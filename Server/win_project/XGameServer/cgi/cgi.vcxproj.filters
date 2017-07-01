@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="cgi">
+      <UniqueIdentifier>{4336bbac-7c47-4b85-a467-22c48dbe3905}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\cgi\cgi_game_login.cpp">
+      <Filter>cgi</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

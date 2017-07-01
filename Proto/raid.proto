@@ -1,0 +1,127 @@
+
+message enter_raid_request
+{
+	required uint32 raid_id = 1;
+}
+
+message enter_raid_answer
+{
+	required uint32 result = 1;  //成功就不返回这个了，1：玩家死亡 2: 等级不够 3：玩家不在附近 4: 道具不够  5：金钱不够   6：元宝不够  7: 玩家不在线  8: 不在副本开启时间内  9: 队长换人了 10: 收益次数不够
+	repeated uint64 reson_player_id = 2; //进入失败的玩家ID
+	required uint32 item_id = 3; //进入失败的道具ID	
+}
+
+message enter_raid_notify
+{
+	required uint32 raid_id = 1;
+}
+
+message team_member_refuse_transfer_notify
+{
+	required uint64 player_id = 1;  //拒绝传送的队员playerID
+}
+
+message transfer_to_leader_request
+{
+	required uint32 result = 1;  //是否同意传送，0表示同意，1表示拒绝
+	required uint64 leader_id = 2;  //发起召集队员的队长的PLAYERID
+}
+
+message raid_finish_notify
+{
+	required uint32 result = 1;  //成功0失败1,其他待定
+	required uint32 raid_id = 2;  //副本ID
+	repeated uint32 star = 3;  //星级
+	repeated uint32 score_param = 4;   //评分标准对应的值，比如通关时间，死亡次数
+	required uint32 gold = 5;   //金币
+	required uint32 exp = 6;   //经验
+	repeated uint32 item_id = 7;  //奖励物品ID
+	repeated uint32 item_num = 8;  //奖励物品数量
+}
+
+message raid_earning_times_changed_notify
+{
+	repeated uint32 raid_id = 1;       //副本ID
+	repeated uint32 earning_times = 2;	 //已经获得收益的次数
+}
+
+message raid_hit_statis_changed_notify
+{
+	required uint64 player_id = 1;
+	required uint32 damage = 2;    //伤害
+	required uint32 injured = 3;   //受击
+	required uint32 cure = 4;      //治疗
+//	required uint32 lv = 5;    //等级
+//	required uint32 job = 6;  //职业
+//	required string name = 7; //名字
+	
+}
+
+//副本通关参数变更
+message raid_pass_param_changed_notify
+{
+	required uint32 pass_index = 1;   //通关阶段，从0开始
+	required uint32 pass_value = 2;  //当前的通关数值
+}
+
+message raid_refresh_npc_notify
+{
+	repeated uint32 npc_id = 1;  //要显示的NPC id
+}
+
+message raid_refresh_transfer_notify
+{
+	repeated uint32 transfer_id = 1;  //要显示的传送点ID
+}
+
+message raid_show_hide_air_wall_notify
+{
+	required uint32 show_hide = 1;  //1表示显示，0表示隐藏
+	required uint32 air_wall_id = 2; //空气墙的ID
+}
+
+//副本AI事件通知
+message RaidEventNotify
+{
+	required uint32 type = 1; //事件类型
+	repeated double param1 = 2; //参数1
+	repeated string param2 = 3; //参数2
+}
+
+message FbCD
+{
+	required uint32 cd = 1;
+}
+
+message raid_show_countdown_notify
+{
+	required uint32 time = 1;
+}
+
+message raid_star_changed_notify
+{
+	repeated uint32 star = 1;    //0星星不亮，1星星亮
+	repeated uint32 param = 2;   //杀怪类型的星星不亮的时候，这里保存的是已经杀怪的数量
+}
+
+message team_raid_wait_ready_notify
+{
+	required uint32 raid_id = 1;
+}
+
+message team_raid_ready_notify
+{
+	required uint64 player_id = 1;
+}
+
+message team_raid_cancel_notify
+{
+	required uint64 player_id = 1;
+	required uint32 result = 2;		//190500112，匹配过程中，邀请别人加入队伍，解散队伍，退队提示
+		//190500113，匹配过程玩家掉线会退出匹配提示	
+}
+
+message npc_talk_request
+{
+	required uint32 npc_id = 1;
+}

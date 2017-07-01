@@ -1,0 +1,1196 @@
+.TargetPos {
+	TargetPosX 1 : double
+	TargetPosZ 2 : double
+}
+
+.TargetInfoEntry {
+	TargetPos 1 : TargetPos
+	RemainTime 2 : integer
+}
+
+#刷怪
+.SceneCreateMonsterTable {
+	uid 1 : integer
+	ID 2 : integer
+	PointPosX 3 : double
+	PointPosZ 4 : double
+	Level 5 : integer
+	TargetInfoList 6 : *TargetInfoEntry
+	PointPosY 7 : double
+	Yaw 8 : double
+}
+
+.ScriptTable {
+	     ID 1 : integer
+	     Path 2 : string
+}
+
+.CastSpiritTable
+{
+	ID 1 : integer
+	ToddlerLv 2 : *integer
+	CastSpiritAttribute 3 : *integer
+	CastAttributeCeiling 4 : *integer
+	Cast1Expend 5 : *integer
+	Expend1Num 6 : *integer
+	Cast2Expend 7 : *integer
+	Expend2Num 8 : *integer
+	GradeNum 9 : *integer
+	OrderAttribute 10 : *integer
+	AdvancedLv 11 : *integer
+}
+.MountsTable
+{
+	ID 1 : integer
+	BaseAttribute 2 : integer
+	Time 3 : *integer
+	WingBinding 4 : *integer
+	MountsAttribute 5 : *integer
+	AttributeCeiling 6 : *double
+	Name 7 : string
+	Item 8 : *integer
+	ItemNum 9 : *integer
+}
+
+.MonsterTable {
+	ID 1 : integer
+	NameId 2 : integer
+	ResId 3 : integer
+	BaseAttribute 4 : integer
+	Skill 5 : *integer
+	PassiveSkill 6 : *integer
+	MapDisplay 7 : integer
+	BaseID 8 : integer
+	HateDao 10 : integer
+	HateGong 11 : integer
+	HateBi 12 : integer
+	HateQiang 13 : integer
+	HateFazhang 14 : integer
+	HateMonster 15 : integer
+	HateType 16: integer
+	Camp 17: integer
+	AttackType 18: integer
+	Type 19  : integer
+	LifeTime 20  : integer
+	talk_config 21 : NpcTalkTable
+	PkType 22 : integer
+}
+
+.SpiritTable {
+	ID 1 : integer
+	Level 2 : integer
+	SpiritAttribute 3 : *integer
+	AttributeCeiling 4 : *integer
+	SpiritExpend 5 : integer
+	ExpendNum 6 : integer
+	GradeNum 7 : *integer
+	OrderAttribute 8 : *integer
+}
+
+.ActorTable {
+	ID 1 : integer
+	NameId 2 : integer
+	DescId 3 : integer
+	ResId 4 : *integer
+	HairResId 5 : *integer
+	WeaponId 6 : integer
+	BaseAttribute 7 : integer
+	Skill 8 : *integer
+	PassiveSkill 9 : *integer
+	InitialHead 10 : integer
+}
+
+.ActorAttributeTable {
+	ID 1 : integer
+	Lv 2 : integer
+	Health 3 : double
+	Attack 4 : double
+	Defense 5 : double
+	AtGold 6 : double
+	AtWood 7 : double
+	AtWater 8 : double
+	AtFire 9 : double
+	AtEarth 10 : double
+	AtGoldDf 11 : double
+	AtWoodDf 12 : double
+	AtWaterDf 13 : double
+	AtFireDf 14 : double
+	AtEarthDf 15 : double
+	Dodge 16 : double
+	Hit 17 : double
+	Critical 18 : double
+	CriticalDf 19 : double
+	CtDmg 20 : double
+	CtDmgDf 21 : double
+	MoveSpeed 22 : double
+	Recover 23 : double
+	Cure 24 : double
+	CureAdd 25 : double
+	DmgAdd 26 : double
+	DmgDf 27 : double
+	DmgAddPE 28 : double
+	DmgDfPP 29 : double
+	Dizzy 30 : double
+	Slow 31 : double
+	Chaos 32 : double
+	Poison 33 : double
+	Vampire 34 : double
+	Bounce 35 : double
+	HitRepel 36 : double
+	Hitfly 37 : double
+	DizzyDf 38 : double
+	SlowDf 39 : double
+	ChaosDf 40 : double
+	PoisonDf 41 : double
+	VampireDf 42 : double
+	BounceDf 43 : double
+	HitRepelDf 44 : double
+	HitflyDf 45 : double
+	DropID 46 : integer
+}
+
+.ActorLevelTable {
+	ID 1 : integer
+	NeedExp 2 : integer
+	ActorLvAttri 3 : integer
+	FreeGrid 4 : integer
+	LockGrid 5 : integer
+}
+
+.SceneResTable {
+	SceneID 1 : integer
+	ResName 2 : string
+	SceneName 3 : string
+	Level 5 : integer
+	BirthPointX 7 : double
+	BirthPointY 8 : double
+	BirthPointZ 9 : double
+	FaceY 10 : double
+	RelivePointX 11 : *double
+	RelivePointZ 12 : *double
+	ReliveRange 13  : *integer
+	ReliveFaceY 14 :  *double
+	RefreshPoint 15 : string
+	PlaceNature 16 : string
+	UseMounts 17 : integer
+	UseDelivery 18 : *integer
+}
+
+.SkillTable {
+	ID 1 : integer
+	levelMax 2 : integer
+	SkillType 3 : integer
+	SkillAffectId 4 : integer
+	PassiveID 5 : integer
+	TargetType 6 : *integer
+	SearchRadius 7 : integer
+	MaxCount 8 : integer
+	RangeType 9 : integer
+	Radius 10 : double
+	Angle 11 : double
+	IsMonster 12 : integer
+	SkillRange 13 : double
+	HateAdd 14 : integer
+	HateValue 15 : integer
+	SkillLv 16 : integer
+	PassiveLv 17 : integer
+	Career 18 : integer
+	OpenLv 19 : integer
+	SkillRune 20 : integer
+	RuneID 21 : *integer
+	SkillAcc 22 : integer
+
+}
+
+.ActiveSkillTable {
+	  ID 1 : integer
+	  SkillAction 2 : *string
+	  SkillLength 3 : *integer
+	  SkillEffect 4 : *integer
+	  WarningEffect 5 : integer
+	  HitEffect 6 : integer
+	  ActionTime 7 : integer
+	  Interval 8 : integer
+	  FlyId 9 : integer
+	  CanMove 10 : integer
+	  NextSkill 11 : integer
+	  TotalSkillDelay 12 : integer
+}
+
+.PassiveSkillTable {
+	ID 1 : integer
+	TriggerType 2 : integer
+	NeedNum 3 : integer
+}
+
+.FlySkillTable {
+	ID 1 : integer
+	DurationTime 2 : integer
+	MoveType 3 : integer
+	Interval 4 : integer
+	MoveDistance 5 : integer
+	MoveSpeed 6 : integer
+}
+
+.SkillLvTable {
+	ID 1 : integer
+	CD 2 : integer
+	EffectIdEnemy 3 : *integer
+	EffectIdFriend 4 : *integer
+	BuffIdEnemy 5 : *integer
+	BuffIdFriend 6 : *integer
+	MonsterID 7 : integer
+	MonsterLv 8 : integer
+	CostCoin 9 : integer
+	NeedFight 10 : integer
+	MonsterEff 11 : integer
+}
+
+.BuffTable {
+	ID 1 : integer
+	BuffType 2 : integer
+	NeedPro 3 : integer
+	Time 4 : integer
+	Interval 5 : integer
+	EffectID 6 : *integer
+	AtPro 7 : integer
+	DfPro 8 : integer
+	TimeDelay 9 : integer
+	CoverType 10 : integer
+	DeleteType 11 : integer
+	IsDeBuff 12 : integer
+	IsControl 13 : integer
+}
+
+.SkillEffectTable {
+	ID 1 : integer
+	Type 2 : integer
+	Effect 3 : *integer
+	EffectAdd 4 : *integer
+	EffectNum 5 : *integer
+}
+
+.ItemsConfigTable {
+	ID 1 : integer
+	Name 2 : string
+	Camp 3 : integer
+	ItemLevel 4 : integer
+	ItemQuality 5 : integer
+	ItemType 6 : integer
+	SkillId 7 : integer
+	Price 8 : integer
+	BindType 9 : integer
+	ItemRelation 10 : integer
+	UseDegree 11 : integer
+	ItemLimit 12 : integer
+	Stackable 13 : integer
+	TaskId 14 : integer
+	DropId 15 : integer
+	ItemEffect 16 : integer
+	ParameterEffect 17 : *integer
+	CostTime 18 : integer
+	ItemCD 19 : integer
+}
+
+.ParameterTable {
+	ID 1 : integer
+	parameter1 2 : *double
+	parameter2 3 : string
+}
+
+.DropConfigTable {
+	ID 1 : integer
+	ProType 2 : integer
+	DropID 3 : *integer
+	Probability 4 : *integer
+	NumMin 5 : *integer
+	NumMax 6 : *integer
+}
+
+.BaseAITable {
+	BaseID 1 : integer
+	ActiveAttackRange 2 : integer
+	IsChase 3 : integer
+	ChaseRange 4 : integer
+	MovingChange 5 : integer
+	Regeneration 6 : integer
+	AIType 7 : integer
+	GuardRange 8 : integer
+	StopMin 9 : integer
+	StopMax 10 : integer
+	Response 11 : integer
+}
+
+.ActorHeadTable {
+	ID 1 : integer
+	Vocation 2 : *integer
+	HeadLock 3 : integer
+	UnlockType 4 : integer
+	UnlockCondition1 5 : integer
+}
+
+.CollectTable {
+	ID 1 : integer
+	TaskId 2 : *integer
+	DisplayLevel 3 : integer
+	Level 4 : integer
+	Time 5 : integer
+	Regeneration 6 : integer
+	DropID 7 : integer
+	LifeTime 8 : integer
+	NameId 9 : string
+}
+
+.TaskTable {
+	ID 1 : integer
+	ChapterId 2 : integer
+	TaskType 3 : integer
+	Level 4 : integer
+	TaskTime 5 : integer
+	TimeRule 6 : integer
+	FollowTask 7 : integer
+	AccessConID 8 : *integer
+	EndConID 9 : *integer
+	EventID 10 : *integer
+	DropID 11 : *integer
+	RewardID 12 : *integer
+	Team 13 : integer
+	PostTask 14 : *integer
+}
+
+.TaskConditionTable {
+	ID 1 : integer
+	ConditionType 2 : integer
+	ConditionTarget 3 : integer
+	ConditionNum 4 : integer
+	Scene 5 : integer
+	PointX 6 : double
+	PointZ 7 : double
+	Radius 8 : integer
+}
+
+.TaskEventTable {
+	ID 1 : integer
+	EventClass 2 : integer
+	EventType 3 : integer
+	EventTarget 4 : integer
+	EventNum 5 : integer
+}
+
+.TaskDropTable {
+	ID 1 : integer
+	MonsterID 2 : integer
+	SceneID 3 : integer
+	DropItem 4 : integer
+	DropPro 5 : integer
+}
+
+.TaskRewardTable {
+	ID 1 : integer
+	RewardEXP 2 : integer
+	RewardMoney 3 : integer
+	RewardType 4 : *integer
+	RewardTarget 5 : *integer
+	RewardNum 6 : *integer
+}
+
+.TaskMonsterTable {
+	ID 1 : integer
+	MonsterID 2 : integer
+	MonsterLevel 3 : integer
+	PointX 4 : integer
+	PointZ 5 : integer
+}
+
+.TaskChapterTable {
+	ChapterID 2 : integer
+	RewardID 3 : *integer
+}
+
+.ActorFashionTable {
+	ID  1 : integer
+	ResType 2 :	integer
+	ResId 3 : integer
+	ColourID1 4 : *integer
+	ColourID2 5 : *integer
+	Occupation 6 : integer
+	Type 7 : integer
+	Lock 8 : integer
+	Colour 9 : integer
+	Time 10 : *integer
+	WingBinding 11 : *integer
+	ListAcc 12 : integer
+	UnlockType 13 : integer
+	UnlockEffect1 14 : integer
+	UnlockEffect2 15 : integer
+	Charm 16 : integer
+}
+
+.DungeonTable {
+	DungeonID 1 : integer
+	DengeonType 2 : integer
+	DengeonRank 3 : integer
+	AddMidway 4 : integer
+	CostItemID 5 : integer
+	CostNum 6 : integer
+	Score 7 : *integer
+	ScoreValue 8 : *integer
+	ScoreValue1 9 : *integer
+	Rewards 10 : *integer
+	ExitPointX 11 : double
+	BirthPointY 12 : double
+	BirthPointZ 13 : double
+	FaceY 14 : double
+	ExitScene 15 : integer
+	PassType 16 : *integer
+	PassValue 17 : *integer
+	PassValue1 18 : *integer
+	RandomGrade 19 : integer
+	RandomID 20 : *integer
+	RandomNum 21 : integer
+	wanyaoka 22 : *integer
+	RewardPosition 23 : *double
+	InstantRelive 24 : integer
+	AutomaticRelive 25 : integer
+	ReliveTime 26 : *integer
+	ActivityControl 27 : integer
+	DungeonPass 28 : string
+	TaskID 29 : integer
+}
+
+.EquipmentTable {
+	ID 1 : integer
+	Occupation 2 : integer
+	EquipmentPosition 3 : integer
+	EquipmentQuality 4 : integer
+	AttriEquipType 5 : integer
+	AttriEquipValue 6 : double
+	StarLvID 7 : integer
+}
+
+.EquipStarLv {
+	ID 1 : integer
+	Level 2 : integer
+	StarSchedule 3 : integer
+	ConsumeItem 4 : integer
+	ConsumeCoin 5 : integer
+	EnchantQuality 6 : integer
+	Quality 7 : integer
+	StarLv 8 : integer 
+}
+
+.EquipLock {
+	ID 1 : integer
+	LockLv 2 : *integer
+	LockQuality 3 : *integer
+	LockStar 4 : *integer
+	LockItem 5 : *integer
+	LockItemNum 6 : *integer
+	MosaicType 7 : *integer
+	Enchant1Type 8 : *integer
+	Enchant2Type 9 : *integer
+	Enchant3Type 10 : *integer
+	EnchantQualityLock 11 : *integer
+	EnchantStarLock 12 : *integer
+	EnchantItem 13 : *integer
+	EnchantItemNum 14 : *integer
+	EnchantCoin 15 : *integer
+}
+
+.EquipAttribute {
+	Effect 1 : integer
+	Rand 2 : *double
+}
+
+.GemAttribute {
+	ID 1 : integer
+	GemType 2 : integer
+	AttributeType 3 : integer
+	AttributeValue 4 : double
+	GemSynthetic 5 : integer
+	Number 6 : integer
+	Consumption 7 : integer
+}
+
+.AttributeTypeTable {
+	ID 1 : integer
+	FightRatio 2 : double
+}
+
+.ColourTable
+{
+	Id 1 : integer
+	OpenColourItem 2 : integer
+	OpenColourNum 3 : integer
+	ColourItem 4 : integer
+	ColourNum 5 : integer
+}
+
+.ShopListTable {
+	ID 1 : integer
+	ShopType 2 : integer
+	StartTime 3 : integer
+	EndTime 4 : integer
+}
+
+.ShopTable {
+	ID 1 : integer
+	ItemID 2 : integer
+	ShopType 3 : integer
+	Acc 4 : integer
+	ConsumptionType 5 : integer
+	Price 6 : integer
+	Purchasetype 7 : integer
+	Condition 8 : integer
+	BuyNum 9 : integer
+}
+
+.TransferPointTable {
+	ID 1 : integer
+	MapId 2 : *integer
+}
+
+#万妖卡
+.RandomCardTable {
+	CardID	1 : integer
+	CardDengeon 2 : integer
+	Condition 3 : *integer
+	Parameter1 4 : *integer
+	Parameter2 5 : *integer
+	Probability 6 : integer
+}
+
+#万妖卡奖励
+.RandomCardRewardTable {
+#	CardRewardID 1 : integer
+	CardNum 2 : integer
+	RewardID 3 : integer
+	RewardNum 4 : integer
+}
+
+#御气道经脉
+.PulseTable {
+	ID 1 : integer
+	Break 2 : integer
+	BreakCondition 3 : integer
+	AcupunctureType 4 : integer
+}
+
+#御气道穴位灌入真气
+.AcupunctureTable {
+	ID 1 : integer
+	AcupunctureAttribute 2 : *integer
+	AttributeCeiling 3 : *integer
+	GradeNum 4 : integer
+	ExpendSilver 5 : integer
+	ExpendQi 6 : integer
+}
+
+#御气道冲穴
+.BreakTable {
+	ID 1 : integer
+	PulseAttribute 2 : *integer
+	AttributeLower 3 : *integer
+	AttributeUpper 4 : *integer
+	PulseLv 5 : integer
+	AttributeColor 8 : *integer
+	MeridiansProbability 9 : *integer
+	BloodProbability 10 : *integer
+	VitalProbability 11 : *integer
+	MarrowProbability 12: *integer
+	Minimum 13: integer
+	MeridiansMinimum 14: *integer
+	BloodMinimum 15: *integer
+	VitalMinimum 16: *integer
+	MarrowMinimum 17: *integer
+	Time 18: integer
+	Secondary 19: integer
+	Lost 20: integer
+}
+
+#pvp副本
+.StageTable {
+	StageID 1 : integer
+	Stage 2 : integer
+	StageLevel 3 : integer
+	StageScore 4 : integer
+	StageValue 5 : integer
+	BasicsCoinValue 6 : integer
+	StageReward 7 : integer
+	VictoryTime 8 : *integer
+	VictoryReward3 9 : *integer
+	VictoryReward5 10 : *integer
+}
+
+#八卦牌主表
+.BaguaTable {
+	ID 1 : integer
+	Level 2 : integer
+	BaguaPosition 3 : integer
+	BaguaType 4 : integer
+	BaguaQuality 5 : integer
+	StarLv 6 : integer
+	Suit 7 : integer
+	PrimaryAttributeType 8 : integer
+	PrimaryAttributeLimit 9 : double
+	PrimaryAttributeCeiling 10 : double
+	ViceAttributeType 11 : *integer
+	ViceAttributeEntry 12 : *integer
+	coefficient 13 : double
+	DecomposeItem 14 : *integer
+	DecomposeNum 15 : *integer
+	RecastItem 16 : *integer
+	RecastNum 17 : *integer
+	RecastCoin 18 : integer
+	ClearItem 19 : *integer
+	ClearNum 20 : *integer
+	ClearCoin 21 : integer
+}
+
+#八卦牌炼星表
+.BaguaStarTable {
+	ID 1 : integer
+	AttributeValue 2 : double
+	StarItem 3 : *integer
+	StarNum 4 : *integer
+	StarCoin 5 : integer
+	StatProbability 6 : integer
+	DecomposeCompensation 7 : *integer
+	DecomposeCompensationNum 8 : *integer
+}
+
+#八卦牌洗炼表
+.BaguaViceAttributeTable {
+	Effect 1 : integer
+	Rand 2 : *double
+}
+
+#八卦牌套装表
+.BaguaSuitTable {
+	ID 1 : integer
+	SuitNum 2 : *integer
+	SuitAttributeType 3 : *integer
+	Classification 4 : *integer
+	AttributeValue 5 : *double
+	SuitPlus1 6 : *double
+	SuitPlus2 7 : *double
+	SuitPlus3 8 : *double
+	SuitPlus4 9 : *double
+	SuitPlus5 10 : *double
+	SuitPlus6 11 : *double
+}
+
+#机器人
+.ActorRobotTable {
+	ID 1 : integer
+	ResId 2 : *integer
+	HairResId 3 : *integer
+	WeaponId 4 : *integer
+	AttributeType 5 : *integer
+	AttributePro 6 : *integer
+	Skill 7 : *integer
+	PassiveSkill 8 : *integer
+	InitialHead 9 : integer
+	FightPro 10 : *integer
+	ActiveAttackRange 11 : integer
+	ChaseRange 12 : integer
+}
+
+#随机名字
+.BootNameTable {
+	ID 1 : integer
+	Name 2 : string
+}
+
+.RandomMonsterTable {
+	ID 1 : integer
+	TypeLevel 2 : integer
+	MonsterID 3 : integer
+	Difficulty 4 : integer
+	Times 5 : integer
+	ActivityReward 6 : integer
+	BasicsReward 7 : integer
+	MaxLevel 8 : integer
+}
+
+.SpecialtyLevelTable {
+	ID 1 : integer
+	LevelExp 2 : integer
+	SpecialTitle 3 : integer
+}
+
+.SpecialtySkillTable {
+	ID 1 : integer
+	SpecialtyType 2 : integer
+	SpecialtyLevel 3 : integer
+	SkillEffect 5 : integer
+	EffectValue 6 : *integer	
+}
+
+.TypeLevelTable {
+	ID 1 : integer
+	Level 2 : integer
+	RewardTime 3 : integer
+	MinActor 4 : integer
+	MaxActor 5 : integer
+	OpenDay 6 : *integer
+	OpenTime 7 : *integer
+	CloseTime 8 : *integer
+	OpenProbability 9 : integer
+	SpecialtyPlus 10 : integer
+	ShowTimes 11 : integer
+}
+
+.ChangeSpecialty
+{
+	ID 1 : integer
+	ChangeCost 2 : integer
+	CostValue 3 : integer
+}
+
+.RandomDungeonTable
+{
+	ID 1 : integer
+	TypeLevel 2 : integer
+	ResID 3 : integer
+	ResProbability 6 : integer
+	PointX 7 : *integer
+	PointZ 8 : *integer
+	FaceY 9 : *integer
+	GroupProbability 10 : *integer
+}
+
+.RewardTable
+{
+	ID 1 : integer
+	ExpCoefficient 2 : integer
+	CoinReward 3 : integer
+}
+
+.SpecialTitleTable
+{
+	ID 1 : integer
+	TitleEffect1 2 : integer
+	TitleEffect2 3 : integer
+	TitleEffect3 4 : integer
+	TitleEffect4 5 : integer
+}
+
+.MoneyQuestTable
+{
+	ID 1 : integer
+	LevelSection 2 : *integer
+	QuestGroup 3 : *integer
+	RewardGroup 4 : *integer
+	QualityGroup 5 : *integer
+	RewardPlus 6 : *integer
+}
+
+.EventCalendarTable {
+	ID 1 : integer
+	RelationID 2 : integer
+	ChivalrousID 3 : integer
+	HotspotID 4 : integer
+	SubtabCondition 5 : integer
+	SubtabValue 6 : integer
+	ActivityType 7 : integer
+	ActivityValue 8 : integer
+	AuxiliaryValue 9 : *integer
+	Sum 10 : integer
+	Active 11 : integer
+}
+
+.ActiveTable {
+	ID 1 : integer
+	Active 2 : integer
+	Reward 3 : *integer
+	RewardNum 4 : *integer
+}
+
+.ChivalrousTable {
+	ID 1 : integer
+	Condition1 2 : integer
+	SingleNum 3 : integer
+	MaxNum 4 : integer
+}
+
+.GangsTable {
+	ID 1 : integer
+	BuildingType 2 : integer
+	BuildingLeve 4 : integer
+	HallLeve 5 : integer
+	Leve1Expend 6 : integer
+	Leve2Expend 7 : integer
+	LeveCompetence 8 : integer
+	LeveTime 9 : integer
+	MaintenanceCosts 10 : integer
+	PopularityCost 11 : integer
+	parameter1 12 : integer
+	parameter2 13 : integer
+	parameter3 14 : integer
+	parameter4 15 : *integer
+}
+
+.GangsJurisdictionTable {
+	Position 1 : integer
+	Appoint1 2 : integer
+	Appoint2 3 : integer
+	OpenActivity 4 : integer
+	Recruit 5 : integer
+	Expel1 6 : integer
+	Expel2 7 : integer
+	Expel3 8 : integer
+	RecruitSetup 9 : integer
+	NoticeSetup 10 : integer
+	skill 11 : integer
+	GangsName 12 : integer
+}
+
+.GangsSkillTable {
+	ID 1 : integer
+	skillLeve 2 : integer
+	skillType 3 : integer
+	SkillValue 4 : double
+	CreateLeve 5 : integer
+	CreateMnoney 6 : integer
+	UseMoney1 7 : integer
+	UseMoney2 8 : integer
+	BuildingLeve 9 : integer
+}
+
+.ControlTable {
+	ID 1 : integer
+	MinActor 2 : integer
+	MaxActor 3 : integer
+	OpenDay 4 : *integer
+	OpenTime 5 : *integer
+	CloseTime 6 : *integer
+	TimeType 7 : integer
+	RewardTime 8 : integer
+}
+
+.CampTable {
+	ID 1 : integer
+	Level 2 : integer
+	FreeLv 3 : integer
+	FreeNum 4 : integer
+	MaxExp 5 : integer
+	Consume 6 : integer
+}
+
+.GradeTable {
+	ID 1 : integer
+	LevelExp 2 : integer
+	Level 3 : integer
+}
+
+.WeekTable {
+	ID 1 : integer
+	Type 2 : integer
+	Num 3 : integer
+	Reward 4 : integer
+}
+
+.RaidScriptTable {
+	ID 1 : integer
+	TypeID 2 : integer
+	Parameter1 3 : *double
+	Parameter2 4 : *string
+}
+
+.QuestionTable {
+	ID 1 : integer
+	Type 2 : integer
+	RightAnseer 3 : integer
+	Coin 4 : integer
+	Exp 5 : integer
+	GangsAnseer 6 : string
+}
+
+.sproto_config_pos {
+     pos_x 1 : integer
+     pos_z 2 : integer
+}
+
+.RobotPatrolTable {
+	ID 1 : integer
+	patrol1 2 : *integer
+	patrol2 3 : *integer
+	patrol3 4 : *integer
+	patrol4 5 : *integer
+	patrol5 6 : *integer
+	patrol6 7 : *integer
+	patrol7 8 : *integer
+	patrol8 9 : *integer
+	patrol9 10 : *integer
+	patrol10 11 : *integer
+	patrol11 12 : *integer
+	patrol12 13 : *integer
+	patrol 14 : *sproto_config_pos
+}
+
+.FactionBattleTable {
+	ID 1 : integer
+	LowerLimitLv 2 : integer
+	UpperLimitLv 3 : integer
+	Map 4 : integer
+	BirthPoint1 5 : *integer
+	BirthPoint2 6 : *integer
+	FlagExp 7 : integer
+	BoxID 8 : integer
+	BoxReloadX 9 : *integer
+	BoxReloadY 10 : *integer
+	BoxReloadZ 11 : *integer
+	BoxReloadTime 12 : integer
+	BoxReloadNum 13 : integer
+	BoxExp 14 : integer
+	BoxExp2 15 : integer
+	BoxOpenNum 16 : integer
+	SkillIntegral 17 : integer
+	FlagIntegral 18 : integer
+}
+
+.LifeItemTable {
+	ID 1 : integer
+	Type 2 : integer
+	SkillNeed 4 : integer
+	ItemID 5 : integer
+}
+
+.LifeSkillTable {
+	ID 1 : integer
+	Type 2 : integer
+	Lv 3 : integer
+	LvMax 4 : integer
+	Exp 5 : integer
+	ExpAdd 6 : integer
+	NeedCoin 7 : integer
+	NeedItem 8 : integer
+	BreachLv 9 : integer
+	BreachItem 10 : integer
+	BreachNum 11 : integer
+	ProMax 12 : integer
+	LvPro 13 : *integer
+	ItemID 14 : *integer
+	NeedDonation 15 : integer
+	NeedJingli 16 : integer
+}
+
+.NoticeTable {
+	ID 1 : integer
+	Priority 2 : integer
+	NoticeTxt 3 : string
+}
+
+.GangsDungeonTable {
+	ID 1 : integer
+	Type 2 : integer
+	RankHigh 3 : integer
+	RankLow 4 : integer
+	mailID 5 : integer
+	RewardID 6 : *integer
+	RewardNum 7 : *integer
+}
+
+.SearchTable {
+	ID 1 : integer
+	ItemId 2 : integer
+	TreasureId 3 : *integer
+	Event 4 : *integer
+	Probability 5 : *integer
+	Parameter1 6 : *integer
+	Parameter2 7 : *integer
+	Parameter3 8 : *integer
+}
+
+.TreasureTable {
+	ID 1 : integer
+	MapId 2 : integer
+	PointX 3 : integer
+	PointY 4 : integer
+	PointZ 5 : integer
+	TransferPoint 6 : integer
+}
+
+.EscortTask {
+	ID 1 : integer
+	NpcID 2 : integer
+	Scene 3 : integer
+	MonsterIndex 4 : integer
+	Time 5 : integer
+	Team 6 : integer
+	Distance 7 : integer
+	BlockedStop 8 : integer
+	MonsterID1 9 : *integer
+	PointXZ1 10 : *double
+	MonsterID2 11 : *integer
+	PointXZ2 12 : *double
+	MonsterID3 13 : *integer
+	PointXZ3 14 : *double
+	talkID 15 : *integer
+}
+
+.PartnerTable {
+	ID 1 : integer
+	Grade 2 : integer
+	Skill 3 : *integer
+	BaseSkill1 4 : integer
+	ProtectSkill 5 : integer
+	Angerskill 6 : integer
+	AttributeType 7 : *integer
+	GradeCoefficient 8 : *double
+	TypeCoefficient 9 : *double
+	UpperLimitBase 10 : *double
+	LowerLimitBase 11 : *double
+	DetailedType 12 : *integer
+	DetailedNum 13 : *double
+	Recruit 14 : *integer
+	SeveranceItem 15 : *integer
+	SeveranceNum 16 : *integer
+	PartnerAttributeType 17 : *integer
+	PartnerAttributeID 18 : *integer
+	WashMarrowItem 19 : *integer
+	GodYao 20 : *integer
+	ThreeCurrencyItem 21 : integer
+	ThreeCurrencyItemNum 22 : integer
+	SevenCurrencyItem 23 : integer
+	SevenCurrencyItemNum 24 : integer
+	ThreeExclusiveItem 25 : integer
+	ThreeExclusiveItemNum 26 : integer
+	SevenExclusiveItem 27 : integer
+	SevenExclusiveItemNum 28 : integer
+	QualificationsItem 29 : *integer
+	Character 30 : integer
+	SkillProbability 31 : *integer
+	GrowthValue 32 : *integer
+	GodYaoAttribute 33 : *integer
+}
+
+.GodYaoAttributeTable {
+	ID 1 : integer
+	AttributeType 2 : integer
+	AttributeNum 3 : integer
+	Coefficient 4 : integer
+}
+
+.RecruitTable {
+	ID 1 : integer
+	RecruitNum 2 : integer
+	GetItem 3 : *integer
+	ConsumeType 4 : integer
+	ConsumeNum 5 : integer
+	Recruit 6 : *integer
+	RecruitGrade 7 : *integer
+	RecruitProbability 8 : *integer
+	BottomTime 9 : integer
+	BottomGrade 10 : *integer
+	RecruitBottom 11 : *integer
+	Time 12 : integer
+	TypeProbability 13 : *integer
+	Item 14 : *integer
+	ItemNum 15 : *integer
+}
+
+.PartnerLevelTable {
+	ID 1 : integer
+	NeedExp 2 : integer
+}
+
+.BiaocheTable
+{
+	ID 1 : integer
+	Type 2 : integer
+	ActivityControl 3 : integer
+	TaskId 4 : integer
+	MonsterId 5 : integer
+	shanfeiId 6 : *integer
+	level 7 : *integer
+	Interval 8 : integer
+	Probability 9 : integer
+	Time 10 : integer
+	Number 11 : *integer
+	Range 12 : integer
+	Reward 13 : integer
+}
+
+.BiaocheRewardTable {
+	ID 1 : integer
+	Deposit 2 : integer
+	StartTime 3 : *integer
+	EndTime 4 : *integer
+	RewardMoney1 5 : integer
+	RewardExp1 6 : integer
+	RewardLv1 7 : integer
+	RewardItem1 8 : *integer
+	RewardNum1 9 : *integer
+	Collection 10 : integer
+	RewardMoney2 11 : integer
+	RewardExp2 12 : integer
+	RewardLv2 13 : integer
+	RewardItem2 14 : *integer
+	RewardNum2 15 : *integer
+}
+
+.FunctionUnlockTable
+{
+    ID 1 : integer
+    Type 2 : integer
+    Level 3 : integer
+    IsSoon 4 : integer
+    ItemID 5 : integer
+    ItemNum 6 : integer
+}
+
+.NpcTalkTable
+{
+	ID 1 : integer
+	NpcId 2 : integer
+	Type 3 : integer
+	EventNum1 4 : integer
+	EventNum2 5 : *integer
+	next 6 : NpcTalkTable
+}
+
+.MonsterPkTypeTable
+{
+	ID 0 : integer
+	Remark1 1 : integer
+	PkType0 2 : integer
+	PkType1 3 : integer
+	PkType2 4 : integer
+	PkType3 5 : integer
+	PkType4 6 : integer
+	PkType5 7 : integer
+	PkType6 8 : integer
+	PkType7 9 : integer
+	PkType8 10 : integer
+	PkType9 11 : integer
+	PkType10 12 : integer
+	PkType11 13 : integer
+	PkType12 14 : integer
+	PkType13 15 : integer
+	PkType14 16 : integer
+	PkType15 17 : integer
+	PkType16 18 : integer
+	PkType17 19 : integer
+	PkType18 20 : integer
+	PkType19 21 : integer
+	PkType20 22 : integer
+}
+
+.CharmTable {
+	ID 0 : integer
+	Exp 1 : integer
+	AttributeType 2 : *integer
+	AttributeNum 3 : *integer
+}
+
+.WeaponsEffectTable {
+	ID 0 : integer
+	WeaponsID 1 : integer
+	Requirement1 2 : integer
+	Requirement2 3 : integer
+	Item 4 : integer
+	ItemNum 5 : integer
+}
+

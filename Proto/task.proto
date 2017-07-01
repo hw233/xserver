@@ -1,0 +1,66 @@
+import "comm_message.proto";
+
+//任务通用请求
+message TaskCommRequest
+{
+	required uint32 task_id = 1; //任务id
+}
+
+//任务通用应答
+message TaskCommAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 task_id = 2; //任务id
+}
+
+//任务更新通知
+message TaskUpdateNotify
+{
+	required TaskData data = 1; //任务数据
+}
+
+//任务列表应答
+message TaskListAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated TaskData ongoing_list = 2; //正在进行中的任务列表
+	repeated uint32 finish_list = 3; //已完成的任务列表
+	required uint32 chapterId = 4; //当前章节ID
+	required uint32 chapterState = 5; //当前章节状态，0：不可领，非0：可领
+}
+
+//任务条件完成请求
+message TaskCompleteRequest
+{
+	required uint32 task_id = 1; //任务id
+	required uint32 condition_id = 2; //条件id
+}
+
+//任务事件请求
+message TaskEventRequest
+{
+	required uint32 task_id = 1; //任务id
+	required uint32 event_id = 2; //事件id
+}
+
+//删除任务通知
+message TaskRemoveNotify
+{
+	required uint32 task_id = 1; //任务id
+}
+
+//任务完成列表更新通知
+message TaskUpdateFinishNotify
+{
+	repeated uint32 adds = 1; //加入完成集合的ID
+	repeated uint32 dels = 2; //移出完成集合的ID
+}
+
+//任务章节奖励更新通知
+message TaskUpdateChapterRewardNotify
+{
+	required uint32 chapterId = 2; //当前章节ID
+	required uint32 chapterState = 3; //当前章节状态，0：不可领，非0：可领
+}
+
+

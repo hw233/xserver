@@ -1,0 +1,80 @@
+#+OPTIONS: ^:{}
+
+* handle_leave_raid_request  离开副本或踢出队伍
+** raid->player_leave_raid
+*** clear_m_player_and_player_info
+把raid的m_player清理，需要的话把player_info也清理(下线不清理)
+
+*** player->set_out_raid_pos_and_clear_scene();    
+设置玩家场景ID和坐标，把scene设置成NULL
+
+*** delete_player_from_scene(player);
+把玩家从场景移除，也会把scene设置成NULL
+
+*** on_player_leave_raid(player);
+减少玩家计数，并调用AI接口 ai->raid_on_player_leave(this, player);
+
+*** raid_manager::delete_raid(this);  
+单人副本就删除
+
+*** player->send_scene_transfer   
+通知客户端离开副本
+
+* player_struct::process_offline 玩家下线
+** raid->player_offline(this);
+玩家进入副本的时候设置了scene，而且scene_type等于SCENE_TYPE_RAID
+
+** raid_struct::player_offline
+*** clear_m_player_and_player_info
+把raid的m_player清理，需要的话把player_info也清理(下线不清理)
+
+*** on_player_leave_raid(player);	
+减少玩家计数，并调用AI接口 ai->raid_on_player_leave(this, player);
+
+*** 单人副本就删除
+player->set_out_raid_pos_and_clear_scene();
+raid_manager::delete_raid(this);
+
+*** 多人副本就delete_player_from_scene(player);
+
+
+* handle_enter_raid_request  进入副本
+** check_player_enter_raid(player, raid_id) != 0)  
+检查能否进入副本, 组队副本检查整个队伍
+
+** raid_struct *raid = raid_manager::create_raid(raid_id, player);  
+创建副本
+
+** raid->team_enter_raid(player->m_team); 或者 raid->player_enter_raid(player, pos_x, pos_z)
+设置team的raid_uuid
+
+*** player_enter_raid_impl(player, index, pos_x, pos_z)
+
+**** set_m_player_and_player_info(player, index);
+设置player_info和m_player
+
+**** player->set_enter_raid_pos_and_scene(this);   
+设置玩家的场景对象，ID，进入坐标
+
+**** 发送MSG_ID_ENTER_RAID_NOTIFY和MSG_ID_TRANSFER_ANSWER
+
+**** on_player_enter_raid(player)
+添加玩家计数并调用AI ai->raid_on_player_enter(this, player);
+设置玩家的player_raid_uuid
+
+* delete_raid 删除副本
+** 删除单人副本
+1. 玩家下线的时候  player_offline
+2. 玩家主动离开副本 player_leave_raid
+
+** 删除多人副本
+*** on_tick_10 
+检查check_raid_need_delete()接口, 一般来说就是检查副本玩家计数
+
+* TODO
+1. handle_pvp_match_start_request   已经添加了检查
+2. pvp_match_player_set_ready       已经添加了检查
+3. add_player_to_zhenying_raid      已经添加了检查
+4. 读新的表检查开启时间             已完成
+5. AI player 不做计数统计           已完成
+6. 副本中解散队伍                   

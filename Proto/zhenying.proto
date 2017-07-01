@@ -1,0 +1,105 @@
+
+enum ZHENYING_TYPE
+{
+	NULL = 0;
+	FULONGGUO = 1;
+	WANYAOGU = 2;
+}
+
+message ChoseZhenying
+{
+	required int32 zhenying = 1; //ZHENGYIN_TYPE
+}
+
+message AnsChoseZhenying
+{
+	required int32 zhenying = 1; //ZHENGYIN_TYPE
+	required int32 ret = 2; //0成功
+}
+
+message ZhenyingPower
+{
+	required uint32 power_fulongguo = 1; //伏龙国总战斗力
+	required uint32 power_wanyaogu = 2; //万妖谷总战斗力
+	required uint32 man_fulongguo = 3; //伏龙国人数百分比
+	required uint32 man_wanyaogu = 4; //万妖谷人数百分比
+	required uint64 power_man = 5; //阵营主宰ID
+	required string power_name = 6; //阵营主宰
+	required string power_guild = 7; //阵营主宰帮会
+}
+
+enum ZHENYING_TASK_AWARD_STATE
+{
+	UNACHIVE = 0; //未达成
+	COMPLETE = 1; //已达成
+	AWARD = 2; //已领
+}
+
+message ZhenyingInfo
+{
+	required int32 zhenying = 1; //ZHENGYIN_TYPE
+	required uint32 level = 2; //
+	required uint32 exp = 3; //
+	required uint32 task = 4; //当前任务ID
+	required uint32 task_type = 5; //当前任务类型
+	required uint32 task_num = 6; //当前任务进度
+	required uint32 step = 7; //军阶
+	required uint32 exp_day = 8; //
+	required uint32 free_change = 9; //免费换阵营次数
+	required uint32 task_award_state = 10; //ZHENYING_TASK_AWARD_STATE
+}
+
+message ZhenyingExp
+{
+	required uint32 exp = 1;
+	required uint32 exp_day = 2; //
+	required uint32 level = 3; //
+}
+
+message ZhenyingTeamInfo
+{
+	required uint64 playerid = 1;
+	required string name = 2;
+	required uint32 kill = 3;
+	required uint32 death = 4;
+	required uint32 assist = 5;
+	required uint32 score = 6;
+	required uint32 job = 7;
+	required uint32 lv = 8;
+}
+
+message ZhenyingTeam
+{
+	repeated ZhenyingTeamInfo mem = 1;
+}
+
+message ZhenyingTaskProcess
+{
+	required uint32 task_num = 1;//当前任务进度
+	required uint32 task_award_state = 2; //ZHENYING_TASK_AWARD_STATE
+}
+
+message NewZhenyingTask
+{
+	required uint32 task = 1; //当前任务ID
+	required uint32 task_type = 2; //当前任务类型
+	required uint32 task_num = 3; //当前任务进度
+}
+
+enum ZHENYING_LINE_STATE
+{
+	NORMAL = 0;
+	FULL = 1;
+}
+
+message ZhenyingLineInfo
+{
+	required uint32 id = 1; //第几条线 从1开始
+	required uint32 man = 2;//人数
+	required int32 state = 3;//ZHENYING_LINE_STATE
+}
+message ZhenyingLine
+{
+	required uint32 my_line = 1; //
+	repeated ZhenyingLineInfo all_line = 2;
+}

@@ -1,0 +1,162 @@
+//只有成功失败返回的通用返回信息
+message comm_answer
+{
+	required int32 result = 1;
+}
+
+//地图坐标
+message pos_data
+{
+	required float pos_x = 1;
+	required float pos_z = 2;	
+}
+
+//buff信息
+message buff_info
+{
+	required uint32 id = 1;
+	required uint32 start_time = 2;
+}
+
+//属性信息
+message AttrData
+{
+	required uint32 id = 1; //属性id
+	required double val = 2; //属性值
+}
+
+//角色基本信息
+message PlayerBaseInfo
+{
+	required uint64 playerId = 1; //角色id
+	required string name = 2; //角色名
+	repeated uint32 attrId = 3; //属性id列表
+	repeated uint32 attrVal = 4; //属性值列表
+}
+
+//八卦道具额外信息
+message ItemBaguaData
+{
+	required uint32 star = 1;
+	required double main_attr_val = 2;
+	repeated AttrData minor_attrs = 3;
+}
+
+//背包格子
+message BagGrid
+{
+	required uint32 index = 1; //服务器索引
+	required uint32 id = 2; //道具id
+	required uint32 num = 3; //道具数量
+	required uint32 usedCount = 4; //已使用次数
+	required uint32 expireTime = 5; //过期时间
+	optional ItemBaguaData bagua = 6; //八卦道具额外信息
+}
+
+//道具信息
+message ItemData
+{
+	required uint32 id = 1; //道具id
+	required uint32 num = 2; //道具数量
+}
+
+//头像信息
+message HeadIconData
+{
+	required uint32 id = 1; //头像id
+	required uint32 status = 2; //状态，1：新解锁
+}
+
+//任务状态定义
+enum TaskStatus
+{
+	NOT_ACCEPT_YET = 0; //未接
+	UNACCEPTABLE = 1; //不可接
+	ACCEPTABLE = 2; //可接
+	ACCEPTED = 3; //已接未完成
+	ACHIEVED = 4; //完成未提交
+	FINISH = 5; //已经领取奖励
+	UNACHIEVABLE = 6; //失败，无法达成
+}
+
+//任务计数
+message TaskCount
+{
+	required uint32 type = 1; //条件类型
+	required uint32 count = 2; //计数
+}
+
+//任务奖励
+message TaskRewardData
+{
+	repeated ItemData items = 1; //道具
+}
+
+//任务信息
+message TaskData
+{
+	required uint32 id = 1; //任务id
+	required uint32 status = 2; //任务状态
+	required uint32 expireTime = 3; //过期时间戳，0表示不限时
+	repeated TaskCount progress = 4; //任务进度
+	optional TaskRewardData reward = 5; //任务奖励
+}
+
+message PlayerOnlineState
+{
+	required uint64 id = 1; //角色ID
+	required bool state = 2; //true:在线 , false不在线
+}
+
+//装备附魔信息
+message EquipEnchantData
+{
+	required uint32 index = 1; //索引
+	required AttrData curAttr = 2; //当前属性
+	repeated AttrData randAttr = 3; //随机出来的属性
+}
+
+//装备信息
+message EquipData
+{
+	required uint32 type = 1; //部位
+	required uint32 stair = 2; //阶数
+	required uint32 starLv = 3; //星数
+	required uint32 starExp = 4; //升星等级
+	repeated EquipEnchantData enchant = 5; //附魔
+	repeated int32 inlay = 6; //镶嵌（-1：未开孔，0：未镶嵌，>0：宝石id）
+}
+
+//邮件信息
+message MailData
+{
+	required uint64 id = 1; //邮件id
+	required uint32 type = 2; //类型
+	required string title = 3; //标题
+	required string senderName = 4; //发件人
+	required string content = 5; //正文
+	repeated string args = 6; //参数列表
+	required uint32 sendTime = 7; //发件时间
+	repeated ItemData attach = 8; //附件
+	required uint32 read = 9; //是否已读；0：未读，1：已读
+	required uint32 extract = 10; //是否领取附件；0：未领，1：已领
+}
+
+//商品信息
+message GoodsData
+{
+	required uint32 goodsId = 1; //商品ID
+	required uint32 boughtNum = 2; //已购买数量
+}
+
+//玩家基础信息
+message PlayerBaseData
+{
+	required uint64 playerId = 1; //角色id
+	required string name = 2; //角色名
+	repeated AttrData attrs = 3; //属性列表
+	repeated uint32 tags = 4; //标签
+	required string textIntro = 5; //文字签名
+}
+
+

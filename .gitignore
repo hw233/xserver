@@ -1,0 +1,15 @@
+.1.sh
+Server/*_srv/*_srv
+!Server/game_srv/so_game_srv
+*.so
+CMakeCache.txt
+CMakeFiles/
+*.meta
+TAGS
+cscope.*
+compile_commands.json
+Makefile
+cmake_install.cmake
+libgame.a
+*~
+.svn/

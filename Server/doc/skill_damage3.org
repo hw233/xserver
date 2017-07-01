@@ -1,0 +1,33 @@
+* _查找_ 技能ID对应的技能表(SkillTable)
+* 根据SkillLv字段 _查找_ 技能升级表(SkillLvTable)
+* 遍历目标
+* 计算目标关系(友好或者敌对)
+** 友好关系
+1. 遍历EffectIdFriend
+2. _查找_ 技能效果表(SkillEffectTable)
+3. 计算伤害
+4. 遍历BuffIdFriend字段
+5. _查找_ buff表(BuffTable)
+6. 计算buff几率
+7. 遍历EffectID字段
+8. _查找_ 技能效果表(SkillEffectTable)
+9. 计算buff效果
+
+** 敌对关系
+1. 计算暴击闪避命中
+2. 遍历EffectIdFriend
+3. _查找_ 技能效果表(SkillEffectTable)
+4. 计算伤害
+5. 遍历BuffIdFriend字段
+6. _查找_ buff表(BuffTable)
+7. 计算buff几率
+8. 遍历EffectID字段
+9. _查找_ 技能效果表(SkillEffectTable)
+10. 计算buff效果
+
+
+
+
+
+
+

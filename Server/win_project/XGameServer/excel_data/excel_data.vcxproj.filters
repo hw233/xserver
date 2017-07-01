@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="excel_data">
+      <UniqueIdentifier>{f7d6d366-a205-4096-a8b1-e7c40ac2f8b5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\excel_data\excel_data.h">
+      <Filter>excel_data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\excel_data\sproto.h">
+      <Filter>excel_data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\excel_data\sprotoc_common.h">
+      <Filter>excel_data</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

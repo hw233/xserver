@@ -1,0 +1,23 @@
+* 遍历目标
+* _查找_ 技能ID对应的技能表(SkillTable)
+* 计算暴击闪避命中
+* 根据SkillLv字段 _查找_ 技能升级表(SkillLvTable)
+* 遍历EffectId字段和BuffId字段
+** 遍历EffectId字段
+1. _查找_ 技能效果表(SkillEffectTable)
+2. 根据TargetType字段判断是否需要计算伤害, 如果不需要就 _返回_
+3. 计算伤害
+** 遍历BuffId字段
+1. _查找_ buff表(BuffTable)
+2. 遍历EffectID字段
+3. _查找_ 技能效果表(SkillEffectTable)
+4. 根据TargetType字段判断是否需要产生buff, 如果不需要就 _返回_
+5. 计算buff效果
+
+
+
+
+
+
+
+

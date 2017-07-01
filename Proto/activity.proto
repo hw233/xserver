@@ -1,0 +1,37 @@
+
+//日常活动项
+message DailyActivityData
+{
+	required uint32 id = 1; //配置id
+	required uint32 count = 2; //已完成次数
+}
+
+//侠义活动项
+message ChivalryActivityData
+{
+	required uint32 id = 1; //配置id
+	required uint32 val = 2; //已获得侠义值
+}
+
+//活动信息通知
+message ActivityInfoNotify
+{
+	repeated DailyActivityData dailys = 1; //日常、限时、阵营
+	repeated ChivalryActivityData chivalrys = 2; //侠义
+	repeated uint32 activeRewardIds = 3; //活跃度已领奖列表
+}
+
+//领取活跃度奖励请求
+message ActiveRewardRequest
+{
+	required uint32 rewardId = 1; //奖励id
+}
+
+//领取活跃度奖励应答
+message ActiveRewardAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 rewardId = 2; //奖励id
+}
+
+

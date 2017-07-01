@@ -1,0 +1,217 @@
+import "comm_message.proto";
+
+//移动请求
+message move_request
+{
+	repeated pos_data data = 1;
+}
+
+//移动通知
+message move_notify
+{
+	required uint64 playerid = 1;
+	repeated pos_data data = 2;
+}
+
+//同步某个玩家的坐标，组队同步队长坐标用
+message sync_player_pos_notify
+{
+	required uint64 player_id = 1;
+	required float pos_x = 2;
+	required float pos_z = 3;
+	required uint32 scene_id = 4;
+}
+
+//视野玩家的基本信息
+message sight_player_base_info
+{
+	required uint64 playerid = 1;
+	repeated pos_data data = 2;	  //移动信息
+	required float pos_y = 23;
+	required string name = 3;
+	required uint32 lv = 4;
+	required uint32 job = 5;
+	required uint32 avatar = 6; //时装
+	required float direct_x = 7;   //移动x方向
+	required float direct_y = 8;   //移动高度方向
+	required float direct_z = 9;   //移动z方向
+	required float speed = 10;     //速度
+	required int32 hp = 11;          //剩余血量
+	required uint32 icon = 12;          //头像
+	required uint32 maxhp = 13;          //最大血量
+	required uint32 clothes = 14;
+	required uint32 clothes_color_up = 15;
+	required uint32 clothes_color_down = 16;
+	required uint32 hat = 17;
+	required uint32 hat_color = 18;
+	repeated buff_info buff_info = 19; //buff信息
+	required uint32 team_id = 20;   //队伍ID
+	required uint32 fashion_weapon = 21;   //
+	required uint32 horse = 22;   //
+	required uint32 pk_type = 24; //pk模式
+	required uint32 region_id = 25; //region 信息
+	required uint32 zhenying_id = 26; //阵营ID
+	required uint32 guild_id = 27; //帮会ID
+	required uint32 fashion_weapon_color = 28;   //
+}
+
+//视野怪物的基本信息
+message sight_monster_info
+{
+	required uint64 uuid = 1;        //唯一ID
+	required uint32 monsterid = 2;	 //怪物ID
+	required int32 hp = 3;          //剩余血量
+	repeated pos_data data = 4;		 //移动信息
+	required float speed = 5;	    //速度
+	required uint32 lv = 6;         //等级
+	repeated buff_info buff_info = 7;	 //buff信息
+	required uint32 pk_type = 8; //pk模式
+	required uint32 zhenying_id = 9; //阵营ID
+	required uint32 effectid = 10;  //召唤怪物出生特效
+}
+
+//视野镖车上的玩家的基本信息
+message player_on_cash_truck_info
+{
+	required uint64 playerid = 1;
+	required string name = 3;
+	required uint32 lv = 4;
+	required uint32 job = 5;
+	required uint32 avatar = 6; //时装
+	required int32 hp = 7;          //剩余血量
+	//required uint32 icon = 8;          //头像
+	required uint32 maxhp = 9;          //最大血量
+	required uint32 clothes = 10;
+	required uint32 clothes_color_up = 11;
+	required uint32 clothes_color_down = 12;
+	required uint32 hat = 13;
+	required uint32 hat_color = 14;
+	required uint32 team_id = 15;   //队伍ID
+	required uint32 fashion_weapon = 16;   //
+	required uint32 pk_type = 17; //pk模式
+	required uint32 region_id = 18; //region 信息
+}
+
+//视野镖车的基本信息
+message sight_cash_truck_info
+{
+	required uint64 uuid = 1;        //唯一ID
+	required uint32 monsterid = 2;	 //怪物ID
+	required int32 hp = 3;          //剩余血量
+	repeated pos_data data = 4;		 //移动信息
+	required float speed = 5;	    //速度
+	required uint32 lv = 6;         //等级
+	repeated buff_info buff_info = 7;	 //buff信息
+	//optional player_on_cash_truck_info truck_player = 8;
+	required uint32 guild_id = 8; //帮会ID
+	required uint64 owner = 9;
+	required string owner_name = 10;
+	required uint32 team_id = 11;   //队伍ID
+	required uint32 zhenying_id = 12; //阵营ID
+	required uint32 maxhp = 13;          //最大血量	
+	required float pos_y = 14;
+	required uint32 pk_type = 15; //pk模式
+	required float direct_x = 16;   //移动x方向
+	required float direct_z = 17;   //移动z方向
+}
+
+//视野采集点的基本信息
+message sight_collect_info
+{
+	required uint32 uuid = 1;        //唯一ID
+	required uint32 collectid = 2;	 //怪物ID
+	required pos_data data = 4;		 //移动信息
+	required float y = 5;
+	required float yaw = 6;   //朝向
+}
+
+//视野npc的基本信息
+message sight_npc_info
+{
+	required uint32 npcid = 1;	 //npc ID
+	required pos_data data = 2;		 //移动信息
+	required uint32 cd = 3;	 //存活cd
+	required float y = 4;
+}
+
+//视野陷阱的基本信息
+message sight_trap_info
+{
+	required uint64 uuid = 1;  //唯一ID
+	required uint32 monsterid = 2;	 //怪物ID
+	required uint64 owner = 3;  //属主唯一ID	
+}
+
+//视野伙伴的基本信息
+message sight_partner_info
+{
+	required uint64 uuid = 1;  //唯一ID
+	required uint32 partnerid = 2;	 //伙伴ID
+	required uint64 owner = 3;  //属主唯一ID
+	required int32 hp = 4;          //剩余血量
+	repeated pos_data data = 5;		 //移动信息
+	required float speed = 6;	    //速度
+	required uint32 lv = 7;         //等级
+	repeated buff_info buff_info = 8;	 //buff信息
+	required uint32 pk_type = 9; //pk模式
+	required uint32 zhenying_id = 10; //阵营ID
+	required uint32 maxhp = 11; //最大血量
+}
+
+//视野变化数据
+message sight_changed_notify
+{
+	repeated sight_player_base_info add_player = 1;  //视野新增加的玩家
+	repeated uint64 delete_player = 2;   //从视野移除的玩家
+	repeated sight_monster_info add_monster = 3;  // 视野新增加的怪物
+	repeated uint64 delete_monster = 4;  // 视野删除的怪物
+	repeated sight_trap_info add_trap = 5;  // 视野新增加的陷阱
+	repeated uint64 delete_trap = 6;  // 视野删除的陷阱
+	repeated sight_collect_info add_collect = 7;  //视野新增加的采集点
+	repeated uint32  delete_collect = 8;	  //视野删除的采集点
+	repeated sight_cash_truck_info add_cash_truck = 9; //视野新增加的镖车
+	repeated uint64 delete_cash_truck = 10;  // 视野删除的镖车
+	repeated sight_partner_info add_partner = 11; //视野新增加的伙伴
+	repeated uint64 delete_partner = 12;  // 视野删除的伙伴
+}
+
+// message enter_region_notify
+// {
+// 	required uint32 region_id = 1;  //区域ID
+// }
+
+message special_monster_pos_notify
+{
+	required uint32 monster_id = 1;  //怪物ID
+	required uint64 uuid = 2;       //唯一ID
+	required uint32 scene_id = 3;   //场景ID
+	required int32 pos_x = 4;       //坐标X
+	required int32 pos_z = 5;	    //坐标Z
+}
+
+message special_player_pos_notify
+{
+	required uint64 uuid = 1;       //唯一ID
+	required uint32 scene_id = 2;   //场景ID
+	required int32 pos_x = 3;       //坐标X
+	required int32 pos_z = 4;	    //坐标Z
+}
+
+//视野玩家信息变更通知
+message sight_player_info_change_notify
+{
+	required uint64 player_id = 1;
+	optional uint32 guild_id = 2; //帮会ID
+}
+
+message sight_monster_id_change_notify
+{
+	required uint64 uuid = 1;	//唯一ID
+	required uint32 monster_id = 2;  //新的怪物ID
+}
+
+message monster_talk_notify
+{
+	required uint64 uuid = 1;	//唯一ID
+	required uint32 talkid = 2; //NpcTalkTable表中的索引ID
+}

@@ -1,0 +1,113 @@
+message OnHorseRequest
+{
+	required float pos_y = 1;  //上坐骑后初始化的高度
+}
+
+
+message HorseData
+{
+	required uint32 id = 1;
+	required uint32 cd = 2; //剩余秒数 0：永久
+	required bool isnew = 3;
+	required bool isexpire = 4; //true 过期
+	required bool is_current = 5; //true 激活
+}
+
+message HorseCommonAttr
+{
+	required uint32 step = 1; //阶
+	repeated uint32 attr = 2; //属性
+	repeated uint32 attr_level = 3; //当前修灵次数
+	required uint32 soul_level = 4; //铸灵等级
+	required uint32 cur_soul = 5; //当前可以升级的灵
+	required uint32 power = 6; //总的战斗力
+	repeated uint32 soul_num = 7; //当前已铸灵次数
+	required bool soul_full = 8; //true铸灵已满
+}
+
+message HorseList
+{
+	repeated HorseData data = 1;
+	required HorseCommonAttr attr = 2;
+}
+
+message BuyHorse
+{
+	required uint32 id = 1; //
+	required uint32 shopid = 2; //
+	required uint32 type = 3; // 0道具买 1元宝买
+}
+
+message BuyHorseAns
+{
+	required int32 ret = 1; //
+	required HorseData data = 2; //
+}
+
+message HorseId
+{
+	required uint32 id = 1;
+}
+
+message SetCurHorseAns
+{
+	required int32 ret = 1; //0:成功
+	required uint32 id = 2; //马id
+	required uint32 power = 3; //总的战斗力
+	required uint64 playerid = 4; //
+	required uint32 old_id = 5; //旧马id
+}
+
+message HorseAttr
+{
+	required uint32 arrtid = 1;
+	required uint32 type = 2; //修灵 0:一键修灵 1:修一次
+}
+
+message HorseAttrAns
+{
+	required uint32 arrtid = 1;
+	required uint32 num = 2; //当前修灵次数
+	required int32 ret = 3; //0:成功
+	required uint32 power = 4; //总的战斗力
+}
+
+message HorseStepAns
+{
+	required uint32 step = 1;
+	required int32 ret = 2; //0:成功
+	required uint32 power = 3; //总的战斗力
+}
+
+message HorseAddSoul
+{
+	required uint32 soul = 1; //铸灵id
+}
+
+message HorseSoulAns
+{
+	required uint32 soul = 1; //铸灵id
+	required uint32 power = 2; //总的战斗力
+	required uint32 num = 3; //铸灵次数
+	required int32 ret = 4; //0:成功
+	required uint32 cur_soul = 5; //当前可以升级的灵
+	required bool soul_full = 6; //true铸灵已满
+}
+
+message HorseSoulLevelAns
+{
+	required uint32 level = 1; //铸灵等级
+	required uint32 power = 2; //总的战斗力
+	required int32 ret = 3; //0:成功
+}
+
+message OnHorse
+{
+	required uint64 playerid = 1;
+	required uint32 horseid = 2;
+}
+
+message FlyState
+{
+	required int32 fly = 1; //2 飞行状态 1 陆行
+}

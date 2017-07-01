@@ -1,0 +1,45 @@
+import "comm_message.proto";
+
+//商城开启信息
+message ShopOpenData
+{
+	required uint32 shopId = 1; //商城ID
+	required uint32 openTime = 2; //开启时间，0：永久开，>0：结束时间
+}
+
+//获取商城信息应答
+message ShopInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated ShopOpenData shops = 3; //商城列表
+	repeated GoodsData goods = 2; //商品列表
+}
+
+//购买商城商品请求
+message ShopBuyRequest
+{
+	required uint32 goodsId = 1; //商品ID
+	required uint32 goodsNum = 2; //商品数量
+}
+
+//购买商城商品应答
+message ShopBuyAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 goodsId = 2; //商品ID
+	required uint32 boughtNum = 3; //已购买数量
+}
+
+//商城商品信息通知
+message ShopGoodsNotify
+{
+	repeated GoodsData goods = 1; //商品列表
+}
+
+//特殊商店信息应答
+message SpecialShopInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated GoodsData goods = 2; //商品列表
+}
+

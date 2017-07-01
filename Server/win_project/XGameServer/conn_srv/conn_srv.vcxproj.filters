@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="conn_srv">
+      <UniqueIdentifier>{2e9aca24-35b4-43c0-9dea-b82aab382f8d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\conn_srv\conn_node_client.cpp">
+      <Filter>conn_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\conn_srv\conn_node_gamesrv.cpp">
+      <Filter>conn_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\conn_srv\conn_node_login.cpp">
+      <Filter>conn_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\conn_srv\conn_srv.cpp">
+      <Filter>conn_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\conn_srv\listen_node_client.cpp">
+      <Filter>conn_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\conn_srv\listen_node_gamesrv.cpp">
+      <Filter>conn_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\conn_srv\listen_node_login.cpp">
+      <Filter>conn_srv</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\conn_srv\conn_node_client.h">
+      <Filter>conn_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\conn_srv\conn_node_gamesrv.h">
+      <Filter>conn_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\conn_srv\conn_node_login.h">
+      <Filter>conn_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\conn_srv\listen_node_client.h">
+      <Filter>conn_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\conn_srv\listen_node_gamesrv.h">
+      <Filter>conn_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\conn_srv\listen_node_login.h">
+      <Filter>conn_srv</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,36 @@
+* test code color
+
+#+BEGIN_SRC CPP 
+int MySkill::SetFuwen(uint32_t id, uint32_t fuwen)
+{
+	SKILL_CONTAIN::iterator it = m_skill.find(id);
+	if (it == m_skill.end())
+	{
+		return 1;
+	}
+
+	if (fuwen == 0)
+	{
+		it->second->data->cur_fuwen = fuwen;
+		return 0;
+	}
+	std::map<uint64_t, struct SkillTable *>::iterator itCon = skill_config.begin();
+	if (itCon == skill_config.end())
+	{
+		return 190500069;
+	}
+	if (it->second->data->lv < itCon->second->OpenLv)
+	{
+		return 190500069;
+	}
+	for (int i = 0; i < it->second->data->fuwen_num; ++i)
+	{
+		if (it->second->data->fuwen[i] == fuwen)
+		{
+			it->second->data->cur_fuwen = fuwen;
+			return 0;
+		}
+	}
+	return 2;
+}
+#+END_SRC

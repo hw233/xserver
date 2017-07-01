@@ -1,0 +1,62 @@
+
+message ClientData
+{
+	required uint32 cameraType = 1; //摄像机自由模式，1自由视角 2锁定视角
+	required uint32 attackedTip = 2; //被攻击提示，1提示，2不提示
+}
+
+//获取客户端数据应答
+message LoadClientDataAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required ClientData data = 2;
+}
+
+//设置开关类型
+enum SettingSwitchType
+{
+	qiecuo = 1; //切磋
+	team_invite = 2; //组队
+	friend = 3; //好友
+}
+
+//设置开关信息
+message SettingSwitchData
+{
+	required SettingSwitchType type = 1; //开关类型，SettingSwitchType
+	required uint32 state = 2; //状态，0：开，非0：关
+}
+
+//设置开关信息通知
+message SettingSwitchNotify
+{
+	repeated SettingSwitchData datas = 1;
+}
+
+//切换设置开关请求
+message SettingTurnSwitchRequest
+{
+	required SettingSwitchType type = 1; //开关类型，SettingSwitchType
+}
+
+//切换设置开关应答
+message SettingTurnSwitchAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required SettingSwitchData data = 2; //开关信息
+}
+
+//脱离卡死信息通知
+message TransferOutStuckInfoNotify
+{
+	required uint32 CDTimestamp = 1; //CD时间，结束时间戳
+}
+
+//脱离卡死应答
+message TransferOutStuckAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 CDTimestamp = 2; //CD时间，结束时间戳
+}
+
+

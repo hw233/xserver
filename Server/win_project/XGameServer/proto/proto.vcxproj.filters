@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="proto">
+      <UniqueIdentifier>{05db2032-7b2f-494d-a90d-238c4f7e282a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\proto\cast_skill.pb-c.c">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\proto\comm_message.pb-c.c">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\proto\login.pb-c.c">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\proto\move.pb-c.c">
+      <Filter>proto</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\proto\cast_skill.pb-c.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\proto\comm_message.pb-c.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\proto\login.pb-c.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\proto\move.pb-c.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\proto\msgid.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

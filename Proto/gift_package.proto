@@ -1,0 +1,17 @@
+
+//登录通知玩家已经领过的最大礼包类型
+message GiftCommNotify
+{
+	required uint64 gift_type = 1; //已领最大奖励类型
+}
+
+//玩家领奖请求，只需要发一个领奖请求即可，不需要内容
+
+//玩家领奖应答
+message GiftReceiveAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败	
+	required uint64 gift_type = 2; //已领最大奖励类型
+}
+
+

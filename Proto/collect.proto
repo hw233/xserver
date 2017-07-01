@@ -1,0 +1,37 @@
+
+//采集点ID 
+message CollectId
+{
+	required uint32 id = 1;
+}
+
+message NotifyCollect
+{
+	required uint64 playerid = 1;
+	required uint32 collectid = 2;
+}
+
+//吟唱类型
+enum SingType
+{
+	USE_PROP = 1; //使用道具
+	TRANSFER_SCENE = 2; //场景传送
+	TASK = 3; //任务
+	XUNBAO = 4;
+}
+
+//吟唱通知
+message SingNotify
+{
+	required uint64 playerId = 1; //玩家id
+	required uint32 singType = 2; //吟唱类型SingType
+	required uint32 singTime = 3; //吟唱时间(单位：毫秒）
+}
+
+//吟唱开始请求
+message SingBeginRequest
+{
+	required uint32 type = 1; //吟唱类型
+	required uint32 time = 2; //吟唱时间（单位：毫秒）
+}
+

@@ -1,0 +1,38 @@
+option optimize_for = LITE_RUNTIME;
+
+message MailAttach
+{
+	required uint32 id = 1; //道具id
+	required uint32 num = 2; //道具数量
+}
+
+message MailAttachGiveInfo
+{
+	required uint64 mailId = 1; //邮件id
+	required uint32 statisId = 2; //统计类型
+	repeated MailAttach attachs = 3; //附件
+}
+
+message MailGiveAttachRequest
+{
+	repeated MailAttachGiveInfo mails = 1; //领取附件的多封邮件
+}
+
+message MailGiveAttachAnswer
+{
+	repeated uint64 successIds = 1; //领取成功的id
+	repeated uint64 failIds = 2; //领取失败的id
+}
+
+
+message MailDBInfo
+{
+	required uint32 type = 1; //类型
+	required string title = 2; //标题
+	required string senderName = 3; //发件人
+	required string content = 4; //正文
+	repeated string args = 5; //参数列表
+	repeated MailAttach attach = 6; //附件
+	required uint32 statisId = 7; //统计类型
+}
+

@@ -1,0 +1,120 @@
+import "comm_message.proto";
+
+//装备信息应答
+message EquipListAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated EquipData equips = 2; //装备列表
+}
+
+//装备升星请求
+message EquipStarUpRequest
+{
+	required uint32 type = 1; //部位
+	required uint32 itemNum = 2; //道具数量
+}
+
+//装备升星应答
+message EquipStarUpAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 type = 2; //部位
+	required uint32 starLv = 3; //星数
+	required uint32 starExp = 4; //部位
+}
+
+//装备附魔请求
+message EquipEnchantRequest
+{
+	required uint32 type = 1; //部位
+	required uint32 index = 2; //索引
+	required uint32 skipRetain = 3; //跳过保留检查，0：不跳过，其他值：跳过
+}
+
+//装备附魔应答
+message EquipEnchantAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 type = 2; //部位
+	required uint32 index = 3; //索引
+	repeated AttrData randAttr = 4; //随机出来的属性
+}
+
+//装备附魔保留请求
+message EquipEnchantRetainRequest
+{
+	required uint32 type = 1; //部位
+	required uint32 attrIndex = 2; //属性索引
+	required uint32 retainIndex = 3; //保留索引
+}
+
+//装备附魔保留应答
+message EquipEnchantRetainAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 type = 2; //部位
+	required uint32 attrIndex = 3; //属性索引
+	required AttrData retainAttr = 4; //保留属性
+}
+
+//装备解锁孔位请求
+message EquipDrillRequest
+{
+	required uint32 type = 1; //部位
+	required uint32 index = 2; //孔位索引
+}
+
+//装备解锁孔位应答
+message EquipDrillAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 type = 2; //部位
+	required uint32 index = 3; //孔位索引
+}
+
+//装备镶嵌请求
+message EquipInlayRequest
+{
+	required uint32 type = 1; //部位
+	required uint32 index = 2; //孔位索引
+	required uint32 gemId = 3; //宝石id
+}
+
+//装备镶嵌应答
+message EquipInlayAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 type = 2; //部位
+	required uint32 index = 3; //孔位索引
+	required uint32 gemId = 4; //宝石id
+}
+
+//装备剥离请求
+message EquipStripRequest
+{
+	required uint32 type = 1; //部位
+	required uint32 index = 2; //孔位索引
+}
+
+//装备剥离应答
+message EquipStripAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 type = 2; //部位
+	required uint32 index = 3; //孔位索引
+}
+
+//宝石合成请求
+message EquipGemComposeRequest
+{
+	required uint32 gemId = 1; //要合成的宝石id，始终用绑定的
+	required uint32 materialType = 2; //使用材料类型；1：只用绑定，2：只用非绑定，3：绑定+非绑定
+}
+
+//宝石合成应答
+message EquipGemComposeAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 gemId = 2; //合成的宝石id
+}
+

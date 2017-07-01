@@ -1,0 +1,388 @@
+import "comm_message.proto";
+
+//帮会简要信息
+message GuildBriefData
+{
+	required uint32 guildId = 1; //帮会ID
+	required string name = 2; //帮会名
+	required uint32 icon = 3; //图标
+	required uint32 level = 4; //等级
+	required uint32 memberNum = 5; //人数
+	required uint32 popularity = 6; //人气
+	required uint32 totalFc = 7; //总战力
+	required uint32 approveState = 8; //审批状态；0：不需要审批，非0：需要审批
+	required uint32 recruitState = 9; //招募状态；0：不开启招募，非0：开启招募
+	required string recruitNotice = 10; //招募宣言
+	required uint64 masterId = 11; //帮主ID
+	required string masterName = 12; //帮主名字
+	required uint32 masterJob = 13; //帮主职业
+	required uint32 masterHead = 14; //帮主头像
+	required uint32 masterCamp = 15; //帮主阵营
+	required bool joinApplied = 16; //是否已申请
+}
+
+//帮会信息
+message GuildData
+{
+	required uint32 guildId = 1; //帮会ID
+	required string name = 2; //帮会名
+	required uint32 icon = 3; //图标
+	required uint32 level = 4; //等级
+	required uint32 memberNum = 5; //人数
+	required uint32 popularity = 6; //人气
+	required uint32 totalFc = 7; //总战力
+	required uint32 approveState = 8; //审批状态；0：不需要审批，非0：需要审批
+	required uint32 recruitState = 9; //招募状态；0：不开启招募，非0：开启招募
+	required string recruitNotice = 10; //招募宣言
+	required string announcement = 11; //公告
+	required uint32 treasure = 12; //资金
+	required uint32 buildBoard = 13; //建设令
+	required uint64 masterId = 14; //帮主ID
+	required string masterName = 15; //帮主名字
+	required uint32 renameTime = 16; //上次改名的时间
+}
+
+//帮会个人信息
+message GuildPersonalData
+{
+	required uint32 office = 1; //职位
+	required uint32 donation = 2; //帮贡
+	required uint32 allHistoryDonation = 3; //所有帮会历史帮贡
+	required uint32 curHistoryDonation = 4; //当前帮会历史帮贡
+	required uint32 taskCount = 5; //内政次数
+	required uint32 cfCount = 6; //阵营次数
+	required uint32 joinTime = 7; //入帮时间
+	required uint32 exitTime = 8; //退帮时间
+}
+
+//帮会建筑信息
+message GuildBuildingData
+{
+	required uint32 buildingId = 1; //建筑类型
+	required uint32 level = 2; //技能等级
+}
+
+//帮会成员信息
+message GuildMemberData
+{
+	required uint64 playerId = 1; //玩家ID
+	required string name = 2; //玩家名
+	required uint32 job = 3; //职业
+	required uint32 level = 4; //等级
+	required uint32 head = 5; //头像
+	required uint32 fc = 6; //战力
+	required uint32 offlineTime = 7; //下线时间，0：表示在线
+	required uint32 office = 8; //职位
+	required uint32 donation = 9; //帮贡
+	required uint32 curHistoryDonation = 10; //当前帮会历史帮贡
+	required uint32 curWeekDonation = 11; //本周帮贡
+	required uint32 taskCount = 12; //内政次数
+	required uint32 cfCount = 13; //阵营次数
+	required uint32 joinTime = 14; //入帮时间
+}
+
+//帮会入帮申请玩家信息
+message GuildJoinPlayerData
+{
+	required uint64 playerId = 1; //玩家ID
+	required string name = 2; //玩家名
+	required uint32 job = 3; //职业
+	required uint32 level = 4; //等级
+	required uint32 fc = 5; //战力
+}
+
+//帮会入帮申请处理类型
+enum GuildJoinDealType
+{
+	APPROVE_JOIN = 1; //同意加入
+	REJECT_JOIN = 2; //拒绝加入
+}
+
+//帮会开关类型
+enum GuildSwitchType
+{
+	RECRUIT_SWITCH = 1; //招募开关
+	APPROVE_SWITCH = 2; //审批开关
+}
+
+//帮会公告类型
+enum GuildWordsType
+{
+	RECRUIT_NOTICE = 1; //招募宣言
+	ANNOUNCEMENT = 2; //公告
+}
+
+//帮会职位类型
+enum GuildOfficeType
+{
+	OFFICE_MASTER = 1; //帮主
+	OFFICE_VICE_MASTER = 2; //副帮主
+	OFFICE_ELDER = 3; //长老
+	OFFICE_MASS = 4; //帮众
+}
+
+//帮会属性类型
+enum GuildAttrType
+{
+	ATTR_POPULARITY = 1; //人气
+	ATTR_TREASURE = 2; //资金
+	ATTR_BUILDBOARD = 3; //建设令
+	ATTR_DONATION = 4; //帮贡
+	ATTR_MEMBER_NUM = 5; //帮会人数
+	ATTR_APPROVE_STATE = 6; //审批开关
+	ATTR_RECRUIT_STATE = 7; //招募开关
+	ATTR_MASTER_ID = 8; //帮主ID
+	ATTR_HISTORY_DONATION = 9; //历史帮贡（帮会商店用到）
+	ATTR_OFFICE = 10; //帮会职位
+}
+
+//帮会字符属性类型
+enum GuildStrAttrType
+{
+	ATTR_GUILD_NAME = 21; //帮会名
+	ATTR_RECRUIT_NOTICE = 22; //招募宣言
+	ATTR_ANNOUNCEMENT = 23; //帮会公告
+	ATTR_MASTER_NAME = 24; //帮主名
+}
+
+//帮会结构属性类型
+enum GuildObjectAttrType
+{
+	ATTR_BUILDING = 31; //建筑
+	ATTR_SKILL_DEVELOP = 32; //技能研发
+}
+
+
+
+//帮会列表应答
+message GuildListAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated GuildBriefData guilds = 2; //帮会列表
+}
+
+//帮会信息应答
+message GuildInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required GuildData basicInfo = 2; //基础信息
+	required GuildPersonalData personalInfo = 3; //个人信息
+	repeated GuildBuildingData buildings = 4; //建筑信息
+}
+
+//帮会成员列表应答
+message GuildMemberListAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated GuildMemberData members = 3; //帮众信息
+}
+
+//帮会创建请求
+message GuildCreateRequest
+{
+	required uint32 icon = 1; //图标
+	required string name = 2; //名字
+}
+
+//帮会入帮请求
+message GuildJoinRequest
+{
+	required uint32 guildId = 1; //帮会ID，填0表示全部
+}
+
+//帮会入帮应答
+message GuildJoinAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required GuildData basicInfo = 2; //基础信息
+	required GuildPersonalData personalInfo = 3; //个人信息
+	repeated GuildBuildingData buildings = 4; //建筑信息
+	repeated uint32 applyIds = 5; //新申请成功帮会列表
+}
+
+//帮会入帮申请列表应答
+message GuildJoinListAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated GuildJoinPlayerData joins = 2; //入帮申请列表
+}
+
+//帮会处理入帮申请请求
+message GuildDealJoinRequest
+{
+	required uint64 playerId = 1; //玩家ID，填0表示全部
+	required GuildJoinDealType deal = 2; //处理
+}
+
+//帮会处理入帮申请应答
+message GuildDealJoinAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint64 playerId = 2; //玩家ID，填0表示全部
+	required GuildJoinDealType deal = 3; //处理
+	required uint32 memberNum = 4; //帮会当前人数
+	required uint64 delId = 5; //删除ID，当"playerId为0,deal为同意"时有效，值为0表示不删除，否则删除该ID前的所有玩家（包括该ID）
+}
+
+//帮会反转开关请求
+message GuildTurnSwitchRequest
+{
+	required GuildSwitchType type = 1; //开关类型
+}
+
+//帮会反转开关应答
+message GuildTurnSwitchAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required GuildSwitchType type = 2; //开关类型
+	required uint32 state = 3; //开关新状态，0：关闭，非0：开启 
+}
+
+//帮会设置公告请求
+message GuildSetWordsRequest
+{
+	required GuildWordsType type = 1; //公告类型
+	required string words = 2; //语句
+}
+
+//帮会设置公告应答
+message GuildSetWordsAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required GuildWordsType type = 2; //开关类型
+}
+
+//帮会任命请求
+message GuildAppointOfficeRequest
+{
+	required uint64 playerId = 1; //玩家ID
+	required GuildOfficeType office = 2; //职位，撤离任命填"帮众"
+}
+
+//帮会踢人请求
+message GuildKickReuqest
+{
+	required uint64 playerId = 1; //玩家ID
+}
+
+//帮会属性更新通知
+message GuildUpdateAttrNotify
+{
+	repeated AttrData attrs = 1; //属性列表
+}
+
+//帮会改名请求
+message GuildRenameRequest
+{
+	required string name = 1; //新名字
+}
+
+//帮会改名应答
+message GuildRenameAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required string name = 2; //新名字
+	required uint32 renameTime = 3; //上次改名时间
+}
+
+//帮会退出应答
+message GuildExitAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 exitTime = 3; //退帮时间
+}
+
+
+
+//帮会建筑信息应答
+message GuildBuildingInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated GuildBuildingData buildings = 2; //建筑列表
+	required uint32 upgradeId = 3; //正在升级的建筑，0表示没有建筑在升级
+	required uint32 upgradeEnd = 4; //建筑升级结束时间戳
+}
+
+//帮会建筑升级请求
+message GuildBuildingUpgradeRequest
+{
+	required uint32 buildingId = 1; //建筑类型
+}
+
+//帮会建筑升级应答
+message GuildBuildingUpgradeAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 upgradeId = 2; //正在升级的建筑，0表示没有建筑在升级
+	required uint32 upgradeEnd = 3; //建筑升级结束时间戳
+}
+
+//帮会建筑升级信息更新通知
+message GuildBuildingUpgradeUpdateNotify
+{
+	required uint32 upgradeId = 1; //正在升级的建筑，0表示没有建筑在升级
+	required uint32 upgradeEnd = 2; //建筑升级结束时间戳
+}
+
+//帮会技能信息
+message GuildSkillData
+{
+	required uint32 skillId = 1; //技能ID
+	required uint32 level = 2; //技能等级
+}
+
+//帮会技能信息应答
+message GuildSkillInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated GuildSkillData develops = 2; //研发技能ID列表
+	repeated GuildSkillData practices = 3; //修炼技能ID列表
+}
+
+//帮会技能提升请求
+message GuildSkillUpgradeRequest
+{
+	required uint32 skillId = 1; //要提升的技能ID
+}
+
+//帮会技能提升应答
+message GuildSkillUpgradeAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 skillId = 2; //要提升的技能ID
+	required uint32 level = 3; //技能等级
+}
+
+//帮会技能修炼请求
+message GuildSkillPracticeRequest
+{
+	required uint32 skillId = 1; //要提升的技能ID
+	required uint32 level = 2; //要提升多少级
+}
+
+message GuildStrAttrData
+{
+	required uint32 id = 1; //GuildStrAttrType
+	required string val = 2;
+}
+
+//帮会字符属性更新通知
+message GuildUpdateStrAttrNotify
+{
+	repeated GuildStrAttrData attrs = 1; //属性列表
+}
+
+message GuildObjectAttrData
+{
+	required uint32 type = 1; //GuildObjectAttrType
+	required uint32 id = 2;
+	required uint32 val = 3;
+}
+
+//帮会结构属性更新通知
+message GuildUpdateObjectAttrNotify
+{
+	repeated GuildObjectAttrData attrs = 1; //属性列表
+}
+
+

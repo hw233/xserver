@@ -1,0 +1,61 @@
+
+// 频道
+enum Channel
+{
+	world = 1; //世界
+	zhaomu = 2; //招募
+	private = 3; //私聊
+	team = 4; //队伍
+	family = 5; //帮会
+	menpai = 6; //门宗
+	area = 7; //附近
+	system = 8; //系统
+	group = 9; //阵营
+}
+
+enum CharRetCode
+{
+	success = 0; //成功
+	offLine = 1; //不在线
+	noTeam = 2; //没队伍
+	noGuild = 3; //没帮派
+}
+
+enum ChatBroadcastType
+{
+	ITEM = 1;
+	MONEY = 2;
+}
+
+//客户端发送聊天请求
+message Chat
+{
+	required int32 channel = 1; //频道
+	required string contain = 2; //聊天内容 
+	required string sendName = 3; //发送者角色名
+	required uint64 sendPlayerId = 4; //发送者角色id
+	required uint32 sendPlayerLv = 5; //发送者角色等级
+	required uint32 sendPlayerJob = 6; //发送者角色职业
+	optional uint64 recvPlayerId = 7; //接受着角色id
+	optional string guild = 8; //发送者帮派名字
+	optional uint32 sendPlayerPicture = 9; //发送者头像ID
+	optional uint32 costtype = 10; //广播扣费类型 ChatBroadcastType
+	required string url = 11;
+	optional uint32 time_stamp = 12; //
+	required string tanslation = 13;
+	optional uint32 sendTime = 14; //发送时间
+}
+
+message ChatHorse
+{
+	required uint32 id = 1;
+	required uint32 prior = 2; //优先级
+	required string content = 3; 
+}
+
+message AnsChat
+{
+	required uint32 ret = 1;
+	required uint32 cd = 2; 
+}
+

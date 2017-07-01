@@ -1,0 +1,33 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+project(XGame)
+
+add_custom_target(protoup
+  COMMAND ${PROJECT_SOURCE_DIR}/../Proto/create_server_file.sh
+  COMMAND make -C proto)
+
+add_custom_target(proto_file
+  COMMAND ${PROJECT_SOURCE_DIR}/proto/proto2c.sh)
+
+add_custom_target(svnup
+  COMMAND make clean
+  COMMAND svn up ${PROJECT_SOURCE_DIR}/../Proto
+  COMMAND cd ${PROJECT_SOURCE_DIR}/lua_data && svn up .
+  COMMAND svn up ${PROJECT_SOURCE_DIR}
+  COMMAND cd ${PROJECT_SOURCE_DIR}/excel_data && make excel_data
+  COMMAND make -j protoup)
+
+add_subdirectory(proto)
+add_subdirectory(comm_lib)
+add_subdirectory(conn_srv)
+add_subdirectory(game_srv)
+add_subdirectory(game_srv/so_game_srv)
+add_subdirectory(db_srv)
+add_subdirectory(login_srv)
+add_subdirectory(dump_srv)
+add_subdirectory(client_srv)
+add_subdirectory(item_srv)
+add_subdirectory(friend_srv)
+add_subdirectory(mail_srv)
+add_subdirectory(guild_srv)
+add_subdirectory(rank_srv)
+

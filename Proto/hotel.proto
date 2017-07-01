@@ -1,0 +1,253 @@
+
+enum MAJOR_TYPE
+{
+	NONE = 0;
+	SHUANGJIN = 1;
+	CHENGJIE = 2;
+	GUOYU = 3;
+}
+message GuoyuType
+{
+	required int32 guoyu_level = 1;
+	required int32 cur_exp = 2;
+	required int32 cur_task = 3; //0 没任务
+	required int32 task_cd = 4; //0 超时 大于0 剩余cd  
+	required int32 critical_cd = 5; // 紧急cd 0没开
+	required int32 critical_num = 6; // 紧急剩余次数
+	required int32 guoyu_num = 7; //国御剩余收益次数
+	required int32 map = 8; //国御地图
+	required int32 type = 9; //难度
+	required bool award = 10; //true 有奖励  false 没奖励
+}
+enum GUOYU_TASK_TYPE
+{
+	PRIMATY = 1;
+	MIDDLE = 2;
+	HIGH = 3;
+	CRITICAL = 4;
+}
+message ReqChoseGuoyuTask
+{
+	required int32 type = 1; //guoyu_task_type
+	required bool refresh = 2; //true 刷新
+}
+message UpdateGuoyuTask
+{
+	required int32 id = 1; //
+	required int32 cd = 2; //
+	required int32 ret = 3; // 0:成功
+	required int32 map = 4; //国御地图
+	required int32 type = 5; //guoyu_task_type
+	repeated uint64 pid = 6;
+	required bool refresh = 7; //true 手动刷新  false 接受任务刷新
+	required bool award = 8; //true 有奖励  false 没奖励
+}
+message Yaoshi
+{
+	required int32 cur_major = 1;  //MAJOR_TYPE
+	required GuoyuType guoyu = 2;
+	required ChengjieType chengjie = 3;
+	required ShangjinType shangjin = 4;
+	required uint32 change_num = 5;  //改变专精次数
+}
+message GiveupGuoyuTask
+{
+	required int32 ret = 1; // 0:成功
+}
+message ReqSetYaoshiSpecial
+{
+	required int32 type = 1; // MAJOR_TYPE
+}
+message AnsYaoshiSpecial
+{
+	required int32 type = 1; // MAJOR_TYPE
+	required int32 ret = 2; // 0:成功
+}
+message YaoshiLevelExp
+{
+	required int32 type = 1; // MAJOR_TYPE
+	required uint32 level = 2;
+	required uint32 exp = 3;
+}
+message YaoshiNumber
+{
+	required int32 critical_num = 1; // 紧急剩余次数
+	required int32 guoyu_num = 2; //国御剩余收益次数
+}
+message GuoyuSucc
+{
+	required bool succ = 1; // false 失败
+}
+message GuoyuFbSucc
+{
+	required int32 succ = 1; // 0 成功
+}
+
+message BossId
+{
+	required uint32 id = 1;
+}
+message GuoyuFb
+{
+	required uint32 cd = 1;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+message ReqFindTarget
+{
+	required uint64 pid = 1; //0 用名字查找 > 0 用数字ID找
+	required string name = 2; //名字
+}
+message AnsFindTarget
+{
+	required int32 ret = 1; //0 找到了 
+	required string name = 2; //名字
+	required uint64 pid = 3; //
+	required uint32 lv = 4;
+}
+message ChengjieType
+{
+	required int32 level = 1;
+	required int32 cur_exp = 2;
+	required int32 num = 3; //剩余接任务次数
+}
+message ReqAddChengjieTask
+{
+	required uint64 playerid = 1; //
+	required uint32 shangjin = 2; //赏金
+	required bool anonymous = 3; //true 匿名
+	required string declaration = 4; //宣言
+	required string name = 5; //
+	required uint32 step = 6; //
+}
+message AnsAddChengjieTask
+{
+	required int32 ret = 1; // 0成功
+}
+message ReqAcceptChengjieTask
+{
+	required uint32 taskid = 1;
+}
+message AnsAcceptChengjieTask
+{
+	required int32 ret = 1; // 0成功
+	required uint32 taskid = 2;
+}
+message ChengjieTaskSucc
+{
+	required bool succ = 1; // true成功
+	required uint32 taskid = 2;
+}
+message ChengjieTask
+{
+	required uint64 playerid = 1;
+	required uint32 icon = 2;          //头像
+	required string name = 3;
+	required uint32 lv = 4;
+	required uint32 job = 5;
+	required bool online = 6;          //true 在线
+	required uint32 fight = 7;
+	required uint32 fail = 9; //失败次数
+	required uint32 shuangjin = 10; //
+	required uint32 exp = 11; //
+	required uint32 courage = 12;
+	required uint32 taskid = 13;
+	required uint32 cd = 14; //任务消失剩余时间
+	required uint32 complete_cd = 15; //完成任务剩余时间 >0:已接
+	required bool complete = 16; //true 任务已完成
+	required uint32 accept_cd = 17; //可接任务剩余时间 0:可接
+	required uint64 investor = 18; //发布悬赏的人
+	required uint32 zhenying = 19;
+}
+message ChengjieRefreshType
+{
+	required int32 type = 1; //0自动刷 1手动刷
+}
+message ChengjieList
+{
+	repeated ChengjieTask task = 1;
+	required int32 type = 2; //0自动刷 1手动刷
+	repeated ChengjieTask task_myself = 3;
+}
+message ChengjieKiller
+{
+	required uint64 playerid = 1; //接受悬赏任务者 
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+message ShangjinTaskAward
+{
+	required uint32 id = 1;
+	required uint32 num = 2; //
+}
+message ShangjinTaskType
+{
+	required uint32 id = 1;
+	required uint32 quality = 2; //
+	repeated ShangjinTaskAward award = 3; //
+	required uint32 reduce = 4; //技能减免
+}
+message ShangjinType
+{
+	required int32 level = 1;
+	required int32 cur_exp = 2;
+	required uint32 num = 3; //剩余接任务次数
+	required uint32 cur_task = 4; //任务列表下表
+	repeated ShangjinTaskType task_type = 5; //
+	required bool accept = 6; //false 可接 true 已接
+	required uint32 free_refresh = 7; //免费刷新次数
+}
+message ShangjinTaskId
+{
+	required uint32 taskid = 1;
+}
+message ShangjinList
+{
+	required uint32 ret = 1; //0成功
+	required uint32 cur_task = 2; //任务列表下表
+	repeated ShangjinTaskType task_list = 3; //
+	required bool accept = 4;
+	required bool refresh = 5; //true 手动刷 false系统刷
+}
+message AllYaoshiNum
+{
+	required int32 critical_num = 1; //国御紧急剩余次数
+	required int32 guoyu_num = 2; //国御剩余收益次数
+	required int32 shangjin_num = 3; //赏金剩余接任务次数
+	required int32 chengjie_num = 4; //惩戒剩余接任务次数
+	required int32 shangjin_free = 5; //赏金免费刷新次数
+}
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+message ChengjieMoney
+{
+	required uint64 pid = 1;
+	required uint64 target = 2;
+	required uint64 cd = 3;
+	required uint32 money = 4;
+}
+
+message ChengjieTaskComplete
+{
+	required uint64 investor = 1;
+	required uint64 target = 2;
+	required uint64 acceptor = 3;
+	required bool anonymous = 4; //true 匿名
+	required string declaration = 5; //宣言
+	required string scene = 6;
+	required uint32 step = 7;
+}

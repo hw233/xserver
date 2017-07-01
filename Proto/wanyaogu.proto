@@ -1,0 +1,19 @@
+message list_wanyaoka_answer
+{
+	repeated uint32 wanyaoka_id = 1;  //已经拥有的万妖卡列表
+}
+
+message wanyaogu_start_notify
+{
+	required uint32 start_time = 1;  //副本开始时间，客户端做倒计时
+}
+
+message wanyaogu_bbq_notify
+{
+	required uint32 result = 1;  //成功0，失败1
+}
+
+message wanyaoka_get_notify
+{
+	repeated uint32 wanyaoka_id = 1;  //获得的万妖卡列表	
+}

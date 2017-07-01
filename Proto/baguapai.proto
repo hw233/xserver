@@ -1,0 +1,122 @@
+import "comm_message.proto";
+
+//八卦牌牌片信息
+message BaguapaiCardData
+{
+	required uint32 id = 1; //牌ID
+	required uint32 star = 2; //星数
+	required double mainAttrVal = 3; //主属性数值
+	required double mainAttrValNew = 4; //新主属性数值
+	repeated AttrData minorAttrs = 5; //副属性
+	repeated AttrData minorAttrsNew = 6; //新副属性
+}
+
+//八卦牌穿戴信息
+message BaguapaiDressData
+{
+	required uint32 styleId = 1; //风格，普通套or竞技套
+	repeated BaguapaiCardData cards = 2; //已穿戴的牌片
+}
+
+//八卦牌信息应答
+message BaguapaiInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated BaguapaiDressData datas = 2; //八卦牌信息
+}
+
+//八卦牌切换请求
+message BaguapaiSwitchRequest
+{
+	required uint32 styleId = 1; //风格，普通套or竞技套
+}
+
+//八卦牌切换应答
+message BaguapaiSwitchAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 styleId = 2; //风格，普通套or竞技套
+}
+
+//八卦牌更换请求
+message BaguapaiWearRequest
+{
+	required uint32 styleId = 1; //风格，普通套or竞技套
+	repeated uint32 gridIds = 2; //填背包格子索引
+}
+
+//八卦牌更换应答
+message BaguapaiWearAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required BaguapaiDressData datas = 2; //新的穿戴信息
+}
+
+//八卦牌分解请求
+message BaguapaiDecomposeRequest
+{
+	repeated uint32 gridIds = 1; //背包格子索引
+}
+
+//八卦牌分解应答
+message BaguapaiDecomposeAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated ItemData items = 2; //获得的材料
+}
+
+//八卦牌炼化通用请求
+message BaguapaiRefineCommonRequest
+{
+	required uint32 styleId = 1; //风格，普通套or竞技套
+	required uint32 partId = 2; //部位
+}
+
+//八卦牌炼星应答
+message BaguapaiRefineStarAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 styleId = 2; //风格，普通套or竞技套
+	required uint32 partId = 3; //部位
+	required uint32 star = 4; //新的星级
+}
+
+//八卦牌重铸应答
+message BaguapaiRefineMainAttrAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 styleId = 2; //风格，普通套or竞技套
+	required uint32 partId = 3; //部位
+	required double mainAttrValNew = 4; //新主属性数值
+}
+
+//八卦牌重铸保留应答
+message BaguapaiRetainMainAttrAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 styleId = 2; //风格，普通套or竞技套
+	required uint32 partId = 3; //部位
+	required double mainAttrVal = 4; //主属性数值
+	required double mainAttrValNew = 5; //新主属性数值
+}
+
+//八卦牌洗炼应答
+message BaguapaiRefineMinorAttrAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 styleId = 2; //风格，普通套or竞技套
+	required uint32 partId = 3; //部位
+	repeated AttrData minorAttrsNew = 4; //新副属性
+}
+
+//八卦牌洗炼保留应答
+message BaguapaiRetainMinorAttrAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 styleId = 2; //风格，普通套or竞技套
+	required uint32 partId = 3; //部位
+	repeated AttrData minorAttrs = 5; //副属性
+	repeated AttrData minorAttrsNew = 4; //新副属性
+}
+
+

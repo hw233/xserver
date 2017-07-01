@@ -1,0 +1,51 @@
+
+message set_pk_type_request
+{
+	required uint32 pk_type = 1;
+}
+
+message set_pk_type_answer
+{
+	required uint32 result = 1;
+	required uint32 pk_type = 2;
+}
+
+message qiecuo_request
+{
+	required uint64 player_id = 1;
+}
+
+message qiecuo_notify
+{
+	required uint64 player_id = 1;
+	required string name = 2;	
+}
+
+message qiecuo_start_request
+{
+	required uint64 player_id = 1;
+}
+
+message qiecuo_start_notify
+{
+	required uint32 pos_x = 1;
+	required uint32 pos_z = 2;
+	required uint64 player_id = 3;
+	required string name = 4;
+}
+
+message qiecuo_finish_notify
+{
+	required uint32 result = 1; //0胜利，1失败, 2平局
+}
+
+message qiecuo_refuse_request
+{
+	required uint64 player_id = 1;  
+}
+
+message qiecuo_refuse_notify
+{
+	required uint64 player_id = 1;
+	required string name = 2;	
+}

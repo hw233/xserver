@@ -1,0 +1,73 @@
+import "comm_message.proto";
+import "baguapai.proto";
+
+//个人信息
+message PersonalityData
+{
+	required uint32 sex = 1; //性别
+	required uint32 birthday = 2; //生日（格式：20170410）
+	required string location = 3; //位置
+	repeated uint32 tags = 4; //标签
+	required string textIntro = 5; //文字签名
+	required string voiceIntro = 6; //语音签名
+}
+
+//个人信息应答
+message PersonalityInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required PersonalityData data = 2;
+}
+
+//设置普通信息请求
+message PersonalitySetGeneralRequest
+{
+	required uint32 sex = 1; //性别
+	required uint32 birthday = 2; //生日（格式：20170410）
+	required string location = 3; //位置
+}
+
+//设置标签信息请求
+message PersonalitySetTagsRequest
+{
+	repeated uint32 tags = 1; //标签
+}
+
+//设置签名信息请求
+message PersonalitySetIntroRequest
+{
+	optional string textIntro = 1; //文字签名
+	optional string voiceIntro = 2; //语音签名
+}
+
+//玩家具体信息
+message OtherDetailData
+{
+	required uint64 playerId = 1; //玩家ID
+	required string name = 2; //玩家名
+	repeated AttrData attrs = 3; //属性列表
+	required uint32 guildId = 6; //帮会ID
+	required string guildName = 7; //帮会名称
+	required uint32 guildOffice = 8; //帮会职位
+	required uint32 campTitle = 10; //阵营军衔
+	required PersonalityData personality = 11; //个人信息
+	repeated EquipData equips = 12; //装备信息
+	repeated BaguapaiDressData baguas = 13; //八卦牌信息
+	required uint32 teamId = 14; //队伍ID
+}
+
+//查看他人个人信息请求
+message GetOtherInfoRequest
+{
+	required uint64 playerId = 1; //玩家ID
+}
+
+//查看他人个人信息应答
+message GetOtherInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required OtherDetailData data = 2; //玩家详细信息
+}
+
+
+

@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="game_srv">
+      <UniqueIdentifier>{01e01f25-79df-4424-9c06-f5d4a443fbb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="so_game_srv">
+      <UniqueIdentifier>{a4c01d84-0d5e-46bf-b8aa-29237b73a382}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\game_srv\area.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\buff.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\conn_node_gamesrv.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\equip.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\game_config.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\game_srv.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\map_config.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\monster.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\monster_ai_normal.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\monster_manager.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\path_algorithm.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\player.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\player_manager.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\raid.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\scene.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\scene_manager.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\signal_usr_process.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\skill.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\sproto.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\sprotoc_encode.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\unit_path.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\uuid.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\so_game_srv\handle_gamesrv.cpp">
+      <Filter>so_game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\so_game_srv\register_gamesrv.cpp">
+      <Filter>so_game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\so_game_srv\test_interface.cpp">
+      <Filter>so_game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\so_game_srv\install_monster_ai.cpp">
+      <Filter>so_game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\so_game_srv\monster_ai_normal.cpp">
+      <Filter>so_game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\so_game_srv\path_algorithm.cpp">
+      <Filter>so_game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\conn_node_dbsrv.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\skill_manager.cpp">
+      <Filter>game_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\game_srv\so_game_srv\handle_dbsrv.cpp">
+      <Filter>so_game_srv</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\game_srv\area.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\buff.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\conn_node_gamesrv.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\equip.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\game_config.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\map_config.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\monster.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\monster_ai_normal.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\monster_manager.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\path_algorithm.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\player.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\player_manager.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\raid.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\scene.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\scene_manager.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\skill.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\skill_const.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\unit_path.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\uuid.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\so_game_srv\install_monster_ai.h">
+      <Filter>so_game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\so_game_srv\monster_ai_normal.h">
+      <Filter>so_game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\so_game_srv\path_algorithm.h">
+      <Filter>so_game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\conn_node_dbsrv.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\game_srv\skill_manager.h">
+      <Filter>game_srv</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

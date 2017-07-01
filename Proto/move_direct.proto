@@ -1,0 +1,55 @@
+import "comm_message.proto";
+
+message move_start_request
+{
+	required pos_data cur_pos = 1;  //起始位置
+	required float cur_pos_y = 2;   //起始Y坐标	
+	required float direct_x = 3;
+	required float direct_z = 4;	
+}
+
+message move_start_notify
+{
+	required uint64 playerid = 1;	
+	required pos_data cur_pos = 2;  //起始位置
+	required float cur_pos_y = 3;   //起始Y坐标		
+	required float direct_x = 4;
+	required float direct_z = 5;	
+}
+
+message move_stop_request
+{
+	required pos_data cur_pos = 1;  //起始位置
+	required float cur_pos_y = 2;   //起始Y坐标		
+}
+message move_stop_notify
+{
+	required uint64 playerid = 1;	
+	required pos_data cur_pos = 2;  //起始位置
+	required float cur_pos_y = 3;   //起始Y坐标		
+}
+
+message move_y_start_request
+{
+	required pos_data cur_pos = 1;  //起始位置
+	required float cur_pos_y = 2;   //起始Y坐标
+	required float direct_y = 3;    //方向 0上，1下
+}
+message move_y_start_notify
+{
+	required uint64 playerid = 1;
+	required pos_data cur_pos = 2;  //起始位置
+	required float cur_pos_y = 3;   //起始Y坐标
+	required float direct_y = 4;    //方向 0上，1下
+}
+message move_y_stop_request
+{
+	required pos_data cur_pos = 1;  //起始位置
+	required float cur_pos_y = 2;   //起始Y坐标
+}
+message move_y_stop_notify
+{
+	required uint64 playerid = 1;
+	required pos_data cur_pos = 2;  //起始位置
+	required float cur_pos_y = 3;   //起始Y坐标
+}

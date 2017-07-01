@@ -1,0 +1,121 @@
+option optimize_for = LITE_RUNTIME;
+
+message CacheSubExp
+{
+	required uint32 val = 1;
+	required uint32 statis_id = 2;
+}
+
+message cache_pvp_raid_lose
+{
+	required uint32 time = 1;  //时间
+	required uint32 type = 2;
+	required uint32 score = 3; //扣除的积分
+}
+message cache_pvp_raid_win
+{
+	required uint32 time = 1;  //时间
+	required uint32 type = 2;	
+	required uint32 score = 3; //增加的积分
+}
+
+message PlayerOfflineCache
+{
+	repeated CacheSubExp sub_exps = 1;
+	repeated cache_pvp_raid_lose pvp_lose = 2;
+	repeated cache_pvp_raid_win pvp_win = 3;	
+}
+
+message player_redis_info
+{
+	required string name = 1;
+	required uint32 lv = 2;
+	required uint32 job = 3;
+	required uint32 head_icon = 4;
+	required uint32 scene_id = 5;
+	required uint32 status = 6;
+	required uint32 hp = 7;
+	required uint32 max_hp = 8;
+	required uint32 clothes = 9;
+	required uint32 clothes_color_up = 10;
+	required uint32 clothes_color_down = 11;
+	required uint32 hat = 12;
+	required uint32 hat_color = 13;
+	required uint32 fighting_capacity = 14;
+	required uint32 weapon = 15;
+	required uint32 zhenying = 16;
+	required uint32 guild_id = 17;
+	required string guild_name = 18;
+	repeated uint32 tags = 19;
+	required string textIntro = 20;
+	required uint32 coin = 21;
+	required uint32 gold = 22;
+	required uint32 bind_gold = 23;
+	required uint32 equip_fc = 24;
+	required uint32 bagua_fc = 25;
+	required uint32 weapon_color = 26;
+}
+
+message ZhenyingRedis
+{
+	required uint32 power_fulongguo = 1; //伏龙国总战斗力
+	required uint32 power_wanyaogu = 2; //万妖谷总战斗力
+	required uint32 man_fulongguo = 3; //伏龙国人数百分比
+	required uint32 man_wanyaogu = 4; //万妖谷人数百分比
+	required uint64 power_man_fulongguo = 5; //阵营主宰ID
+	required string power_name_fulongguo = 6; //阵营主宰
+	required string power_guild_fulongguo = 7; //阵营主宰帮会
+	required uint64 power_man_wanyaogu = 8; //阵营主宰ID
+	required string power_name_wanyaogu = 9; //阵营主宰
+	required string power_guild_wanyaogu = 10; //阵营主宰帮会
+	required uint64 power_man_kill_fulongguo = 11; //
+	required uint64 power_man_kill_wanyaogu = 12; //
+}
+
+message AddZhenyingPlayer
+{
+	required string name = 1;
+	required uint32 zhenying = 2;
+	required uint32 zhenying_old = 3;
+	required uint32 fighting_capacity = 4;
+	required uint32 kill = 5;
+	required uint32 ret = 6;
+	required uint32 gold = 7;
+	required uint32 free = 8;
+}
+
+
+//好友分组
+message RedisFriendGroup
+{
+	required uint32 group_id = 1; //分组ID
+	required uint32 create_time = 2; //创建时间
+	required string group_name = 3; //分组名称
+}
+
+//好友个体
+message RedisFriendUnit
+{
+	required uint64 player_id = 1; //玩家ID
+	required uint32 closeness = 2; //好感度
+	required uint32 gift_num = 3; //礼物数
+	required uint32 group_id = 4; //分组ID
+}
+
+//玩家好友模块数据
+message RedisFriendPlayer
+{
+	required uint64 player_id = 1; //玩家ID
+	required uint32 apply_switch = 2; //好友申请开关
+	required uint32 contact_extend = 3; //我的好友上限
+	repeated uint64 recents = 4; //最近联系人
+	repeated RedisFriendUnit contacts = 5; //我的好友
+	repeated RedisFriendUnit blocks = 6; //黑名单
+	repeated uint64 enemies = 7; //仇人
+	repeated uint64 applys = 8; //申请列表
+	repeated RedisFriendGroup groups = 9; //分组
+	required uint32 gift_accept = 10; //接收礼物数
+	required uint32 reset_time = 11; //每日重置时间
+}
+
+

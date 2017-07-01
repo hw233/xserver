@@ -1,0 +1,119 @@
+import "comm_message.proto";
+
+message GuildBattleWaitInfoNotify
+{
+	optional uint32 participateNum = 1; //参战人数
+	optional uint32 guildScore = 2; //帮会积分
+	optional uint32 round = 3; //当前轮次
+	optional uint32 waitTime = 4; //等待时间
+	optional uint32 callCD = 5; //征召CD，比当前时间大处于CD中
+	optional uint32 activityId = 6; //活动ID
+}
+
+//帮会战帮会排名信息
+message GuildBattleRankData
+{
+	required uint32 rank = 1; //排名
+	required uint32 guildId = 2; //帮会ID
+	required string guildName = 3; //帮会名字
+	required uint32 guildScore = 4; //帮会积分
+	required uint32 guildCamp = 5; //帮会阵营
+}
+
+//帮会战成员贡献信息
+message GuildBattleContributionData
+{
+	required PlayerBaseData baseInfo = 1; //玩家信息
+	required uint32 score = 2; //积分贡献
+}
+
+//帮会战信息应答
+message GuildBattleInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated GuildBattleRankData ranks = 2; //帮会排名
+	repeated GuildBattleContributionData contributions = 3; //成员贡献
+	required uint32 myGuildRank = 4; //本帮排名，0表示未上榜
+	required uint32 myGuildScore = 5; //本帮积分
+	required uint32 myScore = 6; //我的积分
+}
+
+//帮会战征召通知
+message GuildBattleCallNotify
+{
+	required uint32 activityId = 1; //活动ID
+	optional uint64 callerId = 2; //征召者ID，如果有是人为征召
+	optional string callerName = 3; //征召者名字
+}
+
+//帮会战参与玩家信息
+message GuildBattleMatchData
+{
+	required uint32 guildId = 1; //帮会ID
+	required string guildName = 2; //帮会名字
+	repeated PlayerBaseData members = 3; //成员信息
+}
+
+//帮会战参与者信息通知
+message GuildBattleMatchNotify
+{
+	repeated GuildBattleMatchData teams = 1; //队伍信息
+}
+
+//帮会战战绩信息
+message GuildBattleRecordData
+{
+	required uint64 playerId = 1; //玩家ID
+	required uint32 kill = 2; //击杀数
+	required uint32 dead = 3; //死亡数
+	optional uint32 boss = 4; //对Boss的伤害
+	optional uint32 monster = 5; //击杀小怪数
+}
+
+//帮会战战绩信息通知
+message GuildBattleRecordNotify
+{
+	repeated GuildBattleRecordData records = 1; //战绩
+}
+
+//帮会战每轮结算通知
+message GuildBattleRoundFinishNotify
+{
+	required uint32 result = 1; //胜败
+	required uint32 score = 4; //积分
+	required uint32 guildTreasure = 5; //帮会资金
+	required uint32 guildDonation = 6; //帮贡
+}
+
+//帮会战活动结算通知
+message GuildBattleActivityFinishNotify
+{
+	repeated GuildBattleRankData ranks = 1; //前四帮会
+	required uint32 guildRank = 2; //帮会排名
+	required uint32 guildScore = 3; //帮会积分
+}
+
+//帮会战每轮信息通知
+message GuildBattleRoundInfoNotify
+{
+	required uint32 endTime = 1; //结束时间
+}
+
+//帮会战击杀通知
+message GuildBattleKillNotify
+{
+	required uint64 killerId = 1; //击杀者ID
+	required uint64 deadId = 2; //被击杀者ID
+}
+
+//帮会战Boss伤害通知
+message GuildBattleBossDamageNotify
+{
+	required uint64 playerId = 1; //伤害者ID
+	required uint32 damage = 2; //本次造成的伤害值
+}
+
+
+
+
+

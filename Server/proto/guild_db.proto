@@ -1,0 +1,46 @@
+message DBGuildBuilding
+{
+	required uint32 level = 1;
+}
+
+message DBGuildSkill
+{
+	required uint32 skill_id = 1;
+	required uint32 skill_lv = 2;
+}
+
+message DBGuildGoods
+{
+	required uint32 goods_id = 1;
+	required uint32 bought_num = 2;
+}
+
+message DBGuild
+{
+	required uint32 rename_time = 1;
+	required uint32 treasure = 2;
+	required uint32 build_board = 3;
+	required uint32 maintain_time = 4;
+	repeated DBGuildBuilding buildings = 5;
+	required uint32 building_upgrade_id = 6;
+	required uint32 building_upgrade_end = 7;
+	repeated DBGuildSkill skills = 8;
+	required uint32 battle_score = 9;
+}
+
+message DBGuildPlayer
+{
+	required uint32 donation = 1;
+	required uint32 all_history_donation = 2;
+	required uint32 cur_history_donation = 3;
+	required uint32 office = 4;
+	required uint32 join_time = 5;
+	required uint32 exit_time = 6;
+	repeated DBGuildSkill skills = 7;
+	repeated DBGuildGoods goods = 8;
+	required uint32 cur_week_donation = 9;
+	required uint32 week_reset_time = 10;
+	required uint32 battle_score = 11;
+	required uint32 act_battle_score = 12;
+}
+

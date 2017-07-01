@@ -1,0 +1,29 @@
+import "comm_message.proto";
+
+//邮件通用请求
+message MailCommRequest
+{
+	required uint64 mail_id = 1; //邮件id，0表示一键操作
+}
+
+//邮件通用应答
+message MailCommAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint64 mail_id = 2; //邮件id
+}
+
+//邮件列表应答
+message MailListAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated MailData mails = 2; //邮件列表
+}
+
+//邮件多操作应答
+message MailMultiAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated uint64 mail_id = 2; //邮件id
+}
+

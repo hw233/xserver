@@ -1,0 +1,161 @@
+
+message pvp_match_request
+{
+	required uint32 type = 1;  //0表示3v3, 1表示5V5
+}
+
+message pvp_match_answer
+{
+		//0成功,
+		//190500175已经在队列中，
+		//190500103 CD中,
+	required uint32 result = 1; 
+	required uint64 playerid = 2; //cd中的玩家ID
+	required uint32 cdtime = 3; //cd时间
+}
+
+message pvp_score_changed_notify
+{
+	required uint32 type = 1;  //0表示3v3, 1表示5V5	
+	required uint32 level = 2;  //最新段位
+	required uint32 score = 4;  //最新积分
+	required uint32 today_win_num = 5; //今日获胜次数
+	required uint32 max_level = 6; //历史最高段位
+	required uint32 max_score = 7; //历史最高分
+	required uint32 avaliable_reward_level = 8; //可以领取的段位奖励
+	repeated uint32 avaliable_box_id = 9; //今日剩余还没领取的宝箱下标，从0开始
+}
+
+message pvp_rank_request
+{
+	required uint32 type = 1;  //0表示3v3, 1表示5V5
+}
+
+message pvp_rank_player_data
+{
+	required uint64 player_id = 1;
+	required uint32 level = 2;
+	required string name = 3;
+	required uint32 job = 4;
+}
+
+message pvp_rank_answer
+{
+	required uint32 type = 1;  //0表示3v3, 1表示5V5
+	required uint32 start = 2;  //起始排名
+	repeated pvp_rank_player_data rank_data = 3; //排行榜玩家数据
+}
+
+message pvp_open_daily_box_request
+{
+	required uint32 type = 1;  //0表示3v3, 1表示5V5	
+	required uint32 box_id = 2;  //宝箱下标，从0开始
+}
+
+message pvp_open_daily_box_answer
+{
+	required uint32 result = 1;  //0成功，其他失败
+	required uint32 type = 2;  //0表示3v3, 1表示5V5		
+	repeated uint32 avaliable_box_id = 3; //剩余还没有领取的宝箱下标，从0开始
+}
+
+message pvp_open_level_reward_request
+{
+	required uint32 type = 1;  //0表示3v3, 1表示5V5		
+}
+
+message pvp_open_level_reward_answer
+{
+	required uint32 type = 1;  //0表示3v3, 1表示5V5			
+	required uint32 avaliable_reward_level = 2; //可以领取的段位奖励
+}
+
+message pvp_match_player_info
+{
+	required uint64 player_id = 1;
+	required uint32 job = 2;        //职业
+	required uint32 head_icon = 3;       //头像
+	required string name = 4;		 //姓名
+	required uint32 lv = 5;  //等级
+}
+
+message pvp_match_success_notify
+{
+	repeated pvp_match_player_info team1_player_info = 1;  //匹配的队伍1玩家信息
+	repeated pvp_match_player_info team2_player_info = 2;  //匹配的队伍2玩家信息	
+}
+
+message pvp_match_ready_notify
+{
+	required uint64 player_id = 1;
+}
+
+message pvp_match_cancel_notify
+{
+	required uint64 player_id = 1;
+	required uint32 result = 2;		//190500112，匹配过程中，邀请别人加入队伍，解散队伍，退队提示
+		//190500113，匹配过程玩家掉线会退出匹配提示	
+}
+
+message pvp_kill_notify
+{
+	required uint64 dead_player_id = 1; //被击杀的玩家ID
+	required uint64 kill_player_id = 2; //击杀的玩家ID(也可能是怪物)
+	repeated uint64 assist_player_id = 3; //助攻的玩家ID(也可能是怪物)
+}
+
+message pvp_raid_finish_player_info
+{
+	required uint64 player_id = 1;
+	required string name = 2;
+	required uint32 head_icon = 3;
+	required uint32 kill = 4;
+	required uint32 dead = 5;
+	required uint32 assist = 6;
+}
+
+message pvp_raid_finished_notify
+{
+	required uint32 raid_result = 1;  //结果，1表示队伍1胜利，2表示队伍2胜利，0表示平局
+	required uint32 team1_kill = 2;  //队伍1击杀
+	required uint32 team2_kill = 3;	//队伍2击杀
+	repeated pvp_raid_finish_player_info team1_player = 4;  //队伍1成员信息
+	repeated pvp_raid_finish_player_info team2_player = 5;	//队伍2成员信息
+	required int32 score_changed = 6;     //积分变化
+	required int32 courage_gold_changed = 7;   //勇气币变化
+}
+
+message pvp_raid_praise_request
+{
+	required uint64 player_id = 1;
+}
+
+message pvp_raid_praise_notify
+{
+	required uint64 player_id = 1;
+	required uint32 praise_num = 2;  //当前点赞次数
+}
+
+message pvp_raid_player_fall_notify
+{
+	required uint64 player_id = 1;
+}
+
+message pvp_raid_buff_get_notify
+{
+	required uint32 type = 1; //0是红buff，1是蓝buff
+	required uint64 player_id = 2; //获得buff的玩家ID
+}
+
+message pvp_raid_start_notify
+{
+	required uint32 start_time = 1;  //副本开始时间，客户端做倒计时
+}
+
+message pvp_raid_buff_relive_time_notify
+{
+	required uint32 red_center_buff_relive_time = 1;   //红色中心buff刷新时间，0表示已经存在
+	required uint32 blue_center_buff_relive_time = 2;  //蓝色中心buff刷新时间，0表示已经存在	
+}
+
+

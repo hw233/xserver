@@ -1,0 +1,180 @@
+message TeamMemInfo
+{
+	required uint64 playerid = 1;
+	required uint32 icon = 2;          //头像
+	required string name = 3;
+	required uint32 lv = 4;
+	required uint32 job = 5;
+	required int32 hp = 6;          //剩余血量
+	required uint32 maxhp = 7;          //最大血量
+	required bool online = 8;          //
+	required uint32 clothes = 9;
+	required uint32 clothes_color_up = 10;
+	required uint32 clothes_color_down = 11;
+	required uint32 hat = 12;
+	required uint32 hat_color = 13;
+	required bool follow = 14; //true 跟随 反之不是
+	required uint32 weapon = 15;
+	required uint32 fight = 16;
+	required float pos_x = 17;
+	required float pos_z = 18;
+	required uint32 scene_id = 19;
+	required uint32 weapon_color = 20;
+	required uint32 head_icon = 21;
+	required uint32 zhenying = 22;
+}
+message TeamApplyAnswer
+{
+	required uint32 errcode = 1;          //返回码 0:成功 1;队伍不存在 2:等级不足 3:人数满
+	required uint32 teamid = 2;
+}
+
+message TeamInfo
+{
+	required uint32 teamid = 1;
+	repeated TeamMemInfo mem = 2;
+	required TeamLimited limit =  3;
+}
+
+message Teamid
+{
+	required uint32 id = 1; //队伍ID
+}
+
+message TeamPlayerid
+{
+	required uint64 id = 1;  //角色ID
+}
+
+message TeamInvite
+{
+	required uint32 teamid = 1;
+	required TeamMemInfo lead = 2;
+	required uint32 target = 3;
+}
+
+enum TeamChose
+{
+	YES = 1;
+	NO = 2;
+}
+message HandleTeamInvite
+{
+	required uint32 teamid = 1;
+	required uint64 playerid = 2; //邀请人
+	required uint32 accept = 3; //TeamChose
+}
+
+message TeamApplyerList
+{
+	repeated TeamMemInfo apply = 1; //申请者
+}
+
+message DelTeamPlayer
+{
+	required uint64 playerid = 1;  //角色ID
+	required bool kick = 2;  //ture被T
+}
+
+message HandleTeamApply
+{
+	optional int32 chose = 1; //TeamChose
+	optional uint64 id = 2;  //角色ID
+}
+
+
+message TeamLimited
+{
+	required uint32 target = 1; //配置表ID 0:无目标无等级
+	required uint32 lv = 2;  //等级限制 0：按副本等级   >0按角色等级
+	required bool auto_accept = 3; //自动接收
+	optional bool speek = 4; //自动喊话
+	required uint32 lv_max = 5;  // >0自定义等级的上限
+	required uint32 lv_min = 6;  // >0自定义等级的下限
+//	required uint32 lv_type = 5;  //等级限制类型
+}
+
+enum TeamTargetType
+{
+	sys = 1;
+	near = 2;
+	fb = 3;
+}
+message TeamTarget
+{
+	required uint32 target = 1; //配置表ID
+	required int32 type = 2; //TeamTargetType
+}
+
+message TeamListInfo
+{
+	required uint32 teamid = 1;
+	required TeamLimited limit =  2;
+	repeated TeamMemInfo lead = 3;
+	repeated int32 job = 4;
+	repeated int32 lv = 5;
+	required bool apply = 6; //ture 申请过 
+}
+
+message TeamList
+{
+	repeated TeamListInfo team = 1;
+	required int32 player = 2;
+}
+
+message TeamBeLead
+{
+	required uint64 playerid = 1;
+	required int32 chose = 2; //TeamChose
+	required string name = 3;
+}
+
+message BeLeadAnswer
+{
+	required int32 ret = 1; //0成功 > 0 错误码 
+	required string name = 2;
+}
+
+message TeamNotifyCd
+{
+	required int32 cd = 1;
+}
+
+message TeamHp
+{
+	required uint32 hp = 1;
+	required uint32 maxhp = 2;
+	required uint32 lv = 3;
+	required uint64 playerid = 4;
+}
+
+
+message RefuceApplyTeam
+{
+	required string name = 1;
+}
+
+message ChangeTeamid
+{
+	required uint64 playerid = 1;
+	required uint32 teamid = 2;
+}
+
+message MatchAnser
+{
+	required int32 ret = 1; //0 成功
+	required uint32 target = 2 ;
+}
+/*
+message LeadPos
+{
+	required int32 map = 1;
+	required int32 x = 2;
+	required int32 z = 3;
+}
+*/
+message Follow
+{
+	required bool state = 1; //true 跟随 反之不是
+	required uint64 playerid = 2; 
+}

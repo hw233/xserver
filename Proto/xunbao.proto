@@ -1,0 +1,40 @@
+
+message XunbaoPos
+{
+	required uint32 mapid = 1;
+	required uint32 x = 2;
+	required uint32 z = 3;
+	required uint32 transfer = 4;
+}
+
+message CashTruckInfo
+{
+	required uint32 num_cion = 1; //剩余粮草押镖次数
+	required uint32 num_gold = 2; //剩余财宝押镖次数
+	required uint64 cash_truck = 3; //自己的镖车ID 0没有
+	required uint32 mapid = 4; //镖车位置
+	required uint32 x = 5;
+	required uint32 z = 6;
+}
+
+message AcceptCashTruck
+{
+	required uint32 id = 1; //运镖表的ID
+}
+
+message UpDownCashTruck
+{
+	required uint64 cash_truck = 1;
+	required uint64 playerid = 2;
+}
+
+message ResAcceptCashTruck
+{
+	required uint32 id = 1; //任务ID
+	required uint32 ret = 2; //
+}
+
+message TruckEndurance
+{
+	required uint32 endurance = 1; //耐力值
+}

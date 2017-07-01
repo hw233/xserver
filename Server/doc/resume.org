@@ -1,0 +1,129 @@
+* 创建scene
+** map_config, region_config, res_config, create_monster_config
+可恢复
+** m_id, m_guild_id
+创建时候获取
+** m_area
+新创建
+** m_born_x, m_area_size
+读配置
+** m_collect
+全部重新创建
+
+* 创建area
+** 怪物和采集物
+全部重新创建
+** 玩家
+等player恢复后重新加入
+
+* 恢复raid
+** ai
+根据m_config->DengeonRank可恢复
+** m_player
+玩家恢复后，加入副本，如果不在loading的就设置m_player
+** m_raid_team
+根据data->team_id恢复
+** m_config
+根据data->ID恢复
+** m_control_config
+可恢复
+** player_num
+等玩家恢复后，根据玩家的场景ID和raid_uuid恢复
+** m_monster
+根据怪物的raid_uuid恢复
+* 恢复zhenying_raid
+** m_collect_pos
+恢复后，重新创建
+
+* 恢复guild_wait_raid
+
+* 恢复采集物 无法恢复, 重新创建
+
+* 恢复player
+** item_pos_cache
+可以重新算出来
+** task_finish_set
+可以重新算出来
+** last_change_area_time
+不需要恢复
+** sight_space
+恢复sight_space后设置
+** m_team
+可以根据team恢复, 也可以通过teamid恢复
+** m_inviter
+不用恢复
+** m_skill
+可以根据skill对象恢复
+** m_pet_list
+可以根据monster的owner恢复
+** bagua_buffs
+可以重新计算
+** guild_skill_attrs 不能恢复
+** m_hitMe
+不恢复
+** m_meHit
+不恢复
+** ai_patrol_config
+pvp副本ai巡逻路径配置，可以通过在raid中的位置重新算出来
+** srtt
+不需要恢复
+
+* 恢复skill
+** config
+读配置恢复
+
+* 恢复monster
+** ai
+根据怪物ID读表恢复
+** ai_type
+根据怪物ID读表恢复
+** ai_state
+不恢复
+** target
+不恢复
+** ai_data 无法恢复
+** config
+根据怪物ID读表恢复
+** ai_config
+根据怪物ID读表恢复
+** create_config 无法恢复
+** drop_id
+根据怪物ID读表恢复
+** sight_space
+恢复sight_space后设置
+
+* 恢复boss
+** hate_unit
+清空, 不用恢复
+** next_hate_reduce_time
+清空, 不用恢复
+
+* 恢复buff
+** config, effect_config
+根据data->buff_id恢复
+** m_owner
+根据data->owner恢复
+** m_attacker
+根据data->attacker恢复
+
+* 恢复team
+** m_sumLevel
+根据玩家属性重新算出来
+** s_teamContain
+根据所有的team重新加回来
+
+* 恢复TeamMatch 不能恢复
+
+* 恢复sightspace
+** players
+根据data->player_id恢复
+** monsters
+根据data->monster_uuid恢复
+
+* TODO
+1. 玩家加入场景/副本的loading过程中，scene_id是新场景的，但是还没加入场景, 需要靠player_is_in_loading来判断
+2. 从场景删除的时候假设在loading，但是加入sight_space的玩家呢？
+3. sight_space恢复的时候，把所有玩家的player_is_in_loading修改一下
+
+
+

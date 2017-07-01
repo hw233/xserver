@@ -1,0 +1,217 @@
+import "chat.proto";
+import "role.proto";
+
+//好友列表类型
+enum FriendListType
+{
+	L_RECENT = 1; //最近联系人
+	L_CONTACT = 2; //我的好友
+	L_BLOCK = 3; //黑名单
+	L_ENEMY = 4; //仇人
+	L_APPLY = 5; //请求列表
+	L_CUSTOM_BEGIN = 10; //自定义分组开始
+}
+
+//好友请求处理
+enum FriendApplyDeal
+{
+	AD_ACCEPT = 1; //接受
+	AD_IGNORE = 2; //忽略
+}
+
+//好友玩家简要信息
+message FriendPlayerBriefData
+{
+	required uint64 playerId = 1; //玩家ID
+	required string name = 2; //玩家名字
+	required uint32 job = 3; //职业
+	required uint32 level = 4; //等级
+	required uint32 offlineTime = 5; //下线时间，0：表示在线
+	required uint32 closeness = 6; //好感度
+	repeated uint32 tags = 7; //标签
+	required string textIntro = 8; //文字签名
+	required uint32 head = 9; //头像
+}
+
+//好友分组信息
+message FriendGroupData
+{
+	required uint32 groupId = 1; //分组ID
+	required string name = 2; //分组名
+	required uint32 createTime = 3; //创建时间
+	repeated FriendPlayerBriefData players = 4; //分组内玩家
+}
+
+//好友信息应答
+message FriendInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated FriendGroupData fixs = 2; //固定分组
+	repeated FriendGroupData customs = 3; //新建分组
+	required uint32 contact_extend = 4; //好友上限是否扩展过，0没扩展过，非0扩展过
+}
+
+//好友操作请求
+message FriendOperateRequest
+{
+	required uint64 playerId = 1; //玩家ID
+}
+
+//好友操作应答
+message FriendOperateAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint64 playerId = 2; //玩家ID
+}
+
+//好友列表添加信息
+message FriendListAddData
+{
+	required uint32 groupId = 1; //分组ID
+	required FriendPlayerBriefData data = 2; //好友数据
+}
+
+//好友列表删除信息
+message FriendListDelData
+{
+	required uint32 groupId = 1; //分组ID
+	required uint64 playerId = 2; //玩家ID
+}
+
+//好友列表变更通知
+message FriendListChangeNotify
+{
+	repeated FriendListAddData adds = 1; //添加列表
+	repeated FriendListDelData dels = 2; //删除列表
+}
+
+//新建分组请求
+message FriendCreateGroupRequest
+{
+	required string name = 1; //分组名称
+	repeated uint64 playerIds = 2; //选择玩家
+}
+
+//新建分组应答
+message FriendCreateGroupAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required FriendGroupData info = 2; //新建的分组
+}
+
+//编辑分组请求
+message FriendEditGroupRequest
+{
+	required uint32 groupId = 1; //分组ID
+	required string name = 2; //分组名称
+	repeated uint64 playerIds = 3; //选择玩家
+}
+
+//编辑分组应答
+message FriendEditGroupAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 groupId = 2; //分组ID
+	required string name = 3; //分组名称
+}
+
+//删除分组请求
+message FriendRemoveGroupRequest
+{
+	required uint32 groupId = 1; //分组ID
+}
+
+//更改分组请求
+message FriendMovePlayerGroupRequest
+{
+	required uint64 playerId = 1; //玩家ID
+	required uint32 toGroup = 3; //新分组ID
+}
+
+//处理申请请求
+message FriendDealApplyRequest
+{
+	required uint64 playerId = 1; //玩家ID，填0表示全部
+	required FriendApplyDeal deal = 2; //处理类型
+}
+
+//处理申请应答
+message FriendDealApplyAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint64 playerId = 2; //玩家ID，填0表示全部
+	required FriendApplyDeal deal = 3; //处理类型
+	repeated uint64 dealPlayers = 4; //已处理玩家列表
+}
+
+//推荐好友应答
+message FriendRecommendAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated FriendPlayerBriefData players = 2; //推荐的玩家
+}
+
+//搜索好友请求
+message FriendSearchRequest
+{
+	required uint64 playerId = 1; //玩家ID
+	required string playerName = 2; //玩家名
+}
+
+//搜索好友应答
+message FriendSearchAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required FriendPlayerBriefData data = 2; //玩家信息
+}
+
+//赠送礼物请求
+message FriendSendGiftRequest
+{
+	required uint64 playerId = 1; //玩家ID
+	required uint32 itemId = 2; //道具ID
+	required uint32 itemNum = 3; //道具数量
+}
+
+//赠送礼物应答
+message FriendSendGiftAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint64 playerId = 2; //玩家ID
+	required uint32 itemId = 3; //道具ID
+	required uint32 itemNum = 4; //道具数量
+}
+
+//赠送礼物通知
+message FriendSendGiftNotify
+{
+	required uint64 senderId = 1; //赠送者ID
+	required uint32 itemId = 2; //道具ID
+	required uint32 itemNum = 3; //道具数量
+}
+
+//更新好友通知
+message FriendUpdateUnitNotify
+{
+	required uint64 playerId = 1; //玩家ID
+	required uint32 closeness = 2; //好感度
+}
+
+//服务器缓存的离线聊天信息
+message ChatList
+{
+	repeated Chat chats = 1;
+	repeated SystemNoticeNotify systems = 2;
+}
+
+//更新好友状态通知
+message FriendUpdateStatusNotify
+{
+	required uint64 playerId = 1; //玩家ID
+	required uint32 offlineTime = 2; //下线时间，0：表示在线
+}
+
+
+
+
+

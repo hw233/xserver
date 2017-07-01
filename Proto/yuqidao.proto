@@ -1,0 +1,74 @@
+
+//经脉信息
+message YuqidaoMaiData
+{
+	required uint32 maiId = 1; //经脉ID
+	required uint32 acupointId = 2; //当前穴位ID
+	required uint32 fillLv = 3; //灌入进度
+}
+
+//穴脉冲击信息
+message YuqidaoBreakData
+{
+	required uint32 id = 1; //突破id
+	repeated uint32 curAttr = 2; //当前属性值
+	repeated uint32 newAttr = 3; //新属性值
+	repeated uint32 newAddn = 4; //新属性加成值
+}
+
+//御气道信息应答
+message YuqidaoInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated YuqidaoMaiData mais = 2; //经脉信息列表
+	repeated YuqidaoBreakData breaks = 3; //穴脉突破信息列表
+}
+
+//御气道灌入真气请求
+message YuqidaoFillRequest
+{
+	required uint32 maiId = 1; //经脉ID
+}
+
+//御气道灌入真气应答
+message YuqidaoFillAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 maiId = 2; //经脉ID
+	required uint32 acupointId = 3; //当前穴位ID
+	required uint32 fillLv = 4; //灌入进度
+}
+
+//御气道突破请求
+message YuqidaoBreakRequest
+{
+	required uint32 breakId = 1; //突破ID
+	required uint32 time = 2; //时间（毫秒）
+}
+
+//御气道突破应答
+message YuqidaoBreakAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required YuqidaoBreakData breakInfo = 2; //突破信息
+}
+
+//御气道突破保留请求
+message YuqidaoBreakRetainRequest
+{
+	required uint32 breakId = 1; //突破ID
+}
+
+//御气道突破保留应答
+message YuqidaoBreakRetainAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required YuqidaoBreakData breakInfo = 2; //突破信息
+}
+
+//御气道经脉开启通知
+message YuqidaoMaiOpenNotify
+{
+	repeated YuqidaoMaiData mais = 1; //经脉列表
+}
+

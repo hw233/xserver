@@ -1,0 +1,215 @@
+import "comm_message.proto";
+
+//释放技能
+message skill_cast_request
+{
+	required uint32 skillid = 1;      //技能id
+	required pos_data cur_pos = 2;    //释放技能的位置	
+	required float direct_x = 3;      //方向向量x
+	required float direct_z = 4;	  //方向向量z
+}
+
+//释放技能的通知
+message skill_cast_notify
+{
+	required uint64 playerid = 1;     //施法玩家的ID
+	required uint32 skillid = 2;      //技能id
+	required pos_data cur_pos = 3;    //释放技能的位置
+	required float direct_x = 4;      //方向向量x
+	required float direct_z = 5;	  //方向向量z
+	optional pos_data target_pos = 6;    //技能的目标位置(扔石棺等技能使用)
+}
+
+//技能命中的请求
+message skill_hit_request
+{
+	required pos_data attack_pos = 1;    //攻击者的位置
+	repeated uint64 target_playerid = 2;   //受击者的玩家ID
+	repeated pos_data target_pos = 3;    //受击者的位置
+}
+
+//命中效果
+//无效果 0
+//闪避 1
+//暴击 2
+//加血 3
+message skill_hit_effect
+{
+	required uint64 playerid = 1;   //命中的玩家ID
+	required int32  hp_delta = 2;   //血量变化
+	required int32 cur_hp = 3;      //剩余血量, 小于等于0就死了
+	required uint32 effect = 4;     //命中效果，闪避，暴击
+	repeated uint32 add_buff = 5;    //造成的buff效果
+	required pos_data target_pos = 6;    //技能命中后的新坐标(击飞击退等)
+}
+
+//技能命中的通知
+message skill_hit_notify
+{
+	required uint64 playerid = 1;   //施法对象的ID
+	required uint64 owneriid = 2;   //施法对象的属主的ID, 如果没有属主，则等于施法对象的ID
+	optional string ownername = 3;   //施法对象的属主的名字
+	required uint32 skillid = 4;    //技能ID
+	required pos_data attack_pos = 5;    //攻击者的位置
+	required uint32 life_steal = 6;    //吸血
+	required uint32 damage_return = 7;    //反弹
+	required int32 attack_cur_hp = 8;    //攻击者最新血量
+	repeated skill_hit_effect target_player = 9;  //命中的玩家数组
+}
+
+//客户端发送召唤物攻击消息
+message skill_call_attack_request
+{
+	required pos_data attack_pos = 1;    //攻击者的位置
+	required uint32 skillid = 2;    //技能ID	
+	repeated uint64 target_playerid = 3;   //受击者的玩家ID
+	repeated pos_data target_pos = 4;    //受击者的位置
+	repeated int32  hit_index = 5;   //命中次序
+}
+//服务端发送召唤物攻击消息
+message skill_call_attack_notify
+{
+	required uint64 playerid = 1;   //施法玩家的ID
+	required uint32 skillid = 2;    //技能ID
+	required pos_data attack_pos = 3;    //攻击者的位置
+	required uint32 life_steal = 4;    //吸血
+	required uint32 damage_return = 5;    //反弹
+	required int32 attack_cur_hp = 6;    //攻击者最新血量
+	repeated skill_hit_effect target_player = 7;  //命中的玩家数组
+	repeated int32  hit_index = 8;   //命中下标
+}
+
+//直接命中的技能的通知
+message skill_hit_immediate_notify
+{
+	required uint64 playerid = 1;   //施法对象的ID
+	required uint64 owneriid = 2;   //施法对象的属主的ID, 如果没有属主，则等于施法对象的ID
+	optional string ownername = 3;   //施法对象的属主的名字	
+	required uint32 skillid = 4;    //技能ID
+	required pos_data attack_pos = 5;    //攻击者的位置
+	required uint32 life_steal = 6;    //吸血
+	required uint32 damage_return = 7;    //反弹
+	required int32 attack_cur_hp = 8;    //攻击者最新血量
+	required skill_hit_effect target_player = 9;  //命中的玩家
+}
+/*
+message skill_cast_delay_notify
+{
+	required uint64 playerid = 1;     //施法怪物的ID
+	required uint32 skillid = 2;      //技能id
+	required pos_data cur_pos = 3;    //释放技能的位置
+	required uint64 targetid = 4;     //技能目标玩家的ID	
+}
+
+message skill_hit_delay_request
+{
+	required uint64 playerid = 1;     //施法怪物的ID
+	required pos_data attack_pos = 2;    //攻击者的位置
+	required pos_data target_pos = 3;    //受击者的位置	
+}
+*/
+message skill_move_request
+{
+	required pos_data cur_pos = 1;    //位移的新坐标
+}
+
+message skill_move_notify
+{
+	required uint64 playerid = 1;     //施法玩家的ID	
+	required pos_data cur_pos = 2;    //位移的新坐标	
+}
+
+message add_buff_notify
+{
+	required uint64 playerid = 1;     //玩家的ID	
+	required uint32 buff_id = 2;    //buff id
+	required uint32 start_time = 3; //buff开始时间
+}
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////技能学习
+message skill_data
+{
+	required uint32 id = 1;
+	required uint32 lv = 2;
+	repeated uint32 fuwen = 3;
+	required uint32 cur_fuwen = 4; //使用的符文
+}
+
+message skill_list
+{
+	repeated skill_data data = 1;
+}
+
+message learn_skill_req
+{
+	required uint32 id = 1;
+	required uint32 num = 2; //升级多少次
+	required bool autoup = 3; //ture 一键升级 
+}
+
+message learn_skill_ans
+{
+	required uint32 id = 1;
+	required uint32 lv = 2; //
+	required int32 ret = 3; //0成功 
+}
+
+message fuwen
+{
+	required uint32 fuwen = 1;
+	required uint32 skill = 2;
+}
+
+message fuwen_ans
+{
+	required uint32 fuwen = 1;
+	required int32 ret = 2;
+	required uint32 skill = 3;
+}
+
+message buff_state_changed_notify
+{
+	required uint64 player_id = 1;
+	required uint32 buff_state = 2;
+}
+
+
+enum LIVE_SKILL_TYPE
+{
+	MEDICINE = 1;
+	COOK = 2;
+}
+message learn_live_req
+{
+	required uint32 type = 1; //LIVE_SKILL_TYPE
+	required uint32 num = 2; //升级次数 0物品升级
+}
+
+message AnsLiveSkill
+{
+	repeated uint32 level = 1; //当前技能等级
+	repeated uint32 exp = 2; //当前技能经验
+	repeated uint32 broken = 3; //当前技能突破等级
+	repeated uint32 book = 4; //剩余使用技能书的次数
+}
+
+message AnsLearnLiveSkill
+{
+	required uint32 type = 1;
+	required uint32 lv = 2; //
+	required int32 ret = 3; //0成功 
+	required uint32 exp = 4;
+	required uint32 book = 5; //剩余使用技能书的次数
+	required uint32 broken = 6; //当前技能突破等级
+}

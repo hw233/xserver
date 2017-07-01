@@ -1,0 +1,64 @@
+import "comm_message.proto";
+
+//登录请求
+message LoginRequest
+{
+	required int32 channel = 1; //渠道，1：winTest
+	required string openid = 2; //open_id,由服务器生成的账号唯一id
+	required string key = 3; //通过cgi获取的key
+}
+
+//登录应答
+message LoginAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 openid = 2; //账号唯一id
+}
+
+//获取角色列表应答
+message PlayerListAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated PlayerBaseInfo playerList = 2; //角色列表
+}
+
+//创建角色请求
+message PlayerCreateRequest
+{
+	required string name = 1; //角色名
+	required uint32 job = 2; //角色职业
+}
+
+//创建角色应答
+message PlayerCreateAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	optional PlayerBaseInfo playerList = 2; //角色信息
+}
+
+//进入游戏请求
+message EnterGameRequest
+{
+	required uint64 playerId = 1; //选择的角色id
+	required uint32 reconnect = 2; //是否断线重连，0：正常登陆，1：断线重连
+}
+
+//进入游戏应答
+message EnterGameAnswer
+{
+	required uint32 result = 1; //结果
+	required float posX = 2; //X坐标
+	required float posZ = 3; //Z坐标
+	required uint32 sceneId = 4; //场景id
+	required uint32 curTime = 5; //服务器当前时间（秒）
+	required int32 posY = 6; //Y坐标  有坐骑的时候需要用
+	required uint32 CurHorse = 7; //当前坐骑id
+	required uint32 CurHorseState = 8; //当前坐骑乘骑状态 0不在坐骑上  1在坐骑上
+	required int32 fly = 9; //2飞行 1陆行
+	required int32 direct = 10;	  //朝向
+}
+
+message HeartbeatNotify
+{
+	required uint32 curTime = 1; //服务器当前时间（秒）	
+}

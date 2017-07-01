@@ -1,0 +1,187 @@
+import "comm_message.proto";
+
+//伙伴技能信息
+message PartnerSkillData
+{
+	required uint32 id = 1;
+	required uint32 lv = 2;
+}
+
+message PartnerAttr
+{
+	repeated PartnerSkillData skills = 1; //技能列表
+	repeated uint32 base_attr_id = 2; //基本属性id
+	repeated uint32 base_attr_cur = 3; //基本属性当前值
+	repeated uint32 base_attr_up = 4; //基本属性上限
+	repeated uint32 detail_attr_id = 5; //详细属性id
+	repeated uint32 detail_attr_cur = 6; //详细属性当前值
+	required uint32 type = 7; //伙伴类型 0普通,1平凡,2天才
+}
+
+//伙伴个体信息
+message PartnerData
+{
+	required uint64 uuid = 1; //唯一ID
+	required uint32 partnerId = 2; //伙伴ID
+	repeated AttrData attrs = 3; //属性列表
+	required PartnerAttr cur_attr = 4; //当前属性
+	optional PartnerAttr flash_attr = 5; //洗髓属性
+	repeated uint32 god_id = 6; //神曜id
+	repeated uint32 god_level = 7; //神曜等级
+	required uint64 power = 8; //洗髓战斗力
+}
+
+//伙伴信息应答
+message PartnerInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated PartnerData partners = 2; //伙伴列表
+	repeated uint64 formation = 3; //布阵信息
+	repeated uint32 dictionary = 4; //图鉴信息
+	required uint32 recruitJuniorTime = 5; //低级招募免费时间（比当前时间大表示处于CD中）
+	required uint32 recruitJuniorCount = 6; //低级招募计数
+	required uint32 recruitSeniorTime = 7; //高级招募免费时间（比当前时间大表示处于CD中）
+	required uint32 recruitSeniorCount = 8; //高级招募计数
+}
+
+//伙伴翻转开关请求
+message PartnerTurnSwitchRequest
+{
+	required uint32 type = 1; //属性类型
+}
+
+//伙伴布阵请求
+message PartnerFormationRequest
+{
+	required uint64 uuid = 1; //伙伴唯一ID
+	required uint32 position = 2; //位置
+}
+
+//伙伴布阵应答
+message PartnerFormationAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated uint64 uuids = 2; //伙伴唯一ID
+}
+
+//伙伴学习技能请求
+message PartnerLearnSkillRequest
+{
+	required uint64 uuid = 1; //伙伴唯一ID
+	required uint32 index = 2; //技能索引
+	required uint32 bookId = 3; //技能书ID
+}
+
+//伙伴学习技能应答
+message PartnerLearnSkillAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint64 uuid = 2; //伙伴唯一ID
+	required uint32 index = 3; //技能索引
+	required PartnerSkillData skill = 4; //技能信息
+}
+
+//伙伴使用经验丹请求
+message PartnerUseExpItemRequest
+{
+	required uint64 uuid = 1; //伙伴唯一ID
+	required uint32 itemId = 2; //道具ID
+}
+
+//伙伴使用经验丹请求
+message PartnerAddBaseAttr
+{
+	required uint64 uuid = 1; //伙伴唯一ID
+	repeated uint32 attr = 2; //增加属性值
+	required uint32 power = 3; //洗髓战斗力
+}
+
+//伙伴遣散请求
+message PartnerDismissRequest
+{
+	repeated uint64 uuids = 1; //伙伴的唯一ID列表
+}
+
+message PartnerUuid
+{
+	required uint64 uuids = 1; //伙伴的唯一ID列表
+}
+
+message ResResetAttr
+{
+	required uint32 ret = 1; //
+	optional PartnerAttr flash_attr = 2; //洗髓属性
+	required uint64 power = 3; //
+}
+
+message StrongPartner
+{
+	required uint64 uuids = 1; //伙伴的唯一ID列表
+	required uint32 attr_id = 2; //属性ID
+	required uint32 count = 3; //强化次数
+}
+message ResStrongPartner
+{
+	required uint64 uuids = 1; //伙伴的唯一ID列表
+	required uint32 attr_id = 2; //属性ID
+	required uint32 attr_cur = 3; //属性值 
+	required uint32 ret = 4; //
+}
+
+
+
+//伙伴遣散应答
+message PartnerDismissAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated uint64 uuids = 2; //伙伴的唯一ID列表
+}
+
+//伙伴图鉴开启通知
+message PartnerDictionaryAddNotify
+{
+	required uint32 partnerId = 1; //伙伴的ID
+}
+
+//伙伴兑换请求
+message PartnerExchangeRequest
+{
+	required uint32 partnerId = 1; //伙伴ID
+}
+
+//伙伴兑换应答
+message PartnerExchangeAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint64 uuid = 2; //伙伴唯一ID
+}
+
+//伙伴招募请求
+message PartnerRecruitRequest
+{
+	required uint32 type = 1; //招募类型
+}
+
+//伙伴招募结果信息
+message PartnerRecruitResultData
+{
+	required uint32 type = 1; //1表示道具，2表示伙伴
+	optional ItemData item = 2; //道具
+	optional uint64 uuid = 3; //伙伴唯一ID
+}
+
+//伙伴招募应答
+message PartnerRecruitAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated PartnerRecruitResultData recruits = 2; //招募结果
+	required uint32 recruitJuniorTime = 5; //低级招募免费时间（比当前时间大表示处于CD中）
+	required uint32 recruitJuniorCount = 6; //低级招募计数
+	required uint32 recruitSeniorTime = 7; //高级招募免费时间（比当前时间大表示处于CD中）
+	required uint32 recruitSeniorCount = 8; //高级招募计数
+}
+
+
+
+
+

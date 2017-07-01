@@ -1,0 +1,84 @@
+
+message FashionData
+{
+	required uint32 id = 1;
+	required uint32 color = 2;
+	required uint32 cd = 3; //剩余秒数 0：永久
+	required bool isnew = 4;
+	required bool isexpire = 5; //true 过期
+	required bool ison = 6; //true 穿上
+//	required uint32 colordown = 7; //下衣颜色
+}
+
+message FashionList
+{
+	repeated FashionData data = 1;
+	required uint32 level = 2; //魅力等级
+	required uint32  charm = 3; //总魅力
+}
+
+message BuyFashion
+{
+	required uint32 id = 1; //
+	required uint32 during = 2; //0永久 其它按秒倒计时
+}
+
+message BuyFashionAnswer
+{	
+	required uint32 ret = 1; 
+	required FashionData data= 2;
+	required uint32 level = 3; //魅力等级
+	required uint32  charm = 4; //总魅力
+}
+
+message SetFashionColor
+{
+	required uint32 id = 1;
+	required uint32 color = 2;
+	required uint32 isdown = 3;
+}
+
+message SetFashionColorAnswer
+{
+	required uint32 id = 1;
+	required uint32 color = 2;
+	required uint32 ret = 3;
+	required uint32 isdown = 4;
+	required uint32 level = 5; //魅力等级
+	required uint32  charm = 6; //总魅力
+}
+
+message FashionCharm
+{
+	required uint32 level = 1; //魅力等级
+	required uint32  charm = 2; //总魅力
+}
+
+message PutonFashion
+{
+	required uint32 id = 1;
+}	
+
+message PutonFashionAns
+{
+	required uint32 id = 1;
+	required uint32 ret = 2;
+	required uint32 newid = 3;
+}
+
+message ColorList
+{
+	repeated uint32 color = 1;
+	repeated int32 isnew = 2;
+}
+
+message UnlockColor
+{
+	required uint32 color = 1;
+}
+
+message UnlockColorAns
+{
+	required uint32 color = 1;
+	required uint32 ret = 2;
+}

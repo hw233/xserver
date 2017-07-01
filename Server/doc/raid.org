@@ -1,0 +1,52 @@
+#+OPTIONS: ^:{}
+
+* 副本协议
+
+** 单人副本
+1. 客户端发送进入副本请求（ENTER_RAID_REQUEST）
+   + 服务器回复进入失败（ENTER_RAID_ANSWER）
+2. 服务端通知客户端进入副本(MSG_ID_ENTER_RAID_NOTIFY)
+3. 服务端通知客户端场景跳转至副本(TRANSFER_ANSWER)
+4. 副本逻辑
+5. 服务端通知客户端副本结算(RAID_FINISHED_NOTIFY)
+6. 客户端发送离开副本请求(LEAVE_RAID_REQUEST)
+7. 服务端通知客户端场景跳转至副本外(TRANSFER_ANSWER)
+
+** 位面副本
+1. 服务端通知进入位面副本(ENTER_PLANES_RAID_NOTIFY)
+2. 副本逻辑
+3. 服务端通知离开位面副本(LEAVE_PLANES_RAID_NOTIFY)
+
+** 多人副本
+1. 队长发送进入副本请求(ENTER_RAID_REQUEST)
+   + 服务端回复进入失败（ENTER_RAID_ANSWER）
+   + 队长请求传送其他队员过来(MSG_ID_TRANSFER_FAR_TEAM_MEMBER_REQUEST)
+   + 远离的队员收到传送至队长位置通知(TRANSFER_TO_LEADER_NOTIFY)
+   + 队员发送传送至队长请求(TRANSFER_TO_LEADER_REQUEST)
+     + 通知队长队员不同意传送(MSG_ID_TEAM_MEMBER_REFUSE_TRANSFER_NOTIFY)
+   + 服务端通知传送至队长位置(TRANSFER_ANSWER)
+2. 服务端通知客户端进入副本(MSG_ID_ENTER_RAID_NOTIFY)
+3. 服务端通知客户端场景跳转至副本(TRANSFER_ANSWER)
+4. 副本逻辑
+5. 服务端通知客户端副本结算(RAID_FINISHED_NOTIFY)
+6. 客户端发送离开副本请求(LEAVE_RAID_REQUEST)
+7. 服务端通知客户端场景跳转至副本外(TRANSFER_ANSWER)
+
+
+
+
+
+* 组队玩家重新上线后返回副本
+** 下线处理
+1. 副本玩家记录里面清除玩家信息
+2. 玩家场景ID和坐标保留当前值
+
+** 上线处理
+1. 检查玩家有队伍
+	+ 没有队伍但是场景ID是个副本，那么把玩家场景ID和位置设置到副本退出位置
+2. 检查队伍有副本
+	+ 没有队伍但是场景ID是个副本，那么把玩家场景ID和位置设置到副本退出位置
+3. 检查玩家当前场景属于该副本
+	+ 不属于的话把玩家位置设置到副本初始位置
+
+

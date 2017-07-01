@@ -1,0 +1,63 @@
+local FactionBattleTable = {
+	[360400001] = {
+		['ID'] = 360400001,	--索引
+		['LowerLimitLv'] = 30,	--等级下限
+		['UpperLimitLv'] = 59,	--等级下限
+		['Map'] = 30001,	--地图
+		['BirthPoint1'] = {200,0,49},	--出生点1
+		['BirthPoint2'] = {200,0,49},	--出生点1
+		['FlagExp'] = 10,	--旗帜经验
+		['BoxID'] = 154000013,	--宝箱ID
+		['BoxReloadX'] = {180,198,216,184,189,210,169,166,148,141,125,104,96,71,69,68,69},	--宝箱刷新点X
+		['BoxReloadY'] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	--宝箱刷新点Y
+		['BoxReloadZ'] = {75,77,76,113,128,128,144,170,192,158,156,155,138,135,109,87,55},	--宝箱刷新点Z
+		['BoxReloadTime'] = 3600,	--宝箱刷新时间
+		['BoxReloadNum'] = 10,	--宝箱刷新个数
+		['BoxExp'] = 5,	--宝箱经验1
+		['BoxExp2'] = 50,	--宝箱经验2
+		['BoxOpenNum'] = 5,	--宝箱开启次数
+		['SkillIntegral'] = 10,	--杀人积分
+		['FlagIntegral'] = 5	--旗帜积分
+		},
+	[360400002] = {
+		['ID'] = 360400002,
+		['LowerLimitLv'] = 60,
+		['UpperLimitLv'] = 89,
+		['Map'] = 30002,
+		['BirthPoint1'] = {200,0,49},
+		['BirthPoint2'] = {200,0,49},
+		['FlagExp'] = 10,
+		['BoxID'] = 154000013,
+		['BoxReloadX'] = {180,198,216,184,189,210,169,166,148,141,125,104,96,71,69,68,69},
+		['BoxReloadY'] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		['BoxReloadZ'] = {75,77,76,113,128,128,144,170,192,158,156,155,138,135,109,87,55},
+		['BoxReloadTime'] = 3600,
+		['BoxReloadNum'] = 10,
+		['BoxExp'] = 5,
+		['BoxExp2'] = 50,
+		['BoxOpenNum'] = 5,
+		['SkillIntegral'] = 10,
+		['FlagIntegral'] = 5
+		},
+	[360400003] = {
+		['ID'] = 360400003,
+		['LowerLimitLv'] = 90,
+		['UpperLimitLv'] = 200,
+		['Map'] = 30003,
+		['BirthPoint1'] = {200,0,49},
+		['BirthPoint2'] = {200,0,49},
+		['FlagExp'] = 10,
+		['BoxID'] = 154000013,
+		['BoxReloadX'] = {180,198,216,184,189,210,169,166,148,141,125,104,96,71,69,68,69},
+		['BoxReloadY'] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		['BoxReloadZ'] = {75,77,76,113,128,128,144,170,192,158,156,155,138,135,109,87,55},
+		['BoxReloadTime'] = 3600,
+		['BoxReloadNum'] = 10,
+		['BoxExp'] = 5,
+		['BoxExp2'] = 50,
+		['BoxOpenNum'] = 5,
+		['SkillIntegral'] = 10,
+		['FlagIntegral'] = 5
+		}
+	}
+return FactionBattleTable

@@ -1,0 +1,64 @@
+import "comm_message.proto";
+
+//属性变更通知
+message PlayerAttrNotify
+{
+	required uint64 player_id = 1; //玩家ID
+	repeated AttrData attrs = 2; //属性列表
+}
+
+//名字变更通知
+message PlayerNameNotify
+{
+	required uint64 player_id = 1; //玩家ID
+	optional string player_name = 2; //玩家名字
+}
+
+//改名请求
+message PlayerRenameRequest
+{
+	required string name = 1; //名字
+}
+
+//更换头像请求
+message HeadIconReplaceRequest
+{
+	required uint32 icon_id = 1; //头像id
+}
+
+//头像解锁通知
+message HeadIconUnlockNotify
+{
+	required uint32 icon_id = 1; //头像id
+}
+
+//头像信息应答
+message HeadIconInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated HeadIconData icon_list = 2; //已解锁头像列表 
+}
+
+//头像新解锁状态消失应答
+message HeadIconOldAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 icon_id = 2; //头像id 
+}
+
+//时装
+message SetFashion
+{
+	required uint32 id = 1; 
+	required uint32 vaual = 2; 
+}
+
+//系统提示通知
+message SystemNoticeNotify
+{
+	required uint32 id = 1; 
+	repeated string args = 2; //参数列表
+	optional uint64 targetId = 3; //操作对象ID
+}
+
+

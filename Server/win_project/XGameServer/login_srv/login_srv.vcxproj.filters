@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="login_srv">
+      <UniqueIdentifier>{53f8fd0f-64c5-47a1-a268-729e438fdda0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\login_srv\conn_node_loginsrv.cpp">
+      <Filter>login_srv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\login_srv\login_srv.cpp">
+      <Filter>login_srv</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\login_srv\conn_node_loginsrv.h">
+      <Filter>login_srv</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

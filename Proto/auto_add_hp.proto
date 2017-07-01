@@ -1,0 +1,12 @@
+message AutoAddHpSetData
+{
+	required uint32 open_auto_add_hp = 1; //0表示关闭自动补血，1表示开启
+	required uint32 auto_add_hp_item_id = 2; //自动补血的道具ID
+	required uint32 auto_add_hp_percent = 3; //自动补血的百分比，0-100
+}
+
+message HpPoolChangedNotify
+{
+	required uint32 hp_pool_num = 1;  //剩余的血池容量
+}
+

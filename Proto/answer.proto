@@ -1,0 +1,67 @@
+
+message ReqAnswer
+{
+	required uint32 id = 1;
+	required bool timeout = 2; //ture 超时
+}
+
+message CommonQuestion
+{
+	required uint32 question = 1; //题目
+	required uint32 contin = 2; //连续答对
+	required uint32 right = 3; //答对数
+	required uint32 money = 4; //
+	required uint32 exp = 5; //
+	required uint32 tip = 6; //剩余提示次数
+	required uint32 help = 7; //剩余求助次数
+	required bool btip = 8; //true 已经提示过
+	required bool bhelp = 9; //true 已经求助过 
+	required uint32 number = 10; //第几题
+	required uint32 cd = 11; //活动剩余时间
+	repeated uint32 answer = 12;
+	repeated uint32 anstip = 13; //
+}
+
+message AwardAnswer
+{
+	required uint32 trun = 1; //第几轮 从1开始
+	required uint32 npc = 2; //当前轮的答题NPC 
+}
+
+message AwardQuestion
+{
+	required uint32 trun = 1; //第几轮 从1开始
+	required uint32 npc = 2; //当前轮的答题NPC
+	required uint32 right = 3; //答对数
+	required uint32 contin = 4; //连续答对
+	required uint32 money = 6; //
+	required uint32 exp = 7; //
+	required uint32 timer = 8; //总耗时
+	required uint32 question = 9; //题目
+	required uint32 number = 10; //第几题
+	required uint32 cd = 11; //活动剩余时间
+}
+
+message FactionQuestion
+{
+	required uint32 qid = 1;//题目iD
+	required uint32 cd = 2;//答题剩余时间 秒
+}
+
+message FactionQuestionResult
+{
+	required bool result = 1; //ture正确 false错误
+	required bool add = 2; //ture有额外奖励 
+}
+
+message OneFactionQuestionEnd
+{
+	repeated string name = 1;//额外奖励名单  
+	required uint32 qid = 2;//题目iD
+}
+
+message FactionQuestionRest
+{
+	required uint32 num = 1;//第几题
+	required uint32 cd = 2; //下一题cd
+}

@@ -1,0 +1,13 @@
+message relive_request
+{
+	required uint32 type = 1;  //1是原地复活，2是复活点复活
+}
+message relive_notify
+{
+	required uint64 playerid = 1;	
+	required uint32 type = 2;
+	required int32  pos_x = 3;
+	required int32  pos_z = 4;
+	required int32  direct = 5;		
+}
+

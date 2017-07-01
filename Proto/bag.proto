@@ -1,0 +1,73 @@
+import "comm_message.proto";
+
+//背包信息应答
+message BagInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 curGridNum = 2; //当前格子数
+	required uint32 totalGridNum = 3; //总格子数
+	repeated BagGrid grids = 4; //背包格子列表
+}
+
+//背包开格子应答
+message BagUnlockGridAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 curGridNum = 2; //当前格子数
+	required uint32 totalGridNum = 3; //总格子数
+}
+
+//背包出售物品请求
+message BagSellRequest
+{
+	required uint32 index = 1; //格子服务器索引
+	required uint32 num = 2; //出售数量
+}
+
+//背包出售物品应答
+message BagSellAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required ItemData sellItem = 2; //出售的道具信息
+	required AttrData gainMoney = 3; //获得的货币信息
+}
+
+//背包使用物品请求
+message BagUseRequest
+{
+	required uint32 index = 1; //格子服务器索引
+	required uint32 use_all = 2; //0:单个使用，1:一键使用
+}
+
+//背包使用物品应答
+message BagUseAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 item_id = 2;
+	required uint32 cd = 3;	
+	repeated ItemData itemList = 4; //获得的道具列表
+}
+
+//背包堆叠请求
+message BagStackRequest
+{
+	required uint32 id = 1; //物品id
+}
+
+//展示物品请求
+message ShowItemRequest
+{
+	required uint32 index = 1; //格子服务器索引
+}
+
+//展示物品
+message ShowItemAnswer
+{
+	required uint32 key = 1; //服务器生成的
+}
+
+message ShowItemData
+{
+	required uint32 id = 1; //物品ID
+}
+

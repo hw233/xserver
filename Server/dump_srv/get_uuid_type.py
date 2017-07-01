@@ -1,0 +1,11 @@
+#!/usr/bin/python
+# coding: UTF-8
+
+ENTITY_TYPE_PLAYER = 0
+ENTITY_TYPE_MONSTER = 1
+ENTITY_TYPE_AI_PLAYER = 3
+ENTITY_TYPE_PARTNER = 4
+ENTITY_TYPE_TRUCK = 5
+
+def get_uuid_type(uuid):
+    return uuid / 1125899906842624

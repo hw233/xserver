@@ -1,0 +1,21 @@
+message scene_transfer_request
+{
+	required uint32 transfer_id = 1;   //传送点ID
+	required uint32 type = 2; //传送类型
+}
+
+message scene_transfer_answer
+{
+	required int32 result = 1;
+	required uint32 new_scene_id = 2;   //跳转的场景ID
+	required float pos_x = 3;     //新场景坐标X
+	required float pos_z = 4;     //新场景坐标Z
+	required float direct = 5;	  //新场景朝向
+	required float pos_y = 6;     //新场景坐标Y	
+}
+
+message transfer_to_player_scene_request
+{
+	required uint64 player_id = 1;   //玩家的ID
+}
+

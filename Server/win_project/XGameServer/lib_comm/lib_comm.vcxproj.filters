@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="comm_include">
+      <UniqueIdentifier>{8afeaf05-b5fa-406d-8984-6837efab9eaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="comm_lib">
+      <UniqueIdentifier>{4d3e8b07-956a-445a-8e22-b1e43c4173b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdlib">
+      <UniqueIdentifier>{9abfdd47-d8c4-48e7-b5b5-fe21e7f89038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdlib\libevent">
+      <UniqueIdentifier>{3a653ca6-d267-4fa2-837b-8b236f862654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="comm_game">
+      <UniqueIdentifier>{6d2e8b89-9c30-4047-90d8-c2f4c9eda356}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\comm_include\cgi_common.h">
+      <Filter>comm_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_include\comm.h">
+      <Filter>comm_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_include\get_cpu_pulse.h">
+      <Filter>comm_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_include\redis_client.h">
+      <Filter>comm_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_include\server_proto.h">
+      <Filter>comm_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_include\sortarray.h">
+      <Filter>comm_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\account_help.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\app_data_statis.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\conn_node.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\deamon.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\game_event.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\GRand.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\listen_node.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\machai_lucky_day_id.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\mem_pool.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\minheap.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\mysql_module.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\oper_config.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\radix-tree.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\ResConv.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\ResLoader.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\ResMapTempete.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\stl_relation.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\str_copy.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\tea.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_lib\include\time_helper.h">
+      <Filter>comm_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\bufferevent-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\changelist-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\config.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\defer-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\epolltable-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\evbuffer-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\evconfig-private.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\event-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\evmap-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\evrpc-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\evsignal-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\evthread-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\ht-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\http-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\iocp-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\ipv6-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\kqueue-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\log-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\minheap-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\mm-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\ratelim-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\strlcpy-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\time-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\util-internal.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\evdns.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\evhttp.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\evrpc.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\evutil.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\buffer.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\buffer_compat.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\bufferevent.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\bufferevent_compat.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\bufferevent_ssl.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\bufferevent_struct.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\dns.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\dns_compat.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\dns_struct.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\event.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\event_compat.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\event_struct.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\event-config.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\http.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\http_compat.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\http_struct.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\keyvalq_struct.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\listener.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\rpc.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\rpc_compat.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\rpc_struct.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\tag.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\tag_compat.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\thread.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\util.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdlib\libevent\include\event2\visibility.h">
+      <Filter>thirdlib\libevent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_game\error_code.h">
+      <Filter>comm_game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_game\attr_id.h">
+      <Filter>comm_game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\comm_game\comm_define.h">
+      <Filter>comm_game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\comm_lib\account_help.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\conn_node.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\deamon.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\game_event.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\GRand.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\listen_node.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\machai_lucky_day_id.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\mem_pool.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\minheap.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\mysql_module.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\oper_config.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\radix-tree.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\ResLoader.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\sortarray.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\tea.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\comm_lib\time_helper.cpp">
+      <Filter>comm_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\arc4random.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\buffer.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\buffer_iocp.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\bufferevent.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\bufferevent_async.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\bufferevent_filter.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\bufferevent_openssl.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\bufferevent_pair.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\bufferevent_ratelim.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\bufferevent_sock.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\devpoll.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\epoll.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\epoll_sub.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\evdns.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\event.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\event_iocp.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\event_tagging.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\evmap.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\evport.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\evrpc.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\evthread.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\evthread_pthread.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\evthread_win32.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\evutil.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\evutil_rand.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\evutil_time.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\http.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\kqueue.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\listener.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\log.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\poll.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\select.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\signal.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\strlcpy.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\thirdlib\libevent\win32select.c">
+      <Filter>thirdlib\libevent</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
