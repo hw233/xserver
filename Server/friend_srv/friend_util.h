@@ -88,7 +88,7 @@ int add_recent(FriendPlayer *player, uint64_t target_id);
 int del_recent(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo &change_info);
 
 void try_reset_friend_player(FriendPlayer *player); //检测每日重置
-void notify_friend_unit_update(FriendPlayer *player, FriendUnit &unit);
+void notify_friend_closeness_update(FriendPlayer *player, FriendUnit &unit);
 std::set<uint64_t> *get_contact_me_players(uint64_t player_id);
 std::set<uint64_t> *get_watch_me_players(uint64_t player_id);
 void rebuild_watch_info(void); //重建反向映射表

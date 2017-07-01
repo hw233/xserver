@@ -172,6 +172,8 @@ message ShangjinTaskTypeDb
 	required uint32 quality = 2; //
 	repeated ShangjinTaskAwardDb award = 3; //
 	required uint32 reduce = 4; //
+	required uint32 coin = 5; //
+	required uint32 exp = 6; //
 }
 message ShangjinTypeDb
 {
@@ -289,6 +291,9 @@ message DBPartner
 	optional DBPartnerAttr attr_cur = 7;
 	optional DBPartnerAttr attr_flash = 8;
 	required uint32 relive_time = 9;
+	repeated uint32 god_id = 10; //
+	repeated uint32 god_lv = 11; //
+	required uint32 strong_num = 12;
 }
 
 message DBTruck

@@ -346,8 +346,8 @@ local BaseAI = {
 		['Regeneration'] = 999,
 		['AIType'] = 21,
 		['GuardRange'] = 4,
-		['StopMin'] = 2000,
-		['StopMax'] = 6000,
+		['StopMin'] = 100,
+		['StopMax'] = 500,
 		['Response'] = 5
 		},
 	[153100205] = {
@@ -359,8 +359,8 @@ local BaseAI = {
 		['Regeneration'] = 999,
 		['AIType'] = 17,
 		['GuardRange'] = 0,
-		['StopMin'] = 2000,
-		['StopMax'] = 6000,
+		['StopMin'] = 100,
+		['StopMax'] = 500,
 		['Response'] = 10
 		},
 	[153100206] = {
@@ -372,8 +372,8 @@ local BaseAI = {
 		['Regeneration'] = 999,
 		['AIType'] = 16,
 		['GuardRange'] = 1,
-		['StopMin'] = 2000,
-		['StopMax'] = 6000,
+		['StopMin'] = 100,
+		['StopMax'] = 500,
 		['Response'] = 10
 		},
 	[153100207] = {
@@ -385,8 +385,21 @@ local BaseAI = {
 		['Regeneration'] = 999,
 		['AIType'] = 1,
 		['GuardRange'] = 0,
-		['StopMin'] = 2000,
-		['StopMax'] = 6000,
+		['StopMin'] = 100,
+		['StopMax'] = 500,
+		['Response'] = 10
+		},
+	[153100208] = {
+		['BaseID'] = 153100208,
+		['ActiveAttackRange'] = 5,
+		['IsChase'] = 1,
+		['ChaseRange'] = 20,
+		['MovingChange'] = 0,
+		['Regeneration'] = 999,
+		['AIType'] = 2,
+		['GuardRange'] = 0,
+		['StopMin'] = 100,
+		['StopMax'] = 500,
 		['Response'] = 10
 		},
 	[153100301] = {
@@ -453,6 +466,45 @@ local BaseAI = {
 		['StopMin'] = 300,
 		['StopMax'] = 800,
 		['Response'] = 50
+		},
+	[153100306] = {
+		['BaseID'] = 153100306,
+		['ActiveAttackRange'] = 3,
+		['IsChase'] = 1,
+		['ChaseRange'] = 5,
+		['MovingChange'] = 0,
+		['Regeneration'] = 999,
+		['AIType'] = 1,
+		['GuardRange'] = 0,
+		['StopMin'] = 300,
+		['StopMax'] = 800,
+		['Response'] = 10
+		},
+	[153100401] = {
+		['BaseID'] = 153100401,
+		['ActiveAttackRange'] = 10,
+		['IsChase'] = 1,
+		['ChaseRange'] = 20,
+		['MovingChange'] = 0,
+		['Regeneration'] = 999,
+		['AIType'] = 16,
+		['GuardRange'] = 0,
+		['StopMin'] = 100,
+		['StopMax'] = 500,
+		['Response'] = 10
+		},
+	[153100402] = {
+		['BaseID'] = 153100402,
+		['ActiveAttackRange'] = 10,
+		['IsChase'] = 1,
+		['ChaseRange'] = 20,
+		['MovingChange'] = 0,
+		['Regeneration'] = 999,
+		['AIType'] = 22,
+		['GuardRange'] = 0,
+		['StopMin'] = 100,
+		['StopMax'] = 500,
+		['Response'] = 10
 		}
 	}
 return BaseAI

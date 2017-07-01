@@ -1195,6 +1195,8 @@ static void adjust_dungeon_table(lua_State *L, struct sproto_type *type)
 		else if (config->DengeonRank == DUNGEON_TYPE_RAND_SLAVE)
 		{
 			add_wanyaoka_id(config);
+			if (config->DungeonPass[0] != '\0')
+				add_raid_script_config(L, type, config, config->DungeonPass);			
 		}
 		else if (config->DengeonRank == DUNGEON_TYPE_SCRIPT)
 		{
@@ -1389,6 +1391,10 @@ static void generate_item_relative_info(void)
 		if (config->ItemType == 10 && config->BindType == 1 && config->n_ParameterEffect > 0)
 		{
 			sg_bagua_bind_item_map[config->ParameterEffect[0]] = config->ID;
+		}
+		if (iter->second->ItemEffect == 16)
+		{
+			sg_partner_item_map[iter->second->ParameterEffect[0]] = iter->first;
 		}
 	}
 }

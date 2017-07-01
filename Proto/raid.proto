@@ -125,3 +125,15 @@ message npc_talk_request
 {
 	required uint32 npc_id = 1;
 }
+
+message EnterPlanesRaid
+{
+	required uint32 type = 1; //0:任务普通 1:寻宝 2:镖车
+}
+
+//客户端执行完相对应的副本ai事件，请求服务器副本ai继续往下走
+message raid_ai_continue_request
+{
+	required uint64 ai_type = 1; //当前正在进行的副本ai
+}
+

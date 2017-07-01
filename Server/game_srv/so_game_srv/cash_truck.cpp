@@ -288,8 +288,7 @@ void cash_truck_struct::on_tick()
 			return;
 		}
 		
-		player->sight_space = sight_space_manager::create_sight_space(player);
-		player->sight_space->data->type = 2;
+		player->sight_space = sight_space_manager::create_sight_space(player, 2);
 		for (uint32_t num = 0; num < truck_config->Number[player->data->truck.jiefei]; ++num)
 		{
 			int lv = player->get_attr(PLAYER_ATTR_LEVEL) + truck_config->level[0] - rand() % (truck_config->level[0] * 2);
@@ -775,19 +774,21 @@ void cash_truck_struct::del_sight_partner_in_area(int n_del, area_struct **del_a
 
 int cash_truck_struct::del_partner_from_sight_both(partner_struct *partner)
 {
-	if (prepare_add_partner_to_sight(partner) != 0 ||
-		partner->prepare_add_truck_to_sight(this) != 0)
-		return -1;
-	
 	int ret = del_partner_from_sight(partner->data->uuid);
-	assert (ret >= 0);
-	int ret1 = partner->del_partner_from_sight(data->player_id);
-	assert(ret1 >= 0);
+	if (ret >= 0)
+	{
+		int ret1 = partner->del_partner_from_sight(data->player_id);
+		assert(ret1 >= 0);
+	}
 	return ret;
 }
 
 int cash_truck_struct::add_partner_to_sight_both(partner_struct *partner)
 {
+	if (prepare_add_partner_to_sight(partner) != 0 ||
+		partner->prepare_add_truck_to_sight(this) != 0)
+		return -1;
+	
 	int ret = add_partner_to_sight(partner->data->uuid);
 	assert(ret >= 0);
 	int ret1 = partner->add_truck_to_sight(data->player_id);

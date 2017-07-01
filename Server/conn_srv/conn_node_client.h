@@ -4,7 +4,7 @@
 #include "conn_node.h"
 #include "game_event.h"
 
-#define MAX_SEND_BUFFER_SIZE (1024*64)
+#define MAX_SEND_BUFFER_SIZE (1024*256)
 
 class conn_node_client: public conn_node_base
 {

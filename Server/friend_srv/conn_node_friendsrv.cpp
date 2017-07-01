@@ -2736,7 +2736,7 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 		save_friend_player(player);
 		save_friend_player(target);
 
-		notify_friend_unit_update(player, player->contacts[target_idx]);
+		notify_friend_closeness_update(player, player->contacts[target_idx]);
 
 		do
 		{
@@ -2768,7 +2768,7 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 				fast_send_msg(&conn_node_friendsrv::connecter, &ext_data, MSG_ID_FRIEND_SEND_GIFT_NOTIFY, friend_send_gift_notify__pack, nty);
 
 				//通知好感度变更
-				notify_friend_unit_update(target, target->contacts[player_idx]);
+				notify_friend_closeness_update(target, target->contacts[player_idx]);
 			}
 
 			//通知系统消息
@@ -3256,6 +3256,13 @@ void conn_node_friendsrv::handle_friend_rename_request() //玩家改名
 		{
 			//向所有在线玩家广播
 			broadcast_message(MSG_ID_SYSTEM_NOTICE_NOTIFY, &sys, (pack_func)system_notice_notify__pack, broadcast_ids);
+
+			FriendUpdateUnitNotify nty;
+			friend_update_unit_notify__init(&nty);
+
+			nty.playerid = extern_data->player_id;
+			nty.name = req->new_name;
+			broadcast_message(MSG_ID_FRIEND_UPDATE_UNIT_NOTIFY, &nty, (pack_func)friend_update_unit_notify__pack, broadcast_ids);
 		}
 	} while(0);
 }

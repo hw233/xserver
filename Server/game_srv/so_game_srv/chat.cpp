@@ -48,6 +48,7 @@ void chat_mod::parse_cmd(char *line, int *argc, char *argv[])
 	*argc = n + 1;
 }
 
+
 static void send_chat_content(player_struct *player, char *content)
 {
 	Chat nty;
@@ -65,6 +66,25 @@ static void send_chat_content(player_struct *player, char *content)
 	EXTERN_DATA extern_data;
 	extern_data.player_id = player->get_uuid();
 	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_CHAT_NOTIFY, chat__pack, nty);
+}
+
+static void send_script_info(player_struct *player, struct raid_script_data *data)
+{
+	RaidScriptTable *config = NULL;
+	if (data->cur_index < data->script_config->size())
+	{
+		config = (*data->script_config)[data->cur_index];
+	}
+
+	std::ostringstream os;
+	os << "ID:" << (config ? config->ID : 0) << " Type:" << (config ? config->TypeID : 0) << " finish:[";
+
+	for (int i = 0; i < MAX_SCRIPT_COND_NUM; ++i)
+	{
+		os << data->cur_finished_num[i] << " ";
+	}
+	os << "]";
+	send_chat_content(player, const_cast<char*>(os.str().c_str()));
 }
 
 extern int send_mail(conn_node_base *connecter, uint64_t player_id, uint32_t type,
@@ -346,22 +366,27 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 		raid_struct *raid = player->get_raid();
 		if (raid && raid->m_config->DengeonRank == DUNGEON_TYPE_SCRIPT)
 		{
-			RaidScriptTable *config = NULL;
-			if (raid->data->ai_data.script_data.script_data.cur_index < raid->data->ai_data.script_data.script_data.script_config->size())
-			{
-				config = (*raid->data->ai_data.script_data.script_data.script_config)[raid->data->ai_data.script_data.script_data.cur_index];
-			}
+			send_script_info(player, &raid->data->ai_data.script_data.script_data);
+			// RaidScriptTable *config = NULL;
+			// if (raid->data->ai_data.script_data.script_data.cur_index < raid->data->ai_data.script_data.script_data.script_config->size())
+			// {
+			// 	config = (*raid->data->ai_data.script_data.script_data.script_config)[raid->data->ai_data.script_data.script_data.cur_index];
+			// }
 
-			std::ostringstream os;
-			os << "ID:" << (config ? config->ID : 0) << " Type:" << (config ? config->TypeID : 0) << " finish:[";
+			// std::ostringstream os;
+			// os << "ID:" << (config ? config->ID : 0) << " Type:" << (config ? config->TypeID : 0) << " finish:[";
 
-			for (int i = 0; i < MAX_SCRIPT_COND_NUM; ++i)
-			{
-				os << raid->data->ai_data.script_data.script_data.cur_finished_num[i] << " ";
-			}
-			os << "]";
+			// for (int i = 0; i < MAX_SCRIPT_COND_NUM; ++i)
+			// {
+			// 	os << raid->data->ai_data.script_data.script_data.cur_finished_num[i] << " ";
+			// }
+			// os << "]";
 
-			send_chat_content(player, const_cast<char*>(os.str().c_str()));
+			// send_chat_content(player, const_cast<char*>(os.str().c_str()));
+		}
+		else if (raid && raid->m_config->DengeonRank == DUNGEON_TYPE_RAND_MASTER)
+		{
+			send_script_info(player, &raid->WANYAOGU_DATA.script_data);
 		}
 	}
 	else if (argc >=1 && strcasecmp(argv[0], "set_script_raid") == 0)
@@ -553,6 +578,7 @@ void chat_mod::gm_set_attr(player_struct *player, int id, int value)
 		player->data->buff_fight_attr[id] = value;
 
 	player->set_attr(id, value);
+	player->notify_one_attr_changed(id, value);
 }
 
 void chat_mod::gm_add_wanyaoka(player_struct *player, int id)

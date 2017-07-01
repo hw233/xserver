@@ -13,3 +13,5 @@ cmake_install.cmake
 libgame.a
 *~
 .svn/
+Server/proto/*.pb-c.h
+Server/proto/*.pb-c.c

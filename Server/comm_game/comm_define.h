@@ -63,8 +63,8 @@
 #define MAX_PARTNER_BATTLE_NUM  2
 
 #define MAX_ESCORT_NUM   2
-#define MAX_ESCORT_MONSTER_NUM   (30 + 1)
-#define MAX_ESCORT_MONSTER_WAVE   (3)
+#define MAX_ESCORT_MONSTER_NUM   (40 + 1)
+#define MAX_ESCORT_MONSTER_WAVE   (4)
 
 
 //玩家状态
@@ -179,13 +179,13 @@ enum TaskConditionType
 	TCT_FINISH = 4, //完成任务---完成条件
 	TCT_JOIN_CAMP = 5, //加入阵营---完成条件
 	TCT_TEAM = 6, //组队
-	TCT_JOIN_GUILD = 7, //加入帮派
+	TCT_GUILD_JOIN = 7, //加入帮派
 	TCT_GUILD_DONATION = 8, //拥有帮贡
 	TCT_KILL_MONSTER = 9, //击杀怪物
 	TCT_SKILL_LEVEL_UP = 10, //技能升级
 	TCT_CARRY_ITEM = 12, //携带物品
 	TCT_USE_PROP = 13, //使用物品
-	TCT_WEAR_BAGUA = 14, //佩戴八卦
+	TCT_BAGUA_WEAR = 14, //佩戴八卦
 	TCT_ACTIVITY = 17, //完成活动
 	TCT_PARTNER_OUT_FIGHT = 18, //伙伴参战
 	TCT_FINISH_RAID = 20, //通关副本
@@ -204,9 +204,23 @@ enum TaskConditionType
 	TCT_EQUIP_ENCHANT = 36, //装备附魔
 	TCT_EQUIP_INLAY = 37, //装备镶嵌
 	TCT_GEM_COMPOSE = 38, //宝石合成
-	TCT_WEAR_FASHION = 39, //佩戴时装
+	TCT_FASHION_WEAR = 39, //佩戴时装
 	TCT_FRIEND_NUM = 40, //好友数量
 	TCT_JOIN_TEAM = 41, //加入队伍
+	TCT_SHOP_BUY = 42, //商城购买
+	TCT_XUNBAO = 43, //寻宝
+	TCT_PARTNER_RECRUIT = 44, //伙伴招募
+	TCT_PARTNER_ADD_ATTR = 45, //伙伴资质强化
+	TCT_PARTNER_RESET_ATTR = 46, //伙伴洗髓
+	TCT_PARTNER_ADD_GOD = 47, //伙伴神曜
+	TCT_BAGUA_REFINE_STAR = 48, //八卦炼星
+	TCT_BAGUA_REFINE_MAIN_ATTR = 49, //八卦重铸
+	TCT_BAGUA_REFINE_MINOR_ATTR = 50, //八卦洗炼
+	TCT_YAOSHI_GUOYU = 51, //妖师国御
+	TCT_YAOSHI_SHANGJIN = 52, //妖师赏金
+	TCT_WANYAOGU = 53, //万妖谷
+	TCT_HORSE_ADD_EXP = 54, //坐骑修灵
+	TCT_QUESTION_JOIN = 55, //参与答题
 };
 
 enum TaskBasicCondition

@@ -12,7 +12,7 @@ class sight_space_manager
 public:
 	static void on_tick();
 	static int init_sight_space(int num, unsigned long key);
-	static sight_space_struct *create_sight_space(player_struct *player);
+	static sight_space_struct *create_sight_space(player_struct *player, int type = 0);
 //	static int add_player_to_sight_space(sight_space_struct *sight_space, player_struct *player);
 	static int del_player_from_sight_space(sight_space_struct *sight_space, player_struct *player, bool enter_scene);
 	static int get_sight_space_num();

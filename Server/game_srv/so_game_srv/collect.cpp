@@ -32,6 +32,7 @@ Collect::Collect()
 	m_minType = 0;
 	m_ownerLv = 0;
 	m_active = 0;
+	m_raid_uuid = 0;
 	++g_collect_num;
 }
 

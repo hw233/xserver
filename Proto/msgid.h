@@ -95,6 +95,7 @@
 #define MSG_ID_BAG_TIDY_ANSWER      		10312 //背包整理应答 NULL
 #define MSG_ID_BAG_SHOW_REQUEST      		10313 //展示物品请求 ShowItemRequest
 #define MSG_ID_BAG_SHOW_ANSWER      		10314 //展示物品 ShowItemAnswer
+#define MSG_ID_ITEM_FLOW_TO_BAG_NOTIFY      10315 //道具飞向背包通知 ItemFlowToBagNotify
 
 //角色信息
 #define MSG_ID_PLAYER_ATTR_NOTIFY           10400 //属性变更通知 playerattrnotify
@@ -239,7 +240,7 @@
 #define MSG_ID_LEAVE_RAID_REQUEST            10805 //离开副本请求 NULL
 #define MSG_ID_LEAVE_RAID_ANSWER             10806 //离开副本回复 comm_answer (暂时没用到)
 #define MSG_ID_LEAVE_RAID_NOTIFY             10807 //离开副本通知 NULL 
-#define MSG_ID_ENTER_PLANES_RAID_NOTIFY             10808 //进入位面通知 NULL
+#define MSG_ID_ENTER_PLANES_RAID_NOTIFY             10808 //进入位面通知 EnterPlanesRaid
 #define MSG_ID_LEAVE_PLANES_RAID_NOTIFY             10809 //离开位面通知 NULL
 #define MSG_ID_RAID_EARNING_TIMES_CHANGED_NOTIFY             10810 //副本收益次数变更通知  raid_earning_times_changed_notify
 #define MSG_ID_RAID_HIT_STATIS_CHANGED_NOTIFY             10811 //副本统计信息变更  raid_hit_statis_changed_notify
@@ -263,6 +264,7 @@
 #define MSG_ID_TEAM_RAID_CANCEL_REQUEST           10829   //组队副本取消准备请求
 #define MSG_ID_TEAM_RAID_CANCEL_NOTIFY           10830   //组队副本取消准备通知 team_raid_cancel_notify
 #define MSG_ID_NPC_TALK_REQUEST           10831   //告知后台和某个NPC对话了 npc_talk_request
+#define MSG_ID_RAID_AI_CONTINUE_REQUEST		   10832 //客户端执行完特定的副本ai请求继续副本   RaidAiContinueRequest
 
 //装备
 #define MSG_ID_EQUIP_LIST_REQUEST              10900 //装备信息请求 NULL 

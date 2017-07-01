@@ -2289,7 +2289,7 @@ int conn_node_guildsrv::handle_guild_shop_buy_request(EXTERN_DATA *extern_data)
 			break;
 		}
 
-		uint32_t need_donation = config->Price * buy_num;
+		uint32_t need_donation = config->Discount * buy_num;
 		if (player->donation < need_donation)
 		{
 			ret = ERROR_ID_GUILD_PLAYER_DONATION;

@@ -220,11 +220,8 @@ void player_manager::delete_player(player_struct *p)
 	player_manager_player_used_list.erase(p);
 	player_manager_player_free_list.push_back(p);
 
-	p->clear_all_buffs();
+	p->clear();
 	p->interrupt();
-	p->clear_temp_data();
-	p->clear_all_partners();
-	p->clear_all_escort();
 	
 	LOG_DEBUG("[%s:%d] player_id[%lu], player:%p, data:%p", __FUNCTION__, __LINE__, p->data->player_id, p, p->data);
 

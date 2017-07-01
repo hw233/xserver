@@ -109,7 +109,7 @@ local CollectionTable = {
 		},
 	[154000010] = {
 		['ID'] = 154000010,
-		['NameId'] = '杏花',
+		['NameId'] = '',
 		['Icon'] = '0',
 		['TaskId'] = {240110029,240130013},
 		['Level'] = 1,
@@ -117,7 +117,7 @@ local CollectionTable = {
 		['Regeneration'] = 5,
 		['DropID'] = 220100230,
 		['LifeTime'] = 0,
-		['ShowTips'] = 0
+		['ShowTips'] = 1
 		},
 	[154000011] = {
 		['ID'] = 154000011,
@@ -219,11 +219,23 @@ local CollectionTable = {
 		['ID'] = 154000019,
 		['NameId'] = '',
 		['Icon'] = 'item_01_yyc001',
-		['TaskId'] = {240110037},
+		['TaskId'] = {240110037,240130011},
 		['Level'] = 1,
 		['Time'] = 3,
 		['Regeneration'] = 5,
 		['DropID'] = 220100233,
+		['LifeTime'] = 0,
+		['ShowTips'] = 1
+		},
+	[154000020] = {
+		['ID'] = 154000020,
+		['NameId'] = '',
+		['Icon'] = 'item_01_yyc001',
+		['TaskId'] = {240130012},
+		['Level'] = 1,
+		['Time'] = 3,
+		['Regeneration'] = 5,
+		['DropID'] = 220100238,
 		['LifeTime'] = 0,
 		['ShowTips'] = 1
 		}

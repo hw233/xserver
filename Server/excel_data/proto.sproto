@@ -543,6 +543,7 @@
 	Purchasetype 7 : integer
 	Condition 8 : integer
 	BuyNum 9 : integer
+	Discount 10 : integer
 }
 
 .TransferPointTable {
@@ -783,7 +784,11 @@
 	QuestGroup 3 : *integer
 	RewardGroup 4 : *integer
 	QualityGroup 5 : *integer
-	RewardPlus 6 : *integer
+	RewardGroup1 6 : *integer
+	RewardGroup2 7 : *integer
+	RewardGroup3 8 : *integer
+	RewardGroup4 9 : *integer
+	RewardGroup5 10 : *integer
 }
 
 .EventCalendarTable {
@@ -1027,7 +1032,9 @@
 	PointXZ2 12 : *double
 	MonsterID3 13 : *integer
 	PointXZ3 14 : *double
-	talkID 15 : *integer
+	MonsterID4 15 : *integer
+	PointXZ4 16 : *double
+	talkID 17 : *integer
 }
 
 .PartnerTable {

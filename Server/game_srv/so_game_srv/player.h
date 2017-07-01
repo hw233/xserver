@@ -47,6 +47,15 @@ enum
 static const int AWARD_QUESTION_ACTIVE_ID = 330100021;
 static const int COMMON_QUESTION_ACTIVE_ID = 330100020;
 
+struct ItemUseEffectInfo
+{
+	uint32_t pos;
+	uint32_t use_all;
+	bool is_easy;
+	std::map<uint32_t, uint32_t> items;
+	~ItemUseEffectInfo();
+};
+
 struct AttrInfo
 {
 	uint32_t id;
@@ -103,10 +112,10 @@ struct SingInfo
 {
 	uint32_t type;
 	uint32_t time;
-	uint32_t obj_id;
 	bool broad;
 	bool include_myself;
 	uint64_t start_ts;
+	void *args;
 };
 
 //struct player_raid_data
@@ -280,6 +289,8 @@ struct ShangJinTask
 	AttrInfo award[MAX_SHANGJIN_AWARD_NUM];
 	uint32_t n_award;
 	uint32_t reduce;
+	uint32_t coin;
+	uint32_t exp;
 };
 struct ShangJin
 {
@@ -627,6 +638,7 @@ public:
 	virtual ~player_struct();
 	player_data *data;   //放共享内存的数据，可以恢复模式下恢复
 	void init_player();
+	void clear(void);
 
 	void send_enter_region_notify(int region_id);
 
@@ -849,13 +861,17 @@ public:
 	int merge_item(uint32_t id); //将非绑定道具变成绑定道具
 	int stack_item(uint32_t id); //调整多个格子堆叠数量
 	void tidy_bag(void);
-	int use_prop_effect(uint32_t id, std::map<uint32_t, uint32_t> *add_list);
-	int use_prop(uint32_t pos, uint32_t use_all, std::map<uint32_t, uint32_t> *add_list);
+	int check_use_prop(uint32_t item_id, uint32_t use_count, ItemUseEffectInfo *info);
+	int try_use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInfo *info);
+	int use_prop_effect(uint32_t id, uint32_t use_count, ItemUseEffectInfo *info);
+	int use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInfo *info);
 	void update_bag_grid(uint32_t pos);
 	bool is_item_expire(uint32_t pos); //判断道具是否到期
 	void check_bag_expire(bool isNty = false);
 
 	int move_baguapai_to_bag(BaguapaiCardInfo &card);
+	void noitfy_item_flow_to_bag(std::map<uint32_t, uint32_t> &item_list);
+	void notify_one_item_flow_to_bag(uint32_t id, uint32_t num);
 
 	//掉落
 	bool give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty = true); //发放掉落奖励
@@ -922,12 +938,12 @@ public:
 
 	//吟唱
 	void sing_notify(uint32_t msg_id, uint32_t type, uint32_t time, bool broadcast, bool include_myself);
-	int begin_sing(uint32_t type, uint32_t time, uint32_t obj_id, bool broadcast, bool include_myself);
+	int begin_sing(uint32_t type, uint32_t time, bool broadcast, bool include_myself, void *args);
 	int interrupt_sing(void);
 	int end_sing(void);
 
 	//系统提示
-	void send_system_notice(uint32_t id, std::vector<char*> &args);
+	void send_system_notice(uint32_t id, std::vector<char*> *args);
 	static void send_rock_notice(player_struct &player, uint32_t notify_id);
 
 	int conserve_out_raid_pos_and_scene(raid_struct *raid); //进入副本前保存离开副本后所到的场景id以及位置
@@ -1048,8 +1064,8 @@ public:
 	bool is_partner_battle(void); //伙伴是否参战
 	bool is_partner_precedence(void); //主战伙伴是否优先出战
 	int add_partner_to_scene(uint64_t partner_uuid); //把伙伴加入到玩家所在的场景
-	int del_partner_from_scene(uint64_t partner_uuid);
-	int del_partner_from_scene(partner_struct *partner);
+	int del_partner_from_scene(uint64_t partner_uuid, bool send_msg);
+	int del_partner_from_scene(partner_struct *partner, bool send_msg);
 	void del_battle_partner_from_scene();  //临时把所有出战伙伴移出场景(副本结束的时候用)
 	void take_partner_into_scene(void); //角色进入场景后，把伙伴加入场景
 	void adjust_battle_partner(void); //阵型变化，调整出战的伙伴

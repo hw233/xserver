@@ -48,6 +48,8 @@ enum
 	SCRIPT_EVENT_ADD_BUFF_TO_MONSTER	  = 43, //给指定怪物ID增加buff
 	SCRIPT_EVENT_AUTOMATIC_NPC_TALK		  = 44, //自动npc对话通知
 	SCRIPT_EVENT_PLAY_EFFECT			  = 45, //播放特效
+	SCRIPT_EVENT_DELETE_MONSTER			  = 46, //删除副本内特定怪物
+	
 };
 
 void do_script_raid_init_cond(raid_struct *raid, struct raid_script_data *script_data);

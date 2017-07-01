@@ -362,8 +362,7 @@ void monster_manager::on_tick_10()
 				if (player != NULL)
 				{
 					//系统提示
-					std::vector<char *> args;
-					player->send_system_notice(190500285, args);
+					player->send_system_notice(190500285, NULL);
 				}
 			}
 			if (monster->sight_space != NULL)

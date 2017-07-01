@@ -215,6 +215,8 @@ static void send_raid_reward(raid_struct *raid, int star)
 			notify.exp = 0;
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RAID_FINISHED_NOTIFY, raid_finish_notify__pack, notify);
 		}
+
+		raid->m_player[i]->add_task_progress(TCT_WANYAOGU, raid->data->ID, 0);
 	}
 }
 
@@ -334,10 +336,10 @@ static void wanyaogu_raid_ai_tick(raid_struct *raid)
 						raid->m_id = raid->WANYAOGU_DATA.wanyaogu_raid_id[i + 1];
 						raid->WANYAOGU_DATA.m_config = get_config_by_id(raid->m_id, &all_raid_config);
 						assert(raid->WANYAOGU_DATA.m_config);
-						raid->init_common_script_data(&raid->WANYAOGU_DATA.script_data);
+						raid->init_common_script_data(raid->WANYAOGU_DATA.m_config->DungeonPass, &raid->WANYAOGU_DATA.script_data);
 //						raid->WANYAOGU_DATA.m_control_config = get_config_by_id(raid->WANYAOGU_DATA.m_config->ActivityControl, &all_control_config);
 //						assert(raid->WANYAOGU_DATA.m_control_config);
-						raid->init_scene_struct(raid->m_id, true);	
+						raid->init_scene_struct(raid->m_id, false);	
 						raid->stop_monster_ai();
 
 						for (int j = 0; j < MAX_TEAM_MEM; ++j)

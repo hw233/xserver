@@ -106,6 +106,7 @@ static int notify_equip_list(player_struct *player, EXTERN_DATA *extern_data);
 static int notify_yuqidao_info(player_struct *player, EXTERN_DATA *extern_data);
 static int notify_pvp_raid_info(player_struct *player, int type, EXTERN_DATA *extern_data);
 static int player_online_enter_scene_after(player_struct *player, EXTERN_DATA *extern_data);
+static void player_online_to_other_srvs(player_struct *player, EXTERN_DATA *extern_data, bool reconnect);
 static void player_ready_enter_scene(player_struct *player, EXTERN_DATA *extern_data, bool reconnect);
 static int notify_baguapai_info(player_struct *player, EXTERN_DATA *extern_data);
 static int notify_setting_switch_info(player_struct *player, EXTERN_DATA *extern_data);
@@ -2325,17 +2326,7 @@ int pack_player_online(player_struct *player, EXTERN_DATA *extern_data, bool loa
 	}
 #endif // !NO_NEWRAID
 
-
-
-	if (reconnect)
-	{ //如果是断线重连，不再通知玩家数据
-		player->data->login_notify = true;
-		player_ready_enter_scene(player, extern_data, true);
-
-			//获取玩家离线缓存
-		fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_GET_OFFLINE_CACHE_REQUEST, 0, get_seq());
-	}
-	else
+	if (!reconnect)
 	{
 		AttrMap attrs;
 		for (int i = 1; i < PLAYER_ATTR_MAX; ++i)
@@ -2369,9 +2360,13 @@ int pack_player_online(player_struct *player, EXTERN_DATA *extern_data, bool loa
 
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_ENTER_GAME_ANSWER, enter_game_answer__pack, resp);
 
-	/// 用户上线通知的排行榜服务器
-	fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_PLAYER_ONLINE_NOTIFY, 0, 0);
-
+	//放在MSG_ID_ENTER_GAME_ANSWER后面，防止客户端出错
+	if (reconnect)
+	{ //如果是断线重连，不再通知玩家数据
+		player->data->login_notify = true;
+		player_ready_enter_scene(player, extern_data, true);
+		player_online_to_other_srvs(player, extern_data, true);
+	}
 
 	ChengJieTaskManage::NotifyTargetLogin(player);
 	player->clear_award_question();
@@ -2399,10 +2394,20 @@ static int player_online_enter_scene_after(player_struct *player, EXTERN_DATA *e
 
 	player->data->login_notify = true;
 
-	//获取玩家离线缓存
-	fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_GET_OFFLINE_CACHE_REQUEST, 0, get_seq());
+	player_online_to_other_srvs(player, extern_data, false);
 
 	return 0;
+}
+
+static void player_online_to_other_srvs(player_struct *player, EXTERN_DATA *extern_data, bool reconnect)
+{
+	//获取玩家离线缓存
+	fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_GET_OFFLINE_CACHE_REQUEST, 0, 0);
+	
+	//用户上线通知的其他服务器
+	uint8_t *pData = get_send_data();
+	*pData++ = reconnect;
+	fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_PLAYER_ONLINE_NOTIFY, sizeof(uint8_t), 0);
 }
 
 static int handle_transfer_to_player_scene_request(player_struct *player, EXTERN_DATA *extern_data)
@@ -3022,13 +3027,19 @@ static int handle_bag_use_request(player_struct *player, EXTERN_DATA *extern_dat
 
 	uint32_t pos = req->index;
 	uint32_t use_all = req->use_all;
+	bool is_easy = req->isesay;
 
 	bag_use_request__free_unpacked(req, NULL);
 
 	ItemsConfigTable *prop_config = NULL;
 	int ret = 0;
 	uint32_t item_id = 0;
-	std::map<uint32_t, uint32_t> add_item_list;
+	ItemUseEffectInfo *effect_info = new ItemUseEffectInfo();
+	effect_info->pos = pos;
+	effect_info->use_all = use_all;
+	effect_info->is_easy = is_easy;
+	bool need_free = true;
+	std::map<uint32_t, uint32_t> *item_map = NULL;
 	do
 	{
 		if (player->is_item_expire(pos))
@@ -3070,33 +3081,13 @@ static int handle_bag_use_request(player_struct *player, EXTERN_DATA *extern_dat
 			break;
 		}
 
-		if (prop_config->ItemEffect == IUE_FIND_TARGET)
+		ret = player->try_use_prop(pos, use_all, effect_info);
+		if (ret != 0)
 		{
-			ret = ChengJieTaskManage::CanUseFollowItem(player);
-			if (ret != 190500154)
-			{
-				break;
-			}
+			break;
 		}
-		else if (prop_config->ItemEffect == IUE_TRANSFER_SCENE)
-		{
-			if (!player->scene || !player->scene->can_transfer(2))
-			{
-				ret = ERROR_ID_CAN_NOT_TRANSFER_IN_RAID;
-				break;
-			}
-			if (player->is_in_raid())
-			{
-				ret = ERROR_ID_CAN_NOT_TRANSFER_IN_RAID;
-				break;
-			}
-			if (player->data->truck.truck_id != 0)
-			{
-				ret = 190500305;
-				break;
-			}
-		}
-		else if (prop_config->ItemEffect == IUE_EXTEND_FRIEND_NUM)
+
+		if (prop_config->ItemEffect == IUE_EXTEND_FRIEND_NUM)
 		{
 			//换一个消息号，转发到好友服处理
 			int data_len = get_data_len();
@@ -3107,19 +3098,21 @@ static int handle_bag_use_request(player_struct *player, EXTERN_DATA *extern_dat
 
 		if (prop_config->CostTime > 0)
 		{
+			need_free = false;
 			player->stop_move();
 			if (prop_config->ItemEffect == IUE_XUNBAO)
 			{
-				player->begin_sing(SING_TYPE__XUNBAO, prop_config->CostTime, pos, false, true);
+				player->begin_sing(SING_TYPE__XUNBAO, prop_config->CostTime, false, true, effect_info);
 			}
 			else
 			{
-				player->begin_sing(SING_TYPE__USE_PROP, prop_config->CostTime, pos, true, true);
+				player->begin_sing(SING_TYPE__USE_PROP, prop_config->CostTime, true, true, effect_info);
 			}
 		}
 		else
 		{
-			ret = player->use_prop(pos, use_all, &add_item_list);
+			ret = player->use_prop(pos, use_all, effect_info);
+			item_map = &effect_info->items;
 		}
 	} while(0);
 
@@ -3138,15 +3131,24 @@ static int handle_bag_use_request(player_struct *player, EXTERN_DATA *extern_dat
 	resp.item_id = item_id;
 	resp.n_itemlist = 0;
 	resp.itemlist = item_data_point;
-	for (std::map<uint32_t, uint32_t>::iterator iter = add_item_list.begin(); iter != add_item_list.end() && resp.n_itemlist < 50; ++iter)
+	if (item_map)
 	{
-		item_data_point[resp.n_itemlist] = &item_data[resp.n_itemlist];
-		item_data__init(&item_data[resp.n_itemlist]);
-		item_data[resp.n_itemlist].id = iter->first;
-		item_data[resp.n_itemlist].num = iter->second;
-		resp.n_itemlist++;
+		for (std::map<uint32_t, uint32_t>::iterator iter = item_map->begin(); iter != item_map->end() && resp.n_itemlist < 50; ++iter)
+		{
+			item_data_point[resp.n_itemlist] = &item_data[resp.n_itemlist];
+			item_data__init(&item_data[resp.n_itemlist]);
+			item_data[resp.n_itemlist].id = iter->first;
+			item_data[resp.n_itemlist].num = iter->second;
+			resp.n_itemlist++;
+		}
 	}
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_BAG_USE_ANSWER, bag_use_answer__pack, resp);
+
+	if (need_free)
+	{
+		delete effect_info;
+		effect_info = NULL;
+	}
 
 	return 0;
 }
@@ -3507,6 +3509,9 @@ static int notify_task_list(player_struct *player, EXTERN_DATA *extern_data)
 	TaskListAnswer resp;
 	task_list_answer__init(&resp);
 
+	TaskRewardData reward_data[MAX_TASK_ACCEPTED_NUM];
+	ItemData item_data[MAX_TASK_ACCEPTED_NUM][MAX_SHANGJIN_AWARD_NUM];
+	ItemData *item_data_point[MAX_TASK_ACCEPTED_NUM][MAX_SHANGJIN_AWARD_NUM];
 	TaskData task_data[MAX_TASK_ACCEPTED_NUM];
 	TaskData* task_data_point[MAX_TASK_ACCEPTED_NUM];
 	TaskCount count_data[MAX_TASK_ACCEPTED_NUM][MAX_TASK_TARGET_NUM];
@@ -3543,6 +3548,23 @@ static int notify_task_list(player_struct *player, EXTERN_DATA *extern_data)
 		}
 		task_data[resp.n_ongoing_list].n_progress = nTarget;
 		task_data[resp.n_ongoing_list].progress = count_data_point[i];
+
+		if (get_task_type(info.id) == TT_SHANGJIN)
+		{//只发当前赏金任务奖励
+			task_reward_data__init(&reward_data[resp.n_ongoing_list]);
+			task_data[resp.n_ongoing_list].reward = &reward_data[resp.n_ongoing_list];
+			reward_data[resp.n_ongoing_list].exp = player->data->shangjin.task[player->data->shangjin.cur_task].exp;
+			reward_data[resp.n_ongoing_list].coin = player->data->shangjin.task[player->data->shangjin.cur_task].coin;
+			reward_data[resp.n_ongoing_list].items = item_data_point[resp.n_ongoing_list];
+			size_t &n_item = reward_data[resp.n_ongoing_list].n_items;
+			for (; n_item < player->data->shangjin.task[player->data->shangjin.cur_task].n_award; ++n_item)
+			{
+				item_data_point[resp.n_ongoing_list][n_item] = &(item_data[resp.n_ongoing_list][n_item]);
+				item_data__init(item_data_point[resp.n_ongoing_list][n_item]);
+				item_data[resp.n_ongoing_list][n_item].id = player->data->shangjin.task[player->data->shangjin.cur_task].award[n_item].id;
+				item_data[resp.n_ongoing_list][n_item].num = player->data->shangjin.task[player->data->shangjin.cur_task].award[n_item].val;
+			}
+		}
 		resp.n_ongoing_list++;
 	}
 
@@ -3666,7 +3688,7 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 		player->get_task_reward_item(task_id, item_list);
 		if (item_list.size() > 0 && !player->check_can_add_item_list(item_list))
 		{
-			ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
+			ret = ERROR_ID_BAG_NOT_ABLE_ADD_TASK_SUBMIT;
 			LOG_ERR("[%s:%d] player[%lu] bag not enough, id:%u", __FUNCTION__, __LINE__, extern_data->player_id, task_id);
 			break;
 		}
@@ -5269,7 +5291,7 @@ static int handle_sing_begin_request(player_struct *player, EXTERN_DATA *extern_
 			broadcast = false;
 			include_myself = false;
 		}
-		player->begin_sing(sing_type, sing_time, 0, broadcast, include_myself);
+		player->begin_sing(sing_type, sing_time, broadcast, include_myself, NULL);
 	} while(0);
 
 	CommAnswer resp;
@@ -7577,7 +7599,7 @@ static int  handle_puton_fashion_request(player_struct *player, EXTERN_DATA *ext
 		attrs[PLAYER_ATTR_CLOTHES_COLOR_DOWN] = player->data->fashion[index].colordown;
 	}
 	player->notify_attr(attrs, true, true);
-	player->add_task_progress(TCT_WEAR_FASHION, fashionId, 1);
+	player->add_task_progress(TCT_FASHION_WEAR, fashionId, 1);
 done:
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_PUTON_FASHION_ANSWER, puton_fashion_ans__pack, send);
 
@@ -8032,6 +8054,7 @@ static int handle_add_horse_exp_request(player_struct *player, EXTERN_DATA *exte
 	}
 
 	player->data->horse_attr.attr_exp[i] += add;
+	player->add_task_progress(TCT_HORSE_ADD_EXP, 0, 1);
 
 done:
 	send.arrtid = attid;
@@ -8527,7 +8550,7 @@ static int handle_shop_buy_request(player_struct *player, EXTERN_DATA *extern_da
 		}
 
 		uint32_t money_type = goods_config->ConsumptionType;
-		uint32_t need_money = goods_config->Price * buy_num;
+		uint32_t need_money = goods_config->Discount * buy_num;
 		uint32_t has_money = 0;
 		uint32_t error_id = 0;
 		switch(money_type)
@@ -8574,6 +8597,8 @@ static int handle_shop_buy_request(player_struct *player, EXTERN_DATA *extern_da
 
 		goods_info->goods_id = goods_id;
 		goods_info->bought_num += buy_num;
+
+		player->add_task_progress(TCT_SHOP_BUY, goods_info->goods_id, 1);
 	} while(0);
 
 	ShopBuyAnswer resp;
@@ -10120,7 +10145,7 @@ static int handle_baguapai_wear_request(player_struct *player, EXTERN_DATA *exte
 			card_info->star = grid->baguapai.star;
 			card_info->main_attr_val = grid->baguapai.main_attr_val;
 			memcpy(card_info->minor_attrs, grid->baguapai.minor_attrs, sizeof(card_info->minor_attrs));
-			player->add_task_progress(TCT_WEAR_BAGUA, card_id, 1);
+			player->add_task_progress(TCT_BAGUA_WEAR, card_id, 1);
 		}
 
 		//把装备的卡牌从背包删除，由于不是消耗，此处不记录流水
@@ -10297,7 +10322,7 @@ static int handle_baguapai_decompose_request(player_struct *player, EXTERN_DATA 
 
 		if (!player->check_can_add_item_list(gain_map))
 		{
-			ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
+			ret = ERROR_ID_BAG_NOT_ABLE_BAGUA_DECOMPOSE;
 			LOG_ERR("[%s:%d] player[%lu] bag not enough", __FUNCTION__, __LINE__, extern_data->player_id);
 			break;
 		}
@@ -10428,6 +10453,7 @@ static int handle_baguapai_refine_star_request(player_struct *player, EXTERN_DAT
 		}
 
 		player->calculate_attribute(true);
+		player->add_task_progress(TCT_BAGUA_REFINE_STAR, 0, 1);
 	} while(0);
 
 	BaguapaiRefineStarAnswer resp;
@@ -10529,6 +10555,7 @@ static int handle_baguapai_refine_main_attr_request(player_struct *player, EXTER
 		player->sub_coin(need_coin, MAGIC_TYPE_BAGUAPAI_REFINE_MAIN_ATTR);
 
 		card_info->main_attr_val_new = new_val;
+		player->add_task_progress(TCT_BAGUA_REFINE_MAIN_ATTR, 0, 1);
 	} while(0);
 
 	BaguapaiRefineMainAttrAnswer resp;
@@ -10698,6 +10725,7 @@ static int handle_baguapai_refine_minor_attr_request(player_struct *player, EXTE
 
 		memset(card_info->minor_attrs_new, 0, sizeof(card_info->minor_attrs_new));
 		memcpy(card_info->minor_attrs_new, attr_new, sizeof(card_info->minor_attrs_new));
+		player->add_task_progress(TCT_BAGUA_REFINE_MINOR_ATTR, 0, 1);
 	} while(0);
 
 	BaguapaiRefineMinorAttrAnswer resp;
@@ -11063,6 +11091,8 @@ static int on_login_send_yaoshi(player_struct *player, EXTERN_DATA *extern_data)
 		arrTask[i].quality = player->data->shangjin.task[i].quality;
 		arrTask[i].n_award = player->data->shangjin.task[i].n_award;
 		arrTask[i].reduce = player->data->shangjin.task[i].reduce;
+		arrTask[i].coin = player->data->shangjin.task[i].coin;
+		arrTask[i].exp = player->data->shangjin.task[i].exp;
 		for (uint32_t j = 0; j < player->data->shangjin.task[i].n_award; ++j)
 		{
 			shangjin_task_award__init(&arrAward[i][j]);// + i * MAX_SHANGJIN_AWARD_NUM + j);
@@ -11097,15 +11127,16 @@ static int refresh_guoyu_task(player_struct *player, int type, bool isItem)
 {
 	EXTERN_DATA extern_data;
 	RandomMonsterTable *table = get_random_monster_config(type, player->data->guoyu.guoyu_level);
-	if (table == NULL)
+	while (table == NULL)
 	{
-		LOG_ERR("[%s:%d] can not get shangjin task table player[%lu] ", __FUNCTION__, __LINE__, player->get_uuid());
-		return 1;
+		//LOG_ERR("[%s:%d] can not get guoyu task table player[%lu] ", __FUNCTION__, __LINE__, player->get_uuid());
+		//return 1;
+		table = get_random_monster_config(type, player->data->guoyu.guoyu_level);
 	}
 	RandomDungeonTable *tableFb = get_random_guoyu_fb_config(type);
 	if (tableFb == NULL)
 	{
-		LOG_ERR("[%s:%d] can not get shangjin task table player[%lu] ", __FUNCTION__, __LINE__, player->get_uuid());
+		LOG_ERR("[%s:%d] can not get guoyu task table player[%lu] ", __FUNCTION__, __LINE__, player->get_uuid());
 		return 2;
 	}
 	if (player->m_team == NULL)
@@ -11119,10 +11150,10 @@ static int refresh_guoyu_task(player_struct *player, int type, bool isItem)
 		{
 			continue;
 		}
-		if (mem->data->guoyu.cur_task != 0 && i > 0)
-		{
-			continue;
-		}
+		//if (mem->data->guoyu.cur_task != 0 && i > 0)
+		//{
+		//	continue;
+		//}
 		mem->data->guoyu.cur_task = table->ID;
 		mem->data->guoyu.map = tableFb->ResID;
 		mem->data->guoyu.random_map = tableFb->ID;
@@ -11711,9 +11742,13 @@ int CheckCanAcceptChengjieTask(player_struct *player, STChengJie * task)
 	{
 		return 190500136;
 	}
-	if (player->get_uuid() == task->investor || player->get_uuid() == task->pid)
+	if (player->get_uuid() == task->investor)
 	{
 		return 190500135;
+	}
+	if (player->get_uuid() == task->pid)
+	{
+		return 190500340;
 	}
 	if (task->complete)
 	{
@@ -11913,6 +11948,7 @@ static int handle_accept_shangjin_task_request(player_struct *player, EXTERN_DAT
 	player->data->shangjin.accept = true;
 	player->accept_task(player->data->shangjin.task[0].id, false);
 	player->check_activity_progress(AM_YAOSHI, 1);
+	player->add_task_progress(TCT_YAOSHI_SHANGJIN, 0, 1);
 done:
 	send_comm_answer(MSG_ID_ACCEPT_SHANGJIN_TASK_ANSWER, ret, extern_data);
 
@@ -12573,6 +12609,11 @@ static int handle_guildsrv_reward_request(player_struct *player, EXTERN_DATA *ex
 		{
 			player->add_item_list(item_map, req->statis_id, ADD_ITEM_WILL_FAIL, true);
 		}
+
+		if (req->statis_id == MAGIC_TYPE_SHOP_BUY)
+		{
+			player->add_task_progress(TCT_SHOP_BUY, 0, 1);
+		}
 	} while(0);
 
 	PROTO_GUILDSRV_REWARD_RES *res = (PROTO_GUILDSRV_REWARD_RES *)get_send_buf(SERVER_PROTO_GUILDSRV_REWARD_ANSWER, get_seq());
@@ -12657,7 +12698,7 @@ static int handle_sync_guild_info_request(player_struct *player, EXTERN_DATA *ex
 	}
 	else if (old_guild_id == 0 && player->data->guild_id > 0)
 	{
-		player->add_task_progress(TCT_JOIN_GUILD, (player->data->guild_office == 1 ? 2 : 1), 1);
+		player->add_task_progress(TCT_GUILD_JOIN, (player->data->guild_office == 1 ? 2 : 1), 1);
 	}
 
 	if (old_guild_id != player->data->guild_id)
@@ -12698,6 +12739,8 @@ static int handle_guild_answer_award(player_struct *player, EXTERN_DATA *extern_
 	{
 		player->add_item(table->parameter1[2], table->parameter1[3], MAGIC_TYPE_QUESTION);
 	}
+
+	player->add_task_progress(TCT_QUESTION_JOIN, 0, 1);
 
 	faction_question_result__free_unpacked(reqAward, NULL);
 	return 0;
@@ -13518,6 +13561,7 @@ static int handle_answer_common_question_request(player_struct *player, EXTERN_D
 	{
 		player->data->common_answer.question = 0;
 		player->check_activity_progress(AM_ANSWER, 1);
+		player->add_task_progress(TCT_QUESTION_JOIN, 0, 1);
 	}
 	else
 	{
@@ -13712,6 +13756,7 @@ static int handle_answer_award_question_request(player_struct *player, EXTERN_DA
 			//send_comm_answer(MSG_ID_NEXT_AWARD_QUESTION_NOTIFY, 0, extern_data);
 			on_login_send_question(player, extern_data); //完成一次任务答题
 			player->check_activity_progress(AM_ANSWER, 2);
+			player->add_task_progress(TCT_QUESTION_JOIN, 0, 1);
 		}
 		player->data->award_answer.bOpenWin = false;
 	}
@@ -14555,8 +14600,7 @@ static int handle_xunbao_pos_request(player_struct *player, EXTERN_DATA *extern_
 	}
 	if (empty_num < 3)
 	{
-		std::vector<char *> args;
-		player->send_system_notice(190500284, args);
+		player->send_system_notice(190500284, NULL);
 	}
 
 	uint32_t mapId = 0;
@@ -14995,10 +15039,10 @@ static int handle_partner_formation_request(player_struct *player, EXTERN_DATA *
 
 		partner->mark_bind();
 
+		player->adjust_battle_partner();
 		if (player->is_partner_battle())
 		{
 			player->calculate_attribute(true);
-			player->adjust_battle_partner();
 		}
 	} while(0);
 
@@ -15745,6 +15789,7 @@ static int handle_partner_recruit_request(player_struct *player, EXTERN_DATA *ex
 		{
 			player->add_item_list(award_item_map, MAGIC_TYPE_PARTNER_RECRUIT, ADD_ITEM_SEND_MAIL_WHEN_BAG_FULL);
 		}
+		player->add_task_progress(TCT_PARTNER_RECRUIT, 0, config->RecruitNum);
 	} while(0);
 
 	PartnerRecruitAnswer resp;
@@ -15857,6 +15902,8 @@ static int handle_partner_reset_attr_request(player_struct *player, EXTERN_DATA 
 		sendAttr.detail_attr_cur = partner->data->attr_flash.detail_attr_vaual;
 		sendAttr.n_detail_attr_cur = partner->data->attr_flash.n_detail_attr;
 		sendAttr.type = partner->data->attr_flash.type;
+
+		player->add_task_progress(TCT_PARTNER_RESET_ATTR, 0, 1);
 	}
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_PARTNER_RESET_ATTR_ANSWER, res_reset_attr__pack, send);
 
@@ -15890,9 +15937,30 @@ static int handle_partner_save_attr_request(player_struct *player, EXTERN_DATA *
 		return -3;
 	}
 
+	std::map<uint32_t, uint32_t> item_list;
+	for (int i = 0; i < MAX_PARTNER_SKILL_NUM; ++i)
+	{
+		if (partner->data->attr_cur.skill_list[i].lv > 0)
+		{
+			std::map<uint32_t, uint32_t>::iterator it = sg_partner_item_map.find(partner->data->attr_cur.skill_list[i].skill_id);
+			if (it == sg_partner_item_map.end())
+			{
+				continue;
+			}
+			item_list.insert(std::make_pair(it->second, partner->data->attr_cur.skill_list[i].lv));
+		}	
+	}
+	player->add_item_list(item_list, MAGIC_TYPE_PARTNER_ATTR, ADD_ITEM_SEND_MAIL_WHEN_BAG_FULL);
 	memcpy(&(partner->data->attr_cur), &(partner->data->attr_flash), sizeof(partner_attr_data));
 	memset(&(partner->data->attr_flash), 0, sizeof(partner_attr_data));
 	partner->calculate_attribute(true);
+	if (partner->data->strong_num > 0)
+	{
+		item_list.clear();
+		item_list.insert(std::make_pair(partner->config->QualificationsItem[0], partner->config->QualificationsItem[1] * partner->data->strong_num));
+		partner->data->strong_num = 0;
+		player->add_item_list(item_list, MAGIC_TYPE_PARTNER_ATTR, ADD_ITEM_SEND_MAIL_WHEN_BAG_FULL);
+	}
 	send_comm_answer(MSG_ID_PARTNER_SAVE_ATTR_ANSWER, 0, extern_data);
 
 	return 0;
@@ -15950,6 +16018,8 @@ static int handle_partner_add_attr_request(player_struct *player, EXTERN_DATA *e
 			break;
 		}
 		partner->data->attr_cur.base_attr_vaual[i] += rand() % table->ParameterEffect[1] + 1;
+		++partner->data->strong_num;
+		player->add_task_progress(TCT_PARTNER_ADD_ATTR, 0, 1);
 		if (partner->data->attr_cur.base_attr_vaual[i] >= partner->data->attr_cur.base_attr_up[i])
 		{
 			partner->data->attr_cur.base_attr_vaual[i] = partner->data->attr_cur.base_attr_up[i];
@@ -16064,6 +16134,7 @@ static int handle_partner_add_god_request(player_struct *player, EXTERN_DATA *ex
 	if (send.ret == 0)
 	{
 		partner->calculate_attribute(true);
+		player->add_task_progress(TCT_PARTNER_ADD_GOD, 0, 1);
 	}
 
 	send.uuids = partner_uuid;
@@ -16170,6 +16241,35 @@ static int handle_undo_cost(player_struct *player, EXTERN_DATA *extern_data)
 	{
 		player->add_item_list(item_map, req->cost.statis_id, ADD_ITEM_SEND_MAIL_WHEN_BAG_FULL);
 	}
+
+	return 0;
+}
+//客户端完成特定副本ai请求继续执行副本
+static int handle_continue_raid_ai_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+	RaidAiContinueRequest* req = raid_ai_continue_request__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+
+	if(req == NULL)
+	{
+		LOG_ERR("[%s:%d] req == NULL", __FUNCTION__, __LINE__);
+		return -2;
+	}
+	uint64_t type = req->ai_type;
+	raid_ai_continue_request__free_unpacked(req, NULL);
+
+	raid_struct *raid = player->get_raid();
+	if(raid == NULL || raid->data == NULL)
+	{
+		LOG_ERR("[%s:%d] raid == NULL or raid->data == NULL", __FUNCTION__, __LINE__);
+		return -3;
+	}
+
+	raid->data->raid_ai_event = type;
 
 	return 0;
 }
@@ -16435,6 +16535,9 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_JIJIANGOP_GIFT_INFO_REQUEST, handle_gift_receive_request);
 
 	add_msg_handle(SERVER_PROTO_UNDO_COST, handle_undo_cost);
+
+
+	add_msg_handle(MSG_ID_RAID_AI_CONTINUE_REQUEST, handle_continue_raid_ai_request);
 }
 
 void uninstall_msg_handle()

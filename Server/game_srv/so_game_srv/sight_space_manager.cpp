@@ -1,5 +1,6 @@
 #include "sight_space_manager.h"
 #include "msgid.h"
+#include "../proto/raid.pb-c.h"
 #include "cash_truck_manager.h"
 
 // comm_pool sight_space_manager::sight_space_manager_sight_space_data_pool;
@@ -39,9 +40,12 @@ static void player_enter_sight_space(sight_space_struct *sight_space, player_str
 		}
 	}
 
+	EnterPlanesRaid send;
+	enter_planes_raid__init(&send);
+	send.type = sight_space->data->type;
 	EXTERN_DATA extern_data;
 	extern_data.player_id = player->get_uuid();
-	fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ENTER_PLANES_RAID_NOTIFY, 0, 0);
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ENTER_PLANES_RAID_NOTIFY, enter_planes_raid__pack, send);
 }
 
 int sight_space_manager::init_sight_space(int num, unsigned long key)
@@ -91,7 +95,7 @@ void sight_space_manager::on_tick()
 	sight_space_manager_mark_delete_sight_space.clear();
 }
 
-sight_space_struct *sight_space_manager::create_sight_space(player_struct *player)
+sight_space_struct *sight_space_manager::create_sight_space(player_struct *player, int type)
 {
 	assert(player->sight_space == NULL);
 
@@ -109,6 +113,7 @@ sight_space_struct *sight_space_manager::create_sight_space(player_struct *playe
 		return NULL;
 	}
 	ret->data = data;
+	ret->data->type = type;
 	
 	ret->players[0] = player;
 	ret->data->player_id[0] = player->get_uuid();

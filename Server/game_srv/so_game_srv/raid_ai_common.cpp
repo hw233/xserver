@@ -233,21 +233,40 @@ static bool script_raid_check_finished(raid_struct *raid, struct raid_script_dat
 					{	
 						break;
 					}	
-					
-					uint32_t monster_id = config->Parameter1[0];
-					uint32_t percent_hp = config->Parameter1[1];		
-					for(std::set<monster_struct*>::iterator target_monster = raid->m_monster.begin(); target_monster != raid->m_monster.end(); target_monster++)
+					bool flag = true;
+					for(size_t i = 0; i+1 < config->n_Parameter1; i = i+2)
 					{
-						monster_struct* cause_monster = *target_monster;
-						if(monster_id != cause_monster->data->monster_id)
+						uint32_t monster_id = config->Parameter1[i];
+						uint32_t percent_hp = config->Parameter1[i+1];		
+						for(std::set<monster_struct*>::iterator target_monster = raid->m_monster.begin(); target_monster != raid->m_monster.end(); target_monster++)
 						{
-							continue;
+							monster_struct* cause_monster = *target_monster;
+							if(monster_id != cause_monster->data->monster_id)
+							{
+								continue;
+							}
+
+							if(!do_check_script_raid_monster_hp(percent_hp,cause_monster))
+							{
+								flag = false;
+							}
 						}
-						
-						return do_check_script_raid_monster_hp(percent_hp,cause_monster);
 					}
+					return flag;
 					
 				}while(0);
+			}
+			return false;
+			case SCRIPT_EVENT_AUTOMATIC_NPC_TALK:  //发送自动npc对话，并且等待对话完毕
+			{
+				if(raid != NULL && raid->data != NULL)
+				{
+					if(raid->data->raid_ai_event == SCRIPT_EVENT_AUTOMATIC_NPC_TALK)
+					{
+						raid->data->raid_ai_event = 0;
+						return true;
+					}
+				}
 			}
 			return false;
 		default:
@@ -390,7 +409,6 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 		case SCRIPT_EVENT_PLAY_NPC_ACTION:
 		case SCRIPT_EVENT_PLAY_ANIMATION:
 		case SCRIPT_EVENT_START_GONGCHENGCHUI:
-		case SCRIPT_EVENT_AUTOMATIC_NPC_TALK:
 		case SCRIPT_EVENT_PLAY_EFFECT:
 		{
 			RaidEventNotify nty;
@@ -471,6 +489,17 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 			}
 			return true;
 		}
+		case SCRIPT_EVENT_AUTOMATIC_NPC_TALK:  //发送自动npc对话，并且等待对话完毕
+		{
+			RaidEventNotify nty;
+			raid_event_notify__init(&nty);
+			nty.type = config->TypeID;
+			nty.param1 = config->Parameter1;
+			nty.n_param1 = config->n_Parameter1;
+			nty.param2 = config->Parameter2;
+			nty.n_param2 = config->n_Parameter2;
+			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
+		}
 		case SCRIPT_EVENT_MONSTER_DEAD_ALL: //所有指定怪物死亡 等同于检测副本内还存活指定怪物数量小于某值
 		case SCRIPT_EVENT_ALIVE_MONSTER_EQUEL: //检测副本内还存活指定怪物数量等于某值
 		case SCRIPT_EVENT_ALIVE_MONSTER_LESSER: //检测副本内还存活指定怪物数量小于某值
@@ -514,7 +543,28 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 				}
 			}
 
-		 return true;
+		return true;
+		}
+		case SCRIPT_EVENT_DELETE_MONSTER:
+		{
+			assert(config->n_Parameter1 >=1);
+			for(size_t j = 0; j < config->n_Parameter1; j++)
+			{
+				uint32_t monster_id = config->Parameter1[j];
+				for(std::set<monster_struct*>::iterator itr = raid->m_monster.begin(); itr != raid->m_monster.end();)
+				{
+					std::set<monster_struct *>::iterator next_itr = itr;
+					++next_itr;
+					if ((*itr)->data->monster_id == monster_id)
+					{
+						raid->delete_monster_from_scene((*itr), true);
+						monster_manager::delete_monster(*itr);
+					}
+					itr = next_itr;
+				}
+
+			}
+		return true;
 		}
 		default:
 			return false;
@@ -628,8 +678,9 @@ void script_ai_common_tick(raid_struct *raid, struct raid_script_data *script_da
 	
 	if (script_raid_check_finished(raid, script_data))
 		script_raid_next(raid, script_data);
-	
-	normal_raid_ai_tick(raid);
+
+	if (raid->m_config->DengeonRank == DUNGEON_TYPE_SCRIPT)
+		normal_raid_ai_tick(raid);
 }
 
 void script_ai_common_player_ready(raid_struct *raid, player_struct *player, struct raid_script_data *script_data)

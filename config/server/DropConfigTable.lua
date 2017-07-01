@@ -127,6 +127,38 @@ local DropConfigTable = {
 		['NumMin'] = {100000,100000},
 		['NumMax'] = {100000,100000}
 		},
+	[220100017] = {
+		['ID'] = 220100017,
+		['ProType'] = 1,
+		['DropID'] = {201010005,201010008},
+		['Probability'] = {10000,10000},
+		['NumMin'] = {1000,2000},
+		['NumMax'] = {1000,2000}
+		},
+	[220100018] = {
+		['ID'] = 220100018,
+		['ProType'] = 1,
+		['DropID'] = {201010005,201010008},
+		['Probability'] = {10000,10000},
+		['NumMin'] = {2000,3000},
+		['NumMax'] = {2000,3000}
+		},
+	[220100019] = {
+		['ID'] = 220100019,
+		['ProType'] = 1,
+		['DropID'] = {201010005,201010008},
+		['Probability'] = {10000,10000},
+		['NumMin'] = {3000,4000},
+		['NumMax'] = {3000,4000}
+		},
+	[220100020] = {
+		['ID'] = 220100020,
+		['ProType'] = 1,
+		['DropID'] = {201010005,201010008},
+		['Probability'] = {10000,10000},
+		['NumMin'] = {4000,5000},
+		['NumMax'] = {4000,5000}
+		},
 	[220100221] = {
 		['ID'] = 220100221,
 		['ProType'] = 1,
@@ -211,7 +243,7 @@ local DropConfigTable = {
 		['ID'] = 220100231,
 		['ProType'] = 1,
 		['DropID'] = {201050022},
-		['Probability'] = {100000},
+		['Probability'] = {10000},
 		['NumMin'] = {1},
 		['NumMax'] = {1}
 		},
@@ -219,7 +251,7 @@ local DropConfigTable = {
 		['ID'] = 220100232,
 		['ProType'] = 1,
 		['DropID'] = {201050025},
-		['Probability'] = {100000},
+		['Probability'] = {10000},
 		['NumMin'] = {1},
 		['NumMax'] = {1}
 		},
@@ -227,7 +259,7 @@ local DropConfigTable = {
 		['ID'] = 220100233,
 		['ProType'] = 1,
 		['DropID'] = {201050026},
-		['Probability'] = {100000},
+		['Probability'] = {10000},
 		['NumMin'] = {1},
 		['NumMax'] = {1}
 		},
@@ -235,15 +267,39 @@ local DropConfigTable = {
 		['ID'] = 220100234,
 		['ProType'] = 1,
 		['DropID'] = {201050019},
-		['Probability'] = {100000},
+		['Probability'] = {10000},
 		['NumMin'] = {1},
 		['NumMax'] = {1}
 		},
-	[220100234] = {
-		['ID'] = 220100234,
+	[220100235] = {
+		['ID'] = 220100235,
 		['ProType'] = 1,
 		['DropID'] = {201050027},
-		['Probability'] = {100000},
+		['Probability'] = {10000},
+		['NumMin'] = {1},
+		['NumMax'] = {1}
+		},
+	[220100236] = {
+		['ID'] = 220100236,
+		['ProType'] = 1,
+		['DropID'] = {201050030},
+		['Probability'] = {10000},
+		['NumMin'] = {1},
+		['NumMax'] = {1}
+		},
+	[220100237] = {
+		['ID'] = 220100237,
+		['ProType'] = 1,
+		['DropID'] = {201050031},
+		['Probability'] = {10000},
+		['NumMin'] = {1},
+		['NumMax'] = {1}
+		},
+	[220100238] = {
+		['ID'] = 220100238,
+		['ProType'] = 1,
+		['DropID'] = {201050032},
+		['Probability'] = {10000},
 		['NumMin'] = {1},
 		['NumMax'] = {1}
 		},

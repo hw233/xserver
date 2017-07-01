@@ -3,41 +3,41 @@ local TaskRewardTable = {
 		['ID'] = 240600001,	--任务奖励表ID
 		['RewardEXP'] = 20,	--奖励EXP
 		['RewardMoney'] = 0,	--奖励银两
-		['RewardType'] = {0},	--奖励类型
-		['RewardTarget'] = {0},	--奖励目标
-		['RewardNum'] = {0}	--奖励值
+		['RewardType'] = {1},	--奖励类型
+		['RewardTarget'] = {201100301},	--奖励目标
+		['RewardNum'] = {1}	--奖励值
 		},
 	[240600002] = {
 		['ID'] = 240600002,
 		['RewardEXP'] = 30,
 		['RewardMoney'] = 55000,
-		['RewardType'] = {0},
-		['RewardTarget'] = {0},
-		['RewardNum'] = {0}
+		['RewardType'] = {1},
+		['RewardTarget'] = {201070027},
+		['RewardNum'] = {1}
 		},
 	[240600003] = {
 		['ID'] = 240600003,
 		['RewardEXP'] = 40,
 		['RewardMoney'] = 60000,
-		['RewardType'] = {0},
-		['RewardTarget'] = {0},
-		['RewardNum'] = {0}
+		['RewardType'] = {1},
+		['RewardTarget'] = {201060001},
+		['RewardNum'] = {1}
 		},
 	[240600004] = {
 		['ID'] = 240600004,
 		['RewardEXP'] = 50,
 		['RewardMoney'] = 65000,
-		['RewardType'] = {0},
-		['RewardTarget'] = {0},
-		['RewardNum'] = {0}
+		['RewardType'] = {1},
+		['RewardTarget'] = {201010014},
+		['RewardNum'] = {1}
 		},
 	[240600005] = {
 		['ID'] = 240600005,
 		['RewardEXP'] = 60,
 		['RewardMoney'] = 70000,
-		['RewardType'] = {0},
-		['RewardTarget'] = {0},
-		['RewardNum'] = {0}
+		['RewardType'] = {1},
+		['RewardTarget'] = {201100301},
+		['RewardNum'] = {1}
 		},
 	[240600006] = {
 		['ID'] = 240600006,
@@ -67,8 +67,8 @@ local TaskRewardTable = {
 		['ID'] = 240600009,
 		['RewardEXP'] = 100,
 		['RewardMoney'] = 90000,
-		['RewardType'] = {1},
-		['RewardTarget'] = {201070027},
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
 		['RewardNum'] = {1}
 		},
 	[240600010] = {
@@ -337,43 +337,163 @@ local TaskRewardTable = {
 		},
 	[240600043] = {
 		['ID'] = 240600043,
-		['RewardEXP'] = 0,
-		['RewardMoney'] = 0,
-		['RewardType'] = {1,1,1,1},
-		['RewardTarget'] = {201070076,201010001,201010004,201010007},
-		['RewardNum'] = {5,1000,1000,1000}
+		['RewardEXP'] = 1000,
+		['RewardMoney'] = 2000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070074,201010007,201010010},
+		['RewardNum'] = {2,150,200}
 		},
 	[240600044] = {
 		['ID'] = 240600044,
-		['RewardEXP'] = 0,
-		['RewardMoney'] = 0,
-		['RewardType'] = {1,1,1,1},
-		['RewardTarget'] = {201070076,201010001,201010004,201010007},
-		['RewardNum'] = {5,1000,1000,1000}
+		['RewardEXP'] = 1000,
+		['RewardMoney'] = 2000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070075,201010007,201010010},
+		['RewardNum'] = {2,150,200}
 		},
 	[240600045] = {
 		['ID'] = 240600045,
-		['RewardEXP'] = 0,
-		['RewardMoney'] = 0,
-		['RewardType'] = {1,1,1,1},
-		['RewardTarget'] = {201070076,201010001,201010004,201010007},
-		['RewardNum'] = {5,1000,1000,1000}
+		['RewardEXP'] = 1000,
+		['RewardMoney'] = 2000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070076,201010007,201010010},
+		['RewardNum'] = {2,150,200}
 		},
 	[240600046] = {
 		['ID'] = 240600046,
 		['RewardEXP'] = 1000,
 		['RewardMoney'] = 10000,
-		['RewardType'] = {1,1,1,1,1},
-		['RewardTarget'] = {201070074,201070075,201070076,201070077,201070078},
-		['RewardNum'] = {2,2,2,2,2}
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070074,201010007,201010010},
+		['RewardNum'] = {2,2,2}
 		},
 	[240600047] = {
 		['ID'] = 240600047,
 		['RewardEXP'] = 1000,
 		['RewardMoney'] = 10000,
-		['RewardType'] = {1,1,1,1,1},
-		['RewardTarget'] = {201070079,201070080,201070081,201070082,201070083},
-		['RewardNum'] = {2,2,2,2,2}
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070079,201010007,201010010},
+		['RewardNum'] = {2,2,2}
+		},
+	[240600048] = {
+		['ID'] = 240600048,
+		['RewardEXP'] = 2000,
+		['RewardMoney'] = 3000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070074,201010007,201010010},
+		['RewardNum'] = {2,200,300}
+		},
+	[240600049] = {
+		['ID'] = 240600049,
+		['RewardEXP'] = 2000,
+		['RewardMoney'] = 3000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070075,201010007,201010010},
+		['RewardNum'] = {2,200,300}
+		},
+	[240600050] = {
+		['ID'] = 240600050,
+		['RewardEXP'] = 2000,
+		['RewardMoney'] = 3000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070076,201010007,201010010},
+		['RewardNum'] = {2,200,300}
+		},
+	[240600051] = {
+		['ID'] = 240600051,
+		['RewardEXP'] = 4000,
+		['RewardMoney'] = 5000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070077,201010007,201010010},
+		['RewardNum'] = {3,250,400}
+		},
+	[240600052] = {
+		['ID'] = 240600052,
+		['RewardEXP'] = 4000,
+		['RewardMoney'] = 5000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070078,201010007,201010010},
+		['RewardNum'] = {3,250,400}
+		},
+	[240600053] = {
+		['ID'] = 240600053,
+		['RewardEXP'] = 4000,
+		['RewardMoney'] = 5000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070079,201010007,201010010},
+		['RewardNum'] = {3,250,400}
+		},
+	[240600054] = {
+		['ID'] = 240600054,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 7000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070077,201010007,201010010},
+		['RewardNum'] = {3,300,500}
+		},
+	[240600055] = {
+		['ID'] = 240600055,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 7000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070078,201010007,201010010},
+		['RewardNum'] = {3,300,500}
+		},
+	[240600056] = {
+		['ID'] = 240600056,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 7000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070079,201010007,201010010},
+		['RewardNum'] = {3,300,500}
+		},
+	[240600057] = {
+		['ID'] = 240600057,
+		['RewardEXP'] = 8000,
+		['RewardMoney'] = 9000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070080,201010007,201010010},
+		['RewardNum'] = {5,350,600}
+		},
+	[240600058] = {
+		['ID'] = 240600058,
+		['RewardEXP'] = 8000,
+		['RewardMoney'] = 9000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070081,201010007,201010010},
+		['RewardNum'] = {5,350,600}
+		},
+	[240600059] = {
+		['ID'] = 240600059,
+		['RewardEXP'] = 8000,
+		['RewardMoney'] = 9000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070082,201010007,201010010},
+		['RewardNum'] = {5,350,600}
+		},
+	[240600060] = {
+		['ID'] = 240600060,
+		['RewardEXP'] = 15000,
+		['RewardMoney'] = 20000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070080,201010007,201010010},
+		['RewardNum'] = {5,400,700}
+		},
+	[240600061] = {
+		['ID'] = 240600061,
+		['RewardEXP'] = 15000,
+		['RewardMoney'] = 20000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070081,201010007,201010010},
+		['RewardNum'] = {5,400,700}
+		},
+	[240600062] = {
+		['ID'] = 240600062,
+		['RewardEXP'] = 15000,
+		['RewardMoney'] = 20000,
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201070082,201010007,201010010},
+		['RewardNum'] = {5,400,700}
 		},
 	[240620001] = {
 		['ID'] = 240620001,

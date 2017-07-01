@@ -43,7 +43,7 @@ static void guoyu_raid_ai_init(raid_struct *raid, player_struct *player)
 	{
 		avLv = it->second->MaxLevel;
 	}
-
+	raid->data->ai_data.guoyu_data.target = it->second->MonsterID;
 	monster_manager::create_monster_at_pos(raid, it->second->MonsterID, avLv, itFb->second->PointX[i], itFb->second->PointZ[i], 0, NULL);
 }
 
@@ -51,81 +51,99 @@ static void guoyu_raid_ai_finished(raid_struct *raid)
 {
 	raid->clear_monster();
 
-	GuoyuFbSucc notify;
-	guoyu_fb_succ__init(&notify);
-	notify.succ = 0;
-
 	raid->data->state = RAID_STATE_PASS;
-
-	EXTERN_DATA extern_data;
-	for (int i = 0; i < MAX_TEAM_MEM; ++i)
-	{
-		if (!raid->m_player[i])
-			continue;
-		extern_data.player_id = raid->m_player[i]->get_uuid();
-		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_FB_SUCC_NOTIFY, guoyu_fb_succ__pack, notify);
-	}
 }
 
 static void guoyu_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
 {
-	EXTERN_DATA extern_data;
-	GuoyuSucc notify;
-	guoyu_succ__init(&notify);
-	for (int i = 0; i < MAX_TEAM_MEM; ++i)
+	if (monster->data->monster_id == raid->data->ai_data.guoyu_data.target)
 	{
-		if (!raid->m_player[i])
-			continue;
-		extern_data.player_id = raid->m_player[i]->get_uuid();
-
-		std::map<uint64_t, struct RandomMonsterTable*>::iterator it = random_monster.find(raid->m_player[i]->data->guoyu.cur_task);
-		if (it == random_monster.end())
+		EXTERN_DATA extern_data;
+		GuoyuSucc notify;
+		guoyu_succ__init(&notify);
+		for (int i = 0; i < MAX_TEAM_MEM; ++i)
 		{
-			continue;
-		}
-		uint64_t dropid = it->second->BasicsReward;
-		if (monster->data->monster_id == it->second->MonsterID)
-		{
-			notify.succ = true;
-			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_TASK_SUCC_NOTIFY, guoyu_succ__pack, notify);
-			raid->m_player[i]->data->guoyu.cur_task = 0;
+			if (!raid->m_player[i])
+				continue;
+			extern_data.player_id = raid->m_player[i]->get_uuid();
 
-			if (raid->m_player[i]->data->guoyu.award)
+			GuoyuFbSucc notifyFb;
+			guoyu_fb_succ__init(&notifyFb);
+			notify.succ = 0;
+
+			std::map<uint64_t, struct RandomMonsterTable*>::iterator it = random_monster.find(raid->m_player[i]->data->guoyu.cur_task);
+			if (it == random_monster.end())
 			{
-				dropid = it->second->ActivityReward;
-				raid->m_player[i]->data->guoyu.award = false;
+				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_FB_SUCC_NOTIFY, guoyu_fb_succ__pack, notifyFb);
 			}
-		}
-
-		std::map<uint32_t, uint32_t> item_list;
-		int ret = get_drop_item(dropid, item_list);
-		if (ret != 0)
-		{
-			continue;
-		}
-		SpecialtySkillTable *tableSkill = get_yaoshi_skill_config(GUOYU_TWELVE, raid->m_player[i]->data->guoyu.guoyu_level);
-		for (std::map<uint32_t, uint32_t>::iterator it = item_list.begin(); it != item_list.end(); ++it)
-		{
-			uint32_t add = 0;
-			if (tableSkill != NULL)
+			else
 			{
-				add = tableSkill->EffectValue[0];
-			}
-			if (get_item_type(it->first) == ITEM_TYPE_GUOYU_EXP)
-			{
-				if (raid->m_player[i]->data->cur_yaoshi == MAJOR__TYPE__SHUANGJIN)  //专精加成
+				uint64_t dropid = it->second->BasicsReward;
+				if (monster->data->monster_id == it->second->MonsterID)
 				{
-					SpecialTitleTable *title = get_yaoshi_title_table(raid->m_player[i]->data->cur_yaoshi, raid->m_player[i]->data->guoyu.guoyu_level);
-					if (title != NULL)
+					notify.succ = true;
+					fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_TASK_SUCC_NOTIFY, guoyu_succ__pack, notify);
+					raid->m_player[i]->data->guoyu.cur_task = 0;
+
+					if (raid->m_player[i]->data->guoyu.award)
 					{
-						add += title->TitleEffect2;
+						dropid = it->second->ActivityReward;
+						raid->m_player[i]->data->guoyu.award = false;
 					}
 				}
+
+				std::map<uint32_t, uint32_t> item_list;
+				int ret = get_drop_item(dropid, item_list);
+				if (ret == 0)
+				{
+					static const int MAX_SEND_ITEM = 20;
+					uint32_t sendItemId[MAX_SEND_ITEM];
+					uint32_t sendItemNum[MAX_SEND_ITEM];
+					notifyFb.item_id = sendItemId;
+					notifyFb.item_num = sendItemNum;
+					SpecialtySkillTable *tableSkill = get_yaoshi_skill_config(GUOYU_TWELVE, raid->m_player[i]->data->guoyu.guoyu_level);
+					for (std::map<uint32_t, uint32_t>::iterator it = item_list.begin(); it != item_list.end(); ++it)
+					{
+						uint32_t add = 0;
+						if (tableSkill != NULL)
+						{
+							add = tableSkill->EffectValue[0];
+						}
+						int itemType = get_item_type(it->first);
+						if (itemType == ITEM_TYPE_GUOYU_EXP)
+						{
+							if (raid->m_player[i]->data->cur_yaoshi == MAJOR__TYPE__SHUANGJIN)  //专精加成
+							{
+								SpecialTitleTable *title = get_yaoshi_title_table(raid->m_player[i]->data->cur_yaoshi, raid->m_player[i]->data->guoyu.guoyu_level);
+								if (title != NULL)
+								{
+									add += title->TitleEffect2;
+								}
+							}
+						}
+						it->second = it->second *(10000 + add) / 10000;
+						if (itemType == ITEM_TYPE_COIN)
+						{
+							notifyFb.coin = it->second;
+						}
+						else if (itemType == ITEM_TYPE_EXP)
+						{
+							notifyFb.exp = it->second;
+						}
+						else
+						{
+							sendItemId[notifyFb.n_item_id++] = it->first;
+							sendItemNum[notifyFb.n_item_num++] = it->second;
+						}
+					}
+					raid->m_player[i]->add_item_list(item_list, MAGIC_TYPE_YAOSHI, ADD_ITEM_SEND_MAIL_WHEN_BAG_FULL);
+				}
+			
+				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_FB_SUCC_NOTIFY, guoyu_fb_succ__pack, notifyFb);
+				raid->m_player[i]->check_activity_progress(AM_YAOSHI, 3);
+				raid->m_player[i]->add_task_progress(TCT_YAOSHI_GUOYU, 0, 1);
 			}
-			it->second = it->second *(10000 + add) / 10000;
 		}
-		raid->m_player[i]->add_item_list(item_list, MAGIC_TYPE_YAOSHI, ADD_ITEM_SEND_MAIL_WHEN_BAG_FULL);
-		raid->m_player[i]->check_activity_progress(AM_YAOSHI, 3);
 	}
 
 	if (raid->get_monster_num() == 0)
@@ -152,6 +170,7 @@ static void guoyu_raid_ai_tick(raid_struct *raid)
 			extern_data.player_id = raid->m_player[i]->get_uuid();
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_FB_SUCC_NOTIFY, guoyu_fb_succ__pack, notify);
 			raid->m_player[i]->check_activity_progress(AM_YAOSHI, 3);
+			raid->m_player[i]->add_task_progress(TCT_YAOSHI_GUOYU, 0, 1);
 		}
 	}
 }

@@ -27,6 +27,7 @@
 #define ERROR_ID_PROP_NOT_ENOUGH         1104 //道具数量不足
 #define ERROR_ID_PROP_CAN_NOT_USE        1105 //道具不能使用
 #define ERROR_ID_PROP_IN_CD              1106 //道具CD中
+#define ERROR_ID_PROP_EFFECT_TASK        1107 //道具不能再加任务
 
 #define ERROR_ID_ICON_USING              1200 //头像已在使用
 #define ERROR_ID_ICON_NEED_UNLOCK        1201 //头像尚未解锁
@@ -156,7 +157,9 @@
 
 #define ERROR_ID_NAME_EXIST              		190100005 //您输入的名字已存在
 #define ERROR_ID_UNLOCK_BAG_GOLD_NOT_ENOUGH		190300004 //您没有足够的元宝扩充背包格子
-#define ERROR_ID_USE_PROP_BAG_NOT_ENOUGH		190300008 //背包空位不足，无法使用道具
+#define ERROR_ID_BAG_NOT_ABLE_ADD_TASK_SUBMIT   190300007 //背包空位不足，无法提交任务
+#define ERROR_ID_BAG_NOT_ABLE_ADD_USE		    190300008 //背包空位不足，无法使用道具
+#define ERROR_ID_BAG_NOT_ABLE_ADD_PASSIVE		190300009 //背包空位不足，道具以邮件形式发送
 #define ERROR_ID_USE_PROP_IS_EXPIRE	        	190300010 //道具已到期无法使用
 #define ERROR_ID_RENAME_PROP_NOT_ENOUGH        	190300011 //您的改名卡不足，请前往商城购买
 #define ERROR_ID_SHOP_BUY_BAG_FULL      	    190300016 //背包空位不足，购买失败
@@ -202,6 +205,8 @@
 #define ERROR_ID_FRIEND_SEARCH_SELF             190500220 //查找目标必须为其他玩家
 #define ERROR_ID_GUILD_ACTIVITY_CANT_KICK       190411006 //帮派活动期间不能踢人
 #define ERROR_ID_GIJIANGOPEN_GIFT_FAIL          190500315 //即将开启礼包领取失败（一般是包裹满了）
+#define ERROR_ID_BAG_NOT_ABLE_ADD_TASK_DROP     190500325 //背包空位不足，无法获得任务道具
 #define ERROR_ID_PARTNER_LEVEL_LIMIT            190500334 //当前伙伴经验已满
+#define ERROR_ID_BAG_NOT_ABLE_BAGUA_DECOMPOSE   190500337 //当前背包已满
 
 #endif

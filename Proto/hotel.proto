@@ -81,6 +81,10 @@ message GuoyuSucc
 message GuoyuFbSucc
 {
 	required int32 succ = 1; // 0 成功
+	repeated uint32 item_id = 2;
+	repeated uint32 item_num = 3;
+	required uint32 coin = 4;
+	required uint32 exp = 5;
 }
 
 message BossId
@@ -192,6 +196,8 @@ message ShangjinTaskType
 	required uint32 quality = 2; //
 	repeated ShangjinTaskAward award = 3; //
 	required uint32 reduce = 4; //技能减免
+	required uint32 coin = 5; //
+	required uint32 exp = 6; //
 }
 message ShangjinType
 {

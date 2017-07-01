@@ -16,12 +16,12 @@
 
 int g_raid_keep_time;
 
-int raid_struct::init_common_script_data(struct raid_script_data *script_data)
+int raid_struct::init_common_script_data(const char *script_name, struct raid_script_data *script_data)
 {
 	for (int i = 0; i < MAX_SCRIPT_COND_NUM; ++i)
 		script_data->cur_finished_num[i] = 0;
 	script_data->cur_index = 0;
-	script_data->script_config = get_config_by_name(m_config->DungeonPass, &all_raid_script_config);
+	script_data->script_config = get_config_by_name((char *)script_name, &all_raid_script_config);
 	if (script_data->script_config)
 		return (0);
 	else
@@ -30,7 +30,7 @@ int raid_struct::init_common_script_data(struct raid_script_data *script_data)
 
 int raid_struct::init_script_data()
 {
-	int ret = init_common_script_data(&SCRIPT_DATA.script_data);
+	int ret = init_common_script_data(m_config->DungeonPass, &SCRIPT_DATA.script_data);
 	assert(ret == 0);
 	raid_set_ai_interface(8);	
 	init_scene_struct(m_id, false);
@@ -66,12 +66,12 @@ int	raid_struct::init_wanyaogu_data()
 	WANYAOGU_DATA.wanyaogu_state = WANYAOGU_STATE_INIT;
 	WANYAOGU_DATA.m_config = get_config_by_id(m_id, &all_raid_config);
 	assert(WANYAOGU_DATA.m_config);
-	init_common_script_data(&WANYAOGU_DATA.script_data);
+	init_common_script_data(WANYAOGU_DATA.m_config->DungeonPass, &WANYAOGU_DATA.script_data);
 //	WANYAOGU_DATA.m_control_config = get_config_by_id(WANYAOGU_DATA.m_config->ActivityControl, &all_control_config);
 //	assert(WANYAOGU_DATA.m_control_config);
 	
 	raid_set_ai_interface(3);
-	init_scene_struct(m_id, true);	
+	init_scene_struct(m_id, false);	
 	stop_monster_ai();
 	return (0);
 }
@@ -365,6 +365,10 @@ int raid_struct::team_enter_raid(Team *team)
 		if (!t_player)
 		{
 			LOG_ERR("%s %d: can not find player[%lu] to enter raid %u", __FUNCTION__, __LINE__, team->m_data->m_mem[i].id, data->ID);
+			continue;
+		}
+		if (t_player->sight_space != NULL && t_player->sight_space->data->type == 2)
+		{
 			continue;
 		}
 		player_enter_raid_impl(t_player, index++, res_config->BirthPointX, res_config->BirthPointZ);

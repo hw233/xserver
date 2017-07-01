@@ -57,8 +57,8 @@ while True:
 #    msg_format = "=IHH" + str(data_len) + 'sQIHH' 
 #    msg_len, msg_id, seq, pb_data, player_id, t1, t1, t1 = struct.unpack(msg_format, data)
 
-    if not player_id in WATCH_PLAYER:
-        continue;
+#    if not player_id in WATCH_PLAYER:
+#        continue;
 
 #视野变化    
     if msg_id == 10103:

@@ -37,6 +37,7 @@ message BagUseRequest
 {
 	required uint32 index = 1; //格子服务器索引
 	required uint32 use_all = 2; //0:单个使用，1:一键使用
+	required bool isEsay = 3; //false:非快捷，true:快捷使用
 }
 
 //背包使用物品应答
@@ -69,5 +70,11 @@ message ShowItemAnswer
 message ShowItemData
 {
 	required uint32 id = 1; //物品ID
+}
+
+//道具飞向背包通知
+message ItemFlowToBagNotify
+{
+	repeated ItemData itemList = 1; //道具列表
 }
 

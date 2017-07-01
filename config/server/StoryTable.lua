@@ -12,8 +12,8 @@ local StoryTable = {
 		['ShowUI'] = 0,
 		['PlayerOperation'] = 1,
 		['PlayerInvincible'] = 1,
-		['StoryTime'] = 7.3,
-		['FileID'] = 'FB_DFG_01'
+		['StoryTime'] = 9,
+		['FileID'] = 'FB_DFG_01 lin'
 		},
 	[450000003] = {
 		['ID'] = 450000003,
@@ -22,6 +22,14 @@ local StoryTable = {
 		['PlayerInvincible'] = 1,
 		['StoryTime'] = 9,
 		['FileID'] = 'FB_DFG_02'
+		},
+	[450000005] = {
+		['ID'] = 450000005,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 48.5,
+		['FileID'] = 'MAP_JYD_01'
 		}
 	}
 return StoryTable

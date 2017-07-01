@@ -779,6 +779,19 @@ local NpcTable = {
 		['StandTalk'] = {},
 		['LifeTime'] = 0
 		},
+	[152000061] = {
+		['ID'] = 152000061,
+		['NameId'] = '要护送保护的目标-[c250d8]贾大富[-]',
+		['Level'] = 100,
+		['ClickType'] = 1,
+		['TalkNotice'] = 0,
+		['Function'] = {},
+		['FunctionPort'] = {},
+		['Personality'] = {},
+		['PerAction'] = '',
+		['StandTalk'] = {156000015},
+		['LifeTime'] = 0
+		},
 	[152020001] = {
 		['ID'] = 152020001,
 		['NameId'] = '[c250d8]帮战引导员[-]',
@@ -1444,6 +1457,19 @@ local NpcTable = {
 		},
 	[152007027] = {
 		['ID'] = 152007027,
+		['NameId'] = '幸子',
+		['Level'] = 1,
+		['ClickType'] = 1,
+		['TalkNotice'] = 1,
+		['Function'] = {},
+		['FunctionPort'] = {},
+		['Personality'] = {},
+		['PerAction'] = '',
+		['StandTalk'] = {},
+		['LifeTime'] = 0
+		},
+	[152007028] = {
+		['ID'] = 152007028,
 		['NameId'] = '幸子',
 		['Level'] = 1,
 		['ClickType'] = 1,

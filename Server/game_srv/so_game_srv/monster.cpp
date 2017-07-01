@@ -653,8 +653,9 @@ void monster_struct::on_dead(unit_struct *killer)
 
 	uint32_t scene_id = scene->m_id;
 	uint32_t monster_id = data->monster_id;
-	if (killer && drop_id > 0)
+	if (killer && drop_id > 0) //todo 国御目标怪根据任务掉落
 		killer->give_drop_item(drop_id, MAGIC_TYPE_MONSTER_DEAD, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
+		
 	data->relive_time = ai_config->Regeneration * 1000 + time_helper::get_cached_time();
 	scene_struct *o_scene = scene;
 	scene->delete_monster_from_scene(this, false);
@@ -1140,8 +1141,17 @@ void monster_struct::go_back()
 		return;
 	on_go_back();
 	reset_pos();
-	data->move_path.pos[1].pos_x = get_born_pos_x();
-	data->move_path.pos[1].pos_z = get_born_pos_z();
+	if(ai_type == 22)
+	{
+		data->move_path.pos[1].pos_x = ai_data.circle_ai.ret_pos.pos_x;
+		data->move_path.pos[1].pos_z = ai_data.circle_ai.ret_pos.pos_z;
+
+	}
+	else
+	{
+		data->move_path.pos[1].pos_x = get_born_pos_x();
+		data->move_path.pos[1].pos_z = get_born_pos_z();
+	}
 //		ai_state = AI_GO_BACK_STATE;
 	send_patrol_move();
 }

@@ -220,6 +220,9 @@ static int handle_player_rename_answer(EXTERN_DATA *extern_data)
 			LOG_ERR("[%s:%d] send to friend_srv failed err[%d]", __FUNCTION__, __LINE__, errno);
 		}
 
+		//同步消息到RANK_SRV
+		player->refresh_player_redis_info(false);
+
 		//场景广播
 		PlayerNameNotify nty;
 		player_name_notify__init(&nty);

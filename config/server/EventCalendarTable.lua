@@ -33,7 +33,7 @@ local EventCalendarTable = {
 		['Sum'] = 10,
 		['Active'] = 0,
 		['JoinType'] = 2,
-		['TypeEffect'] = {155000015,152000050},
+		['TypeEffect'] = {155000013,152000050},
 		['Reward'] = {0},
 		['RewardNum'] = {0}
 		},
@@ -71,7 +71,7 @@ local EventCalendarTable = {
 		['Sum'] = 10,
 		['Active'] = 0,
 		['JoinType'] = 2,
-		['TypeEffect'] = {155000015,152000050},
+		['TypeEffect'] = {155000013,152000050},
 		['Reward'] = {0},
 		['RewardNum'] = {0}
 		},
@@ -90,7 +90,7 @@ local EventCalendarTable = {
 		['Sum'] = 20,
 		['Active'] = 20,
 		['JoinType'] = 2,
-		['TypeEffect'] = {155000015,152000052},
+		['TypeEffect'] = {155000013,152000052},
 		['Reward'] = {201020004,201020005,201070023,201070017,201070020},
 		['RewardNum'] = {1,1,1,1,1}
 		},
@@ -109,7 +109,7 @@ local EventCalendarTable = {
 		['Sum'] = 10,
 		['Active'] = 0,
 		['JoinType'] = 2,
-		['TypeEffect'] = {155000015,152000050},
+		['TypeEffect'] = {155000013,152000050},
 		['Reward'] = {0},
 		['RewardNum'] = {0}
 		},
@@ -165,8 +165,8 @@ local EventCalendarTable = {
 		['Push'] = 1,
 		['Sum'] = 20,
 		['Active'] = 20,
-		['JoinType'] = 4,
-		['TypeEffect'] = {14},
+		['JoinType'] = 2,
+		['TypeEffect'] = {155000013,152000052},
 		['Reward'] = {201020004,201020005,201070023,201070017,201070020},
 		['RewardNum'] = {1,1,1,1,1}
 		},

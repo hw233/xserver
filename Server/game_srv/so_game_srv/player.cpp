@@ -59,6 +59,7 @@
 #include "../proto/yuqidao.pb-c.h"
 #include "../proto/activity.pb-c.h"
 #include "../proto/chat.pb-c.h"
+#include "../proto/bag.pb-c.h"
 #include "auto_add_hp.pb-c.h"
 #include "error_code.h"
 #include "app_data_statis.h"
@@ -74,6 +75,15 @@
 #include "guild_wait_raid_manager.h"
 #include "partner_manager.h"
 #include "partner.pb-c.h"
+
+ItemUseEffectInfo::~ItemUseEffectInfo()
+{
+//	LOG_ERR("[%s:%d]", __FUNCTION__, __LINE__);
+	pos = 0;
+	use_all = 0;
+	is_easy = 0;
+	items.clear();
+}
 
 uint32_t FightingCapacity::get_total(void)
 {
@@ -437,6 +447,27 @@ void player_struct::init_player()
 //	memset(&fc_data, 0, sizeof(FightingCapacity));
 	m_partners.clear();
 	chengjie_kill = 0;
+}
+
+void player_struct::clear(void)
+{
+	if (data)
+	{
+		if (data->sing_info.args)
+		{
+			switch (data->sing_info.type)
+			{
+				case SING_TYPE__USE_PROP:
+				case SING_TYPE__XUNBAO:
+					delete (ItemUseEffectInfo*)(data->sing_info.args);
+					break;
+			}
+		}
+	}
+	clear_all_buffs();
+	clear_temp_data();
+	clear_all_partners();
+	clear_all_escort();
 }
 
 bool player_struct::is_in_pvp_raid()
@@ -1480,6 +1511,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		partner_data[partner_num].partner_id = partner->data->partner_id;
 		partner_data[partner_num].bind = partner->data->bind;
 		partner_data[partner_num].relive_time = partner->data->relive_time;
+		partner_data[partner_num].strong_num = partner->data->strong_num;
 
 		uint32_t attr_num = 0;
 		for (int i = 1; i < MAX_PARTNER_ATTR; ++i)
@@ -1497,6 +1529,9 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		}
 		partner_data[partner_num].attrs = partner_attr_point[partner_num];
 		partner_data[partner_num].n_attrs = attr_num;
+		partner_data[partner_num].n_god_id = partner_data[partner_num].n_god_lv = partner->data->n_god;
+		partner_data[partner_num].god_id = partner->data->god_id;
+		partner_data[partner_num].god_lv = partner->data->god_level;
 
 		partner_data[partner_num].attr_cur = partner_cur_attr + partner_num;
 		dbpartner_attr__init(partner_cur_attr + partner_num);
@@ -1943,6 +1978,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 
 		partner->data->bind = db_info->partner_list[i]->bind;
 		partner->data->relive_time = db_info->partner_list[i]->relive_time; 
+		partner->data->strong_num = db_info->partner_list[i]->strong_num;
 		for (size_t j = 0; j < db_info->partner_list[i]->n_attrs; ++j)
 		{
 			partner->data->attrData[db_info->partner_list[i]->attrs[j]->id] = db_info->partner_list[i]->attrs[j]->val;
@@ -1978,6 +2014,12 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 			partner->data->attr_cur.n_detail_attr = db_info->partner_list[i]->attr_cur->n_detail_attr_id;
 			partner->data->attr_cur.type = db_info->partner_list[i]->attr_cur->type;
 		}
+		for (uint32_t n_g = 0; n_g < db_info->partner_list[i]->n_god_id; ++n_g)
+		{
+			partner->data->god_id[n_g] = db_info->partner_list[i]->god_id[n_g];
+			partner->data->god_level[n_g] = db_info->partner_list[i]->god_lv[n_g];
+		}
+		partner->data->n_god = db_info->partner_list[i]->n_god_id;
 
 		m_partners.insert(std::make_pair(partner->data->uuid, partner));
 	}
@@ -3711,7 +3753,7 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 		if (tCollet != NULL)
 		{
 			args.push_back(tCollet->NameId);
-			player.send_system_notice(190500286, args);
+			player.send_system_notice(190500286, &args);
 			Collect *pCollect = Collect::CreateCollectByPos(player.scene, sTable->Parameter1[i], x, y, z, 0);
 			if (pCollect != NULL)
 			{
@@ -3722,7 +3764,7 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 		break;
 	case 4:
 	{
-		player.send_system_notice(190500288, args);
+		player.send_system_notice(190500288, &args);
 		monster_struct *mon = monster_manager::create_monster_at_pos(player.scene, sTable->Parameter1[i], player.get_attr(PLAYER_ATTR_LEVEL), x, z, 0, NULL);
 		if (mon != NULL)
 		{
@@ -3748,12 +3790,11 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 	break;
 	case 3:
 	{
-		player.send_system_notice(190500287, args);
+		player.send_system_notice(190500287, &args);
 		if (!player.sight_space)
 		{
-			player.sight_space = sight_space_manager::create_sight_space(&player);
+			player.sight_space = sight_space_manager::create_sight_space(&player, 1);
 		}
-		player.sight_space->data->type = 1;
 		for (uint32_t num = 0; num < sTable->Parameter2[i]; ++num)
 		{
 			monster_manager::create_sight_space_monster(player.sight_space, player.scene, sTable->Parameter1[i], player.get_attr(PLAYER_ATTR_LEVEL), x + sTable->Parameter2[i] - rand()% 2*sTable->Parameter2[i], z + sTable->Parameter2[i] - rand() % 2*sTable->Parameter2[i]);
@@ -3784,7 +3825,7 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ADD_NPC_NOTIFY, sight_npc_info__pack, send);
 		
 
-		player.send_system_notice(190500290, args);
+		player.send_system_notice(190500290, &args);
 
 		ParameterTable * config = get_config_by_id(161000222, &parameter_config);
 		char str[512] = "aaaaaaaaaaaaaaaaaaa";
@@ -3806,6 +3847,7 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 	}
 
 	player.check_activity_progress(AM_XUNBAO, 0);
+	player.add_task_progress(TCT_XUNBAO, 0, 1);
 }
 
 bool player_struct::is_qiecuo_target(player_struct *target)
@@ -3876,7 +3918,7 @@ int player_struct::add_unbind_gold(uint32_t num, uint32_t statis_id, bool isNty)
 	ss_num << realNum;
 	args.push_back(const_cast<char*>(ss_num.str().c_str()));
 	uint32_t notice_id = SNT_ADD_GOLD_TEXT;
-	send_system_notice(notice_id, args);
+	send_system_notice(notice_id, &args);
 
 	if (realNum > 0)
 	{
@@ -3918,7 +3960,7 @@ int player_struct::add_bind_gold(uint32_t num, uint32_t statis_id, bool isNty)
 	ss_num << realNum;
 	args.push_back(const_cast<char*>(ss_num.str().c_str()));
 	uint32_t notice_id = SNT_ADD_GOLD_TEXT;
-	send_system_notice(notice_id, args);
+	send_system_notice(notice_id, &args);
 
 	if (realNum > 0)
 	{
@@ -4037,13 +4079,12 @@ int player_struct::add_coin(uint32_t num, uint32_t statis_id, bool isNty)
 		this->notify_attr(attrs);
 
 		//系统提示
-	std::vector<char *> args;
-	std::stringstream ss_num;
-	ss_num << realNum;
-	args.push_back(const_cast<char*>(ss_num.str().c_str()));
-	uint32_t notice_id = (notice_use_art(statis_id) ? SNT_ADD_COIN_ART : SNT_ADD_COIN_TEXT);
-	send_system_notice(notice_id, args);
-
+		std::vector<char *> args;
+		std::stringstream ss_num;
+		ss_num << realNum;
+		args.push_back(const_cast<char*>(ss_num.str().c_str()));
+		uint32_t notice_id = (notice_use_art(statis_id) ? SNT_ADD_COIN_ART : SNT_ADD_COIN_TEXT);
+		send_system_notice(notice_id, &args);
 	}
 
 	if (realNum > 0)
@@ -4423,7 +4464,7 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 			std::stringstream ss_num;
 			ss_num << num;
 			args.push_back(const_cast<char*>(ss_num.str().c_str()));
-			send_system_notice(190500170, args);
+			send_system_notice(190500170, &args);
 		}
 			break;
 		case ITEM_TYPE_SHANGJIN_COIN:
@@ -4432,7 +4473,7 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 			std::stringstream ss_num;
 			ss_num << num;
 			args.push_back(const_cast<char*>(ss_num.str().c_str()));
-			send_system_notice(190500171, args);
+			send_system_notice(190500171, &args);
 		}
 			break;
 		case ITEM_TYPE_GUOYU_COIN:
@@ -4441,7 +4482,7 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 			std::stringstream ss_num;
 			ss_num << num;
 			args.push_back(const_cast<char*>(ss_num.str().c_str()));
-			send_system_notice(190500169, args);
+			send_system_notice(190500169, &args);
 		}
 		break;
 		case ITEM_TYPE_SHANGJIN_EXP:
@@ -4565,7 +4606,17 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 				ss_num << num;
 				args.push_back(const_cast<char*>(ss_id.str().c_str()));
 				args.push_back(const_cast<char*>(ss_num.str().c_str()));
-				send_system_notice(SNT_ADD_ITEM_TEXT, args);
+				send_system_notice(SNT_ADD_ITEM_TEXT, &args);
+
+				//道具飞背包
+				switch (statis_id)
+				{
+					case MAGIC_TYPE_XUNBAO:
+					case MAGIC_TYPE_GATHER:
+					case MAGIC_TYPE_MONSTER_DEAD:
+						notify_one_item_flow_to_bag(id, num);
+						break;
+				}
 			}
 			break;
 	}
@@ -4685,6 +4736,7 @@ bool player_struct::add_item_list(std::map<uint32_t, uint32_t>& item_list, uint3
 				mail_id = MAIL_ID_BAG_FULL;
 			}
 			send_mail_by_id(mail_id, NULL, &failed_list, statis_id);
+			send_system_notice(ERROR_ID_BAG_NOT_ABLE_ADD_PASSIVE, NULL);
 		}
 	}
 	else
@@ -5157,7 +5209,127 @@ void player_struct::tidy_bag(void)
 	}
 }
 
-int player_struct::use_prop_effect(uint32_t id, std::map<uint32_t, uint32_t> *add_list)
+int player_struct::check_use_prop(uint32_t item_id, uint32_t use_count, ItemUseEffectInfo *info)
+{
+	ItemsConfigTable *config = get_config_by_id(item_id, &item_config);
+	if (!config)
+	{
+		return ERROR_ID_NO_CONFIG;
+	}
+
+	if (config->UseDegree == 0)
+	{
+		return ERROR_ID_PROP_CAN_NOT_USE;
+	}
+
+	if (config->SkillId > 0)
+	{
+	}
+
+	if (config->TaskId > 0 && (task_is_finish(config->TaskId) || get_task_info(config->TaskId) != NULL))
+	{
+		return ERROR_ID_PROP_EFFECT_TASK;
+	}
+
+	if (config->DropId > 0)
+	{
+		int ret = 0;
+		for (uint32_t i = 0; i < use_count; ++i)
+		{
+			ret = get_drop_item(config->DropId, info->items);
+			if (ret != 0)
+			{
+				return ERROR_ID_NO_CONFIG;
+			}
+		}
+
+		if (!check_can_add_item_list(info->items))
+		{
+			return ERROR_ID_BAG_NOT_ABLE_ADD_USE;
+		}
+	}
+
+	switch (config->ItemEffect)
+	{
+		case IUE_TRANSFER_SCENE:
+			{
+				if (!scene || !scene->can_transfer(2))
+				{
+					return ERROR_ID_CAN_NOT_TRANSFER_IN_RAID;
+				}
+				if (is_in_raid())
+				{
+					return ERROR_ID_CAN_NOT_TRANSFER_IN_RAID;
+				}
+				if (data->truck.truck_id != 0)
+				{
+					return 190500305;
+				}
+
+				if (config->n_ParameterEffect < 1)
+				{
+					return ERROR_ID_NO_CONFIG;
+				}
+			}
+			break;
+		case IUE_FIND_TARGET:
+			{
+				int ret = ChengJieTaskManage::CanUseFollowItem(this);
+				if (ret != 190500154)
+				{
+					return ret;
+				}
+			}
+			break;
+		case IUE_SUB_MURDER:
+			{
+				if (config->n_ParameterEffect < 1)
+				{
+					return ERROR_ID_NO_CONFIG;
+				}
+			}
+			break;
+		case IUE_ADD_HP:
+			{
+				if (config->n_ParameterEffect < 1)
+				{
+					return ERROR_ID_NO_CONFIG;
+				}
+			}
+			break;
+		case IUE_ADD_HP_POOL:
+			{
+				if (config->n_ParameterEffect < 1)
+				{
+					return ERROR_ID_NO_CONFIG;
+				}
+
+				uint32_t value = data->hp_pool_num + config->ParameterEffect[0] * use_count;
+				if (value > sg_hp_pool_max)
+				{
+					LOG_ERR("%s: player[%lu] use hp pool too much", __FUNCTION__, data->player_id);
+					return (ERROR_ID_PROP_CAN_NOT_USE);
+				}
+			}
+			break;
+		case IUE_ADD_ENERGY:
+			break;
+		case IUE_XUNBAO:
+			break;
+		case IUE_ADD_HORSE:
+			{
+				if (config->n_ParameterEffect < 2)
+				{
+					return ERROR_ID_NO_CONFIG;
+				}
+			}
+			break;
+	}
+
+	return 0;
+}
+
+int player_struct::use_prop_effect(uint32_t id, uint32_t use_count, ItemUseEffectInfo *info)
 {
 	ItemsConfigTable *config = get_config_by_id(id, &item_config);
 	if (!config)
@@ -5177,32 +5349,22 @@ int player_struct::use_prop_effect(uint32_t id, std::map<uint32_t, uint32_t> *ad
 	if (config->TaskId > 0)
 	{
 		int ret = 0;
-		ret = accept_task(config->TaskId, false);
-		if (ret != 0)
+		for (uint32_t i = 0; i < use_count; ++i)
 		{
-			return ret;
+			ret = accept_task(config->TaskId, false);
+			if (ret != 0)
+			{
+				return ret;
+			}
 		}
 	}
 
-	if (config->DropId > 0)
+	if (info && info->items.size() > 0)
 	{
-		std::map<uint32_t, uint32_t> item_list;
-		int ret = get_drop_item(config->DropId, item_list);
-		if (ret == 0)
+		add_item_list(info->items, MAGIC_TYPE_BAG_USE, ADD_ITEM_AS_MUCH_AS_POSSIBLE, true);
+		if (info->is_easy)
 		{
-			if (!check_can_add_item_list(item_list))
-			{
-				return ERROR_ID_BAG_GRID_NOT_ENOUGH;
-			}
-
-			for (std::map<uint32_t, uint32_t>::iterator iter = item_list.begin(); iter != item_list.end(); ++iter)
-			{
-				this->add_item(iter->first, iter->second, MAGIC_TYPE_BAG_USE);
-				if (add_list)
-				{
-					(*add_list)[iter->first] += iter->second;
-				}
-			}
+			noitfy_item_flow_to_bag(info->items);
 		}
 	}
 
@@ -5240,7 +5402,7 @@ int player_struct::use_prop_effect(uint32_t id, std::map<uint32_t, uint32_t> *ad
 			{
 				if (config->n_ParameterEffect >= 1)
 				{
-					this->sub_murder_num(config->ParameterEffect[0]);
+					this->sub_murder_num(config->ParameterEffect[0] * use_count);
 				}
 			}
 			break;
@@ -5250,7 +5412,7 @@ int player_struct::use_prop_effect(uint32_t id, std::map<uint32_t, uint32_t> *ad
 			{
 				uint32_t cur_hp = get_attr(PLAYER_ATTR_HP);
 				uint32_t max_hp = get_attr(PLAYER_ATTR_MAXHP);
-				uint32_t add_hp = config->ParameterEffect[0];
+				uint32_t add_hp = config->ParameterEffect[0] * use_count;
 				cur_hp += add_hp;								
 				if (cur_hp > max_hp)
 					cur_hp = max_hp;
@@ -5264,7 +5426,7 @@ int player_struct::use_prop_effect(uint32_t id, std::map<uint32_t, uint32_t> *ad
 		{
 			if (config->n_ParameterEffect >= 1)
 			{
-				uint32_t value = data->hp_pool_num + config->ParameterEffect[0];
+				uint32_t value = data->hp_pool_num + config->ParameterEffect[0] * use_count;
 				if (value > sg_hp_pool_max)
 				{
 					LOG_ERR("%s: player[%lu] use hp pool too much", __FUNCTION__, data->player_id);
@@ -5277,7 +5439,7 @@ int player_struct::use_prop_effect(uint32_t id, std::map<uint32_t, uint32_t> *ad
 		break;
 		case IUE_ADD_ENERGY:
 		{
-			add_attr(PLAYER_ATTR_ENERGY, config->ParameterEffect[0]);
+			add_attr(PLAYER_ATTR_ENERGY, config->ParameterEffect[0] * use_count);
 			AttrMap attrs;
 			attrs[PLAYER_ATTR_ENERGY] = data->attrData[PLAYER_ATTR_ENERGY];
 			this->notify_attr(attrs);
@@ -5304,7 +5466,27 @@ int player_struct::use_prop_effect(uint32_t id, std::map<uint32_t, uint32_t> *ad
 	return 0;
 }
 
-int player_struct::use_prop(uint32_t pos, uint32_t use_all, std::map<uint32_t, uint32_t> *add_list)
+int player_struct::try_use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInfo *info)
+{
+	if (pos >= data->bag_grid_num)
+	{
+		return ERROR_ID_BAG_POS;
+	}
+
+	bag_grid_data& grid = data->bag[pos];
+	ItemsConfigTable *prop_config = get_config_by_id(grid.id, &item_config);
+	if (!prop_config)
+	{
+		return ERROR_ID_NO_CONFIG;
+	}
+
+	uint32_t item_id = grid.id;
+	uint32_t use_count = (use_all == 0 ? 1 : (prop_config->UseDegree * grid.num - grid.used_count));
+
+	return check_use_prop(item_id, use_count, info);
+}
+
+int player_struct::use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInfo *info)
 {
 	int ret = 0;
 	if (pos >= data->bag_grid_num)
@@ -5320,37 +5502,21 @@ int player_struct::use_prop(uint32_t pos, uint32_t use_all, std::map<uint32_t, u
 	}
 
 	uint32_t item_id = grid.id;
-	uint32_t use_count = 0;
+	uint32_t use_count = (use_all == 0 ? 1 : (prop_config->UseDegree * grid.num - grid.used_count));
+
 	uint32_t del_num = 0;
-	while (true)
+	if (use_all == 0)
 	{
-		if (grid.used_count < prop_config->UseDegree)
-		{
-			int ret2 = use_prop_effect(grid.id, add_list);
-			if (ret2 != 0)
-			{
-				ret = ERROR_ID_USE_PROP_BAG_NOT_ENOUGH;
-				break;
-			}
-
-			grid.used_count++;
-			use_count++;
-		}
-
+		grid.used_count++;
 		if (grid.used_count >= prop_config->UseDegree)
 		{
 			grid.used_count = 0;
 			del_num++;
-			if (del_num >= grid.num)
-			{
-				break;
-			}
 		}
-
-		if (use_all == 0 && use_count >= 1)
-		{
-			break;
-		}
+	}
+	else
+	{
+		del_num = grid.num;
 	}
 
 	if (del_num > 0)
@@ -5370,6 +5536,12 @@ int player_struct::use_prop(uint32_t pos, uint32_t use_all, std::map<uint32_t, u
 		extern_data.player_id = data->player_id;
 		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);
 		this->data->xunbao.send_next = false;
+	}
+
+	ret = use_prop_effect(item_id, use_count, info);
+	if (ret != 0)
+	{
+		return ret;
 	}
 
 	return ret;
@@ -5495,6 +5667,55 @@ int player_struct::move_baguapai_to_bag(BaguapaiCardInfo &card)
 	return -1;
 }
 
+void player_struct::noitfy_item_flow_to_bag(std::map<uint32_t, uint32_t> &item_list)
+{
+	if (item_list.empty())
+	{
+		return;
+	}
+	ItemFlowToBagNotify nty;
+	item_flow_to_bag_notify__init(&nty);
+
+	ItemData item_data[50];
+	ItemData* item_point[50];
+
+	nty.itemlist = item_point;
+	nty.n_itemlist = 0;
+	for (std::map<uint32_t, uint32_t>::iterator iter = item_list.begin(); iter != item_list.end() && nty.n_itemlist < 50; ++iter)
+	{
+		item_point[nty.n_itemlist] = &item_data[nty.n_itemlist];
+		item_data__init(&item_data[nty.n_itemlist]);
+		item_data[nty.n_itemlist].id = iter->first;
+		item_data[nty.n_itemlist].num = iter->second;
+		nty.n_itemlist++;
+	}
+
+	EXTERN_DATA ext_data;
+	ext_data.player_id = data->player_id;
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_ITEM_FLOW_TO_BAG_NOTIFY, item_flow_to_bag_notify__pack, nty);
+}
+
+void player_struct::notify_one_item_flow_to_bag(uint32_t id, uint32_t num)
+{
+	ItemFlowToBagNotify nty;
+	item_flow_to_bag_notify__init(&nty);
+
+	ItemData item_data[1];
+	ItemData* item_point[1];
+
+	nty.itemlist = item_point;
+	nty.n_itemlist = 0;
+	item_point[nty.n_itemlist] = &item_data[nty.n_itemlist];
+	item_data__init(&item_data[nty.n_itemlist]);
+	item_data[nty.n_itemlist].id = id;
+	item_data[nty.n_itemlist].num = num;
+	nty.n_itemlist++;
+
+	EXTERN_DATA ext_data;
+	ext_data.player_id = data->player_id;
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_ITEM_FLOW_TO_BAG_NOTIFY, item_flow_to_bag_notify__pack, nty);
+}
+
 bool player_struct::give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty)
 {
 	std::map<uint32_t, uint32_t> item_list;
@@ -5562,7 +5783,7 @@ int player_struct::add_exp(uint32_t val, uint32_t statis_id, bool isNty)
 	ss_num << val;
 	args.push_back(const_cast<char*>(ss_num.str().c_str()));
 	uint32_t notice_id = (notice_use_art(statis_id) ? SNT_ADD_EXP_ART : SNT_ADD_EXP_TEXT);
-	send_system_notice(notice_id, args);
+	send_system_notice(notice_id, &args);
 
 	return 0;
 }
@@ -6059,6 +6280,26 @@ void player_struct::task_update_notify(TaskInfo *info)
 		count_data[task_data.n_progress].count = info->progress[i].num;
 		task_data.n_progress++;
 	}
+	
+	TaskRewardData reward_data;
+	ItemData item_data[MAX_SHANGJIN_AWARD_NUM];
+	ItemData *item_data_point[MAX_SHANGJIN_AWARD_NUM];
+	if (get_task_type(info->id) == TT_SHANGJIN)
+	{
+		task_reward_data__init(&reward_data);
+		task_data.reward = &reward_data;
+		reward_data.exp = data->shangjin.task[data->shangjin.cur_task].exp;
+		reward_data.coin =data->shangjin.task[data->shangjin.cur_task].coin;
+		reward_data.items = item_data_point;
+		size_t &n_item = reward_data.n_items;
+		for (; n_item < data->shangjin.task[data->shangjin.cur_task].n_award; ++n_item)
+		{
+			item_data_point[n_item] = &(item_data[n_item]);
+			item_data__init(item_data_point[n_item]);
+			item_data[n_item].id = data->shangjin.task[data->shangjin.cur_task].award[n_item].id;
+			item_data[n_item].num =data->shangjin.task[data->shangjin.cur_task].award[n_item].val;
+		}
+	}
 
 	if (task_is_team(info->id) && m_team && m_team->GetLeadId() == data->player_id)
 	{
@@ -6437,7 +6678,10 @@ int player_struct::touch_task_drop(uint32_t scene_id, uint32_t monster_id)
 			uint32_t rand_val = rand() % RAND_RATE_BASE;
 			if (rand_val < drop_config->DropPro)
 			{
-				this->add_item(drop_config->DropItem, 1, MAGIC_TYPE_TASK_DROP);
+				if (this->add_item(drop_config->DropItem, 1, MAGIC_TYPE_TASK_DROP) != 0)
+				{
+					send_system_notice(ERROR_ID_BAG_NOT_ABLE_ADD_TASK_DROP, NULL);
+				}
 				LOG_DEBUG("[%s:%d] player[%lu], task_id:%u, drop_id:%u, scene_id:%u, monster_id:%u, item_id:%lu", __FUNCTION__, __LINE__, data->player_id, info.id, drop_id, scene_id, monster_id, drop_config->DropItem);
 			}
 			break;
@@ -6591,7 +6835,7 @@ void player_struct::init_task_progress(TaskInfo *info)
 					}
 				}
 				break;
-			case TCT_JOIN_GUILD:
+			case TCT_GUILD_JOIN:
 				{
 					if (data->guild_id == 0)
 					{
@@ -6608,7 +6852,7 @@ void player_struct::init_task_progress(TaskInfo *info)
 			case TCT_GUILD_DONATION:
 				num = data->guild_donation;
 				break;
-			case TCT_WEAR_BAGUA:
+			case TCT_BAGUA_WEAR:
 				{
 					if (config->ConditionTarget != 0)
 					{
@@ -6686,7 +6930,7 @@ void player_struct::init_task_progress(TaskInfo *info)
 					}
 				}
 				break;
-			case TCT_WEAR_FASHION:
+			case TCT_FASHION_WEAR:
 				{
 					if (config->ConditionTarget > 0 && (config->ConditionTarget == (uint64_t)get_attr(PLAYER_ATTR_WEAPON) || config->ConditionTarget == (uint64_t)get_attr(PLAYER_ATTR_CLOTHES) || config->ConditionTarget == (uint64_t)get_attr(PLAYER_ATTR_HAT)))
 					{
@@ -6942,7 +7186,6 @@ int player_struct::set_task_fail(TaskInfo *info)
 		if (truck != NULL)
 		{
 			//系统提示
-			std::vector<char *> args;
 			uint64_t noId = 0;
 			if (truck->get_attr(PLAYER_ATTR_HP) < 1)
 			{
@@ -6952,7 +7195,7 @@ int player_struct::set_task_fail(TaskInfo *info)
 			{
 				noId = 190500295;
 			}
-			this->send_system_notice(noId, args);
+			this->send_system_notice(noId, NULL);
 			data->truck.truck_id = 0;
 			if (this->sight_space != NULL)
 			{
@@ -7620,16 +7863,16 @@ void player_struct::sing_notify(uint32_t msg_id, uint32_t type, uint32_t time, b
 	}
 }
 
-int player_struct::begin_sing(uint32_t type, uint32_t time, uint32_t obj_id, bool broadcast, bool include_myself)
+int player_struct::begin_sing(uint32_t type, uint32_t time, bool broadcast, bool include_myself, void *args)
 {
-	LOG_DEBUG("[%s:%d] player[%lu], type:%u, time:%u, obj_id:%u, broadcast:%u, include_myself:%u", __FUNCTION__, __LINE__, data->player_id, type, time, obj_id, broadcast, include_myself);
+	LOG_DEBUG("[%s:%d] player[%lu], type:%u, time:%u, broadcast:%u, include_myself:%u", __FUNCTION__, __LINE__, data->player_id, type, time, broadcast, include_myself);
 	interrupt();
 	data->sing_info.type = type;
 	data->sing_info.time = time;
-	data->sing_info.obj_id = obj_id;
 	data->sing_info.broad = broadcast;
 	data->sing_info.include_myself = include_myself;
 	data->sing_info.start_ts = time_helper::get_cached_time();
+	data->sing_info.args = args;
 
 	sing_notify(MSG_ID_SING_BEGIN_NOTIFY, type, time, broadcast, include_myself);
 	return 0;
@@ -7640,6 +7883,15 @@ int player_struct::interrupt_sing(void)
 	if (data->sing_info.type != 0)
 	{
 		sing_notify(MSG_ID_SING_INTERRUPT_NOTIFY, data->sing_info.type, data->sing_info.time, data->sing_info.broad, data->sing_info.include_myself);
+		switch(data->sing_info.type)
+		{
+			case SING_TYPE__USE_PROP:
+			case SING_TYPE__XUNBAO:
+				{
+					delete (ItemUseEffectInfo*)data->sing_info.args;
+				}
+				break;
+		}
 		memset(&data->sing_info, 0, sizeof(SingInfo));
 	}
 	return 0;
@@ -7655,21 +7907,27 @@ int player_struct::end_sing(void)
 	sing_notify(MSG_ID_SING_END_NOTIFY, data->sing_info.type, data->sing_info.time, data->sing_info.broad, data->sing_info.include_myself);
 
 	uint32_t type = data->sing_info.type;
-	uint32_t obj_id = data->sing_info.obj_id;
-	memset(&data->sing_info, 0, sizeof(SingInfo));
 	//吟唱结束，触发效果
 	switch(type)
 	{
 		case SING_TYPE__USE_PROP:
 		case SING_TYPE__XUNBAO:
-			use_prop(obj_id, 0, NULL);
+			{
+				ItemUseEffectInfo *effect_info = (ItemUseEffectInfo*)data->sing_info.args;
+				use_prop(effect_info->pos, effect_info->use_all, effect_info);
+				if (data->sing_info.args)
+				{
+					delete effect_info;
+				}
+			}
 			break;
 	}
+	memset(&data->sing_info, 0, sizeof(SingInfo));
 
 	return 0;
 }
 
-void player_struct::send_system_notice(uint32_t id, std::vector<char*> &args)
+void player_struct::send_system_notice(uint32_t id, std::vector<char*> *args)
 {
 	if (get_entity_type(data->player_id) == ENTITY_TYPE_AI_PLAYER)
 		return;
@@ -7678,8 +7936,11 @@ void player_struct::send_system_notice(uint32_t id, std::vector<char*> &args)
 	system_notice_notify__init(&nty);
 
 	nty.id = id;
-	nty.n_args = args.size();
-	nty.args = &args[0];
+	if (args)
+	{
+		nty.n_args = args->size();
+		nty.args = &(*args)[0];
+	}
 
 	EXTERN_DATA ext_data;
 	ext_data.player_id = data->player_id;
@@ -9288,6 +9549,13 @@ static void escort_summon_monster(player_struct *player, monster_struct *monster
 		n_MonsterID = config->n_MonsterID3;
 		MonsterID = config->MonsterID3;
 	}
+	else if (idx == 4)
+	{
+		n_Point = config->n_PointXZ4;
+		Point = config->PointXZ4;
+		n_MonsterID = config->n_MonsterID4;
+		MonsterID = config->MonsterID4;
+	}
 	else
 	{
 		return;
@@ -9434,7 +9702,7 @@ void player_struct::check_escort(void)
 			}
 
 			//检查召唤
-			for (int i = 0; i < 3; ++i)
+			for (int i = 0; i < 4; ++i)
 			{
 				escort_summon_monster(this, monster, info, config, i);
 			}
@@ -9697,23 +9965,23 @@ bool player_struct::is_partner_precedence(void)
 	return ((int)get_attr(PLAYER_ATTR_PARTNER_PRECEDENCE) != 0);
 }
 
-int player_struct::del_partner_from_scene(partner_struct *partner)
+int player_struct::del_partner_from_scene(partner_struct *partner, bool send_msg)
 {
 	if (partner->scene)
 	{
-		partner->scene->delete_partner_from_scene(partner, true);
+		partner->scene->delete_partner_from_scene(partner, send_msg);
 	}
 	if (is_node_in_heap(&partner_manager_minheap, partner))
 		partner_manager::partner_ontick_delete(partner);
 	return (0);
 }
 
-int player_struct::del_partner_from_scene(uint64_t partner_uuid)
+int player_struct::del_partner_from_scene(uint64_t partner_uuid, bool send_msg)
 {
 	partner_struct *partner = get_partner_by_uuid(partner_uuid);
 	if (!partner)
 		return (-1);
-	return del_partner_from_scene(partner);
+	return del_partner_from_scene(partner, send_msg);
 }
 
 int player_struct::add_partner_to_scene(uint64_t partner_uuid)
@@ -9733,7 +10001,7 @@ int player_struct::add_partner_to_scene(uint64_t partner_uuid)
 	// {
 	// 	partner->scene->delete_partner_from_scene(partner, true);
 	// }
-	del_partner_from_scene(partner);
+	del_partner_from_scene(partner, true);
 
 	struct position pos;
 	partner->calc_target_pos(&pos);
@@ -9770,7 +10038,7 @@ void player_struct::del_battle_partner_from_scene()
 	{
 		if (data->partner_battle[i] > 0)
 		{
-			del_partner_from_scene(data->partner_battle[i]);
+			del_partner_from_scene(data->partner_battle[i], false);
 //			add_partner_to_scene(data->partner_battle[i]);
 		}
 	}
@@ -9778,6 +10046,7 @@ void player_struct::del_battle_partner_from_scene()
 
 void player_struct::adjust_battle_partner(void)
 {
+//	LOG_DEBUG("[%s:%u] player[%lu] ", __FUNCTION__, __LINE__, data->player_id);
 	uint64_t old_uuid = get_fighting_partner();
 	do
 	{
@@ -9791,7 +10060,7 @@ void player_struct::adjust_battle_partner(void)
 					continue;
 				}
 
-				del_partner_from_scene(data->partner_battle[i]);
+				del_partner_from_scene(data->partner_battle[i], true);
 				// partner_struct *partner = get_partner_by_uuid(data->partner_battle[i]);
 				// if (partner && partner->scene)
 				// {
@@ -9822,7 +10091,7 @@ void player_struct::adjust_battle_partner(void)
 
 			if (data->partner_battle[0] > 0)
 			{
-				del_partner_from_scene(data->partner_battle[0]);			
+				del_partner_from_scene(data->partner_battle[0], true);
 				// partner_struct *down_partner = get_partner_by_uuid(data->partner_battle[0]);
 				// if (down_partner && down_partner->scene)
 				// {
@@ -9847,7 +10116,7 @@ void player_struct::adjust_battle_partner(void)
 			if (!partner_is_in_formation(data->partner_battle[i]) || !partner || !partner->is_alive())
 			{
 				if (partner)
-					del_partner_from_scene(partner);
+					del_partner_from_scene(partner, true);
 				// if (partner && partner->scene)
 				// {
 				// 	partner->scene->delete_partner_from_scene(partner, true);
@@ -9857,10 +10126,10 @@ void player_struct::adjust_battle_partner(void)
 				data->partner_battle[i] = get_next_can_battle_partner();
 				if (data->partner_battle[i] > 0)
 				{
-					add_partner_to_scene(data->partner_battle[i]);
 					partner_struct *partner_on = get_partner_by_uuid(data->partner_battle[i]);
-					if (partner_on)
+					if (partner_on && partner_on->is_alive())
 					{
+						add_partner_to_scene(data->partner_battle[i]);
 						add_task_progress(TCT_PARTNER_OUT_FIGHT, partner_on->data->partner_id, 1);
 					}
 				}
@@ -9886,6 +10155,7 @@ void player_struct::adjust_battle_partner(void)
 
 uint64_t player_struct::get_next_can_battle_partner(void)
 {
+	uint64_t fast_relive_uuid = 0, relive_time = UINT64_MAX;
 	for (int i = 0; i < MAX_PARTNER_FORMATION_NUM; ++i)
 	{
 		uint64_t partner_uuid = data->partner_formation[i];
@@ -9907,25 +10177,31 @@ uint64_t player_struct::get_next_can_battle_partner(void)
 
 		if (!partner->is_alive())
 		{
+			if (partner->data->relive_time < relive_time)
+			{
+				relive_time = partner->data->relive_time;
+				fast_relive_uuid = partner->get_uuid();
+			}
 			continue;
 		}
 
 		return partner_uuid;
 	}
-	return 0;
+
+	return fast_relive_uuid;
 }
 
 uint64_t player_struct::get_fighting_partner(void)
 {
 	uint64_t uuid = data->partner_battle[0];
-	if (uuid > 0)
-	{
-		partner_struct *partner = get_partner_by_uuid(uuid);
-		if (!partner || !partner->scene)
-		{
-			uuid = 0;
-		}
-	}
+//	if (uuid > 0)
+//	{
+//		partner_struct *partner = get_partner_by_uuid(uuid);
+//		if (!partner || !partner->scene)
+//		{
+//			uuid = 0;
+//		}
+//	}
 
 	return uuid;
 }
@@ -9939,7 +10215,7 @@ void player_struct::on_leave_scene(scene_struct *old_scene)
 			continue;
 		}
 
-		del_partner_from_scene(data->partner_battle[i]);
+		del_partner_from_scene(data->partner_battle[i], true);
 		// partner_struct *partner = get_partner_by_uuid(data->partner_battle[i]);
 		// if (partner && partner->scene)
 		// {
@@ -10406,80 +10682,83 @@ void player_struct::on_relive(uint32_t type)
 		return;
 	}
 
-	adjust_battle_partner();
 	if (scene->get_scene_type() == SCENE_TYPE_RAID)
 	{
 		raid_struct *raid = (raid_struct *)scene;
-		return on_relive_in_raid(raid, type);
+		on_relive_in_raid(raid, type);
 	}
-
-	ReliveNotify nty;
-	relive_notify__init(&nty);
-	nty.playerid = get_uuid();
-	nty.type = type;
-
-	if (type == 1)	//原地复活
+	else
 	{
-		int relive_times = get_attr(PLAYER_ATTR_RELIVE_TYPE1);
-//		int free_times = get_config_by_id(PARAM_ID_RELIVE_FREE_TIMES, &parameter_config)->parameter1[0];
-		if (relive_times >= sg_relive_free_times)
+		ReliveNotify nty;
+		relive_notify__init(&nty);
+		nty.playerid = get_uuid();
+		nty.type = type;
+
+		if (type == 1)	//原地复活
 		{
-//			int first_cost = get_config_by_id(PARAM_ID_RELIVE_FIRST_COST, &parameter_config)->parameter1[0];
-//			int grow_cost = get_config_by_id(PARAM_ID_RELIVE_GROW_COST, &parameter_config)->parameter1[0];
-//			int max_cost = get_config_by_id(PARAM_ID_RELIVE_MAX_COST, &parameter_config)->parameter1[0];
-			int fin_cost = (relive_times - sg_relive_free_times) * sg_relive_grow_cost + sg_relive_first_cost;
-			if (fin_cost > sg_relive_max_cost)
-				fin_cost = sg_relive_max_cost;
-			if (get_comm_gold() < fin_cost)
+			int relive_times = get_attr(PLAYER_ATTR_RELIVE_TYPE1);
+	//		int free_times = get_config_by_id(PARAM_ID_RELIVE_FREE_TIMES, &parameter_config)->parameter1[0];
+			if (relive_times >= sg_relive_free_times)
 			{
-				LOG_ERR("%s: player[%lu] do not have enough gold", __FUNCTION__, get_uuid());
-				return;
+	//			int first_cost = get_config_by_id(PARAM_ID_RELIVE_FIRST_COST, &parameter_config)->parameter1[0];
+	//			int grow_cost = get_config_by_id(PARAM_ID_RELIVE_GROW_COST, &parameter_config)->parameter1[0];
+	//			int max_cost = get_config_by_id(PARAM_ID_RELIVE_MAX_COST, &parameter_config)->parameter1[0];
+				int fin_cost = (relive_times - sg_relive_free_times) * sg_relive_grow_cost + sg_relive_first_cost;
+				if (fin_cost > sg_relive_max_cost)
+					fin_cost = sg_relive_max_cost;
+				if (get_comm_gold() < fin_cost)
+				{
+					LOG_ERR("%s: player[%lu] do not have enough gold", __FUNCTION__, get_uuid());
+					return;
+				}
+				sub_comm_gold(fin_cost, MAGIC_TYPE_RELIVE);
 			}
-			sub_comm_gold(fin_cost, MAGIC_TYPE_RELIVE);
+
+			++data->attrData[PLAYER_ATTR_RELIVE_TYPE1];
+			broadcast_to_sight(MSG_ID_RELIVE_NOTIFY, &nty, (pack_func)relive_notify__pack, true);
+		}
+		else //复活点复活
+		{
+			struct position *pos = get_pos();
+			scene->get_relive_pos(pos->pos_x, pos->pos_z, &nty.pos_x, &nty.pos_z, &nty.direct);
+			LOG_DEBUG("%s: player[%lu] relive to pos[%d][%d][%d]", __FUNCTION__, get_uuid(), nty.pos_x, nty.pos_z, nty.direct);
+
+			EXTERN_DATA extern_data;
+			extern_data.player_id = get_uuid();
+			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RELIVE_NOTIFY, relive_notify__pack, nty);
+
+			send_clear_sight();
+			scene_struct *t_scene = scene;
+			scene->delete_player_from_scene(this);
+			set_pos(nty.pos_x, nty.pos_z);
+			t_scene->add_player_to_scene(this);
 		}
 
-		++data->attrData[PLAYER_ATTR_RELIVE_TYPE1];
-		broadcast_to_sight(MSG_ID_RELIVE_NOTIFY, &nty, (pack_func)relive_notify__pack, true);
-	}
-	else //复活点复活
-	{
-		struct position *pos = get_pos();
-		scene->get_relive_pos(pos->pos_x, pos->pos_z, &nty.pos_x, &nty.pos_z, &nty.direct);
-		LOG_DEBUG("%s: player[%lu] relive to pos[%d][%d][%d]", __FUNCTION__, get_uuid(), nty.pos_x, nty.pos_z, nty.direct);
-
-		EXTERN_DATA extern_data;
-		extern_data.player_id = get_uuid();
-		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RELIVE_NOTIFY, relive_notify__pack, nty);
-
-		send_clear_sight();
-		scene_struct *t_scene = scene;
-		scene->delete_player_from_scene(this);
-		set_pos(nty.pos_x, nty.pos_z);
-		t_scene->add_player_to_scene(this);
-	}
-
-	data->attrData[PLAYER_ATTR_HP] = data->attrData[PLAYER_ATTR_MAXHP];
-	++data->attrData[PLAYER_ATTR_RELIVE_TYPE2];
-	on_hp_changed(0);	
+		data->attrData[PLAYER_ATTR_HP] = data->attrData[PLAYER_ATTR_MAXHP];
+		++data->attrData[PLAYER_ATTR_RELIVE_TYPE2];
+		on_hp_changed(0);	
 
 		//复活的时候加上一个无敌buff
-	buff_manager::create_buff(114400001, this, this, false);
-	if (chengjie_kill != 0)
-	{
-		STChengJie *pTask = ChengJieTaskManage::FindTask(chengjie_kill);
-		if (pTask != NULL )
+		buff_manager::create_buff(114400001, this, this, false);
+		if (chengjie_kill != 0)
 		{
-			ParameterTable *config = get_config_by_id(161000098, &parameter_config);
-			if (config != NULL)
+			STChengJie *pTask = ChengJieTaskManage::FindTask(chengjie_kill);
+			if (pTask != NULL )
 			{
-				buff_manager::create_buff(config->parameter1[pTask->step - 1], this, this, true);
+				ParameterTable *config = get_config_by_id(161000098, &parameter_config);
+				if (config != NULL)
+				{
+					buff_manager::create_buff(config->parameter1[pTask->step - 1], this, this, true);
+				}
 			}
+			chengjie_kill = 0;
 		}
-		chengjie_kill = 0;
-	}
-	
 
-	m_team == NULL ? true : m_team->OnMemberHpChange(*this);
+
+		m_team == NULL ? true : m_team->OnMemberHpChange(*this);
+	}
+
+	adjust_battle_partner();
 }
 
 void player_struct::on_repel(unit_struct *player)
@@ -11199,7 +11478,12 @@ int player_struct::add_fashion(uint32_t id, uint32_t color, time_t expire)
 		CharmTable *tableCharm = get_charm_table(data->charm_level);
 		while (tableCharm != NULL && data->charm_total >= tableCharm->Exp)
 		{
+			if (data->charm_level == charm_config.size())
+			{
+				break;
+			}
 			++data->charm_level;
+			data->charm_total -= tableCharm->Exp;
 			tableCharm = get_charm_table(data->charm_level);
 		}
 
@@ -11346,30 +11630,44 @@ void player_struct::check_fashion_expire()
 	puton_fashion_ans__init(&send);
 	send.ret = 0;
 	bool have = false;
-	for (uint32_t i = 0; i < data->n_fashion; ++i)
+	for (uint32_t i = 0; i < data->n_fashion; )
 	{
 		if (data->fashion[i].timeout != 0
 			&& data->fashion[i].timeout <= (time_t)time_helper::get_cached_time()/1000)
 		{
-			std::map<uint64_t, struct ActorFashionTable *>::iterator itFashion = fashion_config.find(data->fashion[i].id);
+			uint32_t factionId = data->fashion[i].id;
+			if (i + 1 != data->n_fashion)
+			{
+				memcpy(data->fashion + i, data->fashion + data->n_fashion - 1, sizeof(FashionInfo));
+			} 
+			--data->n_fashion;
+			std::map<uint64_t, struct ActorFashionTable *>::iterator itFashion = fashion_config.find(factionId);
 			if (itFashion == fashion_config.end())
 			{
 				continue;
 			}
 
 			have = true;
-			data->charm_total -= itFashion->second->Charm;
 			CharmTable *tableCharm = get_charm_table(data->charm_level - 1);
-			while (tableCharm != NULL && data->charm_total < tableCharm->Exp && data->charm_level > 1)
+			while (tableCharm != NULL && data->charm_total < itFashion->second->Charm  && data->charm_level > 1)
 			{
 				--data->charm_level;
-				tableCharm = get_charm_table(data->charm_level);
+				data->charm_total += tableCharm->Exp;
+				tableCharm = get_charm_table(data->charm_level - 1);
 			}
-
-			send.id = data->fashion[i].id;
+			if (data->charm_total < itFashion->second->Charm)
+			{
+				data->charm_total = 0;
+			} 
+			else
+			{
+				data->charm_total -= itFashion->second->Charm;
+			}
+			
+			send.id = factionId;
 			if (itFashion->second->Type == FASHION_TYPE_WEAPON)
 			{
-				if (data->fashion[i].id != get_attr(PLAYER_ATTR_WEAPON))
+				if (factionId != get_attr(PLAYER_ATTR_WEAPON))
 				{
 					continue;
 				}
@@ -11379,14 +11677,14 @@ void player_struct::check_fashion_expire()
 			}
 			else if (itFashion->second->Type == FASHION_TYPE_HAT)
 			{
-				if (data->fashion[i].id != get_attr(PLAYER_ATTR_HAT))
+				if (factionId != get_attr(PLAYER_ATTR_HAT))
 				{
 					continue;
 				}
 
 				attrs[PLAYER_ATTR_HAT] = it->second->HairResId[0];
 				set_attr(PLAYER_ATTR_HAT, it->second->HairResId[0]);
-				data->fashion[i].color = itFashion->second->Colour;
+				//data->fashion[i].color = itFashion->second->Colour;
 				send.newid = attrs[PLAYER_ATTR_HAT];
 				std::map<uint64_t, struct ActorFashionTable *>::iterator itFNew = fashion_config.find(it->second->HairResId[0]);
 				if (itFNew != fashion_config.end())
@@ -11400,13 +11698,13 @@ void player_struct::check_fashion_expire()
 			}
 			else if (itFashion->second->Type == FASHION_TYPE_CLOTHES)
 			{
-				if (data->fashion[i].id != get_attr(PLAYER_ATTR_CLOTHES))
+				if (factionId != get_attr(PLAYER_ATTR_CLOTHES))
 				{
 					continue;
 				}
 
-				data->fashion[i].color = itFashion->second->Colour;
-				data->fashion[i].colordown = itFashion->second->Colour;
+				//data->fashion[i].color = itFashion->second->Colour;
+				//data->fashion[i].colordown = itFashion->second->Colour;
 				attrs[PLAYER_ATTR_CLOTHES] = it->second->ResId[0];
 				set_attr(PLAYER_ATTR_CLOTHES, it->second->ResId[0]);
 				send.newid = attrs[PLAYER_ATTR_CLOTHES];
@@ -11425,7 +11723,9 @@ void player_struct::check_fashion_expire()
 					}
 				}
 			}
-
+		}
+		else {
+			++i;
 		}
 	}
 
@@ -11707,6 +12007,15 @@ void player_struct::check_guoyu_expire()
 			EXTERN_DATA extern_data;
 			extern_data.player_id = get_uuid();
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_TASK_SUCC_NOTIFY, guoyu_succ__pack, send);
+
+			if (data->scene_id < SCENCE_DEPART)
+			{
+				return;
+			}
+			GuoyuFbSucc notify;
+			guoyu_fb_succ__init(&notify);
+			notify.succ = 1;
+			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_FB_SUCC_NOTIFY, guoyu_fb_succ__pack, notify);
 		}
 	}
 }
@@ -11882,7 +12191,7 @@ void player_struct::add_chengjie_exp(uint32_t num)
 	std::stringstream ss_num;
 	ss_num << num;
 	args.push_back(const_cast<char*>(ss_num.str().c_str()));
-	send_system_notice(190500167, args);
+	send_system_notice(190500167, &args);
 }
 
 void player_struct::add_chengjie_courage(uint32_t num)
@@ -11899,7 +12208,7 @@ void player_struct::add_chengjie_courage(uint32_t num)
 	std::stringstream ss_num;
 	ss_num << num;
 	args.push_back(const_cast<char*>(ss_num.str().c_str()));
-	send_system_notice(190500170, args);
+	send_system_notice(190500170, &args);
 
 }
 
@@ -11963,7 +12272,7 @@ void player_struct::add_shangjin_exp(uint32_t num)
 	std::stringstream ss_num;
 	ss_num << num;
 	args.push_back(const_cast<char*>(ss_num.str().c_str()));
-	send_system_notice(190500168, args);
+	send_system_notice(190500168, &args);
 }
 
 void player_struct::send_all_yaoshi_num()

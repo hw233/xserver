@@ -1556,13 +1556,14 @@ void try_reset_friend_player(FriendPlayer *player)
 	}
 }
 
-void notify_friend_unit_update(FriendPlayer *player, FriendUnit &unit)
+void notify_friend_closeness_update(FriendPlayer *player, FriendUnit &unit)
 {
 	FriendUpdateUnitNotify nty;
 	friend_update_unit_notify__init(&nty);
 
 	nty.playerid = unit.player_id;
 	nty.closeness = unit.closeness;
+	nty.has_closeness = true;
 
 	EXTERN_DATA ext_data;
 	ext_data.player_id = player->player_id;

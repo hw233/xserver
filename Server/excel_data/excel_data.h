@@ -721,8 +721,12 @@ struct EscortTask
 	uint64_t *MonsterID3; //13
 	uint32_t n_PointXZ3; //14
 	double *PointXZ3; //14
-	uint32_t n_talkID; //15
-	uint64_t *talkID; //15
+	uint32_t n_MonsterID4; //15
+	uint64_t *MonsterID4; //15
+	uint32_t n_PointXZ4; //16
+	double *PointXZ4; //16
+	uint32_t n_talkID; //17
+	uint64_t *talkID; //17
 }__attribute__ ((packed));
 
 struct EventCalendarTable
@@ -940,8 +944,16 @@ struct MoneyQuestTable
 	uint64_t *RewardGroup; //4
 	uint32_t n_QualityGroup; //5
 	uint64_t *QualityGroup; //5
-	uint32_t n_RewardPlus; //6
-	uint64_t *RewardPlus; //6
+	uint32_t n_RewardGroup1; //6
+	uint64_t *RewardGroup1; //6
+	uint32_t n_RewardGroup2; //7
+	uint64_t *RewardGroup2; //7
+	uint32_t n_RewardGroup3; //8
+	uint64_t *RewardGroup3; //8
+	uint32_t n_RewardGroup4; //9
+	uint64_t *RewardGroup4; //9
+	uint32_t n_RewardGroup5; //10
+	uint64_t *RewardGroup5; //10
 }__attribute__ ((packed));
 
 struct MonsterPkTypeTable
@@ -1335,6 +1347,7 @@ struct ShopTable
 	uint64_t  Purchasetype; //7
 	uint64_t  Condition; //8
 	uint64_t  BuyNum; //9
+	uint64_t  Discount; //10
 }__attribute__ ((packed));
 
 struct SkillEffectTable

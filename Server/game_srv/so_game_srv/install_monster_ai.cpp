@@ -25,6 +25,7 @@
 // 19=太极BOS  AI
 // 20=妖帝AI
 // 21=蒋雳夫等4人AI
+// 22=定点护送，可在路途中自动攻击对立方
 
 void install_monster_ai()
 {
@@ -47,6 +48,7 @@ void install_monster_ai()
 	monster_struct::add_ai_interface(19, &monster_ai_19_interface);
 	monster_struct::add_ai_interface(20, &monster_ai_20_interface);
 	monster_struct::add_ai_interface(21, &monster_ai_21_interface);		
+	monster_struct::add_ai_interface(22, &monster_ai_22_interface);		
 }
 void uninstall_monster_ai()
 {
@@ -69,4 +71,5 @@ void uninstall_monster_ai()
 	monster_struct::add_ai_interface(19, NULL);
 	monster_struct::add_ai_interface(20, NULL);
 	monster_struct::add_ai_interface(21, NULL);	
+	monster_struct::add_ai_interface(22, NULL);	
 }

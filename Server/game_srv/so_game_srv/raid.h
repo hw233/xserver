@@ -181,7 +181,8 @@ union raid_ai_data
 
 	struct
 	{
-		bool note_boss;   //		
+		bool note_boss;   //
+		uint32_t target;
 	}guoyu_data;
 };
 
@@ -214,6 +215,7 @@ struct raid_data
 	uint32_t pass_index;  //通关类型下标
 	uint32_t pass_value;  //通关参数对应完成的数值
 	int ai_type;
+	uint64_t raid_ai_event; //有些副本ai事件需要客户端执行完毕后通知后台继续副本ai，次参数用来记录客户端发回的副本事件id
 	union raid_ai_data ai_data;
 };
 
@@ -300,7 +302,7 @@ public:
 	int check_cond_finished(int index, uint64_t cond_type, uint64_t cond_value, uint64_t cond_value1, uint32_t *ret_param);  //判断指定的完成条件是否达成
 	int calc_raid_star(uint32_t star_param[3], uint32_t score_param[3]);
 	virtual int broadcast_to_raid(uint32_t msg_id, void *msg_data, pack_func func);
-	int init_common_script_data(struct raid_script_data *script_data);	
+	int init_common_script_data(const char *script_name, struct raid_script_data *script_data);	
 
 	void stop_monster_ai();
 	void start_monster_ai();

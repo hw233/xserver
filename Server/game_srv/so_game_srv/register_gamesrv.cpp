@@ -45,7 +45,7 @@
 
 static int default_handle(player_struct *player, EXTERN_DATA *extern_data)
 {
-	LOG_INFO("%s %d", __FUNCTION__, __LINE__);
+	LOG_ERR("%s %d", __FUNCTION__, __LINE__);
 	return (0);
 }
 static void cb_signal2(evutil_socket_t fd, short events, void *arg)

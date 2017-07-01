@@ -194,7 +194,8 @@ message FriendSendGiftNotify
 message FriendUpdateUnitNotify
 {
 	required uint64 playerId = 1; //玩家ID
-	required uint32 closeness = 2; //好感度
+	optional string name = 2; //玩家名字
+	optional uint32 closeness = 3; //好感度
 }
 
 //服务器缓存的离线聊天信息

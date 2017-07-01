@@ -41,7 +41,7 @@ static void do_wait(monster_struct *monster)
 	monster->ai_state = AI_PATROL_STATE;
 }
 
-static void do_patrol(monster_struct *monster)
+void do_circlea_or_type22_ai_patrol(monster_struct *monster)
 {
 	if (!monster->config)
 		return;
@@ -50,7 +50,10 @@ static void do_patrol(monster_struct *monster)
 	{
 		monster->ai_state = AI_PURSUE_STATE;
 		monster->data->target_pos.pos_x = 0;
-		monster->data->target_pos.pos_z = 0;			
+		monster->data->target_pos.pos_z = 0;
+		struct position *pos = monster->get_pos();
+		monster->ai_data.circle_ai.ret_pos.pos_x = pos->pos_x;
+		monster->ai_data.circle_ai.ret_pos.pos_z = pos->pos_z;			
 		return;
 	}
 
@@ -128,6 +131,7 @@ static void	do_dead(monster_struct *monster)
 
 static void	do_goback(monster_struct *monster)
 {
+	monster->on_go_back();	
 	monster->reset_pos();
 	monster->data->move_path.pos[1].pos_x = monster->ai_data.circle_ai.ret_pos.pos_x;
 	monster->data->move_path.pos[1].pos_z = monster->ai_data.circle_ai.ret_pos.pos_z;
@@ -165,19 +169,19 @@ static void circle_ai_tick(monster_struct *monster)
 		case AI_PURSUE_STATE:
 			do_normal_pursue(monster);
 			break;
-		case AI_GO_BACK_STATE:
-			monster->data->ontick_time += random() % 2000;
-			do_goback(monster);
-			break;
+//		case AI_GO_BACK_STATE:
+//			monster->data->ontick_time += random() % 2000;
+//			do_goback(monster);
+//			break;
 		case AI_PATROL_STATE:
-			do_patrol(monster);
+			do_circlea_or_type22_ai_patrol(monster);
 			break;
 //		case AI_DEAD_STATE:
 //			do_dead(monster);
 	}
 }
 
-static void circle_ai_beattack(monster_struct *monster, unit_struct *player)
+void circle_ai_beattack(monster_struct *monster, unit_struct *player)
 {
 	monster->ai_state = AI_PURSUE_STATE;
 	monster->data->target_pos.pos_x = 0;
@@ -190,13 +194,29 @@ static void circle_ai_beattack(monster_struct *monster, unit_struct *player)
 	monster->ai_data.circle_ai.ret_pos.pos_z = pos->pos_z;	
 }
 
-static void circle_ai_befly(monster_struct *monster, unit_struct *player)
+void circle_ai_befly(monster_struct *monster, unit_struct *player)
 {
 }
 
-static void circle_ai_dead(monster_struct *monster, scene_struct *scene)
+void circle_ai_dead(monster_struct *monster, scene_struct *scene)
 {
 	monster->ai_state = AI_DEAD_STATE;
+}
+
+bool circle_ai_check_goback(monster_struct *monster)
+{
+	struct position *my_pos = monster->get_pos();
+//	monster->data->move_path.pos[1].pos_x = monster->ai_data.circle_ai.ret_pos.pos_x;
+//	monster->data->move_path.pos[1].pos_z = monster->ai_data.circle_ai.ret_pos.pos_z;
+
+	if (fabsf(my_pos->pos_x - monster->ai_data.circle_ai.ret_pos.pos_x) > (int)(monster->ai_config->ChaseRange)
+		|| fabsf(my_pos->pos_z - monster->ai_data.circle_ai.ret_pos.pos_z) > (int)(monster->ai_config->ChaseRange))
+	{
+		do_goback(monster);
+		return true;
+	}
+	
+	return false;
 }
 
 struct ai_interface monster_ai_circle_interface =
@@ -206,7 +226,13 @@ struct ai_interface monster_ai_circle_interface =
 	circle_ai_dead,
 	circle_ai_befly,
 	NULL,
-	NULL
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	.on_monster_ai_check_goback = circle_ai_check_goback,
 };
 
 

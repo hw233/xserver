@@ -228,6 +228,7 @@ int sg_pvp_center_buff_id[2];
 
 int sg_pvp_raid_fighting_capacity_range[2];
 std::map<uint32_t, uint32_t> sg_bagua_bind_item_map; //通过八卦ID找绑定道具ID
+std::map<uint32_t, uint32_t> sg_partner_item_map; //skill_id, book_id
 
 std::vector<uint32_t> sg_common_question;
 std::vector<uint32_t> sg_award_question;

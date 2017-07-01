@@ -255,6 +255,7 @@ void partner_struct::on_hp_changed(int damage)
 
 void partner_struct::on_dead(unit_struct *killer)
 {
+	LOG_DEBUG("[%s:%d] player[%lu] partner[%lu][%u]", __FUNCTION__, __LINE__, data->owner_id, data->uuid, data->partner_id);
 	data->relive_time = time_helper::get_cached_time() / 1000 + sg_partner_relive_time;
 	m_owner->adjust_battle_partner();
 }
@@ -376,7 +377,7 @@ void partner_struct::on_tick()
 	float z = owner_pos->pos_z - cur_pos->pos_z;
 	float d = x * x + z * z;
 	
-	if (d >= 12 * 12 || scene != m_owner->scene)
+	if (d >= 24 * 24 || scene != m_owner->scene)
 	{
 			// 超过10米闪现
 		struct position target_pos;
@@ -859,12 +860,18 @@ void partner_struct::calculate_attribute(double *attrData, partner_attr_data &at
 	}
 	for (uint32_t i = 0; i < data->n_god; ++i)
 	{
-		GodYaoAttributeTable *table = get_config_by_id(data->god_id[i], &partner_god_attr_config);
-		if (table == NULL)
+		for (uint32_t n_attr = 0; n_attr < config->n_GodYao; ++n_attr)
 		{
-			continue;
+			if (config->GodYao[n_attr] == data->god_id[i])
+			{
+				GodYaoAttributeTable *table = get_config_by_id(config->GodYaoAttribute[n_attr], &partner_god_attr_config);
+				if (table != NULL)
+				{
+					module_attr[table->AttributeType] += (table->AttributeNum * (1 + data->god_level[i] * table->Coefficient));
+				}
+				break;
+			}
 		}
-		module_attr[table->AttributeType] += (table->AttributeNum * (1 + data->god_level[i] * table->Coefficient));
 	}
 	
 	add_fight_attr(attrData, module_attr);

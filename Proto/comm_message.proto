@@ -90,6 +90,8 @@ message TaskCount
 message TaskRewardData
 {
 	repeated ItemData items = 1; //道具
+	required uint32 coin = 2; //
+	required uint32 exp = 3; //
 }
 
 //任务信息

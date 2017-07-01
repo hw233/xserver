@@ -1437,7 +1437,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 500,
 		['Discount'] = 8,
-		['BuyNum'] = 3
+		['BuyNum'] = 9999
 		},
 	[281030002] = {
 		['ID'] = 281030002,
@@ -1449,7 +1449,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 32,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		},
 	[281030003] = {
 		['ID'] = 281030003,
@@ -1461,7 +1461,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 16,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		},
 	[281030004] = {
 		['ID'] = 281030004,
@@ -1473,7 +1473,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 16,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		},
 	[281030005] = {
 		['ID'] = 281030005,
@@ -1485,7 +1485,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 32,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		},
 	[281030006] = {
 		['ID'] = 281030006,
@@ -1497,7 +1497,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 32,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		},
 	[281030007] = {
 		['ID'] = 281030007,
@@ -1509,7 +1509,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 16,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		},
 	[281030008] = {
 		['ID'] = 281030008,
@@ -1521,7 +1521,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 16,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		},
 	[282000020] = {
 		['ID'] = 282000020,
@@ -1533,7 +1533,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 500,
 		['Discount'] = 8,
-		['BuyNum'] = 3
+		['BuyNum'] = 9999
 		},
 	[282000021] = {
 		['ID'] = 282000021,
@@ -1545,7 +1545,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 32,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		},
 	[282000022] = {
 		['ID'] = 282000022,
@@ -1557,7 +1557,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 16,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		},
 	[282000023] = {
 		['ID'] = 282000023,
@@ -1569,7 +1569,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 16,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		},
 	[282000024] = {
 		['ID'] = 282000024,
@@ -1581,7 +1581,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 32,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		},
 	[282000025] = {
 		['ID'] = 282000025,
@@ -1593,7 +1593,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 32,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		},
 	[282000026] = {
 		['ID'] = 282000026,
@@ -1605,7 +1605,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 16,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		},
 	[282000027] = {
 		['ID'] = 282000027,
@@ -1617,7 +1617,7 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 16,
 		['Discount'] = 8,
-		['BuyNum'] = 5
+		['BuyNum'] = 9999
 		}
 	}
 return ShopTable

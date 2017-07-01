@@ -97,6 +97,7 @@ typedef void (*ai_alive)(monster_struct *);
 typedef bool (*ai_on_player_leave_sight)(monster_struct *, player_struct *);
 typedef void (*ai_owner_attack)(monster_struct *, player_struct *, unit_struct *);
 typedef void (*ai_owner_beattack)(monster_struct *, player_struct *, unit_struct *);
+typedef bool (*ai_check_goback)(monster_struct *);
 struct ai_interface
 {
 	ai_tick on_tick; //定时驱动
@@ -110,6 +111,7 @@ struct ai_interface
 	ai_raid_attack_player on_raid_attack_player;  //副本中攻击玩家
 	ai_hp_changed on_hp_changed;   //死亡
 	ai_init on_monster_ai_init;  //初始化
+	ai_check_goback on_monster_ai_check_goback; //检查是否需要走回去
 };
 
 enum AIStateType
@@ -118,8 +120,8 @@ enum AIStateType
 	AI_PURSUE_STATE,    //追击模式
 	AI_GO_BACK_STATE,   //返回模式
 	AI_PATROL_STATE,   //巡逻模式
-	AI_DIRECT_PATROL_STATE,    //直巡模式
-	AI_PRE_GO_BACK_STATE,   //预返回模式
+//	AI_DIRECT_PATROL_STATE,    //直巡模式
+//	AI_PRE_GO_BACK_STATE,   //预返回模式
 	AI_DEAD_STATE,      //死亡
 	AI_WAIT_STATE,     //等待状态
 };
@@ -270,7 +272,7 @@ public:
 			uint8_t cur_pos_index;			
 //			uint8_t n_circle;
 //			struct position circle[MAX_CIRCLE_POS_NUM];
-		} circle_ai; //转圈怪物AI
+		} circle_ai; //转圈怪物AI以及单线不返回巡逻怪
 		struct
 		{
 			uint8_t cur_pos_index;

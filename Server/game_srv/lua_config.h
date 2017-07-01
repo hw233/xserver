@@ -238,6 +238,7 @@ extern uint64_t sg_yaoshi_level_limited[YAOSHI_SKILL_MAX_NUM];
 
 extern int sg_pvp_raid_fighting_capacity_range[2];
 extern std::map<uint32_t, uint32_t> sg_bagua_bind_item_map; //通过八卦ID找绑定道具ID
+extern std::map<uint32_t, uint32_t> sg_partner_item_map; //skill_id, book_id
 extern std::map<uint32_t, struct SpecialtySkillTable*> sg_yaoshi_skill_map; //
 extern std::map<uint32_t, std::vector<RandomMonsterTable *> > sg_random_monster_map; //
 extern std::vector<RandomDungeonTable *> random_guoyu_fb_arr[MAX_GUOYU_TASK_TYPE + 1];
