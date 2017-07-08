@@ -2,6 +2,7 @@
 Server/*_srv/*_srv
 !Server/game_srv/so_game_srv
 *.so
+\#*
 CMakeCache.txt
 CMakeFiles/
 *.meta
