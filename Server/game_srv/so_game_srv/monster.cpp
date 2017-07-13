@@ -680,6 +680,7 @@ void monster_struct::on_dead(unit_struct *killer)
 			{
 				if (sight_space->data->type != 0)
 				{
+						//寻宝
 					if (sight_space->data->type == 1)
 					{
 						EXTERN_DATA extern_data;

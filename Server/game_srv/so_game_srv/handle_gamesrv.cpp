@@ -7914,8 +7914,8 @@ static int handle_buy_horse_request(player_struct *player, EXTERN_DATA *extern_d
 	}
 	
 
-	//int i = player->add_horse(horseId, it->second->Time[shopid]);
-	int i = player->add_horse(horseId, 30);
+	int i = player->add_horse(horseId, it->second->Time[shopid]);
+	//int i = player->add_horse(horseId, 30);
 	if (i < 0)
 	{
 		return -1;
