@@ -2924,9 +2924,9 @@ void player_struct::update_player_pos_and_sight()
 
 	update_sight(old_area, new_area);
 
-	if (truck != NULL)
+	if (truck != NULL && truck->area)
 	{
-		truck->update_sight(old_area, new_area);
+		truck->update_sight(truck->area, new_area);
 	}
 }
 
