@@ -215,15 +215,15 @@
 // 	monster->data->ontick_time += count_skill_delay_time(config);
 // }
 
-static void	do_goback(monster_struct *monster)
-{
-	if (!monster->create_config)
-		return;
-	monster->reset_pos();
-	monster->data->move_path.pos[1].pos_x = monster->get_born_pos_x();
-	monster->data->move_path.pos[1].pos_z = monster->get_born_pos_z();
-	monster->send_patrol_move();
-}
+// static void	do_goback(monster_struct *monster)
+// {
+// 	if (!monster->create_config)
+// 		return;
+// 	monster->reset_pos();
+// 	monster->data->move_path.pos[1].pos_x = monster->get_born_pos_x();
+// 	monster->data->move_path.pos[1].pos_z = monster->get_born_pos_z();
+// 	monster->send_patrol_move();
+// }
 
 // static void	do_dead(monster_struct *monster)
 // {
