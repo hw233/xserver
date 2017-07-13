@@ -166,7 +166,7 @@ Collect * Collect::CreateCollectByConfig(scene_struct *scene, int index)
 	return CreateCollectByPos(scene, create_config->ID, create_config->PointPosX, create_config->PointPosY, create_config->PointPosZ, create_config->Yaw);
 }
 
-Collect *Collect::CreateCollectByPos(scene_struct *scene, uint32_t id, uint32_t x, uint32_t y, uint32_t z, float yaw)
+Collect *Collect::CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw)
 {
 	CollectTable *table = get_config_by_id(id, &collect_config);
 	if (table == NULL)

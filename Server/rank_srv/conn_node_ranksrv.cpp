@@ -22,39 +22,92 @@ char sg_player_key[64]; //玩家数据
 static std::map<uint32_t, std::string> scm_rank_keys;
 static std::map<uint32_t, char *> rank_key_map;
 
-#define MAX_RANK_GET_NUM  100
-#define MAX_RANK_ADD_NUM  5000
+#define MAX_RANK_GET_NUM  100 //前端显示数目
+#define MAX_RANK_ADD_NUM  5000 //最多排行数
 #define MAX_RANK_ATTR_NUM  10
+
+enum
+{
+	//等级排行
+	RANK_LEVEL_TOTAL = 101,
+	RANK_LEVEL_JOB1  = 102,
+	RANK_LEVEL_JOB2  = 103,
+	RANK_LEVEL_JOB3  = 104,
+	RANK_LEVEL_JOB4  = 105,
+	RANK_LEVEL_JOB5  = 106,
+	//战力排行
+	RANK_FC_TOTAL = 201,
+	RANK_FC_JOB1  = 202,
+	RANK_FC_JOB2  = 203,
+	RANK_FC_JOB3  = 204,
+	RANK_FC_JOB4  = 205,
+	RANK_FC_JOB5  = 206,
+	//装备排行
+	RANK_EQUIP_TOTAL = 301,
+	RANK_EQUIP_JOB1  = 302,
+	RANK_EQUIP_JOB2  = 303,
+	RANK_EQUIP_JOB3  = 304,
+	RANK_EQUIP_JOB4  = 305,
+	RANK_EQUIP_JOB5  = 306,
+	//财富排行
+	RANK_TREASURE_COIN      = 407,
+	RANK_TREASURE_GOLD      = 408,
+	RANK_TREASURE_BIND_GOLD = 409,
+	//八卦排行
+	RANK_BAGUA_TOTAL = 501,
+	RANK_BAGUA_JOB1  = 502,
+	RANK_BAGUA_JOB2  = 503,
+	RANK_BAGUA_JOB3  = 504,
+	RANK_BAGUA_JOB4  = 505,
+	RANK_BAGUA_JOB5  = 506,
+	//太极之巅排行
+	RANK_PVP3_DIVISION2 = 610,
+	RANK_PVP3_DIVISION3 = 611,
+	RANK_PVP3_DIVISION4 = 612,
+	RANK_PVP3_DIVISION5 = 613,
+	RANK_PVP3_DIVISION6 = 614,
+	RANK_PVP3_DIVISION7 = 615,
+	RANK_PVP3_DIVISION8 = 616,
+	RANK_PVP3_DIVISION9 = 617,
+};
 
 static void init_rank_key_map()
 {
-	scm_rank_keys[RANK_TYPE__RANK_LEVEL_TOTAL]                            = "s%u_rank_level_total";
-	scm_rank_keys[RANK_TYPE__RANK_LEVEL_JOB1]                             = "s%u_rank_level_job1";
-	scm_rank_keys[RANK_TYPE__RANK_LEVEL_JOB2]                             = "s%u_rank_level_job2";
-	scm_rank_keys[RANK_TYPE__RANK_LEVEL_JOB3]                             = "s%u_rank_level_job3";
-	scm_rank_keys[RANK_TYPE__RANK_LEVEL_JOB4]                             = "s%u_rank_level_job4";
-	scm_rank_keys[RANK_TYPE__RANK_LEVEL_JOB5]                             = "s%u_rank_level_job5";
-	scm_rank_keys[RANK_TYPE__RANK_FC_TOTAL]                               = "s%u_rank_fc_total";
-	scm_rank_keys[RANK_TYPE__RANK_FC_JOB1]                                = "s%u_rank_fc_job1";
-	scm_rank_keys[RANK_TYPE__RANK_FC_JOB2]                                = "s%u_rank_fc_job2";
-	scm_rank_keys[RANK_TYPE__RANK_FC_JOB3]                                = "s%u_rank_fc_job3";
-	scm_rank_keys[RANK_TYPE__RANK_FC_JOB4]                                = "s%u_rank_fc_job4";
-	scm_rank_keys[RANK_TYPE__RANK_FC_JOB5]                                = "s%u_rank_fc_job5";
-	scm_rank_keys[RANK_TYPE__RANK_EQUIP_TOTAL]                            = "s%u_rank_equip_total";
-	scm_rank_keys[RANK_TYPE__RANK_EQUIP_JOB1]                             = "s%u_rank_equip_job1";
-	scm_rank_keys[RANK_TYPE__RANK_EQUIP_JOB2]                             = "s%u_rank_equip_job2";
-	scm_rank_keys[RANK_TYPE__RANK_EQUIP_JOB3]                             = "s%u_rank_equip_job3";
-	scm_rank_keys[RANK_TYPE__RANK_EQUIP_JOB4]                             = "s%u_rank_equip_job4";
-	scm_rank_keys[RANK_TYPE__RANK_EQUIP_JOB5]                             = "s%u_rank_equip_job5";
-	scm_rank_keys[RANK_TYPE__RANK_TREASURE_COIN]                          = "s%u_rank_treasure_coin";
-	scm_rank_keys[RANK_TYPE__RANK_TREASURE_GOLD]                          = "s%u_rank_treasure_gold";
-	scm_rank_keys[RANK_TYPE__RANK_TREASURE_BIND_GOLD]                     = "s%u_rank_treasure_bind_gold";
-	scm_rank_keys[RANK_TYPE__RANK_BAGUA_TOTAL]                            = "s%u_rank_bagua_total";
-	scm_rank_keys[RANK_TYPE__RANK_BAGUA_JOB1]                             = "s%u_rank_bagua_job1";
-	scm_rank_keys[RANK_TYPE__RANK_BAGUA_JOB2]                             = "s%u_rank_bagua_job2";
-	scm_rank_keys[RANK_TYPE__RANK_BAGUA_JOB3]                             = "s%u_rank_bagua_job3";
-	scm_rank_keys[RANK_TYPE__RANK_BAGUA_JOB4]                             = "s%u_rank_bagua_job4";
-	scm_rank_keys[RANK_TYPE__RANK_BAGUA_JOB5]                             = "s%u_rank_bagua_job5";
+	scm_rank_keys[RANK_LEVEL_TOTAL]                            = "s%u_rank_level_total";
+	scm_rank_keys[RANK_LEVEL_JOB1]                             = "s%u_rank_level_job1";
+	scm_rank_keys[RANK_LEVEL_JOB2]                             = "s%u_rank_level_job2";
+	scm_rank_keys[RANK_LEVEL_JOB3]                             = "s%u_rank_level_job3";
+	scm_rank_keys[RANK_LEVEL_JOB4]                             = "s%u_rank_level_job4";
+	scm_rank_keys[RANK_LEVEL_JOB5]                             = "s%u_rank_level_job5";
+	scm_rank_keys[RANK_FC_TOTAL]                               = "s%u_rank_fc_total";
+	scm_rank_keys[RANK_FC_JOB1]                                = "s%u_rank_fc_job1";
+	scm_rank_keys[RANK_FC_JOB2]                                = "s%u_rank_fc_job2";
+	scm_rank_keys[RANK_FC_JOB3]                                = "s%u_rank_fc_job3";
+	scm_rank_keys[RANK_FC_JOB4]                                = "s%u_rank_fc_job4";
+	scm_rank_keys[RANK_FC_JOB5]                                = "s%u_rank_fc_job5";
+	scm_rank_keys[RANK_EQUIP_TOTAL]                            = "s%u_rank_equip_total";
+	scm_rank_keys[RANK_EQUIP_JOB1]                             = "s%u_rank_equip_job1";
+	scm_rank_keys[RANK_EQUIP_JOB2]                             = "s%u_rank_equip_job2";
+	scm_rank_keys[RANK_EQUIP_JOB3]                             = "s%u_rank_equip_job3";
+	scm_rank_keys[RANK_EQUIP_JOB4]                             = "s%u_rank_equip_job4";
+	scm_rank_keys[RANK_EQUIP_JOB5]                             = "s%u_rank_equip_job5";
+	scm_rank_keys[RANK_TREASURE_COIN]                          = "s%u_rank_treasure_coin";
+	scm_rank_keys[RANK_TREASURE_GOLD]                          = "s%u_rank_treasure_gold";
+	scm_rank_keys[RANK_TREASURE_BIND_GOLD]                     = "s%u_rank_treasure_bind_gold";
+	scm_rank_keys[RANK_BAGUA_TOTAL]                            = "s%u_rank_bagua_total";
+	scm_rank_keys[RANK_BAGUA_JOB1]                             = "s%u_rank_bagua_job1";
+	scm_rank_keys[RANK_BAGUA_JOB2]                             = "s%u_rank_bagua_job2";
+	scm_rank_keys[RANK_BAGUA_JOB3]                             = "s%u_rank_bagua_job3";
+	scm_rank_keys[RANK_BAGUA_JOB4]                             = "s%u_rank_bagua_job4";
+	scm_rank_keys[RANK_BAGUA_JOB5]                             = "s%u_rank_bagua_job5";
+	scm_rank_keys[RANK_PVP3_DIVISION2]                         = "s%u_rank_pvp3_division2";
+	scm_rank_keys[RANK_PVP3_DIVISION3]                         = "s%u_rank_pvp3_division3";
+	scm_rank_keys[RANK_PVP3_DIVISION4]                         = "s%u_rank_pvp3_division4";
+	scm_rank_keys[RANK_PVP3_DIVISION5]                         = "s%u_rank_pvp3_division5";
+	scm_rank_keys[RANK_PVP3_DIVISION6]                         = "s%u_rank_pvp3_division6";
+	scm_rank_keys[RANK_PVP3_DIVISION7]                         = "s%u_rank_pvp3_division7";
+	scm_rank_keys[RANK_PVP3_DIVISION8]                         = "s%u_rank_pvp3_division8";
+	scm_rank_keys[RANK_PVP3_DIVISION9]                         = "s%u_rank_pvp3_division9";
 }
 
 void init_redis_keys(uint32_t server_id)
@@ -317,6 +370,8 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		uint32_t coin = req->coin;
 		uint32_t gold = req->gold;
 		uint32_t gold_bind = req->bind_gold;
+		uint32_t pvp3_division = req->pvp_division_3;
+		uint32_t pvp3_score = req->pvp_score_3;
 		
 		uint32_t old_level = 0;
 		uint32_t old_fc_total = 0;
@@ -325,6 +380,8 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		uint32_t old_coin = 0;
 		uint32_t old_gold = 0;
 		uint32_t old_gold_bind = 0;
+		uint32_t old_pvp3_division = 0;
+		uint32_t old_pvp3_score = 0;
 
 		if (redis_player)
 		{
@@ -338,6 +395,8 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 			old_coin = redis_player->coin;
 			old_gold = redis_player->gold;
 			old_gold_bind = redis_player->bind_gold;
+			old_pvp3_division = redis_player->pvp_division_3;
+			old_pvp3_score = redis_player->pvp_score_3;
 		}
 		else
 		{
@@ -346,14 +405,14 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 
 		if (level != old_level)
 		{
-			rank_key = get_rank_key(RANK_TYPE__RANK_LEVEL_TOTAL);
+			rank_key = get_rank_key(RANK_LEVEL_TOTAL);
 			ret = rc.zset(rank_key, player_id, level);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, level, old_level);
 			}
 
-			rank_key = get_rank_key(RANK_TYPE__RANK_LEVEL_TOTAL + job);
+			rank_key = get_rank_key(RANK_LEVEL_TOTAL + job);
 			ret = rc.zset(rank_key, player_id, level);
 			if (ret != 0)
 			{
@@ -363,31 +422,38 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 
 		if (fc_total != old_fc_total)
 		{
-			rank_key = get_rank_key(RANK_TYPE__RANK_FC_TOTAL);
+			rank_key = get_rank_key(RANK_FC_TOTAL);
 			ret = rc.zset(rank_key, player_id, fc_total);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_total, old_fc_total);
 			}
 
-			rank_key = get_rank_key(RANK_TYPE__RANK_FC_TOTAL + job);
+			rank_key = get_rank_key(RANK_FC_TOTAL + job);
 			ret = rc.zset(rank_key, player_id, fc_total);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_total, old_fc_total);
+			}
+			if (req->zhenying != 0)
+			{
+				PROTO_ZHENYIN_CHANGE_POWER *toFriend = (PROTO_ZHENYIN_CHANGE_POWER *)get_send_data();
+				toFriend->power = fc_total - old_fc_total;
+				toFriend->zhen_ying = req->zhenying;
+				fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST, sizeof(toFriend), 0);
 			}
 		}
 
 		if (fc_equip != old_fc_equip)
 		{
-			rank_key = get_rank_key(RANK_TYPE__RANK_EQUIP_TOTAL);
+			rank_key = get_rank_key(RANK_EQUIP_TOTAL);
 			ret = rc.zset(rank_key, player_id, fc_equip);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_equip, old_fc_equip);
 			}
 
-			rank_key = get_rank_key(RANK_TYPE__RANK_EQUIP_TOTAL + job);
+			rank_key = get_rank_key(RANK_EQUIP_TOTAL + job);
 			ret = rc.zset(rank_key, player_id, fc_equip);
 			if (ret != 0)
 			{
@@ -397,14 +463,14 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 
 		if (fc_bagua != old_fc_bagua)
 		{
-			rank_key = get_rank_key(RANK_TYPE__RANK_BAGUA_TOTAL);
+			rank_key = get_rank_key(RANK_BAGUA_TOTAL);
 			ret = rc.zset(rank_key, player_id, fc_bagua);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_bagua, old_fc_bagua);
 			}
 
-			rank_key = get_rank_key(RANK_TYPE__RANK_BAGUA_TOTAL + job);
+			rank_key = get_rank_key(RANK_BAGUA_TOTAL + job);
 			ret = rc.zset(rank_key, player_id, fc_bagua);
 			if (ret != 0)
 			{
@@ -414,7 +480,7 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 
 		if (coin != old_coin)
 		{
-			rank_key = get_rank_key(RANK_TYPE__RANK_TREASURE_COIN);
+			rank_key = get_rank_key(RANK_TREASURE_COIN);
 			ret = rc.zset(rank_key, player_id, coin);
 			if (ret != 0)
 			{
@@ -424,7 +490,7 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 
 		if (gold != old_gold)
 		{
-			rank_key = get_rank_key(RANK_TYPE__RANK_TREASURE_GOLD);
+			rank_key = get_rank_key(RANK_TREASURE_GOLD);
 			ret = rc.zset(rank_key, player_id, gold);
 			if (ret != 0)
 			{
@@ -434,11 +500,36 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 
 		if (gold_bind != old_gold_bind)
 		{
-			rank_key = get_rank_key(RANK_TYPE__RANK_TREASURE_BIND_GOLD);
+			rank_key = get_rank_key(RANK_TREASURE_BIND_GOLD);
 			ret = rc.zset(rank_key, player_id, gold_bind);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, gold_bind, old_gold_bind);
+			}
+		}
+
+		if (pvp3_score != old_pvp3_score)
+		{
+			if (pvp3_division > 1)
+			{
+				rank_key = get_rank_key(RANK_PVP3_DIVISION2 + pvp3_division - 2);
+				ret = rc.zset(rank_key, player_id, pvp3_score);
+				if (ret != 0)
+				{
+					LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, pvp3_score, old_pvp3_score);
+				}
+			}
+
+			if (pvp3_division != old_pvp3_division)
+			{
+				rank_key = get_rank_key(RANK_PVP3_DIVISION2 + old_pvp3_division - 2);
+				std::vector<uint64_t> dels;
+				dels.push_back(player_id);
+				ret = rc.zdel(rank_key, dels);
+				if (ret != 0)
+				{
+					LOG_ERR("[%s:%d] del %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, pvp3_score, old_pvp3_score);
+				}
 			}
 		}
 	}

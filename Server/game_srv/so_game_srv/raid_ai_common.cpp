@@ -257,11 +257,12 @@ static bool script_raid_check_finished(raid_struct *raid, struct raid_script_dat
 				}while(0);
 			}
 			return false;
+			case SCRIPT_EVENT_WAIT_NPC_TALK:		//等待玩家主动点击npc对话完毕
 			case SCRIPT_EVENT_AUTOMATIC_NPC_TALK:  //发送自动npc对话，并且等待对话完毕
 			{
 				if(raid != NULL && raid->data != NULL)
 				{
-					if(raid->data->raid_ai_event == SCRIPT_EVENT_AUTOMATIC_NPC_TALK)
+					if(raid->data->raid_ai_event == SCRIPT_EVENT_AUTOMATIC_NPC_TALK || raid->data->raid_ai_event == SCRIPT_EVENT_WAIT_NPC_TALK)
 					{
 						raid->data->raid_ai_event = 0;
 						return true;
@@ -460,7 +461,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 			player_struct *player = get_script_raid_event_player(raid);
 			if (player)
 			{
-				buff_manager::create_buff(config->Parameter1[0], player, player, true);
+				buff_manager::create_default_buff(config->Parameter1[0], player, player, true);
 			}
 			return true; 
 		}
@@ -489,6 +490,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 			}
 			return true;
 		}
+		case SCRIPT_EVENT_WAIT_NPC_TALK:		//等待玩家主动点击npc对话完毕
 		case SCRIPT_EVENT_AUTOMATIC_NPC_TALK:  //发送自动npc对话，并且等待对话完毕
 		{
 			RaidEventNotify nty;
@@ -517,7 +519,6 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 		case SCRIPT_EVENT_COLLECT_NUM: //采集指定采集物
 		case SCRIPT_EVENT_PLAYER_TASK_FORK:
 		case SCRIPT_EVENT_ESCORT_RESULT:
-		case SCRIPT_EVENT_WAIT_NPC_TALK:
 			return false;
 		case SCRIPT_EVENT_COLLECT_CALLBACK:
 		{
@@ -539,7 +540,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 						continue;
 					}
 
-					buff_manager::create_buff(buff_id, monster, monster, true);
+					buff_manager::create_default_buff(buff_id, monster, monster, true);
 				}
 			}
 
@@ -557,8 +558,9 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 					++next_itr;
 					if ((*itr)->data->monster_id == monster_id)
 					{
-						raid->delete_monster_from_scene((*itr), true);
-						monster_manager::delete_monster(*itr);
+						monster_struct *m = *itr;
+						raid->delete_monster_from_scene(m, true);
+						monster_manager::delete_monster(m);
 					}
 					itr = next_itr;
 				}
@@ -595,7 +597,7 @@ static void script_raid_next(raid_struct *raid, struct raid_script_data *script_
 	do_script_raid_init_cond(raid, script_data);
 }
 
-void script_ai_common_npc_talk(raid_struct *raid, uint32_t npc_id, struct raid_script_data *script_data)
+/*void script_ai_common_npc_talk(raid_struct *raid, uint32_t npc_id, struct raid_script_data *script_data)
 {
 	LOG_DEBUG("%s: npc id[%u] raid[%p][%lu]", __FUNCTION__, npc_id, raid, raid->data->uuid);
 	struct RaidScriptTable *config = (*script_data->script_config)[script_data->cur_index];
@@ -610,17 +612,23 @@ void script_ai_common_npc_talk(raid_struct *raid, uint32_t npc_id, struct raid_s
 		return;
 	script_raid_next(raid, script_data);
 	return;
-}
+}*/
 
 void script_ai_common_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer, struct raid_script_data *script_data)
 {
 	LOG_DEBUG("%s: monster id[%u] raid[%p][%lu]", __FUNCTION__, monster->data->monster_id, raid, raid->data->uuid);
 	bool pass = true;
+	if (script_data->cur_index >= script_data->script_config->size())
+		return;
+	
 	struct RaidScriptTable *config = (*script_data->script_config)[script_data->cur_index];
 	if (config->TypeID != SCRIPT_EVENT_MONSTER_DEAD_NUM)
 		return;
 	for (size_t i = 0; i + 1 < config->n_Parameter1; i = i+2)
 	{
+		assert(i + 1 < config->n_Parameter1);
+		assert(i / 2 < MAX_SCRIPT_COND_NUM);
+		
 		if (config->Parameter1[i] == monster->data->monster_id)
 			++script_data->cur_finished_num[i / 2];
 		if (script_data->cur_finished_num[i / 2] < config->Parameter1[i + 1])
@@ -634,6 +642,9 @@ void script_ai_common_monster_dead(raid_struct *raid, monster_struct *monster, u
 extern void stop_leiminggu_skill(monster_struct *monster);
 void script_ai_common_collect(raid_struct *raid, player_struct *player, Collect *collect, struct raid_script_data *script_data)
 {
+	if (script_data->cur_index >= script_data->script_config->size())
+		return;
+	
 	switch (script_data->collect_callback_event)
 	{
 		case 1://打断雷鸣鼓
@@ -656,8 +667,10 @@ void script_ai_common_collect(raid_struct *raid, player_struct *player, Collect 
 	struct RaidScriptTable *config = (*script_data->script_config)[script_data->cur_index];
 	if (config->TypeID != SCRIPT_EVENT_COLLECT_NUM)
 		return;
-	for (size_t i = 0; i < config->n_Parameter1; ++i)
+	for (size_t i = 0; i < config->n_Parameter1; i = i + 2)
 	{
+		assert(i + 1 < config->n_Parameter1);
+		assert(i / 2 < MAX_SCRIPT_COND_NUM);
 		if (config->Parameter1[i] == collect->m_collectId)
 			++script_data->cur_finished_num[i / 2];
 		if (script_data->cur_finished_num[i / 2] < config->Parameter1[i + 1])
@@ -734,6 +747,9 @@ void script_ai_common_player_ready(raid_struct *raid, player_struct *player, str
 
 void script_ai_common_escort_stop(raid_struct *raid, player_struct *player, uint32_t escort_id, bool success, struct raid_script_data *script_data)
 {
+	if (script_data->cur_index >= script_data->script_config->size())
+		return;
+	
 	struct RaidScriptTable *config = (*script_data->script_config)[script_data->cur_index];
 	if (config->TypeID != SCRIPT_EVENT_ESCORT_RESULT)
 		return;

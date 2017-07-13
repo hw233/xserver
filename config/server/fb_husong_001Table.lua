@@ -3,10 +3,10 @@
         ['uid'] = 1000001,
         ['ID'] = 152000061,
         ['ResType'] = "Npc",
-        ['PointPosX'] = 232.28,
-        ['PointPosY'] = 19.402,
-        ['PointPosZ'] = 285.88,
-        ['Yaw'] = 260,
+        ['PointPosX'] = 222.1,
+        ['PointPosY'] = 19.193,
+        ['PointPosZ'] = 266.38,
+        ['Yaw'] = 338.68,
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }
@@ -18,7 +18,7 @@
         ['PointPosX'] = 229.5259,
         ['PointPosY'] = 19.24602,
         ['PointPosZ'] = 277.8014,
-        ['Yaw'] = 0,
+        ['Yaw'] = 198.3001,
         ['Level'] = 10,
         ['TargetInfoList'] = {
             {
@@ -59,7 +59,7 @@
                     ['TargetPosY'] = 23.341,
                     ['TargetPosZ'] = 97.53,
                 },
-                ['RemainTime'] = 3,
+                ['RemainTime'] = 0,
             },
             {
                 ['TargetPos'] = {
@@ -67,7 +67,7 @@
                     ['TargetPosY'] = 23.341,
                     ['TargetPosZ'] = 69.4,
                 },
-                ['RemainTime'] = 0,
+                ['RemainTime'] = 4,
             },
             {
                 ['TargetPos'] = {
@@ -75,53 +75,13 @@
                     ['TargetPosY'] = 23.341,
                     ['TargetPosZ'] = 69.4,
                 },
-                ['RemainTime'] = 0,
+                ['RemainTime'] = 3,
             },
             {
                 ['TargetPos'] = {
                     ['TargetPosX'] = 309.407,
                     ['TargetPosY'] = 23.29244,
                     ['TargetPosZ'] = 102.5,
-                },
-                ['RemainTime'] = 3,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 311.21,
-                    ['TargetPosY'] = 18.96,
-                    ['TargetPosZ'] = 128.9,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 378.9,
-                    ['TargetPosY'] = 18.96,
-                    ['TargetPosZ'] = 160.2,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 415.29,
-                    ['TargetPosY'] = 18.96,
-                    ['TargetPosZ'] = 152.56,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 425.79,
-                    ['TargetPosY'] = 13.16,
-                    ['TargetPosZ'] = 111.02,
-                },
-                ['RemainTime'] = 3,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 426,
-                    ['TargetPosY'] = 12.69,
-                    ['TargetPosZ'] = 81,
                 },
                 ['RemainTime'] = 0,
             },
@@ -131,17 +91,17 @@
         ['uid'] = 1000003,
         ['ID'] = 151005002,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 232.3856,
+        ['PointPosX'] = 234.04,
         ['PointPosY'] = 19.20407,
-        ['PointPosZ'] = 281.5056,
-        ['Yaw'] = 180,
+        ['PointPosZ'] = 280.01,
+        ['Yaw'] = 193.4001,
         ['Level'] = 1,
         ['TargetInfoList'] = {
             {
                 ['TargetPos'] = {
-                    ['TargetPosX'] = 227.02,
+                    ['TargetPosX'] = 228.15,
                     ['TargetPosY'] = 19.20407,
-                    ['TargetPosZ'] = 263.76,
+                    ['TargetPosZ'] = 260.75,
                 },
                 ['RemainTime'] = 0,
             },
@@ -175,7 +135,7 @@
                     ['TargetPosY'] = 23.21,
                     ['TargetPosZ'] = 101.24,
                 },
-                ['RemainTime'] = 3,
+                ['RemainTime'] = 0,
             },
             {
                 ['TargetPos'] = {
@@ -199,46 +159,6 @@
                     ['TargetPosY'] = 23.43,
                     ['TargetPosZ'] = 105.86,
                 },
-                ['RemainTime'] = 3,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 314.11,
-                    ['TargetPosY'] = 19.05,
-                    ['TargetPosZ'] = 132.61,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 381.8,
-                    ['TargetPosY'] = 19.05,
-                    ['TargetPosZ'] = 164,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 418.19,
-                    ['TargetPosY'] = 19.05,
-                    ['TargetPosZ'] = 156.36,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 428.69,
-                    ['TargetPosY'] = 13.25,
-                    ['TargetPosZ'] = 114.82,
-                },
-                ['RemainTime'] = 3,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 428.9,
-                    ['TargetPosY'] = 12.729,
-                    ['TargetPosZ'] = 84.7,
-                },
                 ['RemainTime'] = 0,
             },
         }
@@ -247,17 +167,17 @@
         ['uid'] = 1000004,
         ['ID'] = 151005003,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 232.4392,
+        ['PointPosX'] = 231.45,
         ['PointPosY'] = 19.08138,
-        ['PointPosZ'] = 274.4731,
-        ['Yaw'] = 180,
+        ['PointPosZ'] = 273.04,
+        ['Yaw'] = 200.4001,
         ['Level'] = 1,
         ['TargetInfoList'] = {
             {
                 ['TargetPos'] = {
-                    ['TargetPosX'] = 227.08,
+                    ['TargetPosX'] = 225.93,
                     ['TargetPosY'] = 19.08138,
-                    ['TargetPosZ'] = 256.73,
+                    ['TargetPosZ'] = 254.36,
                 },
                 ['RemainTime'] = 0,
             },
@@ -291,7 +211,7 @@
                     ['TargetPosY'] = 23.42,
                     ['TargetPosZ'] = 94.21,
                 },
-                ['RemainTime'] = 3,
+                ['RemainTime'] = 0,
             },
             {
                 ['TargetPos'] = {
@@ -315,46 +235,6 @@
                     ['TargetPosY'] = 23.42,
                     ['TargetPosZ'] = 98.83,
                 },
-                ['RemainTime'] = 3,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 314.11,
-                    ['TargetPosY'] = 19.04,
-                    ['TargetPosZ'] = 125.58,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 381.8,
-                    ['TargetPosY'] = 19.04,
-                    ['TargetPosZ'] = 156.9,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 418.19,
-                    ['TargetPosY'] = 19.04,
-                    ['TargetPosZ'] = 149.26,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 428.69,
-                    ['TargetPosY'] = 13.24,
-                    ['TargetPosZ'] = 107.72,
-                },
-                ['RemainTime'] = 3,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 428.9,
-                    ['TargetPosY'] = 12.72,
-                    ['TargetPosZ'] = 77.7,
-                },
                 ['RemainTime'] = 0,
             },
         }
@@ -363,10 +243,10 @@
         ['uid'] = 1000005,
         ['ID'] = 151005004,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 227.0259,
+        ['PointPosX'] = 227.49,
         ['PointPosY'] = 19.505,
-        ['PointPosZ'] = 281.0679,
-        ['Yaw'] = 180,
+        ['PointPosZ'] = 282.08,
+        ['Yaw'] = 198.0001,
         ['Level'] = 1,
         ['TargetInfoList'] = {
             {
@@ -407,7 +287,7 @@
                     ['TargetPosY'] = 23.3,
                     ['TargetPosZ'] = 100.08,
                 },
-                ['RemainTime'] = 3,
+                ['RemainTime'] = 0,
             },
             {
                 ['TargetPos'] = {
@@ -431,46 +311,6 @@
                     ['TargetPosY'] = 23.4,
                     ['TargetPosZ'] = 105.42,
                 },
-                ['RemainTime'] = 3,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 308.71,
-                    ['TargetPosY'] = 18.92,
-                    ['TargetPosZ'] = 132.17,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 376.4,
-                    ['TargetPosY'] = 18.92,
-                    ['TargetPosZ'] = 163.5,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 412.79,
-                    ['TargetPosY'] = 18.92,
-                    ['TargetPosZ'] = 155.86,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 423.29,
-                    ['TargetPosY'] = 13.12,
-                    ['TargetPosZ'] = 114.32,
-                },
-                ['RemainTime'] = 3,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 423.5,
-                    ['TargetPosY'] = 12.81,
-                    ['TargetPosZ'] = 84.3,
-                },
                 ['RemainTime'] = 0,
             },
         }
@@ -479,17 +319,17 @@
         ['uid'] = 1000006,
         ['ID'] = 151005005,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 226.7992,
+        ['PointPosX'] = 225.72,
         ['PointPosY'] = 19.25142,
-        ['PointPosZ'] = 274.359,
-        ['Yaw'] = 180,
+        ['PointPosZ'] = 274.83,
+        ['Yaw'] = 198.7001,
         ['Level'] = 1,
         ['TargetInfoList'] = {
             {
                 ['TargetPos'] = {
-                    ['TargetPosX'] = 221.44,
+                    ['TargetPosX'] = 219.11,
                     ['TargetPosY'] = 19.24602,
-                    ['TargetPosZ'] = 256.61,
+                    ['TargetPosZ'] = 257.56,
                 },
                 ['RemainTime'] = 0,
             },
@@ -523,7 +363,7 @@
                     ['TargetPosY'] = 23.44,
                     ['TargetPosZ'] = 94.09,
                 },
-                ['RemainTime'] = 3,
+                ['RemainTime'] = 0,
             },
             {
                 ['TargetPos'] = {
@@ -546,46 +386,6 @@
                     ['TargetPosX'] = 306.26,
                     ['TargetPosY'] = 23.44,
                     ['TargetPosZ'] = 98.71,
-                },
-                ['RemainTime'] = 3,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 308.51,
-                    ['TargetPosY'] = 19.06,
-                    ['TargetPosZ'] = 125.46,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 376.2,
-                    ['TargetPosY'] = 19.06,
-                    ['TargetPosZ'] = 156.8,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 412.59,
-                    ['TargetPosY'] = 19.06,
-                    ['TargetPosZ'] = 149.16,
-                },
-                ['RemainTime'] = 0,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 423.09,
-                    ['TargetPosY'] = 13.26,
-                    ['TargetPosZ'] = 107.62,
-                },
-                ['RemainTime'] = 3,
-            },
-            {
-                ['TargetPos'] = {
-                    ['TargetPosX'] = 423.3,
-                    ['TargetPosY'] = 12.71,
-                    ['TargetPosZ'] = 77.6,
                 },
                 ['RemainTime'] = 0,
             },
@@ -725,42 +525,6 @@
     },
     [1000018] = {
         ['uid'] = 1000018,
-        ['ID'] = 151005008,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 195.4665,
-        ['PointPosY'] = 19.04413,
-        ['PointPosZ'] = 224.2206,
-        ['Yaw'] = 0,
-        ['Level'] = 20,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000019] = {
-        ['uid'] = 1000019,
-        ['ID'] = 151005007,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 225.0992,
-        ['PointPosY'] = 18.86102,
-        ['PointPosZ'] = 216.349,
-        ['Yaw'] = 0,
-        ['Level'] = 20,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000020] = {
-        ['uid'] = 1000020,
-        ['ID'] = 151005007,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 193.2434,
-        ['PointPosY'] = 18.98033,
-        ['PointPosZ'] = 222.9032,
-        ['Yaw'] = 0,
-        ['Level'] = 20,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000021] = {
-        ['uid'] = 1000021,
         ['ID'] = 151005006,
         ['ResType'] = "Monster",
         ['PointPosX'] = 200.215,
@@ -771,8 +535,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000022] = {
-        ['uid'] = 1000022,
+    [1000019] = {
+        ['uid'] = 1000019,
         ['ID'] = 151005006,
         ['ResType'] = "Monster",
         ['PointPosX'] = 207.387,
@@ -783,8 +547,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000023] = {
-        ['uid'] = 1000023,
+    [1000020] = {
+        ['uid'] = 1000020,
         ['ID'] = 151005007,
         ['ResType'] = "Monster",
         ['PointPosX'] = 205.421,
@@ -795,8 +559,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000024] = {
-        ['uid'] = 1000024,
+    [1000021] = {
+        ['uid'] = 1000021,
         ['ID'] = 151005007,
         ['ResType'] = "Monster",
         ['PointPosX'] = 198.0626,
@@ -807,8 +571,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000025] = {
-        ['uid'] = 1000025,
+    [1000022] = {
+        ['uid'] = 1000022,
         ['ID'] = 151005006,
         ['ResType'] = "Monster",
         ['PointPosX'] = 248.1072,
@@ -819,8 +583,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000026] = {
-        ['uid'] = 1000026,
+    [1000023] = {
+        ['uid'] = 1000023,
         ['ID'] = 151005006,
         ['ResType'] = "Monster",
         ['PointPosX'] = 271.0153,
@@ -831,8 +595,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000027] = {
-        ['uid'] = 1000027,
+    [1000024] = {
+        ['uid'] = 1000024,
         ['ID'] = 151005006,
         ['ResType'] = "Monster",
         ['PointPosX'] = 233.3638,
@@ -843,8 +607,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000028] = {
-        ['uid'] = 1000028,
+    [1000025] = {
+        ['uid'] = 1000025,
         ['ID'] = 151005007,
         ['ResType'] = "Monster",
         ['PointPosX'] = 231.2944,
@@ -855,8 +619,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000029] = {
-        ['uid'] = 1000029,
+    [1000026] = {
+        ['uid'] = 1000026,
         ['ID'] = 151005007,
         ['ResType'] = "Monster",
         ['PointPosX'] = 249.7867,
@@ -867,8 +631,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000030] = {
-        ['uid'] = 1000030,
+    [1000027] = {
+        ['uid'] = 1000027,
         ['ID'] = 151005007,
         ['ResType'] = "Monster",
         ['PointPosX'] = 268.3562,
@@ -879,8 +643,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000031] = {
-        ['uid'] = 1000031,
+    [1000028] = {
+        ['uid'] = 1000028,
         ['ID'] = 151005008,
         ['ResType'] = "Monster",
         ['PointPosX'] = 248.9505,
@@ -891,8 +655,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000032] = {
-        ['uid'] = 1000032,
+    [1000029] = {
+        ['uid'] = 1000029,
         ['ID'] = 151005006,
         ['ResType'] = "Monster",
         ['PointPosX'] = 246.4144,
@@ -903,8 +667,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000033] = {
-        ['uid'] = 1000033,
+    [1000030] = {
+        ['uid'] = 1000030,
         ['ID'] = 151005007,
         ['ResType'] = "Monster",
         ['PointPosX'] = 249.8552,
@@ -915,8 +679,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000034] = {
-        ['uid'] = 1000034,
+    [1000031] = {
+        ['uid'] = 1000031,
         ['ID'] = 151005006,
         ['ResType'] = "Monster",
         ['PointPosX'] = 267.7821,
@@ -927,8 +691,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000035] = {
-        ['uid'] = 1000035,
+    [1000032] = {
+        ['uid'] = 1000032,
         ['ID'] = 151005007,
         ['ResType'] = "Monster",
         ['PointPosX'] = 266.1159,
@@ -939,8 +703,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000036] = {
-        ['uid'] = 1000036,
+    [1000033] = {
+        ['uid'] = 1000033,
         ['ID'] = 151005006,
         ['ResType'] = "Monster",
         ['PointPosX'] = 259.2616,
@@ -951,32 +715,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000037] = {
-        ['uid'] = 1000037,
-        ['ID'] = 151005006,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 256.3299,
-        ['PointPosY'] = 23.31075,
-        ['PointPosZ'] = 83.5463,
-        ['Yaw'] = 0,
-        ['Level'] = 20,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000038] = {
-        ['uid'] = 1000038,
-        ['ID'] = 151005007,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 253.4804,
-        ['PointPosY'] = 23.31075,
-        ['PointPosZ'] = 85.99868,
-        ['Yaw'] = 0,
-        ['Level'] = 20,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000039] = {
-        ['uid'] = 1000039,
+    [1000034] = {
+        ['uid'] = 1000034,
         ['ID'] = 151005007,
         ['ResType'] = "Monster",
         ['PointPosX'] = 258.8057,
@@ -987,8 +727,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000040] = {
-        ['uid'] = 1000040,
+    [1000035] = {
+        ['uid'] = 1000035,
         ['ID'] = 151005006,
         ['ResType'] = "Monster",
         ['PointPosX'] = 258.0397,
@@ -999,8 +739,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000041] = {
-        ['uid'] = 1000041,
+    [1000036] = {
+        ['uid'] = 1000036,
         ['ID'] = 151005007,
         ['ResType'] = "Monster",
         ['PointPosX'] = 242.3581,
@@ -1011,8 +751,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000042] = {
-        ['uid'] = 1000042,
+    [1000037] = {
+        ['uid'] = 1000037,
         ['ID'] = 151005009,
         ['ResType'] = "Monster",
         ['PointPosX'] = 197.0856,
@@ -1023,8 +763,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000043] = {
-        ['uid'] = 1000043,
+    [1000038] = {
+        ['uid'] = 1000038,
         ['ID'] = 151005009,
         ['ResType'] = "Monster",
         ['PointPosX'] = 207.1083,
@@ -1035,8 +775,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000044] = {
-        ['uid'] = 1000044,
+    [1000039] = {
+        ['uid'] = 1000039,
         ['ID'] = 151005009,
         ['ResType'] = "Monster",
         ['PointPosX'] = 196.7389,
@@ -1047,8 +787,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000045] = {
-        ['uid'] = 1000045,
+    [1000040] = {
+        ['uid'] = 1000040,
         ['ID'] = 151005009,
         ['ResType'] = "Monster",
         ['PointPosX'] = 206.8979,
@@ -1059,8 +799,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000046] = {
-        ['uid'] = 1000046,
+    [1000041] = {
+        ['uid'] = 1000041,
         ['ID'] = 151005009,
         ['ResType'] = "Monster",
         ['PointPosX'] = 203.7839,
@@ -1071,8 +811,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000047] = {
-        ['uid'] = 1000047,
+    [1000042] = {
+        ['uid'] = 1000042,
         ['ID'] = 151005010,
         ['ResType'] = "Monster",
         ['PointPosX'] = 201.3974,
@@ -1083,8 +823,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000048] = {
-        ['uid'] = 1000048,
+    [1000043] = {
+        ['uid'] = 1000043,
         ['ID'] = 151005010,
         ['ResType'] = "Monster",
         ['PointPosX'] = 195.6046,
@@ -1095,8 +835,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000049] = {
-        ['uid'] = 1000049,
+    [1000044] = {
+        ['uid'] = 1000044,
         ['ID'] = 151005010,
         ['ResType'] = "Monster",
         ['PointPosX'] = 206.371,
@@ -1107,8 +847,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000050] = {
-        ['uid'] = 1000050,
+    [1000045] = {
+        ['uid'] = 1000045,
         ['ID'] = 151005010,
         ['ResType'] = "Monster",
         ['PointPosX'] = 205.6959,
@@ -1119,8 +859,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000051] = {
-        ['uid'] = 1000051,
+    [1000046] = {
+        ['uid'] = 1000046,
         ['ID'] = 151005011,
         ['ResType'] = "Monster",
         ['PointPosX'] = 198.7684,
@@ -1131,8 +871,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000052] = {
-        ['uid'] = 1000052,
+    [1000047] = {
+        ['uid'] = 1000047,
         ['ID'] = 151005012,
         ['ResType'] = "Monster",
         ['PointPosX'] = 195.6356,
@@ -1143,8 +883,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000053] = {
-        ['uid'] = 1000053,
+    [1000048] = {
+        ['uid'] = 1000048,
         ['ID'] = 151005012,
         ['ResType'] = "Monster",
         ['PointPosX'] = 207.6653,
@@ -1155,8 +895,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000054] = {
-        ['uid'] = 1000054,
+    [1000049] = {
+        ['uid'] = 1000049,
         ['ID'] = 151005012,
         ['ResType'] = "Monster",
         ['PointPosX'] = 206.5331,
@@ -1167,8 +907,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000055] = {
-        ['uid'] = 1000055,
+    [1000050] = {
+        ['uid'] = 1000050,
         ['ID'] = 151005012,
         ['ResType'] = "Monster",
         ['PointPosX'] = 195.7859,
@@ -1179,8 +919,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000056] = {
-        ['uid'] = 1000056,
+    [1000051] = {
+        ['uid'] = 1000051,
         ['ID'] = 151005013,
         ['ResType'] = "Monster",
         ['PointPosX'] = 200.6681,
@@ -1191,8 +931,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000057] = {
-        ['uid'] = 1000057,
+    [1000052] = {
+        ['uid'] = 1000052,
         ['ID'] = 151005013,
         ['ResType'] = "Monster",
         ['PointPosX'] = 201.1534,
@@ -1203,8 +943,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000058] = {
-        ['uid'] = 1000058,
+    [1000053] = {
+        ['uid'] = 1000053,
         ['ID'] = 151005013,
         ['ResType'] = "Monster",
         ['PointPosX'] = 209.078,
@@ -1215,8 +955,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000059] = {
-        ['uid'] = 1000059,
+    [1000054] = {
+        ['uid'] = 1000054,
         ['ID'] = 151005013,
         ['ResType'] = "Monster",
         ['PointPosX'] = 193.6291,
@@ -1227,8 +967,8 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000060] = {
-        ['uid'] = 1000060,
+    [1000055] = {
+        ['uid'] = 1000055,
         ['ID'] = 151005014,
         ['ResType'] = "Monster",
         ['PointPosX'] = 201.0846,
@@ -1239,14 +979,74 @@
         ['TargetInfoList'] = {
         }
     },
+    [1000056] = {
+        ['uid'] = 1000056,
+        ['ID'] = 152000062,
+        ['ResType'] = "Npc",
+        ['PointPosX'] = 228.15,
+        ['PointPosY'] = 19.20407,
+        ['PointPosZ'] = 260.75,
+        ['Yaw'] = 193.4001,
+        ['Level'] = 1,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000057] = {
+        ['uid'] = 1000057,
+        ['ID'] = 152000063,
+        ['ResType'] = "Npc",
+        ['PointPosX'] = 225.93,
+        ['PointPosY'] = 19.08138,
+        ['PointPosZ'] = 254.36,
+        ['Yaw'] = 200.4001,
+        ['Level'] = 1,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000058] = {
+        ['uid'] = 1000058,
+        ['ID'] = 152000064,
+        ['ResType'] = "Npc",
+        ['PointPosX'] = 221.66,
+        ['PointPosY'] = 19.16,
+        ['PointPosZ'] = 263.32,
+        ['Yaw'] = 198.0001,
+        ['Level'] = 1,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000059] = {
+        ['uid'] = 1000059,
+        ['ID'] = 152000065,
+        ['ResType'] = "Npc",
+        ['PointPosX'] = 219.11,
+        ['PointPosY'] = 19.25142,
+        ['PointPosZ'] = 257.56,
+        ['Yaw'] = 198.7001,
+        ['Level'] = 1,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000060] = {
+        ['uid'] = 1000060,
+        ['ID'] = 152000066,
+        ['ResType'] = "Npc",
+        ['PointPosX'] = 224.16,
+        ['PointPosY'] = 19.24602,
+        ['PointPosZ'] = 260.05,
+        ['Yaw'] = 203,
+        ['Level'] = 1,
+        ['TargetInfoList'] = {
+        }
+    },
     [1000061] = {
         ['uid'] = 1000061,
         ['ID'] = 151005015,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 342.1315,
-        ['PointPosY'] = 18.86102,
-        ['PointPosZ'] = 143.0496,
-        ['Yaw'] = 0,
+        ['PointPosX'] = 306.49,
+        ['PointPosY'] = 23.31075,
+        ['PointPosZ'] = 81.68,
+        ['Yaw'] = 221.2001,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
@@ -1255,10 +1055,10 @@
         ['uid'] = 1000062,
         ['ID'] = 151005015,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 362.3435,
-        ['PointPosY'] = 18.86102,
-        ['PointPosZ'] = 151.9237,
-        ['Yaw'] = 0,
+        ['PointPosX'] = 309.4559,
+        ['PointPosY'] = 23.31075,
+        ['PointPosZ'] = 77.46508,
+        ['Yaw'] = 215.2901,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
@@ -1267,10 +1067,10 @@
         ['uid'] = 1000063,
         ['ID'] = 151005015,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 357.5758,
-        ['PointPosY'] = 18.86101,
-        ['PointPosZ'] = 140.7879,
-        ['Yaw'] = 0,
+        ['PointPosX'] = 301.2368,
+        ['PointPosY'] = 23.31075,
+        ['PointPosZ'] = 85.23248,
+        ['Yaw'] = 225.6001,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
@@ -1279,10 +1079,10 @@
         ['uid'] = 1000064,
         ['ID'] = 151005015,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 348.5399,
-        ['PointPosY'] = 18.86102,
-        ['PointPosZ'] = 155.1081,
-        ['Yaw'] = 0,
+        ['PointPosX'] = 295.565,
+        ['PointPosY'] = 23.31075,
+        ['PointPosZ'] = 88.07846,
+        ['Yaw'] = 218.2501,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
@@ -1291,10 +1091,10 @@
         ['uid'] = 1000065,
         ['ID'] = 151005016,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 356.3276,
-        ['PointPosY'] = 18.86102,
-        ['PointPosZ'] = 156.2784,
-        ['Yaw'] = 0,
+        ['PointPosX'] = 310.8977,
+        ['PointPosY'] = 23.31075,
+        ['PointPosZ'] = 82.30506,
+        ['Yaw'] = 232.1,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
@@ -1303,10 +1103,10 @@
         ['uid'] = 1000066,
         ['ID'] = 151005016,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 342.7901,
-        ['PointPosY'] = 18.86102,
-        ['PointPosZ'] = 149.6779,
-        ['Yaw'] = 0,
+        ['PointPosX'] = 307.2455,
+        ['PointPosY'] = 23.31075,
+        ['PointPosZ'] = 85.46452,
+        ['Yaw'] = 231.51,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
@@ -1315,10 +1115,10 @@
         ['uid'] = 1000067,
         ['ID'] = 151005016,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 363.0352,
-        ['PointPosY'] = 18.86102,
-        ['PointPosZ'] = 144.8765,
-        ['Yaw'] = 0,
+        ['PointPosX'] = 301.6377,
+        ['PointPosY'] = 23.31075,
+        ['PointPosZ'] = 89.23804,
+        ['Yaw'] = 222.2401,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
@@ -1327,10 +1127,10 @@
         ['uid'] = 1000068,
         ['ID'] = 151005016,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 348.9176,
-        ['PointPosY'] = 18.86102,
-        ['PointPosZ'] = 139.2213,
-        ['Yaw'] = 0,
+        ['PointPosX'] = 296.3832,
+        ['PointPosY'] = 23.31075,
+        ['PointPosZ'] = 92.33325,
+        ['Yaw'] = 201.8901,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
@@ -1339,131 +1139,23 @@
         ['uid'] = 1000069,
         ['ID'] = 151005017,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 345.2708,
-        ['PointPosY'] = 18.86102,
-        ['PointPosZ'] = 144.7776,
-        ['Yaw'] = 0,
+        ['PointPosX'] = 313.8311,
+        ['PointPosY'] = 23.31075,
+        ['PointPosZ'] = 77.65868,
+        ['Yaw'] = 230.71,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
     },
     [1000070] = {
         ['uid'] = 1000070,
-        ['ID'] = 151005021,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 425.9214,
-        ['PointPosY'] = 12.65336,
-        ['PointPosZ'] = 89.24467,
-        ['Yaw'] = 0,
-        ['Level'] = 30,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000071] = {
-        ['uid'] = 1000071,
         ['ID'] = 151005018,
         ['ResType'] = "Monster",
-        ['PointPosX'] = 432.335,
-        ['PointPosY'] = 12.65336,
-        ['PointPosZ'] = 94.15904,
-        ['Yaw'] = 0,
-        ['Level'] = 25,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000072] = {
-        ['uid'] = 1000072,
-        ['ID'] = 151005018,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 419.4485,
-        ['PointPosY'] = 12.65336,
-        ['PointPosZ'] = 94.78218,
-        ['Yaw'] = 0,
-        ['Level'] = 25,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000073] = {
-        ['uid'] = 1000073,
-        ['ID'] = 151005018,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 428.91,
-        ['PointPosY'] = 12.65336,
-        ['PointPosZ'] = 91.58583,
-        ['Yaw'] = 0,
-        ['Level'] = 25,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000074] = {
-        ['uid'] = 1000074,
-        ['ID'] = 151005018,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 423.2498,
-        ['PointPosY'] = 12.65336,
-        ['PointPosZ'] = 91.96353,
-        ['Yaw'] = 0,
-        ['Level'] = 25,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000075] = {
-        ['uid'] = 1000075,
-        ['ID'] = 151005019,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 432.6042,
-        ['PointPosY'] = 12.65336,
-        ['PointPosZ'] = 90.89392,
-        ['Yaw'] = 0,
-        ['Level'] = 25,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000076] = {
-        ['uid'] = 1000076,
-        ['ID'] = 151005019,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 419.3672,
-        ['PointPosY'] = 12.65336,
-        ['PointPosZ'] = 91.02648,
-        ['Yaw'] = 0,
-        ['Level'] = 25,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000077] = {
-        ['uid'] = 1000077,
-        ['ID'] = 151005020,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 426.0116,
-        ['PointPosY'] = 12.65336,
-        ['PointPosZ'] = 91.78006,
-        ['Yaw'] = 0,
-        ['Level'] = 25,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000078] = {
-        ['uid'] = 1000078,
-        ['ID'] = 151005019,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 436.3789,
-        ['PointPosY'] = 12.65336,
-        ['PointPosZ'] = 92.55049,
-        ['Yaw'] = 0,
-        ['Level'] = 25,
-        ['TargetInfoList'] = {
-        }
-    },
-    [1000079] = {
-        ['uid'] = 1000079,
-        ['ID'] = 151005019,
-        ['ResType'] = "Monster",
-        ['PointPosX'] = 416.3694,
-        ['PointPosY'] = 12.65336,
-        ['PointPosZ'] = 93.1338,
-        ['Yaw'] = 0,
-        ['Level'] = 25,
+        ['PointPosX'] = 306.7409,
+        ['PointPosY'] = 23.31075,
+        ['PointPosZ'] = 90.0703,
+        ['Yaw'] = 223.07,
+        ['Level'] = 35,
         ['TargetInfoList'] = {
         }
     },

@@ -151,6 +151,11 @@ void monster_struct::on_tick()
 				MSG_ID_SPECIAL_MONSTER_POS_NOTIFY, special_monster_pos_notify__pack, nty);
 		}
 	}
+
+	if (buff_state & BUFF_STATE_ONEBLOOD)
+	{
+		return;
+	}
 	
 	if (buff_state & BUFF_STATE_TAUNT)
 	{
@@ -170,9 +175,9 @@ void monster_struct::update_monster_pos_and_sight()
 	if (!is_unit_in_move())
 		return;
 
-	float speed = data->attrData[PLAYER_ATTR_MOVE_SPEED];
-	if (ai_state == AI_GO_BACK_STATE)
-		speed *= 2;
+//	float speed = data->attrData[PLAYER_ATTR_MOVE_SPEED];
+//	if (ai_state == AI_GO_BACK_STATE)
+//		speed *= 2;
 	
 	area_struct *old_area = area;
 	if (update_unit_position() == 0)
@@ -226,7 +231,8 @@ void monster_struct::calculate_attribute(void)
 	data->attrData[PLAYER_ATTR_HP] = data->attrData[PLAYER_ATTR_MAXHP];
 //	data->speed = data->attrData[PLAYER_ATTR_MOVE_SPEED] + ai_config->MovingChange / 100.0;
 	data->attrData[PLAYER_ATTR_MOVE_SPEED] += (int)(ai_config->MovingChange) / 100.0;
-	set_timer(time_helper::get_cached_time() + 1000 + random() % 1500);
+	assert(data->ontick_time == 0);
+	set_timer(time_helper::get_cached_time() + ai_config->Response + random() % 200);
 	calculate_buff_fight_attr(true);	
 }
 
@@ -647,7 +653,7 @@ void monster_struct::on_dead(unit_struct *killer)
 
 	bool player_kill = (killer && killer->get_unit_type() == UNIT_TYPE_PLAYER);
 
-	LOG_DEBUG("%s: %lu[%p] dead", __FUNCTION__, get_uuid(), this);
+	LOG_DEBUG("%s: %lu[%u][%p] dead", __FUNCTION__, get_uuid(), data->monster_id, this);
 
 	clear_all_buffs();
 
@@ -694,6 +700,32 @@ void monster_struct::on_dead(unit_struct *killer)
 		((player_struct*)killer)->add_task_progress(TCT_KILL_MONSTER, monster_id, 1);
 		((player_struct*)killer)->touch_task_drop(scene_id, monster_id);
 	}
+	else if (sight_space != NULL && sight_space->data->type == 0)
+	{
+		std::vector<player_struct*> players;
+		//任务位面副本，友方怪杀死的怪物，也算进任务计数
+		for (int i = 0; i < MAX_PLAYER_IN_SIGHT_SPACE; ++i)
+		{
+			player_struct *player = sight_space->players[i];
+			if (player == NULL)
+			{
+				continue;
+			}
+
+			if (get_unit_fight_type(this, player) != UNIT_FIGHT_TYPE_ENEMY)							
+			{
+				continue;
+			}
+
+			players.push_back(player);
+		}
+
+		for (std::vector<player_struct*>::iterator iter = players.begin(); iter != players.end(); ++iter)
+		{
+			(*iter)->add_task_progress(TCT_KILL_MONSTER, monster_id, 1);
+			(*iter)->touch_task_drop(scene_id, monster_id);
+		}
+	}
 }
 
 int monster_struct::del_truck_from_sight_both(cash_truck_struct *truck)
@@ -708,6 +740,11 @@ int monster_struct::del_truck_from_sight_both(cash_truck_struct *truck)
 }
 int monster_struct::add_truck_to_sight_both(cash_truck_struct *truck)
 {
+			//友好，中立关系的不用加
+	if (get_unit_fight_type(this, truck) != UNIT_FIGHT_TYPE_ENEMY
+		&& get_unit_fight_type(truck, this) != UNIT_FIGHT_TYPE_ENEMY)
+		return (-1);
+	
 	if (prepare_add_truck_to_sight(truck) != 0 ||
 		truck->prepare_add_monster_to_sight(this) != 0)
 		return -1;
@@ -721,6 +758,11 @@ int monster_struct::add_truck_to_sight_both(cash_truck_struct *truck)
 
 int monster_struct::add_monster_to_sight_both(monster_struct *monster)
 {
+			//友好，中立关系的不用加
+	if (get_unit_fight_type(this, monster) != UNIT_FIGHT_TYPE_ENEMY
+		&& get_unit_fight_type(monster, this) != UNIT_FIGHT_TYPE_ENEMY)
+		return (-1);
+	
 	if (prepare_add_monster_to_sight(monster) != 0 ||
 		monster->prepare_add_monster_to_sight(this) != 0)
 		return -1;
@@ -745,6 +787,11 @@ int monster_struct::del_monster_from_sight_both(monster_struct *monster)
 
 int monster_struct::add_partner_to_sight_both(partner_struct *partner)
 {
+			//友好，中立关系的不用加
+	if (get_unit_fight_type(this, partner) != UNIT_FIGHT_TYPE_ENEMY
+		&& get_unit_fight_type(partner, this) != UNIT_FIGHT_TYPE_ENEMY)
+		return (-1);
+	
 	if (prepare_add_partner_to_sight(partner) != 0 ||
 		partner->prepare_add_monster_to_sight(this) != 0)
 		return -1;
@@ -778,9 +825,9 @@ int monster_struct::prepare_add_player_to_sight(player_struct *player)
 }
 int monster_struct::prepare_add_truck_to_sight(cash_truck_struct * truck)
 {
-		//友好，中立关系的不用加
-	if (get_unit_fight_type(this, truck) != UNIT_FIGHT_TYPE_ENEMY)
-		return (-1);
+	// 	//友好，中立关系的不用加
+	// if (get_unit_fight_type(this, truck) != UNIT_FIGHT_TYPE_ENEMY)
+	// 	return (-1);
 	
 	if (data->cur_sight_truck < MAX_TRUCK_IN_MONSTER_SIGHT)
 		return (0);
@@ -791,9 +838,9 @@ int monster_struct::prepare_add_truck_to_sight(cash_truck_struct * truck)
 
 int monster_struct::prepare_add_partner_to_sight(partner_struct *partner)
 {
-		//友好，中立关系的不用加
-	if (get_unit_fight_type(this, partner) != UNIT_FIGHT_TYPE_ENEMY)
-		return (-1);
+	// 	//友好，中立关系的不用加
+	// if (get_unit_fight_type(this, partner) != UNIT_FIGHT_TYPE_ENEMY)
+	// 	return (-1);
 	
 		//死了的不进入视野
 //	if (partner->data->attrData[PLAYER_ATTR_HP] <= 0)
@@ -808,9 +855,9 @@ int monster_struct::prepare_add_partner_to_sight(partner_struct *partner)
 
 int monster_struct::prepare_add_monster_to_sight(monster_struct *monster)
 {
-		//友好，中立关系的不用加
-	if (get_unit_fight_type(this, monster) != UNIT_FIGHT_TYPE_ENEMY)
-		return (-1);
+	// 	//友好，中立关系的不用加
+	// if (get_unit_fight_type(this, monster) != UNIT_FIGHT_TYPE_ENEMY)
+	// 	return (-1);
 	
 		//死了的不进入视野
 //	if (monster->data->attrData[PLAYER_ATTR_HP] <= 0)
@@ -1137,17 +1184,26 @@ bool monster_struct::on_partner_enter_sight(uint64_t uuid)
 
 void monster_struct::go_back()
 {
+		//既然不再使用goback状态，为了避免反复在移动，追击，返回之间切换，设定2秒以上的定时
+	uint64_t t = time_helper::get_cached_time() + 2000;
+	if (data->ontick_time < t)
+		data->ontick_time = t;
+	ai_state = AI_PATROL_STATE;
+	
+	if (ai && ai->on_monster_ai_do_goback)
+		return ai->on_monster_ai_do_goback(this);
+	
 	if (!create_config)
 		return;
 	on_go_back();
 	reset_pos();
-	if(ai_type == 22)
-	{
-		data->move_path.pos[1].pos_x = ai_data.circle_ai.ret_pos.pos_x;
-		data->move_path.pos[1].pos_z = ai_data.circle_ai.ret_pos.pos_z;
+	// if(ai_type == 22)
+	// {
+	// 	data->move_path.pos[1].pos_x = ai_data.circle_ai.ret_pos.pos_x;
+	// 	data->move_path.pos[1].pos_z = ai_data.circle_ai.ret_pos.pos_z;
 
-	}
-	else
+	// }
+	// else
 	{
 		data->move_path.pos[1].pos_x = get_born_pos_x();
 		data->move_path.pos[1].pos_z = get_born_pos_z();
@@ -1477,6 +1533,12 @@ void monster_struct::cast_immediate_skill_to_player(uint64_t skill_id, unit_stru
 
 bool monster_struct::try_active_attack()
 {
+	if (ai && ai->monster_ai_choose_target)
+	{
+		target = ai->monster_ai_choose_target(this);
+		return (target != NULL);
+	}
+	
 	assert(ai_config);
 	if (ai_config->ActiveAttackRange == 0)
 		return false;

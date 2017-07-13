@@ -74,6 +74,7 @@
 	LifeTime 20  : integer
 	talk_config 21 : NpcTalkTable
 	PkType 22 : integer
+	HateBase 23 : integer 
 }
 
 .SpiritTable {
@@ -98,55 +99,67 @@
 	Skill 8 : *integer
 	PassiveSkill 9 : *integer
 	InitialHead 10 : integer
+	TiLv 11 : integer
+	LiLv 12 : integer
+ 	MinLv 13 : integer
+	LingLv 14 : integer
+	Ti 15 : integer
+	Li 16 : integer
+	Min 17 : integer
+	Ling 18 : integer
 }
 
 .ActorAttributeTable {
 	ID 1 : integer
 	Lv 2 : integer
-	Health 3 : double
-	Attack 4 : double
-	Defense 5 : double
-	AtGold 6 : double
-	AtWood 7 : double
-	AtWater 8 : double
-	AtFire 9 : double
-	AtEarth 10 : double
-	AtGoldDf 11 : double
-	AtWoodDf 12 : double
-	AtWaterDf 13 : double
-	AtFireDf 14 : double
-	AtEarthDf 15 : double
-	Dodge 16 : double
-	Hit 17 : double
-	Critical 18 : double
-	CriticalDf 19 : double
-	CtDmg 20 : double
-	CtDmgDf 21 : double
-	MoveSpeed 22 : double
-	Recover 23 : double
-	Cure 24 : double
-	CureAdd 25 : double
-	DmgAdd 26 : double
-	DmgDf 27 : double
-	DmgAddPE 28 : double
-	DmgDfPP 29 : double
-	Dizzy 30 : double
-	Slow 31 : double
-	Chaos 32 : double
-	Poison 33 : double
-	Vampire 34 : double
-	Bounce 35 : double
-	HitRepel 36 : double
-	Hitfly 37 : double
-	DizzyDf 38 : double
-	SlowDf 39 : double
-	ChaosDf 40 : double
-	PoisonDf 41 : double
-	VampireDf 42 : double
-	BounceDf 43 : double
-	HitRepelDf 44 : double
-	HitflyDf 45 : double
-	DropID 46 : integer
+	DropID 3 : integer
+	FlySpeed 4 : integer
+	Health 5 : integer
+	MaxHP 6 : integer
+	Attack 7 : integer
+	AtGold 8 : integer
+	AtWood 9 : integer
+	AtWater 10 : integer
+	AtFire 11 : integer
+	AtEarth 12 : integer
+	AtGoldDf 13 : integer
+	AtWoodDf 14 : integer
+	AtWaterDf 15 : integer
+	AtFireDf 16 : integer
+	AtEarthDf 17 : integer
+	DfWuDel 18 : integer
+	Hit 19 : integer
+	Dodge 20 : integer
+	DodgeDf 21 : integer
+	Critical 22 : integer
+	CriticalDf 23 : integer
+	CtDmg 24 : double
+	CtDmgDf 25 : double
+	MoveSpeed 26 : integer
+	Dizzy 27 : integer
+	Slow 28 : integer
+	Mabi 29 : integer
+	Hurt 30 : integer
+	Can 31 : integer
+	DizzyDf 32 : integer
+	SlowDf 33 : integer
+	MabiDf 34 : integer
+	HurtDf 35 : integer
+	CanDf 36 : integer
+	PVPAt 37 : integer
+	PVPDf 38 : integer
+	DizzyTime 39 : integer
+	SlowTime 40 : integer
+	MabiTime 41 : integer
+	HurtTime 42 : integer
+	CanTime 43 : integer
+	DizzyTimeDf 44 : integer
+	SlowTimeDf 45 : integer
+	MabiTimeDf 46 : integer
+	HurtTimeDf 47 : integer
+	CanTimeDf 48 : integer
+	DeEffDf 49 : integer
+	DeTimeDf 50 : integer
 }
 
 .ActorLevelTable {
@@ -253,13 +266,13 @@
 	Time 4 : integer
 	Interval 5 : integer
 	EffectID 6 : *integer
-	AtPro 7 : integer
 	DfPro 8 : integer
 	TimeDelay 9 : integer
 	CoverType 10 : integer
 	DeleteType 11 : integer
 	IsDeBuff 12 : integer
 	IsControl 13 : integer
+	
 }
 
 .SkillEffectTable {
@@ -539,11 +552,13 @@
 	ShopType 3 : integer
 	Acc 4 : integer
 	ConsumptionType 5 : integer
-	Price 6 : integer
-	Purchasetype 7 : integer
-	Condition 8 : integer
-	BuyNum 9 : integer
-	Discount 10 : integer
+	Purchasetype 6 : integer
+	Condition 7 : integer
+	Price 8 : integer
+	Discount 9 : integer
+	BuyNum 10 : integer
+	Reset 11 : integer
+	RestrictionTime 12 : integer
 }
 
 .TransferPointTable {
@@ -1026,15 +1041,17 @@
 	Team 6 : integer
 	Distance 7 : integer
 	BlockedStop 8 : integer
-	MonsterID1 9 : *integer
-	PointXZ1 10 : *double
-	MonsterID2 11 : *integer
-	PointXZ2 12 : *double
-	MonsterID3 13 : *integer
-	PointXZ3 14 : *double
-	MonsterID4 15 : *integer
-	PointXZ4 16 : *double
-	talkID 17 : *integer
+	Range 9 : integer
+	MonsterID 10 : *integer
+	MonsterID1 11 : *integer
+	PointXZ1 12 : *double
+	MonsterID2 13 : *integer
+	PointXZ2 14 : *double
+	MonsterID3 15 : *integer
+	PointXZ3 16 : *double
+	MonsterID4 17 : *integer
+	PointXZ4 18 : *double
+	talkID 19 : *integer
 }
 
 .PartnerTable {
@@ -1071,6 +1088,8 @@
 	SkillProbability 31 : *integer
 	GrowthValue 32 : *integer
 	GodYaoAttribute 33 : *integer
+	Fetter 34 : *integer
+	Reward 35 : integer
 }
 
 .GodYaoAttributeTable {
@@ -1101,6 +1120,16 @@
 .PartnerLevelTable {
 	ID 1 : integer
 	NeedExp 2 : integer
+}
+
+.FetterTable {
+	ID 1 : integer
+	Relation 2 : integer
+	Partner 4 : *integer
+	AttributeType 5 : integer
+	AttributeNum 6 : integer
+	LevelItem 7 : integer
+	ItemNum 8 : integer
 }
 
 .BiaocheTable
@@ -1199,5 +1228,12 @@
 	Requirement2 3 : integer
 	Item 4 : integer
 	ItemNum 5 : integer
+}
+
+.GiftTable {
+	ID 1 : integer
+	TypeId 2 : integer
+	CoinType 3 : integer
+	Value 4 : integer
 }
 

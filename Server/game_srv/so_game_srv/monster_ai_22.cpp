@@ -96,6 +96,8 @@ struct ai_interface monster_ai_22_interface =
 	NULL,
 	NULL,
 	.on_monster_ai_check_goback = circle_ai_check_goback,
+	NULL,
+	.on_monster_ai_do_goback = circle_ai_do_goback,	
 };
 
 

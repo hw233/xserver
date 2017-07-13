@@ -270,15 +270,11 @@ void cash_truck_struct::on_tick()
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_CASH_TRUCK_ENDURANCE_NOTIFY, truck_endurance__pack, send);
 		}
 	}
-	if (data->fb_time < time_helper::get_cached_time() && player->data->truck.jiefei < truck_config->Time)
+	if (player->sight_space == NULL && data->fb_time < time_helper::get_cached_time() && player->data->truck.jiefei < truck_config->Time)
 	{
 		data->fb_time = time_helper::get_cached_time() + truck_config->Interval * 1000;
 
 		if (!player->data->truck.on_truck)
-		{
-			return;
-		}
-		if (player->sight_space != NULL)
 		{
 			return;
 		}
@@ -289,6 +285,8 @@ void cash_truck_struct::on_tick()
 		}
 		
 		player->sight_space = sight_space_manager::create_sight_space(player, 2);
+		player->stop_move();
+		player->go_down_cash_truck();
 		for (uint32_t num = 0; num < truck_config->Number[player->data->truck.jiefei]; ++num)
 		{
 			int lv = player->get_attr(PLAYER_ATTR_LEVEL) + truck_config->level[0] - rand() % (truck_config->level[0] * 2);
@@ -340,7 +338,14 @@ void cash_truck_struct::on_dead(unit_struct *killer)
 }
 
 void cash_truck_struct::on_beattack(unit_struct *player, uint32_t skill_id, int32_t damage)
-{}
+{
+	player_struct *pOwner = player_manager::get_player_by_id(data->owner);
+	if (pOwner == NULL)
+	{
+		return;
+	}
+	pOwner->send_system_notice(190500299, NULL);
+}
 
 void cash_truck_struct::pack_sight_cash_truck_info(SightCashTruckInfo *info)
 {

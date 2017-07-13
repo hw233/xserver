@@ -224,40 +224,50 @@ local ScriptTable = {
 		['Path'] = 'Skill/Effect/ThrowDirEffect',
 		['paramList'] = {0,3,135210505}
 		},
-	[172000001] = {
-		['ID'] = 172000001,
-		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {50,135200001}
-		},
 	[172000002] = {
 		['ID'] = 172000002,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {30,135200002}
-		},
-	[172000003] = {
-		['ID'] = 172000003,
-		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {10,135200003}
-		},
-	[172000004] = {
-		['ID'] = 172000004,
-		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {50,135200004}
+		['paramList'] = {50,135200001}
 		},
 	[172000005] = {
 		['ID'] = 172000005,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
+		['paramList'] = {30,135200002}
+		},
+	[172000010] = {
+		['ID'] = 172000010,
+		['Path'] = 'Skill/Effect/BulletSkillEffect',
+		['paramList'] = {10,135200003}
+		},
+	[172000011] = {
+		['ID'] = 172000011,
+		['Path'] = 'Skill/Effect/BulletSkillEffect',
+		['paramList'] = {50,135200004}
+		},
+	[172000012] = {
+		['ID'] = 172000012,
+		['Path'] = 'Skill/Effect/BulletSkillEffect',
 		['paramList'] = {10,135200005}
 		},
-	[172000006] = {
-		['ID'] = 172000006,
+	[172000019] = {
+		['ID'] = 172000019,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
 		['paramList'] = {10,135200006}
 		},
-	[172000007] = {
-		['ID'] = 172000007,
+	[172000024] = {
+		['ID'] = 172000024,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
 		['paramList'] = {50,135200001}
+		},
+	[172000036] = {
+		['ID'] = 172000036,
+		['Path'] = 'Skill/Effect/BulletSkillEffect',
+		['paramList'] = {10,135173001}
+		},
+	[172000047] = {
+		['ID'] = 172000047,
+		['Path'] = 'Skill/Effect/BulletSkillEffect',
+		['paramList'] = {10,135200003}
 		}
 	}
 return ScriptTable

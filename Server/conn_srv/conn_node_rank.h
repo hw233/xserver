@@ -14,6 +14,7 @@ public:
 private:
 	int transfer_to_client();
 	int transfer_to_gamesrv();
+	int transfer_to_friendsrv();
 	int transfer_to_mailsrv();
 	int broadcast_to_client();
 };

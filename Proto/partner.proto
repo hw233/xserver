@@ -29,6 +29,7 @@ message PartnerData
 	repeated uint32 god_id = 6; //神曜id
 	repeated uint32 god_level = 7; //神曜等级
 	required uint64 power = 8; //洗髓战斗力
+	required uint32 reliveTime = 9; //复活时间，大于0处于复活状态
 }
 
 //伙伴信息应答
@@ -42,6 +43,8 @@ message PartnerInfoAnswer
 	required uint32 recruitJuniorCount = 6; //低级招募计数
 	required uint32 recruitSeniorTime = 7; //高级招募免费时间（比当前时间大表示处于CD中）
 	required uint32 recruitSeniorCount = 8; //高级招募计数
+	repeated uint32 bonds = 9; //羁绊信息
+	repeated uint32 bondReward = 10; //羁绊领奖信息
 }
 
 //伙伴翻转开关请求
@@ -180,6 +183,46 @@ message PartnerRecruitAnswer
 	required uint32 recruitSeniorTime = 7; //高级招募免费时间（比当前时间大表示处于CD中）
 	required uint32 recruitSeniorCount = 8; //高级招募计数
 }
+
+//伙伴复活时间通知
+message PartnerReliveTimeNotify
+{
+	required uint64 uuid = 1; //伙伴唯一ID
+	required uint32 reliveTime = 2; //复活时间，大于0处于复活状态
+}
+
+//伙伴激活羁绊请求
+message PartnerBondActiveRequest
+{
+	required uint32 bondId = 1; //羁绊ID
+}
+
+//伙伴激活羁绊应答
+message PartnerBondActiveAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 bondId = 2; //羁绊ID
+}
+
+//伙伴羁绊奖励请求
+message PartnerBondRewardRequest
+{
+	required uint32 partnerId = 1; //伙伴ID
+}
+
+//伙伴羁绊奖励应答
+message PartnerBondRewardAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 partnerId = 2; //伙伴ID
+}
+
+//伙伴神曜合成请求
+message PartnerComposeStoneRequest
+{
+	repeated ItemData stones = 1; //材料
+}
+
 
 
 

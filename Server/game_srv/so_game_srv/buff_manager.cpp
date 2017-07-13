@@ -145,7 +145,17 @@ int buff_manager::do_move_buff_effect(struct BuffTable *config, unit_struct *att
 	return (0);
 }
 
-buff_struct *buff_manager::create_buff(uint64_t id, unit_struct *attack, unit_struct *owner, bool notify)
+buff_struct *buff_manager::create_default_buff(uint64_t id, unit_struct *attack, unit_struct *owner, bool notify)
+{
+	struct BuffTable *config = get_config_by_id(id, &buff_config);
+	if (!config)
+		return NULL;
+	uint64_t now = time_helper::get_cached_time();
+	
+	return create_buff(id, config->Time + now, attack, owner, notify);
+}
+
+buff_struct *buff_manager::create_buff(uint64_t id, uint64_t end_time, unit_struct *attack, unit_struct *owner, bool notify)
 {
 	struct BuffTable *config = get_config_by_id(id, &buff_config);
 	if (!config)
@@ -174,7 +184,7 @@ buff_struct *buff_manager::create_buff(uint64_t id, unit_struct *attack, unit_st
 	LOG_DEBUG("%s: player[%lu] add buff[%lu]", __FUNCTION__, owner->get_uuid(), id);
 
 	buff_struct *ret;
-	ret = owner->try_cover_duplicate_buff(config, attack);
+	ret = owner->try_cover_duplicate_buff(config, end_time, attack);
 	if (ret)
 		return ret;
 
@@ -189,7 +199,7 @@ buff_struct *buff_manager::create_buff(uint64_t id, unit_struct *attack, unit_st
 		return ret;
 	}
 	
-	if (ret->init_buff(config, attack, owner) != 0)
+	if (ret->init_buff(config, end_time, attack, owner) != 0)
 	{
 		delete_buff(ret);
 		return NULL;
@@ -204,6 +214,7 @@ buff_struct *buff_manager::create_buff(uint64_t id, unit_struct *attack, unit_st
 		add_buff_notify__init(&notify);
 		notify.buff_id = id;
 		notify.start_time = ret->data->start_time / 1000;
+//		notify.end_time = ret->data->end_time / 1000;		
 		notify.playerid = owner->get_uuid();
 		owner->broadcast_to_sight(MSG_ID_ADD_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
 	}
@@ -291,14 +302,14 @@ void buff_manager::delete_buff(buff_struct *p)
 }
 
 
-int buff_manager::add_skill_buff(unit_struct *attack, unit_struct *owner, int add_num, uint32_t *buff_id)
-{
-	for (int i = 0; i < add_num; ++i)
-	{
-		create_buff(buff_id[i], attack, owner);
-	}
-	return (0);
-}
+// int buff_manager::add_skill_buff(unit_struct *attack, unit_struct *owner, int add_num, uint32_t *buff_id, uint32_t *buff_end_time)
+// {
+// 	for (int i = 0; i < add_num; ++i)
+// 	{
+// 		create_buff(buff_id[i], buff_end_time[i], attack, owner);
+// 	}
+// 	return (0);
+// }
 
 int buff_manager::load_item_buff(player_struct *player, ItemBuff *db_item_buff)
 {

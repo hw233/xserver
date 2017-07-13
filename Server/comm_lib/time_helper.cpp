@@ -320,6 +320,41 @@ unsigned time_helper::get_next_timestamp_by_week_old(int wday, int hour, int min
 	return now - now_tm.tm_wday * 86400 - now_tm.tm_hour * 3600 - now_tm.tm_min * 60 - now_tm.tm_sec + offset;
 }
 
+unsigned time_helper::get_next_timestamp_by_month_old(int mday, int hour, int minute, time_t now)
+{
+	if (now == 0)
+	{
+		struct timeval tv;
+		get_current_time(&tv);
+		now = tv.tv_sec;
+	}
+
+	struct tm now_tm;
+	localtime_r(&now, &now_tm);
+
+	int year = now_tm.tm_year;
+	int month = now_tm.tm_mon;
+	if (month >= 11)
+	{
+		year++;
+		month = 0;
+	}
+	else
+	{
+		month++;
+	}
+
+	struct tm tm;
+	memset(&tm, 0, sizeof(tm));
+	tm.tm_year = year;
+	tm.tm_mon = month;
+	tm.tm_mday = mday;
+	tm.tm_hour = hour;
+	tm.tm_min = minute;
+
+	return mktime(&tm);
+}
+
 void time_helper::showTime(time_t t)
 {
 	if (t == 0)

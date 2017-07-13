@@ -131,7 +131,7 @@ void normal_raid_ai_finished(raid_struct *raid)
 			notify.gold = gold;
 			notify.exp = exp;
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RAID_FINISHED_NOTIFY, raid_finish_notify__pack, notify);
-			raid->m_player[i]->add_item_list(item_list, MAGIC_TYPE_RAID, ADD_ITEM_SEND_MAIL_WHEN_BAG_FULL, true);
+			raid->m_player[i]->add_item_list_otherwise_send_mail(item_list, MAGIC_TYPE_RAID, 270200002, NULL, true);
 			raid->m_player[i]->add_raid_reward_count(raid->data->ID);
 			raid->m_player[i]->check_activity_progress(AM_RAID, raid->data->ID);
 		}

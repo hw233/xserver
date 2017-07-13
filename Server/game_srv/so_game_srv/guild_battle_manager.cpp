@@ -2133,7 +2133,7 @@ static void check_guild_wait_award()
 			if (player->guild_battle_wait_award_time + sg_guild_battle_wait_award_interval <= now)
 			{
 				player->guild_battle_wait_award_time += sg_guild_battle_wait_award_interval;
-				player->add_item_list(sg_guild_battle_wait_award, MAGIC_TYPE_GUILD_BATTLE_WAIT, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
+				player->add_item_list_as_much_as_possible(sg_guild_battle_wait_award, MAGIC_TYPE_GUILD_BATTLE_WAIT);
 			}
 		}
 	}

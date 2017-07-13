@@ -15,8 +15,14 @@
 static int get_circle_ai_wait_time(monster_struct * monster)
 {
 	assert(monster->create_config->n_TargetInfoList > 0);
-	assert(monster->ai_data.circle_ai.cur_pos_index < monster->create_config->n_TargetInfoList);
-	return monster->create_config->TargetInfoList[monster->ai_data.circle_ai.cur_pos_index]->RemainTime;
+	if (monster->ai_data.circle_ai.cur_pos_index < monster->create_config->n_TargetInfoList)
+	{
+		return monster->create_config->TargetInfoList[monster->ai_data.circle_ai.cur_pos_index]->RemainTime;
+	}
+	else
+	{
+		return monster->create_config->TargetInfoList[0]->RemainTime;
+	}
 }
 
 static int get_circle_ai_next_pos(monster_struct * monster, float *pos_x, float *pos_z)
@@ -118,6 +124,8 @@ void do_circlea_or_type22_ai_patrol(monster_struct *monster)
 
 static void	do_dead(monster_struct *monster)
 {
+	if (!monster->create_config)
+		return;		
 	if (check_monster_relive(monster))
 	{
 		monster->target = NULL;
@@ -129,7 +137,7 @@ static void	do_dead(monster_struct *monster)
 	}
 }
 
-static void	do_goback(monster_struct *monster)
+void circle_ai_do_goback(monster_struct *monster)
 {
 	monster->on_go_back();	
 	monster->reset_pos();
@@ -212,7 +220,7 @@ bool circle_ai_check_goback(monster_struct *monster)
 	if (fabsf(my_pos->pos_x - monster->ai_data.circle_ai.ret_pos.pos_x) > (int)(monster->ai_config->ChaseRange)
 		|| fabsf(my_pos->pos_z - monster->ai_data.circle_ai.ret_pos.pos_z) > (int)(monster->ai_config->ChaseRange))
 	{
-		do_goback(monster);
+//		do_goback(monster);
 		return true;
 	}
 	
@@ -233,6 +241,8 @@ struct ai_interface monster_ai_circle_interface =
 	NULL,
 	NULL,
 	.on_monster_ai_check_goback = circle_ai_check_goback,
+	NULL,
+	.on_monster_ai_do_goback = circle_ai_do_goback,
 };
 
 

@@ -13,7 +13,7 @@ import datetime
 import get_one_msg
 
 WATCH_PLAYER = {4294968631}
-WATCH_ATTR_ID = {}
+WATCH_ATTR_ID = {1, 2}
 
 
 HOST='127.0.0.1'
@@ -54,10 +54,10 @@ while True:
         req.ParseFromString(pb_data)
         oldtime=datetime.datetime.now()
         attrid = ''
-        for t1 in req.attrs:
-            attrid = attrid + ' {' + str(t1.id) + ':' + str(t1.val) + '}'
+#        for t1 in req.attrs:
+#            attrid = attrid + ' {' + str(t1.id) + ':' + str(t1.val) + '}'
         
-        print oldtime.time(), ": player %lu attr[%d][%s] changed" % (player_id, len(req.attrs), attrid)       
+#       print oldtime.time(), ": player %lu attr[%d][%s] changed" % (player_id, len(req.attrs), attrid)       
         for t1 in req.attrs:
             if not t1.id in WATCH_ATTR_ID:
                 continue;

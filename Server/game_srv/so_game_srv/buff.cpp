@@ -11,7 +11,7 @@
 #include "player_manager.h"
 #include "monster_manager.h"
 
-int buff_struct::init_buff(struct BuffTable *buffconfig, unit_struct *attack, unit_struct *owner)
+int buff_struct::init_buff(struct BuffTable *buffconfig, uint64_t end_time, unit_struct *attack, unit_struct *owner)
 {
 	assert(data);
 	effect_config = NULL;
@@ -37,7 +37,7 @@ int buff_struct::init_buff(struct BuffTable *buffconfig, unit_struct *attack, un
 	uint32_t old_buff_state = owner->buff_state;
 	
 	data->start_time = time_helper::get_cached_time();
-	data->end_time = data->start_time + config->Time;
+	data->end_time = end_time;
 
 	if (config->Interval > 0)
 	{
@@ -218,7 +218,7 @@ int buff_struct::reinit_type3_buff(struct BuffTable *buffconfig)
 	return (0);
 }
 
-int buff_struct::reinit_buff(struct BuffTable *buffconfig, unit_struct *attack)
+int buff_struct::reinit_buff(struct BuffTable *buffconfig, uint64_t end_time, unit_struct *attack)
 {
 	effect_config = NULL;
 	config = buffconfig;
@@ -233,7 +233,7 @@ int buff_struct::reinit_buff(struct BuffTable *buffconfig, unit_struct *attack)
 	}
 	data->buff_id = config->ID;
 	data->start_time = time_helper::get_cached_time();
-	data->end_time = data->start_time + config->Time;
+	data->end_time = end_time;
 	if (config->Interval > 0)
 	{
 		data->effect.hp_effect.hp_delta = count_skill_effect(attack->get_all_attr(), m_owner->get_all_attr(),

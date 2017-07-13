@@ -449,6 +449,8 @@
 #define MSG_ID_GIVEUP_GUOYU_TASK_ANSWER            11905 //放弃国御任务 GiveupGuoyuTask
 #define MSG_ID_SET_SPECIAL_REQUEST            11906 //设置专精 ReqSetYaoshiSpecial
 #define MSG_ID_SET_SPECIAL_ANSWER            11907 //设置专精 AnsYaoshiSpecial
+#define MSG_ID_ACCECT_GUOYU_TASK_NOTIFY            11908 //接受国御任务 NULL
+#define MSG_ID_AGREED_GUOYU_TASK_REQUEST            11909 //同意接受国御任务 GuoyuSucc
 //#define MSG_ID_ENTER_GUOYU_FB_REQUEST            11908 //进入fb NULL
 //#define MSG_ID_ENTER_GUOYU_FB_ANSWER            11909 //进入fb comm_answer
 #define MSG_ID_YAOSHI_EXP_NOTIFY            11910 //妖师经验等级 YaoshiLevelExp
@@ -458,6 +460,8 @@
 #define MSG_ID_GUOYU_BOSS_APPEAR_NOTIFY            11914 //发现boss BossId
 #define MSG_ID_GUOYU_FB_SUCC_NOTIFY            11915 //fb成功或失败 GuoyuFbSucc
 #define MSG_ID_GUOYU_FB_CD_NOTIFY            11916 //fb CD  GuoyuFb
+#define MSG_ID_GUOYU_FB_COLSE_NOTIFY            11917 //fb关闭 GuoyuFbSucc
+#define MSG_ID_REFUCE_GUOYU_TASK_NOTIFY            11918 //拒绝国御任务 GuoyuName
 //妖师客栈——惩戒
 #define MSG_ID_REFRESH_CHENGJIE_LIST_REQUEST            11923 //刷新惩戒列表 ChengjieRefreshType
 #define MSG_ID_REFRESH_CHENGJIE_LIST_ANSWER            11924 //刷新惩戒列表 ChengjieList
@@ -704,6 +708,14 @@
 #define MSG_ID_PARTNER_SAVE_ATTR_ANSWER                   13126 //保存伙伴洗髓应答 comm_answer
 #define MSG_ID_PARTNER_FIGHTING_NOTIFY                    13127 //主战伙伴通知 PartnerUuid
 #define MSG_ID_PARTNER_ADD_BASE_NOTIFY                    13128 //升级增加属性值 PartnerAddBaseAttr
+#define MSG_ID_PARTNER_RELIVE_TIME_NOTIFY                 13129 //伙伴复活时间通知 PartnerReliveTimeNotify
+#define MSG_ID_PARTNER_DEAD_FINISH_REQUEST                13130 //伙伴死亡完成请求 NULL
+#define MSG_ID_PARTNER_BOND_ACTIVE_REQUEST                13131 //伙伴激活羁绊请求 PartnerBondActiveRequest
+#define MSG_ID_PARTNER_BOND_ACTIVE_ANSWER                 13132 //伙伴激活羁绊应答 PartnerBondActiveAnswer
+#define MSG_ID_PARTNER_BOND_REWARD_REQUEST                13133 //伙伴羁绊奖励请求 PartnerBondRewardRequest
+#define MSG_ID_PARTNER_BOND_REWARD_ANSWER                 13134 //伙伴羁绊奖励应答 PartnerBondRewardAnswer
+#define MSG_ID_PARTNER_COMPOSE_STONE_REQUEST              13135 //伙伴神曜合成请求 PartnerComposeStoneRequest
+#define MSG_ID_PARTNER_COMPOSE_STONE_ANSWER               13136 //伙伴神曜合成应答 comm_answer
 
 //运镖
 #define MSG_ID_CASH_TRUCK_INFO_NOTIFY                       13301 //运镖信息 CashTruckInfo
@@ -719,6 +731,8 @@
 #define MSG_ID_GO_DOWND_CASH_TRUCK_NOTIFY                    13311 //下镖车通知 UpDownCashTruck
 #define MSG_ID_CASH_TRUCK_SPEED_UP_REQUEST                   13312 //镖车加速请求 NULL
 #define MSG_ID_CASH_TRUCK_ENDURANCE_NOTIFY                   13313 //耐力值 TruckEndurance
+#define MSG_ID_CASH_TRUCK_TASK_FAIL_NOTIFY                   13314 //镖车任务失败 comm_answer
+#define MSG_ID_CASH_TRUCK_SPEED_UP_ANSWER                    13315 //镖车加速应答 AnsSpeedUp
 
 
 //即将开启礼包相关

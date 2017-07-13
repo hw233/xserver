@@ -13,6 +13,7 @@
 #define MAX_FRIEND_RECOMMEND_NUM    4   //推荐玩家数
 #define MAX_FRIEND_CHAT_NUM			100 //好友聊天数
 #define MAX_FRIEND_SYSTEM_NUM	    100 //系统消息数
+#define MAX_FRIEND_GIFT_NUM	        100 //接收礼物数
 
 struct FriendGroup
 {

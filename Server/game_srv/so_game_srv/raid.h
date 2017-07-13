@@ -54,7 +54,7 @@ enum RAID_STATE_DEFINE
 
 #define MAX_ITEM_REWARD_PER_RAID 20
 #define MAX_WANYAOGU_RAID_NUM 3
-#define MAX_SCRIPT_COND_NUM 3
+#define MAX_SCRIPT_COND_NUM 5
 #define WANYAOGU_DATA data->ai_data.wanyaogu_data
 #define PVP_DATA data->ai_data.pvp_data
 #define SCRIPT_DATA data->ai_data.script_data

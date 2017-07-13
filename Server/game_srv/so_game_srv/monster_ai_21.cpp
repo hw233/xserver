@@ -48,8 +48,8 @@ static void ai_beattack_21(monster_struct *monster, unit_struct *player)
 			if (percent <= 50)
 			{
 				monster->ai_data.type21_ai.state = 1;
-				buff_manager::create_buff(STATE1_BUFF_ID1, monster, monster, true);
-				buff_manager::create_buff(STATE1_BUFF_ID2, monster, monster, true);	
+				buff_manager::create_default_buff(STATE1_BUFF_ID1, monster, monster, true);
+				buff_manager::create_default_buff(STATE1_BUFF_ID2, monster, monster, true);	
 			}
 		}
 		break;
@@ -59,8 +59,8 @@ static void ai_beattack_21(monster_struct *monster, unit_struct *player)
 			if (percent <= 10)
 			{
 				monster->ai_data.type21_ai.state = 2;
-				buff_manager::create_buff(STATE2_BUFF_ID1, monster, monster, true);
-				buff_manager::create_buff(STATE2_BUFF_ID2, monster, monster, true);	
+				buff_manager::create_default_buff(STATE2_BUFF_ID1, monster, monster, true);
+				buff_manager::create_default_buff(STATE2_BUFF_ID2, monster, monster, true);	
 			}
 		}
 		break;

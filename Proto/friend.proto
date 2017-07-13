@@ -1,5 +1,6 @@
 import "chat.proto";
 import "role.proto";
+import "comm_message.proto";
 
 //好友列表类型
 enum FriendListType
@@ -198,11 +199,19 @@ message FriendUpdateUnitNotify
 	optional uint32 closeness = 3; //好感度
 }
 
+message FriendGiftData
+{
+	required uint64 playerId = 1; //玩家ID
+	required string playerName = 2; //玩家名
+	required ItemData item = 3; //送的礼物
+}
+
 //服务器缓存的离线聊天信息
 message ChatList
 {
 	repeated Chat chats = 1;
 	repeated SystemNoticeNotify systems = 2;
+	repeated FriendGiftData gifts = 3;
 }
 
 //更新好友状态通知

@@ -2282,7 +2282,7 @@ int conn_node_guildsrv::handle_guild_shop_buy_request(EXTERN_DATA *extern_data)
 		}
 
 		uint32_t limit_num = config->BuyNum;
-		if (limit_num > 0 && pGoods->bought_num + buy_num > limit_num)
+		if ((int64_t)config->BuyNum > 0 && pGoods->bought_num + buy_num > limit_num)
 		{
 			ret = ERROR_ID_SHOP_GOODS_REMAIN;
 			LOG_ERR("[%s:%d] player[%lu] goods remain, guild_id:%u, goods_id:%u, buy_num:%u, bought_num:%u, limit_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, goods_id, buy_num, pGoods->bought_num, limit_num);
@@ -2359,6 +2359,13 @@ static int handle_shop_buy_answer(int data_len, uint8_t *data, int result, EXTER
 		}
 
 		GuildInfo *guild = player->guild;
+		ShopTable *config = get_config_by_id(goods_id, &shop_config);
+		if (!config)
+		{
+			ret = ERROR_ID_NO_CONFIG;
+			LOG_ERR("[%s:%d] player[%lu] get goods config failed, guild_id:%u, goods_id:%u, buy_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, goods_id, buy_num);
+			break;
+		}
 
 		pGoods = get_player_goods_info(player, goods_id);
 		if (!pGoods)
@@ -2370,9 +2377,12 @@ static int handle_shop_buy_answer(int data_len, uint8_t *data, int result, EXTER
 
 		sub_player_donation(player, need_donation, false);
 
-		pGoods->goods_id = goods_id;
-		pGoods->bought_num += buy_num;
-		save_guild_player(player);
+		if ((int64_t)config->BuyNum > 0)
+		{
+			pGoods->goods_id = goods_id;
+			pGoods->bought_num += buy_num;
+			save_guild_player(player);
+		}
 	} while(0);
 
 	ShopBuyAnswer resp;

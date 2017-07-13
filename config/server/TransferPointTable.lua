@@ -184,6 +184,18 @@ local TransferPointTable = {
 		['NameId'] = '皆悦岛渡口',
 		['limitLevel'] = 1,
 		['MapId'] = {10012,128890,20000,323200,94}
+		},
+	[155000032] = {
+		['ID'] = 155000032,
+		['NameId'] = '八宝郡幻境',
+		['limitLevel'] = 1,
+		['MapId'] = {20037}
+		},
+	[155000033] = {
+		['ID'] = 155000033,
+		['NameId'] = '凡浅镇地图墓穴入口',
+		['limitLevel'] = 1,
+		['MapId'] = {10006,51438,40381,194956,-90}
 		}
 	}
 return TransferPointTable

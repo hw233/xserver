@@ -54,6 +54,8 @@ message player_redis_info
 	required uint32 equip_fc = 24;
 	required uint32 bagua_fc = 25;
 	required uint32 weapon_color = 26;
+	required uint32 pvp_division_3 = 27;
+	required uint32 pvp_score_3 = 28;
 }
 
 message ZhenyingRedis

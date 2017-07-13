@@ -98,6 +98,8 @@ typedef bool (*ai_on_player_leave_sight)(monster_struct *, player_struct *);
 typedef void (*ai_owner_attack)(monster_struct *, player_struct *, unit_struct *);
 typedef void (*ai_owner_beattack)(monster_struct *, player_struct *, unit_struct *);
 typedef bool (*ai_check_goback)(monster_struct *);
+typedef unit_struct *(*ai_choose_target)(monster_struct *);
+typedef void (*ai_do_goback)(monster_struct *);
 struct ai_interface
 {
 	ai_tick on_tick; //定时驱动
@@ -112,6 +114,8 @@ struct ai_interface
 	ai_hp_changed on_hp_changed;   //死亡
 	ai_init on_monster_ai_init;  //初始化
 	ai_check_goback on_monster_ai_check_goback; //检查是否需要走回去
+	ai_choose_target monster_ai_choose_target;  //主动攻击的时候寻找攻击目标
+	ai_do_goback on_monster_ai_do_goback;   //执行走回去
 };
 
 enum AIStateType

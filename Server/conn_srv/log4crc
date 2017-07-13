@@ -11,7 +11,9 @@
 	</config>
 
 	<category name="root" priority="notice"/>
-        <category name="six13log.log" priority="error" appender="stdout" />
+	<!--
+            <category name="six13log.log" priority="error" appender="stdout" />
+	    -->
 
 	<rollingpolicy name="myrollingpolicy" type="sizewin" maxsize="524288000" maxnum="10" />
 

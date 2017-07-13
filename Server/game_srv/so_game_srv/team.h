@@ -62,6 +62,9 @@ struct Team_data
 	int m_lvMax;
 	int m_memSize;
 	int m_applySize;
+	int m_agreed;
+	int m_guoyuType;
+	bool m_guoyuItem;
 	MEM_INFO m_mem[MAX_TEAM_MEM + 1];
 	uint64_t m_raid_uuid;   //队伍正在进行的副本的唯一ID
 	time_t speekCd[MAX_CHANNEL];

@@ -4,5 +4,6 @@
 
 int change_to_deamon();
 uint64_t write_pid_file();
+int open_err_log_file();
 #endif
 

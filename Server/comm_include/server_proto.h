@@ -47,6 +47,7 @@ enum SERVER_PROTO
 	SERVER_PROTO_FRIEND_TURN_SWITCH, //翻转好友申请开关
 	SERVER_PROTO_FRIEND_SYNC_RENAME, //玩家改名同步
 	SERVER_PROTO_FRIEND_SYNC_FRIEND_NUM, //同步好友数
+	SERVER_PROTO_FRIEND_ADD_GIFT, //好友送礼接收
 
 	SERVER_PROTO_GAMESRV_START,                 //游戏服启动通知
 	SERVER_PROTO_MAIL_INSERT,                   //插入新邮件
@@ -82,6 +83,7 @@ enum SERVER_PROTO
 	SERVER_PROTO_CHOSE_ZHENYING_REQUEST, //加入阵营
 	SERVER_PROTO_CHANGE_ZHENYING_REQUEST, //改变阵营
 	SERVER_PROTO_ADD_ZHENYING_KILL_REQUEST, //
+	SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST, //
 
 	SERVER_PROTO_UNDO_COST, //通知game_srv操作失败，把扣取的资源还回去
 
@@ -283,10 +285,11 @@ typedef struct proto_chengjie_id
 typedef struct srv_cost_info
 {
 	uint32_t statis_id;
-	uint32_t gold;
+	uint32_t gold; //绑定元宝
+	uint32_t unbind_gold; //非绑定元宝
 	uint32_t coin;
-	uint32_t item_id[5];
-	uint32_t item_num[5];
+	uint32_t item_id[10]; //最多携带5个道具
+	uint32_t item_num[10];
 } SRV_COST_INFO;
 
 typedef struct proto_guildsrv_check_and_cost_req
@@ -368,8 +371,11 @@ typedef struct proto_cost_friend_gift_req
 {
 	PROTO_HEAD head;
 	uint64_t target_id;
-	uint32_t item_id;
-	uint32_t item_num;
+	uint32_t gift_id; //礼物ID
+	uint32_t gift_num; //礼物数量
+	uint32_t item_id; //对应道具ID
+	uint32_t currency_type; //抵消货币类型
+	uint32_t currency_val; //抵消货币值
 } PROTO_COST_FRIEND_GIFT_REQ;
 
 typedef struct proto_cost_friend_gift_res
@@ -377,9 +383,11 @@ typedef struct proto_cost_friend_gift_res
 	PROTO_HEAD head;
 	int result;
 	uint64_t target_id;
-	uint32_t item_id;
-	uint32_t item_num;
-	uint32_t add_val;
+	uint32_t gift_id;
+	uint32_t gift_num;
+	uint32_t item_id; //对方实际收到道具
+	uint32_t add_closeness; //获得的好感度
+	SRV_COST_INFO cost; //实际消耗
 } PROTO_COST_FRIEND_GIFT_RES;
 
 typedef struct proto_friend_sync_rename
@@ -431,6 +439,13 @@ typedef struct proto_undo_cost
 	PROTO_HEAD head;
 	SRV_COST_INFO cost;
 } PROTO_UNDO_COST;
+
+typedef struct proto_zhenyin_change_power
+{
+//	PROTO_HEAD head;
+	int power;
+	int zhen_ying;
+} PROTO_ZHENYIN_CHANGE_POWER;
 
 #pragma pack() 
 #endif

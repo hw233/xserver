@@ -60,6 +60,7 @@
 #include "../proto/activity.pb-c.h"
 #include "../proto/chat.pb-c.h"
 #include "../proto/bag.pb-c.h"
+#include "../proto/xunbao.pb-c.h"
 #include "auto_add_hp.pb-c.h"
 #include "error_code.h"
 #include "app_data_statis.h"
@@ -217,7 +218,7 @@ void player_struct::try_out_raid()
 		// struct DungeonTable* r_config = get_config_by_id(data->scene_id, &all_raid_config);
 		// if (r_config->DengeonRank == DUNGEON_TYPE_RAND_MASTER)
 		// {
-		// 	r_config = get_config_by_id(r_config->DungeonID, &all_raid_config);
+		//	r_config = get_config_by_id(r_config->DungeonID, &all_raid_config);
 		// }
 		set_out_raid_pos();
 	}
@@ -253,7 +254,7 @@ void player_struct::try_return_zhenying_raid()
 	}
 	scene = raid;
 
-	raid->on_player_enter_raid(this);	
+	raid->on_player_enter_raid(this);
 }
 
 void player_struct::try_return_guild_wait_raid()
@@ -278,7 +279,7 @@ void player_struct::try_return_guild_wait_raid()
 
 		scene = raid;
 
-		raid->on_player_enter_raid(this);	
+		raid->on_player_enter_raid(this);
 
 		return;
 	} while(0);
@@ -545,7 +546,7 @@ void player_struct::set_camp_id(int id)
 
 // int player_struct::get_pk_type()
 // {
-// 	return get_attr(PLAYER_ATTR_PK_TYPE);
+//	return get_attr(PLAYER_ATTR_PK_TYPE);
 // }
 
 bool player_struct::is_in_safe_region()
@@ -571,7 +572,7 @@ int player_struct::add_monster_to_sight_both(monster_struct *monster)
 	if (prepare_add_monster_to_sight(monster) != 0 ||
 		monster->prepare_add_player_to_sight(this) != 0)
 		return -1;
-	
+
 	int ret = add_monster_to_sight(monster->data->player_id);
 	assert(ret >= 0);
 	int ret1 = monster->add_player_to_sight(data->player_id);
@@ -583,7 +584,7 @@ int player_struct::add_partner_to_sight_both(partner_struct *partner)
 	if (prepare_add_partner_to_sight(partner) != 0 ||
 		partner->prepare_add_player_to_sight(this) != 0)
 		return -1;
-	
+
 	int ret = add_partner_to_sight(partner->data->uuid);
 	assert(ret >= 0);
 	int ret1 = partner->add_player_to_sight(data->player_id);
@@ -619,12 +620,12 @@ int player_struct::add_cash_truck_to_sight_both(cash_truck_struct *truck)
 	if (prepare_add_truck_to_sight(truck) != 0 ||
 		truck->prepare_add_player_to_sight(this) != 0)
 		return -1;
-	
+
 	int ret = add_truck_to_sight(truck->data->player_id);
 	assert(ret >= 0);
 	int ret1 = truck->add_player_to_sight(data->player_id);
 	assert(ret1 >= 0);
-	
+
 	return ret;
 }
 int player_struct::del_cash_truck_from_sight_both(cash_truck_struct *truck)
@@ -635,7 +636,7 @@ int player_struct::del_cash_truck_from_sight_both(cash_truck_struct *truck)
 		int ret1 = truck->del_player_from_sight(data->player_id);
 		assert(ret1 >= 0);
 	}
-	
+
 	return ret;
 }
 
@@ -654,7 +655,7 @@ int player_struct::add_player_to_sight_both(player_struct *player)
 	if (prepare_add_player_to_sight(player) != 0 ||
 		player->prepare_add_player_to_sight(this) != 0)
 		return -1;
-	
+
 	LOG_INFO("%s: player[%lu] enter player[%lu] sight", __FUNCTION__, data->player_id, player->data->player_id);
 	print_player_sight_player(player);
 	print_player_sight_player(this);
@@ -852,7 +853,7 @@ void player_struct::process_offline(bool again/* = false*/, EXTERN_DATA *ext_dat
 				//放在上线的时候做
 			// if (raid->m_config->DengeonRank == DUNGEON_TYPE_RAND_MASTER)
 			// {
-			// 	data->scene_id = raid->m_config->DungeonID;
+			//	data->scene_id = raid->m_config->DungeonID;
 			// }
 			raid->player_offline(this);
 		}
@@ -875,12 +876,12 @@ void player_struct::process_offline(bool again/* = false*/, EXTERN_DATA *ext_dat
 	stop_all_escort();
 	clear_team_task();
 
-	
+
 
 	logout_check_task_time();
 	logout_check_award_question();
-	cache_to_dbserver(again, ext_data); 
-	
+	cache_to_dbserver(again, ext_data);
+
 	if (data->truck.truck_id != 0)
 	{
 		cash_truck_struct *truck = cash_truck_manager::get_cash_truck_by_id(data->truck.truck_id);
@@ -965,7 +966,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	db_info.raid_reward_num = &data->raid_reward_num[0];
 
 	db_info.angle = data->m_angle;
-	
+
 	//背包
 	DBBagGrid bag_data[MAX_BAG_GRID_NUM];
 	DBBagGrid *bag_data_point[MAX_BAG_GRID_NUM];
@@ -1090,8 +1091,8 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	db_info.task_list = task_data_point;
 	db_info.n_task_list = task_num;
 
-	uint32_t task_finish_num = 0;
-	for (int i = 0; i < MAX_TASK_NUM; ++i)
+	uint32_t task_finish_num = 1;
+	for (int i = 1; i < MAX_TASK_NUM; ++i)
 	{
 		if (data->task_finish[i] > 0)
 		{
@@ -1237,6 +1238,13 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	}
 	db_info.n_shop_goods = goods_num;
 	db_info.shop_goods = goods_data_point;
+
+	DBShopReset shop_reset_data;
+	dbshop_reset__init(&shop_reset_data);
+	db_info.shop_reset = &shop_reset_data;
+	shop_reset_data.next_day_time = data->shop_reset.next_day_time;
+	shop_reset_data.next_week_time = data->shop_reset.next_week_time;
+	shop_reset_data.next_month_time = data->shop_reset.next_month_time;
 
 	//horse
 	DbHorseData horse[MAX_HORSE_NUM];
@@ -1590,7 +1598,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 			partner_cur_flash[partner_num].type = partner->data->attr_flash.type;
 			partner_cur_flash[partner_num].power_refresh = partner->data->attr_flash.power_refresh;
 		}
-		
+
 
 		partner_num++;
 	}
@@ -1615,6 +1623,27 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	db_info.partner_recruit_senior_time = data->partner_recruit_senior_time;
 	db_info.partner_recruit_senior_count = data->partner_recruit_senior_count;
 
+	db_info.partner_bond = data->partner_bond;
+	db_info.n_partner_bond = 0;
+	for (int i = 0; i < MAX_PARTNER_BOND_NUM; ++i)
+	{
+		if (data->partner_bond[i] == 0)
+		{
+			break;
+		}
+		db_info.n_partner_bond++;
+	}
+	db_info.partner_bond_reward = data->partner_bond_reward;
+	db_info.n_partner_bond_reward = 0;
+	for (int i = 0; i < MAX_PARTNER_TYPE; ++i)
+	{
+		if (data->partner_bond_reward[i] == 0)
+		{
+			break;
+		}
+		db_info.n_partner_bond_reward++;
+	}
+
 	DBTruck truckData;
 	dbtruck__init(&truckData);
 	truckData.truck_id = data->truck.truck_id;
@@ -1630,7 +1659,28 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		truckData.hp = pTruck->get_attr(PLAYER_ATTR_HP);
 	}
 	db_info.truck = &truckData;
-	
+
+	DBZhenying zhenying;
+	dbzhenying__init(&zhenying);
+	db_info.zhenying = &zhenying;
+	zhenying.level = data->zhenying.level;
+	zhenying.exp = data->zhenying.exp;
+	zhenying.step = data->zhenying.step;
+	zhenying.task = data->zhenying.task;
+	zhenying.task_type = data->zhenying.task_type;
+	zhenying.task_num = data->zhenying.task_num;
+	zhenying.exp_day = data->zhenying.exp_day;
+	zhenying.free_change = data->zhenying.free;
+	zhenying.kill_week = data->zhenying.kill_week;
+	zhenying.score_week = data->zhenying.score_week;
+	zhenying.last_week = data->zhenying.last_week;
+	zhenying.week = data->zhenying.week;
+	zhenying.kill = data->zhenying.kill;
+	zhenying.death = data->zhenying.death;
+	zhenying.help = data->zhenying.help;
+	zhenying.score = data->zhenying.score;
+	zhenying.mine = data->zhenying.mine;
+
 
 	return player_dbinfo__pack(&db_info, out_data);
 }
@@ -1664,6 +1714,27 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	{
 		data->raid_reward_id[i] = db_info->raid_reward_id[i];
 		data->raid_reward_num[i] = db_info->raid_reward_num[i];
+	}
+
+	if (db_info->zhenying != NULL)
+	{
+		 data->zhenying.level = db_info->zhenying->level;
+		 data->zhenying.exp = db_info->zhenying->exp;
+		 data->zhenying.step = db_info->zhenying->step;
+		 data->zhenying.task = db_info->zhenying->task;
+		 data->zhenying.task_type = db_info->zhenying->task_type;
+		 data->zhenying.task_num = db_info->zhenying->task_num;
+		 data->zhenying.exp_day = db_info->zhenying->exp_day;
+		 data->zhenying.free = db_info->zhenying->free_change;
+		 data->zhenying.kill_week = db_info->zhenying->kill_week;
+		 data->zhenying.score_week = db_info->zhenying->score_week;
+		 data->zhenying.last_week = db_info->zhenying->last_week;
+		 data->zhenying.week = db_info->zhenying->week;
+		 data->zhenying.kill = db_info->zhenying->kill;
+		 data->zhenying.death = db_info->zhenying->death;
+		 data->zhenying.help = db_info->zhenying->help;
+		 data->zhenying.score = db_info->zhenying->score;
+		 data->zhenying.mine = db_info->zhenying->mine;
 	}
 
 	//背包
@@ -1779,13 +1850,20 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		memcpy(data->weapon_color, db_info->weapon_color, data->n_weapon_color * sizeof(uint32_t));
 		memcpy(data->weapon_color_is_new, db_info->weapon_color_isnew, data->n_color * sizeof(uint32_t));
 	}
-	
+
 
 	//商城
 	for (size_t i = 0; i < db_info->n_shop_goods && i < MAX_SHOP_GOODS_NUM; ++i)
 	{
 		data->shop_goods[i].goods_id = db_info->shop_goods[i]->goods_id;
 		data->shop_goods[i].bought_num = db_info->shop_goods[i]->bought_num;
+	}
+
+	if (db_info->shop_reset)
+	{
+		data->shop_reset.next_day_time = db_info->shop_reset->next_day_time;
+		data->shop_reset.next_week_time = db_info->shop_reset->next_week_time;
+		data->shop_reset.next_month_time = db_info->shop_reset->next_month_time;
 	}
 
 	unpack_horse(db_info);
@@ -1896,7 +1974,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		std::map<uint64_t, struct StageTable*>::iterator first_ite = pvp_raid_config.begin();
 		std::map<uint64_t, struct StageTable*>::iterator second_ite = first_ite;
 		++second_ite;
-		
+
 		data->pvp_raid_data.cur_level_id_3 = first_ite->first;
 		data->pvp_raid_data.cur_level_id_5 = data->pvp_raid_data.cur_level_id_3;
 		data->pvp_raid_data.max_level_id_3 = data->pvp_raid_data.cur_level_id_3;
@@ -1955,7 +2033,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 			data->live_skill.exp[i + 1] = db_info->live_skill->exp[i];
 			data->live_skill.book[i + 1] = db_info->live_skill->book[i];
 			data->live_skill.broken[i + 1] = db_info->live_skill->broken[i];
-		}	
+		}
 	}
 	//离开副本后要到的场景的位置
 	data->leaveraid.scene_id = db_info->leaveraid_sceneid;
@@ -1977,12 +2055,13 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		}
 
 		partner->data->bind = db_info->partner_list[i]->bind;
-		partner->data->relive_time = db_info->partner_list[i]->relive_time; 
+		partner->data->relive_time = db_info->partner_list[i]->relive_time;
 		partner->data->strong_num = db_info->partner_list[i]->strong_num;
 		for (size_t j = 0; j < db_info->partner_list[i]->n_attrs; ++j)
 		{
 			partner->data->attrData[db_info->partner_list[i]->attrs[j]->id] = db_info->partner_list[i]->attrs[j]->val;
 		}
+		size_t tmp = MAX_PARTNER_DETAIL_ATTR;
 		if (db_info->partner_list[i]->attr_flash != NULL)
 		{
 			for (uint32_t nAtt = 0; nAtt < db_info->partner_list[i]->attr_flash->n_skills; ++nAtt)
@@ -1993,8 +2072,8 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 			memcpy(partner->data->attr_flash.base_attr_id, db_info->partner_list[i]->attr_flash->base_attr_id, sizeof(partner->data->attr_flash.base_attr_id));
 			memcpy(partner->data->attr_flash.base_attr_vaual, db_info->partner_list[i]->attr_flash->base_attr_cur, sizeof(partner->data->attr_flash.base_attr_vaual));
 			memcpy(partner->data->attr_flash.base_attr_up, db_info->partner_list[i]->attr_flash->base_attr_up, sizeof(partner->data->attr_flash.base_attr_up));
-			memcpy(partner->data->attr_flash.detail_attr_id, db_info->partner_list[i]->attr_flash->detail_attr_id, sizeof(partner->data->attr_flash.detail_attr_id));
-			memcpy(partner->data->attr_flash.detail_attr_vaual, db_info->partner_list[i]->attr_flash->detail_attr_cur, sizeof(partner->data->attr_flash.detail_attr_vaual));
+			memcpy(partner->data->attr_flash.detail_attr_id, db_info->partner_list[i]->attr_flash->detail_attr_id, sizeof(uint32_t) * std::min(tmp, db_info->partner_list[i]->attr_flash->n_detail_attr_id));
+			memcpy(partner->data->attr_flash.detail_attr_vaual, db_info->partner_list[i]->attr_flash->detail_attr_cur, sizeof(uint32_t) * std::min(tmp, db_info->partner_list[i]->attr_flash->n_detail_attr_cur));
 			partner->data->attr_flash.n_detail_attr = db_info->partner_list[i]->attr_flash->n_detail_attr_id;
 			partner->data->attr_flash.type = db_info->partner_list[i]->attr_flash->type;
 			partner->data->attr_flash.power_refresh = db_info->partner_list[i]->attr_flash->power_refresh;
@@ -2009,8 +2088,8 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 			memcpy(partner->data->attr_cur.base_attr_id, db_info->partner_list[i]->attr_cur->base_attr_id, sizeof(partner->data->attr_cur.base_attr_id));
 			memcpy(partner->data->attr_cur.base_attr_vaual, db_info->partner_list[i]->attr_cur->base_attr_cur, sizeof(partner->data->attr_cur.base_attr_vaual));
 			memcpy(partner->data->attr_cur.base_attr_up, db_info->partner_list[i]->attr_cur->base_attr_up, sizeof(partner->data->attr_cur.base_attr_up));
-			memcpy(partner->data->attr_cur.detail_attr_id, db_info->partner_list[i]->attr_cur->detail_attr_id, sizeof(partner->data->attr_cur.detail_attr_id));
-			memcpy(partner->data->attr_cur.detail_attr_vaual, db_info->partner_list[i]->attr_cur->detail_attr_cur, sizeof(partner->data->attr_cur.detail_attr_vaual));
+			memcpy(partner->data->attr_cur.detail_attr_id, db_info->partner_list[i]->attr_cur->detail_attr_id, sizeof(uint32_t) * std::min(tmp, db_info->partner_list[i]->attr_cur->n_detail_attr_id));
+			memcpy(partner->data->attr_cur.detail_attr_vaual, db_info->partner_list[i]->attr_cur->detail_attr_cur, sizeof(uint32_t) * std::min(tmp, db_info->partner_list[i]->attr_cur->n_detail_attr_cur));
 			partner->data->attr_cur.n_detail_attr = db_info->partner_list[i]->attr_cur->n_detail_attr_id;
 			partner->data->attr_cur.type = db_info->partner_list[i]->attr_cur->type;
 		}
@@ -2039,6 +2118,14 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	data->partner_recruit_junior_count = db_info->partner_recruit_junior_count;
 	data->partner_recruit_senior_time = db_info->partner_recruit_senior_time;
 	data->partner_recruit_senior_count = db_info->partner_recruit_senior_count;
+	for (size_t i = 0; i < db_info->n_partner_bond && i < MAX_PARTNER_BOND_NUM; ++i)
+	{
+		data->partner_bond[i] = db_info->partner_bond[i];
+	}
+	for (size_t i = 0; i < db_info->n_partner_bond_reward && i < MAX_PARTNER_TYPE; ++i)
+	{
+		data->partner_bond_reward[i] = db_info->partner_bond_reward[i];
+	}
 
 	if (db_info->truck != NULL)
 	{
@@ -2051,11 +2138,11 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		data->truck.pos.pos_z = db_info->truck->pos_z;
 		data->truck.scene_id = db_info->truck->scene_id;
 		data->truck.hp = db_info->truck->hp;
-		
+
 	}
 
 	player_dbinfo__free_unpacked(db_info, NULL);
-	
+
 	return 0;
 }
 
@@ -2194,7 +2281,7 @@ void player_struct::add_area_collect_to_sight(area_struct *area, int *add_collec
 		add_collect[*add_collect_id_index].uuid = pCollect->m_uuid;
 		add_collect[*add_collect_id_index].collectid = pCollect->m_collectId;
 		add_collect[*add_collect_id_index].y = pCollect->m_y;
-		add_collect[*add_collect_id_index].yaw = pCollect->m_yaw;		
+		add_collect[*add_collect_id_index].yaw = pCollect->m_yaw;
 		pos_data__init(&collect_pos[*add_collect_id_index]);
 		collect_pos[*add_collect_id_index].pos_x = pCollect->m_pos.pos_x;
 		collect_pos[*add_collect_id_index].pos_z = pCollect->m_pos.pos_z;
@@ -2234,7 +2321,7 @@ void init_sight_unit_info_point()
 	for (int i = 0; i < MAX_TRUCK_IN_PLAYER_SIGHT; ++i)
 		cash_truck_info_point[i] = &cash_truck_info[i];
 	for (int i = 0; i < MAX_PARTNER_IN_PLAYER_SIGHT; ++i)
-		partner_info_point[i] = &partner_info[i];	
+		partner_info_point[i] = &partner_info[i];
 }
 
 void player_struct::clear_player_sight()
@@ -2242,7 +2329,7 @@ void player_struct::clear_player_sight()
 	data->cur_sight_player = 0;
 	data->cur_sight_monster = 0;
 	data->cur_sight_truck = 0;
-	data->cur_sight_partner = 0;	
+	data->cur_sight_partner = 0;
 }
 
 void player_struct::send_scene_transfer(float direct, float pos_x, float pos_y, float pos_z, uint32_t scene_id, int32_t result)
@@ -2304,12 +2391,12 @@ void player_struct::send_clear_sight()
 		for (int t = 0; t < data->cur_sight_truck; ++t)
 		{
 			if (data->sight_truck[t] == data->truck.truck_id) //在镖车上 自己的镖车不删
-			{ 
+			{
 				data->sight_truck[t] = 0; //note 调这个函数之后会把视野全清除所以先置0了
 			}
 		}
 	}
-	
+
 
 	if (area)
 	{
@@ -2402,7 +2489,7 @@ int player_struct::broadcast_player_create(scene_struct *scene)
 	int add_monster_uuid_index = 0;
 	int add_collect_uuid_index = 0;
 	int add_truck_uuid_index = 0;
-	int add_partner_uuid_index = 0;	
+	int add_partner_uuid_index = 0;
 	if (!scene || !area)
 		return (0);
 
@@ -2410,14 +2497,14 @@ int player_struct::broadcast_player_create(scene_struct *scene)
 	add_area_monster_to_sight(area, &add_monster_uuid_index, monster_info);
 	add_area_collect_to_sight(area, &add_collect_uuid_index, collect_info);
 	add_area_truck_to_sight(area, &add_truck_uuid_index, cash_truck_info);
-	add_area_partner_to_sight(area, &add_partner_uuid_index, partner_info);	
+	add_area_partner_to_sight(area, &add_partner_uuid_index, partner_info);
 	for (int i = 0; i < MAX_NEIGHBOUR_AREA; ++i)
 	{
 		add_area_player_to_sight(area->neighbour[i], &add_player_id_index, player_info);
 		add_area_monster_to_sight(area->neighbour[i], &add_monster_uuid_index, monster_info);
 		add_area_collect_to_sight(area->neighbour[i], &add_collect_uuid_index, collect_info);
 		add_area_truck_to_sight(area->neighbour[i], &add_truck_uuid_index, cash_truck_info);
-		add_area_partner_to_sight(area->neighbour[i], &add_partner_uuid_index, partner_info);			
+		add_area_partner_to_sight(area->neighbour[i], &add_partner_uuid_index, partner_info);
 	}
 
 	if (get_entity_type(data->player_id) != ENTITY_TYPE_AI_PLAYER &&
@@ -2436,7 +2523,7 @@ int player_struct::broadcast_player_create(scene_struct *scene)
 		notify.add_cash_truck = cash_truck_info_point;
 		notify.n_add_cash_truck = add_truck_uuid_index;
 		notify.add_partner = partner_info_point;
-		notify.n_add_partner = add_partner_uuid_index;		
+		notify.n_add_partner = add_partner_uuid_index;
 		EXTERN_DATA extern_data;
 		extern_data.player_id = data->player_id;
 		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);
@@ -2605,7 +2692,7 @@ void player_struct::update_sight(area_struct *old_area, area_struct *new_area)
 	int delete_partner_uuid_index = 0;
 	uint64_t delete_partner_uuid[MAX_PARTNER_IN_PLAYER_SIGHT];
 	int add_partner_uuid_index = 0;
-	
+
 
 	SightChangedNotify notify;
 	sight_changed_notify__init(&notify);
@@ -2613,7 +2700,7 @@ void player_struct::update_sight(area_struct *old_area, area_struct *new_area)
 	del_sight_player_in_area(n_del, &del_area[0], &delete_player_id_index, &delete_player_id[0]);
 	del_sight_monster_in_area(n_del, &del_area[0], &delete_monster_uuid_index, &delete_monster_uuid[0]);
 	del_sight_truck_in_area(n_del, &del_area[0], &delete_truck_uuid_index, &delete_truck_uuid[0]);
-	del_sight_partner_in_area(n_del, &del_area[0], &delete_partner_uuid_index, &delete_partner_uuid[0]);	
+	del_sight_partner_in_area(n_del, &del_area[0], &delete_partner_uuid_index, &delete_partner_uuid[0]);
 
 	for (int i = 0; i < n_del; ++i)
 	{
@@ -2639,7 +2726,7 @@ void player_struct::update_sight(area_struct *old_area, area_struct *new_area)
 		add_area_monster_to_sight(add_area[i], &add_monster_uuid_index, monster_info);
 		add_area_collect_to_sight(add_area[i], &add_collect_uuid_index, collect_info);
 		add_area_truck_to_sight(add_area[i], &add_truck_uuid_index, cash_truck_info);
-		add_area_partner_to_sight(add_area[i], &add_partner_uuid_index, partner_info);		
+		add_area_partner_to_sight(add_area[i], &add_partner_uuid_index, partner_info);
 	}
 
 	if ((get_entity_type(data->player_id) == ENTITY_TYPE_PLAYER) &&
@@ -2676,7 +2763,7 @@ void player_struct::update_sight(area_struct *old_area, area_struct *new_area)
 		notify.delete_partner = delete_partner_uuid;
 		notify.n_add_partner = add_partner_uuid_index;
 		notify.add_partner = partner_info_point;
-		
+
 		size_t size = sight_changed_notify__pack(&notify, conn_node_base::get_send_data());
 		if (size != (size_t)-1)
 		{
@@ -2787,7 +2874,7 @@ void player_struct::update_player_pos_and_sight()
 //		return;
 	if (!scene)
 		return;
-	
+
 //	if (data->attrData[PLAYER_ATTR_MOVE_SPEED] == 0)
 	if (get_speed() < __DBL_EPSILON__)
 		return;
@@ -2829,7 +2916,7 @@ void player_struct::update_player_pos_and_sight()
 
 	if (!old_area)
 		return;
-	
+
 	area_struct *new_area = scene->get_area_by_pos(pos->pos_x, pos->pos_z);
 		//检查是否越过area
 	if (old_area == new_area || !new_area)
@@ -2872,9 +2959,9 @@ void player_struct::on_region_changed(uint16_t old_region_id, uint16_t new_regio
 			broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, PK_TYPE_NORMAL, false, true);
 			break;
 		case 12:
-			// 		//检查等级
+			//		//检查等级
 			// if (get_attr(PLAYER_ATTR_LEVEL) < sg_pk_level)
-			// 	return;
+			//	return;
 			//没有选择阵营
 			if (get_attr(PLAYER_ATTR_ZHENYING) <= __DBL_EPSILON__)
 				return;
@@ -2951,7 +3038,7 @@ void player_struct::pack_sight_player_base_info(SightPlayerBaseInfo *info)
 	info->horse = get_on_horse_id();
 	info->pos_y = data->pos_y;
 	info->pk_type = data->attrData[PLAYER_ATTR_PK_TYPE];
-	info->zhenying_id = data->attrData[PLAYER_ATTR_ZHENYING];	
+	info->zhenying_id = data->attrData[PLAYER_ATTR_ZHENYING];
 	info->region_id = data->attrData[PLAYER_ATTR_REGION_ID];
 	info->guild_id = data->guild_id;
 	info->fashion_weapon_color = data->attrData[PLAYER_ATTR_WEAPON_COLOR];
@@ -2991,13 +3078,105 @@ void player_struct::pack_sight_player_base_info(SightPlayerBaseInfo *info)
 	info->buff_info = pack_unit_buff(&info->n_buff_info);
 }
 
+void player_struct::calculate_lv4_attribute()
+{
+// 面板金系抗性=最终全系抗性+角色金系抗性+其他系统附加属性
+	data->attrData[PLAYER_ATTR_DEF_METAL] += data->attrData[PLAYER_ATTR_DFWU];
+// 面板木系抗性=最终全系抗性+角色木系抗性+其他系统附加属性
+	data->attrData[PLAYER_ATTR_DEF_WOOD] += data->attrData[PLAYER_ATTR_DFWU];
+// 面板水系抗性=最终全系抗性+角色水系抗性+其他系统附加属性
+	data->attrData[PLAYER_ATTR_DEF_WATER] += data->attrData[PLAYER_ATTR_DFWU];
+// 面板火系抗性=最终全系抗性+角色火系抗性+其他系统附加属性
+	data->attrData[PLAYER_ATTR_DEF_FIRE] += data->attrData[PLAYER_ATTR_DFWU];
+// 面板土系抗性=最终全系抗性+角色土系抗性+其他系统附加属性
+	data->attrData[PLAYER_ATTR_DEF_EARTH] += data->attrData[PLAYER_ATTR_DFWU];
+
+// 面板眩晕几率=最终属性效果几率+角色眩晕几率+其他系统附加属性			
+// 面板迟缓几率=最终属性效果几率+角色迟缓几率+其他系统附加属性			
+// 面板麻痹几率=最终属性效果几率+角色麻痹几率+其他系统附加属性			
+// 面板受伤几率=最终属性效果几率+角色受伤几率+其他系统附加属性			
+// 面板致残几率=最终属性效果几率+角色致残几率+其他系统附加属性
+	data->attrData[PLAYER_ATTR_DIZZY] += data->attrData[PLAYER_ATTR_ALLEFF];
+	data->attrData[PLAYER_ATTR_SLOW] += data->attrData[PLAYER_ATTR_ALLEFF];
+	data->attrData[PLAYER_ATTR_MABI] += data->attrData[PLAYER_ATTR_ALLEFF];
+	data->attrData[PLAYER_ATTR_HURT] += data->attrData[PLAYER_ATTR_ALLEFF];
+	data->attrData[PLAYER_ATTR_CAN] += data->attrData[PLAYER_ATTR_ALLEFF];	
+
+// 面板抗眩晕几率=最终抗属性效果几率+角色抗眩晕几率+其他系统附加属性			
+// 面板抗迟缓几率=最终抗属性效果几率+角色抗迟缓几率+其他系统附加属性			
+// 面板抗麻痹几率=最终抗属性效果几率+角色抗麻痹几率+其他系统附加属性			
+// 面板抗受伤几率=最终抗属性效果几率+角色抗受伤几率+其他系统附加属性			
+// 面板抗致残几率=最终抗属性效果几率+角色抗致残几率+其他系统附加属性
+	data->attrData[PLAYER_ATTR_DIZZYDF] += data->attrData[PLAYER_ATTR_ALLEFFDF];
+	data->attrData[PLAYER_ATTR_SLOWDF] += data->attrData[PLAYER_ATTR_ALLEFFDF];
+	data->attrData[PLAYER_ATTR_MABIDF] += data->attrData[PLAYER_ATTR_ALLEFFDF];
+	data->attrData[PLAYER_ATTR_HURTDF] += data->attrData[PLAYER_ATTR_ALLEFFDF];
+	data->attrData[PLAYER_ATTR_CANDF] += data->attrData[PLAYER_ATTR_ALLEFFDF];	
+}
+
+void player_struct::calculate_lv3_attribute()
+{
+// 面板生命=面板体质*（1+最终基础生命加成）*体质转生命系数+角色等级生命+其他系统附加属性
+	data->attrData[PLAYER_ATTR_MAXHP] += data->attrData[PLAYER_ATTR_TI] * (1 + data->attrData[PLAYER_ATTR_HEALTHPRO]) * sg_fight_param_161000274;
+// 面板攻击=面板力量*（1+最终基础攻击加成）*力量转攻击系数+角色等级攻击+其他系统附加属性
+	data->attrData[PLAYER_ATTR_ATTACK] += data->attrData[PLAYER_ATTR_LI] * (1 + data->attrData[PLAYER_ATTR_ATTACKPRO]) * sg_fight_param_161000275;
+// 最终全系抗性=面板敏捷*敏捷转全系抗性系数+其他系统附加属性
+	data->attrData[PLAYER_ATTR_DFWU] += data->attrData[PLAYER_ATTR_MIN] * sg_fight_param_161000277;
+// 面板忽略全抗=角色忽略全抗+其他系统附加属性
+// 最终金系伤害=角色金系伤害+其他系统附加属性	
+// 最终木系伤害=角色木系伤害+其他系统附加属性	
+// 最终水系伤害=角色水系伤害+其他系统附加属性	
+// 最终火系伤害=角色火系伤害+其他系统附加属性	
+// 最终土系伤害=角色土系伤害+其他系统附加属性	
+// 面板命中=面板灵巧*灵巧转命中系数+角色命中+其他系统附加属性
+	data->attrData[PLAYER_ATTR_HIT] += data->attrData[PLAYER_ATTR_LING] * sg_fight_param_161000278;
+// 面板闪避=面板敏捷*敏捷转闪避系数+角色闪避+其他系统附加属性
+	data->attrData[PLAYER_ATTR_DODGE] += data->attrData[PLAYER_ATTR_MIN] * sg_fight_param_161000276;
+// 面板会心几率=面板灵巧*灵巧转会心几率系数+角色会心几率+其他系统附加属性
+	data->attrData[PLAYER_ATTR_CRIT] += data->attrData[PLAYER_ATTR_LING] * sg_fight_param_161000279;
+// 面板忽略闪避=角色忽略闪避+其他系统附加属性
+// 面板抗会心几率=角色抗会心几率+其他系统附加属性	
+// 面板会心伤害=角色会心伤害+其他系统附加属性	
+// 面板会心免伤=角色会心免伤+其他系统附加属性	
+// 面板移动速度=角色移动速度+其他系统附加属性	
+// 最终属性效果几率=其他系统附加属性	
+// 最终抗属性效果几率=其他系统附加属性	
+// 最终属性效果时间=其他系统附加属性	
+// 最终抗属性效果时间=其他系统附加属性	
+}
+
+void player_struct::calculate_lv2_attribute()
+{
+// 面板体质=角色等级*角色体质成长+角色体质+其他系统附加属性		
+// 面板力量=角色等级*角色力量成长+角色力量+其他系统附加属性		
+// 面板敏捷=角色等级*角色敏捷成长+角色敏捷+其他系统附加属性		
+// 面板灵巧=角色等级*角色灵巧成长+角色灵巧+其他系统附加属性
+	uint32_t player_job = data->attrData[PLAYER_ATTR_JOB];
+	ActorTable *config = get_actor_config(player_job);
+	assert(config);
+	data->attrData[PLAYER_ATTR_TI] += data->attrData[PLAYER_ATTR_LEVEL] * config->TiLv + config->Ti;
+	data->attrData[PLAYER_ATTR_LI] += data->attrData[PLAYER_ATTR_LEVEL] * config->LiLv + config->Li;
+	data->attrData[PLAYER_ATTR_MIN] += data->attrData[PLAYER_ATTR_LEVEL] * config->MinLv + config->Min;
+	data->attrData[PLAYER_ATTR_LING] += data->attrData[PLAYER_ATTR_LEVEL] * config->LingLv + config->Ling;		
+}
+
 void player_struct::calculate_attribute(bool isNty)
 {
-	memset(&data->attrData[PLAYER_ATTR_MAXHP], 0, sizeof(double));
-	memset(&data->attrData[PLAYER_ATTR_ATTACK], 0, (PLAYER_ATTR_HIT_FLY_DEF - PLAYER_ATTR_ATTACK + 1) * sizeof(double));
+//	memset(&data->attrData[PLAYER_ATTR_MAXHP], 0, sizeof(double));
+//	data->attrData[PLAYER_ATTR_MAXHP] = 0;
+//	memset(&data->attrData[PLAYER_ATTR_ATTACK], 0, (PLAYER_ATTR_DETIMEDF - PLAYER_ATTR_ATTACK + 1) * sizeof(double));
+	memset(&data->attrData[PLAYER_ATTR_MAXHP], 0, (PLAYER_ATTR_PVPDF - PLAYER_ATTR_MAXHP + 1) * sizeof(double));	
 
-	double module_attr[PLAYER_ATTR_FIGHT_MAX];
-	memset(module_attr, 0, sizeof(double) * PLAYER_ATTR_FIGHT_MAX);
+	for (int i = PLAYER_ATTR_TI; i <= PLAYER_ATTR_ALLEFFDF; ++i)
+		data->attrData[i] = 0;
+	// data->attrData[PLAYER_ATTR_DFWU] = 0;
+	// data->attrData[PLAYER_ATTR_TI] = 0;
+	// data->attrData[PLAYER_ATTR_LI] = 0;
+	// data->attrData[PLAYER_ATTR_MIN] = 0;
+	// data->attrData[PLAYER_ATTR_LING] = 0;
+
+	double module_attr[PLAYER_ATTR_MAX];
+	memset(module_attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
 	memset(&data->fc_data, 0, sizeof(FightingCapacity));
 
 	calcu_level_attr(module_attr);
@@ -3035,6 +3214,10 @@ void player_struct::calculate_attribute(bool isNty)
 		data->fc_data.fashion = calculate_fighting_capacity(module_attr);
 	}
 
+	calculate_lv2_attribute();
+	calculate_lv3_attribute();
+	calculate_lv4_attribute();		
+
 //	data->speed = data->attrData[PLAYER_ATTR_MOVE_SPEED];// / 10.0;
 
 	print_attribute("total", data->attrData);
@@ -3056,7 +3239,7 @@ void player_struct::calculate_attribute(bool isNty)
 		for (uint32_t i = 1; i < PLAYER_ATTR_FIGHT_MAX; ++i)
 		{
 			//当前生命值，由外部进行视野广播
-			if (i == PLAYER_ATTR_HP || i > PLAYER_ATTR_HIT_FLY_DEF)
+			if (i == PLAYER_ATTR_HP || i > PLAYER_ATTR_PVPDF)
 			{
 				continue;
 			}
@@ -3128,7 +3311,7 @@ void player_struct::notify_attr_changed(uint32_t num, uint32_t* id, double *valu
 	for (size_t i = 0; i < num; ++i)
 	{
 		attr_data_point[i] = &attr_data[i];
-		attr_data__init(&attr_data[0]);
+		attr_data__init(&attr_data[i]);
 		attr_data[i].id = id[i];
 		attr_data[i].val = value[i];
 	}
@@ -3209,14 +3392,14 @@ void player_struct::calcu_level_attr(double *attr)
 		return;
 	}
 
-	memset(attr, 0, sizeof(double) * PLAYER_ATTR_FIGHT_MAX);
+	memset(attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
 	::get_attr_from_config(level_config->ActorLvAttri, attr, NULL);
 	print_attribute("level", attr);
 }
 
 void player_struct::calcu_equip_attr(double *attr)
 {
-	memset(attr, 0, sizeof(double) * PLAYER_ATTR_FIGHT_MAX);
+	memset(attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
 
 	uint32_t player_job = data->attrData[PLAYER_ATTR_JOB];
 	for (int equip_i = 0; equip_i < MAX_EQUIP_NUM; ++equip_i)
@@ -3275,7 +3458,7 @@ void player_struct::calcu_equip_attr(double *attr)
 
 void player_struct::calcu_yuqidao_attr(double *attr)
 {
-	memset(attr, 0, sizeof(double) * PLAYER_ATTR_FIGHT_MAX);
+	memset(attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
 
 	//穴脉属性
 	for (int mai_i = 0; mai_i < MAX_YUQIDAO_MAI_NUM; ++mai_i)
@@ -3339,7 +3522,7 @@ void player_struct::calcu_yuqidao_attr(double *attr)
 
 void player_struct::calcu_baguapai_attr(double *attr)
 {
-	memset(attr, 0, sizeof(double) * PLAYER_ATTR_FIGHT_MAX);
+	memset(attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
 
 	uint32_t dress_id = get_attr(PLAYER_ATTR_BAGUA);
 	BaguapaiDressInfo *dress_info = get_baguapai_dress(dress_id);
@@ -3476,7 +3659,7 @@ void player_struct::calcu_baguapai_attr(double *attr)
 							buff_id = attr_id;
 						}
 						bagua_buffs.push_back(buff_id);
-						buff_struct *buff = buff_manager::create_buff(buff_id, this, this, true);
+						buff_struct *buff = buff_manager::create_default_buff(buff_id, this, this, true);
 						if (!buff)
 						{
 							LOG_ERR("[%s:%d] player[%lu] create buff failed, create_id:%u", __FUNCTION__, __LINE__, data->player_id, buff_id);
@@ -3492,7 +3675,7 @@ void player_struct::calcu_baguapai_attr(double *attr)
 
 void player_struct::calcu_guild_skill_attr(double *attr)
 {
-	memset(attr, 0, sizeof(double) * PLAYER_ATTR_FIGHT_MAX);
+	memset(attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
 	memcpy(attr, data->guild_skill_attr, sizeof(double) * PLAYER_ATTR_FIGHT_MAX);
 
 	print_attribute("guild_skill", attr);
@@ -3500,7 +3683,7 @@ void player_struct::calcu_guild_skill_attr(double *attr)
 
 void player_struct::calcu_fashion_attr(double *attr)
 {
-	memset(attr, 0, sizeof(double) * PLAYER_ATTR_FIGHT_MAX);
+	memset(attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
 	CharmTable *table = get_charm_table(data->charm_level);
 	if (table == NULL)
 	{
@@ -3514,7 +3697,7 @@ void player_struct::calcu_fashion_attr(double *attr)
 
 void player_struct::calcu_partner_attr(double *attr)
 {
-	memset(attr, 0, sizeof(double) * PLAYER_ATTR_FIGHT_MAX);
+	memset(attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
 
 	for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
 	{
@@ -3651,7 +3834,7 @@ int check_qiecuo_finished(player_struct *p1, player_struct *p2)
 	if (!p2->is_alive())
 	{
 		p2->set_attr(PLAYER_ATTR_HP, 1);
-		p2->on_hp_changed(0);		
+		p2->on_hp_changed(0);
 		ret += 1;
 	}
 
@@ -3744,7 +3927,7 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 	{
 	case 1:
 		player.give_drop_item(sTable->Parameter1[i], MAGIC_TYPE_XUNBAO, ADD_ITEM_SEND_MAIL_WHEN_BAG_FULL);
-		
+
 		player.data->xunbao.send_next = true;
 		break;
 	case 2:
@@ -3799,7 +3982,7 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 		{
 			monster_manager::create_sight_space_monster(player.sight_space, player.scene, sTable->Parameter1[i], player.get_attr(PLAYER_ATTR_LEVEL), x + sTable->Parameter2[i] - rand()% 2*sTable->Parameter2[i], z + sTable->Parameter2[i] - rand() % 2*sTable->Parameter2[i]);
 		}
-		
+
 	}
 		break;
 	case 5:
@@ -3813,7 +3996,7 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 		pos.pos_z = z;
 		send.data = &pos;
 		send.cd = 1800;
-	
+
 		player.data->xunbao.cd = time_helper::get_cached_time() / 1000 + 1800;
 		player.data->xunbao.door_map = player.data->scene_id;
 		player.data->xunbao.door_x = x;
@@ -3821,9 +4004,9 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 		player.data->xunbao.door_y = y;
 		send.y = player.data->xunbao.door_y;
 		player.data->xunbao.door_id = sTable->Parameter1[i];
-			
+
 		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ADD_NPC_NOTIFY, sight_npc_info__pack, send);
-		
+
 
 		player.send_system_notice(190500290, &args);
 
@@ -4126,6 +4309,151 @@ int player_struct::sub_coin(uint32_t num, uint32_t statis_id, bool isNty)
 	return 0;
 }
 
+int player_struct::add_chengjie_coin(uint32_t num, uint32_t statis_id, bool isNty)
+{
+	if (num == 0)
+	{
+		return 0;
+	}
+
+	data->attrData[PLAYER_ATTR_CHENGJIE_COIN] += num;
+
+	if (isNty)
+	{
+		AttrMap attrs;
+		attrs[PLAYER_ATTR_CHENGJIE_COIN] = data->attrData[PLAYER_ATTR_CHENGJIE_COIN];
+		this->notify_attr(attrs);
+
+		std::vector<char *> args;
+		std::stringstream ss_num;
+		ss_num << num;
+		args.push_back(const_cast<char*>(ss_num.str().c_str()));
+		send_system_notice(190500170, &args);
+	}
+
+
+	return 0;
+}
+int player_struct::sub_chengjie_coin(uint32_t num, uint32_t statis_id, bool isNty)
+{
+	if (num == 0)
+	{
+		return 0;
+	}
+
+	if (data->attrData[PLAYER_ATTR_CHENGJIE_COIN] < num)
+	{
+		return -1;
+	}
+
+	data->attrData[PLAYER_ATTR_CHENGJIE_COIN] -= num;
+
+	if (isNty)
+	{
+		AttrMap attrs;
+		attrs[PLAYER_ATTR_CHENGJIE_COIN] = data->attrData[PLAYER_ATTR_CHENGJIE_COIN];
+		this->notify_attr(attrs);
+	}
+
+	return 0;
+}
+int player_struct::add_guoyu_coin(uint32_t num, uint32_t statis_id, bool isNty)
+{
+	if (num == 0)
+	{
+		return 0;
+	}
+
+	data->attrData[PLAYER_ATTR_GUOYU_COIN] += num;
+
+	if (isNty)
+	{
+		AttrMap attrs;
+		attrs[PLAYER_ATTR_GUOYU_COIN] = data->attrData[PLAYER_ATTR_GUOYU_COIN];
+		this->notify_attr(attrs);
+
+		std::vector<char *> args;
+		std::stringstream ss_num;
+		ss_num << num;
+		args.push_back(const_cast<char*>(ss_num.str().c_str()));
+		send_system_notice(190500169, &args);
+	}
+
+
+	return 0;
+}
+int player_struct::sub_guoyu_coin(uint32_t num, uint32_t statis_id, bool isNty)
+{
+	if (num == 0)
+	{
+		return 0;
+	}
+
+	if (data->attrData[PLAYER_ATTR_GUOYU_COIN] < num)
+	{
+		return -1;
+	}
+
+	data->attrData[PLAYER_ATTR_GUOYU_COIN] -= num;
+
+	if (isNty)
+	{
+		AttrMap attrs;
+		attrs[PLAYER_ATTR_GUOYU_COIN] = data->attrData[PLAYER_ATTR_GUOYU_COIN];
+		this->notify_attr(attrs);
+	}
+
+	return 0;
+}
+int player_struct::add_shangjin_coin(uint32_t num, uint32_t statis_id, bool isNty)
+{
+	if (num == 0)
+	{
+		return 0;
+	}
+
+	data->attrData[PLAYER_ATTR_SHANGJIN_COIN] += num;
+
+	if (isNty)
+	{
+		AttrMap attrs;
+		attrs[PLAYER_ATTR_SHANGJIN_COIN] = data->attrData[PLAYER_ATTR_SHANGJIN_COIN];
+		this->notify_attr(attrs);
+
+		std::vector<char *> args;
+		std::stringstream ss_num;
+		ss_num << num;
+		args.push_back(const_cast<char*>(ss_num.str().c_str()));
+		send_system_notice(190500171, &args);
+	}
+
+
+	return 0;
+}
+int player_struct::sub_shangjin_coin(uint32_t num, uint32_t statis_id, bool isNty)
+{
+	if (num == 0)
+	{
+		return 0;
+	}
+
+	if (data->attrData[PLAYER_ATTR_SHANGJIN_COIN] < num)
+	{
+		return -1;
+	}
+
+	data->attrData[PLAYER_ATTR_SHANGJIN_COIN] -= num;
+
+	if (isNty)
+	{
+		AttrMap attrs;
+		attrs[PLAYER_ATTR_SHANGJIN_COIN] = data->attrData[PLAYER_ATTR_SHANGJIN_COIN];
+		this->notify_attr(attrs);
+	}
+
+	return 0;
+}
+
 uint32_t player_struct::get_coin(void)
 {
 	return (data ? data->attrData[PLAYER_ATTR_COIN] : 0);
@@ -4248,7 +4576,7 @@ int player_struct::check_can_transfer()
 
 	if (sight_space)
 	{
-		return ERROR_ID_CAN_NOT_TRANSFER;		
+		return ERROR_ID_CAN_NOT_TRANSFER;
 	}
 
 	if (data->truck.truck_id != 0)
@@ -4281,7 +4609,7 @@ uint32_t player_struct::set_item_cd(ItemsConfigTable *config)
 			set_attr(PLAYER_ATTR_ITEM_HP_CD, cd);
 			break;
 		case IUE_ADD_HP_POOL:
-			set_attr(PLAYER_ATTR_ITEM_HP_POOL_CD, cd);			
+			set_attr(PLAYER_ATTR_ITEM_HP_POOL_CD, cd);
 			break;
 		default:
 			return (0);
@@ -4298,7 +4626,7 @@ int player_struct::check_item_cd(ItemsConfigTable *config)
 			cd = get_attr(PLAYER_ATTR_ITEM_HP_CD);
 			break;
 		case IUE_ADD_HP_POOL:
-			cd = get_attr(PLAYER_ATTR_ITEM_HP_POOL_CD);			
+			cd = get_attr(PLAYER_ATTR_ITEM_HP_POOL_CD);
 			break;
 		default:
 			return (0);
@@ -4460,29 +4788,17 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 			break;
 		case ITEM_TYPE_CHENGJIE_COIN:
 		{
-			std::vector<char *> args;
-			std::stringstream ss_num;
-			ss_num << num;
-			args.push_back(const_cast<char*>(ss_num.str().c_str()));
-			send_system_notice(190500170, &args);
+			add_chengjie_coin(num, statis_id, isNty);
 		}
 			break;
 		case ITEM_TYPE_SHANGJIN_COIN:
 		{
-			std::vector<char *> args;
-			std::stringstream ss_num;
-			ss_num << num;
-			args.push_back(const_cast<char*>(ss_num.str().c_str()));
-			send_system_notice(190500171, &args);
+			add_shangjin_coin(num, statis_id, isNty);
 		}
 			break;
 		case ITEM_TYPE_GUOYU_COIN:
 		{
-			std::vector<char *> args;
-			std::stringstream ss_num;
-			ss_num << num;
-			args.push_back(const_cast<char*>(ss_num.str().c_str()));
-			send_system_notice(190500169, &args);
+			add_guoyu_coin(num, statis_id, isNty);
 		}
 		break;
 		case ITEM_TYPE_SHANGJIN_EXP:
@@ -4624,124 +4940,122 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 	return ret;
 }
 
-bool player_struct::add_item_list(std::map<uint32_t, uint32_t>& item_list, uint32_t statis_id, AddItemDealWay deal_way, bool isNty)
+bool player_struct::add_item_list(std::map<uint32_t, uint32_t>& item_list, uint32_t statis_id, bool isNty)
 {
-	if (deal_way == ADD_ITEM_WILL_FAIL)
+	if (!check_can_add_item_list(item_list))
 	{
-		if (!check_can_add_item_list(item_list))
-		{
-			return false;
-		}
+		return false;
+	}
 
-		for (std::map<uint32_t, uint32_t>::iterator iter = item_list.begin(); iter != item_list.end(); ++iter)
+	for (std::map<uint32_t, uint32_t>::iterator iter = item_list.begin(); iter != item_list.end(); ++iter)
+	{
+		add_item(iter->first, iter->second, statis_id, isNty);
+	}
+
+	return true;
+}
+
+bool player_struct::add_item_list_as_much_as_possible(std::map<uint32_t, uint32_t>& item_list, uint32_t statis_id, bool isNty) //增加一堆道具，尽可能放入背包，满了丢弃
+{
+	std::map<uint32_t, uint32_t> stackable_map;
+	uint32_t empty_num = 0;
+	for (uint32_t i = 0; i < data->bag_grid_num; ++i)
+	{
+		bag_grid_data& grid = data->bag[i];
+		if (grid.id > 0)
 		{
-			add_item(iter->first, iter->second, statis_id, isNty);
+			uint32_t stack_num = get_item_stack_num(grid.id);
+			if (stack_num > grid.num)
+			{
+				stackable_map[grid.id] += stack_num - grid.num;
+			}
+		}
+		else
+		{
+			empty_num++;
 		}
 	}
-	else if (deal_way == ADD_ITEM_AS_MUCH_AS_POSSIBLE)
+
+	std::map<uint32_t, uint32_t> add_list;
+	for (std::map<uint32_t, uint32_t>::iterator iter = item_list.begin(); iter != item_list.end(); ++iter)
 	{
-		std::map<uint32_t, uint32_t> stackable_map;
-		uint32_t empty_num = 0;
-		for (uint32_t i = 0; i < data->bag_grid_num; ++i)
+		uint32_t item_id = iter->first;
+		uint32_t item_num = iter->second;
+		if (get_item_type(item_id) != ITEM_TYPE_ITEM)
 		{
-			bag_grid_data& grid = data->bag[i];
-			if (grid.id > 0)
+			add_list[item_id] += item_num;
+			continue;
+		}
+
+		std::map<uint32_t, uint32_t>::iterator iter_stack = stackable_map.find(item_id);
+		if (iter_stack != stackable_map.end())
+		{
+			if (iter_stack->second > item_num)
 			{
-				uint32_t stack_num = get_item_stack_num(grid.id);
-				if (stack_num > grid.num)
-				{
-					stackable_map[grid.id] += stack_num - grid.num;
-				}
+				add_list[item_id] += item_num;
+				item_num = 0;
+				iter_stack->second -= item_num;
 			}
 			else
 			{
-				empty_num++;
+				add_list[item_id] += iter_stack->second;
+				item_num -= iter_stack->second;
+				stackable_map.erase(item_id);
 			}
 		}
 
-		std::map<uint32_t, uint32_t> add_list;
-		for (std::map<uint32_t, uint32_t>::iterator iter = item_list.begin(); iter != item_list.end(); ++iter)
+		if (item_num > 0)
 		{
-			uint32_t item_id = iter->first;
-			uint32_t item_num = iter->second;
-			if (get_item_type(item_id) != ITEM_TYPE_ITEM)
+			uint32_t stack_num = get_item_stack_num(item_id);
+			while (item_num > 0 && empty_num > 0)
 			{
-				add_list[item_id] += item_num;
-				continue;
-			}
-
-			std::map<uint32_t, uint32_t>::iterator iter_stack = stackable_map.find(item_id);
-			if (iter_stack != stackable_map.end())
-			{
-				if (iter_stack->second > item_num)
+				empty_num--;
+				if (item_num >= stack_num)
 				{
-					add_list[item_id] += item_num;
-					item_num = 0;
-					iter_stack->second -= item_num;
+					add_list[item_id] += stack_num;
+					item_num -= stack_num;
 				}
 				else
 				{
-					add_list[item_id] += iter_stack->second;
-					item_num -= iter_stack->second;
-					stackable_map.erase(item_id);
+					add_list[item_id] += item_num;
+					stackable_map[item_id] = stack_num - item_num;
+					item_num = 0;
 				}
 			}
-
-			if (item_num > 0)
-			{
-				uint32_t stack_num = get_item_stack_num(item_id);
-				while (item_num > 0 && empty_num > 0)
-				{
-					empty_num--;
-					if (item_num >= stack_num)
-					{
-						add_list[item_id] += stack_num;
-						item_num -= stack_num;
-					}
-					else
-					{
-						add_list[item_id] += item_num;
-						stackable_map[item_id] = stack_num - item_num;
-						item_num = 0;
-					}
-				}
-			}
-		}
-
-		for (std::map<uint32_t, uint32_t>::iterator iter = add_list.begin(); iter != add_list.end(); ++iter)
-		{
-			this->add_item(iter->first, iter->second, statis_id, isNty);
 		}
 	}
-	else if (deal_way == ADD_ITEM_SEND_MAIL_WHEN_BAG_FULL)
-	{
-		std::map<uint32_t, uint32_t> failed_list;
-		for (std::map<uint32_t, uint32_t>::iterator iter = item_list.begin(); iter != item_list.end(); ++iter)
-		{
-			if (add_item(iter->first, iter->second, statis_id, isNty) != 0)
-			{
-				failed_list[iter->first] = iter->second;
-			}
-		}
 
-		if (failed_list.size() > 0)
+	for (std::map<uint32_t, uint32_t>::iterator iter = add_list.begin(); iter != add_list.end(); ++iter)
+	{
+		this->add_item(iter->first, iter->second, statis_id, isNty);
+	}
+
+	return true;
+}
+
+bool player_struct::add_item_list_otherwise_send_mail(std::map<uint32_t, uint32_t>& item_list, uint32_t statis_id, uint32_t mail_id, std::vector<char *> *mail_args, bool isNty) //增加一堆道具，背包满后发邮件
+{
+	std::map<uint32_t, uint32_t> failed_list;
+	for (std::map<uint32_t, uint32_t>::iterator iter = item_list.begin(); iter != item_list.end(); ++iter)
+	{
+		if (add_item(iter->first, iter->second, statis_id, isNty) != 0)
 		{
-			uint32_t mail_id = 0;
-			if (statis_id == MAGIC_TYPE_PARTNER_RECRUIT)
-			{
-				mail_id = 270300030;
-			}
-			else
-			{
-				mail_id = MAIL_ID_BAG_FULL;
-			}
-			send_mail_by_id(mail_id, NULL, &failed_list, statis_id);
+			failed_list[iter->first] = iter->second;
+		}
+	}
+
+	if (failed_list.size() > 0)
+	{
+		if (mail_id > 0)
+		{
+			send_mail_by_id(mail_id, mail_args, &failed_list, statis_id);
 			send_system_notice(ERROR_ID_BAG_NOT_ABLE_ADD_PASSIVE, NULL);
 		}
-	}
-	else
-	{
-		return false;
+		else
+		{
+			LOG_ERR("[%s:%d] player[%lu] bag full, but has't mail_id, statis_id:%u", __FUNCTION__, __LINE__, data->player_id, statis_id);
+			return false;
+		}
 	}
 
 	return true;
@@ -5361,7 +5675,7 @@ int player_struct::use_prop_effect(uint32_t id, uint32_t use_count, ItemUseEffec
 
 	if (info && info->items.size() > 0)
 	{
-		add_item_list(info->items, MAGIC_TYPE_BAG_USE, ADD_ITEM_AS_MUCH_AS_POSSIBLE, true);
+		add_item_list_as_much_as_possible(info->items, MAGIC_TYPE_BAG_USE, true);
 		if (info->is_easy)
 		{
 			noitfy_item_flow_to_bag(info->items);
@@ -5413,12 +5727,12 @@ int player_struct::use_prop_effect(uint32_t id, uint32_t use_count, ItemUseEffec
 				uint32_t cur_hp = get_attr(PLAYER_ATTR_HP);
 				uint32_t max_hp = get_attr(PLAYER_ATTR_MAXHP);
 				uint32_t add_hp = config->ParameterEffect[0] * use_count;
-				cur_hp += add_hp;								
+				cur_hp += add_hp;
 				if (cur_hp > max_hp)
 					cur_hp = max_hp;
 				set_attr(PLAYER_ATTR_HP, cur_hp);
 				broadcast_one_attr_changed(PLAYER_ATTR_HP, cur_hp, true, true);
-				on_hp_changed(0);	
+				on_hp_changed(0);
 			}
 		}
 		break;
@@ -5716,7 +6030,7 @@ void player_struct::notify_one_item_flow_to_bag(uint32_t id, uint32_t num)
 	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_ITEM_FLOW_TO_BAG_NOTIFY, item_flow_to_bag_notify__pack, nty);
 }
 
-bool player_struct::give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty)
+bool player_struct::give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty, uint32_t mail_id, std::vector<char *> *mail_args)
 {
 	std::map<uint32_t, uint32_t> item_list;
 	int ret = get_drop_item(drop_id, item_list);
@@ -5727,7 +6041,20 @@ bool player_struct::give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItem
 
 	LOG_INFO("%s: player[%lu] id[%u] statis_id[%u]", __FUNCTION__, get_uuid(), drop_id, statis_id);
 
-	return this->add_item_list(item_list, statis_id, deal_way, isNty);
+	bool ret2 = false;
+	switch (deal_way)
+	{
+		case ADD_ITEM_WILL_FAIL:
+			ret2 = this->add_item_list(item_list, statis_id, isNty);
+			break;
+		case ADD_ITEM_AS_MUCH_AS_POSSIBLE:
+			ret2 = this->add_item_list_as_much_as_possible(item_list, statis_id, isNty);
+			break;
+		case ADD_ITEM_SEND_MAIL_WHEN_BAG_FULL:
+			ret2 = this->add_item_list_otherwise_send_mail(item_list, statis_id, mail_id, mail_args, isNty);
+			break;
+	}
+	return ret2;
 }
 
 int player_struct::add_exp(uint32_t val, uint32_t statis_id, bool isNty)
@@ -5794,7 +6121,7 @@ int player_struct::deal_level_up(uint32_t level_old, uint32_t level_new)
 
 	//当前血量回满
 	data->attrData[PLAYER_ATTR_HP] = data->attrData[PLAYER_ATTR_MAXHP];
-	on_hp_changed(0);	
+	on_hp_changed(0);
 
 		//视野广播属性
 	AttrMap attrs;
@@ -5804,19 +6131,53 @@ int player_struct::deal_level_up(uint32_t level_old, uint32_t level_new)
 	notify_attr(attrs, true, false);
 
 ////  给玩家自己发送属性
-	AttrMap nty_list;
-	for (uint32_t i = 1; i < PLAYER_ATTR_FIGHT_MAX; ++i)
+	// AttrMap nty_list;
+	// for (uint32_t i = PLAYER_ATTR_FIGHT_MAX; i >=1; --i)
+	// {
+	// 	nty_list[i] = data->attrData[i];
+	// }
+	
+	// nty_list[PLAYER_ATTR_DFWU] = data->attrData[PLAYER_ATTR_DFWU];
+	// nty_list[PLAYER_ATTR_TI] = data->attrData[PLAYER_ATTR_TI];
+	// nty_list[PLAYER_ATTR_LI] = data->attrData[PLAYER_ATTR_LI];
+	// nty_list[PLAYER_ATTR_MIN] = data->attrData[PLAYER_ATTR_MIN];
+	// nty_list[PLAYER_ATTR_LING] = data->attrData[PLAYER_ATTR_LING];
+	
+	// nty_list[PLAYER_ATTR_FIGHTING_CAPACITY] = data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY];
+	// nty_list[PLAYER_ATTR_EXP] = data->attrData[PLAYER_ATTR_EXP];
+	// notify_attr(nty_list);
+	std::vector<uint32_t> attr_id;
+	std::vector<double> attr_value;	
+	for (uint32_t i = PLAYER_ATTR_FIGHT_MAX; i >=1; --i)
 	{
-		nty_list[i] = data->attrData[i];
+		attr_id.push_back(i);
+		attr_value.push_back(data->attrData[i]);
 	}
-	nty_list[PLAYER_ATTR_FIGHTING_CAPACITY] = data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY];
-	nty_list[PLAYER_ATTR_EXP] = data->attrData[PLAYER_ATTR_EXP];
-	notify_attr(nty_list);
-///	
+	attr_id.push_back(PLAYER_ATTR_DFWU);
+	attr_id.push_back(PLAYER_ATTR_TI);
+	attr_id.push_back(PLAYER_ATTR_LI);
+	attr_id.push_back(PLAYER_ATTR_MIN);
+	attr_id.push_back(PLAYER_ATTR_LING);
+	attr_id.push_back(PLAYER_ATTR_FIGHTING_CAPACITY);
+	attr_id.push_back(PLAYER_ATTR_EXP);
+	attr_value.push_back(data->attrData[PLAYER_ATTR_DFWU]);
+	attr_value.push_back(data->attrData[PLAYER_ATTR_TI]);
+	attr_value.push_back(data->attrData[PLAYER_ATTR_LI]);
+	attr_value.push_back(data->attrData[PLAYER_ATTR_MIN]);
+	attr_value.push_back(data->attrData[PLAYER_ATTR_LING]);
+	attr_value.push_back(data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY]);
+	attr_value.push_back(data->attrData[PLAYER_ATTR_EXP]);	
+
+	notify_attr_changed(attr_id.size(), attr_id.data(), attr_value.data());
+///
 
 	this->check_head_condition(HUCT_LEVEL_UP, level_new);
 	this->add_task_progress(TCT_BASIC, TBC_LEVEL, level_new);
 
+	if (ChengJieTaskManage::GetRoleLevel(get_uuid()) != 0)
+	{
+		ChengJieTaskManage::AddRoleLevel(get_uuid(), get_attr(PLAYER_ATTR_LEVEL), data->chengjie.rest);
+	}
 	refresh_player_redis_info();
 	m_team == NULL ? 0 : m_team->OnMemberHpChange(*this);
 	m_skill.OnPlayerLevelUp(level_new);
@@ -5827,7 +6188,7 @@ int player_struct::deal_level_up(uint32_t level_old, uint32_t level_new)
 	{
 		send_rock_notice(*this, 330510001);
 	}
-	
+
 	return 0;
 }
 
@@ -6280,7 +6641,7 @@ void player_struct::task_update_notify(TaskInfo *info)
 		count_data[task_data.n_progress].count = info->progress[i].num;
 		task_data.n_progress++;
 	}
-	
+
 	TaskRewardData reward_data;
 	ItemData item_data[MAX_SHANGJIN_AWARD_NUM];
 	ItemData *item_data_point[MAX_SHANGJIN_AWARD_NUM];
@@ -6298,6 +6659,35 @@ void player_struct::task_update_notify(TaskInfo *info)
 			item_data__init(item_data_point[n_item]);
 			item_data[n_item].id = data->shangjin.task[data->shangjin.cur_task].award[n_item].id;
 			item_data[n_item].num =data->shangjin.task[data->shangjin.cur_task].award[n_item].val;
+		}
+	}
+	else if (get_task_type(info->id) == TT_CASH_TRUCK)
+	{
+		BiaocheTable *table = get_config_by_id(data->truck.active_id, &cash_truck_config);
+		if (table != NULL)
+		{
+			BiaocheRewardTable *reward_config = get_config_by_id(table->Reward, &cash_truck_reward_config);
+			if (reward_config != NULL)
+			{
+				task_reward_data__init(&reward_data);
+				task_data.reward = &reward_data;
+				reward_data.exp = reward_config->RewardExp1 * get_attr(PLAYER_ATTR_LEVEL);
+				reward_data.coin = reward_config->RewardMoney1 * get_attr(PLAYER_ATTR_LEVEL) * (reward_config->Deposit + 10000) / 10000.0;
+				reward_data.items = item_data_point;
+				size_t &n_item = reward_data.n_items;
+				for (uint32_t i = 0; i < reward_config->n_RewardItem1; ++n_item,++i)
+				{
+					item_data_point[n_item] = &(item_data[n_item]);
+					item_data__init(item_data_point[n_item]);
+					item_data[n_item].id = reward_config->RewardItem1[i];
+					item_data[n_item].num = reward_config->RewardNum1[i];
+				}
+				item_data_point[n_item] = &(item_data[n_item]);
+				item_data__init(item_data_point[n_item]);
+				item_data[n_item].id = 201010002;
+				item_data[n_item].num = reward_config->RewardLv1 * get_attr(PLAYER_ATTR_LEVEL);
+				++n_item;
+			}
 		}
 	}
 
@@ -6357,13 +6747,13 @@ int player_struct::touch_task_event(uint32_t task_id, uint32_t event_class)
 
 	for (uint32_t i = 0; i < config->n_EventID; ++i)
 	{
-		execute_task_event(config->EventID[i], event_class);
+		execute_task_event(config->EventID[i], event_class, true);
 	}
 
 	return 0;
 }
 
-int player_struct::execute_task_event(uint32_t event_id, uint32_t event_class)
+int player_struct::execute_task_event(uint32_t event_id, uint32_t event_class, bool internal)
 {
 	TaskEventTable *config = get_config_by_id(event_id, &task_event_config);
 	if (!config)
@@ -6389,6 +6779,11 @@ int player_struct::execute_task_event(uint32_t event_id, uint32_t event_class)
 			break;
 		case TET_ADD_MONSTER:
 			{
+				if (internal)
+				{
+					break;
+				}
+
 				TaskMonsterTable *monster_config = get_config_by_id(config->EventTarget, &task_monster_config);
 				if (!monster_config)
 				{
@@ -6434,7 +6829,7 @@ int player_struct::execute_task_event(uint32_t event_id, uint32_t event_class)
 			break;
 		case TET_ADD_BUFF:
 			{
-				buff_struct *buff = buff_manager::create_buff(config->EventTarget, this, this, true);
+				buff_struct *buff = buff_manager::create_default_buff(config->EventTarget, this, this, true);
 				if (!buff)
 				{
 					LOG_ERR("[%s:%d] player[%lu] create buff failed, create_id:%lu", __FUNCTION__, __LINE__, data->player_id, config->EventTarget);
@@ -6727,15 +7122,15 @@ void player_struct::load_task_end(void)
 		}
 	}
 
-	if (cur_trunk_task_id == 0)
-	{
-		cur_trunk_task_id = sg_first_trunk_task_id;
-	}
+//	if (cur_trunk_task_id == 0)
+//	{
+//		cur_trunk_task_id = sg_first_trunk_task_id;
+//	}
 
 	uint32_t trunk_task_finish_last = task_is_trunk(data->task_finish[0]) ? data->task_finish[0] : 0;
 
 	task_finish_set.clear();
-	if (cur_trunk_task_id != 0 && sg_first_trunk_task_id != 0)
+	if (sg_first_trunk_task_id != 0)
 	{
 		uint32_t task_id = sg_first_trunk_task_id;
 		while (true)
@@ -6748,13 +7143,17 @@ void player_struct::load_task_end(void)
 					break;
 				}
 			}
-			else
+			else if (cur_trunk_task_id != 0)
 			{
 				if (task_id == cur_trunk_task_id)
 				{
 					break;
 				}
 				this->add_finish_task(task_id);
+			}
+			else
+			{
+				break;
 			}
 			TaskTable *config = get_config_by_id(task_id, &task_config);
 			if (!config)
@@ -6777,6 +7176,14 @@ void player_struct::load_task_end(void)
 	if (task_is_finish(sg_first_trunk_task_id) == false && get_task_info(sg_first_trunk_task_id) == NULL)
 	{
 		add_task(sg_first_trunk_task_id, TASK_STATUS__NOT_ACCEPT_YET);
+	}
+	else if (cur_trunk_task_id == 0 && trunk_task_finish_last != 0)
+	{
+		TaskTable *config = get_config_by_id(trunk_task_finish_last, &task_config);
+		if (config)
+		{
+			add_task(config->FollowTask, TASK_STATUS__NOT_ACCEPT_YET);
+		}
 	}
 }
 
@@ -7034,6 +7441,7 @@ void player_struct::add_task_progress(uint32_t type, uint32_t target, uint32_t n
 				case TCT_BASIC:
 				case TCT_FRIEND_NUM:
 				case TCT_GUILD_DONATION:
+				case TCT_JOIN_TEAM:
 					count_info.num = num;
 					break;
 				case TCT_EQUIP_STAR:
@@ -7127,7 +7535,7 @@ bool player_struct::go_down_cash_truck()
 	{
 		stop_move();
 	}
-	
+
 	data->truck.on_truck = false;
 
 	EXTERN_DATA extern_data;
@@ -7190,12 +7598,17 @@ int player_struct::set_task_fail(TaskInfo *info)
 			if (truck->get_attr(PLAYER_ATTR_HP) < 1)
 			{
 				noId = 190500298;
-			} 
+			}
 			else
 			{
 				noId = 190500295;
 			}
-			this->send_system_notice(noId, NULL);
+			CommAnswer resp;
+			comm_answer__init(&resp);
+			resp.result = noId;
+			EXTERN_DATA ext_data;
+			ext_data.player_id = data->player_id;
+			fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_CASH_TRUCK_TASK_FAIL_NOTIFY, comm_answer__pack, resp);
 			data->truck.truck_id = 0;
 			if (this->sight_space != NULL)
 			{
@@ -7205,7 +7618,7 @@ int player_struct::set_task_fail(TaskInfo *info)
 			{
 				truck->scene->delete_cash_truck_from_scene(truck);
 			}
-			
+
 			cash_truck_manager::delete_cash_truck(truck);
 		}
 		data->truck.truck_id = 0;
@@ -7501,11 +7914,11 @@ void player_struct::clear_team_task(void)
 		{
 			continue;
 		}
-		
+
 		memset(task, 0, sizeof(TaskInfo));
 	}
 
-	for (int i = 0; i < MAX_TASK_NUM; ++i)
+	for (int i = 1; i < MAX_TASK_NUM; ++i)
 	{
 		if (data->task_finish[i] == 0)
 		{
@@ -7618,7 +8031,7 @@ void player_struct::leave_team(player_struct *leader)
 	}
 
 	std::vector<uint32_t> finish_del;
-	for (int i = 0; i < MAX_TASK_NUM; ++i)
+	for (int i = 1; i < MAX_TASK_NUM; ++i)
 	{
 		uint32_t task_id = leader->data->task_finish[i];
 		if (task_id == 0)
@@ -7690,7 +8103,7 @@ void player_struct::hand_out_team_leader(player_struct *leader)
 			}
 		}
 
-		for (int i = 0; i < MAX_TASK_NUM; ++i)
+		for (int i = 1; i < MAX_TASK_NUM; ++i)
 		{
 			uint32_t task_id = data->task_finish[i];
 			if (task_id == 0)
@@ -7715,7 +8128,7 @@ void player_struct::hand_out_team_leader(player_struct *leader)
 			//把数据拷贝给leader
 			int free_idx = -1;
 			bool task_exist = false;
-			for (int j = 0; j < MAX_TASK_NUM; ++j)
+			for (int j = 1; j < MAX_TASK_NUM; ++j)
 			{
 				if (leader->data->task_finish[j] == 0)
 				{
@@ -8008,7 +8421,7 @@ uint32_t player_struct::add_murder_num(uint32_t num)
 
 	if (old_murder < sg_muder_debuff[0] && murder >= sg_muder_debuff[0])
 	{
-		buff_manager::create_buff(sg_muder_debuff[1], this, this, true);
+		buff_manager::create_default_buff(sg_muder_debuff[1], this, this, true);
 	}
 
 	uint32_t id[1];
@@ -8431,6 +8844,7 @@ int player_struct::add_pvp_raid_score(int type, int value)
 			if (id > data->pvp_raid_data.max_level_id_3)
 				data->pvp_raid_data.max_level_id_3 = id;
 		}
+		refresh_player_redis_info(false);
 	}
 	else
 	{
@@ -8494,6 +8908,7 @@ int player_struct::sub_pvp_raid_score(int type, int value)
 			data->pvp_raid_data.level_3 = level;
 			data->pvp_raid_data.star_3 = star;
 		}
+		refresh_player_redis_info(false);
 	}
 	else
 	{
@@ -9418,7 +9833,7 @@ int player_struct::stop_escort(uint32_t escort_id, bool success)
 					set_task_fail(&info);
 				}
 			}
-			
+
 		}
 	}
 
@@ -9673,7 +10088,7 @@ void player_struct::check_escort(void)
 			}
 
 			//检查护送时间
-			if (info->start_time + (uint32_t)config->Time <= now)
+			if (config->Time != 0 && info->start_time + (uint32_t)config->Time <= now)
 			{
 				this->stop_escort(info->escort_id, false);
 				break;
@@ -9999,7 +10414,7 @@ int player_struct::add_partner_to_scene(uint64_t partner_uuid)
 
 	// if (partner->scene)
 	// {
-	// 	partner->scene->delete_partner_from_scene(partner, true);
+	//	partner->scene->delete_partner_from_scene(partner, true);
 	// }
 	del_partner_from_scene(partner, true);
 
@@ -10007,11 +10422,11 @@ int player_struct::add_partner_to_scene(uint64_t partner_uuid)
 	partner->calc_target_pos(&pos);
 	partner->set_pos(pos.pos_x, pos.pos_z);
 	partner->data->attrData[PLAYER_ATTR_PK_TYPE] = partner->m_owner->get_attr(PLAYER_ATTR_PK_TYPE);
-	partner->data->attrData[PLAYER_ATTR_ZHENYING] = partner->m_owner->get_attr(PLAYER_ATTR_ZHENYING);	
+	partner->data->attrData[PLAYER_ATTR_ZHENYING] = partner->m_owner->get_attr(PLAYER_ATTR_ZHENYING);
 	scene->add_partner_to_scene(partner);
 
 		//开启定时器
-	partner->set_timer(time_helper::get_cached_time() + 1000 + random() % 1500);	
+	partner->set_timer(time_helper::get_cached_time() + 1000 + random() % 1500);
 
 	return 0;
 }
@@ -10064,7 +10479,7 @@ void player_struct::adjust_battle_partner(void)
 				// partner_struct *partner = get_partner_by_uuid(data->partner_battle[i]);
 				// if (partner && partner->scene)
 				// {
-				// 	partner->scene->delete_partner_from_scene(partner, true);
+				//	partner->scene->delete_partner_from_scene(partner, true);
 				// }
 			}
 			break;
@@ -10095,7 +10510,7 @@ void player_struct::adjust_battle_partner(void)
 				// partner_struct *down_partner = get_partner_by_uuid(data->partner_battle[0]);
 				// if (down_partner && down_partner->scene)
 				// {
-				// 	down_partner->scene->delete_partner_from_scene(down_partner, true);
+				//	down_partner->scene->delete_partner_from_scene(down_partner, true);
 				// }
 			}
 
@@ -10119,7 +10534,7 @@ void player_struct::adjust_battle_partner(void)
 					del_partner_from_scene(partner, true);
 				// if (partner && partner->scene)
 				// {
-				// 	partner->scene->delete_partner_from_scene(partner, true);
+				//	partner->scene->delete_partner_from_scene(partner, true);
 				// }
 
 				data->partner_battle[i] = 0;
@@ -10219,7 +10634,7 @@ void player_struct::on_leave_scene(scene_struct *old_scene)
 		// partner_struct *partner = get_partner_by_uuid(data->partner_battle[i]);
 		// if (partner && partner->scene)
 		// {
-		// 	partner->scene->delete_partner_from_scene(partner, true);
+		//	partner->scene->delete_partner_from_scene(partner, true);
 		// }
 	}
 }
@@ -10313,6 +10728,60 @@ void player_struct::check_partner_relive(void)
 	}
 }
 
+bool player_struct::partner_dictionary_is_active(uint32_t partner_id)
+{
+	for (int i = 0; i < MAX_PARTNER_TYPE; ++i)
+	{
+		if (data->partner_dictionary[i] == 0)
+		{
+			break;
+		}
+
+		if (data->partner_dictionary[i] == partner_id)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool player_struct::partner_bond_is_active(uint32_t bond_id)
+{
+	for (int i = 0; i < MAX_PARTNER_BOND_NUM; ++i)
+	{
+		if (data->partner_bond[i] == 0)
+		{
+			break;
+		}
+
+		if (data->partner_bond[i] == bond_id)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool player_struct::partner_bond_reward_is_get(uint32_t partner_id)
+{
+	for (int i = 0; i < MAX_PARTNER_TYPE; ++i)
+	{
+		if (data->partner_bond_reward[i] == 0)
+		{
+			break;
+		}
+
+		if (data->partner_bond_reward[i] == partner_id)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 
 
 #if 0
@@ -10331,13 +10800,13 @@ void player_struct::use_hp_pool_add_hp()
 		return;
 	if (!is_alive())
 		return;
-	
+
 	uint32_t cur_hp = get_attr(PLAYER_ATTR_HP);
 	uint32_t max_hp = get_attr(PLAYER_ATTR_MAXHP);
 
 	if (max_hp <= cur_hp)
 		return;
-	
+
 	uint32_t add_hp = max_hp * sg_hp_pool_percent;
 	if (add_hp > data->hp_pool_num)
 		add_hp = data->hp_pool_num;
@@ -10349,7 +10818,7 @@ void player_struct::use_hp_pool_add_hp()
 	data->hp_pool_num -= add_hp;
 	send_hp_pool_changed_notify();
 	broadcast_one_attr_changed(PLAYER_ATTR_HP, cur_hp, true, true);
-	on_hp_changed(add_hp);	
+	on_hp_changed(add_hp);
 }
 
 void player_struct::do_auto_add_hp()
@@ -10363,7 +10832,7 @@ void player_struct::do_auto_add_hp()
 	else
 	{
 		use_hp_pool_add_hp();
-		data->next_auto_add_hp_time = time_helper::get_cached_time() + 1000;		
+		data->next_auto_add_hp_time = time_helper::get_cached_time() + 1000;
 	}
 }
 
@@ -10395,7 +10864,7 @@ void player_struct::on_tick_10()
 	}
 
 	do_auto_add_hp();
-	
+
 	if (!pos_changed)
 		return;
 	pos_changed = false;
@@ -10603,7 +11072,7 @@ void player_struct::on_dead(unit_struct *killer)
 		fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
 	}
 
-	if (sight_space && sight_space->data->type != 2)
+	if (sight_space) //&& sight_space->data->type != 2)
 		sight_space_manager::mark_sight_space_delete(sight_space);
 
 	interrupt();
@@ -10667,7 +11136,7 @@ void player_struct::on_relive_in_raid(raid_struct *raid, uint32_t type)
 	on_hp_changed(0);
 
 		//复活的时候加上一个无敌buff
-	buff_manager::create_buff(114400001, this, this, false);
+	buff_manager::create_default_buff(114400001, this, this, false);
 
 	m_team == NULL ? true : m_team->OnMemberHpChange(*this);
 }
@@ -10736,20 +11205,16 @@ void player_struct::on_relive(uint32_t type)
 
 		data->attrData[PLAYER_ATTR_HP] = data->attrData[PLAYER_ATTR_MAXHP];
 		++data->attrData[PLAYER_ATTR_RELIVE_TYPE2];
-		on_hp_changed(0);	
+		on_hp_changed(0);
 
 		//复活的时候加上一个无敌buff
-		buff_manager::create_buff(114400001, this, this, false);
+		buff_manager::create_default_buff(114400001, this, this, false);
 		if (chengjie_kill != 0)
 		{
-			STChengJie *pTask = ChengJieTaskManage::FindTask(chengjie_kill);
-			if (pTask != NULL )
+			ParameterTable *config = get_config_by_id(161000098, &parameter_config);
+			if (config != NULL)
 			{
-				ParameterTable *config = get_config_by_id(161000098, &parameter_config);
-				if (config != NULL)
-				{
-					buff_manager::create_buff(config->parameter1[pTask->step - 1], this, this, true);
-				}
+				buff_manager::create_default_buff(config->parameter1[chengjie_kill - 1], this, this, true);
 			}
 			chengjie_kill = 0;
 		}
@@ -10805,7 +11270,7 @@ void player_struct::refresh_oneday_job()
 	{
 		data->zhenying.mine = table->BoxOpenNum;
 	}
-	
+
 	add_zhenying_exp(0);
 	data->live_skill.book[LIVE__SKILL__TYPE__COOK] = 20; //todo 读配置
 	data->live_skill.book[LIVE__SKILL__TYPE__MEDICINE] = 20;
@@ -10813,7 +11278,48 @@ void player_struct::refresh_oneday_job()
 
 void player_struct::refresh_shop_daily(void)
 {
-	memset(data->shop_goods, 0, sizeof(data->shop_goods));
+	uint32_t now = time_helper::get_cached_time() / 1000;
+	uint32_t hour = time_helper::get_cur_hour(data->next_time_refresh_oneday_job);
+	bool day_reset = false, week_reset = false, month_reset = false;
+	if (now >= data->shop_reset.next_day_time) //每天
+	{
+		data->shop_reset.next_day_time = time_helper::nextOffsetTime(hour * 3600, now);
+		day_reset = true;
+	}
+	if (now >= data->shop_reset.next_week_time) //每周一
+	{
+		data->shop_reset.next_week_time = time_helper::get_next_timestamp_by_week_old(1, hour, 0, now);
+		week_reset = true;
+	}
+	if (now >= data->shop_reset.next_month_time) //每月一号
+	{
+		data->shop_reset.next_month_time = time_helper::get_next_timestamp_by_month_old(1, hour, 0, now);
+		month_reset = true;
+	}
+	for (int i = 0; i < MAX_SHOP_GOODS_NUM; ++i)
+	{
+		GoodsInfo *info = &data->shop_goods[i];
+		if (info->goods_id == 0)
+		{
+			continue;
+		}
+
+		ShopTable *config = get_config_by_id(info->goods_id, &shop_config);
+		if (!config)
+		{
+			continue;
+		}
+
+		if (config->Reset != 1)
+		{
+			continue;
+		}
+
+		if ((config->RestrictionTime == 1 && day_reset) || (config->RestrictionTime == 2 && week_reset) || (config->RestrictionTime == 3 && month_reset))
+		{
+			info->bought_num = 0;
+		}
+	}
 
 	ShopGoodsNotify nty;
 	shop_goods_notify__init(&nty);
@@ -10882,7 +11388,7 @@ void player_struct::on_attack(unit_struct *target)
 
 void player_struct::enter_fight_state()
 {
-	data->next_auto_add_hp_time = time_helper::get_cached_time() + 5000;	
+	data->next_auto_add_hp_time = time_helper::get_cached_time() + 5000;
 	if (data->on_fight_state)
 		return;
 	data->on_fight_state = true;
@@ -10947,12 +11453,12 @@ void player_struct::broadcast_to_sight_and_team(uint16_t msg_id, void *msg_data,
 	uint64_t *t_player_id = get_all_sight_player();
 	for (int i = 0; i < player_num; ++i)
 	{
-		conn_node_gamesrv::broadcast_msg_add_players(t_player_id[i], ppp);							
+		conn_node_gamesrv::broadcast_msg_add_players(t_player_id[i], ppp);
 	}
-	
+
 	if (include_myself && get_entity_type(get_uuid()) == ENTITY_TYPE_PLAYER)
 	{
-		conn_node_gamesrv::broadcast_msg_add_players(data->player_id, ppp);									
+		conn_node_gamesrv::broadcast_msg_add_players(data->player_id, ppp);
 	}
 
 	if (m_team != NULL)
@@ -11232,6 +11738,7 @@ void player_struct::send_buff_info()
 		if (m_buffs[i] && m_buffs[i]->data)
 		{
 			notify.start_time = m_buffs[i]->data->start_time / 1000;
+//			notify.end_time = m_buffs[i]->data->end_time / 1000;
 			notify.buff_id = m_buffs[i]->data->buff_id;
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ADD_BUFF_NOTIFY, add_buff_notify__pack, notify);
 //			owner->broadcast_to_sight(MSG_ID_ADD_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
@@ -11328,6 +11835,7 @@ void player_struct::refresh_player_redis_info(bool offline)
 	info.weapon_color = data->attrData[PLAYER_ATTR_WEAPON_COLOR];
 	info.fighting_capacity = data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY];
 	info.status = (offline ? time_helper::get_cached_time() / 1000 : 0); //保存下线时间，0表示在线
+	info.zhenying = data->attrData[PLAYER_ATTR_ZHENYING];
 //	info.guild_id = guild_id;
 //	info.guild_name = guild_name;
 	info.n_tags = 0;
@@ -11346,6 +11854,8 @@ void player_struct::refresh_player_redis_info(bool offline)
 	info.bind_gold = get_attr(PLAYER_ATTR_BIND_GOLD);
 	info.equip_fc = data->fc_data.equip;
 	info.bagua_fc = data->fc_data.bagua;
+	info.pvp_division_3 = data->pvp_raid_data.level_3;
+	info.pvp_score_3 = data->pvp_raid_data.score_3;
 
 	EXTERN_DATA extern_data;
 	extern_data.player_id = data->player_id;
@@ -11600,7 +12110,7 @@ void player_struct::open_new_fashion(uint32_t level_old, uint32_t level_new)
 			send.data = &data;
 			send.ret = 0;
 			fashion_data__init(&data);
-			
+
 			int ret = add_fashion(it->first, it->second->Colour, 0);
 			if (ret >= 0)
 			{
@@ -11639,7 +12149,7 @@ void player_struct::check_fashion_expire()
 			if (i + 1 != data->n_fashion)
 			{
 				memcpy(data->fashion + i, data->fashion + data->n_fashion - 1, sizeof(FashionInfo));
-			} 
+			}
 			--data->n_fashion;
 			std::map<uint64_t, struct ActorFashionTable *>::iterator itFashion = fashion_config.find(factionId);
 			if (itFashion == fashion_config.end())
@@ -11658,12 +12168,12 @@ void player_struct::check_fashion_expire()
 			if (data->charm_total < itFashion->second->Charm)
 			{
 				data->charm_total = 0;
-			} 
+			}
 			else
 			{
 				data->charm_total -= itFashion->second->Charm;
 			}
-			
+
 			send.id = factionId;
 			if (itFashion->second->Type == FASHION_TYPE_WEAPON)
 			{
@@ -11828,7 +12338,7 @@ void player_struct::notify_add_horse(int i)
 	else
 	{
 		hData.isexpire = false;
-		hData.cd = 0;  
+		hData.cd = 0;
 	}
 	hData.is_current = false;
 
@@ -11939,7 +12449,7 @@ void player_struct::calc_horse_attr()
 
 void player_struct::calc_horse_attr(double *attr)
 {
-	memset(attr, 0, sizeof(double) * PLAYER_ATTR_FIGHT_MAX);
+	memset(attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
 	for (uint32_t i = 1; i < PLAYER_ATTR_FIGHT_MAX; ++i)
 	{
 		if (i == PLAYER_ATTR_MOVE_SPEED)
@@ -11960,39 +12470,51 @@ void player_struct::calc_horse_attr(double *attr)
 
 void player_struct::check_horse_expire()
 {
-	int i = get_horse(get_attr(PLAYER_ATTR_CUR_HORSE));
-	if (i < 0)
+	for (uint32_t i = 0; i < data->n_horse;)
 	{
-		return;
-	}
-	if (data->horse[i].timeout == 0 || data->horse[i].id == DEFAULT_HORSE)
-	{
-		return;
-	}
-	if (time_helper::get_cached_time() / 1000 >= (uint64_t)data->horse[i].timeout)
-	{
-		int oldHorse = data->attrData[PLAYER_ATTR_CUR_HORSE];
-		data->attrData[PLAYER_ATTR_CUR_HORSE] = DEFAULT_HORSE;
-		SetCurHorseAns send;
-		set_cur_horse_ans__init(&send);
-		send.ret = 0;
-		send.id = DEFAULT_HORSE;
-		calc_horse_attr();
-		send.power = data->horse_attr.power;
-		send.playerid = this->get_uuid();
-		send.old_id = oldHorse;
-		broadcast_to_sight(MSG_ID_SET_CUR_HORSE_ANSWER, &send, (pack_func)set_cur_horse_ans__pack, true);
-		calculate_attribute(true);
-
-		MountsTable *table = get_config_by_id(data->horse[i].id, &horse_config);
-		std::vector<char *> args;
-		if (table != NULL)
+		if (data->horse[i].timeout == 0)
 		{
-			args.push_back(table->Name);
+			++i;
+			continue;
 		}
-		send_mail(270300029, NULL, NULL, NULL, &args, NULL, 0);
-	}
+		if (time_helper::get_cached_time() / 1000 >= (uint64_t)data->horse[i].timeout)
+		{
+			if (data->horse[i].id == get_attr(PLAYER_ATTR_CUR_HORSE))
+			{
+				int oldHorse = data->attrData[PLAYER_ATTR_CUR_HORSE];
+				data->attrData[PLAYER_ATTR_CUR_HORSE] = DEFAULT_HORSE;
+				SetCurHorseAns send;
+				set_cur_horse_ans__init(&send);
+				send.ret = 0;
+				send.id = DEFAULT_HORSE;
+				calc_horse_attr();
+				send.power = data->horse_attr.power;
+				send.playerid = this->get_uuid();
+				send.old_id = oldHorse;
+				broadcast_to_sight(MSG_ID_SET_CUR_HORSE_ANSWER, &send, (pack_func)set_cur_horse_ans__pack, true);
+				calculate_attribute(true);
+			}
 
+
+			MountsTable *table = get_config_by_id(data->horse[i].id, &horse_config);
+			std::vector<char *> args;
+			if (table != NULL)
+			{
+				args.push_back(table->Name);
+			}
+			send_mail(270300029, NULL, NULL, NULL, &args, NULL, 0);
+
+			if (i + 1 != data->n_horse)
+			{
+				memcpy(data->horse + i, data->horse + data->n_horse - 1, sizeof(HorseInfo));
+			}
+			--data->n_horse;
+		}
+		else
+		{
+			++i;
+		}
+	}
 }
 void player_struct::check_guoyu_expire()
 {
@@ -12009,6 +12531,15 @@ void player_struct::check_guoyu_expire()
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_TASK_SUCC_NOTIFY, guoyu_succ__pack, send);
 
 			if (data->scene_id < SCENCE_DEPART)
+			{
+				return;
+			}
+			if (scene == NULL)
+			{
+				return;
+			}
+			raid_struct *raid = (raid_struct *)scene;
+			if (raid->m_config->DengeonRank != DUNGEON_TYPE_YAOSHI)
 			{
 				return;
 			}
@@ -12316,6 +12847,31 @@ void player_struct::refresh_yaoshi_oneday()
 	}
 
 	send_all_yaoshi_num();
+
+	//镖车
+	for (std::map<uint64_t, struct BiaocheTable*>::iterator it = cash_truck_config.begin(); it != cash_truck_config.end(); ++it)
+	{
+		ControlTable *tableAct = get_config_by_id(it->second->ActivityControl, &all_control_config);
+		if (it->second->Type == 1)
+		{
+			data->truck.num_coin = tableAct->RewardTime;
+		}
+		else
+		{
+			data->truck.num_gold = tableAct->RewardTime;
+		}
+	}
+	CashTruckInfo note;
+	cash_truck_info__init(&note);
+	note.num_cion = data->truck.num_coin;
+	note.num_gold = data->truck.num_gold;
+	note.cash_truck = data->truck.truck_id;
+	note.mapid = data->truck.scene_id;
+	note.x = data->truck.pos.pos_x;
+	note.z = data->truck.pos.pos_z;
+	EXTERN_DATA extern_data;
+	extern_data.player_id = get_uuid();
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_CASH_TRUCK_INFO_NOTIFY, cash_truck_info__pack, note);
 }
 
 void player_struct::logout_check_award_question()
@@ -12449,11 +13005,11 @@ void player_struct::set_team_raid_id_wait_ready(uint32_t raid_id)
 {
 	LOG_INFO("%s: player[%lu] old[%u] new[%u]", __FUNCTION__, data->player_id, data->team_raid_id_wait_ready, raid_id);
 	data->team_raid_id_wait_ready = raid_id;
-	data->is_team_raid_ready = false;	
+	data->is_team_raid_ready = false;
 }
 void player_struct::unset_team_raid_id_wait_ready()
 {
-	LOG_INFO("%s: player[%lu] old[%u]", __FUNCTION__, data->player_id, data->team_raid_id_wait_ready);	
+	LOG_INFO("%s: player[%lu] old[%u]", __FUNCTION__, data->player_id, data->team_raid_id_wait_ready);
 	data->team_raid_id_wait_ready = 0;
 	data->is_team_raid_ready = false;
 }

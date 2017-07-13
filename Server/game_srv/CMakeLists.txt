@@ -12,12 +12,9 @@ INCLUDE_DIRECTORIES("."
   "${PROJECT_SOURCE_DIR}/thirdlib/libevent"
   )
 
-link_libraries(game)
-link_libraries(event)
-link_libraries(log4c)
-link_libraries(rt)
 link_libraries(dl)
 link_libraries(python2.7)
+INCLUDE ("../cmake_ldflags")
 
 link_directories("${PROJECT_SOURCE_DIR}/thirdlib/libevent/.libs"
   )

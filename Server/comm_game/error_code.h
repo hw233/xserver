@@ -151,6 +151,12 @@
 #define ERROR_ID_PARTNER_NUM_MAX              2407 //玩家拥有伙伴数量最大
 #define ERROR_ID_PARTNER_RECRUIT_TYPE         2408 //伙伴招募类型错误
 #define ERROR_ID_PARTNER_LEVEL_MAX            2410 //伙伴等级已达最大
+#define ERROR_ID_PARTNER_BOND_ACTIVED         2411 //伙伴羁绊已激活
+#define ERROR_ID_PARTNER_BOND_ACTIVE_CONDITION    2412 //伙伴羁绊激活条件不满足
+#define ERROR_ID_PARTNER_BOND_REWARD_GET      2413 //伙伴羁绊奖励已领取
+#define ERROR_ID_PARTNER_BOND_REWARD_CONDITION    2414 //伙伴羁绊奖励条件不满足
+#define ERROR_ID_PARTNER_COMPOSE_STONE_TYPE   2415 //伙伴神曜合成材料类型不一致
+#define ERROR_ID_PARTNER_COMPOSE_STONE_SCORE   2416 //伙伴神曜合成材料积分不足
 
 
 /*******************以下是前端提示专用*********************/

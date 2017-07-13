@@ -262,6 +262,7 @@ static void ai_player_hit_notify_to_many_player(uint64_t skill_id, player_struct
 			monster, player,
 			&cached_hit_effect[n_hit_effect].effect,
 			&cached_buff_id[n_buff],
+			&cached_buff_end_time[n_buff],
 			&add_num, other_rate);
 
 		life_steal += monster->count_life_steal_effect(damage);
@@ -402,6 +403,7 @@ static void ai_player_cast_immediate_skill_to_player(uint64_t skill_id, player_s
 		monster, player,
 		&cached_hit_effect[n_hit_effect].effect,
 		&cached_buff_id[n_buff],
+		&cached_buff_end_time[n_buff],		
 		&add_num, other_rate);
 
 	player->on_hp_changed(damage);
@@ -431,6 +433,7 @@ static void ai_player_cast_immediate_skill_to_player(uint64_t skill_id, player_s
 	cached_hit_effect[n_hit_effect].playerid = player->get_uuid();
 	cached_hit_effect[n_hit_effect].n_add_buff = add_num;
 	cached_hit_effect[n_hit_effect].add_buff = &cached_buff_id[n_buff];
+//	cached_hit_effect[n_hit_effect].add_buff_end_time = &cached_buff_end_time[n_buff];	
 	cached_hit_effect[n_hit_effect].hp_delta = damage;
 	cached_hit_effect[n_hit_effect].cur_hp = player->get_attr(PLAYER_ATTR_HP);
 //	cached_hit_effect.attack_pos = &attack_pos;
@@ -669,7 +672,7 @@ static void do_ai_player_relive(raid_struct *raid, player_struct *player, struct
 		player->m_team->OnMemberHpChange(*player);
 
 		//复活的时候加上一个无敌buff
-	buff_manager::create_buff(114400001, player, player, false);	
+	buff_manager::create_default_buff(114400001, player, player, false);	
 }
 
 static void do_ai_player_attack(player_struct *monster, struct ai_player_data *ai_player_data, player_struct **enemy)

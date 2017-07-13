@@ -30,6 +30,7 @@ static void wanyaogu_end_one_raid(raid_struct *raid, bool fail)
 	raid->WANYAOGU_DATA.timer2 = time_helper::get_cached_time() + sg_wanyaogu_time_delta * 1000;				
 //	raid->stop_monster_ai();
 	raid->clear_monster();
+	raid->clear_all_collet();
 
 	// for (int i = 0; i < MAX_TEAM_MEM; ++i)
 	// {
@@ -203,7 +204,7 @@ static void send_raid_reward(raid_struct *raid, int star)
 			notify.gold = gold;
 			notify.exp = exp;
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RAID_FINISHED_NOTIFY, raid_finish_notify__pack, notify);
-			raid->m_player[i]->add_item_list(item_list, MAGIC_TYPE_RAID, ADD_ITEM_SEND_MAIL_WHEN_BAG_FULL, true);
+			raid->m_player[i]->add_item_list_otherwise_send_mail(item_list, MAGIC_TYPE_RAID, 270200002, NULL, true);
 			raid->m_player[i]->add_raid_reward_count(raid->data->ID);
 			raid->m_player[i]->check_activity_progress(AM_RAID, raid->data->ID);
 //			raid->m_player[i]->send_raid_earning_time_notify();
@@ -478,18 +479,19 @@ static void wanyaogu_raid_ai_monster_dead(raid_struct *raid, monster_struct *mon
 	// 	}
 	// }
 
-	if (raid->WANYAOGU_DATA.script_data.script_config)
-	{
-		return script_ai_common_monster_dead(raid, monster, killer, &raid->WANYAOGU_DATA.script_data);
-	}
-	
 	if (raid->data->pass_index < raid->WANYAOGU_DATA.m_config->n_PassType && raid->WANYAOGU_DATA.m_config->PassType[raid->data->pass_index] == 1)
 	{
 		if (raid->WANYAOGU_DATA.m_config->PassValue[raid->data->pass_index] == monster->config->ID)
 		{
 			if (raid->add_raid_pass_value(1, raid->WANYAOGU_DATA.m_config))
-				return;
+			{
+					//return;
+			}
 		}
+	}
+	if (raid->WANYAOGU_DATA.script_data.script_config)
+	{
+		return script_ai_common_monster_dead(raid, monster, killer, &raid->WANYAOGU_DATA.script_data);
 	}
 }
 
@@ -511,19 +513,22 @@ static void wanyaogu_raid_ai_collect(raid_struct *raid, player_struct *player, C
 		}
 	}
 
-	if (raid->WANYAOGU_DATA.script_data.script_config)
-	{
-		return script_ai_common_collect(raid, player, collect, &raid->WANYAOGU_DATA.script_data);
-	}	
-
 	if (raid->data->pass_index < raid->WANYAOGU_DATA.m_config->n_PassType && raid->WANYAOGU_DATA.m_config->PassType[raid->data->pass_index] == 3)
 	{
 		if (raid->WANYAOGU_DATA.m_config->PassValue[raid->data->pass_index] == collect->m_collectId)
 		{
 			if (raid->add_raid_pass_value(3, raid->WANYAOGU_DATA.m_config))
-				return;
+			{
+//				return;
+			}
 		}
 	}
+
+	if (raid->WANYAOGU_DATA.script_data.script_config)
+	{
+		return script_ai_common_collect(raid, player, collect, &raid->WANYAOGU_DATA.script_data);
+	}	
+	
 }
 
 static void wanyaogu_raid_ai_finished(raid_struct *raid)

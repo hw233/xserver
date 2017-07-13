@@ -2,6 +2,7 @@
 #include "msgid.h"
 #include "../proto/raid.pb-c.h"
 #include "cash_truck_manager.h"
+#include "time_helper.h"
 
 // comm_pool sight_space_manager::sight_space_manager_sight_space_data_pool;
 // std::vector<sight_space_struct *> sight_space_manager::sight_space_manager_mark_delete_sight_space;
@@ -83,7 +84,8 @@ void sight_space_manager::on_tick()
 						truck->clear_cash_truck_sight();
 						truck->scene->add_cash_truck_to_scene(truck);
 						truck->sight_space = NULL;
-						truck->sight_space = NULL;						
+						truck->sight_space = NULL;
+						truck->data->fb_time = time_helper::get_cached_time() + truck->truck_config->Interval * 1000;
 					}
 				}
 					
@@ -191,6 +193,7 @@ int sight_space_manager::del_player_from_sight_space(sight_space_struct *sight_s
 				truck->clear_cash_truck_sight();
 				truck->scene->add_cash_truck_to_scene(truck);
 				truck->sight_space = NULL;
+				truck->data->fb_time = time_helper::get_cached_time() + truck->truck_config->Interval * 1000;
 			}
 			
 		}

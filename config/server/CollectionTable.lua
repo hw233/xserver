@@ -121,7 +121,7 @@ local CollectionTable = {
 		},
 	[154000011] = {
 		['ID'] = 154000011,
-		['NameId'] = '草药',
+		['NameId'] = '矿石',
 		['Icon'] = '0',
 		['TaskId'] = {},
 		['Level'] = 1,
@@ -139,7 +139,7 @@ local CollectionTable = {
 		['Level'] = 1,
 		['Time'] = 5,
 		['Regeneration'] = 99999,
-		['DropID'] = 0,
+		['DropID'] = 220100229,
 		['LifeTime'] = 0,
 		['ShowTips'] = 0
 		},

@@ -12,9 +12,9 @@
 #include <fcntl.h>
 extern "C"
 {
-#include "lua5.2/lua.h"
-#include "lua5.2/lualib.h"
-#include "lua5.2/lauxlib.h"
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
 }
 #include "excel_data.h"
 
@@ -32,6 +32,7 @@ std::set<uint32_t> sg_friend_gift_id;
 std::map<uint64_t, struct RandomCardRewardTable*> wanyaoka_reward_config; //万妖卡奖励配置
 std::map<uint64_t, struct ParameterTable *> parameter_config;
 std::map<uint64_t, struct CampTable*> zhenying_base_config; //阵营基础信息表
+std::map<uint64_t, struct GiftTable*> friend_gift_config; //好友礼物表
 
 static void generate_parameters(void)
 {
@@ -138,6 +139,11 @@ int read_all_excel_data()
 	type = sproto_type(sp, "CampTable");
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/CampTable.lua", (config_type)&zhenying_base_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "GiftTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/GiftTable.lua", (config_type)&friend_gift_config);
 	assert(ret == 0);
 
 	lua_close(L);	

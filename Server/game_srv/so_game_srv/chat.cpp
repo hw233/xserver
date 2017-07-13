@@ -113,6 +113,12 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 			
 		}
 	}
+	else if (strcasecmp(argv[0], "pass1") == 0)
+	{
+		raid_struct *raid = player->get_raid();
+		if (raid)
+			raid->on_raid_finished();
+	}
 	else if (argc >= 2 && strcasecmp(argv[0], "print") == 0)
 	{
 		if (strcasecmp(argv[1], "pos") == 0)
@@ -569,7 +575,7 @@ void chat_mod::gm_add_pet_monster(player_struct *player)
 
 void chat_mod::gm_add_buff(player_struct *player, int buffid)
 {
-	buff_manager::create_buff(buffid, player, player, true);	
+	buff_manager::create_default_buff(buffid, player, player, true);	
 }
 
 void chat_mod::gm_set_attr(player_struct *player, int id, int value)

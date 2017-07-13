@@ -32,9 +32,16 @@ message ResAcceptCashTruck
 {
 	required uint32 id = 1; //任务ID
 	required uint32 ret = 2; //
+	required uint32 type = 3; //押镖类型
 }
 
 message TruckEndurance
 {
 	required uint32 endurance = 1; //耐力值
+}
+
+message AnsSpeedUp
+{
+	required uint32 ret = 1; //
+	required uint32 cd = 2; //
 }

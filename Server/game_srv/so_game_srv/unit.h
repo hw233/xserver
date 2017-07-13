@@ -75,7 +75,7 @@ public:
 	int count_circle_unit(std::vector<unit_struct *> *ret, uint max, double radius);
 	int count_fan_unit(std::vector<unit_struct *> *ret, uint max, double radius, double angle);
 	
-	virtual bool give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty = true); //发放掉落奖励
+	virtual bool give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty = true, uint32_t mail_id = 0, std::vector<char *> *mail_args = NULL); //发放掉落奖励
 	virtual void broadcast_one_attr_changed(uint32_t id, double value, bool send_team, bool include_myself);
 	void broadcast_buff_state_changed();
 	struct position *get_pos();
@@ -104,7 +104,7 @@ public:
 	void set_one_buff(buff_struct *buff, int pos);	
 	void delete_one_buff(buff_struct *buff);
 	void clear_all_buffs();
-	buff_struct *try_cover_duplicate_buff(struct BuffTable *buff_config, unit_struct *attack);
+	buff_struct *try_cover_duplicate_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack);
 	void reset_unit_buff_state();
 	int stop_move();
 	int clear_debuff();
@@ -154,7 +154,7 @@ protected:
 	unit_struct *get_taunt_target();
 	void calculate_buff_fight_attr(bool isNty);	
 	buff_struct *try_cover_duplicate_item_buff(struct BuffTable *buff_config);
-	buff_struct *try_cover_duplicate_skill_buff(struct BuffTable *buff_config, unit_struct *attack);
+	buff_struct *try_cover_duplicate_skill_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack);
 	buff_struct *try_cover_duplicate_type3_buff(struct BuffTable *buff_config);
 
 	bool pos_changed;   //坐标是否变化过，如果变化过，就发送给下面的监视列表

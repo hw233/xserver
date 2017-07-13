@@ -1,6 +1,6 @@
 local BaguaViceAttributeTable = {
-	[1] = {
-		['Effect'] = 1,	--属性
+	[2] = {
+		['Effect'] = 2,	--属性
 		['Rand'] = {200,500,1000,1300,1500,2000}	--随机值
 		},
 	[3] = {

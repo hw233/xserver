@@ -22,6 +22,7 @@
 static void pvp_raid_refresh_monster(raid_struct *raid);
 static void get_team_kill_num(raid_struct *raid, int *kill1, int *kill2);
 static void	finished_raid(raid_struct *raid, int win_team);
+static void	pvp_raid_player_killmyself(raid_struct *raid, int target_index, player_struct *target);
 static void pvp_raid_player_kill(raid_struct *raid, int target_index, player_struct *player, player_struct *target);
 static void pvp_raid_ai_init(raid_struct *raid, player_struct *player)
 {
@@ -93,7 +94,7 @@ static void do_frozen_effect(player_struct *player)
 	LOG_INFO("%s: player[%lu] in frozen rand = %d", __FUNCTION__, player->get_uuid(), randnum);
 
 	if (randnum <= sg_pvp_raid_blue_region_buff_rate)
-		buff_manager::create_buff(sg_pvp_raid_blue_region_buff_id[0], player, player, true);
+		buff_manager::create_default_buff(sg_pvp_raid_blue_region_buff_id[0], player, player, true);
 }
 
 // public enum MapAreaType
@@ -120,7 +121,7 @@ static void	do_region_effect(raid_struct *raid, player_struct *player)
 //			int32_t randnum = random() % 10000;
 //			if (randnum <= sg_pvp_raid_blue_region_buff_rate)
 //				buff_manager::create_buff(sg_pvp_raid_blue_region_buff_id[0], player, player, true);
-			buff_manager::create_buff(sg_pvp_raid_blue_region_buff_id[1], player, player, true);
+			buff_manager::create_default_buff(sg_pvp_raid_blue_region_buff_id[1], player, player, true);
 		}
 		break;
 		case 14:
@@ -128,8 +129,8 @@ static void	do_region_effect(raid_struct *raid, player_struct *player)
 			if (player->buff_state & BUFF_STATE_AVOID_RED_BUFF)
 				return;
 //			player->send_enter_region_notify(region_id);
-			buff_manager::create_buff(sg_pvp_raid_red_region_buff_id[0], player, player, true);
-			buff_manager::create_buff(sg_pvp_raid_red_region_buff_id[1], player, player, true);
+			buff_manager::create_default_buff(sg_pvp_raid_red_region_buff_id[0], player, player, true);
+			buff_manager::create_default_buff(sg_pvp_raid_red_region_buff_id[1], player, player, true);
 		}
 		break;
 		case 15:
@@ -190,7 +191,7 @@ static void	check_buff_range(raid_struct *raid, uint32_t now)
 			if (check_player_in_buff_range(raid->m_player[i], sg_3v3_pvp_raid_red_buff_param[1], sg_3v3_pvp_raid_red_buff_param[3]))
 			{
 					//  add buff
-				buff_manager::create_buff(sg_pvp_center_buff_id[0], raid->m_player[i], raid->m_player[i], true);
+				buff_manager::create_default_buff(sg_pvp_center_buff_id[0], raid->m_player[i], raid->m_player[i], true);
 				raid->PVP_DATA.red_buff_relive_time = now + sg_pvp_raid_buff_relive_time;
 				send_get_buff(raid, 0, raid->m_player[i]->get_uuid());
 				send = true;
@@ -199,7 +200,7 @@ static void	check_buff_range(raid_struct *raid, uint32_t now)
 			if (check_player_in_buff_range(raid->m_player2[i], sg_3v3_pvp_raid_red_buff_param[1], sg_3v3_pvp_raid_red_buff_param[3]))
 			{
 					// add buff
-				buff_manager::create_buff(sg_pvp_center_buff_id[0], raid->m_player2[i], raid->m_player2[i], true);
+				buff_manager::create_default_buff(sg_pvp_center_buff_id[0], raid->m_player2[i], raid->m_player2[i], true);
 				raid->PVP_DATA.red_buff_relive_time = now + sg_pvp_raid_buff_relive_time;
 				send_get_buff(raid, 0, raid->m_player2[i]->get_uuid());
 				send = true;
@@ -220,7 +221,7 @@ static void	check_buff_range(raid_struct *raid, uint32_t now)
 			if (check_player_in_buff_range(raid->m_player[i], sg_3v3_pvp_raid_blue_buff_param[1], sg_3v3_pvp_raid_blue_buff_param[3]))
 			{
 					// add buff
-				buff_manager::create_buff(sg_pvp_center_buff_id[1], raid->m_player[i], raid->m_player[i], true);
+				buff_manager::create_default_buff(sg_pvp_center_buff_id[1], raid->m_player[i], raid->m_player[i], true);
 				raid->PVP_DATA.red_buff_relive_time = now + sg_pvp_raid_buff_relive_time;
 				send_get_buff(raid, 1, raid->m_player[i]->get_uuid());
 				send = true;
@@ -229,7 +230,7 @@ static void	check_buff_range(raid_struct *raid, uint32_t now)
 			if (check_player_in_buff_range(raid->m_player2[i], sg_3v3_pvp_raid_blue_buff_param[1], sg_3v3_pvp_raid_blue_buff_param[3]))
 			{
 					// add buff
-				buff_manager::create_buff(sg_pvp_center_buff_id[1], raid->m_player2[i], raid->m_player2[i], true);
+				buff_manager::create_default_buff(sg_pvp_center_buff_id[1], raid->m_player2[i], raid->m_player2[i], true);
 				raid->PVP_DATA.red_buff_relive_time = now + sg_pvp_raid_buff_relive_time;
 				send_get_buff(raid, 1, raid->m_player2[i]->get_uuid());
 				send = true;
@@ -355,6 +356,10 @@ static void pvp_raid_ai_player_dead(raid_struct *raid, player_struct *player, un
 	{
 		pvp_raid_player_kill(raid, index, killer, player);
 	}
+	else
+	{
+		pvp_raid_player_killmyself(raid, index, player);
+	}
 }
 
 static void pvp_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
@@ -389,7 +394,7 @@ static void pvp_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster,
 	{
 		if (!player[i])
 			continue;
-		buff_manager::create_buff(buffid, player[i], player[i], true);
+		buff_manager::create_default_buff(buffid, player[i], player[i], true);
 	}
 }
 
@@ -427,7 +432,7 @@ static void pvp_raid_ai_player_relive(raid_struct *raid, player_struct *player, 
 	player->set_camp_id(camp_id);
 
 		//复活的时候加上一个无敌buff
-	buff_manager::create_buff(114400001, player, player, false);
+	buff_manager::create_default_buff(114400001, player, player, false);
 
 	player->m_team == NULL ? true : player->m_team->OnMemberHpChange(*player);
 }
@@ -806,6 +811,11 @@ static void pvp_raid_check_ace(raid_struct *raid, int target_index)
 			raid->m_raid_team2->BroadcastToTeam(MSG_ID_PVP_RAID_BE_ACE_NOTIFY, NULL, NULL, 0);
 		}
 	}
+}
+
+static void	pvp_raid_player_killmyself(raid_struct *raid, int target_index, player_struct *target)
+{
+	pvp_raid_check_ace(raid, target_index);	
 }
 
 static void pvp_raid_player_kill(raid_struct *raid, int target_index, player_struct *player, player_struct *target)

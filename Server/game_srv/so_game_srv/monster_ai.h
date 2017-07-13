@@ -25,6 +25,7 @@ extern struct ai_interface monster_ai_19_interface;
 extern struct ai_interface monster_ai_20_interface;
 extern struct ai_interface monster_ai_21_interface;
 extern struct ai_interface monster_ai_22_interface;
+extern struct ai_interface monster_ai_23_interface;
 
 int get_monster_hp_percent(monster_struct *monster);
 //计算技能硬直时间
@@ -45,6 +46,7 @@ bool check_monster_relive(monster_struct *monster);
 void do_normal_patrol(monster_struct *monster);
 void do_normal_attack(monster_struct *monster);
 void do_normal_pursue(monster_struct *monster);
+void do_normal_dead(monster_struct *monster);
 
 //定点巡逻以及单线不返回巡逻ai公用接口
 void do_circlea_or_type22_ai_patrol(monster_struct *monster);
@@ -52,4 +54,5 @@ void circle_ai_beattack(monster_struct *monster, unit_struct *player);
 void circle_ai_befly(monster_struct *monster, unit_struct *player);
 void circle_ai_dead(monster_struct *monster, scene_struct *scene);
 bool circle_ai_check_goback(monster_struct *monster);
+void circle_ai_do_goback(monster_struct *monster);
 #endif /* MONSTER_AI_NORMAL_H */

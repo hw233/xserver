@@ -17,7 +17,7 @@ extern void get_skill_configs(uint32_t skill_lv, uint32_t skill_id, struct Skill
 
 extern int32_t count_skill_total_damage(UNIT_FIGHT_TYPE type, struct SkillTable *skillconfig, struct SkillLvTable *act_lvconfig,
 	struct PassiveSkillTable *pas_config, struct SkillLvTable *pas_lvconfig, unit_struct *attack_unit,
-	unit_struct *defence_unit, uint32_t *effect, uint32_t buff_add[], uint32_t *n_buff_add, int32_t other_rate);
+	unit_struct *defence_unit, uint32_t *effect, uint32_t buff_add[], uint32_t buff_add_end_time[], uint32_t *n_buff_add, int32_t other_rate);
 
 extern int32_t count_other_skill_damage_effect(unit_struct *attack, unit_struct *defence);
 

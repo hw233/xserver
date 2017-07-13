@@ -62,3 +62,17 @@ message HeartbeatNotify
 {
 	required uint32 curTime = 1; //服务器当前时间（秒）	
 }
+
+//账号服务器信息
+message AccountServerData
+{
+	required uint32 serverId = 1; //服务器ID
+	repeated PlayerBaseInfo playerList = 2; //角色列表
+}
+
+//账号服务器列表
+message AccountServerListAnswer
+{
+	repeated AccountServerData serverList = 2; //服务器列表
+}
+

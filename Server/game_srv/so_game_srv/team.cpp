@@ -324,6 +324,10 @@ bool Team::AddMember(player_struct &player)
 
 	for (int i = 0; i < m_data->m_memSize; ++i)
 	{
+		if (m_team_player[i] == NULL)
+		{
+			continue;
+		}
 		m_team_player[i]->add_task_progress(TCT_JOIN_TEAM, 0, m_data->m_memSize);
 	}
 

@@ -2,5 +2,5 @@
 find . -type f -name "*.[hc]pp" > cscope.files
 find . -type f -name "*.[hc]" >> cscope.files
 cscope -bq
-cat cscope.files | etags -
+#cat cscope.files | etags -
 

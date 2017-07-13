@@ -426,6 +426,34 @@ void add_friend_offline_system(uint64_t player_id, SystemNoticeNotify *sys)
 	chat_list__free_unpacked(list, NULL);
 }
 
+void add_friend_offline_gift(uint64_t player_id, FriendGiftData *gift)
+{
+	ChatList *list = load_friend_chat(player_id);
+	if (!list)
+	{
+		list = (ChatList *)malloc(sizeof(ChatList));
+		chat_list__init(list);
+	}
+
+	if (list->n_gifts >= (size_t)MAX_FRIEND_GIFT_NUM)
+	{
+		free(list->gifts[0]);
+		list->gifts[0] = NULL;
+		memmove(&list->gifts[0], &list->gifts[1], (list->n_gifts - 1) * sizeof(FriendGiftData*));
+	}
+	else
+	{
+		list->n_gifts++;
+		list->gifts = (FriendGiftData**)realloc(list->gifts, list->n_gifts * sizeof(FriendGiftData*));
+	}
+	list->gifts[list->n_gifts - 1] = gift;
+	save_friend_chat(player_id, list);
+
+	list->gifts[list->n_gifts - 1] = NULL;
+	list->n_gifts--;
+	chat_list__free_unpacked(list, NULL);
+}
+
 int get_more_redis_player(std::set<uint64_t> &player_ids, std::map<uint64_t, PlayerRedisInfo*> &redis_players)
 {
 	if (player_ids.size() == 0)
@@ -779,6 +807,22 @@ uint32_t get_new_group_id(FriendPlayer *player)
 	}
 
 	return id;
+}
+
+int get_recent_num(FriendPlayer *player)
+{
+	int num = 0;
+	for (int i = 0; i < MAX_FRIEND_RECENT_NUM; ++i)
+	{
+		if (player->recents[i] == 0)
+		{
+			break;
+		}
+
+		num++;
+	}
+
+	return num;
 }
 
 int add_contact(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo &change_info, bool bDelApply)
@@ -1441,6 +1485,14 @@ int add_recent(FriendPlayer *player, uint64_t target_id)
 		}
 		if (player->recents[i] == target_id)
 		{
+			//把联系人提到最新
+			int last_idx = get_recent_num(player);
+			if (i != last_idx - 1)
+			{
+				player->recents[i] = player->recents[last_idx - 1];
+				player->recents[last_idx - 1] = target_id;
+				save_friend_player(player);
+			}
 			return 0;
 		}
 	}

@@ -171,7 +171,7 @@ static void ai_beattack_13(monster_struct *monster, unit_struct *player)
 					// 使用雷鸣鼓技能
 				start_use_leiminggu_skill(monster, percent);
 					// 添加免疫buff
-				buff_manager::create_buff(LEIXINYE_MIANYI_BUFF_ID, monster, monster, true);
+				buff_manager::create_default_buff(LEIXINYE_MIANYI_BUFF_ID, monster, monster, true);
 			}
 			if (percent <= 40)
 			{
@@ -245,7 +245,7 @@ void set_leixinye_type(monster_struct *monster, uint32_t type)
 			monster->ai_data.leixinye_ai.can_use_leiminggu = false;
 			start_use_leiminggu_skill(monster, 100);							
 				// 添加免疫buff
-			buff_manager::create_buff(LEIXINYE_MIANYI_BUFF_ID, monster, monster, true);
+			buff_manager::create_default_buff(LEIXINYE_MIANYI_BUFF_ID, monster, monster, true);
 			break;
 		default:
 			assert(0);

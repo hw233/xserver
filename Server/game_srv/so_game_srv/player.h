@@ -178,6 +178,13 @@ struct GoodsInfo
 	uint32_t bought_num;
 };
 
+struct ShopResetInfo
+{
+	uint32_t next_day_time;
+	uint32_t next_week_time;
+	uint32_t next_month_time;
+};
+
 struct YuqidaoMaiInfo
 {
 	uint32_t mai_id;
@@ -307,23 +314,26 @@ struct ZhenYing
 {
 	uint32_t level;
 	uint32_t exp;
+	uint32_t step;
+	uint32_t exp_day;//每天能获得的经验 
+	uint32_t free;//免费换阵营次数
+	uint32_t change_cd; //转换阵营CD 
+
+	//周任务
+	uint32_t last_week;//上次更新时间
+	uint32_t week; 
 	uint32_t task;
 	uint32_t task_type;
 	uint32_t task_num;
-	uint32_t step;
-	uint32_t exp_day;
-	uint32_t kill_week; //战场一周杀人
-	uint32_t free;
-	uint32_t score_week;
-	uint32_t last_week;//上次更新时间
-	uint32_t week; //周任务
-	uint32_t change_cd; //转换阵营CD 
-
+	
+	//战绩
 	uint32_t kill;
 	uint32_t death;
 	uint32_t help;
 	uint32_t score;
 	uint32_t mine; //挖宝次数
+	uint32_t kill_week; //战场一周杀人
+	uint32_t score_week; //战场周积分
 };
 
 static const int MAX_QUESTION_ANSWER = 4;
@@ -529,6 +539,7 @@ struct player_data
 
 	//商城
 	GoodsInfo shop_goods[MAX_SHOP_GOODS_NUM];
+	ShopResetInfo shop_reset;
 
 	//御气道
 	YuqidaoMaiInfo yuqidao_mais[MAX_YUQIDAO_MAI_NUM];
@@ -612,6 +623,8 @@ struct player_data
 	uint32_t partner_recruit_junior_count; //低级招募计数
 	uint32_t partner_recruit_senior_time; //高级招募免费时间
 	uint32_t partner_recruit_senior_count; //高级招募计数
+	uint32_t partner_bond[MAX_PARTNER_BOND_NUM];
+	uint32_t partner_bond_reward[MAX_PARTNER_TYPE];
 
 	LeaveRaidPosition leaveraid; //离开副本
 	uint32_t noviceraid_flag;	//新手副本是否完成的标记
@@ -823,6 +836,12 @@ public:
 	int sub_comm_gold(uint32_t num, uint32_t statis_id, bool isNty = true); //消耗通用元宝，先消耗绑定元宝
 	int add_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //增加银两
 	int sub_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //消耗银两
+	int add_chengjie_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
+	int sub_chengjie_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
+	int add_guoyu_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
+	int sub_guoyu_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
+	int add_shangjin_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
+	int sub_shangjin_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
 	uint32_t get_coin(void); //获取银两
 	int add_zhenqi(uint32_t num, uint32_t statis_id, bool isNty = true); //增加真气
 	int sub_zhenqi(uint32_t num, uint32_t statis_id, bool isNty = true); //消耗真气
@@ -851,7 +870,9 @@ public:
 	bool check_can_add_item(uint32_t id, uint32_t num, std::map<uint32_t, uint32_t> *out_add_list); //检查背包空间
 	bool check_can_add_item_list(std::map<uint32_t, uint32_t>& item_list);
 	int add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool isNty = true); //增加道具
-	bool add_item_list(std::map<uint32_t, uint32_t>& item_list, uint32_t statis_id, AddItemDealWay deal_way, bool isNty = true); //增加一堆道具
+	bool add_item_list(std::map<uint32_t, uint32_t>& item_list, uint32_t statis_id, bool isNty = true); //增加一堆道具，如果背包不足，会失败
+	bool add_item_list_as_much_as_possible(std::map<uint32_t, uint32_t>& item_list, uint32_t statis_id, bool isNty = true); //增加一堆道具，尽可能放入背包，满了丢弃
+	bool add_item_list_otherwise_send_mail(std::map<uint32_t, uint32_t>& item_list, uint32_t statis_id, uint32_t mail_id, std::vector<char *> *mail_args = NULL, bool isNty = true); //增加一堆道具，背包满后发邮件
 	int get_item_num_by_id(uint32_t id); //获取指定id道具数量
 	int get_item_can_use_num(uint32_t id); //获取绑定+非绑定道具数量
 	int del_item_grid(uint32_t pos, bool isNty = true);
@@ -874,7 +895,7 @@ public:
 	void notify_one_item_flow_to_bag(uint32_t id, uint32_t num);
 
 	//掉落
-	bool give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty = true); //发放掉落奖励
+	bool give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty = true, uint32_t mail_id = 0, std::vector<char *> *mail_args = NULL); //发放掉落奖励
 
 	//经验
 	int add_exp(uint32_t val, uint32_t statis_id, bool isNty = true);
@@ -898,7 +919,7 @@ public:
 	void task_update_notify(TaskInfo *info);
 	void get_task_event_item(uint32_t task_id, uint32_t event_class, std::map<uint32_t, uint32_t> &item_list);
 	int touch_task_event(uint32_t task_id, uint32_t event_class);
-	int execute_task_event(uint32_t event_id, uint32_t event_class);
+	int execute_task_event(uint32_t event_id, uint32_t event_class, bool internal);
 	int add_finish_task(uint32_t task_id);
 	int del_finish_task(uint32_t task_id);
 	int submit_task(uint32_t task_id);
@@ -1077,6 +1098,9 @@ public:
 	int add_partner_exp(uint32_t num, uint32_t statis_id, bool isNty = true);
 	void notify_fighting_partner(void);
 	void check_partner_relive(void);
+	bool partner_dictionary_is_active(uint32_t partner_id); //伙伴图鉴是否激活
+	bool partner_bond_is_active(uint32_t bond_id); //伙伴羁绊是否激活
+	bool partner_bond_reward_is_get(uint32_t partner_id); //伙伴羁绊奖励是否领取
 
 	uint64_t last_change_area_time;
 	sight_space_struct *sight_space;
@@ -1096,6 +1120,9 @@ public:
 		//ai巡逻配置
 	struct RobotPatrolTable *ai_patrol_config;
 private:
+	void calculate_lv2_attribute();
+	void calculate_lv3_attribute();
+	void calculate_lv4_attribute();			
 	void use_hp_pool_add_hp();
 	void enter_fight_state();
 	void leave_fight_state();	

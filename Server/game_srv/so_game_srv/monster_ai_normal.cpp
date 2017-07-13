@@ -225,24 +225,24 @@ static void	do_goback(monster_struct *monster)
 	monster->send_patrol_move();
 }
 
-static void	do_dead(monster_struct *monster)
-{
-	if (!monster->create_config)
-		return;	
-	if (check_monster_relive(monster))
-	{
-		monster->target = NULL;
-		monster->ai_state = AI_PATROL_STATE;
-		monster->set_pos(monster->get_born_pos_x(),	monster->get_born_pos_z());
-		monster->data->attrData[PLAYER_ATTR_HP] = monster->data->attrData[PLAYER_ATTR_MAXHP];
-		monster->on_relive();
-	}
-}
+// static void	do_dead(monster_struct *monster)
+// {
+// 	if (!monster->create_config)
+// 		return;	
+// 	if (check_monster_relive(monster))
+// 	{
+// 		monster->target = NULL;
+// 		monster->ai_state = AI_PATROL_STATE;
+// 		monster->set_pos(monster->get_born_pos_x(),	monster->get_born_pos_z());
+// 		monster->data->attrData[PLAYER_ATTR_HP] = monster->data->attrData[PLAYER_ATTR_MAXHP];
+// 		monster->on_relive();
+// 	}
+// }
 
 void normal_ai_tick(monster_struct *monster)
 {
 	if (monster->ai_state == AI_DEAD_STATE)
-		return do_dead(monster);
+		return do_normal_dead(monster);
 
 	if (monster->is_in_lock_time())
 		return;
@@ -267,10 +267,10 @@ void normal_ai_tick(monster_struct *monster)
 		case AI_PURSUE_STATE:  //追击
 			do_normal_pursue(monster);
 			break;
-		case AI_GO_BACK_STATE:
-			monster->data->ontick_time += random() % 2000;
-			do_goback(monster);
-			break;
+//		case AI_GO_BACK_STATE:
+//			monster->data->ontick_time += random() % 2000;
+//			do_goback(monster);
+//			break;
 		case AI_PATROL_STATE:  //巡逻
 			monster->data->ontick_time += monster->count_rand_patrol_time();
 			do_normal_patrol(monster);

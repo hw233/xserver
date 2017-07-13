@@ -158,6 +158,9 @@ int install(int argc, char **argv)
 		} else if(strcmp(argv[i], "-o") == 0) { /// dump shared memory data to db
 			dump = 1;
 		}
+	    else if(strcmp(argv[i], "-t") == 0) { /// test for mem check
+			open_err_log_file();
+		}
 	}
 
 	uint64_t pid = write_pid_file();

@@ -101,27 +101,9 @@ local SkillCallTable = {
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
-	[112720001] = {
-		['ID'] = 112720001,
-		['CallScriptPath'] = 172000001,
-		['ConditionScriptId'] = {0},
-		['OperationScriptId'] = {0}
-		},
 	[112720002] = {
 		['ID'] = 112720002,
 		['CallScriptPath'] = 172000002,
-		['ConditionScriptId'] = {0},
-		['OperationScriptId'] = {0}
-		},
-	[112720003] = {
-		['ID'] = 112720003,
-		['CallScriptPath'] = 172000003,
-		['ConditionScriptId'] = {0},
-		['OperationScriptId'] = {0}
-		},
-	[112720004] = {
-		['ID'] = 112720004,
-		['CallScriptPath'] = 172000004,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
@@ -131,15 +113,45 @@ local SkillCallTable = {
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
-	[112720006] = {
-		['ID'] = 112720006,
-		['CallScriptPath'] = 172000006,
+	[112720010] = {
+		['ID'] = 112720010,
+		['CallScriptPath'] = 172000010,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
-	[112720007] = {
-		['ID'] = 112720007,
-		['CallScriptPath'] = 172000007,
+	[112720011] = {
+		['ID'] = 112720011,
+		['CallScriptPath'] = 172000011,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112720012] = {
+		['ID'] = 112720012,
+		['CallScriptPath'] = 172000012,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112720019] = {
+		['ID'] = 112720019,
+		['CallScriptPath'] = 172000019,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112720024] = {
+		['ID'] = 112720024,
+		['CallScriptPath'] = 172000024,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112720036] = {
+		['ID'] = 112720036,
+		['CallScriptPath'] = 172000036,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112720047] = {
+		['ID'] = 112720047,
+		['CallScriptPath'] = 172000047,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		}

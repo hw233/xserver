@@ -61,6 +61,7 @@
 #define MAX_PARTNER_FORMATION_NUM   4
 #define MAX_PARTNER_SKILL_NUM   6
 #define MAX_PARTNER_BATTLE_NUM  2
+#define MAX_PARTNER_BOND_NUM  100 //伙伴羁绊数
 
 #define MAX_ESCORT_NUM   2
 #define MAX_ESCORT_MONSTER_NUM   (40 + 1)
@@ -72,22 +73,6 @@ enum PlayerStatus
 {
 	ONLINE,               //正常在线玩家
 	OFFLINE_SAVING,       //下线玩家,保存数据未返回
-};
-
-//参数表ID定义
-enum ParameterID
-{
-	PARAM_ID_BAG_UNLOCK = 162000001, //背包解锁
-	PARAM_ID_RENAME = 161000002, //改名道具
-	PARAM_ID_RELIVE_FREE_TIMES = 161000008, //每天免费原地复活次数
-	PARAM_ID_RELIVE_FIRST_COST, //每天付费原地复活初始消耗
-	PARAM_ID_RELIVE_GROW_COST, //每天付费原地复活消耗增长
-	PARAM_ID_RELIVE_MAX_COST, //每天付费原地复活消耗上限
-	PARAM_ID_RAID_KEEP_TIME = 161000007,  //副本保留时间
-	PARAM_ID_GEM_STRIP_COIN = 161000019,  //宝石剥离消耗银币
-	PARAM_ID_PLAYER_LEVEL_LIMIT = 161000020,  //角色等级上限
-	PARAM_ID_BIRTH_MAP = 161000023,  //角色出生点
-	PARAM_ID_YUQIDAO_BREAK_ITEM = 161000041,  //御气道冲脉道具
 };
 
 //道具类型

@@ -44,6 +44,7 @@ private:
 	void handle_chose_zhenying();
 	void handle_change_zhenying();
 	void handle_zhenying_power();
+	void handle_zhenying_change_power();
 	void handle_zhenying_add_kill();
 
 	void handle_friend_info_request();

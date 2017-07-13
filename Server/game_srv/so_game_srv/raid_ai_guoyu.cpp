@@ -70,11 +70,11 @@ static void guoyu_raid_ai_monster_dead(raid_struct *raid, monster_struct *monste
 			GuoyuFbSucc notifyFb;
 			guoyu_fb_succ__init(&notifyFb);
 			notify.succ = 0;
-
 			std::map<uint64_t, struct RandomMonsterTable*>::iterator it = random_monster.find(raid->m_player[i]->data->guoyu.cur_task);
 			if (it == random_monster.end())
 			{
-				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_FB_SUCC_NOTIFY, guoyu_fb_succ__pack, notifyFb);
+				//fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_FB_COLSE_NOTIFY, 0, 0);
+				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_FB_COLSE_NOTIFY, guoyu_fb_succ__pack, notifyFb);
 			}
 			else
 			{
@@ -136,7 +136,7 @@ static void guoyu_raid_ai_monster_dead(raid_struct *raid, monster_struct *monste
 							sendItemNum[notifyFb.n_item_num++] = it->second;
 						}
 					}
-					raid->m_player[i]->add_item_list(item_list, MAGIC_TYPE_YAOSHI, ADD_ITEM_SEND_MAIL_WHEN_BAG_FULL);
+					raid->m_player[i]->add_item_list_otherwise_send_mail(item_list, MAGIC_TYPE_YAOSHI, 0, NULL);
 				}
 			
 				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_FB_SUCC_NOTIFY, guoyu_fb_succ__pack, notifyFb);
@@ -168,7 +168,8 @@ static void guoyu_raid_ai_tick(raid_struct *raid)
 			if (!raid->m_player[i])
 				continue;
 			extern_data.player_id = raid->m_player[i]->get_uuid();
-			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_FB_SUCC_NOTIFY, guoyu_fb_succ__pack, notify);
+			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_FB_COLSE_NOTIFY, guoyu_fb_succ__pack, notify);
+			//fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_FB_COLSE_NOTIFY, 0, 0);
 			raid->m_player[i]->check_activity_progress(AM_YAOSHI, 3);
 			raid->m_player[i]->add_task_progress(TCT_YAOSHI_GUOYU, 0, 1);
 		}

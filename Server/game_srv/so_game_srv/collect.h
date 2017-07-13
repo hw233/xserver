@@ -67,7 +67,7 @@ public:
 
 	static Collect * CreateCollect(scene_struct *scene, int index);
 	static Collect *CreateCollectByConfig(scene_struct *scene, int index);
-	static Collect *CreateCollectByPos(scene_struct *scene, uint32_t id, uint32_t x, uint32_t y, uint32_t z, float yaw);
+	static Collect *CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw);
 	static int CreateCollectByID(scene_struct *scene, uint32_t id, uint32_t num);
 	static void DestroyCollect(uint64_t id);
 	static Collect * GetById(const uint32_t id);

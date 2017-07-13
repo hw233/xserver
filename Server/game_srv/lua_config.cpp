@@ -106,6 +106,7 @@ std::map<uint64_t, struct PartnerTable*> partner_config; //伙伴表
 std::map<uint64_t, struct GodYaoAttributeTable*> partner_god_attr_config; //伙伴表神耀属性
 std::map<uint64_t, struct RecruitTable*> partner_recruit_config; //伙伴招募表
 std::map<uint64_t, struct PartnerLevelTable*> partner_level_config; //伙伴等级表
+std::map<uint64_t, struct FetterTable*> partner_bond_config; //伙伴羁绊表
 std::map<uint64_t, struct BiaocheTable*> cash_truck_config; //镖车表
 std::map<uint64_t, struct FunctionUnlockTable*> function_unlock_config; //功能开启表
 std::map<uint64_t, struct NpcTalkTable*> monster_talk_config; //怪物冒泡说话
@@ -118,6 +119,10 @@ std::map<uint64_t, std::vector<struct SceneCreateMonsterTable *> *> all_scene_cr
 
 
 /////////////////////
+uint32_t sg_bag_unlock_base_price;
+uint32_t sg_bag_unlock_incr_factor;
+uint32_t sg_rename_item_id;
+uint32_t sg_rename_item_num;
 uint32_t sg_first_trunk_task_id = 0;
 std::map<uint64_t, TaskChapterTable*> task_chapter_map;
 int sg_relive_free_times;
@@ -271,3 +276,29 @@ int sg_guild_battle_final_score_factor[4];
 double sg_partner_assist_percent;
 uint32_t sg_partner_anger_max;
 uint32_t sg_partner_relive_time;
+uint32_t sg_partner_sanshenshi_id;
+uint32_t sg_partner_sanshenshi_score;
+uint32_t sg_partner_qiyaoshi_id;
+uint32_t sg_partner_qiyaoshi_score;
+
+double sg_fight_param_161000274;                //体质转生命系数
+double sg_fight_param_161000275;                //力量转攻击系数
+double sg_fight_param_161000276;                //敏捷转闪避系数
+double sg_fight_param_161000277;                //敏捷转全系抗性系数
+double sg_fight_param_161000278;                //灵巧转命中系数
+double sg_fight_param_161000279;                //灵巧转会心几率系数
+double sg_fight_param_161000280;                //命中等级系数
+double sg_fight_param_161000281;                //命中基础值
+double sg_fight_param_161000282;                //闪避等级系数
+double sg_fight_param_161000283;                //闪避基础值
+double sg_fight_param_161000284;                //实际命中几率下限
+double sg_fight_param_161000285;                //会心等级系数
+double sg_fight_param_161000286;                //会心基础值
+double sg_fight_param_161000287;                //五行抗性等级系数
+double sg_fight_param_161000288;                //五行抗性基础值
+double sg_fight_param_161000289;                //特殊属性基础值
+double sg_fight_param_161000290;                //buff持续时间保底比例
+double sg_fight_param_161000291;                //PVP等级系数
+double sg_fight_param_161000292;                //PVP基础值
+double sg_fight_param_161000293;                //PVP保底比例
+

@@ -49,7 +49,7 @@ local GodYaoAttributeTable = {
 		},
 	[420500010] = {
 		['ID'] = 420500010,
-		['AttributeType'] = 1,
+		['AttributeType'] = 2,
 		['AttributeNum'] = 100,
 		['Coefficient'] = 0.1
 		},

@@ -40,6 +40,7 @@ public:
 	static unsigned				get_timestamp_by_day(int hour, int minute, time_t now = 0);  //当天指定时间的时间戳
 	static unsigned				get_timestamp_by_day_old(int hour, int minute, time_t now = 0);  //当天指定时间的时间戳
 	static unsigned				get_next_timestamp_by_week_old(int wday, int hour, int minute, time_t now = 0);  //下一个周几（wday）当天指定时间的时间戳
+	static unsigned				get_next_timestamp_by_month_old(int mday, int hour, int minute, time_t now = 0);  //下个月（mday）号当天指定时间的时间戳
 
 	static void					showTime(time_t t = 0);
 	static void					showTime(tm t);

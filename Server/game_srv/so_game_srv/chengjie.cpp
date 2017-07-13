@@ -51,14 +51,18 @@ void ChengJieTaskManage::AddTask(STChengJie &task, uint64_t accepter)
 		}
 		LOG_INFO("[%s:%d] add guoyu task[%u]", __FUNCTION__, __LINE__, task.id);
 
-		PROTO_FIND_PLAYER_REQ *todb = (PROTO_FIND_PLAYER_REQ *)&conn_node_base::global_send_buf[0];
-		sprintf(todb->name, "%lu", task.pid);
-		todb->head.msg_id = ENDION_FUNC_2(SERVER_PROTO_FIND_PLAYER_REQUEST);
-		todb->head.len = ENDION_FUNC_4(sizeof(PROTO_FIND_PLAYER_REQ));
-		EXTERN_DATA extern_data;
-		conn_node_base::add_extern_data(&todb->head, &extern_data);
-		if (conn_node_dbsrv::connecter.send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
-			LOG_ERR("%s %d: send to dbsrv err[%d]", __FUNCTION__, __LINE__, errno);
+		if (GetRoleLevel(task.pid) == 0)
+		{
+			PROTO_FIND_PLAYER_REQ *todb = (PROTO_FIND_PLAYER_REQ *)&conn_node_base::global_send_buf[0];
+			sprintf(todb->name, "%lu", task.pid);
+			todb->head.msg_id = ENDION_FUNC_2(SERVER_PROTO_FIND_PLAYER_REQUEST);
+			todb->head.len = ENDION_FUNC_4(sizeof(PROTO_FIND_PLAYER_REQ));
+			EXTERN_DATA extern_data;
+			extern_data.player_id = 0;
+			conn_node_base::add_extern_data(&todb->head, &extern_data);
+			if (conn_node_dbsrv::connecter.send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
+				LOG_ERR("%s %d: send to dbsrv err[%d]", __FUNCTION__, __LINE__, errno);
+			}
 		}
 	}
 }
@@ -262,7 +266,7 @@ void ChengJieTaskManage::CommpleteTask(player_struct *player, player_struct *tar
 	ext_data.player_id = target->get_uuid();
 	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_CHENGJIE_KILLER_NOTIFY, chengjie_killer__pack, send);
 
-	target->chengjie_kill = task.id;
+	target->chengjie_kill = task.step;
 }
 
 void ChengJieTaskManage::UpdateTaskDb(STChengJie &task)
@@ -328,6 +332,7 @@ void ChengJieTaskManage::AddTaskDb(STChengJie &task, EXTERN_DATA *extern_data)
 	if (conn_node_dbsrv::connecter.send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
 		LOG_ERR("%s %d: send to dbsrv err[%d]", __FUNCTION__, __LINE__, errno);
 	}
+	ChengJieTaskManage_m_target.insert(std::make_pair(task.pid, 0));
 }
 
 void ChengJieTaskManage::ClientGetTaskList(player_struct *player, int type)
@@ -499,7 +504,11 @@ bool ChengJieTaskManage::PackTask(STChengJie &task, _ChengjieTask &send)
 	ParameterTable * config = get_config_by_id(161000087, &parameter_config);
 	if (config != NULL)
 	{
-		int rate = send.fail / config->parameter1[0];
+		int rate = send.fail;
+		if (rate > config->parameter1[0])
+		{
+			rate = config->parameter1[0];
+		}
 		if (rate > 0)
 		{
 			add = task.shuangjin * config->parameter1[1] * rate / 10000.0;
@@ -1065,7 +1074,7 @@ int ChengJieTaskManage::ChengjieAddHurt(player_struct &player, player_struct &ta
 		tableSkill = get_yaoshi_skill_config(CHENGJIE_FIVE, player.data->chengjie.level);
 		if (tableSkill != NULL)
 		{
-			buff_manager::create_buff(tableSkill->EffectValue[0], &player, &target, true);
+			buff_manager::create_default_buff(tableSkill->EffectValue[0], &player, &target, true);
 		}
 	}
 	tableSkill = get_yaoshi_skill_config(CHENGJIE_SEVEN, player.data->chengjie.level);
@@ -1326,7 +1335,7 @@ void ShangjinManage::CompleteTask(player_struct *player, uint32_t taskid)
 	}
 	player->add_exp(player->data->shangjin.task[player->data->shangjin.cur_task].exp * (add + 10000) / 10000, MAGIC_TYPE_YAOSHI);
 	player->add_coin(player->data->shangjin.task[player->data->shangjin.cur_task].coin * (add + 10000) / 10000,MAGIC_TYPE_YAOSHI);
-	player->add_item_list(item_list, MAGIC_TYPE_YAOSHI, ADD_ITEM_SEND_MAIL_WHEN_BAG_FULL, true);
+	player->add_item_list_otherwise_send_mail(item_list, MAGIC_TYPE_YAOSHI, 0, NULL, true);
 
 	if (player->data->shangjin.cur_task + 1 == MAX_SHANGJIN_NUM)
 	{

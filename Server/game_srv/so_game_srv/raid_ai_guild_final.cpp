@@ -202,7 +202,7 @@ static void guild_raid_final_ai_player_relive(raid_struct *raid, player_struct *
 	player->set_camp_id(camp_id);
 
 		//复活的时候加上一个无敌buff
-	buff_manager::create_buff(114400001, player, player, false);
+	buff_manager::create_default_buff(114400001, player, player, false);
 
 	player->m_team == NULL ? true : player->m_team->OnMemberHpChange(*player);
 }

@@ -27,7 +27,7 @@ local BaseAI = {
 		},
 	[153000003] = {
 		['BaseID'] = 153000003,
-		['ActiveAttackRange'] = 10,
+		['ActiveAttackRange'] = 20,
 		['IsChase'] = 1,
 		['ChaseRange'] = 20,
 		['MovingChange'] = 0,
@@ -40,7 +40,7 @@ local BaseAI = {
 		},
 	[153000004] = {
 		['BaseID'] = 153000004,
-		['ActiveAttackRange'] = 10,
+		['ActiveAttackRange'] = 20,
 		['IsChase'] = 1,
 		['ChaseRange'] = 20,
 		['MovingChange'] = 0,
@@ -118,7 +118,7 @@ local BaseAI = {
 		},
 	[153000010] = {
 		['BaseID'] = 153000010,
-		['ActiveAttackRange'] = 10,
+		['ActiveAttackRange'] = 20,
 		['IsChase'] = 1,
 		['ChaseRange'] = 20,
 		['MovingChange'] = 0,
@@ -456,7 +456,7 @@ local BaseAI = {
 		},
 	[153100305] = {
 		['BaseID'] = 153100305,
-		['ActiveAttackRange'] = 10,
+		['ActiveAttackRange'] = 20,
 		['IsChase'] = 1,
 		['ChaseRange'] = 20,
 		['MovingChange'] = 0,
@@ -498,13 +498,78 @@ local BaseAI = {
 		['ActiveAttackRange'] = 10,
 		['IsChase'] = 1,
 		['ChaseRange'] = 20,
-		['MovingChange'] = 0,
+		['MovingChange'] = 200,
 		['Regeneration'] = 999,
 		['AIType'] = 22,
-		['GuardRange'] = 0,
+		['GuardRange'] = 1,
 		['StopMin'] = 100,
 		['StopMax'] = 500,
 		['Response'] = 10
+		},
+	[153100403] = {
+		['BaseID'] = 153100403,
+		['ActiveAttackRange'] = 10,
+		['IsChase'] = 1,
+		['ChaseRange'] = 20,
+		['MovingChange'] = 0,
+		['Regeneration'] = 999,
+		['AIType'] = 1,
+		['GuardRange'] = 1,
+		['StopMin'] = 100,
+		['StopMax'] = 500,
+		['Response'] = 10
+		},
+	[153100501] = {
+		['BaseID'] = 153100501,
+		['ActiveAttackRange'] = 20,
+		['IsChase'] = 1,
+		['ChaseRange'] = 20,
+		['MovingChange'] = -200,
+		['Regeneration'] = 999,
+		['AIType'] = 2,
+		['GuardRange'] = 0,
+		['StopMin'] = 100,
+		['StopMax'] = 500,
+		['Response'] = 50
+		},
+	[153100502] = {
+		['BaseID'] = 153100502,
+		['ActiveAttackRange'] = 0,
+		['IsChase'] = 0,
+		['ChaseRange'] = 0,
+		['MovingChange'] = -100,
+		['Regeneration'] = 999,
+		['AIType'] = 14,
+		['GuardRange'] = 0,
+		['StopMin'] = 100,
+		['StopMax'] = 500,
+		['Response'] = 50
+		},
+	[153100503] = {
+		['BaseID'] = 153100503,
+		['ActiveAttackRange'] = 30,
+		['IsChase'] = 1,
+		['ChaseRange'] = 30,
+		['MovingChange'] = 100,
+		['Regeneration'] = 999,
+		['AIType'] = 23,
+		['GuardRange'] = 4,
+		['StopMin'] = 1000,
+		['StopMax'] = 2000,
+		['Response'] = 50
+		},
+	[153100504] = {
+		['BaseID'] = 153100504,
+		['ActiveAttackRange'] = 30,
+		['IsChase'] = 1,
+		['ChaseRange'] = 30,
+		['MovingChange'] = 100,
+		['Regeneration'] = 999,
+		['AIType'] = 23,
+		['GuardRange'] = 0,
+		['StopMin'] = 1000,
+		['StopMax'] = 2000,
+		['Response'] = 50
 		}
 	}
 return BaseAI

@@ -64,6 +64,7 @@ SkillLvTable *get_skill_level_config(uint32_t skill_id, uint32_t level);
 RecruitTable *get_partner_recruit_config(uint32_t type);
 
 uint32_t get_item_relate_id(uint32_t id);
+int get_item_bind_and_unbind_id(uint32_t id, uint32_t *bind_id, uint32_t *unbind_id);
 uint32_t get_bag_total_num(uint32_t job, uint32_t level);
 uint32_t get_item_stack_num(uint32_t id);
 int get_drop_item(uint32_t drop_id, std::map<uint32_t, uint32_t> &item_list, uint32_t stack = 0);

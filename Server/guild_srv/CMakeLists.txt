@@ -13,15 +13,12 @@ INCLUDE_DIRECTORIES("."
   "${PROJECT_SOURCE_DIR}/thirdlib/libevent"
   )
 
-link_libraries(game)
-link_libraries(event)
 link_libraries(protobuf-c)
-link_libraries(log4c)
 link_libraries(proto)
-link_libraries(rt)
 link_libraries(mysqlclient)
 link_libraries(lua5.2)
 link_libraries(hiredis)
+INCLUDE ("../cmake_ldflags")
 
 link_directories("${PROJECT_SOURCE_DIR}/thirdlib/libevent/.libs"
   )

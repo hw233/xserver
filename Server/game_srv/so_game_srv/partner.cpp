@@ -257,7 +257,15 @@ void partner_struct::on_dead(unit_struct *killer)
 {
 	LOG_DEBUG("[%s:%d] player[%lu] partner[%lu][%u]", __FUNCTION__, __LINE__, data->owner_id, data->uuid, data->partner_id);
 	data->relive_time = time_helper::get_cached_time() / 1000 + sg_partner_relive_time;
-	m_owner->adjust_battle_partner();
+	m_owner->del_partner_from_scene(this, false);
+
+	PartnerReliveTimeNotify nty;
+	partner_relive_time_notify__init(&nty);
+	nty.uuid = data->uuid;
+	nty.relivetime = data->relive_time;
+	EXTERN_DATA ext_data;
+	ext_data.player_id = data->owner_id;
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_PARTNER_RELIVE_TIME_NOTIFY, partner_relive_time_notify__pack, nty);
 }
 
 void partner_struct::on_repel(unit_struct *player)  //击退
@@ -586,6 +594,7 @@ void partner_struct::cast_immediate_skill_to_target(uint64_t skill_id, int skill
 		this, target,
 		&cached_hit_effect[n_hit_effect].effect,
 		&cached_buff_id[n_buff],
+		&cached_buff_end_time[n_buff],
 		&add_num, other_rate);
 
 	target->on_hp_changed(damage);
@@ -613,6 +622,7 @@ void partner_struct::cast_immediate_skill_to_target(uint64_t skill_id, int skill
 	cached_hit_effect[n_hit_effect].playerid = target->get_uuid();
 	cached_hit_effect[n_hit_effect].n_add_buff = add_num;
 	cached_hit_effect[n_hit_effect].add_buff = &cached_buff_id[n_buff];
+//	cached_hit_effect[n_hit_effect].add_buff_end_time = &cached_buff_end_time[n_buff];
 	cached_hit_effect[n_hit_effect].hp_delta = damage;
 	cached_hit_effect[n_hit_effect].cur_hp = target->get_attr(PLAYER_ATTR_HP);
 //	cached_hit_effect.attack_pos = &attack_pos;
@@ -834,11 +844,12 @@ void partner_struct::calc_target_pos(struct position *pos)
 
 void partner_struct::calculate_attribute(double *attrData, partner_attr_data &attr_cur)
 {
-	memset(&attrData[PLAYER_ATTR_MAXHP], 0, sizeof(double));
-	memset(&attrData[PLAYER_ATTR_ATTACK], 0, (PLAYER_ATTR_HIT_FLY_DEF - PLAYER_ATTR_ATTACK + 1) * sizeof(double));
-
-	double module_attr[PLAYER_ATTR_FIGHT_MAX];
-	memset(module_attr, 0, sizeof(double) * PLAYER_ATTR_FIGHT_MAX);
+//	memset(&attrData[PLAYER_ATTR_MAXHP], 0, sizeof(double));
+//	memset(&attrData[PLAYER_ATTR_ATTACK], 0, (PLAYER_ATTR_DETIMEDF - PLAYER_ATTR_ATTACK + 1) * sizeof(double));
+	memset(&data->attrData[PLAYER_ATTR_MAXHP], 0, (PLAYER_ATTR_PVPDF - PLAYER_ATTR_MAXHP + 1) * sizeof(double));
+	
+	double module_attr[PLAYER_ATTR_MAX];
+	memset(module_attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
 
 	for (int i = 0; i < MAX_PARTNER_BASE_ATTR; ++i)
 	{
@@ -901,7 +912,7 @@ void partner_struct::calculate_attribute(bool isNty)
 		for (uint32_t i = 1; i < PLAYER_ATTR_FIGHT_MAX; ++i)
 		{
 			//当前生命值，由外部进行视野广播
-			if (i == PLAYER_ATTR_HP || i > PLAYER_ATTR_HIT_FLY_DEF)
+			if (i == PLAYER_ATTR_HP || i > PLAYER_ATTR_PVPDF)
 			{
 				continue;
 			}
@@ -1113,9 +1124,9 @@ int partner_struct::prepare_add_truck_to_sight(cash_truck_struct * truck)
 
 int partner_struct::prepare_add_partner_to_sight(partner_struct *partner)
 {
-		//友好，中立关系的不用加
-	if (get_unit_fight_type(this, partner) != UNIT_FIGHT_TYPE_ENEMY)
-		return (-1);
+	// 	//友好，中立关系的不用加
+	// if (get_unit_fight_type(this, partner) != UNIT_FIGHT_TYPE_ENEMY)
+	// 	return (-1);
 	
 		//死了的不进入视野
 //	if (partner->data->attrData[PLAYER_ATTR_HP] <= 0)
@@ -1130,9 +1141,9 @@ int partner_struct::prepare_add_partner_to_sight(partner_struct *partner)
 
 int partner_struct::prepare_add_monster_to_sight(monster_struct *monster)
 {
-		//友好，中立关系的不用加
-	if (get_unit_fight_type(this, monster) != UNIT_FIGHT_TYPE_ENEMY)
-		return (-1);
+	// 	//友好，中立关系的不用加
+	// if (get_unit_fight_type(this, monster) != UNIT_FIGHT_TYPE_ENEMY)
+	// 	return (-1);
 	
 		//死了的不进入视野
 //	if (monster->data->attrData[PLAYER_ATTR_HP] <= 0)
@@ -1147,6 +1158,11 @@ int partner_struct::prepare_add_monster_to_sight(monster_struct *monster)
 
 int partner_struct::add_partner_to_sight_both(partner_struct *partner)
 {
+			//友好，中立关系的不用加
+	if (get_unit_fight_type(this, partner) != UNIT_FIGHT_TYPE_ENEMY
+		&& get_unit_fight_type(partner, this) != UNIT_FIGHT_TYPE_ENEMY)
+		return (-1);
+	
 	if (prepare_add_partner_to_sight(partner) != 0 ||
 		partner->prepare_add_partner_to_sight(this) != 0)
 		return -1;
@@ -1606,6 +1622,7 @@ void partner_struct::hit_notify_to_many_player(uint64_t skill_id, std::vector<un
 			this, player,
 			&cached_hit_effect[n_hit_effect].effect,
 			&cached_buff_id[n_buff],
+			&cached_buff_end_time[n_buff],
 			&add_num, other_rate);
 
 		life_steal += count_life_steal_effect(damage);

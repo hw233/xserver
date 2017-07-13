@@ -52,3 +52,16 @@ uint64_t write_pid_file()
 	close(fd);
 	return pid;
 }
+
+int open_err_log_file()
+{
+	int fd = open("memerr.txt", O_CREAT | O_TRUNC | O_WRONLY, 0600);
+	if (fd != 2)
+	{
+		dup2(fd, 2);
+		close(fd);		
+	}
+	return (0);
+}
+
+	

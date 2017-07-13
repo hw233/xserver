@@ -76,10 +76,10 @@ static void script_raid_ai_escort_stop(raid_struct *raid, player_struct *player,
 	script_ai_common_escort_stop(raid, player, escort_id, success, &raid->SCRIPT_DATA.script_data);
 }
 
-static void script_raid_ai_npc_talk(raid_struct *raid, player_struct *player, uint32_t npc_id)
+/*static void script_raid_ai_npc_talk(raid_struct *raid, player_struct *player, uint32_t npc_id)
 {
 	script_ai_common_npc_talk(raid, npc_id, &raid->SCRIPT_DATA.script_data);
-}
+}*/
 
 struct raid_ai_interface raid_ai_script_interface =
 {
@@ -96,5 +96,5 @@ struct raid_ai_interface raid_ai_script_interface =
 	NULL,
 	NULL,
 	script_raid_ai_escort_stop,
-	.raid_on_npc_talk = script_raid_ai_npc_talk,
+	//.raid_on_npc_talk = script_raid_ai_npc_talk,
 };

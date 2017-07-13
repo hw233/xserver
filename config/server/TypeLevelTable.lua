@@ -15,30 +15,12 @@ local TypeLevelTable = {
 		['OpenProbability'] = 10000,	--开启几率
 		['SpecialtyPlus'] = 0,	--专精加成
 		['ShowTimes'] = 0,	--最大出现次数
-		['RewardDisplay'] = {201010001,201010004,201070023,201070017,201070020}	--掉落物品显示
+		['RewardDisplay'] = {201010001,201010004,201010005,201010008,201010014,201010015,201010016}	--掉落物品显示
 		},
 	[324000002] = {
 		['ID'] = 324000002,
 		['TypeLevel'] = 2,
 		['LevelTxt'] = '中级悬赏',
-		['Level'] = 30,
-		['RewardTime'] = 2,
-		['MinActor'] = 1,
-		['MaxActor'] = 5,
-		['OpenDay'] = {0,1,2,3,4,5,6},
-		['OpenTime'] = {0},
-		['CloseTime'] = {2359},
-		['JoinTxt'] = '组队参加',
-		['TimeTxt'] = '每天开放',
-		['OpenProbability'] = 10000,
-		['SpecialtyPlus'] = 0,
-		['ShowTimes'] = 0,
-		['RewardDisplay'] = {201010001,201010004,201070023,201070017,201070020}
-		},
-	[324000003] = {
-		['ID'] = 324000003,
-		['TypeLevel'] = 3,
-		['LevelTxt'] = '高级悬赏',
 		['Level'] = 40,
 		['RewardTime'] = 2,
 		['MinActor'] = 1,
@@ -51,7 +33,25 @@ local TypeLevelTable = {
 		['OpenProbability'] = 10000,
 		['SpecialtyPlus'] = 0,
 		['ShowTimes'] = 0,
-		['RewardDisplay'] = {201010001,201010004,201070023,201070017,201070020}
+		['RewardDisplay'] = {201010001,201010004,201010005,201010008,201010015,201010016,201010017}
+		},
+	[324000003] = {
+		['ID'] = 324000003,
+		['TypeLevel'] = 3,
+		['LevelTxt'] = '高级悬赏',
+		['Level'] = 60,
+		['RewardTime'] = 2,
+		['MinActor'] = 1,
+		['MaxActor'] = 5,
+		['OpenDay'] = {0,1,2,3,4,5,6},
+		['OpenTime'] = {0},
+		['CloseTime'] = {2359},
+		['JoinTxt'] = '组队参加',
+		['TimeTxt'] = '每天开放',
+		['OpenProbability'] = 10000,
+		['SpecialtyPlus'] = 0,
+		['ShowTimes'] = 0,
+		['RewardDisplay'] = {201010001,201010004,201010005,201010008,201010016,201010017,201010018}
 		},
 	[324000004] = {
 		['ID'] = 324000004,
@@ -66,10 +66,10 @@ local TypeLevelTable = {
 		['CloseTime'] = {1230,1830},
 		['JoinTxt'] = '组队参加',
 		['TimeTxt'] = '每天12点,18点有几率出现',
-		['OpenProbability'] = 5000,
-		['SpecialtyPlus'] = 5000,
-		['ShowTimes'] = 2,
-		['RewardDisplay'] = {201010001,201010004,201070023,201070017,201070020}
+		['OpenProbability'] = 10000,
+		['SpecialtyPlus'] = 0,
+		['ShowTimes'] = 1,
+		['RewardDisplay'] = {201010001,201010004,201010005,201010008,201010017,201010018,201010019}
 		}
 	}
 return TypeLevelTable

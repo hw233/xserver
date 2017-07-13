@@ -65,8 +65,8 @@ class buff_struct
 public:
 	static uint32_t get_skill_effect_by_buff_state(int state);
 	void del_buff();
-	int init_buff(struct BuffTable *buffconfig, unit_struct *attack, unit_struct *owner);
-	int reinit_buff(struct BuffTable *buffconfig, unit_struct *attack);
+	int init_buff(struct BuffTable *buffconfig, uint64_t end_time, unit_struct *attack, unit_struct *owner);
+	int reinit_buff(struct BuffTable *buffconfig, uint64_t end_time, unit_struct *attack);
 	int reinit_type3_buff(struct BuffTable *buffconfig);
 	bool is_recoverable_buff();
 	bool is_attr_buff();

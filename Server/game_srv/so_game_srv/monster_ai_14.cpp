@@ -191,6 +191,9 @@ static void monster_ai_14_beattack(monster_struct *monster, unit_struct *player)
 	monster->data->target_pos.pos_x = 0;
 	monster->data->target_pos.pos_z = 0;	
 	monster->ai_data.escort_ai.out_fight_time = time_helper::get_cached_time() + 5000;
+		//停止移动
+	monster->stop_move();
+	
 	if (config->BlockedStop == 1)
 	{
 		monster->ai_data.escort_ai.fight_back = false;

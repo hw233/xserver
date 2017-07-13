@@ -37,7 +37,7 @@ fi
 sleep 2
 
 cd ../game_srv
-./game_srv -d
+./game_srv -d -t
 
 cd ../login_srv
 ./login_srv -d

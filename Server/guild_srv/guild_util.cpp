@@ -103,16 +103,63 @@ void handle_daily_reset_timeout(void)
 	for (std::map<uint64_t, GuildPlayer *>::iterator iter = guild_player_map.begin(); iter != guild_player_map.end(); ++iter)
 	{
 		GuildPlayer *player = iter->second;
+		bool save = false;
 		uint32_t expect_time = (player->week_reset_time == 0 ? cur_tick : player->week_reset_time);
 		expect_time = time_helper::nextWeek(week_reset_day + daily_reset_clock, expect_time);
-		if (expect_time > cur_tick)
+		if (expect_time <= cur_tick)
 		{
-			continue;
+			player->week_reset_time = cur_tick;
+			player->cur_week_donation = 0;
+			save = true;
 		}
 
-		player->week_reset_time = cur_tick;
-		player->cur_week_donation = 0;
-		save_guild_player(player);
+		uint32_t hour = time_helper::get_cur_hour(next_tick);
+		bool day_reset = false, week_reset = false, month_reset = false;
+		if (cur_tick >= player->shop_reset.next_day_time) //每天
+		{
+			player->shop_reset.next_day_time = time_helper::nextOffsetTime(hour * 3600, cur_tick);
+			day_reset = true;
+		}
+		if (cur_tick >= player->shop_reset.next_week_time) //每周一
+		{
+			player->shop_reset.next_week_time = time_helper::get_next_timestamp_by_week_old(1, hour, 0, cur_tick);
+			week_reset = true;
+		}
+		if (cur_tick >= player->shop_reset.next_month_time) //每月一号
+		{
+			player->shop_reset.next_month_time = time_helper::get_next_timestamp_by_month_old(1, hour, 0, cur_tick);
+			month_reset = true;
+		}
+		for (int i = 0; i < MAX_GUILD_GOODS_NUM; ++i)
+		{
+			GuildGoods *info = &player->goods[i];
+			if (info->goods_id == 0)
+			{
+				continue;
+			}
+
+			ShopTable *config = get_config_by_id(info->goods_id, &shop_config);
+			if (!config)
+			{
+				continue;
+			}
+
+			if (config->Reset != 1)
+			{
+				continue;
+			}
+
+			if ((config->RestrictionTime == 1 && day_reset) || (config->RestrictionTime == 2 && week_reset) || (config->RestrictionTime == 3 && month_reset))
+			{
+				save = true;
+				info->bought_num = 0;
+			}
+		}
+
+		if (save)
+		{
+			save_guild_player(player);
+		}
 	}
 }
 
@@ -155,6 +202,12 @@ int dbdata_to_guild_player(DBGuildPlayer *db_player, GuildPlayer *player)
 	{
 		player->goods[i].goods_id = db_player->goods[i]->goods_id;
 		player->goods[i].bought_num = db_player->goods[i]->bought_num;
+	}
+	if (db_player->shop_reset)
+	{
+		player->shop_reset.next_day_time = db_player->shop_reset->next_day_time;
+		player->shop_reset.next_week_time = db_player->shop_reset->next_week_time;
+		player->shop_reset.next_month_time = db_player->shop_reset->next_month_time;
 	}
 
 	player->cur_week_donation = db_player->cur_week_donation;
@@ -270,6 +323,9 @@ int pack_guild_player(GuildPlayer *player, uint8_t *out_data)
 	DBGuildGoods goods_data[MAX_GUILD_GOODS_NUM];
 	DBGuildGoods* goods_point[MAX_GUILD_GOODS_NUM];
 
+	DBGuildShopReset shop_reset_data;
+	dbguild_shop_reset__init(&shop_reset_data);
+
 	db_player->donation = player->donation;
 	db_player->all_history_donation = player->all_history_donation;
 	db_player->cur_history_donation = player->cur_history_donation;
@@ -306,6 +362,11 @@ int pack_guild_player(GuildPlayer *player, uint8_t *out_data)
 		goods_data[db_player->n_goods].bought_num = player->goods[i].bought_num;
 		db_player->n_goods++;
 	}
+	db_player->shop_reset = &shop_reset_data;
+	shop_reset_data.next_day_time = player->shop_reset.next_day_time;
+	shop_reset_data.next_week_time = player->shop_reset.next_week_time;
+	shop_reset_data.next_month_time = player->shop_reset.next_month_time;
+
 	db_player->cur_week_donation = player->cur_week_donation;
 	db_player->week_reset_time = player->week_reset_time;
 	db_player->battle_score = player->battle_score;

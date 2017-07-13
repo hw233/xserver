@@ -26,6 +26,7 @@
 // 20=妖帝AI
 // 21=蒋雳夫等4人AI
 // 22=定点护送，可在路途中自动攻击对立方
+// 23=优先攻击护送怪的AI
 
 void install_monster_ai()
 {
@@ -48,7 +49,8 @@ void install_monster_ai()
 	monster_struct::add_ai_interface(19, &monster_ai_19_interface);
 	monster_struct::add_ai_interface(20, &monster_ai_20_interface);
 	monster_struct::add_ai_interface(21, &monster_ai_21_interface);		
-	monster_struct::add_ai_interface(22, &monster_ai_22_interface);		
+	monster_struct::add_ai_interface(22, &monster_ai_22_interface);
+	monster_struct::add_ai_interface(23, &monster_ai_23_interface);			
 }
 void uninstall_monster_ai()
 {
@@ -71,5 +73,6 @@ void uninstall_monster_ai()
 	monster_struct::add_ai_interface(19, NULL);
 	monster_struct::add_ai_interface(20, NULL);
 	monster_struct::add_ai_interface(21, NULL);	
-	monster_struct::add_ai_interface(22, NULL);	
+	monster_struct::add_ai_interface(22, NULL);
+	monster_struct::add_ai_interface(23, NULL);		
 }

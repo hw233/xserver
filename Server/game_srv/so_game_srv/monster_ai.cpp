@@ -167,6 +167,7 @@ void monster_hit_notify_to_many_player(uint64_t skill_id, monster_struct *monste
 			monster, player,
 			&cached_hit_effect[n_hit_effect].effect,
 			&cached_buff_id[n_buff],
+			&cached_buff_end_time[n_buff],
 			&add_num, other_rate);
 
 		life_steal += monster->count_life_steal_effect(damage);
@@ -388,6 +389,7 @@ void monster_cast_immediate_skill_to_player(uint64_t skill_id, monster_struct *m
 		monster, player,
 		&cached_hit_effect[n_hit_effect].effect,
 		&cached_buff_id[n_buff],
+		&cached_buff_end_time[n_buff],
 		&add_num, other_rate);
 
 	player->on_hp_changed(damage);
@@ -415,6 +417,7 @@ void monster_cast_immediate_skill_to_player(uint64_t skill_id, monster_struct *m
 	cached_hit_effect[n_hit_effect].playerid = player->get_uuid();
 	cached_hit_effect[n_hit_effect].n_add_buff = add_num;
 	cached_hit_effect[n_hit_effect].add_buff = &cached_buff_id[n_buff];
+//	cached_hit_effect[n_hit_effect].add_buff_end_time = &cached_buff_end_time[n_buff];	
 	cached_hit_effect[n_hit_effect].hp_delta = damage;
 	cached_hit_effect[n_hit_effect].cur_hp = player->get_attr(PLAYER_ATTR_HP);
 //	cached_hit_effect.attack_pos = &attack_pos;
@@ -678,6 +681,20 @@ void do_normal_attack(monster_struct *monster)
 	}
 }
 
+void do_normal_dead(monster_struct *monster)
+{
+	if (!monster->create_config)
+		return;	
+	if (check_monster_relive(monster))
+	{
+		monster->target = NULL;
+		monster->ai_state = AI_PATROL_STATE;
+		monster->set_pos(monster->get_born_pos_x(),	monster->get_born_pos_z());
+		monster->data->attrData[PLAYER_ATTR_HP] = monster->data->attrData[PLAYER_ATTR_MAXHP];
+		monster->on_relive();
+	}
+}
+
 void do_normal_pursue(monster_struct *monster)
 {
 	if (!monster->data)
@@ -710,7 +727,7 @@ void do_normal_pursue(monster_struct *monster)
 	if (monster->ai && monster->ai->on_monster_ai_check_goback)
 	{
 		if (monster->ai->on_monster_ai_check_goback(monster))
-			return;
+			return monster->go_back();
 	}
 	else if (monster->create_config &&
 		(fabsf(my_pos->pos_x - monster->get_born_pos_x()) > (int)(monster->ai_config->ChaseRange)
@@ -734,6 +751,14 @@ void do_normal_pursue(monster_struct *monster)
 	if (!check_distance_in_range(my_pos, his_pos, config->SkillRange/*monster->ai_config->ActiveAttackRange*/))
 	{
 			//追击
+		if (!monster->ai_config->IsChase || monster->ai_config->ChaseRange == 0)
+		{
+				//不追击那么直接返回巡逻状态
+			monster->data->skill_id = 0;			
+			monster->ai_state = AI_PATROL_STATE;
+			return;
+		}
+		
 //		if (monster->is_unit_in_move())
 //			return;
 		monster->reset_pos();

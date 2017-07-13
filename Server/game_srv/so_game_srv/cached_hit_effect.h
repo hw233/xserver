@@ -10,5 +10,6 @@ extern int32_t cached_target_index[256];
 //extern PosData cached_attack_pos[256];
 extern PosData cached_target_pos[256];
 extern uint32_t cached_buff_id[512];
+extern uint32_t cached_buff_end_time[512];
 
 #endif /* CACHED_HIT_EFFECT_H */

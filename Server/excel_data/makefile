@@ -8,3 +8,7 @@ excel_data: proto.sproto
 generate_head: generate_head.c ../comm_lib/sproto.cpp
 	g++ -g -O0 -I./ -o generate_head generate_head.c ../comm_lib/sproto.cpp
 
+init_id:
+	sed 's/	/\n/g' 1.log > 2.log
+	awk -f init_id.awk < 2.log
+

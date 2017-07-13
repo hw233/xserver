@@ -11,9 +11,9 @@
 #include <fcntl.h>
 extern "C"
 {
-#include "lua5.2/lua.h"
-#include "lua5.2/lualib.h"
-#include "lua5.2/lauxlib.h"
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
 };
 #include "sproto.h"
 #include "sprotoc_common.h"

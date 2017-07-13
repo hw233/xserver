@@ -57,9 +57,11 @@ static int handle_find_player_answer(EXTERN_DATA *extern_data)
 		send.ret = 0;
 		ChengJieTaskManage::AddRoleLevel(send.pid, send.lv, proto->cd);
 	}
+	if (extern_data->player_id != 0)
+	{
+		fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_CHENGJIE_FIND_TARGET_ANSWER, ans_find_target__pack, send);
+	}
 	
-	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_CHENGJIE_FIND_TARGET_ANSWER, ans_find_target__pack, send);
-
 	return 0;
 }
 
@@ -195,13 +197,7 @@ static int handle_player_rename_answer(EXTERN_DATA *extern_data)
 	if (req->result == 0)
 	{
 		//扣除道具
-		ParameterTable *param_config = get_config_by_id(PARAM_ID_RENAME, &parameter_config);
-		if (param_config && param_config->n_parameter1 >= 2)
-		{
-			uint32_t item_id = param_config->parameter1[0];
-			uint32_t item_num = param_config->parameter1[1];
-			player->del_item(item_id, item_num, MAGIC_TYPE_RENAME);
-		}
+		player->del_item(sg_rename_item_id, sg_rename_item_num, MAGIC_TYPE_RENAME);
 
 		char old_name[MAX_PLAYER_NAME_LEN + 1];
 		memcpy(old_name, player->data->name, sizeof(player->data->name));

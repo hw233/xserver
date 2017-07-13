@@ -51,7 +51,10 @@ monster_struct * monster_manager::get_monster_by_id(uint64_t id)
 	if (it != monster_manager_all_monsters_id.end())
 	{
 		if (it->second->mark_delete)
-			LOG_ERR("%s: monster[%lu] already mark delete", __FUNCTION__, id);
+		{
+			LOG_INFO("%s: monster[%lu] already mark delete", __FUNCTION__, id);
+			return NULL;
+		}
 		return it->second;
 	}
 
@@ -463,6 +466,7 @@ monster_struct *monster_manager::add_monster(uint64_t monster_id, uint64_t lv, u
 
 	ret->config = ite->second;
 	ret->ai_config = base_ai_config[ret->config->BaseID];
+	assert(ret->ai_config);
 	ret->ai_type = ret->ai_config->AIType;
 	ret->ai_state = AI_PATROL_STATE;
 	ret->set_ai_interface(ret->ai_type);
@@ -685,7 +689,10 @@ boss_struct * monster_manager::get_boss_by_id(uint64_t id)
 	if (it != monster_manager_all_boss_id.end())
 	{
 		if (it->second->mark_delete)
-			LOG_ERR("%s: boss[%lu] already mark delete", __FUNCTION__, id);		
+		{
+			LOG_INFO("%s: boss[%lu] already mark delete", __FUNCTION__, id);
+			return NULL;
+		}
 		return it->second;
 	}
 	return NULL;

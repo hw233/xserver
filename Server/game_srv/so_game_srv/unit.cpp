@@ -85,7 +85,7 @@ void unit_struct::on_beattack(unit_struct *player, uint32_t skill_id, int32_t da
 {
 }
 
-bool unit_struct::give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty)
+bool unit_struct::give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty, uint32_t mail_id, std::vector<char *> *mail_args)
 {
 	return false;
 }
@@ -681,6 +681,7 @@ BuffInfo **unit_struct::pack_unit_buff(size_t *n_data)
 		buff_info__init(buff_pool_buff_point[buff_pool_len]);
 		buff_pool_buff[buff_pool_len].id = m_buffs[i]->data->buff_id;
 		buff_pool_buff[buff_pool_len].start_time = m_buffs[i]->data->start_time / 1000;
+//		buff_pool_buff[buff_pool_len].end_time = m_buffs[i]->data->end_time / 1000;
 		++buff_pool_len;
 		++(*n_data);
 	}
@@ -807,10 +808,10 @@ void unit_struct::clear_all_buffs()
 //		m_buffs[i] = NULL;		
 	}
 }
-buff_struct *unit_struct::try_cover_duplicate_buff(struct BuffTable *buff_config, unit_struct *attack)
+buff_struct *unit_struct::try_cover_duplicate_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack)
 {
 	if (buff_config->BuffType == 1)
-		return try_cover_duplicate_skill_buff(buff_config, attack);
+		return try_cover_duplicate_skill_buff(buff_config, end_time, attack);
 	else if (buff_config->BuffType == 2)
 		return try_cover_duplicate_item_buff(buff_config);
 	else if (buff_config->BuffType == 3)
@@ -833,7 +834,7 @@ buff_struct *unit_struct::try_cover_duplicate_type3_buff(struct BuffTable *buff_
 	return NULL;
 }
 
-buff_struct *unit_struct::try_cover_duplicate_skill_buff(struct BuffTable *buff_config, unit_struct *attack)
+buff_struct *unit_struct::try_cover_duplicate_skill_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack)
 {
 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
 	{
@@ -843,7 +844,7 @@ buff_struct *unit_struct::try_cover_duplicate_skill_buff(struct BuffTable *buff_
 			continue;
 		if (m_buffs[i]->config->CoverType == buff_config->CoverType)
 		{
-			m_buffs[i]->reinit_buff(buff_config, attack);
+			m_buffs[i]->reinit_buff(buff_config, end_time, attack);
 			return m_buffs[i];
 		}
 	}
@@ -962,10 +963,11 @@ uint32_t unit_struct::count_life_steal_effect(int32_t damage)
 	if (damage <= 0)
 		return (0);
 	double *all_attr = get_all_attr();
-	if (all_attr[PLAYER_ATTR_VAMPIRE] <= __DBL_EPSILON__)
-		return (0);
+//	if (all_attr[PLAYER_ATTR_VAMPIRE] <= __DBL_EPSILON__)
+//		return (0);
 	
-	uint32_t ret = damage * all_attr[PLAYER_ATTR_VAMPIRE] / 100;
+//	uint32_t ret = damage * all_attr[PLAYER_ATTR_VAMPIRE] / 100;
+	uint32_t ret = 0;
 	
 	all_attr[PLAYER_ATTR_HP] += ret;
 	if (all_attr[PLAYER_ATTR_HP] > all_attr[PLAYER_ATTR_MAXHP])
@@ -988,7 +990,8 @@ uint32_t unit_struct::count_damage_return(int32_t damage, unit_struct *unit)
 {
 	if (damage <= 0)
 		return (0);
-	double bounce = unit->get_attr(PLAYER_ATTR_BOUNCE);
+//	double bounce = unit->get_attr(PLAYER_ATTR_BOUNCE);
+	double bounce = 0;
 	if (bounce <= __DBL_EPSILON__)
 		return (0);
 	

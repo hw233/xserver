@@ -15,6 +15,13 @@ message DBGuildGoods
 	required uint32 bought_num = 2;
 }
 
+message DBGuildShopReset
+{
+	required uint32 next_day_time = 1;
+	required uint32 next_week_time = 2;
+	required uint32 next_month_time = 3;
+}
+
 message DBGuild
 {
 	required uint32 rename_time = 1;
@@ -42,5 +49,6 @@ message DBGuildPlayer
 	required uint32 week_reset_time = 10;
 	required uint32 battle_score = 11;
 	required uint32 act_battle_score = 12;
+	optional DBGuildShopReset shop_reset = 13;
 }
 

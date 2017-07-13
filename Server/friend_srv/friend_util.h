@@ -74,6 +74,7 @@ int get_contact_limit_num(FriendPlayer *player);
 int get_contact_num(FriendPlayer *player);
 int get_contact_idx(FriendPlayer *player, uint64_t member_id);
 uint32_t get_new_group_id(FriendPlayer *player);
+int get_recent_num(FriendPlayer *player);
 
 int add_contact(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo &change_info, bool bDelApply);
 int del_contact(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo &change_info);

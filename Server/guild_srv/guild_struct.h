@@ -91,6 +91,13 @@ struct GuildGoods
 	uint32_t bought_num;
 };
 
+struct GuildShopReset
+{
+	uint32_t next_day_time;
+	uint32_t next_week_time;
+	uint32_t next_month_time;
+};
+
 struct GuildPlayer
 {
 	uint64_t player_id;
@@ -105,6 +112,7 @@ struct GuildPlayer
 	uint32_t exit_time; //离帮时间
 	GuildSkill skills[MAX_GUILD_SKILL_NUM]; //修炼技能列表
 	GuildGoods goods[MAX_GUILD_GOODS_NUM]; //购买商品列表
+	GuildShopReset shop_reset;
 	uint32_t battle_score; //帮战积分
 	uint32_t act_battle_score; //本场帮战积分
 };

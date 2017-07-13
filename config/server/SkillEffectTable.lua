@@ -114,7 +114,7 @@ local SkillEffectTable = {
 	[115000017] = {
 		['ID'] = 115000017,
 		['Type'] = 170000002,
-		['Effect'] = {3},
+		['Effect'] = {2},
 		['EffectAdd'] = {6000},
 		['EffectNum'] = {0}
 		},

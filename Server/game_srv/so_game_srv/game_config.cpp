@@ -14,9 +14,9 @@
 #include "time_helper.h"
 extern "C"
 {
-#include "lua5.2/lua.h"
-#include "lua5.2/lualib.h"
-#include "lua5.2/lauxlib.h"
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
 }
 #include "sproto.h"
 #include "sprotoc_common.h"
@@ -31,12 +31,24 @@ extern "C"
 static void generate_parameters(void)
 {
 	ParameterTable *config = NULL;
-	sg_relive_free_times = get_config_by_id(PARAM_ID_RELIVE_FREE_TIMES, &parameter_config)->parameter1[0];
-	sg_relive_first_cost = get_config_by_id(PARAM_ID_RELIVE_FIRST_COST, &parameter_config)->parameter1[0];
-	sg_relive_grow_cost = get_config_by_id(PARAM_ID_RELIVE_GROW_COST, &parameter_config)->parameter1[0];
-	sg_relive_max_cost = get_config_by_id(PARAM_ID_RELIVE_MAX_COST, &parameter_config)->parameter1[0];
-	sg_gem_strip_coin = get_config_by_id(PARAM_ID_GEM_STRIP_COIN, &parameter_config)->parameter1[0];
-	sg_player_level_limit = get_config_by_id(PARAM_ID_PLAYER_LEVEL_LIMIT, &parameter_config)->parameter1[0];
+	config = get_config_by_id(162000001, &parameter_config);
+	if (config && config->n_parameter1 >= 2)
+	{
+		sg_bag_unlock_base_price = config->parameter1[0];
+		sg_bag_unlock_incr_factor = config->parameter1[1];
+	}
+	config = get_config_by_id(161000002, &parameter_config);
+	if (config && config->n_parameter1 >= 2)
+	{
+		sg_rename_item_id = config->parameter1[0];
+		sg_rename_item_num = config->parameter1[1];
+	}
+	sg_relive_free_times = get_config_by_id(161000008, &parameter_config)->parameter1[0];
+	sg_relive_first_cost = get_config_by_id(161000009, &parameter_config)->parameter1[0];
+	sg_relive_grow_cost = get_config_by_id(161000010, &parameter_config)->parameter1[0];
+	sg_relive_max_cost = get_config_by_id(161000011, &parameter_config)->parameter1[0];
+	sg_gem_strip_coin = get_config_by_id(161000019, &parameter_config)->parameter1[0];
+	sg_player_level_limit = get_config_by_id(161000020, &parameter_config)->parameter1[0];
 
 	sg_wanyaogu_range = get_config_by_id(161000028, &parameter_config)->parameter1[0];
 	sg_wanyaogu_reward = get_config_by_id(161000029, &parameter_config)->parameter1[0];
@@ -60,15 +72,15 @@ static void generate_parameters(void)
 
 	sg_hp_pool_max = get_config_by_id(161000176, &parameter_config)->parameter1[0];
 
-	ParameterTable *param_config = get_config_by_id(PARAM_ID_RAID_KEEP_TIME, &parameter_config);
-	assert(param_config && param_config->n_parameter1 > 0);
-	sg_raid_keep_time = param_config->parameter1[0];
+	config = get_config_by_id(161000007, &parameter_config);
+	assert(config && config->n_parameter1 > 0);
+	sg_raid_keep_time = config->parameter1[0];
 
-	ParameterTable *yuqidao_break_item_param = get_config_by_id(PARAM_ID_YUQIDAO_BREAK_ITEM, &parameter_config);
-	if (yuqidao_break_item_param && yuqidao_break_item_param->n_parameter1 >= 2)
+	config = get_config_by_id(161000041, &parameter_config);
+	if (config && config->n_parameter1 >= 2)
 	{
-		sg_yuqidao_break_item_id = yuqidao_break_item_param->parameter1[0];
-		sg_yuqidao_break_item_num = yuqidao_break_item_param->parameter1[1];
+		sg_yuqidao_break_item_id = config->parameter1[0];
+		sg_yuqidao_break_item_num = config->parameter1[1];
 	}
 
 	ParameterTable *pvp_raid_param = get_config_by_id(161000058, &parameter_config);
@@ -255,10 +267,10 @@ static void generate_parameters(void)
 	sg_pvp_raid_basic_param = pvp_raid_param->parameter1[0];
 
 	sg_transfer_out_stuck_cd_time = get_config_by_id(161000110, &parameter_config)->parameter1[0];
-	ParameterTable *guild_scene_param = get_config_by_id(161000147, &parameter_config);
-	if (guild_scene_param && guild_scene_param->n_parameter1 > 0)
+	config = get_config_by_id(161000147, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
 	{
-		sg_guild_scene_id = guild_scene_param->parameter1[0];
+		sg_guild_scene_id = config->parameter1[0];
 		scene_manager::set_guild_scene_id(sg_guild_scene_id);
 	}
 
@@ -280,106 +292,107 @@ static void generate_parameters(void)
 		}
 	}
 	sg_guild_battle_brave_init = get_config_by_id(161000206, &parameter_config)->parameter1[0];
-	ParameterTable *guild_battle_fight_auto_win_param = get_config_by_id(161000207, &parameter_config);
-	if (guild_battle_fight_auto_win_param)
+
+	config = get_config_by_id(161000207, &parameter_config);
+	if (config && config->n_parameter1 >= 4)
 	{
-		for (uint32_t i = 0; i < guild_battle_fight_auto_win_param->n_parameter1; ++i)
+		for (uint32_t i = 0; i < 4; ++i)
 		{
-			sg_guild_battle_fight_auto_win_reward[i] = guild_battle_fight_auto_win_param->parameter1[i];
+			sg_guild_battle_fight_auto_win_reward[i] = config->parameter1[i];
 		}
 	}
-	ParameterTable *guild_battle_fight_win_param = get_config_by_id(161000208, &parameter_config);
-	if (guild_battle_fight_win_param)
+	config = get_config_by_id(161000208, &parameter_config);
+	if (config && config->n_parameter1 >= 4)
 	{
-		for (uint32_t i = 0; i < guild_battle_fight_win_param->n_parameter1; ++i)
+		for (uint32_t i = 0; i < 4; ++i)
 		{
-			sg_guild_battle_fight_win_reward[i] = guild_battle_fight_win_param->parameter1[i];
+			sg_guild_battle_fight_win_reward[i] = config->parameter1[i];
 		}
 	}
-	ParameterTable *guild_battle_fight_lose_param = get_config_by_id(161000209, &parameter_config);
-	if (guild_battle_fight_lose_param)
+	config = get_config_by_id(161000209, &parameter_config);
+	if (config && config->n_parameter1 >= 4)
 	{
-		for (uint32_t i = 0; i < guild_battle_fight_lose_param->n_parameter1; ++i)
+		for (uint32_t i = 0; i < 4; ++i)
 		{
-			sg_guild_battle_fight_lose_reward[i] = guild_battle_fight_lose_param->parameter1[i];
+			sg_guild_battle_fight_lose_reward[i] = config->parameter1[i];
 		}
 	}
-	ParameterTable *guild_battle_fight_draw_param = get_config_by_id(161000210, &parameter_config);
-	if (guild_battle_fight_draw_param)
+	config = get_config_by_id(161000210, &parameter_config);
+	if (config && config->n_parameter1 >= 4)
 	{
-		for (uint32_t i = 0; i < guild_battle_fight_draw_param->n_parameter1; ++i)
+		for (uint32_t i = 0; i < 4; ++i)
 		{
-			sg_guild_battle_fight_draw_reward[i] = guild_battle_fight_draw_param->parameter1[i];
+			sg_guild_battle_fight_draw_reward[i] = config->parameter1[i];
 		}
 	}
-	ParameterTable *guild_battle_treasure_factor_param = get_config_by_id(161000211, &parameter_config);
-	if (guild_battle_treasure_factor_param)
+	config = get_config_by_id(161000211, &parameter_config);
+	if (config && config->n_parameter1 >= 3)
 	{
-		for (uint32_t i = 0; i < guild_battle_treasure_factor_param->n_parameter1; ++i)
+		for (uint32_t i = 0; i < 3; ++i)
 		{
-			sg_guild_battle_treasure_factor[i] = guild_battle_treasure_factor_param->parameter1[i];
+			sg_guild_battle_treasure_factor[i] = config->parameter1[i];
 		}
 	}
-	ParameterTable *guild_battle_round_param = get_config_by_id(161000212, &parameter_config);
-	if (guild_battle_round_param)
+	config = get_config_by_id(161000212, &parameter_config);
+	if (config && config->n_parameter1 >= 2)
 	{
-		sg_guild_battle_round_num = guild_battle_round_param->parameter1[0];
-		sg_guild_battle_final_round_num = guild_battle_round_param->parameter1[1];
+		sg_guild_battle_round_num = config->parameter1[0];
+		sg_guild_battle_final_round_num = config->parameter1[1];
 	}
-	ParameterTable *guild_battle_final_fight_param0 = get_config_by_id(161000213, &parameter_config);
-	if (guild_battle_final_fight_param0)
+	config = get_config_by_id(161000213, &parameter_config);
+	if (config && config->n_parameter1 >= 4)
 	{
-		for (uint32_t i = 0; i < guild_battle_final_fight_param0->n_parameter1; ++i)
+		for (uint32_t i = 0; i < 4; ++i)
 		{
-			sg_guild_battle_final_fight_reward_0[i] = guild_battle_final_fight_param0->parameter1[i];
+			sg_guild_battle_final_fight_reward_0[i] = config->parameter1[i];
 		}
 	}
-	ParameterTable *guild_battle_final_fight_param1 = get_config_by_id(161000214, &parameter_config);
-	if (guild_battle_final_fight_param1)
+	config = get_config_by_id(161000214, &parameter_config);
+	if (config && config->n_parameter1 >= 3)
 	{
-		for (uint32_t i = 0; i < guild_battle_final_fight_param1->n_parameter1; ++i)
+		for (uint32_t i = 0; i < 3; ++i)
 		{
-			sg_guild_battle_final_fight_reward_1[i] = guild_battle_final_fight_param1->parameter1[i];
+			sg_guild_battle_final_fight_reward_1[i] = config->parameter1[i];
 		}
 	}
-	ParameterTable *guild_battle_final_fight_param2 = get_config_by_id(161000215, &parameter_config);
-	if (guild_battle_final_fight_param2)
+	config = get_config_by_id(161000215, &parameter_config);
+	if (config && config->n_parameter1 >= 3)
 	{
-		for (uint32_t i = 0; i < guild_battle_final_fight_param2->n_parameter1; ++i)
+		for (uint32_t i = 0; i < 3; ++i)
 		{
-			sg_guild_battle_final_fight_reward_2[i] = guild_battle_final_fight_param2->parameter1[i];
+			sg_guild_battle_final_fight_reward_2[i] = config->parameter1[i];
 		}
 	}
-	ParameterTable *guild_battle_final_fight_param3 = get_config_by_id(161000216, &parameter_config);
-	if (guild_battle_final_fight_param3)
+	config = get_config_by_id(161000216, &parameter_config);
+	if (config && config->n_parameter1 >= 3)
 	{
-		for (uint32_t i = 0; i < guild_battle_final_fight_param3->n_parameter1; ++i)
+		for (uint32_t i = 0; i < 3; ++i)
 		{
-			sg_guild_battle_final_fight_reward_3[i] = guild_battle_final_fight_param3->parameter1[i];
+			sg_guild_battle_final_fight_reward_3[i] = config->parameter1[i];
 		}
 	}
-	ParameterTable *guild_battle_final_fight_param4 = get_config_by_id(161000217, &parameter_config);
-	if (guild_battle_final_fight_param4)
+	config = get_config_by_id(161000217, &parameter_config);
+	if (config && config->n_parameter1 >= 3)
 	{
-		for (uint32_t i = 0; i < guild_battle_final_fight_param4->n_parameter1; ++i)
+		for (uint32_t i = 0; i < 3; ++i)
 		{
-			sg_guild_battle_final_fight_reward_4[i] = guild_battle_final_fight_param4->parameter1[i];
+			sg_guild_battle_final_fight_reward_4[i] = config->parameter1[i];
 		}
 	}
-	ParameterTable *guild_battle_final_treasure_factor_param = get_config_by_id(161000218, &parameter_config);
-	if (guild_battle_final_treasure_factor_param)
+	config = get_config_by_id(161000218, &parameter_config);
+	if (config && config->n_parameter1 >= 4)
 	{
-		for (uint32_t i = 0; i < guild_battle_final_treasure_factor_param->n_parameter1; ++i)
+		for (uint32_t i = 0; i < 4; ++i)
 		{
-			sg_guild_battle_final_treasure_factor[i] = guild_battle_final_treasure_factor_param->parameter1[i];
+			sg_guild_battle_final_score_factor[i] = config->parameter1[i];
 		}
 	}
-	ParameterTable *guild_battle_final_score_factor_param = get_config_by_id(161000220, &parameter_config);
-	if (guild_battle_final_score_factor_param)
+	config = get_config_by_id(161000220, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
 	{
-		for (uint32_t i = 0; i < guild_battle_final_score_factor_param->n_parameter1; ++i)
+		for (uint32_t i = 0; i < 1; ++i)
 		{
-			sg_guild_battle_final_score_factor[i] = guild_battle_final_score_factor_param->parameter1[i];
+			sg_guild_battle_final_treasure_factor[i] = config->parameter1[i];
 		}
 	}
 
@@ -392,20 +405,53 @@ static void generate_parameters(void)
 //	sg_guild_battle_final_settle_time = 20;
 
 	config = get_config_by_id(161000235, &parameter_config);
-	if (config && config->n_parameter1 > 0)
+	if (config && config->n_parameter1 >= 1)
 	{
 		sg_partner_assist_percent = (double)config->parameter1[0] / (double)100;
 	}
 	config = get_config_by_id(161000237, &parameter_config);
-	if (config && config->n_parameter1 > 0)
+	if (config && config->n_parameter1 >= 1)
 	{
 		sg_partner_anger_max = config->parameter1[0];
 	}
 	config = get_config_by_id(161000255, &parameter_config);
-	if (config && config->n_parameter1 > 0)
+	if (config && config->n_parameter1 >= 1)
 	{
 		sg_partner_relive_time = config->parameter1[0];
 	}
+	config = get_config_by_id(161000298, &parameter_config);
+	if (config && config->n_parameter1 >= 2)
+	{
+		sg_partner_sanshenshi_id = config->parameter1[0];
+		sg_partner_sanshenshi_score = config->parameter1[1];
+	}
+	config = get_config_by_id(161000299, &parameter_config);
+	if (config && config->n_parameter1 >= 2)
+	{
+		sg_partner_qiyaoshi_id = config->parameter1[0];
+		sg_partner_qiyaoshi_score = config->parameter1[1];
+	}
+
+	sg_fight_param_161000274 = get_config_by_id(161000274, &parameter_config)->parameter1[0]; 
+	sg_fight_param_161000275 = get_config_by_id(161000275, &parameter_config)->parameter1[0];  
+	sg_fight_param_161000276 = get_config_by_id(161000276, &parameter_config)->parameter1[0];  
+	sg_fight_param_161000277 = get_config_by_id(161000277, &parameter_config)->parameter1[0];  	
+	sg_fight_param_161000278 = get_config_by_id(161000278, &parameter_config)->parameter1[0];  
+	sg_fight_param_161000279 = get_config_by_id(161000279, &parameter_config)->parameter1[0];  
+	sg_fight_param_161000280 = get_config_by_id(161000280, &parameter_config)->parameter1[0];  
+	sg_fight_param_161000281 = get_config_by_id(161000281, &parameter_config)->parameter1[0];  
+	sg_fight_param_161000282 = get_config_by_id(161000282, &parameter_config)->parameter1[0];  
+	sg_fight_param_161000283 = get_config_by_id(161000283, &parameter_config)->parameter1[0];  
+	sg_fight_param_161000284 = get_config_by_id(161000284, &parameter_config)->parameter1[0];  
+	sg_fight_param_161000285 = get_config_by_id(161000285, &parameter_config)->parameter1[0];  
+	sg_fight_param_161000286 = get_config_by_id(161000286, &parameter_config)->parameter1[0];  
+	sg_fight_param_161000287 = get_config_by_id(161000287, &parameter_config)->parameter1[0];  
+	sg_fight_param_161000288 = get_config_by_id(161000288, &parameter_config)->parameter1[0];  
+	sg_fight_param_161000289 = get_config_by_id(161000289, &parameter_config)->parameter1[0];  	
+	sg_fight_param_161000290 = get_config_by_id(161000290, &parameter_config)->parameter1[0];
+	sg_fight_param_161000291 = get_config_by_id(161000291, &parameter_config)->parameter1[0];
+	sg_fight_param_161000292 = get_config_by_id(161000292, &parameter_config)->parameter1[0];
+	sg_fight_param_161000293 = get_config_by_id(161000293, &parameter_config)->parameter1[0]; 	
 }
 
 	// 读取刷怪配置
@@ -1644,6 +1690,48 @@ uint32_t get_item_relate_id(uint32_t id)
 	return 0;
 }
 
+int get_item_bind_and_unbind_id(uint32_t id, uint32_t *bind_id, uint32_t *unbind_id)
+{
+	if (bind_id)
+	{
+		*bind_id = 0;
+	}
+	if (unbind_id)
+	{
+		*unbind_id = 0;
+	}
+	ItemsConfigTable *config = get_config_by_id(id, &item_config);
+	if (!config)
+	{
+		return -1;
+	}
+
+	if (config->BindType == 0)
+	{
+		if (bind_id)
+		{
+			*bind_id = config->ItemRelation;
+		}
+		if (unbind_id)
+		{
+			*unbind_id = id;
+		}
+	}
+	else
+	{
+		if (bind_id)
+		{
+			*bind_id = id;
+		}
+		if (unbind_id)
+		{
+			*unbind_id = config->ItemRelation;
+		}
+	}
+
+	return 0;
+}
+
 uint32_t get_bag_total_num(uint32_t job, uint32_t level)
 {
 	uint32_t num = 0;
@@ -2340,6 +2428,11 @@ int read_all_excel_data()
 	type = sproto_type(sp, "PartnerLevelTable");
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/PartnerLevelTable.lua", (config_type)&partner_level_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "FetterTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/FetterTable.lua", (config_type)&partner_bond_config);
 	assert(ret == 0);
 
 	type = sproto_type(sp, "BiaocheTable");

@@ -153,6 +153,7 @@ int raid_manager::check_player_enter_raid(player_struct *player, uint32_t raid_i
 
 	if (player->data->truck.truck_id != 0)
 	{
+		send_enter_raid_fail(player, 190500305, 0, NULL, 0);
 		return -(11);
 	}
 

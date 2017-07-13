@@ -22,6 +22,7 @@ extern std::set<uint32_t> sg_friend_gift_id;
 extern std::map<uint64_t, struct RandomCardRewardTable*> wanyaoka_reward_config; //万妖卡奖励配置
 extern std::map<uint64_t, struct ParameterTable *> parameter_config;
 extern std::map<uint64_t, struct CampTable*> zhenying_base_config; //阵营基础信息表
+extern std::map<uint64_t, struct GiftTable*> friend_gift_config; //好友礼物表
 
 int read_all_excel_data();
 

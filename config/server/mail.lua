@@ -308,6 +308,16 @@ local mail = {
 		['RewardID'] = {},
 		['RewardNum'] = {},
 		['time'] = ''
+		},
+	[270300031] = {
+		['ID'] = 270300031,
+		['MailType'] = 1,
+		['Title'] = '好友赠送获得',
+		['Content'] = '由于您背包不足，您的好友%s赠送的以下道具由邮件形式给予',
+		['Sender'] = '系统',
+		['RewardID'] = {},
+		['RewardNum'] = {},
+		['time'] = ''
 		}
 	}
 return mail

@@ -87,6 +87,13 @@ message DBGoods
 	required uint32 bought_num = 2;
 }
 
+message DBShopReset
+{
+	required uint32 next_day_time = 1;
+	required uint32 next_week_time = 2;
+	required uint32 next_month_time = 3;
+}
+
 
 message DbHorseData
 {
@@ -308,6 +315,26 @@ message DBTruck
 	required uint32 scene_id = 8;
 }
 
+message DBZhenying
+{
+	required uint32 mine = 1; //挖宝次数
+	required uint32 level = 2; //
+	required uint32 exp = 3; //
+	required uint32 task = 4; //当前任务ID
+	required uint32 task_type = 5; //当前任务类型
+	required uint32 task_num = 6; //当前任务进度
+	required uint32 step = 7; //军阶
+	required uint32 exp_day = 8; //
+	required uint32 free_change = 9; //免费换阵营次数
+	required uint32 kill_week = 10; //战场一周杀人
+	required uint32 score_week = 11;
+	required uint32 last_week = 12;//上次更新时间
+	required uint32 week = 13; 
+	required uint32 kill = 14;
+	required uint32 death = 15;
+	required uint32 help = 16;
+	required uint32 score = 17;
+}
 
 message PlayerDBInfo
 {
@@ -385,6 +412,10 @@ message PlayerDBInfo
 	repeated uint32 weapon_color = 72;  //已解锁颜色
 	repeated int32 weapon_color_isnew = 73;  //
 	required uint32 task_chapter_reward = 74;  //任务章节奖励
+	optional DBShopReset shop_reset = 75; //商城重置
+	repeated uint32 partner_bond = 76; //伙伴羁绊
+	repeated uint32 partner_bond_reward = 77; //伙伴羁绊奖励
+	optional DBZhenying zhenying = 78; //阵营
 }
 
 message DBAutoAddHp

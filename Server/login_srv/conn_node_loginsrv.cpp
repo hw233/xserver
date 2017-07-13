@@ -728,6 +728,90 @@ int conn_node_loginsrv::check_can_create_player(){
 	// return result;
 };
 
+static int add_server_account_url(uint32_t open_id, uint32_t server_id)
+{
+	char szUrl[1024] = { 0 };
+	char outStr[2048] = { 0 };
+
+	memset(outStr, 0, sizeof(outStr));
+	snprintf(szUrl, sizeof(szUrl), "http://192.168.2.114/cgi-bin/cgi_add_account_server?open_id=%u&server_id=%u", open_id, server_id);
+
+	int ret = 0;
+	CURL* curl_obj = NULL;
+	json_object *json_obj = NULL;
+	do
+	{
+		curl_obj = curl_easy_init();	
+		if (!curl_obj)
+		{
+			LOG_ERR("[%s:%d] curl_easy_init failed, open_id:%u, server_id:%u", __FUNCTION__, __LINE__, open_id, server_id);
+			break;
+		}
+
+		curl_easy_setopt(curl_obj, CURLOPT_URL, szUrl);
+		curl_easy_setopt(curl_obj, CURLOPT_TIMEOUT, 5);
+		curl_easy_setopt(curl_obj, CURLOPT_WRITEFUNCTION, &__curl_process_data__);
+		curl_easy_setopt(curl_obj, CURLOPT_WRITEDATA, outStr);
+
+		ret = curl_easy_perform(curl_obj);
+		if (0 != ret)
+		{
+			LOG_ERR("[%s:%d] curl_easy_perform failed, open_id:%u, server_id:%u", __FUNCTION__, __LINE__, open_id, server_id);
+			break;
+		}
+
+		json_obj = json_tokener_parse(outStr);
+		if (!json_obj)
+		{
+			LOG_ERR("[%s:%d] json_tokener_parse failed, open_id:%u, server_id:%u", __FUNCTION__, __LINE__, open_id, server_id);
+			break;
+		}
+
+		std::map<std::string, std::string>  jsonMap;
+		json_object_object_foreach(json_obj, key, val) 
+		{
+			jsonMap[std::string(key)] = std::string(json_object_to_json_string(val));
+		}
+
+		std::map<std::string, std::string>::iterator it;
+		std::string szValue;
+
+		it = jsonMap.find("code");
+		if (it == jsonMap.end())
+		{
+			break;
+		}
+
+		int code = atoi(szValue.c_str());
+		if (code != 0)
+		{
+			it = jsonMap.find("reason");
+			if (it != jsonMap.end())
+			{
+				szValue.assign(it->second.c_str()+1, it->second.length()-2);
+				LOG_ERR("[%s:%d] open_id:%u, server_id:%u, code:%d, reason:%s", __FUNCTION__, __LINE__, open_id, server_id, code, szValue.c_str());
+			}
+			else
+			{
+				LOG_ERR("[%s:%d] open_id:%u, server_id:%u, code:%d", __FUNCTION__, __LINE__, open_id, server_id, code);
+			}
+
+			break;
+		}
+	} while(0);
+	
+	if (curl_obj)
+	{
+		curl_easy_cleanup(curl_obj);
+	}
+	if (json_obj)
+	{
+		json_object_put(json_obj);
+	}
+
+	return 0;
+}
+
 int conn_node_loginsrv::handle_create_player(EXTERN_DATA *extern_data)
 {
 	uint32_t result = ERROR_ID_SUCCESS;
@@ -786,7 +870,7 @@ int conn_node_loginsrv::handle_create_player(EXTERN_DATA *extern_data)
 			PlayerDBInfo info;
 			player_dbinfo__init(&info);
 
-			ParameterTable *birth_config = get_config_by_id(PARAM_ID_BIRTH_MAP, &parameter_config);
+			ParameterTable *birth_config = get_config_by_id(161000023, &parameter_config);
 			if (birth_config && birth_config->n_parameter1 >= 4)
 			{
 				info.scene_id = birth_config->parameter1[0];
@@ -992,9 +1076,14 @@ int conn_node_loginsrv::handle_create_player(EXTERN_DATA *extern_data)
 		return (0);
 	}
 
-	if (result == ERROR_ID_SUCCESS) {
+	if (result == ERROR_ID_SUCCESS)
+	{
 //		pack_statis(GAME_APPID, extern_data->open_id, player_id, 0, time(NULL), MAGIC_ID_TYPE_CREATE_PLAYER);
 //		PROTO_STATIS_INFO_COMMIT3(MAGIC_ID_TYPE_CREATE_PLAYER, 0, player_id);
+		if (!bRet)
+		{
+			add_server_account_url(extern_data->open_id, sg_server_id);
+		}
 	}
 	
 	return (0);

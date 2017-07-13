@@ -167,6 +167,45 @@ local ShopListTable = {
 		['EndTime'] = 0,
 		['ConsumptionType'] = 2,
 		['TabDescribe'] = ''
+		},
+	[280003044] = {
+		['ID'] = 280003044,
+		['ShopType'] = 3,
+		['ShopType1'] = 5,
+		['TabName'] = '妖师商铺',
+		['GroupingName'] = '赏金妖师',
+		['OpenConditionType'] = 1,
+		['OpenCondition'] = '玩家等级达到1级',
+		['StartTime'] = 0,
+		['EndTime'] = 0,
+		['ConsumptionType'] = 8,
+		['TabDescribe'] = '使用赏金货币可兑换下列物品'
+		},
+	[280003045] = {
+		['ID'] = 280003045,
+		['ShopType'] = 3,
+		['ShopType1'] = 5,
+		['TabName'] = '妖师商铺',
+		['GroupingName'] = '惩戒妖师',
+		['OpenConditionType'] = 20,
+		['OpenCondition'] = '玩家等级达到20级',
+		['StartTime'] = 0,
+		['EndTime'] = 0,
+		['ConsumptionType'] = 9,
+		['TabDescribe'] = '使用惩戒货币可兑换下列物品'
+		},
+	[280003046] = {
+		['ID'] = 280003046,
+		['ShopType'] = 3,
+		['ShopType1'] = 5,
+		['TabName'] = '妖师商铺',
+		['GroupingName'] = '国御妖师',
+		['OpenConditionType'] = 20,
+		['OpenCondition'] = '玩家等级达到20级',
+		['StartTime'] = 0,
+		['EndTime'] = 0,
+		['ConsumptionType'] = 10,
+		['TabDescribe'] = '使用国御货币可兑换下列物品'
 		}
 	}
 return ShopListTable

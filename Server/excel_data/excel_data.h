@@ -38,6 +38,7 @@ struct EquipmentTable;
 struct EscortTask;
 struct EventCalendarTable;
 struct FactionBattleTable;
+struct FetterTable;
 struct FlySkillTable;
 struct FunctionUnlockTable;
 struct GangsDungeonTable;
@@ -45,6 +46,7 @@ struct GangsJurisdictionTable;
 struct GangsSkillTable;
 struct GangsTable;
 struct GemAttribute;
+struct GiftTable;
 struct GodYaoAttributeTable;
 struct GradeTable;
 struct ItemsConfigTable;
@@ -132,50 +134,54 @@ struct ActorAttributeTable
 {
 	uint64_t  ID; //1
 	uint64_t  Lv; //2
-	double  Health; //3
-	double  Attack; //4
-	double  Defense; //5
-	double  AtGold; //6
-	double  AtWood; //7
-	double  AtWater; //8
-	double  AtFire; //9
-	double  AtEarth; //10
-	double  AtGoldDf; //11
-	double  AtWoodDf; //12
-	double  AtWaterDf; //13
-	double  AtFireDf; //14
-	double  AtEarthDf; //15
-	double  Dodge; //16
-	double  Hit; //17
-	double  Critical; //18
-	double  CriticalDf; //19
-	double  CtDmg; //20
-	double  CtDmgDf; //21
-	double  MoveSpeed; //22
-	double  Recover; //23
-	double  Cure; //24
-	double  CureAdd; //25
-	double  DmgAdd; //26
-	double  DmgDf; //27
-	double  DmgAddPE; //28
-	double  DmgDfPP; //29
-	double  Dizzy; //30
-	double  Slow; //31
-	double  Chaos; //32
-	double  Poison; //33
-	double  Vampire; //34
-	double  Bounce; //35
-	double  HitRepel; //36
-	double  Hitfly; //37
-	double  DizzyDf; //38
-	double  SlowDf; //39
-	double  ChaosDf; //40
-	double  PoisonDf; //41
-	double  VampireDf; //42
-	double  BounceDf; //43
-	double  HitRepelDf; //44
-	double  HitflyDf; //45
-	uint64_t  DropID; //46
+	uint64_t  DropID; //3
+	uint64_t  FlySpeed; //4
+	uint64_t  Health; //5
+	uint64_t  MaxHP; //6
+	uint64_t  Attack; //7
+	uint64_t  AtGold; //8
+	uint64_t  AtWood; //9
+	uint64_t  AtWater; //10
+	uint64_t  AtFire; //11
+	uint64_t  AtEarth; //12
+	uint64_t  AtGoldDf; //13
+	uint64_t  AtWoodDf; //14
+	uint64_t  AtWaterDf; //15
+	uint64_t  AtFireDf; //16
+	uint64_t  AtEarthDf; //17
+	uint64_t  DfWuDel; //18
+	uint64_t  Hit; //19
+	uint64_t  Dodge; //20
+	uint64_t  DodgeDf; //21
+	uint64_t  Critical; //22
+	uint64_t  CriticalDf; //23
+	double  CtDmg; //24
+	double  CtDmgDf; //25
+	uint64_t  MoveSpeed; //26
+	uint64_t  Dizzy; //27
+	uint64_t  Slow; //28
+	uint64_t  Mabi; //29
+	uint64_t  Hurt; //30
+	uint64_t  Can; //31
+	uint64_t  DizzyDf; //32
+	uint64_t  SlowDf; //33
+	uint64_t  MabiDf; //34
+	uint64_t  HurtDf; //35
+	uint64_t  CanDf; //36
+	uint64_t  PVPAt; //37
+	uint64_t  PVPDf; //38
+	uint64_t  DizzyTime; //39
+	uint64_t  SlowTime; //40
+	uint64_t  MabiTime; //41
+	uint64_t  HurtTime; //42
+	uint64_t  CanTime; //43
+	uint64_t  DizzyTimeDf; //44
+	uint64_t  SlowTimeDf; //45
+	uint64_t  MabiTimeDf; //46
+	uint64_t  HurtTimeDf; //47
+	uint64_t  CanTimeDf; //48
+	uint64_t  DeEffDf; //49
+	uint64_t  DeTimeDf; //50
 }__attribute__ ((packed));
 
 struct ActorFashionTable
@@ -261,6 +267,14 @@ struct ActorTable
 	uint32_t n_PassiveSkill; //9
 	uint64_t *PassiveSkill; //9
 	uint64_t  InitialHead; //10
+	uint64_t  TiLv; //11
+	uint64_t  LiLv; //12
+	uint64_t  MinLv; //13
+	uint64_t  LingLv; //14
+	uint64_t  Ti; //15
+	uint64_t  Li; //16
+	uint64_t  Min; //17
+	uint64_t  Ling; //18
 }__attribute__ ((packed));
 
 struct AcupunctureTable
@@ -471,7 +485,6 @@ struct BuffTable
 	uint64_t  Interval; //5
 	uint32_t n_EffectID; //6
 	uint64_t *EffectID; //6
-	uint64_t  AtPro; //7
 	uint64_t  DfPro; //8
 	uint64_t  TimeDelay; //9
 	uint64_t  CoverType; //10
@@ -709,24 +722,27 @@ struct EscortTask
 	uint64_t  Team; //6
 	uint64_t  Distance; //7
 	uint64_t  BlockedStop; //8
-	uint32_t n_MonsterID1; //9
-	uint64_t *MonsterID1; //9
-	uint32_t n_PointXZ1; //10
-	double *PointXZ1; //10
-	uint32_t n_MonsterID2; //11
-	uint64_t *MonsterID2; //11
-	uint32_t n_PointXZ2; //12
-	double *PointXZ2; //12
-	uint32_t n_MonsterID3; //13
-	uint64_t *MonsterID3; //13
-	uint32_t n_PointXZ3; //14
-	double *PointXZ3; //14
-	uint32_t n_MonsterID4; //15
-	uint64_t *MonsterID4; //15
-	uint32_t n_PointXZ4; //16
-	double *PointXZ4; //16
-	uint32_t n_talkID; //17
-	uint64_t *talkID; //17
+	uint64_t  Range; //9
+	uint32_t n_MonsterID; //10
+	uint64_t *MonsterID; //10
+	uint32_t n_MonsterID1; //11
+	uint64_t *MonsterID1; //11
+	uint32_t n_PointXZ1; //12
+	double *PointXZ1; //12
+	uint32_t n_MonsterID2; //13
+	uint64_t *MonsterID2; //13
+	uint32_t n_PointXZ2; //14
+	double *PointXZ2; //14
+	uint32_t n_MonsterID3; //15
+	uint64_t *MonsterID3; //15
+	uint32_t n_PointXZ3; //16
+	double *PointXZ3; //16
+	uint32_t n_MonsterID4; //17
+	uint64_t *MonsterID4; //17
+	uint32_t n_PointXZ4; //18
+	double *PointXZ4; //18
+	uint32_t n_talkID; //19
+	uint64_t *talkID; //19
 }__attribute__ ((packed));
 
 struct EventCalendarTable
@@ -770,6 +786,18 @@ struct FactionBattleTable
 	uint64_t  BoxOpenNum; //16
 	uint64_t  SkillIntegral; //17
 	uint64_t  FlagIntegral; //18
+}__attribute__ ((packed));
+
+struct FetterTable
+{
+	uint64_t  ID; //1
+	uint64_t  Relation; //2
+	uint32_t n_Partner; //4
+	uint64_t *Partner; //4
+	uint64_t  AttributeType; //5
+	uint64_t  AttributeNum; //6
+	uint64_t  LevelItem; //7
+	uint64_t  ItemNum; //8
 }__attribute__ ((packed));
 
 struct FlySkillTable
@@ -862,6 +890,14 @@ struct GemAttribute
 	uint64_t  GemSynthetic; //5
 	uint64_t  Number; //6
 	uint64_t  Consumption; //7
+}__attribute__ ((packed));
+
+struct GiftTable
+{
+	uint64_t  ID; //1
+	uint64_t  TypeId; //2
+	uint64_t  CoinType; //3
+	uint64_t  Value; //4
 }__attribute__ ((packed));
 
 struct GodYaoAttributeTable
@@ -1008,6 +1044,7 @@ struct MonsterTable
 	uint64_t  LifeTime; //20
 	struct NpcTalkTable  *talk_config; //21
 	uint64_t  PkType; //22
+	uint64_t  HateBase; //23
 }__attribute__ ((packed));
 
 struct MountsTable
@@ -1115,6 +1152,9 @@ struct PartnerTable
 	uint64_t *GrowthValue; //32
 	uint32_t n_GodYaoAttribute; //33
 	uint64_t *GodYaoAttribute; //33
+	uint32_t n_Fetter; //34
+	uint64_t *Fetter; //34
+	uint64_t  Reward; //35
 }__attribute__ ((packed));
 
 struct PassiveSkillTable
@@ -1343,11 +1383,13 @@ struct ShopTable
 	uint64_t  ShopType; //3
 	uint64_t  Acc; //4
 	uint64_t  ConsumptionType; //5
-	uint64_t  Price; //6
-	uint64_t  Purchasetype; //7
-	uint64_t  Condition; //8
-	uint64_t  BuyNum; //9
-	uint64_t  Discount; //10
+	uint64_t  Purchasetype; //6
+	uint64_t  Condition; //7
+	uint64_t  Price; //8
+	uint64_t  Discount; //9
+	uint64_t  BuyNum; //10
+	uint64_t  Reset; //11
+	uint64_t  RestrictionTime; //12
 }__attribute__ ((packed));
 
 struct SkillEffectTable

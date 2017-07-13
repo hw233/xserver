@@ -58,5 +58,5 @@ void script_ai_common_collect(raid_struct *raid, player_struct *player, Collect 
 void script_ai_common_tick(raid_struct *raid, struct raid_script_data *script_data);
 void script_ai_common_player_ready(raid_struct *raid, player_struct *player, struct raid_script_data *script_data);
 void script_ai_common_escort_stop(raid_struct *raid, player_struct *player, uint32_t escort_id, bool success, struct raid_script_data *script_data);
-void script_ai_common_npc_talk(raid_struct *raid, uint32_t npc_id, struct raid_script_data *script_data);
+//void script_ai_common_npc_talk(raid_struct *raid, uint32_t npc_id, struct raid_script_data *script_data);
 #endif /* RAID_AI_COMMON_H */

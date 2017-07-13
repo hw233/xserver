@@ -45,6 +45,7 @@ extern ChatList *load_friend_chat(uint64_t player_id);
 extern void delete_friend_chat(uint64_t player_id);
 extern void add_friend_offline_chat(uint64_t player_id, Chat *chat);
 extern void add_friend_offline_system(uint64_t player_id, SystemNoticeNotify *sys);
+extern void add_friend_offline_gift(uint64_t player_id, FriendGiftData *gift);
 
 void send_friend_to_game(EXTERN_DATA *extern_data, uint16_t msg_id, void *data, pack_func func)
 {
@@ -272,6 +273,50 @@ void conn_node_friendsrv::handle_zhenying_power()
 	}
 	fast_send_msg(&conn_node_friendsrv::connecter, extern_data, MSG_ID_ZHENYING_POWER_ANSWER, zhenying_power__pack, send);
 	add_zhenying_player__free_unpacked(req, NULL);
+
+	LOG_DEBUG("%s: team info %lu len[%d] ret", __FUNCTION__, extern_data->player_id, data_len);
+}
+
+void conn_node_friendsrv::handle_zhenying_change_power()
+{
+	PROTO_HEAD *head = get_head();
+	EXTERN_DATA *extern_data = get_extern_data(head);
+	char key[128] = "zhenying";
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+
+	PROTO_ZHENYIN_CHANGE_POWER *req = (PROTO_ZHENYIN_CHANGE_POWER *)get_data();
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return;
+	}
+
+	data_len = MAX_GLOBAL_SEND_BUF;
+	int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	ZhenyingPower send;
+	zhenying_power__init(&send);
+	if (ret >= 0)
+	{
+		ZhenyingRedis *rzhenying = zhenying_redis__unpack(NULL, data_len, conn_node_base::global_send_buf);
+		if (rzhenying != NULL)
+		{
+			if (req->zhen_ying == ZHENYING__TYPE__FULONGGUO)
+			{
+				rzhenying->power_fulongguo += req->power;
+			}
+			else if (req->zhen_ying == ZHENYING__TYPE__WANYAOGU)
+			{
+				rzhenying->power_wanyaogu += req->power;
+			}
+
+			data_len = zhenying_redis__pack(rzhenying, (uint8_t *)conn_node_base::global_send_buf);
+			ret = sg_redis_client.hset_bin(server_key, key, (char *)conn_node_base::global_send_buf, data_len);
+			if (ret < 0)
+			{
+				LOG_ERR("%s: oper failed, ret = %d", __FUNCTION__, ret);
+			}
+		}
+	}
 
 	LOG_DEBUG("%s: team info %lu len[%d] ret", __FUNCTION__, extern_data->player_id, data_len);
 }
@@ -1028,6 +1073,9 @@ int conn_node_friendsrv::recv_func(evutil_socket_t fd)
 				case MSG_ID_ZHENYING_POWER_REQUEST:
 					handle_zhenying_power();
 					break;
+				case SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST:
+					handle_zhenying_change_power();
+					break;
 				case SERVER_PROTO_ADD_ZHENYING_KILL_REQUEST:
 					handle_zhenying_add_kill();
 					break;
@@ -1389,12 +1437,12 @@ void conn_node_friendsrv::handle_friend_info_request()
 		recent_group->groupid = FRIEND_LIST_TYPE__L_RECENT;
 		recent_group->n_players = 0;
 		recent_group->players = recent_point;
-		for (int i = 0; i < MAX_FRIEND_RECENT_NUM; ++i)
+		for (int i = MAX_FRIEND_RECENT_NUM - 1; i >= 0; --i)
 		{
 			uint64_t player_id = player->recents[i];
 			if (player_id == 0)
 			{
-				break;
+				continue;
 			}
 
 			PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, player_id);
@@ -2558,8 +2606,8 @@ void conn_node_friendsrv::handle_friend_send_gift_request()
 	}
 
 	uint64_t target_id = req->playerid;
-	uint64_t item_id = req->itemid;
-	uint64_t item_num = req->itemnum;
+	uint64_t gift_id = req->itemid;
+	uint64_t gift_num = req->itemnum;
 	friend_send_gift_request__free_unpacked(req, NULL);
 
 	int ret = 0;
@@ -2608,10 +2656,11 @@ void conn_node_friendsrv::handle_friend_send_gift_request()
 		}
 
 		//检查道具ID和类型
-		if (sg_friend_gift_id.find(item_id) == sg_friend_gift_id.end())
+		GiftTable *config = get_config_by_id(gift_id, &friend_gift_config);
+		if (!config)
 		{
 			ret = ERROR_ID_FRIEND_GIFT_ID;
-			LOG_ERR("[%s:%d] player[%lu] gift id, target_id:%lu, item_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id, item_id);
+			LOG_ERR("[%s:%d] player[%lu] get config failed, target_id:%lu, gift_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id, gift_id);
 			break;
 		}
 
@@ -2625,7 +2674,7 @@ void conn_node_friendsrv::handle_friend_send_gift_request()
 			break;
 		}
 
-		if (player->contacts[target_idx].gift_num + item_num > sg_friend_gift_send_num)
+		if (player->contacts[target_idx].gift_num + gift_num > sg_friend_gift_send_num)
 		{
 			ret = ERROR_ID_FRIEND_GIFT_SEND_WILL_OVER;
 			LOG_ERR("[%s:%d] player[%lu] can't send, target_id:%lu, send_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, target_id, player->contacts[target_idx].gift_num);
@@ -2633,38 +2682,41 @@ void conn_node_friendsrv::handle_friend_send_gift_request()
 		}
 
 		//检查每日最多接受数量
-		if (target->gift_accept + item_num > sg_friend_gift_accept_num)
+		if (target->gift_accept + gift_num > sg_friend_gift_accept_num)
 		{
 			ret = ERROR_ID_FRIEND_GIFT_ACCEPT_MAX;
 			LOG_ERR("[%s:%d] player[%lu] target can't accept, target_id:%lu, accept_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, target_id, target->gift_accept);
 			break;
 		}
 
+		{ //成功，去game_srv检查道具数量是否足够
+			PROTO_COST_FRIEND_GIFT_REQ *cost_req = (PROTO_COST_FRIEND_GIFT_REQ *)get_send_buf(SERVER_PROTO_FRIEND_GIFT_COST_REQUEST, get_seq());
+			cost_req->head.len = ENDION_FUNC_4(sizeof(PROTO_COST_FRIEND_GIFT_REQ));
+			memset(cost_req->head.data, 0, sizeof(PROTO_COST_FRIEND_GIFT_REQ) - sizeof(PROTO_HEAD));
+			cost_req->target_id = target_id;
+			cost_req->gift_id = gift_id;
+			cost_req->gift_num = gift_num;
+			cost_req->item_id = config->TypeId;
+			cost_req->currency_type = config->CoinType;
+			cost_req->currency_val = config->Value;
+			add_extern_data(&cost_req->head, extern_data);
+			if (connecter.send_one_msg(&cost_req->head, 1) != (int)ENDION_FUNC_4(cost_req->head.len))
+			{
+				LOG_ERR("[%s:%d] send to gamesrv failed err[%d]", __FUNCTION__, __LINE__, errno);
+				ret = ERROR_ID_SERVER;
+			}
+		}
 	} while(0);
 
-	if (ret == 0)
-	{ //成功，去game_srv检查道具数量是否足够
-		PROTO_COST_FRIEND_GIFT_REQ *cost_req = (PROTO_COST_FRIEND_GIFT_REQ *)get_send_buf(SERVER_PROTO_FRIEND_GIFT_COST_REQUEST, get_seq());
-		cost_req->head.len = ENDION_FUNC_4(sizeof(PROTO_COST_FRIEND_GIFT_REQ));
-		memset(cost_req->head.data, 0, sizeof(PROTO_COST_FRIEND_GIFT_REQ) - sizeof(PROTO_HEAD));
-		cost_req->target_id = target_id;
-		cost_req->item_id = item_id;
-		cost_req->item_num = item_num;
-		add_extern_data(&cost_req->head, extern_data);
-		if (connecter.send_one_msg(&cost_req->head, 1) != (int)ENDION_FUNC_4(cost_req->head.len))
-		{
-			LOG_ERR("[%s:%d] send to gamesrv failed err[%d]", __FUNCTION__, __LINE__, errno);
-		}
-	}
-	else
+	if (ret != 0)
 	{ //失败，返回错误给client
 		FriendSendGiftAnswer resp;
 		friend_send_gift_answer__init(&resp);
 
 		resp.result = ret;
 		resp.playerid = target_id;
-		resp.itemid = item_id;
-		resp.itemnum = item_num;
+		resp.itemid = gift_id;
+		resp.itemnum = gift_num;
 
 		fast_send_msg(&connecter, extern_data, MSG_ID_FRIEND_SEND_GIFT_ANSWER, friend_send_gift_answer__pack, resp);
 	}
@@ -2679,19 +2731,21 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 	PROTO_COST_FRIEND_GIFT_RES *res = (PROTO_COST_FRIEND_GIFT_RES*)buf_head();
 
 	uint64_t target_id = res->target_id;
-	uint64_t item_id = res->item_id;
-	uint64_t item_num = res->item_num;
+	uint64_t gift_id = res->gift_id;
+	uint64_t gift_num = res->gift_num;
 
 	int ret = res->result;
 	AutoReleaseBatchFriendPlayer arb_friend;
 	AutoReleaseBatchRedisPlayer arb_redis;
 	FriendPlayer *player = NULL;
+	bool internal = false;
 	do
 	{
 		if (ret != 0)
 		{
 			break;
 		}
+		internal = true;
 
 		player = get_friend_player(extern_data->player_id);
 		if (!player)
@@ -2726,17 +2780,32 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 			break;
 		}
 
-		//记录次数
-		player->contacts[target_idx].gift_num += item_num;
-		target->gift_accept += item_num;
-		
-		//增加好感度
-		player->contacts[target_idx].closeness += res->add_val;
-		target->contacts[player_idx].closeness += res->add_val;
-		save_friend_player(player);
-		save_friend_player(target);
+		GiftTable *config = get_config_by_id(gift_id, &friend_gift_config);
+		if (!config)
+		{
+			ret = ERROR_ID_FRIEND_GIFT_ID;
+			LOG_ERR("[%s:%d] player[%lu] get config failed, target_id:%lu, gift_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id, gift_id);
+			break;
+		}
 
-		notify_friend_closeness_update(player, player->contacts[target_idx]);
+		//记录次数
+		player->contacts[target_idx].gift_num += gift_num;
+		target->gift_accept += gift_num;
+		
+		if (res->add_closeness > 0)
+		{
+			//增加好感度
+			player->contacts[target_idx].closeness += res->add_closeness;
+			target->contacts[player_idx].closeness += res->add_closeness;
+			save_friend_player(player);
+			save_friend_player(target);
+
+			notify_friend_closeness_update(player, player->contacts[target_idx]);
+		}
+		if (res->item_id > 0)
+		{
+			//直接送道具给对方
+		}
 
 		do
 		{
@@ -2755,20 +2824,46 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 			EXTERN_DATA ext_data;
 			ext_data.player_id = target->player_id;
 
-			if (redis_target && redis_target->status == 0)
+			bool target_online = (redis_target && redis_target->status == 0);
+			//通知送礼
+			if (target_online)
 			{
-				//通知送礼
 				FriendSendGiftNotify nty;
 				friend_send_gift_notify__init(&nty);
 
 				nty.senderid = player->player_id;
-				nty.itemid = item_id;
-				nty.itemnum = item_num;
+				nty.itemid = gift_id;
+				nty.itemnum = gift_num;
 
 				fast_send_msg(&conn_node_friendsrv::connecter, &ext_data, MSG_ID_FRIEND_SEND_GIFT_NOTIFY, friend_send_gift_notify__pack, nty);
+			}
 
-				//通知好感度变更
+			//通知好感度变更
+			if (res->add_closeness > 0 && target_online)
+			{
 				notify_friend_closeness_update(target, target->contacts[player_idx]);
+			}
+
+			//通知收到道具
+			if (res->item_id > 0)
+			{
+				FriendGiftData gift_data;
+				friend_gift_data__init(&gift_data);
+				ItemData item_data;
+				item_data__init(&item_data);
+				gift_data.playerid = player->player_id;
+				gift_data.playername = redis_player->name;
+				gift_data.item = &item_data;
+				item_data.id = res->item_id;
+				item_data.num = res->gift_num;
+				if (target_online)
+				{ //目标在线，直接发送
+					fast_send_msg(&conn_node_friendsrv::connecter, &ext_data, SERVER_PROTO_FRIEND_ADD_GIFT, friend_gift_data__pack, gift_data);
+				}
+				else
+				{ //目标离线，存离线消息
+					add_friend_offline_gift(target->player_id, &gift_data);
+				}
 			}
 
 			//通知系统消息
@@ -2776,8 +2871,8 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 			{
 				std::vector<char*> args;
 				std::stringstream ss_id, ss_num;
-				ss_id << item_id;
-				ss_num << item_num;
+				ss_id << config->TypeId;
+				ss_num << gift_num;
 				args.push_back(redis_player->name);
 				args.push_back(const_cast<char*>(ss_num.str().c_str()));
 				args.push_back(const_cast<char*>(ss_id.str().c_str()));
@@ -2791,7 +2886,7 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 				sys.targetid = player->player_id;
 				sys.has_targetid = true;
 
-				if (redis_target && redis_target->status == 0)
+				if (target_online)
 				{ //在线直接发送
 					fast_send_msg(&conn_node_friendsrv::connecter, &ext_data, MSG_ID_SYSTEM_NOTICE_NOTIFY, system_notice_notify__pack, sys);
 				}
@@ -2809,10 +2904,23 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 
 	resp.result = ret;
 	resp.playerid = target_id;
-	resp.itemid = item_id;
-	resp.itemnum = item_num;
+	resp.itemid = gift_id;
+	resp.itemnum = gift_num;
 
 	fast_send_msg(&conn_node_friendsrv::connecter, extern_data, MSG_ID_FRIEND_SEND_GIFT_ANSWER, friend_send_gift_answer__pack, resp);
+
+	if (ret != 0 && internal)
+	{
+		PROTO_UNDO_COST *proto = (PROTO_UNDO_COST*)get_send_buf(SERVER_PROTO_UNDO_COST, 0);
+		proto->head.len = ENDION_FUNC_4(sizeof(PROTO_UNDO_COST));
+		memset(proto->head.data, 0, sizeof(PROTO_UNDO_COST) - sizeof(PROTO_HEAD));
+		memcpy(&proto->cost, &res->cost, sizeof(SRV_COST_INFO));
+		conn_node_base::add_extern_data(&proto->head, extern_data);
+		if (connecter.send_one_msg(&proto->head, 1) != (int)ENDION_FUNC_4(proto->head.len))
+		{
+			LOG_ERR("[%s:%d] send to gamesrv failed err[%d]", __FUNCTION__, __LINE__, errno);
+		}
+	}
 }
 
 void conn_node_friendsrv::handle_friend_chat_request()
@@ -2957,6 +3065,11 @@ void conn_node_friendsrv::handle_player_online_notify()
 				}
 				fast_send_msg(&connecter, extern_data, MSG_ID_CHAT_NOTIFY, chat__pack, *info);
 			}
+			for (size_t i = 0; i < chats->n_gifts; ++i)
+			{
+				FriendGiftData *info = chats->gifts[i];
+				fast_send_msg(&connecter, extern_data, SERVER_PROTO_FRIEND_ADD_GIFT, friend_gift_data__pack, *info);
+			}
 			delete_friend_chat(extern_data->player_id);
 
 			chat_list__free_unpacked(chats, NULL);
@@ -2999,6 +3112,9 @@ void conn_node_friendsrv::handle_player_online_notify()
 	{
 		player_redis_info__free_unpacked(iter->second, NULL);
 	}
+
+		//发送万妖卡
+	handle_list_wanyaoka();
 }
 
 void conn_node_friendsrv::handle_player_offline_notify() //玩家下线
