@@ -32,6 +32,23 @@ local MountsTable = {
 		['Lock'] = 1,
 		['ListAcc'] = 1,
 		['PrintMounts'] = 1
+		},
+	[180000003] = {
+		['ID'] = 180000003,
+		['Name'] = '飞剑',
+		['ResId'] = 130500002,
+		['BaseAttribute'] = 102200001,
+		['MountsAttribute'] = {21,46,2,3,4,15},
+		['AttributeCeiling'] = {10,12,250,55,110,15},
+		['Time'] = {0},
+		['WingBinding'] = {0},
+		['Binding'] = {0},
+		['Item'] = {0},
+		['ItemNum'] = {0},
+		['ItemQuality'] = 3,
+		['Lock'] = 1,
+		['ListAcc'] = 1,
+		['PrintMounts'] = 1
 		}
 	}
 return MountsTable

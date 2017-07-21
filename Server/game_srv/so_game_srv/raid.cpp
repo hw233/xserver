@@ -674,8 +674,8 @@ int raid_struct::player_enter_raid_impl(player_struct *player, int index, double
 	// t[index % MAX_TEAM_MEM] = player;
 	set_m_player_and_player_info(player, index);
 	
-	player->set_enter_raid_pos_and_scene(this, pos_x, pos_z);
 	player->conserve_out_raid_pos_and_scene(this);
+	player->set_enter_raid_pos_and_scene(this, pos_x, pos_z);
 
 	if (get_entity_type(player->get_uuid()) == ENTITY_TYPE_PLAYER)
 	{
@@ -996,6 +996,20 @@ int raid_struct::check_cond_finished(int index, uint64_t cond_type, uint64_t con
 			{
 				*ret_param = data->star_param[index];
 				return (0);
+			}
+		}
+		break;
+		case 3: //怪物存活
+		{
+			if (data->star_param[index] >= cond_value1)
+			{
+				*ret_param = cond_value1;
+				return (0);
+			}
+			else
+			{
+				*ret_param = data->star_param[index];
+				return (1);
 			}
 		}
 		break;
@@ -1443,9 +1457,20 @@ void raid_struct::on_player_dead(player_struct *player, unit_struct *killer)
 		ai->raid_on_player_dead(this, player, killer);
 }
 
+void raid_struct::delete_raid_collect_safe(uint32_t uuid)
+{
+	std::set<uint64_t>::iterator ite = m_collect.find(uuid);
+	if (ite == m_collect.end())
+		return;
+	m_collect.erase(ite);
+	Collect::DestroyCollect(uuid);	
+}
+
 void raid_struct::on_collect(player_struct *player, Collect *collect)
 {
 	LOG_DEBUG("%s: raid[%u][%lu], collect[%u][%u]", __FUNCTION__, data->ID, data->uuid, collect->m_collectId, collect->m_uuid);
+		//有可能副本结束把采集物删除了
+	uint32_t collect_uuid = collect->m_uuid;
 	if (data->pass_index < m_config->n_PassType && m_config->PassType[data->pass_index] == 3)
 	{
 		if (m_config->PassValue[data->pass_index] == collect->m_collectId)
@@ -1454,8 +1479,9 @@ void raid_struct::on_collect(player_struct *player, Collect *collect)
 //			raid_manager::delete_raid(this);
 			if (add_raid_pass_value(3, m_config))
 			{
-				m_collect.erase(collect->m_uuid);
-				Collect::DestroyCollect(collect->m_uuid);
+				delete_raid_collect_safe(collect_uuid);
+//				m_collect.erase(collect->m_uuid);
+//				Collect::DestroyCollect(collect->m_uuid);
 				return;
 			}
 		}
@@ -1463,8 +1489,9 @@ void raid_struct::on_collect(player_struct *player, Collect *collect)
 	
 	if (ai && ai->raid_on_raid_collect)
 		ai->raid_on_raid_collect(this, player, collect);
-	m_collect.erase(collect->m_uuid);	
-	Collect::DestroyCollect(collect->m_uuid);	
+	delete_raid_collect_safe(collect_uuid);
+//	m_collect.erase(collect->m_uuid);	
+//	Collect::DestroyCollect(collect->m_uuid);	
 }
 
 void raid_struct::send_raid_pass_param(player_struct *player)
@@ -1561,7 +1588,8 @@ void raid_struct::on_monster_dead(monster_struct *monster, unit_struct *killer)
 	bool send_star_changed = false;
 	for (uint32_t i = 0; i < m_config->n_Score; ++i)
 	{
-		if (m_config->Score[i] != 2)
+			//击杀怪物或者怪物存活
+		if (m_config->Score[i] != 2 && m_config->Score[i] != 3)
 			continue;
 		if (m_config->ScoreValue[i] != monster->config->ID)
 			continue;

@@ -1,21 +1,34 @@
 #include "sight_space.h"
 #include "monster_manager.h"
+#include "cash_truck_manager.h"
+#include "time_helper.h"
 #include "msgid.h"
 
 sight_space_struct::sight_space_struct()
 {
 	for (int i = 0; i < MAX_PLAYER_IN_SIGHT_SPACE; ++i)
+	{
 		players[i] = NULL;
+		trucks[i] = NULL;
+	}
 	for (int i = 0; i < MAX_MONSTER_IN_SIGHT_SPACE; ++i)
 		monsters[i] = NULL;
-
+	for (int i = 0; i < MAX_PARTNER_IN_SIGHT_SPACE; ++i)	
+		partners[i] = NULL;
+	
 	LOG_DEBUG("%s %p", __FUNCTION__, this);
 }
 
 sight_space_struct::~sight_space_struct()
 {
 	for (int i = 0; i < MAX_PLAYER_IN_SIGHT_SPACE; ++i)
+	{
 		assert(players[i] == NULL);
+		assert(trucks[i] == NULL);		
+	}
+	for (int i = 0; i < MAX_PARTNER_IN_SIGHT_SPACE; ++i)
+		assert(partners[i] == NULL);
+	
 	for (int i = 0; i < MAX_MONSTER_IN_SIGHT_SPACE; ++i)
 	{
 		if (monsters[i] == NULL)
@@ -27,8 +40,77 @@ sight_space_struct::~sight_space_struct()
 	LOG_DEBUG("%s %p", __FUNCTION__, this);	
 }
 
-int sight_space_struct::broadcast_player_delete(player_struct *player)
+int sight_space_struct::broadcast_player_delete(player_struct *player, bool enter_scene)
 {
+	player->take_truck_out_sight_space(this);
+	player->take_partner_out_sight_space(this);
+	EXTERN_DATA extern_data;
+	extern_data.player_id = player->get_uuid();	
+	fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEAVE_PLANES_RAID_NOTIFY, 0, 0);	
+
+	if (enter_scene)
+	{
+		player->send_clear_sight();
+		player->clear_player_sight();
+		if (player->scene)
+		{
+			player->scene->add_player_to_scene(player);
+			player->take_partner_into_scene();
+			player->take_truck_into_scene();			
+			
+			// cash_truck_struct *truck = cash_truck_manager::get_cash_truck_by_id(player->data->truck.truck_id);
+			// if (truck != NULL && truck->sight_space != NULL)
+			// {
+			// 	truck->clear_cash_truck_sight();
+			// 	truck->scene->add_cash_truck_to_scene(truck);
+			// 	truck->sight_space = NULL;
+			// 	truck->data->fb_time = time_helper::get_cached_time() + truck->truck_config->Interval * 1000;
+			// }
+			
+		}
+	}
+	if (data->type == 1)
+	{
+		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);
+	}
+	return (0);
+}
+int sight_space_struct::broadcast_truck_delete(cash_truck_struct *truck)
+{
+	LOG_DEBUG("%s %d: delete truck %u %lu at %p [%.1f][%.1f]", __FUNCTION__, __LINE__,
+		truck->data->monster_id, truck->get_uuid(), this, 
+		truck->get_pos()->pos_x, truck->get_pos()->pos_z);
+	
+	for (int i = 0; i < MAX_PLAYER_IN_SIGHT_SPACE; ++i)
+	{
+		if (trucks[i] == truck)
+		{
+			trucks[i] = NULL;
+			break;
+		}
+	}
+
+	truck->sight_space = NULL;
+	truck->broadcast_cash_truck_delete();
+	return (0);
+}
+
+int sight_space_struct::broadcast_partner_delete(partner_struct *partner)
+{
+	LOG_DEBUG("%s %d: delete partner %u %lu at %p [%.1f][%.1f]", __FUNCTION__, __LINE__,
+		partner->data->partner_id, partner->get_uuid(), this, 
+		partner->get_pos()->pos_x, partner->get_pos()->pos_z);
+	
+	for (int i = 0; i < MAX_PARTNER_IN_SIGHT_SPACE; ++i)
+	{
+		if (partners[i] == partner)
+		{
+			partners[i] = NULL;
+			break;
+		}
+	}
+	partner->partner_sight_space = NULL;
+	partner->broadcast_partner_delete(true);
 	return (0);
 }
 int sight_space_struct::broadcast_monster_delete(monster_struct *monster)
@@ -39,6 +121,92 @@ int sight_space_struct::broadcast_monster_delete(monster_struct *monster)
 
 int sight_space_struct::broadcast_player_create(player_struct *player)
 {
+	return (0);
+}
+
+int sight_space_struct::broadcast_truck_create(cash_truck_struct *truck)
+{
+	assert(!truck->area);
+
+	LOG_DEBUG("%s %d: create partner %u %lu at %p [%.1f][%.1f]", __FUNCTION__, __LINE__,
+		truck->data->monster_id, truck->get_uuid(), this, 
+		truck->get_pos()->pos_x, truck->get_pos()->pos_z);
+
+	for (int i = 0; i < MAX_PLAYER_IN_SIGHT_SPACE; ++i)
+	{
+		if (!trucks[i])
+		{
+//			assert(partners[i] == NULL);
+//			data->partner_uuid[i] = partner->get_uuid();
+			trucks[i] = truck;
+			break;
+		}
+	}
+	
+	SightChangedNotify notify;
+	sight_changed_notify__init(&notify);
+	SightCashTruckInfo truck_info[1];
+	SightCashTruckInfo *truck_info_point[1];
+	truck_info_point[0] = &truck_info[0];
+	notify.n_add_cash_truck = 1;
+	notify.add_cash_truck = truck_info_point;
+	truck->pack_sight_cash_truck_info(truck_info_point[0]);
+
+	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SIGHT_CHANGED_NOTIFY, &notify, (pack_func)sight_changed_notify__pack);
+	PROTO_HEAD_CONN_BROADCAST *head;	
+	head = (PROTO_HEAD_CONN_BROADCAST *)conn_node_base::global_send_buf;	
+
+	truck->add_sight_space_player_to_sight(this, &head->num_player_id, ppp);
+	truck->add_sight_space_monster_to_sight(this);
+	
+	if (head->num_player_id > 0)
+	{
+		head->len += sizeof(uint64_t) * head->num_player_id;	
+		conn_node_gamesrv::broadcast_msg_send();
+	}
+	return (0);
+}
+
+int sight_space_struct::broadcast_partner_create(partner_struct *partner)
+{
+	assert(!partner->area);
+
+	LOG_DEBUG("%s %d: create partner %u %lu at %p [%.1f][%.1f]", __FUNCTION__, __LINE__,
+		partner->data->partner_id, partner->get_uuid(), this, 
+		partner->get_pos()->pos_x, partner->get_pos()->pos_z);
+
+	for (int i = 0; i < MAX_PARTNER_IN_SIGHT_SPACE; ++i)
+	{
+		if (!partners[i])
+		{
+//			assert(partners[i] == NULL);
+//			data->partner_uuid[i] = partner->get_uuid();
+			partners[i] = partner;
+			break;
+		}
+	}
+	
+	SightChangedNotify notify;
+	sight_changed_notify__init(&notify);
+	SightPartnerInfo partner_info[1];
+	SightPartnerInfo *partner_info_point[1];
+	partner_info_point[0] = &partner_info[0];
+	notify.n_add_partner = 1;
+	notify.add_partner = partner_info_point;
+	partner->pack_sight_partner_info(partner_info_point[0]);
+
+	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SIGHT_CHANGED_NOTIFY, &notify, (pack_func)sight_changed_notify__pack);
+	PROTO_HEAD_CONN_BROADCAST *head;	
+	head = (PROTO_HEAD_CONN_BROADCAST *)conn_node_base::global_send_buf;	
+
+	partner->add_sight_space_player_to_sight(this, &head->num_player_id, ppp);
+	partner->add_sight_space_monster_to_sight(this);
+	
+	if (head->num_player_id > 0)
+	{
+		head->len += sizeof(uint64_t) * head->num_player_id;	
+		conn_node_gamesrv::broadcast_msg_send();
+	}
 	return (0);
 }
 
@@ -65,6 +233,8 @@ int sight_space_struct::broadcast_monster_create(monster_struct *monster)
 
 	monster->add_sight_space_player_to_sight(this, &head->num_player_id, ppp);
 	monster->add_sight_space_monster_to_sight(this);
+	monster->add_sight_space_partner_to_sight(this);
+	monster->add_sight_space_truck_to_sight(this);		
 	
 	if (head->num_player_id > 0)
 	{

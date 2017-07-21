@@ -478,12 +478,11 @@ bool ChengJieTaskManage::PackTask(STChengJie &task, _ChengjieTask &send)
 	chengjie_task__init(&send);
 
 	bool toFr = false;
-	char str[33] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"; //todo 定义为全局变量 组队也有
 	player_struct *target = player_manager::get_player_by_id(task.pid);
 	if (target == NULL)
 	{
 		send.online = false;
-		send.name = str;
+		send.name = (char *)g_tmp_name;
 		toFr = true;
 	}
 	else

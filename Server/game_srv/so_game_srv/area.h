@@ -10,7 +10,7 @@ public:
 	static void area_neighbour_diff(area_struct *old_area, area_struct *new_area, area_struct **del, int *n_del, area_struct **add, int *n_add);
 	
 	int init_area_struct(area_struct *base, int index, int max_x, int max_z);
-	int clean_area_strcut();
+	int clean_area_struct();
 	
 	bool is_player_in_area(uint64_t player_id);
 	int add_player_to_area(uint64_t player_id);

@@ -28,6 +28,13 @@ void normal_raid_ai_tick(raid_struct *raid)
 		{
 			raid->send_star_changed_notify(star_param, score_param);
 		}
+
+		if (raid->data->pass_index < raid->m_config->n_PassType && raid->m_config->PassType[raid->data->pass_index] == 2)
+		{
+			uint64_t t = (time_helper::get_cached_time() - raid->data->start_time) / 1000;
+			if (raid->m_config->PassValue[raid->data->pass_index] <= t)
+				raid->add_raid_pass_value(2, raid->m_config);
+		}
 	}
 }
 

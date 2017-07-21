@@ -261,6 +261,8 @@ void conn_node_friendsrv::handle_zhenying_power()
 			{
 				send.power_man = 0;
 			}
+
+			zhenying_redis__free_unpacked(rzhenying, NULL);
 		}
 	}
 	else
@@ -315,6 +317,8 @@ void conn_node_friendsrv::handle_zhenying_change_power()
 			{
 				LOG_ERR("%s: oper failed, ret = %d", __FUNCTION__, ret);
 			}
+
+			zhenying_redis__free_unpacked(rzhenying, NULL);
 		}
 	}
 
@@ -370,6 +374,7 @@ void conn_node_friendsrv::handle_zhenying_add_kill()
 					LOG_ERR("%s: oper failed, ret = %d", __FUNCTION__, ret);
 				}
 			}
+			zhenying_redis__free_unpacked(rzhenying, NULL);
 		}
 	}
 

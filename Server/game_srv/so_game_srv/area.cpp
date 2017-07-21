@@ -7,9 +7,14 @@
 #define DEFAULT_PLAYER_NUM_IN_AREA 50
 #define DEFAULT_COLLECT_NUM_IN_AREA 50
 
-int area_struct::clean_area_strcut()
+int area_struct::clean_area_struct()
 {
 	free(m_monster_uuid);
+	free(m_collect_ids);
+	free(m_player_ids);
+	free(m_truck_uuid);
+	free(m_partner_uuid);
+	
 	return (0);
 }
 

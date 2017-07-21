@@ -20,25 +20,27 @@ static void player_enter_sight_space(sight_space_struct *sight_space, player_str
 	if (scene)
 	{
 		player->send_clear_sight();
-		bool addTruck = false; 
-		cash_truck_struct *truck = cash_truck_manager::get_cash_truck_by_id(player->data->truck.truck_id);
-		if (truck != NULL)
-		{
-			if (player->data->truck.on_truck)
-			{
-				truck->sight_space = sight_space;
-				scene->delete_cash_truck_from_scene(truck);
-				truck->scene = scene;
-				addTruck = true;
-			}
-		}
+		// bool addTruck = false; 
+		// cash_truck_struct *truck = cash_truck_manager::get_cash_truck_by_id(player->data->truck.truck_id);
+		// if (truck != NULL)
+		// {
+		// 	if (player->data->truck.on_truck)
+		// 	{
+		// 		truck->sight_space = sight_space;
+		// 		scene->delete_cash_truck_from_scene(truck);
+		// 		truck->scene = scene;
+		// 		addTruck = true;
+		// 	}
+		// }
 		
 		scene->delete_player_from_scene(player);
 		player->scene = scene; //之前delete的时候会清空这个指针，这里需要恢复
-		if (addTruck)
-		{
-			player->add_truck_to_sight(truck->get_uuid());
-		}
+		// if (addTruck)
+		// {
+		// 	player->add_truck_to_sight(truck->get_uuid());
+		// }
+		player->take_truck_into_sight_space();
+		player->take_partner_into_sight_space();
 	}
 
 	EnterPlanesRaid send;
@@ -67,27 +69,26 @@ void sight_space_manager::on_tick()
 				assert(player->sight_space == sight_space);
 				player->sight_space = NULL;
 				sight_space->players[i] = NULL;
-				sight_space->data->player_id[i] = 0;
+//				sight_space->data->player_id[i] = 0;
+				sight_space->broadcast_player_delete(player, true);
+				// EXTERN_DATA extern_data;
+				// extern_data.player_id = player->get_uuid();	
+				// fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEAVE_PLANES_RAID_NOTIFY, 0, 0);
 
-				EXTERN_DATA extern_data;
-				extern_data.player_id = player->get_uuid();	
-				fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEAVE_PLANES_RAID_NOTIFY, 0, 0);
-
-				player->send_clear_sight();
-				player->clear_player_sight();
-				if (player->scene)
-				{
-					player->scene->add_player_to_scene(player);
-					cash_truck_struct *truck = cash_truck_manager::get_cash_truck_by_id(player->data->truck.truck_id);
-					if (truck != NULL && truck->sight_space != NULL)
-					{
-						truck->clear_cash_truck_sight();
-						truck->scene->add_cash_truck_to_scene(truck);
-						truck->sight_space = NULL;
-						truck->sight_space = NULL;
-						truck->data->fb_time = time_helper::get_cached_time() + truck->truck_config->Interval * 1000;
-					}
-				}
+				// player->send_clear_sight();
+				// player->clear_player_sight();
+				// if (player->scene)
+				// {
+				// 	player->scene->add_player_to_scene(player);
+				// 	cash_truck_struct *truck = cash_truck_manager::get_cash_truck_by_id(player->data->truck.truck_id);
+				// 	if (truck != NULL && truck->sight_space != NULL)
+				// 	{
+				// 		truck->clear_cash_truck_sight();
+				// 		truck->scene->add_cash_truck_to_scene(truck);
+				// 		truck->sight_space = NULL;
+				// 		truck->data->fb_time = time_helper::get_cached_time() + truck->truck_config->Interval * 1000;
+				// 	}
+				// }
 					
 			}
 		}
@@ -118,7 +119,7 @@ sight_space_struct *sight_space_manager::create_sight_space(player_struct *playe
 	ret->data->type = type;
 	
 	ret->players[0] = player;
-	ret->data->player_id[0] = player->get_uuid();
+//	ret->data->player_id[0] = player->get_uuid();
 	player_enter_sight_space(ret, player);
 	return ret;
 }
@@ -140,67 +141,64 @@ sight_space_struct *sight_space_manager::create_sight_space(player_struct *playe
 // }
 int sight_space_manager::del_player_from_sight_space(sight_space_struct *sight_space, player_struct *player, bool enter_scene)
 {
-	assert(player->sight_space == sight_space);
-	player->sight_space = NULL;
-	LOG_DEBUG("%s: player[%lu] leave sightspace %p", __FUNCTION__, player->get_uuid(), sight_space);	
-	bool empty = true;
-
 		//已经在删除队列了，就不用管了
 	if (sight_space->data->mark_delete)
 	{
-		empty = false;
+		return 0;
 	}
-	else
+	
+	assert(player->sight_space == sight_space);
+	player->sight_space = NULL;
+	LOG_DEBUG("%s: player[%lu] leave sightspace %p", __FUNCTION__, player->get_uuid(), sight_space);	
+	bool empty = true;	
+
+	for (int i = 0; i < MAX_PLAYER_IN_SIGHT_SPACE; ++i)
 	{
-		for (int i = 0; i < MAX_PLAYER_IN_SIGHT_SPACE; ++i)
+		if (sight_space->players[i] == player)
 		{
-			if (sight_space->players[i] == player)
-			{
-				sight_space->players[i] = NULL;
-				sight_space->data->player_id[i] = 0;
-			}
-			else if (sight_space->players[i])
-			{
-				empty = false;
-			}
+			sight_space->players[i] = NULL;
+//				sight_space->data->player_id[i] = 0;
+		}
+		else if (sight_space->players[i])
+		{
+			empty = false;
 		}
 	}
+	sight_space->broadcast_player_delete(player, enter_scene);
 
 	if (empty)
 	{
 		comm_pool_free(&sight_space_manager_sight_space_data_pool, sight_space->data);		
 		delete sight_space;
 	}
-	else
-	{
-		sight_space->broadcast_player_delete(player);
-	}
 
-	EXTERN_DATA extern_data;
-	extern_data.player_id = player->get_uuid();	
-	fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEAVE_PLANES_RAID_NOTIFY, 0, 0);	
-
-	if (enter_scene)
-	{
-		player->send_clear_sight();
-		player->clear_player_sight();
-		if (player->scene)
-		{
-			player->scene->add_player_to_scene(player);
-			cash_truck_struct *truck = cash_truck_manager::get_cash_truck_by_id(player->data->truck.truck_id);
-			if (truck != NULL && truck->sight_space != NULL)
-			{
-				truck->clear_cash_truck_sight();
-				truck->scene->add_cash_truck_to_scene(truck);
-				truck->sight_space = NULL;
-				truck->data->fb_time = time_helper::get_cached_time() + truck->truck_config->Interval * 1000;
-			}
-			
-		}
-			
-	}
-	
 	return (0);
+
+	// EXTERN_DATA extern_data;
+	// extern_data.player_id = player->get_uuid();	
+	// fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEAVE_PLANES_RAID_NOTIFY, 0, 0);	
+
+	// if (enter_scene)
+	// {
+	// 	player->send_clear_sight();
+	// 	player->clear_player_sight();
+	// 	if (player->scene)
+	// 	{
+	// 		player->scene->add_player_to_scene(player);
+	// 		cash_truck_struct *truck = cash_truck_manager::get_cash_truck_by_id(player->data->truck.truck_id);
+	// 		if (truck != NULL && truck->sight_space != NULL)
+	// 		{
+	// 			truck->clear_cash_truck_sight();
+	// 			truck->scene->add_cash_truck_to_scene(truck);
+	// 			truck->sight_space = NULL;
+	// 			truck->data->fb_time = time_helper::get_cached_time() + truck->truck_config->Interval * 1000;
+	// 		}
+			
+	// 	}
+			
+	// }
+	
+	// return (0);
 }
 
 void sight_space_manager::mark_sight_space_delete(sight_space_struct *sight_space)

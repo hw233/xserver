@@ -16,6 +16,9 @@ add_custom_target(svnup
   COMMAND cd ${PROJECT_SOURCE_DIR}/excel_data && make excel_data
   COMMAND make -j protoup)
 
+option(MEMERR
+    "check mem overflow" ON)
+
 add_subdirectory(proto)
 add_subdirectory(comm_lib)
 add_subdirectory(conn_srv)

@@ -46,6 +46,7 @@
 #define ERROR_ID_TASK_TEAM_LEADER        1311 //组队任务只能队长接
 #define ERROR_ID_TASK_ACCEPTED           1312 //任务已接
 #define ERROR_ID_TASK_CHAPTER_REWARD     1313 //任务章节奖励还不能领
+#define ERROR_ID_TASK_FINISHED           1314 //任务已完成
 
 #define ERROR_ID_NOT_SINGING             1400 //玩家没有在吟唱
 #define ERROR_ID_SING_TIME               1401 //吟唱时间未结束
@@ -169,6 +170,7 @@
 #define ERROR_ID_USE_PROP_IS_EXPIRE	        	190300010 //道具已到期无法使用
 #define ERROR_ID_RENAME_PROP_NOT_ENOUGH        	190300011 //您的改名卡不足，请前往商城购买
 #define ERROR_ID_SHOP_BUY_BAG_FULL      	    190300016 //背包空位不足，购买失败
+#define ERROR_ID_TASK_ACCEPT_MAX        	    190300036 //已达任务数量上限，请完成当前任务再进行接取！
 #define ERROR_ID_GET_MAIL_ATTACH_BAG_FULL      	190500081 //您的背包已满，邮件领取失败
 #define ERROR_ID_COIN_IS_NOT_ENOUGH           	190500100 //您的银两不足
 #define ERROR_ID_ZHENQI_IS_NOT_ENOUGH           190500101 //您的真气不足

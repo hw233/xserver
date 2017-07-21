@@ -6,7 +6,7 @@
 class guild_wait_raid_struct : public raid_struct
 {
 public:
-//	int init_raid(player_struct *player);
+	int init_raid(player_struct *player);
 	int init_special_raid_data(player_struct *player);	
 	void add_player_to_guild_wait_raid(player_struct *player);
 	virtual int add_player_to_scene(player_struct *player);

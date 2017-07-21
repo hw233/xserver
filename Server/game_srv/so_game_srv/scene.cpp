@@ -39,6 +39,9 @@ scene_struct::~scene_struct()
 
 void scene_struct::clear()
 {
+	for (int i = 0; i < m_area_size; ++i)
+		m_area[i].clean_area_struct();
+	
 	free(m_area);
 	m_area = NULL;
 	m_area_size = 0;

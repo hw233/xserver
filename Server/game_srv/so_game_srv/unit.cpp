@@ -6,6 +6,7 @@
 #include "team.h"
 #include "buff_manager.h"
 #include "partner_manager.h"
+#include "cash_truck_manager.h"
 #include "msgid.h"
 #include "role.pb-c.h"
 #include "cast_skill.pb-c.h"
@@ -24,10 +25,18 @@ unit_struct *unit_struct::get_unit_by_uuid(uint64_t uuid)
 	else if (entity_type == ENTITY_TYPE_MONSTER)
 	{
 		T = monster_manager::get_monster_by_id(uuid);
+		if (!T)
+		{
+			T = cash_truck_manager::get_cash_truck_by_id(uuid);			
+		}
 	}
 	else if (entity_type == ENTITY_TYPE_PARTNER)
 	{
 		T = partner_manager::get_partner_by_uuid(uuid);
+	}
+	else if (entity_type == ENTITY_TYPE_TRUCK)
+	{
+		T = cash_truck_manager::get_cash_truck_by_id(uuid);		
 	}
 	else
 	{

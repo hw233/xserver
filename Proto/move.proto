@@ -68,6 +68,7 @@ message sight_monster_info
 	required uint32 pk_type = 8; //pk模式
 	required uint32 zhenying_id = 9; //阵营ID
 	required uint32 effectid = 10;  //召唤怪物出生特效
+	required float direct = 11; //出生朝向
 }
 
 //视野镖车上的玩家的基本信息

@@ -206,6 +206,7 @@ enum TaskConditionType
 	TCT_WANYAOGU = 53, //万妖谷
 	TCT_HORSE_ADD_EXP = 54, //坐骑修灵
 	TCT_QUESTION_JOIN = 55, //参与答题
+	TCT_TRUCK_NUM = 56, //押镖次数
 };
 
 enum TaskBasicCondition

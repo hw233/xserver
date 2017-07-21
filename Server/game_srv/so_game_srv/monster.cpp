@@ -236,6 +236,10 @@ void monster_struct::calculate_attribute(void)
 	calculate_buff_fight_attr(true);	
 }
 
+monster_struct::~monster_struct()
+{
+}
+
 void monster_struct::init_monster()
 {
 	init_unit_struct();
@@ -298,6 +302,7 @@ void monster_struct::pack_sight_monster_info(SightMonsterInfo *info)
 	info->data = pack_unit_move_path(&info->n_data);
 	info->speed = data->attrData[PLAYER_ATTR_MOVE_SPEED];
 	info->buff_info = pack_unit_buff(&info->n_buff_info);
+	info->direct = data->born_direct;
 /*	
 	info->n_data = 1;
 	info->data = &pos_pool_pos_point[pos_pool_len];
@@ -323,6 +328,29 @@ void monster_struct::add_sight_space_player_to_sight(sight_space_struct *sight_s
 	}
 }
 
+void monster_struct::add_sight_space_truck_to_sight(sight_space_struct *sight_space)
+{
+	for (int j = 0; j < MAX_PLAYER_IN_SIGHT_SPACE; ++j)
+	{
+		cash_truck_struct *truck = sight_space->trucks[j];
+		if (!truck)
+			continue;
+
+		add_truck_to_sight_both(truck);
+	}
+}
+
+void monster_struct::add_sight_space_partner_to_sight(sight_space_struct *sight_space)
+{
+	for (int j = 0; j < MAX_PARTNER_IN_SIGHT_SPACE; ++j)
+	{
+		partner_struct *partner = sight_space->partners[j];
+		if (!partner)
+			continue;
+
+		add_partner_to_sight_both(partner);
+	}
+}
 void monster_struct::add_sight_space_monster_to_sight(sight_space_struct *sight_space)
 {
 	for (int j = 0; j < MAX_MONSTER_IN_SIGHT_SPACE; ++j)
@@ -681,12 +709,12 @@ void monster_struct::on_dead(unit_struct *killer)
 				if (sight_space->data->type != 0)
 				{
 						//寻宝
-					if (sight_space->data->type == 1)
-					{
-						EXTERN_DATA extern_data;
-						extern_data.player_id = killer->get_uuid();
-						fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);
-					}
+					//if (sight_space->data->type == 1)
+					//{
+					//	EXTERN_DATA extern_data;
+					//	extern_data.player_id = killer->get_uuid();
+					//	fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);
+					//}
 					sight_space_manager::del_player_from_sight_space(sight_space, (player_struct *)killer, true);
 					return;
 				}

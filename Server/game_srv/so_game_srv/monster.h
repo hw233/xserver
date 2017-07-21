@@ -57,6 +57,7 @@ struct monster_data
 //	float speed;  //速度
 //移动路径
 	struct unit_path move_path;
+	float born_direct;
 
 	uint64_t sight_player[MAX_PLAYER_IN_MONSTER_SIGHT];
 	int cur_sight_player;
@@ -125,9 +126,10 @@ enum AIStateType
 	AI_GO_BACK_STATE,   //返回模式
 	AI_PATROL_STATE,   //巡逻模式
 //	AI_DIRECT_PATROL_STATE,    //直巡模式
-//	AI_PRE_GO_BACK_STATE,   //预返回模式
+	AI_PRE_GO_BACK_STATE,   //预返回模式
 	AI_DEAD_STATE,      //死亡
 	AI_WAIT_STATE,     //等待状态
+	AI_STAND_STATE,    //傻站状态
 };
 enum AIType
 {
@@ -143,6 +145,7 @@ enum AIType
 class monster_struct: public unit_struct
 {
 public:
+	virtual ~monster_struct();
 	UNIT_TYPE get_unit_type();	
 	bool is_avaliable();
 	uint32_t get_skill_id();
@@ -250,7 +253,9 @@ public:
 
 	void add_sight_space_player_to_sight(sight_space_struct *sight_space, uint16_t *add_player_id_index, uint64_t *add_player);
 	void add_sight_space_monster_to_sight(sight_space_struct *sight_space);
-
+	void add_sight_space_partner_to_sight(sight_space_struct *sight_space);	
+	void add_sight_space_truck_to_sight(sight_space_struct *sight_space);
+	
 //	int count_rect_unit(std::vector<unit_struct *> *ret, uint max, double length, double width);	
 	
 //移动路径
@@ -281,9 +286,10 @@ public:
 		{
 			uint8_t cur_pos_index;
 			uint64_t out_fight_time;  //脱战时间
-			bool     fight_back;
 			uint64_t owner_player_id;  //所属的玩家
 			uint32_t escort_id; //护送ID
+			EscortTask *config;
+			struct position ret_pos;  //被吸引进战斗的地点，只会返回该地点
 		} escort_ai; //护送怪物AI
 		struct
 		{

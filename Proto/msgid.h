@@ -69,6 +69,8 @@
 #define MSG_ID_OPEN_SKILL_FOR_GUIDE 		10222   // 新手副本开放技能 learn_skill_req
 #define MSG_ID_PARTNER_SKILL_CAST_REQUEST 		10223   //伙伴施法请求  NULL
 #define MSG_ID_PARTNER_SKILL_CAST_ANSWER  		10224   //伙伴施法应答  comm_answer, 190500320表示无目标
+#define MSG_ID_ADD_SPEED_BUFF_REQUEST  		10225   //请求添加加速buff  NULL
+#define MSG_ID_DEL_SPEED_BUFF_REQUEST  		10226   //请求删除加速buff  NULL
 
 //生活技能
 #define MSG_ID_LEARN_LIVE_SKILL_REQUEST 	10250   // 升级生活技能请求 learn_live_req
@@ -218,6 +220,7 @@
 #define MSG_ID_TEAM_SPEEK_CD_NOTIFY       10676 // 自动喊话CD TeamNotifyCd
 #define MSG_ID_TEAM_SPEEK_REQUEST       10678 //喊话 Chat
 #define MSG_ID_DISBAND_TEAM_NOTIFY         10657 //解散队伍  comm_answer
+#define MSG_ID_TEAM_SUMMON_MEM_ANSWER       10679 // 通知队员跟随 BeLeadAnswer
 
 
 //吟唱
@@ -604,6 +607,8 @@
 #define MSG_ID_XUNBAO_POS_ANSWER          12552 //寻宝位置应答 XunbaoPos
 #define MSG_ID_XUNBAO_FB_PASS_NOTIFY          12553 //寻宝副本通关 NULL
 #define MSG_ID_XUNBAO_USE_NEXT_NOTIFY          12554 //使用下张藏宝图 NULL
+#define MSG_ID_XUNBAO_AUTO_COLLECT_NOTIFY          12555 // AutoCollect
+#define MSG_ID_XUNBAO_AUTO_MONSTER_NOTIFY          12556 //AutoCollect
  
 //好友
 #define MSG_ID_FRIEND_INFO_REQUEST                        12601 //好友信息请求 NULL
@@ -739,5 +744,8 @@
 #define MSG_ID_JIJIANGOP_GIFT_INFO_NOTIFY                   13401 //已领取最大奖励礼包信息  GiftCommNotify
 #define MSG_ID_JIJIANGOP_GIFT_INFO_REQUEST                  13402 //领取即将开启礼包请求  NULL
 #define MSG_ID_JIJIANGOP_GIFT_INFO_ANSWER                   13403 //领奖回复  GiftReceiveAnswer
+
+//客户端请求跳过新手副本
+#define MSG_ID_SKIP_NEW_RAID_REQUEST						13501 //请求跳过新手副本 NULL
 #endif
 

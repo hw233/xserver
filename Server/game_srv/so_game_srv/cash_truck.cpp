@@ -177,6 +177,10 @@ void cash_truck_struct::calculate_attribute(void)
 	calculate_buff_fight_attr(true);
 }
 
+cash_truck_struct::~cash_truck_struct()
+{
+}
+
 void cash_truck_struct::init_cash_truck()
 {
 	init_unit_struct();
@@ -253,6 +257,8 @@ void cash_truck_struct::on_tick()
 		ParameterTable *table = get_config_by_id(161000225, &parameter_config);
 		if (table != NULL && data->next_add_endruance < time_helper::get_cached_time())
 		{
+			uint32_t old = data->endurance;
+			
 			data->next_add_endruance = time_helper::get_cached_time() + 1000;
 			if (data->endurance < table->parameter1[0])
 			{
@@ -263,11 +269,15 @@ void cash_truck_struct::on_tick()
 			{
 				data->endurance = table->parameter1[0];
 			}
-			TruckEndurance send;
-			truck_endurance__init(&send);
-			send.endurance = data->endurance;
-			extern_data.player_id = player->get_uuid();
-			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_CASH_TRUCK_ENDURANCE_NOTIFY, truck_endurance__pack, send);
+
+			if (old != data->endurance)
+			{
+				TruckEndurance send;
+				truck_endurance__init(&send);
+				send.endurance = data->endurance;
+				extern_data.player_id = player->get_uuid();
+				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_CASH_TRUCK_ENDURANCE_NOTIFY, truck_endurance__pack, send);
+			}
 		}
 	}
 	if (player->sight_space == NULL && data->fb_time < time_helper::get_cached_time() && player->data->truck.jiefei < truck_config->Time)
@@ -309,10 +319,6 @@ void cash_truck_struct::on_tick()
 
 void cash_truck_struct::on_dead(unit_struct *killer)
 {
-
-	if (sight_space)
-		sight_space_manager::mark_sight_space_delete(sight_space);
-
 	player_struct *pOwner = player_manager::get_player_by_id(data->owner);
 	if (pOwner == NULL)
 	{
@@ -654,40 +660,28 @@ bool cash_truck_struct::on_partner_enter_sight(uint64_t uuid)
 
 void cash_truck_struct::add_sight_space_player_to_sight(sight_space_struct *sight_space, uint16_t *add_player_id_index, uint64_t *add_player)
 {
-	//for (int j = 0; j < MAX_PLAYER_IN_SIGHT_SPACE; ++j)
-	//{
-	//	player_struct *player = sight_space->players[j];
-	//	if (!player)
-	//		continue;
-	//	if (player->prepare_add_monster_to_sight(this) != 0)
-	//		continue;
-	//	if (player->add_monster_to_sight_both(this) >= 0)
-	//	{
-	//		add_player[*add_player_id_index] = player->data->player_id;
-	//		(*add_player_id_index)++;
-	//	}
-	//}
+	for (int j = 0; j < MAX_PLAYER_IN_SIGHT_SPACE; ++j)
+	{
+		player_struct *player = sight_space->players[j];
+		if (!player)
+			continue;
+		if (player->add_cash_truck_to_sight_both(this) >= 0)
+		{
+			add_player[*add_player_id_index] = player->data->player_id;
+			(*add_player_id_index)++;
+		}
+	}
 }
 
 void cash_truck_struct::add_sight_space_monster_to_sight(sight_space_struct *sight_space)
 {
-	//for (int j = 0; j < MAX_MONSTER_IN_SIGHT_SPACE; ++j)
-	//{
-	//	monster_struct *monster = sight_space->monsters[j];
-	//	if (!monster)
-	//		continue;
-
-	//	if (monster == this)
-	//		continue;
-
-	//	LOG_DEBUG("%s: %lu[%u] prepare add monster %lu[%u]", __FUNCTION__, get_uuid(), data->cur_sight_monster,
-	//		monster->get_uuid(), monster->data->cur_sight_monster);
-
-	//	if (prepare_add_monster_to_sight(monster) != 0)
-	//		continue;
-	//	// TODO: 检查是否能攻击，不能攻击的不需要加入视野
-	//	add_monster_to_sight_both(monster);
-	//}
+	for (int j = 0; j < MAX_MONSTER_IN_SIGHT_SPACE; ++j)
+	{
+		monster_struct *monster = sight_space->monsters[j];
+		if (!monster)
+			continue;
+		monster->add_truck_to_sight_both(this);
+	}
 }
 
 bool cash_truck_struct::can_see_player(player_struct *player)

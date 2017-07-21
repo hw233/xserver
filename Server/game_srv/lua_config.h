@@ -285,8 +285,10 @@ extern uint32_t sg_partner_anger_max;
 extern uint32_t sg_partner_relive_time;
 extern uint32_t sg_partner_sanshenshi_id;
 extern uint32_t sg_partner_sanshenshi_score;
+extern uint32_t sg_partner_sanshenshi_coin;
 extern uint32_t sg_partner_qiyaoshi_id;
 extern uint32_t sg_partner_qiyaoshi_score;
+extern uint32_t sg_partner_qiyaoshi_coin;
 
 extern double sg_fight_param_161000274;                //体质转生命系数
 extern double sg_fight_param_161000275;                //力量转攻击系数

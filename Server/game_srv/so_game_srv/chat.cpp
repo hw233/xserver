@@ -5,6 +5,7 @@
 #include "buff_manager.h"
 #include "partner_manager.h"
 #include "sight_space_manager.h"
+#include "cash_truck_manager.h"
 #include "raid.h"
 #include "raid_manager.h"
 #include "pvp_match_manager.h"
@@ -51,21 +52,7 @@ void chat_mod::parse_cmd(char *line, int *argc, char *argv[])
 
 static void send_chat_content(player_struct *player, char *content)
 {
-	Chat nty;
-	chat__init(&nty);
-
-	nty.channel = CHANNEL__area;
-	nty.contain = content;
-	nty.sendname = player->get_name();
-	nty.sendplayerid = player->get_uuid();
-	nty.sendplayerlv = player->get_level();
-	nty.sendplayerjob = player->get_job();
-	nty.sendplayerpicture = player->get_attr(PLAYER_ATTR_HEAD);
-	nty.has_sendplayerpicture = true;
-
-	EXTERN_DATA extern_data;
-	extern_data.player_id = player->get_uuid();
-	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_CHAT_NOTIFY, chat__pack, nty);
+	player->send_chat(CHANNEL__area, content);
 }
 
 static void send_script_info(player_struct *player, struct raid_script_data *data)
@@ -119,12 +106,20 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 		if (raid)
 			raid->on_raid_finished();
 	}
-	else if (argc >= 2 && strcasecmp(argv[0], "print") == 0)
+	else if (argc >= 4 && strcasecmp(argv[0], "print") == 0)
 	{
 		if (strcasecmp(argv[1], "pos") == 0)
 		{
 			LOG_DEBUG("%s: [%lu] player pos x=%f, z= %f", __FUNCTION__, player->get_uuid(), player->get_pos()->pos_x, player->get_pos()->pos_z);
 		}
+		ChatHorse send;
+		chat_horse__init(&send);
+		send.id = 0;
+		send.prior = 1;
+		send.content = argv[3];
+		send.gap = atoi(argv[1]);
+		send.cd = atoi(argv[2]);
+		conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_HORSE_NOTIFY, &send, (pack_func)chat_horse__pack);
 	}
 	else if (strcasecmp(argv[0], "uid") == 0)
 	{
@@ -150,6 +145,16 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	else if (argc >= 3 && strcasecmp(argv[0], "add") == 0 && strcasecmp(argv[1], "exp") == 0)
 	{
 		add_exp(player, atoi(argv[2]));
+	}
+	else if (argc >= 1 && strcasecmp(argv[0], "addtruck") == 0)
+	{
+		cash_truck_struct *pTruck = cash_truck_manager::create_cash_truck_at_pos(player->scene, 440100002, *player);
+		if (pTruck != NULL)
+		{
+			player->data->truck.truck_id = pTruck->get_uuid();
+			player->data->truck.active_id = 440100002;
+			player->data->truck.jiefei = 0;
+		}
 	}
 	else if (argc >= 2 && strcasecmp(argv[0], "addmonster") == 0)
 	{
@@ -479,7 +484,9 @@ void chat_mod::gm_add_sight_space_monster(player_struct *player, int val)
 		return;
 	sight_space_struct *sight = sight_space_manager::create_sight_space(player);
 
-	uint32_t monster_id[] = {151000001,	151000033, 	151000034,	151000036};
+//	uint32_t monster_id[] = {151000001,	151000033, 	151000034,	151000036};
+	uint32_t monster_id[] = {151005042};
+//	uint32_t monster_id[] = {};	
 
 	for (size_t i = 0; i < ARRAY_SIZE(monster_id); ++i)
 	{

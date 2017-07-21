@@ -3065,6 +3065,7 @@ int conn_node_guildsrv::handle_guild_battle_final_list_request(EXTERN_DATA * /*e
 	}
 
 	PROTO_GUILD_BATTLE_RANK *rank_req = (PROTO_GUILD_BATTLE_RANK*)get_send_buf(SERVER_PROTO_GUILD_BATTLE_FINAL_LIST_ANSWER, 0);
+	rank_req->head.len = ENDION_FUNC_4(sizeof(PROTO_GUILD_BATTLE_RANK));
 	memset(rank_req->head.data, 0, sizeof(PROTO_GUILD_BATTLE_RANK) - sizeof(PROTO_HEAD));
 	for (size_t i = 0; i < guild_ids.size() && i < 4; ++i)
 	{

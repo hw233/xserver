@@ -37,7 +37,7 @@ static char sql[1024*64];
 //static char send_buf[1024 * 64];
 static PlayerBaseInfo playerinfo_buf[MAX_PLAYER_NUM];
 static PlayerBaseInfo *playerinfo[MAX_PLAYER_NUM];
-static char playerinfo_name[MAX_PLAYER_NUM][MAX_PLAYER_NAME_LEN];
+static char playerinfo_name[MAX_PLAYER_NUM][MAX_PLAYER_NAME_LEN + 1];
 
 uint32_t sg_server_id = 0;
 uint32_t sg_max_conn = 0;
@@ -337,8 +337,7 @@ int conn_node_loginsrv::select_player_base_info(uint32_t open_id, size_t *n_play
 
 		strncpy(playerinfo[*n_playerinfo]->name, row[2], MAX_PLAYER_NAME_LEN - 1);
 		playerinfo[*n_playerinfo]->name[MAX_PLAYER_NAME_LEN - 1] = '\0';		
-		playerinfo[*n_playerinfo]->name = strdup(row[2]);
-
+//		playerinfo[*n_playerinfo]->name = strdup(row[2]);
 
 		attrs_id[*n_playerinfo].push_back(PLAYER_ATTR_LEVEL);
 		attrs_val[*n_playerinfo].push_back(atoi(row[3]));

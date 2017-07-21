@@ -6,4 +6,5 @@ core_file_name=`ls -lt /tmp/core.game_srv.*.$pid | head -1 | awk '{print $9}'`
 `cp so_game_srv/*.so core_bak/`
 `cp game_srv core_bak/`
 `cp logs/game_srv.0 core_bak/`
+`cp memerr.txt core_bak/`
 `chmod a+r core_bak/*`

@@ -10,6 +10,7 @@
 #include "lua_config.h"
 #include "raid_manager.h"
 #include "raid.h"
+#include "global_param.h"
 #include "pvp_match_manager.h"
 #include "global_shared_data.h"
 
@@ -345,7 +346,6 @@ void Team::SendWholeTeamInfo(player_struct &player)
 	TeamInfo send;
 	team_info__init(&send);
 	int offline = 0;
-	char str[33] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 	for (int pos = 0; pos < m_data->m_memSize; ++pos)
 	{
 		player_struct *pMem = player_manager::get_player_by_id(m_data->m_mem[pos].id);
@@ -357,7 +357,7 @@ void Team::SendWholeTeamInfo(player_struct &player)
 		{
 			team_mem_info__init(&arr[i]);
 			arr[i].playerid = m_data->m_mem[pos].id;
-			arr[i].name = str;
+			arr[i].name = (char *)g_tmp_name;
 			++offline;
 		}
 
@@ -470,7 +470,20 @@ void Team::SummonMem()
 	for (int i = 1; i < m_data->m_memSize; ++i)
 	{
 		if (m_data->m_mem[i].timeremove == 0 && !m_data->m_mem[i].follow)
+		{
 			conn_node_gamesrv::broadcast_msg_add_players(m_data->m_mem[i].id, ppp);
+			player_struct *pMember = player_manager::get_player_by_id(m_data->m_mem[i].id);
+			if (pMember != NULL && pMember->data->truck.truck_id != 0)
+			{
+				BeLeadAnswer send;
+				be_lead_answer__init(&send);
+				send.ret = 190500361;
+				send.name = pMember->get_name();
+				EXTERN_DATA extern_data;
+				extern_data.player_id = m_data->m_mem[0].id;
+				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_TEAM_HANDLE_BE_LEAD_ANSWER, be_lead_answer__pack, send);
+			}
+		}			
 	}
 	conn_node_gamesrv::broadcast_msg_send();
 }
@@ -532,7 +545,6 @@ void Team::SendApplyList(player_struct &player)
 	team_applyer_list__init(&send);
 
 	int offline = 0;
-	char str[33] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 	for (int pos = 0; pos < m_data->m_applySize; ++pos)
 	{
 		player_struct *pMem = player_manager::get_player_by_id(m_data->m_applyList[i]);
@@ -540,7 +552,7 @@ void Team::SendApplyList(player_struct &player)
 		{
 			team_mem_info__init(&arr[i]);
 			arr[i].playerid = m_data->m_applyList[i];
-			arr[i].name = str;
+			arr[i].name = (char *)g_tmp_name;
 			++offline;
 		}
 		else
@@ -959,6 +971,8 @@ void Team::NotityXiayi()
 	send.sendplayerid = lead->get_uuid();
 	send.sendplayerlv = lead->get_attr(PLAYER_ATTR_LEVEL);
 	send.sendplayerjob = lead->get_attr(PLAYER_ATTR_JOB);
+	send.sendplayerpicture = lead->get_attr(PLAYER_ATTR_HEAD);
+	send.has_sendplayerpicture = true;
 
 	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_CHAT_NOTIFY, &send, (pack_func)chat__pack);
 	PROTO_HEAD_CONN_BROADCAST *head;
@@ -1045,16 +1059,7 @@ void Team::SetLimited(TeamLimited &limit, player_struct &player)
 	{
 		if (m_data->speekCd[CHANNEL__world] <= (time_t)time_helper::get_cached_time() / 1000)
 		{
-			Chat send;
-			chat__init(&send);
-
-			send.contain = str;
-			send.channel = CHANNEL__world;
-			send.sendname = player.data->name;
-			send.sendplayerid = player.get_uuid();
-			send.sendplayerlv = player.get_attr(PLAYER_ATTR_LEVEL);
-			send.sendplayerjob = player.get_attr(PLAYER_ATTR_JOB);
-			conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_NOTIFY, (void *)&send, (pack_func)chat__pack);
+			player.send_chat(CHANNEL__world, str);
 
 			ParameterTable *table = get_config_by_id(161000005, &parameter_config);
 			if (table != NULL)
@@ -1118,7 +1123,6 @@ int Team::PackAllMemberInfo(_TeamMemInfo *notice, _TeamMemInfo **noticeArr)
 {
 	int num = 0;
 	int offline = 0;
-	char str[33] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 	for (int i = 0; i < m_data->m_memSize; ++i)
 	{
 		player_struct *pMem = player_manager::get_player_by_id(m_data->m_mem[i].id);
@@ -1126,7 +1130,7 @@ int Team::PackAllMemberInfo(_TeamMemInfo *notice, _TeamMemInfo **noticeArr)
 		{
 			team_mem_info__init(notice + num);
 			notice[num].playerid = m_data->m_mem[i].id;
-			notice[num].name = str;
+			notice[num].name = (char *)g_tmp_name;
 			++offline;
 		}
 		else

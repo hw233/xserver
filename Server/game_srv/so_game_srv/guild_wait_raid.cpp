@@ -8,40 +8,11 @@
 #include "collect.h"
 #include "guild_battle_manager.h"
 
-// int guild_wait_raid_struct::init_raid(player_struct */*player*/)
-// {
-// 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
-// 	{
-// 		m_player[i] = NULL;
-// 		m_player2[i] = NULL;
-// 		m_player3[i] = NULL;
-// 		m_player4[i] = NULL;		
-// 	}
-// 	m_raid_team = NULL;
-// 	m_raid_team2 = NULL;
-// 	m_raid_team3 = NULL;
-// 	m_raid_team4 = NULL;	
-// 	data->ID = m_id;
-// 	data->state = RAID_STATE_START;
-// 	m_monster.clear();
-
-// 	m_config = get_config_by_id(m_id, &all_raid_config);
-// 	assert(m_config);
-// 	m_control_config = get_config_by_id(m_config->ActivityControl, &all_control_config);
-// 	assert(m_control_config);
-
-// 	data->start_time = time_helper::get_cached_time();
-
-// 	raid_set_ai_interface(17);
-// 	LOG_DEBUG("%s: raid[%u][%lu] curtime = %lu", __FUNCTION__, data->ID, data->uuid, time_helper::get_cached_time());
-
-// 	init_scene_struct(m_id, true);
-
-// 	if (ai && ai->raid_on_init)
-// 		ai->raid_on_init(this, NULL);
-
-// 	return (0);
-// }
+int guild_wait_raid_struct::init_raid(player_struct *player)
+{
+	m_players.clear();
+	return raid_struct::init_raid(player);
+}
 
 int guild_wait_raid_struct::init_special_raid_data(player_struct *player)
 {

@@ -59,6 +59,7 @@ monster_struct * monster_manager::get_monster_by_id(uint64_t id)
 	}
 
 	return get_boss_by_id(id);
+	
 //	return NULL;
 }
 
@@ -342,7 +343,7 @@ void monster_manager::on_tick_5()
 		boss->data->ontick_time = now + boss->ai_config->Response;
 		if (!boss->data->stop_ai)
 			boss->on_tick();
-		if (boss->data)
+		if (boss->data && !boss->mark_delete)
 			boss_ontick_settimer(boss);
 		boss = get_ontick_boss(now);
 	}
@@ -439,6 +440,9 @@ monster_struct *monster_manager::add_monster(uint64_t monster_id, uint64_t lv, u
 	ite = monster_config.find(monster_id);
 	if (ite == monster_config.end())
 		return NULL;
+
+	LOG_DEBUG("%s: monster[%lu] ai[%u]",  __FUNCTION__, monster_id, ite->second->BaseID);
+	
 	monster_struct *ret;
 
 	switch (ite->second->HateType)
@@ -554,7 +558,7 @@ monster_struct *monster_manager::create_sight_space_monster(sight_space_struct *
 		monster->set_pos(pos_x, pos_z);
 		monster->sight_space = sight_space;
 		sight_space->monsters[i] = monster;
-		sight_space->data->monster_uuid[i] = monster->get_uuid();
+//		sight_space->data->monster_uuid[i] = monster->get_uuid();
 
 		if (monster->ai && monster->ai->on_alive)
 			monster->ai->on_alive(monster);
@@ -649,11 +653,17 @@ monster_struct *monster_manager::create_monster_by_config(scene_struct *scene, i
 	if (!monster)
 		return NULL;
 	monster->data->create_config_index = index;
+	monster->data->born_direct = create_config->Yaw;
 	monster->create_config = create_config;
 	switch (monster->ai_type)
 	{
 		case AI_TYPE_CIRCLE:
 		case AI_TYPE_ESCORT:
+			if (create_config->n_TargetInfoList == 0)
+			{
+				LOG_ERR("%s: scene[%u] create monster[%lu] wrong", __FUNCTION__, scene->m_id, create_config->ID);
+				assert(0);
+			}
 			monster->set_pos(create_config->TargetInfoList[0]->TargetPos->TargetPosX,
 				create_config->TargetInfoList[0]->TargetPos->TargetPosZ);
 			break;

@@ -708,6 +708,7 @@ void do_normal_pursue(monster_struct *monster)
 		|| !monster->target->is_alive())
 	{
 		monster->ai_state = AI_PATROL_STATE;
+		monster->go_back();
 		return;
 	}
 	struct position *my_pos = monster->get_pos();
@@ -751,7 +752,8 @@ void do_normal_pursue(monster_struct *monster)
 	if (!check_distance_in_range(my_pos, his_pos, config->SkillRange/*monster->ai_config->ActiveAttackRange*/))
 	{
 			//追击
-		if (!monster->ai_config->IsChase || monster->ai_config->ChaseRange == 0)
+		if (monster->ai_config->ChaseRange == 0)
+//		if (!monster->ai_config->IsChase || monster->ai_config->ChaseRange == 0)
 		{
 				//不追击那么直接返回巡逻状态
 			monster->data->skill_id = 0;			
@@ -812,7 +814,6 @@ void do_normal_pursue(monster_struct *monster)
 
 	monster->reset_pos();
 	monster_cast_immediate_skill_to_player(skill_id, monster, NULL, monster->target);
-
 		//被反弹死了
 	if (!monster->data)
 		return;

@@ -262,7 +262,7 @@ public:
 	virtual	int player_offline(player_struct *player);
 	virtual uint32_t get_area_width();
 
-	int init_raid(player_struct *player);
+	virtual int init_raid(player_struct *player);
 	void raid_set_ai_interface(int ai_type);
 	static void raid_add_ai_interface(int ai_type, struct raid_ai_interface *ai);
 	int team_enter_raid(Team *team);
@@ -334,6 +334,7 @@ public:
 	
 protected:
 	uint16_t player_num;  //记录玩家数目，没有玩家了才可以删除
+	void delete_raid_collect_safe(uint32_t uuid);	
 	int init_script_data();
 	int	init_wanyaogu_data();
 	int	init_pvp_raid_data_3();

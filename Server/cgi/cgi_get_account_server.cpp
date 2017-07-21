@@ -137,7 +137,7 @@ int main(void)
 				continue;
 			}
 
-			sprintf(sql, "SELECT player_id, job, player_name, lv, comm_data from player where open_id = %u", open_id);
+			sprintf(sql, "SELECT player_id, job, player_name, lv, comm_data, UNIX_TIMESTAMP(logout_time) from player where open_id = %u", open_id);
 			res = query(sql, 1, NULL);
 			if (res == NULL)
 			{
@@ -149,6 +149,7 @@ int main(void)
 			account_server_data__init(pServer);
 
 			pServer->serverid = iter->server_id;
+			uint64_t last_login_time = 0;
 			while(true)
 			{
 				row = fetch_row(res);
@@ -158,6 +159,11 @@ int main(void)
 				}
 
 				lengths = mysql_fetch_lengths(res);
+				uint64_t logout_time = (row[5] == NULL ? 0 : strtoull(row[5], NULL, 0));
+				if (logout_time > last_login_time)
+				{
+					last_login_time = logout_time;
+				}
 				uint32_t job = atoi(row[1]);
 
 				PlayerBaseInfo *base_info = (PlayerBaseInfo*)malloc(sizeof(PlayerBaseInfo));
@@ -201,6 +207,7 @@ int main(void)
 			}
 			else
 			{
+				pServer->lastlogintime = last_login_time;
 				resp->n_serverlist++;
 				resp->serverlist = (AccountServerData**)realloc(resp->serverlist, resp->n_serverlist * sizeof(AccountServerData*));
 				resp->serverlist[resp->n_serverlist - 1] = pServer;

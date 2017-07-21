@@ -68,6 +68,7 @@ message AccountServerData
 {
 	required uint32 serverId = 1; //服务器ID
 	repeated PlayerBaseInfo playerList = 2; //角色列表
+	required uint32 lastLoginTime = 3; //最后登录时间
 }
 
 //账号服务器列表

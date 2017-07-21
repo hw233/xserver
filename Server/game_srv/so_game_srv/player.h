@@ -159,15 +159,17 @@ const int MAX_HORSE_ATTR_NUM = 4;
 const int MAX_HORSE_SOUL = 8;
 struct HorseCommonInfo
 {
-	uint32_t step;
+	uint32_t step;//修灵的阶	
+	uint32_t attr[MAX_HORSE_ATTR_NUM + 1];
+	uint32_t attr_exp[MAX_HORSE_ATTR_NUM + 1]; //修灵次数
+	uint32_t n_attr;
+
 	uint32_t soul;
 	uint32_t soul_exp[MAX_HORSE_SOUL + 1];
 	uint32_t cur_soul;
-	uint32_t attr[MAX_HORSE_ATTR_NUM + 1];
-	uint32_t attr_exp[MAX_HORSE_ATTR_NUM + 1];
-	uint32_t n_attr;
 	bool soul_full;
 	uint64_t power;
+
 	uint32_t total[PLAYER_ATTR_FIGHT_MAX];
 	int fly;
 };
@@ -707,6 +709,7 @@ public:
 	int transfer_to_birth_position(EXTERN_DATA *extern_data); //将玩家传送回地图出生点
 	int transfer_to_guild_scene(EXTERN_DATA *extern_data); //将玩家传送到帮会地图
 	int transfer_out_guild_scene(EXTERN_DATA *extern_data); //将玩家拉出帮会地图
+	void send_chat(int channal, char *conten);
 
 //	int get_pk_type();
 	bool can_beattack();
@@ -1088,7 +1091,13 @@ public:
 	int del_partner_from_scene(uint64_t partner_uuid, bool send_msg);
 	int del_partner_from_scene(partner_struct *partner, bool send_msg);
 	void del_battle_partner_from_scene();  //临时把所有出战伙伴移出场景(副本结束的时候用)
+	void take_truck_into_scene(void);	//角色进入场景后，把镖车加入场景
 	void take_partner_into_scene(void); //角色进入场景后，把伙伴加入场景
+	void take_partner_into_sight_space(void);	 //角色进入位面后，把伙伴加入位面
+	void take_partner_out_sight_space(sight_space_struct *sp);   //角色离开位面后，把伙伴拉出位面
+	void take_truck_into_sight_space(void);	 //角色进入位面后，把镖车加入位面	
+	void take_truck_out_sight_space(sight_space_struct *sp);  //角色离开位面后，把镖车拉出位面
+	
 	void adjust_battle_partner(void); //阵型变化，调整出战的伙伴
 	uint64_t get_next_can_battle_partner(void); //获取能出战的伙伴
 	uint64_t get_fighting_partner(void);
@@ -1125,7 +1134,7 @@ private:
 	void calculate_lv4_attribute();			
 	void use_hp_pool_add_hp();
 	void enter_fight_state();
-	void leave_fight_state();	
+	void leave_fight_state();
 	void do_auto_add_hp();
 	void pack_answer_db(_PlayerDBInfo &db_info);
 	void unpack_answer_db(_PlayerDBInfo *db_info);

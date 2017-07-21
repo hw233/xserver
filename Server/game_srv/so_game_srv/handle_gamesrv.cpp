@@ -1003,6 +1003,29 @@ static int handle_guild_prodece_medicine(player_struct *player, EXTERN_DATA *ext
 
 	return 0;
 }
+
+
+static int handle_add_speed_buff_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (comm_check_player_valid(player, extern_data->player_id) != 0)
+	{
+		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
+		return (-1);
+	}
+	buff_manager::create_default_buff(114400019, player, player, true);		
+	return (0);
+}
+static int handle_del_speed_buff_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (comm_check_player_valid(player, extern_data->player_id) != 0)
+	{
+		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
+		return (-1);
+	}
+	player->clear_one_buff(114400019);	
+	return (0);
+}
+
 static int handle_produce_medicine_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (comm_check_player_valid(player, extern_data->player_id) != 0)
@@ -1819,7 +1842,7 @@ static int handle_gather_interupt(player_struct *player, EXTERN_DATA *extern_dat
 	return 0;
 }
 
-static int handle_chat_no_check(player_struct *player, EXTERN_DATA *extern_data, Chat *req)
+int handle_chat_no_check(player_struct *player, EXTERN_DATA *extern_data, Chat *req)
 {
 	if (req->channel == CHANNEL__private)
 	{
@@ -2419,6 +2442,38 @@ static void player_online_to_other_srvs(player_struct *player, EXTERN_DATA *exte
 	fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_PLAYER_ONLINE_NOTIFY, sizeof(uint8_t), 0);
 }
 
+static int check_can_transfer_to_player(player_struct *player, player_struct *target_player)
+{
+	if (player->is_in_raid())
+	{
+		LOG_ERR("%s: %lu is in raid", __FUNCTION__, player->get_uuid());
+		return 190500045;
+	}
+
+	if (player->sight_space)
+	{
+		LOG_ERR("%s: %lu is in sightspace %p", __FUNCTION__, player->get_uuid(), player->sight_space);
+		return 190500045;
+	}
+	if (player->data->truck.truck_id != 0)
+	{
+		LOG_ERR("%s: %lu is in yabiao %lu", __FUNCTION__, player->get_uuid(), player->data->truck.truck_id);
+		return 190500305;
+	}
+
+	if (target_player->scene == player->scene)
+	{
+		LOG_INFO("%s: %lu target player[%lu] in the same scene", __FUNCTION__, player->get_uuid(), target_player->get_uuid());
+		return 190500142;
+	}
+
+	if (target_player->check_can_transfer() != 0)
+	{
+		LOG_INFO("%s: %lu target player[%lu] is in raid", __FUNCTION__, player->get_uuid(), target_player->get_uuid());
+		return 190500143;
+	}
+	return 0;
+}
 static int handle_transfer_to_player_scene_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (comm_check_player_valid(player, extern_data->player_id) != 0)
@@ -2426,31 +2481,6 @@ static int handle_transfer_to_player_scene_request(player_struct *player, EXTERN
 		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
 		send_comm_answer(MSG_ID_TRANSFER_TO_PLAYER_SCENE_ANSWER, -1, extern_data);
 		return (-1);
-	}
-
-	if (player->is_in_raid())
-	{
-		LOG_ERR("%s: %lu is in raid", __FUNCTION__, extern_data->player_id);
-		send_comm_answer(MSG_ID_TRANSFER_TO_PLAYER_SCENE_ANSWER, -1, extern_data);
-		return (-10);
-	}
-
-	if (player->data->scene_id > SCENCE_DEPART)
-	{
-		return -3;
-	}
-
-	if (player->sight_space)
-	{
-		LOG_ERR("%s: %lu is in sightspace %p", __FUNCTION__, extern_data->player_id, player->sight_space);
-		send_comm_answer(MSG_ID_TRANSFER_TO_PLAYER_SCENE_ANSWER, -1, extern_data);
-		return (-20);
-	}
-	if (player->data->truck.truck_id != 0)
-	{
-		LOG_ERR("%s: %lu is in yabiao %lu", __FUNCTION__, extern_data->player_id, player->data->truck.truck_id);
-		send_comm_answer(MSG_ID_TRANSFER_TO_PLAYER_SCENE_ANSWER, 190500305, extern_data);
-		return (-20);
 	}
 
 	LOG_INFO("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
@@ -2472,18 +2502,11 @@ static int handle_transfer_to_player_scene_request(player_struct *player, EXTERN
 		return (0);
 	}
 
-	if (target_player->scene == player->scene)
+	int ret = check_can_transfer_to_player(player, target_player);
+	if (ret != 0)
 	{
-		LOG_INFO("%s: %lu target player[%lu] in the same scene", __FUNCTION__, extern_data->player_id, target_id);
-		send_comm_answer(MSG_ID_TRANSFER_TO_PLAYER_SCENE_ANSWER, 190500142, extern_data);
-		return (0);
-	}
-
-	if (target_player->check_can_transfer() != 0)
-	{
-		LOG_INFO("%s: %lu target player[%lu] is in raid", __FUNCTION__, extern_data->player_id, target_id);
-		send_comm_answer(MSG_ID_TRANSFER_TO_PLAYER_SCENE_ANSWER, 190500143, extern_data);
-		return (0);
+		send_comm_answer(MSG_ID_TRANSFER_TO_PLAYER_SCENE_ANSWER, ret, extern_data);
+		return -3;
 	}
 
 	scene_struct *new_scene = target_player->scene;
@@ -3716,6 +3739,7 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 		player->touch_task_event(task_id, TEC_SUBMIT);
 		player->give_task_reward(task_id);
 		player->add_finish_task(task_id);
+		player->clear_one_buff(114400019);	
 
 		//章节、主线下一个任务
 		if (config->TaskType == TT_TRUNK)
@@ -4023,18 +4047,21 @@ static int handle_task_complete_request(player_struct *player, EXTERN_DATA *exte
 			}
 			player->go_down_cash_truck();
 			cash_truck_struct *truck = cash_truck_manager::get_cash_truck_by_id(player->data->truck.truck_id);
-			player->data->truck.truck_id = 0;
 			if (truck != NULL)
 			{
 				if (truck->sight_space != NULL)
 				{
+					truck->sight_space->broadcast_truck_delete(truck);
+					player->data->truck.truck_id = 0;
+					player->data->truck.active_id = 0;									
 					sight_space_manager::del_player_from_sight_space(truck->sight_space, player, true);
 				}
 				else
 				{
+					player->data->truck.truck_id = 0;
+					player->data->truck.active_id = 0;			
 					truck->scene->delete_cash_truck_from_scene(truck);
 				}
-				
 				cash_truck_manager::delete_cash_truck(truck);
 			}
 		}
@@ -4067,6 +4094,10 @@ static int handle_task_complete_request(player_struct *player, EXTERN_DATA *exte
 		}
 
 		player->add_task_progress(config->ConditionType, config->ConditionTarget, 1, task_id, cond_id);
+		if (config->ConditionType == TCT_TRUCK)
+		{
+			player->add_task_progress(TCT_TRUCK_NUM, 0, 1);
+		}
 	} while(0);
 
 	TaskCommAnswer resp;
@@ -4287,17 +4318,18 @@ int handle_apply_team_request(player_struct *player, EXTERN_DATA *extern_data)
 		return (-10);
 	}
 	int ret = handle_apply_team_request_impl(*player, req->id);
+	uint64_t teamId = req->id;
 	teamid__free_unpacked(req, NULL);
 
 	TeamApplyAnswer send;
 	team_apply_answer__init(&send);
 	send.errcode = ret;
-	send.teamid = req->id;
+	send.teamid = teamId;
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_APPLY_TEAM_ANSWER, team_apply_answer__pack, send);
 	//send_comm_answer(MSG_ID_APPLY_TEAM_ANSWER, ret, extern_data);
 	if (ret == 0)
 	{
-		Team *pTeam = Team::GetTeam(req->id);
+		Team *pTeam = Team::GetTeam(teamId);
 		if (pTeam == NULL)
 		{
 			return 190500025;
@@ -6010,9 +6042,10 @@ static int handle_transfer_to_leader_request(player_struct *player, EXTERN_DATA 
 		return (-30);
 	}
 
-	if (player->check_can_transfer() != 0)
+	int ret = player->check_can_transfer();
+	if (ret != 0)
 	{
-		raid_manager::send_enter_raid_fail(player, 9, 0, NULL, 0);
+		raid_manager::send_enter_raid_fail(player, ret, 0, NULL, 0);
 		return (-35);		
 	}
 	
@@ -6023,15 +6056,16 @@ static int handle_transfer_to_leader_request(player_struct *player, EXTERN_DATA 
 		return (-40);
 	}
 	int answer = req->result;
+	uint64_t leader_id = req->leader_id;
 	transfer_to_leader_request__free_unpacked(req, NULL);
 	if (answer != 0)
 	{
-		if (req->leader_id == leader->get_uuid())
+		if (leader_id == leader->get_uuid())
 			send_team_member_refuse_transfer_notify(player, leader);
 		return 0;
 	}
 
-	if (req->leader_id != leader->get_uuid())
+	if (leader_id != leader->get_uuid())
 	{
 		raid_manager::send_enter_raid_fail(player, 9, 0, NULL, 0);
 		return (0);
@@ -7877,7 +7911,7 @@ static int handle_buy_horse_request(player_struct *player, EXTERN_DATA *extern_d
 		return (-10);
 	}
 	uint32_t horseId = req->id;
-	int shopid = req->shopid;
+	uint32_t shopid = req->shopid;
 	int type = req->type;
 	buy_horse__free_unpacked(req, NULL);
 
@@ -7892,17 +7926,20 @@ static int handle_buy_horse_request(player_struct *player, EXTERN_DATA *extern_d
 	}
 	BuyHorseAns send;
 	buy_horse_ans__init(&send);
+
 	send.ret = 0;
 	if (type == 0)
 	{
-		if (player->del_item(it->second->Item[shopid], it->second->ItemNum[shopid], MAGIC_TYPE_HORSE) < 0)
+		if (shopid >= it->second->n_Item || shopid >= it->second->n_ItemNum ||
+			player->del_item(it->second->Item[shopid], it->second->ItemNum[shopid], MAGIC_TYPE_HORSE) < 0)
 		{
 			send.ret = 190400006;
 		}
 	} 
 	else
 	{
-		if (player->sub_comm_gold(it->second->WingBinding[shopid], MAGIC_TYPE_HORSE) < 0)
+		if (shopid >= it->second->n_WingBinding ||
+			player->sub_comm_gold(it->second->WingBinding[shopid], MAGIC_TYPE_HORSE) < 0)
 		{
 			send.ret = 190400005;
 		}
@@ -7912,11 +7949,15 @@ static int handle_buy_horse_request(player_struct *player, EXTERN_DATA *extern_d
 		fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_BUY_HORSE_ANSWER, buy_horse_ans__pack, send);
 		return -2;
 	}
-	
+
+	if (shopid >= it->second->n_Time)
+	{
+		return 5;
+	}
 
 	int i = player->add_horse(horseId, it->second->Time[shopid]);
 	//int i = player->add_horse(horseId, 30);
-	if (i < 0)
+	if (i < 0 || i >= MAX_HORSE_NUM)
 	{
 		return -1;
 	}
@@ -9157,6 +9198,12 @@ static int handle_set_pk_type_request(player_struct *player, EXTERN_DATA *extern
 	//	LOG_ERR("%s: player[%lu] pktype wrong[%d]", __FUNCTION__, player->get_uuid(), type);
 	//	return (-1);
 	// }
+	cash_truck_struct *pTruck = cash_truck_manager::get_cash_truck_by_id(player->data->truck.truck_id);
+	if (pTruck != NULL && pTruck->get_truck_type() == 2)
+	{
+		send_set_pk_type_answer(190500311, type, extern_data);
+		return (-3);
+	}
 
 	switch (type)
 	{
@@ -11498,25 +11545,9 @@ static int handle_guoyu_boss_appear_request(player_struct *player, EXTERN_DATA *
 	raid_struct *raid = (raid_struct *)player->scene;
 	if (!raid->data->ai_data.guoyu_data.note_boss)
 	{
-		Chat notify;
-		chat__init(&notify);
-		char name[MAX_PLAYER_NAME_LEN] = "神秘人";
-
-		strncpy(name, player->get_name(), MAX_PLAYER_NAME_LEN);
-		notify.sendplayerid = player->get_uuid();
-		notify.sendplayerlv = player->get_attr(PLAYER_ATTR_LEVEL);
-		notify.sendplayerjob = player->get_attr(PLAYER_ATTR_JOB);
-		char str[128]= "没找到怪物配置";
-
-		notify.sendname = name;
-		notify.contain = str;
-		notify.channel = CHANNEL__team;
-		//player->m_team->BroadcastToTeam(MSG_ID_GUOYU_BOSS_APPEAR_NOTIFY, &notify, (pack_func)chat__pack);
-
 		BossId send;
 		boss_id__init(&send);
 		send.id = bossId;
-		//player->m_team->BroadcastToTeam(MSG_ID_GUOYU_BOSS_APPEAR_NOTIFY, &send, (pack_func)boss_id__pack);
 		fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_GUOYU_BOSS_APPEAR_NOTIFY, boss_id__pack, send);
 		raid->data->ai_data.guoyu_data.note_boss = true;
 	}
@@ -11793,18 +11824,8 @@ static int handle_add_chengjie_task_request(player_struct *player, EXTERN_DATA *
 	{
 		char str[1024];
 		ParameterTable * configSpeek = get_config_by_id(161000271, &parameter_config);
-		sprintf(str, configSpeek->parameter2, player->get_name(), req->name);
-		Chat notify;
-		chat__init(&notify);
-		notify.sendplayerid = player->get_uuid();
-		notify.sendplayerlv = player->get_attr(PLAYER_ATTR_LEVEL);
-		notify.sendplayerjob = player->get_attr(PLAYER_ATTR_JOB);
-		notify.sendplayerpicture = player->get_attr(PLAYER_ATTR_HEAD);
-		notify.has_sendplayerpicture = true;
-		notify.sendname = player->get_name();
-		notify.contain = str;
-		notify.channel = CHANNEL__family;
-		handle_chat_no_check(player, extern_data, &notify); 
+		sprintf(str, configSpeek->parameter2, player->get_name(), req->name); 
+		player->send_chat(CHANNEL__family, str);
 	}
 done:
 	req_add_chengjie_task__free_unpacked(req, NULL);
@@ -12023,10 +12044,14 @@ static int handle_accept_shangjin_task_request(player_struct *player, EXTERN_DAT
 		ret = 190500233;
 		goto done;
 	}
+	ret = player->accept_task(player->data->shangjin.task[0].id, false);
+	if (ret != 0)
+	{
+		goto done;
+	}
 
 	--player->data->shangjin.shangjin_num;
 	player->data->shangjin.accept = true;
-	player->accept_task(player->data->shangjin.task[0].id, false);
 	player->check_activity_progress(AM_YAOSHI, 1);
 	player->add_task_progress(TCT_YAOSHI_SHANGJIN, 0, 1);
 done:
@@ -12318,9 +12343,10 @@ int check_can_accept_cash_truck(player_struct *player, uint32_t type)
 	{
 		return 190500294;
 	}
-	if (player->accept_task(table->TaskId, false) != 0)
+	int ret = player->accept_task(table->TaskId, false);
+	if (ret != 0)
 	{
-		return 190500316;
+		return ret;
 	}
 	if (table->Type == 1)
 	{
@@ -12371,13 +12397,15 @@ static int handle_accept_cash_truck_request(player_struct *player, EXTERN_DATA *
 			player->data->truck.active_id = type;
 			player->data->truck.jiefei = 0;
 			send.type = pTruck->get_truck_type();
+
+			if (pTruck->get_truck_type() == 2 && player->get_attr(PLAYER_ATTR_PK_TYPE) != PK_TYPE_CAMP)
+			{
+				player->set_attr(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP);
+				player->broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP, true, true);
+			}
 		}
 
-		if (player->get_attr(PLAYER_ATTR_PK_TYPE) != PK_TYPE_CAMP)
-		{
-			player->set_attr(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP);
-			player->broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP, true, true);
-		}
+		
 	}
 
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_ACCEPT_CASH_TRUCK_ANSWER, res_accept_cash_truck__pack, send);
@@ -14015,6 +14043,7 @@ static int on_login_send_live_skill(player_struct *player, EXTERN_DATA *extern_d
 
 	if (player->data->truck.truck_id != 0)
 	{
+		assert(player->data->truck.scene_id > 0);
 		scene_struct *pScene = scene_manager::get_scene(player->data->truck.scene_id);
 		if (pScene != NULL)
 		{
@@ -14718,6 +14747,10 @@ static int handle_xunbao_pos_request(player_struct *player, EXTERN_DATA *extern_
 	if (player->data->bag[pos].num < 1)
 	{
 		return -3;
+	}
+	if (player->sight_space != NULL)
+	{
+		return -8;
 	}
 
 	ItemsConfigTable *prop_config = get_config_by_id(player->data->bag[pos].id, &item_config);
@@ -16448,16 +16481,18 @@ static int handle_partner_compose_stone_request(player_struct *player, EXTERN_DA
 			break;
 		}
 
-		uint32_t product_id = 0, product_score = 0;
+		uint32_t product_id = 0, product_score = 0, product_coin = 0;
 		if (stone_type == 12)
 		{
 			product_id = sg_partner_sanshenshi_id;
 			product_score = sg_partner_sanshenshi_score;
+			product_coin = sg_partner_sanshenshi_coin;
 		}
 		else if (stone_type == 13)
 		{
 			product_id = sg_partner_qiyaoshi_id;
 			product_score = sg_partner_qiyaoshi_score;
+			product_coin = sg_partner_qiyaoshi_coin;
 		}
 		else
 		{
@@ -16477,6 +16512,15 @@ static int handle_partner_compose_stone_request(player_struct *player, EXTERN_DA
 		{
 			ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
 			LOG_ERR("[%s:%d] player[%lu] bag not enough, item_id:%u, item_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, product_id, product_num);
+			break;
+		}
+
+		uint32_t need_coin = product_coin * product_num;
+		uint32_t has_coin = player->get_coin();
+		if (has_coin < need_coin)
+		{
+			ret = ERROR_ID_COIN_NOT_ENOUGH;
+			LOG_ERR("[%s:%d] player[%lu] coin not enough, need:%u, has:%u", __FUNCTION__, __LINE__, extern_data->player_id, need_coin, has_coin);
 			break;
 		}
 
@@ -16952,6 +16996,45 @@ static int handle_continue_raid_ai_request(player_struct *player, EXTERN_DATA *e
 	return 0;
 }
 
+//客户端请求跳过新手副本
+static int handle_skip_new_raid_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	raid_struct *raid = player->get_raid();
+	if (NULL == raid || raid->data->ID != 20035)
+	{
+		LOG_ERR("[%s:%d] skip new raid fail", __FUNCTION__, __LINE__);
+		return -2;
+	}
+
+	//将pk模式和阵营设置回去
+	player->data->noviceraid_flag = 1;
+	player->set_attr(PLAYER_ATTR_PK_TYPE, 0);
+	player->broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, 0, false, true);
+	player->set_attr(PLAYER_ATTR_ZHENYING, 0);		
+	player->broadcast_one_attr_changed(PLAYER_ATTR_ZHENYING, 0, false, true);
+	player->send_zhenying_info();
+
+	//将技能重置
+	player->m_skill.clear(); //重新初始化技能
+	player->m_skill.SendAllSkill();
+	player->m_skill.Init();
+	player->m_skill.SendAllSkill();
+	
+
+	raid->clear_monster();
+	raid->m_player[0]->clear_one_buff(114400018);
+	raid->player_leave_raid(raid->m_player[0]);		
+
+
+	return 0;
+}
 void install_msg_handle()
 {
 	add_msg_handle(MSG_ID_MOVE_REQUEST, handle_move_request);
@@ -16966,6 +17049,8 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_LEARN_LIVE_SKILL_REQUEST, handle_learn_live_skill_request);
 	add_msg_handle(MSG_ID_LIVE_SKILL_BREAK_REQUEST, handle_live_skill_break_request);
 	add_msg_handle(MSG_ID_PRODUCE_MEDICINE_REQUEST, handle_produce_medicine_request);
+	add_msg_handle(MSG_ID_ADD_SPEED_BUFF_REQUEST, handle_add_speed_buff_request);
+	add_msg_handle(MSG_ID_DEL_SPEED_BUFF_REQUEST, handle_del_speed_buff_request);		
 
 	//镖车
 	add_msg_handle(MSG_ID_ACCEPT_CASH_TRUCK_REQUEST, handle_accept_cash_truck_request);
@@ -17222,6 +17307,7 @@ void install_msg_handle()
 
 
 	add_msg_handle(MSG_ID_RAID_AI_CONTINUE_REQUEST, handle_continue_raid_ai_request);
+	add_msg_handle(MSG_ID_SKIP_NEW_RAID_REQUEST, handle_skip_new_raid_request);
 }
 
 void uninstall_msg_handle()

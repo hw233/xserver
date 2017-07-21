@@ -73,7 +73,7 @@ static int get_server_account_url(uint32_t open_id)
 					printf("resp.n_serverlist:%lu\n", resp->n_serverlist);
 					for (size_t j = 0; j < resp->n_serverlist; ++j)
 					{
-						printf("server[%u] n_playerlist:%lu\n", resp->serverlist[j]->serverid, resp->serverlist[j]->n_playerlist);
+						printf("server[%u] n_playerlist:%lu, last_login_time:%u\n", resp->serverlist[j]->serverid, resp->serverlist[j]->n_playerlist, resp->serverlist[j]->lastlogintime);
 						for (size_t k = 0; k < resp->serverlist[j]->n_playerlist; ++k)
 						{
 							PlayerBaseInfo* player = resp->serverlist[j]->playerlist[k];

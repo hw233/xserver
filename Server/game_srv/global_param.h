@@ -6,6 +6,7 @@
 #include <string>
 #include <set>
 #include <stdint.h>
+#include "comm_define.h"
 #include "mem_pool.h"
 #include "minheap.h"
 
@@ -23,6 +24,8 @@ typedef std::map<uint64_t, int> ALL_ROLE_CONTAIN;
 typedef std::set<uint64_t> ROLE_IN_TARGET;
 typedef std::map<int, ROLE_IN_TARGET > TARGET_ROLE_CONTAIN;
 typedef std::vector<uint64_t> TEAM_CONTAIN;
+
+const char g_tmp_name[MAX_PLAYER_NAME_LEN + 1] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
 struct STChengJie
 {

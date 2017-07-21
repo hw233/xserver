@@ -232,8 +232,11 @@ int main(int argc, char **argv)
 	for (i = 1; i < argc; ++i) {
 		if (strcmp(argv[i], "-d") == 0) {
 			change_to_deamon();
-			break;
+//			break;
 		}
+	    else if(strcmp(argv[i], "-t") == 0) { /// test for mem check
+			open_err_log_file();
+		}		
 	}
 
 	uint64_t pid = write_pid_file();		

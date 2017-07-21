@@ -420,16 +420,18 @@ static void generate_parameters(void)
 		sg_partner_relive_time = config->parameter1[0];
 	}
 	config = get_config_by_id(161000298, &parameter_config);
-	if (config && config->n_parameter1 >= 2)
+	if (config && config->n_parameter1 >= 3)
 	{
 		sg_partner_sanshenshi_id = config->parameter1[0];
 		sg_partner_sanshenshi_score = config->parameter1[1];
+		sg_partner_sanshenshi_coin = config->parameter1[2];
 	}
 	config = get_config_by_id(161000299, &parameter_config);
-	if (config && config->n_parameter1 >= 2)
+	if (config && config->n_parameter1 >= 3)
 	{
 		sg_partner_qiyaoshi_id = config->parameter1[0];
 		sg_partner_qiyaoshi_score = config->parameter1[1];
+		sg_partner_qiyaoshi_coin = config->parameter1[2];
 	}
 
 	sg_fight_param_161000274 = get_config_by_id(161000274, &parameter_config)->parameter1[0]; 

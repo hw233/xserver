@@ -380,7 +380,6 @@ struct BaseAITable
 {
 	uint64_t  BaseID; //1
 	uint64_t  ActiveAttackRange; //2
-	uint64_t  IsChase; //3
 	uint64_t  ChaseRange; //4
 	uint64_t  MovingChange; //5
 	uint64_t  Regeneration; //6
@@ -1342,6 +1341,7 @@ struct SceneResTable
 	uint64_t  UseMounts; //17
 	uint32_t n_UseDelivery; //18
 	uint64_t *UseDelivery; //18
+	uint64_t  Recovery; //19
 }__attribute__ ((packed));
 
 struct ScriptTable

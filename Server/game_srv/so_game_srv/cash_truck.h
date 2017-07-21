@@ -89,6 +89,7 @@ public:
 	int get_truck_type() { return truck_config->Type; }
 	
 	void calculate_attribute(void);
+	virtual ~cash_truck_struct();
 	virtual void init_cash_truck();
 	virtual void on_tick();
 	void on_dead(unit_struct *killer);

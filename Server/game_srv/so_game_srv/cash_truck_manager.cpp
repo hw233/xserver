@@ -23,6 +23,7 @@ cash_truck_struct *cash_truck_manager::create_cash_truck_at_pos(scene_struct *sc
 	BiaocheTable *table = get_config_by_id(id, &cash_truck_config);
 	if (table == NULL)
 	{
+		LOG_ERR("%s: player[%lu] truck id[%lu] wrong",  __FUNCTION__, player.get_uuid(), id);
 		return NULL;
 	}
 	std::map<uint64_t, struct MonsterTable *>::iterator ite;
@@ -31,7 +32,10 @@ cash_truck_struct *cash_truck_manager::create_cash_truck_at_pos(scene_struct *sc
 		return NULL;
 	cash_truck_struct *ret = alloc_cash_truck();
 	if (!ret)
+	{
+		LOG_ERR("%s: player[%lu] alloc truck failed",  __FUNCTION__, player.get_uuid());		
 		return NULL;
+	}
 	ret->data->player_id = alloc_truck_uuid();
 	cash_truck_manager_all_id[ret->data->player_id] = ret;
 	ret->set_pos(x, z);

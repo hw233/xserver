@@ -278,8 +278,10 @@ uint32_t sg_partner_anger_max;
 uint32_t sg_partner_relive_time;
 uint32_t sg_partner_sanshenshi_id;
 uint32_t sg_partner_sanshenshi_score;
+uint32_t sg_partner_sanshenshi_coin;
 uint32_t sg_partner_qiyaoshi_id;
 uint32_t sg_partner_qiyaoshi_score;
+uint32_t sg_partner_qiyaoshi_coin;
 
 double sg_fight_param_161000274;                //体质转生命系数
 double sg_fight_param_161000275;                //力量转攻击系数

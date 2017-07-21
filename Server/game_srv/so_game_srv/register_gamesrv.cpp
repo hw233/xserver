@@ -17,6 +17,7 @@
 #include "scene.h"
 #include "game_config.h"
 #include "player_manager.h"
+#include "scene_manager.h"
 #include "raid_manager.h"
 #include "zhenying_raid_manager.h"
 #include "sight_space_manager.h"
@@ -62,6 +63,155 @@ static void install_all_msg()
 	install_raid_ai();
 	install_db_msg_handle();
 	install_ai_player_handle();
+}
+
+static void	clear_all_mem()
+{
+		//player
+	for (std::list<player_struct *>::iterator ite = player_manager_player_free_list.begin();
+		 ite != player_manager_player_free_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+	for (std::set<player_struct *>::iterator ite = player_manager_player_used_list.begin();
+		 ite != player_manager_player_used_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+
+		//buff
+	for (std::list<buff_struct *>::iterator ite = buff_manager_buff_free_list.begin();
+		 ite != buff_manager_buff_free_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+	for (std::set<buff_struct *>::iterator ite = buff_manager_buff_used_list.begin();
+		 ite != buff_manager_buff_used_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+
+		//monster boss
+	for (std::list<monster_struct *>::iterator ite = monster_manager_monster_free_list.begin();
+		 ite != monster_manager_monster_free_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+	for (std::set<monster_struct *>::iterator ite = monster_manager_monster_used_list.begin();
+		 ite != monster_manager_monster_used_list.end(); ++ite)
+	{
+		delete (*ite);		
+	}
+	for (std::list<boss_struct *>::iterator ite = monster_manager_boss_free_list.begin();
+		 ite != monster_manager_boss_free_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+	for (std::set<boss_struct *>::iterator ite = monster_manager_boss_used_list.begin();
+		 ite != monster_manager_boss_used_list.end(); ++ite)
+	{
+		delete (*ite);		
+	}
+
+		//cash_truck
+	for (std::list<cash_truck_struct *>::iterator ite = cash_truck_manager_free_list.begin();
+		 ite != cash_truck_manager_free_list.end(); ++ite)
+	{
+		delete (*ite);		
+	}
+	for (std::set<cash_truck_struct *>::iterator ite = cash_truck_manager_used_list.begin();
+		 ite != cash_truck_manager_used_list.end(); ++ite)
+	{
+		delete (*ite);		
+	}
+		
+		//raid_struct
+	for (std::list<raid_struct *>::iterator ite = raid_manager_raid_free_list.begin();
+		 ite != raid_manager_raid_free_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+	for (std::set<raid_struct *>::iterator ite = raid_manager_raid_used_list.begin();
+		 ite != raid_manager_raid_used_list.end(); ++ite)
+	{
+		delete (*ite);		
+	}
+	
+	for (std::map<uint64_t, scene_struct *>::iterator ite = scene_manager_scene_map.begin();
+		 ite != scene_manager_scene_map.end(); ++ite)
+	{
+		delete ite->second;
+	}
+
+	for (std::map<uint64_t, scene_struct *>::iterator ite = scene_manager_guild_scene_map.begin();
+		 ite != scene_manager_guild_scene_map.end(); ++ite)
+	{
+		delete ite->second;
+	}
+		//位面的析构里面会有删除怪物等操作，可能会引发别的问题
+	// for (std::vector<sight_space_struct *>::iterator ite = sight_space_manager_mark_delete_sight_space.begin();
+	// 	 ite != sight_space_manager_mark_delete_sight_space.end(); ++ite)
+	// {
+	// 	delete (*ite);
+	// }
+
+	for (std::list<skill_struct *>::iterator ite = skill_manager_skill_free_list.begin();
+		 ite != skill_manager_skill_free_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+	for (std::set<skill_struct *>::iterator ite = skill_manager_skill_used_list.begin();
+		 ite != skill_manager_skill_used_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+
+		//zhenying_raid
+	for (std::list<zhenying_raid_struct *>::iterator ite = zhenying_raid_manager_raid_free_list.begin();
+		 ite != zhenying_raid_manager_raid_free_list.end(); ++ite)
+	{
+		delete(*ite);
+	}
+	for (std::set<zhenying_raid_struct *>::iterator ite = zhenying_raid_manager_raid_used_list.begin();
+		 ite != zhenying_raid_manager_raid_used_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+
+		//guild wait raid
+	for (std::list<guild_wait_raid_struct *>::iterator ite = guild_wait_raid_manager_raid_free_list.begin();
+		 ite != guild_wait_raid_manager_raid_free_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+	for (std::set<guild_wait_raid_struct *>::iterator ite = guild_wait_raid_manager_raid_used_list.begin();
+		 ite != guild_wait_raid_manager_raid_used_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+
+	for (TEAM_MAP::iterator ite = team_manager_s_teamContain.begin();
+		 ite != team_manager_s_teamContain.end(); ++ite)
+	{
+		delete ite->second;
+	}
+	for (COLLECT_MAP::iterator ite = collect_manager_s_collectContain.begin();
+		 ite != collect_manager_s_collectContain.end(); ++ite)
+	{
+		delete ite->second;
+	}
+
+		//partner
+	for (std::list<partner_struct *>::iterator ite = partner_manager_partner_free_list.begin();
+		 ite != partner_manager_partner_free_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+	for (std::set<partner_struct *>::iterator ite = partner_manager_partner_used_list.begin();
+		 ite != partner_manager_partner_used_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
 }
 
 extern "C"
@@ -790,6 +940,8 @@ int game_recv_func(evutil_socket_t fd, conn_node_gamesrv *node)
 				ext_data.player_id = player->data->player_id;
 				player->cache_to_dbserver(false, &ext_data);
 			}
+
+			clear_all_mem();
 
 			event_del(&node->event_recv);
 			evutil_closesocket(fd);

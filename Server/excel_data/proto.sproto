@@ -187,6 +187,7 @@
 	PlaceNature 16 : string
 	UseMounts 17 : integer
 	UseDelivery 18 : *integer
+	Recovery 19 : integer
 }
 
 .SkillTable {
@@ -323,7 +324,7 @@
 .BaseAITable {
 	BaseID 1 : integer
 	ActiveAttackRange 2 : integer
-	IsChase 3 : integer
+#	IsChase 3 : integer
 	ChaseRange 4 : integer
 	MovingChange 5 : integer
 	Regeneration 6 : integer

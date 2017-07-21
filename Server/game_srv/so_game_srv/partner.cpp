@@ -26,6 +26,7 @@ partner_struct::partner_struct(void)
 {
 	config = NULL;
 	data = NULL;
+	partner_sight_space = NULL;
 }
 
 partner_struct::~partner_struct(void)
@@ -293,15 +294,17 @@ void partner_struct::do_taunt_action()  //嘲讽
 
 void partner_struct::update_partner_pos_and_sight()
 {
-	if (!scene || !area)
+	if (!scene)
 		return;
-	if (data->attrData[PLAYER_ATTR_MOVE_SPEED] == 0)
+	if (get_speed() < __DBL_EPSILON__)
 		return;
 	if (!is_unit_in_move())
 		return;
 
 	area_struct *old_area = area;
 	if (update_unit_position() == 0)
+		return;
+	if (!old_area)
 		return;
 	struct position *pos = get_pos();	
 	area_struct *new_area = scene->get_area_by_pos(pos->pos_x, pos->pos_z);
@@ -336,8 +339,7 @@ void partner_struct::set_timer(uint64_t time)
 
 int partner_struct::broadcast_partner_move()
 {
-	if (!area // && !sight_space
-		)
+	if (!area && !partner_sight_space)
 		return (0);
 	
 	MoveNotify notify;
@@ -385,7 +387,7 @@ void partner_struct::on_tick()
 	float z = owner_pos->pos_z - cur_pos->pos_z;
 	float d = x * x + z * z;
 	
-	if (d >= 24 * 24 || scene != m_owner->scene)
+	if (!partner_sight_space && (d >= 24 * 24 || scene != m_owner->scene))
 	{
 			// 超过10米闪现
 		struct position target_pos;
@@ -489,6 +491,7 @@ int partner_struct::init_partner(uint32_t partner_id, player_struct *owner)
 	lock_time = 0;
 	m_target = NULL;
 	memset(&m_buffs[0], 0, sizeof(m_buffs));
+	partner_sight_space = NULL;
 
 	ai_type = config->Character;
 	//ai_state = AI_PATROL_STATE;
@@ -1834,3 +1837,29 @@ void partner_struct::try_attack(struct SkillTable *config)
 	hit_notify_to_many_player(config->ID, &target);
 }
 
+void partner_struct::add_sight_space_player_to_sight(sight_space_struct *sight_space, uint16_t *add_player_id_index, uint64_t *add_player)
+{
+	for (int j = 0; j < MAX_PLAYER_IN_SIGHT_SPACE; ++j)
+	{
+		player_struct *player = sight_space->players[j];
+		if (!player)
+			continue;
+		if (player->add_partner_to_sight_both(this) >= 0)
+		{
+			add_player[*add_player_id_index] = player->data->player_id;
+			(*add_player_id_index)++;
+		}
+	}
+}
+
+void partner_struct::add_sight_space_monster_to_sight(sight_space_struct *sight_space)
+{
+	for (int j = 0; j < MAX_MONSTER_IN_SIGHT_SPACE; ++j)
+	{
+		monster_struct *monster = sight_space->monsters[j];
+		if (!monster)
+			continue;
+
+		monster->add_partner_to_sight_both(this);
+	}
+}

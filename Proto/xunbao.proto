@@ -7,6 +7,15 @@ message XunbaoPos
 	required uint32 transfer = 4;
 }
 
+message AutoCollect
+{
+	required uint32 mapid = 1;
+	required uint32 x = 2;
+	required uint32 z = 3;
+	required uint64 id = 4;  //采集点或者怪ID
+	required uint32 transfer = 5;
+}
+
 message CashTruckInfo
 {
 	required uint32 num_cion = 1; //剩余粮草押镖次数

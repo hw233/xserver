@@ -13,7 +13,7 @@ import datetime
 import get_one_msg
 
 WATCH_PLAYER = {4294968631}
-WATCH_ATTR_ID = {1, 2}
+WATCH_ATTR_ID = {89}
 
 
 HOST='127.0.0.1'

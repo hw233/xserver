@@ -51,6 +51,8 @@ message ChatHorse
 	required uint32 id = 1;
 	required uint32 prior = 2; //优先级
 	required string content = 3; 
+	required uint32 gap = 4; //滚动间隔 0
+	required uint32 cd = 5;
 }
 
 message AnsChat

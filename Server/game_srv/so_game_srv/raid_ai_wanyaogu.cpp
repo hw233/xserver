@@ -217,7 +217,7 @@ static void send_raid_reward(raid_struct *raid, int star)
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RAID_FINISHED_NOTIFY, raid_finish_notify__pack, notify);
 		}
 
-		raid->m_player[i]->add_task_progress(TCT_WANYAOGU, raid->data->ID, 0);
+		raid->m_player[i]->add_task_progress(TCT_WANYAOGU, raid->data->ID, 1);
 	}
 }
 
@@ -403,6 +403,13 @@ static void wanyaogu_raid_ai_tick(raid_struct *raid)
 			{
 				script_ai_common_tick(raid, &raid->WANYAOGU_DATA.script_data);
 			}
+
+			if (raid->data->pass_index < raid->WANYAOGU_DATA.m_config->n_PassType && raid->WANYAOGU_DATA.m_config->PassType[raid->data->pass_index] == 2)
+			{
+				uint64_t t = (time_helper::get_cached_time() - raid->data->start_time) / 1000;
+				if (raid->WANYAOGU_DATA.m_config->PassValue[raid->data->pass_index] <= t)
+					raid->add_raid_pass_value(2, raid->WANYAOGU_DATA.m_config);
+			}
 		}
 		break;
 		default:
@@ -485,7 +492,7 @@ static void wanyaogu_raid_ai_monster_dead(raid_struct *raid, monster_struct *mon
 		{
 			if (raid->add_raid_pass_value(1, raid->WANYAOGU_DATA.m_config))
 			{
-					//return;
+				return;
 			}
 		}
 	}
@@ -519,7 +526,7 @@ static void wanyaogu_raid_ai_collect(raid_struct *raid, player_struct *player, C
 		{
 			if (raid->add_raid_pass_value(3, raid->WANYAOGU_DATA.m_config))
 			{
-//				return;
+				return;
 			}
 		}
 	}

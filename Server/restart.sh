@@ -1,4 +1,7 @@
 #!/bin/sh
+export ASAN_OPTIONS=detect_leaks=true:detect_stack_use_after_return=true:check_initialization_order=true:log_path=./memerr.log
+#export LSAN_OPTIONS=suppressions=/home/jacktang/svnroot/XGame/Server/suppr.txt
+export LSAN_OPTIONS=suppressions=../suppr.txt
 cd `dirname $0`
 #sleep 2
 filename="`pwd`/server_info.ini"
@@ -37,7 +40,7 @@ fi
 sleep 2
 
 cd ../game_srv
-./game_srv -d -t
+./game_srv -d
 
 cd ../login_srv
 ./login_srv -d
@@ -57,4 +60,11 @@ cd ../rank_srv
 cd ..
 ./show_all_pid.sh 
 ./check_srv_alive.sh
+
+a=`find . -type f -name memerr*  | xargs grep  -H ERROR | awk -F":" '{print $1}'`
+if [ -z "$a" ]; then
+    find . -type f -name "memerr*" | xargs rm -f    
+else
+    find . -type f -name "memerr*" | grep -v "$a" | xargs rm -f    
+fi    
 

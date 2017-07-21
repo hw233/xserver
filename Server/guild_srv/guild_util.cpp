@@ -591,14 +591,20 @@ int get_more_redis_player(std::set<uint64_t> &player_ids, std::map<uint64_t, Pla
 		PlayerRedisInfo *redis_player = player_redis_info__unpack(NULL, iter->three, (uint8_t*)iter->second);
 		if (!redis_player)
 		{
+			ret = -1;
 			LOG_ERR("[%s:%d] unpack redis failed, player_id:%lu", __FUNCTION__, __LINE__, iter->first);
-			return -1;
+			break;
 		}
 
 		redis_players[iter->first] = redis_player;
 	}
 
-	return 0;
+	for (std::vector<std::relation_three<uint64_t, char*, int> >::iterator iter = player_infos.begin(); iter != player_infos.end(); ++iter)
+	{
+		free(iter->second);
+	}
+
+	return ret;
 }
 
 PlayerRedisInfo *find_redis_from_map(std::map<uint64_t, PlayerRedisInfo*> &redis_players, uint64_t player_id)

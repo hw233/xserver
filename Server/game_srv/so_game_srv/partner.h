@@ -3,6 +3,7 @@
 
 #include "unit.h"
 #include "player.h"
+#include "sight_space.h"
 
 class partner_struct;
 
@@ -186,6 +187,9 @@ public:
 	int add_partner_to_sight_both(partner_struct *partner);
 	int del_partner_from_sight_both(partner_struct *partner);
 
+	void add_sight_space_player_to_sight(sight_space_struct *sight_space, uint16_t *add_player_id_index, uint64_t *add_player);	
+	void add_sight_space_monster_to_sight(sight_space_struct *sight_space);
+	
 	int broadcast_partner_delete(bool send_msg);
 	int broadcast_partner_create();
 	void pack_sight_partner_info(SightPartnerInfo *info);
@@ -231,6 +235,7 @@ public:
 	partner_attack_unit attack_owner[MAX_PARTNER_ATTACK_UNIT]; //正在攻击主人
 	partner_attack_unit attack_partner[MAX_PARTNER_ATTACK_UNIT];  //正在攻击伙伴自己
 	partner_attack_unit owner_attack[MAX_PARTNER_ATTACK_UNIT];  //主人正在攻击的目标
+	sight_space_struct *partner_sight_space;
 	
 	unit_struct *m_target;  //攻击目标
 	union

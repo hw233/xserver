@@ -22,10 +22,7 @@ static bool get_22_ai_next_pos(monster_struct * monster, float *pos_x, float *po
 	*pos_z = monster->create_config->TargetInfoList[monster->ai_data.circle_ai.cur_pos_index]->TargetPos->TargetPosZ;
 	++monster->ai_data.circle_ai.cur_pos_index;
 	
-	if (monster->ai_data.circle_ai.cur_pos_index >= monster->create_config->n_TargetInfoList)
-	{
-		monster->ai_data.circle_ai.cur_pos_index = monster->create_config->n_TargetInfoList-1;
-	}
+	
 	return true;
 }
 
@@ -42,7 +39,16 @@ static void do_type22_ai_wait(monster_struct *monster)
 	return;
 }
 
+static void type22_ai_do_goback(monster_struct *monster)
+{
+	monster->on_go_back();	
+	monster->reset_pos();
+	monster->data->move_path.pos[1].pos_x = monster->ai_data.circle_ai.ret_pos.pos_x;
+	monster->data->move_path.pos[1].pos_z = monster->ai_data.circle_ai.ret_pos.pos_z;
+	monster->send_patrol_move();
+	monster->ai_state = AI_PRE_GO_BACK_STATE;
 
+}
 
 static void ai_tick_22(monster_struct *monster)
 {
@@ -74,6 +80,18 @@ static void ai_tick_22(monster_struct *monster)
 		case AI_PATROL_STATE:
 			do_circlea_or_type22_ai_patrol(monster);
 			break;
+		case AI_PRE_GO_BACK_STATE:
+			if( !monster->is_unit_in_move())
+			{
+				if(monster->ai_data.circle_ai.cur_pos_index > 0 )
+				{
+					--monster->ai_data.circle_ai.cur_pos_index;
+					do_type22_ai_wait(monster);
+				}
+
+				monster->ai_state =	AI_PATROL_STATE;
+			}
+			break;
 	}
 }
 
@@ -97,7 +115,7 @@ struct ai_interface monster_ai_22_interface =
 	NULL,
 	.on_monster_ai_check_goback = circle_ai_check_goback,
 	NULL,
-	.on_monster_ai_do_goback = circle_ai_do_goback,	
+	.on_monster_ai_do_goback = type22_ai_do_goback,	
 };
 
 
