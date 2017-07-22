@@ -407,6 +407,7 @@ int conn_node_guildsrv::handle_guild_create_request(EXTERN_DATA *extern_data)
 
 	int ret = 0;
 	GuildPlayer *player = NULL;
+	AutoReleaseBatchRedisPlayer arb_player;
 	do
 	{
 		player = get_guild_player(extern_data->player_id);
@@ -453,6 +454,7 @@ int conn_node_guildsrv::handle_guild_create_request(EXTERN_DATA *extern_data)
 			LOG_ERR("[%s:%d] player[%lu] get redis player failed", __FUNCTION__, __LINE__, extern_data->player_id);
 			break;
 		}
+		arb_player.push_back(redis_player);		
 
 		uint32_t need_level = sg_guild_create_level;
 		uint32_t player_level = redis_player->lv;

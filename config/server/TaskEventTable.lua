@@ -3841,6 +3841,27 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0
+		},
+	[240300223] = {
+		['ID'] = 240300223,
+		['EventClass'] = 3,
+		['EventType'] = 10,
+		['EventTarget'] = 450000010,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 0,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0
 		}
 	}
 return TaskEventTable

@@ -2969,6 +2969,7 @@ void conn_node_friendsrv::handle_friend_chat_request()
 			LOG_ERR("[%s:%d] player[%lu] receiver not exist, receiver_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, req->recvplayerid);
 			break;
 		}
+		arb_redis.push_back(redis_receiver);		
 
 		if (is_in_block(player, req->recvplayerid))
 		{

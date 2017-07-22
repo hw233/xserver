@@ -22,7 +22,7 @@ link_directories("${PROJECT_SOURCE_DIR}/thirdlib/libevent/.libs"
 link_libraries(game)
 link_libraries(protobuf-c)
 link_libraries(proto)
-link_libraries(lua5.2)
+link_libraries(${LUA_LIBRARIES})
 
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})

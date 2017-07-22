@@ -441,7 +441,7 @@ monster_struct *monster_manager::add_monster(uint64_t monster_id, uint64_t lv, u
 	if (ite == monster_config.end())
 		return NULL;
 
-	LOG_DEBUG("%s: monster[%lu] ai[%u]",  __FUNCTION__, monster_id, ite->second->BaseID);
+	LOG_DEBUG("%s: monster[%lu] ai[%lu]",  __FUNCTION__, monster_id, ite->second->BaseID);
 	
 	monster_struct *ret;
 

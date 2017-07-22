@@ -1,3 +1,9 @@
+execute_process(COMMAND ./mysql_lib_dir.sh OUTPUT_VARIABLE MYSQL_LIB_DIR)
+
+link_directories("${PROJECT_SOURCE_DIR}/thirdlib/libevent/.libs"
+	${MYSQL_LIB_DIR}
+  )
+
 link_libraries(log4c)
 link_libraries(rt)
 link_libraries(game)

@@ -1473,6 +1473,10 @@ static int deal_exit_player_part(GuildPlayer *player, PlayerExitGuildReason reas
 		EXTERN_DATA ext_data;
 		ext_data.player_id = player->player_id;
 		fast_send_msg_base(&conn_node_guildsrv::connecter, &ext_data, MSG_ID_GUILD_KICK_NOTIFY, 0, 0);
+	}
+
+	if (redis_player)
+	{
 		player_redis_info__free_unpacked(redis_player, NULL);
 	}
 

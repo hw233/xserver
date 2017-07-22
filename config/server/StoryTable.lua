@@ -62,6 +62,14 @@ local StoryTable = {
 		['PlayerInvincible'] = 1,
 		['StoryTime'] = 5.00,
 		['FileID'] = 'CC_NPC_xingzi'
+		},
+	[450000010] = {
+		['ID'] = 450000010,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 16.00,
+		['FileID'] = 'JYD_YHT_duihua'
 		}
 	}
 return StoryTable
