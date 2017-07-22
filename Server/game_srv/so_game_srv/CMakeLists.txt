@@ -15,8 +15,10 @@ INCLUDE_DIRECTORIES(
 	)
 
 #link_libraries(protobuf-c)
+execute_process(COMMAND ${PROJECT_SOURCE_DIR}/mysql_lib_dir.sh OUTPUT_VARIABLE MYSQL_LIB_DIR)
 
 link_directories("${PROJECT_SOURCE_DIR}/thirdlib/libevent/.libs"
+	${MYSQL_LIB_DIR}
   )
 
 link_libraries(game)

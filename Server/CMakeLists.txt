@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 project(XGame)
 
-find_package(Lua  REQUIRED)
+find_package(Lua50  REQUIRED)
 
 add_custom_target(protoup
   COMMAND ${PROJECT_SOURCE_DIR}/../Proto/create_server_file.sh
