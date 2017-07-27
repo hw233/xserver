@@ -10,6 +10,7 @@
 #include "flow_record.h"
 #include <assert.h>
 #include <errno.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 extern uint32_t sg_server_id;

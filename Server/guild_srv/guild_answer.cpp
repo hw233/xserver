@@ -4,6 +4,7 @@
 #include "guild_util.h"
 #include "../proto/msgid.h"
 #include "../proto/answer.pb-c.h"
+#include "../proto/comm_message.pb-c.h"
 #include "conn_node_guildsrv.h"
 //#include "guild_config.h"
 
@@ -22,7 +23,10 @@ GuildAnswer::GuildAnswer()
 
 void GuildAnswer::Start(GuildInfo *guild, uint32_t *arrQuestion, uint32_t num)
 {
-	
+	CommAnswer resp;
+	comm_answer__init(&resp);
+	broadcast_guild_message(guild, MSG_ID_FACTION_QUESTION_OPEN_NOTIFY, &resp, (pack_func)comm_answer__pack);
+
 	n_memSize = 0;
 	pName[0] = name[0];
 	pName[1] = name[1];

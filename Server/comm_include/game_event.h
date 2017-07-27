@@ -1,9 +1,11 @@
 #ifndef GAME_EVENT_H__
 #define GAME_EVENT_H__
+#include <errno.h>
+#include <stdlib.h>
 #include "listen_node.h"
 #include "event2/event.h"
 #include "event2/event_compat.h"
-#include "event-internal.h"
+//#include "event-internal.h"
 
 extern "C" {
 #include "log4c.h"

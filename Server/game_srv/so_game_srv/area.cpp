@@ -2,6 +2,7 @@
 #include "area.h"
 #include "sortarray.h"
 #include <string.h>
+#include <errno.h>
 #include <stdlib.h>
 
 #define DEFAULT_PLAYER_NUM_IN_AREA 50

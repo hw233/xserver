@@ -13,6 +13,7 @@
 #include <assert.h>
 #include <errno.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 extern uint32_t sg_server_id;
 

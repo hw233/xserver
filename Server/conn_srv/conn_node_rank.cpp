@@ -5,6 +5,7 @@
 #include "conn_node_friend.h"
 #include "game_event.h"
 #include "flow_record.h"
+#include <stdlib.h>
 #include <assert.h>
 #include <errno.h>
 #include "msgid.h"

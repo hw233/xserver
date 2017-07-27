@@ -15,6 +15,7 @@
 #include "monster.h"
 //#include "send_mail.h"
 #include <algorithm>
+#include <errno.h>
 
 extern int send_mail(conn_node_base *connecter, uint64_t player_id, uint32_t type,
 	char *title, char *sender_name, char *content, std::vector<char *> *args,

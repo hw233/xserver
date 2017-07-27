@@ -259,7 +259,7 @@ int Collect::BegingGather(player_struct *player)
 	//验证距离
 
 	std::map<uint32_t, uint32_t> item_list;
-	get_drop_item(it->second->DropID, item_list);
+	get_drop_item(it->second->DropID[0], item_list);
 	if (!player->check_can_add_item_list(item_list))
 	{
 		return 190500097;
@@ -308,7 +308,7 @@ int Collect::GatherComplete(player_struct *player)
 		}
 		else
 		{
-			player->give_drop_item(it->second->DropID, MAGIC_TYPE_GATHER, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
+			player->give_drop_item(it->second->DropID[0], MAGIC_TYPE_GATHER, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
 		}
 		
 		
@@ -322,6 +322,7 @@ int Collect::GatherComplete(player_struct *player)
 		else if (it->second->Regeneration == 0)
 		{
 			m_state = COLLECT_DESTROY;
+			scene->delete_collect_to_scene(this);
 		}
 		else
 		{

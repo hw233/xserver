@@ -459,6 +459,12 @@ static void wanyaogu_raid_ai_player_dead(raid_struct *raid, player_struct *playe
 // static void wanyaogu_raid_ai_player_relive(raid_struct *raid, player_struct *player)
 // {
 // }
+
+static struct DungeonTable *wanyaogu_raid_get_config(raid_struct *raid)
+{
+	return raid->WANYAOGU_DATA.m_config;
+}
+
 static void wanyaogu_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
 {
 	int param_index = 0;
@@ -564,4 +570,6 @@ struct raid_ai_interface raid_ai_wanyaogu_interface =
 	NULL,  //ai_player_attack
 	NULL,
 	.raid_on_escort_stop = wanyaogu_raid_ai_escort_stop,
+	NULL,
+	.raid_get_config = wanyaogu_raid_get_config, 
 };

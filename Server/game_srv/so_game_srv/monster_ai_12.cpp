@@ -37,10 +37,11 @@ static void ai_dead_12(monster_struct *monster, scene_struct *scene)
 	{
 		std::set<monster_struct *>::iterator next_ite = ite;
 		++next_ite;
-		if ((*ite)->data->monster_id == monster_id)
+		monster_struct *p = *ite;
+		if (p->data->monster_id == monster_id)
 		{
-			raid->delete_monster_from_scene((*ite), true);
-			monster_manager::delete_monster(*ite);
+			raid->delete_monster_from_scene(p, true);
+			monster_manager::delete_monster(p);
 		}
 		ite = next_ite;
 	}

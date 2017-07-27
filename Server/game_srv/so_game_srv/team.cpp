@@ -36,13 +36,13 @@ Team::Team()
 
 Team::~Team()
 {
-	// raid_struct *raid = NULL;
-	// if (m_data->m_raid_uuid != 0)
-	// 	raid = raid_manager::get_raid_by_uuid(m_data->m_raid_uuid);
-	// if (raid)
-	// {
-	// 	raid_manager::delete_raid(raid);
-	// }
+	raid_struct *raid = NULL;
+	if (m_data->m_raid_uuid != 0)
+		raid = raid_manager::get_raid_by_uuid(m_data->m_raid_uuid);
+	if (raid)
+	{
+		raid->team_destoryed(this);
+	}
 
 	comm_pool_free(&team_manager_teamDataPool, m_data);
 }

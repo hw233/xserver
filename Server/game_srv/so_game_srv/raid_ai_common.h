@@ -49,6 +49,7 @@ enum
 	SCRIPT_EVENT_AUTOMATIC_NPC_TALK		  = 44, //自动npc对话通知
 	SCRIPT_EVENT_PLAY_EFFECT			  = 45, //播放特效
 	SCRIPT_EVENT_DELETE_MONSTER			  = 46, //删除副本内特定怪物
+	SCRIPT_EVENT_FAIL_RAID               = 47, //副本失败
 	
 };
 

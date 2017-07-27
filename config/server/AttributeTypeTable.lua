@@ -463,19 +463,19 @@ local AttributeTypeTable = {
 		},
 	[81] = {
 		['ID'] = 81,
-		['Effect'] = '',
+		['Effect'] = 'player_attr_partner_fight',
 		['FightRatio'] = 0,
 		['ShowType'] = 0
 		},
 	[82] = {
 		['ID'] = 82,
-		['Effect'] = '',
+		['Effect'] = 'player_attr_partner_precedence',
 		['FightRatio'] = 0,
 		['ShowType'] = 0
 		},
 	[83] = {
 		['ID'] = 83,
-		['Effect'] = '',
+		['Effect'] = 'player_attr_partner_anger',
 		['FightRatio'] = 0,
 		['ShowType'] = 0
 		},

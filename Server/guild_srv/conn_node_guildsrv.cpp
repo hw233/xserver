@@ -1552,7 +1552,7 @@ int conn_node_guildsrv::handle_open_guild_answer_request(EXTERN_DATA *extern_dat
 		{
 			question[i] = sg_guild_question[rand() % sg_guild_question.size()];
 		}
-		broadcast_guild_message(player->guild, MSG_ID_FACTION_QUESTION_OPEN_NOTIFY, &resp, (pack_func)comm_answer__pack);
+		//broadcast_guild_message(player->guild, MSG_ID_FACTION_QUESTION_OPEN_NOTIFY, &resp, (pack_func)comm_answer__pack);
 		player->guild->answer.Start(player->guild, question, GuildAnswer::MAX_SEND_GUILD_QUESTION);
 	}
 

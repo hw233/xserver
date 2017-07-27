@@ -332,6 +332,15 @@ local ModelTable = {
 		['BindEffect'] = {''},
 		['Scale'] = 1.00
 		},
+	[130200027] = {
+		['ModelId'] = 130200027,
+		['ModelPath'] = 'Prefabs/Actor/gw_056',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
 	[130400003] = {
 		['ModelId'] = 130400003,
 		['ModelPath'] = 'Prefabs/Actor/mw_d_001',
@@ -739,7 +748,7 @@ local ModelTable = {
 		},
 	[130300038] = {
 		['ModelId'] = 130300038,
-		['ModelPath'] = 'Prefabs/Actor/gw_036',
+		['ModelPath'] = 'Prefabs/Actor/gw_038',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',
@@ -901,7 +910,7 @@ local ModelTable = {
 		},
 	[130300056] = {
 		['ModelId'] = 130300056,
-		['ModelPath'] = 'Prefabs/Actor/gw_047',
+		['ModelPath'] = 'Prefabs/Actor/gw_056',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',
@@ -910,7 +919,7 @@ local ModelTable = {
 		},
 	[130300057] = {
 		['ModelId'] = 130300057,
-		['ModelPath'] = 'Prefabs/Actor/gw_047',
+		['ModelPath'] = 'Prefabs/Actor/gw_057',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',
@@ -1073,6 +1082,15 @@ local ModelTable = {
 	[130600001] = {
 		['ModelId'] = 130600001,
 		['ModelPath'] = 'Prefabs/Effect/ef_scene_chuansongdian',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
+	[130600002] = {
+		['ModelId'] = 130600002,
+		['ModelPath'] = 'Prefabs/Effect/ef_juese_chuansong_03',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',

@@ -69,10 +69,10 @@ int sight_space_struct::broadcast_player_delete(player_struct *player, bool ente
 			
 		}
 	}
-	if (data->type == 1)
-	{
-		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);
-	}
+	//if (data->type == 1)
+	//{
+	//	fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);
+	//}
 	return (0);
 }
 int sight_space_struct::broadcast_truck_delete(cash_truck_struct *truck)

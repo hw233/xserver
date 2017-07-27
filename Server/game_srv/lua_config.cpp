@@ -116,7 +116,10 @@ std::map<uint64_t, struct CharmTable *> charm_config; //时装配置
 std::map<uint64_t, struct WeaponsEffectTable*> weapon_color_config; //
 
 std::map<uint64_t, std::vector<struct SceneCreateMonsterTable *> *> all_scene_create_monster_config;
-
+std::map<uint64_t, struct LifeMagicTable*> lifemagic_config; //伙伴法宝配置表
+std::map<uint64_t, struct MagicTable*> MagicTable_config;   //伙伴法宝属性主表
+std::map<uint64_t, struct MagicAttributeTable*> MagicAttrbute_config;   //伙伴法宝副属性表
+//std::map<uint64_t, std::vector<struct LifeProbabilitytable *> *> LifeProbabi_config; //法宝命体对应表
 
 /////////////////////
 uint32_t sg_bag_unlock_base_price;

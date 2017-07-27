@@ -162,6 +162,7 @@ int raid_struct::init_special_raid_data(player_struct *player)
 
 int raid_struct::init_raid(player_struct *player)
 {
+	mark_finished = false;
 	ai = NULL;
 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
 	{
@@ -292,6 +293,30 @@ void raid_struct::clear_monster()
 		}		
 	}
 	
+}
+
+void raid_struct::team_destoryed(Team *team)
+{
+	if (m_raid_team == team)
+	{
+		m_raid_team = NULL;
+		data->team_id = 0;
+	}
+	else if (m_raid_team2 == team)
+	{
+		m_raid_team2 = NULL;
+		data->team2_id = 0;
+	}
+	else if (m_raid_team3 == team)
+	{
+		m_raid_team3 = NULL;
+		data->team3_id = 0;
+	}
+	else if (m_raid_team4 == team)
+	{
+		m_raid_team4 = NULL;
+		data->team4_id = 0;
+	}
 }
 
 void raid_struct::clear()
@@ -1176,9 +1201,10 @@ void raid_struct::on_player_enter_raid(player_struct *player)
 
 int raid_struct::on_raid_finished()
 {
+	mark_finished = true;
 	LOG_DEBUG("%s: raid[%u][%lu]", __FUNCTION__, data->ID, data->uuid);
-	if (ai && ai->raid_on_finished)
-		ai->raid_on_finished(this);
+//	if (ai && ai->raid_on_finished)
+//		ai->raid_on_finished(this);
 
 // 	clear_monster();
 
@@ -1402,6 +1428,13 @@ bool raid_struct::check_raid_need_delete()
 
 void raid_struct::on_tick()
 {
+	if (mark_finished)
+	{
+		if (ai && ai->raid_on_finished)
+			ai->raid_on_finished(this);
+		mark_finished = false;
+		return;
+	}
 	if (ai && ai->raid_on_tick)
 		ai->raid_on_tick(this);
 }
@@ -1570,14 +1603,19 @@ void raid_struct::on_monster_dead(monster_struct *monster, unit_struct *killer)
 	LOG_DEBUG("%s: raid[%u][%lu], monster[%u][%lu]", __FUNCTION__, data->ID, data->uuid, monster->data->monster_id, monster->get_uuid());
 //	m_monster.remove(monster);
 //	assert(data->pass_index < m_config->n_PassType);
-		//杀死怪物
-	if (data->pass_index < m_config->n_PassType && m_config->PassType[data->pass_index] == 1)
+	struct DungeonTable *t_config = m_config;
+	if (ai && ai->raid_get_config)
 	{
-		if (m_config->PassValue[data->pass_index] == monster->config->ID)
+		t_config = ai->raid_get_config(this);
+	}
+		//杀死怪物
+	if (data->pass_index < t_config->n_PassType && t_config->PassType[data->pass_index] == 1)
+	{
+		if (t_config->PassValue[data->pass_index] == monster->config->ID)
 		{
 				// TODO: 不能直接干掉副本，要记录状态并通知玩家副本结束，然后等他们退出去
 //			raid_manager::delete_raid(this);
-			if (add_raid_pass_value(1, m_config))
+			if (add_raid_pass_value(1, t_config))
 			{
 				monster_manager::delete_monster(monster);
 				return;
@@ -1586,16 +1624,16 @@ void raid_struct::on_monster_dead(monster_struct *monster, unit_struct *killer)
 	}
 
 	bool send_star_changed = false;
-	for (uint32_t i = 0; i < m_config->n_Score; ++i)
+	for (uint32_t i = 0; i < t_config->n_Score; ++i)
 	{
 			//击杀怪物或者怪物存活
-		if (m_config->Score[i] != 2 && m_config->Score[i] != 3)
+		if (t_config->Score[i] != 2 && t_config->Score[i] != 3)
 			continue;
-		if (m_config->ScoreValue[i] != monster->config->ID)
+		if (t_config->ScoreValue[i] != monster->config->ID)
 			continue;
 		++data->star_param[i];
 
-		if (data->star_param[i] < m_config->ScoreValue1[i])
+		if (data->star_param[i] < t_config->ScoreValue1[i])
 			send_star_changed = true;
 	}
 	if (send_star_changed && need_show_star())

@@ -38,6 +38,7 @@
 	GradeNum 9 : *integer
 	OrderAttribute 10 : *integer
 	AdvancedLv 11 : *integer
+	AdvancedGet 12 : *integer
 }
 .MountsTable
 {
@@ -350,9 +351,13 @@
 	Level 4 : integer
 	Time 5 : integer
 	Regeneration 6 : integer
-	DropID 7 : integer
+	DropID 7 : *integer
 	LifeTime 8 : integer
 	NameId 9 : string
+	CollectionTeyp 10 : integer
+	ConsumeTeyp 11 : integer
+	Parameter1 12 : *integer
+	Parameter2 13 : *integer
 }
 
 .TaskTable {
@@ -1237,4 +1242,45 @@
 	CoinType 3 : integer
 	Value 4 : integer
 }
-
+.LifeMagicTable{
+	ID 1 : integer
+	LifeMagic 2 : *integer
+	NeedJingli 3 : integer
+	NeedItem 4 : integer
+	NeedItemNum 5 : integer
+	Life1 6 : integer
+	LifeNum1 7 : integer
+	LifeProbability1 8 : *integer
+	Magic1 9 : *integer
+	Life2 10 : integer
+	LifeNum2 11 : integer
+	LifeProbability2 12 : *integer
+	Magic2 13 : *integer
+	Life3 14 : integer
+	LifeNum3 15 : integer
+	LifeProbability3 16 : *integer
+	Magic3 17 : *integer
+	Life4 18 : integer
+	LifeNum4 19 : integer
+	LifeProbability4 20 : *integer
+	Magic4 21 : *integer
+	
+}
+.LifeProbabilitytable{
+	Life 1 : integer
+	LifeNum 2 : integer
+    LifeProbability 3 : *integer
+    Magic 4 : *integer
+}
+.MagicTable{
+	ID 1 : integer
+	Quality 2 : integer
+	MainAttribute 3 : integer
+	MainAttributeNum 4 : *integer
+	ViceAttribute22 5 : *integer
+	ViceAttribute 6 : *integer
+}
+.MagicAttributeTable{
+	Effect 1 : integer
+	Rand 2 : *double
+}

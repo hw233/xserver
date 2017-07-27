@@ -223,7 +223,12 @@ message PartnerComposeStoneRequest
 	repeated ItemData stones = 1; //材料
 }
 
-
+//伙伴法宝合成请求
+message PartnerFabaoStoneRequest
+{
+	required uint64 id  = 1; //索引id
+	required uint64 mingti_id = 2; //合成材料
+}
 
 
 

@@ -77,5 +77,6 @@ int get_transfer_point(uint32_t transfer_id, uint32_t *scene_id, double *pos_x, 
 bool item_is_baguapai(uint32_t item_id);
 int bagua_item_to_card(uint32_t item_id);
 int get_actor_skill_index(uint32_t job, uint32_t skill_id);
+bool item_is_partner_fabao(uint32_t item_id);
 
 #endif /* GAME_CONFIG_H */

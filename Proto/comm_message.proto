@@ -51,6 +51,8 @@ message BagGrid
 	required uint32 usedCount = 4; //已使用次数
 	required uint32 expireTime = 5; //过期时间
 	optional ItemBaguaData bagua = 6; //八卦道具额外信息
+	optional ItemPartnerFabaoData fabao = 7; //伙伴法宝额外信息
+
 }
 
 //道具信息
@@ -161,4 +163,9 @@ message PlayerBaseData
 	required string textIntro = 5; //文字签名
 }
 
-
+//伙伴法宝额外信息
+message ItemPartnerFabaoData
+{
+	required AttrData main_attr = 1; //主属性
+	repeated AttrData minor_attr = 2; //副属性
+}

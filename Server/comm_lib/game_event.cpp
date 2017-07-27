@@ -9,8 +9,9 @@
 #include <string.h>
 #include <pthread.h>
 #include <netinet/tcp.h>
+#include <event2/event_struct.h>
 #include "event2/event.h"
-#include "util-internal.h"
+//#include "util-internal.h"
 #include "listen_node.h"
 
 extern "C" {
@@ -25,6 +26,45 @@ static void libevent_log(int severity, const char *msg)
 {
 	printf("%s %d %d: %s", __FUNCTION__, __LINE__, severity, msg);
 	log4c_category_log(mycat, severity, msg);
+}
+
+#define EVUTIL_ERR_CONNECT_RETRIABLE(e)			\
+	((e) == EINTR || (e) == EINPROGRESS)
+#define EVUTIL_ERR_CONNECT_REFUSED(e)					\
+	((e) == ECONNREFUSED)
+
+
+static int
+evutil_socket_connect_(evutil_socket_t *fd_ptr, const struct sockaddr *sa, int socklen)
+{
+	int made_fd = 0;
+
+	if (*fd_ptr < 0) {
+		if ((*fd_ptr = socket(sa->sa_family, SOCK_STREAM, 0)) < 0)
+			goto err;
+		made_fd = 1;
+		if (evutil_make_socket_nonblocking(*fd_ptr) < 0) {
+			goto err;
+		}
+	}
+
+	if (connect(*fd_ptr, sa, socklen) < 0) {
+		int e = evutil_socket_geterror(*fd_ptr);
+		if (EVUTIL_ERR_CONNECT_RETRIABLE(e))
+			return 0;
+		if (EVUTIL_ERR_CONNECT_REFUSED(e))
+			return 2;
+		goto err;
+	} else {
+		return 1;
+	}
+
+err:
+	if (made_fd) {
+		evutil_closesocket(*fd_ptr);
+		*fd_ptr = -1;
+	}
+	return -1;
 }
 
 int game_event_init()
@@ -198,7 +238,6 @@ int add_timer(struct timeval t, struct event *event_timer, void *arg)
 
 	return evtimer_add(event_timer, &t);
 }
-
 int add_signal(int signum, struct event *event, event_callback_fn callback)
 {
 	if (!event) {

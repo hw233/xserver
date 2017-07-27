@@ -2351,13 +2351,10 @@ void open_all_guild_answer()
 	{
 		question[i] = sg_guild_question[rand() % sg_guild_question.size()];
 	}
-	CommAnswer resp;
-	comm_answer__init(&resp);
+	
 	for (std::map<uint32_t, GuildInfo*>::iterator iter = guild_map.begin(); iter != guild_map.end(); ++iter)
 	{
 		GuildInfo *guild = iter->second;
-		
-		broadcast_guild_message(guild, MSG_ID_FACTION_QUESTION_OPEN_NOTIFY, &resp, (pack_func)comm_answer__pack);
 		guild->answer.Start(guild, question, GuildAnswer::MAX_SEND_GUILD_QUESTION);
 	}
 }

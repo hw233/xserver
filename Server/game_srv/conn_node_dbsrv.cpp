@@ -2,6 +2,7 @@
 #include "game_event.h"
 #include "conn_node_gamesrv.h"
 #include <assert.h>
+#include <stdlib.h>
 #include <errno.h>
 #include <stdint.h>
 #include <string.h>

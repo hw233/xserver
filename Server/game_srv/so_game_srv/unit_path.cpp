@@ -4,6 +4,7 @@
 #include "game_event.h"
 #include <assert.h>
 #include <math.h>
+#include <stdlib.h>
 
 inline float FastSqrtQ3(float x)
 {

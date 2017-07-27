@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <errno.h>
 #include <string.h>
 #include <unistd.h>
 #include <algorithm>
@@ -1983,6 +1984,17 @@ int get_actor_skill_index(uint32_t job, uint32_t skill_id)
 	return 0;
 }
 
+bool item_is_partner_fabao(uint32_t item_id)
+{
+
+	ItemsConfigTable *config = get_config_by_id(item_id, &item_config);
+	if (!config)
+	{
+		return false;
+	}
+
+	return (config->ItemType == 14);
+}
 
 typedef std::map<uint64_t, void *> *config_type;
 #define READ_SPB_MAX_LEN (1024 * 1024)
@@ -2463,6 +2475,21 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/FunctionUnlockTable.lua", (config_type)&function_unlock_config);
 	assert(ret == 0);
 	adjust_jijiangopen_table();
+
+	type = sproto_type(sp, "LifeMagicTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/LifeMagicTable.lua", (config_type)&lifemagic_config);
+	assert(ret == 0);
+	
+	type = sproto_type(sp, "MagicTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/MagicTable.lua", (config_type)&MagicTable_config);
+	assert(ret == 0);
+	
+	type = sproto_type(sp, "MagicAttributeTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/MagicAttributeTable.lua", (config_type)&MagicAttrbute_config);
+	assert(ret == 0);
 
 	type = sproto_type(sp, "SceneCreateMonsterTable");
 	assert(type);

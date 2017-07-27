@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 #include <evhttp.h>
+#include <signal.h>
 
 #include "game_event.h"
 #include "time_helper.h"
@@ -193,6 +195,8 @@ static void	clear_all_mem()
 	for (TEAM_MAP::iterator ite = team_manager_s_teamContain.begin();
 		 ite != team_manager_s_teamContain.end(); ++ite)
 	{
+		if (ite->second->m_data)
+			ite->second->m_data->m_raid_uuid = 0;
 		delete ite->second;
 	}
 	for (COLLECT_MAP::iterator ite = collect_manager_s_collectContain.begin();

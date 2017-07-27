@@ -972,8 +972,10 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	DBBagGrid bag_data[MAX_BAG_GRID_NUM];
 	DBBagGrid *bag_data_point[MAX_BAG_GRID_NUM];
 	DBItemBagua item_bagua_data[MAX_BAG_GRID_NUM];
+	DBItemPartnerFabao item_fabao_data[MAX_BAG_GRID_NUM];
 	DBAttr item_bagua_attr[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_MINOR_ATTR_NUM];
 	DBAttr* item_bagua_attr_point[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_MINOR_ATTR_NUM];
+	DBAttr fabao_attr;
 	for (uint32_t i = 0; i < data->bag_grid_num; ++i)
 	{
 		bag_data_point[i] = &bag_data[i];
@@ -986,19 +988,40 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		{
 			bag_data[i].bagua = &item_bagua_data[i];
 			dbitem_bagua__init(&item_bagua_data[i]);
-			item_bagua_data[i].star = data->bag[i].baguapai.star;
-			item_bagua_data[i].main_attr_val = data->bag[i].baguapai.main_attr_val;
+			item_bagua_data[i].star = data->bag[i].especial_item.baguapai.star;
+			item_bagua_data[i].main_attr_val = data->bag[i].especial_item.baguapai.main_attr_val;
 			uint32_t attr_num = 0;
 			for (int j = 0; j < MAX_BAGUAPAI_MINOR_ATTR_NUM; ++j)
 			{
 				item_bagua_attr_point[i][attr_num] = &item_bagua_attr[i][attr_num];
 				dbattr__init(&item_bagua_attr[i][attr_num]);
-				item_bagua_attr[i][attr_num].id = data->bag[i].baguapai.minor_attrs[j].id;
-				item_bagua_attr[i][attr_num].val = data->bag[i].baguapai.minor_attrs[j].val;
+				item_bagua_attr[i][attr_num].id = data->bag[i].especial_item.baguapai.minor_attrs[j].id;
+				item_bagua_attr[i][attr_num].val = data->bag[i].especial_item.baguapai.minor_attrs[j].val;
 				attr_num++;
 			}
 			item_bagua_data[i].minor_attrs = item_bagua_attr_point[i];
 			item_bagua_data[i].n_minor_attrs = attr_num;
+		}
+		
+		if (item_is_partner_fabao(data->bag[i].id))
+		{
+			bag_data[i].fabao = &item_fabao_data[i];
+			dbitem_partner_fabao__init(&item_fabao_data[i]);
+			item_fabao_data[i].main_attr = &fabao_attr;
+			dbattr__init(&fabao_attr);
+			fabao_attr.id = data->bag[i].especial_item.fabao.main_attr.id;
+			fabao_attr.val = data->bag[i].especial_item.fabao.main_attr.val;
+			uint32_t attr_num = 0;
+			for (int j = 0; j < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM ; ++j)
+			{
+				item_bagua_attr_point[i][attr_num] = &item_bagua_attr[i][attr_num];
+				dbattr__init(&item_bagua_attr[i][attr_num]);
+				item_bagua_attr[i][attr_num].id = data->bag[i].especial_item.fabao.minor_attr[j].id;
+				item_bagua_attr[i][attr_num].val = data->bag[i].especial_item.fabao.minor_attr[j].val;
+				attr_num++;
+			}
+			item_fabao_data[i].minor_attr = item_bagua_attr_point[i];
+			item_fabao_data[i].n_minor_attr = attr_num;
 		}
 	}
 	db_info.bag = bag_data_point;
@@ -1748,12 +1771,22 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		data->bag[i].expire_time = db_info->bag[i]->expire_time;
 		if (db_info->bag[i]->bagua)
 		{
-			data->bag[i].baguapai.star = db_info->bag[i]->bagua->star;
-			data->bag[i].baguapai.main_attr_val = db_info->bag[i]->bagua->main_attr_val;
+			data->bag[i].especial_item.baguapai.star = db_info->bag[i]->bagua->star;
+			data->bag[i].especial_item.baguapai.main_attr_val = db_info->bag[i]->bagua->main_attr_val;
 			for (size_t j = 0; j < db_info->bag[i]->bagua->n_minor_attrs && j < MAX_BAGUAPAI_MINOR_ATTR_NUM; ++j)
 			{
-				data->bag[i].baguapai.minor_attrs[j].id = db_info->bag[i]->bagua->minor_attrs[j]->id;
-				data->bag[i].baguapai.minor_attrs[j].val = db_info->bag[i]->bagua->minor_attrs[j]->val;
+				data->bag[i].especial_item.baguapai.minor_attrs[j].id = db_info->bag[i]->bagua->minor_attrs[j]->id;
+				data->bag[i].especial_item.baguapai.minor_attrs[j].val = db_info->bag[i]->bagua->minor_attrs[j]->val;
+			}
+		}
+		if (db_info->bag[i]->fabao)
+		{
+			data->bag[i].especial_item.fabao.main_attr.id = db_info->bag[i]->fabao->main_attr->id;
+			data->bag[i].especial_item.fabao.main_attr.val = db_info->bag[i]->fabao->main_attr->val;
+			for (size_t j = 0; j < db_info->bag[i]->fabao->n_minor_attr && j < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM; ++j)
+			{
+				data->bag[i].especial_item.fabao.minor_attr[j].id = db_info->bag[i]->fabao->minor_attr[j]->id;
+				data->bag[i].especial_item.fabao.minor_attr[j].val = db_info->bag[i]->fabao->minor_attr[j]->val;
 			}
 		}
 	}
@@ -3245,6 +3278,11 @@ void player_struct::calculate_attribute(bool isNty)
 			nty_list[i] = data->attrData[i];
 		}
 
+		nty_list[PLAYER_ATTR_TI] = data->attrData[PLAYER_ATTR_TI];
+		nty_list[PLAYER_ATTR_LI] = data->attrData[PLAYER_ATTR_LI];
+		nty_list[PLAYER_ATTR_MIN] = data->attrData[PLAYER_ATTR_MIN];
+		nty_list[PLAYER_ATTR_LING] = data->attrData[PLAYER_ATTR_LING];		
+
 		if (NtyFp)
 		{
 			nty_list[PLAYER_ATTR_FIGHTING_CAPACITY] = data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY];
@@ -3675,7 +3713,7 @@ void player_struct::calcu_baguapai_attr(double *attr)
 void player_struct::calcu_guild_skill_attr(double *attr)
 {
 	memset(attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
-	memcpy(attr, data->guild_skill_attr, sizeof(double) * PLAYER_ATTR_FIGHT_MAX);
+	memcpy(attr, data->guild_skill_attr, sizeof(double) * PLAYER_ATTR_MAX);
 
 	print_attribute("guild_skill", attr);
 }
@@ -4038,9 +4076,13 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 
 		ParameterTable * config = get_config_by_id(161000222, &parameter_config);
 		char str[512] = "aaaaaaaaaaaaaaaaaaa";
-		if (config != NULL)
+		if (player.m_team == NULL)
 		{
-			sprintf(str, config->parameter2, player.scene->res_config->SceneName, player.get_uuid());
+			Team::CreateTeam(player);
+		}
+		if (config != NULL && player.m_team != NULL)
+		{
+			sprintf(str, config->parameter2, player.scene->res_config->SceneName, player.m_team->m_data->m_id);
 		}
 		player.send_chat(CHANNEL__world, str);
 	}
@@ -4887,6 +4929,71 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 					break;
 				}
 
+				std::vector<EspecialItemInfo> extra_list;
+				if (config->ItemType == 10 || config->ItemType == 14)
+				{
+					if (config->Stackable != 1)
+					{
+						ret = ERROR_ID_CONFIG;
+						LOG_ERR("[%s:%d] player[%lu] item stack error, id:%u, stack:%lu", __FUNCTION__, __LINE__, data->player_id, id, config->Stackable);
+						break;
+					}
+
+					if ((config->ItemType == 10 && config->n_ParameterEffect < 1) || (config->ItemType == 14 && config->n_ParameterEffect < 1))
+					{
+						ret = ERROR_ID_CONFIG;
+						LOG_ERR("[%s:%d] player[%lu] item config effect param num error, item_id:%u, n_param:%u", __FUNCTION__, __LINE__, data->player_id, id, config->n_ParameterEffect);
+						break;
+					}
+
+					size_t list_size = add_list.size();
+					for (size_t i = 0; i < list_size; ++i)
+					{
+						EspecialItemInfo extra_info;
+						memset(&extra_info, 0, sizeof(extra_info));
+						if (config->ItemType == 10) //八卦牌
+						{
+							uint32_t card_id = config->ParameterEffect[0];
+							if (generate_baguapai_main_attr(card_id, extra_info.baguapai.main_attr_val) != 0)
+							{
+								ret = ERROR_ID_CONFIG;
+								LOG_ERR("[%s:%d] player[%lu] generate main attr failed, item_id:%u", __FUNCTION__, __LINE__, data->player_id, id);
+								break;
+							}
+							if (generate_baguapai_minor_attr(card_id, extra_info.baguapai.minor_attrs) != 0)
+							{
+								ret = ERROR_ID_CONFIG;
+								LOG_ERR("[%s:%d] player[%lu] generate minor attr failed, item_id:%u", __FUNCTION__, __LINE__, data->player_id, id);
+								break;
+							}
+						}
+						else if(config->ItemType == 14) //伙伴法宝
+						{
+							uint32_t effect_id = config->ParameterEffect[0];
+							if (get_partner_fabao_main_attr(effect_id, extra_info.fabao.main_attr) != 0)
+							{
+								ret = ERROR_ID_CONFIG;
+								LOG_ERR("[%s:%d] player[%lu] generate main attr failed, item_id:%u", __FUNCTION__, __LINE__, data->player_id, id);
+								break;
+							}
+							if (get_partner_fabao_minor_attr(effect_id, extra_info.fabao.minor_attr) != 0)
+							{
+								ret = ERROR_ID_CONFIG;
+								LOG_ERR("[%s:%d] player[%lu] generate minor attr failed, item_id:%u", __FUNCTION__, __LINE__, data->player_id, id);
+								break;
+							}
+						}
+
+						extra_list.push_back(extra_info);
+					}
+
+					if (ret != 0)
+					{
+						break;
+					}
+				}
+
+				int list_idx = 0;
 				for (std::map<uint32_t, uint32_t>::iterator iter = add_list.begin(); iter != add_list.end(); ++iter)
 				{
 					bag_grid_data *grid = &data->bag[iter->first];
@@ -4903,25 +5010,13 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 							uint32_t now = time_helper::get_cached_time() / 1000;
 							grid->expire_time = now + config->ItemLimit;
 						}
-						if (config->ItemType == 10) //八卦牌
+
+						if (config->ItemType == 10 || config->ItemType == 14)
 						{
-							if (config->n_ParameterEffect < 1)
-							{
-								LOG_ERR("[%s:%d] player[%lu] item config miss baguapai id, item_id:%u", __FUNCTION__, __LINE__, data->player_id, id);
-							}
-							else
-							{
-								uint32_t card_id = config->ParameterEffect[0];
-								if (generate_baguapai_main_attr(card_id, grid->baguapai.main_attr_val) != 0)
-								{
-									LOG_ERR("[%s:%d] player[%lu] generate main attr failed, item_id:%u", __FUNCTION__, __LINE__, data->player_id, id);
-								}
-								if (generate_baguapai_minor_attr(card_id, grid->baguapai.minor_attrs) != 0)
-								{
-									LOG_ERR("[%s:%d] player[%lu] generate minor attr failed, item_id:%u", __FUNCTION__, __LINE__, data->player_id, id);
-								}
-							}
+							memcpy(&grid->especial_item, &extra_list[list_idx], sizeof(EspecialItemInfo));
+							list_idx++;
 						}
+
 						this->add_item_pos_cache(id, iter->first);
 					}
 
@@ -5903,20 +5998,20 @@ void player_struct::update_bag_grid(uint32_t pos)
 	{
 		grid_data.bagua = &bagua_data;
 		item_bagua_data__init(&bagua_data);
-		bagua_data.star = grid->baguapai.star;
-		bagua_data.main_attr_val = grid->baguapai.main_attr_val;
+		bagua_data.star = grid->especial_item.baguapai.star;
+		bagua_data.main_attr_val = grid->especial_item.baguapai.main_attr_val;
 		uint32_t attr_num = 0;
 		for (int j = 0; j < MAX_BAGUAPAI_MINOR_ATTR_NUM; ++j)
 		{
-			if (grid->baguapai.minor_attrs[j].id == 0)
+			if (grid->especial_item.baguapai.minor_attrs[j].id == 0)
 			{
 				break;
 			}
 
 			bagua_attr_point[attr_num] = &bagua_attr[attr_num];
 			attr_data__init(&bagua_attr[attr_num]);
-			bagua_attr[attr_num].id = grid->baguapai.minor_attrs[j].id;
-			bagua_attr[attr_num].val = grid->baguapai.minor_attrs[j].val;
+			bagua_attr[attr_num].id = grid->especial_item.baguapai.minor_attrs[j].id;
+			bagua_attr[attr_num].val = grid->especial_item.baguapai.minor_attrs[j].val;
 			attr_num++;
 		}
 		bagua_data.minor_attrs = bagua_attr_point;
@@ -5983,9 +6078,9 @@ int player_struct::move_baguapai_to_bag(BaguapaiCardInfo &card)
 		{
 			grid.id = bagua_card_to_bind_item(card.id);
 			grid.num = 1;
-			grid.baguapai.star = card.star;
-			grid.baguapai.main_attr_val = card.main_attr_val;
-			memcpy(&grid.baguapai.minor_attrs, &card.minor_attrs, sizeof(AttrInfo) * MAX_BAGUAPAI_MINOR_ATTR_NUM);
+			grid.especial_item.baguapai.star = card.star;
+			grid.especial_item.baguapai.main_attr_val = card.main_attr_val;
+			memcpy(&grid.especial_item.baguapai.minor_attrs, &card.minor_attrs, sizeof(AttrInfo) * MAX_BAGUAPAI_MINOR_ATTR_NUM);
 
 			this->add_item_pos_cache(grid.id, i);
 			this->update_bag_grid(i);
@@ -11410,8 +11505,12 @@ void player_struct::refresh_oneday_job()
 	}
 
 	add_zhenying_exp(0);
-	data->live_skill.book[LIVE__SKILL__TYPE__COOK] = 20; //todo 读配置
-	data->live_skill.book[LIVE__SKILL__TYPE__MEDICINE] = 20;
+	ParameterTable *tablePar = get_config_by_id(161000175, &parameter_config);
+	if (tablePar != NULL)
+	{
+		data->live_skill.book[LIVE__SKILL__TYPE__COOK] = tablePar->parameter1[0]; 
+		data->live_skill.book[LIVE__SKILL__TYPE__MEDICINE] = tablePar->parameter1[0];
+	}
 }
 
 void player_struct::refresh_shop_daily(void)
@@ -12146,14 +12245,14 @@ int player_struct::add_fashion(uint32_t id, uint32_t color, time_t expire)
 			data->charm_total -= tableCharm->Exp;
 			tableCharm = get_charm_table(data->charm_level);
 			calculate_attribute(true);
-			std::vector<uint32_t> attr_id;
-			std::vector<double> attr_value;
-			for (uint32_t i = 0; i < tableCharm->n_AttributeType; ++i)
-			{
-				attr_id.push_back(tableCharm->AttributeType[i]);
-				attr_value.push_back(data->attrData[tableCharm->AttributeType[i]]);
-			}
-			notify_attr_changed(attr_id.size(), attr_id.data(), attr_value.data());
+			// std::vector<uint32_t> attr_id;
+			// std::vector<double> attr_value;
+			// for (uint32_t i = 0; i < tableCharm->n_AttributeType; ++i)
+			// {
+			// 	attr_id.push_back(tableCharm->AttributeType[i]);
+			// 	attr_value.push_back(data->attrData[tableCharm->AttributeType[i]]);
+			// }
+			// notify_attr_changed(attr_id.size(), attr_id.data(), attr_value.data());
 		}
 
 		FashionCharm send;
@@ -12324,14 +12423,14 @@ void player_struct::check_fashion_expire()
 				data->charm_total += tableCharm->Exp;
 				tableCharm = get_charm_table(data->charm_level - 1);
 				calculate_attribute(true);
-				std::vector<uint32_t> attr_id;
-				std::vector<double> attr_value;
-				for (uint32_t i = 0; i < tableCharm->n_AttributeType; ++i)
-				{
-					attr_id.push_back(tableCharm->AttributeType[i]);
-					attr_value.push_back(data->attrData[tableCharm->AttributeType[i]]);
-				}
-				notify_attr_changed(attr_id.size(), attr_id.data(), attr_value.data());
+				// std::vector<uint32_t> attr_id;
+				// std::vector<double> attr_value;
+				// for (uint32_t i = 0; i < tableCharm->n_AttributeType; ++i)
+				// {
+				// 	attr_id.push_back(tableCharm->AttributeType[i]);
+				// 	attr_value.push_back(data->attrData[tableCharm->AttributeType[i]]);
+				// }
+				// notify_attr_changed(attr_id.size(), attr_id.data(), attr_value.data());
 			}
 			if (data->charm_total < itFashion->second->Charm)
 			{
@@ -13212,4 +13311,156 @@ void player_struct::send_chat(int channal, char *conten)
 	EXTERN_DATA extern_data;
 	extern_data.player_id = get_uuid();
 	handle_chat_no_check(this, &extern_data, &notify);
+}
+
+
+int player_struct::get_partner_fabao_main_attr(uint32_t card_id, AttrInfo &attr_val)
+{
+	MagicTable *magictable_config = get_config_by_id(card_id, &MagicTable_config);
+	if(!magictable_config)
+	{
+		LOG_ERR("[%s:%d] cant not get magictable_config, playerid:[%lu]", __FUNCTION__, __LINE__, data->player_id);
+		return -1;
+	}
+
+	AttributeTypeTable *attrtable_config = get_config_by_id(magictable_config->MainAttribute, &attribute_type_config);
+	
+	if(!attrtable_config)
+	{
+		LOG_ERR("[%s:%d] cant not get attrtable_config , playerid:[%lu]", __FUNCTION__, __LINE__, data->player_id);
+		return -2;
+	}
+
+	assert(magictable_config->n_MainAttributeNum == 2);
+	assert(magictable_config->MainAttributeNum[1] >= magictable_config->MainAttributeNum[0]);
+
+
+	attr_val.id = magictable_config->MainAttribute;
+	uint64_t min_attr = magictable_config->MainAttributeNum[0];
+	uint64_t max_attr = magictable_config->MainAttributeNum[1];
+
+	attr_val.val = rand() % (max_attr - min_attr + 1) + min_attr;
+	LOG_INFO("生成伙伴法宝是随机的主属性值[%lf]", attr_val.val);
+
+	return 0;
+}
+int player_struct::get_partner_fabao_minor_attr(uint32_t card_id, AttrInfo *attrs)
+{
+
+	MagicTable *magictable_config = get_config_by_id(card_id, &MagicTable_config);
+	if(!magictable_config)
+	{
+		LOG_ERR("[%s:%d] cant not get magictable_config, playerid:[%lu]", __FUNCTION__, __LINE__, data->player_id);
+		return -1;
+	}
+
+	uint64_t total_gailv = 0;
+	for(uint32_t i = 0; i < magictable_config->n_ViceAttribute22; ++i)
+	{
+		total_gailv += magictable_config->ViceAttribute22[i];
+	}
+
+	if(total_gailv <= 0)
+	{
+		LOG_ERR("[%s:%d] get fabao fu shu xing gailv failed", __FUNCTION__, __LINE__);
+		return -2;
+	}
+
+	//随机获取福属性数目
+	total_gailv = rand() % total_gailv + 1;
+	int flag = -1;
+	uint64_t begin_gailv = 0;
+	uint64_t end_gailv = 0;
+	for(uint32_t j = 0; j < magictable_config->n_ViceAttribute22; ++j)
+	{
+		end_gailv = begin_gailv + magictable_config->ViceAttribute22[j];
+		if(total_gailv > begin_gailv && total_gailv <= end_gailv)
+		{
+			flag = j;
+			break;
+		}
+		begin_gailv = end_gailv;
+	}
+
+	if(flag < 0)
+	{	
+		LOG_ERR("[%s:%d] get fabao fu shu xing num failed", __FUNCTION__, __LINE__);
+		return -3;
+	}
+	uint32_t minor_attr_num = flag + 1;
+
+	//随机获取福属性id
+	if(minor_attr_num > magictable_config->n_ViceAttribute)
+	{
+		LOG_ERR("[%s:%d] minor attr num not enough nedd attr_num:[%u], total attr_num:[%u]", minor_attr_num, magictable_config->n_ViceAttribute);
+		return -4;
+	}
+
+	uint64_t attr_id[minor_attr_num];
+	for(uint32_t k = 0; k < minor_attr_num; ++k)
+	{
+		while(1)
+		{
+			uint32_t i = rand() %  magictable_config->n_ViceAttribute;
+			bool like = false;
+			for(uint32_t n = 0; n < minor_attr_num; ++n)
+			{
+				if(attr_id[n] == magictable_config->ViceAttribute[i])
+					like = true;
+			}
+			if(!like)
+			{
+				LOG_INFO("伙伴法宝随机到的副属性id[%u]", attr_id[k]);
+				attr_id[k] = magictable_config->ViceAttribute[i];
+				break;
+			}
+		}
+
+	}
+	//根据随机获取到的几条属相ID来设置相应属性
+	AttrInfo tmp_attr[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
+	memset(tmp_attr, 0, sizeof(AttrInfo) * MAX_HUOBAN_FABAO_MINOR_ATTR_NUM);
+	for(uint32_t i = 0; i < minor_attr_num && i < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM; ++i)
+	{
+		MagicAttributeTable *magicattribute_config = get_config_by_id(attr_id[i], &MagicAttrbute_config);
+		if(!magicattribute_config)
+		{
+			LOG_ERR("[%s:%d], get magic attribute table failed, palyer_id=[%lu]", __FUNCTION__, __LINE__, data->player_id);
+			return -5;
+		}
+		
+		if(magictable_config->Quality >= magicattribute_config->n_Rand || magictable_config->Quality <= 0)
+		{
+		
+			LOG_ERR("[%s:%d] player[%lu] attr rand size error, card_id:%u, attr_id:%u", __FUNCTION__, __LINE__, data->player_id, card_id, attr_id[i]);
+			return -1;
+		}
+		
+		double min_val = magicattribute_config->Rand[magictable_config->Quality-1];
+		double max_val = magicattribute_config->Rand[magictable_config->Quality];
+		if (max_val < min_val)
+		{
+			LOG_ERR("[%s:%d] player[%lu] attr rand range error, card_id:%u, attr_id:%u", __FUNCTION__, __LINE__, data->player_id, card_id, attr_id[i]);
+			return -1;
+		}
+
+		double range_val = max_val	- min_val;
+		double total_attr = 0;
+		uint32_t rand_num = 0;
+		if(range_val > 1.00)
+		{
+			rand_num = rand() % (uint32_t)(range_val + 1);
+			total_attr = min_val + rand_num;
+		}
+		else
+		{
+			rand_num = rand() % (uint32_t)(range_val * 10000 + 1);
+			total_attr = min_val + (double)rand_num / 10000.0;
+		}
+		tmp_attr[i].id = attr_id[i];
+		tmp_attr[i].val = total_attr;
+	}
+	memcpy(attrs, tmp_attr, sizeof(AttrInfo) * MAX_HUOBAN_FABAO_MINOR_ATTR_NUM);
+
+	return 0;
 }

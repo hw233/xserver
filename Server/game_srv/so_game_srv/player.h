@@ -70,11 +70,18 @@ struct cast_skill_data
 	uint64_t start_time;
 };
 
-struct ItemBaguapaiInfo
+union EspecialItemInfo
 {
-	uint32_t star;
-	double main_attr_val;
-	AttrInfo minor_attrs[MAX_BAGUAPAI_MINOR_ATTR_NUM];
+	struct{
+		uint32_t star;
+		double main_attr_val;
+		AttrInfo minor_attrs[MAX_BAGUAPAI_MINOR_ATTR_NUM];
+	}baguapai;
+
+	struct{
+		AttrInfo main_attr;	   //主属性
+		AttrInfo minor_attr[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];//副属性
+	}fabao;
 };
 
 struct bag_grid_data
@@ -83,7 +90,7 @@ struct bag_grid_data
 	uint32_t num;
 	uint32_t used_count;
 	uint32_t expire_time;
-	ItemBaguapaiInfo baguapai;
+	EspecialItemInfo especial_item;
 };
 
 struct HeadIconInfo
@@ -611,7 +618,7 @@ struct player_data
 
 	LiveSkill live_skill;
 	//帮会技能属性
-	double guild_skill_attr[PLAYER_ATTR_FIGHT_MAX]; //属性
+	double guild_skill_attr[PLAYER_ATTR_MAX]; //属性
 	XunBaoData xunbao;
 
 	EscortInfo escort_list[MAX_ESCORT_NUM]; //护送列表
@@ -1110,6 +1117,8 @@ public:
 	bool partner_dictionary_is_active(uint32_t partner_id); //伙伴图鉴是否激活
 	bool partner_bond_is_active(uint32_t bond_id); //伙伴羁绊是否激活
 	bool partner_bond_reward_is_get(uint32_t partner_id); //伙伴羁绊奖励是否领取
+	int get_partner_fabao_main_attr(uint32_t card_id, AttrInfo &attr_val);
+	int get_partner_fabao_minor_attr(uint32_t card_id, AttrInfo *attrs);
 
 	uint64_t last_change_area_time;
 	sight_space_struct *sight_space;

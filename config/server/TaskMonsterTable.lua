@@ -663,6 +663,13 @@ local TaskMonsterTable = {
 		['MonsterLevel'] = 28,
 		['PointX'] = 85,
 		['PointZ'] = 268
+		},
+	[240720096] = {
+		['ID'] = 240720096,
+		['MonsterID'] = 151003014,
+		['MonsterLevel'] = 10,
+		['PointX'] = 98,
+		['PointZ'] = 394
 		}
 	}
 return TaskMonsterTable

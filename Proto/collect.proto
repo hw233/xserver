@@ -5,6 +5,13 @@ message CollectId
 	required uint32 id = 1;
 }
 
+//采集点ID 
+message StartCollect
+{
+	required uint32 id = 1;
+	required uint32 step = 2; //0 第一档 1 第二档 2 第三档
+}
+
 message NotifyCollect
 {
 	required uint64 playerid = 1;

@@ -9,3 +9,4 @@ leak:liblog4c.so.3
 leak:create_collect
 leak:get_friend_player
 leak:create_sight_space
+leak:create_guild

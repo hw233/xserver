@@ -14,6 +14,7 @@
 #define ERROR_ID_SERVER                  1009 //服务器内部错误
 #define ERROR_ID_REQUEST_UNPACK          1010 //请求消息解包出错
 #define ERROR_ID_PLAYER_DEAD             1011 //玩家已死亡
+#define ERROR_ID_CONFIG                  1012 //配置表错误
 
 #define ERROR_ID_GOLD_NOT_ENOUGH         1050 //元宝不足
 #define ERROR_ID_COIN_NOT_ENOUGH         1051 //银两不足

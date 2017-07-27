@@ -3,7 +3,7 @@
         ['uid'] = 1000001,
         ['ID'] = 151005052,
         ['ResType'] = "Monster",
-        ['PointPosX'] = -69.53594,
+        ['PointPosX'] = -72.47,
         ['PointPosY'] = -1.424881,
         ['PointPosZ'] = 114.98,
         ['Yaw'] = 0,
@@ -574,7 +574,7 @@
         ['PointPosX'] = -62.9369,
         ['PointPosY'] = -1.43,
         ['PointPosZ'] = 124.0632,
-        ['Yaw'] = 211.5,
+        ['Yaw'] = 211.5001,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
@@ -622,7 +622,7 @@
         ['PointPosX'] = -68.61734,
         ['PointPosY'] = -1.43,
         ['PointPosZ'] = 127.0933,
-        ['Yaw'] = 208.31,
+        ['Yaw'] = 208.3101,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
@@ -646,7 +646,7 @@
         ['PointPosX'] = -64.55,
         ['PointPosY'] = -1.43,
         ['PointPosZ'] = 127.57,
-        ['Yaw'] = 215.49,
+        ['Yaw'] = 215.4901,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
@@ -691,9 +691,9 @@
         ['uid'] = 1000027,
         ['ID'] = 151005059,
         ['ResType'] = "Monster",
-        ['PointPosX'] = -66.43628,
+        ['PointPosX'] = -74.84,
         ['PointPosY'] = -1.077796,
-        ['PointPosZ'] = 105.8514,
+        ['PointPosZ'] = 107.22,
         ['Yaw'] = 339.63,
         ['Level'] = 25,
         ['TargetInfoList'] = {
@@ -706,7 +706,7 @@
         ['PointPosX'] = -71.67692,
         ['PointPosY'] = -1.43,
         ['PointPosZ'] = 128.7018,
-        ['Yaw'] = 192.02,
+        ['Yaw'] = 192.0201,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
@@ -718,7 +718,7 @@
         ['PointPosX'] = -66.83167,
         ['PointPosY'] = -1.43,
         ['PointPosZ'] = 124.0129,
-        ['Yaw'] = 215.99,
+        ['Yaw'] = 215.9901,
         ['Level'] = 25,
         ['TargetInfoList'] = {
         }
@@ -768,6 +768,18 @@
         ['PointPosZ'] = 105.6065,
         ['Yaw'] = 0,
         ['Level'] = 25,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000034] = {
+        ['uid'] = 1000034,
+        ['ID'] = 151005068,
+        ['ResType'] = "Monster",
+        ['PointPosX'] = -0.7394705,
+        ['PointPosY'] = -1.3,
+        ['PointPosZ'] = 114.6426,
+        ['Yaw'] = 0,
+        ['Level'] = 1,
         ['TargetInfoList'] = {
         }
     },

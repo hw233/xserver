@@ -2,6 +2,7 @@
 #include "game_event.h"
 #include <errno.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <assert.h>
 #include <time.h>
 #include <string.h>

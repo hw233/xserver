@@ -108,6 +108,7 @@ struct raid_script_data
 	uint16_t cur_index;
 	uint32_t cur_finished_num[MAX_SCRIPT_COND_NUM];
 	uint32_t collect_callback_event;   //采集回调的操作 1: 打断雷鸣鼓
+	uint32_t dead_monster_id;  //死亡的怪物在判断怪物血量的时候也要算进去
 };
 
 union raid_ai_data
@@ -234,6 +235,7 @@ typedef void(*raid_ai_attack)(raid_struct *, player_struct *, unit_struct *, int
 typedef void(*raid_ai_player_region_changed)(raid_struct *, player_struct *, uint32_t);
 typedef void(*raid_ai_escort_stop)(raid_struct *, player_struct *, uint32_t, bool);
 typedef void(*raid_ai_npc_talk)(raid_struct *, player_struct *, uint32_t);
+typedef struct DungeonTable* (*raid_ai_get_config)(raid_struct *);
 
 struct raid_ai_interface
 {
@@ -251,6 +253,7 @@ struct raid_ai_interface
 	raid_ai_player_region_changed raid_on_player_region_changed; //区域变化
 	raid_ai_escort_stop raid_on_escort_stop; //护送结果
 	raid_ai_npc_talk raid_on_npc_talk; //和npc对话
+	raid_ai_get_config raid_get_config; //获取配置，主要是万妖谷的配置
 };
 
 class raid_struct : public scene_struct
@@ -266,6 +269,7 @@ public:
 	void raid_set_ai_interface(int ai_type);
 	static void raid_add_ai_interface(int ai_type, struct raid_ai_interface *ai);
 	int team_enter_raid(Team *team);
+	void team_destoryed(Team *team);
 	/* int team2_enter_raid(Team *team); */
 	/* int team3_enter_raid(Team *team); */
 	/* int team4_enter_raid(Team *team);		 */
@@ -331,6 +335,7 @@ public:
 	struct DungeonTable* m_config;
 	struct ControlTable *m_control_config;
 	std::set<monster_struct *> m_monster;
+	bool mark_finished;   //副本是否结束了
 	
 protected:
 	uint16_t player_num;  //记录玩家数目，没有玩家了才可以删除

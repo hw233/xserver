@@ -4,6 +4,7 @@
 #include "game_event.h"
 #include "flow_record.h"
 #include <assert.h>
+#include <stdlib.h>
 #include <errno.h>
 #include "msgid.h"
 

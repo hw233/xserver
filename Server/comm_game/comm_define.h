@@ -68,6 +68,8 @@
 #define MAX_ESCORT_MONSTER_WAVE   (4)
 
 
+//伙伴法宝
+#define MAX_HUOBAN_FABAO_MINOR_ATTR_NUM 4 //伙伴法宝最大副属性
 //玩家状态
 enum PlayerStatus
 {

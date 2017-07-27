@@ -139,7 +139,7 @@
 #define MSG_ID_CHAT_HORSE_NOTIFY                10555  //跑马灯 ChatHorse
 
 //采集点
-#define MSG_ID_COLLECT_BEGIN_REQUEST                10560  //开始采集 CollectId
+#define MSG_ID_COLLECT_BEGIN_REQUEST                10560  //开始采集 StartCollect
 #define MSG_ID_COLLECT_BEGIN_ANSWER                10561  //开始采集 comm_answer 0成功 1:正被采集 2:等级不够
 #define MSG_ID_COLLECT_BEGIN_NOTIFY                10562  //开始采集 NotifyCollect
 #define MSG_ID_COLLECT_INTERRUPT_REQUEST                10563  //中断采集 CollectId
@@ -721,6 +721,8 @@
 #define MSG_ID_PARTNER_BOND_REWARD_ANSWER                 13134 //伙伴羁绊奖励应答 PartnerBondRewardAnswer
 #define MSG_ID_PARTNER_COMPOSE_STONE_REQUEST              13135 //伙伴神曜合成请求 PartnerComposeStoneRequest
 #define MSG_ID_PARTNER_COMPOSE_STONE_ANSWER               13136 //伙伴神曜合成应答 comm_answer
+#define MSG_ID_PARTNER_FABAO_STONE_REQUEST                13137 //伙伴法宝合成请求 PartnerFabaoStoneRequest
+#define MSG_ID_PARTNER_FABAO_STONE_ANSWER                 13138 //伙伴法宝合成应答 comm_answer 
 
 //运镖
 #define MSG_ID_CASH_TRUCK_INFO_NOTIFY                       13301 //运镖信息 CashTruckInfo

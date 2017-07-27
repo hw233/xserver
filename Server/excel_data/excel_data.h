@@ -51,7 +51,11 @@ struct GodYaoAttributeTable;
 struct GradeTable;
 struct ItemsConfigTable;
 struct LifeItemTable;
+struct LifeMagicTable;
+struct LifeProbabilitytable;
 struct LifeSkillTable;
+struct MagicAttributeTable;
+struct MagicTable;
 struct MoneyQuestTable;
 struct MonsterPkTypeTable;
 struct MonsterTable;
@@ -525,6 +529,8 @@ struct CastSpiritTable
 	uint64_t *OrderAttribute; //10
 	uint32_t n_AdvancedLv; //11
 	uint64_t *AdvancedLv; //11
+	uint32_t n_AdvancedGet; //12
+	uint64_t *AdvancedGet; //12
 }__attribute__ ((packed));
 
 struct ChangeSpecialty
@@ -561,9 +567,16 @@ struct CollectTable
 	uint64_t  Level; //4
 	uint64_t  Time; //5
 	uint64_t  Regeneration; //6
-	uint64_t  DropID; //7
+	uint32_t n_DropID; //7
+	uint64_t *DropID; //7
 	uint64_t  LifeTime; //8
 	char  *NameId; //9
+	uint64_t  CollectionTeyp; //10
+	uint64_t  ConsumeTeyp; //11
+	uint32_t n_Parameter1; //12
+	uint64_t *Parameter1; //12
+	uint32_t n_Parameter2; //13
+	uint64_t *Parameter2; //13
 }__attribute__ ((packed));
 
 struct ColourTable
@@ -946,6 +959,50 @@ struct LifeItemTable
 	uint64_t  ItemID; //5
 }__attribute__ ((packed));
 
+struct LifeMagicTable
+{
+	uint64_t  ID; //1
+	uint32_t n_LifeMagic; //2
+	uint64_t *LifeMagic; //2
+	uint64_t  NeedJingli; //3
+	uint64_t  NeedItem; //4
+	uint64_t  NeedItemNum; //5
+	uint64_t  Life1; //6
+	uint64_t  LifeNum1; //7
+	uint32_t n_LifeProbability1; //8
+	uint64_t *LifeProbability1; //8
+	uint32_t n_Magic1; //9
+	uint64_t *Magic1; //9
+	uint64_t  Life2; //10
+	uint64_t  LifeNum2; //11
+	uint32_t n_LifeProbability2; //12
+	uint64_t *LifeProbability2; //12
+	uint32_t n_Magic2; //13
+	uint64_t *Magic2; //13
+	uint64_t  Life3; //14
+	uint64_t  LifeNum3; //15
+	uint32_t n_LifeProbability3; //16
+	uint64_t *LifeProbability3; //16
+	uint32_t n_Magic3; //17
+	uint64_t *Magic3; //17
+	uint64_t  Life4; //18
+	uint64_t  LifeNum4; //19
+	uint32_t n_LifeProbability4; //20
+	uint64_t *LifeProbability4; //20
+	uint32_t n_Magic4; //21
+	uint64_t *Magic4; //21
+}__attribute__ ((packed));
+
+struct LifeProbabilitytable
+{
+	uint64_t  Life; //1
+	uint64_t  LifeNum; //2
+	uint32_t n_LifeProbability; //3
+	uint64_t *LifeProbability; //3
+	uint32_t n_Magic; //4
+	uint64_t *Magic; //4
+}__attribute__ ((packed));
+
 struct LifeSkillTable
 {
 	uint64_t  ID; //1
@@ -966,6 +1023,26 @@ struct LifeSkillTable
 	uint64_t *ItemID; //14
 	uint64_t  NeedDonation; //15
 	uint64_t  NeedJingli; //16
+}__attribute__ ((packed));
+
+struct MagicAttributeTable
+{
+	uint64_t  Effect; //1
+	uint32_t n_Rand; //2
+	double *Rand; //2
+}__attribute__ ((packed));
+
+struct MagicTable
+{
+	uint64_t  ID; //1
+	uint64_t  Quality; //2
+	uint64_t  MainAttribute; //3
+	uint32_t n_MainAttributeNum; //4
+	uint64_t *MainAttributeNum; //4
+	uint32_t n_ViceAttribute22; //5
+	uint64_t *ViceAttribute22; //5
+	uint32_t n_ViceAttribute; //6
+	uint64_t *ViceAttribute; //6
 }__attribute__ ((packed));
 
 struct MoneyQuestTable

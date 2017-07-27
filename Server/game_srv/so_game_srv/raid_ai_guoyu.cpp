@@ -148,7 +148,8 @@ static void guoyu_raid_ai_monster_dead(raid_struct *raid, monster_struct *monste
 
 	if (raid->get_monster_num() == 0)
 	{
-		guoyu_raid_ai_finished(raid);
+//		guoyu_raid_ai_finished(raid);
+		raid->on_raid_finished();
 	}
 }
 

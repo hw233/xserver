@@ -829,7 +829,7 @@ void cash_truck_struct::add_area_player_to_sight(area_struct *area, uint16_t *ad
 			LOG_ERR("%s %d: can not find sight player %lu area[%p]", __FUNCTION__, __LINE__, area->m_player_ids[j], area);
 			continue;
 		}
-		if (player->prepare_add_truck_to_sight(this) != 0) //todo 实现这2个
+		if (player->prepare_add_truck_to_sight(this) != 0) 
 			continue;
 		if (player->add_cash_truck_to_sight_both(this) >= 0)
 		{

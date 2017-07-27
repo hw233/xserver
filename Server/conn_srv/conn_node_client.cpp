@@ -14,6 +14,7 @@
 #include <errno.h>
 #include <string.h>
 #include <assert.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 conn_node_client::conn_node_client()

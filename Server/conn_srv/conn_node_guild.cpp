@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <errno.h>
 #include "msgid.h"
+#include <stdlib.h>
 
 conn_node_guild *conn_node_guild::server_node;
 

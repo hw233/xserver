@@ -20,6 +20,7 @@ message DBBagGrid
 	required uint32 used_count = 3;
 	required uint32 expire_time = 4;
 	optional DBItemBagua bagua = 5;
+	optional DBItemPartnerFabao fabao = 6;
 }
 
 message DBHeadIcon
@@ -449,3 +450,8 @@ message LoadChengjieTask
 	repeated ChengjieTaskDb data = 1;
 }
 
+message DBItemPartnerFabao
+{
+	required DBAttr main_attr = 1;	//伙伴法宝主属性
+	repeated DBAttr minor_attr = 2;	//伙伴法宝副属性
+}

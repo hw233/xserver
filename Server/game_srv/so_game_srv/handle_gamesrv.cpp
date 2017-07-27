@@ -1790,20 +1790,21 @@ static int handle_gather_complete(player_struct *player, EXTERN_DATA *extern_dat
 		return -10;
 	}
 
-	CollectId *req = collect_id__unpack(NULL, get_data_len(), (uint8_t *)get_data());
-	if (!req) {
-		LOG_ERR("%s %d: can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
-		return (-10);
-	}
-	uint32_t reqid = req->id;
+	//CollectId *req = collect_id__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	//if (!req) {
+	//	LOG_ERR("%s %d: can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+	//	return (-10);
+	//}
+	//uint32_t reqid = req->id;
 
-	Collect *pCollect = Collect::GetById(req->id);
-	collect_id__free_unpacked(req, NULL);
+	//Collect *pCollect = Collect::GetById(req->id);
+	//collect_id__free_unpacked(req, NULL);
 
-	LOG_DEBUG("%s: player[%lu] collectid[%u]", __FUNCTION__, extern_data->player_id, reqid);
+	LOG_DEBUG("%s: player[%lu] collectid[%u]", __FUNCTION__, extern_data->player_id, player->data->m_collect_uuid);
+	Collect *pCollect = Collect::GetById(player->data->m_collect_uuid);
 	if (pCollect == NULL)
 	{
-		LOG_ERR("%s %d: can not player[%lu] find collect %u", __FUNCTION__, __LINE__, extern_data->player_id, reqid);
+		LOG_ERR("%s %d: can not player[%lu] find collect %u", __FUNCTION__, __LINE__, extern_data->player_id, player->data->m_collect_uuid);
 		return -11;
 	}
 	int ret = pCollect->GatherComplete(player);
@@ -2821,8 +2822,10 @@ static int handle_bag_info_request(player_struct *player, EXTERN_DATA *extern_da
 	BagGrid bag_data[MAX_BAG_GRID_NUM];
 	BagGrid *bag_data_point[MAX_BAG_GRID_NUM];
 	ItemBaguaData bagua_data[MAX_BAG_GRID_NUM];
+	ItemPartnerFabaoData fabao_data[MAX_BAG_GRID_NUM];
 	AttrData bagua_attr[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_MINOR_ATTR_NUM];
 	AttrData* bagua_attr_point[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_MINOR_ATTR_NUM];
+	AttrData fabao_attr;
 
 	resp.result = 0;
 	resp.curgridnum = player->data->bag_grid_num;
@@ -2847,24 +2850,51 @@ static int handle_bag_info_request(player_struct *player, EXTERN_DATA *extern_da
 		{
 			bag_data[resp.n_grids].bagua = &bagua_data[resp.n_grids];
 			item_bagua_data__init(&bagua_data[resp.n_grids]);
-			bagua_data[resp.n_grids].star = player->data->bag[i].baguapai.star;
-			bagua_data[resp.n_grids].main_attr_val = player->data->bag[i].baguapai.main_attr_val;
+			bagua_data[resp.n_grids].star = player->data->bag[i].especial_item.baguapai.star;
+			bagua_data[resp.n_grids].main_attr_val = player->data->bag[i].especial_item.baguapai.main_attr_val;
 			uint32_t attr_num = 0;
 			for (int j = 0; j < MAX_BAGUAPAI_MINOR_ATTR_NUM; ++j)
 			{
-				if (player->data->bag[i].baguapai.minor_attrs[j].id == 0)
+				if (player->data->bag[i].especial_item.baguapai.minor_attrs[j].id == 0)
 				{
 					break;
 				}
 
 				bagua_attr_point[resp.n_grids][attr_num] = &bagua_attr[resp.n_grids][attr_num];
 				attr_data__init(&bagua_attr[resp.n_grids][attr_num]);
-				bagua_attr[resp.n_grids][attr_num].id = player->data->bag[i].baguapai.minor_attrs[j].id;
-				bagua_attr[resp.n_grids][attr_num].val = player->data->bag[i].baguapai.minor_attrs[j].val;
+				bagua_attr[resp.n_grids][attr_num].id = player->data->bag[i].especial_item.baguapai.minor_attrs[j].id;
+				bagua_attr[resp.n_grids][attr_num].val = player->data->bag[i].especial_item.baguapai.minor_attrs[j].val;
 				attr_num++;
 			}
 			bagua_data[resp.n_grids].minor_attrs = bagua_attr_point[resp.n_grids];
 			bagua_data[resp.n_grids].n_minor_attrs = attr_num;
+		}
+		if (item_is_partner_fabao(player->data->bag[i].id))
+		{
+			bag_data[resp.n_grids].fabao = &fabao_data[resp.n_grids];
+			item_partner_fabao_data__init(&fabao_data[resp.n_grids]);
+			fabao_data[resp.n_grids].main_attr = &fabao_attr;
+			attr_data__init(&fabao_attr);
+			//fabao_data[resp.n_grids].main_attr->id = player->data->bag[i].especial_item.fabao.main_attr.id;
+			//fabao_data[resp.n_grids].main_attr->val = player->data->bag[i].especial_item.fabao.main_attr.val;
+			fabao_attr.id =  player->data->bag[i].especial_item.fabao.main_attr.id;
+			fabao_attr.val = player->data->bag[i].especial_item.fabao.main_attr.val;
+			uint32_t attr_num = 0;
+			for (int j = 0; j < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM; ++j)
+			{
+				if (player->data->bag[i].especial_item.fabao.minor_attr[j].id == 0)
+				{
+					break;
+				}
+
+				bagua_attr_point[resp.n_grids][attr_num] = &bagua_attr[resp.n_grids][attr_num];
+				attr_data__init(&bagua_attr[resp.n_grids][attr_num]);
+				bagua_attr[resp.n_grids][attr_num].id = player->data->bag[i].especial_item.fabao.minor_attr[j].id;
+				bagua_attr[resp.n_grids][attr_num].val = player->data->bag[i].especial_item.fabao.minor_attr[j].val;
+				attr_num++;
+			}
+			fabao_data[resp.n_grids].minor_attr = bagua_attr_point[resp.n_grids];
+			fabao_data[resp.n_grids].n_minor_attr = attr_num;
 		}
 		resp.n_grids++;
 	}
@@ -7955,39 +7985,39 @@ static int handle_buy_horse_request(player_struct *player, EXTERN_DATA *extern_d
 		return 5;
 	}
 
-	int i = player->add_horse(horseId, it->second->Time[shopid]);
-	//int i = player->add_horse(horseId, 30);
+	//int i = player->add_horse(horseId, it->second->Time[shopid]);
+	int i = player->add_horse(horseId, 30);
 	if (i < 0 || i >= MAX_HORSE_NUM)
 	{
 		return -1;
 	}
+	player->notify_add_horse(i);
+	//HorseData hData;
+	//send.data = &hData;
+	//horse_data__init(&hData);
+	//hData.id = player->data->horse[i].id;
+	//hData.isnew = player->data->horse[i].isNew;
 
-	HorseData hData;
-	send.data = &hData;
-	horse_data__init(&hData);
-	hData.id = player->data->horse[i].id;
-	hData.isnew = player->data->horse[i].isNew;
+	//if (player->data->horse[i].timeout != 0)
+	//{
+	//	if (player->data->horse[i].timeout <= (time_t)time_helper::get_cached_time() / 1000)
+	//	{
+	//		hData.isexpire = true;
+	//	}
+	//	else
+	//	{
+	//		hData.cd = player->data->horse[i].timeout - time_helper::get_cached_time() / 1000;
+	//		hData.isexpire = false;
+	//	}
+	//}
+	//else
+	//{
+	//	hData.isexpire = false;
+	//	hData.cd = 0;
+	//}
+	//hData.is_current = false;
 
-	if (player->data->horse[i].timeout != 0)
-	{
-		if (player->data->horse[i].timeout <= (time_t)time_helper::get_cached_time() / 1000)
-		{
-			hData.isexpire = true;
-		}
-		else
-		{
-			hData.cd = player->data->horse[i].timeout - time_helper::get_cached_time() / 1000;
-			hData.isexpire = false;
-		}
-	}
-	else
-	{
-		hData.isexpire = false;
-		hData.cd = 0;
-	}
-	hData.is_current = false;
-
-	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_BUY_HORSE_ANSWER, buy_horse_ans__pack, send);
+	//fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_BUY_HORSE_ANSWER, buy_horse_ans__pack, send);
 
 	return 0;
 }
@@ -8188,7 +8218,7 @@ static int handle_add_horse_soul_level_request(player_struct *player, EXTERN_DAT
 		return (-1);
 	}
 
-	std::map<uint64_t, struct CastSpiritTable*>::iterator it = horse_soul_config.find(player->data->horse_attr.soul); //坐骑铸灵配置
+	std::map<uint64_t, struct CastSpiritTable*>::iterator it = horse_soul_config.find(MAX_HORSE_SOUL); //坐骑铸灵配置
 	if (it == horse_soul_config.end())
 	{
 		return -2;
@@ -8200,6 +8230,11 @@ static int handle_add_horse_soul_level_request(player_struct *player, EXTERN_DAT
 
 	for (uint32_t i = 1; i <= MAX_HORSE_SOUL; ++i)
 	{
+		//std::map<uint64_t, struct CastSpiritTable*>::iterator it = horse_soul_config.find(i); //每个卦升级次数都是一样的 
+		//if (it == horse_soul_config.end())
+		//{
+		//	return -2;
+		//}
 		if (player->data->horse_attr.soul_exp[i] < it->second->GradeNum[player->data->horse_attr.soul - 1])
 		{
 			return -4;
@@ -8212,6 +8247,15 @@ static int handle_add_horse_soul_level_request(player_struct *player, EXTERN_DAT
 
 	memset(player->data->horse_attr.soul_exp, 0, sizeof(player->data->horse_attr.soul_exp));
 
+	MountsTable *table = get_config_by_id(it->second->AdvancedGet[player->data->horse_attr.soul - 1], &horse_config);
+	if (table != NULL)
+	{
+		int pos = player->add_horse(it->second->AdvancedGet[player->data->horse_attr.soul - 1], 0);
+		if (pos >= 0)
+		{
+			player->notify_add_horse(pos);
+		}
+	}
 	player->data->horse_attr.soul += 1;
 
 	HorseSoulLevelAns send;
@@ -10210,9 +10254,9 @@ static int handle_baguapai_wear_request(player_struct *player, EXTERN_DATA *exte
 			card_caches.push_back(*card_info);
 			memset(card_info, 0, sizeof(BaguapaiCardInfo));
 			card_info->id = card_id;
-			card_info->star = grid->baguapai.star;
-			card_info->main_attr_val = grid->baguapai.main_attr_val;
-			memcpy(card_info->minor_attrs, grid->baguapai.minor_attrs, sizeof(card_info->minor_attrs));
+			card_info->star = grid->especial_item.baguapai.star;
+			card_info->main_attr_val = grid->especial_item.baguapai.main_attr_val;
+			memcpy(card_info->minor_attrs, grid->especial_item.baguapai.minor_attrs, sizeof(card_info->minor_attrs));
 			player->add_task_progress(TCT_BAGUA_WEAR, card_id, 1);
 		}
 
@@ -10364,13 +10408,13 @@ static int handle_baguapai_decompose_request(player_struct *player, EXTERN_DATA 
 				gain_map[item_id] += item_num * grid->num;
 			}
 
-			if (grid->baguapai.star > 0)
+			if (grid->especial_item.baguapai.star > 0)
 			{
-				BaguaStarTable *star_config = get_bagua_star_config(grid->baguapai.star);
+				BaguaStarTable *star_config = get_bagua_star_config(grid->especial_item.baguapai.star);
 				if (!star_config)
 				{
 					ret = ERROR_ID_NO_CONFIG;
-					LOG_ERR("[%s:%d] player[%lu] get star config failed, pos:%u, item_id:%u, star:%u", __FUNCTION__, __LINE__, extern_data->player_id, pos, grid->id, grid->baguapai.star);
+					LOG_ERR("[%s:%d] player[%lu] get star config failed, pos:%u, item_id:%u, star:%u", __FUNCTION__, __LINE__, extern_data->player_id, pos, grid->id, grid->especial_item.baguapai.star);
 					break;
 				}
 
@@ -12808,7 +12852,7 @@ static int handle_sync_guild_skill_request(player_struct *player, EXTERN_DATA *e
 		return (-1);
 	}
 
-	memset(player->data->guild_skill_attr, 0, sizeof(double) * PLAYER_ATTR_FIGHT_MAX);
+	memset(player->data->guild_skill_attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
 	PROTO_SYNC_GUILD_SKILL *req = (PROTO_SYNC_GUILD_SKILL*)buf_head();
 	for (uint32_t i = 0; i < req->attr_num; ++i)
 	{
@@ -13088,7 +13132,11 @@ static int on_login_send_zhenying(player_struct *player, EXTERN_DATA *extern_dat
 			player->data->zhenying.task = table->ID;
 			player->data->zhenying.task_type = table->Type;
 		}
-		player->data->zhenying.mine = 5;
+		FactionBattleTable *tableFa = get_zhenying_battle_table(player->get_attr(PLAYER_ATTR_LEVEL));
+		if (tableFa != NULL)
+		{
+			player->data->zhenying.mine = tableFa->BoxOpenNum;
+		}
 		player->data->zhenying.last_week = time_helper::nextWeek(5 * 3600);
 	}
 
@@ -13451,6 +13499,7 @@ static int handle_server_chose_zhenying(player_struct *player, EXTERN_DATA *exte
 		nty_list[PLAYER_ATTR_ZHENYING] = player->get_attr(PLAYER_ATTR_ZHENYING);
 		player->notify_attr(nty_list, true, false);
 		player->add_task_progress(TCT_JOIN_CAMP, req->zhenying, 1);
+		player->refresh_player_redis_info(false);
 	}
 
 
@@ -13500,6 +13549,7 @@ static int handle_server_change_zhenying(player_struct *player, EXTERN_DATA *ext
 			player->data->zhenying.change_cd = time_helper::get_cached_time() / 1000 + table->parameter1[0];
 		}
 		player->add_task_progress(TCT_JOIN_CAMP, req->zhenying, 1);
+		player->refresh_player_redis_info(false);
 	}
 
 	AnsChoseZhenying send;
@@ -14014,8 +14064,13 @@ static int on_login_send_live_skill(player_struct *player, EXTERN_DATA *extern_d
 	{
 		player->data->live_skill.level[LIVE__SKILL__TYPE__MEDICINE] = 1;
 		player->data->live_skill.level[LIVE__SKILL__TYPE__COOK] = 1;
-		player->data->live_skill.book[LIVE__SKILL__TYPE__COOK] = 20; //todo 读配置
-		player->data->live_skill.book[LIVE__SKILL__TYPE__MEDICINE] = 20;
+		ParameterTable *tablePar = get_config_by_id(161000175, &parameter_config);
+		if (tablePar != NULL)
+		{
+			player->data->live_skill.book[LIVE__SKILL__TYPE__COOK] = tablePar->parameter1[0];
+			player->data->live_skill.book[LIVE__SKILL__TYPE__MEDICINE] = tablePar->parameter1[0];
+		}
+		
 		LifeSkillTable *table = get_medicine_table(LIVE__SKILL__TYPE__MEDICINE, 1);
 		if (table != NULL)
 		{
@@ -16864,6 +16919,178 @@ static int handle_partner_add_god_request(player_struct *player, EXTERN_DATA *ex
 	return 0;
 }
 
+static int handle_partner_fabao_stone_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	PartnerFabaoStoneRequest *req = partner_fabao_stone_request__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if(!req)
+	{
+		LOG_ERR("[%s:%d] can not upack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-10);
+	}
+	
+	uint64_t id = req->id;
+	uint64_t mingti_id = req->mingti_id;
+	partner_fabao_stone_request__free_unpacked(req, NULL);
+
+	int ret = 0;
+	do{
+		LifeMagicTable * life_config = get_config_by_id(id, &lifemagic_config);
+		if(!life_config)
+		{
+			ret = ERROR_ID_NO_CONFIG;
+			LOG_ERR("[%s:%d] player[%lu] get config failed, id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, id);
+			break;
+		}
+		
+
+		//先判断精力值是否充足
+		if(life_config->NeedJingli > player->get_attr(PLAYER_ATTR_ENERGY))
+		{
+			ret = 190410002;
+			break;
+		}
+		
+		//选择对应的命体
+		uint64_t LifeNum = 0;
+		uint32_t n_LifeProbability = 0;
+		uint64_t *LifeProbability = 0;
+		uint32_t n_Magic = 0;
+		uint64_t *Magic =0;
+		if(mingti_id == life_config->Life1)
+		{
+			LifeNum = life_config->LifeNum1;
+			n_LifeProbability = life_config->n_LifeProbability1;
+			LifeProbability = life_config->LifeProbability1;
+			n_Magic = life_config->n_Magic1;
+			Magic = life_config->Magic1;
+		}
+		else if(mingti_id == life_config->Life2)
+		{
+			LifeNum = life_config->LifeNum2;
+			n_LifeProbability = life_config->n_LifeProbability2;
+			LifeProbability = life_config->LifeProbability2;
+			n_Magic = life_config->n_Magic2;
+			Magic = life_config->Magic2;
+		}
+		else if(mingti_id == life_config->Life3)
+		{
+			LifeNum = life_config->LifeNum3;
+			n_LifeProbability = life_config->n_LifeProbability3;
+			LifeProbability = life_config->LifeProbability3;
+			n_Magic = life_config->n_Magic3;
+			Magic = life_config->Magic3;
+		}
+		else if(mingti_id == life_config->Life4)
+		{
+			LifeNum = life_config->LifeNum4;
+			n_LifeProbability = life_config->n_LifeProbability4;
+			LifeProbability = life_config->LifeProbability4;
+			n_Magic = life_config->n_Magic4;
+			Magic = life_config->Magic4;
+		}
+		else
+		{			
+			ret = ERROR_ID_NO_CONFIG;
+			LOG_ERR("[%s:%d] player[%lu] get config failed, item_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, life_config->NeedItem);
+			break;
+		}
+		std::map<uint64_t, uint64_t> item_map;
+		item_map[mingti_id] = LifeNum;
+		item_map[life_config->NeedItem] = life_config->NeedItemNum;
+
+		//判断要消耗的道具
+		for(std::map<uint64_t, uint64_t>::iterator iter = item_map.begin(); iter != item_map.end(); ++iter)
+		{
+			uint64_t item_id = iter->first;
+			uint64_t item_num = iter->second;
+			ItemsConfigTable *config = get_config_by_id(item_id, &item_config);
+			if (!config)
+			{
+				ret = ERROR_ID_NO_CONFIG;
+				LOG_ERR("[%s:%d] player[%lu] get config failed, item_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, item_id);
+				break;
+			}
+			uint32_t has_num = player->get_item_can_use_num(item_id);
+			if (has_num < item_num)
+			{
+				ret = ERROR_ID_PROP_NOT_ENOUGH;
+				LOG_ERR("[%s:%d] player[%lu] prop not enough, item_id:%u, need_num:%u, has_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, item_id, item_num, has_num);
+				break;
+			}
+		}
+		
+		if(ret != 0)
+		{
+			break;
+		}
+
+		//根据概率获取对应的法宝
+		uint64_t total_gailv = 0;
+		for(size_t	i = 0; i < n_LifeProbability; ++i)
+		{
+			total_gailv += LifeProbability[i];
+		}
+		if(total_gailv <= 0)
+		{
+			ret = 199923; //概率出错的错误码，新增
+			break;
+		}
+
+		total_gailv = rand() % total_gailv + 1;
+		int flag = -1;
+		uint64_t gailv_begin = 0;
+		uint64_t gailv_end = 0;
+		for(size_t j = 0; j < n_LifeProbability; ++j)
+		{
+			gailv_end = gailv_begin + LifeProbability[j];
+			if(total_gailv > gailv_begin && total_gailv <= gailv_end)
+			{
+				flag = j;
+				break;	
+			}
+			gailv_begin = gailv_end;
+		}
+
+
+		if(flag < 0 || flag >= (int)n_Magic)
+		{
+			ret = 12132323;//没有此概率所对应的法宝，新增
+			break;
+		}
+	
+		uint64_t fabao_id = Magic[flag];
+		if (!player->check_can_add_item(fabao_id, 1, NULL))
+		{
+			ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
+			LOG_ERR("[%s:%d] player[%lu] bag not enough, item_id:%u, item_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, fabao_id, 1);
+			break;
+		}
+		for (std::map<uint64_t, uint64_t>::iterator iter = item_map.begin(); iter != item_map.end(); ++iter)
+		{
+			player->del_item(iter->first, iter->second, MAGIC_TYPE_PARTNER_FABAO_STONE);
+		}
+		player->set_attr(PLAYER_ATTR_ENERGY, player->get_attr(PLAYER_ATTR_ENERGY) - life_config->NeedJingli);
+		
+		player->add_item(fabao_id, 1 , MAGIC_TYPE_PARTNER_FABAO_STONE);
+
+	}while(0);
+
+
+	CommAnswer resp;
+	comm_answer__init(&resp);
+
+	resp.result = ret;
+
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_PARTNER_FABAO_STONE_ANSWER, comm_answer__pack, resp);
+
+	return 0;
+}
 //即将开启请求领奖
 static int handle_gift_receive_request(player_struct *player, EXTERN_DATA *extern_data)
 {
@@ -17300,6 +17527,7 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_PARTNER_BOND_ACTIVE_REQUEST, handle_partner_bond_active_request);
 	add_msg_handle(MSG_ID_PARTNER_BOND_REWARD_REQUEST, handle_partner_bond_reward_request);
 	add_msg_handle(MSG_ID_PARTNER_COMPOSE_STONE_REQUEST, handle_partner_compose_stone_request);
+	add_msg_handle(MSG_ID_PARTNER_FABAO_STONE_REQUEST, handle_partner_fabao_stone_request);
 
 	add_msg_handle(MSG_ID_JIJIANGOP_GIFT_INFO_REQUEST, handle_gift_receive_request);
 
