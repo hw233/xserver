@@ -302,6 +302,7 @@ message DBPartner
 	repeated uint32 god_id = 10; //
 	repeated uint32 god_lv = 11; //
 	required uint32 strong_num = 12;
+	optional DBCurPartnerFabao cur_fabao_info = 13;
 }
 
 message DBTruck
@@ -454,4 +455,10 @@ message DBItemPartnerFabao
 {
 	required DBAttr main_attr = 1;	//伙伴法宝主属性
 	repeated DBAttr minor_attr = 2;	//伙伴法宝副属性
+}
+
+message DBCurPartnerFabao
+{
+	required uint32 fabao_id = 1;
+	optional DBItemPartnerFabao fabao_attr = 2;
 }

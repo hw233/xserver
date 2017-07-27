@@ -33,12 +33,13 @@ public:
 	void BroadcastCollectCreate();
 	void BroadcastCollectDelete();
 	void BroadcastToSight(uint16_t msg_id, void *msg_data, pack_func func);
+	void NotifyCollectCreate(player_struct *player);
 
 	//采集操作相关
 	void CashTruckDrop(player_struct &player);
 
 	//开始采集
-	int BegingGather(player_struct *player);
+	int BegingGather(player_struct *player, uint32_t step);
 	bool InterruptGather();
 	int GatherComplete(player_struct *player);
 	int GatherInterupt(player_struct *player);
@@ -56,6 +57,7 @@ public:
 	uint64_t m_reliveTime;
 	uint64_t m_liveTime;
 	int32_t m_state;
+	uint32_t m_dropId; //
 	int32_t m_minType;
 	uint32_t m_ownerLv;
 	uint64_t m_active; //镖车活动表id 
@@ -68,6 +70,7 @@ public:
 	static Collect * CreateCollect(scene_struct *scene, int index);
 	static Collect *CreateCollectByConfig(scene_struct *scene, int index);
 	static Collect *CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw);
+	static Collect *CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw, player_struct *player);
 	static int CreateCollectByID(scene_struct *scene, uint32_t id, uint32_t num);
 	static void DestroyCollect(uint64_t id);
 	static Collect * GetById(const uint32_t id);

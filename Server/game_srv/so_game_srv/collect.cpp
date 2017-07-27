@@ -33,6 +33,7 @@ Collect::Collect()
 	m_ownerLv = 0;
 	m_active = 0;
 	m_raid_uuid = 0;
+	m_dropId = 0;
 	++g_collect_num;
 }
 
@@ -61,6 +62,33 @@ void Collect::BroadcastToSight(uint16_t msg_id, void *msg_data, pack_func func)
 		head->len += sizeof(uint64_t) * head->num_player_id;
 		conn_node_gamesrv::broadcast_msg_send();
 	}
+}
+
+
+void Collect::NotifyCollectCreate(player_struct *player)
+{
+	SightChangedNotify notify;
+	sight_changed_notify__init(&notify);
+	SightCollectInfo collect_info[1];
+	SightCollectInfo *collect_info_point[1];
+	collect_info_point[0] = &collect_info[0];
+	notify.n_add_collect = 1;
+	notify.add_collect = collect_info_point;
+
+	sight_collect_info__init(collect_info_point[0]);
+	collect_info_point[0]->uuid = m_uuid;
+	collect_info_point[0]->collectid = m_collectId;
+	collect_info_point[0]->y = m_y;
+	collect_info_point[0]->yaw = m_yaw;
+	PosData pos;
+	pos_data__init(&pos);
+	pos.pos_x = m_pos.pos_x;
+	pos.pos_z = m_pos.pos_z;
+	collect_info_point[0]->data = &pos;
+
+	EXTERN_DATA extern_data;
+	extern_data.player_id = player->get_uuid();
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);
 }
 
 void Collect::BroadcastCollectCreate()
@@ -125,7 +153,7 @@ Collect * Collect::CreateCollect(scene_struct *scene, int index)
 	pCollect->m_pos.pos_z = 46;
 
 	scene->add_collect_to_scene(pCollect);
-	pCollect->BroadcastCollectCreate();
+	//pCollect->BroadcastCollectCreate();
 
 	collect_manager_s_collectContain.insert(std::make_pair(pCollect->m_uuid, pCollect));
 	return pCollect;
@@ -166,6 +194,37 @@ Collect * Collect::CreateCollectByConfig(scene_struct *scene, int index)
 	return CreateCollectByPos(scene, create_config->ID, create_config->PointPosX, create_config->PointPosY, create_config->PointPosZ, create_config->Yaw);
 }
 
+Collect *Collect::CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw, player_struct *player)
+{
+	if (player == NULL)
+	{
+		return NULL;
+	}
+
+	CollectTable *table = get_config_by_id(id, &collect_config);
+	if (table == NULL)
+	{
+		return NULL;
+	}
+	Collect * pCollect = new Collect();
+	pCollect->m_collectId = id;
+	pCollect->m_uuid = ++collect_manager_s_id;
+	pCollect->m_pos.pos_x = x;
+	pCollect->m_pos.pos_z = z;
+	pCollect->m_y = y;
+	pCollect->m_yaw = yaw;
+	if (table->LifeTime != 0)
+	{
+		pCollect->m_liveTime = time_helper::get_cached_time() / 1000 + table->LifeTime;
+	}
+
+	pCollect->NotifyCollectCreate(player);
+
+	collect_manager_s_collectContain.insert(std::make_pair(pCollect->m_uuid, pCollect));
+
+	return pCollect;
+}
+
 Collect *Collect::CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw)
 {
 	CollectTable *table = get_config_by_id(id, &collect_config);
@@ -186,7 +245,7 @@ Collect *Collect::CreateCollectByPos(scene_struct *scene, uint32_t id, double x,
 	}
 
 	scene->add_collect_to_scene(pCollect);
-	pCollect->BroadcastCollectCreate();
+	//pCollect->BroadcastCollectCreate();
 
 	collect_manager_s_collectContain.insert(std::make_pair(pCollect->m_uuid, pCollect));
 
@@ -241,7 +300,7 @@ Collect * Collect::GetById(const uint32_t id)
 	return it->second;
 }
 
-int Collect::BegingGather(player_struct *player)
+int Collect::BegingGather(player_struct *player, uint32_t step)
 {
 	if (player->scene != this->scene)
 	{
@@ -256,14 +315,27 @@ int Collect::BegingGather(player_struct *player)
 	{
 		return 2;
 	}
-	//验证距离
+	//todo 验证距离
 
+	if (it->second->CollectionTeyp == 1)
+	{
+		m_dropId = it->second->DropID[0];
+	}
+	else
+	{
+		if (step >= it->second->n_DropID)
+		{
+			return 6;
+		}
+		m_dropId = it->second->DropID[step];
+	}
 	std::map<uint32_t, uint32_t> item_list;
-	get_drop_item(it->second->DropID[0], item_list);
+	get_drop_item(m_dropId, item_list);
 	if (!player->check_can_add_item_list(item_list))
 	{
 		return 190500097;
 	}
+
 		//阵营战的宝箱限制采集次数
 	if (player->data->zhenying.mine < 1 && player->scene->is_in_zhenying_raid())
 	{
@@ -272,6 +344,28 @@ int Collect::BegingGather(player_struct *player)
 		if (m_collectId == table->BoxID)
 		{
 			return 4;
+		}
+	}
+	
+	if (it->second->ConsumeTeyp == 2) //道具
+	{
+		if (player->del_item(it->second->Parameter1[step], it->second->Parameter1[step], MAGIC_TYPE_GATHER) < 0)
+		{
+			return 190600003;
+		}
+	}
+	else if (it->second->ConsumeTeyp == 3) //金币
+	{
+		if (player->sub_coin(it->second->Parameter1[step], MAGIC_TYPE_GATHER) < 0)
+		{
+			return 190500063;
+		}
+	}
+	else if (it->second->ConsumeTeyp == 4) //元宝
+	{
+		if (player->sub_comm_gold(it->second->Parameter1[step], MAGIC_TYPE_GATHER) < 0)
+		{
+			return 190400005;
 		}
 	}
 	if (m_state == COLLECT_NORMOR || (m_state == COLLECT_GATHING && m_commpleteTime + 2 < time_helper::get_cached_time() / 1000))
@@ -308,7 +402,7 @@ int Collect::GatherComplete(player_struct *player)
 		}
 		else
 		{
-			player->give_drop_item(it->second->DropID[0], MAGIC_TYPE_GATHER, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
+			player->give_drop_item(m_dropId, MAGIC_TYPE_GATHER, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
 		}
 		
 		

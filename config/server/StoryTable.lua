@@ -36,7 +36,7 @@ local StoryTable = {
 		['ShowUI'] = 0,
 		['PlayerOperation'] = 1,
 		['PlayerInvincible'] = 1,
-		['StoryTime'] = 3.20,
+		['StoryTime'] = 4.20,
 		['FileID'] = 'FB_DFG_03'
 		},
 	[450000007] = {
@@ -44,7 +44,7 @@ local StoryTable = {
 		['ShowUI'] = 0,
 		['PlayerOperation'] = 1,
 		['PlayerInvincible'] = 1,
-		['StoryTime'] = 3.20,
+		['StoryTime'] = 4.20,
 		['FileID'] = 'FB_DFG_04'
 		},
 	[450000008] = {

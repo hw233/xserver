@@ -975,6 +975,8 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	DBItemPartnerFabao item_fabao_data[MAX_BAG_GRID_NUM];
 	DBAttr item_bagua_attr[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_MINOR_ATTR_NUM];
 	DBAttr* item_bagua_attr_point[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_MINOR_ATTR_NUM];
+	DBAttr item_fabao_attr[MAX_BAG_GRID_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
+	DBAttr* item_fabao_attr_point[MAX_BAG_GRID_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
 	DBAttr fabao_attr;
 	for (uint32_t i = 0; i < data->bag_grid_num; ++i)
 	{
@@ -1014,13 +1016,13 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 			uint32_t attr_num = 0;
 			for (int j = 0; j < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM ; ++j)
 			{
-				item_bagua_attr_point[i][attr_num] = &item_bagua_attr[i][attr_num];
-				dbattr__init(&item_bagua_attr[i][attr_num]);
-				item_bagua_attr[i][attr_num].id = data->bag[i].especial_item.fabao.minor_attr[j].id;
-				item_bagua_attr[i][attr_num].val = data->bag[i].especial_item.fabao.minor_attr[j].val;
+				item_fabao_attr_point[i][attr_num] = &item_fabao_attr[i][attr_num];
+				dbattr__init(&item_fabao_attr[i][attr_num]);
+				item_fabao_attr[i][attr_num].id = data->bag[i].especial_item.fabao.minor_attr[j].id;
+				item_fabao_attr[i][attr_num].val = data->bag[i].especial_item.fabao.minor_attr[j].val;
 				attr_num++;
 			}
-			item_fabao_data[i].minor_attr = item_bagua_attr_point[i];
+			item_fabao_data[i].minor_attr = item_fabao_attr_point[i];
 			item_fabao_data[i].n_minor_attr = attr_num;
 		}
 	}
@@ -1533,6 +1535,11 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	DBPartnerSkill* partner_skill_point_flash[MAX_PARTNER_NUM][MAX_PARTNER_SKILL_NUM];
 	DBAttr  partner_attr_data[MAX_PARTNER_NUM][PLAYER_ATTR_MAX];
 	DBAttr* partner_attr_point[MAX_PARTNER_NUM][PLAYER_ATTR_MAX];
+	DBCurPartnerFabao partner_cur_fabao[MAX_PARTNER_NUM];
+	DBItemPartnerFabao partner_fabao_attr[MAX_PARTNER_NUM];
+	DBAttr partner_fabao_minor_attr[MAX_PARTNER_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
+	DBAttr* partner_fabao_minor_attr_point[MAX_PARTNER_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
+	DBAttr partner_fabao_main_attr; 
 	uint32_t partner_num = 0;
 	for (PartnerMap::iterator iter = m_partners.begin(); iter != m_partners.end() && partner_num < MAX_PARTNER_NUM; ++iter)
 	{
@@ -1564,6 +1571,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		partner_data[partner_num].n_god_id = partner_data[partner_num].n_god_lv = partner->data->n_god;
 		partner_data[partner_num].god_id = partner->data->god_id;
 		partner_data[partner_num].god_lv = partner->data->god_level;
+
 
 		partner_data[partner_num].attr_cur = partner_cur_attr + partner_num;
 		dbpartner_attr__init(partner_cur_attr + partner_num);
@@ -1622,6 +1630,28 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 			partner_cur_flash[partner_num].type = partner->data->attr_flash.type;
 			partner_cur_flash[partner_num].power_refresh = partner->data->attr_flash.power_refresh;
 		}
+
+
+		partner_data[partner_num].cur_fabao_info = &partner_cur_fabao[partner_num];
+		dbcur_partner_fabao__init(&partner_cur_fabao[partner_num]);
+		partner_cur_fabao[partner_num].fabao_id = partner->data->cur_fabao.fabao_id;
+		partner_cur_fabao[partner_num].fabao_attr = &partner_fabao_attr[partner_num];
+		dbitem_partner_fabao__init(&partner_fabao_attr[partner_num]);
+		partner_fabao_attr[partner_num].main_attr = &partner_fabao_main_attr;
+		dbattr__init(&partner_fabao_main_attr);
+		partner_fabao_main_attr.id = partner->data->cur_fabao.main_attr.id;
+		partner_fabao_main_attr.val = partner->data->cur_fabao.main_attr.val;
+		uint32_t fabao_minor_attr_num = 0;
+		for (int j = 0; j < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM ; ++j)
+		{
+			partner_fabao_minor_attr_point[partner_num][fabao_minor_attr_num] = &partner_fabao_minor_attr[partner_num][fabao_minor_attr_num];
+			dbattr__init(&partner_fabao_minor_attr[partner_num][fabao_minor_attr_num]);
+			partner_fabao_minor_attr[partner_num][fabao_minor_attr_num].id = partner->data->cur_fabao.minor_attr[j].id;
+			partner_fabao_minor_attr[partner_num][fabao_minor_attr_num].val = partner->data->cur_fabao.minor_attr[j].val;
+			fabao_minor_attr_num++;
+		}
+		partner_fabao_attr[partner_num].minor_attr = partner_fabao_minor_attr_point[partner_num];
+		partner_fabao_attr[partner_num].n_minor_attr = fabao_minor_attr_num;
 
 
 		partner_num++;
@@ -2128,6 +2158,19 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 			partner->data->attr_cur.n_detail_attr = db_info->partner_list[i]->attr_cur->n_detail_attr_id;
 			partner->data->attr_cur.type = db_info->partner_list[i]->attr_cur->type;
 		}
+
+		if(db_info->partner_list[i]->cur_fabao_info != NULL)
+		{
+			partner->data->cur_fabao.fabao_id = db_info->partner_list[i]->cur_fabao_info->fabao_id;
+			partner->data->cur_fabao.main_attr.id = db_info->partner_list[i]->cur_fabao_info->fabao_attr->main_attr->id;
+			partner->data->cur_fabao.main_attr.val = db_info->partner_list[i]->cur_fabao_info->fabao_attr->main_attr->val;
+			for(uint32_t i =0; i < db_info->partner_list[i]->cur_fabao_info->fabao_attr->n_minor_attr && i < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM; ++i)
+			{
+			partner->data->cur_fabao.minor_attr[i].id = db_info->partner_list[i]->cur_fabao_info->fabao_attr->minor_attr[i]->id;
+			partner->data->cur_fabao.minor_attr[i].val = db_info->partner_list[i]->cur_fabao_info->fabao_attr->minor_attr[i]->val;
+			}
+		}
+
 		for (uint32_t n_g = 0; n_g < db_info->partner_list[i]->n_god_id; ++n_g)
 		{
 			partner->data->god_id[n_g] = db_info->partner_list[i]->god_id[n_g];

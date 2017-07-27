@@ -3,6 +3,7 @@ leak:sproto.cpp
 leak:game_config.cpp
 leak:get_value
 leak:game_event_init
+leak:event_config_new
 leak:rebuild_watch_info
 leak:load_guild_module
 leak:liblog4c.so.3

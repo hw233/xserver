@@ -65,6 +65,12 @@ struct partner_attr_data
 	PartnerSkill skill_list[MAX_PARTNER_SKILL_NUM];
 };
 
+struct partner_cur_fabao
+{
+	uint32_t fabao_id; //法宝id
+	AttrInfo main_attr; //当前法宝主属性
+	AttrInfo minor_attr[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM]; //当前法宝副属性
+};
 struct partner_data
 {
 	uint64_t uuid; //唯一ID
@@ -108,6 +114,7 @@ struct partner_data
 	double angle;     //技能的角度
 
 	struct cast_skill_data cur_skill;  //正在释放的技能	
+	struct partner_cur_fabao cur_fabao; //伙伴当前佩戴的法宝
 };
 
 //战斗中的对象

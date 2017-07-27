@@ -723,6 +723,7 @@
 #define MSG_ID_PARTNER_COMPOSE_STONE_ANSWER               13136 //伙伴神曜合成应答 comm_answer
 #define MSG_ID_PARTNER_FABAO_STONE_REQUEST                13137 //伙伴法宝合成请求 PartnerFabaoStoneRequest
 #define MSG_ID_PARTNER_FABAO_STONE_ANSWER                 13138 //伙伴法宝合成应答 comm_answer 
+#define MSG_ID_PARTNER_FABAO_CHANGE_REQUEST				  13139 //伙伴法宝佩戴或者替换 PartnerFabaoChangeRequest
 
 //运镖
 #define MSG_ID_CASH_TRUCK_INFO_NOTIFY                       13301 //运镖信息 CashTruckInfo

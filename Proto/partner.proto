@@ -230,6 +230,12 @@ message PartnerFabaoStoneRequest
 	required uint64 mingti_id = 2; //合成材料
 }
 
-
+//伙伴法宝佩戴或者替换
+message PartnerFabaoChangeRequest
+{
+	required uint32 bage_id = 1; //背包格子索引id
+	required uint32 fabao_item_id = 2; //法宝物品id
+	required uint64 partner_uuid = 3; //伙伴唯一id
+}
 
 

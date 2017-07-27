@@ -1745,7 +1745,7 @@ static int handle_gather_request(player_struct *player, EXTERN_DATA *extern_data
 		return -3;
 	}
 
-	CollectId *req = collect_id__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	StartCollect *req = start_collect__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req) {
 		LOG_ERR("%s %d: can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
 		return (-10);
@@ -1753,7 +1753,8 @@ static int handle_gather_request(player_struct *player, EXTERN_DATA *extern_data
 
 	Collect *pCollect = Collect::GetById(req->id);
 	uint32_t reqid = req->id;
-	collect_id__free_unpacked(req, NULL);
+	uint32_t step = req->step;
+	start_collect__free_unpacked(req, NULL);
 
 	LOG_DEBUG("%s: player[%lu] collectid[%u]", __FUNCTION__, extern_data->player_id, reqid);
 
@@ -1763,7 +1764,7 @@ static int handle_gather_request(player_struct *player, EXTERN_DATA *extern_data
 		return -11;
 	}
 	//player->interrupt();
-	int ret = pCollect->BegingGather( player );
+	int ret = pCollect->BegingGather( player , step);
 	if (ret != 0)
 	{
 		send_comm_answer(MSG_ID_COLLECT_BEGIN_ANSWER, ret, extern_data);
@@ -2825,6 +2826,8 @@ static int handle_bag_info_request(player_struct *player, EXTERN_DATA *extern_da
 	ItemPartnerFabaoData fabao_data[MAX_BAG_GRID_NUM];
 	AttrData bagua_attr[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_MINOR_ATTR_NUM];
 	AttrData* bagua_attr_point[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_MINOR_ATTR_NUM];
+	AttrData item_fabao_attr[MAX_BAG_GRID_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
+	AttrData* item_fabao_attr_point[MAX_BAG_GRID_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
 	AttrData fabao_attr;
 
 	resp.result = 0;
@@ -2875,8 +2878,6 @@ static int handle_bag_info_request(player_struct *player, EXTERN_DATA *extern_da
 			item_partner_fabao_data__init(&fabao_data[resp.n_grids]);
 			fabao_data[resp.n_grids].main_attr = &fabao_attr;
 			attr_data__init(&fabao_attr);
-			//fabao_data[resp.n_grids].main_attr->id = player->data->bag[i].especial_item.fabao.main_attr.id;
-			//fabao_data[resp.n_grids].main_attr->val = player->data->bag[i].especial_item.fabao.main_attr.val;
 			fabao_attr.id =  player->data->bag[i].especial_item.fabao.main_attr.id;
 			fabao_attr.val = player->data->bag[i].especial_item.fabao.main_attr.val;
 			uint32_t attr_num = 0;
@@ -2887,13 +2888,13 @@ static int handle_bag_info_request(player_struct *player, EXTERN_DATA *extern_da
 					break;
 				}
 
-				bagua_attr_point[resp.n_grids][attr_num] = &bagua_attr[resp.n_grids][attr_num];
+				item_fabao_attr_point[resp.n_grids][attr_num] = &item_fabao_attr[resp.n_grids][attr_num];
 				attr_data__init(&bagua_attr[resp.n_grids][attr_num]);
-				bagua_attr[resp.n_grids][attr_num].id = player->data->bag[i].especial_item.fabao.minor_attr[j].id;
-				bagua_attr[resp.n_grids][attr_num].val = player->data->bag[i].especial_item.fabao.minor_attr[j].val;
+				item_fabao_attr[resp.n_grids][attr_num].id = player->data->bag[i].especial_item.fabao.minor_attr[j].id;
+				item_fabao_attr[resp.n_grids][attr_num].val = player->data->bag[i].especial_item.fabao.minor_attr[j].val;
 				attr_num++;
 			}
-			fabao_data[resp.n_grids].minor_attr = bagua_attr_point[resp.n_grids];
+			fabao_data[resp.n_grids].minor_attr = item_fabao_attr_point[resp.n_grids];
 			fabao_data[resp.n_grids].n_minor_attr = attr_num;
 		}
 		resp.n_grids++;
@@ -17038,7 +17039,7 @@ static int handle_partner_fabao_stone_request(player_struct *player, EXTERN_DATA
 		}
 		if(total_gailv <= 0)
 		{
-			ret = 199923; //概率出错的错误码，新增
+			ret = ERROR_ID_CONFIG;
 			break;
 		}
 
@@ -17060,7 +17061,7 @@ static int handle_partner_fabao_stone_request(player_struct *player, EXTERN_DATA
 
 		if(flag < 0 || flag >= (int)n_Magic)
 		{
-			ret = 12132323;//没有此概率所对应的法宝，新增
+			ret = ERROR_ID_CONFIG;
 			break;
 		}
 	
@@ -17088,6 +17089,35 @@ static int handle_partner_fabao_stone_request(player_struct *player, EXTERN_DATA
 	resp.result = ret;
 
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_PARTNER_FABAO_STONE_ANSWER, comm_answer__pack, resp);
+
+	return 0;
+}
+
+//伙伴法宝佩戴或替换请求
+static int handle_partner_fabao_change_request(player_struct *player, EXTERN_DATA *extern_data)
+{	
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	PartnerFabaoChangeRequest *req = partner_fabao_change_request__unpack(NULL, get_data_len(), (uint8_t*)get_data());
+	if(!req)
+	{
+		LOG_ERR("[%s:%d] partner fabao change request unpack failed, player_id:[%lu]", __FUNCTION__, __LINE__, player->data->player_id);
+	}
+
+	//uint32_t bag_pos = req->bage_id;
+	//uint32_t item_id = req->fabao_item_id;
+	uint64_t partner_uuid = req->partner_uuid;
+	partner_fabao_change_request__free_unpacked(req, NULL);
+	partner_struct *partner = player->get_partner_by_uuid(partner_uuid);
+	if( partner == NULL )
+	{
+		LOG_ERR("[%s:%d] player[%lu] can't find partner:lu", __FUNCTION__, __LINE__, extern_data->player_id, partner_uuid);
+		return -2;
+	}
 
 	return 0;
 }
@@ -17528,6 +17558,7 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_PARTNER_BOND_REWARD_REQUEST, handle_partner_bond_reward_request);
 	add_msg_handle(MSG_ID_PARTNER_COMPOSE_STONE_REQUEST, handle_partner_compose_stone_request);
 	add_msg_handle(MSG_ID_PARTNER_FABAO_STONE_REQUEST, handle_partner_fabao_stone_request);
+	add_msg_handle(MSG_ID_PARTNER_FABAO_CHANGE_REQUEST, handle_partner_fabao_change_request);
 
 	add_msg_handle(MSG_ID_JIJIANGOP_GIFT_INFO_REQUEST, handle_gift_receive_request);
 

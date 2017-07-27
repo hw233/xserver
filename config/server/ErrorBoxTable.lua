@@ -2704,6 +2704,18 @@ local ErrorBoxTable = {
 		['Type'] = 1,
 		['Text'] = '您还没有帮会',
 		['SystemChannel'] = 0
+		},
+	[190500371] = {
+		['ID'] = 190500371,
+		['Type'] = 1,
+		['Text'] = '语音时间太短',
+		['SystemChannel'] = 0
+		},
+	[190500372] = {
+		['ID'] = 190500372,
+		['Type'] = 1,
+		['Text'] = '无法识别语音',
+		['SystemChannel'] = 0
 		}
 	}
 return ErrorBoxTable

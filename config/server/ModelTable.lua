@@ -339,7 +339,7 @@ local ModelTable = {
 		['Gaine'] = '',
 		['BindPos'] = '',
 		['BindEffect'] = {''},
-		['Scale'] = 1.00
+		['Scale'] = .40
 		},
 	[130400003] = {
 		['ModelId'] = 130400003,

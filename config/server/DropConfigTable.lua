@@ -303,6 +303,14 @@ local DropConfigTable = {
 		['NumMin'] = {1},
 		['NumMax'] = {1}
 		},
+	[220100239] = {
+		['ID'] = 220100239,
+		['ProType'] = 1,
+		['DropID'] = {201050034},
+		['Probability'] = {10000},
+		['NumMin'] = {1},
+		['NumMax'] = {1}
+		},
 	[220101001] = {
 		['ID'] = 220101001,
 		['ProType'] = 1,
