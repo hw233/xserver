@@ -385,6 +385,9 @@ static void	do_pursue(monster_struct *monster)
 			//如果足够距离释放技能，就放技能
 			if (check_distance_in_range(my_pos, his_pos, monster->ai_config->ActiveAttackRange))
 			{
+				if (monster->target && monster->target->is_too_high_to_beattack())
+					return;	
+				
 				//LOG_DEBUG("[%s:%d] monster[%lu][%u] chase, cast skill, ActiveAttackRange:%u", __FUNCTION__, __LINE__, monster->get_uuid(), monster->data->monster_id, monster->ai_config->ActiveAttackRange);
 				monster->reset_pos();
 				// 释放技能攻击目标

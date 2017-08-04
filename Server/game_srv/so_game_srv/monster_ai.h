@@ -26,6 +26,8 @@ extern struct ai_interface monster_ai_20_interface;
 extern struct ai_interface monster_ai_21_interface;
 extern struct ai_interface monster_ai_22_interface;
 extern struct ai_interface monster_ai_23_interface;
+extern struct ai_interface monster_ai_24_interface;
+extern struct ai_interface monster_ai_25_interface;
 
 int get_monster_hp_percent(monster_struct *monster);
 //计算技能硬直时间
@@ -43,6 +45,7 @@ void monster_cast_skill_to_pos(uint64_t skill_id, monster_struct *monster, float
 void monster_cast_immediate_skill_to_player(uint64_t skill_id, monster_struct *monster, player_struct *owner, unit_struct *player);
 //void monster_cast_delay_skill_to_player(uint64_t skill_id, monster_struct *monster, unit_struct *player);
 bool check_monster_relive(monster_struct *monster);
+void normal_ai_dead(monster_struct *monster, scene_struct *scene);
 void do_normal_patrol(monster_struct *monster);
 void do_normal_attack(monster_struct *monster);
 void do_normal_pursue(monster_struct *monster);
@@ -52,7 +55,6 @@ void do_normal_dead(monster_struct *monster);
 void do_circlea_or_type22_ai_patrol(monster_struct *monster);
 void circle_ai_beattack(monster_struct *monster, unit_struct *player);
 void circle_ai_befly(monster_struct *monster, unit_struct *player);
-void circle_ai_dead(monster_struct *monster, scene_struct *scene);
 bool circle_ai_check_goback(monster_struct *monster);
 void circle_ai_do_goback(monster_struct *monster);
 #endif /* MONSTER_AI_NORMAL_H */

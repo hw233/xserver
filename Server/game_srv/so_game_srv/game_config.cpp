@@ -455,6 +455,13 @@ static void generate_parameters(void)
 	sg_fight_param_161000291 = get_config_by_id(161000291, &parameter_config)->parameter1[0];
 	sg_fight_param_161000292 = get_config_by_id(161000292, &parameter_config)->parameter1[0];
 	sg_fight_param_161000293 = get_config_by_id(161000293, &parameter_config)->parameter1[0]; 	
+
+	config = get_config_by_id(161000308, &parameter_config);
+	if (config && config->n_parameter1 >= 2)
+	{
+		sg_server_level_reward_item_id = config->parameter1[0];
+		sg_server_level_reward_item_num = config->parameter1[1];
+	}
 }
 
 	// 读取刷怪配置
@@ -1448,6 +1455,18 @@ static void generate_item_relative_info(void)
 	}
 }
 
+//std::map<uint64_t, struct GenerateMonster*> GenerateMonster_config;   //定时刷怪配置
+static void	adjust_generatemonster_config()
+{
+	std::map<uint64_t, struct GenerateMonster*> tmp = GenerateMonster_config;
+	GenerateMonster_config.clear();
+	for (std::map<uint64_t, struct GenerateMonster*>::iterator ite = tmp.begin(); ite != tmp.end(); ++ite)
+	{
+		struct GenerateMonster* t = ite->second;
+		assert(t->n_MovePointXZ == 2);
+		GenerateMonster_config[ite->second->MonsterPointID] = t;
+	}
+}
 
 static void adjust_escort_config(void)
 {
@@ -2498,6 +2517,22 @@ int read_all_excel_data()
 		printf("generate create monster config fail\n");
 		return (-1);
 	}
+	
+	type = sproto_type(sp, "GenerateMonster");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/GenerateMonster.lua", (config_type)&GenerateMonster_config);
+	assert(ret == 0);
+	adjust_generatemonster_config();
+
+	type = sproto_type(sp, "ServerResTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/ServerResTable.lua", (config_type)&server_res_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "ServerLevelTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/ServerLevelTable.lua", (config_type)&server_level_config);
+	assert(ret == 0);
 
 	adjust_escort_config();
 

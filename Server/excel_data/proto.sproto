@@ -161,6 +161,8 @@
 	CanTimeDf 48 : integer
 	DeEffDf 49 : integer
 	DeTimeDf 50 : integer
+	CollectionDrop 51 : integer
+	CollectionProbability 52 : integer
 }
 
 .ActorLevelTable {
@@ -475,6 +477,9 @@
 	ActivityControl 27 : integer
 	DungeonPass 28 : string
 	TaskID 29 : integer
+	FailType 30 : *integer
+	FailValue 31 : *integer
+	FailValue1 32 : *integer
 }
 
 .EquipmentTable {
@@ -1284,3 +1289,31 @@
 	Effect 1 : integer
 	Rand 2 : *double
 }
+
+.GenerateMonster {
+	ID 1 : integer
+	MonsterPointID 2 : integer
+#	Duration 3 : integer
+#	Scene 4 : integer
+#	MonsterPointXZ 5 : *integer
+	MonsterID 6 : integer
+	MovePointXZ 7 : *integer
+	MonsterTime 9 : integer
+	MonsterMax 10 : integer
+}
+
+.ServerResTable {
+	ID 1 : integer
+	OpenTime 2 : integer
+}
+
+.ServerLevelTable {
+	ID 1 : integer
+	Level 2 : integer
+	Time 3 : integer
+	Dungeon 4 : integer
+	DungeonSchedule 5 : integer
+	LevelPlusEXP1 6 : integer
+	LevelPlusEXP2 7 : integer
+}
+

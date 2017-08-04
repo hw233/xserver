@@ -17,11 +17,6 @@
 #include "buff.h"
 #include "buff_manager.h"
 
-static void ai_dead_18(monster_struct *monster, scene_struct *scene)
-{
-	monster->ai_state = AI_DEAD_STATE;
-}
-
 static void do_pursue(monster_struct *monster)
 {
 	if (!monster->data)
@@ -178,7 +173,7 @@ struct ai_interface monster_ai_18_interface =
 {
 	ai_tick_18,
 	ai_beattack_18,
-	ai_dead_18,
+	normal_ai_dead,
 	NULL,
 	NULL,
 	NULL,

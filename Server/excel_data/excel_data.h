@@ -46,6 +46,7 @@ struct GangsJurisdictionTable;
 struct GangsSkillTable;
 struct GangsTable;
 struct GemAttribute;
+struct GenerateMonster;
 struct GiftTable;
 struct GodYaoAttributeTable;
 struct GradeTable;
@@ -80,6 +81,8 @@ struct SceneCreateMonsterTable;
 struct SceneResTable;
 struct ScriptTable;
 struct SearchTable;
+struct ServerLevelTable;
+struct ServerResTable;
 struct ShopListTable;
 struct ShopTable;
 struct SkillEffectTable;
@@ -186,6 +189,8 @@ struct ActorAttributeTable
 	uint64_t  CanTimeDf; //48
 	uint64_t  DeEffDf; //49
 	uint64_t  DeTimeDf; //50
+	uint64_t  CollectionDrop; //51
+	uint64_t  CollectionProbability; //52
 }__attribute__ ((packed));
 
 struct ActorFashionTable
@@ -659,6 +664,12 @@ struct DungeonTable
 	uint64_t  ActivityControl; //27
 	char  *DungeonPass; //28
 	uint64_t  TaskID; //29
+	uint32_t n_FailType; //30
+	uint64_t *FailType; //30
+	uint32_t n_FailValue; //31
+	uint64_t *FailValue; //31
+	uint32_t n_FailValue1; //32
+	uint64_t *FailValue1; //32
 }__attribute__ ((packed));
 
 struct EquipAttribute
@@ -902,6 +913,17 @@ struct GemAttribute
 	uint64_t  GemSynthetic; //5
 	uint64_t  Number; //6
 	uint64_t  Consumption; //7
+}__attribute__ ((packed));
+
+struct GenerateMonster
+{
+	uint64_t  ID; //1
+	uint64_t  MonsterPointID; //2
+	uint64_t  MonsterID; //6
+	uint32_t n_MovePointXZ; //7
+	uint64_t *MovePointXZ; //7
+	uint64_t  MonsterTime; //9
+	uint64_t  MonsterMax; //10
 }__attribute__ ((packed));
 
 struct GiftTable
@@ -1443,6 +1465,23 @@ struct SearchTable
 	uint64_t *Parameter2; //7
 	uint32_t n_Parameter3; //8
 	uint64_t *Parameter3; //8
+}__attribute__ ((packed));
+
+struct ServerLevelTable
+{
+	uint64_t  ID; //1
+	uint64_t  Level; //2
+	uint64_t  Time; //3
+	uint64_t  Dungeon; //4
+	uint64_t  DungeonSchedule; //5
+	uint64_t  LevelPlusEXP1; //6
+	uint64_t  LevelPlusEXP2; //7
+}__attribute__ ((packed));
+
+struct ServerResTable
+{
+	uint64_t  ID; //1
+	uint64_t  OpenTime; //2
 }__attribute__ ((packed));
 
 struct ShopListTable

@@ -928,7 +928,7 @@ local ModelTable = {
 		},
 	[130300058] = {
 		['ModelId'] = 130300058,
-		['ModelPath'] = 'Prefabs/Actor/gw_047',
+		['ModelPath'] = 'Prefabs/Actor/gw_058',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',
@@ -1091,6 +1091,15 @@ local ModelTable = {
 	[130600002] = {
 		['ModelId'] = 130600002,
 		['ModelPath'] = 'Prefabs/Effect/ef_juese_chuansong_03',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
+	[130500003] = {
+		['ModelId'] = 130500003,
+		['ModelPath'] = 'Prefabs/Actor/gw_056',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',

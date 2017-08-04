@@ -112,10 +112,6 @@ static void do_patrol(monster_struct *monster)
 }
 
 
-static void ai_dead_16(monster_struct *monster, scene_struct *scene)
-{
-	monster->ai_state = AI_DEAD_STATE;
-}
 
 static void ai_tick_16(monster_struct *monster)
 {
@@ -158,7 +154,7 @@ struct ai_interface monster_ai_16_interface =
 {
 	ai_tick_16,
 	ai_beattack_16,
-	ai_dead_16,
+	normal_ai_dead,
 	NULL,
 	NULL,
 	NULL,

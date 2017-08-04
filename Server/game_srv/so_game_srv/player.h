@@ -645,6 +645,9 @@ struct player_data
 	bool is_team_raid_ready;  //是否ready
 
 	uint32_t friend_num;
+
+	uint8_t  server_level_break_count; //服务器等级突破计数
+	uint32_t server_level_break_notify; //服务器等级突破通知，记录level_id
 };
 
 
@@ -676,7 +679,6 @@ public:
 	
 	void send_hp_pool_changed_notify();
 
-	raid_struct *get_raid();
 	UNIT_TYPE get_unit_type();		
 	bool is_avaliable();
 	uint32_t get_skill_id();
@@ -1007,6 +1009,7 @@ public:
 	void check_horse_expire();
 	void check_guoyu_expire();
 	bool go_down_cash_truck();
+	void down_horse();
 
 	//装备
 	EquipInfo *get_equip(uint32_t type);
@@ -1119,6 +1122,7 @@ public:
 	bool partner_bond_reward_is_get(uint32_t partner_id); //伙伴羁绊奖励是否领取
 	int get_partner_fabao_main_attr(uint32_t card_id, AttrInfo &attr_val);
 	int get_partner_fabao_minor_attr(uint32_t card_id, AttrInfo *attrs);
+	bool is_too_high_to_beattack();   //是否飞的太高不能被攻击
 
 	uint64_t last_change_area_time;
 	sight_space_struct *sight_space;

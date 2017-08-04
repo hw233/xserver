@@ -7,7 +7,8 @@ local ServerResTable = {
 		['ResName2'] = 'tag_common_red',	--资源名
 		['Ip'] = '192.168.2.114',	--键值
 		['Port'] = 12686,	--键值
-		['ServerId'] = 1	--键值
+		['ServerId'] = 1,	--键值
+		['OpenTime'] = 1501689600	--开服时间
 		},
 	[2] = {
 		['ID'] = 2,
@@ -17,7 +18,8 @@ local ServerResTable = {
 		['ResName2'] = 'tag_common_green',
 		['Ip'] = '192.168.2.114',
 		['Port'] = 10686,
-		['ServerId'] = 2
+		['ServerId'] = 2,
+		['OpenTime'] = 1501689600
 		},
 	[3] = {
 		['ID'] = 3,
@@ -27,7 +29,8 @@ local ServerResTable = {
 		['ResName2'] = 'tag_common_green',
 		['Ip'] = '192.168.2.114',
 		['Port'] = 11686,
-		['ServerId'] = 3
+		['ServerId'] = 3,
+		['OpenTime'] = 1501689600
 		},
 	[4] = {
 		['ID'] = 4,
@@ -37,7 +40,8 @@ local ServerResTable = {
 		['ResName2'] = '',
 		['Ip'] = '192.168.2.114',
 		['Port'] = 13686,
-		['ServerId'] = 4
+		['ServerId'] = 4,
+		['OpenTime'] = 1501689600
 		},
 	[5] = {
 		['ID'] = 5,
@@ -47,7 +51,8 @@ local ServerResTable = {
 		['ResName2'] = '',
 		['Ip'] = '192.168.2.114',
 		['Port'] = 14686,
-		['ServerId'] = 5
+		['ServerId'] = 5,
+		['OpenTime'] = 1501689600
 		},
 	[6] = {
 		['ID'] = 6,
@@ -57,7 +62,8 @@ local ServerResTable = {
 		['ResName2'] = '',
 		['Ip'] = '192.168.2.114',
 		['Port'] = 15686,
-		['ServerId'] = 6
+		['ServerId'] = 6,
+		['OpenTime'] = 1501689600
 		},
 	[7] = {
 		['ID'] = 7,
@@ -67,7 +73,8 @@ local ServerResTable = {
 		['ResName2'] = 'tag_common_red',
 		['Ip'] = '120.92.139.120',
 		['Port'] = 6686,
-		['ServerId'] = 7
+		['ServerId'] = 7,
+		['OpenTime'] = 1501689600
 		},
 	[8] = {
 		['ID'] = 8,
@@ -77,7 +84,8 @@ local ServerResTable = {
 		['ResName2'] = '',
 		['Ip'] = '192.168.2.114',
 		['Port'] = 17686,
-		['ServerId'] = 8
+		['ServerId'] = 8,
+		['OpenTime'] = 1501689600
 		},
 	[9] = {
 		['ID'] = 9,
@@ -87,7 +95,8 @@ local ServerResTable = {
 		['ResName2'] = '',
 		['Ip'] = '192.168.2.114',
 		['Port'] = 18686,
-		['ServerId'] = 9
+		['ServerId'] = 9,
+		['OpenTime'] = 1501689600
 		},
 	[10] = {
 		['ID'] = 10,
@@ -97,7 +106,8 @@ local ServerResTable = {
 		['ResName2'] = 'tag_common_red',
 		['Ip'] = '192.168.2.199',
 		['Port'] = 6686,
-		['ServerId'] = 10
+		['ServerId'] = 10,
+		['OpenTime'] = 1501689600
 		},
 	[11] = {
 		['ID'] = 11,
@@ -107,7 +117,8 @@ local ServerResTable = {
 		['ResName2'] = '',
 		['Ip'] = '192.168.2.114',
 		['Port'] = 19686,
-		['ServerId'] = 11
+		['ServerId'] = 11,
+		['OpenTime'] = 1501689600
 		},
 	[12] = {
 		['ID'] = 12,
@@ -117,7 +128,8 @@ local ServerResTable = {
 		['ResName2'] = '',
 		['Ip'] = '192.168.2.114',
 		['Port'] = 20686,
-		['ServerId'] = 12
+		['ServerId'] = 12,
+		['OpenTime'] = 1501689600
 		}
 	}
 return ServerResTable

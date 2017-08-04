@@ -57,11 +57,6 @@ static void start_use_shiguan_skill(monster_struct *monster)
 	}	
 }
 
-static void ai_dead_10(monster_struct *monster, scene_struct *scene)
-{
-	monster->ai_state = AI_DEAD_STATE;
-}
-
 extern void normal_ai_tick(monster_struct *monster);
 static void ai_tick_10(monster_struct *monster)
 {
@@ -160,7 +155,7 @@ struct ai_interface monster_ai_10_interface =
 {
 	ai_tick_10,
 	ai_beattack_10,
-	ai_dead_10,
+	normal_ai_dead,
 	NULL,
 	NULL,
 	NULL,

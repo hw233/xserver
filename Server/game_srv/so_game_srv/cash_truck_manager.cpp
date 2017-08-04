@@ -23,7 +23,7 @@ cash_truck_struct *cash_truck_manager::create_cash_truck_at_pos(scene_struct *sc
 	BiaocheTable *table = get_config_by_id(id, &cash_truck_config);
 	if (table == NULL)
 	{
-		LOG_ERR("%s: player[%lu] truck id[%lu] wrong",  __FUNCTION__, player.get_uuid(), id);
+		LOG_ERR("%s: player[%lu] truck id[%lu] wrong", __FUNCTION__, player.get_uuid(), id);
 		return NULL;
 	}
 	std::map<uint64_t, struct MonsterTable *>::iterator ite;
@@ -33,7 +33,7 @@ cash_truck_struct *cash_truck_manager::create_cash_truck_at_pos(scene_struct *sc
 	cash_truck_struct *ret = alloc_cash_truck();
 	if (!ret)
 	{
-		LOG_ERR("%s: player[%lu] alloc truck failed",  __FUNCTION__, player.get_uuid());		
+		LOG_ERR("%s: player[%lu] alloc truck failed", __FUNCTION__, player.get_uuid());		
 		return NULL;
 	}
 	ret->data->player_id = alloc_truck_uuid();
@@ -158,6 +158,6 @@ void cash_truck_manager::cash_truck_drop(player_struct &player)
 	{
 		player.add_item(reward_config->RewardItem1[i], reward_config->RewardNum1[i], MAGIC_TYPE_CASH_TRUCK);
 	}
-	player.data->truck.active_id = 0;
-	player.data->truck.truck_id = 0;
+	//player.data->truck.active_id = 0;
+	//player.data->truck.truck_id = 0;
 }

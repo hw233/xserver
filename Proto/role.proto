@@ -61,4 +61,12 @@ message SystemNoticeNotify
 	optional uint64 targetId = 3; //操作对象ID
 }
 
+//服务器等级信息通知
+message ServerLevelInfoNotify
+{
+	required uint32 level_id = 1; //配置表ID
+	required uint32 break_goal = 2; //突破目标
+	required uint32 break_num = 3; //突破进度
+}
+
 

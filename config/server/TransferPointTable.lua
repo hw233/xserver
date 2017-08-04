@@ -196,6 +196,12 @@ local TransferPointTable = {
 		['NameId'] = '凡浅镇地图墓穴入口',
 		['limitLevel'] = 1,
 		['MapId'] = {10006,51438,40381,194956,-90}
+		},
+	[155000034] = {
+		['ID'] = 155000034,
+		['NameId'] = '龟灵洞',
+		['limitLevel'] = 1,
+		['MapId'] = {20042}
 		}
 	}
 return TransferPointTable

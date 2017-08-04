@@ -13,6 +13,7 @@
 #include "relive.pb-c.h"
 #include "app_data_statis.h"
 #include "raid_ai_common.h"
+#include "server_level.h"
 
 static int get_wanyaogu_cur_raid_index(raid_struct *raid);
 
@@ -31,6 +32,7 @@ static void wanyaogu_end_one_raid(raid_struct *raid, bool fail)
 //	raid->stop_monster_ai();
 	raid->clear_monster();
 	raid->clear_all_collet();
+	raid->mark_finished = 0;   //让tick能继续执行
 
 	// for (int i = 0; i < MAX_TEAM_MEM; ++i)
 	// {
@@ -218,6 +220,7 @@ static void send_raid_reward(raid_struct *raid, int star)
 		}
 
 		raid->m_player[i]->add_task_progress(TCT_WANYAOGU, raid->data->ID, 1);
+		server_level_listen_raid_finish(raid->data->ID, raid->m_player[i]);
 	}
 }
 
@@ -391,25 +394,29 @@ static void wanyaogu_raid_ai_tick(raid_struct *raid)
 		break;
 		case WANYAOGU_STATE_START:
 		{
-			uint32_t param;
-				//失败了
-			if (raid->check_cond_finished(0, raid->WANYAOGU_DATA.m_config->Score[0],
-					raid->WANYAOGU_DATA.m_config->ScoreValue[0],
-					raid->WANYAOGU_DATA.m_config->ScoreValue1[0], &param) == 0)
-			{
-				wanyaogu_end_one_raid(raid, true);
-			}
-			else if (raid->WANYAOGU_DATA.script_data.script_config)
+			// 	uint32_t param;
+			// 	//失败了
+			// if (raid->check_cond_finished(0, raid->WANYAOGU_DATA.m_config->Score[0],
+			// 		raid->WANYAOGU_DATA.m_config->ScoreValue[0],
+			// 		raid->WANYAOGU_DATA.m_config->ScoreValue1[0], &param) == 0)
+			// {
+			// 	wanyaogu_end_one_raid(raid, true);				
+			// }
+			// else if (raid->check_raid_timeout())
+			// {
+			// 	wanyaogu_end_one_raid(raid, true);
+			// }
+			if (raid->WANYAOGU_DATA.script_data.script_config)
 			{
 				script_ai_common_tick(raid, &raid->WANYAOGU_DATA.script_data);
 			}
 
-			if (raid->data->pass_index < raid->WANYAOGU_DATA.m_config->n_PassType && raid->WANYAOGU_DATA.m_config->PassType[raid->data->pass_index] == 2)
-			{
-				uint64_t t = (time_helper::get_cached_time() - raid->data->start_time) / 1000;
-				if (raid->WANYAOGU_DATA.m_config->PassValue[raid->data->pass_index] <= t)
-					raid->add_raid_pass_value(2, raid->WANYAOGU_DATA.m_config);
-			}
+			// if (raid->data->pass_index < raid->WANYAOGU_DATA.m_config->n_PassType && raid->WANYAOGU_DATA.m_config->PassType[raid->data->pass_index] == 2)
+			// {
+			// 	uint64_t t = (time_helper::get_cached_time() - raid->data->start_time) / 1000;
+			// 	if (raid->WANYAOGU_DATA.m_config->PassValue[raid->data->pass_index] <= t)
+			// 		raid->add_raid_pass_value(2, raid->WANYAOGU_DATA.m_config);
+			// }
 		}
 		break;
 		default:
@@ -462,6 +469,8 @@ static void wanyaogu_raid_ai_player_dead(raid_struct *raid, player_struct *playe
 
 static struct DungeonTable *wanyaogu_raid_get_config(raid_struct *raid)
 {
+	if (raid->WANYAOGU_DATA.wanyaogu_state != WANYAOGU_STATE_START)
+		return NULL;
 	return raid->WANYAOGU_DATA.m_config;
 }
 
@@ -492,16 +501,16 @@ static void wanyaogu_raid_ai_monster_dead(raid_struct *raid, monster_struct *mon
 	// 	}
 	// }
 
-	if (raid->data->pass_index < raid->WANYAOGU_DATA.m_config->n_PassType && raid->WANYAOGU_DATA.m_config->PassType[raid->data->pass_index] == 1)
-	{
-		if (raid->WANYAOGU_DATA.m_config->PassValue[raid->data->pass_index] == monster->config->ID)
-		{
-			if (raid->add_raid_pass_value(1, raid->WANYAOGU_DATA.m_config))
-			{
-				return;
-			}
-		}
-	}
+	// if (raid->data->pass_index < raid->WANYAOGU_DATA.m_config->n_PassType && raid->WANYAOGU_DATA.m_config->PassType[raid->data->pass_index] == 1)
+	// {
+	// 	if (raid->WANYAOGU_DATA.m_config->PassValue[raid->data->pass_index] == monster->config->ID)
+	// 	{
+	// 		if (raid->add_raid_pass_value(1, raid->WANYAOGU_DATA.m_config))
+	// 		{
+	// 			return;
+	// 		}
+	// 	}
+	// }
 	if (raid->WANYAOGU_DATA.script_data.script_config)
 	{
 		return script_ai_common_monster_dead(raid, monster, killer, &raid->WANYAOGU_DATA.script_data);
@@ -526,22 +535,28 @@ static void wanyaogu_raid_ai_collect(raid_struct *raid, player_struct *player, C
 		}
 	}
 
-	if (raid->data->pass_index < raid->WANYAOGU_DATA.m_config->n_PassType && raid->WANYAOGU_DATA.m_config->PassType[raid->data->pass_index] == 3)
-	{
-		if (raid->WANYAOGU_DATA.m_config->PassValue[raid->data->pass_index] == collect->m_collectId)
-		{
-			if (raid->add_raid_pass_value(3, raid->WANYAOGU_DATA.m_config))
-			{
-				return;
-			}
-		}
-	}
+	// if (raid->data->pass_index < raid->WANYAOGU_DATA.m_config->n_PassType && raid->WANYAOGU_DATA.m_config->PassType[raid->data->pass_index] == 3)
+	// {
+	// 	if (raid->WANYAOGU_DATA.m_config->PassValue[raid->data->pass_index] == collect->m_collectId)
+	// 	{
+	// 		if (raid->add_raid_pass_value(3, raid->WANYAOGU_DATA.m_config))
+	// 		{
+	// 			return;
+	// 		}
+	// 	}
+	// }
 
 	if (raid->WANYAOGU_DATA.script_data.script_config)
 	{
 		return script_ai_common_collect(raid, player, collect, &raid->WANYAOGU_DATA.script_data);
 	}	
 	
+}
+
+static void wanyaogu_raid_ai_failed(raid_struct *raid)
+{
+		//失败了
+	wanyaogu_end_one_raid(raid, true);		
 }
 
 static void wanyaogu_raid_ai_finished(raid_struct *raid)
@@ -571,5 +586,6 @@ struct raid_ai_interface raid_ai_wanyaogu_interface =
 	NULL,
 	.raid_on_escort_stop = wanyaogu_raid_ai_escort_stop,
 	NULL,
-	.raid_get_config = wanyaogu_raid_get_config, 
+	.raid_get_config = wanyaogu_raid_get_config,
+	.raid_on_failed = wanyaogu_raid_ai_failed,
 };

@@ -17,10 +17,6 @@
 #include "buff.h"
 #include "buff_manager.h"
 
-static void ai_dead_17(monster_struct *monster, scene_struct *scene)
-{
-	monster->ai_state = AI_DEAD_STATE;
-}
 
 static struct position *get_sight_player_pos(monster_struct *monster)
 {
@@ -110,7 +106,7 @@ struct ai_interface monster_ai_17_interface =
 {
 	ai_tick_17,
 	ai_beattack_17,
-	ai_dead_17,
+	normal_ai_dead,
 	NULL,
 	NULL,
 	NULL,

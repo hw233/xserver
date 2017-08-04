@@ -276,7 +276,7 @@ int buff_struct::reinit_buff(struct BuffTable *buffconfig, uint64_t end_time, un
 			data->effect.attr_effect.added_attr_value = base_attr * (effect_config->EffectAdd[0] / 10000.0 - 1) + effect_config->EffectNum[0];			
 			fight_attr[effect_config->Effect[0]] += data->effect.attr_effect.added_attr_value;
 			LOG_DEBUG("%s: player[%lu] reinit[%u] attr[%d] delta[%.1f] to[%.1f]",
-				__FUNCTION__, m_owner->get_uuid(), data->buff_id,  data->effect.attr_effect.attr_id,
+				__FUNCTION__, m_owner->get_uuid(), data->buff_id, data->effect.attr_effect.attr_id,
 				data->effect.attr_effect.added_attr_value, fight_attr[data->effect.attr_effect.attr_id]);
 		}
 	}

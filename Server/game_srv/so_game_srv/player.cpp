@@ -1,6 +1,7 @@
 //
 #include <unistd.h>
 #include "comm.h"
+#include "path_algorithm.h"
 #include "player.h"
 #include "raid.h"
 #include "uuid.h"
@@ -76,6 +77,7 @@
 #include "guild_wait_raid_manager.h"
 #include "partner_manager.h"
 #include "partner.pb-c.h"
+#include "server_level.h"
 
 ItemUseEffectInfo::~ItemUseEffectInfo()
 {
@@ -100,13 +102,6 @@ player_struct::player_struct() : m_skill(this)
 player_struct::~player_struct()
 {
 	data = NULL;
-}
-
-raid_struct *player_struct::get_raid()
-{
-	if (!scene || (scene->get_scene_type() != SCENE_TYPE_RAID))
-		return NULL;
-	return (raid_struct *)scene;
 }
 
 UNIT_TYPE player_struct::get_unit_type()
@@ -977,7 +972,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	DBAttr* item_bagua_attr_point[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_MINOR_ATTR_NUM];
 	DBAttr item_fabao_attr[MAX_BAG_GRID_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
 	DBAttr* item_fabao_attr_point[MAX_BAG_GRID_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
-	DBAttr fabao_attr;
+	DBAttr fabao_attr[MAX_BAG_GRID_NUM];
 	for (uint32_t i = 0; i < data->bag_grid_num; ++i)
 	{
 		bag_data_point[i] = &bag_data[i];
@@ -1009,10 +1004,10 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		{
 			bag_data[i].fabao = &item_fabao_data[i];
 			dbitem_partner_fabao__init(&item_fabao_data[i]);
-			item_fabao_data[i].main_attr = &fabao_attr;
-			dbattr__init(&fabao_attr);
-			fabao_attr.id = data->bag[i].especial_item.fabao.main_attr.id;
-			fabao_attr.val = data->bag[i].especial_item.fabao.main_attr.val;
+			item_fabao_data[i].main_attr = &fabao_attr[i];
+			dbattr__init(&fabao_attr[i]);
+			fabao_attr[i].id = data->bag[i].especial_item.fabao.main_attr.id;
+			fabao_attr[i].val = data->bag[i].especial_item.fabao.main_attr.val;
 			uint32_t attr_num = 0;
 			for (int j = 0; j < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM ; ++j)
 			{
@@ -1539,7 +1534,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	DBItemPartnerFabao partner_fabao_attr[MAX_PARTNER_NUM];
 	DBAttr partner_fabao_minor_attr[MAX_PARTNER_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
 	DBAttr* partner_fabao_minor_attr_point[MAX_PARTNER_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
-	DBAttr partner_fabao_main_attr; 
+	DBAttr partner_fabao_main_attr[MAX_PARTNER_NUM]; 
 	uint32_t partner_num = 0;
 	for (PartnerMap::iterator iter = m_partners.begin(); iter != m_partners.end() && partner_num < MAX_PARTNER_NUM; ++iter)
 	{
@@ -1631,28 +1626,29 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 			partner_cur_flash[partner_num].power_refresh = partner->data->attr_flash.power_refresh;
 		}
 
-
-		partner_data[partner_num].cur_fabao_info = &partner_cur_fabao[partner_num];
-		dbcur_partner_fabao__init(&partner_cur_fabao[partner_num]);
-		partner_cur_fabao[partner_num].fabao_id = partner->data->cur_fabao.fabao_id;
-		partner_cur_fabao[partner_num].fabao_attr = &partner_fabao_attr[partner_num];
-		dbitem_partner_fabao__init(&partner_fabao_attr[partner_num]);
-		partner_fabao_attr[partner_num].main_attr = &partner_fabao_main_attr;
-		dbattr__init(&partner_fabao_main_attr);
-		partner_fabao_main_attr.id = partner->data->cur_fabao.main_attr.id;
-		partner_fabao_main_attr.val = partner->data->cur_fabao.main_attr.val;
-		uint32_t fabao_minor_attr_num = 0;
-		for (int j = 0; j < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM ; ++j)
+		if(partner->data->cur_fabao.fabao_id != 0)
 		{
-			partner_fabao_minor_attr_point[partner_num][fabao_minor_attr_num] = &partner_fabao_minor_attr[partner_num][fabao_minor_attr_num];
-			dbattr__init(&partner_fabao_minor_attr[partner_num][fabao_minor_attr_num]);
-			partner_fabao_minor_attr[partner_num][fabao_minor_attr_num].id = partner->data->cur_fabao.minor_attr[j].id;
-			partner_fabao_minor_attr[partner_num][fabao_minor_attr_num].val = partner->data->cur_fabao.minor_attr[j].val;
-			fabao_minor_attr_num++;
+			partner_data[partner_num].cur_fabao_info = &partner_cur_fabao[partner_num];
+			dbcur_partner_fabao__init(&partner_cur_fabao[partner_num]);
+			partner_cur_fabao[partner_num].fabao_id = partner->data->cur_fabao.fabao_id;
+			partner_cur_fabao[partner_num].fabao_attr = &partner_fabao_attr[partner_num];
+			dbitem_partner_fabao__init(&partner_fabao_attr[partner_num]);
+			partner_fabao_attr[partner_num].main_attr = &partner_fabao_main_attr[partner_num];
+			dbattr__init(&partner_fabao_main_attr[partner_num]);
+			partner_fabao_main_attr[partner_num].id = partner->data->cur_fabao.main_attr.id;
+			partner_fabao_main_attr[partner_num].val = partner->data->cur_fabao.main_attr.val;
+			uint32_t fabao_minor_attr_num = 0;
+			for (int j = 0; j < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM ; ++j)
+			{
+				partner_fabao_minor_attr_point[partner_num][fabao_minor_attr_num] = &partner_fabao_minor_attr[partner_num][fabao_minor_attr_num];
+				dbattr__init(&partner_fabao_minor_attr[partner_num][fabao_minor_attr_num]);
+				partner_fabao_minor_attr[partner_num][fabao_minor_attr_num].id = partner->data->cur_fabao.minor_attr[j].id;
+				partner_fabao_minor_attr[partner_num][fabao_minor_attr_num].val = partner->data->cur_fabao.minor_attr[j].val;
+				fabao_minor_attr_num++;
+			}
+			partner_fabao_attr[partner_num].minor_attr = partner_fabao_minor_attr_point[partner_num];
+			partner_fabao_attr[partner_num].n_minor_attr = fabao_minor_attr_num;
 		}
-		partner_fabao_attr[partner_num].minor_attr = partner_fabao_minor_attr_point[partner_num];
-		partner_fabao_attr[partner_num].n_minor_attr = fabao_minor_attr_num;
-
 
 		partner_num++;
 	}
@@ -1736,6 +1732,8 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	zhenying.score = data->zhenying.score;
 	zhenying.mine = data->zhenying.mine;
 
+	db_info.server_level_break_count = data->server_level_break_count;
+	db_info.server_level_break_notify = data->server_level_break_notify;
 
 	return player_dbinfo__pack(&db_info, out_data);
 }
@@ -1913,7 +1911,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	{
 		data->n_weapon_color = db_info->n_weapon_color;
 		memcpy(data->weapon_color, db_info->weapon_color, data->n_weapon_color * sizeof(uint32_t));
-		memcpy(data->weapon_color_is_new, db_info->weapon_color_isnew, data->n_color * sizeof(uint32_t));
+		memcpy(data->weapon_color_is_new, db_info->weapon_color_isnew, data->n_weapon_color * sizeof(uint32_t));
 	}
 
 
@@ -2164,10 +2162,10 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 			partner->data->cur_fabao.fabao_id = db_info->partner_list[i]->cur_fabao_info->fabao_id;
 			partner->data->cur_fabao.main_attr.id = db_info->partner_list[i]->cur_fabao_info->fabao_attr->main_attr->id;
 			partner->data->cur_fabao.main_attr.val = db_info->partner_list[i]->cur_fabao_info->fabao_attr->main_attr->val;
-			for(uint32_t i =0; i < db_info->partner_list[i]->cur_fabao_info->fabao_attr->n_minor_attr && i < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM; ++i)
+			for(uint32_t k =0; k < db_info->partner_list[i]->cur_fabao_info->fabao_attr->n_minor_attr && k < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM; ++k)
 			{
-			partner->data->cur_fabao.minor_attr[i].id = db_info->partner_list[i]->cur_fabao_info->fabao_attr->minor_attr[i]->id;
-			partner->data->cur_fabao.minor_attr[i].val = db_info->partner_list[i]->cur_fabao_info->fabao_attr->minor_attr[i]->val;
+				partner->data->cur_fabao.minor_attr[k].id = db_info->partner_list[i]->cur_fabao_info->fabao_attr->minor_attr[k]->id;
+				partner->data->cur_fabao.minor_attr[k].val = db_info->partner_list[i]->cur_fabao_info->fabao_attr->minor_attr[k]->val;
 			}
 		}
 
@@ -2218,6 +2216,9 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		data->truck.hp = db_info->truck->hp;
 
 	}
+
+	data->server_level_break_count = db_info->server_level_break_count;
+	data->server_level_break_notify = db_info->server_level_break_notify;
 
 	player_dbinfo__free_unpacked(db_info, NULL);
 
@@ -3985,6 +3986,7 @@ int check_qiecuo_finished(player_struct *p1, player_struct *p2)
 
 void xunbao_drop(player_struct &player, uint32_t itemid)
 {
+	LOG_DEBUG("%s: player[%s] ", __FUNCTION__, player.get_name());
 	SearchTable *sTable = get_config_by_id(itemid, &sg_xunbao);
 	if (sTable == NULL)
 	{
@@ -4061,9 +4063,13 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 
 			ParameterTable * config = get_config_by_id(161000221, &parameter_config);
 			char str[512] = "bbbbbbbbbbbbbbbbbbbbbbbbb";
-			if (config != NULL)
+			if (player.m_team == NULL)
 			{
-				sprintf(str, config->parameter2, player.scene->res_config->SceneName);
+				Team::CreateTeam(player);
+			}
+			if (config != NULL && player.m_team != NULL)
+			{
+				sprintf(str, config->parameter2, player.scene->res_config->SceneName, player.m_team->m_data->m_id);
 			}
 			player.send_chat(CHANNEL__world, str);
 
@@ -4272,7 +4278,7 @@ int player_struct::sub_unbind_gold(uint32_t num, uint32_t statis_id, bool isNty)
 
 	data->attrData[PLAYER_ATTR_GOLD] -= num;
 	uint32_t curGold = data->attrData[PLAYER_ATTR_GOLD];
-	LOG_INFO("[%s:%d] player[%lu] unbind gold, prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id,  prevGold, curGold, num);
+	LOG_INFO("[%s:%d] player[%lu] unbind gold, prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevGold, curGold, num);
 
 	this->add_task_progress(TCT_BASIC, TBC_GOLD, get_comm_gold());
 	if (isNty)
@@ -4307,7 +4313,7 @@ int player_struct::sub_comm_gold(uint32_t num, uint32_t statis_id, bool isNty)
 	{
 		data->attrData[PLAYER_ATTR_BIND_GOLD] -= num;
 		uint32_t curBindGold = data->attrData[PLAYER_ATTR_BIND_GOLD];
-		LOG_INFO("[%s:%d] player[%lu] bind gold, prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id,  prevBindGold, curBindGold, num);
+		LOG_INFO("[%s:%d] player[%lu] bind gold, prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevBindGold, curBindGold, num);
 
 		attrs[PLAYER_ATTR_BIND_GOLD] = data->attrData[PLAYER_ATTR_BIND_GOLD];
 	}
@@ -4318,13 +4324,13 @@ int player_struct::sub_comm_gold(uint32_t num, uint32_t statis_id, bool isNty)
 		{
 			left_num = num - prevBindGold;
 			data->attrData[PLAYER_ATTR_BIND_GOLD] = 0;
-			LOG_INFO("[%s:%d] player[%lu] bind gold, prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id,  prevBindGold, 0, prevBindGold);
+			LOG_INFO("[%s:%d] player[%lu] bind gold, prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevBindGold, 0, prevBindGold);
 			attrs[PLAYER_ATTR_BIND_GOLD] = 0;
 		}
 
 		data->attrData[PLAYER_ATTR_GOLD] -= left_num;
 		uint32_t curGold = data->attrData[PLAYER_ATTR_GOLD];
-		LOG_INFO("[%s:%d] player[%lu] gold, prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id,  prevGold, curGold, left_num);
+		LOG_INFO("[%s:%d] player[%lu] gold, prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevGold, curGold, left_num);
 		attrs[PLAYER_ATTR_GOLD] = data->attrData[PLAYER_ATTR_GOLD];
 	}
 
@@ -4819,10 +4825,10 @@ bool player_struct::check_can_add_item_list(std::map<uint32_t, uint32_t>& item_l
 	}
 
 	//空格子足够
-	if (item_list.size() <= empty_num)
-	{
-		return true;
-	}
+//	if (item_list.size() <= empty_num)
+//	{
+//		return true;
+//	}
 
 	for (std::map<uint32_t, uint32_t>::iterator iter = item_list.begin(); iter != item_list.end(); ++iter)
 	{
@@ -5924,11 +5930,7 @@ int player_struct::use_prop_effect(uint32_t id, uint32_t use_count, ItemUseEffec
 				{
 					return ERROR_ID_NO_CONFIG;
 				}
-				int i = add_horse(config->ParameterEffect[0], config->ParameterEffect[1]);
-				if (i >= 0)
-				{
-					notify_add_horse(i);
-				}
+				add_horse(config->ParameterEffect[0], config->ParameterEffect[1]);
 			}
 			break;
 	}
@@ -6031,6 +6033,10 @@ void player_struct::update_bag_grid(uint32_t pos)
 	ItemBaguaData bagua_data;
 	AttrData bagua_attr[MAX_BAGUAPAI_MINOR_ATTR_NUM];
 	AttrData* bagua_attr_point[MAX_BAGUAPAI_MINOR_ATTR_NUM];
+	ItemPartnerFabaoData fabao_data;
+	AttrData item_fabao_attr[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
+	AttrData* item_fabao_attr_point[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
+	AttrData fabao_attr;
 
 	grid_data.index = pos;
 	grid_data.id = grid->id;
@@ -6059,6 +6065,31 @@ void player_struct::update_bag_grid(uint32_t pos)
 		}
 		bagua_data.minor_attrs = bagua_attr_point;
 		bagua_data.n_minor_attrs = attr_num;
+	}
+	if (item_is_partner_fabao(grid->id))
+	{
+		grid_data.fabao = &fabao_data;
+		item_partner_fabao_data__init(&fabao_data);
+		fabao_data.main_attr = &fabao_attr;
+		attr_data__init(&fabao_attr);
+		fabao_attr.id =  grid->especial_item.fabao.main_attr.id;
+		fabao_attr.val = grid->especial_item.fabao.main_attr.val;
+		uint32_t attr_num = 0;
+		for (int j = 0; j < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM; ++j)
+		{
+			if (grid->especial_item.fabao.minor_attr[j].id == 0)
+			{
+				break;
+			}
+
+			item_fabao_attr_point[attr_num] = &item_fabao_attr[attr_num];
+			attr_data__init(&item_fabao_attr[attr_num]);
+			item_fabao_attr[attr_num].id = grid->especial_item.fabao.minor_attr[j].id;
+			item_fabao_attr[attr_num].val = grid->especial_item.fabao.minor_attr[j].val;
+			attr_num++;
+		}
+		fabao_data.minor_attr = item_fabao_attr_point;
+		fabao_data.n_minor_attr = attr_num;
 	}
 
 	EXTERN_DATA extern_data;
@@ -6220,16 +6251,25 @@ int player_struct::add_exp(uint32_t val, uint32_t statis_id, bool isNty)
 	}
 
 	AttrMap attrs;
-	uint32_t exp_new = data->attrData[PLAYER_ATTR_EXP] + val;
 	uint32_t level_old = data->attrData[PLAYER_ATTR_LEVEL];
 	uint32_t level_new = level_old;
+	uint32_t exp_new = data->attrData[PLAYER_ATTR_EXP] + val * (1.0 + get_server_exp_addition(level_old));
 
 	while (true)
 	{
+		if (is_server_level_limit(level_new))
+		{
+			LOG_DEBUG("[%s:%d] player[%lu] server level limit, level:%u", __FUNCTION__, __LINE__, data->player_id, level_new);
+			mark_server_level_break();
+			exp_new = 0;
+			break;
+		}
+
 		if (level_new >= (uint32_t)sg_player_level_limit)
 		{
 			break;
 		}
+
 
 		ActorLevelTable* level_config = get_actor_level_config(data->attrData[PLAYER_ATTR_JOB], level_new);
 		if (!level_config)
@@ -7769,23 +7809,18 @@ int player_struct::set_task_fail(TaskInfo *info)
 			EXTERN_DATA ext_data;
 			ext_data.player_id = data->player_id;
 			fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_CASH_TRUCK_TASK_FAIL_NOTIFY, comm_answer__pack, resp);
-//			data->truck.truck_id = 0;
 			if (sight_space)
 			{
-				sight_space->broadcast_truck_delete(truck);
-				data->truck.truck_id = 0;
-				data->truck.active_id = 0;				
-				sight_space_manager::del_player_from_sight_space(this->sight_space, this, true);
+				sight_space->broadcast_truck_delete(truck);							
+				//sight_space_manager::del_player_from_sight_space(this->sight_space, this, true);
 			}
 			else
-			{
-				data->truck.truck_id = 0;
-				data->truck.active_id = 0;				
+			{			
 				truck->scene->delete_cash_truck_from_scene(truck);
 			}
-			cash_truck_manager::delete_cash_truck(truck);
+			cash_truck_manager::delete_cash_truck(truck); 
 		}
-
+		data->truck.truck_id = 0;
 	}
 
 	info->status = TASK_STATUS__UNACHIEVABLE;
@@ -10901,6 +10936,11 @@ int player_struct::add_partner_anger(uint32_t num, bool isNty)
 		return 0;
 	}
 
+	if (!get_battle_partner())
+	{
+		return 0;
+	}
+
 	uint32_t prevVal = data->attrData[PLAYER_ATTR_PARTNER_ANGER];
 	if (prevVal >= sg_partner_anger_max)
 	{
@@ -11554,6 +11594,8 @@ void player_struct::refresh_oneday_job()
 		data->live_skill.book[LIVE__SKILL__TYPE__COOK] = tablePar->parameter1[0]; 
 		data->live_skill.book[LIVE__SKILL__TYPE__MEDICINE] = tablePar->parameter1[0];
 	}
+
+	data->server_level_break_count = 0;
 }
 
 void player_struct::refresh_shop_daily(void)
@@ -12620,6 +12662,7 @@ int player_struct::add_horse(uint32_t id, time_t expire)
 	int pos = data->n_horse;
 	++data->n_horse;
 
+	notify_add_horse(pos);
 	return pos;
 }
 
@@ -12654,7 +12697,40 @@ void player_struct::notify_add_horse(int i)
 
 	EXTERN_DATA extern_data;
 	extern_data.player_id = get_uuid();
-	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_BUY_HORSE_ANSWER, buy_horse_ans__pack, send);
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ADD_HORSE_NOTIFY, buy_horse_ans__pack, send);
+}
+
+void player_struct::down_horse()
+{
+	if (data->attrData[PLAYER_ATTR_CUR_HORSE] == 0)
+	{
+		return;
+	}
+	if (data->attrData[PLAYER_ATTR_ON_HORSE_STATE] == 0)
+	{
+		return;
+	}
+
+	ActorLevelTable *level_config = get_actor_level_config(get_attr(PLAYER_ATTR_JOB), get_attr(PLAYER_ATTR_LEVEL));
+	if (level_config != NULL)
+	{
+		ActorAttributeTable* config = get_config_by_id(level_config->ActorLvAttri, &actor_attribute_config);
+		if (config != NULL)
+		{
+			AttrMap attrs;
+			attrs[PLAYER_ATTR_MOVE_SPEED] = config->MoveSpeed;
+			set_attr(PLAYER_ATTR_MOVE_SPEED, config->MoveSpeed);
+			notify_attr(attrs, true, true);
+		}
+	}
+
+	data->attrData[PLAYER_ATTR_ON_HORSE_STATE] = 0;
+	OnHorse send;
+	on_horse__init(&send);
+	send.playerid = get_uuid();
+	send.horseid = data->attrData[PLAYER_ATTR_CUR_HORSE];
+	broadcast_to_sight(MSG_ID_DOWN_HORSE_NOTIFY, &send, (pack_func)on_horse__pack, false);
+	adjust_battle_partner();
 }
 
 int player_struct::get_on_horse_id()
@@ -13383,9 +13459,17 @@ int player_struct::get_partner_fabao_main_attr(uint32_t card_id, AttrInfo &attr_
 	uint64_t max_attr = magictable_config->MainAttributeNum[1];
 
 	attr_val.val = rand() % (max_attr - min_attr + 1) + min_attr;
-	LOG_INFO("生成伙伴法宝是随机的主属性值[%lf]", attr_val.val);
 
 	return 0;
+}
+bool player_struct::is_too_high_to_beattack()
+{
+	if (get_attr(PLAYER_ATTR_ON_HORSE_STATE) == 0)
+		return false;
+	float height = get_pos_height(scene, get_pos());
+	if (data->pos_y - height >= 3)
+		return true;
+	return false;
 }
 int player_struct::get_partner_fabao_minor_attr(uint32_t card_id, AttrInfo *attrs)
 {
@@ -13409,7 +13493,7 @@ int player_struct::get_partner_fabao_minor_attr(uint32_t card_id, AttrInfo *attr
 		return -2;
 	}
 
-	//随机获取福属性数目
+	//随机获取副属性数目
 	total_gailv = rand() % total_gailv + 1;
 	int flag = -1;
 	uint64_t begin_gailv = 0;
@@ -13435,11 +13519,12 @@ int player_struct::get_partner_fabao_minor_attr(uint32_t card_id, AttrInfo *attr
 	//随机获取福属性id
 	if(minor_attr_num > magictable_config->n_ViceAttribute)
 	{
-		LOG_ERR("[%s:%d] minor attr num not enough nedd attr_num:[%u], total attr_num:[%u]", minor_attr_num, magictable_config->n_ViceAttribute);
+		LOG_ERR("[%s:%d] minor attr num not enough nedd attr_num:[%u], total attr_num:[%u]",
+			__FUNCTION__, __LINE__, minor_attr_num, magictable_config->n_ViceAttribute);
 		return -4;
 	}
 
-	uint64_t attr_id[minor_attr_num];
+	uint64_t attr_id[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM] = {0};
 	for(uint32_t k = 0; k < minor_attr_num; ++k)
 	{
 		while(1)
@@ -13453,14 +13538,13 @@ int player_struct::get_partner_fabao_minor_attr(uint32_t card_id, AttrInfo *attr
 			}
 			if(!like)
 			{
-				LOG_INFO("伙伴法宝随机到的副属性id[%u]", attr_id[k]);
 				attr_id[k] = magictable_config->ViceAttribute[i];
 				break;
 			}
 		}
 
 	}
-	//根据随机获取到的几条属相ID来设置相应属性
+	//根据随机获取到的几条属性ID来设置相应属性
 	AttrInfo tmp_attr[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
 	memset(tmp_attr, 0, sizeof(AttrInfo) * MAX_HUOBAN_FABAO_MINOR_ATTR_NUM);
 	for(uint32_t i = 0; i < minor_attr_num && i < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM; ++i)
@@ -13475,7 +13559,7 @@ int player_struct::get_partner_fabao_minor_attr(uint32_t card_id, AttrInfo *attr
 		if(magictable_config->Quality >= magicattribute_config->n_Rand || magictable_config->Quality <= 0)
 		{
 		
-			LOG_ERR("[%s:%d] player[%lu] attr rand size error, card_id:%u, attr_id:%u", __FUNCTION__, __LINE__, data->player_id, card_id, attr_id[i]);
+			LOG_ERR("[%s:%d] player[%lu] attr rand size error, card_id:%u, attr_id:%lu", __FUNCTION__, __LINE__, data->player_id, card_id, attr_id[i]);
 			return -1;
 		}
 		
@@ -13483,7 +13567,7 @@ int player_struct::get_partner_fabao_minor_attr(uint32_t card_id, AttrInfo *attr
 		double max_val = magicattribute_config->Rand[magictable_config->Quality];
 		if (max_val < min_val)
 		{
-			LOG_ERR("[%s:%d] player[%lu] attr rand range error, card_id:%u, attr_id:%u", __FUNCTION__, __LINE__, data->player_id, card_id, attr_id[i]);
+			LOG_ERR("[%s:%d] player[%lu] attr rand range error, card_id:%u, attr_id:%lu", __FUNCTION__, __LINE__, data->player_id, card_id, attr_id[i]);
 			return -1;
 		}
 

@@ -16,6 +16,7 @@
 #include "chengjie.h"
 #include "error_code.h"
 #include "register_gamesrv.h"
+#include "server_level.h"
 
 #include <assert.h>
 #include <errno.h>
@@ -29,6 +30,8 @@
 extern int pack_player_online(player_struct *player, EXTERN_DATA *extern_data, bool load_db, bool reconnect);
 extern void answer_friend_search(EXTERN_DATA *extern_data, int result, player_struct *target, uint32_t logout_time);
 extern void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *target);
+extern void notify_server_level_info(player_struct *player, EXTERN_DATA *extern_data);
+extern void notify_server_level_break(player_struct *player, EXTERN_DATA *extern_data);
 
 DbHandleMap m_db_handle_map;
 
@@ -332,6 +335,117 @@ static int handle_get_other_info_answer(EXTERN_DATA *extern_data)
 	return (0);
 }
 
+static int handle_load_server_level_answer(EXTERN_DATA *extern_data)
+{
+	LOG_INFO("[%s:%d] ", __FUNCTION__, __LINE__);
+	memset(&global_shared_data->server_level, 0, sizeof(global_shared_data->server_level));
+
+	int data_size = conn_node_dbsrv::connecter.get_data_len();
+	DBServerLevel *db_info = NULL;
+	if (data_size != 0)
+	{
+		db_info = dbserver_level__unpack(NULL, data_size, conn_node_dbsrv::connecter.get_data());
+	}
+
+	ServerLevelTable *config = NULL;
+	if (db_info != NULL)
+	{
+		global_shared_data->server_level.level_id = db_info->level_id;
+		global_shared_data->server_level.break_goal = db_info->break_goal;
+		global_shared_data->server_level.break_num = db_info->break_num;
+		for (size_t i = 0; i < db_info->n_break_reward && i < MAX_SERVER_LEVEL_REWARD_NUM; ++i)
+		{
+			global_shared_data->server_level.break_reward[i] = db_info->break_reward[i];
+		}
+
+		config = get_config_by_id(global_shared_data->server_level.level_id, &server_level_config);
+	}
+	else
+	{
+		config = server_level_config.begin()->second;
+	}
+
+	if (config != NULL)
+	{
+		global_shared_data->server_level.config = config;
+		if (global_shared_data->server_level.level_id == 0)
+		{
+			global_shared_data->server_level.level_id = config->ID;
+			global_shared_data->server_level.break_goal = config->DungeonSchedule;
+		}
+	}
+
+	if (db_info != NULL)
+	{
+		dbserver_level__free_unpacked(db_info, NULL);
+	}
+
+	return 0;
+}
+
+static int handle_break_server_level_answer(EXTERN_DATA *extern_data)
+{
+	LOG_INFO("[%s:%d] ", __FUNCTION__, __LINE__);
+
+	uint32_t* pData = (uint32_t*)conn_node_dbsrv::connecter.get_data();
+	uint32_t num = *pData++;
+
+	ServerLevelTable *config = get_config_by_id(global_shared_data->server_level.level_id + 1, &server_level_config);
+	if (!config)
+	{
+		return -1;
+	}
+
+	memset(&global_shared_data->server_level, 0, sizeof(global_shared_data->server_level));
+	if (num != 0)
+	{
+		global_shared_data->server_level.break_goal = num;
+	}
+	else
+	{
+		global_shared_data->server_level.break_goal = config->DungeonSchedule;
+	}
+
+	global_shared_data->server_level.level_id = config->ID;
+	global_shared_data->server_level.config = config;
+	save_server_level_info();
+
+	{
+		ServerLevelInfoNotify nty;
+		server_level_info_notify__init(&nty);
+
+		nty.level_id = global_shared_data->server_level.level_id;
+		nty.break_goal = global_shared_data->server_level.break_goal;
+		nty.break_num = global_shared_data->server_level.break_num;
+
+		uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SERVER_LEVEL_INFO_NOTIFY, &nty, (pack_func)server_level_info_notify__pack);
+		for (std::map<uint64_t, player_struct *>::iterator iter = player_manager_all_players_id.begin(); iter != player_manager_all_players_id.end(); ++iter)
+		{
+			player_struct *player = iter->second;
+			if (player->is_online())
+			{
+				ppp = conn_node_gamesrv::broadcast_msg_add_players(player->get_uuid(), ppp);
+			}
+		}
+		conn_node_gamesrv::broadcast_msg_send();
+	}
+	{
+		uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SERVER_LEVEL_BREAK_NOTIFY, NULL, (pack_func)NULL);
+		for (std::map<uint64_t, player_struct *>::iterator iter = player_manager_all_players_id.begin(); iter != player_manager_all_players_id.end(); ++iter)
+		{
+			player_struct *player = iter->second;
+			if (player->is_online())
+			{
+				ppp = conn_node_gamesrv::broadcast_msg_add_players(player->get_uuid(), ppp);
+				player->data->server_level_break_notify = global_shared_data->server_level.level_id;
+			}
+		}
+		conn_node_gamesrv::broadcast_msg_send();
+	}
+
+	return 0;
+}
+
 void install_db_msg_handle()
 {
 	add_msg_handle(SERVER_PROTO_ENTER_GAME_ANSWER, handle_player_enter_game_answer);
@@ -342,6 +456,8 @@ void install_db_msg_handle()
 	add_msg_handle(SERVER_PROTO_LOAD_CHENGJIE_ANSWER, handle_load_chengjie_answer);
 	add_msg_handle(MSG_ID_FRIEND_SEARCH_ANSWER, handle_friend_search_answer);
 	add_msg_handle(MSG_ID_GET_OTHER_INFO_ANSWER, handle_get_other_info_answer);
+	add_msg_handle(SERVER_PROTO_LOAD_SERVER_LEVEL_ANSWER, handle_load_server_level_answer);
+	add_msg_handle(SERVER_PROTO_BREAK_SERVER_LEVEL_ANSWER, handle_break_server_level_answer);
 }
 
 void uninstall_db_msg_handle()

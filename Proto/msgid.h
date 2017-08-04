@@ -124,6 +124,8 @@
 #define MSG_ID_TRANSFER_OUT_STUCK_REQUEST         10424 //脱离卡死请求 NULL
 #define MSG_ID_TRANSFER_OUT_STUCK_ANSWER          10425 //脱离卡死应答 TransferOutStuckAnswer
 #define MSG_ID_TRANSFER_OUT_STUCK_INFO_NOTIFY     10426 //脱离卡死信息通知 TransferOutStuckInfoNotify
+#define MSG_ID_SERVER_LEVEL_INFO_NOTIFY     10427 //服务器等级信息通知 ServerLevelInfoNotify
+#define MSG_ID_SERVER_LEVEL_BREAK_NOTIFY    10428 //服务器等级突破通知 NULL
 
 //复活
 #define MSG_ID_RELIVE_REQUEST               10500  //复活 relive_request
@@ -268,6 +270,7 @@
 #define MSG_ID_TEAM_RAID_CANCEL_NOTIFY           10830   //组队副本取消准备通知 team_raid_cancel_notify
 #define MSG_ID_NPC_TALK_REQUEST           10831   //告知后台和某个NPC对话了 npc_talk_request
 #define MSG_ID_RAID_AI_CONTINUE_REQUEST		   10832 //客户端执行完特定的副本ai请求继续副本   RaidAiContinueRequest
+#define MSG_ID_TRANSFER_TO_LEADER_ANSWER    10833 //传送至队长应答 comm_answer
 
 //装备
 #define MSG_ID_EQUIP_LIST_REQUEST              10900 //装备信息请求 NULL 
@@ -331,7 +334,7 @@
 //坐骑
 #define MSG_ID_HORSE_LIST_NOTIFY              11200 //已有坐骑列表 HorseList
 #define MSG_ID_BUY_HORSE_REQUEST              11201 //买坐骑 BuyHorse
-#define MSG_ID_BUY_HORSE_ANSWER              11202 //BuyHorseAns
+#define MSG_ID_BUY_HORSE_ANSWER              11202 //comm_answer
 #define MSG_ID_SET_CUR_HORSE_REQUEST              11203 //幻化 HorseId
 #define MSG_ID_SET_CUR_HORSE_ANSWER              11204 //SetCurHorseAns
 #define MSG_ID_ADD_HORSE_EXP_REQUEST              11205 //修灵 HorseAttr
@@ -350,6 +353,7 @@
 #define MSG_ID_ADD_HORSE_SOUL_LEVEL_ANSWER              11218 //HorseSoulAns
 #define MSG_ID_SET_HORSE_FLY_REQUEST              11219 //FlyState
 #define MSG_ID_HORSE_RESTORE_REQUEST              11220 //还原
+#define MSG_ID_ADD_HORSE_NOTIFY              11221 //增加或更新一个坐骑 BuyHorseAns
 
 //商城
 #define MSG_ID_SHOP_INFO_REQUEST                11300 //获取商城信息请求 NULL
@@ -723,7 +727,8 @@
 #define MSG_ID_PARTNER_COMPOSE_STONE_ANSWER               13136 //伙伴神曜合成应答 comm_answer
 #define MSG_ID_PARTNER_FABAO_STONE_REQUEST                13137 //伙伴法宝合成请求 PartnerFabaoStoneRequest
 #define MSG_ID_PARTNER_FABAO_STONE_ANSWER                 13138 //伙伴法宝合成应答 comm_answer 
-#define MSG_ID_PARTNER_FABAO_CHANGE_REQUEST				  13139 //伙伴法宝佩戴或者替换 PartnerFabaoChangeRequest
+#define MSG_ID_PARTNER_FABAO_CHANGE_REQUEST				  13139 //伙伴法宝佩戴或者替换请求 PartnerFabaoChangeRequest
+#define MSG_ID_PARTNER_FABAO_CHANGE_ANSWER				  13140 //伙伴法宝佩戴或者替换应答 PartnerFabaoChangeAnswer
 
 //运镖
 #define MSG_ID_CASH_TRUCK_INFO_NOTIFY                       13301 //运镖信息 CashTruckInfo

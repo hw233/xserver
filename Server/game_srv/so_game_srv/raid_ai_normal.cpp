@@ -9,33 +9,41 @@
 #include "unit.h"
 #include "msgid.h"
 #include "raid.pb-c.h"
+#include "server_level.h"
 
 void normal_raid_ai_tick(raid_struct *raid)
 {
-	if (raid->data->state == RAID_STATE_START)// && m_config->Score == 1)
-	{
-		uint32_t star_param[3];
-		uint32_t score_param[3];
-		uint8_t old_star_bits = raid->data->star_bits;
-		uint32_t star = raid->calc_raid_star(star_param, score_param);
-		if (star <= 0)
-		{
-			raid->on_raid_failed(0);
-			return;
-		}
+	// if (raid->data->state == RAID_STATE_START)// && m_config->Score == 1)
+	// {
+	// 	uint32_t star_param[3];
+	// 	uint32_t score_param[3];
+	// 	uint8_t old_star_bits = raid->data->star_bits;
 
-		if (raid->data->star_bits != old_star_bits && raid->need_show_star())
-		{
-			raid->send_star_changed_notify(star_param, score_param);
-		}
+	// 	// if (raid->check_raid_timeout())
+	// 	// {
+	// 	// 	raid->on_raid_failed(0);
+	// 	// 	return;			
+	// 	// }
+		
+	// 	// uint32_t star = raid->calc_raid_star(star_param, score_param);
+	// 	// if (star <= 0)
+	// 	// {
+	// 	// 	raid->on_raid_failed(0);
+	// 	// 	return;
+	// 	// }
 
-		if (raid->data->pass_index < raid->m_config->n_PassType && raid->m_config->PassType[raid->data->pass_index] == 2)
-		{
-			uint64_t t = (time_helper::get_cached_time() - raid->data->start_time) / 1000;
-			if (raid->m_config->PassValue[raid->data->pass_index] <= t)
-				raid->add_raid_pass_value(2, raid->m_config);
-		}
-	}
+	// 	if (raid->data->star_bits != old_star_bits && raid->need_show_star())
+	// 	{
+	// 		raid->send_star_changed_notify(star_param, score_param);
+	// 	}
+
+	// 	// if (raid->data->pass_index < raid->m_config->n_PassType && raid->m_config->PassType[raid->data->pass_index] == 2)
+	// 	// {
+	// 	// 	uint64_t t = (time_helper::get_cached_time() - raid->data->start_time) / 1000;
+	// 	// 	if (raid->m_config->PassValue[raid->data->pass_index] <= t)
+	// 	// 		raid->add_raid_pass_value(2, raid->m_config);
+	// 	// }
+	// }
 }
 
 static void normal_raid_ai_init(raid_struct *raid, player_struct *)
@@ -49,13 +57,13 @@ void normal_raid_ai_finished(raid_struct *raid)
 	uint32_t star_param[3];
 	uint32_t score_param[3];
 	uint32_t star = raid->calc_raid_star(star_param, score_param);
-	if (star <= 0)
-	{
-		raid->on_raid_failed(0);
-		return;
-	}
+	// if (star <= 0)
+	// {
+	// 	raid->on_raid_failed(0);
+	// 	return;
+	// }
 
-	if (star > raid->m_config->n_Rewards)
+	if (star > raid->m_config->n_Rewards || star == 0)
 		star = 1;
 
 	RaidFinishNotify notify;
@@ -151,6 +159,7 @@ void normal_raid_ai_finished(raid_struct *raid)
 		}
 
 		raid->m_player[i]->add_task_progress(TCT_FINISH_RAID, raid->data->ID, 1);
+		server_level_listen_raid_finish(raid->data->ID, raid->m_player[i]);
 	}
 }
 

@@ -90,6 +90,18 @@ struct position *unit_struct::get_pos()
 	return &path->pos[path->cur_pos];
 }
 
+raid_struct *unit_struct::get_raid()
+{
+	if (!scene || (scene->get_scene_type() != SCENE_TYPE_RAID))
+		return NULL;
+	return (raid_struct *)scene;
+}
+
+bool unit_struct::is_too_high_to_beattack()
+{
+	return false;
+}
+
 void unit_struct::on_beattack(unit_struct *player, uint32_t skill_id, int32_t damage)
 {
 }
@@ -1039,6 +1051,9 @@ int unit_struct::count_rect_unit_at_pos(double angle, struct position *start_pos
 			LOG_ERR("%s %d: player[%lu] in sight", __FUNCTION__, __LINE__, sight_player[i]);
 			continue;
 		}
+		if (player->is_too_high_to_beattack())
+			continue;
+		
 		struct position *pos = player->get_pos();
 
 		double pos_x = pos->pos_x - start_pos->pos_x;
@@ -1083,6 +1098,9 @@ int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, do
 			LOG_ERR("%s %d: player[%lu] in sight", __FUNCTION__, __LINE__, sight_player[i]);
 			continue;
 		}
+		if (player->is_too_high_to_beattack())
+			continue;
+		
 		double x = my_pos->pos_x - player->get_pos()->pos_x;
 		double z = my_pos->pos_z - player->get_pos()->pos_z;
 		if (x * x + z * z > radius)
@@ -1111,6 +1129,9 @@ int unit_struct::count_fan_unit(std::vector<unit_struct *> *ret, uint max, doubl
 			LOG_ERR("%s %d: player[%lu] in sight", __FUNCTION__, __LINE__, sight_player[i]);
 			continue;
 		}
+		if (player->is_too_high_to_beattack())
+			continue;
+		
 		double x = my_pos->pos_x - player->get_pos()->pos_x;
 		double z = my_pos->pos_z - player->get_pos()->pos_z;
 		if (x * x + z * z > radius)

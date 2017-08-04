@@ -104,7 +104,7 @@ struct ai_interface monster_ai_22_interface =
 {
 	ai_tick_22,
 	circle_ai_beattack,
-	circle_ai_dead,
+	normal_ai_dead,
 	circle_ai_befly,
 	NULL,
 	NULL,

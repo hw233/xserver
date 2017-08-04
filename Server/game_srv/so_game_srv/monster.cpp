@@ -27,6 +27,7 @@
 #include "zhenying_battle.h"
 #include "sight_space_manager.h"
 #include "monster_ai.h"
+#include "collect.h"
 
 uint64_t monster_struct::get_uuid()
 {
@@ -687,6 +688,8 @@ void monster_struct::on_dead(unit_struct *killer)
 
 	uint32_t scene_id = scene->m_id;
 	uint32_t monster_id = data->monster_id;
+	//特定怪物死亡创建采集点
+	monster_dead_creat_collect(killer);
 	if (killer && drop_id > 0) //todo 国御目标怪根据任务掉落
 		killer->give_drop_item(drop_id, MAGIC_TYPE_MONSTER_DEAD, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
 		
@@ -708,13 +711,6 @@ void monster_struct::on_dead(unit_struct *killer)
 			{
 				if (sight_space->data->type != 0)
 				{
-						//寻宝
-					//if (sight_space->data->type == 1)
-					//{
-					//	EXTERN_DATA extern_data;
-					//	extern_data.player_id = killer->get_uuid();
-					//	fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);
-					//}
 					sight_space_manager::del_player_from_sight_space(sight_space, (player_struct *)killer, true);
 					return;
 				}
@@ -1623,4 +1619,69 @@ bool monster_struct::try_active_attack()
 		return true;
 	}
 	return false;
+}
+
+void monster_struct::monster_dead_creat_collect(unit_struct *murderer)
+{
+	if(murderer == NULL)
+	{
+		LOG_ERR("[%s:%d] monster dead creat collect fail", __FUNCTION__, __LINE__);
+		return;
+	}
+
+	player_struct *player = NULL;
+
+	if(murderer->get_unit_type() == UNIT_TYPE_PLAYER)
+	{
+		player = (player_struct*)murderer;
+	}
+	else if(murderer->get_unit_type() == UNIT_TYPE_PARTNER)
+	{
+	
+		player = ((partner_struct*)murderer)->m_owner;
+	}
+	else
+	{
+		return;
+	}
+
+	if(player == NULL)
+	{		
+		LOG_ERR("[%s]:[%d] get player failed", __FUNCTION__, __LINE__);
+		return;
+	}
+	if(this->scene == NULL)
+	{		
+		LOG_ERR("[%s]:[%d] get scene failed", __FUNCTION__, __LINE__);
+		return;
+	}
+
+	if(this->config == NULL)
+	{
+		return;
+	}
+
+	uint64_t baseAttribute = this->config->BaseAttribute;
+	uint64_t id = baseAttribute * 1000 + this->get_attr(PLAYER_ATTR_LEVEL); 
+	ActorAttributeTable* actor_config = get_config_by_id(id, &actor_attribute_config);
+	if(actor_config == NULL)
+	{
+		LOG_ERR("[%s]:[%d] get ActorAttributeTable failed", __FUNCTION__, __LINE__);
+		return;
+	}
+
+	if(actor_config->CollectionDrop == 0)
+	{
+		return;
+	}
+
+	uint64_t drop_gailv = rand() % 10000 + 1;
+
+	if(drop_gailv > actor_config->CollectionProbability)
+	{
+		return;
+	}
+
+	Collect::CreateCollectByPos(this->scene, actor_config->CollectionDrop, this->get_pos()->pos_x , 9, this->get_pos()->pos_z, 0, player);
+
 }

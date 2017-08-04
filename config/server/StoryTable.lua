@@ -70,6 +70,22 @@ local StoryTable = {
 		['PlayerInvincible'] = 1,
 		['StoryTime'] = 16.00,
 		['FileID'] = 'JYD_YHT_duihua'
+		},
+	[450000011] = {
+		['ID'] = 450000011,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.00,
+		['FileID'] = 'FB_SG_xingzi'
+		},
+	[450000012] = {
+		['ID'] = 450000012,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.00,
+		['FileID'] = 'shengui'
 		}
 	}
 return StoryTable

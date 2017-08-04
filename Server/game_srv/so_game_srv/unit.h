@@ -25,6 +25,7 @@ enum UNIT_TYPE
 class buff_struct;
 class Team;
 class unit_struct;
+class raid_struct;
 
 class unit_struct
 {
@@ -74,11 +75,13 @@ public:
 	int count_rect_unit(double angle, std::vector<unit_struct *> *ret, uint max, double length, double width);
 	int count_circle_unit(std::vector<unit_struct *> *ret, uint max, double radius);
 	int count_fan_unit(std::vector<unit_struct *> *ret, uint max, double radius, double angle);
-	
+
+	virtual bool is_too_high_to_beattack();   //是否飞的太高不能被攻击
 	virtual bool give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty = true, uint32_t mail_id = 0, std::vector<char *> *mail_args = NULL); //发放掉落奖励
 	virtual void broadcast_one_attr_changed(uint32_t id, double value, bool send_team, bool include_myself);
 	void broadcast_buff_state_changed();
 	struct position *get_pos();
+	raid_struct *get_raid();
 	int check_pos_distance(float pos_x, float pos_z);
 	void reset_pos();
 	int set_pos_with_broadcast(float pos_x, float pos_z);	

@@ -530,6 +530,16 @@ bool get_circle_random_position(scene_struct *scene, int iDirection, const struc
 	return false;
 }
 
+float get_pos_height(const scene_struct *scene, const struct position *pos)
+{
+	struct map_block *b = get_map_block(scene->map_config, pos->pos_x, pos->pos_z);
+	if (b)
+	{
+		return b->height;
+	}
+	return 0;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #if 0
 bool FindPathSlow(const TUnitPosition &rstStartPosition,

@@ -49,7 +49,7 @@ enum RAID_STATE_DEFINE
 {
 	RAID_STATE_START,  //副本开始
 	RAID_STATE_PASS,  //副本胜利
-	RAID_STATE_FAIL,  //副本失败
+//	RAID_STATE_FAIL,  //副本失败
 };
 
 #define MAX_ITEM_REWARD_PER_RAID 20
@@ -225,6 +225,7 @@ class raid_struct;
 typedef void(*raid_ai_tick)(raid_struct *);
 typedef void(*raid_ai_init)(raid_struct *, player_struct *);
 typedef void(*raid_ai_finished)(raid_struct *);
+typedef void(*raid_ai_failed)(raid_struct *);
 typedef void(*raid_ai_player_enter)(raid_struct *, player_struct *);
 typedef void(*raid_ai_player_leave)(raid_struct *, player_struct *);
 typedef void(*raid_ai_player_dead)(raid_struct *, player_struct *, unit_struct *);
@@ -254,6 +255,7 @@ struct raid_ai_interface
 	raid_ai_escort_stop raid_on_escort_stop; //护送结果
 	raid_ai_npc_talk raid_on_npc_talk; //和npc对话
 	raid_ai_get_config raid_get_config; //获取配置，主要是万妖谷的配置
+	raid_ai_failed raid_on_failed; //失败
 };
 
 class raid_struct : public scene_struct
@@ -303,6 +305,7 @@ public:
 	bool need_show_star();
 	void send_star_changed_notify(uint32_t star_param[3], uint32_t score_param[3]);	
 	bool add_raid_pass_value(uint32_t pass_type, struct DungeonTable* config);	  //true表示副本结束
+	bool check_raid_failed();  //副本是否已经失败
 	int check_cond_finished(int index, uint64_t cond_type, uint64_t cond_value, uint64_t cond_value1, uint32_t *ret_param);  //判断指定的完成条件是否达成
 	int calc_raid_star(uint32_t star_param[3], uint32_t score_param[3]);
 	virtual int broadcast_to_raid(uint32_t msg_id, void *msg_data, pack_func func);
@@ -335,11 +338,12 @@ public:
 	struct DungeonTable* m_config;
 	struct ControlTable *m_control_config;
 	std::set<monster_struct *> m_monster;
-	bool mark_finished;   //副本是否结束了
+	int mark_finished;   //副本是否结束了, 0表示没结束，1表示失败了，其他表示通过结束了
 	
 protected:
 	uint16_t player_num;  //记录玩家数目，没有玩家了才可以删除
-	void delete_raid_collect_safe(uint32_t uuid);	
+	void delete_raid_collect_safe(uint32_t uuid);
+	struct DungeonTable *get_raid_config();	
 	int init_script_data();
 	int	init_wanyaogu_data();
 	int	init_pvp_raid_data_3();

@@ -119,7 +119,10 @@ std::map<uint64_t, std::vector<struct SceneCreateMonsterTable *> *> all_scene_cr
 std::map<uint64_t, struct LifeMagicTable*> lifemagic_config; //伙伴法宝配置表
 std::map<uint64_t, struct MagicTable*> MagicTable_config;   //伙伴法宝属性主表
 std::map<uint64_t, struct MagicAttributeTable*> MagicAttrbute_config;   //伙伴法宝副属性表
+std::map<uint64_t, struct GenerateMonster*> GenerateMonster_config;   //定时刷怪配置
 //std::map<uint64_t, std::vector<struct LifeProbabilitytable *> *> LifeProbabi_config; //法宝命体对应表
+std::map<uint64_t, struct ServerResTable*> server_res_config; //服务器资源配置
+std::map<uint64_t, struct ServerLevelTable*> server_level_config; //服务器等级配置
 
 /////////////////////
 uint32_t sg_bag_unlock_base_price;
@@ -306,4 +309,8 @@ double sg_fight_param_161000290;                //buff持续时间保底比例
 double sg_fight_param_161000291;                //PVP等级系数
 double sg_fight_param_161000292;                //PVP基础值
 double sg_fight_param_161000293;                //PVP保底比例
+
+uint32_t sg_server_level_reward_item_id;
+uint32_t sg_server_level_reward_item_num;
+
 

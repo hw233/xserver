@@ -16,11 +16,6 @@
 #include "buff.h"
 #include "buff_manager.h"
 
-static void ai_dead_15(monster_struct *monster, scene_struct *scene)
-{
-	monster->ai_state = AI_DEAD_STATE;
-}
-
 extern void normal_ai_tick(monster_struct *monster);
 static void ai_tick_15(monster_struct *monster)
 {
@@ -65,7 +60,7 @@ struct ai_interface monster_ai_15_interface =
 {
 	ai_tick_15,
 	ai_beattack_15,
-	ai_dead_15,
+	normal_ai_dead,
 	NULL,
 	NULL,
 	NULL,

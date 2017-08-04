@@ -9,14 +9,21 @@
 #include <stdlib.h>
 #include "map_config.h"
 #include "game_event.h"
+
+struct block_data
+{
+	uint8_t can_walk;
+	uint16_t height;
+}__attribute__ ((packed));
+
 struct map_data
 {
 	uint16_t size_x;
 	uint16_t size_z;
 	int16_t offset_x;
 	int16_t offset_z;
-	uint16_t block_data[0];
-};
+	struct block_data block_data[0];
+}__attribute__ ((packed));
 
 static int calc_merge_block_width(struct map_config *config, int x, int z, bool b)
 {
@@ -187,7 +194,8 @@ struct map_config *create_map_config(char *map_path)
 	{
 		for (int j = 0; j < ret->size_x; ++j)
 		{
-			ret->block_data[i * ret->size_x + j].can_walk = map_data->block_data[i * map_data->size_x + j];
+			ret->block_data[i * ret->size_x + j].can_walk = map_data->block_data[i * map_data->size_x + j].can_walk;
+			ret->block_data[i * ret->size_x + j].height = map_data->block_data[i * map_data->size_x + j].height / 100.0;
 			ret->block_data[i * ret->size_x + j].first_block = -1;
 		}
 	}

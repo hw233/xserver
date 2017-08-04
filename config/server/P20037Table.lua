@@ -124,12 +124,6 @@ local P20037Table = {
 		['TypeID'] = 27,
 		['Parameter1'] = {},
 		['Parameter2'] = {''}
-		},
-	[350301022] = {
-		['ID'] = 350301022,
-		['TypeID'] = 35,
-		['Parameter1'] = {},
-		['Parameter2'] = {''}
 		}
 	}
 return P20037Table

@@ -418,6 +418,8 @@ message PlayerDBInfo
 	repeated uint32 partner_bond = 76; //伙伴羁绊
 	repeated uint32 partner_bond_reward = 77; //伙伴羁绊奖励
 	optional DBZhenying zhenying = 78; //阵营
+	required uint32 server_level_break_count = 79; //服务器等级突破计数
+	required uint32 server_level_break_notify = 80; //服务器等级突破通知
 }
 
 message DBAutoAddHp
@@ -462,3 +464,12 @@ message DBCurPartnerFabao
 	required uint32 fabao_id = 1;
 	optional DBItemPartnerFabao fabao_attr = 2;
 }
+
+message DBServerLevel
+{
+	required uint32 level_id = 1;
+	required uint32 break_goal = 2;
+	required uint32 break_num = 3;
+	repeated uint64 break_reward = 4;
+}
+

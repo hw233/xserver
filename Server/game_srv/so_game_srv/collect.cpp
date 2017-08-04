@@ -194,7 +194,7 @@ Collect * Collect::CreateCollectByConfig(scene_struct *scene, int index)
 	return CreateCollectByPos(scene, create_config->ID, create_config->PointPosX, create_config->PointPosY, create_config->PointPosZ, create_config->Yaw);
 }
 
-Collect *Collect::CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw, player_struct *player)
+Collect *Collect::CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw, player_struct *player) 
 {
 	if (player == NULL)
 	{
@@ -206,6 +206,10 @@ Collect *Collect::CreateCollectByPos(scene_struct *scene, uint32_t id, double x,
 	{
 		return NULL;
 	}
+	//if (table->LifeTime == 0)
+	//{
+	//	return NULL;
+	//}
 	Collect * pCollect = new Collect();
 	pCollect->m_collectId = id;
 	pCollect->m_uuid = ++collect_manager_s_id;
@@ -213,10 +217,7 @@ Collect *Collect::CreateCollectByPos(scene_struct *scene, uint32_t id, double x,
 	pCollect->m_pos.pos_z = z;
 	pCollect->m_y = y;
 	pCollect->m_yaw = yaw;
-	if (table->LifeTime != 0)
-	{
-		pCollect->m_liveTime = time_helper::get_cached_time() / 1000 + table->LifeTime;
-	}
+	//pCollect->m_liveTime = time_helper::get_cached_time() / 1000 + table->LifeTime;
 
 	pCollect->NotifyCollectCreate(player);
 
@@ -302,7 +303,7 @@ Collect * Collect::GetById(const uint32_t id)
 
 int Collect::BegingGather(player_struct *player, uint32_t step)
 {
-	if (player->scene != this->scene)
+	if (player->scene != this->scene && this->scene != NULL)
 	{
 		return 5;
 	}
@@ -349,7 +350,7 @@ int Collect::BegingGather(player_struct *player, uint32_t step)
 	
 	if (it->second->ConsumeTeyp == 2) //道具
 	{
-		if (player->del_item(it->second->Parameter1[step], it->second->Parameter1[step], MAGIC_TYPE_GATHER) < 0)
+		if (player->del_item(it->second->Parameter1[step], it->second->Parameter2[step], MAGIC_TYPE_GATHER) < 0)
 		{
 			return 190600003;
 		}
@@ -386,16 +387,62 @@ int Collect::GatherComplete(player_struct *player)
 	{
 		return 3;
 	}
-	
+
+	EXTERN_DATA extern_data;
+	extern_data.player_id = player->get_uuid();
 	player->data->m_collect_uuid = 0;
 	NotifyCollect send;
 	notify_collect__init(&send);
 	send.playerid = player->get_uuid();
 	send.collectid = m_uuid;
-	BroadcastToSight(MSG_ID_COLLECT_COMMPLETE_NOTIFY, &send, (pack_func)notify_collect__pack);
+	if (area == NULL)
+	{
+		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_COLLECT_COMMPLETE_NOTIFY, notify_collect__pack, send);
+	}
+	else {
+		BroadcastToSight(MSG_ID_COLLECT_COMMPLETE_NOTIFY, &send, (pack_func)notify_collect__pack);
+	}
+	
 
 	if (m_commpleteTime <= time_helper::get_cached_time() / 1000 && m_state == COLLECT_GATHING)
 	{
+		m_gatherPlayer = 0; 
+		SightChangedNotify notify;
+		sight_changed_notify__init(&notify);
+		notify.n_delete_collect = 1;
+		uint32_t ar[1];
+		ar[0] = m_uuid;
+		notify.delete_collect = ar;
+		if (it->second->Regeneration > 0)
+		{
+			m_state = COLLECT_RELIVE;
+			m_reliveTime = time_helper::get_cached_time() / 1000 + it->second->Regeneration;
+			if (scene != NULL)
+			{
+				scene->delete_collect_to_scene(this);
+			}
+			else
+			{
+				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);
+			}
+		}
+		else if (it->second->Regeneration == 0)
+		{
+			m_state = COLLECT_DESTROY;
+			if (scene != NULL)
+			{
+				scene->delete_collect_to_scene(this);
+			}
+			else
+			{
+				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);
+			}
+		}
+		else
+		{
+			m_state = COLLECT_NORMOR;
+		}
+
 		if (m_ownerLv != 0)
 		{
 			CashTruckDrop(*player);
@@ -404,31 +451,12 @@ int Collect::GatherComplete(player_struct *player)
 		{
 			player->give_drop_item(m_dropId, MAGIC_TYPE_GATHER, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
 		}
-		
-		
-		m_gatherPlayer = 0;
-		if (it->second->Regeneration > 0)
-		{
-			m_state = COLLECT_RELIVE;
-			m_reliveTime = time_helper::get_cached_time() / 1000 + it->second->Regeneration;
-			scene->delete_collect_to_scene(this);
-		}
-		else if (it->second->Regeneration == 0)
-		{
-			m_state = COLLECT_DESTROY;
-			scene->delete_collect_to_scene(this);
-		}
-		else
-		{
-			m_state = COLLECT_NORMOR;
-		}
+
 		return 0;
 	}
 
 	if (m_minType == 1)
 	{
-		EXTERN_DATA extern_data;
-		extern_data.player_id = player->get_uuid();
 		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);
 	}
 
@@ -452,8 +480,16 @@ int Collect::GatherInterupt(player_struct *player)
 	notify_collect__init(&send);
 	send.playerid = player->get_uuid();
 	send.collectid = m_uuid;
-	BroadcastToSight(MSG_ID_COLLECT_INTERRUPT_NOTIFY, &send, (pack_func)notify_collect__pack);
-
+	if (area == NULL)
+	{
+		EXTERN_DATA extern_data;
+		extern_data.player_id = player->get_uuid();
+		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_COLLECT_INTERRUPT_NOTIFY, notify_collect__pack, send);
+	}
+	else {
+		BroadcastToSight(MSG_ID_COLLECT_INTERRUPT_NOTIFY, &send, (pack_func)notify_collect__pack);
+	}
+	
 	player->data->m_collect_uuid = 0;
 	if (m_gatherPlayer == player->get_uuid())
 	{
@@ -466,21 +502,6 @@ int Collect::GatherInterupt(player_struct *player)
 
 bool Collect::OnTick()
 {
-	//if (m_state == COLLECT_GATHING)
-	//{
-	//	if (m_commpleteTime <= time_helper::get_cached_time())
-	//	{
-	//		m_state = COLLECT_NORMOR;			
-	//		
-	//		NotifyCollect send;
-	//		notify_collect__init(&send);
-	//		send.playerid = m_gatherPlayer;
-	//		send.collectid = m_id;
-	//		BroadcastToSight(MSG_ID_COLLECT_COMMPLETE_NOTIFY, &send, (pack_func)notify_collect__pack);
-
-	//		m_gatherPlayer = 0;
-	//	}
-	//}
 	if (m_state == COLLECT_DESTROY)
 	{
 		return false;
@@ -488,7 +509,10 @@ bool Collect::OnTick()
 	if (m_liveTime != 0 && m_liveTime < time_helper::get_cached_time() /1000 )
 	{
 		BroadcastCollectDelete();
-		scene->delete_collect_to_scene(this);
+		if (scene != NULL)
+		{
+			scene->delete_collect_to_scene(this);
+		}
 		return false;
 	}
 	if (m_state == COLLECT_RELIVE)

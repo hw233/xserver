@@ -13,8 +13,8 @@ enum GuildAnswerState
 	GUILD_ANSWER_AWARD = 3, //公布前3名
 };
 
-class GuildPlayer;
-class GuildInfo;
+struct GuildPlayer;
+struct GuildInfo;
 
 class GuildAnswer
 {

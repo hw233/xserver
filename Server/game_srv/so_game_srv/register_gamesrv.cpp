@@ -43,6 +43,7 @@
 #include "team.h"
 #include "deamon.h"
 #include "flow_record.h"
+#include "server_level.h"
 //#define run_with_period(_ms_) if ((_ms_ <= 1000/server.hz) || !(server.cronloops%((_ms_)/(1000/server.hz))))
 #define run_with_period(_ms_) if (timer_loop_count % _ms_ == 0)
 
@@ -218,6 +219,19 @@ static void	clear_all_mem()
 	}
 }
 
+static int get_server_open_time(void)
+{
+	ServerResTable *config = get_config_by_id(sg_server_id, &server_res_config);
+	if (!config)
+	{
+		return -1;
+	}
+
+	sg_server_open_time = config->OpenTime;
+
+	return 0;
+}
+
 extern "C"
 {
 int uninstall()
@@ -330,6 +344,15 @@ int install(int argc, char **argv)
  		ret = -1;
  		goto done;
  	}
+
+	line = get_first_key(file, (char*)"game_srv_id");
+	if (!line)
+	{
+		LOG_ERR("config file wrong, no game_srv_id");
+		ret = -1;
+		goto done;
+	}
+	sg_server_id = atoi(get_value(line));
 
 	line = get_first_key(file, (char*)"open_gm_cmd");
 	if (line) {
@@ -746,8 +769,10 @@ int install(int argc, char **argv)
 	}
 	init_http_server(web_port);
 	
+	get_server_open_time();
 	conn_node_gamesrv::notify_gamesrv_start();
 	ChengJieTaskManage::LoadAllTask();
+	load_server_level_info();
 	init_guild_battle_manager();
 
 //	ret = reload();
@@ -824,6 +849,7 @@ void cb_gamesrv_timer()
 		TeamMatch::Timer();
 		guild_battle_manager_on_tick();
 		partner_manager::on_tick_5();
+		check_server_level();
 	}
 
 	run_with_period(30)
@@ -945,6 +971,7 @@ int game_recv_func(evutil_socket_t fd, conn_node_gamesrv *node)
 				player->cache_to_dbserver(false, &ext_data);
 			}
 
+			save_server_level_info();
 			clear_all_mem();
 
 			event_del(&node->event_recv);

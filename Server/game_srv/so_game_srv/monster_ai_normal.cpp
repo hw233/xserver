@@ -309,11 +309,6 @@ static void normal_ai_befly(monster_struct *monster, unit_struct *player)
 	}
 }
 
-static void normal_ai_dead(monster_struct *monster, scene_struct *scene)
-{
-	monster->ai_state = AI_DEAD_STATE;
-}
-
 static bool	normal_ai_player_leave_sight(monster_struct *monster, player_struct *player)
 {
 	if (monster->target && monster->target->get_uuid() == player->data->player_id)

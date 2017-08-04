@@ -21,11 +21,6 @@
 //151002013巅峰谷500年前-妖帝真身-写死ID（近战）
 #define NEW_YAODI_ID 151002013
 
-static void ai_dead_20(monster_struct *monster, scene_struct *scene)
-{
-	monster->ai_state = AI_DEAD_STATE;
-}
-
 extern void normal_ai_tick(monster_struct *monster);
 static void ai_tick_20(monster_struct *monster)
 {
@@ -104,7 +99,7 @@ struct ai_interface monster_ai_20_interface =
 {
 	.on_tick = ai_tick_20,
 	.on_beattack = ai_beattack_20,
-	ai_dead_20,
+	normal_ai_dead,
 	NULL,
 	NULL,
 	NULL,

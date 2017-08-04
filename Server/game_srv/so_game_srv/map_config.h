@@ -7,6 +7,7 @@
 struct map_block
 {
 	bool can_walk;
+	float height;
 	uint32_t first_block;
 
 		//a* 寻路变量

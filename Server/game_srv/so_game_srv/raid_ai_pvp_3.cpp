@@ -18,6 +18,7 @@
 #include "monster_manager.h"
 #include "pvp_match_manager.h"
 #include "../proto/relive.pb-c.h"
+#include "server_level.h"
 
 static void pvp_raid_refresh_monster(raid_struct *raid);
 static void get_team_kill_num(raid_struct *raid, int *kill1, int *kill2);
@@ -739,7 +740,7 @@ static void	finished_raid(raid_struct *raid, int win_team)
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_PVP_RAID_FINISHED_NOTIFY, pvp_raid_finished_notify__pack, nty);
 			raid->m_player[i]->change_pvp_raid_score(PVP_TYPE_DEFINE_3, nty.score_changed);
 			raid->m_player[i]->check_activity_progress(AM_RAID, raid->data->ID);
-
+			server_level_listen_raid_finish(raid->data->ID, raid->m_player[i]);
 		}
 		if (raid->m_player2[i] && get_entity_type(raid->m_player2[i]->get_uuid()) != ENTITY_TYPE_AI_PLAYER)
 		{
@@ -763,6 +764,7 @@ static void	finished_raid(raid_struct *raid, int win_team)
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_PVP_RAID_FINISHED_NOTIFY, pvp_raid_finished_notify__pack, nty);
 			raid->m_player2[i]->change_pvp_raid_score(PVP_TYPE_DEFINE_3, -nty.score_changed);
 			raid->m_player2[i]->check_activity_progress(AM_RAID, raid->data->ID);
+			server_level_listen_raid_finish(raid->data->ID, raid->m_player2[i]);
 		}
 //		add_team_raid_score(raid->m_player);
 //		sub_team_raid_score(raid->m_player2);

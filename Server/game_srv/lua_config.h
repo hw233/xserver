@@ -110,7 +110,10 @@ extern std::map<uint64_t, struct WeaponsEffectTable*> weapon_color_config; //
 extern std::map<uint64_t, struct LifeMagicTable*> lifemagic_config; //伙伴法宝配置表
 extern std::map<uint64_t, struct MagicTable*> MagicTable_config;   //伙伴法宝属性主表
 extern std::map<uint64_t, struct MagicAttributeTable*> MagicAttrbute_config;   //伙伴法宝副属性表
+extern std::map<uint64_t, struct GenerateMonster*> GenerateMonster_config;   //定时刷怪配置
 //extern std::map<uint64_t, std::vector<struct LifeProbabilitytable *> *> LifeProbabi_config; //法宝命体对应表
+extern std::map<uint64_t, struct ServerResTable*> server_res_config; //服务器资源配置
+extern std::map<uint64_t, struct ServerLevelTable*> server_level_config; //服务器等级配置
 
 //////////////////
 extern uint32_t sg_bag_unlock_base_price;
@@ -313,5 +316,8 @@ extern double sg_fight_param_161000290;                //buff持续时间保底�
 extern double sg_fight_param_161000291;                //PVP等级系数
 extern double sg_fight_param_161000292;                //PVP基础值
 extern double sg_fight_param_161000293;                //PVP保底比例
+
+extern uint32_t sg_server_level_reward_item_id;
+extern uint32_t sg_server_level_reward_item_num;
 
 #endif /* __LUA_CONFIG_H__ */

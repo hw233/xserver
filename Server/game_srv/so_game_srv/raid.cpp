@@ -2,17 +2,21 @@
 #include "msgid.h"
 #include "monster_manager.h"
 #include "uuid.h"
+#include "team.h"
 #include "raid_manager.h"
 #include "player_manager.h"
 #include "app_data_statis.h"
 #include "time_helper.h"
 #include "team.h"
 #include "collect.h"
-#include "../proto/scene_transfer.pb-c.h"
-#include "../proto/raid.pb-c.h"
+#include "scene_transfer.pb-c.h"
+#include "raid.pb-c.h"
+#include "role.pb-c.h"
+#include "relive.pb-c.h"
 #include "zhenying.pb-c.h"
 #include "guild_wait_raid_manager.h"
 #include "guild_battle_manager.h"
+#include <math.h>
 
 int g_raid_keep_time;
 
@@ -996,20 +1000,48 @@ SCENE_TYPE_DEFINE raid_struct::get_scene_type()
 	return SCENE_TYPE_RAID;
 }
 
+bool raid_struct::check_raid_failed()
+{
+	struct DungeonTable *t_config = get_raid_config();
+	if (!t_config)
+		return false;
+	for (size_t i = 0; i < t_config->n_FailType; ++i)
+	{
+		switch (t_config->FailType[i])
+		{
+			case 1: //限时
+			{
+				uint32_t time_escape = (time_helper::get_cached_time() - data->start_time) / 1000;
+				if (time_escape >= t_config->FailValue[i])
+					return true;			
+			}
+			break;
+			case 2: //检测指定怪物ID是否仍然存活
+			{
+				uint32_t num = get_id_monster_num(t_config->FailValue[i]);
+				if (num < t_config->FailValue1[i])
+					return true;
+			}
+			break;
+		}
+	}
+	return false;
+}
+
 int raid_struct::check_cond_finished(int index, uint64_t cond_type, uint64_t cond_value, uint64_t cond_value1, uint32_t *ret_param)
 {
 	assert(index >= 0 && index < 3);
 	switch (cond_type)
 	{
-		case 1://通关时间
-		{
-			*ret_param = (time_helper::get_cached_time() - data->start_time) / 1000;
-			if (*ret_param <= cond_value)
-				return (1);
-			else
-				return (0);
-		}
-		break;
+		// case 1://通关时间
+		// {
+		// 	*ret_param = (time_helper::get_cached_time() - data->start_time) / 1000;
+		// 	if (*ret_param <= cond_value)
+		// 		return (1);
+		// 	else
+		// 		return (0);
+		// }
+		// break;
 		case 2: //击杀怪物
 		{
 			if (data->star_param[index] >= cond_value1)
@@ -1036,6 +1068,12 @@ int raid_struct::check_cond_finished(int index, uint64_t cond_type, uint64_t con
 				*ret_param = data->star_param[index];
 				return (1);
 			}
+		}
+		break;
+		case 4: //通关副本
+		{
+			*ret_param = 0;
+			return (1);
 		}
 		break;
 		// case 2://死亡次数
@@ -1100,79 +1138,61 @@ int raid_struct::calc_raid_star(uint32_t star_param[3], uint32_t score_param[3])
 			++star_param[i];
 			++ret;
 		}
-		
-		// switch (m_config->Score[i])
-		// {
-		// 	case 1://通关时间
-		// 	{
-		// 		score_param[i] = (time_helper::get_cached_time() - data->start_time) / 1000;
-		// 		if (score_param[i] <= m_config->ScoreValue[i])
-		// 		{
-		// 			++star_param[i];
-		// 			++ret;
-		// 		}
-		// 	}
-		// 	break;
-		// 	case 2://死亡次数
-		// 	{
-		// 		*star_param = data->dead_count;
-		// 		if (*star_param <= m_config->ScoreValue[i])
-		// 			++ret;
-		// 	}
-		// 	break;
-		// 	case 3://伤害数值
-		// 	{
-		// 		*star_param = 0;
-		// 		for (int j = 0; j < MAX_TEAM_MEM; ++j)
-		// 		{
-		// 			*star_param += data->player_info[j].damage;
-		// 		}
-		// 		if (*star_param >= m_config->ScoreValue[i])
-		// 			++ret;
-		// 	}
-		// 	break;
-		// 	case 4://受到伤害
-		// 	{
-		// 		*star_param = 0;
-		// 		for (int j = 0; j < MAX_TEAM_MEM; ++j)
-		// 		{
-		// 			*star_param += data->player_info[j].injured;
-		// 		}
-		// 		if (*star_param <= m_config->ScoreValue[i])
-		// 			++ret;
-		// 	}
-		// 	break;
-		// 	default:
-		// 	{
-		// 		*star_param = 0;
-		// 		return 0;
-		// 	}
-		// }
 	}
 	return (ret);
 }
 
 int raid_struct::on_raid_failed(uint32_t score_param)
 {
+	mark_finished = 1;	
 	LOG_DEBUG("%s: raid[%u][%lu] curtime = %lu", __FUNCTION__, data->ID, data->uuid, time_helper::get_cached_time());
+// 	clear_monster();
+// 	data->state = RAID_STATE_PASS;
 
-	clear_monster();
-	data->state = RAID_STATE_PASS;
+// 	RaidFinishNotify notify;
+// 	raid_finish_notify__init(&notify);
+// 	notify.result = -1;
+// 	notify.raid_id = data->ID;
+// //	notify.n_star = ;
+// //	notify.star = 0;
+// //	notify.score_param = score_param;
 
-	RaidFinishNotify notify;
-	raid_finish_notify__init(&notify);
-	notify.result = -1;
-	notify.raid_id = data->ID;
-//	notify.n_star = ;
-//	notify.star = 0;
-//	notify.score_param = score_param;
-
-	broadcast_to_raid(MSG_ID_RAID_FINISHED_NOTIFY, &notify, (pack_func)raid_finish_notify__pack);
+// 	broadcast_to_raid(MSG_ID_RAID_FINISHED_NOTIFY, &notify, (pack_func)raid_finish_notify__pack);
 	return (0);
 }
 
 void raid_struct::on_player_leave_raid(player_struct *player)
 {
+		//如果死亡，就给予复活
+	if (!player->is_alive())
+	{
+		uint32_t maxhp = player->get_attr(PLAYER_ATTR_MAXHP);
+		player->set_attr(PLAYER_ATTR_HP, maxhp);
+
+		ReliveNotify nty;
+		relive_notify__init(&nty);
+		nty.playerid = player->data->player_id;
+		EXTERN_DATA extern_data;
+		extern_data.player_id = player->data->player_id;
+		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RELIVE_NOTIFY, relive_notify__pack, nty);			
+		
+		if (player->m_team)
+		{
+			PlayerAttrNotify nty;
+			player_attr_notify__init(&nty);
+			AttrData attr_data[1];
+			AttrData *attr_data_point[1];
+			nty.player_id = player->data->player_id;
+			nty.n_attrs = 1;
+			nty.attrs = attr_data_point;
+			attr_data_point[0] = &attr_data[0];
+			attr_data__init(&attr_data[0]);
+			attr_data[0].id = PLAYER_ATTR_HP;
+			attr_data[0].val = maxhp;
+			player->m_team->BroadcastToTeam(MSG_ID_PLAYER_ATTR_NOTIFY, &nty, (pack_func)player_attr_notify__pack);
+		}
+	}
+	
 	player->data->player_raid_uuid = 0;
 	assert(get_entity_type(player->get_uuid()) == ENTITY_TYPE_PLAYER);
 	--player_num;
@@ -1201,7 +1221,7 @@ void raid_struct::on_player_enter_raid(player_struct *player)
 
 int raid_struct::on_raid_finished()
 {
-	mark_finished = true;
+	mark_finished = 2;
 	LOG_DEBUG("%s: raid[%u][%lu]", __FUNCTION__, data->ID, data->uuid);
 //	if (ai && ai->raid_on_finished)
 //		ai->raid_on_finished(this);
@@ -1315,6 +1335,15 @@ int raid_struct::on_raid_finished()
 	return (0);
 }
 
+struct DungeonTable *raid_struct::get_raid_config()
+{
+	if (ai && ai->raid_get_config)
+	{
+		return ai->raid_get_config(this);
+	}
+	return m_config;
+}
+
 extern struct raid_ai_interface *all_raid_ai_interface[MAX_RAID_AI_INTERFACE];
 void raid_struct::raid_set_ai_interface(int ai_type)
 {
@@ -1426,17 +1455,97 @@ bool raid_struct::check_raid_need_delete()
 // 	return false;
 }
 
+static void do_raid_failed(raid_struct *raid)
+{
+	raid->mark_finished = 999;
+	if (raid->ai && raid->ai->raid_on_failed)
+	{
+		raid->ai->raid_on_failed(raid);
+	}
+	else
+	{
+		raid->clear_monster();
+		raid->data->state = RAID_STATE_PASS;
+		RaidFinishNotify notify;
+		raid_finish_notify__init(&notify);
+		notify.result = -1;
+		notify.raid_id = raid->data->ID;
+		raid->broadcast_to_raid(MSG_ID_RAID_FINISHED_NOTIFY, &notify, (pack_func)raid_finish_notify__pack);
+	}
+}
+
 void raid_struct::on_tick()
 {
-	if (mark_finished)
+	switch (mark_finished)
 	{
-		if (ai && ai->raid_on_finished)
-			ai->raid_on_finished(this);
-		mark_finished = false;
-		return;
+		case 0:  //没结束
+		{
+			if (ai && ai->raid_on_tick)
+				ai->raid_on_tick(this);
+
+			if (check_raid_failed())
+			{
+				do_raid_failed(this);
+				return;
+			}
+
+			struct DungeonTable *t_config = get_raid_config();
+			if (!t_config)
+				return;
+			if (data->pass_index < t_config->n_PassType)
+			{
+				switch (t_config->PassType[data->pass_index])
+				{
+					case 2:  //达到时间通关类型，单位秒
+					{
+						int t = (time_helper::get_cached_time() - data->start_time) / 1000;
+						if ((int)(t_config->PassValue[data->pass_index]) <= t)
+						{
+							LOG_DEBUG("%s: raid[%lu][%p] time pass, start_time[%lu] [%lu][%d]", __FUNCTION__, data->uuid, this, data->start_time,
+									  t_config->PassValue[data->pass_index], t);
+							add_raid_pass_value(2, t_config);
+						}
+					}
+					break;
+					case 5:  //玩家到达某个坐标点
+					{
+						float pos_x = (int)t_config->PassValue[data->pass_index];
+						float pos_z = (int)t_config->PassValue1[data->pass_index];						
+						for (int i = 0; i < MAX_TEAM_MEM; ++i)
+						{
+							if (!m_player[i] || !m_player[i]->is_avaliable())
+								continue;
+							struct position *pos = m_player[i]->get_pos();
+							if (fabsf(pos->pos_x - pos_x) <= 2 &&
+								fabsf(pos->pos_z - pos_z) <= 2)
+							{
+								add_raid_pass_value(5, t_config);								
+								break;
+							}
+						}
+					}
+					break;
+				}
+			}
+		}
+		break;
+		case 1: //失败了
+		{
+			do_raid_failed(this);
+		}
+		break;
+		case 2: //成功了
+		{
+			mark_finished = 999;
+			if (ai && ai->raid_on_finished)
+				ai->raid_on_finished(this);
+		}
+		break;
+		default:
+		{
+		}
+		break;
 	}
-	if (ai && ai->raid_on_tick)
-		ai->raid_on_tick(this);
 }
 
 void raid_struct::broadcast_player_hit_statis_changed(struct raid_player_info *info, player_struct *player)
@@ -1502,15 +1611,19 @@ void raid_struct::delete_raid_collect_safe(uint32_t uuid)
 void raid_struct::on_collect(player_struct *player, Collect *collect)
 {
 	LOG_DEBUG("%s: raid[%u][%lu], collect[%u][%u]", __FUNCTION__, data->ID, data->uuid, collect->m_collectId, collect->m_uuid);
+
+	struct DungeonTable *t_config = get_raid_config();
+	if (!t_config)
+		return;
 		//有可能副本结束把采集物删除了
 	uint32_t collect_uuid = collect->m_uuid;
-	if (data->pass_index < m_config->n_PassType && m_config->PassType[data->pass_index] == 3)
+	if (data->pass_index < t_config->n_PassType && t_config->PassType[data->pass_index] == 3)
 	{
-		if (m_config->PassValue[data->pass_index] == collect->m_collectId)
+		if (t_config->PassValue[data->pass_index] == collect->m_collectId)
 		{
 				// TODO: 不能直接干掉副本，要记录状态并通知玩家副本结束，然后等他们退出去
 //			raid_manager::delete_raid(this);
-			if (add_raid_pass_value(3, m_config))
+			if (add_raid_pass_value(3, t_config))
 			{
 				delete_raid_collect_safe(collect_uuid);
 //				m_collect.erase(collect->m_uuid);
@@ -1552,7 +1665,7 @@ void raid_struct::send_raid_pass_param(player_struct *player)
 bool raid_struct::add_raid_pass_value(uint32_t pass_type, struct DungeonTable* config)
 {
 	++data->pass_value;
-	if (config->PassValue1[data->pass_index] <= data->pass_value)
+	if (pass_type == 5 || config->PassValue1[data->pass_index] <= data->pass_value)
 	{
 		++data->pass_index;
 		data->pass_value = 0;
@@ -1603,11 +1716,9 @@ void raid_struct::on_monster_dead(monster_struct *monster, unit_struct *killer)
 	LOG_DEBUG("%s: raid[%u][%lu], monster[%u][%lu]", __FUNCTION__, data->ID, data->uuid, monster->data->monster_id, monster->get_uuid());
 //	m_monster.remove(monster);
 //	assert(data->pass_index < m_config->n_PassType);
-	struct DungeonTable *t_config = m_config;
-	if (ai && ai->raid_get_config)
-	{
-		t_config = ai->raid_get_config(this);
-	}
+	struct DungeonTable *t_config = get_raid_config();
+	if (!t_config)
+		return;
 		//杀死怪物
 	if (data->pass_index < t_config->n_PassType && t_config->PassType[data->pass_index] == 1)
 	{

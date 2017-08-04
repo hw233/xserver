@@ -56,6 +56,7 @@
 
 uint64_t  sg_server_id;
 uint32_t sg_gm_cmd_open;
+uint32_t sg_server_open_time;
 
 typedef int (*install_func)(int argc, char **argv);
 typedef int (*reload_func)();

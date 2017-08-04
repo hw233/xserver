@@ -34,4 +34,7 @@ bool get_direct_position_v2(scene_struct *scene, double angle, const struct posi
 bool get_circle_random_position_v3(scene_struct *scene, const struct position *center, float radius,
 	struct position *ret_pos);
 
+//获取某个地点的高度信息
+float get_pos_height(const scene_struct *scene, const struct position *pos);
+
 #endif /* PATH_ALGORITHM_H */

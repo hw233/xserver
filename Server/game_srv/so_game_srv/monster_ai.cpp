@@ -156,6 +156,9 @@ void monster_hit_notify_to_many_player(uint64_t skill_id, monster_struct *monste
 		{
 			continue;
 		}
+
+		if (player->is_too_high_to_beattack())
+			return;		
 		
 		cached_hit_effect_point[n_hit_effect] = &cached_hit_effect[n_hit_effect];
 		skill_hit_effect__init(&cached_hit_effect[n_hit_effect]);
@@ -534,8 +537,12 @@ static void try_attack_target(monster_struct *monster, struct SkillTable *config
 	struct position *my_pos = monster->get_pos();
 	struct position *his_pos = monster->target->get_pos();
 
+	if (monster->target && monster->target->is_too_high_to_beattack())
+		return;
+
 	assert(config && config->SkillType == 2);
 //	LOG_DEBUG("%s monster hit skill %u", __FUNCTION__, config->ID);
+
 	if (check_distance_in_range(my_pos, his_pos, config->SkillRange/*monster->ai_config->ActiveAttackRange*/))
 	{
 		monster_hit_notify_to_player(config->ID, monster, monster->target);
@@ -590,6 +597,11 @@ void do_normal_patrol(monster_struct *monster)
 	{
 		monster->send_patrol_move();		
 	}
+}
+
+void normal_ai_dead(monster_struct *monster, scene_struct *scene)
+{
+	monster->ai_state = AI_DEAD_STATE;
 }
 
 void do_normal_attack(monster_struct *monster)
@@ -789,6 +801,9 @@ void do_normal_pursue(monster_struct *monster)
 //		send_patrol_move(monster);
 		return;
 	}
+
+	if (monster->target && monster->target->is_too_high_to_beattack())
+		return;	
 
 		//主动技能
 	if (config->SkillType == 2)

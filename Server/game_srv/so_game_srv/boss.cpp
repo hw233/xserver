@@ -221,7 +221,7 @@ void boss_struct::on_beattack(unit_struct *player, uint32_t skill_id, int32_t da
 		// }
 	}
 	
-	if (ai)
+	if (ai && ai->on_beattack)
 		ai->on_beattack(this, player);
 }
 

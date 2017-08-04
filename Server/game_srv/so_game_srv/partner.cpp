@@ -655,7 +655,7 @@ void partner_struct::cast_immediate_skill_to_target(uint64_t skill_id, int skill
 
 	if (!target->is_alive())
 	{
-		target->on_dead(target);
+		target->on_dead(this);
 	}
 	else
 	{
@@ -888,6 +888,25 @@ void partner_struct::calculate_attribute(double *attrData, partner_attr_data &at
 		}
 	}
 	
+	//法宝加成属性
+	if(data->cur_fabao.fabao_id !=0 )
+	{
+		uint32_t attr_id = data->cur_fabao.main_attr.id;
+		double attr_val = data->cur_fabao.main_attr.val;
+		if(attr_id > 0 && attr_id < MAX_PARTNER_ATTR && attr_val > 0.0)
+		{
+			module_attr[attr_id] += attr_val;
+		}
+		for(uint32_t i = 0; i < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM; ++i)
+		{	
+			uint32_t attr_id = data->cur_fabao.minor_attr[i].id;
+			double attr_val = data->cur_fabao.minor_attr[i].val;
+			if(attr_id > 0 && attr_id < MAX_PARTNER_ATTR && attr_val > 0.0)
+			{
+				module_attr[attr_id] += attr_val;
+			}
+		}
+	}
 	add_fight_attr(attrData, module_attr);
 }
 
@@ -1614,6 +1633,9 @@ void partner_struct::hit_notify_to_many_player(uint64_t skill_id, std::vector<un
 		{
 			continue;
 		}
+
+		if (player->is_too_high_to_beattack())
+			return;
 		
 		cached_hit_effect_point[n_hit_effect] = &cached_hit_effect[n_hit_effect];
 		skill_hit_effect__init(&cached_hit_effect[n_hit_effect]);

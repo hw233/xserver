@@ -22,10 +22,6 @@
 #define STATE2_BUFF_ID1 114400014
 #define STATE2_BUFF_ID2 114400015
 
-static void ai_dead_21(monster_struct *monster, scene_struct *scene)
-{
-	monster->ai_state = AI_DEAD_STATE;
-}
 
 extern void normal_ai_tick(monster_struct *monster);
 static void ai_tick_21(monster_struct *monster)
@@ -75,7 +71,7 @@ struct ai_interface monster_ai_21_interface =
 {
 	ai_tick_21,
 	ai_beattack_21,
-	ai_dead_21,
+	normal_ai_dead,
 	NULL,
 	NULL,
 	NULL,

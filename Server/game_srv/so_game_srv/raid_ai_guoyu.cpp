@@ -155,10 +155,10 @@ static void guoyu_raid_ai_monster_dead(raid_struct *raid, monster_struct *monste
 
 static void guoyu_raid_ai_tick(raid_struct *raid)
 {
-	if (time_helper::get_cached_time() > raid->data->start_time + raid->m_config->ScoreValue[0] * 1000 && raid->data->state == RAID_STATE_START)
+	if (time_helper::get_cached_time() > raid->data->start_time + raid->m_config->FailValue[0] * 1000 && raid->data->state == RAID_STATE_START)
 	{
 		raid->clear_monster();
-		raid->data->state = RAID_STATE_FAIL;
+		raid->data->state = RAID_STATE_PASS;
 
 		GuoyuFbSucc notify;
 		guoyu_fb_succ__init(&notify);
@@ -186,9 +186,9 @@ static void guoyu_raid_ai_player_enter(raid_struct *raid, player_struct *player)
 	GuoyuFb notify;
 	guoyu_fb__init(&notify);
 	notify.cd = 0;
-	if (time_helper::get_cached_time() < raid->data->start_time + raid->m_config->ScoreValue[0] * 1000)
+	if (time_helper::get_cached_time() < raid->data->start_time + raid->m_config->FailValue[0] * 1000)
 	{
-		notify.cd = raid->data->start_time + raid->m_config->ScoreValue[0] * 1000 - time_helper::get_cached_time();
+		notify.cd = raid->data->start_time + raid->m_config->FailValue[0] * 1000 - time_helper::get_cached_time();
 		notify.cd /= 1000;
 	}
 	EXTERN_DATA extern_data;
@@ -209,4 +209,9 @@ struct raid_ai_interface raid_ai_guoyu_interface =
 	NULL,
 	guoyu_raid_ai_finished,
 	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	guoyu_raid_ai_finished,
 };

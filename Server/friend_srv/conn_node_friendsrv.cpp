@@ -3387,6 +3387,11 @@ void conn_node_friendsrv::handle_friend_rename_request() //玩家改名
 			broadcast_message(MSG_ID_FRIEND_UPDATE_UNIT_NOTIFY, &nty, (pack_func)friend_update_unit_notify__pack, broadcast_ids);
 		}
 	} while(0);
+
+	for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
+	{
+		player_redis_info__free_unpacked(iter->second, NULL);
+	}
 }
 
 void conn_node_friendsrv::send_to_all_player(uint16_t msg_id, void *data, pack_func func)

@@ -206,11 +206,6 @@ void circle_ai_befly(monster_struct *monster, unit_struct *player)
 {
 }
 
-void circle_ai_dead(monster_struct *monster, scene_struct *scene)
-{
-	monster->ai_state = AI_DEAD_STATE;
-}
-
 bool circle_ai_check_goback(monster_struct *monster)
 {
 	struct position *my_pos = monster->get_pos();
@@ -231,7 +226,7 @@ struct ai_interface monster_ai_circle_interface =
 {
 	circle_ai_tick,
 	circle_ai_beattack,
-	circle_ai_dead,
+	normal_ai_dead,
 	circle_ai_befly,
 	NULL,
 	NULL,

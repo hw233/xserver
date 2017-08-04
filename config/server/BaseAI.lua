@@ -371,6 +371,18 @@ local BaseAI = {
 		['StopMax'] = 500,
 		['Response'] = 10
 		},
+	[153100209] = {
+		['BaseID'] = 153100209,
+		['ActiveAttackRange'] = 0,
+		['ChaseRange'] = 0,
+		['MovingChange'] = 0,
+		['Regeneration'] = 20,
+		['AIType'] = 24,
+		['GuardRange'] = 0,
+		['StopMin'] = 2000,
+		['StopMax'] = 6000,
+		['Response'] = 250
+		},
 	[153100301] = {
 		['BaseID'] = 153100301,
 		['ActiveAttackRange'] = 0,

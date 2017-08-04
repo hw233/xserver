@@ -263,6 +263,8 @@ public:
 	bool can_see_player(player_struct *player);
 	void update_monster_pos_and_sight();
 	bool try_active_attack();	
+//特定怪物死亡在特定情况下需要创建采集点
+	void monster_dead_creat_collect(unit_struct *murderer);
 	struct monster_data *data;
 
 	struct ai_interface *ai;
@@ -330,6 +332,10 @@ public:
 		{
 			uint8_t state;   //1: 血量低于50%的时候，属性提升  2: 血量低于10%的时候，进入虚弱状态
 		} type21_ai;
+		struct
+		{
+			struct GenerateMonster *ai_24_config;
+		} type24_ai;
 	} ai_data;
 
 	struct MonsterTable *config;

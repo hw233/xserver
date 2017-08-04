@@ -39,9 +39,9 @@ static void xunbao_raid_ai_player_enter(raid_struct *raid, player_struct *player
 	FbCD notify;
 	fb_cd__init(&notify);
 	notify.cd = 0;
-	if (time_helper::get_cached_time() < raid->data->start_time + raid->m_config->ScoreValue[0] * 1000)
+	if (time_helper::get_cached_time() < raid->data->start_time + raid->m_config->FailValue[0] * 1000)
 	{
-		notify.cd = raid->data->start_time + raid->m_config->ScoreValue[0] * 1000 - time_helper::get_cached_time();
+		notify.cd = raid->data->start_time + raid->m_config->FailValue[0] * 1000 - time_helper::get_cached_time();
 		notify.cd /= 1000;
 	}
 	EXTERN_DATA extern_data;
@@ -73,4 +73,10 @@ struct raid_ai_interface raid_ai_xunbao_interface =
 	NULL,
 	NULL,
 	xunbao_raid_ai_finished,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	xunbao_raid_ai_finished
 };

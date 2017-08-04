@@ -10,6 +10,7 @@ extern int init_signals();
 extern void init_http_server(uint32_t port);
 extern uint64_t  sg_server_id;
 extern uint32_t sg_gm_cmd_open;
+extern uint32_t sg_server_open_time;
 extern struct timeval gamesrv_timeout;
 extern uint64_t timer_loop_count;
 

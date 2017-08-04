@@ -67,7 +67,7 @@ struct partner_attr_data
 
 struct partner_cur_fabao
 {
-	uint32_t fabao_id; //法宝id
+	uint32_t fabao_id; //法宝道具id
 	AttrInfo main_attr; //当前法宝主属性
 	AttrInfo minor_attr[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM]; //当前法宝副属性
 };

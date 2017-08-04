@@ -25,6 +25,9 @@ private:
 	void handle_load_chengjie(EXTERN_DATA *extern_data);
 	void handle_search_player(EXTERN_DATA *extern_data);
 	void handle_get_other_info(EXTERN_DATA *extern_data);
+	void handle_load_server_level(EXTERN_DATA *extern_data);
+	void handle_save_server_level(EXTERN_DATA *extern_data);
+	void handle_break_server_level(EXTERN_DATA *extern_data);
 };
 
 #endif

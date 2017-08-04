@@ -8,6 +8,7 @@
 #include "cash_truck_manager.h"
 #include "raid.h"
 #include "raid_manager.h"
+#include "collect.h"
 #include "pvp_match_manager.h"
 #include "zhenying_raid_manager.h"
 #include "guild_battle_manager.h"
@@ -15,6 +16,7 @@
 #include "msgid.h"
 #include "time_helper.h"
 #include "chat.pb-c.h"
+#include "server_level.h"
 #include <sstream>
 #include <math.h>
 
@@ -220,6 +222,10 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	else if (argc >= 3 && strcasecmp(argv[0], "add") == 0 && strcasecmp(argv[1], "zhenqi") == 0)
 	{
 		gm_add_zhenqi(player, atoi(argv[2]));
+	}
+	else if (argc >= 3 && strcasecmp(argv[0], "add") == 0 && strcasecmp(argv[1], "gather") == 0)
+	{
+		Collect::CreateCollectByPos(player->scene, 154000022, player->get_pos()->pos_x, atoi(argv[2]), player->get_pos()->pos_z, 0, player);
 	}
 	else if (argc >= 3 && strcasecmp(argv[0], "sub") == 0 && strcasecmp(argv[1], "exp") == 0)
 	{
@@ -437,6 +443,10 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 				player->del_item_grid(i, true);
 			}
 		}
+	}
+	else if (argc >=1 && strcasecmp(argv[0], "break_level") == 0)
+	{
+		break_server_level();
 	}
 }
 

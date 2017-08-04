@@ -12,7 +12,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,	--存活时间
 		['ConsumeTeyp'] = 1,	--采集消耗类型
 		['Parameter1'] = {0},	--消耗参数1
-		['Parameter2'] = {0}	--消耗参数2
+		['Parameter2'] = {0},	--消耗参数2
+		['CollectionSize'] = 1.00	--采集物模型大小
 		},
 	[154000002] = {
 		['ID'] = 154000002,
@@ -27,7 +28,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000003] = {
 		['ID'] = 154000003,
@@ -42,7 +44,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000004] = {
 		['ID'] = 154000004,
@@ -57,7 +60,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000005] = {
 		['ID'] = 154000005,
@@ -72,7 +76,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000006] = {
 		['ID'] = 154000006,
@@ -87,7 +92,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000007] = {
 		['ID'] = 154000007,
@@ -102,7 +108,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000008] = {
 		['ID'] = 154000008,
@@ -117,7 +124,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000009] = {
 		['ID'] = 154000009,
@@ -132,7 +140,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000010] = {
 		['ID'] = 154000010,
@@ -147,12 +156,13 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000011] = {
 		['ID'] = 154000011,
 		['NameId'] = '矿石',
-		['Icon'] = '0',
+		['Icon'] = 'item_06_zl002',
 		['CollectionTeyp'] = 1,
 		['TaskId'] = {},
 		['Level'] = 1,
@@ -162,7 +172,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000012] = {
 		['ID'] = 154000012,
@@ -177,7 +188,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000013] = {
 		['ID'] = 154000013,
@@ -192,7 +204,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000014] = {
 		['ID'] = 154000014,
@@ -207,7 +220,8 @@ local CollectionTable = {
 		['LifeTime'] = 120,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000015] = {
 		['ID'] = 154000015,
@@ -222,7 +236,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000016] = {
 		['ID'] = 154000016,
@@ -237,7 +252,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000017] = {
 		['ID'] = 154000017,
@@ -252,7 +268,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000018] = {
 		['ID'] = 154000018,
@@ -267,7 +284,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 3.00
 		},
 	[154000019] = {
 		['ID'] = 154000019,
@@ -282,7 +300,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000020] = {
 		['ID'] = 154000020,
@@ -297,7 +316,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000021] = {
 		['ID'] = 154000021,
@@ -312,7 +332,8 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 1,
 		['Parameter1'] = {0},
-		['Parameter2'] = {0}
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		},
 	[154000022] = {
 		['ID'] = 154000022,
@@ -327,7 +348,24 @@ local CollectionTable = {
 		['LifeTime'] = 0,
 		['ConsumeTeyp'] = 2,
 		['Parameter1'] = {201060037,201060038,201060039},
-		['Parameter2'] = {1,1,1}
+		['Parameter2'] = {1,1,1},
+		['CollectionSize'] = 1.00
+		},
+	[154000023] = {
+		['ID'] = 154000023,
+		['NameId'] = '蓝晶石',
+		['Icon'] = 'item_06_zl002',
+		['CollectionTeyp'] = 1,
+		['TaskId'] = {},
+		['Level'] = 1,
+		['Time'] = 5,
+		['Regeneration'] = 99999,
+		['DropID'] = {0},
+		['LifeTime'] = 0,
+		['ConsumeTeyp'] = 1,
+		['Parameter1'] = {0},
+		['Parameter2'] = {0},
+		['CollectionSize'] = 1.00
 		}
 	}
 return CollectionTable

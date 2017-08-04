@@ -94,3 +94,10 @@ echo '	KEY  (`player_id`),'
 echo '	KEY  (`guild_id`)'
 echo ') ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;'
 
+echo 'DROP TABLE IF EXISTS `'"game_global"'`;'
+echo 'CREATE TABLE `'game_global'`('
+echo '	`key`  int  NOT NULL COMMENT '"'"键值"'"','
+echo '	`comm_data` blob NOT NULL COMMENT  '"'"打包数据"'"','
+echo '	PRIMARY KEY (`key`)'
+echo ') ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;'
+

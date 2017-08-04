@@ -92,11 +92,6 @@ static void ai_befly_23(monster_struct *monster, unit_struct *player)
 	}
 }
 
-static void ai_dead_23(monster_struct *monster, scene_struct *scene)
-{
-	monster->ai_state = AI_DEAD_STATE;
-}
-
 static bool	ai_player_leave_sight_23(monster_struct *monster, player_struct *player)
 {
 	if (monster->target && monster->target->get_uuid() == player->data->player_id)
@@ -186,7 +181,7 @@ struct ai_interface monster_ai_23_interface =
 {
 	ai_tick_23,
 	ai_beattack_23,
-	ai_dead_23,
+	normal_ai_dead,
 	ai_befly_23,
 	NULL,
 	ai_player_leave_sight_23,

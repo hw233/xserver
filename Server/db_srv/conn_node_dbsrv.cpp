@@ -15,6 +15,7 @@
 
 static char sql[1024 * 64];
 //static char send_buf[1024 * 64];
+static const uint32_t server_level_key = 1;
 
 conn_node_dbsrv::conn_node_dbsrv()
 {
@@ -214,6 +215,7 @@ void conn_node_dbsrv::handle_load_chengjie(EXTERN_DATA *extern_data)
 		if (tmp == NULL)
 		{
 			row = fetch_row(res);
+			lengths = mysql_fetch_lengths(res);
 			continue;
 		}
 		arr[sLen].playerid = tmp->playerid ;
@@ -247,6 +249,7 @@ void conn_node_dbsrv::handle_load_chengjie(EXTERN_DATA *extern_data)
 		}
 
 		row = fetch_row(res);
+		lengths = mysql_fetch_lengths(res);
 	}
 
 	if (sLen > 0)
@@ -312,6 +315,15 @@ int conn_node_dbsrv::recv_func(evutil_socket_t fd)
 					break;
 				case MSG_ID_GET_OTHER_INFO_REQUEST:
 					handle_get_other_info(extern_data);
+					break;
+				case SERVER_PROTO_LOAD_SERVER_LEVEL_REQUEST:
+					handle_load_server_level(extern_data);
+					break;
+				case SERVER_PROTO_SAVE_SERVER_LEVEL_REQUEST:
+					handle_save_server_level(extern_data);
+					break;
+				case SERVER_PROTO_BREAK_SERVER_LEVEL_REQUEST:
+					handle_break_server_level(extern_data);
 					break;
 
 				default:
@@ -761,6 +773,84 @@ void conn_node_dbsrv::handle_get_other_info(EXTERN_DATA *extern_data)
 	{
 		ret = 0;
 	}
+}
+
+void conn_node_dbsrv::handle_load_server_level(EXTERN_DATA *extern_data)
+{
+	LOG_INFO("[%s:%d]", __FUNCTION__, __LINE__); 
+
+	unsigned long *lengths = NULL;	
+	MYSQL_RES *res = NULL;
+	MYSQL_ROW row = NULL;
+
+	size_t data_size = 0;
+
+	query(const_cast<char*>("set names utf8"), 1, NULL);
+
+	sprintf(sql, "SELECT comm_data from game_global where key = %u", server_level_key);
+	res = query(sql, 1, NULL);
+	if (res)
+	{
+		row = fetch_row(res);
+		if (row)
+		{
+			lengths = mysql_fetch_lengths(res);
+			data_size = lengths[0];
+			memcpy(get_send_data(), row[0], data_size);
+		}
+		free_query(res);
+	}
+
+	fast_send_msg_base(server_node, extern_data, SERVER_PROTO_LOAD_SERVER_LEVEL_ANSWER, data_size, 0);
+}
+
+void conn_node_dbsrv::handle_save_server_level(EXTERN_DATA *extern_data)
+{
+	uint64_t effect = 0;
+	int len;
+	char *p;
+
+	len = sprintf(sql, "replace game_global set key = %u, data = \'", server_level_key);
+	p = sql + len;
+	p += escape_string(p, (const char*)get_data(), get_data_len());
+	len = sprintf(p, "\'");
+
+	LOG_DEBUG("[%s:%d] data size: %d.", __FUNCTION__, __LINE__, get_data_len());
+	query(sql, 1, &effect);	
+	if (effect <= 0) 
+	{
+		LOG_ERR("[%s:%d] save failed effect[%lu]", __FUNCTION__, __LINE__, effect);
+		return ;
+	}
+}
+
+void conn_node_dbsrv::handle_break_server_level(EXTERN_DATA *extern_data)
+{
+	LOG_INFO("[%s:%d]", __FUNCTION__, __LINE__); 
+
+	uint32_t *pData = (uint32_t*)get_data();
+	uint32_t level_limit = *pData++;
+
+	MYSQL_RES *res = NULL;
+	MYSQL_ROW row = NULL;
+
+	int num = 0;
+
+	sprintf(sql, "SELECT count(player_id) from player where lv >= %u", level_limit);
+	res = query(sql, 1, NULL);
+	if (res)
+	{
+		row = fetch_row(res);
+		if (row)
+		{
+			num = atoi(row[0]);
+		}
+		free_query(res);
+	}
+
+	uint32_t *send_data = (uint32_t*)get_send_data();
+	*send_data++ = num;
+	fast_send_msg_base(server_node, extern_data, SERVER_PROTO_BREAK_SERVER_LEVEL_ANSWER, sizeof(uint32_t), 0);
 }
 
 //////////////////////////// 涓嬮潰鏄痵tatic 鍑芥暟
