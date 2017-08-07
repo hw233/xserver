@@ -1,3 +1,4 @@
+syntax = "proto2";
 import "chat.proto";
 import "role.proto";
 import "comm_message.proto";

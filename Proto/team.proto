@@ -1,3 +1,4 @@
+syntax = "proto2";
 message TeamMemInfo
 {
 	required uint64 playerid = 1;

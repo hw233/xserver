@@ -1,3 +1,4 @@
+syntax = "proto2";
 import "comm_message.proto";
 
 //背包信息应答

@@ -1,3 +1,4 @@
+syntax = "proto2";
 message OnHorseRequest
 {
 	required float pos_y = 1;  //上坐骑后初始化的高度

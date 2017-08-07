@@ -1,3 +1,4 @@
+syntax = "proto2";
 //只有成功失败返回的通用返回信息
 message comm_answer
 {

@@ -1,3 +1,4 @@
+syntax = "proto2";
 
 //经脉信息
 message YuqidaoMaiData

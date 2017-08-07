@@ -1,3 +1,4 @@
+syntax = "proto2";
 
 //登录通知玩家已经领过的最大礼包类型
 message GiftCommNotify

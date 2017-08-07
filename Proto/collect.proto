@@ -1,3 +1,4 @@
+syntax = "proto2";
 
 //采集点ID 
 message CollectId

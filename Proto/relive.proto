@@ -1,3 +1,4 @@
+syntax = "proto2";
 message relive_request
 {
 	required uint32 type = 1;  //1是原地复活，2是复活点复活

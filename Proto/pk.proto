@@ -1,3 +1,4 @@
+syntax = "proto2";
 
 message set_pk_type_request
 {

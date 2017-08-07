@@ -1,3 +1,4 @@
+syntax = "proto2";
 import "comm_message.proto";
 
 //八卦牌牌片信息

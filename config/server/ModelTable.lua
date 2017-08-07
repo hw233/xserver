@@ -631,7 +631,7 @@ local ModelTable = {
 		},
 	[130300025] = {
 		['ModelId'] = 130300025,
-		['ModelPath'] = 'Prefabs/Actor/gw_024',
+		['ModelPath'] = 'Prefabs/Actor/gw_025',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',
@@ -856,7 +856,7 @@ local ModelTable = {
 		},
 	[130300050] = {
 		['ModelId'] = 130300050,
-		['ModelPath'] = 'Prefabs/Actor/gw_047',
+		['ModelPath'] = 'Prefabs/Actor/gw_050',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',

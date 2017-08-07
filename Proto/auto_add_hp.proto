@@ -1,3 +1,4 @@
+syntax = "proto2";
 message AutoAddHpSetData
 {
 	required uint32 open_auto_add_hp = 1; //0表示关闭自动补血，1表示开启

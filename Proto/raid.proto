@@ -1,3 +1,4 @@
+syntax = "proto2";
 
 message enter_raid_request
 {

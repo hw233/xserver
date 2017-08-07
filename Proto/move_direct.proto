@@ -1,3 +1,4 @@
+syntax = "proto2";
 import "comm_message.proto";
 
 message move_start_request

@@ -1,3 +1,4 @@
+syntax = "proto2";
 import "comm_message.proto";
 
 //装备信息应答

@@ -1,3 +1,4 @@
+syntax = "proto2";
 
 // 频道
 enum Channel

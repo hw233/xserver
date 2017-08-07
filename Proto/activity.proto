@@ -1,3 +1,4 @@
+syntax = "proto2";
 
 //日常活动项
 message DailyActivityData

@@ -1,3 +1,4 @@
+syntax = "proto2";
 message list_wanyaoka_answer
 {
 	repeated uint32 wanyaoka_id = 1;  //已经拥有的万妖卡列表
