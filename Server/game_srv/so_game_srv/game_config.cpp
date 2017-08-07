@@ -706,7 +706,7 @@ static void adjust_xunbao_table()
 	std::map<uint64_t, struct SearchTable *>::iterator ite;
 	for (ite = xunbao_config.begin(); ite != xunbao_config.end(); ++ite)
 	{
-		sg_xunbao.insert(std::make_pair(ite->second->ItemId, ite->second));
+		sg_xunbao.insert(std::make_pair(uint64_t(ite->second->ItemId), ite->second));
 	}
 }
 
@@ -720,7 +720,7 @@ static void adjust_xunbao_map_table()
 		{
 			std::vector<uint64_t> tmp;
 			tmp.push_back(ite->first);
-			sg_xunbao_map.insert(std::make_pair(ite->second->MapId, tmp));
+			sg_xunbao_map.insert(std::make_pair(uint64_t(ite->second->MapId), tmp));
 		}
 		else
 		{
@@ -1496,7 +1496,7 @@ static void adjust_jijiangopen_table()
 	{
 		if (ite->second->IsSoon == 0)
 			continue;
-		sg_jijiangopen.insert(std::make_pair(ite->second->IsSoon, ite->second));
+		sg_jijiangopen.insert(std::make_pair((uint64_t)(ite->second->IsSoon), ite->second));
 	}
 }
 

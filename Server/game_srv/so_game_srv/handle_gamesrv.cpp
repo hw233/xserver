@@ -7602,7 +7602,7 @@ static int handle_set_weapon_color_request(player_struct *player, EXTERN_DATA *e
 	set_fashion_color_answer__init(&send);
 	send.ret = 0;
 	std::map<uint64_t, struct ActorFashionTable *>::iterator itFashion = fashion_config.find(fashoinid);
-	std::map<uint64_t, struct ColourTable*>::iterator it = color_table_config.find(color);
+//	std::map<uint64_t, struct ColourTable*>::iterator it = color_table_config.find(color);
 	AttrMap attrs;
 	int i = player->get_fashion(fashoinid);
 	if (i < 0)
@@ -13264,7 +13264,8 @@ static int handle_get_zhenying_task_award_request(player_struct *player, EXTERN_
 	{
 		//任务完成 给奖励
 		std::map<uint32_t, uint32_t> item_list;
-		item_list.insert(std::make_pair(table->Reward, 1));
+		uint32_t reward = table->Reward;
+		item_list.insert(std::make_pair(reward, 1));
 		player->add_item_list_otherwise_send_mail(item_list, MAGIC_TYPE_ZHENYING, 0, NULL);
 		//player->give_drop_item(table->Reward, MAGIC_TYPE_MONSTER_DEAD, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
 	}
@@ -16474,7 +16475,8 @@ static int handle_partner_bond_reward_request(player_struct *player, EXTERN_DATA
 		}
 
 		std::map<uint32_t, uint32_t> award_map;
-		award_map.insert(std::make_pair(config->Reward, 1));
+		uint32_t reward = config->Reward;
+		award_map.insert(std::make_pair(reward, 1));
 		if (!player->check_can_add_item_list(award_map))
 		{
 			ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
