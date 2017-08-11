@@ -1537,6 +1537,8 @@ struct SkillLvTable
 	uint64_t  CostCoin; //9
 	uint64_t  NeedFight; //10
 	uint64_t  MonsterEff; //11
+	uint64_t  CostItem; //12
+	uint64_t  CostNum; //13
 }__attribute__ ((packed));
 
 struct SkillTable

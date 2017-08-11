@@ -2754,10 +2754,11 @@ int conn_node_guildsrv::handle_guild_battle_fight_reward_request(EXTERN_DATA * /
 {
 	PROTO_GUILD_BATTLE_REWARD *req = (PROTO_GUILD_BATTLE_REWARD*)buf_head();
 	LOG_INFO("[%s:%d] guild %u", __FUNCTION__, __LINE__, req->guild_id);
+	uint32_t activity_id = req->activity_id;
 	
+	GuildInfo *guild = get_guild(req->guild_id);
 	do
 	{
-		GuildInfo *guild = get_guild(req->guild_id);
 		if (!guild)
 		{
 			LOG_ERR("[%s:%d] can't find guild[%u]", __FUNCTION__, __LINE__, req->guild_id);
@@ -2799,6 +2800,110 @@ int conn_node_guildsrv::handle_guild_battle_fight_reward_request(EXTERN_DATA * /
 			}
 
 			broadcast_guild_battle_score(guild, broadcast_ids);
+		}
+	} while(0);
+
+	AutoReleaseBatchRedisPlayer arb_redis;
+	do
+	{
+		if (!guild_battle_is_final(activity_id))
+		{
+			break;
+		}
+
+		std::vector<std::pair<uint64_t, uint32_t> > rank_info;
+		char *rank_key = sg_rank_guild_battle_key;
+		int ret2 = sg_redis_client.zget(rank_key, 0, 3, rank_info);
+		if (ret2 != 0)
+		{
+			LOG_ERR("[%s:%d] get rank failed, rank_key:%s", __FUNCTION__, __LINE__, rank_key);
+			break;
+		}
+
+		std::vector<uint32_t> guild_ids;
+		load_guild_battle_final_list(guild_ids);
+		if (guild_ids.size() > rank_info.size())
+		{
+			for (size_t i = 0; i < guild_ids.size(); ++i)
+			{
+				bool has = false;
+				for (size_t j = 0; j < rank_info.size(); ++j)
+				{
+					if (rank_info[j].first == guild_ids[i])
+					{
+						has = true;
+						break;
+					}
+				}
+
+				if (!has)
+				{
+					rank_info.push_back(std::make_pair(guild_ids[i], 0));
+				}
+			}
+		}
+
+		GuildBattleRoundFinishNotify nty;
+		GuildBattleRankData rank_data[MAX_GUILD_BATTLE_FINAL_GUILD_NUM];
+		GuildBattleRankData* rank_point[MAX_GUILD_BATTLE_FINAL_GUILD_NUM];
+
+		for (uint32_t i = 0; i < req->player_num; ++i)
+		{
+			if (req->result[i] == 0)
+			{
+				continue;
+			}
+
+			GuildPlayer *player = get_guild_player(req->player_id[i]);
+			if (!player)
+			{
+				LOG_ERR("[%s:%d] can't find guild player[%lu]", __FUNCTION__, __LINE__, req->player_id[i]);
+				continue;
+			}
+
+			if (player->guild != guild)
+			{
+				LOG_ERR("[%s:%d] player[%lu] guild[%u] is not guild[%u]", __FUNCTION__, __LINE__, req->player_id[i], player->guild->guild_id, guild->guild_id);
+				continue;
+			}
+
+			guild_battle_round_finish_notify__init(&nty);
+
+			nty.result = req->result[i];
+			nty.score = req->score[i];
+			nty.guildtreasure = req->treasure[i];
+			nty.guilddonation = req->donation[i];
+			nty.ranks = rank_point;
+			nty.n_ranks = 0;
+			for (size_t j = 0; j < rank_info.size() && j < MAX_GUILD_BATTLE_FINAL_GUILD_NUM; ++j)
+			{
+				GuildInfo *tmp_guild = get_guild(rank_info[j].first);
+				if (!tmp_guild)
+				{
+					continue;
+				}
+
+				PlayerRedisInfo *redis_player = get_redis_player(tmp_guild->master_id);
+				if (!redis_player)
+				{
+					continue;
+				}
+				arb_redis.push_back(redis_player);
+
+				rank_point[nty.n_ranks] = &rank_data[nty.n_ranks];
+				guild_battle_rank_data__init(&rank_data[nty.n_ranks]);
+				rank_data[nty.n_ranks].rank = j + 1;
+				rank_data[nty.n_ranks].guildid = tmp_guild->guild_id;
+				rank_data[nty.n_ranks].guildname = tmp_guild->name;
+				rank_data[nty.n_ranks].guildscore = rank_info[j].second;
+				rank_data[nty.n_ranks].guildcamp = redis_player->zhenying;
+				nty.n_ranks++;
+			}
+
+			EXTERN_DATA ext_data;
+			ext_data.player_id = player->player_id;
+
+			fast_send_msg(&conn_node_guildsrv::connecter, &ext_data, MSG_ID_GUILD_BATTLE_ROUND_FINISH_NOTIFY, guild_battle_round_finish_notify__pack, nty);
 		}
 	} while(0);
 

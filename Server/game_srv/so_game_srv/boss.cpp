@@ -1,3 +1,4 @@
+#if 0
 #include "boss.h"
 #include "monster_manager.h"
 #include "time_helper.h"
@@ -230,4 +231,5 @@ void boss_struct::clear_monster_timer()
 	if (is_node_in_heap(&monster_manager_m_boss_minheap, this))
 		monster_manager::boss_ontick_delete(this);
 }
+#endif
 

@@ -73,140 +73,140 @@ local SpecialtyLevelTable = {
 		['ID'] = 321001011,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 11,
-		['LevelExp'] = 11000,
+		['LevelExp'] = 12000,
 		['SpecialTitle'] = 328000004
 		},
 	[321001012] = {
 		['ID'] = 321001012,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 12,
-		['LevelExp'] = 12000,
+		['LevelExp'] = 14000,
 		['SpecialTitle'] = 328000004
 		},
 	[321001013] = {
 		['ID'] = 321001013,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 13,
-		['LevelExp'] = 13000,
+		['LevelExp'] = 16000,
 		['SpecialTitle'] = 328000005
 		},
 	[321001014] = {
 		['ID'] = 321001014,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 14,
-		['LevelExp'] = 14000,
+		['LevelExp'] = 18000,
 		['SpecialTitle'] = 328000005
 		},
 	[321001015] = {
 		['ID'] = 321001015,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 15,
-		['LevelExp'] = 15000,
+		['LevelExp'] = 20000,
 		['SpecialTitle'] = 328000005
 		},
 	[321001016] = {
 		['ID'] = 321001016,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 16,
-		['LevelExp'] = 16000,
+		['LevelExp'] = 22000,
 		['SpecialTitle'] = 328000006
 		},
 	[321001017] = {
 		['ID'] = 321001017,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 17,
-		['LevelExp'] = 17000,
+		['LevelExp'] = 24000,
 		['SpecialTitle'] = 328000006
 		},
 	[321001018] = {
 		['ID'] = 321001018,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 18,
-		['LevelExp'] = 18000,
+		['LevelExp'] = 26000,
 		['SpecialTitle'] = 328000006
 		},
 	[321001019] = {
 		['ID'] = 321001019,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 19,
-		['LevelExp'] = 19000,
+		['LevelExp'] = 28000,
 		['SpecialTitle'] = 328000007
 		},
 	[321001020] = {
 		['ID'] = 321001020,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 20,
-		['LevelExp'] = 20000,
+		['LevelExp'] = 30000,
 		['SpecialTitle'] = 328000007
 		},
 	[321001021] = {
 		['ID'] = 321001021,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 21,
-		['LevelExp'] = 25000,
+		['LevelExp'] = 35000,
 		['SpecialTitle'] = 328000007
 		},
 	[321001022] = {
 		['ID'] = 321001022,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 22,
-		['LevelExp'] = 30000,
+		['LevelExp'] = 40000,
 		['SpecialTitle'] = 328000008
 		},
 	[321001023] = {
 		['ID'] = 321001023,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 23,
-		['LevelExp'] = 35000,
+		['LevelExp'] = 45000,
 		['SpecialTitle'] = 328000008
 		},
 	[321001024] = {
 		['ID'] = 321001024,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 24,
-		['LevelExp'] = 40000,
+		['LevelExp'] = 50000,
 		['SpecialTitle'] = 328000008
 		},
 	[321001025] = {
 		['ID'] = 321001025,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 25,
-		['LevelExp'] = 45000,
+		['LevelExp'] = 55000,
 		['SpecialTitle'] = 328000009
 		},
 	[321001026] = {
 		['ID'] = 321001026,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 26,
-		['LevelExp'] = 50000,
+		['LevelExp'] = 60000,
 		['SpecialTitle'] = 328000009
 		},
 	[321001027] = {
 		['ID'] = 321001027,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 27,
-		['LevelExp'] = 55000,
+		['LevelExp'] = 65000,
 		['SpecialTitle'] = 328000009
 		},
 	[321001028] = {
 		['ID'] = 321001028,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 28,
-		['LevelExp'] = 60000,
+		['LevelExp'] = 70000,
 		['SpecialTitle'] = 328000010
 		},
 	[321001029] = {
 		['ID'] = 321001029,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 29,
-		['LevelExp'] = 65000,
+		['LevelExp'] = 75000,
 		['SpecialTitle'] = 328000010
 		},
 	[321001030] = {
 		['ID'] = 321001030,
 		['SpecialtyType'] = 1,
 		['SpecialtyLevel'] = 30,
-		['LevelExp'] = 70000,
+		['LevelExp'] = 80000,
 		['SpecialTitle'] = 328000010
 		},
 	[321002001] = {
@@ -283,140 +283,140 @@ local SpecialtyLevelTable = {
 		['ID'] = 321002011,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 11,
-		['LevelExp'] = 11000,
+		['LevelExp'] = 12000,
 		['SpecialTitle'] = 328000014
 		},
 	[321002012] = {
 		['ID'] = 321002012,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 12,
-		['LevelExp'] = 12000,
+		['LevelExp'] = 14000,
 		['SpecialTitle'] = 328000014
 		},
 	[321002013] = {
 		['ID'] = 321002013,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 13,
-		['LevelExp'] = 13000,
+		['LevelExp'] = 16000,
 		['SpecialTitle'] = 328000015
 		},
 	[321002014] = {
 		['ID'] = 321002014,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 14,
-		['LevelExp'] = 14000,
+		['LevelExp'] = 18000,
 		['SpecialTitle'] = 328000015
 		},
 	[321002015] = {
 		['ID'] = 321002015,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 15,
-		['LevelExp'] = 15000,
+		['LevelExp'] = 20000,
 		['SpecialTitle'] = 328000015
 		},
 	[321002016] = {
 		['ID'] = 321002016,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 16,
-		['LevelExp'] = 16000,
+		['LevelExp'] = 22000,
 		['SpecialTitle'] = 328000016
 		},
 	[321002017] = {
 		['ID'] = 321002017,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 17,
-		['LevelExp'] = 17000,
+		['LevelExp'] = 24000,
 		['SpecialTitle'] = 328000016
 		},
 	[321002018] = {
 		['ID'] = 321002018,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 18,
-		['LevelExp'] = 18000,
+		['LevelExp'] = 26000,
 		['SpecialTitle'] = 328000016
 		},
 	[321002019] = {
 		['ID'] = 321002019,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 19,
-		['LevelExp'] = 19000,
+		['LevelExp'] = 28000,
 		['SpecialTitle'] = 328000017
 		},
 	[321002020] = {
 		['ID'] = 321002020,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 20,
-		['LevelExp'] = 20000,
+		['LevelExp'] = 30000,
 		['SpecialTitle'] = 328000017
 		},
 	[321002021] = {
 		['ID'] = 321002021,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 21,
-		['LevelExp'] = 25000,
+		['LevelExp'] = 35000,
 		['SpecialTitle'] = 328000017
 		},
 	[321002022] = {
 		['ID'] = 321002022,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 22,
-		['LevelExp'] = 30000,
+		['LevelExp'] = 40000,
 		['SpecialTitle'] = 328000018
 		},
 	[321002023] = {
 		['ID'] = 321002023,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 23,
-		['LevelExp'] = 35000,
+		['LevelExp'] = 45000,
 		['SpecialTitle'] = 328000018
 		},
 	[321002024] = {
 		['ID'] = 321002024,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 24,
-		['LevelExp'] = 40000,
+		['LevelExp'] = 50000,
 		['SpecialTitle'] = 328000018
 		},
 	[321002025] = {
 		['ID'] = 321002025,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 25,
-		['LevelExp'] = 45000,
+		['LevelExp'] = 55000,
 		['SpecialTitle'] = 328000019
 		},
 	[321002026] = {
 		['ID'] = 321002026,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 26,
-		['LevelExp'] = 50000,
+		['LevelExp'] = 60000,
 		['SpecialTitle'] = 328000019
 		},
 	[321002027] = {
 		['ID'] = 321002027,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 27,
-		['LevelExp'] = 55000,
+		['LevelExp'] = 65000,
 		['SpecialTitle'] = 328000019
 		},
 	[321002028] = {
 		['ID'] = 321002028,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 28,
-		['LevelExp'] = 60000,
+		['LevelExp'] = 70000,
 		['SpecialTitle'] = 328000020
 		},
 	[321002029] = {
 		['ID'] = 321002029,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 29,
-		['LevelExp'] = 65000,
+		['LevelExp'] = 75000,
 		['SpecialTitle'] = 328000020
 		},
 	[321002030] = {
 		['ID'] = 321002030,
 		['SpecialtyType'] = 2,
 		['SpecialtyLevel'] = 30,
-		['LevelExp'] = 70000,
+		['LevelExp'] = 80000,
 		['SpecialTitle'] = 328000020
 		},
 	[321003001] = {
@@ -493,140 +493,140 @@ local SpecialtyLevelTable = {
 		['ID'] = 321003011,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 11,
-		['LevelExp'] = 11000,
+		['LevelExp'] = 12000,
 		['SpecialTitle'] = 328000024
 		},
 	[321003012] = {
 		['ID'] = 321003012,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 12,
-		['LevelExp'] = 12000,
+		['LevelExp'] = 14000,
 		['SpecialTitle'] = 328000024
 		},
 	[321003013] = {
 		['ID'] = 321003013,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 13,
-		['LevelExp'] = 13000,
+		['LevelExp'] = 16000,
 		['SpecialTitle'] = 328000025
 		},
 	[321003014] = {
 		['ID'] = 321003014,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 14,
-		['LevelExp'] = 14000,
+		['LevelExp'] = 18000,
 		['SpecialTitle'] = 328000025
 		},
 	[321003015] = {
 		['ID'] = 321003015,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 15,
-		['LevelExp'] = 15000,
+		['LevelExp'] = 20000,
 		['SpecialTitle'] = 328000025
 		},
 	[321003016] = {
 		['ID'] = 321003016,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 16,
-		['LevelExp'] = 16000,
+		['LevelExp'] = 22000,
 		['SpecialTitle'] = 328000026
 		},
 	[321003017] = {
 		['ID'] = 321003017,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 17,
-		['LevelExp'] = 17000,
+		['LevelExp'] = 24000,
 		['SpecialTitle'] = 328000026
 		},
 	[321003018] = {
 		['ID'] = 321003018,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 18,
-		['LevelExp'] = 18000,
+		['LevelExp'] = 26000,
 		['SpecialTitle'] = 328000026
 		},
 	[321003019] = {
 		['ID'] = 321003019,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 19,
-		['LevelExp'] = 19000,
+		['LevelExp'] = 28000,
 		['SpecialTitle'] = 328000027
 		},
 	[321003020] = {
 		['ID'] = 321003020,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 20,
-		['LevelExp'] = 20000,
+		['LevelExp'] = 30000,
 		['SpecialTitle'] = 328000027
 		},
 	[321003021] = {
 		['ID'] = 321003021,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 21,
-		['LevelExp'] = 25000,
+		['LevelExp'] = 35000,
 		['SpecialTitle'] = 328000027
 		},
 	[321003022] = {
 		['ID'] = 321003022,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 22,
-		['LevelExp'] = 30000,
+		['LevelExp'] = 40000,
 		['SpecialTitle'] = 328000028
 		},
 	[321003023] = {
 		['ID'] = 321003023,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 23,
-		['LevelExp'] = 35000,
+		['LevelExp'] = 45000,
 		['SpecialTitle'] = 328000028
 		},
 	[321003024] = {
 		['ID'] = 321003024,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 24,
-		['LevelExp'] = 40000,
+		['LevelExp'] = 50000,
 		['SpecialTitle'] = 328000028
 		},
 	[321003025] = {
 		['ID'] = 321003025,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 25,
-		['LevelExp'] = 45000,
+		['LevelExp'] = 55000,
 		['SpecialTitle'] = 328000029
 		},
 	[321003026] = {
 		['ID'] = 321003026,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 26,
-		['LevelExp'] = 50000,
+		['LevelExp'] = 60000,
 		['SpecialTitle'] = 328000029
 		},
 	[321003027] = {
 		['ID'] = 321003027,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 27,
-		['LevelExp'] = 55000,
+		['LevelExp'] = 65000,
 		['SpecialTitle'] = 328000029
 		},
 	[321003028] = {
 		['ID'] = 321003028,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 28,
-		['LevelExp'] = 60000,
+		['LevelExp'] = 70000,
 		['SpecialTitle'] = 328000030
 		},
 	[321003029] = {
 		['ID'] = 321003029,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 29,
-		['LevelExp'] = 65000,
+		['LevelExp'] = 75000,
 		['SpecialTitle'] = 328000030
 		},
 	[321003030] = {
 		['ID'] = 321003030,
 		['SpecialtyType'] = 3,
 		['SpecialtyLevel'] = 30,
-		['LevelExp'] = 70000,
+		['LevelExp'] = 80000,
 		['SpecialTitle'] = 328000030
 		}
 	}

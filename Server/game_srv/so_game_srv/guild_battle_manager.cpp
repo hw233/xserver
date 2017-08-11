@@ -45,6 +45,7 @@ extern std::set<player_struct *> guild_battle_manager_waiting_player;   //个人
 extern std::set<Team *> guild_battle_manager_waiting_team;  //队伍，保证队伍里面都是同一个工会
 extern std::multimap<uint32_t, struct matched_team *> guild_battle_manager_matched_team; //组合好的队伍
 
+extern uint32_t guild_battle_manager_activity_start_ts;
 extern uint32_t guild_battle_manager_action_tick;
 extern uint32_t guild_battle_manager_action_state;
 extern uint32_t guild_battle_manager_action_round;
@@ -1325,6 +1326,7 @@ void run_activity_period()
 			{
 				sync_guild_battle_begin();
 
+				guild_battle_manager_activity_start_ts = now;
 				guild_battle_manager_action_tick += get_act_match_time();
 				guild_battle_manager_action_state = GBS_WAIT;
 				guild_battle_manager_action_round = 1;
@@ -1491,6 +1493,11 @@ bool is_guild_battle_opening()
 bool is_guild_battle_settling() //活动是否在结算时间
 {
 	return (guild_battle_manager_action_state == GBS_SETTLE);
+}
+
+bool player_can_return_guild_battle(player_struct *player)
+{
+	return (player->data->guild_battle_activity_time == guild_battle_manager_activity_start_ts);
 }
 
 int player_can_participate_guild_battle(player_struct *player)
@@ -1812,7 +1819,7 @@ void get_guild_battle_fight_reward(player_struct *player, int result, uint32_t &
 		player->set_attr(PLAYER_ATTR_BRAVE, brave);
 		donation = donation_add;
 
-		if (result == GBR_AUTO_WIN)
+		if (result == 0)
 		{
 			score = score_factor;
 			treasure = treasure_factor;
@@ -1852,6 +1859,7 @@ void send_guild_battle_fight_reward_to_guildsrv(std::map<uint32_t, GuildBattleFi
 		PROTO_HEAD *head = &req->head;
 		memset(head->data, 0, sizeof(PROTO_GUILD_BATTLE_REWARD) - sizeof(PROTO_HEAD));
 		head->len = ENDION_FUNC_4(sizeof(PROTO_GUILD_BATTLE_REWARD));
+		req->activity_id = guild_battle_manager_action_act;
 		req->guild_id = guild_reward.guild_id;
 
 		for (std::vector<GuildBattleFightPlayerRewardInfo>::iterator player_iter = guild_reward.players.begin(); player_iter != guild_reward.players.end() && req->player_num < MAX_GUILD_MEMBER_NUM; ++player_iter)
@@ -1897,7 +1905,10 @@ void insert_guild_battle_fight_reward_map(std::map<uint32_t, GuildBattleFightGui
 	player_reward.player_id = player->get_uuid();
 	player_reward.result = result;
 	get_guild_battle_fight_reward(player, result, player_reward.score, player_reward.treasure, player_reward.donation, kill_num, dead_num, monster_num, boss_damage, boss_num);
-	notify_guild_battle_fight_reward(player, result, player_reward.score, player_reward.treasure, player_reward.donation);
+	if (!guild_battle_is_final())
+	{
+		notify_guild_battle_fight_reward(player, result, player_reward.score, player_reward.treasure, player_reward.donation);
+	}
 
 	guild_iter->second.players.push_back(player_reward);
 }

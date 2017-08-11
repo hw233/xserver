@@ -8,6 +8,7 @@
 
 class guild_wait_raid_struct;
 
+//帮战预赛战斗结果
 enum
 {
 	GBR_WIN = 1,
@@ -67,6 +68,7 @@ void start_guild_battle_activity();
 void start_final_guild_battle_activity();
 bool is_guild_battle_opening(); //活动是否开启
 bool is_guild_battle_settling(); //活动是否在结算时间
+bool player_can_return_guild_battle(player_struct *player);
 int player_can_participate_guild_battle(player_struct *player);
 void update_guild_name(uint32_t guild_id, char *name);
 void check_guild_participate_num(uint32_t guild_id);

@@ -254,6 +254,11 @@ local ScriptTable = {
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
 		['paramList'] = {10,135200006}
 		},
+	[172000020] = {
+		['ID'] = 172000020,
+		['Path'] = 'Skill/Effect/BulletSkillEffect',
+		['paramList'] = {10,135200006}
+		},
 	[172000024] = {
 		['ID'] = 172000024,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',

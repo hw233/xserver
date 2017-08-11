@@ -8,6 +8,7 @@ class skill_struct;
 class player_struct;
 
 struct _PlayerDBInfo;
+struct fuwen_data;
 
 class MySkill
 {
@@ -22,7 +23,7 @@ public:
 	void OnPlayerLevelUp(uint32_t lv);
 	int Learn(uint32_t id, uint32_t num);
 	int SetFuwen(uint32_t id, uint32_t fuwen);
-	uint32_t GetCurFuwen(uint32_t id);
+	fuwen_data * GetCurFuwen(uint32_t id);
 	void SendAllSkill();
 	skill_struct *GetSkillStructFromFuwen(uint32_t fuwen_id);  //根据符文id获取对应技能的对象
 	uint32_t GetFirstSkillId();
@@ -34,11 +35,12 @@ public:
 	void UnPackAllSkill(_PlayerDBInfo &pb);
 
 	skill_struct * GetSkill(uint32_t id);
-	uint32_t GetLevelUpTo(uint32_t id);
+	uint32_t GetLevelUpTo(uint32_t id, uint32_t initLv, uint32_t maxLv);
 	uint32_t CalcCost(uint32_t id, uint32_t oldLv, uint32_t num);
+	uint32_t m_index; //套餐下标
 private:
-	skill_struct *GetNoFuwenSkillStruct(uint32_t skill_id);  //没有设置符文的技能ID对应的技能等级,被GetFuwenSkillLevel使用
-	void IteratorLevelUp(uint32_t id, uint32_t num);
+//	skill_struct *GetNoFuwenSkillStruct(uint32_t skill_id);  //没有设置符文的技能ID对应的技能等级,被GetFuwenSkillLevel使用
+	void IteratorLevelUp(uint32_t id, uint32_t num);  //升级关联技能 
 	SKILL_CONTAIN m_skill;
 	player_struct *m_owner;
 };

@@ -405,7 +405,9 @@ void monster_cast_immediate_skill_to_player(uint64_t skill_id, monster_struct *m
 			raid->on_monster_attack(monster, t, damage);
 	}
 
-	LOG_DEBUG("%s: unit[%lu][%p] damage[%d] hp[%f]", __FUNCTION__, player->get_uuid(), player, damage, player->get_attr(PLAYER_ATTR_HP));
+	LOG_DEBUG("%s: unit[%lu][%p] attack unit[%lu][%p] damage[%d] hp[%f]",
+		__FUNCTION__, monster->get_uuid(), monster,
+		player->get_uuid(), player, damage, player->get_attr(PLAYER_ATTR_HP));
 
 	uint32_t life_steal = monster->count_life_steal_effect(damage);
 	uint32_t damage_return = monster->count_damage_return(damage, player);
@@ -455,7 +457,12 @@ void monster_cast_immediate_skill_to_player(uint64_t skill_id, monster_struct *m
 	notify.attack_cur_hp = monster->get_attr(PLAYER_ATTR_HP);
 	notify.life_steal = life_steal;
 	notify.damage_return = damage_return;
-	player->broadcast_to_sight(MSG_ID_SKILL_HIT_IMMEDIATE_NOTIFY, &notify, (pack_func)skill_hit_immediate_notify__pack, true);
+
+	std::vector<unit_struct *> both;
+	both.push_back(player);
+	both.push_back(monster);
+	unit_struct::broadcast_to_many_sight(MSG_ID_SKILL_HIT_IMMEDIATE_NOTIFY, &notify, (pack_func)skill_hit_immediate_notify__pack, both);
+//	player->broadcast_to_sight(MSG_ID_SKILL_HIT_IMMEDIATE_NOTIFY, &notify, (pack_func)skill_hit_immediate_notify__pack, true);
 
 	if (!player->is_alive())
 	{

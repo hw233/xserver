@@ -15,26 +15,26 @@ message ChoseZhenying
 message AnsChoseZhenying
 {
 	required int32 zhenying = 1; //ZHENGYIN_TYPE
-	required int32 ret = 2; //0³É¹¦
-	required int32 free = 3; //Ãâ·Ñ´ÎÊı
+	required int32 ret = 2; //0æˆåŠŸ
+	required int32 free = 3; //å…è´¹æ¬¡æ•°
 }
 
 message ZhenyingPower
 {
-	required uint32 power_fulongguo = 1; //·üÁú¹ú×ÜÕ½¶·Á¦
-	required uint32 power_wanyaogu = 2; //ÍòÑı¹È×ÜÕ½¶·Á¦
-	required uint32 man_fulongguo = 3; //·üÁú¹úÈËÊı°Ù·Ö±È
-	required uint32 man_wanyaogu = 4; //ÍòÑı¹ÈÈËÊı°Ù·Ö±È
-	required uint64 power_man = 5; //ÕóÓªÖ÷Ô×ID
-	required string power_name = 6; //ÕóÓªÖ÷Ô×
-	required string power_guild = 7; //ÕóÓªÖ÷Ô×°ï»á
+	required uint32 power_fulongguo = 1; //ä¼é¾™å›½æ€»æˆ˜æ–—åŠ›
+	required uint32 power_wanyaogu = 2; //ä¸‡å¦–è°·æ€»æˆ˜æ–—åŠ›
+	required uint32 man_fulongguo = 3; //ä¼é¾™å›½äººæ•°ç™¾åˆ†æ¯”
+	required uint32 man_wanyaogu = 4; //ä¸‡å¦–è°·äººæ•°ç™¾åˆ†æ¯”
+	required uint64 power_man = 5; //é˜µè¥ä¸»å®°ID
+	required string power_name = 6; //é˜µè¥ä¸»å®°
+	required string power_guild = 7; //é˜µè¥ä¸»å®°å¸®ä¼š
 }
 
 enum ZHENYING_TASK_AWARD_STATE
 {
-	UNACHIVE = 0; //Î´´ï³É
-	COMPLETE = 1; //ÒÑ´ï³É
-	AWARD = 2; //ÒÑÁì
+	UNACHIVE = 0; //æœªè¾¾æˆ
+	COMPLETE = 1; //å·²è¾¾æˆ
+	AWARD = 2; //å·²é¢†
 }
 
 message ZhenyingInfo
@@ -42,12 +42,12 @@ message ZhenyingInfo
 	required int32 zhenying = 1; //ZHENGYIN_TYPE
 	required uint32 level = 2; //
 	required uint32 exp = 3; //
-	required uint32 task = 4; //µ±Ç°ÈÎÎñID
-	required uint32 task_type = 5; //µ±Ç°ÈÎÎñÀàĞÍ
-	required uint32 task_num = 6; //µ±Ç°ÈÎÎñ½ø¶È
-	required uint32 step = 7; //¾ü½×
+	required uint32 task = 4; //å½“å‰ä»»åŠ¡ID
+	required uint32 task_type = 5; //å½“å‰ä»»åŠ¡ç±»å‹
+	required uint32 task_num = 6; //å½“å‰ä»»åŠ¡è¿›åº¦
+	required uint32 step = 7; //å†›é˜¶
 	required uint32 exp_day = 8; //
-	required uint32 free_change = 9; //Ãâ·Ñ»»ÕóÓª´ÎÊı
+	required uint32 free_change = 9; //å…è´¹æ¢é˜µè¥æ¬¡æ•°
 	required uint32 task_award_state = 10; //ZHENYING_TASK_AWARD_STATE
 }
 
@@ -77,15 +77,15 @@ message ZhenyingTeam
 
 message ZhenyingTaskProcess
 {
-	required uint32 task_num = 1;//µ±Ç°ÈÎÎñ½ø¶È
+	required uint32 task_num = 1;//å½“å‰ä»»åŠ¡è¿›åº¦
 	required uint32 task_award_state = 2; //ZHENYING_TASK_AWARD_STATE
 }
 
 message NewZhenyingTask
 {
-	required uint32 task = 1; //µ±Ç°ÈÎÎñID
-	required uint32 task_type = 2; //µ±Ç°ÈÎÎñÀàĞÍ
-	required uint32 task_num = 3; //µ±Ç°ÈÎÎñ½ø¶È
+	required uint32 task = 1; //å½“å‰ä»»åŠ¡ID
+	required uint32 task_type = 2; //å½“å‰ä»»åŠ¡ç±»å‹
+	required uint32 task_num = 3; //å½“å‰ä»»åŠ¡è¿›åº¦
 }
 
 enum ZHENYING_LINE_STATE
@@ -96,8 +96,8 @@ enum ZHENYING_LINE_STATE
 
 message ZhenyingLineInfo
 {
-	required uint32 id = 1; //µÚ¼¸ÌõÏß ´Ó1¿ªÊ¼
-	required uint32 man = 2;//ÈËÊı
+	required uint32 id = 1; //ç¬¬å‡ æ¡çº¿ ä»1å¼€å§‹
+	required uint32 man = 2;//äººæ•°
 	required int32 state = 3;//ZHENYING_LINE_STATE
 }
 message ZhenyingLine

@@ -134,14 +134,14 @@ void Collect::BroadcastCollectCreate()
 
 void Collect::BroadcastCollectDelete()
 {
-	SightChangedNotify notify;
-	sight_changed_notify__init(&notify);
-	notify.n_delete_collect = 1;
-	uint32_t ar[1];
-	ar[0] = m_uuid;
-	notify.delete_collect = ar;
+	//SightChangedNotify notify;
+	//sight_changed_notify__init(&notify);
+	//notify.n_delete_collect = 1;
+	//uint32_t ar[1];
+	//ar[0] = m_uuid;
+	//notify.delete_collect = ar;
 
-	BroadcastToSight(MSG_ID_SIGHT_CHANGED_NOTIFY, &notify, (pack_func)sight_changed_notify__pack);
+	//BroadcastToSight(MSG_ID_SIGHT_CHANGED_NOTIFY, &notify, (pack_func)sight_changed_notify__pack);
 }
 
 Collect * Collect::CreateCollect(scene_struct *scene, int index)
@@ -317,6 +317,12 @@ int Collect::BegingGather(player_struct *player, uint32_t step)
 		return 2;
 	}
 	//todo 验证距离
+	float lx = player->get_pos()->pos_x - this->m_pos.pos_x;
+	float lz = player->get_pos()->pos_z - this->m_pos.pos_z;
+	if (lx * lx + lz * lz > 32)
+	{
+		return 7;
+	}
 
 	if (it->second->CollectionTeyp == 1)
 	{
@@ -391,19 +397,13 @@ int Collect::GatherComplete(player_struct *player)
 	EXTERN_DATA extern_data;
 	extern_data.player_id = player->get_uuid();
 	player->data->m_collect_uuid = 0;
-	NotifyCollect send;
-	notify_collect__init(&send);
+	CollectComplete send;
+	collect_complete__init(&send);
 	send.playerid = player->get_uuid();
 	send.collectid = m_uuid;
-	if (area == NULL)
-	{
-		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_COLLECT_COMMPLETE_NOTIFY, notify_collect__pack, send);
-	}
-	else {
-		BroadcastToSight(MSG_ID_COLLECT_COMMPLETE_NOTIFY, &send, (pack_func)notify_collect__pack);
-	}
-	
+	send.del = true;
 
+	int ret = 0;
 	if (m_commpleteTime <= time_helper::get_cached_time() / 1000 && m_state == COLLECT_GATHING)
 	{
 		m_gatherPlayer = 0; 
@@ -421,10 +421,10 @@ int Collect::GatherComplete(player_struct *player)
 			{
 				scene->delete_collect_to_scene(this);
 			}
-			else
-			{
-				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);
-			}
+			//else
+			//{
+			//	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);
+			//}
 		}
 		else if (it->second->Regeneration == 0)
 		{
@@ -433,14 +433,23 @@ int Collect::GatherComplete(player_struct *player)
 			{
 				scene->delete_collect_to_scene(this);
 			}
-			else
-			{
-				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);
-			}
+			//else
+			//{
+			//	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);
+			//}
 		}
 		else
 		{
 			m_state = COLLECT_NORMOR;
+			send.del = false;
+		}
+		
+		if (area == NULL)
+		{
+			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_COLLECT_COMMPLETE_NOTIFY, collect_complete__pack, send);
+		}
+		else {
+			BroadcastToSight(MSG_ID_COLLECT_COMMPLETE_NOTIFY, &send, (pack_func)notify_collect__pack);
 		}
 
 		if (m_ownerLv != 0)
@@ -451,16 +460,17 @@ int Collect::GatherComplete(player_struct *player)
 		{
 			player->give_drop_item(m_dropId, MAGIC_TYPE_GATHER, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
 		}
-
-		return 0;
+		if (m_minType == 1)
+		{
+			fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);
+		}
 	}
-
-	if (m_minType == 1)
+	else
 	{
-		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);
+		ret = 190500093;
 	}
 
-	return 190500093;
+	return ret;
 }
 
 int Collect::GatherInterupt(player_struct *player)

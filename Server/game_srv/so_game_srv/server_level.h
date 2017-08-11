@@ -11,6 +11,7 @@ void break_server_level(void);
 void check_server_level(void);
 void mark_server_level_break(void);
 void server_level_listen_raid_finish(uint32_t raid_id, player_struct *player);
+void broadcast_server_level_info(void);
 
 bool is_server_level_limit(uint32_t player_level);
 double get_server_exp_addition(uint32_t player_level);

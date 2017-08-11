@@ -54,6 +54,7 @@ message sight_player_base_info
 	required uint32 zhenying_id = 26; //阵营ID
 	required uint32 guild_id = 27; //帮会ID
 	required uint32 fashion_weapon_color = 28;   //
+	required bool team_lead = 29;   //ture 队长
 }
 
 //视野怪物的基本信息

@@ -1568,6 +1568,16 @@ local EffectTable = {
 		['Length'] = 0,
 		['IsManual'] = 0,
 		['IsFollow'] = 1
+		},
+	[135300037] = {
+		['ID'] = 135300037,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 0,
+		['IsManual'] = 0,
+		['IsFollow'] = 1
 		}
 	}
 return EffectTable

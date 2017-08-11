@@ -225,7 +225,8 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	}
 	else if (argc >= 3 && strcasecmp(argv[0], "add") == 0 && strcasecmp(argv[1], "gather") == 0)
 	{
-		Collect::CreateCollectByPos(player->scene, 154000022, player->get_pos()->pos_x, atoi(argv[2]), player->get_pos()->pos_z, 0, player);
+		//Collect::CreateCollectByPos(player->scene, 154000022, player->get_pos()->pos_x, atoi(argv[2]), player->get_pos()->pos_z, 0, player);
+		Collect::CreateCollectByPos(player->scene, 154000023, player->get_pos()->pos_x, atoi(argv[2]), player->get_pos()->pos_z, 0);
 	}
 	else if (argc >= 3 && strcasecmp(argv[0], "sub") == 0 && strcasecmp(argv[1], "exp") == 0)
 	{

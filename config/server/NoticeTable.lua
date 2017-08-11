@@ -7,6 +7,7 @@ local NoticeTable = {
 		['NoticeTime'] = {958},	--公告时间
 		['NoticeInterval'] = 0,	--循环播放的间隔时间
 		['NoticeEnd'] = 0,	--循环播放的结束时间
+		['NoticeChannel'] = {1},	--公告显示频道
 		['NoticeTxt'] = '测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1测试公告1'	--公告内容
 		},
 	[330500002] = {
@@ -17,6 +18,7 @@ local NoticeTable = {
 		['NoticeTime'] = {959},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1},
 		['NoticeTxt'] = '测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2测试公告2'
 		},
 	[330500003] = {
@@ -27,6 +29,7 @@ local NoticeTable = {
 		['NoticeTime'] = {910},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1},
 		['NoticeTxt'] = '测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3测试公告3'
 		},
 	[330500004] = {
@@ -37,6 +40,7 @@ local NoticeTable = {
 		['NoticeTime'] = {959},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1},
 		['NoticeTxt'] = '测试公告4'
 		},
 	[330500005] = {
@@ -47,6 +51,7 @@ local NoticeTable = {
 		['NoticeTime'] = {1005},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1},
 		['NoticeTxt'] = '测试公告5'
 		},
 	[330500006] = {
@@ -57,6 +62,7 @@ local NoticeTable = {
 		['NoticeTime'] = {1010},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1},
 		['NoticeTxt'] = '测试公告6'
 		},
 	[330500007] = {
@@ -67,6 +73,7 @@ local NoticeTable = {
 		['NoticeTime'] = {1015},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1},
 		['NoticeTxt'] = '测试公告7'
 		},
 	[330500008] = {
@@ -77,6 +84,7 @@ local NoticeTable = {
 		['NoticeTime'] = {1020},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1},
 		['NoticeTxt'] = '测试公告一01分播放测试公告一01分播放测试公告一01分播放测试公告一01分播放测试公告一01分播放测试公告一01分播放测试公告一01分播放测试公告一01分播放测试公告一01分播放测试公告一01分播放测试公告一01分播放测试公告一01分播放测试公告一01分播放测试公告一01分播放测试公告一01分播放测试公告一01分播放'
 		},
 	[330500009] = {
@@ -87,6 +95,7 @@ local NoticeTable = {
 		['NoticeTime'] = {1025},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1},
 		['NoticeTxt'] = '测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放测试公告二01分播放'
 		},
 	[330500010] = {
@@ -97,6 +106,7 @@ local NoticeTable = {
 		['NoticeTime'] = {925},
 		['NoticeInterval'] = 60,
 		['NoticeEnd'] = 1125,
+		['NoticeChannel'] = {1},
 		['NoticeTxt'] = '抵制不良游戏 拒绝盗版游戏 注意自我保护 谨防受骗上当'
 		},
 	[330500011] = {
@@ -107,6 +117,7 @@ local NoticeTable = {
 		['NoticeTime'] = {1125},
 		['NoticeInterval'] = 300,
 		['NoticeEnd'] = 2325,
+		['NoticeChannel'] = {1},
 		['NoticeTxt'] = '适度游戏益脑 沉迷游戏伤身 合理安排时间 享受健康生活'
 		},
 	[330510001] = {
@@ -117,6 +128,7 @@ local NoticeTable = {
 		['NoticeTime'] = {},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1,2,3},
 		['NoticeTxt'] = '恭喜%s已达到100级'
 		},
 	[330510002] = {
@@ -127,6 +139,7 @@ local NoticeTable = {
 		['NoticeTime'] = {},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1,2},
 		['NoticeTxt'] = '恭喜%s装备已达满星'
 		},
 	[330510003] = {
@@ -137,6 +150,7 @@ local NoticeTable = {
 		['NoticeTime'] = {},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1,2},
 		['NoticeTxt'] = '%s杀戮值过高已进入红名模式'
 		}
 	}

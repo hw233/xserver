@@ -131,6 +131,7 @@ uint32_t sg_rename_item_id;
 uint32_t sg_rename_item_num;
 uint32_t sg_first_trunk_task_id = 0;
 std::map<uint64_t, TaskChapterTable*> task_chapter_map;
+int sg_fight_rand;
 int sg_relive_free_times;
 int sg_relive_first_cost;
 int sg_relive_grow_cost;

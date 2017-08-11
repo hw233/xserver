@@ -285,6 +285,19 @@ static bool script_raid_check_finished(raid_struct *raid, struct raid_script_dat
 			{
 				if(raid->data->raid_ai_event == SCRIPT_EVENT_AUTOMATIC_NPC_TALK || raid->data->raid_ai_event == SCRIPT_EVENT_WAIT_NPC_TALK)
 				{
+					struct DungeonTable *t_config = raid->get_raid_config();
+					if (t_config)
+					{
+						if (t_config
+							&& raid->data->pass_index < t_config->n_PassType
+							&& t_config->PassType[raid->data->pass_index] == 6
+							&& config->n_Parameter1 > 0
+							&& t_config->PassValue[raid->data->pass_index] == config->Parameter1[0])
+						{
+							raid->add_raid_pass_value(6, t_config);
+						}
+					}
+					
 					raid->data->raid_ai_event = 0;
 					return true;
 				}
@@ -593,6 +606,48 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 
 			}
 		return true;
+		}
+		case SCRIPT_EVENT_SET_PLAYER_ATTR:
+		{
+			assert(config->n_Parameter1 >= 2 && config->n_Parameter1 % 2 == 0);			
+			player_struct *player = get_script_raid_event_player(raid);
+			if (player)
+			{
+
+				for(size_t i = 0; i + 1 < config->n_Parameter1; i = i + 2)
+				{
+					uint32_t id = config->Parameter1[i];
+					uint32_t val = player->data->attrData[id] + config->Parameter1[i+1];
+					assert(id >= PLAYER_ATTR_MAXHP && id < PLAYER_ATTR_MAX);			
+					if (id < MAX_BUFF_FIGHT_ATTR)
+					{
+						player->data->buff_fight_attr[id] = val;
+					}
+					player->set_attr(id, val);
+					player->broadcast_one_attr_changed(id, val, false, true);
+					if(id == PLAYER_ATTR_MAXHP)
+					{
+						player->set_attr(PLAYER_ATTR_HP, player->data->attrData[PLAYER_ATTR_MAXHP]);
+						player->broadcast_one_attr_changed(PLAYER_ATTR_HP, player->data->attrData[PLAYER_ATTR_HP], false, true);
+					}
+				}
+
+			}
+			return true;
+		}
+		case  SCRIPT_EVENT_RECOVER_PLAYER_ATTR:
+		{
+			player_struct *player = get_script_raid_event_player(raid);
+			if (player)
+			{
+				player->calculate_attribute(true);
+				player->set_attr(PLAYER_ATTR_HP, player->data->attrData[PLAYER_ATTR_MAXHP]);
+				player->data->buff_fight_attr[PLAYER_ATTR_HP] = player->data->attrData[PLAYER_ATTR_HP];
+				player->broadcast_one_attr_changed(PLAYER_ATTR_HP, player->data->attrData[PLAYER_ATTR_HP], false, true);
+
+			}
+			return true;
+		
 		}
 		default:
 			return false;

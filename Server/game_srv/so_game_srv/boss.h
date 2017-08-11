@@ -1,3 +1,4 @@
+#if 0
 #ifndef BOSS_H
 #define BOSS_H
 
@@ -36,3 +37,4 @@ private:
 	uint64_t next_hate_reduce_time;
 };
 #endif /* BOSS_H */
+#endif

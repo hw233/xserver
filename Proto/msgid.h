@@ -71,6 +71,12 @@
 #define MSG_ID_PARTNER_SKILL_CAST_ANSWER  		10224   //伙伴施法应答  comm_answer, 190500320表示无目标
 #define MSG_ID_ADD_SPEED_BUFF_REQUEST  		10225   //请求添加加速buff  NULL
 #define MSG_ID_DEL_SPEED_BUFF_REQUEST  		10226   //请求删除加速buff  NULL
+#define MSG_ID_LEARN_FUWEN_REQUEST 		10227   // 升级符文请求 learn_fuwen_req
+#define MSG_ID_LEARN_FUWEN_ANSWER 		10228   // 升级符文返回 learn_fuwen_ans
+#define MSG_ID_SET_SKILL_MENU_REQUEST 		10229   // 设置技能套餐请求 skill_menu
+#define MSG_ID_SET_SKILL_MENU_ANSWER 		10230   // 设置技能套餐返回 skill_menu_ans
+#define MSG_ID_SET_FUWEN_OLD_REQUEST 		10231   // 设置旧符文请求 learn_fuwen_req
+#define MSG_ID_SET_FUWEN_OLD_ANSWER 		10232   // 设置旧符文返回 learn_fuwen_ans
 
 //生活技能
 #define MSG_ID_LEARN_LIVE_SKILL_REQUEST 	10250   // 升级生活技能请求 learn_live_req
@@ -146,7 +152,7 @@
 #define MSG_ID_COLLECT_BEGIN_NOTIFY                10562  //开始采集 NotifyCollect
 #define MSG_ID_COLLECT_INTERRUPT_REQUEST                10563  //中断采集 CollectId
 #define MSG_ID_COLLECT_INTERRUPT_NOTIFY                10564  //中断采集 NotifyCollect
-#define MSG_ID_COLLECT_COMMPLETE_NOTIFY                10565  //采集完成 NotifyCollect
+#define MSG_ID_COLLECT_COMMPLETE_NOTIFY                10565  //采集完成 CollectComplete
 #define MSG_ID_COLLECT_COMMPLETE_REQUEST                10566  //采集完成 CollectId
 #define MSG_ID_COLLECT_COMMPLETE_ANSWER                10567  //采集完成 comm_answer 0:成功 1:不是采集者 2:时间未到
 
@@ -223,6 +229,8 @@
 #define MSG_ID_TEAM_SPEEK_REQUEST       10678 //喊话 Chat
 #define MSG_ID_DISBAND_TEAM_NOTIFY         10657 //解散队伍  comm_answer
 #define MSG_ID_TEAM_SUMMON_MEM_ANSWER       10679 // 通知队员跟随 BeLeadAnswer
+#define MSG_ID_IS_TEAM_LEAD_NOTIFY         10680 //当队长通知  TeamPlayerid
+#define MSG_ID_NOT_TEAM_LEAD_NOTIFY         10681 //不当队长通知  TeamPlayerid
 
 
 //吟唱

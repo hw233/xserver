@@ -3760,6 +3760,25 @@ local LifeSkillTable = {
 		['ProMax'] = 1100,
 		['LvPro'] = {100,100,100,100,100,100,100,100,100,100,100},
 		['ItemID'] = {201070059,201070060,201070061,201070062,201070063,201070064,201070065,201070066,201070067}
+		},
+	[410203001] = {
+		['ID'] = 410203001,
+		['Type'] = 3,
+		['Lv'] = 1,
+		['LvMax'] = 1,
+		['NeedJingli'] = 50,
+		['Exp'] = 0,
+		['ExpAdd'] = 0,
+		['NeedDonation'] = 0,
+		['NeedCoin'] = 0,
+		['NeedItem'] = 0,
+		['BreachLv'] = 0,
+		['BreachItem'] = 0,
+		['BreachNum'] = 0,
+		['BreachUnlock'] = 0,
+		['ProMax'] = 0,
+		['LvPro'] = {0},
+		['ItemID'] = {0}
 		}
 	}
 return LifeSkillTable

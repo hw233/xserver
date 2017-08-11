@@ -15,14 +15,14 @@ extern struct minheap monster_manager_m_minheap;
 extern std::list<monster_struct *> monster_manager_delete_list;
 extern std::list<monster_struct *> monster_manager_monster_free_list;
 extern std::set<monster_struct *> monster_manager_monster_used_list;
-extern std::list<boss_struct *> monster_manager_boss_free_list;
-extern std::set<boss_struct *> monster_manager_boss_used_list;
+//extern std::list<boss_struct *> monster_manager_boss_free_list;
+//extern std::set<boss_struct *> monster_manager_boss_used_list;
 
 extern struct minheap monster_manager_m_boss_minheap;
 extern struct comm_pool monster_manager_monster_data_pool;
-extern struct comm_pool monster_manager_boss_data_pool;
+//extern struct comm_pool monster_manager_boss_data_pool;
 extern std::map<uint64_t, monster_struct *> monster_manager_all_monsters_id;
-extern std::map<uint64_t, boss_struct *> monster_manager_all_boss_id;
+//extern std::map<uint64_t, boss_struct *> monster_manager_all_boss_id;
 
 class monster_manager
 {
@@ -42,7 +42,7 @@ public:
 	static void on_tick_1000();
 
 	static unsigned int get_monster_pool_max_num();
-	static unsigned int get_boss_pool_max_num();		
+//	static unsigned int get_boss_pool_max_num();		
 
 		//刷出一个怪物并加入相位
 	static monster_struct *create_sight_space_monster(sight_space_struct *sight_space, scene_struct *scene,
@@ -58,10 +58,10 @@ public:
 	static monster_struct *add_monster(uint64_t monster_id, uint64_t lv, unit_struct *owner = NULL);
 	static void delete_monster(monster_struct *p);
 	static monster_struct * get_monster_by_id(uint64_t id);
-	static boss_struct * get_boss_by_id(uint64_t id);
+//	static boss_struct * get_boss_by_id(uint64_t id);
 
 	static int init_monster_struct(int num, unsigned long key);
-	static int init_boss_struct(int num, unsigned long key);
+//	static int init_boss_struct(int num, unsigned long key);
 	static int reinit_monster_min_heap();
 	static int reinit_boss_min_heap();	
 //	static int resume_monster_struct(int num, unsigned long key);
@@ -72,22 +72,22 @@ public:
 	static monster_struct *get_ontick_monster(uint64_t now);
 	static void monster_ontick_delete(monster_struct *p);
 
-	static void boss_ontick_settimer(boss_struct *p);
-	static void boss_ontick_reset_timer(boss_struct *p);
-	static boss_struct *get_ontick_boss(uint64_t now);
-	static void boss_ontick_delete(boss_struct *p);
+	static void boss_ontick_settimer(monster_struct *p);
+//	static void boss_ontick_reset_timer(monster_struct *p);
+	static monster_struct *get_ontick_boss(uint64_t now);
+//	static void boss_ontick_delete(monster_struct *p);
 private:
 //	static int resume_monster_bag_data(monster_struct *monster);
 	static int add_monster(monster_struct *p);
 	static int remove_monster(monster_struct *p);
 	static monster_struct *alloc_monster();
 
-	static int add_boss(boss_struct *p);
-	static int remove_boss(boss_struct *p);
-	static boss_struct *alloc_boss();
+//	static int add_boss(boss_struct *p);
+//	static int remove_boss(boss_struct *p);
+//	static boss_struct *alloc_boss();
 
 	static void delete_monster_impl(monster_struct *p);
-	static void delete_boss_impl(boss_struct *p);
+//	static void delete_boss_impl(boss_struct *p);
 
 private:
 };

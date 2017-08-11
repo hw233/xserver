@@ -10,7 +10,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,	--正确答案
 		['GangsAnseer'] = '0',	--帮派答题答案
 		['Coin'] = 1000,	--银币奖励系数
-		['Exp'] = 10000	--经验奖励系数
+		['Exp'] = 1000	--经验奖励系数
 		},
 	[390101002] = {
 		['ID'] = 390101002,
@@ -23,7 +23,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101003] = {
 		['ID'] = 390101003,
@@ -36,7 +36,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101004] = {
 		['ID'] = 390101004,
@@ -49,7 +49,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101005] = {
 		['ID'] = 390101005,
@@ -62,7 +62,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101006] = {
 		['ID'] = 390101006,
@@ -75,7 +75,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101007] = {
 		['ID'] = 390101007,
@@ -88,7 +88,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101008] = {
 		['ID'] = 390101008,
@@ -101,7 +101,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101009] = {
 		['ID'] = 390101009,
@@ -114,7 +114,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101010] = {
 		['ID'] = 390101010,
@@ -127,7 +127,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101011] = {
 		['ID'] = 390101011,
@@ -140,7 +140,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101012] = {
 		['ID'] = 390101012,
@@ -153,7 +153,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101013] = {
 		['ID'] = 390101013,
@@ -166,7 +166,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101014] = {
 		['ID'] = 390101014,
@@ -179,7 +179,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101015] = {
 		['ID'] = 390101015,
@@ -192,7 +192,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101016] = {
 		['ID'] = 390101016,
@@ -205,7 +205,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101017] = {
 		['ID'] = 390101017,
@@ -218,7 +218,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101018] = {
 		['ID'] = 390101018,
@@ -231,7 +231,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101019] = {
 		['ID'] = 390101019,
@@ -244,7 +244,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101020] = {
 		['ID'] = 390101020,
@@ -257,7 +257,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101021] = {
 		['ID'] = 390101021,
@@ -270,7 +270,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101022] = {
 		['ID'] = 390101022,
@@ -283,7 +283,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101023] = {
 		['ID'] = 390101023,
@@ -296,7 +296,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101024] = {
 		['ID'] = 390101024,
@@ -309,7 +309,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101025] = {
 		['ID'] = 390101025,
@@ -322,7 +322,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101026] = {
 		['ID'] = 390101026,
@@ -335,7 +335,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101027] = {
 		['ID'] = 390101027,
@@ -348,7 +348,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101028] = {
 		['ID'] = 390101028,
@@ -361,7 +361,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101029] = {
 		['ID'] = 390101029,
@@ -374,7 +374,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101030] = {
 		['ID'] = 390101030,
@@ -387,7 +387,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101031] = {
 		['ID'] = 390101031,
@@ -400,7 +400,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101032] = {
 		['ID'] = 390101032,
@@ -413,7 +413,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101033] = {
 		['ID'] = 390101033,
@@ -426,7 +426,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101034] = {
 		['ID'] = 390101034,
@@ -439,7 +439,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101035] = {
 		['ID'] = 390101035,
@@ -452,7 +452,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101036] = {
 		['ID'] = 390101036,
@@ -465,7 +465,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101037] = {
 		['ID'] = 390101037,
@@ -478,7 +478,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101038] = {
 		['ID'] = 390101038,
@@ -491,7 +491,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101039] = {
 		['ID'] = 390101039,
@@ -504,7 +504,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101040] = {
 		['ID'] = 390101040,
@@ -517,7 +517,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101041] = {
 		['ID'] = 390101041,
@@ -530,7 +530,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101042] = {
 		['ID'] = 390101042,
@@ -543,7 +543,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101043] = {
 		['ID'] = 390101043,
@@ -556,7 +556,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390101044] = {
 		['ID'] = 390101044,
@@ -569,7 +569,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102001] = {
 		['ID'] = 390102001,
@@ -582,7 +582,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102002] = {
 		['ID'] = 390102002,
@@ -595,7 +595,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102003] = {
 		['ID'] = 390102003,
@@ -608,7 +608,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102004] = {
 		['ID'] = 390102004,
@@ -621,7 +621,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102005] = {
 		['ID'] = 390102005,
@@ -634,7 +634,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102006] = {
 		['ID'] = 390102006,
@@ -647,7 +647,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102007] = {
 		['ID'] = 390102007,
@@ -660,7 +660,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102008] = {
 		['ID'] = 390102008,
@@ -673,7 +673,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102009] = {
 		['ID'] = 390102009,
@@ -686,7 +686,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102010] = {
 		['ID'] = 390102010,
@@ -699,7 +699,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102011] = {
 		['ID'] = 390102011,
@@ -712,7 +712,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102012] = {
 		['ID'] = 390102012,
@@ -725,7 +725,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102013] = {
 		['ID'] = 390102013,
@@ -738,7 +738,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102014] = {
 		['ID'] = 390102014,
@@ -751,7 +751,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102015] = {
 		['ID'] = 390102015,
@@ -764,7 +764,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102016] = {
 		['ID'] = 390102016,
@@ -777,7 +777,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102017] = {
 		['ID'] = 390102017,
@@ -790,7 +790,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102018] = {
 		['ID'] = 390102018,
@@ -803,7 +803,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102019] = {
 		['ID'] = 390102019,
@@ -816,7 +816,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102020] = {
 		['ID'] = 390102020,
@@ -829,7 +829,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102021] = {
 		['ID'] = 390102021,
@@ -842,7 +842,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102022] = {
 		['ID'] = 390102022,
@@ -855,7 +855,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102023] = {
 		['ID'] = 390102023,
@@ -868,7 +868,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102024] = {
 		['ID'] = 390102024,
@@ -881,7 +881,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102025] = {
 		['ID'] = 390102025,
@@ -894,7 +894,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102026] = {
 		['ID'] = 390102026,
@@ -907,7 +907,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102027] = {
 		['ID'] = 390102027,
@@ -920,7 +920,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102028] = {
 		['ID'] = 390102028,
@@ -933,7 +933,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102029] = {
 		['ID'] = 390102029,
@@ -946,7 +946,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102030] = {
 		['ID'] = 390102030,
@@ -959,7 +959,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102031] = {
 		['ID'] = 390102031,
@@ -972,7 +972,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102032] = {
 		['ID'] = 390102032,
@@ -985,7 +985,7 @@ local QuestionTable = {
 		['RightAnseer'] = 4,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102033] = {
 		['ID'] = 390102033,
@@ -998,7 +998,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102034] = {
 		['ID'] = 390102034,
@@ -1011,7 +1011,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102035] = {
 		['ID'] = 390102035,
@@ -1024,7 +1024,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102036] = {
 		['ID'] = 390102036,
@@ -1037,7 +1037,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102037] = {
 		['ID'] = 390102037,
@@ -1050,7 +1050,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102038] = {
 		['ID'] = 390102038,
@@ -1063,7 +1063,7 @@ local QuestionTable = {
 		['RightAnseer'] = 1,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102039] = {
 		['ID'] = 390102039,
@@ -1076,7 +1076,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102040] = {
 		['ID'] = 390102040,
@@ -1089,7 +1089,7 @@ local QuestionTable = {
 		['RightAnseer'] = 2,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102041] = {
 		['ID'] = 390102041,
@@ -1102,7 +1102,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102042] = {
 		['ID'] = 390102042,
@@ -1115,7 +1115,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102043] = {
 		['ID'] = 390102043,
@@ -1128,7 +1128,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390102044] = {
 		['ID'] = 390102044,
@@ -1141,7 +1141,7 @@ local QuestionTable = {
 		['RightAnseer'] = 3,
 		['GangsAnseer'] = '0',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103001] = {
 		['ID'] = 390103001,
@@ -1154,7 +1154,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '雅典',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103002] = {
 		['ID'] = 390103002,
@@ -1167,7 +1167,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '贝肯鲍尔',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103003] = {
 		['ID'] = 390103003,
@@ -1180,7 +1180,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '尤文图斯',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103004] = {
 		['ID'] = 390103004,
@@ -1193,7 +1193,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '90',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103005] = {
 		['ID'] = 390103005,
@@ -1206,7 +1206,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '故宫',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103006] = {
 		['ID'] = 390103006,
@@ -1219,7 +1219,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '排水',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103007] = {
 		['ID'] = 390103007,
@@ -1232,7 +1232,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '南昌',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103008] = {
 		['ID'] = 390103008,
@@ -1245,7 +1245,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '王勃',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103009] = {
 		['ID'] = 390103009,
@@ -1258,7 +1258,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '时不再来',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103010] = {
 		['ID'] = 390103010,
@@ -1271,7 +1271,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '白居易',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103011] = {
 		['ID'] = 390103011,
@@ -1284,7 +1284,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '木星',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103012] = {
 		['ID'] = 390103012,
@@ -1297,7 +1297,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '1',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103013] = {
 		['ID'] = 390103013,
@@ -1310,7 +1310,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '雅典',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103014] = {
 		['ID'] = 390103014,
@@ -1323,7 +1323,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '贝肯鲍尔',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103015] = {
 		['ID'] = 390103015,
@@ -1336,7 +1336,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '尤文图斯',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103016] = {
 		['ID'] = 390103016,
@@ -1349,7 +1349,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '90',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103017] = {
 		['ID'] = 390103017,
@@ -1362,7 +1362,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '故宫',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103018] = {
 		['ID'] = 390103018,
@@ -1375,7 +1375,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '排水',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103019] = {
 		['ID'] = 390103019,
@@ -1388,7 +1388,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '南昌',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103020] = {
 		['ID'] = 390103020,
@@ -1401,7 +1401,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '王勃',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103021] = {
 		['ID'] = 390103021,
@@ -1414,7 +1414,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '时不再来',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103022] = {
 		['ID'] = 390103022,
@@ -1427,7 +1427,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '白居易',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103023] = {
 		['ID'] = 390103023,
@@ -1440,7 +1440,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '木星',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		},
 	[390103024] = {
 		['ID'] = 390103024,
@@ -1453,7 +1453,7 @@ local QuestionTable = {
 		['RightAnseer'] = 0,
 		['GangsAnseer'] = '1',
 		['Coin'] = 1000,
-		['Exp'] = 10000
+		['Exp'] = 1000
 		}
 	}
 return QuestionTable

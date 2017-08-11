@@ -218,8 +218,7 @@ void monster_struct::on_pursue()
 
 void monster_struct::clear_monster_timer()
 {
-	if (is_node_in_heap(&monster_manager_m_minheap, this))
-		monster_manager::monster_ontick_delete(this);
+	monster_manager::monster_ontick_delete(this);
 }
 
 void monster_struct::calculate_attribute(void)
@@ -1682,6 +1681,6 @@ void monster_struct::monster_dead_creat_collect(unit_struct *murderer)
 		return;
 	}
 
-	Collect::CreateCollectByPos(this->scene, actor_config->CollectionDrop, this->get_pos()->pos_x , 9, this->get_pos()->pos_z, 0, player);
+	Collect::CreateCollectByPos(this->scene, actor_config->CollectionDrop, this->get_pos()->pos_x , player->data->pos_y, this->get_pos()->pos_z, 0, player);
 
 }

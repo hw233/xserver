@@ -79,6 +79,8 @@
 #include "partner.pb-c.h"
 #include "server_level.h"
 
+extern uint32_t guild_battle_manager_activity_start_ts;
+
 ItemUseEffectInfo::~ItemUseEffectInfo()
 {
 //	LOG_ERR("[%s:%d]", __FUNCTION__, __LINE__);
@@ -266,6 +268,11 @@ void player_struct::try_return_guild_wait_raid()
 			break;
 		}
 
+		if (!player_can_return_guild_battle(this))
+		{
+			break;
+		}
+
 		guild_wait_raid_struct *raid = guild_wait_raid_manager::get_avaliable_guild_wait_raid(data->guild_id);
 		if (!raid)
 		{
@@ -279,7 +286,13 @@ void player_struct::try_return_guild_wait_raid()
 		return;
 	} while(0);
 
-	try_out_raid();
+//	try_out_raid();
+	{
+		data->scene_id = sg_guild_scene_id;
+		float pos_x = 0.0, pos_z = 0.0;
+		get_scene_birth_pos(data->scene_id, &pos_x, NULL, &pos_z, NULL);
+		set_pos(pos_x, pos_z);
+	}
 }
 
 void player_struct::try_return_guild_battle_raid()
@@ -294,6 +307,12 @@ void player_struct::try_return_guild_battle_raid()
 		}
 
 		if (player_can_participate_guild_battle(this) != 0)
+		{
+			to_wait = false;
+			break;
+		}
+
+		if (!player_can_return_guild_battle(this))
 		{
 			to_wait = false;
 			break;
@@ -852,6 +871,14 @@ void player_struct::process_offline(bool again/* = false*/, EXTERN_DATA *ext_dat
 			//	data->scene_id = raid->m_config->DungeonID;
 			// }
 			raid->player_offline(this);
+			if (raid->is_guild_battle_raid())
+			{
+				data->guild_battle_activity_time = guild_battle_manager_activity_start_ts;
+			}
+			else
+			{
+				data->guild_battle_activity_time = 0;
+			}
 		}
 		else
 		{
@@ -1734,6 +1761,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 
 	db_info.server_level_break_count = data->server_level_break_count;
 	db_info.server_level_break_notify = data->server_level_break_notify;
+	db_info.guild_battle_activity_time = data->guild_battle_activity_time;
 
 	return player_dbinfo__pack(&db_info, out_data);
 }
@@ -2219,6 +2247,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 
 	data->server_level_break_count = db_info->server_level_break_count;
 	data->server_level_break_notify = db_info->server_level_break_notify;
+	data->guild_battle_activity_time = db_info->guild_battle_activity_time;
 
 	player_dbinfo__free_unpacked(db_info, NULL);
 
@@ -3118,6 +3147,11 @@ void player_struct::pack_sight_player_base_info(SightPlayerBaseInfo *info)
 	info->region_id = data->attrData[PLAYER_ATTR_REGION_ID];
 	info->guild_id = data->guild_id;
 	info->fashion_weapon_color = data->attrData[PLAYER_ATTR_WEAPON_COLOR];
+	if (m_team != NULL && m_team->GetLeadId() == this->get_uuid())
+	{
+		info->team_lead = true;
+	}
+	
 /*
 	info->data = &pos_pool_pos_point[pos_pool_len];
 	if (!is_unit_in_move(&data->move_path))
@@ -4003,9 +4037,9 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 		return;
 	}
 	player.xun_map_id.erase(it);
-	float x = tTable->PointX / 100;
-	float y = tTable->PointY / 100;
-	float z = tTable->PointZ / 100;
+	float x = (float)tTable->PointX / 100;
+	float y = (float)tTable->PointY / 100;
+	float z = (float)tTable->PointZ / 100;
 	uint32_t r = rand() % 10000;
 	uint32_t all = 0;
 	uint32_t event = 0;
@@ -12250,7 +12284,7 @@ bool notice_use_art(uint32_t statis_id)
 {
 	switch(statis_id)
 	{
-		case MAGIC_TYPE_GATHER:
+//		case MAGIC_TYPE_GATHER:
 		case MAGIC_TYPE_MONSTER_DEAD:
 		case MAGIC_TYPE_TASK_REWARD:
 		case MAGIC_TYPE_WANYAOGU_BBQ:

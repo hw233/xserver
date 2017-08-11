@@ -370,10 +370,20 @@ void buff_struct::del_buff()
 			case 170000028: //-免疫PVP阴区域BUFF
 			case 170000026: //-免疫PVP阳区域BUFF
 			case 170000027: //-免疫PVP阴阳区域BUFF
+			{
+				if (m_owner)
+					m_owner->reset_unit_buff_state();
+			}
+			break;
 			case 170000029: //-剩余一点血不死
 			{
 				if (m_owner)
 					m_owner->reset_unit_buff_state();
+				if (m_owner->is_alive())
+				{
+					uint32_t maxhp = m_owner->get_attr(PLAYER_ATTR_MAXHP);
+					m_owner->broadcast_one_attr_changed(PLAYER_ATTR_HP, maxhp, true, true);
+				}
 			}
 			break;
 		}

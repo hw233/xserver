@@ -567,6 +567,7 @@ struct player_data
 	uint32_t guild_office;
 	uint32_t guild_donation;
 	char guild_name[300];
+	uint32_t guild_battle_activity_time; //所参加的帮会战活动开始时间
 
 	//八卦牌
 	BaguapaiDressInfo baguapai_dress[MAX_BAGUAPAI_STYLE_NUM]; //八卦牌装备列表

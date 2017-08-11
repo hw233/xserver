@@ -18,6 +18,12 @@ message NotifyCollect
 	required uint64 playerid = 1;
 	required uint32 collectid = 2;
 }
+message CollectComplete
+{
+	required uint64 playerid = 1;
+	required uint32 collectid = 2;
+	required bool del = 3; //true 删除
+}
 
 //吟唱类型
 enum SingType

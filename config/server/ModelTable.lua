@@ -341,6 +341,33 @@ local ModelTable = {
 		['BindEffect'] = {''},
 		['Scale'] = .40
 		},
+	[130200028] = {
+		['ModelId'] = 130200028,
+		['ModelPath'] = 'Prefabs/Actor/npc_018',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
+	[130200029] = {
+		['ModelId'] = 130200029,
+		['ModelPath'] = 'Prefabs/Actor/npc_019',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
+	[130200030] = {
+		['ModelId'] = 130200030,
+		['ModelPath'] = 'Prefabs/Actor/npc_020',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
 	[130400003] = {
 		['ModelId'] = 130400003,
 		['ModelPath'] = 'Prefabs/Actor/mw_d_001',

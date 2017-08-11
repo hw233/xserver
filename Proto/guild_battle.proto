@@ -69,6 +69,7 @@ message GuildBattleRecordData
 	required uint32 dead = 3; //死亡数
 	optional uint32 boss = 4; //对Boss的伤害
 	optional uint32 monster = 5; //击杀小怪数
+	optional bool   bossKiller = 6; //是否击杀Boss
 }
 
 //帮会战战绩信息通知
@@ -84,6 +85,7 @@ message GuildBattleRoundFinishNotify
 	required uint32 score = 4; //积分
 	required uint32 guildTreasure = 5; //帮会资金
 	required uint32 guildDonation = 6; //帮贡
+	repeated GuildBattleRankData ranks = 7; //前四帮会
 }
 
 //帮会战活动结算通知
@@ -98,6 +100,7 @@ message GuildBattleActivityFinishNotify
 message GuildBattleRoundInfoNotify
 {
 	required uint32 endTime = 1; //结束时间
+	required uint32 bossMaxHp = 2; //Boss最大血量
 }
 
 //帮会战击杀通知
@@ -112,6 +115,7 @@ message GuildBattleBossDamageNotify
 {
 	required uint64 playerId = 1; //伤害者ID
 	required uint32 damage = 2; //本次造成的伤害值
+	required bool   kill = 3; //是否击杀
 }
 
 

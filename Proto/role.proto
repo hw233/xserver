@@ -68,6 +68,7 @@ message ServerLevelInfoNotify
 	required uint32 level_id = 1; //配置表ID
 	required uint32 break_goal = 2; //突破目标
 	required uint32 break_num = 3; //突破进度
+	required bool   breaking = 4; //是否正在突破（true表示有经验加成效果）
 }
 
 

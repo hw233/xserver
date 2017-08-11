@@ -35,3 +35,4 @@ logs
 Server/game_srv/liblog4c_sd.a
 Server/print_name
 memerr.txt
+memerr.log.*

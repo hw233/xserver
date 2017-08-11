@@ -122,6 +122,7 @@ extern uint32_t sg_rename_item_id;
 extern uint32_t sg_rename_item_num;
 extern std::map<uint64_t, TaskChapterTable*> task_chapter_map;
 extern uint32_t sg_first_trunk_task_id; //第一个主线任务id
+extern int sg_fight_rand;
 extern int sg_relive_free_times;
 extern int sg_relive_first_cost;
 extern int sg_relive_grow_cost;

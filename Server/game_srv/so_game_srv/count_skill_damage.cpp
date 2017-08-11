@@ -389,9 +389,10 @@ static int32_t count_enemy_damage(struct SkillTable *skillconfig,
 	//	- defence[PLAYER_ATTR_DMG_DEF_PP];
 	//double tmp_rate = 1;
 	damage = damage * crit_attack_rate;// * tmp_rate;
+	damage *= ((100 - sg_fight_rand + random() % (sg_fight_rand * 2)) / 100.0);
 	if (damage <= 0)
 		damage = 1;
-
+	
 	damage *= (other_rate / 10000.0);
 	if (defence_unit->buff_state & BUFF_STATE_ONEBLOOD)
 	{

@@ -14,19 +14,19 @@ std::set<buff_struct *> buff_manager_buff_used_list;
 struct mass_pool buff_manager_buff_data_pool;
 
 class monster_struct;
-class boss_struct;
+//class boss_struct;
 struct ai_interface *all_monster_ai_interface[MAX_MONSTER_AI_INTERFACE];
 std::map<uint64_t, monster_struct *> monster_manager_all_monsters_id;
-std::map<uint64_t, boss_struct *> monster_manager_all_boss_id;
+//std::map<uint64_t, boss_struct *> monster_manager_all_boss_id;
 struct minheap monster_manager_m_minheap;
 std::list<monster_struct *> monster_manager_delete_list;
 std::list<monster_struct *> monster_manager_monster_free_list;
 std::set<monster_struct *> monster_manager_monster_used_list;
-std::list<boss_struct *> monster_manager_boss_free_list;
-std::set<boss_struct *> monster_manager_boss_used_list;
+//std::list<boss_struct *> monster_manager_boss_free_list;
+//std::set<boss_struct *> monster_manager_boss_used_list;
 struct minheap monster_manager_m_boss_minheap;
 struct comm_pool monster_manager_monster_data_pool;
-struct comm_pool monster_manager_boss_data_pool;
+//struct comm_pool monster_manager_boss_data_pool;
 
 std::list<cash_truck_struct *> cash_truck_manager_free_list;
 std::set<cash_truck_struct *> cash_truck_manager_used_list;
@@ -68,6 +68,7 @@ std::set<player_struct *> guild_battle_manager_waiting_player;   //个人
 std::set<Team *> guild_battle_manager_waiting_team;  //队伍，保证队伍里面都是同一个工会
 std::multimap<uint32_t, struct matched_team *> guild_battle_manager_matched_team; //组合好的队伍
 
+uint32_t guild_battle_manager_activity_start_ts = 0;
 uint32_t guild_battle_manager_action_tick = 0;
 uint32_t guild_battle_manager_action_state = 0;
 uint32_t guild_battle_manager_action_round = 0;
@@ -110,5 +111,6 @@ std::set<partner_struct *> partner_manager_partner_used_list;
 struct mass_pool partner_manager_partner_data_pool;
 struct minheap partner_manager_minheap;
 
+const char g_tmp_name[MAX_PLAYER_NAME_LEN + 1] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 UNIT_FIGHT_TYPE pk_type_to_fight_type[MAX_PK_TYPE][MAX_PK_TYPE];
 

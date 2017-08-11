@@ -1,3 +1,4 @@
+syntax = "proto2";
 message DBGuildBuilding
 {
 	required uint32 level = 1;

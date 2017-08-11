@@ -33,7 +33,7 @@ static void ai_attack_player_15(monster_struct *monster, player_struct *player, 
 {
 	if (damage <= 0)
 		return;
-	boss_struct *boss = monster_manager::get_boss_by_id(monster->ai_data.add_boss_hp_ai.boss_uuid);
+	monster_struct *boss = monster_manager::get_monster_by_id(monster->ai_data.add_boss_hp_ai.boss_uuid);
 	if (!boss)
 		return;
 	double *attr = boss->get_all_attr();	

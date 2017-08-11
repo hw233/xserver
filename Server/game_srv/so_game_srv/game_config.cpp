@@ -44,6 +44,9 @@ static void generate_parameters(void)
 		sg_rename_item_id = config->parameter1[0];
 		sg_rename_item_num = config->parameter1[1];
 	}
+	sg_fight_rand = get_config_by_id(161000312, &parameter_config)->parameter1[0];
+	assert(sg_fight_rand);
+		
 	sg_relive_free_times = get_config_by_id(161000008, &parameter_config)->parameter1[0];
 	sg_relive_first_cost = get_config_by_id(161000009, &parameter_config)->parameter1[0];
 	sg_relive_grow_cost = get_config_by_id(161000010, &parameter_config)->parameter1[0];
@@ -397,13 +400,13 @@ static void generate_parameters(void)
 		}
 	}
 
-//	sg_guild_battle_match_time = 20;
-//	sg_guild_battle_fight_time = 20;
-//	sg_guild_battle_settle_time = 20;
-//	sg_guild_battle_round_num = 3;
-//	sg_guild_battle_final_match_time = 20;
-//	sg_guild_battle_final_fight_time = 20;
-//	sg_guild_battle_final_settle_time = 20;
+	sg_guild_battle_match_time = 20;
+	sg_guild_battle_fight_time = 20;
+	sg_guild_battle_settle_time = 20;
+	sg_guild_battle_round_num = 6;
+	sg_guild_battle_final_match_time = 20;
+	sg_guild_battle_final_fight_time = 60;
+	sg_guild_battle_final_settle_time = 20;
 
 	config = get_config_by_id(161000235, &parameter_config);
 	if (config && config->n_parameter1 >= 1)
@@ -1257,6 +1260,10 @@ static void adjust_dungeon_table(lua_State *L, struct sproto_type *type)
 		else if (config->DengeonRank == DUNGEON_TYPE_SCRIPT)
 		{
 			add_raid_script_config(L, type, config, config->DungeonPass);
+		}
+		else if (config->DengeonRank == DUNGEON_TYPE_GUILD_WAIT)
+		{
+			config->DengeonType = 1;
 		}
 	}
 }
@@ -2536,7 +2543,8 @@ int read_all_excel_data()
 
 	adjust_escort_config();
 
-	lua_close(L);	
+	lua_close(L);
+	sproto_release(sp);
 	free(buf);
 	return (0);
 }
@@ -2568,7 +2576,8 @@ int reload_config()
 	
 	generate_parameters();
 
-	lua_close(L);	
+	lua_close(L);
+	sproto_release(sp);
 	free(buf);
 	return (0);
 }

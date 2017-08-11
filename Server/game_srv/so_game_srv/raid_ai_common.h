@@ -50,6 +50,8 @@ enum
 	SCRIPT_EVENT_PLAY_EFFECT			  = 45, //播放特效
 	SCRIPT_EVENT_DELETE_MONSTER			  = 46, //删除副本内特定怪物
 	SCRIPT_EVENT_FAIL_RAID               = 47, //副本失败
+	SCRIPT_EVENT_SET_PLAYER_ATTR		  = 48, //修改玩家属性
+	SCRIPT_EVENT_RECOVER_PLAYER_ATTR	  = 49, //恢复玩家属性
 	
 };
 

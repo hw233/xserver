@@ -1,8 +1,8 @@
 local MountsTable = {
 	[180000001] = {
 		['ID'] = 180000001,	--索引
-		['Name'] = '凤凰',	--名称
-		['ResId'] = 130500001,	--模型编号
+		['Name'] = '杰尼龟',	--名称
+		['ResId'] = 130500003,	--模型编号
 		['BaseAttribute'] = 102200001,	--属性组id
 		['MountsAttribute'] = {21,46,2,3,4,15},	--坐骑属性
 		['AttributeCeiling'] = {8,10,0,0,0,0},	--属性上限
@@ -61,8 +61,8 @@ local MountsTable = {
 		},
 	[180000004] = {
 		['ID'] = 180000004,
-		['Name'] = '杰尼龟',
-		['ResId'] = 130500003,
+		['Name'] = '凤凰',
+		['ResId'] = 130500001,
 		['BaseAttribute'] = 102200001,
 		['MountsAttribute'] = {21,46,2,3,4,15},
 		['AttributeCeiling'] = {10,12,250,55,110,15},

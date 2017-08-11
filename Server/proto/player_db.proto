@@ -1,3 +1,4 @@
+syntax = "proto2";
 option optimize_for = LITE_RUNTIME;
 
 message DBAttr
@@ -68,10 +69,21 @@ message DBEquip
 
 message SkillDbData
 {
+	repeated SkillOneDbData all = 1; //
+	required uint32 num = 2; //
+}
+message FuwenDb
+{
 	required uint32 id = 1;
 	required uint32 lv = 2;
-	repeated uint32 fuwen = 3;
-	required uint32 cur_fuwen = 4; //使用的符文
+	required bool is_new = 3; //ture 新的
+}
+message SkillOneDbData
+{
+	required uint32 id = 1;
+	required uint32 lv = 2;
+	repeated FuwenDb fuwen = 3;
+	repeated uint32 cur_fuwen = 4; //使用的符文
 }
 
 message FashionDbData
@@ -364,7 +376,7 @@ message PlayerDBInfo
 	repeated uint32 raid_reward_id = 22;  //记录副本收益次数的副本ID
 	repeated uint32 raid_reward_num = 23;  //记录副本收益次数
 	repeated DBEquip equip_list = 24; //装备列表
-	repeated SkillDbData skill = 25;
+	optional SkillDbData skill = 25;
 	repeated FashionDbData fashion = 26;
 	repeated uint32 color = 27;  //已解锁颜色
 	repeated int32 color_isnew = 28;  //
@@ -420,6 +432,7 @@ message PlayerDBInfo
 	optional DBZhenying zhenying = 78; //阵营
 	required uint32 server_level_break_count = 79; //服务器等级突破计数
 	required uint32 server_level_break_notify = 80; //服务器等级突破通知
+	required uint32 guild_battle_activity_time = 81; //所参加的帮会战活动开始时间
 }
 
 message DBAutoAddHp

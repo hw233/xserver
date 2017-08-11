@@ -58,9 +58,9 @@ monster_struct * monster_manager::get_monster_by_id(uint64_t id)
 		return it->second;
 	}
 
-	return get_boss_by_id(id);
+//	return get_boss_by_id(id);
 	
-//	return NULL;
+	return NULL;
 }
 
 int monster_manager::reset_all_monster_ai()
@@ -73,13 +73,13 @@ int monster_manager::reset_all_monster_ai()
 		}
 	}
 
-	{
-		std::map<uint64_t, boss_struct *>::iterator it = monster_manager_all_boss_id.begin();
-		for (; it != monster_manager_all_boss_id.end(); ++it)
-		{
-			it->second->set_ai_interface(it->second->ai_type);
-		}
-	}
+	// {
+	// 	std::map<uint64_t, boss_struct *>::iterator it = monster_manager_all_boss_id.begin();
+	// 	for (; it != monster_manager_all_boss_id.end(); ++it)
+	// 	{
+	// 		it->second->set_ai_interface(it->second->ai_type);
+	// 	}
+	// }
 	return (0);
 }
 
@@ -108,13 +108,29 @@ static void minheap_set_monster_timeout_index(int index, void *a)
 void monster_manager::monster_ontick_settimer(monster_struct *p)
 {
 	assert(p->mark_delete == false);
-	push_heap(&monster_manager_m_minheap, p);
+	switch (p->config->HateType)
+	{
+		case MONSTER_TYPE_DEFINE_BOSS:
+			push_heap(&monster_manager_m_boss_minheap, p);			
+			break;
+		default:
+			push_heap(&monster_manager_m_minheap, p);
+			break;
+	}
 }
 
 void monster_manager::monster_ontick_reset_timer(monster_struct *p)
 {
-	assert(p->mark_delete == false);	
-	adjust_heap_node(&monster_manager_m_minheap, p);
+	assert(p->mark_delete == false);
+	switch (p->config->HateType)
+	{
+		case MONSTER_TYPE_DEFINE_BOSS:
+			adjust_heap_node(&monster_manager_m_boss_minheap, p);			
+			break;
+		default:
+			adjust_heap_node(&monster_manager_m_minheap, p);
+			break;
+	}
 }
 
 monster_struct *monster_manager::get_ontick_monster(uint64_t now)
@@ -129,14 +145,26 @@ monster_struct *monster_manager::get_ontick_monster(uint64_t now)
 
 void monster_manager::monster_ontick_delete(monster_struct *p)
 {
-	erase_heap_node(&monster_manager_m_minheap, p);
+	switch (p->config->HateType)
+	{
+		case MONSTER_TYPE_DEFINE_BOSS:
+			if (is_node_in_heap(&monster_manager_m_boss_minheap, p))
+				erase_heap_node(&monster_manager_m_boss_minheap, p);
+			break;
+		default:
+			if (is_node_in_heap(&monster_manager_m_minheap, p))			
+				erase_heap_node(&monster_manager_m_minheap, p);
+			break;
+	}
 }
 
 //////////////////////////////////////////
 
 int monster_manager::init_monster_struct(int num, unsigned long key)
 {
+		//BOSS怪物数量写死是普通怪物的20%
 	init_heap(&monster_manager_m_minheap, num, minheap_cmp_monster_timeout, minheap_get_monster_timeout_index, minheap_set_monster_timeout_index);
+ 	init_heap(&monster_manager_m_boss_minheap, num / 5, minheap_cmp_monster_timeout, minheap_get_monster_timeout_index, minheap_set_monster_timeout_index);
 
 	monster_struct *monster;
 	for (int i = 0; i < num; ++i) {
@@ -337,7 +365,7 @@ void monster_manager::on_tick_1()
 void monster_manager::on_tick_5()
 {
 	uint64_t now = time_helper::get_cached_time();
-	boss_struct *boss = get_ontick_boss(now);
+	monster_struct *boss = get_ontick_boss(now);
 	while (boss != NULL)
 	{
 		boss->data->ontick_time = now + boss->ai_config->Response;
@@ -395,15 +423,17 @@ void monster_manager::on_tick_50()
 		 ite != monster_manager_delete_list.end(); ++ite)
 	{
 		assert((*ite)->mark_delete == true);
-		switch ((int)(*ite)->get_unit_type())
-		{
-			case UNIT_TYPE_MONSTER:
-				delete_monster_impl(*ite);
-				break;
-			case UNIT_TYPE_BOSS:
-				delete_boss_impl((boss_struct *)(*ite));
-				break;
-		}
+		delete_monster_impl(*ite);
+		
+		// switch ((int)(*ite)->get_unit_type())
+		// {
+		// 	case UNIT_TYPE_MONSTER:
+		// 		delete_monster_impl(*ite);
+		// 		break;
+		// 	case UNIT_TYPE_BOSS:
+		// 		delete_boss_impl((boss_struct *)(*ite));
+		// 		break;
+		// }
 	}
 	monster_manager_delete_list.clear();
 }
@@ -429,10 +459,10 @@ unsigned int monster_manager::get_monster_pool_max_num()
 {
 	return monster_manager_monster_data_pool.num;
 }
-unsigned int monster_manager::get_boss_pool_max_num()
-{
-	return monster_manager_boss_data_pool.num;
-}
+// unsigned int monster_manager::get_boss_pool_max_num()
+// {
+// 	return monster_manager_boss_data_pool.num;
+// }
 
 monster_struct *monster_manager::add_monster(uint64_t monster_id, uint64_t lv, unit_struct *owner)
 {
@@ -444,29 +474,34 @@ monster_struct *monster_manager::add_monster(uint64_t monster_id, uint64_t lv, u
 	LOG_DEBUG("%s: monster[%lu] ai[%lu]",  __FUNCTION__, monster_id, ite->second->BaseID);
 	
 	monster_struct *ret;
+	ret = alloc_monster();
+	if (!ret)
+		return NULL;
+	ret->data->player_id = alloc_monster_uuid();
+	add_monster(ret);
 
-	switch (ite->second->HateType)
-	{
-		case MONSTER_TYPE_DEFINE_BOSS:
-		{
-			boss_struct *boss = alloc_boss();
-			if (!boss)
-				return NULL;
-			boss->data->player_id = alloc_monster_uuid();
-			add_boss(boss);
-			ret = boss;
-		}
-		break;
-		default:
-		{
-			ret = alloc_monster();
-			if (!ret)
-				return NULL;
-			ret->data->player_id = alloc_monster_uuid();
-			add_monster(ret);
-		}
-		break;
-	}
+	// switch (ite->second->HateType)
+	// {
+	// 	case MONSTER_TYPE_DEFINE_BOSS:
+	// 	{
+	// 		boss_struct *boss = alloc_boss();
+	// 		if (!boss)
+	// 			return NULL;
+	// 		boss->data->player_id = alloc_monster_uuid();
+	// 		add_boss(boss);
+	// 		ret = boss;
+	// 	}
+	// 	break;
+	// 	default:
+	// 	{
+	// 		ret = alloc_monster();
+	// 		if (!ret)
+	// 			return NULL;
+	// 		ret->data->player_id = alloc_monster_uuid();
+	// 		add_monster(ret);
+	// 	}
+	// 	break;
+	// }
 
 	ret->config = ite->second;
 	ret->ai_config = base_ai_config[ret->config->BaseID];
@@ -681,58 +716,58 @@ monster_struct *monster_manager::create_monster_by_config(scene_struct *scene, i
 
 //////////////////////////////boss
 
-int monster_manager::add_boss(boss_struct *p)
-{
-	monster_manager_all_boss_id[p->data->player_id] = p;
-	return (0);
-}
+// int monster_manager::add_boss(boss_struct *p)
+// {
+// 	monster_manager_all_boss_id[p->data->player_id] = p;
+// 	return (0);
+// }
 
-int monster_manager::remove_boss(boss_struct *p)
-{
-	monster_manager_all_boss_id.erase(p->data->player_id);
-	return (0);
-}
+// int monster_manager::remove_boss(boss_struct *p)
+// {
+// 	monster_manager_all_boss_id.erase(p->data->player_id);
+// 	return (0);
+// }
 
-boss_struct * monster_manager::get_boss_by_id(uint64_t id)
-{
-	std::map<uint64_t, boss_struct *>::iterator it = monster_manager_all_boss_id.find(id);
-	if (it != monster_manager_all_boss_id.end())
-	{
-		if (it->second->mark_delete)
-		{
-			LOG_INFO("%s: boss[%lu] already mark delete", __FUNCTION__, id);
-			return NULL;
-		}
-		return it->second;
-	}
-	return NULL;
-}
+// boss_struct * monster_manager::get_boss_by_id(uint64_t id)
+// {
+// 	std::map<uint64_t, boss_struct *>::iterator it = monster_manager_all_boss_id.find(id);
+// 	if (it != monster_manager_all_boss_id.end())
+// 	{
+// 		if (it->second->mark_delete)
+// 		{
+// 			LOG_INFO("%s: boss[%lu] already mark delete", __FUNCTION__, id);
+// 			return NULL;
+// 		}
+// 		return it->second;
+// 	}
+// 	return NULL;
+// }
 
 //////////////////////////////////////////////
-void monster_manager::boss_ontick_settimer(boss_struct *p)
+void monster_manager::boss_ontick_settimer(monster_struct *p)
 {
 	push_heap(&monster_manager_m_boss_minheap, p);
 }
 
-void monster_manager::boss_ontick_reset_timer(boss_struct *p)
-{
-	adjust_heap_node(&monster_manager_m_boss_minheap, p);
-}
+// void monster_manager::boss_ontick_reset_timer(monster_struct *p)
+// {
+// 	adjust_heap_node(&monster_manager_m_boss_minheap, p);
+// }
 
-boss_struct *monster_manager::get_ontick_boss(uint64_t now)
+monster_struct *monster_manager::get_ontick_boss(uint64_t now)
 {
 	if (monster_manager_m_boss_minheap.cur_size == 0)
 		return NULL;
 
-	if (((boss_struct *)get_heap_first(&monster_manager_m_boss_minheap))->data->ontick_time > now)
+	if (((monster_struct *)get_heap_first(&monster_manager_m_boss_minheap))->data->ontick_time > now)
 		return NULL;
-	return (boss_struct *)pop_heap(&monster_manager_m_boss_minheap);
+	return (monster_struct *)pop_heap(&monster_manager_m_boss_minheap);
 }
 
-void monster_manager::boss_ontick_delete(boss_struct *p)
-{
-	erase_heap_node(&monster_manager_m_boss_minheap, p);
-}
+// void monster_manager::boss_ontick_delete(monster_struct *p)
+// {
+// 	erase_heap_node(&monster_manager_m_boss_minheap, p);
+// }
 
 //////////////////////////////////////////
 
@@ -752,69 +787,69 @@ int monster_manager::reinit_boss_min_heap()
 	return (0);
 }
 
-int monster_manager::init_boss_struct(int num, unsigned long key)
-{
-	init_heap(&monster_manager_m_boss_minheap, num, minheap_cmp_monster_timeout, minheap_get_monster_timeout_index, minheap_set_monster_timeout_index);
+// int monster_manager::init_boss_struct(int num, unsigned long key)
+// {
+// 	init_heap(&monster_manager_m_boss_minheap, num, minheap_cmp_monster_timeout, minheap_get_monster_timeout_index, minheap_set_monster_timeout_index);
 
-	boss_struct *monster;
-	for (int i = 0; i < num; ++i) {
-		monster = new boss_struct();
-		monster_manager_boss_free_list.push_back(monster);
-	}
-	return init_comm_pool(0, sizeof(monster_data), num, key, &monster_manager_boss_data_pool);
-}
+// 	boss_struct *monster;
+// 	for (int i = 0; i < num; ++i) {
+// 		monster = new boss_struct();
+// 		monster_manager_boss_free_list.push_back(monster);
+// 	}
+// 	return init_comm_pool(0, sizeof(monster_data), num, key, &monster_manager_boss_data_pool);
+// }
 
-boss_struct *monster_manager::alloc_boss()
-{
-	boss_struct *ret = NULL;
-	monster_data *data = NULL;
-	if (monster_manager_boss_free_list.empty())
-		return NULL;
-	ret = monster_manager_boss_free_list.back();
-	monster_manager_boss_free_list.pop_back();
-	data = (monster_data *)comm_pool_alloc(&monster_manager_boss_data_pool);
-	if (!data)
-		goto fail;
-	memset(data, 0, sizeof(monster_data));
-	ret->data = data;
-	monster_manager_boss_used_list.insert(ret);
-	ret->init_monster();
-	return ret;
-fail:
-	if (ret) {
-		monster_manager_boss_used_list.erase(ret);
-		monster_manager_boss_free_list.push_back(ret);
-	}
-	if (data) {
-		comm_pool_free(&monster_manager_monster_data_pool, data);
-	}
-	return NULL;
-}
+// boss_struct *monster_manager::alloc_boss()
+// {
+// 	boss_struct *ret = NULL;
+// 	monster_data *data = NULL;
+// 	if (monster_manager_boss_free_list.empty())
+// 		return NULL;
+// 	ret = monster_manager_boss_free_list.back();
+// 	monster_manager_boss_free_list.pop_back();
+// 	data = (monster_data *)comm_pool_alloc(&monster_manager_boss_data_pool);
+// 	if (!data)
+// 		goto fail;
+// 	memset(data, 0, sizeof(monster_data));
+// 	ret->data = data;
+// 	monster_manager_boss_used_list.insert(ret);
+// 	ret->init_monster();
+// 	return ret;
+// fail:
+// 	if (ret) {
+// 		monster_manager_boss_used_list.erase(ret);
+// 		monster_manager_boss_free_list.push_back(ret);
+// 	}
+// 	if (data) {
+// 		comm_pool_free(&monster_manager_monster_data_pool, data);
+// 	}
+// 	return NULL;
+// }
 
-void monster_manager::delete_boss_impl(boss_struct *p)
-{
-	LOG_DEBUG("%s %d: monster[%p] data[%p]", __FUNCTION__, __LINE__, p, p->data);
+// void monster_manager::delete_boss_impl(boss_struct *p)
+// {
+// 	LOG_DEBUG("%s %d: monster[%p] data[%p]", __FUNCTION__, __LINE__, p, p->data);
 
-	// if (p->data && p->data->owner)
-	// {
-	// 	player_struct *owner = player_manager::get_player_by_id(p->data->owner);
-	// 	if (owner)
-	// 	{
-	// 		owner->del_pet(p);
-	// 	}
-	// }
+// 	// if (p->data && p->data->owner)
+// 	// {
+// 	// 	player_struct *owner = player_manager::get_player_by_id(p->data->owner);
+// 	// 	if (owner)
+// 	// 	{
+// 	// 		owner->del_pet(p);
+// 	// 	}
+// 	// }
 
-	monster_manager_boss_used_list.erase(p);
-	monster_manager_boss_free_list.push_back(p);
+// 	monster_manager_boss_used_list.erase(p);
+// 	monster_manager_boss_free_list.push_back(p);
 
-	// p->clear_all_buffs();
-	// if (is_node_in_heap(&monster_manager_m_boss_minheap, p))
-	// 	boss_ontick_delete(p);
+// 	// p->clear_all_buffs();
+// 	// if (is_node_in_heap(&monster_manager_m_boss_minheap, p))
+// 	// 	boss_ontick_delete(p);
 
-	if (p->data) {
-		LOG_INFO("[%s:%d] monster_id[%u], uuid[%lu]", __FUNCTION__, __LINE__, p->data->monster_id, p->data->player_id);
-		remove_boss(p);
-		comm_pool_free(&monster_manager_boss_data_pool, p->data);
-		p->data = NULL;
-	}
-}
+// 	if (p->data) {
+// 		LOG_INFO("[%s:%d] monster_id[%u], uuid[%lu]", __FUNCTION__, __LINE__, p->data->monster_id, p->data->player_id);
+// 		remove_boss(p);
+// 		comm_pool_free(&monster_manager_boss_data_pool, p->data);
+// 		p->data = NULL;
+// 	}
+// }

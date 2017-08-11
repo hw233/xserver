@@ -410,25 +410,7 @@ static int handle_break_server_level_answer(EXTERN_DATA *extern_data)
 	global_shared_data->server_level.config = config;
 	save_server_level_info();
 
-	{
-		ServerLevelInfoNotify nty;
-		server_level_info_notify__init(&nty);
-
-		nty.level_id = global_shared_data->server_level.level_id;
-		nty.break_goal = global_shared_data->server_level.break_goal;
-		nty.break_num = global_shared_data->server_level.break_num;
-
-		uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SERVER_LEVEL_INFO_NOTIFY, &nty, (pack_func)server_level_info_notify__pack);
-		for (std::map<uint64_t, player_struct *>::iterator iter = player_manager_all_players_id.begin(); iter != player_manager_all_players_id.end(); ++iter)
-		{
-			player_struct *player = iter->second;
-			if (player->is_online())
-			{
-				ppp = conn_node_gamesrv::broadcast_msg_add_players(player->get_uuid(), ppp);
-			}
-		}
-		conn_node_gamesrv::broadcast_msg_send();
-	}
+	broadcast_server_level_info();
 	{
 		uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SERVER_LEVEL_BREAK_NOTIFY, NULL, (pack_func)NULL);
 		for (std::map<uint64_t, player_struct *>::iterator iter = player_manager_all_players_id.begin(); iter != player_manager_all_players_id.end(); ++iter)

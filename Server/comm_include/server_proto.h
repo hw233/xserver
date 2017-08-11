@@ -414,6 +414,7 @@ typedef struct proto_guild_disband
 typedef struct proto_guild_battle_reward
 {
 	PROTO_HEAD head;
+	uint32_t activity_id;
 	uint32_t guild_id;
 	uint32_t player_num; //奖励人数
 	uint64_t player_id[MAX_GUILD_MEMBER_NUM]; //奖励玩家ID

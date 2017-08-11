@@ -53,14 +53,14 @@ static void guild_raid_final_ai_tick(raid_struct *raid)
 	if (raid->data->state == RAID_STATE_PASS)
 		return;
 
-	uint32_t now = time_helper::get_cached_time() / 1000;
+/*	uint32_t now = time_helper::get_cached_time() / 1000;
 	int delta_time = now - raid->data->start_time / 1000;
 	if (delta_time > 300)
 	{
 			// 时间到了，副本结束
 		finished_raid(raid);
 		return;
-	}
+	}*/
 }
 
 static void guild_raid_player_kill(raid_struct *raid, player_struct *player, player_struct *target)
@@ -223,6 +223,7 @@ static void guild_raid_final_ai_player_attack(raid_struct *raid, player_struct *
 		guild_battle_boss_damage_notify__init(&nty);
 		nty.playerid = player->get_uuid();
 		nty.damage = damage;
+		nty.kill = !target->is_alive();
 		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_BOSS_DAMAGE_NOTIFY, &nty, (pack_func)guild_battle_boss_damage_notify__pack);
 	} while(0);
 }
@@ -403,6 +404,8 @@ static void guild_raid_final_ai_player_ready(raid_struct *raid, player_struct *p
 					record_data[nty.n_records].has_monster = true;
 					record_data[nty.n_records].boss = raid->GUILD_FINAL_DATA.boss_record[k * MAX_TEAM_MEM + i];
 					record_data[nty.n_records].has_boss = true;
+					record_data[nty.n_records].bosskiller = (raid->GUILD_FINAL_DATA.boss_killer == team1_player.player_id);
+					record_data[nty.n_records].has_bosskiller = true;
 					nty.n_records++;
 				}
 			}
@@ -418,6 +421,7 @@ static void guild_raid_final_ai_player_ready(raid_struct *raid, player_struct *p
 		guild_battle_round_info_notify__init(&nty);
 
 		nty.endtime = get_cur_round_end_time();
+		nty.bossmaxhp = raid->GUILD_FINAL_DATA.boss_maxhp;
 
 		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUILD_BATTLE_ROUND_INFO_NOTIFY, guild_battle_round_info_notify__pack, nty);
 	} while(0);

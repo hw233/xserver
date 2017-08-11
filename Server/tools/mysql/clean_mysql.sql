@@ -6,4 +6,5 @@ delete from chengjie;
 delete from guild;
 delete from guild_player;
 delete from guild_join;
+delete from game_global;
 

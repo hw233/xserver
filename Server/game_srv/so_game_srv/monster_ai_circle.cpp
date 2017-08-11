@@ -191,11 +191,12 @@ static void circle_ai_tick(monster_struct *monster)
 
 void circle_ai_beattack(monster_struct *monster, unit_struct *player)
 {
+	if (monster->target && monster->target->is_avaliable())
+		return;
+	
 	monster->ai_state = AI_PURSUE_STATE;
 	monster->data->target_pos.pos_x = 0;
 	monster->data->target_pos.pos_z = 0;		
-	if (monster->target && monster->target->is_avaliable())
-		return;
 	monster->target = player;
 	struct position *pos = monster->get_pos();
 	monster->ai_data.circle_ai.ret_pos.pos_x = pos->pos_x;

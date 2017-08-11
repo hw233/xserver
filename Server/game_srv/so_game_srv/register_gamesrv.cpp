@@ -105,16 +105,16 @@ static void	clear_all_mem()
 	{
 		delete (*ite);		
 	}
-	for (std::list<boss_struct *>::iterator ite = monster_manager_boss_free_list.begin();
-		 ite != monster_manager_boss_free_list.end(); ++ite)
-	{
-		delete (*ite);
-	}
-	for (std::set<boss_struct *>::iterator ite = monster_manager_boss_used_list.begin();
-		 ite != monster_manager_boss_used_list.end(); ++ite)
-	{
-		delete (*ite);		
-	}
+	// for (std::list<boss_struct *>::iterator ite = monster_manager_boss_free_list.begin();
+	// 	 ite != monster_manager_boss_free_list.end(); ++ite)
+	// {
+	// 	delete (*ite);
+	// }
+	// for (std::set<boss_struct *>::iterator ite = monster_manager_boss_used_list.begin();
+	// 	 ite != monster_manager_boss_used_list.end(); ++ite)
+	// {
+	// 	delete (*ite);		
+	// }
 
 		//cash_truck
 	for (std::list<cash_truck_struct *>::iterator ite = cash_truck_manager_free_list.begin();
@@ -572,11 +572,11 @@ int install(int argc, char **argv)
 		ret = -1;
 		goto done;
 	}
-	if (monster_manager::init_boss_struct(player_num, player_key) != 0) {
-		LOG_ERR("%d: init boss struct failed", __LINE__);
-		ret = -1;
-		goto done;
-	}
+	// if (monster_manager::init_boss_struct(player_num, player_key) != 0) {
+	// 	LOG_ERR("%d: init boss struct failed", __LINE__);
+	// 	ret = -1;
+	// 	goto done;
+	// }
 
 	{
 		line = get_first_key(file, (char *)"game_srv_partner_num");
@@ -797,7 +797,7 @@ void on_http_request(struct evhttp_request *req, void *arg)
 		struct evbuffer *returnbuffer = evbuffer_new();
 		evbuffer_add_printf(returnbuffer, "player: %lu/%u<br><br>\n", player_manager_all_players_id.size(), player_manager::get_pool_max_num());
 		evbuffer_add_printf(returnbuffer, "monster: %lu/%u<br><br>\n", monster_manager_all_monsters_id.size(), monster_manager::get_monster_pool_max_num());
-		evbuffer_add_printf(returnbuffer, "boss: %lu/%u<br><br>\n", monster_manager_all_boss_id.size(), monster_manager::get_boss_pool_max_num());
+//		evbuffer_add_printf(returnbuffer, "boss: %lu/%u<br><br>\n", monster_manager_all_boss_id.size(), monster_manager::get_boss_pool_max_num());
 		evbuffer_add_printf(returnbuffer, "raid: %lu/%u<br><br>\n", raid_manager_all_raid_id.size(), raid_manager::get_raid_pool_max_num());
 		evbuffer_add_printf(returnbuffer, "skill: %u/%u<br><br>\n", skill_manager::get_skill_count(), skill_manager::get_skill_pool_max_num());
 		evbuffer_add_printf(returnbuffer, "buff: %u/%u<br><br>\n", buff_manager::get_buff_count(), buff_manager::get_buff_pool_max_num());

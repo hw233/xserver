@@ -668,35 +668,180 @@ static int handle_learn_skill_request(player_struct *player, EXTERN_DATA *extern
 		LOG_ERR("%s %d: can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
 		return (-10);
 	}
-	if (req->autoup)
+	skill_struct *skill = player->m_skill.GetSkill(req->id);
+	if (skill != NULL)
 	{
-		req->num = player->m_skill.GetLevelUpTo(req->id);
-	}
-	if (req->num == 0)
-	{
-		req->num = 1;
-	}
+		if (req->autoup)
+		{
+			req->num = player->m_skill.GetLevelUpTo(req->id, skill->data->lv, player->get_attr(PLAYER_ATTR_LEVEL));
+		}
+		if (req->num == 0)
+		{
+			req->num = 1;
+		}
 
 		LearnSkillAns notify;
 		learn_skill_ans__init(&notify);
 		notify.id = req->id;
 		notify.ret = player->m_skill.Learn(req->id, req->num);
-		skill_struct *skill = player->m_skill.GetSkill(req->id);
-		if (skill != NULL)
-		{
-			notify.lv = skill->data->lv;
-		}
-
+		notify.lv = skill->data->lv;
 		fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_LEARN_SKILL_ANSWER, learn_skill_ans__pack, notify);
-
+	}
 
 	learn_skill_req__free_unpacked(req, NULL);
 
 	return (0);
 }
 
+static int handle_set_fuwen_old_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (comm_check_player_valid(player, extern_data->player_id) != 0)
+	{
+		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
+		return (-1);
+	}
+
+	LearnFuwenReq *req = learn_fuwen_req__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req) {
+		LOG_ERR("%s %d: can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-10);
+	}
+
+	LearnFuwenAns notify;
+	learn_fuwen_ans__init(&notify);
+	notify.skill_id = req->skill_id;
+	notify.fuwen_id = req->fuwen_id;
+	notify.ret = 0;
+	skill_struct *skill = player->m_skill.GetSkill(req->skill_id);
+	if (skill != NULL)
+	{
+		for (int i = 0; i < MAX_FUWEN; ++i)
+		{
+			if (skill->data->fuwen[i].id == req->fuwen_id)
+			{
+				skill->data->fuwen[i].isNew = false;
+			}
+		}
+	}
+
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_SET_FUWEN_OLD_ANSWER, learn_fuwen_ans__pack, notify);
+
+	learn_fuwen_req__free_unpacked(req, NULL);
+
+	return (0);
+}
+static int handle_learn_fuwen_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (comm_check_player_valid(player, extern_data->player_id) != 0)
+	{
+		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
+		return (-1);
+	}
+
+	LearnFuwenReq *req = learn_fuwen_req__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req) {
+		LOG_ERR("%s %d: can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-10);
+	}
+
+	LearnFuwenAns notify;
+	learn_fuwen_ans__init(&notify);
+	notify.skill_id = req->skill_id;
+	notify.fuwen_id = req->fuwen_id;
+	notify.ret = 0;
+	skill_struct *skill = player->m_skill.GetSkill(req->skill_id);
+	if (skill != NULL)
+	{
+		for (int i = 0; i < MAX_FUWEN; ++i)
+		{
+			if (skill->data->fuwen[i].id == req->fuwen_id)
+			{
+				if (req->autoup)
+				{
+					req->num = player->m_skill.GetLevelUpTo(req->fuwen_id, skill->data->fuwen[i].lv, skill->data->lv);
+				}
+				if (req->num == 0)
+				{
+					req->num = 1;
+				}
+				for (uint32_t toNum = 0; toNum < req->num; ++toNum)
+				{
+					uint32_t cost = player->m_skill.CalcCost(req->fuwen_id, skill->data->fuwen[i].lv, 1);
+					if (player->sub_coin(cost, MAGIC_TYPE_SKILL) != 0)
+					{
+						notify.ret = 190500063;
+						break;
+					}
+					else
+					{
+						std::map<uint64_t, struct SkillTable *>::iterator it = skill_config.find(req->fuwen_id);
+						if (it != skill_config.end())
+						{
+							std::map<uint64_t, struct SkillLvTable *>::iterator iter = skill_lv_config.find(it->second->SkillLv + skill->data->fuwen[i].lv - 1);
+							if (iter != skill_lv_config.end())
+							{
+								if (player->del_item(iter->second->CostItem, iter->second->CostNum, MAGIC_TYPE_SKILL) < 0)
+								{
+									if (toNum == 0)
+									{
+										notify.ret = 190400006;
+									}
+									break;
+								}
+								skill->data->fuwen[i].lv += 1;
+								notify.lv = skill->data->fuwen[i].lv;
+							}
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_LEARN_FUWEN_ANSWER, learn_fuwen_ans__pack, notify);
+
+	learn_fuwen_req__free_unpacked(req, NULL);
+
+	return (0);
+}
+static int handle_set_skill_menu_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (comm_check_player_valid(player, extern_data->player_id) != 0)
+	{
+		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
+		return (-1);
+	}
+
+	SkillMenu *req = skill_menu__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req) {
+		LOG_ERR("%s %d: can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-10);
+	}
+
+	SkillMenuAns notify;
+	skill_menu_ans__init(&notify);
+	notify.num = req->num;
+	notify.ret = 0;
+	if (req->num > 0 && req->num <= MAX_CUR_FUWEN)
+	{
+		player->m_skill.m_index = req->num;
+	}
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_SET_SKILL_MENU_ANSWER, skill_menu_ans__pack, notify);
+
+	skill_menu__free_unpacked(req, NULL);
+
+	return 0;
+}
+
+extern FuwenData fuwenData[MySkill::MAX_SKILL_NUM][MAX_FUWEN];
+extern FuwenData *fuwenDataPoint[MySkill::MAX_SKILL_NUM][MAX_FUWEN];
+extern FuwenData fuwenData1[MySkill::MAX_SKILL_NUM][MAX_FUWEN];
+extern FuwenData *fuwenDataPoint1[MySkill::MAX_SKILL_NUM][MAX_FUWEN];
 extern SkillData skillData[MySkill::MAX_SKILL_NUM];
 extern SkillData *skillDataPoint[MySkill::MAX_SKILL_NUM];
+extern SkillData skillData1[MySkill::MAX_SKILL_NUM];
+extern SkillData *skillDataPoint1[MySkill::MAX_SKILL_NUM];
 static int handle_open_skill_for_guide_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (comm_check_player_valid(player, extern_data->player_id) != 0)
@@ -726,9 +871,17 @@ static int handle_open_skill_for_guide_request(player_struct *player, EXTERN_DAT
 		skill_data__init(skillData + i);
 		skillData[i].id = req->id;
 		skillData[i].lv = pSkillStruct->data->lv;
-		skillData[i].cur_fuwen = pSkillStruct->data->cur_fuwen;
+		skillData[i].cur_fuwen = pSkillStruct->data->cur_fuwen[player->m_skill.m_index - 1];
 		skillData[i].n_fuwen = pSkillStruct->data->fuwen_num;
-		skillData[i].fuwen = pSkillStruct->data->fuwen;
+		for (int j = 0; j < pSkillStruct->data->fuwen_num; ++j)
+		{
+			fuwen_data__init(&fuwenData[i][j]);
+			fuwenData[i][j].id = pSkillStruct->data->fuwen[j].id;
+			fuwenData[i][j].lv = pSkillStruct->data->fuwen[j].lv;
+			fuwenData[i][j].is_new = pSkillStruct->data->fuwen[j].isNew;
+			fuwenDataPoint[i][j] = &fuwenData[i][j];
+		}
+		skillData[i].fuwen = fuwenDataPoint[i];
 
 		skillDataPoint[i] = skillData + i;
 		++i;
@@ -1556,8 +1709,9 @@ static int handle_skill_hit_request(player_struct *player, EXTERN_DATA *extern_d
 			LOG_ERR("%s %d: player[%lu] skill[%u] no config", __FUNCTION__, __LINE__, extern_data->player_id, player->get_skill_id());
 			return (-25);
 		}
+		int skill_lv = skill_struct->get_skill_lv(player->m_skill.m_index);
 
-		get_skill_configs(skill_struct->data->lv, player->get_skill_id(), &ski_config, &lv_config1, &pas_config, &lv_config2, &act_config);
+		get_skill_configs(skill_lv, player->get_skill_id(), &ski_config, &lv_config1, &pas_config, &lv_config2, &act_config);
 	}
 
 	if (!lv_config1 && !lv_config2)
@@ -1880,7 +2034,7 @@ int handle_chat_no_check(player_struct *player, EXTERN_DATA *extern_data, Chat *
 		{
 			return 2;
 		}
-		if (player->get_attr(PLAYER_ATTR_LEVEL) < table->parameter1[0])
+		if (player->get_attr(PLAYER_ATTR_LEVEL) <= table->parameter1[0])
 		{
 			return 190400002;
 		} 
@@ -2657,7 +2811,7 @@ static int handle_enter_scene_ready_request(player_struct *player, EXTERN_DATA *
 	{
 		player->m_team->SendXunbaoPoint(*player);
 	}
-	if (player->scene->res_config->UseMounts == 0)
+	if (player->scene !=NULL && player->scene->res_config->UseMounts == 0)
 	{
 		player->down_horse();
 	}
@@ -4504,6 +4658,9 @@ int handle_team_change_lead_request(player_struct *player, EXTERN_DATA *extern_d
 		team_playerid__init(&send);
 		send.id = otherPlayer->get_uuid();
 		player->m_team->BroadcastToTeam(MSG_ID_TEAM_CHANGE_LEAD_NOTIFY, &send, (pack_func)team_playerid__pack);
+		otherPlayer->broadcast_to_sight(MSG_ID_IS_TEAM_LEAD_NOTIFY, &send, (pack_func)team_playerid__pack, false);
+		send.id = player->get_uuid();
+		player->broadcast_to_sight(MSG_ID_NOT_TEAM_LEAD_NOTIFY, &send, (pack_func)team_playerid__pack, false);
 		player->m_team->SendApplyList(*otherPlayer);
 	}
 
@@ -4583,6 +4740,9 @@ int handle_be_team_lead_request(player_struct *player, EXTERN_DATA *extern_data)
 				team_playerid__init(&send);
 				send.id = otherPlayer->get_uuid();
 				player->m_team->BroadcastToTeam(MSG_ID_TEAM_CHANGE_LEAD_NOTIFY, &send, (pack_func)team_playerid__pack);
+				otherPlayer->broadcast_to_sight(MSG_ID_IS_TEAM_LEAD_NOTIFY, &send, (pack_func)team_playerid__pack, false);
+				send.id = player->get_uuid();
+				player->broadcast_to_sight(MSG_ID_NOT_TEAM_LEAD_NOTIFY, &send, (pack_func)team_playerid__pack, false);
 				player->m_team->SendApplyList(*otherPlayer);
 			}
 			else
@@ -5344,7 +5504,7 @@ static int handle_sing_end_request(player_struct *player, EXTERN_DATA *extern_da
 		}
 
 		uint64_t cur_time = time_helper::get_cached_time();
-		if (player->data->sing_info.start_ts + (uint64_t)player->data->sing_info.time > cur_time)
+		if (player->data->sing_info.start_ts + (uint64_t)player->data->sing_info.time > cur_time + 500)
 		{
 			ret = ERROR_ID_SING_TIME;
 			LOG_ERR("[%s:%d] player[%lu] sing time, start_ts:%lu, time:%u, cur_time:%lu", __FUNCTION__, __LINE__,
@@ -17111,6 +17271,7 @@ static int handle_partner_fabao_stone_request(player_struct *player, EXTERN_DATA
 			player->del_item(iter->first, iter->second, MAGIC_TYPE_PARTNER_FABAO_STONE);
 		}
 		player->set_attr(PLAYER_ATTR_ENERGY, player->get_attr(PLAYER_ATTR_ENERGY) - life_config->NeedJingli);
+		player->broadcast_one_attr_changed(PLAYER_ATTR_ENERGY, player->data->attrData[PLAYER_ATTR_ENERGY], false, true);
 		
 		player->add_item(fabao_id, 1 , MAGIC_TYPE_PARTNER_FABAO_STONE);
 
@@ -17439,6 +17600,12 @@ static int handle_skip_new_raid_request(player_struct *player, EXTERN_DATA *exte
 	player->broadcast_one_attr_changed(PLAYER_ATTR_ZHENYING, 0, false, true);
 	player->send_zhenying_info();
 
+	//重置玩家属性
+	player->calculate_attribute(true);
+	player->set_attr(PLAYER_ATTR_HP, player->data->attrData[PLAYER_ATTR_MAXHP]);
+	player->data->buff_fight_attr[PLAYER_ATTR_HP] = player->data->attrData[PLAYER_ATTR_HP];
+	player->broadcast_one_attr_changed(PLAYER_ATTR_HP, player->data->attrData[PLAYER_ATTR_HP], false, true);
+
 	//将技能重置
 	player->m_skill.clear(); //重新初始化技能
 	player->m_skill.SendAllSkill();
@@ -17462,6 +17629,7 @@ void notify_server_level_info(player_struct *player, EXTERN_DATA *extern_data)
 	nty.level_id = global_shared_data->server_level.level_id;
 	nty.break_goal = global_shared_data->server_level.break_goal;
 	nty.break_num = global_shared_data->server_level.break_num;
+	nty.breaking = global_shared_data->server_level.breaking;
 
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_SERVER_LEVEL_INFO_NOTIFY, server_level_info_notify__pack, nty);
 }
@@ -17488,6 +17656,9 @@ void install_msg_handle()
 //	add_msg_handle(MSG_ID_CALL_ATTACK_REQUEST, handle_skill_call_attack_request);
 //	add_msg_handle(MSG_ID_SKILL_MOVE_REQUEST, handle_skill_move_request);
 	add_msg_handle(MSG_ID_LEARN_SKILL_REQUEST, handle_learn_skill_request);
+	add_msg_handle(MSG_ID_LEARN_FUWEN_REQUEST, handle_learn_fuwen_request);
+	add_msg_handle(MSG_ID_SET_SKILL_MENU_REQUEST, handle_set_skill_menu_request);
+	add_msg_handle(MSG_ID_SET_FUWEN_OLD_REQUEST, handle_set_fuwen_old_request);
 	add_msg_handle(MSG_ID_OPEN_SKILL_FOR_GUIDE, handle_open_skill_for_guide_request);
 	add_msg_handle(MSG_ID_SET_FUWEN_REQUEST, handle_set_fuwen_request);
 	add_msg_handle(MSG_ID_LEARN_LIVE_SKILL_REQUEST, handle_learn_live_skill_request);

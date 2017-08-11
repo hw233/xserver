@@ -25,7 +25,7 @@ typedef std::set<uint64_t> ROLE_IN_TARGET;
 typedef std::map<int, ROLE_IN_TARGET > TARGET_ROLE_CONTAIN;
 typedef std::vector<uint64_t> TEAM_CONTAIN;
 
-const char g_tmp_name[MAX_PLAYER_NAME_LEN + 1] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+extern const char g_tmp_name[];
 
 struct STChengJie
 {

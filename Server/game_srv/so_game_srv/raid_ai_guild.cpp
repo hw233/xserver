@@ -44,7 +44,7 @@ static void guild_raid_ai_tick(raid_struct *raid)
 	if (raid->data->state == RAID_STATE_PASS)
 		return;
 	
-	uint32_t now = time_helper::get_cached_time() / 1000;
+/*	uint32_t now = time_helper::get_cached_time() / 1000;
 	int delta_time = now - raid->data->start_time / 1000;
 	if (delta_time > 120)
 	{
@@ -58,7 +58,7 @@ static void guild_raid_ai_tick(raid_struct *raid)
 		else
 			finished_raid(raid, 0);
 		return;
-	}
+	}*/
 }
 
 static void guild_raid_player_kill(raid_struct *raid, player_struct *player, player_struct *target)

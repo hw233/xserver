@@ -143,13 +143,26 @@ message skill_data
 {
 	required uint32 id = 1;
 	required uint32 lv = 2;
-	repeated uint32 fuwen = 3;
+	repeated fuwen_data fuwen = 3;
 	required uint32 cur_fuwen = 4; //使用的符文
 }
+message fuwen_data
+{
+	required uint32 id = 1;
+	required uint32 lv = 2;
+	required bool is_new = 3; //ture 新的
+}
 
+//message fuwen_menu
+//{
+//	required uint32 skill_id = 1;
+//	required uint32 fuwen_id = 2;
+//}
 message skill_list
 {
-	repeated skill_data data = 1;
+	repeated skill_data data = 1; //套餐1
+	repeated skill_data data_1 = 2; //套餐2
+	required uint32 num = 3; //技能套餐下标 从1开始
 }
 
 message learn_skill_req
@@ -164,6 +177,22 @@ message learn_skill_ans
 	required uint32 id = 1;
 	required uint32 lv = 2; //
 	required int32 ret = 3; //0成功 
+}
+
+message learn_fuwen_req
+{
+	required uint32 skill_id = 1;
+	required uint32 fuwen_id = 2;
+	required uint32 num = 3; //升级多少次
+	required bool autoup = 4; //ture 一键升级 
+}
+
+message learn_fuwen_ans
+{
+	required uint32 skill_id = 1;
+	required uint32 fuwen_id = 2;
+	required uint32 lv = 3; //
+	required int32 ret = 4; //0成功 
 }
 
 message fuwen
@@ -213,4 +242,14 @@ message AnsLearnLiveSkill
 	required uint32 exp = 4;
 	required uint32 book = 5; //剩余使用技能书的次数
 	required uint32 broken = 6; //当前技能突破等级
+}
+
+message skill_menu
+{
+	required uint32 num = 1; //技能套餐下标 从1开始
+}
+message skill_menu_ans
+{
+	required uint32 num = 1; //技能套餐下标 从1开始
+	required int32 ret = 4; //0成功 
 }

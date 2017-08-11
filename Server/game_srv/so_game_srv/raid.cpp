@@ -848,6 +848,15 @@ int raid_struct::player_offline(player_struct *player)
 		return -1;
 
 	on_player_leave_raid(player);	
+	//新手副本玩家下线重置玩家属性
+	if( data != NULL && player != NULL && data->ID == 20035)
+	{		
+		player->calculate_attribute(true);
+		player->set_attr(PLAYER_ATTR_HP, player->data->attrData[PLAYER_ATTR_MAXHP]);
+		player->data->buff_fight_attr[PLAYER_ATTR_HP] = player->data->attrData[PLAYER_ATTR_HP];
+		player->broadcast_one_attr_changed(PLAYER_ATTR_HP, player->data->attrData[PLAYER_ATTR_HP], false, true);
+		
+	}
 	
 		//单人副本，直接删除
 	if (m_config->DengeonType == 2)
@@ -958,12 +967,14 @@ int raid_struct::player_leave_raid(player_struct *player)
 			if (guild_wait_raid_manager::add_player_to_guild_wait_raid(player))
 				return (0);
 		}
-		/*else
+		else
 		{
 			struct DungeonTable* r_config = get_config_by_id(m_config->ExitScene, &all_raid_config);
 			if (r_config)
 			{
-				player->set_out_raid_pos(r_config);
+				player->data->scene_id = r_config->ExitScene;
+				player->set_pos(r_config->ExitPointX, r_config->BirthPointZ);
+				player->data->m_angle = r_config->BirthPointY;
 
 				EXTERN_DATA extern_data;
 				extern_data.player_id = player->get_uuid();	
@@ -973,7 +984,7 @@ int raid_struct::player_leave_raid(player_struct *player)
 						r_config->BirthPointZ, r_config->ExitScene, 0);
 				return 0;
 			}
-		}*/
+		}
 	}
 	
 	// else
@@ -1646,6 +1657,9 @@ void raid_struct::send_raid_pass_param(player_struct *player)
 		//改成所有副本都发送
 //	if (m_config->DengeonRank != DUNGEON_TYPE_RAND_MASTER)
 //		return;
+
+//	if (need_show_star())
+//		return;
 	
 	RaidPassParamChangedNotify nty;
 	raid_pass_param_changed_notify__init(&nty);
@@ -1744,7 +1758,7 @@ void raid_struct::on_monster_dead(monster_struct *monster, unit_struct *killer)
 			continue;
 		++data->star_param[i];
 
-		if (data->star_param[i] < t_config->ScoreValue1[i])
+		if (data->star_param[i] <= t_config->ScoreValue1[i])
 			send_star_changed = true;
 	}
 	if (send_star_changed && need_show_star())

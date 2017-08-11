@@ -22,15 +22,18 @@
 static void ai_dead_11(monster_struct *monster, scene_struct *scene)
 {
 	monster->ai_state = AI_DEAD_STATE;
-	buff_manager::create_default_buff(DEAD_BUFF_ID1, monster, monster, true);
-	buff_manager::create_default_buff(DEAD_BUFF_ID2, monster, monster, true);	
+//	buff_manager::create_default_buff(DEAD_BUFF_ID1, monster, monster, true);
+//	buff_manager::create_default_buff(DEAD_BUFF_ID2, monster, monster, true);	
 }
 
 static void ai_hp_changed_11(monster_struct *monster)
 {
 	if (monster->is_alive())
 		return;
-	monster->data->attrData[PLAYER_ATTR_HP] = monster->data->attrData[PLAYER_ATTR_MAXHP];
+	monster->set_attr(PLAYER_ATTR_HP, 1);
+	buff_manager::create_default_buff(DEAD_BUFF_ID1, monster, monster, true);
+	buff_manager::create_default_buff(DEAD_BUFF_ID2, monster, monster, true);		
+//	monster->data->attrData[PLAYER_ATTR_HP] = monster->data->attrData[PLAYER_ATTR_MAXHP];
 }
 
 extern void normal_ai_tick(monster_struct *monster);
@@ -57,7 +60,7 @@ struct ai_interface monster_ai_11_interface =
 	NULL,
 	NULL,
 	NULL,
-	ai_hp_changed_11,
+	.on_hp_changed = ai_hp_changed_11,
 };
 
 

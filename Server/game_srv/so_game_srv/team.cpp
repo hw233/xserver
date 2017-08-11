@@ -287,6 +287,13 @@ bool Team::AddMember(player_struct &player)
 		PackMemberInfo(notice, player);
 		BroadcastToTeam(MSG_ID_TEAM_ADD_MEMBER_NOTIFY, &notice, (pack_func)team_mem_info__pack);
 	}
+	else
+	{
+		TeamPlayerid send;
+		team_playerid__init(&send);
+		send.id = player.get_uuid();
+		player.broadcast_to_sight(MSG_ID_IS_TEAM_LEAD_NOTIFY, &send, (pack_func)team_playerid__pack, false);
+	}
 	
 	m_data->m_mem[m_data->m_memSize] = tmp;
 	m_team_player[m_data->m_memSize] = &player;
@@ -652,6 +659,7 @@ void Team::MemberOffLine(player_struct &player)
 			team_playerid__init(&noticeCl);
 			noticeCl.id = lead->get_uuid();
 			BroadcastToTeam(MSG_ID_TEAM_CHANGE_LEAD_NOTIFY, &noticeCl, (pack_func)team_playerid__pack);
+			lead->broadcast_to_sight(MSG_ID_IS_TEAM_LEAD_NOTIFY, &noticeCl, (pack_func)team_playerid__pack, false);
 			SendApplyList(*lead);
 		}
 		OnLeaderChange(player.get_uuid(), GetLeadId());
@@ -814,14 +822,15 @@ void Team::RemoveMember(uint64_t playerid, bool kick)
 
 	if (changeLead)
 	{
-		player_struct *lead = AutoChangeLeader();
-		if (lead != NULL)
+		player_struct *leadNew = AutoChangeLeader();
+		if (leadNew != NULL)
 		{
 			TeamPlayerid noticeCl;
 			team_playerid__init(&noticeCl);
-			noticeCl.id = lead->get_uuid();
+			noticeCl.id = leadNew->get_uuid();
 			BroadcastToTeam(MSG_ID_TEAM_CHANGE_LEAD_NOTIFY, &noticeCl, (pack_func)team_playerid__pack);
-			SendApplyList(*lead);
+			leadNew->broadcast_to_sight(MSG_ID_IS_TEAM_LEAD_NOTIFY, &noticeCl, (pack_func)team_playerid__pack, false);
+			SendApplyList(*leadNew);
 		}
 		OnLeaderChange(playerid, GetLeadId());
 	}

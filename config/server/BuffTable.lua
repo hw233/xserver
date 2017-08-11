@@ -1131,7 +1131,7 @@ local BuffTable = {
 		['DfTime'] = 0,
 		['TimeDelay'] = 0,
 		['Interval'] = 0,
-		['EffectID'] = {115000022}
+		['EffectID'] = {115000091}
 		},
 	[114400016] = {
 		['ID'] = 114400016,

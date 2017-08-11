@@ -5,6 +5,9 @@
 #include "time_helper.h"
 #include "player.h"
 #include "app_data_statis.h"
+#include "msgid.h"
+#include "role.pb-c.h"
+#include "player_manager.h"
 
 extern uint32_t sg_server_open_time;
 extern void notify_server_level_info(player_struct *player, EXTERN_DATA *extern_data);
@@ -71,6 +74,7 @@ void mark_server_level_break(void)
 	global_shared_data->server_level.breaking = true;
 	global_shared_data->server_level.break_num = 0;
 	memset(&global_shared_data->server_level.break_reward, 0, sizeof(global_shared_data->server_level.break_reward));
+	broadcast_server_level_info();
 }
 
 void server_level_listen_raid_finish(uint32_t raid_id, player_struct *player)
@@ -118,15 +122,35 @@ void server_level_listen_raid_finish(uint32_t raid_id, player_struct *player)
 			player->add_item_list_otherwise_send_mail(reward_map, MAGIC_TYPE_SERVER_LEVEL_BREAK, 270200002, NULL);
 		}
 
-		EXTERN_DATA ext_data;
-		ext_data.player_id = player->get_uuid();
-		notify_server_level_info(player, &ext_data);
+		broadcast_server_level_info();
 
 		if (info->break_num >= info->break_goal)
 		{
 			break_server_level();
 		}
 	}
+}
+
+void broadcast_server_level_info(void)
+{
+	ServerLevelInfoNotify nty;
+	server_level_info_notify__init(&nty);
+
+	nty.level_id = global_shared_data->server_level.level_id;
+	nty.break_goal = global_shared_data->server_level.break_goal;
+	nty.break_num = global_shared_data->server_level.break_num;
+	nty.breaking = global_shared_data->server_level.breaking;
+
+	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SERVER_LEVEL_INFO_NOTIFY, &nty, (pack_func)server_level_info_notify__pack);
+	for (std::map<uint64_t, player_struct *>::iterator iter = player_manager_all_players_id.begin(); iter != player_manager_all_players_id.end(); ++iter)
+	{
+		player_struct *player = iter->second;
+		if (player->is_online())
+		{
+			ppp = conn_node_gamesrv::broadcast_msg_add_players(player->get_uuid(), ppp);
+		}
+	}
+	conn_node_gamesrv::broadcast_msg_send();
 }
 
 bool is_server_level_limit(uint32_t player_level)

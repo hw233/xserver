@@ -86,6 +86,46 @@ local StoryTable = {
 		['PlayerInvincible'] = 1,
 		['StoryTime'] = 4.00,
 		['FileID'] = 'shengui'
+		},
+	[450000013] = {
+		['ID'] = 450000013,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 13.00,
+		['FileID'] = 'JYD_yimei'
+		},
+	[450000014] = {
+		['ID'] = 450000014,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 6.50,
+		['FileID'] = 'CC_guiyaoji'
+		},
+	[450000015] = {
+		['ID'] = 450000015,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 5.00,
+		['FileID'] = 'FB_BBJ_TAOLI'
+		},
+	[450000016] = {
+		['ID'] = 450000016,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 5.20,
+		['FileID'] = 'ZIMU_BBJ'
+		},
+	[450000017] = {
+		['ID'] = 450000017,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 5.50,
+		['FileID'] = 'FB_BBJ_jiangxici'
 		}
 	}
 return StoryTable

@@ -22,10 +22,14 @@ int skill_struct::init_skill(uint32_t id, uint64_t owner, uint64_t target)
 	data->lv = 1;
 	for (data->fuwen_num = 0; data->fuwen_num < (int)pos->second->n_RuneID; ++data->fuwen_num)
 	{
-		data->fuwen[data->fuwen_num] = pos->second->RuneID[data->fuwen_num];
+		data->fuwen[data->fuwen_num].id = pos->second->RuneID[data->fuwen_num];
+		data->fuwen[data->fuwen_num].lv = 1;
+		data->fuwen[data->fuwen_num].isNew = true;
 	}
-	
-	data->cur_fuwen = 0;
+	for (int i = 0; i < MAX_CUR_FUWEN; ++i)
+	{
+		data->cur_fuwen[i] = 0;
+	}
 	data->cd_time = 0;
 		// TODO: 计算CD
 
@@ -41,6 +45,20 @@ int skill_struct::init_skill(uint32_t id, uint64_t owner, uint64_t target)
 	// calc_skill_effect();
 
 	return (0);
+}
+
+int skill_struct::get_skill_lv(int fuwen_index)
+{
+	assert(fuwen_index == 1 || fuwen_index == 2);
+	uint32_t fuwen = data->cur_fuwen[fuwen_index - 1];
+	if (fuwen == 0)
+		return data->lv;
+	for (size_t i = 0; i < ARRAY_SIZE(data->fuwen); ++i)
+	{
+		if (data->fuwen[i].id == fuwen)
+			return data->fuwen[i].lv;
+	}
+	return 1;
 }
 
 int skill_struct::add_cd(struct SkillLvTable *lv_config, struct ActiveSkillTable *active_config)

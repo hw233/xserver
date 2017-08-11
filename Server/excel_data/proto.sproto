@@ -261,6 +261,8 @@
 	CostCoin 9 : integer
 	NeedFight 10 : integer
 	MonsterEff 11 : integer
+	CostItem 12 : integer
+	CostNum 13 : integer
 }
 
 .BuffTable {
