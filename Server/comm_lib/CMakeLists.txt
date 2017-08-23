@@ -11,11 +11,13 @@ INCLUDE_DIRECTORIES(
   "${PROJECT_SOURCE_DIR}/comm_include"
   "${PROJECT_SOURCE_DIR}/comm_game"  
   "${PROJECT_SOURCE_DIR}/excel_data"
+  "${PROJECT_SOURCE_DIR}/proto"      
   "${PROJECT_SOURCE_DIR}/thirdlib/libevent/include"
   "${PROJECT_SOURCE_DIR}/thirdlib/libevent"
   )
 
 link_libraries(mysqlclient)
+link_libraries(hiredis)
 link_libraries(pthread)
 link_libraries(z)
 link_libraries(m)

@@ -47,7 +47,8 @@ static struct timeval friendsrv_timeout;
 
 static void debug_log()
 {
-	redisReply *r = sg_redis_client.hgetall_bin(conn_node_friendsrv::server_wyk_key);
+	CAutoRedisReply autoR;		
+	redisReply *r = sg_redis_client.hgetall_bin(conn_node_friendsrv::server_wyk_key, autoR);
 	if (!r || r->type != REDIS_REPLY_ARRAY)
 	{
 		LOG_ERR("%s: hgetall failed", __FUNCTION__);
@@ -76,14 +77,12 @@ static void debug_log()
 			}
 		}
 	}
-
-	if (r)
-		freeReplyObject(r);		
 }
 
 static void	send_wyk_reward()
 {
-	redisReply *r = sg_redis_client.hgetall_bin(conn_node_friendsrv::server_wyk_key);
+	CAutoRedisReply autoR;			
+	redisReply *r = sg_redis_client.hgetall_bin(conn_node_friendsrv::server_wyk_key, autoR);
 	if (!r || r->type != REDIS_REPLY_ARRAY)
 	{
 		LOG_ERR("%s: hgetall failed", __FUNCTION__);
@@ -124,9 +123,6 @@ static void	send_wyk_reward()
 		}
 	}
 
-	if (r)
-		freeReplyObject(r);		
-	
 	int ret = sg_redis_client.del(conn_node_friendsrv::server_wyk_key);
 	if (ret != 0)
 	{

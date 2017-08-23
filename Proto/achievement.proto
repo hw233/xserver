@@ -1,0 +1,70 @@
+syntax = "proto2";
+
+//成就信息
+message AchievementData
+{
+	required uint32 id = 1; //功能配置ID
+	required uint32 star = 2; //当前已达成星数
+	required uint32 progress = 3; //当前进度
+	required uint32 state = 4; //状态；0：奖励不可领，1：奖励可领，2：奖励已领
+	required uint32 achieveTime = 5; //达成时间
+}
+
+//成就信息通知
+message AchievementInfoNotify
+{
+	repeated AchievementData achievements = 1; //成就列表 
+}
+
+//成就领取奖励请求
+message AchievementRewardRequest
+{
+	required uint32 achievementId = 1; //成就ID
+}
+
+
+//称号信息
+message TitleData
+{
+	required uint32 id = 1; //功能配置ID
+	required uint32 state = 2; //状态；0：未激活，非0：已激活
+	required uint32 expireTime = 3; //到期时间，0表示永久
+	required bool   isNew = 4; //新获得标识
+	required uint32 activeTime = 5; //激活时间
+}
+
+//称号信息通知
+message TitleInfoNotify
+{
+	repeated TitleData titles = 1; //称号列表
+}
+
+//佩戴称号请求
+message TitleWearRequest
+{
+	required uint32 titleId = 1; //要佩戴的称号id，0表示卸下称号
+}
+
+//佩戴称号应答
+message TitleWearAnswer
+{
+	required uint32 result = 1; //结果
+	required uint32 oldId = 2; //旧的称号id
+	required uint32 newId = 3; //新的称号id
+}
+
+//称号置旧请求
+message TitleMarkOldRequest
+{
+	required uint32 titleId = 1; //称号id
+}
+
+//称号置旧应答
+message TitleMarkOldAnswer
+{
+	required uint32 result = 1; //结果
+	required uint32 titleId = 2; //称号id
+}
+
+
+

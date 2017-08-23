@@ -71,6 +71,8 @@ int conn_node_rank::transfer_to_client()
 			return transfer_to_mailsrv();
 		case SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST:
 			return transfer_to_friendsrv();
+		case SERVER_PROTO_RANK_SYNC_RANK:
+			return transfer_to_gamesrv();
 	}
 	
 	extern_data = get_extern_data(head);

@@ -15,7 +15,6 @@ INCLUDE_DIRECTORIES("."
 
 link_libraries(protobuf-c)
 link_libraries(proto)
-link_libraries(hiredis)
 link_libraries(${LUA_LIBRARIES})
 INCLUDE ("../cmake_ldflags")
 

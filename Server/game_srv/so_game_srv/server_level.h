@@ -9,7 +9,7 @@ void load_server_level_info(void);
 void save_server_level_info(void);
 void break_server_level(void);
 void check_server_level(void);
-void mark_server_level_break(void);
+void mark_server_level_break(player_struct *player);
 void server_level_listen_raid_finish(uint32_t raid_id, player_struct *player);
 void broadcast_server_level_info(void);
 

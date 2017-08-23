@@ -10,14 +10,15 @@ db_srv
 mail_srv
 guild_srv
 rank_srv
+doufachang_srv
 )
 
 for srv_name in ${srv_list[*]}
 do
 	if [ -f "$srv_name/pid.txt" ] && [ -d "/proc/`cat $srv_name/pid.txt`" ]; then
-		echo -e "\033[0m$srv_name alive\033[0m" | awk '{printf "%-15s %-5s\n", $1, $2}' 
+		echo -e "$srv_name \e[32malive\e[0m" | awk '{printf "%-20s %-5s\n", $1, $2}' 
 	else
-		echo -e "\033[31m$srv_name dead\033[0m" | awk '{printf "%-15s %-5s\n", $1, $2}'
+		echo -e "$srv_name \e[31mdead\e[0m" | awk '{printf "%-20s %-5s\n", $1, $2}'
 	fi
 done
 

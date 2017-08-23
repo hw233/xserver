@@ -24,6 +24,7 @@ public:
 
 	static uint32_t get_skill_count();
 	static uint32_t get_skill_pool_max_num();
+	static skill_struct *copy_skill(skill_struct *p);	
 	
 private:
 	static skill_struct *alloc_skill();	

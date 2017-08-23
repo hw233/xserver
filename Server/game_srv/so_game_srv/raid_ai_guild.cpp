@@ -122,20 +122,19 @@ static void guild_raid_ai_player_relive(raid_struct *raid, player_struct *player
 	nty.type = type;
 		// 出生点
 	int pos;
-	float pos_x, pos_z;
+	float pos_x, pos_z, direct;
 	raid->get_raid_player_info(player->get_uuid(), &pos);
 	if (pos < MAX_TEAM_MEM)
 	{
-		get_rand_born_pos1(&pos_x, &pos_z);
-		nty.direct = sg_guild_raid_param1[4];
+		get_rand_born_pos1(&pos_x, &pos_z, &direct);
 	}
 	else
 	{
-		get_rand_born_pos2(&pos_x, &pos_z);
-		nty.direct = sg_guild_raid_param2[4];
+		get_rand_born_pos2(&pos_x, &pos_z, &direct);
 	}
 	nty.pos_x = pos_x;
 	nty.pos_z = pos_z;
+	nty.direct = direct;
 	
 //	pvp_raid_get_relive_pos(raid, &nty.pos_x, &nty.pos_z, &nty.direct);
 	LOG_DEBUG("%s: player[%lu] relive to pos[%d][%d][%d]", __FUNCTION__, player->get_uuid(), nty.pos_x, nty.pos_z, nty.direct);

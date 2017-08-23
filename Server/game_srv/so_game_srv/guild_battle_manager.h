@@ -39,13 +39,13 @@ struct GuildBattleFightGuildRewardInfo
 	std::vector<GuildBattleFightPlayerRewardInfo> players;
 };
 
-void get_rand_born_pos1(float *pos_x, float *pos_z);
-void get_rand_born_pos2(float *pos_x, float *pos_z);
+void get_rand_born_pos1(float *pos_x, float *pos_z, float *direct);
+void get_rand_born_pos2(float *pos_x, float *pos_z, float *direct);
 
-void get_final_rand_born_pos1(float *pos_x, float *pos_z);
-void get_final_rand_born_pos2(float *pos_x, float *pos_z);
-void get_final_rand_born_pos3(float *pos_x, float *pos_z);
-void get_final_rand_born_pos4(float *pos_x, float *pos_z);
+void get_final_rand_born_pos1(float *pos_x, float *pos_z, float *direct);
+void get_final_rand_born_pos2(float *pos_x, float *pos_z, float *direct);
+void get_final_rand_born_pos3(float *pos_x, float *pos_z, float *direct);
+void get_final_rand_born_pos4(float *pos_x, float *pos_z, float *direct);
 
 void guild_battle_manager_on_tick();
 int add_to_guild_battle_waiting(player_struct *player);

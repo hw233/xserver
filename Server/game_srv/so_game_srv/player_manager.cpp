@@ -2,6 +2,8 @@
 #include "player_manager.h"
 #include "scene_manager.h"
 #include "scene.h"
+#include "global_param.h"
+#include "camp_judge.h"
 #include "skill_manager.h"
 #include "mem_pool.h"
 #include "uuid.h"
@@ -21,7 +23,7 @@ player_manager::~player_manager()
 
 
 /////////////////////  以下是静态成员
-ai_player_handle player_manager::m_ai_player_handle;
+ai_player_handle player_manager::m_ai_player_handle[MAX_PLAYER_AI_TYPE];
 // std::map<uint64_t, player_struct *> player_manager::player_manager_all_ai_players_id;
 // std::map<uint64_t, player_struct *> player_manager::player_manager_all_players_id;
 // std::list<player_struct *> player_manager::player_manager_player_free_list;
@@ -245,14 +247,15 @@ void player_manager::on_tick_10()
 
 void player_manager::on_tick_5()
 {
-		// TODO: ai player ai
 	for (std::map<uint64_t, player_struct *>::iterator iter = player_manager_all_ai_players_id.begin(); iter != player_manager_all_ai_players_id.end(); ++iter)
 	{
 		player_struct *player = iter->second;
 		if (!player->scene)
 			continue;
-		if (m_ai_player_handle)
-			m_ai_player_handle(player);
+		if (player->data->player_ai_index > 0
+			&& player->data->player_ai_index < MAX_PLAYER_AI_TYPE
+			&& m_ai_player_handle[player->data->player_ai_index])
+			m_ai_player_handle[player->data->player_ai_index](player);
 	}
 }
 
@@ -279,6 +282,93 @@ char *player_manager::get_rand_player_name(int index)
 	int size = rand_name_config.size();
 //	int rand = random() % size;
 	return rand_name_config[index % size]->Name;
+}
+
+player_struct * player_manager::create_doufachang_ai_player(DOUFACHANG_LOAD_PLAYER_ANSWER *ans)
+{
+	player_struct *ret;
+	uint64_t player_id = alloc_ai_player_uuid();	
+	
+//	scene_struct *scene = NULL;
+//	bool can_delete_when_fail = true;
+	LOG_DEBUG("%s %d: player_id[%lu][%lu][%lu]", __FUNCTION__, __LINE__, ans->player_id, ans->target_id, player_id);
+
+	ret = add_player(player_id);
+	if (!ret) {
+		LOG_ERR("%s %d: add player[%lu] fail", __FUNCTION__, __LINE__, player_id);		
+		return NULL;
+	}
+	if (ret->unpack_dbinfo_to_playerinfo(ans->data, ans->data_size) != 0) {
+		LOG_ERR("%s %d: unpack info[%lu] fail", __FUNCTION__, __LINE__, player_id);
+		delete_player(ret);
+		return NULL;
+	}
+	strncpy(ret->data->name, ans->name, MAX_PLAYER_NAME_LEN);
+	ret->data->name[MAX_PLAYER_NAME_LEN] = '\0';
+	ret->data->attrData[PLAYER_ATTR_LEVEL] = ans->lv<=0?1:ans->lv;
+	ret->data->attrData[PLAYER_ATTR_JOB] = ans->job;
+
+	if (ret->data->attrData[PLAYER_ATTR_BAGUA] == 0)
+	{
+		ret->data->attrData[PLAYER_ATTR_BAGUA] = 1;
+	}
+	ret->calculate_attribute();
+
+	ret->data->attrData[PLAYER_ATTR_PK_TYPE] = PK_TYPE_MURDER;
+		//ai
+	ret->data->origin_player_id = ans->target_id;
+	ret->data->active_attack_range = sg_doufachang_ai[0];
+	ret->data->chase_range = sg_doufachang_ai[1];
+	ret->data->player_ai_index = 2;
+	
+	ret->data->attrData[PLAYER_ATTR_HP] = ret->data->attrData[PLAYER_ATTR_MAXHP];
+	ret->data->attrData[PLAYER_ATTR_MOVE_SPEED] = 5;	
+	
+		//登陆成功
+	ret->data->status = ONLINE;
+
+		//停止AI
+	ret->data->stop_ai = true;
+
+	player_manager_all_ai_players_id[player_id] = ret;
+	return ret;
+}
+
+player_struct *player_manager::create_doufachang_ai_player(player_struct *player)
+{
+	player_struct *ret;
+	uint64_t player_id = alloc_ai_player_uuid();
+	
+	ret = add_player(player_id);
+	if (!ret) {
+		LOG_ERR("%s %d: add player[%lu] fail", __FUNCTION__, __LINE__, player_id);		
+		return NULL;
+	}
+
+	LOG_DEBUG("%s %d: player_id[%lu] id[%lu] player[%p]", __FUNCTION__, __LINE__, player->get_uuid(), player_id, ret);
+
+	strcpy(ret->data->name, player->get_name());
+	memcpy(&ret->data->attrData[0], &player->data->attrData[0], sizeof(ret->data->attrData));
+	memcpy(&ret->data->buff_fight_attr[0], &player->data->buff_fight_attr[0], sizeof(ret->data->buff_fight_attr));	
+	ret->data->attrData[PLAYER_ATTR_PK_TYPE] = PK_TYPE_MURDER;
+		//ai
+	ret->data->origin_player_id = player->get_uuid();
+	ret->data->active_attack_range = sg_doufachang_ai[0];
+	ret->data->chase_range = sg_doufachang_ai[1];
+	ret->data->player_ai_index = 2;	
+	ret->m_skill.copy(&player->m_skill);
+	
+	ret->data->attrData[PLAYER_ATTR_HP] = ret->data->attrData[PLAYER_ATTR_MAXHP];
+	ret->data->attrData[PLAYER_ATTR_MOVE_SPEED] = 5;	
+	
+		//登陆成功
+	ret->data->status = ONLINE;
+
+		//停止AI
+	ret->data->stop_ai = true;
+
+	player_manager_all_ai_players_id[player_id] = ret;
+	return ret;
 }
 
 player_struct * player_manager::create_ai_player(player_struct *player, scene_struct *scene, int name_index)
@@ -334,7 +424,8 @@ player_struct * player_manager::create_ai_player(player_struct *player, scene_st
 		//ai
 	ret->data->active_attack_range = robot_config[index]->ActiveAttackRange;
 	ret->data->chase_range = robot_config[index]->ChaseRange;
-
+	ret->data->player_ai_index = 1;
+	
 	int max_rate = 0;
 	for (size_t i = 0; i < robot_config[index]->n_AttributeType; ++i)
 	{

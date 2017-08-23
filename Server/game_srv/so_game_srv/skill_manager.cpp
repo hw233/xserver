@@ -28,6 +28,15 @@ int skill_manager::init_skill_struct(int num, unsigned long key)
 	return init_comm_pool(0, sizeof(skill_data), num, key, &skill_manager_skill_data_pool);
 }
 
+skill_struct *skill_manager::copy_skill(skill_struct *p)
+{
+	skill_struct *ret = alloc_skill();
+	if (!ret)
+		return NULL;
+	ret->copy(p);
+	return ret;
+}
+
 skill_struct *skill_manager::create_skill(uint64_t id, uint64_t owner, uint64_t target)
 {
 	skill_struct *ret = alloc_skill();

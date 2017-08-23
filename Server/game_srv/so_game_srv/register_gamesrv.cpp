@@ -13,6 +13,7 @@
 #include "install_partner_ai.h"
 #include "install_raid_ai.h"
 #include "pvp_player_ai.h"
+#include "doufachang_player_ai.h"
 #include "monster.h"
 #include "register_gamesrv.h"
 #include "msgid.h"
@@ -65,7 +66,8 @@ static void install_all_msg()
 	install_partner_ai();	
 	install_raid_ai();
 	install_db_msg_handle();
-	install_ai_player_handle();
+	install_pvp_ai_player_handle();
+	install_doufachang_ai_player_handle();	
 }
 
 static void	clear_all_mem()
@@ -79,6 +81,7 @@ static void	clear_all_mem()
 	for (std::set<player_struct *>::iterator ite = player_manager_player_used_list.begin();
 		 ite != player_manager_player_used_list.end(); ++ite)
 	{
+		(*ite)->clear();
 		delete (*ite);
 	}
 
@@ -243,7 +246,8 @@ int uninstall()
 	uninstall_raid_ai();
 	uninstall_db_msg_handle();
 
-	uninstall_ai_player_handle();
+	for (int i = 0; i < MAX_PLAYER_AI_TYPE; ++i)
+		player_manager::m_ai_player_handle[i] = NULL;
 
 	return (0);
 }
@@ -558,20 +562,20 @@ int install(int argc, char **argv)
 		goto done;
 	}
 
-	line = get_first_key(file, (char *)"game_srv_boss_num");
-	player_num = atoi(get_value(line));
-	if (player_num <= 0) {
-		LOG_ERR("config file wrong, no game_srv_boss_num");
-		ret = -1;
-		goto done;
-	}
-	line = get_first_key(file, (char *)"game_srv_boss_key");
-	player_key = strtoul(get_value(line), NULL, 0);
-	if (player_key == 0 || player_key == ULONG_MAX) {
-		LOG_ERR("config file wrong, no game_srv_boss_key");
-		ret = -1;
-		goto done;
-	}
+	// line = get_first_key(file, (char *)"game_srv_boss_num");
+	// player_num = atoi(get_value(line));
+	// if (player_num <= 0) {
+	// 	LOG_ERR("config file wrong, no game_srv_boss_num");
+	// 	ret = -1;
+	// 	goto done;
+	// }
+	// line = get_first_key(file, (char *)"game_srv_boss_key");
+	// player_key = strtoul(get_value(line), NULL, 0);
+	// if (player_key == 0 || player_key == ULONG_MAX) {
+	// 	LOG_ERR("config file wrong, no game_srv_boss_key");
+	// 	ret = -1;
+	// 	goto done;
+	// }
 	// if (monster_manager::init_boss_struct(player_num, player_key) != 0) {
 	// 	LOG_ERR("%d: init boss struct failed", __LINE__);
 	// 	ret = -1;

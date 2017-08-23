@@ -763,5 +763,33 @@
 
 //客户端请求跳过新手副本
 #define MSG_ID_SKIP_NEW_RAID_REQUEST						13501 //请求跳过新手副本 NULL
+
+//成就
+#define MSG_ID_ACHIEVEMENT_INFO_NOTIFY                      13601 //成就信息通知 AchievementInfoNotify
+#define MSG_ID_ACHIEVEMENT_UPDATE_NOTIFY                    13602 //成就更新通知 AchievementData
+#define MSG_ID_ACHIEVEMENT_REWARD_REQUEST                   13603 //成就领取奖励请求 AchievementRewardRequest
+#define MSG_ID_ACHIEVEMENT_REWARD_ANSWER                    13604 //成就领取奖励应答 comm_answer
+
+//称号
+#define MSG_ID_TITLE_INFO_NOTIFY                            13631 //称号信息通知 TitleInfoNotify
+#define MSG_ID_TITLE_UPDATE_NOTIFY                          13632 //称号更新通知 TitleData
+#define MSG_ID_TITLE_WEAR_REQUEST                           13633 //称号佩戴请求 TitleWearRequest
+#define MSG_ID_TITLE_WEAR_ANSWER                            13634 //称号佩戴应答 TitleWearAnswer
+#define MSG_ID_TITLE_MARK_OLD_REQUEST                       13635 //称号置旧请求 TitleMarkOldRequest
+#define MSG_ID_TITLE_MARK_OLD_ANSWER                        13636 //称号置旧应答 TitleMarkOldAnswer
+
+//斗法场
+#define MSG_ID_DOUFACHANG_INFO_REQUEST						13701  //请求斗法场主界面信息 NULL
+#define MSG_ID_DOUFACHANG_INFO_ANSWER						13702  //斗法场主界面信息 doufachang_info_answer
+#define MSG_ID_DOUFACHANG_CHALLENGE_REQUEST					13703  //斗法场挑战请求	 doufachang_challenge_request
+#define MSG_ID_DOUFACHANG_CHALLENGE_ANSWER					13704  //斗法场挑战	 doufachang_challenge_answer
+#define MSG_ID_DOUFACHANG_RAID_FINISHED_NOTIFY				13705  //斗法场副本结束通知	 doufachang_raid_finished_notify
+#define MSG_ID_DOUFACHANG_GET_REWARD_REQUEST				13706  //斗法场获取奖励请求 NULL
+#define MSG_ID_DOUFACHANG_GET_REWARD_ANSWER					13707  //斗法场获取奖励	 comm_answer
+#define MSG_ID_DOUFACHANG_RECORD_REQUEST					13708  //斗法场战报请求	 NULL
+#define MSG_ID_DOUFACHANG_RECORD_ANSWER						13709  //斗法场战报	 doufachang_record_answer
+#define MSG_ID_DOUFACHANG_BUY_CHALLENGE_REQUEST           13710  //斗法场购买次数请求  doufachang_buy_challenge_request
+#define MSG_ID_DOUFACHANG_BUY_CHALLENGE_ANSWER            13711  //斗法场购买次数回复  doufachang_buy_challenge_answer
+
 #endif
 

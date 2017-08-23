@@ -64,7 +64,7 @@ void check_server_level(void)
 	}
 }
 
-void mark_server_level_break(void)
+void mark_server_level_break(player_struct *player)
 {
 	if (global_shared_data->server_level.breaking)
 	{
@@ -75,6 +75,7 @@ void mark_server_level_break(void)
 	global_shared_data->server_level.break_num = 0;
 	memset(&global_shared_data->server_level.break_reward, 0, sizeof(global_shared_data->server_level.break_reward));
 	broadcast_server_level_info();
+	player->add_title(global_shared_data->server_level.config->Title);
 }
 
 void server_level_listen_raid_finish(uint32_t raid_id, player_struct *player)

@@ -154,7 +154,7 @@ int main(int argc, char **argv)
 		goto done;
 	}
 
-	ret = game_add_listen_event(port, &item_listener);
+	ret = game_add_listen_event(port, &item_listener, "itemsrv");
 	if (ret != 0)
 		goto done;
 
@@ -169,7 +169,7 @@ int main(int argc, char **argv)
 		goto done;
 	}
 
-	ret = game_add_listen_event(port, &gamesrv_listener);
+	ret = game_add_listen_event(port, &gamesrv_listener, "gamesrv");
 	if (ret != 0)
 		goto done;
 

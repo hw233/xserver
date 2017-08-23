@@ -8,6 +8,7 @@
 #include "partner_manager.h"
 #include "cash_truck_manager.h"
 #include "msgid.h"
+#include "camp_judge.h"
 #include "role.pb-c.h"
 #include "cast_skill.pb-c.h"
 #include "move_direct.pb-c.h"
@@ -1098,6 +1099,12 @@ int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, do
 			LOG_ERR("%s %d: player[%lu] in sight", __FUNCTION__, __LINE__, sight_player[i]);
 			continue;
 		}
+
+		if (get_unit_fight_type(this, player) != UNIT_FIGHT_TYPE_ENEMY)							
+		{
+			continue;
+		}
+
 		if (player->is_too_high_to_beattack())
 			continue;
 		
@@ -1106,6 +1113,30 @@ int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, do
 		if (x * x + z * z > radius)
 			continue;
 		ret->push_back(player);
+		if (ret->size() >= max)
+			return (0);		
+	}
+	int cur_sight_monster = *get_cur_sight_monster();
+	uint64_t *sight_monster = get_all_sight_monster();	
+	for (int i = 0; i < cur_sight_monster; ++i)
+	{
+		monster_struct *monster = monster_manager::get_monster_by_id(sight_monster[i]);
+		if (!monster || monster->mark_delete || !monster->is_alive())
+		{
+			LOG_ERR("%s %d: player[%lu] in sight", __FUNCTION__, __LINE__, sight_monster[i]);
+			continue;
+		}
+
+		if (get_unit_fight_type(this, monster) != UNIT_FIGHT_TYPE_ENEMY)							
+		{
+			continue;
+		}
+		
+		double x = my_pos->pos_x - monster->get_pos()->pos_x;
+		double z = my_pos->pos_z - monster->get_pos()->pos_z;
+		if (x * x + z * z > radius)
+			continue;
+		ret->push_back(monster);
 		if (ret->size() >= max)
 			return (0);		
 	}

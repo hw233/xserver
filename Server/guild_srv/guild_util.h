@@ -26,8 +26,6 @@ void handle_daily_reset_timeout(void);
 void cb_second_timer(evutil_socket_t, short, void* /*arg*/);
 void load_guild_module(void);
 
-PlayerRedisInfo *get_redis_player(uint64_t player_id);
-int get_more_redis_player(std::set<uint64_t> &player_ids, std::map<uint64_t, PlayerRedisInfo*> &redis_players);
 PlayerRedisInfo *find_redis_from_map(std::map<uint64_t, PlayerRedisInfo*> &redis_players, uint64_t player_id);
 void update_redis_player_guild(GuildPlayer *player);
 std::map<uint32_t, GuildInfo*> &get_all_guild(void);
@@ -82,7 +80,7 @@ int sub_player_donation(GuildPlayer *player, uint32_t num, bool save = true);
 int add_guild_battle_score(GuildInfo *guild, uint32_t num);
 int add_player_battle_score(GuildPlayer *player, uint32_t num);
 void broadcast_guild_battle_score(GuildInfo *guild, std::vector<uint64_t> &player_ids);
-void sync_player_donation_to_game_srv(GuildPlayer *player);
+void sync_player_donation_to_game_srv(GuildPlayer *player, uint32_t is_change = 0, uint32_t change_val = 0);
 
 //帮会建筑
 int init_guild_building(GuildInfo *guild);

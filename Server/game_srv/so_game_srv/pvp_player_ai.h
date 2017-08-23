@@ -3,7 +3,6 @@
 
 #include "player.h"
 
-void install_ai_player_handle();
-void uninstall_ai_player_handle();
+void install_pvp_ai_player_handle();
 
 #endif /* PVP_PLAYER_AI_H */

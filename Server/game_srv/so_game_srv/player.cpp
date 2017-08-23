@@ -62,6 +62,7 @@
 #include "../proto/chat.pb-c.h"
 #include "../proto/bag.pb-c.h"
 #include "../proto/xunbao.pb-c.h"
+#include "../proto/achievement.pb-c.h"
 #include "auto_add_hp.pb-c.h"
 #include "error_code.h"
 #include "app_data_statis.h"
@@ -92,7 +93,7 @@ ItemUseEffectInfo::~ItemUseEffectInfo()
 
 uint32_t FightingCapacity::get_total(void)
 {
-	return (level + equip + horse + yuqidao + bagua + guild_skill + partner + fashion);
+	return (level + equip + horse + yuqidao + bagua + guild_skill + partner + fashion + title);
 }
 
 player_struct::player_struct() : m_skill(this)
@@ -1699,6 +1700,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	db_info.partner_recruit_junior_count = data->partner_recruit_junior_count;
 	db_info.partner_recruit_senior_time = data->partner_recruit_senior_time;
 	db_info.partner_recruit_senior_count = data->partner_recruit_senior_count;
+	db_info.partner_recruit_first = data->partner_recruit_first;
 
 	db_info.partner_bond = data->partner_bond;
 	db_info.n_partner_bond = 0;
@@ -1762,6 +1764,48 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	db_info.server_level_break_count = data->server_level_break_count;
 	db_info.server_level_break_notify = data->server_level_break_notify;
 	db_info.guild_battle_activity_time = data->guild_battle_activity_time;
+
+	DBAchievement  achievement_data[MAX_ACHIEVEMENT_NUM];
+	DBAchievement* achievement_point[MAX_ACHIEVEMENT_NUM];
+	db_info.achievement_list = achievement_point;
+	db_info.n_achievement_list = 0;
+	for (int i = 0; i < MAX_ACHIEVEMENT_NUM; ++i)
+	{
+		if (data->achievement_list[i].id == 0)
+		{
+			break;
+		}
+
+		achievement_point[db_info.n_achievement_list] = &achievement_data[db_info.n_achievement_list];
+		dbachievement__init(&achievement_data[db_info.n_achievement_list]);
+		achievement_data[db_info.n_achievement_list].id = data->achievement_list[i].id;
+		achievement_data[db_info.n_achievement_list].star = data->achievement_list[i].star;
+		achievement_data[db_info.n_achievement_list].progress = data->achievement_list[i].progress;
+		achievement_data[db_info.n_achievement_list].state = data->achievement_list[i].state;
+		achievement_data[db_info.n_achievement_list].achieve_time = data->achievement_list[i].achieveTime;
+		db_info.n_achievement_list++;
+	}
+
+	DBTitle  title_data[MAX_TITLE_NUM];
+	DBTitle* title_point[MAX_TITLE_NUM];
+	db_info.title_list = title_point;
+	db_info.n_title_list = 0;
+	for (int i = 0; i < MAX_TITLE_NUM; ++i)
+	{
+		if (data->title_list[i].id == 0)
+		{
+			break;
+		}
+
+		title_point[db_info.n_title_list] = &title_data[db_info.n_title_list];
+		dbtitle__init(&title_data[db_info.n_title_list]);
+		title_data[db_info.n_title_list].id = data->title_list[i].id;
+		title_data[db_info.n_title_list].state = data->title_list[i].state;
+		title_data[db_info.n_title_list].expire_time = data->title_list[i].expire_time;
+		title_data[db_info.n_title_list].is_new = data->title_list[i].is_new;
+		title_data[db_info.n_title_list].active_time = data->title_list[i].active_time;
+		db_info.n_title_list++;
+	}
 
 	return player_dbinfo__pack(&db_info, out_data);
 }
@@ -2222,6 +2266,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	data->partner_recruit_junior_count = db_info->partner_recruit_junior_count;
 	data->partner_recruit_senior_time = db_info->partner_recruit_senior_time;
 	data->partner_recruit_senior_count = db_info->partner_recruit_senior_count;
+	data->partner_recruit_first = db_info->partner_recruit_first;
 	for (size_t i = 0; i < db_info->n_partner_bond && i < MAX_PARTNER_BOND_NUM; ++i)
 	{
 		data->partner_bond[i] = db_info->partner_bond[i];
@@ -2248,6 +2293,24 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	data->server_level_break_count = db_info->server_level_break_count;
 	data->server_level_break_notify = db_info->server_level_break_notify;
 	data->guild_battle_activity_time = db_info->guild_battle_activity_time;
+
+	for (size_t i = 0; i < db_info->n_achievement_list && i < MAX_ACHIEVEMENT_NUM; ++i)
+	{
+		data->achievement_list[i].id = db_info->achievement_list[i]->id;
+		data->achievement_list[i].star = db_info->achievement_list[i]->star;
+		data->achievement_list[i].progress = db_info->achievement_list[i]->progress;
+		data->achievement_list[i].state = db_info->achievement_list[i]->state;
+		data->achievement_list[i].achieveTime = db_info->achievement_list[i]->achieve_time;
+	}
+
+	for (size_t i = 0; i < db_info->n_title_list && i < MAX_TITLE_NUM; ++i)
+	{
+		data->title_list[i].id = db_info->title_list[i]->id;
+		data->title_list[i].state = db_info->title_list[i]->state;
+		data->title_list[i].expire_time = db_info->title_list[i]->expire_time;
+		data->title_list[i].is_new = db_info->title_list[i]->is_new;
+		data->title_list[i].active_time = db_info->title_list[i]->active_time;
+	}
 
 	player_dbinfo__free_unpacked(db_info, NULL);
 
@@ -3146,7 +3209,10 @@ void player_struct::pack_sight_player_base_info(SightPlayerBaseInfo *info)
 	info->zhenying_id = data->attrData[PLAYER_ATTR_ZHENYING];
 	info->region_id = data->attrData[PLAYER_ATTR_REGION_ID];
 	info->guild_id = data->guild_id;
+	info->guild_name = (data->guild_id > 0 ? get_guild_name(data->guild_id) : NULL);
+	info->guild_office = data->guild_office;
 	info->fashion_weapon_color = data->attrData[PLAYER_ATTR_WEAPON_COLOR];
+	info->title_id = data->attrData[PLAYER_ATTR_TITLE];
 	if (m_team != NULL && m_team->GetLeadId() == this->get_uuid())
 	{
 		info->team_lead = true;
@@ -3324,6 +3390,10 @@ void player_struct::calculate_attribute(bool isNty)
 		data->fc_data.fashion = calculate_fighting_capacity(module_attr);
 	}
 
+	calcu_title_attr(module_attr);
+	add_fight_attr(data->attrData, module_attr);
+	data->fc_data.title = calculate_fighting_capacity(module_attr);
+
 	calculate_lv2_attribute();
 	calculate_lv3_attribute();
 	calculate_lv4_attribute();		
@@ -3339,6 +3409,7 @@ void player_struct::calculate_attribute(bool isNty)
 	{
 		NtyFp = true;
 		data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY] = cur_fp;
+		this->add_achievement_progress(ACType_PLAYER_FC, cur_fp, 0, 1);
 		refresh_player_redis_info();
 		LOG_DEBUG("[%s:%d] player[%lu] fighting capacity, %u --> %u", __FUNCTION__, __LINE__, data->player_id, prev_fp, cur_fp);
 	}
@@ -3791,7 +3862,25 @@ void player_struct::calcu_baguapai_attr(double *attr)
 void player_struct::calcu_guild_skill_attr(double *attr)
 {
 	memset(attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
-	memcpy(attr, data->guild_skill_attr, sizeof(double) * PLAYER_ATTR_MAX);
+	if (data->guild_id > 0)
+	{
+		for (int i = 0; i < MAX_GUILD_SKILL_NUM; ++i)
+		{
+			ProtoGuildSkill *pSkill = &data->guild_skills[i];
+			if (pSkill->skill_id == 0)
+			{
+				break;
+			}
+
+			GangsSkillTable *config = get_guild_skill_config(pSkill->skill_id, pSkill->skill_lv);
+			if (!config)
+			{
+				continue;
+			}
+
+			attr[config->skillType] += config->SkillValue;
+		}
+	}
 
 	print_attribute("guild_skill", attr);
 }
@@ -3895,6 +3984,26 @@ void player_struct::calcu_partner_attr(double *attr)
 	}
 
 	print_attribute("partner", attr);
+}
+
+void player_struct::calcu_title_attr(double *attr)
+{
+	memset(attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
+
+	uint32_t title_id = get_attr(PLAYER_ATTR_TITLE);
+	if (title_id > 0)
+	{
+		TitleFunctionTable *config = get_config_by_id(title_id, &title_function_config);
+		if (config)
+		{
+			for (uint32_t i = 0; i < config->n_Attribute; ++i)
+			{
+				attr[config->Attribute[i]] += config->Value1[i];
+			}
+		}
+	}
+
+	print_attribute("title", attr);
 }
 
 uint32_t player_struct::get_partner_fc(void)
@@ -4231,6 +4340,8 @@ int player_struct::add_unbind_gold(uint32_t num, uint32_t statis_id, bool isNty)
 	LOG_INFO("[%s:%d] player[%lu] prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevVal, curVal, num);
 
 	this->add_task_progress(TCT_BASIC, TBC_GOLD, get_comm_gold());
+	add_achievement_progress(ACType_ADD_CURRENCY, ACurrency_GOLD, 0, realNum);
+	add_achievement_progress(ACType_ADD_CURRENCY, ACurrency_UNBIND_GOLD, 0, realNum);
 	if (isNty)
 	{
 		AttrMap attrs;
@@ -4273,6 +4384,8 @@ int player_struct::add_bind_gold(uint32_t num, uint32_t statis_id, bool isNty)
 	LOG_INFO("[%s:%d] player[%lu] prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevVal, curVal, num);
 
 	this->add_task_progress(TCT_BASIC, TBC_GOLD, get_comm_gold());
+	add_achievement_progress(ACType_ADD_CURRENCY, ACurrency_GOLD, 0, realNum);
+	add_achievement_progress(ACType_ADD_CURRENCY, ACurrency_BIND_GOLD, 0, realNum);
 	if (isNty)
 	{
 		AttrMap attrs;
@@ -4398,6 +4511,7 @@ int player_struct::add_coin(uint32_t num, uint32_t statis_id, bool isNty)
 	LOG_INFO("[%s:%d] player[%lu] prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevVal, curVal, num);
 
 	this->add_task_progress(TCT_BASIC, TBC_COIN, curVal);
+	add_achievement_progress(ACType_ADD_CURRENCY, ACurrency_COIN, 0, realNum);
 	if (isNty)
 	{
 		AttrMap attrs;
@@ -4460,6 +4574,7 @@ int player_struct::add_chengjie_coin(uint32_t num, uint32_t statis_id, bool isNt
 	}
 
 	data->attrData[PLAYER_ATTR_CHENGJIE_COIN] += num;
+	add_achievement_progress(ACType_ADD_CURRENCY, ACurrency_CHENGJIE_COIN, 0, num);
 
 	if (isNty)
 	{
@@ -4508,6 +4623,7 @@ int player_struct::add_guoyu_coin(uint32_t num, uint32_t statis_id, bool isNty)
 	}
 
 	data->attrData[PLAYER_ATTR_GUOYU_COIN] += num;
+	add_achievement_progress(ACType_ADD_CURRENCY, ACurrency_GUOYU_COIN, 0, num);
 
 	if (isNty)
 	{
@@ -4556,6 +4672,7 @@ int player_struct::add_shangjin_coin(uint32_t num, uint32_t statis_id, bool isNt
 	}
 
 	data->attrData[PLAYER_ATTR_SHANGJIN_COIN] += num;
+	add_achievement_progress(ACType_ADD_CURRENCY, ACurrency_SHANGJIN_COIN, 0, num);
 
 	if (isNty)
 	{
@@ -5328,6 +5445,7 @@ int player_struct::del_item_by_pos(uint32_t pos, uint32_t num, uint32_t statis_i
 	}
 
 	grid->num -= num;
+	add_achievement_progress(ACType_ITEM_CONSUME, grid->id, 0, num);
 	if (grid->num == 0)
 	{
 		this->del_item_grid(pos, false);
@@ -5834,6 +5952,22 @@ int player_struct::check_use_prop(uint32_t item_id, uint32_t use_count, ItemUseE
 				}
 			}
 			break;
+		case IUE_ADD_TITLE:
+			{
+				if (config->n_ParameterEffect < 2)
+				{
+					return ERROR_ID_NO_CONFIG;
+				}
+				if (use_count != 1)
+				{
+					return 190500393;
+				}
+				if (get_title_info(config->ParameterEffect[0]) != NULL)
+				{
+					return 190500393;
+				}
+			}
+			break;
 	}
 
 	return 0;
@@ -5967,7 +6101,14 @@ int player_struct::use_prop_effect(uint32_t id, uint32_t use_count, ItemUseEffec
 				add_horse(config->ParameterEffect[0], config->ParameterEffect[1]);
 			}
 			break;
+		case IUE_ADD_TITLE:
+			{
+				add_title(config->ParameterEffect[0], config->ParameterEffect[1]);
+			}
+			break;
 	}
+
+	add_achievement_progress(ACType_USE_PROP, config->ItemEffect, config->ItemQuality, use_count);
 
 	return 0;
 }
@@ -6294,7 +6435,7 @@ int player_struct::add_exp(uint32_t val, uint32_t statis_id, bool isNty)
 		if (is_server_level_limit(level_new))
 		{
 			LOG_DEBUG("[%s:%d] player[%lu] server level limit, level:%u", __FUNCTION__, __LINE__, data->player_id, level_new);
-			mark_server_level_break();
+			mark_server_level_break(this);
 			exp_new = 0;
 			break;
 		}
@@ -6402,6 +6543,7 @@ int player_struct::deal_level_up(uint32_t level_old, uint32_t level_new)
 
 	this->check_head_condition(HUCT_LEVEL_UP, level_new);
 	this->add_task_progress(TCT_BASIC, TBC_LEVEL, level_new);
+	this->add_achievement_progress(ACType_PLAYER_LEVEL, level_new, 0, 1);
 
 	if (ChengJieTaskManage::GetRoleLevel(get_uuid()) != 0)
 	{
@@ -6412,11 +6554,6 @@ int player_struct::deal_level_up(uint32_t level_old, uint32_t level_new)
 	m_skill.OnPlayerLevelUp(level_new);
 	open_new_fashion(level_old, level_new);
 	cache_to_dbserver();
-
-	if (level_new >= 100)
-	{
-		send_rock_notice(*this, 330510001);
-	}
 
 	return 0;
 }
@@ -6507,6 +6644,7 @@ int player_struct::add_head_icon(uint32_t icon_id)
 				fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_HEAD_ICON_UNLOCK_NOTIFY, head_icon_unlock_notify__pack, nty);
 			}
 
+			add_achievement_progress(ACType_HEAD_NUM, 0, 0, i+1);
 			break;
 		}
 	}
@@ -6643,6 +6781,22 @@ void player_struct::check_head_condition(uint32_t condition_id, uint32_t conditi
 
 		this->add_head_icon(config->ID);
 	}
+}
+
+uint32_t player_struct::get_head_num(void)
+{
+	uint32_t num = 0;
+	for (int i = 0; i < MAX_HEAD_ICON_NUM; ++i)
+	{
+		if (data->head_icon_list[i].id == 0)
+		{
+			break;
+		}
+
+		num++;
+	}
+
+	return num;
 }
 
 bool player_struct::check_task_accept_condition(uint32_t type, uint32_t target, uint32_t val)
@@ -7140,6 +7294,7 @@ int player_struct::add_finish_task(uint32_t task_id)
 	}
 
 	add_task_progress(TCT_FINISH, task_id, 1);
+	add_achievement_progress(ACType_TASK_NUM, task_type, 0, 1);
 
 	return 0;
 }
@@ -7575,7 +7730,7 @@ void player_struct::init_task_progress(TaskInfo *info)
 				}
 				break;
 			case TCT_FRIEND_NUM:
-				num = data->friend_num;
+				num = get_friend_num();
 				break;
 			case TCT_JOIN_TEAM:
 				num = (m_team ? m_team->m_data->m_memSize : 0);
@@ -7846,7 +8001,7 @@ int player_struct::set_task_fail(TaskInfo *info)
 			if (sight_space)
 			{
 				sight_space->broadcast_truck_delete(truck);							
-				//sight_space_manager::del_player_from_sight_space(this->sight_space, this, true);
+				sight_space_manager::mark_sight_space_delete(this->sight_space);
 			}
 			else
 			{			
@@ -8488,6 +8643,33 @@ void player_struct::update_task_chapter_info(void)
 	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_TASK_UPDATE_CHAPTER_REWARD_NOTIFY, task_update_chapter_reward_notify__pack, nty);
 }
 
+uint32_t player_struct::get_task_chapter_id(void)
+{
+	uint32_t cur_trunk_task_id = 0;
+	for (int i = 0; i < MAX_TASK_ACCEPTED_NUM; ++i)
+	{
+		TaskInfo &info = data->task_list[i];
+		if (info.id == 0)
+		{
+			continue;
+		}
+
+		if (task_is_trunk(info.id))
+		{
+			cur_trunk_task_id = info.id;
+			break;
+		}
+	}
+
+	TaskTable *config = get_config_by_id(cur_trunk_task_id, &task_config);
+	if (!config)
+	{
+		return 0;
+	}
+	
+	return config->ChapterId;
+}
+
 void player_struct::sing_notify(uint32_t msg_id, uint32_t type, uint32_t time, bool broadcast, bool include_myself)
 {
 	LOG_DEBUG("[%s:%d] player[%lu], type:%u, time:%u, broadcast:%u, include_myself:%u, msg_id:%u", __FUNCTION__, __LINE__, data->player_id, type, time, broadcast, include_myself, msg_id);
@@ -8609,11 +8791,26 @@ void player_struct::send_rock_notice(player_struct &player, uint32_t notify_id)
 	send.id = notify_id;
 	send.prior = table->Priority;
 	send.content = buff;
+	uint32_t c[MAX_CHANNEL] = { 1,2,3,4,5,6 };
+	for (uint32_t i = 0; i < table->n_NoticeChannel; ++i)
+	{
+		c[i] = table->NoticeChannel[i];
+	}
+	send.channel = c;
+	send.n_channel = table->n_NoticeChannel;
 	switch (notify_id)
 	{
 	case 330510001:
+	case 330510002:
+	case 330510003:
+	case 330510004:
+	case 330510005:
+	case 330510006:
+	case 330510007:
+	case 330510008:
 		snprintf(buff, 510, table->NoticeTxt, player.get_name());
-		break;
+		break; 
+	
 	}
 	conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_HORSE_NOTIFY, &send, (pack_func)chat_horse__pack);
 }
@@ -8650,8 +8847,12 @@ uint32_t player_struct::add_murder_num(uint32_t num)
 	if (murder == sg_muder_num_max)
 		return murder;
 	murder += num;
-	if (murder > sg_muder_num_max)
+	if (murder >= sg_muder_num_max)
+	{
 		murder = sg_muder_num_max;
+		send_rock_notice(*this, 330510003);
+	}
+		
 	set_attr(PLAYER_ATTR_MURDER, murder);
 
 	if (old_murder < sg_muder_debuff[0] && murder >= sg_muder_debuff[0])
@@ -8664,6 +8865,12 @@ uint32_t player_struct::add_murder_num(uint32_t num)
 	id[0] = PLAYER_ATTR_MURDER;
 	value[0] = murder;
 	notify_attr_changed(1, id, value);
+
+	if (murder != old_murder)
+	{
+		check_title_condition(TCType_MURDER_NUM, murder, 0);
+	}
+
 	return (murder);
 }
 uint32_t player_struct::sub_murder_num(uint32_t num)
@@ -8687,6 +8894,12 @@ uint32_t player_struct::sub_murder_num(uint32_t num)
 	value[0] = murder;
 	set_attr(PLAYER_ATTR_MURDER, murder);
 	notify_attr_changed(1, id, value);
+
+	if (murder != old_murder)
+	{
+		check_title_condition(TCType_MURDER_NUM, murder, 0);
+	}
+
 	return (murder);
 }
 
@@ -8781,6 +8994,8 @@ int player_struct::add_equip(uint32_t type, uint32_t statis_id)
 	//刷新属性
 	calculate_attribute(true);
 
+	add_achievement_progress(ACType_EQUIP_NUM, 0, 0, get_equip_num());
+
 	//通知前端
 	EquipData nty;
 	equip_data__init(&nty);
@@ -8867,6 +9082,7 @@ int player_struct::add_equip_exp(uint32_t type, uint32_t val)
 		return -1;
 	}
 
+	uint32_t level_old = equip_info->star_lv;
 	equip_info->star_exp += val;
 
 	bool level_up = false;
@@ -8895,6 +9111,7 @@ int player_struct::add_equip_exp(uint32_t type, uint32_t val)
 	{
 		add_task_progress(TCT_EQUIP_STAR, type, equip_info->stair * 10 + equip_info->star_lv);
 		add_task_progress(TCT_EQUIP_STAR_UP, type, 1);
+		add_achievement_progress(ACType_EQUIP_STAR_UP, 0, 0, equip_info->star_lv - level_old);
 	}
 
 	return 0;
@@ -8944,6 +9161,50 @@ uint32_t player_struct::get_equip_max_star_need_exp(uint32_t type)
 	need_exp -= equip_info->star_exp;
 
 	return need_exp;
+}
+
+int player_struct::get_equip_inlay_quality_num(uint32_t quality)
+{
+	int num = 0;
+	for (int i = 0; i < MAX_EQUIP_NUM; ++i)
+	{
+		EquipInfo *pEquip = &data->equip_list[i];
+		for (int j = 0; j < MAX_EQUIP_INLAY_NUM; ++j)
+		{
+			if (pEquip->inlay[j] == 0)
+			{
+				continue;
+			}
+
+			GemAttribute *gem_config = get_gem_config(pEquip->inlay[j]);
+			if (!gem_config)
+			{
+				continue;
+			}
+			
+			if (gem_config->Level >= quality)
+			{
+				num++;
+				break;
+			}
+		}
+	}
+	return num;
+}
+
+uint32_t player_struct::get_equip_num(void)
+{
+	uint32_t num = 0;
+	for (int i = 0; i < MAX_EQUIP_NUM; ++i)
+	{
+		EquipInfo *pEquip = &data->equip_list[i];
+		if (pEquip->stair > 0)
+		{
+			num++;
+		}
+	}
+
+	return num;
 }
 
 uint64_t player_struct::reset_pvp_raid_level(uint16_t score, uint8_t *level, uint8_t *star)
@@ -9187,6 +9448,7 @@ int player_struct::add_today_pvp_win_num(int type)
 	{
 		++data->pvp_raid_data.oneday_win_num_5;
 	}
+	add_achievement_progress(ACType_PVP_WIN, type, 0, 1);
 	return (0);
 }
 
@@ -9401,6 +9663,7 @@ int player_struct::init_yuqidao_break(uint32_t break_id)
 
 	memset(&data->yuqidao_breaks[idx], 0, sizeof(YuqidaoBreakInfo));
 	data->yuqidao_breaks[idx].id = break_id;
+	add_achievement_progress(ACType_YUQIDAO_BREAK_OPEN, break_id, 0, 1);
 
 	return 0;
 }
@@ -9532,6 +9795,53 @@ int player_struct::generate_baguapai_minor_attr(uint32_t card_id, AttrInfo *attr
 	memcpy(attrs, tmp_attr, sizeof(AttrInfo) * MAX_BAGUAPAI_MINOR_ATTR_NUM);
 
 	return 0;
+}
+
+int player_struct::get_bagua_suit_id(BaguapaiDressInfo *info)
+{
+	uint32_t suit_id = 0;
+	uint32_t suit_num = 0;
+	for (int i = 0; i < MAX_BAGUAPAI_DRESS_NUM; ++i)
+	{
+		BaguaTable *card_config = get_config_by_id(info->card_list[i].id, &bagua_config);
+		if (!card_config)
+		{
+			continue;
+		}
+
+		if (i == 0)
+		{
+			suit_id = card_config->Suit;
+			suit_num++;
+		}
+		else if ((uint32_t)card_config->Suit == suit_id)
+		{
+			suit_num++;
+		}
+	}
+	if (suit_num == MAX_BAGUAPAI_DRESS_NUM)
+	{
+		return suit_id;
+	}
+
+	return 0;
+}
+
+int player_struct::get_bagua_min_star(BaguapaiDressInfo *info)
+{
+	uint32_t min_star = 0;
+	for (int i = 0; i < MAX_BAGUAPAI_DRESS_NUM; ++i)
+	{
+		if (i == 0)
+		{
+			min_star = info->card_list[i].star;
+		}
+		else
+		{
+			min_star = std::min(min_star, info->card_list[i].star);
+		}
+	}
+	return min_star;
 }
 
 int player_struct::add_activeness(uint32_t num, uint32_t statis_id, bool isNty)
@@ -9959,6 +10269,27 @@ void player_struct::disband_guild(uint32_t guild_id)
 		LOG_ERR("[%s:%d] send to conn_srv failed err[%d]", __FUNCTION__, __LINE__, errno);
 	}
 }
+
+uint32_t player_struct::get_guild_skill_level_num(uint32_t level)
+{
+	uint32_t num = 0;
+	for (int i = 0; i < MAX_GUILD_SKILL_NUM; ++i)
+	{
+		ProtoGuildSkill *pSkill = &data->guild_skills[i];
+		if (pSkill->skill_id == 0)
+		{
+			break;
+		}
+
+		if (pSkill->skill_lv >= level)
+		{
+			num++;
+		}
+	}
+
+	return num;
+}
+
 
 int player_struct::start_escort(uint32_t escort_id)
 {
@@ -10398,6 +10729,7 @@ int player_struct::add_partner(uint32_t partner_id, uint64_t *uuid)
 		*uuid = partner->data->uuid;
 	}
 	add_partner_dictionary(partner_id);
+	add_achievement_progress(ACType_PARTNER_NUM, 0, 0, 1);
 
 	PartnerData partner_data;
 	partner_data__init(&partner_data);
@@ -10545,6 +10877,7 @@ int player_struct::remove_partner(uint64_t partner_uuid)
 
 	m_partners.erase(partner_uuid);
 	partner_manager::delete_partner(partner);
+	add_achievement_progress(ACType_PARTNER_NUM, 0, 0, 1);
 
 	return 0;
 }
@@ -11194,6 +11527,7 @@ void player_struct::on_tick_10()
 	check_guoyu_expire();
 	check_escort();
 	check_partner_relive();
+	check_title_expire();
 
 	if (data->zhenying.last_week < time_helper::get_cached_time() / 1000)
 	{
@@ -11301,6 +11635,8 @@ void player_struct::on_kill_player(player_struct *dead)
 		{
 			LOG_ERR("[%s:%d] player[%lu] send to friend_srv failed, err:%u", __FUNCTION__, __LINE__, ext_data.player_id, errno);
 		}
+
+		add_achievement_progress(ACType_MURDER_KILL, 0, 0, 1);
 	}
 
 		//当玩家杀戮值超过10点时，死亡后会掉落经验，杀戮值越高，掉落经验越多，具体点数以及掉落经验读取配置表；
@@ -11326,6 +11662,7 @@ void player_struct::on_kill_player(player_struct *dead)
 		//	dead->set_attr(PLAYER_ATTR_MURDER, value[0]);
 		//	dead->notify_attr_changed(1, id, value);
 		// }
+		dead->add_achievement_progress(ACType_MURDER_DEAD, 0, 0, 1);
 	}
 
 
@@ -11353,6 +11690,10 @@ void player_struct::on_kill_player(player_struct *dead)
 	// }
 
 	add_task_progress(TCT_KILL_PLAYER, data->player_id, 1);
+	if (get_attr(PLAYER_ATTR_PK_TYPE) == PK_TYPE_CAMP && dead->get_attr(PLAYER_ATTR_PK_TYPE) == PK_TYPE_CAMP)
+	{
+		add_achievement_progress(ACType_ZHENYING_KILL, 0, 0, 1);
+	}
 
 	if (data->chengjie.cur_task != 0 && data->chengjie.target == dead->get_uuid())
 	{
@@ -11427,6 +11768,7 @@ void player_struct::on_dead(unit_struct *killer)
 
 	interrupt();
 	adjust_battle_partner();
+	add_achievement_progress(ACType_DEAD, 0, 0, 1);
 }
 
 void player_struct::on_relive_in_raid(raid_struct *raid, uint32_t type)
@@ -11464,6 +11806,7 @@ void player_struct::on_relive_in_raid(raid_struct *raid, uint32_t type)
 		++data->attrData[PLAYER_ATTR_RELIVE_TYPE1];
 		++data->attrData[PLAYER_ATTR_RELIVE_TYPE2];
 		broadcast_to_sight(MSG_ID_RELIVE_NOTIFY, &nty, (pack_func)relive_notify__pack, true);
+		add_achievement_progress(ACType_RELIVE, 0, 0, 1);
 	}
 	else //复活点复活
 	{
@@ -11535,6 +11878,7 @@ void player_struct::on_relive(uint32_t type)
 
 			++data->attrData[PLAYER_ATTR_RELIVE_TYPE1];
 			broadcast_to_sight(MSG_ID_RELIVE_NOTIFY, &nty, (pack_func)relive_notify__pack, true);
+			add_achievement_progress(ACType_RELIVE, 0, 0, 1);
 		}
 		else //复活点复活
 		{
@@ -12151,28 +12495,6 @@ void player_struct::refresh_player_redis_info(bool offline)
 {
 	if (!data || get_entity_type(data->player_id) != ENTITY_TYPE_PLAYER)
 		return;
-/*
-	PROTO_HEAD *req = (PROTO_HEAD *)conn_node_base::global_send_buf;
-	req->msg_id = ENDION_FUNC_2(SERVER_PROTO_GAME_TO_FRIEND);
-
-	PlayerRedisInfo info;
-	player_redis_info__init(&info);
-	info.head_icon = get_attr(PLAYER_ATTR_HEAD);
-	info.job = get_attr(PLAYER_ATTR_JOB);
-	info.lv = get_attr(PLAYER_ATTR_LEVEL);
-	info.name = data->name;
-	info.scene_id = data->scene_id;
-	size_t size = player_redis_info__pack(&info, (uint8_t *)&req->data[0]);
-	req->len = ENDION_FUNC_4(sizeof(PROTO_HEAD) + size);
-
-	LOG_DEBUG("%s: data len %d", __FUNCTION__, size);
-
-
-	conn_node_base::add_extern_data(req, &extern_data);
-	if (conn_node_gamesrv::connecter.send_one_msg(req, 1) != (int)ENDION_FUNC_4(req->len)) {
-		LOG_ERR("%s %d: send to dbsrv err[%d]", __FUNCTION__, __LINE__, errno);
-	}
-	*/
 
 	PlayerRedisInfo info;
 	player_redis_info__init(&info);
@@ -12213,6 +12535,15 @@ void player_struct::refresh_player_redis_info(bool offline)
 	info.bagua_fc = data->fc_data.bagua;
 	info.pvp_division_3 = data->pvp_raid_data.level_3;
 	info.pvp_score_3 = data->pvp_raid_data.score_3;
+
+	uint32_t partner_formation[MAX_PARTNER_FORMATION_NUM];	
+	for (int i = 0; i < MAX_PARTNER_FORMATION_NUM; ++i)
+	{
+		if (data->partner_formation[i] == 0)
+			continue;
+		partner_formation[info.n_partner++] = data->partner_formation[i];
+	}
+	info.partner = partner_formation;
 
 	EXTERN_DATA extern_data;
 	extern_data.player_id = data->player_id;
@@ -12262,7 +12593,7 @@ int player_struct::conserve_out_raid_pos_and_scene(raid_struct *raid)
 {
 	assert(raid);
 	assert(raid->m_config);
-	if (raid->m_config->DengeonRank != 13)
+	if (raid->m_config->DengeonRank != 13 && raid->m_config->ExitScene != 0)
 	{
 		data->leaveraid.scene_id = raid->m_config->ExitScene;
 		data->leaveraid.ExitPointX = raid->m_config->ExitPointX;
@@ -12347,6 +12678,8 @@ int player_struct::add_fashion(uint32_t id, uint32_t color, time_t expire)
 	}
 	ret = data->n_fashion;
 	++data->n_fashion;
+	add_achievement_progress(ACType_FASHION_NUM, 0, 0, data->n_fashion);
+	check_title_condition(TCType_FASHION_ID, id, 1);
 
 	ActorFashionTable *table = get_config_by_id(id, &fashion_config);
 	if (table != NULL)
@@ -12361,6 +12694,7 @@ int player_struct::add_fashion(uint32_t id, uint32_t color, time_t expire)
 				break;
 			}
 			++data->charm_level;
+			add_achievement_progress(ACType_FASHION_CHARM, 0, 0, data->charm_level);
 			data->charm_total -= tableCharm->Exp;
 			tableCharm = get_charm_table(data->charm_level);
 			calculate_attribute(true);
@@ -12528,6 +12862,8 @@ void player_struct::check_fashion_expire()
 				memcpy(data->fashion + i, data->fashion + data->n_fashion - 1, sizeof(FashionInfo));
 			}
 			--data->n_fashion;
+			add_achievement_progress(ACType_FASHION_NUM, 0, 0, data->n_fashion);
+			check_title_condition(TCType_FASHION_ID, factionId, 2);
 			std::map<uint64_t, struct ActorFashionTable *>::iterator itFashion = fashion_config.find(factionId);
 			if (itFashion == fashion_config.end())
 			{
@@ -12539,6 +12875,7 @@ void player_struct::check_fashion_expire()
 			while (tableCharm != NULL && data->charm_total < itFashion->second->Charm  && data->charm_level > 1)
 			{
 				--data->charm_level;
+				add_achievement_progress(ACType_FASHION_CHARM, 0, 0, data->charm_level);
 				data->charm_total += tableCharm->Exp;
 				tableCharm = get_charm_table(data->charm_level - 1);
 				calculate_attribute(true);
@@ -12695,6 +13032,8 @@ int player_struct::add_horse(uint32_t id, time_t expire)
 	}
 	int pos = data->n_horse;
 	++data->n_horse;
+	add_achievement_progress(ACType_HORSE_NUM, 0, 0, data->n_horse);
+	check_title_condition(TCType_HORSE_ID, id, 1);
 
 	notify_add_horse(pos);
 	return pos;
@@ -12901,6 +13240,7 @@ void player_struct::check_horse_expire()
 		}
 		if (time_helper::get_cached_time() / 1000 >= (uint64_t)data->horse[i].timeout)
 		{
+			uint32_t horse_id = data->horse[i].id;
 			if (data->horse[i].id == get_attr(PLAYER_ATTR_CUR_HORSE))
 			{
 				int oldHorse = data->attrData[PLAYER_ATTR_CUR_HORSE];
@@ -12931,6 +13271,8 @@ void player_struct::check_horse_expire()
 				memcpy(data->horse + i, data->horse + data->n_horse - 1, sizeof(HorseInfo));
 			}
 			--data->n_horse;
+			add_achievement_progress(ACType_HORSE_NUM, 0, 0, data->n_horse);
+			check_title_condition(TCType_HORSE_ID, horse_id, 2);
 		}
 		else
 		{
@@ -13296,6 +13638,17 @@ void player_struct::refresh_yaoshi_oneday()
 	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_CASH_TRUCK_INFO_NOTIFY, cash_truck_info__pack, note);
 }
 
+uint32_t player_struct::get_zhenying_grade(void)
+{
+	GradeTable *config = get_config_by_id((36020 + get_attr(PLAYER_ATTR_ZHENYING)) * 10000 + data->zhenying.level, &zhenying_level_config); 
+	if (config)
+	{
+		return config->Level;
+	}
+
+	return 0;
+}
+
 void player_struct::logout_check_award_question()
 {
 	if (data->award_answer.bOpenWin)
@@ -13625,3 +13978,771 @@ int player_struct::get_partner_fabao_minor_attr(uint32_t card_id, AttrInfo *attr
 
 	return 0;
 }
+
+uint32_t player_struct::get_partner_quality_num(uint32_t quality)
+{
+	uint32_t num = 0;
+	for (PartnerMap::iterator iter = m_partners.begin(); iter != m_partners.end(); ++iter)
+	{
+		partner_struct *partner = iter->second;
+		if (partner->config->Grade >= (uint64_t)quality)
+		{
+			num++;
+		}
+	}
+
+	return num;
+}
+
+uint32_t player_struct::get_friend_num(void)
+{
+	uint32_t num = 0;
+	for (int i = 0; i < MAX_FRIEND_CONTACT_NUM; ++i)
+	{
+		if (data->friend_contacts[i].player_id == 0)
+		{
+			break;
+		}
+		num++;
+	}
+	return num;
+}
+
+uint32_t player_struct::get_friend_close_num(uint32_t close_lv)
+{
+	uint32_t num = 0;
+	for (int i = 0; i < MAX_FRIEND_CONTACT_NUM; ++i)
+	{
+		if (data->friend_contacts[i].player_id == 0)
+		{
+			break;
+		}
+
+		if (get_friend_close_level(data->friend_contacts[i].closeness) >= close_lv)
+		{
+			num++;
+		}
+	}
+
+	return num;
+}
+
+uint32_t player_struct::get_rank_ranking(uint32_t rank_type)
+{
+	uint32_t rank = 0xffffffff;
+	if (rank_type == 0)
+	{
+		for (int i = 0; i < MAX_RANK_TYPE; ++i)
+		{
+			if (data->ranks[i].type == 0)
+			{
+				break;
+			}
+			if (data->ranks[i].type == rank_type)
+			{
+				rank = std::min(data->ranks[i].rank, rank);
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < MAX_RANK_TYPE; ++i)
+		{
+			if (data->ranks[i].type == 0)
+			{
+				break;
+			}
+			if (data->ranks[i].type == rank_type)
+			{
+				rank = data->ranks[i].rank;
+				break;
+			}
+		}
+	}
+
+	return rank;
+}
+
+void player_struct::load_achievement_end(void)
+{
+	std::set<uint64_t> achievement_ids;
+	uint32_t free_idx = 0;
+	for (; free_idx < MAX_ACHIEVEMENT_NUM; ++free_idx)
+	{
+		AchievementInfo *info = &data->achievement_list[free_idx];
+		if (info->id == 0)
+		{
+			break;
+		}
+		else
+		{
+			achievement_ids.insert(info->id);
+		}
+	}
+
+	for (std::map<uint64_t, AchievementFunctionTable*>::iterator iter = achievement_function_config.begin(); iter != achievement_function_config.end(); ++iter)
+	{
+		if (achievement_ids.find(iter->first) == achievement_ids.end())
+		{
+			if (free_idx < MAX_ACHIEVEMENT_NUM)
+			{
+				AchievementInfo *info = &data->achievement_list[free_idx];
+				free_idx++;
+				memset(info, 0, sizeof(AchievementInfo));
+				info->id = iter->first;
+				info->state = Achievement_State_Achieving;
+				init_achievement_progress(info);
+			}
+			else
+			{
+				LOG_ERR("[%s:%d] player[%lu] achievement memory not enough", __FUNCTION__, __LINE__, data->player_id);
+			}
+		}
+	}
+}
+
+void player_struct::init_achievement_progress(AchievementInfo *info)
+{
+	uint32_t now = time_helper::get_cached_time() / 1000;
+	do
+	{
+		AchievementFunctionTable *func_config = get_config_by_id(info->id, &achievement_function_config);
+		if (!func_config)
+		{
+			break;
+		}
+		if (info->star >= func_config->n_Hierarchys)
+		{
+			break;
+		}
+
+		AchievementHierarchyTable *hier_config = get_config_by_id(func_config->Hierarchys[info->star], &achievement_hierarchy_config);
+		if (!hier_config)
+		{
+			break;
+		}
+
+		uint32_t config_target1 = hier_config->ConditionTarget1;
+		uint32_t config_target2 = hier_config->ConditionTarget2;
+		switch(hier_config->ConditionType)
+		{
+			case ACType_PLAYER_LEVEL:
+				{
+					info->progress = 0;
+					if (get_level() >= config_target1)
+					{
+						info->progress++;
+					}
+				}
+				break;
+			case ACType_PLAYER_FC:
+				{
+					info->progress = 0;
+					if ((uint32_t)get_attr(PLAYER_ATTR_FIGHTING_CAPACITY) >= config_target1)
+					{
+						info->progress++;
+					}
+				}
+				break;
+			case ACType_SKILL_ALL_LEVEL:
+				{
+					info->progress = m_skill.GetSkillLevelNum(config_target1);
+				}
+				break;
+			case ACType_SKILL_FUWEN_UNLOCK:
+				{
+					info->progress = m_skill.GetFuwenUnlockNum();
+				}
+				break;
+			case ACType_SKILL_FUWEN_WEAR:
+				{
+					info->progress = m_skill.GetFuwenWearNum();
+				}
+				break;
+			case ACType_SKILL_FUWEN_LEVEL_NUM:
+				{
+					info->progress = m_skill.GetFuwenLevelNum(config_target1);
+				}
+				break;
+			case ACType_LIVE_SKILL_LEVEL:
+				{
+					info->progress = 0;
+					if (data->live_skill.level[config_target1] >= config_target2)
+					{
+						info->progress++;
+					}
+				}
+				break;
+			case ACType_EQUIP_NUM:
+				{
+					info->progress = get_equip_num();
+				}
+				break;
+			case ACType_EQUIP_STAIR:
+				{
+					info->progress = 0;
+					if (data->equip_list[0].stair >= config_target1)
+					{
+						info->progress++;
+					}
+				}
+				break;
+			case ACType_EQUIP_INLAY_QULITY_NUM:
+				{
+					info->progress = get_equip_inlay_quality_num(config_target1);
+				}
+				break;
+			case ACType_BAGUA_SUIT:
+				{
+					info->progress = 0;
+					for (int k = 0; k < MAX_BAGUAPAI_STYLE_NUM; ++k)
+					{
+						if (get_bagua_suit_id(&data->baguapai_dress[k]) == (int)config_target1)
+						{
+							info->progress++;
+						}
+					}
+				}
+				break;
+			case ACType_BAGUA_MIN_STAR:
+				{
+					info->progress = 0;
+					for (int k = 0; k < MAX_BAGUAPAI_STYLE_NUM; ++k)
+					{
+						if (get_bagua_min_star(&data->baguapai_dress[k]) >= (int)config_target1)
+						{
+							info->progress++;
+						}
+					}
+				}
+				break;
+			case ACType_YUQIDAO_BREAK_OPEN:
+				{
+					info->progress = 0;
+					if (get_yuqidao_break(config_target1))
+					{
+						info->progress++;
+					}
+				}
+				break;
+			case ACType_HORSE_NUM:
+				{
+					info->progress = data->n_horse;
+				}
+				break;
+			case ACType_PARTNER_NUM:
+				{
+					info->progress = get_partner_quality_num(config_target1);
+				}
+				break;
+			case ACType_FRIEND_NUM:
+				{
+					info->progress = get_friend_num();
+				}
+				break;
+			case ACType_FRIEND_CLOSE_NUM:
+				{
+					info->progress = get_friend_close_num(config_target1);
+				}
+				break;
+			case ACType_GUILD_SKILL_LEVEL_NUM:
+				{
+					info->progress = get_guild_skill_level_num(config_target1);
+				}
+				break;
+			case ACType_GUILD_JOIN:
+				{
+					info->progress = 0;
+					if (data->guild_id > 0)
+					{
+						info->progress++;
+					}
+				}
+				break;
+			case ACType_ZHENYING_GRADE:
+				{
+					info->progress = 0;
+					if (get_zhenying_grade() >= config_target1)
+					{
+						info->progress++;
+					}
+				}
+				break;
+			case ACType_TASK_CHAPTER:
+				{
+					info->progress = 0;
+					if (get_task_chapter_id() > config_target1)
+					{
+						info->progress++;
+					}
+				}
+				break;
+			case ACType_FASHION_NUM:
+				{
+					info->progress = data->n_fashion;
+				}
+				break;
+			case ACType_FASHION_CHARM:
+				{
+					info->progress = data->charm_level;
+				}
+				break;
+			case ACType_HEAD_NUM:
+				{
+					info->progress = get_head_num();
+				}
+				break;
+			case ACType_RANKING_RANK:
+				{
+					info->progress = 0;
+					if (get_rank_ranking(config_target1) <= config_target2)
+					{
+						info->progress++;
+					}
+				}
+				break;
+		}
+
+		if (info->progress >= (uint32_t)hier_config->ConditionNum)
+		{
+			info->achieveTime = now;
+			info->state = Achievement_State_Achieved;
+		}
+	} while(0);
+}
+
+void player_struct::add_achievement_progress(uint32_t type, uint32_t target1, uint32_t target2, uint32_t num)
+{
+	uint32_t now = time_helper::get_cached_time() / 1000;
+	for (int i = 0; i < MAX_ACHIEVEMENT_NUM; ++i)
+	{
+		AchievementInfo *info = &data->achievement_list[i];
+		if (info->id == 0)
+		{
+			continue;
+		}
+
+		AchievementFunctionTable *func_config = get_config_by_id(info->id, &achievement_function_config);
+		if (!func_config)
+		{
+			continue;
+		}
+		if (info->star >= func_config->n_Hierarchys)
+		{
+			continue;
+		}
+
+		AchievementHierarchyTable *hier_config = get_config_by_id(func_config->Hierarchys[info->star], &achievement_hierarchy_config);
+		if (!hier_config)
+		{
+			continue;
+		}
+		if ((uint32_t)hier_config->ConditionType != type)
+		{
+			continue;
+		}
+
+		bool achieve_before = (info->state >= Achievement_State_Achieved);
+
+		uint32_t config_target1 = (uint32_t)hier_config->ConditionTarget1;
+		uint32_t config_target2 = (uint32_t)hier_config->ConditionTarget2;
+		uint32_t pre_progress = info->progress;
+		switch(type)
+		{
+			case ACType_PLAYER_LEVEL:
+			case ACType_PLAYER_FC:
+			case ACType_ZHENYING_GRADE:
+				{
+					if (target1 >= config_target1)
+					{
+						info->progress += num;
+					}
+				}
+				break;
+			case ACType_LIVE_SKILL_LEVEL:
+				{
+					if (target1 == config_target1 && target2 >= config_target2)
+					{
+						info->progress+= num;
+					}
+				}
+				break;
+			case ACType_SKILL_ALL_LEVEL:
+				{
+					info->progress = m_skill.GetSkillLevelNum(config_target1);
+				}
+				break;
+			case ACType_SKILL_FUWEN_LEVEL_NUM:
+				{
+					info->progress = m_skill.GetFuwenLevelNum(config_target1);
+				}
+				break;
+			case ACType_EQUIP_INLAY_QULITY_NUM:
+				{
+					info->progress = get_equip_inlay_quality_num(config_target1);
+				}
+				break;
+			case ACType_BAGUA_MIN_STAR:
+				{
+					info->progress = 0;
+					for (int k = 0; k < MAX_BAGUAPAI_STYLE_NUM; ++k)
+					{
+						if (get_bagua_min_star(&data->baguapai_dress[k]) >= (int)config_target1)
+						{
+							info->progress++;
+						}
+					}
+				}
+				break;
+			case ACType_PARTNER_NUM:
+				{
+					info->progress = get_partner_quality_num(config_target1);
+				}
+				break;
+			case ACType_FRIEND_CLOSE_NUM:
+				{
+					info->progress = get_friend_close_num(config_target1);
+				}
+				break;
+			case ACType_GUILD_SKILL_LEVEL_NUM:
+				{
+					info->progress = get_guild_skill_level_num(config_target1);
+				}
+				break;
+			case ACType_USE_PROP:
+			case ACType_RAID_PASS_STAR:
+				{
+					if (!((config_target1 > 0 && config_target1 != target1) || (config_target2 > 0 && config_target2 != target2)))
+					{
+						info->progress += num;
+					}
+				}
+				break;
+			case ACType_RANKING_RANK:
+				{
+					if (!((config_target1 > 0 && config_target1 != target1) || (config_target2 > 0 && config_target2 < target2)))
+					{
+						info->progress += num;
+					}
+				}
+				break;
+			case ACType_SKILL_FUWEN_UNLOCK:
+			case ACType_SKILL_FUWEN_WEAR:
+			case ACType_EQUIP_NUM:
+			case ACType_HORSE_NUM:
+			case ACType_FRIEND_NUM:
+			case ACType_FASHION_NUM:
+			case ACType_FASHION_CHARM:
+			case ACType_HEAD_NUM:
+				{
+					info->progress = num;
+				}
+				break;
+			default:
+				{
+					if (config_target1 == 0 || (config_target1 > 0 && config_target1 == target1))
+					{
+						info->progress += num;
+					}
+				}
+				break;
+		}
+
+		//计数没变化
+		if (info->progress == pre_progress)
+		{
+			continue;
+		}
+
+		//目标已达成
+		if (info->progress >= (uint32_t)hier_config->ConditionNum)
+		{
+			if (!achieve_before)
+			{
+				info->achieveTime = now;
+				info->state = Achievement_State_Achieved;
+			}
+		}
+
+		if (!achieve_before)
+		{
+			achievement_update_notify(info);
+		}
+	}
+}
+
+AchievementInfo *player_struct::get_achievement_info(uint32_t id)
+{
+	for (int i = 0; i < MAX_ACHIEVEMENT_NUM; ++i)
+	{
+		AchievementInfo *info = &data->achievement_list[i];
+		if (info->id != 0 && info->id == id)
+		{
+			return info;
+		}
+	}
+
+	return NULL;
+}
+
+void player_struct::achievement_update_notify(AchievementInfo *info)
+{
+	if (!data->login_notify)
+	{
+		return;
+	}
+
+	AchievementData nty;
+	achievement_data__init(&nty);
+
+	nty.id = info->id;
+	nty.star = info->star;
+	nty.progress = info->progress;
+	nty.state = info->state;
+	nty.achievetime = info->achieveTime;
+
+	EXTERN_DATA ext_data;
+	ext_data.player_id = data->player_id;
+
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_ACHIEVEMENT_UPDATE_NOTIFY, achievement_data__pack, nty);
+}
+
+AchievementHierarchyTable *player_struct::get_achievement_config(AchievementInfo *info)
+{
+	do
+	{
+		AchievementFunctionTable *func_config = get_config_by_id(info->id, &achievement_function_config);
+		if (!func_config)
+		{
+			break;
+		}
+		if (info->star >= func_config->n_Hierarchys)
+		{
+			break;
+		}
+
+		return get_config_by_id(func_config->Hierarchys[info->star], &achievement_hierarchy_config);
+	} while(0);
+
+	return NULL;
+}
+
+TitleInfo *player_struct::get_title_info(uint32_t id)
+{
+	for (int i = 0; i < MAX_TITLE_NUM; ++i)
+	{
+		TitleInfo *info = &data->title_list[i];
+		if (info->id == 0)
+		{
+			break;
+		}
+		if (info->id == id)
+		{
+			return info;
+		}
+	}
+
+	return NULL;
+}
+
+int player_struct::add_title(uint32_t title_id, uint32_t keep_time)
+{
+	TitleInfo *info = NULL;
+	for (int i = 0; i < MAX_TITLE_NUM; ++i)
+	{
+		if (data->title_list[i].id == 0 || data->title_list[i].id == title_id)
+		{
+			info = &data->title_list[i];
+			break;
+		}
+	}
+
+	if (!info)
+	{
+		return -1;
+	}
+
+	if (info->id > 0)
+	{
+		return 0;
+	}
+
+	uint32_t now = time_helper::get_cached_time() / 1000;
+	info->id = title_id;
+	info->state = 1;
+	info->is_new = true;
+	info->active_time = now;
+	if (keep_time > 0)
+	{
+		info->expire_time = now + keep_time;
+	}
+	else
+	{
+		info->expire_time = 0;
+	}
+
+	title_update_notify(info);
+
+	return 0;
+}
+
+int player_struct::expire_title(uint32_t title_id)
+{
+	int title_idx = -1;
+	for (int i = 0; i < MAX_TITLE_NUM; ++i)
+	{
+		if (data->title_list[i].id == 0)
+		{
+			break;
+		}
+		if (data->title_list[i].id == title_id)
+		{
+			title_idx = i;
+			break;
+		}
+	}
+
+	if (title_idx < 0)
+	{
+		return 0;
+	}
+
+	sub_title(title_idx);
+
+	return 0;
+}
+
+int player_struct::sub_title(uint32_t title_idx)
+{
+	if (title_idx >= MAX_TITLE_NUM)
+	{
+		return -1;
+	}
+
+	TitleInfo *info = &data->title_list[title_idx];
+	uint32_t title_id = info->id;
+	info->state = 0;
+	info->is_new = 0;
+	info->expire_time = 0;
+	info->active_time = 0;
+	title_update_notify(info);
+
+	if (title_idx != MAX_TITLE_NUM - 1)
+	{
+		memmove(&data->title_list[title_idx], &data->title_list[title_idx + 1], sizeof(TitleInfo) * (MAX_TITLE_NUM - title_idx - 1));
+	}
+	memset(&data->title_list[MAX_TITLE_NUM - 1], 0, sizeof(TitleInfo));
+
+	if (title_id == (uint32_t)get_attr(PLAYER_ATTR_TITLE))
+	{
+		set_attr(PLAYER_ATTR_TITLE, 0);
+		calculate_attribute(true);
+		broadcast_one_attr_changed(PLAYER_ATTR_TITLE, title_id, true, true);
+	}
+
+	return 0;
+}
+
+void player_struct::title_update_notify(TitleInfo *info)
+{
+	TitleData nty;
+	title_data__init(&nty);
+
+	nty.id = info->id;
+	nty.state = info->state;
+	nty.expiretime = info->expire_time;
+	nty.isnew = info->is_new;
+	nty.activetime = info->active_time;
+
+	EXTERN_DATA ext_data;
+	ext_data.player_id = data->player_id;
+
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_TITLE_UPDATE_NOTIFY, title_data__pack, nty);
+}
+
+void player_struct::check_title_expire(void)
+{
+	uint32_t now = time_helper::get_cached_time() / 1000;
+	for (int i = 0; i < MAX_TITLE_NUM; ++i)
+	{
+		TitleInfo *info = &data->title_list[i];
+		if (info->id == 0)
+		{
+			break;
+		}
+
+		if (info->expire_time > 0 && info->expire_time <= now)
+		{
+			sub_title(i);
+			i--;
+		}
+	}
+}
+
+void player_struct::check_title_condition(uint32_t type, uint32_t target1, uint32_t target2)
+{
+	for (std::map<uint64_t, TitleFunctionTable*>::iterator iter = title_function_config.begin(); iter != title_function_config.end(); ++iter)
+	{
+		TitleFunctionTable *config = iter->second;
+		uint32_t title_id = config->ID;
+		if (config->ConditionType != type)
+		{
+			continue;
+		}
+
+		uint32_t config_target1 = config->ConditionTarget1;
+		uint32_t config_target2 = config->ConditionTarget2;
+		switch(type)
+		{
+			case TCType_RANK_RANKING:
+				{
+					if (config_target1 != target1)
+					{
+						break;
+					}
+					if (target2 == config_target2)
+					{
+						add_title(title_id);
+					}
+					else
+					{
+						expire_title(title_id);
+					}
+				}
+				break;
+			case TCType_MURDER_NUM:
+				{
+					if (target1 >= config_target1)
+					{
+						add_title(title_id);
+					}
+					else
+					{
+						expire_title(title_id);
+					}
+				}
+				break;
+			case TCType_FASHION_ID:
+			case TCType_HORSE_ID:
+				{
+					if (config_target1 != target1)
+					{
+						break;
+					}
+
+					if (target2 == 1)
+					{
+						add_title(title_id);
+					}
+					else if (target2 == 2)
+					{
+						expire_title(title_id);
+					}
+				}
+				break;
+		}
+	}
+}
+
+
+

@@ -140,7 +140,7 @@ int main(int argc, char **argv)
 	}
 
 
-	ret = game_add_listen_event(port, &server_listener);
+	ret = game_add_listen_event(port, &server_listener, "gamesrv");
 	if (ret != 0)
 		goto done;
 

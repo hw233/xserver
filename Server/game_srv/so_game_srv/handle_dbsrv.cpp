@@ -1,4 +1,5 @@
 #include "game_event.h"
+#include "so_game_srv/raid_manager.h"
 #include "time_helper.h"
 #include "player.h"
 #include "msgid.h"
@@ -135,6 +136,36 @@ static int handle_add_chengjie_answer(EXTERN_DATA *extern_data)
 	return 0;
 }
 
+static int handle_doufachang_load_player_answer(EXTERN_DATA *extern_data)
+{
+	DOUFACHANG_LOAD_PLAYER_ANSWER *ans = (DOUFACHANG_LOAD_PLAYER_ANSWER *)conn_node_dbsrv::connecter.get_data();
+	LOG_DEBUG("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+	
+	player_struct *player1 = player_manager::get_player_by_id(ans->player_id);
+	if (!player1 || !player1->is_avaliable())
+	{
+		return (0);
+	}
+	player_struct *player = player_manager::create_doufachang_ai_player(ans);
+	if (!player)
+	{
+		LOG_ERR("%s %d: can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);		
+		return (-1);
+	}
+
+	raid_struct *raid = raid_manager::create_raid(sg_doufachang_raid_id, NULL);
+	if (!raid)
+	{
+		LOG_ERR("%s: create raid failed", __FUNCTION__);
+		player_manager::delete_player(player);
+		return (-1);
+	}
+
+	raid->player_enter_raid_impl(player1, 0, sg_3v3_pvp_raid_param1[1], sg_3v3_pvp_raid_param1[3]);
+	raid->player_enter_raid_impl(player, MAX_TEAM_MEM, sg_3v3_pvp_raid_param2[1], sg_3v3_pvp_raid_param2[3]);
+	return 0;
+}
+
 //从db_srv返回登录结果
 static int handle_player_enter_game_answer(EXTERN_DATA *extern_data)
 {
@@ -232,6 +263,8 @@ static int handle_player_rename_answer(EXTERN_DATA *extern_data)
 //		{
 //			player->m_team->BroadcastToTeamNotinSight(*player, MSG_ID_PLAYER_NAME_NOTIFY, &nty, (pack_func)player_name_notify__pack);
 //		}
+
+		player->add_achievement_progress(ACType_PLAYER_RENAME, 0, 0, 1);
 	}
 
 	CommAnswer resp;
@@ -440,6 +473,7 @@ void install_db_msg_handle()
 	add_msg_handle(MSG_ID_GET_OTHER_INFO_ANSWER, handle_get_other_info_answer);
 	add_msg_handle(SERVER_PROTO_LOAD_SERVER_LEVEL_ANSWER, handle_load_server_level_answer);
 	add_msg_handle(SERVER_PROTO_BREAK_SERVER_LEVEL_ANSWER, handle_break_server_level_answer);
+	add_msg_handle(SERVER_PROTO_DOUFACHANG_LOAD_PLAYER_ANSWER, handle_doufachang_load_player_answer);
 }
 
 void uninstall_db_msg_handle()

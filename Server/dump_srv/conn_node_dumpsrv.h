@@ -24,13 +24,14 @@ extern void cb_on_timer(evutil_socket_t, short, void *arg);
 class conn_node_dumpsrv: public conn_node_base
 {
 public:
+	virtual int recv_func(evutil_socket_t fd);
+	
+	static conn_node_dumpsrv* instance(void);
+private:
 	conn_node_dumpsrv();
 	virtual ~conn_node_dumpsrv();
 
-	virtual int recv_func(evutil_socket_t fd);
-	
-	static conn_node_dumpsrv connecter;
-private:
+	static conn_node_dumpsrv *connecter;
 };
 
 

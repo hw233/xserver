@@ -542,127 +542,127 @@ local TaskMonsterTable = {
 		['ID'] = 240720078,
 		['MonsterID'] = 151006001,
 		['MonsterLevel'] = 25,
-		['PointX'] = 79,
-		['PointZ'] = 143
+		['PointX'] = 82,
+		['PointZ'] = 131
 		},
 	[240720079] = {
 		['ID'] = 240720079,
 		['MonsterID'] = 151006002,
 		['MonsterLevel'] = 20,
-		['PointX'] = 82,
-		['PointZ'] = 142
+		['PointX'] = 79,
+		['PointZ'] = 132
 		},
 	[240720080] = {
 		['ID'] = 240720080,
 		['MonsterID'] = 151006002,
 		['MonsterLevel'] = 20,
-		['PointX'] = 82,
-		['PointZ'] = 147
+		['PointX'] = 80,
+		['PointZ'] = 130
 		},
 	[240720081] = {
 		['ID'] = 240720081,
 		['MonsterID'] = 151006002,
 		['MonsterLevel'] = 20,
-		['PointX'] = 79,
-		['PointZ'] = 149
+		['PointX'] = 81,
+		['PointZ'] = 127
 		},
 	[240720082] = {
 		['ID'] = 240720082,
 		['MonsterID'] = 151006002,
 		['MonsterLevel'] = 20,
-		['PointX'] = 77,
-		['PointZ'] = 149
+		['PointX'] = 80,
+		['PointZ'] = 126
 		},
 	[240720083] = {
 		['ID'] = 240720083,
 		['MonsterID'] = 151006002,
 		['MonsterLevel'] = 20,
-		['PointX'] = 74,
-		['PointZ'] = 146
+		['PointX'] = 79,
+		['PointZ'] = 127
 		},
 	[240720084] = {
 		['ID'] = 240720084,
 		['MonsterID'] = 151006002,
 		['MonsterLevel'] = 20,
-		['PointX'] = 72,
-		['PointZ'] = 143
+		['PointX'] = 78,
+		['PointZ'] = 129
 		},
 	[240720085] = {
 		['ID'] = 240720085,
 		['MonsterID'] = 151006002,
 		['MonsterLevel'] = 20,
-		['PointX'] = 76,
-		['PointZ'] = 140
+		['PointX'] = 79,
+		['PointZ'] = 130
 		},
 	[240720086] = {
 		['ID'] = 240720086,
 		['MonsterID'] = 151006002,
 		['MonsterLevel'] = 20,
 		['PointX'] = 80,
-		['PointZ'] = 138
+		['PointZ'] = 134
 		},
 	[240720087] = {
 		['ID'] = 240720087,
 		['MonsterID'] = 151006002,
 		['MonsterLevel'] = 20,
-		['PointX'] = 83,
-		['PointZ'] = 139
+		['PointX'] = 84,
+		['PointZ'] = 134
 		},
 	[240720088] = {
 		['ID'] = 240720088,
 		['MonsterID'] = 151006004,
 		['MonsterLevel'] = 20,
-		['PointX'] = 87,
-		['PointZ'] = 272
+		['PointX'] = 126,
+		['PointZ'] = 221
 		},
 	[240720089] = {
 		['ID'] = 240720089,
 		['MonsterID'] = 151006005,
 		['MonsterLevel'] = 20,
-		['PointX'] = 84,
-		['PointZ'] = 272
+		['PointX'] = 126,
+		['PointZ'] = 217
 		},
 	[240720090] = {
 		['ID'] = 240720090,
 		['MonsterID'] = 151006003,
-		['MonsterLevel'] = 28,
-		['PointX'] = 80,
-		['PointZ'] = 273
+		['MonsterLevel'] = 25,
+		['PointX'] = 125,
+		['PointZ'] = 221
 		},
 	[240720091] = {
 		['ID'] = 240720091,
 		['MonsterID'] = 151006003,
-		['MonsterLevel'] = 28,
-		['PointX'] = 83,
-		['PointZ'] = 277
+		['MonsterLevel'] = 25,
+		['PointX'] = 122,
+		['PointZ'] = 221
 		},
 	[240720092] = {
 		['ID'] = 240720092,
 		['MonsterID'] = 151006003,
-		['MonsterLevel'] = 28,
-		['PointX'] = 87,
-		['PointZ'] = 277
+		['MonsterLevel'] = 25,
+		['PointX'] = 122,
+		['PointZ'] = 218
 		},
 	[240720093] = {
 		['ID'] = 240720093,
 		['MonsterID'] = 151006003,
-		['MonsterLevel'] = 28,
-		['PointX'] = 92,
-		['PointZ'] = 275
+		['MonsterLevel'] = 25,
+		['PointX'] = 124,
+		['PointZ'] = 215
 		},
 	[240720094] = {
 		['ID'] = 240720094,
 		['MonsterID'] = 151006003,
-		['MonsterLevel'] = 28,
-		['PointX'] = 90,
-		['PointZ'] = 270
+		['MonsterLevel'] = 25,
+		['PointX'] = 127,
+		['PointZ'] = 220
 		},
 	[240720095] = {
 		['ID'] = 240720095,
 		['MonsterID'] = 151006003,
-		['MonsterLevel'] = 28,
-		['PointX'] = 85,
-		['PointZ'] = 268
+		['MonsterLevel'] = 25,
+		['PointX'] = 124,
+		['PointZ'] = 223
 		},
 	[240720096] = {
 		['ID'] = 240720096,
@@ -670,6 +670,13 @@ local TaskMonsterTable = {
 		['MonsterLevel'] = 10,
 		['PointX'] = 98,
 		['PointZ'] = 394
+		},
+	[240720097] = {
+		['ID'] = 240720097,
+		['MonsterID'] = 151006010,
+		['MonsterLevel'] = 25,
+		['PointX'] = 125,
+		['PointZ'] = 214
 		}
 	}
 return TaskMonsterTable

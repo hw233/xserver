@@ -8,9 +8,7 @@
 #include "guild_answer.h"
 
 #define MAX_GUILD_BUILDING_NUM 5 //每个帮会最大建筑数
-#define MAX_GUILD_NAME_LEN     32 //帮会名字最大长度
 #define MAX_GUILD_ANNOUNCEMENT_LEN     200 //帮会公告最大长度
-#define MAX_GUILD_SKILL_NUM     20 //帮会技能最大数
 #define MAX_GUILD_GOODS_NUM     30 //帮会商品最大数
 
 enum GuildBuildingType
@@ -43,33 +41,33 @@ enum GuildOfficePermissionType
 	GOPT_RENAME = 11, //改名
 };
 
-class AutoReleaseRedisPlayer
-{
-public:
-	AutoReleaseRedisPlayer(PlayerRedisInfo *db) : pointer(db) {}
-	~AutoReleaseRedisPlayer() { player_redis_info__free_unpacked(pointer, NULL); }
-private:
-	PlayerRedisInfo *pointer;
-};
-class AutoReleaseBatchRedisPlayer
-{
-public:
-	AutoReleaseBatchRedisPlayer() {}
-	~AutoReleaseBatchRedisPlayer()
-	{
-		for (std::vector<PlayerRedisInfo*>::iterator iter = pointer_vec.begin(); iter != pointer_vec.end(); ++iter)
-		{
-			player_redis_info__free_unpacked(*iter, NULL);
-		}
-	}
-
-	void push_back(PlayerRedisInfo *player)
-	{
-		pointer_vec.push_back(player);
-	}
-private:
-	std::vector<PlayerRedisInfo *> pointer_vec;
-};
+//class AutoReleaseRedisPlayer
+//{
+//public:
+// 	AutoReleaseRedisPlayer(PlayerRedisInfo *db) : pointer(db) {}
+// 	~AutoReleaseRedisPlayer() { player_redis_info__free_unpacked(pointer, NULL); }
+//private:
+// 	PlayerRedisInfo *pointer;
+//};
+//class AutoReleaseBatchRedisPlayer
+//{
+//public:
+// 	AutoReleaseBatchRedisPlayer() {}
+// 	~AutoReleaseBatchRedisPlayer()
+// 	{
+// 		for (std::vector<PlayerRedisInfo*>::iterator iter = pointer_vec.begin(); iter != pointer_vec.end(); ++iter)
+// 		{
+// 			player_redis_info__free_unpacked(*iter, NULL);
+// 		}
+// 	}
+// 
+// 	void push_back(PlayerRedisInfo *player)
+// 	{
+// 		pointer_vec.push_back(player);
+// 	}
+//private:
+// 	std::vector<PlayerRedisInfo *> pointer_vec;
+//};
 
 
 struct GuildInfo;

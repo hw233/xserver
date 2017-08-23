@@ -4,7 +4,7 @@ FILE(GLOB SRC_LIST
 
 INCLUDE ("../cmake_flags")
 INCLUDE_DIRECTORIES("."
-#  "${PROJECT_SOURCE_DIR}/excel_data"
+  "${PROJECT_SOURCE_DIR}/excel_data"
   "${PROJECT_SOURCE_DIR}/comm_include"
 #  "${PROJECT_SOURCE_DIR}/comm_lib/include"
   "${PROJECT_SOURCE_DIR}/comm_game"
@@ -15,7 +15,6 @@ INCLUDE_DIRECTORIES("."
 
 link_libraries(protobuf-c)
 link_libraries(proto)
-link_libraries(hiredis)
 link_libraries(${LUA_LIBRARIES})
 INCLUDE ("../cmake_ldflags")
 

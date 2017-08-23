@@ -4,7 +4,7 @@
 #include "game_event.h"
 #include "guild_db.pb-c.h"
 #include "mysql_module.h"
-#include "redis_client.h"
+#include "redis_util.h"
 #include "time_helper.h"
 #include "error_code.h"
 #include "guild.pb-c.h"
@@ -549,63 +549,63 @@ void load_guild_module(void)
 }
 
 
-PlayerRedisInfo *get_redis_player(uint64_t player_id)
-{
-	CRedisClient &rc = sg_redis_client;
-	static uint8_t data_buffer[32 * 1024];
-	int data_len = 32 * 1024;
-	char field[64];
-	sprintf(field, "%lu", player_id);
-	int ret = rc.hget_bin(sg_player_key, field, (char *)data_buffer, &data_len);
-	if (ret == 0)
-	{
-		return player_redis_info__unpack(NULL, data_len, data_buffer);
-	}
+// PlayerRedisInfo *get_redis_player(uint64_t player_id)
+// {
+// 	CRedisClient &rc = sg_redis_client;
+// 	static uint8_t data_buffer[32 * 1024];
+// 	int data_len = 32 * 1024;
+// 	char field[64];
+// 	sprintf(field, "%lu", player_id);
+// 	int ret = rc.hget_bin(sg_player_key, field, (char *)data_buffer, &data_len);
+// 	if (ret == 0)
+// 	{
+// 		return player_redis_info__unpack(NULL, data_len, data_buffer);
+// 	}
 
-	return NULL;
-}
+// 	return NULL;
+// }
 
-int get_more_redis_player(std::set<uint64_t> &player_ids, std::map<uint64_t, PlayerRedisInfo*> &redis_players)
-{
-	if (player_ids.size() == 0)
-	{
-		return 0;
-	}
+// int get_more_redis_player(std::set<uint64_t> &player_ids, std::map<uint64_t, PlayerRedisInfo*> &redis_players)
+// {
+// 	if (player_ids.size() == 0)
+// 	{
+// 		return 0;
+// 	}
 
-	std::vector<std::relation_three<uint64_t, char*, int> > player_infos;
-	for (std::set<uint64_t>::iterator iter = player_ids.begin(); iter != player_ids.end(); ++iter)
-	{
-		std::relation_three<uint64_t, char*, int> tmp(*iter, NULL, 0);
-		player_infos.push_back(tmp);
-	}
+// 	std::vector<std::relation_three<uint64_t, char*, int> > player_infos;
+// 	for (std::set<uint64_t>::iterator iter = player_ids.begin(); iter != player_ids.end(); ++iter)
+// 	{
+// 		std::relation_three<uint64_t, char*, int> tmp(*iter, NULL, 0);
+// 		player_infos.push_back(tmp);
+// 	}
 
-	int ret = sg_redis_client.get(sg_player_key, player_infos);
-	if (ret != 0)
-	{
-		LOG_ERR("[%s:%d] hmget failed, ret:%d", __FUNCTION__, __LINE__, ret);
-		return -1;
-	}
+// 	int ret = sg_redis_client.get(sg_player_key, player_infos);
+// 	if (ret != 0)
+// 	{
+// 		LOG_ERR("[%s:%d] hmget failed, ret:%d", __FUNCTION__, __LINE__, ret);
+// 		return -1;
+// 	}
 
-	for (std::vector<std::relation_three<uint64_t, char*, int> >::iterator iter = player_infos.begin(); iter != player_infos.end(); ++iter)
-	{
-		PlayerRedisInfo *redis_player = player_redis_info__unpack(NULL, iter->three, (uint8_t*)iter->second);
-		if (!redis_player)
-		{
-			ret = -1;
-			LOG_ERR("[%s:%d] unpack redis failed, player_id:%lu", __FUNCTION__, __LINE__, iter->first);
-			break;
-		}
+// 	for (std::vector<std::relation_three<uint64_t, char*, int> >::iterator iter = player_infos.begin(); iter != player_infos.end(); ++iter)
+// 	{
+// 		PlayerRedisInfo *redis_player = player_redis_info__unpack(NULL, iter->three, (uint8_t*)iter->second);
+// 		if (!redis_player)
+// 		{
+// 			ret = -1;
+// 			LOG_ERR("[%s:%d] unpack redis failed, player_id:%lu", __FUNCTION__, __LINE__, iter->first);
+// 			break;
+// 		}
 
-		redis_players[iter->first] = redis_player;
-	}
+// 		redis_players[iter->first] = redis_player;
+// 	}
 
-	for (std::vector<std::relation_three<uint64_t, char*, int> >::iterator iter = player_infos.begin(); iter != player_infos.end(); ++iter)
-	{
-		free(iter->second);
-	}
+// 	for (std::vector<std::relation_three<uint64_t, char*, int> >::iterator iter = player_infos.begin(); iter != player_infos.end(); ++iter)
+// 	{
+// 		free(iter->second);
+// 	}
 
-	return ret;
-}
+// 	return ret;
+// }
 
 PlayerRedisInfo *find_redis_from_map(std::map<uint64_t, PlayerRedisInfo*> &redis_players, uint64_t player_id)
 {
@@ -1185,7 +1185,6 @@ int create_guild(uint64_t player_id, uint32_t icon, std::string &name, GuildPlay
 		guild_map[guild->guild_id] = guild;
 		delete_player_join_apply(player->player_id);
 		sync_guild_info_to_gamesrv(player);
-		sync_guild_skill_to_gamesrv(player);
 		update_redis_player_guild(player);
 	} while(0);
 
@@ -1251,19 +1250,18 @@ int join_guild(uint64_t player_id, GuildInfo *guild)
 		}
 		delete_player_join_apply(player->player_id);
 		sync_guild_info_to_gamesrv(player);
-		sync_guild_skill_to_gamesrv(player);
 		update_redis_player_guild(player);
 
 		broadcast_guild_attr_update(guild, GUILD_ATTR_TYPE__ATTR_MEMBER_NUM, guild->member_num, player->player_id);
 
 		do
 		{
-			PlayerRedisInfo *redis_player = get_redis_player(player_id);
+			AutoReleaseRedisPlayer t1;
+			PlayerRedisInfo *redis_player = get_redis_player(player_id, sg_player_key, sg_redis_client, t1);
 			if (!redis_player)
 			{
 				break;
 			}
-			AutoReleaseRedisPlayer ars_redis(redis_player);
 
 			//通知加入玩家帮会信息
 			if (redis_player->status == 0)
@@ -1406,10 +1404,10 @@ int appoint_office(GuildPlayer *appointor, GuildPlayer *appointee, uint32_t offi
 
 	appointee->office = office;
 	save_guild_player(appointee);
-	PlayerRedisInfo *redis_appointee = get_redis_player(appointee->player_id);
+	AutoReleaseRedisPlayer t1;
+	PlayerRedisInfo *redis_appointee = get_redis_player(appointee->player_id, sg_player_key, sg_redis_client, t1);
 	if (redis_appointee)
 	{
-		AutoReleaseRedisPlayer ar_redis(redis_appointee);
 		if (redis_appointee->status == 0)
 		{
 			notify_guild_attr_update(appointee->player_id, GUILD_ATTR_TYPE__ATTR_OFFICE, appointee->office);
@@ -1467,17 +1465,13 @@ static int deal_exit_player_part(GuildPlayer *player, PlayerExitGuildReason reas
 		player->exit_time = time_helper::get_cached_time() / 1000;
 	}
 	save_guild_player(player);
-	PlayerRedisInfo *redis_player = get_redis_player(player->player_id);
+	AutoReleaseRedisPlayer t1;	
+	PlayerRedisInfo *redis_player = get_redis_player(player->player_id, sg_player_key, sg_redis_client, t1);
 	if (reason == PEGR_KICK && redis_player && redis_player->status == 0)
 	{
 		EXTERN_DATA ext_data;
 		ext_data.player_id = player->player_id;
 		fast_send_msg_base(&conn_node_guildsrv::connecter, &ext_data, MSG_ID_GUILD_KICK_NOTIFY, 0, 0);
-	}
-
-	if (redis_player)
-	{
-		player_redis_info__free_unpacked(redis_player, NULL);
 	}
 
 	//被踢、解散需要发邮件
@@ -1504,7 +1498,6 @@ static int deal_exit_player_part(GuildPlayer *player, PlayerExitGuildReason reas
 	{
 		sync_guild_info_to_gamesrv(player);
 	}
-	sync_guild_skill_to_gamesrv(player);
 	update_redis_player_guild(player);
 
 	return 0;
@@ -1781,7 +1774,7 @@ void broadcast_guild_object_attr_update(GuildInfo *guild, uint32_t type, uint32_
 void get_guild_broadcast_objects(GuildInfo *guild, std::vector<uint64_t> &player_ids, uint64_t except_id)
 {
 	player_ids.clear();
-	AutoReleaseBatchRedisPlayer arb_redis;
+
 	for (uint32_t i = 0; i < guild->member_num; ++i)
 	{
 		uint64_t player_id = guild->members[i]->player_id;
@@ -1790,10 +1783,10 @@ void get_guild_broadcast_objects(GuildInfo *guild, std::vector<uint64_t> &player
 			continue;
 		}
 
-		PlayerRedisInfo *redis_player = get_redis_player(player_id);
+		AutoReleaseRedisPlayer t1;		
+		PlayerRedisInfo *redis_player = get_redis_player(player_id, sg_player_key, sg_redis_client, t1);
 		if (redis_player)
 		{
-			arb_redis.push_back(redis_player);
 			if (redis_player->status == 0)
 			{
 				player_ids.push_back(player_id);
@@ -1873,7 +1866,7 @@ int add_player_donation(GuildPlayer *player, uint32_t num)
 	attrs[GUILD_ATTR_TYPE__ATTR_HISTORY_DONATION] = player->all_history_donation;
 	notify_guild_attrs_update(player->player_id, attrs);
 	save_guild_player(player);
-	sync_player_donation_to_game_srv(player);
+	sync_player_donation_to_game_srv(player, 1, num);
 
 	return 0;
 }
@@ -1963,7 +1956,7 @@ int sub_player_donation(GuildPlayer *player, uint32_t num, bool save)
 	{
 		save_guild_player(player);
 	}
-	sync_player_donation_to_game_srv(player);
+	sync_player_donation_to_game_srv(player, 2, num);
 	
 	return 0;
 }
@@ -2012,15 +2005,17 @@ void broadcast_guild_battle_score(GuildInfo *guild, std::vector<uint64_t> &playe
 	conn_node_guildsrv::broadcast_message(MSG_ID_GUILD_BATTLE_WAIT_INFO_NOTIFY, &nty, (pack_func)guild_battle_wait_info_notify__pack, player_ids);
 }
 
-void sync_player_donation_to_game_srv(GuildPlayer *player)
+void sync_player_donation_to_game_srv(GuildPlayer *player, uint32_t is_change, uint32_t change_val)
 {
-	uint32_t *pData = (uint32_t*)conn_node_base::get_send_data();
-	*pData++ = player->donation;
+	PROTO_SYNC_GUILD_DONATION *pData = (PROTO_SYNC_GUILD_DONATION*)conn_node_base::get_send_data();
+	pData->cur_donation = player->donation;
+	pData->is_change = is_change;
+	pData->change_val = change_val;
 
 	EXTERN_DATA ext_data;
 	ext_data.player_id = player->player_id;
 
-	fast_send_msg_base(&conn_node_guildsrv::connecter, &ext_data, SERVER_PROTO_GUILD_SYNC_DONATION, sizeof(uint32_t), 0);
+	fast_send_msg_base(&conn_node_guildsrv::connecter, &ext_data, SERVER_PROTO_GUILD_SYNC_DONATION, sizeof(PROTO_SYNC_GUILD_DONATION), 0);
 }
 
 
@@ -2187,32 +2182,10 @@ void sync_guild_skill_to_gamesrv(GuildPlayer *player)
 	PROTO_SYNC_GUILD_SKILL *req = (PROTO_SYNC_GUILD_SKILL *)conn_node_base::get_send_buf(SERVER_PROTO_SYNC_GUILD_SKILL, 0);
 	req->head.len = ENDION_FUNC_4(sizeof(PROTO_SYNC_GUILD_SKILL));
 	memset(req->head.data, 0, sizeof(PROTO_SYNC_GUILD_SKILL) - sizeof(PROTO_HEAD));
-	if (player->guild)
+	for (int i = 0; i < MAX_GUILD_SKILL_NUM; ++i)
 	{
-		AttrMap attrs;
-		for (int i = 0; i < MAX_GUILD_SKILL_NUM; ++i)
-		{
-			if (player->skills[i].skill_id == 0)
-			{
-				break;
-			}
-
-			GangsSkillTable *config = get_guild_skill_config(player->skills[i].skill_id, player->skills[i].skill_lv);
-			if (!config)
-			{
-				continue;
-			}
-
-			attrs[config->skillType] += config->SkillValue;
-		}
-
-		req->attr_num = 0;
-		for (AttrMap::iterator iter = attrs.begin(); iter != attrs.end(); ++iter)
-		{
-			req->attr_id[req->attr_num] = iter->first;
-			req->attr_val[req->attr_num] = iter->second;
-			req->attr_num++;
-		}
+		req->skills[i].skill_id = player->skills[i].skill_id;
+		req->skills[i].skill_lv = player->skills[i].skill_lv;
 	}
 
 	EXTERN_DATA ext_data;

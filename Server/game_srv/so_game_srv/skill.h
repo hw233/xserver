@@ -20,7 +20,7 @@ struct skill_data
 //	SpellStatEvent state;
 //	uint64_t skill_cast_time;    //施法开始时间，即吟唱结束时间
 //	uint64_t skill_hit_time;    //飞行结束时间，即命中时间
-	uint64_t owner; 		/* 施法者 resume用*/
+//	uint64_t owner; 		/* 施法者 resume用*/
 //	uint64_t target;  		/* 施法目标 */
 //	struct position pos;  		/* 目的地址 */
 	uint32_t lv;
@@ -33,12 +33,15 @@ struct skill_data
 class skill_struct
 {
 public:
+	void copy(skill_struct *skill);  //复制一份，机器人用
 	int init_skill(uint32_t id, uint64_t owner, uint64_t target);
 	int add_cd(struct SkillLvTable *lv_config, struct ActiveSkillTable *active_config);
-	int get_skill_lv(int fuwen_index);
+	int get_skill_id_and_lv(int fuwen_index, int *id, int *lv);	
+//	int get_skill_lv(int fuwen_index);
 //	void on_tick();
 	struct SkillTable *config; 		/* 技能配置 */
 	struct skill_data *data;
+	fuwen_data *get_fuwen(uint32_t fuwen);
 private:
 //	int check_skill_condition();  //检查施法条件
 //	int calc_skill_effect();      //计算施法效果

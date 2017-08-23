@@ -68,6 +68,7 @@ private:
 	int handle_guild_battle_sync_settle(EXTERN_DATA *extern_data);
 	int notify_guild_battle_activity_settle(EXTERN_DATA *extern_data);
 	int handle_guild_battle_final_list_request(EXTERN_DATA *extern_data);
+	int handle_guild_battle_add_final_id(EXTERN_DATA *extern_data);
 
 private:
 	HandleMap   m_handleMap;

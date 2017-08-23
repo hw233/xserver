@@ -2,7 +2,8 @@ FILE(GLOB SRC_LIST
   "./*.cpp"
   )
 
-add_definitions(-g -O0 -Wall -Werror -DDEBUG -fPIC -fstack-protector-all)
+#add_definitions(-g -O0 -Wall -Werror -DDEBUG -fPIC -fstack-protector-all)
+INCLUDE ("../cmake_flags")
 INCLUDE_DIRECTORIES("."
   "${PROJECT_SOURCE_DIR}/excel_data"
   "${PROJECT_SOURCE_DIR}/comm_include"
@@ -19,6 +20,8 @@ link_libraries(protobuf-c)
 link_libraries(log4c)
 link_libraries(proto)
 link_libraries(rt)
+link_libraries(${LUA_LIBRARIES})
+INCLUDE ("../cmake_ldflags")
 
 link_directories("${PROJECT_SOURCE_DIR}/thirdlib/libevent/.libs"
   )

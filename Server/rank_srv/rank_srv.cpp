@@ -21,6 +21,8 @@
 #include "oper_config.h"
 #include "mem_pool.h"
 #include "redis_client.h"
+#include "rank_config.h"
+#include "rank_world_boss.h"
 
 static void cb_signal2(evutil_socket_t fd, short events, void *arg)
 {
@@ -201,6 +203,8 @@ int main(int argc, char **argv)
 	add_signal(SIGUSR2, NULL, cb_signal2);		
 
 	init_redis_keys(sg_server_id);
+	read_all_rank_excel_data();
+	init_rank_world_boss_id();
 
 	sg_clear_timer_val.tv_sec = 3600;
 	sg_clear_timer_event.ev_callback = cb_clear_timeout;

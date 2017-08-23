@@ -6,10 +6,10 @@
 #include <vector>
 #include <map>
 #include <set>
-#include "redis_client.h"
 #include "rank.pb-c.h"
 #include "player_redis_info.pb-c.h"
-
+#include "redis_util.h"
+#include "rank_world_boss.h"
 
 conn_node_ranksrv conn_node_ranksrv::connecter;
 
@@ -19,8 +19,11 @@ struct event sg_clear_timer_event;
 struct timeval sg_clear_timer_val = {3600, 0};	
 
 char sg_player_key[64]; //玩家数据
+char cur_word_boss_key[64]; //当前世界boss数据
+char befor_word_boss_key[64]; //上轮世界boss数据
 static std::map<uint32_t, std::string> scm_rank_keys;
 static std::map<uint32_t, char *> rank_key_map;
+
 
 #define MAX_RANK_GET_NUM  100 //前端显示数目
 #define MAX_RANK_ADD_NUM  5000 //最多排行数
@@ -113,6 +116,8 @@ static void init_rank_key_map()
 void init_redis_keys(uint32_t server_id)
 {
 	sprintf(sg_player_key, "server_%u", server_id);
+	sprintf(cur_word_boss_key, "cur_word_boss_server_%u", server_id);
+	sprintf(befor_word_boss_key, "befor_word_boss_server_%u", server_id);
 	init_rank_key_map();
 	char rank_key[128];
 	for (std::map<uint32_t, std::string>::iterator iter = scm_rank_keys.begin(); iter != scm_rank_keys.end(); ++iter)
@@ -132,25 +137,25 @@ static char *get_rank_key(uint32_t rank_type)
 	return NULL;
 }
 
-class AutoReleaseBatchRedisPlayer
-{
-public:
-	AutoReleaseBatchRedisPlayer() {}
-	~AutoReleaseBatchRedisPlayer()
-	{
-		for (std::vector<PlayerRedisInfo*>::iterator iter = pointer_vec.begin(); iter != pointer_vec.end(); ++iter)
-		{
-			player_redis_info__free_unpacked(*iter, NULL);
-		}
-	}
+// class AutoReleaseBatchRedisPlayer
+// {
+// public:
+// 	AutoReleaseBatchRedisPlayer() {}
+// 	~AutoReleaseBatchRedisPlayer()
+// 	{
+// 		for (std::vector<PlayerRedisInfo*>::iterator iter = pointer_vec.begin(); iter != pointer_vec.end(); ++iter)
+// 		{
+// 			player_redis_info__free_unpacked(*iter, NULL);
+// 		}
+// 	}
 
-	void push_back(PlayerRedisInfo *player)
-	{
-		pointer_vec.push_back(player);
-	}
-private:
-	std::vector<PlayerRedisInfo *> pointer_vec;
-};
+// 	void push_back(PlayerRedisInfo *player)
+// 	{
+// 		pointer_vec.push_back(player);
+// 	}
+// private:
+// 	std::vector<PlayerRedisInfo *> pointer_vec;
+// };
 
 conn_node_ranksrv::conn_node_ranksrv()
 {
@@ -160,6 +165,8 @@ conn_node_ranksrv::conn_node_ranksrv()
 	
 	add_msg_handle(SERVER_PROTO_REFRESH_PLAYER_REDIS_INFO, &conn_node_ranksrv::handle_refresh_player_info);
 	add_msg_handle(MSG_ID_RANK_INFO_REQUEST, &conn_node_ranksrv::handle_rank_info_request);
+	add_msg_handle(SERVER_PROTO_PLAYER_ONLINE_NOTIFY, &conn_node_ranksrv::handle_player_online_notify);
+	add_msg_handle(SERVER_PROTO_WORDBOSS_PLAYER_REDIS_INFO, &conn_node_ranksrv::handle_refresh_player_word_boss_info);
 }
 
 conn_node_ranksrv::~conn_node_ranksrv()
@@ -214,63 +221,63 @@ int conn_node_ranksrv::recv_func(evutil_socket_t fd)
 	return (0);
 }
 
-static PlayerRedisInfo *get_redis_player(uint64_t player_id)
-{
-	CRedisClient &rc = sg_redis_client;
-	static uint8_t data_buffer[32 * 1024];
-	int data_len = 32 * 1024;
-	char field[64];
-	sprintf(field, "%lu", player_id);
-	int ret = rc.hget_bin(sg_player_key, field, (char *)data_buffer, &data_len);
-	if (ret == 0)
-	{
-		return player_redis_info__unpack(NULL, data_len, data_buffer);
-	}
+// static PlayerRedisInfo *get_redis_player(uint64_t player_id)
+// {
+// 	CRedisClient &rc = sg_redis_client;
+// 	static uint8_t data_buffer[32 * 1024];
+// 	int data_len = 32 * 1024;
+// 	char field[64];
+// 	sprintf(field, "%lu", player_id);
+// 	int ret = rc.hget_bin(sg_player_key, field, (char *)data_buffer, &data_len);
+// 	if (ret == 0)
+// 	{
+// 		return player_redis_info__unpack(NULL, data_len, data_buffer);
+// 	}
 
-	return NULL;
-}
+// 	return NULL;
+// }
 
-int get_more_redis_player(std::set<uint64_t> &player_ids, std::map<uint64_t, PlayerRedisInfo*> &redis_players)
-{
-	if (player_ids.size() == 0)
-	{
-		return 0;
-	}
+// int get_more_redis_player(std::set<uint64_t> &player_ids, std::map<uint64_t, PlayerRedisInfo*> &redis_players)
+// {
+// 	if (player_ids.size() == 0)
+// 	{
+// 		return 0;
+// 	}
 
-	std::vector<std::relation_three<uint64_t, char*, int> > player_infos;
-	for (std::set<uint64_t>::iterator iter = player_ids.begin(); iter != player_ids.end(); ++iter)
-	{
-		std::relation_three<uint64_t, char*, int> tmp(*iter, NULL, 0);
-		player_infos.push_back(tmp);
-	}
+// 	std::vector<std::relation_three<uint64_t, char*, int> > player_infos;
+// 	for (std::set<uint64_t>::iterator iter = player_ids.begin(); iter != player_ids.end(); ++iter)
+// 	{
+// 		std::relation_three<uint64_t, char*, int> tmp(*iter, NULL, 0);
+// 		player_infos.push_back(tmp);
+// 	}
 
-	int ret = sg_redis_client.get(sg_player_key, player_infos);
-	if (ret != 0)
-	{
-		LOG_ERR("[%s:%d] hmget failed, ret:%d", __FUNCTION__, __LINE__, ret);
-		return -1;
-	}
+// 	int ret = sg_redis_client.get(sg_player_key, player_infos);
+// 	if (ret != 0)
+// 	{
+// 		LOG_ERR("[%s:%d] hmget failed, ret:%d", __FUNCTION__, __LINE__, ret);
+// 		return -1;
+// 	}
 
-	for (std::vector<std::relation_three<uint64_t, char*, int> >::iterator iter = player_infos.begin(); iter != player_infos.end(); ++iter)
-	{
-		PlayerRedisInfo *redis_player = player_redis_info__unpack(NULL, iter->three, (uint8_t*)iter->second);
-		if (!redis_player)
-		{
-			ret = -1;
-			LOG_ERR("[%s:%d] unpack redis failed, player_id:%lu", __FUNCTION__, __LINE__, iter->first);
-			break;
-		}
+// 	for (std::vector<std::relation_three<uint64_t, char*, int> >::iterator iter = player_infos.begin(); iter != player_infos.end(); ++iter)
+// 	{
+// 		PlayerRedisInfo *redis_player = player_redis_info__unpack(NULL, iter->three, (uint8_t*)iter->second);
+// 		if (!redis_player)
+// 		{
+// 			ret = -1;
+// 			LOG_ERR("[%s:%d] unpack redis failed, player_id:%lu", __FUNCTION__, __LINE__, iter->first);
+// 			break;
+// 		}
 
-		redis_players[iter->first] = redis_player;
-	}
+// 		redis_players[iter->first] = redis_player;
+// 	}
 
-	for (std::vector<std::relation_three<uint64_t, char*, int> >::iterator iter = player_infos.begin(); iter != player_infos.end(); ++iter)
-	{
-		free(iter->second);
-	}
+// 	for (std::vector<std::relation_three<uint64_t, char*, int> >::iterator iter = player_infos.begin(); iter != player_infos.end(); ++iter)
+// 	{
+// 		free(iter->second);
+// 	}
 
-	return ret;
-}
+// 	return ret;
+// }
 
 PlayerRedisInfo *find_redis_from_map(std::map<uint64_t, PlayerRedisInfo*> &redis_players, uint64_t player_id)
 {
@@ -352,16 +359,17 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 	CRedisClient &rc = sg_redis_client;
 	char field[128];
 	sprintf(field, "%lu", extern_data->player_id);
+	uint32_t rank_type = 0;
 	char *rank_key = NULL;
 	int ret = 0;
 	uint64_t player_id = extern_data->player_id;
+	std::vector<std::pair<uint32_t, uint32_t> > change_ranks;
+	uint32_t out_rank = 0xffffffff;
 
-	AutoReleaseBatchRedisPlayer arb_redis;
-	arb_redis.push_back(req);
-	PlayerRedisInfo *redis_player = get_redis_player(extern_data->player_id);
+	AutoReleaseRedisPlayer p1;
+	PlayerRedisInfo *redis_player = get_redis_player(extern_data->player_id, sg_player_key, sg_redis_client, p1);
 	if (redis_player)
 	{
-		arb_redis.push_back(redis_player);
 		LOG_DEBUG("[%s:%d] player[%lu] redis, refresh_type:%u, status:%u", __FUNCTION__, __LINE__, extern_data->player_id, refresh_type, redis_player->status);
 	}
 	PlayerRedisInfo *save_player = NULL;
@@ -411,35 +419,79 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 
 		if (level != old_level)
 		{
-			rank_key = get_rank_key(RANK_LEVEL_TOTAL);
+			rank_type = RANK_LEVEL_TOTAL;
+			rank_key = get_rank_key(rank_type);
 			ret = rc.zset(rank_key, player_id, level);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, level, old_level);
 			}
+			else
+			{
+				out_rank = 0xffffffff;
+				ret = rc.zget_rank(rank_key, player_id, out_rank);
+				if (ret == 0)
+				{
+					out_rank++;
+				}
+				change_ranks.push_back(std::make_pair(rank_type, out_rank));
+			}
 
-			rank_key = get_rank_key(RANK_LEVEL_TOTAL + job);
+			rank_type = RANK_LEVEL_TOTAL + job;
+			rank_key = get_rank_key(rank_type);
 			ret = rc.zset(rank_key, player_id, level);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, level, old_level);
+			}
+			else
+			{
+				out_rank = 0xffffffff;
+				ret = rc.zget_rank(rank_key, player_id, out_rank);
+				if (ret == 0)
+				{
+					out_rank++;
+				}
+				change_ranks.push_back(std::make_pair(rank_type, out_rank));
 			}
 		}
 
 		if (fc_total != old_fc_total)
 		{
-			rank_key = get_rank_key(RANK_FC_TOTAL);
+			rank_type = RANK_FC_TOTAL;
+			rank_key = get_rank_key(rank_type);
 			ret = rc.zset(rank_key, player_id, fc_total);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_total, old_fc_total);
 			}
+			else
+			{
+				out_rank = 0xffffffff;
+				ret = rc.zget_rank(rank_key, player_id, out_rank);
+				if (ret == 0)
+				{
+					out_rank++;
+				}
+				change_ranks.push_back(std::make_pair(rank_type, out_rank));
+			}
 
-			rank_key = get_rank_key(RANK_FC_TOTAL + job);
+			rank_type = RANK_FC_TOTAL + job;
+			rank_key = get_rank_key(rank_type);
 			ret = rc.zset(rank_key, player_id, fc_total);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_total, old_fc_total);
+			}
+			else
+			{
+				out_rank = 0xffffffff;
+				ret = rc.zget_rank(rank_key, player_id, out_rank);
+				if (ret == 0)
+				{
+					out_rank++;
+				}
+				change_ranks.push_back(std::make_pair(rank_type, out_rank));
 			}
 			if (req->zhenying != 0)
 			{
@@ -452,65 +504,142 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 
 		if (fc_equip != old_fc_equip)
 		{
-			rank_key = get_rank_key(RANK_EQUIP_TOTAL);
+			rank_type = RANK_EQUIP_TOTAL;
+			rank_key = get_rank_key(rank_type);
 			ret = rc.zset(rank_key, player_id, fc_equip);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_equip, old_fc_equip);
 			}
+			else
+			{
+				out_rank = 0xffffffff;
+				ret = rc.zget_rank(rank_key, player_id, out_rank);
+				if (ret == 0)
+				{
+					out_rank++;
+				}
+				change_ranks.push_back(std::make_pair(rank_type, out_rank));
+			}
 
-			rank_key = get_rank_key(RANK_EQUIP_TOTAL + job);
+			rank_type = RANK_EQUIP_TOTAL + job;
+			rank_key = get_rank_key(rank_type);
 			ret = rc.zset(rank_key, player_id, fc_equip);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_equip, old_fc_equip);
+			}
+			else
+			{
+				out_rank = 0xffffffff;
+				ret = rc.zget_rank(rank_key, player_id, out_rank);
+				if (ret == 0)
+				{
+					out_rank++;
+				}
+				change_ranks.push_back(std::make_pair(rank_type, out_rank));
 			}
 		}
 
 		if (fc_bagua != old_fc_bagua)
 		{
-			rank_key = get_rank_key(RANK_BAGUA_TOTAL);
+			rank_type = RANK_BAGUA_TOTAL;
+			rank_key = get_rank_key(rank_type);
 			ret = rc.zset(rank_key, player_id, fc_bagua);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_bagua, old_fc_bagua);
 			}
+			else
+			{
+				out_rank = 0xffffffff;
+				ret = rc.zget_rank(rank_key, player_id, out_rank);
+				if (ret == 0)
+				{
+					out_rank++;
+				}
+				change_ranks.push_back(std::make_pair(rank_type, out_rank));
+			}
 
-			rank_key = get_rank_key(RANK_BAGUA_TOTAL + job);
+			rank_type = RANK_BAGUA_TOTAL + job;
+			rank_key = get_rank_key(rank_type);
 			ret = rc.zset(rank_key, player_id, fc_bagua);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_bagua, old_fc_bagua);
+			}
+			else
+			{
+				out_rank = 0xffffffff;
+				ret = rc.zget_rank(rank_key, player_id, out_rank);
+				if (ret == 0)
+				{
+					out_rank++;
+				}
+				change_ranks.push_back(std::make_pair(rank_type, out_rank));
 			}
 		}
 
 		if (coin != old_coin)
 		{
-			rank_key = get_rank_key(RANK_TREASURE_COIN);
+			rank_type = RANK_TREASURE_COIN;
+			rank_key = get_rank_key(rank_type);
 			ret = rc.zset(rank_key, player_id, coin);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, coin, old_coin);
 			}
+			else
+			{
+				out_rank = 0xffffffff;
+				ret = rc.zget_rank(rank_key, player_id, out_rank);
+				if (ret == 0)
+				{
+					out_rank++;
+				}
+				change_ranks.push_back(std::make_pair(rank_type, out_rank));
+			}
 		}
 
 		if (gold != old_gold)
 		{
-			rank_key = get_rank_key(RANK_TREASURE_GOLD);
+			rank_type = RANK_TREASURE_GOLD;
+			rank_key = get_rank_key(rank_type);
 			ret = rc.zset(rank_key, player_id, gold);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, gold, old_gold);
 			}
+			else
+			{
+				out_rank = 0xffffffff;
+				ret = rc.zget_rank(rank_key, player_id, out_rank);
+				if (ret == 0)
+				{
+					out_rank++;
+				}
+				change_ranks.push_back(std::make_pair(rank_type, out_rank));
+			}
 		}
 
 		if (gold_bind != old_gold_bind)
 		{
-			rank_key = get_rank_key(RANK_TREASURE_BIND_GOLD);
+			rank_type = RANK_TREASURE_BIND_GOLD;
+			rank_key = get_rank_key(rank_type);
 			ret = rc.zset(rank_key, player_id, gold_bind);
 			if (ret != 0)
 			{
 				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, gold_bind, old_gold_bind);
+			}
+			else
+			{
+				out_rank = 0xffffffff;
+				ret = rc.zget_rank(rank_key, player_id, out_rank);
+				if (ret == 0)
+				{
+					out_rank++;
+				}
+				change_ranks.push_back(std::make_pair(rank_type, out_rank));
 			}
 		}
 
@@ -518,23 +647,45 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		{
 			if (pvp3_division > 1)
 			{
-				rank_key = get_rank_key(RANK_PVP3_DIVISION2 + pvp3_division - 2);
+				rank_type = RANK_PVP3_DIVISION2 + pvp3_division - 2;
+				rank_key = get_rank_key(rank_type);
 				ret = rc.zset(rank_key, player_id, pvp3_score);
 				if (ret != 0)
 				{
 					LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, pvp3_score, old_pvp3_score);
 				}
+				else
+				{
+					out_rank = 0xffffffff;
+					ret = rc.zget_rank(rank_key, player_id, out_rank);
+					if (ret == 0)
+					{
+						out_rank++;
+					}
+					change_ranks.push_back(std::make_pair(rank_type, out_rank));
+				}
 			}
 
 			if (pvp3_division != old_pvp3_division)
 			{
-				rank_key = get_rank_key(RANK_PVP3_DIVISION2 + old_pvp3_division - 2);
+				rank_type = RANK_PVP3_DIVISION2 + old_pvp3_division - 2;
+				rank_key = get_rank_key(rank_type);
 				std::vector<uint64_t> dels;
 				dels.push_back(player_id);
 				ret = rc.zdel(rank_key, dels);
 				if (ret != 0)
 				{
 					LOG_ERR("[%s:%d] del %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, pvp3_score, old_pvp3_score);
+				}
+				else
+				{
+					out_rank = 0xffffffff;
+					ret = rc.zget_rank(rank_key, player_id, out_rank);
+					if (ret == 0)
+					{
+						out_rank++;
+					}
+					change_ranks.push_back(std::make_pair(rank_type, out_rank));
 				}
 			}
 		}
@@ -574,6 +725,19 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 			}
 			LOG_DEBUG("[%s:%d] save player[%lu] len[%d] ret = %d, refresh_type:%u, status:%u", __FUNCTION__, __LINE__, extern_data->player_id, (int)data_len, ret, refresh_type, save_player->status);
 		} while(0);
+	}
+
+	if (change_ranks.size() > 0)
+	{
+		PROTO_SYNC_RANK *proto = (PROTO_SYNC_RANK*)get_send_data();
+		memset(proto->ranks, 0, sizeof(proto->ranks));
+		for (size_t i = 0; i < change_ranks.size() && i < MAX_RANK_TYPE; ++i)
+		{
+			proto->ranks[i].type = change_ranks[i].first;
+			proto->ranks[i].rank = change_ranks[i].second;
+		}
+
+		fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_RANK_SYNC_RANK, sizeof(PROTO_SYNC_RANK), 0);
 	}
 
 	return 0;
@@ -634,6 +798,7 @@ int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
 
 	int ret = 0;
 	std::vector<std::pair<uint64_t, uint32_t> > rank_info;
+	AutoReleaseBatchRedisPlayer t1;		
 	std::map<uint64_t, PlayerRedisInfo *> redis_players;
 	uint32_t my_rank = 0;
 	do
@@ -664,7 +829,7 @@ int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
 			}
 		}
 
-		if (get_more_redis_player(playerIds, redis_players) != 0)
+		if (get_more_redis_player(playerIds, redis_players, sg_player_key, sg_redis_client, t1) != 0)
 		{
 			ret = ERROR_ID_RANK_REDIS;
 			LOG_ERR("[%s:%d] player[%lu] get player failed, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
@@ -673,10 +838,17 @@ int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
 
 		if (my_rank == 0)
 		{
-			sg_redis_client.zget_rank(rank_key, extern_data->player_id, my_rank);
-			if (my_rank >= MAX_RANK_ADD_NUM)
+			int ret2 = sg_redis_client.zget_rank(rank_key, extern_data->player_id, my_rank);
+			if (ret2 == 0)
 			{
-				my_rank = 0;
+				if (my_rank >= MAX_RANK_ADD_NUM)
+				{
+					my_rank = 0;
+				}
+				else
+				{
+					my_rank++;
+				}
 			}
 		}
 	} while(0);
@@ -727,11 +899,105 @@ int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
 
 	fast_send_msg(&connecter, extern_data, MSG_ID_RANK_INFO_ANSWER, rank_info_answer__pack, resp);
 
-	for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
-	{
-		player_redis_info__free_unpacked(iter->second, NULL);
-	}
+	// for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
+	// {
+	// 	player_redis_info__free_unpacked(iter->second, NULL);
+	// }
 	return 0;
 }
 
+int conn_node_ranksrv::handle_player_online_notify(EXTERN_DATA *extern_data)
+{
+	int ret = 0;
+	do
+	{
+		uint32_t out_rank = 0xffffffff;
+		PROTO_SYNC_RANK *proto = (PROTO_SYNC_RANK*)get_send_data();
+		memset(proto->ranks, 0, sizeof(proto->ranks));
+		int i = 0;
+		for (std::map<uint32_t, std::string>::iterator iter = scm_rank_keys.begin(); iter != scm_rank_keys.end() && i < MAX_RANK_TYPE; ++iter)
+		{
+			out_rank = 0xffffffff;
+			ret = sg_redis_client.zget_rank(iter->second.c_str(), extern_data->player_id, out_rank);
+			if (ret == 0)
+			{
+				out_rank++;
+			}
+			proto->ranks[i].type = iter->first;
+			proto->ranks[i].rank = out_rank;
+			i++;
+		}
 
+		fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_RANK_SYNC_RANK, sizeof(PROTO_SYNC_RANK), 0);
+	} while(0);
+	
+	return 0;
+}
+
+int conn_node_ranksrv::handle_refresh_player_word_boss_info(EXTERN_DATA *extern_data)
+{
+
+	
+	int proto_data_len = get_data_len();
+	uint8_t *proto_data = get_data();
+	PlayerWordBossRedisinfo *req = player_word_boss_redisinfo__unpack(NULL, proto_data_len - sizeof(uint32_t), proto_data + sizeof(uint32_t));
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] player[%lu] unpack req failed, refresh_type:%u", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	char name[MAX_PLAYER_NAME_LEN];
+	memcpy(name, req->name,MAX_PLAYER_NAME_LEN);
+	uint32_t boss_id = req->boss_id;
+	//double score = req->score;
+	uint32_t cur_hp = req->cur_hp;
+	uint32_t max_hp = req->max_hp;
+	player_word_boss_redisinfo__free_unpacked(req, NULL);
+
+
+	CRedisClient &rc = sg_redis_client;
+	char field[128];
+	std::set<uint64_t>::iterator itr = world_boss_id.find(boss_id);
+	if(itr == world_boss_id.end())
+	{
+		LOG_ERR("[%s:%d]更新世界boss数据失败，无对应的世界boss,bossid[%u]", __FUNCTION__, __LINE__, boss_id);
+		return -2;
+	}
+	if(cur_hp <= 0)
+	{
+	
+	}
+	else
+	{
+		CurWordBossRedisinfo cur_boss_info;
+		cur_word_boss_redisinfo__init(&cur_boss_info);
+		cur_boss_info.player_id = extern_data->player_id;
+		cur_boss_info.name = name;
+		cur_boss_info.boss_id = boss_id;
+		cur_boss_info.max_hp = max_hp;
+		cur_boss_info.cur_hp = cur_hp;
+		static uint8_t data_buffer[128 * 1024];
+		do
+		{
+			size_t data_len = cur_word_boss_redisinfo__pack(&cur_boss_info, data_buffer);
+			if (data_len == (size_t)-1)
+			{
+				LOG_ERR("[%s:%d] pack redis player failed, player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+				break;
+			}
+
+			sprintf(field, "%u", boss_id);
+			int ret = rc.hset_bin(cur_word_boss_key, field, (const char *)data_buffer, (int)data_len);
+			if (ret < 0)
+			{
+				LOG_ERR("[%s:%d] set cur word boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret);
+				break;
+			}
+		} while(0);
+	
+	}
+
+	
+	return 0;
+}

@@ -350,6 +350,24 @@ message DBZhenying
 	required uint32 score = 17;
 }
 
+message DBAchievement
+{
+	required uint32 id = 1; //成就ID
+	required uint32 star = 2; //当前已达成星数
+	required uint32 progress = 3; //当前进度
+	required uint32 state = 4; //
+	required uint32 achieve_time = 5; //达成时间
+}
+
+message DBTitle
+{
+	required uint32 id = 1; //称号ID
+	required uint32 state = 2;
+	required uint32 expire_time = 3;
+	required bool   is_new = 4;
+	required uint32 active_time = 5;
+}
+
 message PlayerDBInfo
 {
 	required uint64 exp = 1; //经验
@@ -433,6 +451,9 @@ message PlayerDBInfo
 	required uint32 server_level_break_count = 79; //服务器等级突破计数
 	required uint32 server_level_break_notify = 80; //服务器等级突破通知
 	required uint32 guild_battle_activity_time = 81; //所参加的帮会战活动开始时间
+	repeated DBAchievement achievement_list = 82; //成就列表
+	required bool partner_recruit_first = 83; //首次招募标志
+	repeated DBTitle title_list = 84; //称号列表
 }
 
 message DBAutoAddHp

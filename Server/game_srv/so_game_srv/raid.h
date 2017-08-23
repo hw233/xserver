@@ -57,6 +57,7 @@ enum RAID_STATE_DEFINE
 #define MAX_SCRIPT_COND_NUM 5
 #define WANYAOGU_DATA data->ai_data.wanyaogu_data
 #define PVP_DATA data->ai_data.pvp_data
+#define DOUFACHANG_DATA data->ai_data.doufachang_data
 #define SCRIPT_DATA data->ai_data.script_data
 #define ZHENYING_DATA data->ai_data.zhenying_data
 #define GUILD_DATA data->ai_data.guild_data
@@ -92,6 +93,7 @@ struct ai_player_data
 	uint64_t ontick_time;
 	uint32_t skill_id;  //即将释放的技能
 	double angle;     //技能的角度
+	struct position skill_target_pos;  //技能释放的位置
 	uint64_t relive_time;
 	uint64_t target_player_id;
 };
@@ -142,6 +144,12 @@ union raid_ai_data
 		struct ai_player_data ai_player_data[MAX_TEAM_MEM * 2];  //ai玩家数据
 		bool pvp_raid_ready[MAX_TEAM_MEM * 2];  //是否已经进入游戏了
 	} pvp_data;
+
+	struct
+	{
+		PVP_RAID_STATE pvp_raid_state;
+		struct ai_player_data ai_player_data;  //ai玩家数据		
+	} doufachang_data;
 
 	struct
 	{
@@ -277,7 +285,7 @@ public:
 	/* int team4_enter_raid(Team *team);		 */
 	int player_return_raid(player_struct *player);
 	int player_enter_raid(player_struct *player, double pos_x, double pos_z);
-	int player_enter_raid_impl(player_struct *player, int index, double pos_x, double pos_z);
+	int player_enter_raid_impl(player_struct *player, int index, double pos_x, double pos_z, double direct = 0);
 	int player_leave_raid(player_struct *player);
 	int get_id_monster_num(uint32_t id);
 	int get_id_collect_num(uint32_t id);

@@ -257,22 +257,22 @@ local ScriptTable = {
 	[172000020] = {
 		['ID'] = 172000020,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {10,135200006}
+		['paramList'] = {10,135200007}
 		},
 	[172000024] = {
 		['ID'] = 172000024,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {50,135200001}
+		['paramList'] = {50,135200008}
 		},
 	[172000036] = {
 		['ID'] = 172000036,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {10,135173001}
+		['paramList'] = {20,135173001}
 		},
 	[172000047] = {
 		['ID'] = 172000047,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {10,135200003}
+		['paramList'] = {10,135200009}
 		}
 	}
 return ScriptTable

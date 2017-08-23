@@ -7,6 +7,7 @@
 #include "uuid.h"
 #include "msgid.h"
 #include "game_config.h"
+#include "scene_manager.h"
 #include <stdio.h>
 #include <errno.h>
 
@@ -471,6 +472,22 @@ monster_struct *monster_manager::add_monster(uint64_t monster_id, uint64_t lv, u
 	if (ite == monster_config.end())
 		return NULL;
 
+	//刷世界boss
+	if(ite->second->Type == 5)
+	{
+		uint32_t cd = 0;
+		if(!check_active_open(WORD_BOSS_ACTIVE_ID, cd))
+		{
+			return NULL;
+		}
+
+		std::map<uint64_t, struct WorldBossTable *>::iterator p = monster_to_world_boss_config.find(monster_id);
+		if(p == monster_to_world_boss_config.end())
+		{
+			return NULL;
+		}
+	}
+
 	LOG_DEBUG("%s: monster[%lu] ai[%lu]",  __FUNCTION__, monster_id, ite->second->BaseID);
 	
 	monster_struct *ret;
@@ -853,3 +870,48 @@ int monster_manager::reinit_boss_min_heap()
 // 		p->data = NULL;
 // 	}
 // }
+int monster_manager::add_word_boss_monster()
+{
+	uint32_t cd =0;
+	if(!check_active_open(WORD_BOSS_ACTIVE_ID, cd))
+	{
+		return -1;
+	}
+	struct tm tm;
+	time_t now_time = time_helper::get_cached_time() / 1000;
+	localtime_r(&now_time, &tm);
+	//LOG_ERR("打印当前时间,时[%d] 分[%d] 秒[%d]",tm.tm_hour, tm.tm_min, tm.tm_sec)
+	for(std::map<uint64_t, WorldBossTable*>::iterator ite = world_boss_config.begin(); ite != world_boss_config.end(); ite++)
+	{
+		for(uint32_t i = 0; i < ite->second->n_Time; i++)
+		{
+			tm.tm_hour = ite->second->Time[i] / 100;
+			tm.tm_min = ite->second->Time[i] % 100;
+			tm.tm_sec = 0;
+			uint64_t st = mktime(&tm); 
+			if(st == time_helper::get_cached_time() / 1000)
+			{
+				monster_struct *monster = monster_manager::get_monster_by_id(ite->second->MonsterID);
+				if(monster != NULL && monster->data != NULL && monster->config != NULL && monster->config->Type == 5 && monster->data->scene_id == ite->second->SceneID)
+				{
+					scene_struct *scene = scene_manager::get_scene(ite->second->SceneID);
+					if(scene != NULL)
+					{
+						scene->delete_monster_from_scene(monster, true);
+						monster_manager::delete_monster(monster);
+						create_monster_by_id(scene, ite->second->MonsterID, 1);	
+					}
+				}
+				else
+				{		
+					scene_struct *scene = scene_manager::get_scene(ite->second->SceneID);
+					if(scene != NULL)
+					{
+						create_monster_by_id(scene, ite->second->MonsterID, 1);
+					}
+				}
+			}
+		}
+	}
+	return 0;
+}

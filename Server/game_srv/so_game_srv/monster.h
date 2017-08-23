@@ -265,6 +265,8 @@ public:
 	bool try_active_attack();	
 //特定怪物死亡在特定情况下需要创建采集点
 	void monster_dead_creat_collect(unit_struct *murderer);
+//世界boss死亡或受击更新玩家数据
+	void world_boss_refresf_player_redis_info(unit_struct *murderer, double befor_hp,int32_t damage);
 	struct monster_data *data;
 
 	struct ai_interface *ai;

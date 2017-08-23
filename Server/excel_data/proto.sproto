@@ -171,6 +171,8 @@
 	ActorLvAttri 3 : integer
 	FreeGrid 4 : integer
 	LockGrid 5 : integer
+	QueLvCoin 6 : integer
+	QueLvExp 7 : integer
 }
 
 .SceneResTable {
@@ -216,6 +218,7 @@
 	SkillRune 20 : integer
 	RuneID 21 : *integer
 	SkillAcc 22 : integer
+	IsRune 23 : integer
 
 }
 
@@ -263,6 +266,7 @@
 	MonsterEff 11 : integer
 	CostItem 12 : integer
 	CostNum 13 : integer
+	NeedLv 14 : integer
 }
 
 .BuffTable {
@@ -362,6 +366,7 @@
 	ConsumeTeyp 11 : integer
 	Parameter1 12 : *integer
 	Parameter2 13 : *integer
+	CollectionSize 14 : double
 }
 
 .TaskTable {
@@ -379,6 +384,7 @@
 	RewardID 12 : *integer
 	Team 13 : integer
 	PostTask 14 : *integer
+	StartNPC 15 : integer
 }
 
 .TaskConditionTable {
@@ -536,6 +542,7 @@
 	GemSynthetic 5 : integer
 	Number 6 : integer
 	Consumption 7 : integer
+	Level 8 : integer
 }
 
 .AttributeTypeTable {
@@ -1013,6 +1020,7 @@
 	ID 1 : integer
 	Priority 2 : integer
 	NoticeTxt 3 : string
+	NoticeChannel 4 : *integer
 }
 
 .GangsDungeonTable {
@@ -1128,6 +1136,7 @@
 	TypeProbability 13 : *integer
 	Item 14 : *integer
 	ItemNum 15 : *integer
+	First 16 : integer
 }
 
 .PartnerLevelTable {
@@ -1317,5 +1326,66 @@
 	DungeonSchedule 5 : integer
 	LevelPlusEXP1 6 : integer
 	LevelPlusEXP2 7 : integer
+	Title 8 : integer
+}
+
+.AchievementFunctionTable {
+	ID 1 : integer
+	FunctionID 2 : integer
+	HierarchyID 3 : integer
+	Hierarchys 4 : *integer
+}
+
+.AchievementHierarchyTable {
+	ID 1 : integer
+	HierarchyID 2 : integer
+	ConditionType 3 : integer
+	ConditionTarget1 4 : integer
+	ConditionTarget2 5 : integer
+	ConditionNum 6 : integer
+	Reward 7 : integer
+	RewardValue 8 : integer
+	Title 9 : integer
+	NoticeID 10 : integer
+}
+
+.DegreeTable {
+	ID 1 : integer
+	Stage 2 : integer
+	Value 3 : integer
+	Function 4 : *integer
+}
+
+.ArenaRewardTable {
+	ID 1 : integer
+	Max 2 : integer
+	Low 3 : integer
+	ItemID 4 : *integer
+	Num 5 : *integer
+}
+
+.TitleFunctionTable {
+	ID 1 : integer
+	FunctionID 2 : integer
+	ConditionType 3 : integer
+	ConditionTarget1 4 : integer
+	ConditionTarget2 5 : integer
+	ConditionNum 6 : integer
+	Attribute 7 : *integer
+	Value1 8 : *double
+	Continued 9 : integer
+	Value2 10 : integer
+	NoticeID 11 : integer
+}
+
+.WorldBossTable{
+	ID 1 : integer
+	Level 2 : integer
+	Type 3 : integer
+	SceneID 4 : integer
+	MonsterID 5 : integer
+	Time 6 : *integer
+	Coefficient 7 : double
+	RewardLevel 8 : integer
 }
 

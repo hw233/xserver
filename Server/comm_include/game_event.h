@@ -39,7 +39,7 @@ extern struct event_base *base;
 extern log4c_category_t* mycat;
 
 int game_event_init();
-int game_add_listen_event(uint16_t port, listen_node_base *callback);
+int game_add_listen_event(uint16_t port, listen_node_base *callback, const char *name);
 int game_add_connect_event(struct sockaddr *sa, int socklen, conn_node_base *client);
 
 void remove_listen_callback_event(conn_node_base *client);

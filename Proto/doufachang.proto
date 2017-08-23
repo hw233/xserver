@@ -1,0 +1,67 @@
+message challenge_player
+{
+	required uint64 player_id = 1;  //ID
+	required string name = 2;    //名字
+	required uint32 level = 3;   //等级
+	required uint32 fight = 4;    //战斗力
+	required uint32 job = 5;	  //职业
+	required uint32 rank = 6;	  //排名
+	required uint32 head_icon = 7;	  //头像
+	repeated uint32 partner_id = 8; //伙伴
+}
+
+message doufachang_info_answer
+{
+	required uint32 challenge_count = 1; //挑战次数
+	required uint32 next_add_count = 2;	 //下次恢复
+	required uint32 buy_count = 3;      //今日购买次数
+	required uint32 reward_id = 4;     //领奖的ID, 0表示没奖
+	required uint32 current_rank = 5;   //当前排名
+	repeated challenge_player player = 6;  //可挑战玩家
+}
+
+message doufachang_challenge_request
+{
+	required uint64 player_id = 1; //ID
+}
+
+message doufachang_challenge_answer
+{
+	required uint32 result = 1;  //结果，0表示成功，1表示玩家自己正在被别人挑战，2表示挑战对象正在挑战中, 3表示次数已超上限
+	required uint64 player_id = 2; //ID
+}
+
+message doufachang_raid_finished_notify
+{
+	required uint32 result = 1;  //0胜利 1失败
+	required uint32 rank_add = 2;  //排名上升
+	required uint32 courage_gold_add = 3;  //勇气币增加
+}
+
+message doufachang_record_entry
+{
+	required uint32 rank_add = 1;  //排名上升
+	required uint32 active_attack = 2;  //0主动挑战 1被别人挑战
+	required uint32 time = 3;   //时间
+	required string name = 4;    //名字
+	required uint32 level = 5;   //等级
+	required uint32 fight = 6;    //战斗力
+	required uint32 job = 7;	  //职业
+}
+
+message doufachang_record_answer
+{
+	repeated doufachang_record_entry record = 1;
+}
+
+message doufachang_buy_challenge_request
+{
+	required uint32 count = 1;  //购买次数
+}
+
+message doufachang_buy_challenge_answer
+{
+	required uint32 result = 1;  //0成功，其他失败
+	required uint32 challenge_count = 2;  //最新的挑战次数
+	required uint32 buy_count = 3;   //最新的可购买次数
+}

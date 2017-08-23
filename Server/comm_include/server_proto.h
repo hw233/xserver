@@ -53,6 +53,7 @@ enum SERVER_PROTO
 	SERVER_PROTO_FRIEND_SYNC_RENAME, //玩家改名同步
 	SERVER_PROTO_FRIEND_SYNC_FRIEND_NUM, //同步好友数
 	SERVER_PROTO_FRIEND_ADD_GIFT, //好友送礼接收
+	SERVER_PROTO_FRIEND_SEND_GIFT_SUCCESS, //好友送礼成功
 
 	SERVER_PROTO_GAMESRV_START,                 //游戏服启动通知
 	SERVER_PROTO_MAIL_INSERT,                   //插入新邮件
@@ -82,15 +83,29 @@ enum SERVER_PROTO
 	SERVER_PROTO_GUILD_BATTLE_SETTLE, //帮战结算
 	SERVER_PROTO_GUILD_BATTLE_FINAL_LIST_REQUEST, //帮战决赛参赛名单请求
 	SERVER_PROTO_GUILD_BATTLE_FINAL_LIST_ANSWER, //帮战决赛参赛名单应答
+	SERVER_PROTO_GUILD_ADD_FINAL_BATTLE_GUILD, //增加帮战决赛参赛名单
 	SERVER_PROTO_GUILD_PRODUCE_MEDICINE, //炼药
 	SERVER_PROTO_GUILD_SYNC_DONATION, //同步帮贡
+	SERVER_PROTO_GUILD_SKILL_LEVEL_UP, //帮会技能升级成功
 
 	SERVER_PROTO_CHOSE_ZHENYING_REQUEST, //加入阵营
 	SERVER_PROTO_CHANGE_ZHENYING_REQUEST, //改变阵营
 	SERVER_PROTO_ADD_ZHENYING_KILL_REQUEST, //
 	SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST, //
 
+	//排行榜服消息
+	SERVER_PROTO_RANK_SYNC_RANK,     //同步排名
+
 	SERVER_PROTO_UNDO_COST, //通知game_srv操作失败，把扣取的资源还回去
+
+	SERVER_PROTO_DOUFACHANG_CHALLENGE_REQUEST,  //挑战  doufachang -> game_srv
+	SERVER_PROTO_DOUFACHANG_CHALLENGE_ANSWER,  //挑战	game_srv -> doufachang
+	SERVER_PROTO_DOUFACHANG_ADD_REWARD_REQUEST,  //发奖励  doufachang -> game_srv 
+	SERVER_PROTO_DOUFACHANG_ADD_REWARD_ANSWER,  //发奖励   game_srv -> doufachang 	
+	SERVER_PROTO_DOUFACHANG_LOAD_PLAYER_REQUEST,  //加载玩家数据  game_srv -> db_srv 
+	SERVER_PROTO_DOUFACHANG_LOAD_PLAYER_ANSWER,  //加载玩家数据   db_srv -> game_srv
+	SERVER_PROTO_DOUFACHANG_BUY_CHALLENGE_REQUEST,   //扣元宝  doufachang -> game_srv
+	SERVER_PROTO_DOUFACHANG_BUY_CHALLENGE_ANSWER,   //扣元宝   game_srv -> doufachang
 
 	SERVER_PROTO_GET_OFFLINE_CACHE_REQUEST = 8000, //获取玩家离线缓存请求 game_srv --> friend_srv
 	SERVER_PROTO_GET_OFFLINE_CACHE_ANSWER = 8001,  //获取玩家离线缓存应答 friend_srv --> game_srv
@@ -106,12 +121,10 @@ enum SERVER_PROTO
 	SERVER_PROTO_OFFLINE_RECHARGE_LIST_REQUEST,	// 获取离线充值列表请求
 	SERVER_PROTO_OFFLINE_RECHARGE_LIST_ANSWER,	// 获取离线充值列表应答
 
+	SERVER_PROTO_WORDBOSS_PLAYER_REDIS_INFO,  // 玩家世界boss数据存redis
+
 	SERVER_PROTO_TIREN_LIST_NOTIFY,				// 外挂踢人
 };
-
-#ifndef MAX_GUILD_MEMBER_NUM
-#define MAX_GUILD_MEMBER_NUM 500 //每个帮会最大成员数
-#endif
 
 //除了broadcast的所有消息，第一个字段都是PROTO_HEAD, 最后一个字段都是EXTERN_DATA
 
@@ -349,12 +362,16 @@ typedef struct guild_shop_buy_carry
 	uint32_t need_donation;
 } GUILD_SHOP_BUY_CARRY;
 
+struct ProtoGuildSkill
+{
+	uint32_t skill_id;
+	uint32_t skill_lv;
+};
+
 typedef struct proto_sync_guild_skill
 {
 	PROTO_HEAD head;
-	uint32_t attr_num;
-	uint32_t attr_id[PLAYER_ATTR_FIGHT_MAX];
-	double attr_val[PLAYER_ATTR_FIGHT_MAX];
+	ProtoGuildSkill skills[MAX_GUILD_SKILL_NUM];
 } PROTO_SYNC_GUILD_SKILL;
 
 typedef struct proto_sync_guild_info
@@ -364,6 +381,13 @@ typedef struct proto_sync_guild_info
 	uint32_t guild_office;
 	char guild_name[300];
 } PROTO_SYNC_GUILD_INFO;
+
+typedef struct proto_sync_guild_donation
+{
+	uint32_t cur_donation;
+	uint32_t is_change; //0没变化，1增加，2减少
+	uint32_t change_val; //变化值
+} PROTO_SYNC_GUILD_DONATION;
 
 typedef struct proto_friend_recommend
 {
@@ -394,6 +418,18 @@ typedef struct proto_cost_friend_gift_res
 	uint32_t add_closeness; //获得的好感度
 	SRV_COST_INFO cost; //实际消耗
 } PROTO_COST_FRIEND_GIFT_RES;
+
+struct ProtoFriend
+{
+	uint64_t player_id;
+	uint32_t closeness;
+};
+
+typedef struct proto_friend_sync_info
+{
+	PROTO_HEAD head;
+	ProtoFriend contacts[MAX_FRIEND_CONTACT_NUM];
+} PROTO_FRIEND_SYNC_INFO;
 
 typedef struct proto_friend_sync_rename
 {
@@ -452,6 +488,70 @@ typedef struct proto_zhenyin_change_power
 	int power;
 	int zhen_ying;
 } PROTO_ZHENYIN_CHANGE_POWER;
+
+struct ProtoRank
+{
+	uint32_t type; //排行榜类型
+	uint32_t rank; //排行榜名次
+};
+
+typedef struct proto_sync_rank
+{
+	ProtoRank ranks[MAX_RANK_TYPE];
+} PROTO_SYNC_RANK;
+
+typedef struct doufachang_challenge_request
+{
+	uint64_t attack;
+	uint64_t defence;
+} DOUFACHANG_CHALLENGE_REQUEST;
+typedef struct doufachang_challenge_answer
+{
+	uint32_t result;
+	uint64_t attack;
+	uint64_t defence;
+	uint32_t add_gold;
+	bool notify;
+} DOUFACHANG_CHALLENGE_ANSWER;
+typedef struct doufachang_load_player_request
+{
+	uint64_t player_id;
+	uint64_t target_id;
+} DOUFACHANG_LOAD_PLAYER_REQUEST;
+typedef struct doufachang_load_player_answer
+{
+	uint64_t player_id;
+	uint64_t target_id;
+	char name[MAX_PLAYER_NAME_LEN];
+	uint16_t lv;
+	uint8_t job;	
+	uint16_t data_size; //数据库blob最大64K	
+	uint8_t data[0];
+} DOUFACHANG_LOAD_PLAYER_ANSWER;
+
+typedef struct doufachang_buy_challenge_request
+{
+	PROTO_HEAD head;	
+	uint32_t count;
+	uint32_t gold_num;
+} DOUFACHANG_BUY_CHALLENGE_REQUEST;
+
+typedef struct doufachang_buy_challenge_answer
+{
+	PROTO_HEAD head;
+	int result;
+	uint32_t count;
+	uint32_t gold_num;
+} DOUFACHANG_BUY_CHALLENGE_ANSWER;
+
+typedef struct doufachang_get_reward_request
+{
+	uint32_t reward_id;
+} DOUFACHANG_GET_REWARD_REQUEST;
+typedef struct doufachang_get_reward_answer
+{
+	uint32_t result;
+} DOUFACHANG_GET_REWARD_ANSWER;
 
 #pragma pack() 
 #endif

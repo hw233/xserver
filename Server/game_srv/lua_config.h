@@ -114,6 +114,14 @@ extern std::map<uint64_t, struct GenerateMonster*> GenerateMonster_config;   //�
 //extern std::map<uint64_t, std::vector<struct LifeProbabilitytable *> *> LifeProbabi_config; //法宝命体对应表
 extern std::map<uint64_t, struct ServerResTable*> server_res_config; //服务器资源配置
 extern std::map<uint64_t, struct ServerLevelTable*> server_level_config; //服务器等级配置
+extern std::map<uint64_t, struct AchievementFunctionTable*> achievement_function_config; //成就功能点表
+extern std::map<uint64_t, struct AchievementHierarchyTable*> achievement_hierarchy_config; //成就层级表
+extern std::map<uint64_t, struct DegreeTable*> friend_close_config; //好友亲密度表
+extern std::map<uint64_t, struct ArenaRewardTable*> doufachang_reward_config; //斗法场奖励
+extern std::map<uint64_t, struct TitleFunctionTable*> title_function_config; //称号功能点表
+extern std::map<uint64_t, struct WorldBossTable*> world_boss_config; //世界boss表
+extern std::map<uint64_t, struct WorldBossTable*> monster_to_world_boss_config; //世界boss表(以怪物id为索引)
+
 
 //////////////////
 extern uint32_t sg_bag_unlock_base_price;
@@ -321,4 +329,10 @@ extern double sg_fight_param_161000293;                //PVP保底比例
 extern uint32_t sg_server_level_reward_item_id;
 extern uint32_t sg_server_level_reward_item_num;
 
+extern std::map<uint32_t, GangsSkillTable*> skill_config_map;
+
+extern uint32_t sg_doufachang_ai[2];
+extern uint32_t sg_doufachang_raid_id;
+extern uint32_t sg_doufachang_raid_win_reward[2];
+extern uint32_t sg_doufachang_raid_lose_reward[2];
 #endif /* __LUA_CONFIG_H__ */

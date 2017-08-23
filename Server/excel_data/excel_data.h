@@ -1,6 +1,8 @@
 #ifndef _1_spb_H__
 #define _1_spb_H__
 
+struct AchievementFunctionTable;
+struct AchievementHierarchyTable;
 struct ActiveSkillTable;
 struct ActiveTable;
 struct ActorAttributeTable;
@@ -10,6 +12,7 @@ struct ActorLevelTable;
 struct ActorRobotTable;
 struct ActorTable;
 struct AcupunctureTable;
+struct ArenaRewardTable;
 struct AttributeTypeTable;
 struct BaguaStarTable;
 struct BaguaSuitTable;
@@ -29,6 +32,7 @@ struct ChivalrousTable;
 struct CollectTable;
 struct ColourTable;
 struct ControlTable;
+struct DegreeTable;
 struct DropConfigTable;
 struct DungeonTable;
 struct EquipAttribute;
@@ -102,12 +106,37 @@ struct TaskEventTable;
 struct TaskMonsterTable;
 struct TaskRewardTable;
 struct TaskTable;
+struct TitleFunctionTable;
 struct TransferPointTable;
 struct TreasureTable;
 struct TypeLevelTable;
 struct WeaponsEffectTable;
 struct WeekTable;
+struct WorldBossTable;
 struct sproto_config_pos;
+struct AchievementFunctionTable
+{
+	uint64_t  ID; //1
+	uint64_t  FunctionID; //2
+	uint64_t  HierarchyID; //3
+	uint32_t n_Hierarchys; //4
+	uint64_t *Hierarchys; //4
+}__attribute__ ((packed));
+
+struct AchievementHierarchyTable
+{
+	uint64_t  ID; //1
+	uint64_t  HierarchyID; //2
+	uint64_t  ConditionType; //3
+	uint64_t  ConditionTarget1; //4
+	uint64_t  ConditionTarget2; //5
+	uint64_t  ConditionNum; //6
+	uint64_t  Reward; //7
+	uint64_t  RewardValue; //8
+	uint64_t  Title; //9
+	uint64_t  NoticeID; //10
+}__attribute__ ((packed));
+
 struct ActiveSkillTable
 {
 	uint64_t  ID; //1
@@ -234,6 +263,8 @@ struct ActorLevelTable
 	uint64_t  ActorLvAttri; //3
 	uint64_t  FreeGrid; //4
 	uint64_t  LockGrid; //5
+	uint64_t  QueLvCoin; //6
+	uint64_t  QueLvExp; //7
 }__attribute__ ((packed));
 
 struct ActorRobotTable
@@ -296,6 +327,17 @@ struct AcupunctureTable
 	uint64_t  GradeNum; //4
 	uint64_t  ExpendSilver; //5
 	uint64_t  ExpendQi; //6
+}__attribute__ ((packed));
+
+struct ArenaRewardTable
+{
+	uint64_t  ID; //1
+	uint64_t  Max; //2
+	uint64_t  Low; //3
+	uint32_t n_ItemID; //4
+	uint64_t *ItemID; //4
+	uint32_t n_Num; //5
+	uint64_t *Num; //5
 }__attribute__ ((packed));
 
 struct AttributeTypeTable
@@ -582,6 +624,7 @@ struct CollectTable
 	uint64_t *Parameter1; //12
 	uint32_t n_Parameter2; //13
 	uint64_t *Parameter2; //13
+	double  CollectionSize; //14
 }__attribute__ ((packed));
 
 struct ColourTable
@@ -606,6 +649,15 @@ struct ControlTable
 	uint64_t *CloseTime; //6
 	uint64_t  TimeType; //7
 	uint64_t  RewardTime; //8
+}__attribute__ ((packed));
+
+struct DegreeTable
+{
+	uint64_t  ID; //1
+	uint64_t  Stage; //2
+	uint64_t  Value; //3
+	uint32_t n_Function; //4
+	uint64_t *Function; //4
 }__attribute__ ((packed));
 
 struct DropConfigTable
@@ -913,6 +965,7 @@ struct GemAttribute
 	uint64_t  GemSynthetic; //5
 	uint64_t  Number; //6
 	uint64_t  Consumption; //7
+	uint64_t  Level; //8
 }__attribute__ ((packed));
 
 struct GenerateMonster
@@ -1169,6 +1222,8 @@ struct NoticeTable
 	uint64_t  ID; //1
 	uint64_t  Priority; //2
 	char  *NoticeTxt; //3
+	uint32_t n_NoticeChannel; //4
+	uint64_t *NoticeChannel; //4
 }__attribute__ ((packed));
 
 struct NpcTalkTable
@@ -1364,6 +1419,7 @@ struct RecruitTable
 	uint64_t *Item; //14
 	uint32_t n_ItemNum; //15
 	uint64_t *ItemNum; //15
+	uint64_t  First; //16
 }__attribute__ ((packed));
 
 struct RewardTable
@@ -1476,6 +1532,7 @@ struct ServerLevelTable
 	uint64_t  DungeonSchedule; //5
 	uint64_t  LevelPlusEXP1; //6
 	uint64_t  LevelPlusEXP2; //7
+	uint64_t  Title; //8
 }__attribute__ ((packed));
 
 struct ServerResTable
@@ -1539,6 +1596,7 @@ struct SkillLvTable
 	uint64_t  MonsterEff; //11
 	uint64_t  CostItem; //12
 	uint64_t  CostNum; //13
+	uint64_t  NeedLv; //14
 }__attribute__ ((packed));
 
 struct SkillTable
@@ -1567,6 +1625,7 @@ struct SkillTable
 	uint32_t n_RuneID; //21
 	uint64_t *RuneID; //21
 	uint64_t  SkillAcc; //22
+	uint64_t  IsRune; //23
 }__attribute__ ((packed));
 
 struct SpecialTitleTable
@@ -1721,6 +1780,24 @@ struct TaskTable
 	uint64_t  Team; //13
 	uint32_t n_PostTask; //14
 	uint64_t *PostTask; //14
+	uint64_t  StartNPC; //15
+}__attribute__ ((packed));
+
+struct TitleFunctionTable
+{
+	uint64_t  ID; //1
+	uint64_t  FunctionID; //2
+	uint64_t  ConditionType; //3
+	uint64_t  ConditionTarget1; //4
+	uint64_t  ConditionTarget2; //5
+	uint64_t  ConditionNum; //6
+	uint32_t n_Attribute; //7
+	uint64_t *Attribute; //7
+	uint32_t n_Value1; //8
+	double *Value1; //8
+	uint64_t  Continued; //9
+	uint64_t  Value2; //10
+	uint64_t  NoticeID; //11
 }__attribute__ ((packed));
 
 struct TransferPointTable
@@ -1774,6 +1851,19 @@ struct WeekTable
 	uint64_t  Type; //2
 	uint64_t  Num; //3
 	uint64_t  Reward; //4
+}__attribute__ ((packed));
+
+struct WorldBossTable
+{
+	uint64_t  ID; //1
+	uint64_t  Level; //2
+	uint64_t  Type; //3
+	uint64_t  SceneID; //4
+	uint64_t  MonsterID; //5
+	uint32_t n_Time; //6
+	uint64_t *Time; //6
+	double  Coefficient; //7
+	uint64_t  RewardLevel; //8
 }__attribute__ ((packed));
 
 struct sproto_config_pos

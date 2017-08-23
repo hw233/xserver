@@ -19,6 +19,8 @@ INCLUDE ("../cmake_ldflags")
 
 link_directories("${PROJECT_SOURCE_DIR}/thirdlib/libevent/.libs"
   )
+link_directories("/home/jacktang/gitroot/protobuf-c/protobuf-c/.libs/"
+  )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable  (mail_srv ${SRC_LIST})

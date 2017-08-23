@@ -42,6 +42,10 @@ void MySkill::Init()
 	std::map<uint64_t, struct SkillTable *>::iterator it = skill_config.begin();
 	for (; it != skill_config.end(); ++it)
 	{
+		if (it->second->IsRune == 1)
+		{
+			continue;
+		}
 		if (it->second->OpenLv > m_owner->get_attr(PLAYER_ATTR_LEVEL))
 		{
 			continue;
@@ -60,6 +64,10 @@ void MySkill::OpenAllSkill()
 	std::map<uint64_t, struct SkillTable *>::iterator it = skill_config.begin();
 	for (; it != skill_config.end(); ++it)
 	{
+		if (it->second->IsRune == 1)
+		{
+			continue;
+		}
 		if (it->second->Career != m_owner->get_attr(PLAYER_ATTR_JOB))
 		{
 			continue;
@@ -75,7 +83,10 @@ int MySkill::Learn(uint32_t id, uint32_t num)
 	{
 		return 0;
 	}
-	if (it->second->data->lv + num > m_owner->get_attr(PLAYER_ATTR_LEVEL))
+	std::map<uint64_t, struct SkillLvTable *>::iterator iter = skill_lv_config.find(it->second->config->SkillLv + it->second->data->lv + num - 1);
+	if (iter == skill_lv_config.end())
+		return 1;
+	if (iter->second->NeedLv > m_owner->get_attr(PLAYER_ATTR_LEVEL))
 	{
 		return 190500068;
 	}
@@ -86,6 +97,9 @@ int MySkill::Learn(uint32_t id, uint32_t num)
 	}
 	IteratorLevelUp(id, num);
 	m_owner->add_task_progress(TCT_SKILL_LEVEL_UP, get_actor_skill_index(m_owner->get_job(), id), num);
+	m_owner->add_achievement_progress(ACType_SKILL_LEVEL_UP, 0, 0, num);
+	m_owner->add_achievement_progress(ACType_SKILL_ALL_LEVEL, 0, 0, num);
+	m_owner->add_achievement_progress(ACType_SKILL_FUWEN_UNLOCK, 0, 0, GetFuwenUnlockNum());
 	return 0;
 }
 void MySkill::IteratorLevelUp(uint32_t id, uint32_t num)
@@ -124,6 +138,10 @@ void MySkill::OnPlayerLevelUp(uint32_t lv)
 	std::map<uint64_t, struct SkillTable *>::iterator it = skill_config.begin();
 	for (; it != skill_config.end(); ++it)
 	{
+		if (it->second->IsRune == 1)
+		{
+			continue;
+		}
 		SKILL_CONTAIN::iterator itS = m_skill.find(it->first);
 		if (itS != m_skill.end())
 		{
@@ -257,6 +275,8 @@ skill_struct *MySkill::GetSkillStructFromFuwen(uint32_t fuwen_id)
 // 	return t;
 }
 
+static uint32_t avoid_skill[] = {111100106, 111100206, 111100306, 111100406, 111100506, 111100102};
+
 uint32_t MySkill::GetRandSkillId()
 {
 //	if (m_skill.empty())
@@ -268,12 +288,47 @@ uint32_t MySkill::GetRandSkillId()
 //	for (int i = 0; i < index; ++i)
 //		++ite;
 //	return ite->first;
-	uint64_t now = time_helper::get_cached_time();
+//	return 111100101;
+		//计算CD的时候有200毫秒误差
+	uint64_t now = time_helper::get_cached_time() - 200;
+		//只有第一个普攻可以被选中
+	bool first_normal_attack = true;
 	
 	for (SKILL_CONTAIN::iterator ite = m_skill.begin(); ite != m_skill.end(); ++ite)
 	{
 		if (now < ite->second->data->cd_time)
 			continue;
+
+		if (ite->second->config->SkillType == 1)
+		{
+			if (!first_normal_attack)
+				continue;
+			first_normal_attack = false;
+		}
+		else if (ite->second->config->SkillType != 2)
+		{
+			continue;
+		}
+
+		bool avoid = false;
+		for (size_t i = 0; i < ARRAY_SIZE(avoid_skill); ++i)
+		{
+			if (ite->first == avoid_skill[i])
+			{
+				avoid = true;
+				break;
+			}
+		}
+		if (avoid)
+			continue;
+		
+		// 	//躲避-滚地不能释放
+		// if (ite->first == 111100106)
+		// 	continue;
+
+		// 	//旋风斩不能释放
+		// if (ite->first == 111100102)
+		// 	continue;
 		return ite->first;
 	}
 	return (0);
@@ -284,6 +339,92 @@ uint32_t MySkill::GetFirstSkillId()
 	if (m_skill.empty())
 		return (0);
 	return m_skill.begin()->second->data->skill_id;
+}
+
+int MySkill::GetSkillLevelNum(uint32_t lv)
+{
+	int num = 0;
+	for (SKILL_CONTAIN::iterator iter = m_skill.begin(); iter != m_skill.end(); ++iter)
+	{
+		skill_struct *pSkill = iter->second;
+		if (pSkill->config->IsRune == 1)
+		{
+			continue;
+		}
+		if (pSkill->data->lv < lv)
+		{
+			continue;
+		}
+		ActiveSkillTable *active_config = get_config_by_id(pSkill->config->SkillAffectId, &active_skill_config);
+		if (!active_config || (active_config && active_config->NextSkill == 0))
+		{
+			num++;
+		}
+	}
+	return num;
+}
+
+int MySkill::GetFuwenUnlockNum(void)
+{
+	int num = 0;
+	for (SKILL_CONTAIN::iterator iter = m_skill.begin(); iter != m_skill.end(); ++iter)
+	{
+		skill_struct *pSkill = iter->second;
+		for (int i = 0; i < MAX_FUWEN; ++i)
+		{
+			uint32_t fuwen_id = pSkill->data->fuwen[i].id;
+			if (fuwen_id == 0)
+			{
+				continue;
+			}
+			SkillTable *fuwen_config = get_config_by_id(fuwen_id, &skill_config);
+			if (!fuwen_config)
+			{
+				continue;
+			}
+			if (fuwen_config->OpenLv > pSkill->data->lv)
+			{
+				continue;
+			}
+			num++;
+		}
+	}
+	return num;
+}
+
+int MySkill::GetFuwenWearNum(void)
+{
+	int num = 0;
+	for (SKILL_CONTAIN::iterator iter = m_skill.begin(); iter != m_skill.end(); ++iter)
+	{
+		skill_struct *pSkill = iter->second;
+		for (int i = 0; i < MAX_CUR_FUWEN; ++i)
+		{
+			if (pSkill->data->cur_fuwen[i] > 0)
+			{
+				num++;
+			}
+		}
+	}
+	return num;
+}
+
+int MySkill::GetFuwenLevelNum(uint32_t lv)
+{
+	int num = 0;
+	for (SKILL_CONTAIN::iterator iter = m_skill.begin(); iter != m_skill.end(); ++iter)
+	{
+		skill_struct *pSkill = iter->second;
+		for (int i = 0; i < MAX_FUWEN; ++i)
+		{
+			fuwen_data *pFuwen = &pSkill->data->fuwen[i];
+			if (pFuwen->id > 0 && pFuwen->lv >= lv)
+			{
+				num++;
+			}
+		}
+	}
+	return num;
 }
 
 void MySkill::SendAllSkill()
@@ -361,16 +502,24 @@ uint32_t MySkill::GetLevelUpTo(uint32_t id, uint32_t initLv, uint32_t maxLv)
 	{
 		return 0;
 	}
-	skill_struct *pSkill = GetSkill(id);
-	if (pSkill == NULL)
-	{
-		return 0;
-	}
+	//skill_struct *pSkill = GetSkill(id);
+	//if (pSkill == NULL)
+	//{
+	//	return 0;
+	//}
 	uint32_t num = 0;
 	uint32_t cost = 0;
-	for (uint32_t lv = initLv + 1; lv <= maxLv; ++lv)
+	for (uint32_t lv = initLv; lv < maxLv; ++lv)
 	{
-		cost += CalcCost(it->second->SkillLv, lv - 1, 1);
+		std::map<uint64_t, struct SkillLvTable *>::iterator iter = skill_lv_config.find(it->second->SkillLv + lv);
+		if (iter == skill_lv_config.end())
+			break;
+		if (maxLv < iter->second->NeedLv)
+		{
+			break;
+		}
+		cost += iter->second->CostCoin;
+		//cost += CalcCost(it->second->SkillLv, lv - 1, 1);
 		if (cost > m_owner->get_coin())
 			return num;
 		else
@@ -384,7 +533,7 @@ uint32_t MySkill::CalcCost(uint32_t id, uint32_t oldLv, uint32_t num)
 	uint32_t cost = 0;
 	for (uint32_t i = 0; i < num; ++i)
 	{
-		std::map<uint64_t, struct SkillLvTable *>::iterator iter = skill_lv_config.find(id + oldLv + i - 1);
+		std::map<uint64_t, struct SkillLvTable *>::iterator iter = skill_lv_config.find(id + oldLv + i);
 		if (iter == skill_lv_config.end())
 			break;
 		cost += iter->second->CostCoin;
@@ -453,4 +602,16 @@ void MySkill::UnPackAllSkill(_PlayerDBInfo &pb)
 		}
 	}
 	m_index = pb.skill->num;
+}
+
+void MySkill::copy(MySkill *skill)
+{
+	m_index = skill->m_index;
+	for (SKILL_CONTAIN::iterator ite = skill->m_skill.begin(); ite != skill->m_skill.end(); ++ite)
+	{
+		skill_struct *skill_ = skill_manager::copy_skill(ite->second);
+		if (!skill_)
+			continue;
+		m_skill[ite->first] = skill_;
+	}
 }

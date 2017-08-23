@@ -22,6 +22,21 @@
 #include "mem_pool.h"
 #include "mysql_module.h"
 #include "cgi_common.h"
+extern "C"
+{
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+};
+
+extern void ldb_loop();
+extern void luaLdbLineHook(lua_State *lua, lua_Debug *ar);
+static void cb_signal_int(evutil_socket_t fd, short events, void *arg)
+{
+	sighandler_t old = signal(SIGINT, SIG_IGN);
+	ldb_loop();
+	signal(SIGINT, old);
+}
 
 static void cb_signal2(evutil_socket_t fd, short events, void *arg)
 {
@@ -31,6 +46,41 @@ static void cb_signal2(evutil_socket_t fd, short events, void *arg)
 	
 }
 
+lua_State *L = NULL;
+
+int debug_init()
+{
+	printf("debug pid %d\n", getpid());
+	add_signal(SIGINT, NULL, cb_signal_int);
+	lua_sethook(L, luaLdbLineHook, LUA_MASKLINE, 100000);	
+	return (0);
+}
+
+int lua_init()
+{
+	//开启lua状态机
+    L = luaL_newstate();
+	if (!L)
+	{
+		return (-1);
+	}
+	luaL_openlibs(L);
+	if (luaL_loadfile(L, "lua/main.lua") || lua_pcall(L, 0,0,0))
+	{
+		LOG_ERR("[%s:%d] do lua error %s", __FUNCTION__, __LINE__, lua_tostring(L,-1));
+		printf("[%s:%d] do lua error %s\n", __FUNCTION__, __LINE__, lua_tostring(L,-1));
+		return (-2);
+	}
+
+	lua_getglobal(L, "dispatch_message");
+	if (lua_type(L, -1) != LUA_TFUNCTION)
+	{
+		LOG_ERR("get dispatch message failed");
+		return (-3);
+	}
+	lua_rawsetp(L, LUA_REGISTRYINDEX, &L);
+	return (0);
+}
 
 int main(int argc, char **argv)
 {
@@ -40,6 +90,7 @@ int main(int argc, char **argv)
 	char *line;
 	int port;
 	int i;
+	bool debug = true;
 	struct sockaddr_in sin;
 	signal(SIGTERM, SIG_IGN);
 
@@ -64,19 +115,13 @@ int main(int argc, char **argv)
 	for (i = 1; i < argc; ++i) {
 		if (strcmp(argv[i], "-d") == 0) {
 			change_to_deamon();
+			debug = false;
 			break;
 		}
 	}
 
-//	load_filter_config();
-
 	uint64_t pid = write_pid_file();		
     LOG_INFO("dump_srv run %lu", pid);
-/*	if (init_conn_client_map() != 0) {
-		LOG_ERR("init client map failed");
-		goto done;
-	}
-*/
 	ret = game_event_init();
 	if (ret != 0)
 		goto done;
@@ -87,50 +132,7 @@ int main(int argc, char **argv)
 		ret = -1;
 		goto done;
 	}
-/*
-	line = get_first_key(file, (char *)"mysql_host");
-	if (!line) {
-		LOG_ERR("[%s : %d]: get config failed, key: mysql_host", __FUNCTION__, __LINE__);
-		return -1;
-	}
-	szMysqlIp = (get_value(line));
 
-	line = get_first_key(file, (char *)"mysql_port");
-	if (!line) {
-		LOG_ERR("[%s : %d]: get config failed, key: mysql_port", __FUNCTION__, __LINE__);
-		return -1;
-	}
-	nMysqlPort = atoi(get_value(line));
-
-	line = get_first_key(file, (char *)"mysql_db_name");
-	if (!line) {
-		LOG_ERR("[%s : %d]: get config failed, key: mysql_db_name", __FUNCTION__, __LINE__);
-		return -1;
-	}
-	szMysqlDbName = (get_value(line));
-
-	line = get_first_key(file, (char *)"mysql_db_user");
-	if (!line) {
-		LOG_ERR("[%s : %d]: get config failed, key: mysql_db_user", __FUNCTION__, __LINE__);
-		return -1;
-	}
-	szMysqlDbUser = (get_value(line));
-
-	line = get_first_key(file, (char *)"mysql_db_pwd");
-	if (!line) {
-		LOG_ERR("[%s : %d]: get config failed, key: mysql_db_pwd", __FUNCTION__, __LINE__);
-		return -1;
-	}
-	szMysqlDbPwd = (get_value(line));
-
-	ret = init_db(const_cast<char*>(szMysqlIp.c_str()), nMysqlPort,  const_cast<char*>(szMysqlDbName.c_str())
-		, const_cast<char*>(szMysqlDbUser.c_str()), const_cast<char*>(szMysqlDbPwd.c_str()));
-	if (0 != ret) {
-		LOG_ERR("[%s : %d]: init db failed, ip: %s, port: %u, abname: %s, user name: %s, pwd: %s",
-			__FUNCTION__, __LINE__, szMysqlIp.c_str(), nMysqlPort, szMysqlDbName.c_str(), szMysqlDbUser.c_str(), szMysqlDbPwd.c_str());
-		return -1;
-	}	
-*/
 	line = get_first_key(file, (char *)"conn_srv_dump_port");
 	port = atoi(get_value(line));
 	if (port <= 0) {
@@ -162,7 +164,7 @@ int main(int argc, char **argv)
 	//	return -1;
 	//}
 
-	ret = game_add_connect_event((struct sockaddr *)&sin, sizeof(sin), &conn_node_dumpsrv::connecter);
+	ret = game_add_connect_event((struct sockaddr *)&sin, sizeof(sin), conn_node_dumpsrv::instance());
 	if (ret <= 0)
 		goto done;
 
@@ -177,11 +179,23 @@ int main(int argc, char **argv)
 		LOG_ERR("set sigpipe ign failed");		
 		return (0);
 	}
-	add_signal(SIGUSR2, NULL, cb_signal2);		
+	add_signal(SIGUSR2, NULL, cb_signal2);
+
+	if (lua_init() != 0)
+	{
+		LOG_ERR("init lua failed");
+		goto done;
+	}
+	if (debug)
+		debug_init();
 	
 	ret = event_base_loop(base, 0);
 	LOG_INFO("event_base_loop stoped[%d]", ret);	
 
+	if (L)
+	{
+		lua_close(L);	
+	}
 	struct timeval tv;
 	event_base_gettimeofday_cached(base, &tv);
 

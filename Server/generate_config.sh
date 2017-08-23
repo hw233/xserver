@@ -20,7 +20,7 @@ port=$2
 shm_addr=`printf "%d" ${3}`
 player_num=$4
 monster_num=`expr 100 + ${player_num} \* 10`
-boss_num=`expr ${monster_num} / 20`
+#boss_num=`expr ${monster_num} / 20`
 
 echo "/// SERVER ID"
 echo "game_srv_id=${serverid}"
@@ -81,7 +81,9 @@ port=`expr ${port} + 1`
 echo "//调试服务器连接端口"
 echo "conn_srv_dump_port=${port}"
 port=`expr ${port} + 1`
-
+echo "//斗法场服务器连接端口"
+echo "conn_srv_doufachang_port=${port}"
+port=`expr ${port} + 1`
 
 
 echo "game_srv_tick_time = 50"
@@ -92,10 +94,10 @@ echo "obase=16;${shm_addr}" | bc
 ((shm_addr=${shm_addr}+1))
 echo "game_srv_player_num=${player_num}"
 
-echo -n "game_srv_equip_key=0x"
-echo "obase=16;${shm_addr}" | bc
-((shm_addr=${shm_addr}+1))
-echo "game_srv_equip_num=`expr ${player_num} \* 10`"
+#echo -n "game_srv_equip_key=0x"
+#echo "obase=16;${shm_addr}" | bc
+#((shm_addr=${shm_addr}+1))
+#echo "game_srv_equip_num=`expr ${player_num} \* 10`"
 
 echo -n "game_srv_raid_key=0x"
 echo "obase=16;${shm_addr}" | bc
@@ -117,10 +119,10 @@ echo "obase=16;${shm_addr}" | bc
 ((shm_addr=${shm_addr}+1))
 echo "game_srv_monster_num=${monster_num}"
 
-echo -n "game_srv_boss_key=0x"
-echo "obase=16;${shm_addr}" | bc
-((shm_addr=${shm_addr}+1))
-echo "game_srv_boss_num=${boss_num}"
+#echo -n "game_srv_boss_key=0x"
+#echo "obase=16;${shm_addr}" | bc
+#((shm_addr=${shm_addr}+1))
+#echo "game_srv_boss_num=${boss_num}"
 
 echo -n "game_srv_sight_space_key=0x"
 echo "obase=16;${shm_addr}" | bc

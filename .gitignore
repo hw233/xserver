@@ -36,3 +36,10 @@ Server/game_srv/liblog4c_sd.a
 Server/print_name
 memerr.txt
 memerr.log.*
+.dumbjump
+.projectile
+GPATH
+GRTAGS
+GSYMS
+GTAGS
+ag.list

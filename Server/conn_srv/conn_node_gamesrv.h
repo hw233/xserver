@@ -18,7 +18,8 @@ private:
 	int transfer_to_friendsrv();
 	int game_to_friendsrv();	
 	int transfer_to_mailsrv();	
-	int transfer_to_guildsrv();	
+	int transfer_to_guildsrv();
+	int transfer_to_doufachang();
 	int transfer_to_ranksrv();	
 	int broadcast_to_all_client();	
 	int broadcast_to_client();

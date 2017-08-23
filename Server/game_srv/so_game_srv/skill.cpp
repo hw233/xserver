@@ -17,7 +17,7 @@ int skill_struct::init_skill(uint32_t id, uint64_t owner, uint64_t target)
 	}
 	config = pos->second;
 	data->skill_id = id;
-	data->owner = owner;
+//	data->owner = owner;
 //	data->target = target;
 	data->lv = 1;
 	for (data->fuwen_num = 0; data->fuwen_num < (int)pos->second->n_RuneID; ++data->fuwen_num)
@@ -47,18 +47,28 @@ int skill_struct::init_skill(uint32_t id, uint64_t owner, uint64_t target)
 	return (0);
 }
 
-int skill_struct::get_skill_lv(int fuwen_index)
+int skill_struct::get_skill_id_and_lv(int fuwen_index, int *id, int *lv)
 {
 	assert(fuwen_index == 1 || fuwen_index == 2);
 	uint32_t fuwen = data->cur_fuwen[fuwen_index - 1];
 	if (fuwen == 0)
-		return data->lv;
+	{
+		*lv = data->lv;
+		*id = data->skill_id;
+		return (0);
+	}
 	for (size_t i = 0; i < ARRAY_SIZE(data->fuwen); ++i)
 	{
 		if (data->fuwen[i].id == fuwen)
-			return data->fuwen[i].lv;
+		{
+			*lv = data->fuwen[i].lv;
+			*id = fuwen;
+			return 0; 
+		}
 	}
-	return 1;
+	*lv = 1;
+	*id = fuwen;
+	return -1;
 }
 
 int skill_struct::add_cd(struct SkillLvTable *lv_config, struct ActiveSkillTable *active_config)
@@ -97,3 +107,37 @@ int skill_struct::add_cd(struct SkillLvTable *lv_config, struct ActiveSkillTable
 // */	
 // 	return (0);
 // }
+
+void skill_struct::copy(skill_struct *skill)
+{
+	config = skill->config;
+	assert(data);
+	data->skill_id = skill->data->skill_id;
+//	data->owner =
+	data->lv = skill->data->lv;
+	data->fuwen_num = skill->data->fuwen_num;
+	for (int i = 0; i < data->fuwen_num; ++i)
+	{
+		data->fuwen[data->fuwen_num].id = data->fuwen[data->fuwen_num].id;
+		data->fuwen[data->fuwen_num].lv = data->fuwen[data->fuwen_num].lv;
+		data->fuwen[data->fuwen_num].isNew = data->fuwen[data->fuwen_num].isNew;
+	}
+	for (int i = 0; i < MAX_CUR_FUWEN; ++i)
+	{
+		data->cur_fuwen[i] = skill->data->cur_fuwen[i];
+	}
+	data->cd_time = 0;
+}
+
+fuwen_data *skill_struct::get_fuwen(uint32_t fuwen)
+{
+	for (int i = 0; i < data->fuwen_num; ++i)
+	{
+		if (data->fuwen[i].id == fuwen)
+		{
+			return &data->fuwen[i];
+		}
+	}
+	return NULL;
+}
+

@@ -327,7 +327,7 @@ fail:
 }
 
 
-int game_add_listen_event(uint16_t port, listen_node_base *callback)
+int game_add_listen_event(uint16_t port, listen_node_base *callback, const char *name)
 {
 	struct event *event_accept = &callback->event_accept;
 	int fd = 0;
@@ -360,7 +360,7 @@ int game_add_listen_event(uint16_t port, listen_node_base *callback)
 	}
 	event_add(event_accept, NULL);
 
-	LOG_INFO("%s: fd = %d, port = %d, callback = %p", __FUNCTION__, fd, port, callback);
+	LOG_INFO("%s: %s fd = %d, port = %d, callback = %p", __FUNCTION__, name, fd, port, callback);
 	return (0);
 fail:
 	if (fd > 0) {

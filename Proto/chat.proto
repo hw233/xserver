@@ -54,6 +54,7 @@ message ChatHorse
 	required string content = 3; 
 	required uint32 gap = 4; //滚动间隔 0
 	required uint32 cd = 5;
+	repeated uint32 channel = 6;
 }
 
 message AnsChat

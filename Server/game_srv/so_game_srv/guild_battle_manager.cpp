@@ -576,48 +576,54 @@ static int create_guild_battle_team4(raid_struct *raid, struct matched_team *tea
 }
 
 
-void get_rand_born_pos1(float *pos_x, float *pos_z)
+void get_rand_born_pos1(float *pos_x, float *pos_z, float *direct)
 {
 	float rand1 = (random() % (sg_guild_raid_param1[5] * 2) - sg_guild_raid_param1[5]) / 100.0;
 	*pos_x = sg_guild_raid_param1[1] + rand1;
 	rand1 = (random() % (sg_guild_raid_param1[5] * 2) - sg_guild_raid_param1[5]) / 100.0;		
 	*pos_z = sg_guild_raid_param1[3] + rand1;
+	*direct = sg_guild_raid_param1[4];
 }
-void get_rand_born_pos2(float *pos_x, float *pos_z)
+void get_rand_born_pos2(float *pos_x, float *pos_z, float *direct)
 {
 	float rand1 = (random() % (sg_guild_raid_param2[5] * 2) - sg_guild_raid_param2[5]) / 100.0;
 	*pos_x = sg_guild_raid_param2[1] + rand1;
 	rand1 = (random() % (sg_guild_raid_param2[5] * 2) - sg_guild_raid_param2[5]) / 100.0;		
 	*pos_z = sg_guild_raid_param2[3] + rand1;
+	*direct = sg_guild_raid_param2[4];
 }
 
-void get_final_rand_born_pos1(float *pos_x, float *pos_z)
+void get_final_rand_born_pos1(float *pos_x, float *pos_z, float *direct)
 {
 	float rand1 = (random() % (sg_guild_raid_final_param1[5] * 2) - sg_guild_raid_final_param1[5]) / 100.0;
 	*pos_x = sg_guild_raid_final_param1[1] + rand1;
 	rand1 = (random() % (sg_guild_raid_final_param1[5] * 2) - sg_guild_raid_final_param1[5]) / 100.0;		
 	*pos_z = sg_guild_raid_final_param1[3] + rand1;
+	*direct = sg_guild_raid_final_param1[4];
 }
-void get_final_rand_born_pos2(float *pos_x, float *pos_z)
+void get_final_rand_born_pos2(float *pos_x, float *pos_z, float *direct)
 {
 	float rand1 = (random() % (sg_guild_raid_final_param2[5] * 2) - sg_guild_raid_final_param2[5]) / 100.0;
 	*pos_x = sg_guild_raid_final_param2[1] + rand1;
 	rand1 = (random() % (sg_guild_raid_final_param2[5] * 2) - sg_guild_raid_final_param2[5]) / 100.0;		
 	*pos_z = sg_guild_raid_final_param2[3] + rand1;
+	*direct = sg_guild_raid_final_param2[4];
 }
-void get_final_rand_born_pos3(float *pos_x, float *pos_z)
+void get_final_rand_born_pos3(float *pos_x, float *pos_z, float *direct)
 {
 	float rand1 = (random() % (sg_guild_raid_final_param3[5] * 2) - sg_guild_raid_final_param3[5]) / 100.0;
 	*pos_x = sg_guild_raid_final_param3[1] + rand1;
 	rand1 = (random() % (sg_guild_raid_final_param3[5] * 2) - sg_guild_raid_final_param3[5]) / 100.0;		
 	*pos_z = sg_guild_raid_final_param3[3] + rand1;
+	*direct = sg_guild_raid_final_param3[4];
 }
-void get_final_rand_born_pos4(float *pos_x, float *pos_z)
+void get_final_rand_born_pos4(float *pos_x, float *pos_z, float *direct)
 {
 	float rand1 = (random() % (sg_guild_raid_final_param4[5] * 2) - sg_guild_raid_final_param4[5]) / 100.0;
 	*pos_x = sg_guild_raid_final_param4[1] + rand1;
 	rand1 = (random() % (sg_guild_raid_final_param4[5] * 2) - sg_guild_raid_final_param4[5]) / 100.0;		
 	*pos_z = sg_guild_raid_final_param4[3] + rand1;
+	*direct = sg_guild_raid_final_param4[4];
 }
 
 
@@ -666,8 +672,8 @@ static int start_guild_battle(struct matched_team *team1, struct matched_team *t
 // 		// float pos_x = sg_3v3_pvp_raid_param1[1] + rand1;
 // 		// rand1 = (random() % (sg_3v3_pvp_raid_param1[5] * 2) - sg_3v3_pvp_raid_param1[5]) / 100.0;		
 // 		// float pos_z = sg_3v3_pvp_raid_param1[3] + rand1;
- 		float pos_x, pos_z;
- 		get_rand_born_pos1(&pos_x, &pos_z);
+ 		float pos_x, pos_z, direct;
+ 		get_rand_born_pos1(&pos_x, &pos_z, &direct);
 // 		player->set_pos(pos_x, pos_z);
 
 // 		extern_data.player_id = player->get_uuid();
@@ -678,7 +684,7 @@ static int start_guild_battle(struct matched_team *team1, struct matched_team *t
 
 // 		raid->on_player_enter_raid(player);
 
-		raid->player_enter_raid_impl(player, i, pos_x, pos_z);
+		raid->player_enter_raid_impl(player, i, pos_x, pos_z, direct);
 
 		player = team2->team_player[i];
 		assert(player);
@@ -697,7 +703,7 @@ static int start_guild_battle(struct matched_team *team1, struct matched_team *t
 		
 // 		player->set_enter_raid_pos_and_scene(raid);
 
- 		get_rand_born_pos2(&pos_x, &pos_z);
+ 		get_rand_born_pos2(&pos_x, &pos_z, &direct);
 // 		player->set_pos(pos_x, pos_z);		
 // //		player->set_pos(sg_3v3_pvp_raid_param2[1], sg_3v3_pvp_raid_param2[3]);
 
@@ -708,7 +714,7 @@ static int start_guild_battle(struct matched_team *team1, struct matched_team *t
 // 			pos_z, GUILD_RAID_ID, 0);
 
 // 		raid->on_player_enter_raid(player);
-		raid->player_enter_raid_impl(player, i + MAX_TEAM_MEM, pos_x, pos_z);		
+		raid->player_enter_raid_impl(player, i + MAX_TEAM_MEM, pos_x, pos_z, direct);		
 	}
 
 	create_guild_battle_team(raid, team1);
@@ -770,8 +776,8 @@ static int start_final_guild_battle(struct matched_team *team1, struct matched_t
 // 		// float pos_x = sg_3v3_pvp_raid_param1[1] + rand1;
 // 		// rand1 = (random() % (sg_3v3_pvp_raid_param1[5] * 2) - sg_3v3_pvp_raid_param1[5]) / 100.0;		
 // 		// float pos_z = sg_3v3_pvp_raid_param1[3] + rand1;
- 		float pos_x, pos_z;
- 		get_final_rand_born_pos1(&pos_x, &pos_z);
+ 		float pos_x, pos_z, direct;
+ 		get_final_rand_born_pos1(&pos_x, &pos_z, &direct);
 // 		player->set_pos(pos_x, pos_z);
 
 // 		extern_data.player_id = player->get_uuid();
@@ -781,7 +787,7 @@ static int start_final_guild_battle(struct matched_team *team1, struct matched_t
 // 			pos_z, GUILD_RAID_FINAL_ID, 0);
 
 // 		raid->on_player_enter_raid(player);
-		raid->player_enter_raid_impl(player, i, pos_x, pos_z);
+		raid->player_enter_raid_impl(player, i, pos_x, pos_z, direct);
 
 		player = team2->team_player[i];
 		assert(player);
@@ -800,7 +806,7 @@ static int start_final_guild_battle(struct matched_team *team1, struct matched_t
 // 		raid->set_player_info(player, &raid->data->player_info2[i]);		
 // 		player->set_enter_raid_pos_and_scene(raid);
 
- 		get_final_rand_born_pos2(&pos_x, &pos_z);
+ 		get_final_rand_born_pos2(&pos_x, &pos_z, &direct);
 // 		player->set_pos(pos_x, pos_z);		
 // //		player->set_pos(sg_3v3_pvp_raid_param2[1], sg_3v3_pvp_raid_param2[3]);
 
@@ -811,7 +817,7 @@ static int start_final_guild_battle(struct matched_team *team1, struct matched_t
 // 			pos_z, GUILD_RAID_FINAL_ID, 0);
 
 // 		raid->on_player_enter_raid(player);
-		raid->player_enter_raid_impl(player, i + MAX_TEAM_MEM, pos_x, pos_z);		
+		raid->player_enter_raid_impl(player, i + MAX_TEAM_MEM, pos_x, pos_z, direct);		
 	
 		if (team3)
 		{
@@ -832,7 +838,7 @@ static int start_final_guild_battle(struct matched_team *team1, struct matched_t
 // 			raid->set_player_info(player, &raid->data->player_info3[i]);		
 // 			player->set_enter_raid_pos_and_scene(raid);
 
- 			get_final_rand_born_pos3(&pos_x, &pos_z);
+ 			get_final_rand_born_pos3(&pos_x, &pos_z, &direct);
 // 			player->set_pos(pos_x, pos_z);		
 // //		player->set_pos(sg_3v3_pvp_raid_param2[1], sg_3v3_pvp_raid_param2[3]);
 
@@ -843,7 +849,7 @@ static int start_final_guild_battle(struct matched_team *team1, struct matched_t
 // 				pos_z, GUILD_RAID_FINAL_ID, 0);
 
 // 			raid->on_player_enter_raid(player);
-			raid->player_enter_raid_impl(player, i + MAX_TEAM_MEM + MAX_TEAM_MEM, pos_x, pos_z);					
+			raid->player_enter_raid_impl(player, i + MAX_TEAM_MEM + MAX_TEAM_MEM, pos_x, pos_z, direct);					
 		}
 		if (team4)
 		{
@@ -864,7 +870,7 @@ static int start_final_guild_battle(struct matched_team *team1, struct matched_t
 // 			raid->set_player_info(player, &raid->data->player_info4[i]);		
 // 			player->set_enter_raid_pos_and_scene(raid);
 
- 			get_final_rand_born_pos4(&pos_x, &pos_z);
+ 			get_final_rand_born_pos4(&pos_x, &pos_z, &direct);
 // 			player->set_pos(pos_x, pos_z);		
 // //		player->set_pos(sg_3v3_pvp_raid_param2[1], sg_3v3_pvp_raid_param2[3]);
 
@@ -875,7 +881,7 @@ static int start_final_guild_battle(struct matched_team *team1, struct matched_t
 // 				pos_z, GUILD_RAID_FINAL_ID, 0);
 
 // 			raid->on_player_enter_raid(player);
-			raid->player_enter_raid_impl(player, i + MAX_TEAM_MEM + MAX_TEAM_MEM + MAX_TEAM_MEM, pos_x, pos_z);								
+			raid->player_enter_raid_impl(player, i + MAX_TEAM_MEM + MAX_TEAM_MEM + MAX_TEAM_MEM, pos_x, pos_z, direct);								
 		}
 	}
 
@@ -1084,7 +1090,9 @@ void broadcast_wait_time_change()
 	GuildBattleWaitInfoNotify nty;
 	guild_battle_wait_info_notify__init(&nty);
 
-	nty.waittime = get_wait_time();
+	nty.state = guild_battle_manager_action_state;
+	nty.has_state = true;
+	nty.waittime = guild_battle_manager_action_tick;
 	nty.has_waittime = true;
 
 	broadcast_to_all_guild_wait(MSG_ID_GUILD_BATTLE_WAIT_INFO_NOTIFY, &nty, (pack_func)guild_battle_wait_info_notify__pack);
@@ -1364,6 +1372,8 @@ void run_activity_period()
 					broadcast_round_change();
 				}
 
+				//通知等待区玩家等待时间发生变化
+				broadcast_wait_time_change();
 				//战斗时间结束，没决出胜负的副本进行结算
 				on_guild_battle_raid_time_out();
 
@@ -1648,7 +1658,9 @@ int pack_guild_wait_info(uint32_t guild_id, uint8_t *out_data)
 	nty.has_participatenum = true;
 	nty.round = guild_battle_manager_action_round;
 	nty.has_round = true;
-	nty.waittime = get_wait_time();;
+	nty.state = guild_battle_manager_action_state;
+	nty.has_state = true;
+	nty.waittime = guild_battle_manager_action_tick;
 	nty.has_waittime = true;
 	nty.callcd = get_guild_call_cd(guild_id);
 	nty.has_callcd = true;
@@ -1905,7 +1917,7 @@ void insert_guild_battle_fight_reward_map(std::map<uint32_t, GuildBattleFightGui
 	player_reward.player_id = player->get_uuid();
 	player_reward.result = result;
 	get_guild_battle_fight_reward(player, result, player_reward.score, player_reward.treasure, player_reward.donation, kill_num, dead_num, monster_num, boss_damage, boss_num);
-	if (!guild_battle_is_final())
+	if (!guild_battle_is_final() || result == 0)
 	{
 		notify_guild_battle_fight_reward(player, result, player_reward.score, player_reward.treasure, player_reward.donation);
 	}
@@ -1942,6 +1954,7 @@ void get_guild_raid_reward(raid_struct *raid, int win_team, std::map<uint32_t, G
 				uint32_t kill_num = raid->GUILD_DATA.kill_record[i];
 				uint32_t dead_num = raid->data->player_info[i].dead_count;
 				insert_guild_battle_fight_reward_map(reward_map, player, team1_result, kill_num, dead_num);
+				player->add_achievement_progress(ACType_GUILD_BATTLE, 0, 0, 1);
 			}
 		}
 
@@ -1952,6 +1965,7 @@ void get_guild_raid_reward(raid_struct *raid, int win_team, std::map<uint32_t, G
 				uint32_t kill_num = raid->GUILD_DATA.kill_record[i + MAX_TEAM_MEM];
 				uint32_t dead_num = raid->data->player_info2[i].dead_count;
 				insert_guild_battle_fight_reward_map(reward_map, player, team2_result, kill_num, dead_num);
+				player->add_achievement_progress(ACType_GUILD_BATTLE, 0, 0, 1);
 			}
 		}
 	}
@@ -2124,6 +2138,7 @@ void cant_matched_player_round_finished()
 		{
 			insert_guild_battle_fight_reward_map(reward_map, player, 0);
 		}
+		player->add_achievement_progress(ACType_GUILD_BATTLE, 0, 0, 1);
 	}
 
 	send_guild_battle_fight_reward_to_guildsrv(reward_map);
@@ -2242,6 +2257,11 @@ void add_final_guild_id(uint32_t guild_id)
 	}
 
 	guild_battle_manager_final_guild_id.insert(guild_id);
+
+	uint32_t *pData = (uint32_t*)conn_node_base::get_send_data();
+	*pData++ = guild_id;
+	EXTERN_DATA ext_data;
+	fast_send_msg_base(&conn_node_gamesrv::connecter, &ext_data, SERVER_PROTO_GUILD_ADD_FINAL_BATTLE_GUILD, sizeof(uint32_t), 0);
 }
 
 void fill_player_base_data(raid_player_info &info, PlayerBaseData &data)

@@ -16,6 +16,7 @@ private:
 	void handle_find_player(EXTERN_DATA *extern_data);
 	void handle_save_player_msg(EXTERN_DATA *extern_data);
 	void handle_enter_game(EXTERN_DATA *extern_data);
+	void handle_doufachang_load(EXTERN_DATA *extern_data);
 	void handle_rename_request(EXTERN_DATA *extern_data);
 	void handle_save_client_data(EXTERN_DATA *extern_data);
 	void handle_load_client_data(EXTERN_DATA *extern_data);

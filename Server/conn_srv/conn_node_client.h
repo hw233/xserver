@@ -52,7 +52,8 @@ private:
 	int transfer_to_dumpserver(PROTO_HEAD* head);
 	int transfer_to_mailsrv();
 	int transfer_to_friendsrv();		
-	int transfer_to_guildsrv();		
+	int transfer_to_guildsrv();
+	int transfer_to_doufachang();	
 	int transfer_to_ranksrv();		
 	int send_player_exit(bool again = false);
 	int send_hello_resp();	

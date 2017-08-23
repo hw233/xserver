@@ -5,6 +5,7 @@
 #include "conn_node_mail.h"
 #include "conn_node_guild.h"
 #include "conn_node_rank.h"
+#include "conn_node_doufachang.h"
 #include "game_event.h"
 #include "flow_record.h"
 #include <assert.h>
@@ -123,6 +124,30 @@ done:
 	return (ret);
 }
 
+int conn_node_gamesrv::transfer_to_doufachang()
+{
+	int ret = 0;
+	PROTO_HEAD *head;
+	head = (PROTO_HEAD *)buf_head();
+
+	if (!conn_node_doufachang::server_node) {
+		LOG_ERR("[%s:%d] do not have doufachang server connected", __FUNCTION__, __LINE__);
+		ret = -1;
+		goto done;
+	}
+
+	if (conn_node_doufachang::server_node->send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len)) {
+		LOG_ERR("[%s:%d] send to doufachang failed err[%d]", __FUNCTION__, __LINE__, errno);
+		ret = -2;
+		goto done;
+	}
+#ifdef FLOW_MONITOR
+	add_on_other_server_answer_msg(head);
+#endif
+done:
+	return (ret);
+}
+
 int conn_node_gamesrv::transfer_to_guildsrv()
 {
 	int ret = 0;
@@ -227,12 +252,19 @@ int conn_node_gamesrv::transfer_to_client()
 		case SERVER_PROTO_GUILD_BATTLE_SETTLE:
 		case SERVER_PROTO_GUILD_BATTLE_FINAL_LIST_REQUEST:
 		case SERVER_PROTO_GUILD_PRODUCE_MEDICINE:
+		case SERVER_PROTO_GUILD_ADD_FINAL_BATTLE_GUILD:
 			return transfer_to_guildsrv();
 		case SERVER_PROTO_REFRESH_PLAYER_REDIS_INFO:
+		case SERVER_PROTO_WORDBOSS_PLAYER_REDIS_INFO:
 			return transfer_to_ranksrv();
 		case SERVER_PROTO_PLAYER_ONLINE_NOTIFY:
+			transfer_to_ranksrv();
 			transfer_to_friendsrv(); 
 			return transfer_to_guildsrv();
+		case SERVER_PROTO_DOUFACHANG_ADD_REWARD_ANSWER:
+		case SERVER_PROTO_DOUFACHANG_CHALLENGE_ANSWER:
+		case SERVER_PROTO_DOUFACHANG_BUY_CHALLENGE_ANSWER:			
+			return transfer_to_doufachang();
 	}
 	
 	extern_data = get_extern_data(head);

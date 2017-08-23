@@ -56,6 +56,7 @@ void player_struct::add_zhenying_exp(uint32_t num)
 		data->zhenying.exp -= table->LevelExp;
 		++data->zhenying.level;
 		table = get_config_by_id((36020 + get_attr(PLAYER_ATTR_ZHENYING)) * 10000 + data->zhenying.level, &zhenying_level_config);
+		add_achievement_progress(ACType_ZHENYING_GRADE, table->Level, 0, 1);
 	}
 
 	ZhenyingExp send;

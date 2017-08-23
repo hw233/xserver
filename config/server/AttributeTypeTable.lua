@@ -593,6 +593,12 @@ local AttributeTypeTable = {
 		['FightRatio'] = 0,
 		['ShowType'] = 0
 		},
+	[103] = {
+		['ID'] = 103,
+		['Effect'] = '',
+		['FightRatio'] = 0,
+		['ShowType'] = 0
+		},
 	[200] = {
 		['ID'] = 200,
 		['Effect'] = 'Player_Max',

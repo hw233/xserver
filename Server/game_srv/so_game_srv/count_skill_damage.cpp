@@ -10,6 +10,7 @@
 #include "game_config.h"
 #include "game_event.h"
 #include "chengjie.h"
+#include "monster.h"
 
 static int32_t count_skill_effect_entry(const double *attack, const double *defence,
 	const double *buff_fight_attack, const double *buff_fight_defence,
@@ -331,6 +332,7 @@ static int32_t count_friend_damage(struct SkillLvTable *lvconfig,
 	if (damage < 0)
 		damage = 0;
 
+	double cur_hp = defence[PLAYER_ATTR_HP];
 	if (defence_unit->buff_state & BUFF_STATE_ONEBLOOD)
 	{
 		if (defence[PLAYER_ATTR_HP] - damage < 1)
@@ -345,6 +347,11 @@ static int32_t count_friend_damage(struct SkillLvTable *lvconfig,
 	else
 	{
 		defence[PLAYER_ATTR_HP] -= damage;
+	}
+
+	if(defence_unit->get_unit_type() == UNIT_TYPE_MONSTER || defence_unit->get_unit_type() == UNIT_TYPE_BOSS)
+	{
+		((monster_struct*)defence_unit)->world_boss_refresf_player_redis_info(attack_unit, cur_hp, damage);
 	}
 	return damage;
 }
@@ -394,6 +401,7 @@ static int32_t count_enemy_damage(struct SkillTable *skillconfig,
 		damage = 1;
 	
 	damage *= (other_rate / 10000.0);
+	double cur_hp = defence[PLAYER_ATTR_HP];
 	if (defence_unit->buff_state & BUFF_STATE_ONEBLOOD)
 	{
 		if (defence[PLAYER_ATTR_HP] - damage < 1)
@@ -408,6 +416,10 @@ static int32_t count_enemy_damage(struct SkillTable *skillconfig,
 	else
 	{
 		defence[PLAYER_ATTR_HP] -= damage;
+	}
+	if(defence_unit->get_unit_type() == UNIT_TYPE_MONSTER || defence_unit->get_unit_type() == UNIT_TYPE_BOSS)
+	{
+		((monster_struct*)defence_unit)->world_boss_refresf_player_redis_info(attack_unit, cur_hp, damage);
 	}
 	return damage;
 }

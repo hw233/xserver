@@ -7,6 +7,7 @@
 #include <vector>
 #include <set>
 #include "guild_util.h"
+#include "redis_util.h"
 #include "guild.pb-c.h"
 #include "app_data_statis.h"
 #include <algorithm>
@@ -76,6 +77,7 @@ conn_node_guildsrv::conn_node_guildsrv()
 	add_msg_handle(SERVER_PROTO_GUILD_BATTLE_END, &conn_node_guildsrv::handle_guild_battle_sync_end);
 	add_msg_handle(SERVER_PROTO_GUILD_BATTLE_SETTLE, &conn_node_guildsrv::handle_guild_battle_sync_settle);
 	add_msg_handle(SERVER_PROTO_GUILD_BATTLE_FINAL_LIST_REQUEST, &conn_node_guildsrv::handle_guild_battle_final_list_request);
+	add_msg_handle(SERVER_PROTO_GUILD_ADD_FINAL_BATTLE_GUILD, &conn_node_guildsrv::handle_guild_battle_add_final_id);
 
 	add_msg_handle(MSG_ID_OPEN_FACTION_QUESTION_REQUEST, &conn_node_guildsrv::handle_open_guild_answer_request);
 }
@@ -197,7 +199,6 @@ int conn_node_guildsrv::handle_guild_list_request(EXTERN_DATA *extern_data)
 	resp.result = 0;
 	resp.guilds = guild_data_point;
 	resp.n_guilds = 0;
-	AutoReleaseBatchRedisPlayer arb_redis;
 	std::map<uint32_t, GuildInfo*> &guild_map = get_all_guild();
 	std::vector<uint32_t> applied_guild_ids;
 	get_player_join_apply(extern_data->player_id, applied_guild_ids);
@@ -225,7 +226,8 @@ int conn_node_guildsrv::handle_guild_list_request(EXTERN_DATA *extern_data)
 				continue;
 			}
 
-			PlayerRedisInfo *redis_player = get_redis_player(player->player_id);
+			AutoReleaseRedisPlayer t1;			
+			PlayerRedisInfo *redis_player = get_redis_player(player->player_id, sg_player_key, sg_redis_client, t1);
 			if (!redis_player)
 			{
 				continue;
@@ -239,11 +241,6 @@ int conn_node_guildsrv::handle_guild_list_request(EXTERN_DATA *extern_data)
 				guild_data[resp.n_guilds].masterjob = redis_player->job;
 				guild_data[resp.n_guilds].masterhead = redis_player->head_icon;
 				guild_data[resp.n_guilds].mastercamp = redis_player->zhenying;
-				arb_redis.push_back(redis_player);
-			}
-			else
-			{
-				player_redis_info__free_unpacked(redis_player, NULL);
 			}
 		}
 
@@ -269,7 +266,6 @@ void resp_guild_info(conn_node_guildsrv *node, EXTERN_DATA *extern_data, uint32_
 	GuildBuildingData* building_data_point[MAX_GUILD_BUILDING_NUM];
 
 	resp.result = result;
-	AutoReleaseBatchRedisPlayer arb_player;
 	if (player)
 	{
 		if (player->guild)
@@ -290,10 +286,10 @@ void resp_guild_info(conn_node_guildsrv *node, EXTERN_DATA *extern_data, uint32_
 			basic_data.buildboard = guild->build_board;
 			basic_data.masterid = guild->master_id;
 			basic_data.renametime = guild->rename_time;
-			PlayerRedisInfo *redis_master = get_redis_player(guild->master_id);
+			AutoReleaseRedisPlayer t1;			
+			PlayerRedisInfo *redis_master = get_redis_player(guild->master_id, sg_player_key, sg_redis_client, t1);
 			if (redis_master)
 			{
-				arb_player.push_back(redis_master);
 				basic_data.mastername = redis_master->name;
 			}
 
@@ -353,7 +349,6 @@ int conn_node_guildsrv::handle_guild_member_list_request(EXTERN_DATA *extern_dat
 	GuildMemberData member_data[MAX_GUILD_MEMBER_NUM];
 	GuildMemberData* member_data_point[MAX_GUILD_MEMBER_NUM];
 
-	AutoReleaseBatchRedisPlayer arb_player;
 	resp.result = ret;
 	if (ret == 0)
 	{
@@ -371,10 +366,10 @@ int conn_node_guildsrv::handle_guild_member_list_request(EXTERN_DATA *extern_dat
 			member_data[resp.n_members].curweekdonation = member->cur_week_donation;
 			member_data[resp.n_members].jointime = member->join_time;
 
-			PlayerRedisInfo *redis_player = get_redis_player(member->player_id);
+			AutoReleaseRedisPlayer t1;
+			PlayerRedisInfo *redis_player = get_redis_player(member->player_id, sg_player_key, sg_redis_client, t1);
 			if (redis_player)
 			{
-				arb_player.push_back(redis_player);
 				member_data[resp.n_members].name = redis_player->name;
 				member_data[resp.n_members].job = redis_player->job;
 				member_data[resp.n_members].level = redis_player->lv;
@@ -407,7 +402,6 @@ int conn_node_guildsrv::handle_guild_create_request(EXTERN_DATA *extern_data)
 
 	int ret = 0;
 	GuildPlayer *player = NULL;
-	AutoReleaseBatchRedisPlayer arb_player;
 	do
 	{
 		player = get_guild_player(extern_data->player_id);
@@ -447,14 +441,14 @@ int conn_node_guildsrv::handle_guild_create_request(EXTERN_DATA *extern_data)
 			break;
 		}
 
-		PlayerRedisInfo *redis_player = get_redis_player(extern_data->player_id);
+		AutoReleaseRedisPlayer t1;
+		PlayerRedisInfo *redis_player = get_redis_player(extern_data->player_id, sg_player_key, sg_redis_client, t1);
 		if (!redis_player)
 		{
 			ret = ERROR_ID_SERVER;
 			LOG_ERR("[%s:%d] player[%lu] get redis player failed", __FUNCTION__, __LINE__, extern_data->player_id);
 			break;
 		}
-		arb_player.push_back(redis_player);		
 
 		uint32_t need_level = sg_guild_create_level;
 		uint32_t player_level = redis_player->lv;
@@ -590,7 +584,6 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 
 	int ret = 0;
 	std::vector<uint32_t> applyIds;
-	AutoReleaseBatchRedisPlayer arb_redis;
 	do
 	{
 		GuildPlayer *player = get_guild_player(extern_data->player_id);
@@ -611,14 +604,14 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 			}
 		}
 
-		PlayerRedisInfo *redis_player = get_redis_player(extern_data->player_id);
+		AutoReleaseRedisPlayer t1;		
+		PlayerRedisInfo *redis_player = get_redis_player(extern_data->player_id, sg_player_key, sg_redis_client, t1);
 		if (!redis_player)
 		{
 			ret = ERROR_ID_SERVER;
 			LOG_ERR("[%s:%d] player[%lu] get redis info failed, guild_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild_id);
 			break;
 		}
-		arb_redis.push_back(redis_player);
 
 		uint32_t need_level = sg_guild_create_level;
 		uint32_t player_level = redis_player->lv;
@@ -654,14 +647,14 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 				break;
 			}
 
-			PlayerRedisInfo *redis_master = get_redis_player(guild->master_id);
+			AutoReleaseRedisPlayer t1;			
+			PlayerRedisInfo *redis_master = get_redis_player(guild->master_id, sg_player_key, sg_redis_client, t1);
 			if (!redis_master)
 			{
 				ret = ERROR_ID_SERVER;
 				LOG_ERR("[%s:%d] player[%lu] get master redis info failed, guild_id:%u, master_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, guild_id, guild->master_id);
 				break;
 			}
-			arb_redis.push_back(redis_master);
 
 			//检查阵营是否符合
 			if (redis_player->zhenying != redis_master->zhenying)
@@ -711,13 +704,12 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 				{
 					continue;
 				}
-
-				PlayerRedisInfo *redis_master = get_redis_player(guild->master_id);
+				AutoReleaseRedisPlayer t1;
+				PlayerRedisInfo *redis_master = get_redis_player(guild->master_id, sg_player_key, sg_redis_client, t1);
 				if (!redis_master)
 				{
 					continue;
 				}
-				arb_redis.push_back(redis_master);
 
 				//检查阵营是否符合
 				if (redis_player->zhenying != redis_master->zhenying)
@@ -735,13 +727,12 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 				cmp.guild = guild;
 				cmp.level = get_guild_level(guild);
 				cmp.fc = 0;
-				AutoReleaseBatchRedisPlayer arb_redis;
 				for (uint32_t i = 0; i < guild->member_num; ++i)
 				{
-					PlayerRedisInfo *tmp_redis_player = get_redis_player(guild->members[i]->player_id);
+					AutoReleaseRedisPlayer t1;					
+					PlayerRedisInfo *tmp_redis_player = get_redis_player(guild->members[i]->player_id, sg_player_key, sg_redis_client, t1);
 					if (tmp_redis_player)
 					{
-						arb_redis.push_back(tmp_redis_player);
 						cmp.fc += tmp_redis_player->fighting_capacity;
 					}
 				}
@@ -782,7 +773,6 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 	GuildBuildingData* building_data_point[MAX_GUILD_BUILDING_NUM];
 
 	resp.result = ret;
-	AutoReleaseBatchRedisPlayer arb_player;
 	GuildPlayer *player = get_guild_player(extern_data->player_id);
 	if (player)
 	{
@@ -804,10 +794,10 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 			basic_data.buildboard = guild->build_board;
 			basic_data.masterid = guild->master_id;
 			basic_data.renametime = guild->rename_time;
-			PlayerRedisInfo *redis_master = get_redis_player(guild->master_id);
+			AutoReleaseRedisPlayer t1;			
+			PlayerRedisInfo *redis_master = get_redis_player(guild->master_id, sg_player_key, sg_redis_client, t1);
 			if (redis_master)
 			{
-				arb_player.push_back(redis_master);
 				basic_data.mastername = redis_master->name;
 			}
 
@@ -875,7 +865,7 @@ int conn_node_guildsrv::handle_guild_join_list_request(EXTERN_DATA *extern_data)
 	GuildJoinPlayerData* join_data_point[MAX_JOIN_LIST_SIZE];
 
 	resp.result = ret;
-	AutoReleaseBatchRedisPlayer arb_redis;
+
 	if (ret == 0 && applyIds.size() > 0)
 	{
 		resp.n_joins = 0;
@@ -883,13 +873,13 @@ int conn_node_guildsrv::handle_guild_join_list_request(EXTERN_DATA *extern_data)
 		for (size_t i = 0; i < applyIds.size(); ++i)
 		{
 			uint64_t player_id = applyIds[i];
-			PlayerRedisInfo *redis_player = get_redis_player(player_id);
+			AutoReleaseRedisPlayer t1;			
+			PlayerRedisInfo *redis_player = get_redis_player(player_id, sg_player_key, sg_redis_client, t1);
 			if (!redis_player)
 			{
 				continue;
 			}
 
-			arb_redis.push_back(redis_player);
 			join_data_point[resp.n_joins] = &join_data[resp.n_joins];
 			guild_join_player_data__init(&join_data[resp.n_joins]);
 			join_data[resp.n_joins].playerid = player_id;
@@ -1398,7 +1388,6 @@ static int handle_guild_rename_cost(int data_len, uint8_t *data, int result, EXT
 
 	int ret = result;
 	GuildInfo *guild = NULL;
-	AutoReleaseBatchRedisPlayer arb_redis;
 	bool internal = false;
 	do
 	{
@@ -1445,10 +1434,10 @@ static int handle_guild_rename_cost(int data_len, uint8_t *data, int result, EXT
 			}
 			else
 			{
-				PlayerRedisInfo *redis_member = get_redis_player(member->player_id);
+				AutoReleaseRedisPlayer t1;				
+				PlayerRedisInfo *redis_member = get_redis_player(member->player_id, sg_player_key, sg_redis_client, t1);
 				if (redis_member)
 				{
-					arb_redis.push_back(redis_member);
 					if (redis_member->status == 0)
 					{
 						sync_guild_info_to_gamesrv(member);
@@ -1567,6 +1556,7 @@ int conn_node_guildsrv::handle_player_online_notify(EXTERN_DATA *extern_data)
 	{
 		sync_guild_info_to_gamesrv(player);
 		sync_guild_skill_to_gamesrv(player);
+		sync_player_donation_to_game_srv(player);
 		//聊天发送
 		do
 		{
@@ -1586,13 +1576,12 @@ int conn_node_guildsrv::handle_player_online_notify(EXTERN_DATA *extern_data)
 			{
 				break;
 			}
-
-			PlayerRedisInfo *redis_player = get_redis_player(player->player_id);
+			AutoReleaseRedisPlayer t1;
+			PlayerRedisInfo *redis_player = get_redis_player(player->player_id, sg_player_key, sg_redis_client, t1);
 			if (!redis_player)
 			{
 				break;
 			}
-			AutoReleaseRedisPlayer ars_redis(redis_player);
 
 			char content[1024];
 			sprintf(content, param_config->parameter2, redis_player->name);
@@ -2197,6 +2186,7 @@ static int handle_guild_skill_practice_cost(int data_len, uint8_t *data, int res
 		save_guild_player(player);
 
 		sync_guild_skill_to_gamesrv(player);
+		fast_send_msg_base(&conn_node_guildsrv::connecter, extern_data, SERVER_PROTO_GUILD_SKILL_LEVEL_UP, 0, 0);
 	} while(0);
 	
 	GuildSkillUpgradeAnswer resp;
@@ -2625,6 +2615,7 @@ int conn_node_guildsrv::handle_guild_battle_info_request(EXTERN_DATA *extern_dat
 {
 	int ret = 0;
 	std::vector<std::pair<uint64_t, uint32_t> > rank_info;
+	AutoReleaseBatchRedisPlayer t1;		
 	std::map<uint64_t, PlayerRedisInfo *> redis_players;
 	uint32_t my_rank = 0;
 	GuildPlayer *player = NULL;
@@ -2662,7 +2653,7 @@ int conn_node_guildsrv::handle_guild_battle_info_request(EXTERN_DATA *extern_dat
 		{
 			playerIds.insert(guild->members[i]->player_id);
 		}
-		if (get_more_redis_player(playerIds, redis_players) != 0)
+		if (get_more_redis_player(playerIds, redis_players, sg_player_key, sg_redis_client, t1) != 0)
 		{
 			ret = ERROR_ID_RANK_REDIS;
 			LOG_ERR("[%s:%d] player[%lu] get player failed", __FUNCTION__, __LINE__, extern_data->player_id);
@@ -2743,10 +2734,10 @@ int conn_node_guildsrv::handle_guild_battle_info_request(EXTERN_DATA *extern_dat
 
 	fast_send_msg(&conn_node_guildsrv::connecter, extern_data, MSG_ID_GUILD_BATTLE_INFO_ANSWER, guild_battle_info_answer__pack, resp);
 
-	for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
-	{
-		player_redis_info__free_unpacked(iter->second, NULL);
-	}
+	// for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
+	// {
+	// 	player_redis_info__free_unpacked(iter->second, NULL);
+	// }
 	return 0;
 }
 
@@ -2803,7 +2794,6 @@ int conn_node_guildsrv::handle_guild_battle_fight_reward_request(EXTERN_DATA * /
 		}
 	} while(0);
 
-	AutoReleaseBatchRedisPlayer arb_redis;
 	do
 	{
 		if (!guild_battle_is_final(activity_id))
@@ -2882,13 +2872,12 @@ int conn_node_guildsrv::handle_guild_battle_fight_reward_request(EXTERN_DATA * /
 				{
 					continue;
 				}
-
-				PlayerRedisInfo *redis_player = get_redis_player(tmp_guild->master_id);
+				AutoReleaseRedisPlayer t1;
+				PlayerRedisInfo *redis_player = get_redis_player(tmp_guild->master_id, sg_player_key, sg_redis_client, t1);
 				if (!redis_player)
 				{
 					continue;
 				}
-				arb_redis.push_back(redis_player);
 
 				rank_point[nty.n_ranks] = &rank_data[nty.n_ranks];
 				guild_battle_rank_data__init(&rank_data[nty.n_ranks]);
@@ -2956,6 +2945,30 @@ int conn_node_guildsrv::handle_guild_battle_sync_end(EXTERN_DATA * /*extern_data
 	LOG_INFO("[%s:%d] activity %u", __FUNCTION__, __LINE__, activity_id);
 
 	guild_battle_opening = false;
+	uint32_t param_id = (guild_battle_is_final(activity_id) ? 161000319 : 161000318);
+	ParameterTable *param_config = get_config_by_id(param_id, &parameter_config);
+	if (param_config)
+	{
+		Chat nty;
+		chat__init(&nty);
+		nty.channel = CHANNEL__family;
+		nty.contain = param_config->parameter2;
+
+		std::map<uint32_t, GuildInfo*> &guild_map = get_all_guild();
+		for (std::map<uint32_t, GuildInfo*>::iterator iter = guild_map.begin(); iter != guild_map.end(); ++iter)
+		{
+			GuildInfo *guild = iter->second;
+			for (uint32_t i = 0; i < guild->member_num; ++i)
+			{
+				if (guild->members[i]->act_battle_score > 0)
+				{
+					broadcast_guild_chat(guild, &nty);
+					break;
+				}
+			}
+		}
+	}
+
 	if (!guild_battle_is_final(activity_id))
 	{ //预赛
 		//清除本次活动的玩家积分
@@ -3073,7 +3086,6 @@ int conn_node_guildsrv::handle_guild_battle_sync_settle(EXTERN_DATA * /*extern_d
 
 int conn_node_guildsrv::notify_guild_battle_activity_settle(EXTERN_DATA *extern_data)
 {
-	AutoReleaseBatchRedisPlayer arb_redis;
 	std::vector<std::pair<uint64_t, uint32_t> > rank_info;
 	uint32_t my_rank = 0;
 	GuildPlayer *player = NULL;
@@ -3106,7 +3118,11 @@ int conn_node_guildsrv::notify_guild_battle_activity_settle(EXTERN_DATA *extern_
 
 		if (my_rank == 0)
 		{
-			sg_redis_client.zget_rank(rank_key, guild->guild_id, my_rank);
+			ret2 = sg_redis_client.zget_rank(rank_key, guild->guild_id, my_rank);
+			if (ret2 == 0)
+			{
+				my_rank++;
+			}
 		}
 	} while(0);
 
@@ -3126,12 +3142,12 @@ int conn_node_guildsrv::notify_guild_battle_activity_settle(EXTERN_DATA *extern_
 			continue;
 		}
 
-		PlayerRedisInfo *redis_player = get_redis_player(tmp_guild->master_id);
+		AutoReleaseRedisPlayer t1;
+		PlayerRedisInfo *redis_player = get_redis_player(tmp_guild->master_id, sg_player_key, sg_redis_client, t1);
 		if (!redis_player)
 		{
 			continue;
 		}
-		arb_redis.push_back(redis_player);
 
 		rank_point[resp.n_ranks] = &rank_data[resp.n_ranks];
 		guild_battle_rank_data__init(&rank_data[resp.n_ranks]);
@@ -3182,6 +3198,34 @@ int conn_node_guildsrv::handle_guild_battle_final_list_request(EXTERN_DATA * /*e
 	{
 		LOG_ERR("[%s:%d] send to game_srv failed err[%d]", __FUNCTION__, __LINE__, errno);
 	}
+
+	return 0;
+}
+
+int conn_node_guildsrv::handle_guild_battle_add_final_id(EXTERN_DATA *extern_data)
+{
+	PROTO_HEAD *head = (PROTO_HEAD*)buf_head();
+	uint32_t *pData = (uint32_t*)(head->data);
+	uint32_t guild_id = *pData;
+
+	do
+	{
+		GuildInfo *guild = get_guild(guild_id);
+		if (!guild)
+		{
+			break;
+		}
+
+		std::vector<uint32_t> guild_ids;
+		load_guild_battle_final_list(guild_ids);
+		if (guild_ids.size() >= 4)
+		{
+			break;
+		}
+
+		guild_ids.push_back(guild_id);
+		save_guild_battle_final_list(guild_ids);
+	} while(0);
 
 	return 0;
 }

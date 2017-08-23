@@ -53,8 +53,11 @@ message sight_player_base_info
 	required uint32 region_id = 25; //region 信息
 	required uint32 zhenying_id = 26; //阵营ID
 	required uint32 guild_id = 27; //帮会ID
-	required uint32 fashion_weapon_color = 28;   //
-	required bool team_lead = 29;   //ture 队长
+	required string guild_name = 28; //帮会名称
+	required uint32 guild_office = 29; //帮会职位
+	required uint32 fashion_weapon_color = 30;   //
+	required bool team_lead = 31;   //ture 队长
+	required uint32 title_id = 32;   //称号ID
 }
 
 //视野怪物的基本信息
@@ -205,6 +208,8 @@ message sight_player_info_change_notify
 {
 	required uint64 player_id = 1;
 	optional uint32 guild_id = 2; //帮会ID
+	optional string guild_name = 3; //帮会名称
+	optional uint32 guild_office = 4; //帮会职位
 }
 
 message sight_monster_id_change_notify

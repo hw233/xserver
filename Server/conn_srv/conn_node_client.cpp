@@ -4,6 +4,7 @@
 #include "conn_node_dump.h"
 #include "conn_node_mail.h"
 #include "conn_node_friend.h"
+#include "conn_node_doufachang.h"
 #include "conn_node_guild.h"
 #include "conn_node_rank.h"
 #include "time_helper.h"
@@ -86,7 +87,7 @@ int conn_node_client::send_player_exit(bool again/* = false*/)
 
 int conn_node_client::decode_and_check_crc(PROTO_HEAD *head)
 {
-/*	
+/*
 	int len = ENDION_FUNC_4(head->len) - sizeof(uint16_t);
 	char *p = (char *)&head->msg_id;
 	int pos = 0;
@@ -106,21 +107,21 @@ int conn_node_client::decode_and_check_crc(PROTO_HEAD *head)
 
 	if (ENDION_FUNC_2(head->msg_id) == LOGIN_REQUEST)
 		seq = ENDION_FUNC_2(head->seq);
-	
+
 	if (seq != ENDION_FUNC_2(head->seq))
 	{
-		LOG_ERR("%s %d: check seq fail, msg id = %d seq[%d] head->seq[%d]", __PRETTY_FUNCTION__, __LINE__, ENDION_FUNC_2(head->msg_id), seq, ENDION_FUNC_2(head->seq));		
+		LOG_ERR("%s %d: check seq fail, msg id = %d seq[%d] head->seq[%d]", __PRETTY_FUNCTION__, __LINE__, ENDION_FUNC_2(head->msg_id), seq, ENDION_FUNC_2(head->seq));
 		return (-1);
 	}
 
 	uint32_t crc32 = crc32_long((u_char*)head->data, ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD));
 	if (head->crc != ENDION_FUNC_4(crc32))
 	{
-		LOG_ERR("%s %d: check crc fail, msg id = %d seq[%d] head->seq[%d]", __PRETTY_FUNCTION__, __LINE__, ENDION_FUNC_2(head->msg_id), seq, ENDION_FUNC_2(head->seq));				
+		LOG_ERR("%s %d: check crc fail, msg id = %d seq[%d] head->seq[%d]", __PRETTY_FUNCTION__, __LINE__, ENDION_FUNC_2(head->msg_id), seq, ENDION_FUNC_2(head->seq));
 		return (-10);
 	}
 	++seq;
-*/	
+*/
 	return (0);
 }
 
@@ -153,11 +154,11 @@ int conn_node_client::recv_func(evutil_socket_t fd)
 			if (0 == cmd) {
 				send_hello_resp();
 //				this->send_one_msg(head, 1);
-			} else {				
+			} else {
 				old_len = ENDION_FUNC_4(head->len);
 				extern_data = (EXTERN_DATA *)&head->data[old_len - sizeof(PROTO_HEAD)];
 				memcpy(&save_data, extern_data, sizeof(EXTERN_DATA));
-				head->len = ENDION_FUNC_4(old_len + sizeof(EXTERN_DATA));				
+				head->len = ENDION_FUNC_4(old_len + sizeof(EXTERN_DATA));
 
 				extern_data->player_id = player_id;
 				extern_data->open_id = open_id;
@@ -165,11 +166,14 @@ int conn_node_client::recv_func(evutil_socket_t fd)
 				extern_data->port = sock.sin_port;
 
 				transfer_to_dumpserver(head);
+#ifdef FLOW_MONITOR
+	add_one_client_request(head);
+#endif
 				if (player_id == 0) {
 					if (transfer_to_loginserver() != 0) {
 						remove_listen_callback_event(this);
 						return (0);
-					}				
+					}
 				} else if (dispatch_message() != 0) {
 				}
 
@@ -178,38 +182,38 @@ int conn_node_client::recv_func(evutil_socket_t fd)
 				memcpy(extern_data, &save_data, sizeof(EXTERN_DATA));
 			}
 		}
-		
+
 		if (ret < 0) {
 			LOG_INFO("%s: connect closed from fd %u, err = %d", __PRETTY_FUNCTION__, fd, errno);
 //		send_logout_request();
-//		del_client_map_by_fd(fd, &client_maps[0], (int *)&num_client_map);		
-			return (-1);		
+//		del_client_map_by_fd(fd, &client_maps[0], (int *)&num_client_map);
+			return (-1);
 		} else if (ret > 0) {
 			break;
 		}
-		
+
 		ret = remove_one_buf();
 	}
 	return (0);
 }
 
 void encoder_data(PROTO_HEAD *head) {
-/*	
+/*
 	size_t sz = ENDION_FUNC_4(head->len) - sizeof(uint16_t);
-	if (sz <= 0) 
+	if (sz <= 0)
 		return;
 
-	char* pData = (char*)head+sizeof(uint16_t);	
+	char* pData = (char*)head+sizeof(uint16_t);
 	uint32_t crc32 = crc32_long((u_char*)head->data, ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD));
 	head->crc = ENDION_FUNC_4(crc32);
 
 	char * p = (char *)(pData);
-	
+
 	for (size_t i=0; i<sz/8; ++i) {
 		sg_encrypt((uint32_t *)p);
 		p += 8;
 	}
-*/	
+*/
 }
 
 int conn_node_client::send_one_msg(PROTO_HEAD *head, uint8_t force) {
@@ -239,12 +243,12 @@ int conn_node_client::send_one_msg(PROTO_HEAD *head, uint8_t force) {
 	if (send_buffer_end_pos+len >= MAX_SEND_BUFFER_SIZE) {  ///缓冲区溢出, 关闭连接
 		LOG_DEBUG("[%s: %d]: fd: %d: send msg[%d] len[%d], seq[%d] buffer full", __PRETTY_FUNCTION__, __LINE__, fd, ENDION_FUNC_2(head->msg_id), ENDION_FUNC_4(head->len), ENDION_FUNC_2(head->seq));
 		return -1;
-	} 
+	}
 
 
 	if (head->msg_id != MSG_ID_HEARTBEAT_NOTIFY)
 		LOG_DEBUG("[%s: %d]: fd: %d: send msg[%d] len[%d], seq[%d]", __PRETTY_FUNCTION__, __LINE__, fd, ENDION_FUNC_2(head->msg_id), ENDION_FUNC_4(head->len), ENDION_FUNC_2(head->seq));
-	
+
 	memcpy(send_buffer+send_buffer_end_pos, p, len);
 	encoder_data((PROTO_HEAD*)(send_buffer+send_buffer_end_pos));
 
@@ -255,7 +259,7 @@ int conn_node_client::send_one_msg(PROTO_HEAD *head, uint8_t force) {
 		if (0 != result) {
 			LOG_ERR("[%s : %d]: event add failed, result: %d", __PRETTY_FUNCTION__, __LINE__, result);
 			return result;
-		}		
+		}
 	}
 
 	return 0;
@@ -270,9 +274,6 @@ int conn_node_client::dispatch_message()
 
 	uint32_t cmd = ENDION_FUNC_2(head->msg_id);
 
-#ifdef FLOW_MONITOR
-	add_one_client_request(head);
-#endif
 
 	switch (cmd)
 	{
@@ -335,6 +336,12 @@ int conn_node_client::dispatch_message()
 			return transfer_to_guildsrv();
 		case MSG_ID_RANK_INFO_REQUEST:
 			return transfer_to_ranksrv();
+		case MSG_ID_DOUFACHANG_CHALLENGE_REQUEST:
+		case MSG_ID_DOUFACHANG_INFO_REQUEST:
+		case MSG_ID_DOUFACHANG_GET_REWARD_REQUEST:
+		case MSG_ID_DOUFACHANG_RECORD_REQUEST:
+		case MSG_ID_DOUFACHANG_BUY_CHALLENGE_REQUEST:
+			return transfer_to_doufachang();
 		default:
 			return transfer_to_gameserver();
 	}
@@ -347,7 +354,7 @@ int conn_node_client::transfer_to_gameserver()
 	int ret = 0;
 	PROTO_HEAD *head;
 	head = (PROTO_HEAD *)buf_head();
- 
+
 	if (!conn_node_gamesrv::server_node) {
 		if (conn_node_gamesrv::add_cached_buf(head) != 0) {
 			LOG_ERR("%s %d: add cached buf failed", __PRETTY_FUNCTION__, __LINE__);
@@ -357,12 +364,12 @@ int conn_node_client::transfer_to_gameserver()
 		goto done;
 	}
 
-	if (conn_node_gamesrv::server_node->send_one_msg(head, 1) != (int)(ENDION_FUNC_4(head->len))) {		
+	if (conn_node_gamesrv::server_node->send_one_msg(head, 1) != (int)(ENDION_FUNC_4(head->len))) {
 		LOG_ERR("%s: send to gameserver failed err[%d]", __PRETTY_FUNCTION__, errno);
 		ret = -2;
 		goto done;
 	}
-done:	
+done:
 	return (ret);
 }
 
@@ -451,7 +458,7 @@ int conn_node_client::transfer_to_mailsrv()
 		ret = -2;
 		goto done;
 	}
-done:	
+done:
 	return (ret);
 }
 int conn_node_client::transfer_to_friendsrv()
@@ -471,7 +478,7 @@ int conn_node_client::transfer_to_friendsrv()
 		ret = -2;
 		goto done;
 	}
-done:	
+done:
 	return (ret);
 }
 
@@ -492,7 +499,7 @@ int conn_node_client::transfer_to_guildsrv()
 		ret = -2;
 		goto done;
 	}
-done:	
+done:
 	return (ret);
 }
 
@@ -513,7 +520,28 @@ int conn_node_client::transfer_to_ranksrv()
 		ret = -2;
 		goto done;
 	}
-done:	
+done:
+	return (ret);
+}
+
+int conn_node_client::transfer_to_doufachang()
+{
+	int ret = 0;
+	PROTO_HEAD *head;
+	head = (PROTO_HEAD *)buf_head();
+
+	if (!conn_node_doufachang::server_node) {
+		LOG_ERR("[%s:%d] do not have doufachang server connected", __FUNCTION__, __LINE__);
+		ret = -1;
+		goto done;
+	}
+
+	if (conn_node_doufachang::server_node->send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len)) {
+		LOG_ERR("[%s:%d] send to doufachang failed err[%d]", __FUNCTION__, __LINE__, errno);
+		ret = -2;
+		goto done;
+	}
+done:
 	return (ret);
 }
 
@@ -529,7 +557,7 @@ int conn_node_client::add_map_fd_nodes(conn_node_client *client)
 }
 int conn_node_client::add_map_player_id_nodes(conn_node_client *client)
 {
-		//todo check duplicate	
+		//todo check duplicate
 	if (client->player_id > 0)
 		map_player_id_nodes[client->player_id] = client;
 	return (0);
@@ -538,7 +566,7 @@ int conn_node_client::add_map_player_id_nodes(conn_node_client *client)
 int conn_node_client::add_map_open_id_nodes(conn_node_client *client)
 {
 		//todo check duplicate
-	if (client->open_id > 0)	
+	if (client->open_id > 0)
 		map_open_id_nodes[client->open_id] = client;
 	return (0);
 }
@@ -570,11 +598,11 @@ conn_node_client *conn_node_client::get_nodes_by_open_id(uint32_t open_id)
 
 void on_write(int fd, short ev, void *arg) {
 	assert(arg);
-	conn_node_client *client = (conn_node_client *)arg;	
+	conn_node_client *client = (conn_node_client *)arg;
 	client->send_data_to_client();
 }
 
-void conn_node_client::send_data_to_client() {	
+void conn_node_client::send_data_to_client() {
 	if (send_buffer_end_pos-send_buffer_begin_pos<=0)
 		return;
 
@@ -588,7 +616,7 @@ void conn_node_client::send_data_to_client() {
 			if (0 != result) {
 				LOG_ERR("[%s : %d]: event add failed, result: %d", __PRETTY_FUNCTION__, __LINE__, result);
 				return;
-			}		
+			}
 		}
 	}
 	else if (send_buffer_begin_pos + len < send_buffer_end_pos) {  //没发完
@@ -597,13 +625,13 @@ void conn_node_client::send_data_to_client() {
 		if (0 != result) {
 			LOG_ERR("[%s : %d]: event add failed, result: %d", __PRETTY_FUNCTION__, __LINE__, result);
 			return;
-		}		
+		}
 	}
 	else {  //发完了
 		send_buffer_begin_pos = send_buffer_end_pos = 0;
 		return;
 	}
-		
+
 
 	/// 当数据发送完毕后pos归0
 //	if (send_buffer_begin_pos == send_buffer_end_pos) {
@@ -616,6 +644,5 @@ void conn_node_client::send_data_to_client() {
 		memmove(send_buffer, send_buffer+send_buffer_begin_pos, sz);
 		send_buffer_begin_pos = 0;
 		send_buffer_end_pos = sz;
-	}	
+	}
 }
-

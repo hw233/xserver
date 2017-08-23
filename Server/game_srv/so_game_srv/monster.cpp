@@ -28,6 +28,8 @@
 #include "sight_space_manager.h"
 #include "monster_ai.h"
 #include "collect.h"
+#include "game_config.h"
+#include "../proto/player_redis_info.pb-c.h"
 
 uint64_t monster_struct::get_uuid()
 {
@@ -73,6 +75,8 @@ float monster_struct::get_speed()
 
 UNIT_TYPE monster_struct::get_unit_type()
 {
+	if (config->HateType == MONSTER_TYPE_DEFINE_BOSS)
+		return UNIT_TYPE_BOSS;
 	return UNIT_TYPE_MONSTER;
 }
 
@@ -600,6 +604,7 @@ void monster_struct::on_beattack(unit_struct *player, uint32_t skill_id, int32_t
 	
 	if (ai && ai->on_beattack)
 		ai->on_beattack(this, player);
+
 }
 
 void monster_struct::on_repel(unit_struct *player)
@@ -689,6 +694,7 @@ void monster_struct::on_dead(unit_struct *killer)
 	uint32_t monster_id = data->monster_id;
 	//特定怪物死亡创建采集点
 	monster_dead_creat_collect(killer);
+
 	if (killer && drop_id > 0) //todo 国御目标怪根据任务掉落
 		killer->give_drop_item(drop_id, MAGIC_TYPE_MONSTER_DEAD, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
 		
@@ -1681,6 +1687,68 @@ void monster_struct::monster_dead_creat_collect(unit_struct *murderer)
 		return;
 	}
 
-	Collect::CreateCollectByPos(this->scene, actor_config->CollectionDrop, this->get_pos()->pos_x , player->data->pos_y, this->get_pos()->pos_z, 0, player);
+	Collect::CreateCollectByPos(this->scene, actor_config->CollectionDrop, this->get_pos()->pos_x , 10000, this->get_pos()->pos_z, 0, player);
 
+}
+
+void monster_struct::world_boss_refresf_player_redis_info(unit_struct *murderer, double befor_hp, int32_t damage)
+{
+
+	//世界boss被击，在活动开启期间特殊处理
+	if(befor_hp > get_attr(PLAYER_ATTR_MAXHP) || damage <= 0)
+		return;
+	if(murderer == NULL)
+		return;
+	if(this->config == NULL)
+		return;
+	if(this->config->Type != 5)
+		return;
+	uint32_t cd =0;
+	if(!check_active_open(WORD_BOSS_ACTIVE_ID, cd))
+		return;
+	std::map<uint64_t, struct WorldBossTable *>::iterator p = monster_to_world_boss_config.find(data->monster_id);
+	if(p == monster_to_world_boss_config.end())
+		return;
+	player_struct *player = NULL;
+	if(murderer->get_unit_type() == UNIT_TYPE_PLAYER)
+	{
+		player = (player_struct*)murderer;
+	}
+	else if(murderer->get_unit_type() == UNIT_TYPE_PARTNER)
+	{
+	
+		murderer = ((partner_struct*)murderer)->m_owner;
+	}
+	else
+	{
+		return;
+	}
+	if(player == NULL || player->data == NULL)
+		return;
+
+	PlayerWordBossRedisinfo info;
+	player_word_boss_redisinfo__init(&info);
+
+	double real_damage = befor_hp > damage ? damage:befor_hp; 
+
+	info.name  = player->data->name;
+	info.score = real_damage *  p->second->Coefficient;
+	info.boss_id = p->second->ID;
+	info.cur_hp = get_attr(PLAYER_ATTR_HP) > 0 ? get_attr(PLAYER_ATTR_HP):0;
+	info.max_hp = get_attr(PLAYER_ATTR_MAXHP);
+
+	EXTERN_DATA extern_data;
+	extern_data.player_id = player->data->player_id;
+
+	//在数据开头增加一个类型
+	uint8_t *pData = conn_node_base::get_send_data();
+	size_t data_len = player_word_boss_redisinfo__pack(&info, pData + sizeof(uint32_t));
+	if (data_len != (size_t)-1)
+	{
+		*((uint32_t*)pData) = 1;
+		data_len += sizeof(uint32_t);
+		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, SERVER_PROTO_WORDBOSS_PLAYER_REDIS_INFO
+, data_len, 0);
+	}
+	 
 }

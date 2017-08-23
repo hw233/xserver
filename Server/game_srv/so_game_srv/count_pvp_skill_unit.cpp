@@ -3,7 +3,7 @@
 #include "unit_path.h"
 #include "team.h"
 
-static int count_rect_unit(struct position *my_pos, double angle, std::vector<unit_struct *> *ret, uint max, double length, double width, player_struct **team_player)
+static int count_rect_unit(struct position *my_pos, double angle, std::vector<unit_struct *> *ret, uint max, double length, double width, player_struct **team_player, int team_num)
 {
 	double cos = qFastCos(angle);
 	double sin = qFastSin(angle);
@@ -21,8 +21,9 @@ static int count_rect_unit(struct position *my_pos, double angle, std::vector<un
 	x2 = x1 + length;
 	z1 = -width;
 	z2 = width;	
-	
-	for (int i = 0; i < MAX_TEAM_MEM; ++i)
+
+	for (int i = 0; i < team_num; ++i)	
+//	for (int i = 0; i < MAX_TEAM_MEM; ++i)
 	{
 		player_struct *player = team_player[i];
 		if (!player || !player->is_alive())
@@ -41,30 +42,32 @@ static int count_rect_unit(struct position *my_pos, double angle, std::vector<un
 
 		if (target_x1 >= x1 && target_x1 <= x2 && target_z1 >= z1 && target_z1 <= z2)
 		{
-//			LOG_DEBUG("%s:  hit: angle[%.2f] x1[%.2f] x2[%.2f] x[%.2f] z1[%.2f] z2[%.2f] z[%.2f]", "jacktang", angle, x1, x2, target_x1, z1, z2, target_z1);					
+//			LOG_DEBUG("%s:  jacktang hit: angle[%.2f] x1[%.2f] x2[%.2f] x[%.2f] z1[%.2f] z2[%.2f] z[%.2f]",
+//				__FUNCTION__, angle, x1, x2, target_x1, z1, z2, target_z1);					
 			ret->push_back(player);
 			if (ret->size() >= max)
 				return (0);
 		}
-//		else
-//		{
-//			LOG_DEBUG("%s: miss: angle[%.2f] x1[%.2f] x2[%.2f] x[%.2f] z1[%.2f] z2[%.2f] z[%.2f]", "jacktang", angle, x1, x2, target_x1, z1, z2, target_z1);		
-//		}
+		else
+		{
+//			LOG_DEBUG("%s: jacktang miss: angle[%.2f] x1[%.2f] x2[%.2f] x[%.2f] z1[%.2f] z2[%.2f] z[%.2f]",
+//				__FUNCTION__, angle, x1, x2, target_x1, z1, z2, target_z1);		
+		}
 	}	
 	return (0);
 }
-static int count_circle_unit(struct position *my_pos, std::vector<unit_struct *> *ret, uint max, double radius, player_struct **team_player)
+static int count_circle_unit(struct position *target_pos, std::vector<unit_struct *> *ret, uint max, double radius, player_struct **team_player, int team_num)
 {
 	radius = radius * radius;
-	for (int i = 0; i < MAX_TEAM_MEM; ++i)
+	for (int i = 0; i < team_num; ++i)
 	{
 		player_struct *player = team_player[i];
 		if (!player || !player->is_alive())
 		{
 			continue;
 		}
-		double x = my_pos->pos_x - player->get_pos()->pos_x;
-		double z = my_pos->pos_z - player->get_pos()->pos_z;
+		double x = target_pos->pos_x - player->get_pos()->pos_x;
+		double z = target_pos->pos_z - player->get_pos()->pos_z;
 		if (x * x + z * z > radius)
 			continue;
 		ret->push_back(player);
@@ -73,14 +76,14 @@ static int count_circle_unit(struct position *my_pos, std::vector<unit_struct *>
 	}
 	return (0);	
 }
-static int count_fan_unit(struct position *my_pos, std::vector<unit_struct *> *ret, uint max, double radius, double angle, player_struct **team_player)
+static int count_fan_unit(struct position *my_pos, std::vector<unit_struct *> *ret, uint max, double radius, double angle, player_struct **team_player, int team_num)
 {
 	radius = radius * radius;
 	double my_angle = pos_to_angle(my_pos->pos_x, my_pos->pos_z);
 	double angle_min = my_angle - angle;
 	double angle_max = my_angle + angle;
 	
-	for (int i = 0; i < MAX_TEAM_MEM; ++i)
+	for (int i = 0; i < team_num; ++i)
 	{
 		player_struct *player = team_player[i];
 		if (!player || !player->is_alive())
@@ -102,7 +105,7 @@ static int count_fan_unit(struct position *my_pos, std::vector<unit_struct *> *r
 	return (0);	
 }
 
-int count_skill_hit_unit(struct position *my_pos, double angle, uint32_t skill_id, std::vector<unit_struct *> *ret, player_struct **team_player)
+int count_skill_hit_unit(struct position *my_pos, struct position *target_pos, double angle, uint32_t skill_id, std::vector<unit_struct *> *ret, player_struct **team_player, int team_num)
 {
 	struct SkillTable *_config = get_config_by_id(skill_id, &skill_config);
 	if (!_config)
@@ -110,11 +113,11 @@ int count_skill_hit_unit(struct position *my_pos, double angle, uint32_t skill_i
 	switch (_config->RangeType)
 	{
 		case SKILL_RANGE_TYPE_RECT:
-			return count_rect_unit(my_pos, angle, ret, _config->MaxCount, _config->Radius, _config->Angle, team_player);
+			return count_rect_unit(my_pos, angle, ret, _config->MaxCount, _config->Radius, _config->Angle, team_player, team_num);
 		case SKILL_RANGE_TYPE_CIRCLE:
-			return count_circle_unit(my_pos, ret, _config->MaxCount, _config->Radius, team_player);			
+			return count_circle_unit(target_pos, ret, _config->MaxCount, _config->Radius, team_player, team_num);			
 		case SKILL_RANGE_TYPE_FAN:
-			return count_fan_unit(my_pos, ret, _config->MaxCount, _config->Radius, _config->Angle, team_player);
+			return count_fan_unit(my_pos, ret, _config->MaxCount, _config->Radius, _config->Angle, team_player, team_num);
 		default:
 			return -10;
 	}

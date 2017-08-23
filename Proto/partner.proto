@@ -242,7 +242,7 @@ message PartnerFabaoChangeRequest
 //伙伴当前法宝信息
 message PartnerCurFabaoInfo
 {
-	required uint32 fabao_id = 1; //法宝id
+	required uint32 fabao_id = 1; //法宝道具id
 	required AttrData main_attr = 2; //主属性
 	repeated AttrData minor_attr =3; //副属性
 }

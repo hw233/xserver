@@ -6,9 +6,10 @@ message GuildBattleWaitInfoNotify
 	optional uint32 participateNum = 1; //参战人数
 	optional uint32 guildScore = 2; //帮会积分
 	optional uint32 round = 3; //当前轮次
-	optional uint32 waitTime = 4; //等待时间
-	optional uint32 callCD = 5; //征召CD，比当前时间大处于CD中
-	optional uint32 activityId = 6; //活动ID
+	optional uint32 state = 4; //当前状态，2:匹配，3:战斗，4:结算
+	optional uint32 waitTime = 5; //等待时间
+	optional uint32 callCD = 6; //征召CD，比当前时间大处于CD中
+	optional uint32 activityId = 7; //活动ID
 }
 
 //帮会战帮会排名信息

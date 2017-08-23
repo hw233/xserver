@@ -3,31 +3,7 @@
 
 #include "friend_struct.h"
 #include "player_redis_info.pb-c.h"
-#include <vector>
-#include <map>
-#include <set>
-
-class AutoReleaseBatchRedisPlayer
-{
-public:
-	AutoReleaseBatchRedisPlayer();
-	~AutoReleaseBatchRedisPlayer();
-
-	void push_back(PlayerRedisInfo *player);
-private:
-	std::vector<PlayerRedisInfo *> pointer_vec;
-};
-
-class AutoReleaseBatchFriendPlayer
-{
-public:
-	AutoReleaseBatchFriendPlayer();
-	~AutoReleaseBatchFriendPlayer();
-
-	void push_back(FriendPlayer *player);
-private:
-	std::vector<FriendPlayer *> pointer_vec;
-};
+#include "redis_util.h"
 
 struct FriendListAdd
 {
@@ -47,15 +23,26 @@ struct FriendListChangeInfo
 	std::vector<FriendListDel> dels;
 };
 
+class AutoReleaseBatchFriendPlayer
+{
+public:
+	AutoReleaseBatchFriendPlayer();
+	~AutoReleaseBatchFriendPlayer();
+
+	void push_back(FriendPlayer *player);
+private:
+	std::vector<FriendPlayer *> pointer_vec;
+};
+
 void init_redis_keys(uint32_t server_id);
-PlayerRedisInfo *get_redis_player(uint64_t player_id);
+//PlayerRedisInfo *get_redis_player(uint64_t player_id);
 bool player_is_exist(uint64_t player_id); //是否存在该玩家
 int save_friend_player(FriendPlayer *player);
 FriendPlayer *get_friend_player(uint64_t player_id);
 
-int get_more_redis_player(std::set<uint64_t> &player_ids, std::map<uint64_t, PlayerRedisInfo*> &redis_players);
+//int get_more_redis_player(std::set<uint64_t> &player_ids, std::map<uint64_t, PlayerRedisInfo*> &redis_players);
 void get_all_friend_id(FriendPlayer *player, std::set<uint64_t> &player_ids);
-int get_all_friend_redis_player(FriendPlayer *player, std::map<uint64_t, PlayerRedisInfo*> &redis_players);
+int get_all_friend_redis_player(FriendPlayer *player, std::map<uint64_t, PlayerRedisInfo*> &redis_players, AutoReleaseBatchRedisPlayer &_pool);
 int get_friend_closeness(FriendPlayer *player, uint64_t friend_id);
 
 PlayerRedisInfo *find_redis_from_map(std::map<uint64_t, PlayerRedisInfo*> &redis_players, uint64_t player_id);

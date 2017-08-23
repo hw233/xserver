@@ -142,6 +142,7 @@ static void guoyu_raid_ai_monster_dead(raid_struct *raid, monster_struct *monste
 				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_FB_SUCC_NOTIFY, guoyu_fb_succ__pack, notifyFb);
 				raid->m_player[i]->check_activity_progress(AM_YAOSHI, 3);
 				raid->m_player[i]->add_task_progress(TCT_YAOSHI_GUOYU, 0, 1);
+				raid->m_player[i]->add_achievement_progress(ACType_RAID_PASS_STAR, raid->data->ID, 0, 1);
 			}
 		}
 	}

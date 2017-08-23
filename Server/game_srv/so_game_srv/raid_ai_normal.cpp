@@ -160,6 +160,7 @@ void normal_raid_ai_finished(raid_struct *raid)
 
 		raid->m_player[i]->add_task_progress(TCT_FINISH_RAID, raid->data->ID, 1);
 		server_level_listen_raid_finish(raid->data->ID, raid->m_player[i]);
+		raid->m_player[i]->add_achievement_progress(ACType_RAID_PASS_STAR, raid->data->ID, star, 1);
 	}
 }
 

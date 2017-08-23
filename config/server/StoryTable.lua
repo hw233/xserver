@@ -108,7 +108,7 @@ local StoryTable = {
 		['ShowUI'] = 0,
 		['PlayerOperation'] = 1,
 		['PlayerInvincible'] = 1,
-		['StoryTime'] = 5.00,
+		['StoryTime'] = 10.00,
 		['FileID'] = 'FB_BBJ_TAOLI'
 		},
 	[450000016] = {

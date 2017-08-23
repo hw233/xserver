@@ -161,30 +161,27 @@ static void guild_raid_final_ai_player_relive(raid_struct *raid, player_struct *
 	nty.type = type;
 		// 出生点
 	int pos;
-	float pos_x = 0.0, pos_z = 0.0;
+	float pos_x = 0.0, pos_z = 0.0, direct = 0.0;
 	raid->get_raid_player_info(player->get_uuid(), &pos);
 	if (pos < MAX_TEAM_MEM)
 	{
-		get_final_rand_born_pos1(&pos_x, &pos_z);
-		nty.direct = sg_guild_raid_final_param1[4];
+		get_final_rand_born_pos1(&pos_x, &pos_z, &direct);
 	}
 	else if (pos >= MAX_TEAM_MEM && pos < MAX_TEAM_MEM * 2)
 	{
-		get_final_rand_born_pos2(&pos_x, &pos_z);
-		nty.direct = sg_guild_raid_final_param2[4];
+		get_final_rand_born_pos2(&pos_x, &pos_z, &direct);
 	}
 	else if (pos >= MAX_TEAM_MEM * 2 && pos < MAX_TEAM_MEM * 3)
 	{
-		get_final_rand_born_pos3(&pos_x, &pos_z);
-		nty.direct = sg_guild_raid_final_param3[4];
+		get_final_rand_born_pos3(&pos_x, &pos_z, &direct);
 	}
 	else
 	{
-		get_final_rand_born_pos4(&pos_x, &pos_z);
-		nty.direct = sg_guild_raid_final_param4[4];
+		get_final_rand_born_pos4(&pos_x, &pos_z, &direct);
 	}
 	nty.pos_x = pos_x;
 	nty.pos_z = pos_z;
+	nty.direct = direct;
 	
 //	pvp_raid_get_relive_pos(raid, &nty.pos_x, &nty.pos_z, &nty.direct);
 	LOG_DEBUG("%s: player[%lu] relive to pos[%d][%d][%d]", __FUNCTION__, player->get_uuid(), nty.pos_x, nty.pos_z, nty.direct);

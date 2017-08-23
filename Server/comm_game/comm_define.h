@@ -50,11 +50,14 @@
 #define MAX_PERSONALITY_TEXT_INTRO_LEN 200
 #define MAX_PERSONALITY_VOICE_INTRO_LEN 200
 #define MAX_FRIEND_RECOMMEND_PLAYER    1000
+#define MAX_FRIEND_CONTACT_NUM      200 //我的好友最大数
 
 #define MAX_PLAYER_BASE_ATTR_NUM 10
 #define MAX_RAID_TEAM_NUM  4
 #define MAX_GUILD_RAID_TEAM_NUM  2
 #define MAX_GUILD_BATTLE_FINAL_GUILD_NUM  4 //帮战决赛只有四个帮会参加
+#define MAX_GUILD_NAME_LEN     32 //帮会名字最大长度
+#define MAX_GUILD_SKILL_NUM     20 //帮会技能最大数
 
 #define MAX_PARTNER_TYPE   100
 #define MAX_PARTNER_NUM   150
@@ -67,9 +70,15 @@
 #define MAX_ESCORT_MONSTER_NUM   (40 + 1)
 #define MAX_ESCORT_MONSTER_WAVE   (4)
 
+#define MAX_ACHIEVEMENT_NUM   400 //成就数
+#define MAX_TITLE_NUM   200 //称号数
 
 //伙伴法宝
 #define MAX_HUOBAN_FABAO_MINOR_ATTR_NUM 4 //伙伴法宝最大副属性
+
+#define MAX_RANK_TYPE  100 //排行榜类型数
+
+
 //玩家状态
 enum PlayerStatus
 {
@@ -156,6 +165,7 @@ enum ItemUseEffect
 	IUE_ADD_ENERGY = 13, //精力值
 	IUE_XUNBAO = 14, //寻宝
 	IUE_ADD_HORSE = 18, //获得坐骑
+	IUE_ADD_TITLE = 22, //获得称号
 };
 
 enum TaskConditionType
@@ -316,6 +326,14 @@ enum PlayerOfflineCacheType
 	CACHE_PVP_RAID_WIN,
 };
 
+//答题类型
+enum 
+{
+	QUESTION_DAILY = 1, //每日答题
+	QUESTION_AWARD = 2, //任务答题
+	QUESTION_GUILD = 3, //帮会答题
+};
+
 enum ActivityMatter
 {
 	AM_RAID = 1, //通关副本
@@ -323,6 +341,107 @@ enum ActivityMatter
 	AM_ANSWER = 4, //答题
 	AM_TRUCK = 5, //押镖
 	AM_YAOSHI = 6, //妖师客栈
+};
+
+enum AchievementConditionType
+{
+	ACType_PLAYER_LEVEL = 1, //人物等级达到N级
+	ACType_PLAYER_FC = 2, //人物战力达到N点
+	ACType_SKILL_LEVEL_UP = 3, //升级技能N次
+	ACType_SKILL_ALL_LEVEL = 4, //人物4个技能等级都达到N级
+	ACType_SKILL_FUWEN_UNLOCK = 5, //解锁N个技能符文
+	ACType_SKILL_FUWEN_WEAR = 6, //装备N个技能符文
+	ACType_SKILL_FUWEN_LEVEL_UP = 7, //升级技能符文N次
+	ACType_SKILL_FUWEN_LEVEL_NUM = 8, //任意3个技能符文等级达到5级
+	ACType_LIVE_SKILL_LEVEL = 9, //炼药等级达到5级
+	ACType_LIVE_SKILL_ENERGY = 10, //炼药累计消耗精力200点
+	ACType_FABAO_COMPOSE = 11, //合成出1个法宝
+	ACType_EQUIP_NUM = 12, //人物获得1件装备
+	ACType_EQUIP_STAR_UP = 13, //装备升星5次
+	ACType_EQUIP_STAIR = 14, //人物装备星级都达到2阶
+	ACType_EQUIP_ENCHANT = 15, //累计附魔5次
+	ACType_EQUIP_STRIP = 16, //剥离宝石5次
+	ACType_EQUIP_INLAY_QULITY_NUM = 17, //人物10件装备镶嵌1级宝石
+	ACType_ITEM_CONSUME = 18, //累计消耗八卦碎片50个
+	ACType_BAGUA_DECOMPOSE = 19, //八卦分解
+	ACType_BAGUA_REFINE_MAIN_ATTR = 20, //八卦重铸
+	ACType_BAGUA_REFINE_STAR = 21, //八卦炼星
+	ACType_BAGUA_REFINE_MINOR_ATTR = 22, //八卦洗炼
+	ACType_BAGUA_SUIT = 23, //八卦套装
+	ACType_BAGUA_MIN_STAR = 24, //八卦最小炼星
+	ACType_YUQIDAO_FILL = 25, //御气道灌真气
+	ACType_YUQIDAO_BREAK_OPEN = 26, //御气道开启冲穴
+	ACType_HORSE_NUM = 27, //拥有坐骑
+	ACType_HORSE_ADD_EXP = 28, //坐骑修灵
+	ACType_HORSE_SET_CUR = 29, //坐骑幻化
+	ACType_HORSE_ADD_SOUL = 30, //坐骑铸灵
+	ACType_PARTNER_RECRUIT = 31, //伙伴招募
+	ACType_PARTNER_NUM = 32, //伙伴拥有
+	ACType_PARTNER_BOND_ACTIVE = 33, //伙伴羁绊激活
+	ACType_PARTNER_ADD_ATTR = 34, //伙伴资质强化
+	ACType_PARTNER_WEAR_FABAO = 35, //伙伴装备法宝
+	ACType_PARTNER_RESET_ATTR = 36, //伙伴洗髓
+	ACType_PARTNER_ADD_GOD = 37, //伙伴神曜
+	ACType_PLAYER_RENAME = 38, //角色改名
+	ACType_BAG_UNLOCK = 39, //扩充背包
+	ACType_USE_PROP = 40, //使用道具
+	ACType_CHAT_BOARDCAST = 41, //聊天广播
+	ACType_FRIEND_NUM = 42, //拥有好友
+	ACType_FRIEND_SEND_GIFT = 43, //好友送礼
+	ACType_FRIEND_CLOSE_NUM = 44, //好友亲密度
+	ACType_QIECUO = 45, //切磋
+	ACType_XUANSHANG = 46, //悬赏
+	ACType_GUILD_SKILL_LEVEL_UP = 47, //帮会技能升级
+	ACType_GUILD_SKILL_LEVEL_NUM = 48, //帮会技能级数
+	ACType_ANSWER = 49, //答题
+	ACType_GUILD_BATTLE = 50, //帮会战
+	ACType_GUILD_JOIN = 51, //加入帮会
+	ACType_ZHENYING_CHOSE = 52, //加入阵营
+	ACType_ZHENYING_CHANGE = 53, //转换阵营
+	ACType_ZHENYING_BATTLE = 54, //阵营战
+	ACType_ZHENYING_TASK_AWARD = 55, //阵营周目标奖励
+	ACType_ZHENYING_GRADE = 56, //阵营军阶
+	ACType_ZHENYING_KILL = 57, //击杀敌方阵营玩家
+	ACType_MURDER_KILL = 58, //杀戮模式下击杀玩家
+	ACType_MURDER_DEAD = 59, //杀戮模式下被击杀
+	ACType_DEAD = 60, //死亡
+	ACType_RELIVE = 61, //原地复活
+	ACType_TASK_CHAPTER = 62, //完成任务章节
+	ACType_TASK_NUM = 63, //完成任务数
+	ACType_PVP_WIN = 64, //太极之巅胜利
+	ACType_RAID_PASS_STAR = 65, //副本通关星数
+	ACType_TRUCK = 66, //押镖
+	ACType_FASHION_NUM = 67, //拥有时装
+	ACType_FASHION_COLOR = 68, //时装染色
+	ACType_FASHION_CHARM = 69, //时装魅力
+	ACType_HEAD_NUM = 70, //拥有头像
+	ACType_HEAD_REPLACE = 71, //更换头像
+	ACType_ADD_CURRENCY = 72, //获得货币
+	ACType_SHOP_BUY = 73, //商城购买
+	ACType_RANKING_RANK = 74, //排行榜名次
+	ACType_WORLD_BOSS = 75, //世界Boss
+};
+
+//成就用到的货币类型
+enum
+{
+	ACurrency_COIN = 1, //银两
+	ACurrency_GOLD = 2, //通用元宝
+	ACurrency_BIND_GOLD = 3, //绑定元宝
+	ACurrency_UNBIND_GOLD = 4, //非绑元宝
+	ACurrency_GUILD_DONATION = 5, //帮贡
+	ACurrency_CHENGJIE_COIN = 6, //惩戒货币
+	ACurrency_GUOYU_COIN = 7, //国御货币
+	ACurrency_SHANGJIN_COIN = 8, //赏金货币
+};
+
+//称号条件类型
+enum
+{
+	TCType_RANK_RANKING = 1, //排行榜名次
+	TCType_MURDER_NUM = 2, //杀戮值在N点以上
+	TCType_FASHION_ID = 3, //拥有指定时装
+	TCType_HORSE_ID = 4, //拥有指定坐骑
 };
 
 #define MAX_GUILD_MEMBER_NUM 500 //每个帮会最大成员数

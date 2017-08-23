@@ -368,6 +368,15 @@ local ModelTable = {
 		['BindEffect'] = {''},
 		['Scale'] = 1.00
 		},
+	[130200031] = {
+		['ModelId'] = 130200031,
+		['ModelPath'] = 'Prefabs/Effect/ef_laguai_quan',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
 	[130400003] = {
 		['ModelId'] = 130400003,
 		['ModelPath'] = 'Prefabs/Actor/mw_d_001',
@@ -613,7 +622,7 @@ local ModelTable = {
 		},
 	[130300020] = {
 		['ModelId'] = 130300020,
-		['ModelPath'] = 'Prefabs/Actor/gw_019',
+		['ModelPath'] = 'Prefabs/Actor/gw_020',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',
@@ -667,7 +676,7 @@ local ModelTable = {
 		},
 	[130300026] = {
 		['ModelId'] = 130300026,
-		['ModelPath'] = 'Prefabs/Actor/gw_024',
+		['ModelPath'] = 'Prefabs/Actor/gw_026',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',
@@ -971,6 +980,69 @@ local ModelTable = {
 		['BindEffect'] = {''},
 		['Scale'] = 1.00
 		},
+	[130300060] = {
+		['ModelId'] = 130300060,
+		['ModelPath'] = 'Prefabs/Actor/gw_047',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
+	[130300061] = {
+		['ModelId'] = 130300061,
+		['ModelPath'] = 'Prefabs/Actor/gw_047',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
+	[130300062] = {
+		['ModelId'] = 130300062,
+		['ModelPath'] = 'Prefabs/Actor/gw_047',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
+	[130300063] = {
+		['ModelId'] = 130300063,
+		['ModelPath'] = 'Prefabs/Actor/gw_047',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
+	[130300064] = {
+		['ModelId'] = 130300064,
+		['ModelPath'] = 'Prefabs/Actor/gw_047',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
+	[130300065] = {
+		['ModelId'] = 130300065,
+		['ModelPath'] = 'Prefabs/Actor/gw_047',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
+	[130300066] = {
+		['ModelId'] = 130300066,
+		['ModelPath'] = 'Prefabs/Actor/gw_066',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
 	[130310001] = {
 		['ModelId'] = 130310001,
 		['ModelPath'] = 'Prefabs/Actor/boss_001',
@@ -1045,7 +1117,7 @@ local ModelTable = {
 		},
 	[130310009] = {
 		['ModelId'] = 130310009,
-		['ModelPath'] = 'Prefabs/Actor/boss_007',
+		['ModelPath'] = 'Prefabs/Actor/boss_009',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',
@@ -1118,6 +1190,15 @@ local ModelTable = {
 	[130600002] = {
 		['ModelId'] = 130600002,
 		['ModelPath'] = 'Prefabs/Effect/ef_juese_chuansong_03',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
+	[130600003] = {
+		['ModelId'] = 130600003,
+		['ModelPath'] = 'Prefabs/Effect/ef_cjw_xx',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',

@@ -1,4 +1,5 @@
 #include "chat.h"
+#include "conn_node_dbsrv.h"
 #include "player.h"
 #include "app_data_statis.h"
 #include "monster_manager.h"
@@ -8,6 +9,7 @@
 #include "cash_truck_manager.h"
 #include "raid.h"
 #include "raid_manager.h"
+#include "player_manager.h"
 #include "collect.h"
 #include "pvp_match_manager.h"
 #include "zhenying_raid_manager.h"
@@ -76,6 +78,33 @@ static void send_script_info(player_struct *player, struct raid_script_data *dat
 	send_chat_content(player, const_cast<char*>(os.str().c_str()));
 }
 
+static void do_test2_cmd(player_struct *player, uint64_t target_id)
+{
+	DOUFACHANG_LOAD_PLAYER_REQUEST *req = (DOUFACHANG_LOAD_PLAYER_REQUEST *)conn_node_dbsrv::connecter.get_send_data();
+	req->player_id = player->get_uuid();
+	req->target_id = target_id;
+
+	EXTERN_DATA extern_data;
+	extern_data.player_id = req->player_id;
+	fast_send_msg_base(&conn_node_dbsrv::connecter, &extern_data, SERVER_PROTO_DOUFACHANG_LOAD_PLAYER_REQUEST, sizeof(*req), 0);
+}
+
+static void do_test_cmd(player_struct *player)
+{
+	raid_struct *raid = raid_manager::create_raid(sg_doufachang_raid_id, NULL);
+	if (!raid)
+	{
+		LOG_ERR("%s: create raid failed", __FUNCTION__);
+		return;
+	}
+
+	raid->player_enter_raid_impl(player, 0, sg_3v3_pvp_raid_param1[1], sg_3v3_pvp_raid_param1[3]);
+	player = player_manager::create_doufachang_ai_player(player);
+	assert(player);
+	raid->player_enter_raid_impl(player, MAX_TEAM_MEM, sg_3v3_pvp_raid_param2[1], sg_3v3_pvp_raid_param2[3]);
+	return;
+}
+
 extern int send_mail(conn_node_base *connecter, uint64_t player_id, uint32_t type,
 	char *title, char *sender_name, char *content, std::vector<char *> *args,
 	std::map<uint32_t, uint32_t> *attachs, uint32_t statis_id);
@@ -84,6 +113,15 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 {
 	if (argc < 1)
 		return;
+
+	if (strcasecmp(argv[0], "test") == 0)
+	{
+		do_test_cmd(player);
+	}
+	else if (argc >= 2 && strcasecmp(argv[0], "test2") == 0)
+	{
+		do_test2_cmd(player, strtoul(argv[1], 0, 0));
+	}	
 
 	if (strcasecmp(argv[0], "pass") == 0)
 	{
@@ -121,6 +159,9 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 		send.content = argv[3];
 		send.gap = atoi(argv[1]);
 		send.cd = atoi(argv[2]);
+		uint32_t c[7] = { 1,2,3,4,5,6 };
+		send.channel = c;
+		send.n_channel = 6;
 		conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_HORSE_NOTIFY, &send, (pack_func)chat_horse__pack);
 	}
 	else if (strcasecmp(argv[0], "uid") == 0)
@@ -225,8 +266,8 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	}
 	else if (argc >= 3 && strcasecmp(argv[0], "add") == 0 && strcasecmp(argv[1], "gather") == 0)
 	{
-		//Collect::CreateCollectByPos(player->scene, 154000022, player->get_pos()->pos_x, atoi(argv[2]), player->get_pos()->pos_z, 0, player);
-		Collect::CreateCollectByPos(player->scene, 154000023, player->get_pos()->pos_x, atoi(argv[2]), player->get_pos()->pos_z, 0);
+		Collect::CreateCollectByPos(player->scene, 154000022, player->get_pos()->pos_x, atoi(argv[2]), player->get_pos()->pos_z, 0, player);
+		//Collect::CreateCollectByPos(player->scene, 154000023, player->get_pos()->pos_x, atoi(argv[2]), player->get_pos()->pos_z, 0);
 	}
 	else if (argc >= 3 && strcasecmp(argv[0], "sub") == 0 && strcasecmp(argv[1], "exp") == 0)
 	{
@@ -449,6 +490,19 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	{
 		break_server_level();
 	}
+	else if (argc >=2 && strcasecmp(argv[0], "add_title") == 0)
+	{
+		uint32_t keep_time = 0;
+		if (argc >= 3)
+		{
+			keep_time = atoi(argv[2]);
+		}
+		player->add_title(atoi(argv[1]), keep_time);
+	}
+	else if (argc >=2 && strcasecmp(argv[0], "sub_title") == 0)
+	{
+		player->expire_title(atoi(argv[1]));
+	}
 }
 
 void chat_mod::add_coin(player_struct *player, int val)
@@ -529,6 +583,18 @@ void chat_mod::gm_add_19_monster(player_struct *player, int type)
 
 void chat_mod::gm_add_monster(player_struct *player, int val)
 {
+	MonsterTable *monster_table = get_config_by_id(val, &monster_config);
+	if(monster_table == NULL)
+		return;
+	BaseAITable *baseai_table = get_config_by_id(monster_table->BaseID, &base_ai_config);
+	if(baseai_table == NULL)
+		return;
+
+	if(baseai_table->AIType == 2 || baseai_table->AIType == 14 || baseai_table->AIType == 22)
+	{
+		LOG_ERR("[%s:%d]gm召唤怪物失败，不能召唤有巡逻路径的怪物,monster_id:%d BaseAI:%lu", __FUNCTION__, __LINE__, val, baseai_table->BaseID);
+		return;
+	}
 	monster_struct *monster = monster_manager::add_monster(val, 1, player);
 	if (!monster)
 		return;
@@ -537,6 +603,7 @@ void chat_mod::gm_add_monster(player_struct *player, int val)
 	{
 		LOG_ERR("%s: uuid[%lu] monster[%u] scene[%u]", __FUNCTION__, monster->data->player_id, val, player->scene->m_id);
 	}
+	LOG_INFO("gm召唤怪,怪物uuid [monster_uuid=%lu]", monster->data->player_id);
 }
 
 void chat_mod::gm_accept_task(player_struct *player, int task_id)

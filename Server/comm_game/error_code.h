@@ -160,6 +160,12 @@
 #define ERROR_ID_PARTNER_COMPOSE_STONE_TYPE   2415 //伙伴神曜合成材料类型不一致
 #define ERROR_ID_PARTNER_COMPOSE_STONE_SCORE   2416 //伙伴神曜合成材料积分不足
 
+#define ERROR_ID_ACHIEVEMENT_ID               2500 //成就ID错误
+#define ERROR_ID_ACHIEVEMENT_CANT_REWARD      2501 //成就奖励不可领
+
+#define ERROR_ID_TITLE_ID                     2530 //称号ID错误
+#define ERROR_ID_TITLE_NOT_ACTIVE             2531 //称号未激活
+
 
 /*******************以下是前端提示专用*********************/
 

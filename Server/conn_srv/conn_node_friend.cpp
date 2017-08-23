@@ -179,6 +179,7 @@ int conn_node_friend::transfer_to_client()
 		case SERVER_PROTO_FRIEND_SYNC_FRIEND_NUM:
 		case SERVER_PROTO_UNDO_COST:
 		case SERVER_PROTO_FRIEND_ADD_GIFT:
+		case SERVER_PROTO_FRIEND_SEND_GIFT_SUCCESS:
 			return transfer_to_gameserver();
 		case SERVER_PROTO_FRIEND_TO_GAME:
 			return friend_to_gameserver((PROTO_HEAD *)head->data);

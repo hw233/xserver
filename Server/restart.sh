@@ -57,6 +57,9 @@ cd ../guild_srv
 cd ../rank_srv
 ./rank_srv -d
 
+cd ../doufachang_srv
+./doufachang_srv -d
+
 cd ..
 ./show_all_pid.sh 
 ./check_srv_alive.sh

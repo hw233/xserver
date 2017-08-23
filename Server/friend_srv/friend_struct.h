@@ -2,10 +2,10 @@
 #define _FRIEND_STRUCT_H__
 
 #include <stdint.h>
+#include "comm_define.h"
 
 #define MAX_FRIEND_GROUP_NAME_LEN   100 //好友分组名称最大长度
 #define MAX_FRIEND_RECENT_NUM       200  //最近联系人最大数
-#define MAX_FRIEND_CONTACT_NUM      200 //我的好友最大数
 #define MAX_FRIEND_BLOCK_NUM        200 //黑名单最大数
 #define MAX_FRIEND_ENEMY_NUM        200 //仇人最大数
 #define MAX_FRIEND_APPLY_NUM        200  //申请最大数

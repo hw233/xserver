@@ -319,8 +319,9 @@ int Collect::BegingGather(player_struct *player, uint32_t step)
 	//todo 验证距离
 	float lx = player->get_pos()->pos_x - this->m_pos.pos_x;
 	float lz = player->get_pos()->pos_z - this->m_pos.pos_z;
-	if (lx * lx + lz * lz > 32)
+	if (lx * lx + lz * lz > 2.0 * (3.0 + it->second->CollectionSize)*(3.0 + it->second->CollectionSize))
 	{
+		LOG_ERR("%s: x=%f,z=%f,ox=%f,oz=%f", __FUNCTION__, player->get_pos()->pos_x, player->get_pos()->pos_z, this->m_pos.pos_x, this->m_pos.pos_z);
 		return 7;
 	}
 
@@ -421,10 +422,6 @@ int Collect::GatherComplete(player_struct *player)
 			{
 				scene->delete_collect_to_scene(this);
 			}
-			//else
-			//{
-			//	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);
-			//}
 		}
 		else if (it->second->Regeneration == 0)
 		{
@@ -433,10 +430,6 @@ int Collect::GatherComplete(player_struct *player)
 			{
 				scene->delete_collect_to_scene(this);
 			}
-			//else
-			//{
-			//	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);
-			//}
 		}
 		else
 		{

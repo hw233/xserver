@@ -400,13 +400,13 @@ static void generate_parameters(void)
 		}
 	}
 
-	sg_guild_battle_match_time = 20;
-	sg_guild_battle_fight_time = 20;
-	sg_guild_battle_settle_time = 20;
-	sg_guild_battle_round_num = 6;
-	sg_guild_battle_final_match_time = 20;
-	sg_guild_battle_final_fight_time = 60;
-	sg_guild_battle_final_settle_time = 20;
+//	sg_guild_battle_match_time = 20;
+//	sg_guild_battle_fight_time = 20;
+//	sg_guild_battle_settle_time = 20;
+//	sg_guild_battle_round_num = 6;
+//	sg_guild_battle_final_match_time = 20;
+//	sg_guild_battle_final_fight_time = 60;
+//	sg_guild_battle_final_settle_time = 20;
 
 	config = get_config_by_id(161000235, &parameter_config);
 	if (config && config->n_parameter1 >= 1)
@@ -457,7 +457,15 @@ static void generate_parameters(void)
 	sg_fight_param_161000290 = get_config_by_id(161000290, &parameter_config)->parameter1[0];
 	sg_fight_param_161000291 = get_config_by_id(161000291, &parameter_config)->parameter1[0];
 	sg_fight_param_161000292 = get_config_by_id(161000292, &parameter_config)->parameter1[0];
-	sg_fight_param_161000293 = get_config_by_id(161000293, &parameter_config)->parameter1[0]; 	
+	sg_fight_param_161000293 = get_config_by_id(161000293, &parameter_config)->parameter1[0];
+
+	sg_doufachang_ai[0] = get_config_by_id(161000315, &parameter_config)->parameter1[0];
+	sg_doufachang_ai[1] = get_config_by_id(161000315, &parameter_config)->parameter1[1];
+	sg_doufachang_raid_id = get_config_by_id(161000316, &parameter_config)->parameter1[0];
+	sg_doufachang_raid_win_reward[0] = get_config_by_id(161000320, &parameter_config)->parameter1[0];
+	sg_doufachang_raid_win_reward[1] = get_config_by_id(161000320, &parameter_config)->parameter1[1];
+	sg_doufachang_raid_lose_reward[0] = get_config_by_id(161000321, &parameter_config)->parameter1[0];
+	sg_doufachang_raid_lose_reward[1] = get_config_by_id(161000321, &parameter_config)->parameter1[1];		
 
 	config = get_config_by_id(161000308, &parameter_config);
 	if (config && config->n_parameter1 >= 2)
@@ -1507,6 +1515,37 @@ static void adjust_jijiangopen_table()
 	}
 }
 
+static void adjust_worldboss_table()
+{
+	std::map<uint64_t, struct WorldBossTable *>::iterator ite;
+	for (ite = world_boss_config.begin(); ite != world_boss_config.end(); ++ite)
+	{
+		monster_to_world_boss_config.insert(std::make_pair((uint64_t)(ite->second->MonsterID), ite->second));
+	}
+}
+
+static void adjust_achievement_config(void)
+{
+	std::map<uint64_t, AchievementFunctionTable*> func_hier_map;
+	for (std::map<uint64_t, AchievementFunctionTable*>::iterator iter = achievement_function_config.begin(); iter != achievement_function_config.end(); ++iter)
+	{
+		func_hier_map[iter->second->HierarchyID] = iter->second;
+	}
+
+	for (std::map<uint64_t, AchievementHierarchyTable*>::iterator iter = achievement_hierarchy_config.begin(); iter != achievement_hierarchy_config.end(); ++iter)
+	{
+		AchievementHierarchyTable *config = iter->second;
+		std::map<uint64_t, AchievementFunctionTable*>::iterator iter_func = func_hier_map.find(config->HierarchyID);
+		if (iter_func != func_hier_map.end())
+		{
+			AchievementFunctionTable* func_config = iter_func->second;
+			func_config->n_Hierarchys++;
+			func_config->Hierarchys = (uint64_t*)realloc(func_config->Hierarchys, sizeof(uint64_t) * func_config->n_Hierarchys);
+			func_config->Hierarchys[func_config->n_Hierarchys - 1] = iter->first;
+		}
+	}
+}
+
 ActorTable *get_actor_config(uint32_t job)
 {
 	uint64_t comb_id = 101 * 1e6 + job;
@@ -1706,6 +1745,18 @@ RecruitTable *get_partner_recruit_config(uint32_t type)
 {
 	uint64_t comb_id = 4202 * 1e5 + type;
 	return get_config_by_id(comb_id, &partner_recruit_config);
+}
+
+GangsSkillTable *get_guild_skill_config(uint32_t type, uint32_t level)
+{
+	uint32_t comb_id = type * 1e3 + level;
+	std::map<uint32_t, GangsSkillTable*>::iterator iter = skill_config_map.find(comb_id);
+	if (iter != skill_config_map.end())
+	{
+		return iter->second;
+	}
+
+	return NULL;
 }
 
 uint32_t get_item_relate_id(uint32_t id)
@@ -2021,6 +2072,35 @@ bool item_is_partner_fabao(uint32_t item_id)
 
 	return (config->ItemType == 14);
 }
+
+uint32_t get_friend_close_level(uint32_t closeness)
+{
+	uint32_t lv = 0;
+	for (std::map<uint64_t, DegreeTable*>::iterator iter = friend_close_config.begin(); iter != friend_close_config.end(); ++iter)
+	{
+		DegreeTable *config = iter->second;
+		if (closeness > config->Value)
+		{
+			lv = config->Stage;
+		}
+		else
+		{
+			break;
+		}
+	}
+	return lv;
+}
+
+static void adjust_guild_skill_config(void)
+{
+	for (std::map<uint64_t, GangsSkillTable*>::iterator iter = guild_skill_config.begin(); iter != guild_skill_config.end(); ++iter)
+	{
+		GangsSkillTable *config = iter->second;
+		uint32_t key_new = config->skillType * 1e3 + config->skillLeve;
+		skill_config_map[key_new] = config;
+	}
+}
+
 
 typedef std::map<uint64_t, void *> *config_type;
 #define READ_SPB_MAX_LEN (1024 * 1024)
@@ -2517,6 +2597,11 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/MagicAttributeTable.lua", (config_type)&MagicAttrbute_config);
 	assert(ret == 0);
 
+	type = sproto_type(sp, "ArenaRewardTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/ArenaRewardTable.lua", (config_type)&doufachang_reward_config);
+	assert(ret == 0);
+
 	type = sproto_type(sp, "SceneCreateMonsterTable");
 	assert(type);
 	if (generate_create_monster_config(L, type) != 0)
@@ -2541,7 +2626,35 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/ServerLevelTable.lua", (config_type)&server_level_config);
 	assert(ret == 0);
 
+	type = sproto_type(sp, "AchievementFunctionTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/AchievementFunctionTable.lua", (config_type)&achievement_function_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "AchievementHierarchyTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/AchievementHierarchyTable.lua", (config_type)&achievement_hierarchy_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "GangsSkillTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/GangsSkillTable.lua", (config_type)&guild_skill_config);
+	assert(ret == 0);	
+
+	type = sproto_type(sp, "TitleFunctionTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/TitleFunctionTable.lua", (config_type)&title_function_config);
+	assert(ret == 0);	
+
+	type = sproto_type(sp, "WorldBossTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/WorldBossTable.lua", (config_type)&world_boss_config);
+	assert(ret == 0);	
+	adjust_worldboss_table();
+
 	adjust_escort_config();
+	adjust_achievement_config();
+	adjust_guild_skill_config();
 
 	lua_close(L);
 	sproto_release(sp);

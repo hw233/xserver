@@ -74,23 +74,11 @@ local P20037Table = {
 	[350301013] = {
 		['ID'] = 350301013,
 		['TypeID'] = 9,
-		['Parameter1'] = {5},
+		['Parameter1'] = {10},
 		['Parameter2'] = {''}
 		},
 	[350301014] = {
 		['ID'] = 350301014,
-		['TypeID'] = 21,
-		['Parameter1'] = {450000016},
-		['Parameter2'] = {''}
-		},
-	[350301015] = {
-		['ID'] = 350301015,
-		['TypeID'] = 9,
-		['Parameter1'] = {5},
-		['Parameter2'] = {''}
-		},
-	[350301016] = {
-		['ID'] = 350301016,
 		['TypeID'] = 27,
 		['Parameter1'] = {},
 		['Parameter2'] = {''}

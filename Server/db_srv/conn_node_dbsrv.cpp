@@ -16,6 +16,7 @@
 static char sql[1024 * 64];
 //static char send_buf[1024 * 64];
 static const uint32_t server_level_key = 1;
+#define UNUSED(x) (void)(x)
 
 conn_node_dbsrv::conn_node_dbsrv()
 {
@@ -286,6 +287,9 @@ int conn_node_dbsrv::recv_func(evutil_socket_t fd)
 				case SERVER_PROTO_ENTER_GAME_REQUEST:
 					handle_enter_game(extern_data);
 					break;
+				case SERVER_PROTO_DOUFACHANG_LOAD_PLAYER_REQUEST:
+					handle_doufachang_load(extern_data);
+					break;
 				case MSG_ID_PLAYER_RENAME_REQUEST:
 					handle_rename_request(extern_data);
 					break;
@@ -362,6 +366,49 @@ void conn_node_dbsrv::handle_save_player_msg(EXTERN_DATA *extern_data) {
 
 	query(const_cast<char*>("set names utf8"), 1, NULL);
 	query(sql, 1, &effect);	*/
+}
+
+void conn_node_dbsrv::handle_doufachang_load(EXTERN_DATA *extern_data)
+{
+	DOUFACHANG_LOAD_PLAYER_REQUEST *req = (DOUFACHANG_LOAD_PLAYER_REQUEST *)conn_node_base::get_data();
+	uint64_t player_id = req->target_id;
+
+	unsigned long *lengths;	
+	MYSQL_RES *res = NULL;
+	MYSQL_ROW row;
+
+	query(const_cast<char*>("set names utf8"), 1, NULL);
+
+	sprintf(sql, "SELECT job, player_name, lv , comm_data, UNIX_TIMESTAMP(create_time), UNIX_TIMESTAMP(logout_time),chengjie_rest from player where player_id = %lu", player_id);
+	res = query(sql, 1, NULL);
+	if (!res) {
+		LOG_ERR("[%s : %d]: query user failed, sql: %s", __FUNCTION__, __LINE__, sql);
+		return;
+	}
+	
+	row = fetch_row(res);
+	if (!row) {
+		LOG_ERR("[%s : %d]: query sql fetch row failed, sql: %s", __FUNCTION__, __LINE__, sql);
+		free_query(res);
+		return;
+	}
+
+	lengths = mysql_fetch_lengths(res);
+
+	DOUFACHANG_LOAD_PLAYER_ANSWER *proto = (DOUFACHANG_LOAD_PLAYER_ANSWER *)server_node->get_send_data();
+	proto->job = atoi(row[0]) & 0xff;
+	strncpy(proto->name, row[1], MAX_PLAYER_NAME_LEN);
+	proto->name[MAX_PLAYER_NAME_LEN - 1] = '\0';
+	proto->lv = atoi(row[2]);
+	memcpy(proto->data, row[3], lengths[3]);
+	proto->data_size = lengths[3];
+	proto->player_id = req->player_id;
+	proto->target_id = player_id;
+
+	free_query(res);
+
+	LOG_DEBUG("[%s: %d]: get user info: player: %lu[%lu], comm_data size: %u", __FUNCTION__, __LINE__, req->player_id, req->target_id, proto->data_size);
+	fast_send_msg_base(server_node, extern_data, SERVER_PROTO_DOUFACHANG_LOAD_PLAYER_ANSWER, sizeof(*proto) + proto->data_size, 0);
 }
 
 void conn_node_dbsrv::handle_enter_game(EXTERN_DATA *extern_data)

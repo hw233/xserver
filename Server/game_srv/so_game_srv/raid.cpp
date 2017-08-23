@@ -157,6 +157,12 @@ int raid_struct::init_special_raid_data(player_struct *player)
 			init_scene_struct(m_id, true);
 		}
 			break;
+		case 14:
+		{
+			raid_set_ai_interface(14);
+			init_scene_struct(m_id, true);
+		}
+			break;
 		default:
 			init_scene_struct(m_id, true);			
 			break;
@@ -166,7 +172,7 @@ int raid_struct::init_special_raid_data(player_struct *player)
 
 int raid_struct::init_raid(player_struct *player)
 {
-	mark_finished = false;
+	mark_finished = 0;
 	ai = NULL;
 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
 	{
@@ -676,7 +682,7 @@ int raid_struct::set_m_player_and_player_info(player_struct *player, int index)
 	return (0);
 }
 
-int raid_struct::player_enter_raid_impl(player_struct *player, int index, double pos_x, double pos_z)
+int raid_struct::player_enter_raid_impl(player_struct *player, int index, double pos_x, double pos_z, double direct)
 {
 	// player_struct **t;
 	// switch (index / MAX_TEAM_MEM)
@@ -716,8 +722,12 @@ int raid_struct::player_enter_raid_impl(player_struct *player, int index, double
 		notify.raid_id = m_id;
 		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ENTER_RAID_NOTIFY, enter_raid_notify__pack, notify);
 
-		player->data->m_angle = unity_angle_to_c_angle(res_config->FaceY);
-		player->send_scene_transfer(res_config->FaceY, pos_x, res_config->BirthPointY,
+		if (direct == 0)
+		{
+			direct = res_config->FaceY;
+		}
+		player->data->m_angle = unity_angle_to_c_angle(direct);
+		player->send_scene_transfer(direct, pos_x, res_config->BirthPointY,
 			pos_z, m_id, 0);
 	}
 	else
@@ -1022,9 +1032,12 @@ bool raid_struct::check_raid_failed()
 		{
 			case 1: //限时
 			{
-				uint32_t time_escape = (time_helper::get_cached_time() - data->start_time) / 1000;
-				if (time_escape >= t_config->FailValue[i])
-					return true;			
+				if (time_helper::get_cached_time() > data->start_time)
+				{
+					uint32_t time_escape = (time_helper::get_cached_time() - data->start_time) / 1000;
+					if (time_escape >= t_config->FailValue[i])
+						return true;
+				}
 			}
 			break;
 			case 2: //检测指定怪物ID是否仍然存活
@@ -1374,10 +1387,10 @@ void raid_struct::raid_add_ai_interface(int ai_type, struct raid_ai_interface *a
 {
 	assert(ai_type >= 0 && ai_type < MAX_RAID_AI_INTERFACE);
 
-	if (ai)
-	{
-		assert(ai->raid_on_init);
-	}
+	// if (ai)
+	// {
+	// 	assert(ai->raid_on_init);
+	// }
 	
 //	assert(ai->on_tick);
 //	assert(ai->on_player_enter);

@@ -30,6 +30,7 @@
 #include "setting.pb-c.h"
 #include "friend_config.h"
 #include "role.pb-c.h"
+#include "redis_util.h"
 
 static const int MIN_ZHENYING_PLAYER_NUM = 500;
 
@@ -1388,6 +1389,7 @@ void conn_node_friendsrv::handle_friend_info_request()
 	FriendPlayer *player = NULL;
 	std::map<uint64_t, PlayerRedisInfo*> redis_players;
 	AutoReleaseBatchFriendPlayer arb_friend;
+	AutoReleaseBatchRedisPlayer t1;	
 	do
 	{
 		player = get_friend_player(extern_data->player_id);
@@ -1399,7 +1401,7 @@ void conn_node_friendsrv::handle_friend_info_request()
 		}
 		arb_friend.push_back(player);
 
-		if (get_all_friend_redis_player(player, redis_players) != 0)
+		if (get_all_friend_redis_player(player, redis_players, t1) != 0)
 		{
 			ret = ERROR_ID_SERVER;
 			LOG_ERR("[%s:%d] player[%lu] get_all_friend_redis_player", __FUNCTION__, __LINE__, extern_data->player_id);
@@ -1622,10 +1624,10 @@ void conn_node_friendsrv::handle_friend_info_request()
 
 	fast_send_msg(&connecter, extern_data, MSG_ID_FRIEND_INFO_ANSWER, friend_info_answer__pack, resp);
 
-	for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
-	{
-		player_redis_info__free_unpacked(iter->second, NULL);
-	}
+	// for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
+	// {
+	// 	player_redis_info__free_unpacked(iter->second, NULL);
+	// }
 }
 
 void conn_node_friendsrv::handle_friend_add_contact_request()
@@ -1883,6 +1885,7 @@ void conn_node_friendsrv::handle_friend_create_group_request()
 	FriendPlayer *player = NULL;
 	FriendGroup *pGroup = NULL;
 	std::vector<int> member_idxs;
+	AutoReleaseBatchRedisPlayer t1;	
 	std::map<uint64_t, PlayerRedisInfo*> redis_players;
 	do
 	{
@@ -1981,7 +1984,7 @@ void conn_node_friendsrv::handle_friend_create_group_request()
 
 		if (members.size() > 0)
 		{
-			get_more_redis_player(playerIds, redis_players);
+			get_more_redis_player(playerIds, redis_players, conn_node_friendsrv::server_key, sg_redis_client, t1);
 			notify_friend_list_change(player, change_info);
 		}
 		save_friend_player(player);
@@ -2024,10 +2027,10 @@ void conn_node_friendsrv::handle_friend_create_group_request()
 
 	fast_send_msg(&connecter, extern_data, MSG_ID_FRIEND_CREATE_GROUP_ANSWER, friend_create_group_answer__pack, resp);
 
-	for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
-	{
-		player_redis_info__free_unpacked(iter->second, NULL);
-	}
+	// for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
+	// {
+	// 	player_redis_info__free_unpacked(iter->second, NULL);
+	// }
 }
 
 void conn_node_friendsrv::handle_friend_edit_group_request()
@@ -2530,7 +2533,8 @@ void conn_node_friendsrv::handle_friend_recommend_request()
 
 	std::set<uint64_t> recommendIds;
 	std::map<uint64_t, PlayerRedisInfo*> redis_players;
-
+	AutoReleaseBatchRedisPlayer t1;
+	
 	PROTO_FRIEND_RECOMMEND *proto = (PROTO_FRIEND_RECOMMEND*)head;
 	int ret = 0;
 	AutoReleaseBatchFriendPlayer arb_friend;
@@ -2572,7 +2576,7 @@ void conn_node_friendsrv::handle_friend_recommend_request()
 	
 	resp.result = ret;
 
-	get_more_redis_player(recommendIds, redis_players);
+	get_more_redis_player(recommendIds, redis_players, conn_node_friendsrv::server_key, sg_redis_client, t1);
 	resp.n_players = 0;
 	resp.players = recommend_point;
 	for (std::set<uint64_t>::iterator iter = recommendIds.begin(); iter != recommendIds.end(); ++iter)
@@ -2592,10 +2596,10 @@ void conn_node_friendsrv::handle_friend_recommend_request()
 
 	fast_send_msg(&connecter, extern_data, MSG_ID_FRIEND_RECOMMEND_ANSWER, friend_recommend_answer__pack, resp);
 
-	for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
-	{
-		player_redis_info__free_unpacked(iter->second, NULL);
-	}
+	// for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
+	// {
+	// 	player_redis_info__free_unpacked(iter->second, NULL);
+	// }
 }
 
 void conn_node_friendsrv::handle_friend_send_gift_request()
@@ -2741,7 +2745,9 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 
 	int ret = res->result;
 	AutoReleaseBatchFriendPlayer arb_friend;
-	AutoReleaseBatchRedisPlayer arb_redis;
+//	AutoReleaseBatchRedisPlayer arb_redis;
+	AutoReleaseRedisPlayer p1, p2;
+	
 	FriendPlayer *player = NULL;
 	bool internal = false;
 	do
@@ -2806,6 +2812,7 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 			save_friend_player(target);
 
 			notify_friend_closeness_update(player, player->contacts[target_idx]);
+			sync_friend_num_to_game_srv(player);
 		}
 		if (res->item_id > 0)
 		{
@@ -2814,17 +2821,8 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 
 		do
 		{
-			PlayerRedisInfo *redis_player = get_redis_player(player->player_id);
-			if (redis_player)
-			{
-				arb_redis.push_back(redis_player);
-			}
-
-			PlayerRedisInfo *redis_target = get_redis_player(target->player_id);
-			if (redis_target)
-			{
-				arb_redis.push_back(redis_target);
-			}
+			PlayerRedisInfo *redis_player = get_redis_player(player->player_id, conn_node_friendsrv::server_key, sg_redis_client, p1);
+			PlayerRedisInfo *redis_target = get_redis_player(target->player_id, conn_node_friendsrv::server_key, sg_redis_client, p2);
 
 			EXTERN_DATA ext_data;
 			ext_data.player_id = target->player_id;
@@ -2847,6 +2845,7 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 			if (res->add_closeness > 0 && target_online)
 			{
 				notify_friend_closeness_update(target, target->contacts[player_idx]);
+				sync_friend_num_to_game_srv(target);
 			}
 
 			//通知收到道具
@@ -2857,7 +2856,8 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 				ItemData item_data;
 				item_data__init(&item_data);
 				gift_data.playerid = player->player_id;
-				gift_data.playername = redis_player->name;
+				if (redis_player)
+					gift_data.playername = redis_player->name;
 				gift_data.item = &item_data;
 				item_data.id = res->item_id;
 				item_data.num = res->gift_num;
@@ -2902,6 +2902,8 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 			}
 
 		} while(0);
+
+		fast_send_msg_base(&conn_node_friendsrv::connecter, extern_data, SERVER_PROTO_FRIEND_SEND_GIFT_SUCCESS, 0, 0);
 	} while(0);
 
 	FriendSendGiftAnswer resp;
@@ -2941,8 +2943,9 @@ void conn_node_friendsrv::handle_friend_chat_request()
 	}
 
 	int ret = 0;
-	AutoReleaseBatchRedisPlayer arb_redis;
+//	AutoReleaseBatchRedisPlayer arb_redis;
 	AutoReleaseBatchFriendPlayer arb_friend;
+	AutoReleaseRedisPlayer p1;
 	FriendPlayer *player = NULL;
 	do
 	{
@@ -2962,14 +2965,13 @@ void conn_node_friendsrv::handle_friend_chat_request()
 			break;
 		}
 
-		PlayerRedisInfo *redis_receiver = get_redis_player(req->recvplayerid);
+		PlayerRedisInfo *redis_receiver = get_redis_player(req->recvplayerid, conn_node_friendsrv::server_key, sg_redis_client, p1);
 		if (!redis_receiver)
 		{
 			ret = ERROR_ID_FRIEND_CHAT_RECEIVER;
 			LOG_ERR("[%s:%d] player[%lu] receiver not exist, receiver_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, req->recvplayerid);
 			break;
 		}
-		arb_redis.push_back(redis_receiver);		
 
 		if (is_in_block(player, req->recvplayerid))
 		{
@@ -3043,6 +3045,7 @@ void conn_node_friendsrv::handle_player_online_notify()
 
 	AutoReleaseBatchFriendPlayer arb_friend;
 	std::map<uint64_t, PlayerRedisInfo*> redis_players;
+	AutoReleaseBatchRedisPlayer t1;	
 	//玩家上线通知
 	do
 	{
@@ -3088,7 +3091,7 @@ void conn_node_friendsrv::handle_player_online_notify()
 		std::set<uint64_t> *watchers = get_watch_me_players(player->player_id);
 		if (watchers)
 		{
-			get_more_redis_player(*watchers, redis_players);
+			get_more_redis_player(*watchers, redis_players, conn_node_friendsrv::server_key, sg_redis_client, t1);
 			std::vector<uint64_t> broadcast_ids;
 			for (std::set<uint64_t>::iterator iter = watchers->begin(); iter != watchers->end(); ++iter)
 			{
@@ -3114,10 +3117,10 @@ void conn_node_friendsrv::handle_player_online_notify()
 		sync_friend_num_to_game_srv(player);
 	} while(0);
 
-	for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
-	{
-		player_redis_info__free_unpacked(iter->second, NULL);
-	}
+	// for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
+	// {
+	// 	player_redis_info__free_unpacked(iter->second, NULL);
+	// }
 
 		//发送万妖卡
 	handle_list_wanyaoka();
@@ -3129,6 +3132,7 @@ void conn_node_friendsrv::handle_player_offline_notify() //玩家下线
 	EXTERN_DATA *extern_data = get_extern_data(head);
 
 	AutoReleaseBatchFriendPlayer arb_friend;
+	AutoReleaseBatchRedisPlayer t1;		
 	std::map<uint64_t, PlayerRedisInfo*> redis_players;
 	//玩家下线通知
 	do
@@ -3144,7 +3148,7 @@ void conn_node_friendsrv::handle_player_offline_notify() //玩家下线
 		std::set<uint64_t> *watchers = get_watch_me_players(player->player_id);
 		if (watchers)
 		{
-			get_more_redis_player(*watchers, redis_players);
+			get_more_redis_player(*watchers, redis_players, conn_node_friendsrv::server_key, sg_redis_client, t1);
 			std::vector<uint64_t> broadcast_ids;
 			for (std::set<uint64_t>::iterator iter = watchers->begin(); iter != watchers->end(); ++iter)
 			{
@@ -3168,10 +3172,10 @@ void conn_node_friendsrv::handle_player_offline_notify() //玩家下线
 		}
 	} while(0);
 
-	for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
-	{
-		player_redis_info__free_unpacked(iter->second, NULL);
-	}
+	// for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
+	// {
+	// 	player_redis_info__free_unpacked(iter->second, NULL);
+	// }
 }
 
 void conn_node_friendsrv::handle_friend_add_enemy_request()
@@ -3332,6 +3336,7 @@ void conn_node_friendsrv::handle_friend_rename_request() //玩家改名
 	EXTERN_DATA *extern_data = get_extern_data(head);
 
 	PROTO_FRIEND_SYNC_RENAME *req = (PROTO_FRIEND_SYNC_RENAME*)buf_head();
+	AutoReleaseBatchRedisPlayer t1;	
 	std::map<uint64_t, PlayerRedisInfo*> redis_players;
 	do
 	{
@@ -3342,7 +3347,7 @@ void conn_node_friendsrv::handle_friend_rename_request() //玩家改名
 			break;
 		}
 
-		if (get_more_redis_player(*notice_player, redis_players) != 0)
+		if (get_more_redis_player(*notice_player, redis_players, conn_node_friendsrv::server_key, sg_redis_client, t1) != 0)
 		{
 			break;
 		}
@@ -3388,10 +3393,10 @@ void conn_node_friendsrv::handle_friend_rename_request() //玩家改名
 		}
 	} while(0);
 
-	for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
-	{
-		player_redis_info__free_unpacked(iter->second, NULL);
-	}
+	// for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
+	// {
+	// 	player_redis_info__free_unpacked(iter->second, NULL);
+	// }
 }
 
 void conn_node_friendsrv::send_to_all_player(uint16_t msg_id, void *data, pack_func func)

@@ -11,16 +11,15 @@ db_srv
 mail_srv
 guild_srv
 rank_srv
+doufachang_srv
 )
 
 for srv_name in ${srv_list[*]}
 do
-	echo -n "${srv_name}:  "
 	if [ -f "${srv_name}/pid.txt" ]; then
-		cat "${srv_name}/pid.txt"
-		echo
+	    echo -en "${srv_name}:  \e[33m`cat "${srv_name}/pid.txt"`\e[0m" | awk '{printf "%-20s %-5s\n", $1, $2}' 
 	else
-		echo "0"
+	    echo -en "${srv_name}:  \e33m0\e[0m" | awk '{printf "%-20s %-5s\n", $1, $2}' 
 	fi
 done
 

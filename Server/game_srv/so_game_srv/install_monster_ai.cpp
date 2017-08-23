@@ -1,4 +1,5 @@
 #include <string.h>
+#include "global_param.h"
 #include "install_monster_ai.h"
 #include "monster_ai.h"
 #include "monster.h"
@@ -54,31 +55,13 @@ void install_monster_ai()
 	monster_struct::add_ai_interface(22, &monster_ai_22_interface);
 	monster_struct::add_ai_interface(23, &monster_ai_23_interface);
 	monster_struct::add_ai_interface(24, &monster_ai_24_interface);
-	monster_struct::add_ai_interface(25, &monster_ai_25_interface);				
+	monster_struct::add_ai_interface(25, &monster_ai_25_interface);
+	monster_struct::add_ai_interface(26, &monster_ai_26_interface);					
 }
 void uninstall_monster_ai()
 {
-	monster_struct::add_ai_interface(AI_TYPE_NORMAL, NULL);
-	monster_struct::add_ai_interface(AI_TYPE_CIRCLE, NULL);
-	monster_struct::add_ai_interface(6, NULL);
-	monster_struct::add_ai_interface(4, NULL);
-	monster_struct::add_ai_interface(5, NULL);
-	monster_struct::add_ai_interface(7, NULL);
-	monster_struct::add_ai_interface(8, NULL);
-	monster_struct::add_ai_interface(10, NULL);
-	monster_struct::add_ai_interface(11, NULL);
-	monster_struct::add_ai_interface(12, NULL);
-	monster_struct::add_ai_interface(13, NULL);
-	monster_struct::add_ai_interface(14, NULL);
-	monster_struct::add_ai_interface(15, NULL);
-	monster_struct::add_ai_interface(16, NULL);
-	monster_struct::add_ai_interface(17, NULL);
-	monster_struct::add_ai_interface(18, NULL);
-	monster_struct::add_ai_interface(19, NULL);
-	monster_struct::add_ai_interface(20, NULL);
-	monster_struct::add_ai_interface(21, NULL);	
-	monster_struct::add_ai_interface(22, NULL);
-	monster_struct::add_ai_interface(23, NULL);
-	monster_struct::add_ai_interface(24, NULL);
-	monster_struct::add_ai_interface(25, NULL);			
+	for (int i = 0; i < MAX_MONSTER_AI_INTERFACE; ++i)
+	{
+		monster_struct::add_ai_interface(i, NULL);		
+	}
 }

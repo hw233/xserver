@@ -24,10 +24,17 @@
 #include "comm_message.pb-c.h"
 #include "login.pb-c.h"
 #include "player_db.pb-c.h"
+extern "C"
+{
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+};
 
 
-conn_node_dumpsrv conn_node_dumpsrv::connecter;
+conn_node_dumpsrv *conn_node_dumpsrv::connecter = NULL;
 //static char sql[1024*64];
+extern lua_State *L;
 
 uint32_t sg_server_id = 0;
 
@@ -70,11 +77,28 @@ int conn_node_dumpsrv::recv_func(evutil_socket_t fd)
 			switch(cmd)
 			{
 			}
+//			lua_getglobal(L, "dispatch_message");
+			lua_rawgetp(L, LUA_REGISTRYINDEX, &L);			
+			lua_pushnumber(L, cmd);
+			lua_pushlstring(L, (char*)get_data(), get_data_len());
+			lua_pushinteger(L, extern_data->player_id);
+			if (lua_pcall(L, 3, 0, 0) != LUA_OK)
+			{
+				if (lua_type(L, -1) == LUA_TSTRING)
+				{
+					LOG_ERR("pcall fail, err = %s\n", lua_tostring(L, -1));
+				}
+				else
+				{
+					LOG_ERR("pcall fail, unknow err\n");
+				}
+				lua_pop(L, 1);
+			}
 		}
 		
 		if (ret < 0) {
 			LOG_INFO("%s: connect closed from fd %u, err = %d", __FUNCTION__, fd, errno);
-			exit(0);
+			event_base_loopexit(base, NULL);
 			return (-1);		
 		} else if (ret > 0) {
 			break;
@@ -83,5 +107,14 @@ int conn_node_dumpsrv::recv_func(evutil_socket_t fd)
 		ret = remove_one_buf();
 	}
 	return (0);
+}
+
+conn_node_dumpsrv* conn_node_dumpsrv::instance(void)
+{
+	if (connecter == NULL)
+	{
+		connecter = new conn_node_dumpsrv();
+	}
+	return connecter;
 }
 

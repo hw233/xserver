@@ -23,6 +23,7 @@ extern struct comm_pool monster_manager_monster_data_pool;
 //extern struct comm_pool monster_manager_boss_data_pool;
 extern std::map<uint64_t, monster_struct *> monster_manager_all_monsters_id;
 //extern std::map<uint64_t, boss_struct *> monster_manager_all_boss_id;
+static const int WORD_BOSS_ACTIVE_ID = 330400039; //世界boss活动id
 
 class monster_manager
 {
@@ -64,6 +65,9 @@ public:
 //	static int init_boss_struct(int num, unsigned long key);
 	static int reinit_monster_min_heap();
 	static int reinit_boss_min_heap();	
+	
+	//创建世界boss
+	static int add_word_boss_monster();
 //	static int resume_monster_struct(int num, unsigned long key);
 
 		//定时器相关接口

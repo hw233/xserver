@@ -30,6 +30,7 @@ struct _PlayerDBInfo;
 struct ItemsConfigTable;
 class partner_struct;
 class cash_truck_struct;
+struct AchievementHierarchyTable;
 
 typedef std::map<uint64_t, partner_struct *> PartnerMap;
 
@@ -44,7 +45,7 @@ enum
 #define MAX_COLLECT_IN_PLAYER_SIGHT 50
 #define MAX_PARTNER_IN_PLAYER_SIGHT 50
 
-static const int AWARD_QUESTION_ACTIVE_ID = 330100021;
+static const int AWARD_QUESTION_ACTIVE_ID = 330100008;
 static const int COMMON_QUESTION_ACTIVE_ID = 330100020;
 
 struct ItemUseEffectInfo
@@ -412,6 +413,7 @@ struct FightingCapacity
 	uint32_t guild_skill;
 	uint32_t partner;
 	uint32_t fashion;
+	uint32_t title;
 	uint32_t get_total(void);
 };
 
@@ -467,6 +469,31 @@ struct EscortInfo
 	uint64_t summon_monster_uuids[MAX_ESCORT_MONSTER_NUM]; //召唤的怪物ID
 	uint32_t summon_num;
 	bool     mark_delete;
+};
+
+struct AchievementInfo
+{
+	uint32_t id;
+	uint32_t star;
+	uint32_t progress;
+	uint32_t state;
+	uint32_t achieveTime;
+};
+
+enum
+{
+	Achievement_State_Achieving = 0, //奖励不可领
+	Achievement_State_Achieved = 1, //奖励可领
+	Achievement_State_Rewarded = 2, //奖励已领
+};
+
+struct TitleInfo
+{
+	uint32_t id;
+	uint32_t state;
+	uint32_t expire_time;
+	bool     is_new;
+	uint32_t active_time;
 };
 
 struct player_data
@@ -566,8 +593,8 @@ struct player_data
 	uint32_t guild_id;
 	uint32_t guild_office;
 	uint32_t guild_donation;
-	char guild_name[300];
 	uint32_t guild_battle_activity_time; //所参加的帮会战活动开始时间
+	ProtoGuildSkill guild_skills[MAX_GUILD_SKILL_NUM];
 
 	//八卦牌
 	BaguapaiDressInfo baguapai_dress[MAX_BAGUAPAI_STYLE_NUM]; //八卦牌装备列表
@@ -596,6 +623,8 @@ struct player_data
 	uint64_t next_update;
 
 		//ai相关
+	uint8_t player_ai_index;
+	uint64_t origin_player_id;   //原玩家ID
 	bool stop_ai; //停止AI
 	uint8_t patrol_index; //巡逻路径
 	uint8_t active_attack_range; //主动攻击范围
@@ -618,8 +647,6 @@ struct player_data
 	uint32_t hp_pool_num;   //剩余的血池容量
 
 	LiveSkill live_skill;
-	//帮会技能属性
-	double guild_skill_attr[PLAYER_ATTR_MAX]; //属性
 	XunBaoData xunbao;
 
 	EscortInfo escort_list[MAX_ESCORT_NUM]; //护送列表
@@ -633,6 +660,7 @@ struct player_data
 	uint32_t partner_recruit_junior_count; //低级招募计数
 	uint32_t partner_recruit_senior_time; //高级招募免费时间
 	uint32_t partner_recruit_senior_count; //高级招募计数
+	bool     partner_recruit_first; //首次招募标志
 	uint32_t partner_bond[MAX_PARTNER_BOND_NUM];
 	uint32_t partner_bond_reward[MAX_PARTNER_TYPE];
 
@@ -645,10 +673,14 @@ struct player_data
 	uint32_t team_raid_id_wait_ready;    //在等待准备的副本ID
 	bool is_team_raid_ready;  //是否ready
 
-	uint32_t friend_num;
+	ProtoFriend friend_contacts[MAX_FRIEND_CONTACT_NUM];
+	ProtoRank ranks[MAX_RANK_TYPE];
 
 	uint8_t  server_level_break_count; //服务器等级突破计数
 	uint32_t server_level_break_notify; //服务器等级突破通知，记录level_id
+
+	AchievementInfo achievement_list[MAX_ACHIEVEMENT_NUM]; //成就列表
+	TitleInfo title_list[MAX_TITLE_NUM]; //称号列表
 };
 
 
@@ -829,7 +861,8 @@ public:
 	void calcu_baguapai_attr(double *attr); //八卦牌属性
 	void calcu_guild_skill_attr(double *attr); //帮会技能属性
 	void calcu_partner_attr(double *attr); //伙伴属性
-	void calcu_fashion_attr(double *attr); //伙伴属性
+	void calcu_fashion_attr(double *attr); //时装属性
+	void calcu_title_attr(double *attr); //称号属性
 
 	uint32_t get_partner_fc(void); //获取伙伴模块的战力
 
@@ -868,6 +901,7 @@ public:
 	void send_all_yaoshi_num();
 	void add_zhenying_exp(uint32_t num);
 	void send_zhenying_info();
+	uint32_t get_zhenying_grade(void);
 
 	//背包
 	void item_find_pos_by_cache(uint32_t id, std::vector<uint32_t>& pos_list); //通过id查找pos
@@ -921,6 +955,7 @@ public:
 	int init_head_icon(void);
 	HeadIconInfo *get_head_icon(uint32_t icon_id);
 	void check_head_condition(uint32_t condition_id, uint32_t condition_val);
+	uint32_t get_head_num(void);
 
 	//任务
 	bool check_task_accept_condition(uint32_t type, uint32_t target, uint32_t val);
@@ -964,6 +999,7 @@ public:
 
 	int get_task_chapter_info(uint32_t &id, uint32_t &state);
 	void update_task_chapter_info(void);
+	uint32_t get_task_chapter_id(void);
 
 	void do_taunt_action();
 	void update_region_id();
@@ -1019,6 +1055,8 @@ public:
 	bool equip_is_max_star(uint32_t type);
 	uint32_t get_equip_max_star_need_exp(uint32_t type); //升到当前最大星需要的经验
 	void update_weapon_skin(bool isNty); //更新武器外形
+	int get_equip_inlay_quality_num(uint32_t quality); //获取镶嵌指定品质宝石的装备数量
+	uint32_t get_equip_num(void);
 
 		//pvp副本
 	int change_pvp_raid_score(int type, int value);
@@ -1052,6 +1090,8 @@ public:
 	BaguapaiCardInfo *get_baguapai_card(uint32_t style_id, uint32_t part_id);
 	int generate_baguapai_main_attr(uint32_t card_id, double &attr_val);
 	int generate_baguapai_minor_attr(uint32_t card_id, AttrInfo *attrs);
+	int get_bagua_suit_id(BaguapaiDressInfo *info);
+	int get_bagua_min_star(BaguapaiDressInfo *info);
 
 	//活动
 	int add_activeness(uint32_t num, uint32_t statis_id, bool isNty = true);
@@ -1075,6 +1115,7 @@ public:
 	void add_guild_resource(uint32_t type, uint32_t num);
 	void sub_guild_building_time(uint32_t time);
 	void disband_guild(uint32_t guild_id);
+	uint32_t get_guild_skill_level_num(uint32_t level);
 
 	//护送
 	int start_escort(uint32_t escort_id);
@@ -1123,7 +1164,32 @@ public:
 	bool partner_bond_reward_is_get(uint32_t partner_id); //伙伴羁绊奖励是否领取
 	int get_partner_fabao_main_attr(uint32_t card_id, AttrInfo &attr_val);
 	int get_partner_fabao_minor_attr(uint32_t card_id, AttrInfo *attrs);
+	uint32_t get_partner_quality_num(uint32_t quality);
+
 	bool is_too_high_to_beattack();   //是否飞的太高不能被攻击
+
+	//好友
+	uint32_t get_friend_num(void);
+	uint32_t get_friend_close_num(uint32_t close_lv);
+
+	uint32_t get_rank_ranking(uint32_t rank_type);
+
+	//成就
+	void load_achievement_end(void);
+	void init_achievement_progress(AchievementInfo *info);
+	void add_achievement_progress(uint32_t type, uint32_t target1, uint32_t target2, uint32_t num);
+	AchievementInfo *get_achievement_info(uint32_t id);
+	void achievement_update_notify(AchievementInfo *info);
+	AchievementHierarchyTable *get_achievement_config(AchievementInfo *info);
+
+	//称号
+	TitleInfo *get_title_info(uint32_t id);
+	int add_title(uint32_t title_id, uint32_t keep_time = 0);
+	int expire_title(uint32_t title_id);
+	int sub_title(uint32_t title_idx);
+	void title_update_notify(TitleInfo *info);
+	void check_title_expire(void);
+	void check_title_condition(uint32_t type, uint32_t target1, uint32_t target2);
 
 	uint64_t last_change_area_time;
 	sight_space_struct *sight_space;

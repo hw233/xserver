@@ -100,14 +100,14 @@ local NoticeTable = {
 		},
 	[330500010] = {
 		['ID'] = 330500010,
-		['Priority'] = 3,
+		['Priority'] = 1,
 		['Way'] = 3,
 		['NoticeDay'] = {1,2,3,4,5,6,0},
-		['NoticeTime'] = {925},
-		['NoticeInterval'] = 60,
-		['NoticeEnd'] = 1125,
+		['NoticeTime'] = {025},
+		['NoticeInterval'] = 90,
+		['NoticeEnd'] = 2355,
 		['NoticeChannel'] = {1},
-		['NoticeTxt'] = '抵制不良游戏 拒绝盗版游戏 注意自我保护 谨防受骗上当'
+		['NoticeTxt'] = '当前版本为测试版本，不代表最终游戏品质'
 		},
 	[330500011] = {
 		['ID'] = 330500011,
@@ -115,32 +115,32 @@ local NoticeTable = {
 		['Way'] = 3,
 		['NoticeDay'] = {1,2,3,4,5,6,0},
 		['NoticeTime'] = {1125},
-		['NoticeInterval'] = 300,
-		['NoticeEnd'] = 2325,
+		['NoticeInterval'] = 3600,
+		['NoticeEnd'] = 1130,
 		['NoticeChannel'] = {1},
 		['NoticeTxt'] = '适度游戏益脑 沉迷游戏伤身 合理安排时间 享受健康生活'
 		},
 	[330510001] = {
 		['ID'] = 330510001,
 		['Priority'] = 1,
-		['Way'] = 1,
+		['Way'] = 4,
 		['NoticeDay'] = {},
 		['NoticeTime'] = {},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
-		['NoticeChannel'] = {1,2,3},
+		['NoticeChannel'] = {1,8,5},
 		['NoticeTxt'] = '恭喜%s已达到100级'
 		},
 	[330510002] = {
 		['ID'] = 330510002,
-		['Priority'] = 1,
-		['Way'] = 1,
+		['Priority'] = 3,
+		['Way'] = 4,
 		['NoticeDay'] = {},
 		['NoticeTime'] = {},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
-		['NoticeChannel'] = {1,2},
-		['NoticeTxt'] = '恭喜%s装备已达满星'
+		['NoticeChannel'] = {1,8},
+		['NoticeTxt'] = '%s已集齐青霜八卦牌套装！'
 		},
 	[330510003] = {
 		['ID'] = 330510003,
@@ -150,8 +150,63 @@ local NoticeTable = {
 		['NoticeTime'] = {},
 		['NoticeInterval'] = 0,
 		['NoticeEnd'] = 0,
-		['NoticeChannel'] = {1,2},
-		['NoticeTxt'] = '%s杀戮值过高已进入红名模式'
+		['NoticeChannel'] = {1,8},
+		['NoticeTxt'] = '%s杀戮值过高，已经进入强制杀戮模式'
+		},
+	[330510004] = {
+		['ID'] = 330510004,
+		['Priority'] = 3,
+		['Way'] = 4,
+		['NoticeDay'] = {},
+		['NoticeTime'] = {},
+		['NoticeInterval'] = 0,
+		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1,8},
+		['NoticeTxt'] = '%s战斗力已达5000点！'
+		},
+	[330510005] = {
+		['ID'] = 330510005,
+		['Priority'] = 3,
+		['Way'] = 4,
+		['NoticeDay'] = {},
+		['NoticeTime'] = {},
+		['NoticeInterval'] = 0,
+		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1,8},
+		['NoticeTxt'] = '%s已集齐玄霜八卦牌套装！'
+		},
+	[330510006] = {
+		['ID'] = 330510006,
+		['Priority'] = 3,
+		['Way'] = 4,
+		['NoticeDay'] = {},
+		['NoticeTime'] = {},
+		['NoticeInterval'] = 0,
+		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1,8},
+		['NoticeTxt'] = '%s已集齐天仙八卦牌套装！'
+		},
+	[330510007] = {
+		['ID'] = 330510007,
+		['Priority'] = 3,
+		['Way'] = 4,
+		['NoticeDay'] = {},
+		['NoticeTime'] = {},
+		['NoticeInterval'] = 0,
+		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1,8},
+		['NoticeTxt'] = '%s已集齐巨龙八卦牌套装！'
+		},
+	[330510008] = {
+		['ID'] = 330510008,
+		['Priority'] = 3,
+		['Way'] = 4,
+		['NoticeDay'] = {},
+		['NoticeTime'] = {},
+		['NoticeInterval'] = 0,
+		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {1,8},
+		['NoticeTxt'] = '%s已集齐焚天八卦牌套装！'
 		}
 	}
 return NoticeTable
