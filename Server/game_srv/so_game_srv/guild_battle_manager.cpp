@@ -59,6 +59,8 @@ extern std::set<uint32_t> guild_battle_manager_final_guild_id; //参加决赛的
 extern uint32_t guild_battle_manager_final_list_state;
 extern uint32_t guild_battle_manager_final_list_tick;
 
+extern std::set<uint64_t> guild_battle_manager_participate_players; //参加帮会战的玩家
+
 enum
 {
 	GBS_BEGIN = 1,
@@ -1342,6 +1344,7 @@ void run_activity_period()
 				//活动开始，清除所有数据
 				guild_battle_manager_guild_participate.clear();
 				guild_battle_manager_guild_call_cd.clear();
+				guild_battle_manager_participate_players.clear();
 				//通知所有帮会玩家活动开始
 				call_all_guild_player();
 			}
@@ -1923,6 +1926,11 @@ void insert_guild_battle_fight_reward_map(std::map<uint32_t, GuildBattleFightGui
 	}
 
 	guild_iter->second.players.push_back(player_reward);
+	if (guild_battle_manager_participate_players.find(player_reward.player_id) == guild_battle_manager_participate_players.end())
+	{
+		guild_battle_manager_participate_players.insert(player_reward.player_id);
+		player->add_achievement_progress(ACType_GUILD_BATTLE, 0, 0, 1);
+	}
 }
 
 void get_guild_raid_reward(raid_struct *raid, int win_team, std::map<uint32_t, GuildBattleFightGuildRewardInfo> &reward_map)
@@ -1954,7 +1962,6 @@ void get_guild_raid_reward(raid_struct *raid, int win_team, std::map<uint32_t, G
 				uint32_t kill_num = raid->GUILD_DATA.kill_record[i];
 				uint32_t dead_num = raid->data->player_info[i].dead_count;
 				insert_guild_battle_fight_reward_map(reward_map, player, team1_result, kill_num, dead_num);
-				player->add_achievement_progress(ACType_GUILD_BATTLE, 0, 0, 1);
 			}
 		}
 
@@ -1965,7 +1972,6 @@ void get_guild_raid_reward(raid_struct *raid, int win_team, std::map<uint32_t, G
 				uint32_t kill_num = raid->GUILD_DATA.kill_record[i + MAX_TEAM_MEM];
 				uint32_t dead_num = raid->data->player_info2[i].dead_count;
 				insert_guild_battle_fight_reward_map(reward_map, player, team2_result, kill_num, dead_num);
-				player->add_achievement_progress(ACType_GUILD_BATTLE, 0, 0, 1);
 			}
 		}
 	}
@@ -2138,7 +2144,6 @@ void cant_matched_player_round_finished()
 		{
 			insert_guild_battle_fight_reward_map(reward_map, player, 0);
 		}
-		player->add_achievement_progress(ACType_GUILD_BATTLE, 0, 0, 1);
 	}
 
 	send_guild_battle_fight_reward_to_guildsrv(reward_map);

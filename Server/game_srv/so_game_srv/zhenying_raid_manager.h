@@ -29,7 +29,7 @@ public:
 	static void create_all_line();
 	static void get_all_line_info(player_struct *player); //
 
-	static zhenying_raid_struct *get_avaliable_zhenying_raid();	
+	static zhenying_raid_struct *get_avaliable_zhenying_raid(uint32_t raid_id);
 	static zhenying_raid_struct *add_player_to_zhenying_raid(player_struct *player); //把玩家加入阵营副本
 
 	static unsigned int get_zhenying_raid_pool_max_num();	

@@ -44,10 +44,6 @@ static void guild_raid_final_ai_init(raid_struct *raid, player_struct *player)
 	}
 }
 
-static void guild_raid_final_ai_player_region_changed(raid_struct *raid, player_struct *player, uint32_t region_id)
-{
-}
-
 static void guild_raid_final_ai_tick(raid_struct *raid)
 {
 	if (raid->data->state == RAID_STATE_PASS)
@@ -455,6 +451,4 @@ struct raid_ai_interface raid_ai_guild_final_interface =
 	guild_raid_final_ai_player_ready,
 	NULL,// guild_raid_final_ai_finished,
 	guild_raid_final_ai_player_attack,
-	guild_raid_final_ai_player_region_changed,
-
 };

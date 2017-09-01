@@ -386,6 +386,7 @@ int handle_move_stop_request_impl(player_struct *player, EXTERN_DATA *extern_dat
 		cash_truck_struct *truck = cash_truck_manager::get_cash_truck_by_id(player->data->truck.truck_id);
 		if (truck != NULL)
 		{
+			truck->stop_move();
 			notify.playerid = truck->get_uuid();
 		}
 	}
@@ -2438,6 +2439,7 @@ static int on_login_send_team_task(player_struct *player, EXTERN_DATA *extern_da
 	return 0;
 }
 
+static int on_login_send_live_skill(player_struct *player, EXTERN_DATA *extern_data);
 static int on_login_send_yaoshi(player_struct *player, EXTERN_DATA *extern_data);
 static int on_login_send_auto_add_hp_data(player_struct *player, EXTERN_DATA *extern_data);
 static int notify_jijiangopen_gift_info(player_struct* player, EXTERN_DATA* extern_data);
@@ -2601,6 +2603,7 @@ int pack_player_online(player_struct *player, EXTERN_DATA *extern_data, bool loa
 //玩家登陆时进入场景完成
 static int player_online_enter_scene_after(player_struct *player, EXTERN_DATA *extern_data)
 {
+	LOG_INFO("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 	on_login_send_auto_add_hp_data(player, extern_data);
 	on_login_send_yaoshi(player, extern_data);
 	notify_task_list(player, extern_data);
@@ -2617,6 +2620,7 @@ static int player_online_enter_scene_after(player_struct *player, EXTERN_DATA *e
 	notify_server_level_break(player, extern_data);
 	notify_achievement_info(player, extern_data);
 	notify_title_info(player, extern_data);
+	on_login_send_live_skill(player, extern_data);
 
 	player->data->login_notify = true;
 
@@ -4264,7 +4268,7 @@ static int handle_task_complete_request(player_struct *player, EXTERN_DATA *exte
 			break;
 		}
 
-		uint32_t truck_id = 0;
+		uint32_t truck_type = 0;
 		switch (config->ConditionType)
 		{
 		case TCT_EXPLORE:
@@ -4289,6 +4293,11 @@ static int handle_task_complete_request(player_struct *player, EXTERN_DATA *exte
 				break;
 			}
 			player->go_down_cash_truck();
+			BiaocheTable *table = get_config_by_id(player->data->truck.active_id, &cash_truck_config);
+			if (table)
+			{
+				truck_type = table->Type;
+			}
 			cash_truck_struct *truck = cash_truck_manager::get_cash_truck_by_id(player->data->truck.truck_id);
 			if (truck != NULL)
 			{
@@ -4306,7 +4315,6 @@ static int handle_task_complete_request(player_struct *player, EXTERN_DATA *exte
 				cash_truck_manager::delete_cash_truck(truck); 
 				
 			}
-			truck_id = player->data->truck.truck_id;
 			player->data->truck.truck_id = 0;
 			//player->data->truck.active_id = 0;
 		}
@@ -4342,7 +4350,7 @@ static int handle_task_complete_request(player_struct *player, EXTERN_DATA *exte
 		if (config->ConditionType == TCT_TRUCK)
 		{
 			player->add_task_progress(TCT_TRUCK_NUM, 0, 1);
-			player->add_achievement_progress(ACType_TRUCK, truck_id, 0, 1);
+			player->add_achievement_progress(ACType_TRUCK, truck_type, 0, 1);
 		}
 	} while(0);
 
@@ -7653,6 +7661,11 @@ static int handle_unlock_weapon_color_request(player_struct *player, EXTERN_DATA
 	}
 
 	if (equ->stair < tableEqu->Quality || equ->star_lv < tableEqu->StarLv)
+	{
+		send.ret = 190500063;
+		goto done;
+	}
+	if (table->Item > 0 && player->del_item(table->Item, table->ItemNum , MAGIC_TYPE_FASHION) < 0)
 	{
 		send.ret = 190500063;
 		goto done;
@@ -12831,20 +12844,16 @@ static int handle_transfer_out_stuck_request(player_struct *player, EXTERN_DATA 
 			LOG_ERR("[%s:%d] player[%lu] out stuck cd, out_stuck_time:%u, now:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->data->out_stuck_time, now);
 			break;
 		}
-
+		if (player->data->truck.on_truck)
+		{
+			player->go_down_cash_truck();
+		}
 		if (player->transfer_to_birth_position(extern_data) != 0)
 		{
 			ret = ERROR_ID_TRANSFER_OUT_STUCK_FAIL;
 			LOG_ERR("[%s:%d] player[%lu] transfer fail", __FUNCTION__, __LINE__, extern_data->player_id);
 			break;
 		}
-
-		
-		if (player->data->truck.on_truck)
-		{
-			player->go_down_cash_truck();
-		}
-
 		player->data->out_stuck_time = now + sg_transfer_out_stuck_cd_time;
 
 	} while(0);
@@ -13109,7 +13118,7 @@ static int handle_sync_guild_info_request(player_struct *player, EXTERN_DATA *ex
 	char *pName = get_guild_name(old_guild_id);
 	if (pName)
 	{
-		memcpy(old_guild_name, pName, MAX_GUILD_NAME_LEN + 1);
+		strcpy(old_guild_name, pName);
 	}
 	PROTO_SYNC_GUILD_INFO *req = (PROTO_SYNC_GUILD_INFO*)buf_head();
 	player->data->guild_id = req->guild_id;
@@ -13453,6 +13462,31 @@ static int handle_into_zhenying_battle_request(player_struct *player, EXTERN_DAT
 
 	return 0;
 }
+static int handle_join_zhenying_battle_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (comm_check_player_valid(player, extern_data->player_id) != 0)
+	{
+		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
+		return (-1);
+	}
+
+	ZhenyingBattle::GetInstance()->Join(*player);
+	send_comm_answer(MSG_ID_JOIN_ZHENYING_FIGHT_ANSWER, 0, extern_data);
+
+	return 0;
+}
+static int handle_into_zhenying_fight_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (comm_check_player_valid(player, extern_data->player_id) != 0)
+	{
+		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
+		return (-1);
+	}
+	
+	send_comm_answer(MSG_ID_INTO_ZHENYING_FIGHT_ANSWER, ZhenyingBattle::GetInstance()->IntoBattle(*player), extern_data);
+
+	return 0;
+}
 static int handle_zhenying_change_line_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	LOG_INFO("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
@@ -13526,15 +13560,15 @@ static int handle_zhenying_get_line_info_request(player_struct *player, EXTERN_D
 	zhenying_line__init(&send);
 	int n_line = 0;
 
-	ZhenyingLineInfo info[ZhenyingBattle::MAX_LINE_NUM];
-	ZhenyingLineInfo *infoPoint[ZhenyingBattle::MAX_LINE_NUM];
+	ZhenyingLineInfo info[MAX_BATTLE_LINE_NUM];
+	ZhenyingLineInfo *infoPoint[MAX_BATTLE_LINE_NUM];
 
 	zhenying_raid_struct *raid = NULL;
 	std::map<uint64_t, zhenying_raid_struct *>::iterator iter = zhenying_raid_manager_all_raid_id.begin();
 	for (; iter != zhenying_raid_manager_all_raid_id.end(); ++iter)
 	{
 		raid = iter->second;
-		if (raid->m_id == player->data->scene_id)
+		if (raid->m_id == player->data->scene_id) //todo 对n_line上限做个保护
 		{
 			zhenying_line_info__init(&info[n_line]);
 			info[n_line].id = raid->get_line_num();
@@ -14286,7 +14320,7 @@ static int handle_answer_award_question_request(player_struct *player, EXTERN_DA
 			//send_comm_answer(MSG_ID_NEXT_AWARD_QUESTION_NOTIFY, 0, extern_data);
 			on_login_send_question(player, extern_data); //完成一次任务答题
 			player->check_activity_progress(AM_ANSWER, QUESTION_AWARD);
-			player->add_task_progress(TCT_QUESTION_JOIN, 0, 1);
+			player->add_task_progress(TCT_QUESTION, 0, 1);
 			player->add_achievement_progress(ACType_ANSWER, QUESTION_AWARD, 0, 1);
 		}
 		player->data->award_answer.bOpenWin = false;
@@ -14403,17 +14437,6 @@ static int on_login_send_live_skill(player_struct *player, EXTERN_DATA *extern_d
 		}
 	}
 
-	if (player->data->truck.truck_id != 0)
-	{
-		assert(player->data->truck.scene_id > 0);
-		scene_struct *pScene = scene_manager::get_scene(player->data->truck.scene_id);
-		if (pScene != NULL)
-		{
-			cash_truck_struct *truck = cash_truck_manager::create_cash_truck_at_pos(pScene, player->data->truck.active_id, *player, player->data->truck.pos.pos_x, player->data->truck.pos.pos_z, player->data->truck.hp);
-			player->data->truck.truck_id = truck->get_uuid();
-		}
-	}
-
 	CashTruckInfo note;
 	cash_truck_info__init(&note);
 	note.num_cion = player->data->truck.num_coin;
@@ -14422,6 +14445,11 @@ static int on_login_send_live_skill(player_struct *player, EXTERN_DATA *extern_d
 	note.mapid = player->data->truck.scene_id;
 	note.x = player->data->truck.pos.pos_x;
 	note.z = player->data->truck.pos.pos_z;
+	BiaocheTable *tableTruck = get_config_by_id(player->data->truck.active_id, &cash_truck_config);
+	if (tableTruck != NULL)
+	{
+		note.task = tableTruck->TaskId;
+	}
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_CASH_TRUCK_INFO_NOTIFY, cash_truck_info__pack, note);
 
 	AnsLiveSkill send;
@@ -14457,7 +14485,6 @@ static int handle_team_info_request(player_struct *player, EXTERN_DATA *extern_d
 	//on_login_send_yaoshi(player, extern_data);
 	on_login_send_zhenying(player, extern_data);
 	on_login_send_question(player, extern_data);
-	on_login_send_live_skill(player, extern_data);
 
 	handle_first_award_question_request(player, extern_data);
 	//队伍
@@ -15462,7 +15489,7 @@ static int handle_doufachang_challenge(player_struct *player, EXTERN_DATA *exter
 	player_struct *ai_player = player_manager::create_doufachang_ai_player(target);
 	assert(ai_player);
 	raid->player_enter_raid_impl(ai_player, MAX_TEAM_MEM, sg_3v3_pvp_raid_param2[1], sg_3v3_pvp_raid_param2[3]);
-
+	ai_player->add_all_formation_partner_to_scene();
 	return 0;
 }
 
@@ -18020,12 +18047,12 @@ static int handle_achievement_reward_request(player_struct *player, EXTERN_DATA 
 
 		if (info->state != Achievement_State_Achieved)
 		{
-			ret = ERROR_ID_ACHIEVEMENT_CANT_REWARD;
+			ret = 190500396;
 			LOG_ERR("[%s:%d] player[%lu] achievement state, id:%u, state:%u", __FUNCTION__, __LINE__, extern_data->player_id, achievement_id, info->state);
 			break;
 		}
 
-		AchievementHierarchyTable *config = player->get_achievement_config(info);
+		AchievementHierarchyTable *config = get_achievement_config(info->id, info->star);
 		if (!config)
 		{
 			ret = ERROR_ID_NO_CONFIG;
@@ -18034,7 +18061,7 @@ static int handle_achievement_reward_request(player_struct *player, EXTERN_DATA 
 		}
 
 		info->star++;
-		if (player->get_achievement_config(info) == NULL)
+		if (get_achievement_config(info->id, info->star) == NULL)
 		{
 			info->state = Achievement_State_Rewarded;
 		}
@@ -18065,6 +18092,7 @@ static int handle_achievement_reward_request(player_struct *player, EXTERN_DATA 
 
 		if (config->Title > 0)
 		{
+			player->add_title(config->Title);
 		}
 		if (config->NoticeID > 0)
 		{
@@ -18128,6 +18156,52 @@ static int handle_rank_sync_rank(player_struct *player, EXTERN_DATA *extern_data
 		{
 			player->add_achievement_progress(ACType_RANKING_RANK, rank_type, rank_lv, 1);
 			player->check_title_condition(TCType_RANK_RANKING, rank_type, rank_lv);
+		}
+	}
+
+	return (0);
+}
+
+static int handle_rank_sync_change(player_struct * /*player*/, EXTERN_DATA * /*extern_data*/)
+{
+	PROTO_SYNC_RANK_CHANGE *proto = (PROTO_SYNC_RANK_CHANGE*)buf_head();
+
+	uint32_t rank_type = proto->type;
+	ProtoRankPlayer *pPlayer = proto->changes;
+	for (uint32_t i = 0; i < proto->num; ++i)
+	{
+		player_struct *player = player_manager::get_player_by_id(pPlayer[i].player);
+		if (!player)
+		{
+			continue;
+		}
+
+		uint32_t pre_lv = 0;
+		uint32_t post_lv = pPlayer[i].lv;
+		for (int j = 0; j < MAX_RANK_TYPE; ++j)
+		{
+			if (player->data->ranks[j].type == 0)
+			{
+				player->data->ranks[j].type = rank_type;
+				player->data->ranks[j].rank = post_lv;
+				pre_lv = 0;
+				break;
+			}
+			else if (player->data->ranks[j].type == rank_type)
+			{
+				pre_lv = player->data->ranks[j].rank;
+				if (pre_lv != post_lv)
+				{
+					player->data->ranks[j].rank = post_lv;
+				}
+				break;
+			}
+		}
+
+		if (pre_lv != post_lv)
+		{
+			player->add_achievement_progress(ACType_RANKING_RANK, rank_type, post_lv, 1);
+			player->check_title_condition(TCType_RANK_RANKING, rank_type, post_lv);
 		}
 	}
 
@@ -18334,6 +18408,9 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_GET_ZHENYING_TASK_AWARD_REQUEST, handle_get_zhenying_task_award_request);
 	add_msg_handle(MSG_ID_ZHENYING_GET_LINE_INFO_REQUEST, handle_zhenying_get_line_info_request);
 	add_msg_handle(MSG_ID_ZHENYING_CHANGE_LINE_REQUEST, handle_zhenying_change_line_request);
+
+	add_msg_handle(MSG_ID_JOIN_ZHENYING_FIGHT_REQUEST, handle_join_zhenying_battle_request);
+	add_msg_handle(MSG_ID_INTO_ZHENYING_FIGHT_REQUEST, handle_into_zhenying_fight_request);
 
 	//妖师国御
 	add_msg_handle(MSG_ID_ACCECT_GUOYU_TASK_REQUEST, handle_accect_guoyu_task_request);
@@ -18573,6 +18650,7 @@ void install_msg_handle()
 	add_msg_handle(SERVER_PROTO_DOUFACHANG_BUY_CHALLENGE_REQUEST, handle_doufachang_buy_challenge);			
 
 	add_msg_handle(SERVER_PROTO_RANK_SYNC_RANK, handle_rank_sync_rank);		
+	add_msg_handle(SERVER_PROTO_RANK_SYNC_CHANGE, handle_rank_sync_change);		
 
 	add_msg_handle(MSG_ID_TITLE_WEAR_REQUEST, handle_title_wear_request);
 	add_msg_handle(MSG_ID_TITLE_MARK_OLD_REQUEST, handle_title_mark_old_request);

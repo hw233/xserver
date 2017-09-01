@@ -38,6 +38,7 @@ extern struct event sg_clear_timer_event;
 extern struct timeval sg_clear_timer_val;
 extern void cb_clear_timeout(evutil_socket_t, short, void* /*arg*/);
 extern void init_redis_keys(uint32_t server_id);
+extern void dayinshiju();
 
 int main(int argc, char **argv)
 {
@@ -202,9 +203,10 @@ int main(int argc, char **argv)
 	}
 	add_signal(SIGUSR2, NULL, cb_signal2);		
 
-	init_redis_keys(sg_server_id);
 	read_all_rank_excel_data();
 	init_rank_world_boss_id();
+	init_redis_keys(sg_server_id);
+	init_cur_world_boss_info();
 
 	sg_clear_timer_val.tv_sec = 3600;
 	sg_clear_timer_event.ev_callback = cb_clear_timeout;

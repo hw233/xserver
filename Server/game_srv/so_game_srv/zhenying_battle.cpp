@@ -1,6 +1,7 @@
 #include "zhenying_battle.h"
 #include <unistd.h>
 #include "comm.h"
+#include "time_helper.h"
 #include "player.h"
 #include "msgid.h"
 #include "../proto/zhenying.pb-c.h"
@@ -99,162 +100,276 @@ void player_struct::refresh_zhenying_task_oneday()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// BattleField *ZhenyingBattle::GetFiled()
-// {
-// 	if (ZhenyingBattle_m_filed == NULL)
-// 	{
-// 		ZhenyingBattle_m_filed = new BattleField;
-// 		ZhenyingBattle_m_filed->init_scene_struct(30001, true);
-// 	}
-// 	return ZhenyingBattle_m_filed;
-// }
+ZhenyingBattle *ZhenyingBattle::ins;
+const uint32_t ZhenyingBattle::s_border[MAX_STEP] = { 49,69,89,0 };
 
-int ZhenyingBattle::GotoBattle(player_struct &player)
+ZhenyingBattle::ZhenyingBattle()
 {
-	//raid_struct * raid = raid_manager::get_raid_by_uuid(m_battlefield);
-	//if (raid == NULL)
+	m_nextTick = time_helper::get_cached_time() / 1000 + 60;
+	m_state = REST_STATE;
+}
+ZhenyingBattle *ZhenyingBattle::GetInstance()
+{
+	if (ins == NULL)
+	{
+		ins = new ZhenyingBattle;
+	}
+	return ins;
+}
+
+void ZhenyingBattle::Join(player_struct &player)
+{
+	//int i = 0;
+	//for (; i < MAX_STEP - 1; ++i)
 	//{
-	//	raid = raid_manager::create_zhenying_raid(24, &player);
-	//	m_battlefield = raid->data->uuid;
-	//}
-	//if (player.m_team)
-	//{
-	//	raid->team_enter_raid(player.m_team);
-	//}
-	//else
-	//{
-	//	if (raid->player_enter_raid(&player) != 0)
+	//	if (player.get_attr(PLAYER_ATTR_LEVEL) <= s_border[i])
 	//	{
-	//		LOG_ERR("%s: player[%lu] enter raid failed", __FUNCTION__, player.get_uuid());
-	//		return ;
+	//		break;
 	//	}
 	//}
+	//if (m_join[i].find(player.get_uuid()) != m_join[i].end())
+	//{
+	//	return;
+	//}
 
-
-
-	//GetFiled();
-	//player.set_attr(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP);
-	//player.broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP, false, true);
-	//EXTERN_DATA extern_data;
-	//extern_data.player_id = player.get_uuid();
-	//player.transfer_to_new_scene_impl(ZhenyingBattle_m_filed, 66, 100, 53, 0, &extern_data);
-
-	zhenying_raid_struct *raid = zhenying_raid_manager::add_player_to_zhenying_raid(&player);
-	if (raid == NULL)
-		return (-1);
-	return (0);
+	//todo 判断状态
+	if (m_allJoin.find(player.get_uuid()) != m_allJoin.end())
+	{
+		return;
+	}
+	BATTLE_JOINER tmp;
+	tmp.room = 0;
+	tmp.kill = 0;
+	tmp.dead = 0;
+	tmp.point = 0;
+	tmp.lv = player.get_attr(PLAYER_ATTR_LEVEL);
+	tmp.zhenying = player.get_attr(PLAYER_ATTR_ZHENYING);
+	//m_join[i].insert(std::make_pair(player.get_uuid(), tmp));
+	m_allJoin.insert(std::make_pair(player.get_uuid(), tmp));
 }
 
-void ZhenyingBattle::UpdateOneTeamInfo(player_struct &player)
+void ZhenyingBattle::CreateRoom()
 {
-	ZhenyingTeamInfo send;
-	zhenying_team_info__init(&send);
-	send.playerid = player.get_uuid();
-	send.name = player.get_name();
-	send.job = player.get_attr(PLAYER_ATTR_JOB);
-	send.lv = player.get_attr(PLAYER_ATTR_LEVEL);
-	send.kill = player.data->zhenying.kill;
-	send.death = player.data->zhenying.death;
-	send.assist = player.data->zhenying.help;
-	send.score = player.data->zhenying.score;
-	EXTERN_DATA extern_data;
-	extern_data.player_id = player.get_uuid();
-	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_TEAM_INFO_NOTIFY, zhenying_team_info__pack, send);
+	uint32_t roomId = 1;
+	STEP_JOIN_T stepJoin[MAX_STEP];
+	JOIN_T::iterator it = m_allJoin.begin();
+	for (; it != m_allJoin.end(); ++it) //按等级分组
+	{
+		int s = 0;
+		for (; s < MAX_STEP - 1; ++s)
+		{
+			if (it->second.lv <= s_border[s])
+			{
+				break;
+			}
+		}
+		stepJoin[s].push_back(it->first);
+	}
+	for (int i = 0; i < MAX_STEP; ++i)
+	{	
+		std::vector<uint64_t> fulongguoSide;
+		std::vector<uint64_t> dianfengguSide;
+		for (STEP_JOIN_T::iterator itStep = stepJoin[i].begin(); itStep != stepJoin[i].end(); ++itStep) //相同阵营的放到一起
+		{
+			it = m_allJoin.find(*itStep);
+			if (it == m_allJoin.end())
+			{
+				continue;
+			}
+			if (it->second.zhenying == ZHENYING__TYPE__FULONGGUO)
+			{
+				fulongguoSide.push_back(it->first);
+			}
+			else
+			{
+				dianfengguSide.push_back(it->first);
+			}
+		}
+		std::vector<uint64_t>::iterator itSflg = fulongguoSide.begin();
+		std::vector<uint64_t>::iterator itSdfg = dianfengguSide.begin();
+		for (; itSdfg !=  dianfengguSide.end() || itSflg != fulongguoSide.end();) //分房间
+		{
+			ROOM_T::iterator itRoom = m_room.find(roomId);
+			if (itRoom == m_room.end())
+			{
+				ROOM_INFO info;
+				info.step = i;
+				std::pair<ROOM_T::iterator, bool> ret = m_room.insert(std::make_pair(roomId, info));
+				itRoom = ret.first;
+			}
+			if (itSdfg != dianfengguSide.end() && itRoom->second.fighter[ZHENYING__TYPE__WANYAOGU - 1].size() < MAX_ROOM_SIDE)
+			{
+				it = m_allJoin.find(*itSdfg);
+				if (it != m_allJoin.end())
+				{
+					it->second.room = roomId;
+				}
+				++itSdfg;
+				itRoom->second.fighter[ZHENYING__TYPE__WANYAOGU - 1].push_back(it->first);
+			}
+			if (itSflg != fulongguoSide.end() && itRoom->second.fighter[ZHENYING__TYPE__FULONGGUO - 1].size() < MAX_ROOM_SIDE)
+			{
+				it = m_allJoin.find(*itSflg);
+				if (it != m_allJoin.end())
+				{
+					it->second.room = roomId;
+				}
+				++itSflg;
+				itRoom->second.fighter[ZHENYING__TYPE__FULONGGUO - 1].push_back(it->first);
+			}
+			if (itRoom->second.fighter[0].size() >= MAX_ROOM_SIDE || itRoom->second.fighter[1].size() >= MAX_ROOM_SIDE) //新房间 
+			{
+				++roomId;
+			}
+		}
+	}
 }
 
-
-
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-void BattleField::update_task_process(uint32_t type, player_struct *player)
+int ZhenyingBattle::IntoBattle(player_struct &player)
 {
-	if (player == NULL)
+	JOIN_T::iterator it = m_allJoin.find(player.get_uuid());
+	if (it == m_allJoin.end())
 	{
-		return;
+		return 1;
 	}
-	if (player->data->zhenying.task == 0)
+	if (it->second.room == 0)
 	{
-		return;
+		return 2;
 	}
-	if (player->data->zhenying.task_type != type)
+	raid_struct *raid = NULL;
+	ROOM_T::iterator itRoom = m_room.find(it->second.room);
+	if (itRoom == m_room.end()) //创建副本
 	{
-		return;
+		return 5;
 	}
-	WeekTable *table = get_config_by_id(player->data->zhenying.task, &zhenying_week_config);
+	BattlefieldTable *table = get_config_by_id(itRoom->second.step + 360500001, &zhenying_fight_config);
 	if (table == NULL)
 	{
+		return 6;
+	}
+	if (itRoom->second.uid == 0)
+	{	
+		raid = raid_manager::create_raid(table->Map, &player);
+		if (raid == NULL)
+		{
+			LOG_ERR("%s: create raid failed", __FUNCTION__);
+			return 3;
+		}
+		
+		itRoom->second.uid = raid->data->uuid;
+	}
+	else
+	{
+		raid = raid_manager::get_raid_by_uuid(itRoom->second.uid);
+		if (raid == NULL)
+		{
+			return 4;
+		}
+	}
+	int x, z;
+	if (it->second.zhenying == ZHENYING__TYPE__FULONGGUO)
+	{
+		x = table->BirthPoint1[0];
+		z = table->BirthPoint1[2];
+	}
+	else
+	{
+		x = table->BirthPoint2[0];
+		z = table->BirthPoint2[2];
+	}
+	raid->player_enter_raid_impl(&player, 0, x, z);
+	return 0;
+}
+
+uint32_t ZhenyingBattle::GetStep(player_struct &player)
+{
+	JOIN_T::iterator it = m_allJoin.find(player.get_uuid());
+	if (it == m_allJoin.end())
+	{
+		return 0;
+	}
+	if (it->second.room == 0)
+	{
+		return 0;
+	}
+	ROOM_T::iterator itRoom = m_room.find(it->second.room);
+	if (itRoom == m_room.end()) 
+	{
+		return 0;
+	}
+	return itRoom->second.step;
+}
+
+void ZhenyingBattle::SendMyScore(player_struct &player)
+{
+	JOIN_T::iterator it = m_allJoin.find(player.get_uuid());
+	if (it == m_allJoin.end())
+	{
+		return ;
+	}
+	if (it->second.room == 0)
+	{
+		return ;
+	}
+	ROOM_T::iterator itRoom = m_room.find(it->second.room);
+	if (itRoom == m_room.end()) 
+	{
+		return ;
+	}
+	int zhenying = player.get_attr(PLAYER_ATTR_ZHENYING) - 1;
+	if (zhenying >= 2 || zhenying < 0)
+	{
 		return;
 	}
-
-	if (player->data->zhenying.task_num < table->Num)
+	std::vector<uint64_t>::iterator itFig = itRoom->second.fighter[zhenying].begin();
+	for (; itFig != itRoom->second.fighter[zhenying].end(); ++itFig)
 	{
-		++player->data->zhenying.task_num;
-		ZhenyingTaskProcess send;
-		zhenying_task_process__init(&send);
-		send.task_num = player->data->zhenying.task_num;
-		EXTERN_DATA extern_data;
-		extern_data.player_id = player->get_uuid();
-		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_TASK_PROCESS_NOTIFY, zhenying_task_process__pack, send);
+		if (*itFig == player.get_uuid())
+		{
+			break;
+		}
 	}
-}
-void BattleField::on_collect(player_struct *player, Collect *collect)
-{}
-
-void BattleField::on_monster_dead(monster_struct *monster, unit_struct *killer)
-{
-	if (killer->get_unit_type() == UNIT_TYPE_PLAYER)
-	{
-		player_struct *pKill = (player_struct *)killer;
-
-		pKill->add_zhenying_exp(5);
-
-		update_task_process(3, pKill);
-	}
-}
-
-void BattleField::on_player_dead(player_struct *player, unit_struct *killer)
-{
-	if (killer == NULL || player == NULL)
+	if (itFig == itRoom->second.fighter[zhenying].end())
 	{
 		return;
 	}
-	if (killer->get_unit_type() == UNIT_TYPE_PLAYER)
-	{
-		player_struct *pKill = (player_struct *)killer;
-
-		pKill->add_zhenying_exp(10);
-		++pKill->data->zhenying.kill;
-		++pKill->data->zhenying.kill_week;
-		pKill->data->zhenying.score += 5;
-		pKill->data->zhenying.score_week += 5;
-
-		++player->data->zhenying.death;
-
-		ZhenyingBattle::UpdateOneTeamInfo(*player);
-		ZhenyingBattle::UpdateOneTeamInfo(*pKill);
-
-		update_task_process(1, pKill);
-
-		EXTERN_DATA extern_data;
-		extern_data.player_id = pKill->get_uuid();
-		AddZhenyingPlayer tofr;
-		add_zhenying_player__init(&tofr);
-		tofr.name = pKill->get_name();
-		tofr.zhenying = pKill->get_attr(PLAYER_ATTR_ZHENYING);
-		tofr.zhenying_old = pKill->get_attr(PLAYER_ATTR_ZHENYING);
-		tofr.fighting_capacity = pKill->get_attr(PLAYER_ATTR_FIGHTING_CAPACITY);
-		tofr.kill = pKill->data->zhenying.kill_week;
-		conn_node_gamesrv::connecter.send_to_friend(&extern_data, SERVER_PROTO_ADD_ZHENYING_KILL_REQUEST, &tofr, (pack_func)add_zhenying_player__pack);
-	}
+	int rank = std::distance(itFig, itRoom->second.fighter[zhenying].begin());
+	MyScore send;
+	my_score__init(&send);
+	send.rank = rank;
+	send.point = it->second.point;
+	EXTERN_DATA extern_data;
+	extern_data.player_id = player.get_uuid();
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_FIGHT_MY_SCORE_NOTIFY, my_score__pack, send);
 }
 
-
+void ZhenyingBattle::Tick()
+{
+	uint64_t now = time_helper::get_cached_time() / 1000;
+	if (now > m_nextTick)
+	{
+		ZhenyingExp send;
+		zhenying_exp__init(&send);
+		switch (m_state)
+		{
+		case JOIN_STATE:
+			m_nextTick = now + 600;
+			m_state = RUN_STATE;
+			conn_node_gamesrv::send_to_all_player(MSG_ID_ZHENYING_FIGHT_START_NOTIFY, &send, (pack_func)zhenying_exp__pack);
+			CreateRoom();
+			break;
+		case RUN_STATE:
+			m_nextTick = now + 60;
+			m_state = REST_STATE;
+			break;
+		case REST_STATE:
+			m_nextTick = now + 60;
+			m_state = JOIN_STATE;
+			m_allJoin.clear();
+			m_room.clear();
+			conn_node_gamesrv::send_to_all_player(MSG_ID_JOIN_ZHENYING_FIGHT_NOTIFY, &send, (pack_func)zhenying_exp__pack);
+			break;
+		}
+	}
+	;
+}

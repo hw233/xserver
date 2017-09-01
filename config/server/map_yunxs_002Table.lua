@@ -683,5 +683,17 @@
         ['PointPosZ'] = 80.78,
         ['Yaw'] = 0,
     },
+    [1000060] = {
+        ['uid'] = 1000060,
+        ['ID'] = 151600002,
+        ['ResType'] = "Monster",
+        ['PointPosX'] = 176.189,
+        ['PointPosY'] = 37.0023,
+        ['PointPosZ'] = 35.39211,
+        ['Yaw'] = 0,
+        ['Level'] = 1,
+        ['TargetInfoList'] = {
+        }
+    },
 }
 return map_yunxs_002

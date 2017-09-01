@@ -19,6 +19,7 @@ struct BaguaSuitTable;
 struct BaguaTable;
 struct BaguaViceAttributeTable;
 struct BaseAITable;
+struct BattlefieldTable;
 struct BiaocheRewardTable;
 struct BiaocheTable;
 struct BootNameTable;
@@ -112,6 +113,7 @@ struct TreasureTable;
 struct TypeLevelTable;
 struct WeaponsEffectTable;
 struct WeekTable;
+struct WorldBossRewardTable;
 struct WorldBossTable;
 struct sproto_config_pos;
 struct AchievementFunctionTable
@@ -441,6 +443,26 @@ struct BaseAITable
 	uint64_t  Response; //11
 }__attribute__ ((packed));
 
+struct BattlefieldTable
+{
+	uint64_t  ID; //1
+	uint64_t  LowerLimitLv; //2
+	uint64_t  UpperLimitLv; //3
+	uint64_t  Map; //4
+	uint32_t n_BirthPoint1; //5
+	uint64_t *BirthPoint1; //5
+	uint32_t n_BirthPoint2; //6
+	uint64_t *BirthPoint2; //6
+	uint64_t  ReadyTime; //7
+	uint32_t n_WarSet; //8
+	uint64_t *WarSet; //8
+	uint32_t n_MineSet; //9
+	uint64_t *MineSet; //9
+	uint32_t n_ForestSet; //10
+	uint64_t *ForestSet; //10
+	uint64_t  Kill; //11
+}__attribute__ ((packed));
+
 struct BiaocheRewardTable
 {
 	uint64_t  ID; //1
@@ -535,6 +557,8 @@ struct BuffTable
 	uint64_t  Interval; //5
 	uint32_t n_EffectID; //6
 	uint64_t *EffectID; //6
+	uint32_t n_DelEffectID; //7
+	uint64_t *DelEffectID; //7
 	uint64_t  DfPro; //8
 	uint64_t  TimeDelay; //9
 	uint64_t  CoverType; //10
@@ -843,17 +867,17 @@ struct FactionBattleTable
 	uint64_t  UpperLimitLv; //3
 	uint64_t  Map; //4
 	uint32_t n_BirthPoint1; //5
-	uint64_t *BirthPoint1; //5
+	double *BirthPoint1; //5
 	uint32_t n_BirthPoint2; //6
-	uint64_t *BirthPoint2; //6
+	double *BirthPoint2; //6
 	uint64_t  FlagExp; //7
 	uint64_t  BoxID; //8
 	uint32_t n_BoxReloadX; //9
-	uint64_t *BoxReloadX; //9
+	double *BoxReloadX; //9
 	uint32_t n_BoxReloadY; //10
-	uint64_t *BoxReloadY; //10
+	double *BoxReloadY; //10
 	uint32_t n_BoxReloadZ; //11
-	uint64_t *BoxReloadZ; //11
+	double *BoxReloadZ; //11
 	uint64_t  BoxReloadTime; //12
 	uint64_t  BoxReloadNum; //13
 	uint64_t  BoxExp; //14
@@ -1497,6 +1521,7 @@ struct SceneResTable
 	uint32_t n_UseDelivery; //18
 	uint64_t *UseDelivery; //18
 	uint64_t  Recovery; //19
+	uint64_t  Partner; //20
 }__attribute__ ((packed));
 
 struct ScriptTable
@@ -1533,6 +1558,7 @@ struct ServerLevelTable
 	uint64_t  LevelPlusEXP1; //6
 	uint64_t  LevelPlusEXP2; //7
 	uint64_t  Title; //8
+	uint64_t  Truer; //9
 }__attribute__ ((packed));
 
 struct ServerResTable
@@ -1853,17 +1879,31 @@ struct WeekTable
 	uint64_t  Reward; //4
 }__attribute__ ((packed));
 
+struct WorldBossRewardTable
+{
+	uint64_t  ID; //1
+	uint32_t n_ItemID; //2
+	uint64_t *ItemID; //2
+	uint32_t n_Num; //3
+	uint64_t *Num; //3
+	uint64_t  Draw; //4
+	uint32_t n_Random; //5
+	uint64_t *Random; //5
+	uint64_t  MailID; //6
+}__attribute__ ((packed));
+
 struct WorldBossTable
 {
 	uint64_t  ID; //1
-	uint64_t  Level; //2
-	uint64_t  Type; //3
-	uint64_t  SceneID; //4
-	uint64_t  MonsterID; //5
-	uint32_t n_Time; //6
-	uint64_t *Time; //6
-	double  Coefficient; //7
-	uint64_t  RewardLevel; //8
+	char  *Name; //2
+	uint64_t  Level; //3
+	uint64_t  Type; //4
+	uint64_t  SceneID; //5
+	uint64_t  MonsterID; //6
+	uint32_t n_Time; //7
+	uint64_t *Time; //7
+	double  Coefficient; //8
+	uint64_t  RewardLevel; //9
 }__attribute__ ((packed));
 
 struct sproto_config_pos

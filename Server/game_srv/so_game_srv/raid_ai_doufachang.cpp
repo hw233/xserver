@@ -47,6 +47,7 @@ static void doufachang_raid_ai_player_leave(raid_struct *raid, player_struct *pl
 	player->add_item(sg_doufachang_raid_lose_reward[0], sg_doufachang_raid_lose_reward[1], MAGIC_TYPE_DOUFACHANG_REWARD, true);
 
 	doufachang_send_raid_result(player, raid->m_player2[0], 1, sg_doufachang_raid_lose_reward[1], false);
+//	player->del_all_formation_partner_from_scene(false);	
 	// DOUFACHANG_CHALLENGE_ANSWER *ans = (DOUFACHANG_CHALLENGE_ANSWER *)conn_node_gamesrv::connecter.get_send_data();
 	// ans->attack = player->get_uuid();
 	// ans->defence = raid->m_player2[0]->data->origin_player_id;
@@ -85,23 +86,8 @@ static void doufachang_raid_ai_player_dead(raid_struct *raid, player_struct *pla
 		raid->m_player[0]->add_item(sg_doufachang_raid_win_reward[0], sg_doufachang_raid_win_reward[1], MAGIC_TYPE_DOUFACHANG_REWARD, true);
 		doufachang_send_raid_result(raid->m_player[0], raid->m_player2[0], 0, sg_doufachang_raid_win_reward[1], true);
 	}
-	
-	// DOUFACHANG_CHALLENGE_ANSWER *ans = (DOUFACHANG_CHALLENGE_ANSWER *)conn_node_gamesrv::connecter.get_send_data();
-	// ans->attack = raid->m_player[0]->get_uuid();
-	// ans->defence = raid->m_player2[0]->data->origin_player_id;
-	// if (player == raid->m_player[0])  //玩家死了，输
-	// {
-	// 	ans->result = 1;
-	// 	raid->m_player[0]->add_item(sg_doufachang_raid_lose_reward[0], sg_doufachang_raid_lose_reward[1], MAGIC_TYPE_DOUFACHANG_REWARD, true);
-	// }
-	// else  //否则是AI死了，赢
-	// {
-	// 	raid->m_player[0]->add_item(sg_doufachang_raid_win_reward[0], sg_doufachang_raid_win_reward[1], MAGIC_TYPE_DOUFACHANG_REWARD, true);
-	// }
-	
-	// EXTERN_DATA extern_data;
-	// extern_data.player_id = ans->attack;
-	// fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, SERVER_PROTO_DOUFACHANG_CHALLENGE_ANSWER, sizeof(*ans), 0);
+//	raid->m_player[0]->del_all_formation_partner_from_scene(false);
+	raid->m_player2[0]->data->stop_ai = true;
 }
 
 static void doufachang_raid_ai_player_ready(raid_struct *raid, player_struct *player)

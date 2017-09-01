@@ -207,6 +207,28 @@ local NoticeTable = {
 		['NoticeEnd'] = 0,
 		['NoticeChannel'] = {1,8},
 		['NoticeTxt'] = '%s已集齐焚天八卦牌套装！'
+		},
+	[330510009] = {
+		['ID'] = 330510009,
+		['Priority'] = 1,
+		['Way'] = 1,
+		['NoticeDay'] = {},
+		['NoticeTime'] = {0},
+		['NoticeInterval'] = 0,
+		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {8},
+		['NoticeTxt'] = '%s%s一被%s击杀'
+		},
+	[330510010] = {
+		['ID'] = 330510010,
+		['Priority'] = 1,
+		['Way'] = 1,
+		['NoticeDay'] = {},
+		['NoticeTime'] = {0},
+		['NoticeInterval'] = 0,
+		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {8},
+		['NoticeTxt'] = '%s%s一复活，勇士们快去围剿吧！'
 		}
 	}
 return NoticeTable

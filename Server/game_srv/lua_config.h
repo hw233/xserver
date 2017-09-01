@@ -87,6 +87,7 @@ extern std::map<uint64_t, struct GangsSkillTable*> guild_skill_config; //帮会�
 extern std::map<uint64_t, struct CampTable*> zhenying_base_config; //阵营基础信息表
 extern std::map<uint64_t, struct GradeTable*> zhenying_level_config; //阵营等级表
 extern std::map<uint64_t, struct WeekTable*> zhenying_week_config; //阵营周目标表
+extern std::map<uint64_t, struct BattlefieldTable*> zhenying_fight_config; //阵营战表
 extern std::map<char *, std::vector<struct RaidScriptTable*> *> all_raid_script_config; //副本AI配置表
 extern std::map<uint64_t, struct QuestionTable*> questions_config; //考题表
 extern std::vector<struct RobotPatrolTable*> robot_patrol_config; //机器人巡逻
@@ -232,8 +233,9 @@ extern double sg_leiminggu_pos[4]; //雷鸣鼓坐标
 extern double sg_leiminggu_boss_pos[4]; //雷鸣鼓boss坐标
 extern uint32_t sg_leiminggu_collect_id; //雷鸣鼓采集物ID
 
-extern uint32_t sg_shishen_xiaoguai_id[5];  //侍神小怪ID
-extern uint32_t sg_shishen_shouling_id[5];  //侍神首领ID
+extern uint8_t sg_n_shishen_id;
+extern uint32_t *sg_shishen_xiaoguai_id;  //侍神小怪ID
+extern uint32_t *sg_shishen_shouling_id;  //侍神首领ID
 
 enum YAOSHI_SKILL
 {
@@ -335,4 +337,7 @@ extern uint32_t sg_doufachang_ai[2];
 extern uint32_t sg_doufachang_raid_id;
 extern uint32_t sg_doufachang_raid_win_reward[2];
 extern uint32_t sg_doufachang_raid_lose_reward[2];
+
+extern double sg_exp_turn_zhenqi_percent;
+
 #endif /* __LUA_CONFIG_H__ */

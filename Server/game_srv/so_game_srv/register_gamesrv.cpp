@@ -22,6 +22,7 @@
 #include "player_manager.h"
 #include "scene_manager.h"
 #include "raid_manager.h"
+#include "zhenying_battle.h"
 #include "zhenying_raid_manager.h"
 #include "sight_space_manager.h"
 #include "monster_manager.h"
@@ -854,6 +855,7 @@ void cb_gamesrv_timer()
 		guild_battle_manager_on_tick();
 		partner_manager::on_tick_5();
 		check_server_level();
+		monster_manager::add_world_boss_monster();
 	}
 
 	run_with_period(30)
@@ -878,6 +880,7 @@ void cb_gamesrv_timer()
 		pvp_match_manager_on_tick();
 //		guild_battle_manager_on_tick();
 		//Team::Timer();
+		ZhenyingBattle::GetInstance()->Tick();
 	}
 
 	run_with_period(500)
@@ -891,7 +894,10 @@ void cb_gamesrv_timer()
 		TeamMatch::Timer();
 		//ChengJieTaskManage::SortList();
 	}
-	
+	/*run_with_period(600)
+	{
+		monster_manager::add_world_boss_monster();
+	}*/
 	++timer_loop_count;
 }
 	
@@ -914,6 +920,7 @@ int game_recv_func(evutil_socket_t fd, conn_node_gamesrv *node)
 					node->transfer_to_dbsrv();
 					break;
 				case SERVER_PROTO_GUILD_BATTLE_FINAL_LIST_ANSWER:
+				case SERVER_PROTO_RANK_SYNC_CHANGE:
 					{
 						GameHandleMap::iterator it = m_game_handle_map.find(cmd);
 						if (it != m_game_handle_map.end())

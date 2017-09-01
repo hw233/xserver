@@ -181,7 +181,7 @@ buff_struct *buff_manager::create_buff(uint64_t id, uint64_t end_time, unit_stru
 		return NULL;
 	}
 
-	LOG_DEBUG("%s: player[%lu] add buff[%lu]", __FUNCTION__, owner->get_uuid(), id);
+	LOG_DEBUG("%s: unit[%lu] add buff[%lu]", __FUNCTION__, owner->get_uuid(), id);
 
 	buff_struct *ret;
 	ret = owner->try_cover_duplicate_buff(config, end_time, attack);

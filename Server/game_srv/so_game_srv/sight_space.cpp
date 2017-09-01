@@ -77,7 +77,7 @@ int sight_space_struct::broadcast_player_delete(player_struct *player, bool ente
 }
 int sight_space_struct::broadcast_truck_delete(cash_truck_struct *truck)
 {
-	LOG_DEBUG("%s %d: delete truck %u %lu at %p [%.1f][%.1f]", __FUNCTION__, __LINE__,
+	LOG_DEBUG("%s %d: delete sightspace truck %u %lu at %p [%.1f][%.1f]", __FUNCTION__, __LINE__,
 		truck->data->monster_id, truck->get_uuid(), this, 
 		truck->get_pos()->pos_x, truck->get_pos()->pos_z);
 	
@@ -128,7 +128,7 @@ int sight_space_struct::broadcast_truck_create(cash_truck_struct *truck)
 {
 	assert(!truck->area);
 
-	LOG_DEBUG("%s %d: create partner %u %lu at %p [%.1f][%.1f]", __FUNCTION__, __LINE__,
+	LOG_DEBUG("%s %d: create sightspace truck %u %lu at %p [%.1f][%.1f]", __FUNCTION__, __LINE__,
 		truck->data->monster_id, truck->get_uuid(), this, 
 		truck->get_pos()->pos_x, truck->get_pos()->pos_z);
 

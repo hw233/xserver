@@ -196,6 +196,7 @@ int conn_node_guildsrv::handle_guild_list_request(EXTERN_DATA *extern_data)
 	GuildBriefData guild_data[MAX_GUILD_NUM];
 	GuildBriefData* guild_data_point[MAX_GUILD_NUM];
 
+	AutoReleaseBatchRedisPlayer t1;			
 	resp.result = 0;
 	resp.guilds = guild_data_point;
 	resp.n_guilds = 0;
@@ -226,7 +227,6 @@ int conn_node_guildsrv::handle_guild_list_request(EXTERN_DATA *extern_data)
 				continue;
 			}
 
-			AutoReleaseRedisPlayer t1;			
 			PlayerRedisInfo *redis_player = get_redis_player(player->player_id, sg_player_key, sg_redis_client, t1);
 			if (!redis_player)
 			{
@@ -265,6 +265,7 @@ void resp_guild_info(conn_node_guildsrv *node, EXTERN_DATA *extern_data, uint32_
 	GuildBuildingData building_data[MAX_GUILD_BUILDING_NUM];
 	GuildBuildingData* building_data_point[MAX_GUILD_BUILDING_NUM];
 
+	AutoReleaseBatchRedisPlayer t1;			
 	resp.result = result;
 	if (player)
 	{
@@ -286,7 +287,6 @@ void resp_guild_info(conn_node_guildsrv *node, EXTERN_DATA *extern_data, uint32_
 			basic_data.buildboard = guild->build_board;
 			basic_data.masterid = guild->master_id;
 			basic_data.renametime = guild->rename_time;
-			AutoReleaseRedisPlayer t1;			
 			PlayerRedisInfo *redis_master = get_redis_player(guild->master_id, sg_player_key, sg_redis_client, t1);
 			if (redis_master)
 			{
@@ -349,6 +349,7 @@ int conn_node_guildsrv::handle_guild_member_list_request(EXTERN_DATA *extern_dat
 	GuildMemberData member_data[MAX_GUILD_MEMBER_NUM];
 	GuildMemberData* member_data_point[MAX_GUILD_MEMBER_NUM];
 
+	AutoReleaseBatchRedisPlayer t1;
 	resp.result = ret;
 	if (ret == 0)
 	{
@@ -366,7 +367,6 @@ int conn_node_guildsrv::handle_guild_member_list_request(EXTERN_DATA *extern_dat
 			member_data[resp.n_members].curweekdonation = member->cur_week_donation;
 			member_data[resp.n_members].jointime = member->join_time;
 
-			AutoReleaseRedisPlayer t1;
 			PlayerRedisInfo *redis_player = get_redis_player(member->player_id, sg_player_key, sg_redis_client, t1);
 			if (redis_player)
 			{
@@ -402,6 +402,7 @@ int conn_node_guildsrv::handle_guild_create_request(EXTERN_DATA *extern_data)
 
 	int ret = 0;
 	GuildPlayer *player = NULL;
+	AutoReleaseBatchRedisPlayer t1;
 	do
 	{
 		player = get_guild_player(extern_data->player_id);
@@ -441,7 +442,6 @@ int conn_node_guildsrv::handle_guild_create_request(EXTERN_DATA *extern_data)
 			break;
 		}
 
-		AutoReleaseRedisPlayer t1;
 		PlayerRedisInfo *redis_player = get_redis_player(extern_data->player_id, sg_player_key, sg_redis_client, t1);
 		if (!redis_player)
 		{
@@ -584,6 +584,7 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 
 	int ret = 0;
 	std::vector<uint32_t> applyIds;
+	AutoReleaseBatchRedisPlayer t1;		
 	do
 	{
 		GuildPlayer *player = get_guild_player(extern_data->player_id);
@@ -604,7 +605,6 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 			}
 		}
 
-		AutoReleaseRedisPlayer t1;		
 		PlayerRedisInfo *redis_player = get_redis_player(extern_data->player_id, sg_player_key, sg_redis_client, t1);
 		if (!redis_player)
 		{
@@ -647,7 +647,6 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 				break;
 			}
 
-			AutoReleaseRedisPlayer t1;			
 			PlayerRedisInfo *redis_master = get_redis_player(guild->master_id, sg_player_key, sg_redis_client, t1);
 			if (!redis_master)
 			{
@@ -704,7 +703,6 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 				{
 					continue;
 				}
-				AutoReleaseRedisPlayer t1;
 				PlayerRedisInfo *redis_master = get_redis_player(guild->master_id, sg_player_key, sg_redis_client, t1);
 				if (!redis_master)
 				{
@@ -729,7 +727,6 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 				cmp.fc = 0;
 				for (uint32_t i = 0; i < guild->member_num; ++i)
 				{
-					AutoReleaseRedisPlayer t1;					
 					PlayerRedisInfo *tmp_redis_player = get_redis_player(guild->members[i]->player_id, sg_player_key, sg_redis_client, t1);
 					if (tmp_redis_player)
 					{
@@ -794,7 +791,6 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 			basic_data.buildboard = guild->build_board;
 			basic_data.masterid = guild->master_id;
 			basic_data.renametime = guild->rename_time;
-			AutoReleaseRedisPlayer t1;			
 			PlayerRedisInfo *redis_master = get_redis_player(guild->master_id, sg_player_key, sg_redis_client, t1);
 			if (redis_master)
 			{
@@ -838,6 +834,7 @@ int conn_node_guildsrv::handle_guild_join_list_request(EXTERN_DATA *extern_data)
 {
 	int ret = 0;
 	std::vector<uint64_t> applyIds;
+	AutoReleaseBatchRedisPlayer t1;			
 	do
 	{
 		GuildPlayer *player = get_guild_player(extern_data->player_id);
@@ -873,7 +870,6 @@ int conn_node_guildsrv::handle_guild_join_list_request(EXTERN_DATA *extern_data)
 		for (size_t i = 0; i < applyIds.size(); ++i)
 		{
 			uint64_t player_id = applyIds[i];
-			AutoReleaseRedisPlayer t1;			
 			PlayerRedisInfo *redis_player = get_redis_player(player_id, sg_player_key, sg_redis_client, t1);
 			if (!redis_player)
 			{
@@ -1389,6 +1385,7 @@ static int handle_guild_rename_cost(int data_len, uint8_t *data, int result, EXT
 	int ret = result;
 	GuildInfo *guild = NULL;
 	bool internal = false;
+	AutoReleaseBatchRedisPlayer t1;				
 	do
 	{
 		if (ret != 0)
@@ -1434,7 +1431,6 @@ static int handle_guild_rename_cost(int data_len, uint8_t *data, int result, EXT
 			}
 			else
 			{
-				AutoReleaseRedisPlayer t1;				
 				PlayerRedisInfo *redis_member = get_redis_player(member->player_id, sg_player_key, sg_redis_client, t1);
 				if (redis_member)
 				{
@@ -1552,6 +1548,7 @@ int conn_node_guildsrv::handle_open_guild_answer_request(EXTERN_DATA *extern_dat
 int conn_node_guildsrv::handle_player_online_notify(EXTERN_DATA *extern_data)
 {
 	GuildPlayer *player = get_guild_player(extern_data->player_id);
+	AutoReleaseBatchRedisPlayer t1;
 	if (player)
 	{
 		sync_guild_info_to_gamesrv(player);
@@ -1576,7 +1573,6 @@ int conn_node_guildsrv::handle_player_online_notify(EXTERN_DATA *extern_data)
 			{
 				break;
 			}
-			AutoReleaseRedisPlayer t1;
 			PlayerRedisInfo *redis_player = get_redis_player(player->player_id, sg_player_key, sg_redis_client, t1);
 			if (!redis_player)
 			{
@@ -2748,6 +2744,7 @@ int conn_node_guildsrv::handle_guild_battle_fight_reward_request(EXTERN_DATA * /
 	uint32_t activity_id = req->activity_id;
 	
 	GuildInfo *guild = get_guild(req->guild_id);
+	AutoReleaseBatchRedisPlayer t1;
 	do
 	{
 		if (!guild)
@@ -2872,7 +2869,6 @@ int conn_node_guildsrv::handle_guild_battle_fight_reward_request(EXTERN_DATA * /
 				{
 					continue;
 				}
-				AutoReleaseRedisPlayer t1;
 				PlayerRedisInfo *redis_player = get_redis_player(tmp_guild->master_id, sg_player_key, sg_redis_client, t1);
 				if (!redis_player)
 				{
@@ -3090,6 +3086,7 @@ int conn_node_guildsrv::notify_guild_battle_activity_settle(EXTERN_DATA *extern_
 	uint32_t my_rank = 0;
 	GuildPlayer *player = NULL;
 	GuildInfo *guild = NULL;
+	AutoReleaseBatchRedisPlayer t1;
 	do
 	{
 		player = get_guild_player(extern_data->player_id);
@@ -3142,7 +3139,6 @@ int conn_node_guildsrv::notify_guild_battle_activity_settle(EXTERN_DATA *extern_
 			continue;
 		}
 
-		AutoReleaseRedisPlayer t1;
 		PlayerRedisInfo *redis_player = get_redis_player(tmp_guild->master_id, sg_player_key, sg_redis_client, t1);
 		if (!redis_player)
 		{

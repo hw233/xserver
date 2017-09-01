@@ -62,21 +62,9 @@ void raid_manager::delete_raid(raid_struct *p)
 	raid_manager_raid_used_list.erase(p);
 	raid_manager_raid_free_list.push_back(p);
 
-	p->clear();
-
 	LOG_DEBUG("[%s:%d] raid[%u %lu], %p, data:%p", __FUNCTION__, __LINE__, p->m_id, p->data->uuid, p, p->data);
 
-	for (int i = 0; i < MAX_TEAM_MEM; ++i)
-	{
-		if (p->m_player[i] && p->m_player[i]->data && get_entity_type(p->m_player[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
-			player_manager::delete_player(p->m_player[i]);
-		if (p->m_player2[i] && p->m_player2[i]->data && get_entity_type(p->m_player2[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
-			player_manager::delete_player(p->m_player2[i]);
-		if (p->m_player3[i] && p->m_player3[i]->data && get_entity_type(p->m_player3[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
-			player_manager::delete_player(p->m_player3[i]);
-		if (p->m_player4[i] && p->m_player4[i]->data && get_entity_type(p->m_player4[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
-			player_manager::delete_player(p->m_player4[i]);		
-	}
+	p->clear();
 
 	if (p->data) {
 		remove_raid(p);

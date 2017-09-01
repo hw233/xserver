@@ -42,7 +42,8 @@ enum DUNGEON_TYPE_DEFINE
 	DUNGEON_TYPE_ZHENYING = 9,
 	DUNGEON_TYPE_GUILD_WAIT = 10,
 	DUNGEON_TYPE_GUILD_RAID = 11,
-	DUNGEON_TYPE_GUILD_FINAL_RAID = 12,		
+	DUNGEON_TYPE_GUILD_FINAL_RAID = 12,	
+	DUNGEON_TYPE_BATTLE = 15,
 };
 
 enum RAID_STATE_DEFINE
@@ -103,6 +104,7 @@ struct pvp_player_praise_record
 	bool praise[MAX_TEAM_MEM * 2];  //有没有点赞
 };
 
+#define MAX_RAID_REGION 20
 struct raid_script_data
 {
 		//脚本配置部分
@@ -111,6 +113,8 @@ struct raid_script_data
 	uint32_t cur_finished_num[MAX_SCRIPT_COND_NUM];
 	uint32_t collect_callback_event;   //采集回调的操作 1: 打断雷鸣鼓
 	uint32_t dead_monster_id;  //死亡的怪物在判断怪物血量的时候也要算进去
+	struct RaidScriptTable *region_config[MAX_RAID_REGION];
+	uint8_t cur_region_config;
 };
 
 union raid_ai_data
@@ -241,7 +245,8 @@ typedef void(*raid_ai_player_relive)(raid_struct *, player_struct *, uint32_t);
 typedef void(*raid_ai_monster_dead)(raid_struct *, monster_struct *, unit_struct *);
 typedef void(*raid_ai_collect)(raid_struct *, player_struct *, Collect *);
 typedef void(*raid_ai_attack)(raid_struct *, player_struct *, unit_struct *, int);
-typedef void(*raid_ai_player_region_changed)(raid_struct *, player_struct *, uint32_t);
+typedef void(*raid_ai_player_region_changed)(raid_struct *, player_struct *, uint32_t, uint32_t);
+typedef void(*raid_ai_monster_region_changed)(raid_struct *, monster_struct *, uint32_t, uint32_t);
 typedef void(*raid_ai_escort_stop)(raid_struct *, player_struct *, uint32_t, bool);
 typedef void(*raid_ai_npc_talk)(raid_struct *, player_struct *, uint32_t);
 typedef struct DungeonTable* (*raid_ai_get_config)(raid_struct *);
@@ -264,6 +269,7 @@ struct raid_ai_interface
 	raid_ai_npc_talk raid_on_npc_talk; //和npc对话
 	raid_ai_get_config raid_get_config; //获取配置，主要是万妖谷的配置
 	raid_ai_failed raid_on_failed; //失败
+	raid_ai_monster_region_changed raid_on_monster_region_changed; //区域变化	
 };
 
 class raid_struct : public scene_struct
@@ -287,7 +293,8 @@ public:
 	int player_enter_raid(player_struct *player, double pos_x, double pos_z);
 	int player_enter_raid_impl(player_struct *player, int index, double pos_x, double pos_z, double direct = 0);
 	int player_leave_raid(player_struct *player);
-	int get_id_monster_num(uint32_t id);
+	bool is_monster_alive(uint32_t id);	
+	int get_id_monster_num(uint32_t id);	
 	int get_id_collect_num(uint32_t id);
 
 	int add_monster_to_scene(monster_struct *monster, uint32_t effectid);

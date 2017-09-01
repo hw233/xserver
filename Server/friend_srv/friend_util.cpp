@@ -263,7 +263,6 @@ int load_friend_player(uint64_t player_id, FriendPlayer *player)
 	int ret = rc.hget_bin(sg_friend_key, field, (char *)data_buffer, &data_len);
 	if (ret != 0)
 	{
-		LOG_ERR("[%s:%d] player[%lu] get redis failed, ret:%d", __FUNCTION__, __LINE__, player_id, ret);
 		return -1;
 	}
 
@@ -1049,8 +1048,8 @@ int add_apply(FriendPlayer *player, uint64_t target_id)
 
 	save_friend_player(player);
 
-	AutoReleaseRedisPlayer p1, p2;
-	PlayerRedisInfo *redis_player = get_redis_player(player->player_id, conn_node_friendsrv::server_key, sg_redis_client, p1);	
+	AutoReleaseBatchRedisPlayer arb_redis;
+	PlayerRedisInfo *redis_player = get_redis_player(player->player_id, conn_node_friendsrv::server_key, sg_redis_client, arb_redis);
 	if (redis_player)
 	{
 		if (redis_player->status == 0)
@@ -1079,7 +1078,7 @@ int add_apply(FriendPlayer *player, uint64_t target_id)
 		}
 	}
 
-	PlayerRedisInfo *redis_target = get_redis_player(target_id, conn_node_friendsrv::server_key, sg_redis_client, p2);
+	PlayerRedisInfo *redis_target = get_redis_player(target_id, conn_node_friendsrv::server_key, sg_redis_client, arb_redis);
 	if (redis_target)
 	{
 		SystemNoticeNotify sys;

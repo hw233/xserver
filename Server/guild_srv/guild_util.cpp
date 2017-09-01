@@ -1215,6 +1215,7 @@ int join_guild(uint64_t player_id, GuildInfo *guild)
 	int ret = 0;
 	bool player_new = false;
 	GuildPlayer *player = NULL;
+	AutoReleaseBatchRedisPlayer t1;
 	do
 	{
 		player = get_guild_player(player_id);
@@ -1256,7 +1257,6 @@ int join_guild(uint64_t player_id, GuildInfo *guild)
 
 		do
 		{
-			AutoReleaseRedisPlayer t1;
 			PlayerRedisInfo *redis_player = get_redis_player(player_id, sg_player_key, sg_redis_client, t1);
 			if (!redis_player)
 			{

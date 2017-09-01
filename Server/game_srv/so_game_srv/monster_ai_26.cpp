@@ -14,10 +14,13 @@
 #include "msgid.h"
 #include "buff.h"
 
-static void	do_patrol(monster_struct *monster)
+static void	do_patrol(monster_struct *monster, uint16_t last_ai_state)
 {
 	if (!monster->config)
 		return;
+
+	if (last_ai_state != AI_PATROL_STATE)
+		return monster->go_back();
 	
 	if (monster->is_unit_in_move())
 		return;
@@ -52,6 +55,8 @@ static void monster_ai_26_tick(monster_struct *monster)
 		if (!area->is_all_neighbour_have_player())
 			return;
 	}
+	uint16_t last_ai_state = monster->ai_data.type26_ai.last_ai_state;
+	monster->ai_data.type26_ai.last_ai_state = monster->ai_state;
 	switch (monster->ai_state)
 	{
 		case AI_ATTACK_STATE:
@@ -62,7 +67,7 @@ static void monster_ai_26_tick(monster_struct *monster)
 			break;
 		case AI_PATROL_STATE:  //巡逻
 			monster->data->ontick_time += monster->count_rand_patrol_time();
-			do_patrol(monster);
+			do_patrol(monster, last_ai_state);
 			break;
 	}
 }

@@ -771,7 +771,7 @@ local ModelTable = {
 		['Gaine'] = '',
 		['BindPos'] = '',
 		['BindEffect'] = {''},
-		['Scale'] = 1.00
+		['Scale'] = .80
 		},
 	[130300037] = {
 		['ModelId'] = 130300037,
@@ -1208,6 +1208,15 @@ local ModelTable = {
 	[130500003] = {
 		['ModelId'] = 130500003,
 		['ModelPath'] = 'Prefabs/Actor/gw_056',
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00
+		},
+	[130300067] = {
+		['ModelId'] = 130300067,
+		['ModelPath'] = 'Prefabs/Effect/ef_duoqi_01',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',

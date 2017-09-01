@@ -255,7 +255,8 @@ int conn_node_gamesrv::transfer_to_client()
 		case SERVER_PROTO_GUILD_ADD_FINAL_BATTLE_GUILD:
 			return transfer_to_guildsrv();
 		case SERVER_PROTO_REFRESH_PLAYER_REDIS_INFO:
-		case SERVER_PROTO_WORDBOSS_PLAYER_REDIS_INFO:
+		case SERVER_PROTO_WORLDBOSS_PLAYER_REDIS_INFO:
+		case SERVER_PROTO_WORLDBOSS_BIRTH_UPDATA_REDIS_INFO:
 			return transfer_to_ranksrv();
 		case SERVER_PROTO_PLAYER_ONLINE_NOTIFY:
 			transfer_to_ranksrv();

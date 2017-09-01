@@ -484,7 +484,6 @@ void conn_node_dbsrv::handle_enter_game(EXTERN_DATA *extern_data)
 		}
 		row = fetch_row(res);
 		if (!row) {
-			LOG_ERR("[%s : %d]: query sql fetch row failed, sql: %s", __FUNCTION__, __LINE__, sql);
 			free_query(res);
 			break;
 		}
@@ -834,7 +833,7 @@ void conn_node_dbsrv::handle_load_server_level(EXTERN_DATA *extern_data)
 
 	query(const_cast<char*>("set names utf8"), 1, NULL);
 
-	sprintf(sql, "SELECT comm_data from game_global where key = %u", server_level_key);
+	sprintf(sql, "SELECT `comm_data` from game_global where `key` = %u", server_level_key);
 	res = query(sql, 1, NULL);
 	if (res)
 	{
@@ -857,7 +856,7 @@ void conn_node_dbsrv::handle_save_server_level(EXTERN_DATA *extern_data)
 	int len;
 	char *p;
 
-	len = sprintf(sql, "replace game_global set key = %u, data = \'", server_level_key);
+	len = sprintf(sql, "replace game_global set `key` = %u, `comm_data` = \'", server_level_key);
 	p = sql + len;
 	p += escape_string(p, (const char*)get_data(), get_data_len());
 	len = sprintf(p, "\'");

@@ -202,6 +202,12 @@ local TransferPointTable = {
 		['NameId'] = '龟灵洞',
 		['limitLevel'] = 1,
 		['MapId'] = {20042}
+		},
+	[155000035] = {
+		['ID'] = 155000035,
+		['NameId'] = '雷霆之怒',
+		['limitLevel'] = 1,
+		['MapId'] = {20045}
 		}
 	}
 return TransferPointTable

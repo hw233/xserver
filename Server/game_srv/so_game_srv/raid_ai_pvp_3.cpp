@@ -167,7 +167,7 @@ static void	do_region_effect(raid_struct *raid, player_struct *player)
 	}
 }
 
-static void pvp_raid_ai_player_region_changed(raid_struct *raid, player_struct *player, uint32_t region_id)
+static void pvp_raid_ai_player_region_changed(raid_struct *raid, player_struct *player, uint32_t old_region, uint32_t region_id)
 {
 	do_region_effect(raid, player);
 }

@@ -73,17 +73,22 @@ void zhenying_raid_manager::delete_zhenying_raid(zhenying_raid_struct *p)
 	}
 }
 
-zhenying_raid_struct *zhenying_raid_manager::get_avaliable_zhenying_raid()
+zhenying_raid_struct *zhenying_raid_manager::get_avaliable_zhenying_raid(uint32_t raid_id)
 {
 	for (std::set<zhenying_raid_struct *>::iterator iter = zhenying_raid_manager_raid_used_list.begin(); iter != zhenying_raid_manager_raid_used_list.end(); ++iter)
 	{
 		if ((*iter)->data->state != RAID_STATE_START)
 			continue;
+		if ((*iter)->data->ID != raid_id)
+		{
+			continue;
+		}
 		if ((*iter)->get_cur_player_num() < MAX_ZHENYING_RAID_PLAYER_NUM)
 		{
 			return (*iter);
 		}
 	}
+	LOG_DEBUG("[%s:%d] not find %d", __FUNCTION__, __LINE__, raid_id);
 	return create_zhenying_raid(ZHENYING_RAID_ID);	
 }
 
@@ -94,7 +99,12 @@ unsigned int zhenying_raid_manager::get_zhenying_raid_pool_max_num()
 
 zhenying_raid_struct *zhenying_raid_manager::add_player_to_zhenying_raid(player_struct *player)
 {
-	zhenying_raid_struct *ret = get_avaliable_zhenying_raid();
+	FactionBattleTable *table = get_zhenying_battle_table(player->get_attr(PLAYER_ATTR_LEVEL));
+	if (table == NULL)
+	{
+		return NULL;
+	}
+	zhenying_raid_struct *ret = get_avaliable_zhenying_raid(table->Map);
 	if (ret)
 	{
 		if (ret->add_player_to_zhenying_raid(player) != 0)
@@ -187,10 +197,11 @@ void zhenying_raid_manager::create_all_line()
 	std::vector<struct FactionBattleTable*>::iterator it = zhenying_battle_config.begin();
 	for (; it != zhenying_battle_config.end(); ++it)
 	{
-		for (int i = 1; i <= ZhenyingBattle::MAX_LINE_NUM; ++i)
+		for (int i = 1; i <= MAX_BATTLE_LINE_NUM; ++i)
 		{
 			zhenying_raid_struct *raid = zhenying_raid_manager::create_zhenying_raid((*it)->Map);
 			raid->set_line_num(i);
+			//LOG_DEBUG("%s: %s", __FUNCTION__, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		}
 	}
 	std::vector<struct FactionBattleTable*>::iterator itF = zhenying_battle_config.begin();

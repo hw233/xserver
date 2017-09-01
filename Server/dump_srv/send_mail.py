@@ -4,6 +4,7 @@
 import sys
 from socket import *
 import struct
+import get_one_msg
 import mail_db_pb2
 '''
 import comm_message_pb2
@@ -13,7 +14,7 @@ import bag_pb2
 #WATCH_PLAYER = {12884902859}
 
 HOST='127.0.0.1'
-PORT=11697
+PORT=get_one_msg.get_dumpsrv_port()
 BUFSIZ=1024
 ADDR=(HOST, PORT)
 client=socket(AF_INET, SOCK_STREAM)
@@ -23,7 +24,7 @@ client.connect(ADDR)
 #player_list = {}
 
 req = mail_db_pb2.MailDBInfo()
-req.type = 0
+req.type = 270300014
 req.title = u'测试邮件'
 req.senderName = u'系统'
 req.content = u'这是一封测试邮件，如果超过32个字，会怎么样呢？\n巴索罗米*熊：要是去旅行的话，你想去哪里？'
@@ -32,18 +33,18 @@ req.title = "Message"
 req.senderName = "System"
 req.content = "This is a test mail."
 '''
-for i in range(8):
+for i in range(1):
     attach = req.attach.add()
     attach.id = 201020001 + i
     attach.num = 2
 
 req.statisId = 1
-    
+
 seri_str = req.SerializeToString()
 
 msg_len = 8 + 8 + 4 + len(seri_str)
-msg_id = 1014
-player_id = 12884903196#12884903195
+msg_id = 1043
+player_id = 12884903087
 
 data = struct.pack('=IHHQI', msg_len, msg_id, 0, player_id, len(seri_str)) + seri_str
 

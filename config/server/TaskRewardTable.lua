@@ -825,7 +825,7 @@ local TaskRewardTable = {
 		},
 	[240630114] = {
 		['ID'] = 240630114,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 6000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -833,7 +833,7 @@ local TaskRewardTable = {
 		},
 	[240630115] = {
 		['ID'] = 240630115,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 6000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -841,7 +841,7 @@ local TaskRewardTable = {
 		},
 	[240630116] = {
 		['ID'] = 240630116,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 6000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -849,15 +849,15 @@ local TaskRewardTable = {
 		},
 	[240630117] = {
 		['ID'] = 240630117,
-		['RewardEXP'] = 10000,
-		['RewardMoney'] = 0,
+		['RewardEXP'] = 50000,
+		['RewardMoney'] = 120000,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
 		['RewardNum'] = {0}
 		},
 	[240630118] = {
 		['ID'] = 240630118,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 6000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -865,7 +865,7 @@ local TaskRewardTable = {
 		},
 	[240630119] = {
 		['ID'] = 240630119,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 6000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -873,7 +873,7 @@ local TaskRewardTable = {
 		},
 	[240630120] = {
 		['ID'] = 240630120,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 6000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -881,7 +881,7 @@ local TaskRewardTable = {
 		},
 	[240630121] = {
 		['ID'] = 240630121,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 50000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -889,7 +889,7 @@ local TaskRewardTable = {
 		},
 	[240630122] = {
 		['ID'] = 240630122,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 6000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -897,7 +897,7 @@ local TaskRewardTable = {
 		},
 	[240630123] = {
 		['ID'] = 240630123,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 6000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -905,7 +905,7 @@ local TaskRewardTable = {
 		},
 	[240630124] = {
 		['ID'] = 240630124,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 6000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -913,7 +913,7 @@ local TaskRewardTable = {
 		},
 	[240630125] = {
 		['ID'] = 240630125,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 50000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -921,7 +921,7 @@ local TaskRewardTable = {
 		},
 	[240630126] = {
 		['ID'] = 240630126,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 6000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -929,7 +929,7 @@ local TaskRewardTable = {
 		},
 	[240630127] = {
 		['ID'] = 240630127,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 6000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -937,7 +937,7 @@ local TaskRewardTable = {
 		},
 	[240630128] = {
 		['ID'] = 240630128,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 6000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -945,7 +945,391 @@ local TaskRewardTable = {
 		},
 	[240630129] = {
 		['ID'] = 240630129,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 50000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630130] = {
+		['ID'] = 240630130,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630131] = {
+		['ID'] = 240630131,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630132] = {
+		['ID'] = 240630132,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630133] = {
+		['ID'] = 240630133,
+		['RewardEXP'] = 50000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630134] = {
+		['ID'] = 240630134,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630135] = {
+		['ID'] = 240630135,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630136] = {
+		['ID'] = 240630136,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630137] = {
+		['ID'] = 240630137,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630138] = {
+		['ID'] = 240630138,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630139] = {
+		['ID'] = 240630139,
+		['RewardEXP'] = 50000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630140] = {
+		['ID'] = 240630140,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630141] = {
+		['ID'] = 240630141,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630142] = {
+		['ID'] = 240630142,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630143] = {
+		['ID'] = 240630143,
+		['RewardEXP'] = 50000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630144] = {
+		['ID'] = 240630144,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630145] = {
+		['ID'] = 240630145,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630146] = {
+		['ID'] = 240630146,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630147] = {
+		['ID'] = 240630147,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630148] = {
+		['ID'] = 240630148,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630149] = {
+		['ID'] = 240630149,
+		['RewardEXP'] = 50000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630150] = {
+		['ID'] = 240630150,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630151] = {
+		['ID'] = 240630151,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630152] = {
+		['ID'] = 240630152,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630153] = {
+		['ID'] = 240630153,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630154] = {
+		['ID'] = 240630154,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630155] = {
+		['ID'] = 240630155,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630156] = {
+		['ID'] = 240630156,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630157] = {
+		['ID'] = 240630157,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630158] = {
+		['ID'] = 240630158,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630159] = {
+		['ID'] = 240630159,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630160] = {
+		['ID'] = 240630160,
+		['RewardEXP'] = 50000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630161] = {
+		['ID'] = 240630161,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630162] = {
+		['ID'] = 240630162,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630163] = {
+		['ID'] = 240630163,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630164] = {
+		['ID'] = 240630164,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630165] = {
+		['ID'] = 240630165,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630166] = {
+		['ID'] = 240630166,
+		['RewardEXP'] = 50000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630167] = {
+		['ID'] = 240630167,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630168] = {
+		['ID'] = 240630168,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630169] = {
+		['ID'] = 240630169,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630170] = {
+		['ID'] = 240630170,
+		['RewardEXP'] = 50000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630171] = {
+		['ID'] = 240630171,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630172] = {
+		['ID'] = 240630172,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630173] = {
+		['ID'] = 240630173,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630174] = {
+		['ID'] = 240630174,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630175] = {
+		['ID'] = 240630175,
+		['RewardEXP'] = 50000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630176] = {
+		['ID'] = 240630176,
+		['RewardEXP'] = 6000,
+		['RewardMoney'] = 0,
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
+		},
+	[240630177] = {
+		['ID'] = 240630177,
+		['RewardEXP'] = 50000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -953,7 +1337,7 @@ local TaskRewardTable = {
 		},
 	[240640001] = {
 		['ID'] = 240640001,
-		['RewardEXP'] = 10000,
+		['RewardEXP'] = 50000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {0},
 		['RewardTarget'] = {0},
@@ -1059,16 +1443,16 @@ local TaskRewardTable = {
 		['ID'] = 240640014,
 		['RewardEXP'] = 10000,
 		['RewardMoney'] = 0,
-		['RewardType'] = {1,1},
-		['RewardTarget'] = {201060011,201060012},
-		['RewardNum'] = {1,1}
+		['RewardType'] = {1},
+		['RewardTarget'] = {201060011},
+		['RewardNum'] = {1}
 		},
 	[240640015] = {
 		['ID'] = 240640015,
 		['RewardEXP'] = 10000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {1},
-		['RewardTarget'] = {201060011},
+		['RewardTarget'] = {201060012},
 		['RewardNum'] = {10}
 		},
 	[240640016] = {
@@ -1076,16 +1460,16 @@ local TaskRewardTable = {
 		['RewardEXP'] = 10000,
 		['RewardMoney'] = 0,
 		['RewardType'] = {1},
-		['RewardTarget'] = {201060011},
+		['RewardTarget'] = {201060013},
 		['RewardNum'] = {1}
 		},
 	[240640017] = {
 		['ID'] = 240640017,
 		['RewardEXP'] = 10000,
 		['RewardMoney'] = 0,
-		['RewardType'] = {0},
-		['RewardTarget'] = {0},
-		['RewardNum'] = {0}
+		['RewardType'] = {1,1,1},
+		['RewardTarget'] = {201060011,201060012,201060013},
+		['RewardNum'] = {1,10,1}
 		},
 	[240640018] = {
 		['ID'] = 240640018,

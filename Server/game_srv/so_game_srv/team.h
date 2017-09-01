@@ -104,6 +104,7 @@ public:
 	bool IsFull() { return m_data->m_memSize == MAX_TEAM_MEM ? true : false; }
 	bool CheckLevel(int lv);
 	void SetFollow(player_struct &player, bool follow);
+	bool IsFollow(player_struct &player);
 	void SummonMem();
 	void FollowLeadTrans(uint32_t scene_id, double pos_x, double pos_y, double pos_z, double direct);
 	uint32_t GetAverageLevel() { return m_data->m_memSize == 0 ? 0 : m_sumLevel / m_data->m_memSize; }

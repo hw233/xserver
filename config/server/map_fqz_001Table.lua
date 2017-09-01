@@ -779,5 +779,17 @@
         ['TargetInfoList'] = {
         }
     },
+    [1000074] = {
+        ['uid'] = 1000074,
+        ['ID'] = 151600003,
+        ['ResType'] = "Monster",
+        ['PointPosX'] = 95.06961,
+        ['PointPosY'] = 40.11362,
+        ['PointPosZ'] = 229.5058,
+        ['Yaw'] = 0,
+        ['Level'] = 1,
+        ['TargetInfoList'] = {
+        }
+    },
 }
 return map_fqz_001

@@ -134,21 +134,40 @@ message player_doufachang_info
 }
 
 //世界boss信息
-message PlayerWordBossRedisinfo
+message PlayerWorldBossRedisinfo
 {
 	required string name = 1;		//玩家名字
-	required uint32 boss_id = 2;	//bossid
+	required uint64 boss_id = 2;	//bossid
 	required uint32 score = 3;		//当前获得积分
 	required uint32 cur_hp = 4;     //boss当前血量
 	required uint32 max_hp = 5;     //boss最大血量
 }
 
 //当前世界boss信息
-message CurWordBossRedisinfo
+message CurWorldBossRedisinfo
 {
 	required string name = 1;       //最后一击玩家名字
 	required uint64 player_id = 2;      //最后一击玩家id
-	required uint32 boss_id = 3;    //bossid
+	required uint64 boss_id = 3;    //bossid
 	required uint32 cur_hp = 4;     //boss当前血量
 	required uint32 max_hp = 5;     //boss最大血量
+}
+
+//上轮世界boss信息
+message BeforWorldBossRedisinfo
+{
+	required string name = 1;       //最后一击玩家名字
+	required uint64 player_id = 2;      //最后一击玩家id
+	required uint64 boss_id = 3;    //bossid
+	required string max_score_name = 4; //上轮最高积分玩家名字
+	required uint64 max_score_player_id = 5;//上轮最高积分玩家id
+}
+
+//世界boss领奖信息
+message WorldBossReceiveRewardInfo
+{
+	required uint64 last_time = 1; //排行奖励上次发奖时间
+	required uint32 num = 2; //排行奖励今日已发奖次数
+	required uint64 kill_time = 3; //击杀奖上次发奖时间
+	required uint32 kill_num = 4; //击杀奖今日已发奖次数
 }

@@ -1,48 +1,8 @@
 local ScriptTable = {
-	[170000000] = {
-		['ID'] = 170000000,	--索引
-		['Path'] = 'Skill/Effect/DmgEffect',	--路径
-		['paramList'] = {0}	--参数
-		},
-	[170000001] = {
-		['ID'] = 170000001,
-		['Path'] = 'Skill/Effect/PoisoningEffect',
-		['paramList'] = {0}
-		},
-	[170000002] = {
-		['ID'] = 170000002,
-		['Path'] = 'Skill/Effect/ReplyEffect',
-		['paramList'] = {0}
-		},
-	[170000003] = {
-		['ID'] = 170000003,
-		['Path'] = 'Skill/Effect/SlowEffect',
-		['paramList'] = {0}
-		},
 	[170000004] = {
-		['ID'] = 170000004,
-		['Path'] = 'Skill/Effect/DizzyEffect',
-		['paramList'] = {0}
-		},
-	[170000005] = {
-		['ID'] = 170000005,
-		['Path'] = 'Skill/Effect/MuddleEffect',
-		['paramList'] = {0}
-		},
-	[170000006] = {
-		['ID'] = 170000006,
-		['Path'] = 'Skill/Effect/InvincibleEffect',
-		['paramList'] = {0}
-		},
-	[170000007] = {
-		['ID'] = 170000007,
-		['Path'] = 'Skill/Effect/SuperArmorEffect',
-		['paramList'] = {0}
-		},
-	[170000008] = {
-		['ID'] = 170000008,
-		['Path'] = 'Skill/Effect/AttributeAdditionEffect',
-		['paramList'] = {0}
+		['ID'] = 170000004,	--索引
+		['Path'] = 'Skill/Effect/DizzyEffect',	--路径
+		['paramList'] = {0}	--参数
 		},
 	[170000009] = {
 		['ID'] = 170000009,
@@ -52,16 +12,6 @@ local ScriptTable = {
 	[170000010] = {
 		['ID'] = 170000010,
 		['Path'] = 'Skill/Effect/HitflyEffect',
-		['paramList'] = {0}
-		},
-	[170000011] = {
-		['ID'] = 170000011,
-		['Path'] = 'Skill/Effect/VampireEffect',
-		['paramList'] = {0}
-		},
-	[170000012] = {
-		['ID'] = 170000012,
-		['Path'] = 'Skill/Effect/BounceEffect',
 		['paramList'] = {0}
 		},
 	[170000016] = {
@@ -254,11 +204,6 @@ local ScriptTable = {
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
 		['paramList'] = {10,135200006}
 		},
-	[172000020] = {
-		['ID'] = 172000020,
-		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {10,135200007}
-		},
 	[172000024] = {
 		['ID'] = 172000024,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
@@ -273,6 +218,16 @@ local ScriptTable = {
 		['ID'] = 172000047,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
 		['paramList'] = {10,135200009}
+		},
+	[172000061] = {
+		['ID'] = 172000061,
+		['Path'] = 'Skill/Effect/BulletSkillEffect',
+		['paramList'] = {10,135200010}
+		},
+	[172000063] = {
+		['ID'] = 172000063,
+		['Path'] = 'Skill/Effect/BulletSkillEffect',
+		['paramList'] = {10,135200007}
 		}
 	}
 return ScriptTable

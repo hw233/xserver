@@ -17,4 +17,5 @@ extern struct raid_ai_interface raid_ai_guild_wait_interface;
 extern struct raid_ai_interface raid_ai_guild_final_interface;
 extern struct raid_ai_interface raid_ai_xunbao_interface;
 extern struct raid_ai_interface raid_ai_doufachang_interface;
+extern struct raid_ai_interface raid_ai_battle_interface;
 #endif 

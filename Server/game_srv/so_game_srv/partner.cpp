@@ -180,6 +180,15 @@ void partner_struct::update_sight(area_struct *old_area, area_struct *new_area)
 	area = new_area;
 }
 
+bool partner_struct::on_truck_leave_sight(uint64_t player_id)
+{
+	return true;
+}
+bool partner_struct::on_truck_enter_sight(uint64_t player_id)
+{
+	return true;
+}
+
 bool partner_struct::on_player_leave_sight(uint64_t player_id)
 {
 	return true;

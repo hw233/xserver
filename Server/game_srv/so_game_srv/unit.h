@@ -52,6 +52,8 @@ public:
 	virtual bool on_player_enter_sight(uint64_t player_id) = 0;
 	virtual bool on_monster_leave_sight(uint64_t uuid) = 0;
 	virtual bool on_monster_enter_sight(uint64_t uuid) = 0;
+	virtual bool on_truck_leave_sight(uint64_t uuid) = 0;
+	virtual bool on_truck_enter_sight(uint64_t uuid) = 0;	
 	virtual bool on_partner_leave_sight(uint64_t player_id) = 0;
 	virtual bool on_partner_enter_sight(uint64_t player_id) = 0;	
 	virtual int *get_cur_sight_player() = 0;
@@ -106,6 +108,7 @@ public:
 	int get_free_buff_pos();
 	void set_one_buff(buff_struct *buff, int pos);	
 	void delete_one_buff(buff_struct *buff);
+	void delete_one_buff(uint32_t buff_id);
 	void clear_all_buffs();
 	buff_struct *try_cover_duplicate_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack);
 	void reset_unit_buff_state();

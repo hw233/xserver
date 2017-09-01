@@ -30,10 +30,10 @@ struct map_config
 
 struct region_config
 {
-	uint16_t size_x;
-	uint16_t size_z;
-	int16_t offset_x;
-	int16_t offset_z;
+// 	uint16_t size_x;
+// 	uint16_t size_z;
+// 	int16_t offset_x;
+// 	int16_t offset_z;
 	uint16_t region_id[0];
 }__attribute__ ((packed));
 

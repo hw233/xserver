@@ -1544,3 +1544,40 @@ int CRedisClient::connect()
 
 	return 0;
 }
+
+int CRedisClient::hkeys(const char* table, std::set<uint64_t>& s1)
+{
+	if (!table)
+		return -1;
+
+	int ret = connect();
+	if (0 != ret) {
+		LOG_ERR("connect redis failed\n");
+		return -1;
+	}
+
+	char buffer[1024] = { 0 };
+	snprintf(buffer, sizeof(buffer), "HKEYS %s", table);
+
+	CAutoRedisReply autoR;
+	redisReply* r = (redisReply*)redisCommand(m_redisCtx, buffer);
+	if (NULL == r) {
+		LOG_ERR("[%s : %d]: call redisCommand error, redis break connection,m_redisCtx: %p", __FUNCTION__, __LINE__, m_redisCtx);
+		m_isConnect = false;
+		return -1;
+	}
+
+	autoR.set(r);
+	if(r->type != REDIS_REPLY_ARRAY )
+		return -1;
+
+	for (size_t i = 0; i < r->elements; ++i) {
+		redisReply* childReply = r->element[i];
+		if (childReply->type == REDIS_REPLY_STRING) {
+			uint64_t playerid = strtoull(childReply->str, NULL, 0);
+			s1.insert(playerid);
+		}
+	}
+
+	return 0;
+}

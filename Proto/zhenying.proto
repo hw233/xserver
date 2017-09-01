@@ -105,3 +105,45 @@ message ZhenyingLine
 	required uint32 my_line = 1; //
 	repeated ZhenyingLineInfo all_line = 2;
 }
+
+message MyScore
+{
+	required uint32 rank = 1;
+	required uint32 point = 2;
+}
+message TotalScore
+{
+	required uint32 fulongguo = 1;
+	required uint32 dianfenggu = 2;
+}
+message OneScore
+{
+	required uint64 playerid = 1;
+	required string name = 2;
+	required uint32 kill = 3;
+	required uint32 death = 4;
+	required uint32 rank = 5;
+	required uint32 score = 6;
+	required uint32 job = 7;
+	required uint32 lv = 8;
+}
+message SideScore
+{
+	repeated OneScore side = 1;
+}
+message ZhenYingResult
+{
+	repeated OneScore fulongguo = 1;
+	repeated OneScore dianfenggu = 2;
+	required TotalScore score = 3;
+}
+message ZhenYingFlag
+{
+	required uint32 id = 1;
+	required int32 own = 2;
+}
+message StartFlag
+{
+	required uint32 npc = 1;
+	required int32 zhenying = 2;
+}

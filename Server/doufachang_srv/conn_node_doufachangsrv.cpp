@@ -163,7 +163,7 @@ uint32_t conn_node_doufachangsrv::add_challenge_rank(DOUFACHANG_CHALLENGE_ANSWER
 
 	sg_redis_client.mset_uint64(conn_node_doufachangsrv::doufachang_rank2_key, 2, playerid, rank);
 	sg_redis_client.mset_uint64(conn_node_doufachangsrv::doufachang_rank_key, 2, rank, playerid);
-	return (rank[0] - rank[1]);
+	return (rank[1] - rank[0]);
 }
 
 int conn_node_doufachangsrv::add_challenge_record(DOUFACHANG_CHALLENGE_ANSWER *ans)
@@ -287,9 +287,17 @@ int conn_node_doufachangsrv::handle_challenge_request(EXTERN_DATA *extern_data)
 	}
 
 	info = get_player_doufachang_info(extern_data->player_id, doufachang_key, sg_redis_client, t1);
-	if (info)
+	if (!info)
 	{
-		update_doufachang_player_info(extern_data->player_id, info, now / 1000);
+		info = &conn_node_doufachangsrv::default_info;
+		--info->challenge_count;
+		info->next_add_count = now / 1000000 + ADD_COUNT_SECONDS;
+		save_player_doufachang_info(info, extern_data->player_id, doufachang_key, sg_redis_client);
+		reinit_default_doufachang_info(info);
+	}
+	else
+	{
+		update_doufachang_player_info(extern_data->player_id, info, now / 1000000);
 		if (info->challenge_count <= 0)
 		{
 			ans.result = 3;
@@ -428,25 +436,59 @@ static int get_rank_player(int cur_rank, uint64_t player_id, uint64_t *rank_play
 
 	if (cur_rank <= 30)
 	{
+		uint64_t size = sg_redis_client.size(conn_node_doufachangsrv::doufachang_rank_key);		
 		rank_player_rank[0] = cur_rank - 2;
 		rank_player_rank[1] = cur_rank - 1;
 		rank_player_rank[2] = cur_rank + 1;
-		rank_player_rank[3] = cur_rank + 2;		
+		if (rank_player_rank[2] > size && cur_rank - 3 > 0)
+			rank_player_rank[2] = cur_rank - 3;
+		rank_player_rank[3] = cur_rank + 2;
+		if (rank_player_rank[3] > size && cur_rank - 4 > 0)
+			rank_player_rank[3] = cur_rank - 4;		
 		sg_redis_client.mget_uint64(conn_node_doufachangsrv::doufachang_rank_key, MAX_CHALLENGE_PLAYER, rank_player_rank, rank_player_id);
 		return (0);
 	}
 
-	int t = cur_rank * 3 / 10;
-	for (int i = 0; i < MAX_CHALLENGE_PLAYER / 2; ++i)
+	int t = cur_rank / 10;
+	int min_rank = cur_rank - t;
+	int max_rank = cur_rank + t;
+	int size = sg_redis_client.size(conn_node_doufachangsrv::doufachang_rank_key);
+	if (size >= DOUFACHANG_MAX_RANK)
+		size = DOUFACHANG_MAX_RANK;
+	if (max_rank >= size)
+		max_rank = size - 1;
+
+	for (int i = 0; i < MAX_CHALLENGE_PLAYER; ++i)
+		rank_player_rank[i] = 0;
+	
+	if (max_rank > min_rank)
 	{
-		int n = DOUFACHANG_MAX_RANK - random() % t;
-		if (n <= 0)
-			n = 1;
-		rank_player_rank[i * 2] = t;
-		rank_player_rank[i * 2 + 1] = DOUFACHANG_MAX_RANK + random() % t;
-		if (rank_player_rank[i * 2 + 1] > DOUFACHANG_MAX_RANK)
-			rank_player_rank[i * 2 + 1] = DOUFACHANG_MAX_RANK;
+		for (int i = 0; i < MAX_CHALLENGE_PLAYER; ++i)
+		{
+			int n = min_rank + random() % (max_rank - min_rank);
+			rank_player_rank[i] = n;
+		}
 	}
+
+	t = 0;
+	for (int i = 0; i < MAX_CHALLENGE_PLAYER; ++i)
+	{
+		if (rank_player_rank[i] == 0 || (int)rank_player_rank[i] == cur_rank)
+		{
+			rank_player_rank[i] = min_rank - t;
+			t--;
+		}
+		for (int j = 0; j < i; ++j)
+		{
+			if (rank_player_rank[i] == rank_player_rank[j])
+			{
+				rank_player_rank[i] = min_rank - t;
+				t--;
+				break;
+			}
+		}
+	}
+	
 	sg_redis_client.mget_uint64(conn_node_doufachangsrv::doufachang_rank_key, MAX_CHALLENGE_PLAYER, rank_player_rank, rank_player_id);
 
 	return (0);
@@ -469,7 +511,10 @@ int conn_node_doufachangsrv::handle_info_request(EXTERN_DATA *extern_data)
 	}
 	else
 	{
-		update_doufachang_player_info(extern_data->player_id, info, now / 1000000);
+		if (update_doufachang_player_info(extern_data->player_id, info, now / 1000000))
+		{
+			save_player_doufachang_info(info, extern_data->player_id, doufachang_key, sg_redis_client);
+		}
 	}
 
 //	int num;
@@ -569,9 +614,9 @@ int conn_node_doufachangsrv::handle_get_reward_request(EXTERN_DATA *extern_data)
 
 int conn_node_doufachangsrv::handle_server_add_reward_answer(EXTERN_DATA *extern_data)
 {
-	DOUFACHANG_GET_REWARD_ANSWER *server_ans = (DOUFACHANG_GET_REWARD_ANSWER *)buf_head();
+	DOUFACHANG_GET_REWARD_ANSWER *server_ans = (DOUFACHANG_GET_REWARD_ANSWER *)get_data();
 		//如果领奖成功，告诉客户端
-	if (server_ans->result == 0)
+	if (server_ans->result == 1)
 	{
 		CommAnswer resp;
 		comm_answer__init(&resp);
@@ -595,7 +640,10 @@ int conn_node_doufachangsrv::handle_server_add_reward_answer(EXTERN_DATA *extern
 		return (0);
 	}
 	info->refresh_reward_id = 0;
-	update_doufachang_player_info(extern_data->player_id, info, now / 1000000);
+	if (update_doufachang_player_info(extern_data->player_id, info, now / 1000000))
+	{
+		save_player_doufachang_info(info, extern_data->player_id, doufachang_key, sg_redis_client);
+	}
 	
 	CommAnswer resp;
 	comm_answer__init(&resp);

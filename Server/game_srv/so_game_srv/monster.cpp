@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <math.h>
 #include "game_event.h"
 #include "check_range.h"
 #include "game_config.h"
@@ -30,6 +31,7 @@
 #include "collect.h"
 #include "game_config.h"
 #include "../proto/player_redis_info.pb-c.h"
+#include "chat.pb-c.h"
 
 uint64_t monster_struct::get_uuid()
 {
@@ -171,6 +173,21 @@ void monster_struct::on_tick()
 		ai->on_tick(this);
 }
 
+void monster_struct::update_region_id()
+{
+	if (!is_avaliable())
+		return;
+	struct position *pos = get_pos();
+	uint16_t old_region_id = get_attr(PLAYER_ATTR_REGION_ID);
+	uint16_t new_region_id = get_region_id(scene->map_config, scene->region_config, pos->pos_x, pos->pos_z);
+	if (new_region_id != old_region_id)
+	{
+		set_attr(PLAYER_ATTR_REGION_ID, new_region_id);
+//		send_enter_region_notify(new_region_id);
+//		on_region_changed(old_region_id, new_region_id);
+	}
+}
+
 void monster_struct::update_monster_pos_and_sight()
 {
 	if (!scene)
@@ -187,6 +204,8 @@ void monster_struct::update_monster_pos_and_sight()
 	area_struct *old_area = area;
 	if (update_unit_position() == 0)
 		return;
+
+	update_region_id();	
 
 	if (!old_area)
 		return;
@@ -1174,7 +1193,8 @@ bool monster_struct::on_player_leave_sight(uint64_t player_id)
 		if (player)
 			return ai->on_player_leave_sight(this, player);
 	}
-	if (target && target->get_uuid() == player_id)
+	if (target && target->is_avaliable() && target->get_uuid() == player_id)		
+//	if (target && target->get_uuid() == player_id)
 		target = NULL;
 	
 	return true;
@@ -1189,7 +1209,7 @@ bool monster_struct::on_monster_leave_sight(uint64_t uuid)
 {
 //	if (ai_type == AI_TYPE_NORMAL)
 	{
-		if (target && target->get_uuid() == uuid)
+		if (target && target->is_avaliable() && target->get_uuid() == uuid)		
 			target = NULL;
 	}
 	return true;
@@ -1198,11 +1218,23 @@ bool monster_struct::on_monster_enter_sight(uint64_t uuid)
 {
 	return true;
 }
+
+bool monster_struct::on_truck_leave_sight(uint64_t uuid)
+{
+	if (target && target->is_avaliable() && target->get_uuid() == uuid)		
+		target = NULL;
+	return true;
+}
+bool monster_struct::on_truck_enter_sight(uint64_t uuid)
+{
+	return true;
+}
+
 bool monster_struct::on_partner_leave_sight(uint64_t uuid)
 {
 //	if (ai_type == AI_TYPE_NORMAL)
 	{
-		if (target && target->get_uuid() == uuid)
+		if (target && target->get_unit_type() == UNIT_TYPE_PARTNER && target->is_avaliable() && target->get_uuid() == uuid)
 			target = NULL;
 	}
 	return true;
@@ -1358,7 +1390,7 @@ void monster_struct::go_back()
 uint64_t monster_struct::count_rand_patrol_time()
 {
 	if (ai_config->StopMax <= ai_config->StopMin)
-		return 99999;
+		return ai_config->StopMin;
 	
 	return random() % (ai_config->StopMax - ai_config->StopMin) + ai_config->StopMin;
 }
@@ -1726,29 +1758,64 @@ void monster_struct::world_boss_refresf_player_redis_info(unit_struct *murderer,
 	if(player == NULL || player->data == NULL)
 		return;
 
-	PlayerWordBossRedisinfo info;
-	player_word_boss_redisinfo__init(&info);
+	PlayerWorldBossRedisinfo info;
+	player_world_boss_redisinfo__init(&info);
 
 	double real_damage = befor_hp > damage ? damage:befor_hp; 
 
 	info.name  = player->data->name;
-	info.score = real_damage *  p->second->Coefficient;
+	if(player->get_level() > p->second->RewardLevel)
+	{
+		info.score = 0;
+	}
+	else
+	{
+		info.score = ceil(real_damage *  p->second->Coefficient);
+	}
 	info.boss_id = p->second->ID;
 	info.cur_hp = get_attr(PLAYER_ATTR_HP) > 0 ? get_attr(PLAYER_ATTR_HP):0;
 	info.max_hp = get_attr(PLAYER_ATTR_MAXHP);
+
 
 	EXTERN_DATA extern_data;
 	extern_data.player_id = player->data->player_id;
 
 	//在数据开头增加一个类型
 	uint8_t *pData = conn_node_base::get_send_data();
-	size_t data_len = player_word_boss_redisinfo__pack(&info, pData + sizeof(uint32_t));
+	size_t data_len = player_world_boss_redisinfo__pack(&info, pData + sizeof(uint32_t));
 	if (data_len != (size_t)-1)
 	{
 		*((uint32_t*)pData) = 1;
 		data_len += sizeof(uint32_t);
-		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, SERVER_PROTO_WORDBOSS_PLAYER_REDIS_INFO
+		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, SERVER_PROTO_WORLDBOSS_PLAYER_REDIS_INFO
 , data_len, 0);
 	}
-	 
+	
+   //如果世界boss死了发公告
+   if(get_attr(PLAYER_ATTR_HP) <= 0)
+   {
+	   NoticeTable *table = get_config_by_id(330510009, &notify_config);
+	   if(table == NULL)
+		   return;
+	   SceneResTable *scen_config = get_config_by_id(p->second->SceneID,&scene_res_config);
+	   if(scen_config == NULL)
+		   return;
+		
+	   char buff[512];
+	   ChatHorse send;
+	   chat_horse__init(&send);
+	   send.id = 330510009;
+	   send.prior = table->Priority;
+	   send.content = buff;
+	   uint32_t c[MAX_CHANNEL] = { 1,2,3,4,5,6 };
+	   for (uint32_t i = 0; i < table->n_NoticeChannel; ++i)
+	   {
+		   c[i] = table->NoticeChannel[i];
+	   }
+	   send.channel = c;
+	   send.n_channel = table->n_NoticeChannel;
+
+	   snprintf(buff, 510, table->NoticeTxt, scen_config->SceneName,p->second->Name,player->get_name());
+	   conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_HORSE_NOTIFY, &send, (pack_func)chat_horse__pack);
+   }	   
 }

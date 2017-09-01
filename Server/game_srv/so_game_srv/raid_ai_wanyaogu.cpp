@@ -1,4 +1,5 @@
 #include <math.h>
+#include "so_game_srv/buff_manager.h"
 #include <stdlib.h>
 #include "game_event.h"
 #include "raid_ai.h"
@@ -571,6 +572,51 @@ static void wanyaogu_raid_ai_escort_stop(raid_struct *raid, player_struct *playe
 	script_ai_common_escort_stop(raid, player, escort_id, success, &raid->WANYAOGU_DATA.script_data);
 }
 
+static void wanyaogu_raid_ai_monster_region_changed(raid_struct *raid, monster_struct *monster, uint32_t old_id, uint32_t new_id)
+{
+	uint32_t pk_type = monster->get_attr(PLAYER_ATTR_PK_TYPE);
+	struct raid_script_data *data = &raid->WANYAOGU_DATA.script_data;
+	for (size_t i = 0; i < data->cur_region_config; ++i)
+	{
+		bool pk_type_right = false;
+		for (size_t j = 2; j < data->region_config[i]->n_Parameter1; ++j)
+		{
+			if (pk_type == data->region_config[i]->Parameter1[j])
+			{
+				pk_type_right = true;
+				break;
+			}
+		}
+
+		if (!pk_type_right)
+			continue;
+		
+		if (data->region_config[i]->Parameter1[0] == new_id)
+		{
+			buff_manager::create_default_buff(data->region_config[i]->Parameter1[1], monster, monster, true);
+			return;
+		}
+		else if (data->region_config[i]->Parameter1[0] == old_id)
+		{
+			monster->delete_one_buff(data->region_config[i]->Parameter1[1]);
+			return;
+		}
+	}	
+}
+
+static void wanyaogu_raid_ai_player_region_changed(raid_struct *raid, player_struct *player, uint32_t old_id, uint32_t new_id)
+{
+	// struct raid_script_data *data = &raid->WANYAOGU_DATA.script_data;
+	// for (size_t i = 0; i < data->cur_region_config; ++i)
+	// {
+	// 	if (data->region_config[i]->Parameter1[0] == new_id)
+	// 	{
+	// 		buff_manager::create_default_buff(data->region_config[i]->Parameter1[1], player, player, true);
+	// 		break;
+	// 	}
+	// }
+}
+
 struct raid_ai_interface raid_ai_wanyaogu_interface =
 {
 	wanyaogu_raid_ai_init,
@@ -584,9 +630,10 @@ struct raid_ai_interface raid_ai_wanyaogu_interface =
 	wanyaogu_raid_ai_player_ready,
 	wanyaogu_raid_ai_finished,
 	NULL,  //ai_player_attack
-	NULL,
+	.raid_on_player_region_changed = wanyaogu_raid_ai_player_region_changed,
 	.raid_on_escort_stop = wanyaogu_raid_ai_escort_stop,
 	NULL,
 	.raid_get_config = wanyaogu_raid_get_config,
-	.raid_on_failed = wanyaogu_raid_ai_failed,
+	.raid_on_failed = wanyaogu_raid_ai_failed,	
+	.raid_on_monster_region_changed = wanyaogu_raid_ai_monster_region_changed,
 };

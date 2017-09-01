@@ -1,0 +1,9 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+message RankWorldBossHpInfo
+{
+	required uint64 bossid = 1; //bossid
+	required uint32 max_hp = 2; //最大血量
+	required uint32 cur_hp = 3; //当前血量
+}

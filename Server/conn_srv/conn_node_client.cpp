@@ -335,6 +335,9 @@ int conn_node_client::dispatch_message()
 		case MSG_ID_GUILD_BATTLE_CALL_REQUEST:
 			return transfer_to_guildsrv();
 		case MSG_ID_RANK_INFO_REQUEST:
+		case MSG_ID_WORLDBOSS_REAL_RANK_INFO_REQUEST:
+		case MSG_ID_WORLDBOSS_ZHUJIEMIAN_INFO_REQUEST:
+		case MSG_ID_WORLDBOSS_LAST_RANK_INFO_REQUEST:
 			return transfer_to_ranksrv();
 		case MSG_ID_DOUFACHANG_CHALLENGE_REQUEST:
 		case MSG_ID_DOUFACHANG_INFO_REQUEST:

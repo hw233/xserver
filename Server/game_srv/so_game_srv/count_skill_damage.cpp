@@ -332,7 +332,6 @@ static int32_t count_friend_damage(struct SkillLvTable *lvconfig,
 	if (damage < 0)
 		damage = 0;
 
-	double cur_hp = defence[PLAYER_ATTR_HP];
 	if (defence_unit->buff_state & BUFF_STATE_ONEBLOOD)
 	{
 		if (defence[PLAYER_ATTR_HP] - damage < 1)
@@ -349,10 +348,6 @@ static int32_t count_friend_damage(struct SkillLvTable *lvconfig,
 		defence[PLAYER_ATTR_HP] -= damage;
 	}
 
-	if(defence_unit->get_unit_type() == UNIT_TYPE_MONSTER || defence_unit->get_unit_type() == UNIT_TYPE_BOSS)
-	{
-		((monster_struct*)defence_unit)->world_boss_refresf_player_redis_info(attack_unit, cur_hp, damage);
-	}
 	return damage;
 }
 
@@ -401,7 +396,6 @@ static int32_t count_enemy_damage(struct SkillTable *skillconfig,
 		damage = 1;
 	
 	damage *= (other_rate / 10000.0);
-	double cur_hp = defence[PLAYER_ATTR_HP];
 	if (defence_unit->buff_state & BUFF_STATE_ONEBLOOD)
 	{
 		if (defence[PLAYER_ATTR_HP] - damage < 1)
@@ -416,10 +410,6 @@ static int32_t count_enemy_damage(struct SkillTable *skillconfig,
 	else
 	{
 		defence[PLAYER_ATTR_HP] -= damage;
-	}
-	if(defence_unit->get_unit_type() == UNIT_TYPE_MONSTER || defence_unit->get_unit_type() == UNIT_TYPE_BOSS)
-	{
-		((monster_struct*)defence_unit)->world_boss_refresf_player_redis_info(attack_unit, cur_hp, damage);
 	}
 	return damage;
 }
@@ -616,6 +606,8 @@ int32_t count_skill_total_damage(UNIT_FIGHT_TYPE type, struct SkillTable *skillc
 
 //	bool b_is_friend = is_friend(attack_unit, defence_unit);
 
+	double *defence_attr = defence_unit->get_all_attr();
+	double defence_cur_hp = defence_attr[PLAYER_ATTR_HP];
 
 	if (type == UNIT_FIGHT_TYPE_ENEMY)
 	{
@@ -638,6 +630,11 @@ int32_t count_skill_total_damage(UNIT_FIGHT_TYPE type, struct SkillTable *skillc
 		ret = count_friend_damage(act_lvconfig, attack_unit, defence_unit);
 	}
 
+	//世界boss数据处理
+	if(defence_unit->get_unit_type() == UNIT_TYPE_MONSTER || defence_unit->get_unit_type() == UNIT_TYPE_BOSS)
+	{
+		((monster_struct*)defence_unit)->world_boss_refresf_player_redis_info(attack_unit, defence_cur_hp, ret);
+	}
 	if (!defence_unit->is_alive())
 		return ret;
 

@@ -19,7 +19,7 @@ serverid=$1
 port=$2
 shm_addr=`printf "%d" ${3}`
 player_num=$4
-monster_num=`expr 100 + ${player_num} \* 10`
+monster_num=`expr 3000 + ${player_num} \* 10`
 #boss_num=`expr ${monster_num} / 20`
 
 echo "/// SERVER ID"

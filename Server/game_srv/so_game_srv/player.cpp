@@ -245,7 +245,12 @@ void player_struct::send_raid_hit_statis(raid_struct *raid)
 void player_struct::try_return_zhenying_raid()
 {
 		// TODO: 检查是否还在活动时间
-	zhenying_raid_struct *raid = zhenying_raid_manager::get_avaliable_zhenying_raid();
+	FactionBattleTable *table = get_zhenying_battle_table(get_attr(PLAYER_ATTR_LEVEL));
+	if (table == NULL)
+	{
+		return;
+	}
+	zhenying_raid_struct *raid = zhenying_raid_manager::get_avaliable_zhenying_raid(table->Map);
 	if (!raid)
 	{
 		return try_out_raid();
@@ -712,6 +717,15 @@ bool player_struct::on_player_leave_sight(uint64_t player_id)
 	return true;
 }
 bool player_struct::on_player_enter_sight(uint64_t player_id)
+{
+	return true;
+}
+
+bool player_struct::on_truck_leave_sight(uint64_t player_id)
+{
+	return true;
+}
+bool player_struct::on_truck_enter_sight(uint64_t player_id)
 {
 	return true;
 }
@@ -1725,13 +1739,13 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 
 	DBTruck truckData;
 	dbtruck__init(&truckData);
-	truckData.truck_id = data->truck.truck_id;
-	truckData.active_id = data->truck.active_id;
 	truckData.num_coin = data->truck.num_coin;
 	truckData.num_gold = data->truck.num_gold;
 	cash_truck_struct *pTruck = cash_truck_manager::get_cash_truck_by_id(data->truck.truck_id);
 	if (pTruck != NULL)
 	{
+		truckData.truck_id = data->truck.truck_id;
+		truckData.active_id = data->truck.active_id;
 		assert(pTruck->data->scene_id > 0);
 		truckData.pos_x = pTruck->get_pos()->pos_x;
 		truckData.pos_z = pTruck->get_pos()->pos_z;
@@ -1739,6 +1753,9 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		truckData.hp = pTruck->get_attr(PLAYER_ATTR_HP);
 	}
 	db_info.truck = &truckData;
+	LOG_DEBUG("%s: player[%lu] truck id[%lu] active_id[%u] sceneid[%u] hp[%u] pos[%.1f %.1f]",
+		__FUNCTION__, data->player_id, db_info.truck->truck_id, db_info.truck->active_id,
+		db_info.truck->scene_id, db_info.truck->hp, db_info.truck->pos_x, db_info.truck->pos_z);
 
 	DBZhenying zhenying;
 	dbzhenying__init(&zhenying);
@@ -2288,6 +2305,14 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		data->truck.scene_id = db_info->truck->scene_id;
 		data->truck.hp = db_info->truck->hp;
 
+		LOG_DEBUG("%s: player[%lu] truck id[%lu] active_id[%u] sceneid[%u] hp[%u] pos[%.1f %.1f]",
+			__FUNCTION__, data->player_id, db_info->truck->truck_id, db_info->truck->active_id,
+			db_info->truck->scene_id, db_info->truck->hp, db_info->truck->pos_x, db_info->truck->pos_z);
+
+		if (data->truck.truck_id > 0)
+		{
+			assert(data->truck.scene_id > 0);
+		}
 	}
 
 	data->server_level_break_count = db_info->server_level_break_count;
@@ -2553,16 +2578,16 @@ void player_struct::send_clear_sight()
 	notify.n_delete_cash_truck = data->cur_sight_truck;
 	notify.delete_cash_truck = data->sight_truck;
 
-	if (data->truck.on_truck)
-	{
-		for (int t = 0; t < data->cur_sight_truck; ++t)
-		{
-			if (data->sight_truck[t] == data->truck.truck_id) //在镖车上 自己的镖车不删
-			{
-				data->sight_truck[t] = 0; //note 调这个函数之后会把视野全清除所以先置0了
-			}
-		}
-	}
+	//if (data->truck.on_truck)
+	//{
+	//	for (int t = 0; t < data->cur_sight_truck; ++t)
+	//	{
+	//		if (data->sight_truck[t] == data->truck.truck_id) //在镖车上 自己的镖车不删
+	//		{
+	//			data->sight_truck[t] = 0; //note 调这个函数之后会把视野全清除所以先置0了
+	//		}
+	//	}
+	//}
 
 
 	if (area)
@@ -3162,7 +3187,7 @@ void player_struct::on_region_changed(uint16_t old_region_id, uint16_t new_regio
 	raid_struct *raid = get_raid();
 	if (raid && raid->ai && raid->ai->raid_on_player_region_changed)
 	{
-		raid->ai->raid_on_player_region_changed(raid, this, new_region_id);
+		raid->ai->raid_on_player_region_changed(raid, this, old_region_id, new_region_id);
 	}
 
 }
@@ -4780,6 +4805,66 @@ uint32_t player_struct::get_zhenqi(void)
 	return (data ? data->attrData[PLAYER_ATTR_ZHENQI] : 0);
 }
 
+int player_struct::add_currency(uint32_t id, uint32_t num, uint32_t statis_id, uint32_t limit, bool isNty)
+{
+	if (id >= PLAYER_ATTR_MAX)
+	{
+		return 0;
+	}
+	if (num == 0)
+	{
+		return 0;
+	}
+
+	uint32_t prevVal = data->attrData[id];
+	if (prevVal >= limit)
+	{
+		return 0;
+	}
+
+	data->attrData[id] = std::min(prevVal + num, limit);
+	uint32_t curVal = data->attrData[id];
+	uint32_t realNum = curVal - prevVal;
+	LOG_INFO("[%s:%d] player[%lu] id:%u, prevVal:%u, curVal:%u, num:%u, realNum:%u", __FUNCTION__, __LINE__, data->player_id, id, prevVal, curVal, num, realNum);
+
+	if (isNty)
+	{
+		this->notify_one_attr_changed(id, curVal);
+	}
+
+	return 0;
+}
+
+int player_struct::sub_currency(uint32_t id, uint32_t num, uint32_t statis_id, bool isNty)
+{
+	if (id >= PLAYER_ATTR_MAX)
+	{
+		return 0;
+	}
+	if (num == 0)
+	{
+		return 0;
+	}
+
+	uint32_t prevVal = data->attrData[id];
+	if (prevVal < num)
+	{
+		LOG_ERR("[%s:%d] player[%lu] id[%u] not enough, prevVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, id, prevVal, num);
+		return -1;
+	}
+
+	data->attrData[id] -= num;
+	uint32_t curVal = data->attrData[id];
+	LOG_INFO("[%s:%d] player[%lu] id[%u] prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, id, prevVal, curVal, num);
+
+	if (isNty)
+	{
+		this->notify_one_attr_changed(id, curVal);
+	}
+
+	return 0;
+}
+
 void player_struct::item_find_pos_by_cache(uint32_t id, std::vector<uint32_t>& pos_list)
 {
 	std::pair<ItemPosMap::iterator, ItemPosMap::iterator> range;
@@ -5969,6 +6054,13 @@ int player_struct::check_use_prop(uint32_t item_id, uint32_t use_count, ItemUseE
 			}
 			break;
 	}
+	if (config->ItemEffect == IUE_TRANSFER_SCENE || config->ItemEffect == IUE_XUNBAO)
+	{
+		if (m_team != NULL && m_team->IsFollow(*this))
+		{
+			return ERROR_ID_PROP_CAN_NOT_USE;
+		}
+	}
 
 	return 0;
 }
@@ -6430,21 +6522,19 @@ int player_struct::add_exp(uint32_t val, uint32_t statis_id, bool isNty)
 	uint32_t level_new = level_old;
 	uint32_t exp_new = data->attrData[PLAYER_ATTR_EXP] + val * (1.0 + get_server_exp_addition(level_old));
 
+	uint32_t zhenqi_limit = 0;
+	ServerLevelTable *limit_config = get_server_level_config();
+	if (limit_config)
+	{
+		zhenqi_limit = limit_config->Truer;
+	}
+
 	while (true)
 	{
-		if (is_server_level_limit(level_new))
-		{
-			LOG_DEBUG("[%s:%d] player[%lu] server level limit, level:%u", __FUNCTION__, __LINE__, data->player_id, level_new);
-			mark_server_level_break(this);
-			exp_new = 0;
-			break;
-		}
-
 		if (level_new >= (uint32_t)sg_player_level_limit)
 		{
 			break;
 		}
-
 
 		ActorLevelTable* level_config = get_actor_level_config(data->attrData[PLAYER_ATTR_JOB], level_new);
 		if (!level_config)
@@ -6457,8 +6547,25 @@ int player_struct::add_exp(uint32_t val, uint32_t statis_id, bool isNty)
 			break;
 		}
 
+		if (is_server_level_limit(level_new))
+		{
+			uint32_t add_zhenqi_num = floor((exp_new - level_config->NeedExp) * sg_exp_turn_zhenqi_percent);
+			add_zhenqi_num = std::min(add_zhenqi_num, zhenqi_limit - (uint32_t)get_attr(PLAYER_ATTR_EXP_ZHENQI));
+			if (add_zhenqi_num > 0)
+			{
+				add_zhenqi(add_zhenqi_num, MAGIC_TYPE_SERVER_LEVEL_TURN);
+				add_currency(PLAYER_ATTR_EXP_ZHENQI, add_zhenqi_num, MAGIC_TYPE_SERVER_LEVEL_TURN, zhenqi_limit);
+			}
+			exp_new = level_config->NeedExp;
+			break;
+		}
+
 		exp_new -= level_config->NeedExp;
 		level_new++;
+		if (is_server_level_limit(level_new))
+		{
+			mark_server_level_break(this);
+		}
 	}
 
 	data->attrData[PLAYER_ATTR_EXP] = exp_new;
@@ -7684,7 +7791,7 @@ void player_struct::init_task_progress(TaskInfo *info)
 						}
 
 						partner_struct *partner = get_partner_by_uuid(uuid);
-						if (partner && partner->scene)
+						if (partner && partner->is_alive())
 						{
 							if (config->ConditionTarget == 0 || partner->data->partner_id == (uint32_t)config->ConditionTarget)
 							{
@@ -10951,7 +11058,11 @@ bool player_struct::is_partner_precedence(void)
 
 int player_struct::del_partner_from_scene(partner_struct *partner, bool send_msg)
 {
-	if (partner->scene)
+	if (partner->partner_sight_space)
+	{
+		partner->partner_sight_space->broadcast_partner_delete(partner);
+	}
+	else if (partner->scene)
 	{
 		partner->scene->delete_partner_from_scene(partner, send_msg);
 	}
@@ -10967,6 +11078,40 @@ int player_struct::del_partner_from_scene(uint64_t partner_uuid, bool send_msg)
 	if (!partner)
 		return (-1);
 	return del_partner_from_scene(partner, send_msg);
+}
+
+// int player_struct::del_all_formation_partner_from_scene(bool send_msg)
+// {
+// 	for (int i = 0; i < MAX_PARTNER_FORMATION_NUM; ++i)
+// 	{
+// 		del_partner_from_scene(data->partner_formation[i], send_msg);
+// 	}
+// 	return (0);
+// }
+
+int player_struct::add_all_formation_partner_to_scene()
+{
+	for (int i = 0; i < MAX_PARTNER_FORMATION_NUM; ++i)
+	{
+		partner_struct *partner = get_partner_by_uuid(data->partner_formation[i]);
+		if (!partner)
+		{
+			continue;
+		}
+		del_partner_from_scene(partner, true);
+		
+		struct position pos;
+		partner->calc_target_pos(&pos);
+		partner->set_pos(pos.pos_x, pos.pos_z);
+		partner->data->attrData[PLAYER_ATTR_PK_TYPE] = partner->m_owner->get_attr(PLAYER_ATTR_PK_TYPE);
+		partner->data->attrData[PLAYER_ATTR_ZHENYING] = partner->m_owner->get_attr(PLAYER_ATTR_ZHENYING);
+		scene->add_partner_to_scene(partner);
+
+			//开启定时器
+		partner->set_timer(time_helper::get_cached_time() + 1000 + random() % 1500);
+		
+	}
+	return (0);
 }
 
 int player_struct::add_partner_to_scene(uint64_t partner_uuid)
@@ -10993,7 +11138,16 @@ int player_struct::add_partner_to_scene(uint64_t partner_uuid)
 	partner->set_pos(pos.pos_x, pos.pos_z);
 	partner->data->attrData[PLAYER_ATTR_PK_TYPE] = partner->m_owner->get_attr(PLAYER_ATTR_PK_TYPE);
 	partner->data->attrData[PLAYER_ATTR_ZHENYING] = partner->m_owner->get_attr(PLAYER_ATTR_ZHENYING);
-	scene->add_partner_to_scene(partner);
+	if (sight_space)
+	{
+		partner->scene = scene;
+		partner->partner_sight_space = sight_space;
+		sight_space->broadcast_partner_create(partner);
+	}
+	else
+	{
+		scene->add_partner_to_scene(partner);
+	}
 
 		//开启定时器
 	partner->set_timer(time_helper::get_cached_time() + 1000 + random() % 1500);
@@ -11090,11 +11244,18 @@ void player_struct::take_truck_into_scene(void)
 
 void player_struct::take_partner_into_scene(void)
 {
+	// if (sg_doufachang_raid_id == data->scene_id)
+	// {
+	// 	add_all_formation_partner_to_scene();
+	// 	return;
+	// }
+	
 	if (!is_partner_battle())
 	{
 		return ;
 	}
 
+	adjust_battle_partner();
 	for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
 	{
 		if (data->partner_battle[i] > 0)
@@ -11119,6 +11280,12 @@ void player_struct::del_battle_partner_from_scene()
 void player_struct::adjust_battle_partner(void)
 {
 //	LOG_DEBUG("[%s:%u] player[%lu] ", __FUNCTION__, __LINE__, data->player_id);
+	if (!scene)
+	{
+		return;
+	}
+
+	uint32_t battle_num = std::max((int)scene->res_config->Partner, 1);
 	uint64_t old_uuid = get_fighting_partner();
 	do
 	{
@@ -11177,43 +11344,48 @@ void player_struct::adjust_battle_partner(void)
 			reset_partner_anger();
 		} while(0);
 
-		for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
+		//出战伙伴数减少，先把部分伙伴收回
+		uint32_t cur_battle_num = get_partner_battle_num();
+		if (cur_battle_num > battle_num)
 		{
-			if (data->partner_battle[i] == 0 && i != 0)
+			uint32_t count = 0;
+			for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
 			{
-				continue;
-			}
-
-			partner_struct *partner = get_partner_by_uuid(data->partner_battle[i]);
-			if (!partner_is_in_formation(data->partner_battle[i]) || !partner || !partner->is_alive())
-			{
-				if (partner)
-					del_partner_from_scene(partner, true);
-				// if (partner && partner->scene)
-				// {
-				//	partner->scene->delete_partner_from_scene(partner, true);
-				// }
-
-				data->partner_battle[i] = 0;
-				data->partner_battle[i] = get_next_can_battle_partner();
-				if (data->partner_battle[i] > 0)
+				if (data->partner_battle[i] == 0)
 				{
-					partner_struct *partner_on = get_partner_by_uuid(data->partner_battle[i]);
-					if (partner_on && partner_on->is_alive())
-					{
-						add_partner_to_scene(data->partner_battle[i]);
-						add_task_progress(TCT_PARTNER_OUT_FIGHT, partner_on->data->partner_id, 1);
-					}
+					continue;
 				}
-				if (i == 0)
+
+				if (count == battle_num)
 				{
-					reset_partner_anger();
+					sub_battle_partner(i);
+				}
+				else
+				{
+					count++;
 				}
 			}
-			else if (partner_is_in_formation(data->partner_battle[i]) && partner && partner->is_alive() && !partner->scene)
+		}
+
+		for (int i = 0; i < MAX_PARTNER_BATTLE_NUM && i < (int)battle_num; ++i)
+		{
+			if (data->partner_battle[i] == 0)
 			{
-				add_partner_to_scene(data->partner_battle[i]);
-				add_task_progress(TCT_PARTNER_OUT_FIGHT, partner->data->partner_id, 1);
+				add_battle_partner(i);
+			}
+			else
+			{
+				partner_struct *partner = get_partner_by_uuid(data->partner_battle[i]);
+				if (!partner_is_in_formation(data->partner_battle[i]) || !partner || !partner->is_alive())
+				{
+					sub_battle_partner(i);
+					add_battle_partner(i);
+				}
+				else if (partner_is_in_formation(data->partner_battle[i]) && partner && partner->is_alive() && ((sight_space && !partner->partner_sight_space) || (!partner->scene)))
+				{
+					add_partner_to_scene(data->partner_battle[i]);
+					add_task_progress(TCT_PARTNER_OUT_FIGHT, partner->data->partner_id, 1);
+				}
 			}
 		}
 	} while(0);
@@ -11223,6 +11395,34 @@ void player_struct::adjust_battle_partner(void)
 	{
 		notify_fighting_partner();
 	}
+}
+
+void player_struct::add_battle_partner(int index)
+{
+	data->partner_battle[index] = get_next_can_battle_partner();
+	if (data->partner_battle[index] > 0)
+	{
+		partner_struct *partner_on = get_partner_by_uuid(data->partner_battle[index]);
+		if (partner_on && partner_on->is_alive())
+		{
+			add_partner_to_scene(data->partner_battle[index]);
+			add_task_progress(TCT_PARTNER_OUT_FIGHT, partner_on->data->partner_id, 1);
+		}
+	}
+	if (index == 0)
+	{
+		reset_partner_anger();
+	}
+}
+
+void player_struct::sub_battle_partner(int index)
+{
+	partner_struct *partner = get_partner_by_uuid(data->partner_battle[index]);
+	if (partner)
+	{
+		del_partner_from_scene(partner, true);
+	}
+	data->partner_battle[index] = 0;
 }
 
 uint64_t player_struct::get_next_can_battle_partner(void)
@@ -11768,7 +11968,10 @@ void player_struct::on_dead(unit_struct *killer)
 
 	interrupt();
 	adjust_battle_partner();
-	add_achievement_progress(ACType_DEAD, 0, 0, 1);
+	if (killer && (killer->get_unit_type() == UNIT_TYPE_MONSTER || killer->get_unit_type() == UNIT_TYPE_BOSS))
+	{
+		add_achievement_progress(ACType_DEAD, 0, 0, 1);
+	}
 }
 
 void player_struct::on_relive_in_raid(raid_struct *raid, uint32_t type)
@@ -12205,6 +12408,7 @@ int player_struct::transfer_to_new_scene_impl(scene_struct *new_scene, double po
 		scene->delete_player_from_scene(this);
 		set_pos(pos_x, pos_z);
 		new_scene->add_player_to_scene(this);
+		take_partner_into_scene();
 	}
 	else
 	{
@@ -12541,7 +12745,10 @@ void player_struct::refresh_player_redis_info(bool offline)
 	{
 		if (data->partner_formation[i] == 0)
 			continue;
-		partner_formation[info.n_partner++] = data->partner_formation[i];
+		PartnerMap::iterator ite = m_partners.find(data->partner_formation[i]);
+		assert(ite != m_partners.end());
+		assert(ite->second && ite->second->config);
+		partner_formation[info.n_partner++] = ite->second->config->ID;
 	}
 	info.partner = partner_formation;
 
@@ -13032,7 +13239,7 @@ int player_struct::add_horse(uint32_t id, time_t expire)
 	}
 	int pos = data->n_horse;
 	++data->n_horse;
-	add_achievement_progress(ACType_HORSE_NUM, 0, 0, data->n_horse);
+	add_achievement_progress(ACType_HORSE_NUM, 0, 0, get_horse_num());
 	check_title_condition(TCType_HORSE_ID, id, 1);
 
 	notify_add_horse(pos);
@@ -13104,6 +13311,11 @@ void player_struct::down_horse()
 	send.horseid = data->attrData[PLAYER_ATTR_CUR_HORSE];
 	broadcast_to_sight(MSG_ID_DOWN_HORSE_NOTIFY, &send, (pack_func)on_horse__pack, false);
 	adjust_battle_partner();
+}
+
+uint32_t player_struct::get_horse_num()
+{
+	return (data->n_horse + 1);
 }
 
 int player_struct::get_on_horse_id()
@@ -13271,7 +13483,7 @@ void player_struct::check_horse_expire()
 				memcpy(data->horse + i, data->horse + data->n_horse - 1, sizeof(HorseInfo));
 			}
 			--data->n_horse;
-			add_achievement_progress(ACType_HORSE_NUM, 0, 0, data->n_horse);
+			add_achievement_progress(ACType_HORSE_NUM, 0, 0, get_horse_num());
 			check_title_condition(TCType_HORSE_ID, horse_id, 2);
 		}
 		else
@@ -13656,7 +13868,7 @@ void player_struct::logout_check_award_question()
 		ParameterTable * config1 = get_config_by_id(161000170, &parameter_config);
 		ParameterTable * config2 = get_config_by_id(161000169, &parameter_config);
 		ParameterTable * config3 = get_config_by_id(161000168, &parameter_config);
-		add_task_progress(TCT_QUESTION, 0, config2->parameter1[0] - data->award_answer.number + 1);
+		add_task_progress(TCT_QUESTION, 0, 1);
 		data->award_answer.timer += (config1->parameter1[0] * (config2->parameter1[0] - data->award_answer.number + 1));
 		data->award_answer.number = 1;
 		if (data->award_answer.trun == config3->parameter1[0])
@@ -13994,6 +14206,20 @@ uint32_t player_struct::get_partner_quality_num(uint32_t quality)
 	return num;
 }
 
+uint32_t player_struct::get_partner_battle_num(void)
+{
+	uint32_t num = 0;
+	for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
+	{
+		if (data->partner_battle[i] > 0)
+		{
+			num++;
+		}
+	}
+
+	return num;
+}
+
 uint32_t player_struct::get_friend_num(void)
 {
 	uint32_t num = 0;
@@ -14227,7 +14453,7 @@ void player_struct::init_achievement_progress(AchievementInfo *info)
 				break;
 			case ACType_HORSE_NUM:
 				{
-					info->progress = data->n_horse;
+					info->progress = get_horse_num();
 				}
 				break;
 			case ACType_PARTNER_NUM:
@@ -14507,26 +14733,6 @@ void player_struct::achievement_update_notify(AchievementInfo *info)
 	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_ACHIEVEMENT_UPDATE_NOTIFY, achievement_data__pack, nty);
 }
 
-AchievementHierarchyTable *player_struct::get_achievement_config(AchievementInfo *info)
-{
-	do
-	{
-		AchievementFunctionTable *func_config = get_config_by_id(info->id, &achievement_function_config);
-		if (!func_config)
-		{
-			break;
-		}
-		if (info->star >= func_config->n_Hierarchys)
-		{
-			break;
-		}
-
-		return get_config_by_id(func_config->Hierarchys[info->star], &achievement_hierarchy_config);
-	} while(0);
-
-	return NULL;
-}
-
 TitleInfo *player_struct::get_title_info(uint32_t id)
 {
 	for (int i = 0; i < MAX_TITLE_NUM; ++i)
@@ -14621,6 +14827,13 @@ int player_struct::sub_title(uint32_t title_idx)
 
 	TitleInfo *info = &data->title_list[title_idx];
 	uint32_t title_id = info->id;
+	if (title_id == (uint32_t)get_attr(PLAYER_ATTR_TITLE))
+	{
+		set_attr(PLAYER_ATTR_TITLE, 0);
+		calculate_attribute(true);
+		broadcast_one_attr_changed(PLAYER_ATTR_TITLE, 0, true, true);
+	}
+
 	info->state = 0;
 	info->is_new = 0;
 	info->expire_time = 0;
@@ -14633,18 +14846,16 @@ int player_struct::sub_title(uint32_t title_idx)
 	}
 	memset(&data->title_list[MAX_TITLE_NUM - 1], 0, sizeof(TitleInfo));
 
-	if (title_id == (uint32_t)get_attr(PLAYER_ATTR_TITLE))
-	{
-		set_attr(PLAYER_ATTR_TITLE, 0);
-		calculate_attribute(true);
-		broadcast_one_attr_changed(PLAYER_ATTR_TITLE, title_id, true, true);
-	}
-
 	return 0;
 }
 
 void player_struct::title_update_notify(TitleInfo *info)
 {
+	if (!data->login_notify)
+	{
+		return ;
+	}
+
 	TitleData nty;
 	title_data__init(&nty);
 
@@ -14657,6 +14868,7 @@ void player_struct::title_update_notify(TitleInfo *info)
 	EXTERN_DATA ext_data;
 	ext_data.player_id = data->player_id;
 
+//	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_TITLE_UPDATE_NOTIFY, title_data__pack, nty);
 	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_TITLE_UPDATE_NOTIFY, title_data__pack, nty);
 }
 

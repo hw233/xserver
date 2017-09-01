@@ -332,6 +332,35 @@ void buff_struct::del_buff()
 	if (m_owner)
 	{
 		m_owner->delete_one_buff(this);
+		if (config->n_DelEffectID > 0 && config->DelEffectID[0] != 0)
+		{
+			struct SkillEffectTable *del_config = get_config_by_id(config->DelEffectID[0], &skill_effect_config);
+			assert(del_config);
+			assert(del_config->Type == 170000008);//-改变属性的buff
+			double *attr = m_owner->get_all_attr();
+			double *fight_attr = m_owner->get_all_buff_fight_attr();				
+			assert(attr && fight_attr);
+			double base_attr = attr[effect_config->Effect[0]];
+			int added_attr_value = base_attr * (effect_config->EffectAdd[0] / 10000.0 - 1) + effect_config->EffectNum[0];
+				
+				//速度变化要特殊处理并且通知
+			if (data->effect.attr_effect.attr_id == PLAYER_ATTR_MOVE_SPEED)
+			{
+				attr[effect_config->Effect[0]] += added_attr_value;
+				m_owner->broadcast_one_attr_changed(PLAYER_ATTR_MOVE_SPEED, attr[PLAYER_ATTR_MOVE_SPEED], true, true);
+				LOG_DEBUG("%s: player[%lu] add buff[%lu] attr[%lu] delta[%.1f] to[%.1f]",
+					__FUNCTION__, m_owner->get_uuid(), config->ID, effect_config->Effect[0],
+					data->effect.attr_effect.added_attr_value, attr[effect_config->Effect[0]]);					
+			}
+			else
+			{
+				assert(MAX_BUFF_FIGHT_ATTR > effect_config->Effect[0]);
+				fight_attr[effect_config->Effect[0]] += added_attr_value;
+				LOG_DEBUG("%s: player[%lu] add buff[%lu] attr[%lu] delta[%.1f] to[%.1f]",
+					__FUNCTION__, m_owner->get_uuid(), config->ID, effect_config->Effect[0],
+					data->effect.attr_effect.added_attr_value, fight_attr[effect_config->Effect[0]]);
+			}
+		}
 	}
 	
 	if (is_recoverable_buff())

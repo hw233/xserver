@@ -77,7 +77,12 @@ static int get_server_account_url(uint32_t open_id)
 						for (size_t k = 0; k < resp->serverlist[j]->n_playerlist; ++k)
 						{
 							PlayerBaseInfo* player = resp->serverlist[j]->playerlist[k];
-							printf("player[%lu][%lu][%s]\n", k, player->playerid, player->name);
+							printf("[%lu]player[%lu][%s] ", k, player->playerid, player->name);
+							for (size_t l = 0; l < player->n_attrid; ++l)
+							{
+								printf("attr[%u:%u] ", player->attrid[l], player->attrval[l]);
+							}
+							printf("\n");
 						}
 					}
 				}

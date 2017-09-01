@@ -328,6 +328,7 @@ void conn_node_friendsrv::handle_zhenying_change_power()
 
 void conn_node_friendsrv::handle_zhenying_add_kill()
 {
+	//LOG_DEBUG("%s: team info", __FUNCTION__);
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128] = "zhenying";
@@ -346,6 +347,7 @@ void conn_node_friendsrv::handle_zhenying_add_kill()
 	zhenying_power__init(&send);
 	if (ret >= 0)
 	{
+		//LOG_DEBUG("%s: team info", __FUNCTION__);
 		ZhenyingRedis *rzhenying = zhenying_redis__unpack(NULL, data_len, conn_node_base::global_send_buf);
 		if (rzhenying != NULL)
 		{
@@ -368,20 +370,22 @@ void conn_node_friendsrv::handle_zhenying_add_kill()
 
 			if (save)
 			{
+				LOG_DEBUG("%s: team info", __FUNCTION__);
 				data_len = zhenying_redis__pack(rzhenying, (uint8_t *)conn_node_base::global_send_buf);
 				ret = sg_redis_client.hset_bin(server_key, key, (char *)conn_node_base::global_send_buf, data_len);
 				if (ret < 0)
 				{
 					LOG_ERR("%s: oper failed, ret = %d", __FUNCTION__, ret);
-				}
+				}//LOG_DEBUG("%s: team info", __FUNCTION__);
 			}
-			zhenying_redis__free_unpacked(rzhenying, NULL);
+			zhenying_redis__free_unpacked(rzhenying, NULL); //LOG_DEBUG("%s: team info", __FUNCTION__);
 		}
 	}
 
 	add_zhenying_player__free_unpacked(req, NULL);
 
-	LOG_DEBUG("%s: team info %lu len[%d] ret", __FUNCTION__, extern_data->player_id, data_len);
+	//LOG_DEBUG("%s: team info %lu len[%d] ret", __FUNCTION__, extern_data->player_id, data_len);
+	//LOG_DEBUG("%s: team info", __FUNCTION__);
 }
 
 void conn_node_friendsrv::handle_change_zhenying()
@@ -1083,7 +1087,7 @@ int conn_node_friendsrv::recv_func(evutil_socket_t fd)
 					handle_zhenying_change_power();
 					break;
 				case SERVER_PROTO_ADD_ZHENYING_KILL_REQUEST:
-					handle_zhenying_add_kill();
+					//handle_zhenying_add_kill();
 					break;
 				case MSG_ID_FRIEND_INFO_REQUEST:
 					handle_friend_info_request();
@@ -1257,12 +1261,15 @@ void conn_node_friendsrv::handle_cache_clear()
 	char key[128];
 	sprintf(key, "%lu", extern_data->player_id);
 
-	int ret = sg_redis_client.hdel(sg_player_cache_key, key);
-	if (ret < 0)
+	if (sg_redis_client.exist(sg_player_cache_key, key) == 1)
 	{
-		LOG_ERR("[%s,%d]: oper failed, ret = %d", __FUNCTION__, __LINE__, ret);
+		int ret = sg_redis_client.hdel(sg_player_cache_key, key);
+		if (ret < 0)
+		{
+			LOG_ERR("[%s,%d]: oper failed, ret = %d", __FUNCTION__, __LINE__, ret);
+		}
 	}
-	LOG_DEBUG("%s: clear %lu ret = %d", __FUNCTION__, extern_data->player_id, ret);	
+	LOG_DEBUG("%s: clear %lu", __FUNCTION__, extern_data->player_id);	
 }
 
 static void save_player_cache(uint64_t player_id, char *buffer, int buffer_len)
@@ -2745,8 +2752,7 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 
 	int ret = res->result;
 	AutoReleaseBatchFriendPlayer arb_friend;
-//	AutoReleaseBatchRedisPlayer arb_redis;
-	AutoReleaseRedisPlayer p1, p2;
+	AutoReleaseBatchRedisPlayer arb_redis;
 	
 	FriendPlayer *player = NULL;
 	bool internal = false;
@@ -2821,8 +2827,8 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 
 		do
 		{
-			PlayerRedisInfo *redis_player = get_redis_player(player->player_id, conn_node_friendsrv::server_key, sg_redis_client, p1);
-			PlayerRedisInfo *redis_target = get_redis_player(target->player_id, conn_node_friendsrv::server_key, sg_redis_client, p2);
+			PlayerRedisInfo *redis_player = get_redis_player(player->player_id, conn_node_friendsrv::server_key, sg_redis_client, arb_redis);
+			PlayerRedisInfo *redis_target = get_redis_player(target->player_id, conn_node_friendsrv::server_key, sg_redis_client, arb_redis);
 
 			EXTERN_DATA ext_data;
 			ext_data.player_id = target->player_id;
@@ -2943,9 +2949,8 @@ void conn_node_friendsrv::handle_friend_chat_request()
 	}
 
 	int ret = 0;
-//	AutoReleaseBatchRedisPlayer arb_redis;
+	AutoReleaseBatchRedisPlayer arb_redis;
 	AutoReleaseBatchFriendPlayer arb_friend;
-	AutoReleaseRedisPlayer p1;
 	FriendPlayer *player = NULL;
 	do
 	{
@@ -2965,7 +2970,7 @@ void conn_node_friendsrv::handle_friend_chat_request()
 			break;
 		}
 
-		PlayerRedisInfo *redis_receiver = get_redis_player(req->recvplayerid, conn_node_friendsrv::server_key, sg_redis_client, p1);
+		PlayerRedisInfo *redis_receiver = get_redis_player(req->recvplayerid, conn_node_friendsrv::server_key, sg_redis_client, arb_redis);
 		if (!redis_receiver)
 		{
 			ret = ERROR_ID_FRIEND_CHAT_RECEIVER;

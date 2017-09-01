@@ -163,6 +163,12 @@ int raid_struct::init_special_raid_data(player_struct *player)
 			init_scene_struct(m_id, true);
 		}
 			break;
+		case DUNGEON_TYPE_BATTLE:
+		{
+			raid_set_ai_interface(15);
+			init_scene_struct(m_id, true);
+		}
+			break;
 		default:
 			init_scene_struct(m_id, true);			
 			break;
@@ -331,7 +337,20 @@ void raid_struct::team_destoryed(Team *team)
 
 void raid_struct::clear()
 {
+	for (int i = 0; i < MAX_TEAM_MEM; ++i)
+	{
+		if (m_player[i] && m_player[i]->data && get_entity_type(m_player[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
+			player_manager::delete_player(m_player[i]);
+		if (m_player2[i] && m_player2[i]->data && get_entity_type(m_player2[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
+			player_manager::delete_player(m_player2[i]);
+		if (m_player3[i] && m_player3[i]->data && get_entity_type(m_player3[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
+			player_manager::delete_player(m_player3[i]);
+		if (m_player4[i] && m_player4[i]->data && get_entity_type(m_player4[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
+			player_manager::delete_player(m_player4[i]);		
+	}
+
 	scene_struct::clear();
+	
 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
 	{
 		if (m_player[i] && m_player[i]->is_avaliable())
@@ -895,6 +914,16 @@ int raid_struct::get_id_collect_num(uint32_t id)
 	return (ret);
 }
 
+bool raid_struct::is_monster_alive(uint32_t id)
+{
+	for (std::set<monster_struct *>::iterator ite = m_monster.begin(); ite != m_monster.end(); ++ite)
+	{
+		if ((*ite)->data->monster_id == id)
+			return true;
+	}
+	return false;
+}
+
 int raid_struct::get_id_monster_num(uint32_t id)
 {
 	int ret = 0;
@@ -1023,6 +1052,10 @@ SCENE_TYPE_DEFINE raid_struct::get_scene_type()
 
 bool raid_struct::check_raid_failed()
 {
+	if (this->m_id > 30000)
+	{
+		return false; //阵营战
+	}
 	struct DungeonTable *t_config = get_raid_config();
 	if (!t_config)
 		return false;
@@ -1613,11 +1646,15 @@ void raid_struct::on_monster_attack(monster_struct *monster, player_struct *play
 void raid_struct::on_player_dead(player_struct *player, unit_struct *killer)
 {
 	LOG_DEBUG("%s: raid[%u][%lu], player[%lu]", __FUNCTION__, data->ID, data->uuid, player->get_uuid());
-	++data->dead_count;
+	if (m_id < 30000)
+	{
+		++data->dead_count;
 
-	struct raid_player_info *info = get_raid_player_info(player->get_uuid(), NULL);
-	assert(info);
-	++info->dead_count;
+		struct raid_player_info *info = get_raid_player_info(player->get_uuid(), NULL);
+		assert(info);
+		++info->dead_count;
+	}
+	
 
 	if (ai && ai->raid_on_player_dead)
 		ai->raid_on_player_dead(this, player, killer);

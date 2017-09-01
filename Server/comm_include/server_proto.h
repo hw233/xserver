@@ -95,6 +95,7 @@ enum SERVER_PROTO
 
 	//排行榜服消息
 	SERVER_PROTO_RANK_SYNC_RANK,     //同步排名
+	SERVER_PROTO_RANK_SYNC_CHANGE,   //同步排名变化
 
 	SERVER_PROTO_UNDO_COST, //通知game_srv操作失败，把扣取的资源还回去
 
@@ -121,7 +122,8 @@ enum SERVER_PROTO
 	SERVER_PROTO_OFFLINE_RECHARGE_LIST_REQUEST,	// 获取离线充值列表请求
 	SERVER_PROTO_OFFLINE_RECHARGE_LIST_ANSWER,	// 获取离线充值列表应答
 
-	SERVER_PROTO_WORDBOSS_PLAYER_REDIS_INFO,  // 玩家世界boss数据存redis
+	SERVER_PROTO_WORLDBOSS_PLAYER_REDIS_INFO,  // 玩家世界boss数据存redis
+	SERVER_PROTO_WORLDBOSS_BIRTH_UPDATA_REDIS_INFO,  //世界boss出生时间点,更新数据(非服务器启动时的出生)  
 
 	SERVER_PROTO_TIREN_LIST_NOTIFY,				// 外挂踢人
 };
@@ -499,6 +501,20 @@ typedef struct proto_sync_rank
 {
 	ProtoRank ranks[MAX_RANK_TYPE];
 } PROTO_SYNC_RANK;
+
+struct ProtoRankPlayer
+{
+	uint64_t player;
+	uint32_t lv;
+};
+
+typedef struct proto_sync_rank_change
+{
+	PROTO_HEAD head;
+	uint32_t type;
+	uint32_t num;
+	ProtoRankPlayer changes[0];
+} PROTO_SYNC_RANK_CHANGE;
 
 typedef struct doufachang_challenge_request
 {

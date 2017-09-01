@@ -22,7 +22,7 @@ static void ai_dead_12(monster_struct *monster, scene_struct *scene)
 	monster->ai_state = AI_DEAD_STATE;
 		// 杀死副本里面对应的侍神小怪
 	uint32_t monster_id = 0;
-	for (size_t i = 0; i < ARRAY_SIZE(sg_shishen_shouling_id); ++i)
+	for (size_t i = 0; i < sg_n_shishen_id; ++i)
 	{
 		if (sg_shishen_shouling_id[i] == monster->data->monster_id)
 		{
@@ -30,6 +30,7 @@ static void ai_dead_12(monster_struct *monster, scene_struct *scene)
 			break;
 		}
 	}
+
 	assert(monster_id != 0);
 	assert(scene && scene->get_scene_type() == SCENE_TYPE_RAID);
 	raid_struct *raid = (raid_struct *)scene;

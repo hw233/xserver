@@ -91,6 +91,7 @@ std::map<uint64_t, struct GangsTable*> guild_building_config; //帮会建筑表
 std::map<uint64_t, struct GangsJurisdictionTable*> guild_office_config; //帮会职权表
 std::map<uint64_t, struct GangsSkillTable*> guild_skill_config; //帮会技能表
 std::map<uint64_t, struct CampTable*> zhenying_base_config; //阵营基础信息表
+std::map<uint64_t, struct BattlefieldTable*> zhenying_fight_config; //阵营战表
 std::map<uint64_t, struct GradeTable*> zhenying_level_config; //阵营等级表
 std::map<uint64_t, struct WeekTable*> zhenying_week_config; //阵营周目标表
 std::map<uint64_t, struct QuestionTable*> questions_config; //考题表
@@ -239,8 +240,9 @@ double sg_leiminggu_pos[4]; //雷鸣鼓坐标
 double sg_leiminggu_boss_pos[4]; //雷鸣鼓boss坐标
 uint32_t sg_leiminggu_collect_id; //雷鸣鼓采集物ID
 
-uint32_t sg_shishen_xiaoguai_id[5];  //侍神小怪ID
-uint32_t sg_shishen_shouling_id[5];  //侍神首领ID
+uint8_t sg_n_shishen_id;
+uint32_t *sg_shishen_xiaoguai_id;  //侍神小怪ID
+uint32_t *sg_shishen_shouling_id;  //侍神首领ID
 
 uint32_t sg_pvp_raid_buff_relive_time;
 int sg_pvp_center_buff_id[2];
@@ -327,4 +329,6 @@ uint32_t sg_doufachang_raid_win_reward[2];
 uint32_t sg_doufachang_raid_lose_reward[2];
 
 std::map<uint32_t, GangsSkillTable*> skill_config_map;
+
+double sg_exp_turn_zhenqi_percent;
 

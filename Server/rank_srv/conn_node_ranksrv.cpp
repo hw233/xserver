@@ -10,6 +10,10 @@
 #include "player_redis_info.pb-c.h"
 #include "redis_util.h"
 #include "rank_world_boss.h"
+#include "rank_db.pb-c.h"
+#include "send_mail.h"
+#include "app_data_statis.h"
+#include "rank_config.h"
 
 conn_node_ranksrv conn_node_ranksrv::connecter;
 
@@ -19,8 +23,6 @@ struct event sg_clear_timer_event;
 struct timeval sg_clear_timer_val = {3600, 0};	
 
 char sg_player_key[64]; //玩家数据
-char cur_word_boss_key[64]; //当前世界boss数据
-char befor_word_boss_key[64]; //上轮世界boss数据
 static std::map<uint32_t, std::string> scm_rank_keys;
 static std::map<uint32_t, char *> rank_key_map;
 
@@ -116,14 +118,23 @@ static void init_rank_key_map()
 void init_redis_keys(uint32_t server_id)
 {
 	sprintf(sg_player_key, "server_%u", server_id);
-	sprintf(cur_word_boss_key, "cur_word_boss_server_%u", server_id);
-	sprintf(befor_word_boss_key, "befor_word_boss_server_%u", server_id);
+	sprintf(cur_world_boss_key, "cur_word_boss_server_%u", server_id);
+	sprintf(befor_world_boss_key, "befor_word_boss_server_%u", server_id);
+	sprintf(tou_mu_world_boss_reward_num, "world_boss_tou_mu_reward_server_%u", server_id);
+	sprintf(shou_ling_world_boss_reward_num, "world_boss_shou_ling_reward_server_%u", server_id);
 	init_rank_key_map();
+	init_world_boss_rank_key_map();
 	char rank_key[128];
 	for (std::map<uint32_t, std::string>::iterator iter = scm_rank_keys.begin(); iter != scm_rank_keys.end(); ++iter)
 	{
 		sprintf(rank_key, iter->second.c_str(), server_id);
 		iter->second.assign(rank_key);
+	}
+
+	for(std::map<uint64_t, std::string>::iterator itr = world_boss_rank_keys.begin(); itr != world_boss_rank_keys.end(); itr++)
+	{
+			sprintf(rank_key, itr->second.c_str(), server_id, itr->first);
+			itr->second.assign(rank_key);
 	}
 }
 
@@ -166,7 +177,11 @@ conn_node_ranksrv::conn_node_ranksrv()
 	add_msg_handle(SERVER_PROTO_REFRESH_PLAYER_REDIS_INFO, &conn_node_ranksrv::handle_refresh_player_info);
 	add_msg_handle(MSG_ID_RANK_INFO_REQUEST, &conn_node_ranksrv::handle_rank_info_request);
 	add_msg_handle(SERVER_PROTO_PLAYER_ONLINE_NOTIFY, &conn_node_ranksrv::handle_player_online_notify);
-	add_msg_handle(SERVER_PROTO_WORDBOSS_PLAYER_REDIS_INFO, &conn_node_ranksrv::handle_refresh_player_word_boss_info);
+	add_msg_handle(SERVER_PROTO_WORLDBOSS_PLAYER_REDIS_INFO, &conn_node_ranksrv::handle_refresh_player_world_boss_info);
+	add_msg_handle(MSG_ID_WORLDBOSS_REAL_RANK_INFO_REQUEST, &conn_node_ranksrv::handle_world_boss_real_rank_info_request);
+	add_msg_handle(MSG_ID_WORLDBOSS_ZHUJIEMIAN_INFO_REQUEST, &conn_node_ranksrv::handle_world_boss_zhu_jiemian_info_request);
+	add_msg_handle(MSG_ID_WORLDBOSS_LAST_RANK_INFO_REQUEST, &conn_node_ranksrv::handle_world_boss_last_rank_info_request);
+	add_msg_handle(SERVER_PROTO_WORLDBOSS_BIRTH_UPDATA_REDIS_INFO, &conn_node_ranksrv::handle_world_timing_birth_updata_info);
 }
 
 conn_node_ranksrv::~conn_node_ranksrv()
@@ -342,8 +357,92 @@ void cb_clear_timeout(evutil_socket_t, short, void* /*arg*/)
 	add_timer(sg_clear_timer_val, &sg_clear_timer_event, NULL);
 }
 
+static uint32_t get_player_rank(uint32_t rank_type, uint64_t player_id)
+{
+	CRedisClient &rc = sg_redis_client;
+	uint32_t out_rank = 0xffffffff;
+	char *rank_key = get_rank_key(rank_type);
+	int ret = rc.zget_rank(rank_key, player_id, out_rank);
+	if (ret != 0)
+	{
+		rc.zcard(rank_key, out_rank); //没有排名的人，相当于最后一名
+	}
+	out_rank++;
+
+	return out_rank;
+}
+
+static void sync_rank_change_to_game_srv(uint32_t rank_type, uint32_t prev_rank, uint32_t post_rank)
+{
+	if (prev_rank == post_rank)
+	{
+		return ;
+	}
+
+	uint32_t min = 0, max = 0;
+	if (post_rank > prev_rank)
+	{
+		max = post_rank;
+		min = prev_rank;
+	}
+	else
+	{
+		max = prev_rank;
+		min = post_rank;
+	}
+
+	CRedisClient &rc = sg_redis_client;
+	char *rank_key = get_rank_key(rank_type);
+	std::vector<std::pair<uint64_t, uint32_t> > out_vec;
+	int ret = rc.zget(rank_key, min - 1, max - 1, out_vec);
+	if (ret != 0)
+	{
+		return;
+	}
+
+	PROTO_SYNC_RANK_CHANGE *proto = (PROTO_SYNC_RANK_CHANGE*)conn_node_ranksrv::get_send_buf(SERVER_PROTO_RANK_SYNC_CHANGE, 0);
+	proto->type = rank_type;
+	proto->num = 0;
+	ProtoRankPlayer *pPlayer = proto->changes;
+	for (size_t i = 0; i < out_vec.size(); ++i)
+	{
+		pPlayer[proto->num].player = out_vec[i].first;
+		pPlayer[proto->num].lv = min + proto->num;
+		proto->num++;
+	}
+
+	proto->head.len = ENDION_FUNC_4(sizeof(PROTO_SYNC_RANK_CHANGE) + sizeof(ProtoRankPlayer) * proto->num);
+
+	if (conn_node_ranksrv::connecter.send_one_msg(&proto->head, 1) != (int)ENDION_FUNC_4(proto->head.len))
+	{
+		LOG_ERR("[%s:%d] send to game_srv failed err[%d]", __FUNCTION__, __LINE__, errno);
+		return ;
+	}
+}
+
+static void update_player_rank_score(uint32_t rank_type, uint64_t player_id, uint32_t score_old, uint32_t score_new)
+{
+	char *rank_key = NULL;
+	uint32_t post_rank = 0xffffffff;
+	uint32_t prev_rank = 0xffffffff;
+	CRedisClient &rc = sg_redis_client;
+	rank_key = get_rank_key(rank_type);
+	prev_rank = get_player_rank(rank_type, player_id);
+	int ret = rc.zset(rank_key, player_id, score_new);
+	if (ret != 0)
+	{
+		LOG_ERR("[%s:%d] update %s %lu failed, score_new:%u, score_old:%u", __FUNCTION__, __LINE__, rank_key, player_id, score_new, score_old);
+	}
+	else
+	{
+		post_rank = get_player_rank(rank_type, player_id);
+		sync_rank_change_to_game_srv(rank_type, prev_rank, post_rank);
+	}
+}
+
 int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 {
+	AutoReleaseBatchRedisPlayer arb_redis;
 	int proto_data_len = get_data_len();
 	uint8_t *proto_data = get_data();
 	uint32_t refresh_type = *((uint32_t*)proto_data);
@@ -353,6 +452,7 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		LOG_ERR("[%s:%d] player[%lu] unpack req failed, refresh_type:%u", __FUNCTION__, __LINE__, extern_data->player_id, refresh_type);
 		return -1;
 	}
+	arb_redis.push_back(req);
 
 	LOG_INFO("[%s:%d] player[%lu], refresh_type:%u, status:%u", __FUNCTION__, __LINE__, extern_data->player_id, refresh_type, req->status);
 
@@ -363,11 +463,10 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 	char *rank_key = NULL;
 	int ret = 0;
 	uint64_t player_id = extern_data->player_id;
-	std::vector<std::pair<uint32_t, uint32_t> > change_ranks;
-	uint32_t out_rank = 0xffffffff;
+	uint32_t post_rank = 0xffffffff;
+	uint32_t prev_rank = 0xffffffff;
 
-	AutoReleaseRedisPlayer p1;
-	PlayerRedisInfo *redis_player = get_redis_player(extern_data->player_id, sg_player_key, sg_redis_client, p1);
+	PlayerRedisInfo *redis_player = get_redis_player(extern_data->player_id, sg_player_key, sg_redis_client, arb_redis);
 	if (redis_player)
 	{
 		LOG_DEBUG("[%s:%d] player[%lu] redis, refresh_type:%u, status:%u", __FUNCTION__, __LINE__, extern_data->player_id, refresh_type, redis_player->status);
@@ -420,79 +519,20 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		if (level != old_level)
 		{
 			rank_type = RANK_LEVEL_TOTAL;
-			rank_key = get_rank_key(rank_type);
-			ret = rc.zset(rank_key, player_id, level);
-			if (ret != 0)
-			{
-				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, level, old_level);
-			}
-			else
-			{
-				out_rank = 0xffffffff;
-				ret = rc.zget_rank(rank_key, player_id, out_rank);
-				if (ret == 0)
-				{
-					out_rank++;
-				}
-				change_ranks.push_back(std::make_pair(rank_type, out_rank));
-			}
+			update_player_rank_score(rank_type, player_id, old_level, level);
 
 			rank_type = RANK_LEVEL_TOTAL + job;
-			rank_key = get_rank_key(rank_type);
-			ret = rc.zset(rank_key, player_id, level);
-			if (ret != 0)
-			{
-				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, level, old_level);
-			}
-			else
-			{
-				out_rank = 0xffffffff;
-				ret = rc.zget_rank(rank_key, player_id, out_rank);
-				if (ret == 0)
-				{
-					out_rank++;
-				}
-				change_ranks.push_back(std::make_pair(rank_type, out_rank));
-			}
+			update_player_rank_score(rank_type, player_id, old_level, level);
 		}
 
 		if (fc_total != old_fc_total)
 		{
 			rank_type = RANK_FC_TOTAL;
-			rank_key = get_rank_key(rank_type);
-			ret = rc.zset(rank_key, player_id, fc_total);
-			if (ret != 0)
-			{
-				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_total, old_fc_total);
-			}
-			else
-			{
-				out_rank = 0xffffffff;
-				ret = rc.zget_rank(rank_key, player_id, out_rank);
-				if (ret == 0)
-				{
-					out_rank++;
-				}
-				change_ranks.push_back(std::make_pair(rank_type, out_rank));
-			}
+			update_player_rank_score(rank_type, player_id, old_fc_total, fc_total);
 
 			rank_type = RANK_FC_TOTAL + job;
-			rank_key = get_rank_key(rank_type);
-			ret = rc.zset(rank_key, player_id, fc_total);
-			if (ret != 0)
-			{
-				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_total, old_fc_total);
-			}
-			else
-			{
-				out_rank = 0xffffffff;
-				ret = rc.zget_rank(rank_key, player_id, out_rank);
-				if (ret == 0)
-				{
-					out_rank++;
-				}
-				change_ranks.push_back(std::make_pair(rank_type, out_rank));
-			}
+			update_player_rank_score(rank_type, player_id, old_fc_total, fc_total);
+
 			if (req->zhenying != 0)
 			{
 				PROTO_ZHENYIN_CHANGE_POWER *toFriend = (PROTO_ZHENYIN_CHANGE_POWER *)get_send_data();
@@ -505,142 +545,37 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		if (fc_equip != old_fc_equip)
 		{
 			rank_type = RANK_EQUIP_TOTAL;
-			rank_key = get_rank_key(rank_type);
-			ret = rc.zset(rank_key, player_id, fc_equip);
-			if (ret != 0)
-			{
-				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_equip, old_fc_equip);
-			}
-			else
-			{
-				out_rank = 0xffffffff;
-				ret = rc.zget_rank(rank_key, player_id, out_rank);
-				if (ret == 0)
-				{
-					out_rank++;
-				}
-				change_ranks.push_back(std::make_pair(rank_type, out_rank));
-			}
+			update_player_rank_score(rank_type, player_id, old_fc_equip, fc_equip);
 
 			rank_type = RANK_EQUIP_TOTAL + job;
-			rank_key = get_rank_key(rank_type);
-			ret = rc.zset(rank_key, player_id, fc_equip);
-			if (ret != 0)
-			{
-				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_equip, old_fc_equip);
-			}
-			else
-			{
-				out_rank = 0xffffffff;
-				ret = rc.zget_rank(rank_key, player_id, out_rank);
-				if (ret == 0)
-				{
-					out_rank++;
-				}
-				change_ranks.push_back(std::make_pair(rank_type, out_rank));
-			}
+			update_player_rank_score(rank_type, player_id, old_fc_equip, fc_equip);
 		}
 
 		if (fc_bagua != old_fc_bagua)
 		{
 			rank_type = RANK_BAGUA_TOTAL;
-			rank_key = get_rank_key(rank_type);
-			ret = rc.zset(rank_key, player_id, fc_bagua);
-			if (ret != 0)
-			{
-				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_bagua, old_fc_bagua);
-			}
-			else
-			{
-				out_rank = 0xffffffff;
-				ret = rc.zget_rank(rank_key, player_id, out_rank);
-				if (ret == 0)
-				{
-					out_rank++;
-				}
-				change_ranks.push_back(std::make_pair(rank_type, out_rank));
-			}
+			update_player_rank_score(rank_type, player_id, old_fc_bagua, fc_bagua);
 
 			rank_type = RANK_BAGUA_TOTAL + job;
-			rank_key = get_rank_key(rank_type);
-			ret = rc.zset(rank_key, player_id, fc_bagua);
-			if (ret != 0)
-			{
-				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, fc_bagua, old_fc_bagua);
-			}
-			else
-			{
-				out_rank = 0xffffffff;
-				ret = rc.zget_rank(rank_key, player_id, out_rank);
-				if (ret == 0)
-				{
-					out_rank++;
-				}
-				change_ranks.push_back(std::make_pair(rank_type, out_rank));
-			}
+			update_player_rank_score(rank_type, player_id, old_fc_bagua, fc_bagua);
 		}
 
 		if (coin != old_coin)
 		{
 			rank_type = RANK_TREASURE_COIN;
-			rank_key = get_rank_key(rank_type);
-			ret = rc.zset(rank_key, player_id, coin);
-			if (ret != 0)
-			{
-				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, coin, old_coin);
-			}
-			else
-			{
-				out_rank = 0xffffffff;
-				ret = rc.zget_rank(rank_key, player_id, out_rank);
-				if (ret == 0)
-				{
-					out_rank++;
-				}
-				change_ranks.push_back(std::make_pair(rank_type, out_rank));
-			}
+			update_player_rank_score(rank_type, player_id, old_coin, coin);
 		}
 
 		if (gold != old_gold)
 		{
 			rank_type = RANK_TREASURE_GOLD;
-			rank_key = get_rank_key(rank_type);
-			ret = rc.zset(rank_key, player_id, gold);
-			if (ret != 0)
-			{
-				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, gold, old_gold);
-			}
-			else
-			{
-				out_rank = 0xffffffff;
-				ret = rc.zget_rank(rank_key, player_id, out_rank);
-				if (ret == 0)
-				{
-					out_rank++;
-				}
-				change_ranks.push_back(std::make_pair(rank_type, out_rank));
-			}
+			update_player_rank_score(rank_type, player_id, old_gold, gold);
 		}
 
 		if (gold_bind != old_gold_bind)
 		{
 			rank_type = RANK_TREASURE_BIND_GOLD;
-			rank_key = get_rank_key(rank_type);
-			ret = rc.zset(rank_key, player_id, gold_bind);
-			if (ret != 0)
-			{
-				LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, gold_bind, old_gold_bind);
-			}
-			else
-			{
-				out_rank = 0xffffffff;
-				ret = rc.zget_rank(rank_key, player_id, out_rank);
-				if (ret == 0)
-				{
-					out_rank++;
-				}
-				change_ranks.push_back(std::make_pair(rank_type, out_rank));
-			}
+			update_player_rank_score(rank_type, player_id, old_gold_bind, gold_bind);
 		}
 
 		if (pvp3_score != old_pvp3_score)
@@ -648,28 +583,14 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 			if (pvp3_division > 1)
 			{
 				rank_type = RANK_PVP3_DIVISION2 + pvp3_division - 2;
-				rank_key = get_rank_key(rank_type);
-				ret = rc.zset(rank_key, player_id, pvp3_score);
-				if (ret != 0)
-				{
-					LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, pvp3_score, old_pvp3_score);
-				}
-				else
-				{
-					out_rank = 0xffffffff;
-					ret = rc.zget_rank(rank_key, player_id, out_rank);
-					if (ret == 0)
-					{
-						out_rank++;
-					}
-					change_ranks.push_back(std::make_pair(rank_type, out_rank));
-				}
+				update_player_rank_score(rank_type, player_id, old_pvp3_score, pvp3_score);
 			}
 
 			if (pvp3_division != old_pvp3_division)
 			{
 				rank_type = RANK_PVP3_DIVISION2 + old_pvp3_division - 2;
 				rank_key = get_rank_key(rank_type);
+				prev_rank = get_player_rank(rank_type, player_id);
 				std::vector<uint64_t> dels;
 				dels.push_back(player_id);
 				ret = rc.zdel(rank_key, dels);
@@ -679,13 +600,8 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 				}
 				else
 				{
-					out_rank = 0xffffffff;
-					ret = rc.zget_rank(rank_key, player_id, out_rank);
-					if (ret == 0)
-					{
-						out_rank++;
-					}
-					change_ranks.push_back(std::make_pair(rank_type, out_rank));
+					post_rank = get_player_rank(rank_type, player_id);
+					sync_rank_change_to_game_srv(rank_type, prev_rank, post_rank);
 				}
 			}
 		}
@@ -725,19 +641,6 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 			}
 			LOG_DEBUG("[%s:%d] save player[%lu] len[%d] ret = %d, refresh_type:%u, status:%u", __FUNCTION__, __LINE__, extern_data->player_id, (int)data_len, ret, refresh_type, save_player->status);
 		} while(0);
-	}
-
-	if (change_ranks.size() > 0)
-	{
-		PROTO_SYNC_RANK *proto = (PROTO_SYNC_RANK*)get_send_data();
-		memset(proto->ranks, 0, sizeof(proto->ranks));
-		for (size_t i = 0; i < change_ranks.size() && i < MAX_RANK_TYPE; ++i)
-		{
-			proto->ranks[i].type = change_ranks[i].first;
-			proto->ranks[i].rank = change_ranks[i].second;
-		}
-
-		fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_RANK_SYNC_RANK, sizeof(PROTO_SYNC_RANK), 0);
 	}
 
 	return 0;
@@ -934,13 +837,13 @@ int conn_node_ranksrv::handle_player_online_notify(EXTERN_DATA *extern_data)
 	return 0;
 }
 
-int conn_node_ranksrv::handle_refresh_player_word_boss_info(EXTERN_DATA *extern_data)
+int conn_node_ranksrv::handle_refresh_player_world_boss_info(EXTERN_DATA *extern_data)
 {
 
 	
 	int proto_data_len = get_data_len();
 	uint8_t *proto_data = get_data();
-	PlayerWordBossRedisinfo *req = player_word_boss_redisinfo__unpack(NULL, proto_data_len - sizeof(uint32_t), proto_data + sizeof(uint32_t));
+	PlayerWorldBossRedisinfo *req = player_world_boss_redisinfo__unpack(NULL, proto_data_len - sizeof(uint32_t), proto_data + sizeof(uint32_t));
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack req failed, refresh_type:%u", __FUNCTION__, __LINE__, extern_data->player_id);
@@ -948,47 +851,181 @@ int conn_node_ranksrv::handle_refresh_player_word_boss_info(EXTERN_DATA *extern_
 	}
 
 	char name[MAX_PLAYER_NAME_LEN];
-	memcpy(name, req->name,MAX_PLAYER_NAME_LEN);
-	uint32_t boss_id = req->boss_id;
-	//double score = req->score;
+	strcpy(name, req->name);
+	uint64_t boss_id = req->boss_id;
+	uint32_t score = req->score;
 	uint32_t cur_hp = req->cur_hp;
 	uint32_t max_hp = req->max_hp;
-	player_word_boss_redisinfo__free_unpacked(req, NULL);
+	uint64_t player_id = extern_data->player_id;
+	player_world_boss_redisinfo__free_unpacked(req, NULL);
 
 
-	CRedisClient &rc = sg_redis_client;
-	char field[128];
 	std::set<uint64_t>::iterator itr = world_boss_id.find(boss_id);
 	if(itr == world_boss_id.end())
 	{
 		LOG_ERR("[%s:%d]更新世界boss数据失败，无对应的世界boss,bossid[%u]", __FUNCTION__, __LINE__, boss_id);
 		return -2;
 	}
+
+	CRedisClient &rc = sg_redis_client;
+	char field[128];
+	int ret;
+	char *rank_key = NULL;
+	char *befor_rank_key = NULL;
+	uint32_t old_score = 0;
+	uint32_t out_rank = 0xffffffff;
+	uint32_t old_rank = MAX_WORLD_BOSS_REALTINE_RANK_NUM +1;
+	uint32_t new_rank = MAX_WORLD_BOSS_REALTINE_RANK_NUM +1;
+	char max_score_name[MAX_PLAYER_NAME_LEN] = {0};//上轮最高积分玩家姓名
+	uint64_t max_score_player_id = 0; //上轮最高积分玩家uuid
+	
+	rank_key = get_world_boss_rank_key(boss_id);
+	befor_rank_key = get_world_boss_rank_key(boss_id*10);
+	if(rank_key == NULL || befor_rank_key == NULL)
+	{
+		LOG_ERR("[%s:%d]世界boss被击，跟新redis数据失败，redis key 获取出错，bossid[%lu]", __FUNCTION__, __LINE__, boss_id);
+	}
+
+
+	//积分大于0更新排行榜数据(积分大于0说明是有效积分，即给boss制造伤害的玩家的等级在限制范围内)
+	if(score >0)
+	{	
+		//获取之前的排名
+		out_rank = 0xffffffff;
+		ret = rc.zget_rank(rank_key, player_id, out_rank);
+		if (ret == 0)
+		{
+			out_rank++;
+			old_rank = out_rank;
+		}
+
+		//更新排行榜内的积分
+		ret = rc.zget_score(rank_key, player_id, old_score);
+		if(ret == 0)
+		{
+			score += old_score;
+		}
+		ret = rc.zset(rank_key, player_id, score);
+		if (ret != 0)
+		{
+			LOG_ERR("[%s:%d] update %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, score, old_score);
+		}
+
+		//获取跟新后的排名信息
+		out_rank = 0xffffffff;
+		ret = rc.zget_rank(rank_key, player_id, out_rank);
+		if (ret == 0)
+		{
+			out_rank++;
+			new_rank = out_rank;
+		}
+		//世界boss被击受伤，排行榜内前MAX_WORLD_BOSS_REALTINE_RANK_NUM名玩家数据变化，实时广播排行榜
+		if(new_rank <= MAX_WORLD_BOSS_REALTINE_RANK_NUM || old_rank <= MAX_WORLD_BOSS_REALTINE_RANK_NUM)
+		{
+			broadcast_world_boss_rank_info(boss_id);
+		}
+		//更新当前对boss制造伤害的玩家的信息
+		updata_player_cur_world_boss_info( boss_id, extern_data);
+		//world_boss_provide_reward(boss_id);
+	}
+	
+
+
 	if(cur_hp <= 0)
 	{
-	
+		//世界boss死了将当前排行榜数据替换上轮排行榜内
+		do{
+			ret = rc.zdel_rank(befor_rank_key, 0, -1);
+			if(ret != 0)
+			{
+				LOG_ERR("[%s:%d]将本轮排行信息跟新到上轮时，清除上轮榜单信息失败[%lu]", __FUNCTION__, __LINE__, boss_id);
+				break;
+			}
+			std::vector<std::pair<uint64_t, uint32_t> > cur_world_boss_rank_info;
+			rc.zget(rank_key, 0, -1, cur_world_boss_rank_info);
+			for(size_t i =0; i < cur_world_boss_rank_info.size(); ++i)
+			{
+				ret = rc.zset(befor_rank_key, cur_world_boss_rank_info[i].first, cur_world_boss_rank_info[i].second);
+			}
+			//ret = rc.zdel_rank(rank_key, 0, -1);
+			//if(ret != 0)
+			//{
+			//	LOG_ERR("[%s:%d]将本轮排行信息跟新到上轮时，清除本轮榜单信息失败[%lu]", __FUNCTION__, __LINE__, boss_id)	
+			//	break;
+			//}
+		}while(0);
+
+		//世界boss死了，将数据存入上轮的reids
+		BeforWorldBossRedisinfo befor_boss_info;
+		befor_world_boss_redisinfo__init(&befor_boss_info);
+		befor_boss_info.boss_id = boss_id;
+		befor_boss_info.player_id = player_id;
+		befor_boss_info.name = name;
+		//获取上轮最高积分玩家的数据
+		std::vector<std::pair<uint64_t, uint32_t> > befor_world_boss_rank_info;
+		rc.zget(rank_key, 0, 0, befor_world_boss_rank_info);
+		if(befor_world_boss_rank_info.size() == 1)
+		{
+			max_score_player_id = befor_world_boss_rank_info[0].first;
+		}
+
+		AutoReleaseRedisPlayer p1;
+		PlayerRedisInfo *max_score_player_redis = get_redis_player(max_score_player_id, sg_player_key, sg_redis_client, p1);
+		if(max_score_player_redis)
+		{
+			strcpy(max_score_name, max_score_player_redis->name);
+			befor_boss_info.max_score_name = max_score_name;
+			befor_boss_info.max_score_player_id = max_score_player_id;
+		}
+		static uint8_t data_buffer[128 * 1024];
+		sprintf(field, "%lu", boss_id);
+		do
+		{
+			size_t data_len = befor_world_boss_redisinfo__pack(&befor_boss_info, data_buffer);
+			if (data_len == (size_t)-1)
+			{
+				LOG_ERR("[%s:%d] pack redis world_boss_info failed, bossid[%lu]", __FUNCTION__, __LINE__, boss_id);
+				break;
+			}
+
+			 ret = rc.hset_bin(befor_world_boss_key, field, (const char *)data_buffer, (int)data_len);
+			if (ret < 0)
+			{
+				LOG_ERR("[%s:%d] set befor world boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret);
+				break;
+			}
+		} while(0);
+		//将其在当前redis里面的数据清除
+		ret = rc.hdel(cur_world_boss_key, field);
+		if(ret < 0)
+		{
+			LOG_ERR("[%s:%d] del cur  world boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret)
+		}
+		//世界boss死了发奖
+		world_boss_provide_rank_reward(boss_id);
+		world_boss_provide_kill_reward(boss_id);
 	}
 	else
 	{
-		CurWordBossRedisinfo cur_boss_info;
-		cur_word_boss_redisinfo__init(&cur_boss_info);
-		cur_boss_info.player_id = extern_data->player_id;
-		cur_boss_info.name = name;
+		CurWorldBossRedisinfo cur_boss_info;
+		cur_world_boss_redisinfo__init(&cur_boss_info);
+		//cur_boss_info.player_id = player_id;
+		//cur_boss_info.name = name;
 		cur_boss_info.boss_id = boss_id;
 		cur_boss_info.max_hp = max_hp;
 		cur_boss_info.cur_hp = cur_hp;
 		static uint8_t data_buffer[128 * 1024];
 		do
 		{
-			size_t data_len = cur_word_boss_redisinfo__pack(&cur_boss_info, data_buffer);
+			size_t data_len = cur_world_boss_redisinfo__pack(&cur_boss_info, data_buffer);
 			if (data_len == (size_t)-1)
 			{
-				LOG_ERR("[%s:%d] pack redis player failed, player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+				LOG_ERR("[%s:%d] pack redis world_boss_info failed, bossid[%lu]", __FUNCTION__, __LINE__, boss_id);
 				break;
 			}
 
-			sprintf(field, "%u", boss_id);
-			int ret = rc.hset_bin(cur_word_boss_key, field, (const char *)data_buffer, (int)data_len);
+			sprintf(field, "%lu", boss_id);
+			ret = rc.hset_bin(cur_world_boss_key, field, (const char *)data_buffer, (int)data_len);
 			if (ret < 0)
 			{
 				LOG_ERR("[%s:%d] set cur word boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret);
@@ -998,6 +1035,974 @@ int conn_node_ranksrv::handle_refresh_player_word_boss_info(EXTERN_DATA *extern_
 	
 	}
 
+	return 0;
+}
+
+int conn_node_ranksrv::handle_world_boss_real_rank_info_request(EXTERN_DATA *extern_data)
+{
+	RankWorldBossRealInfoRequest *req = rank_world_boss_real_info_request__unpack(NULL, get_data_len(), get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
 	
+	uint64_t boss_id = req->bossid;
+	rank_world_boss_real_info_request__free_unpacked(req, NULL);
+
+
+	int ret = 0;
+	CRedisClient &rc = sg_redis_client;
+	char *rank_key = NULL;
+	std::vector<std::pair<uint64_t, uint32_t> > cur_world_boss_rank_info;
+	uint64_t player_id = extern_data->player_id;
+	uint32_t out_rank = 0xffffffff;
+	uint32_t my_rank = 0;
+	uint32_t my_score = 0;
+
+
+	RankWorldBossRealInfoAnswer answer;
+	rank_world_boss_real_info_answer__init(&answer);
+	RankWorldBossInfo rank_info[MAX_WORLD_BOSS_REALTINE_RANK_NUM];
+	RankWorldBossInfo *rank_info_point[MAX_WORLD_BOSS_REALTINE_RANK_NUM];
+	RankWorldBossPlayerInfo my_info;
+	int endNO = MAX_WORLD_BOSS_REALTINE_RANK_NUM -1;
+	char name[MAX_WORLD_BOSS_REALTINE_RANK_NUM][MAX_PLAYER_NAME_LEN];
+
+	answer.bossid = boss_id;
+	answer.infos = rank_info_point;
+	answer.n_infos = 0;
+	do
+	{
+		rank_key = get_world_boss_rank_key(boss_id);
+		if( rank_key == NULL)
+		{
+			ret = 1;
+			break;
+		}
+
+		ret = rc.zget(rank_key, 0, endNO, cur_world_boss_rank_info);
+		AutoReleaseBatchRedisPlayer t1;	
+		std::map<uint64_t, PlayerRedisInfo*> redis_players;
+		std::set<uint64_t> notice_player;//榜单内玩家唯一id
+		for(uint32_t i = 0;  i < cur_world_boss_rank_info.size(); i++)
+		{
+			notice_player.insert(cur_world_boss_rank_info[i].first);
+		}
+		
+		get_more_redis_player(notice_player ,redis_players, sg_player_key, sg_redis_client, t1);
+		if(ret == 0 && cur_world_boss_rank_info.size() >0)
+		{		
+			for(uint32_t i = 0; i <MAX_WORLD_BOSS_REALTINE_RANK_NUM && i < cur_world_boss_rank_info.size(); i++)
+			{
+				rank_info_point[answer.n_infos] = &rank_info[answer.n_infos];
+				rank_world_boss_info__init(&rank_info[answer.n_infos]);
+				rank_info[answer.n_infos].player_id = cur_world_boss_rank_info[i].first;
+				rank_info[answer.n_infos].score = cur_world_boss_rank_info[i].second;
+				PlayerRedisInfo *redis_player = find_redis_from_map(redis_players,rank_info[answer.n_infos].player_id);
+				memset(name[answer.n_infos], 0, MAX_PLAYER_NAME_LEN);
+				if(redis_player)
+				{
+					strcpy(name[answer.n_infos], redis_player->name);
+					rank_info[answer.n_infos].name = name[answer.n_infos];
+				}
+				rank_info[answer.n_infos].ranknum = i + 1;
+
+				answer.n_infos++;
+			}
+		}
+
+		//获取玩家自己的积分和排名信息
+		out_rank = 0xffffffff;
+		ret = rc.zget_rank(rank_key, player_id, out_rank);
+		if (ret == 0)
+		{
+			out_rank++;
+			my_rank = out_rank;
+		}
+		ret = rc.zget_score(rank_key, player_id, my_score);	
+
+		answer.my_rankinfo = &my_info;
+		rank_world_boss_player_info__init(&my_info);
+		my_info.bossid = boss_id;
+		my_info.score = my_score;
+		my_info.ranknum = my_rank;
+
+	}while(0);
+
+	//answer.result = ret;
+	
+
+	fast_send_msg(&connecter, extern_data, MSG_ID_WORLDBOSS_REAL_RANK_INFO_ANSWER, rank_world_boss_real_info_answer__pack, answer);
+	return 0;
+}
+int conn_node_ranksrv::broadcast_world_boss_rank_info(uint64_t boss_id)
+{
+	char *rank_key = NULL;
+	rank_key = get_world_boss_rank_key(boss_id);
+	if(rank_key == NULL)
+	{
+		LOG_ERR("[%s:%d]实时广播世界boss排行榜信息失败,redis key 获取有误,bossid[%lu]", __FUNCTION__, __LINE__, boss_id);
+		return -1;
+	}
+
+	int ret = 0;
+	CRedisClient &rc = sg_redis_client;
+	std::vector<std::pair<uint64_t, uint32_t> > cur_world_boss_rank_info;
+
+	RankWorldBossNotify noty;
+	rank_world_boss_notify__init(&noty);
+
+	RankWorldBossInfo rank_info[MAX_WORLD_BOSS_REALTINE_RANK_NUM];
+	RankWorldBossInfo *rank_info_point[MAX_WORLD_BOSS_REALTINE_RANK_NUM];
+	int endNO = MAX_WORLD_BOSS_REALTINE_RANK_NUM -1;
+	char name[MAX_WORLD_BOSS_REALTINE_RANK_NUM][MAX_PLAYER_NAME_LEN];
+
+	noty.bossid = boss_id;
+	noty.infos = rank_info_point;
+	noty.n_infos = 0;
+	ret = rc.zget(rank_key, 0, endNO, cur_world_boss_rank_info);
+	do
+	{
+		if(ret != 0 || cur_world_boss_rank_info.size() <= 0)
+		{
+			break;
+		}
+
+		AutoReleaseBatchRedisPlayer t1;	
+		std::map<uint64_t, PlayerRedisInfo*> redis_players;
+		std::set<uint64_t> notice_player;//所有玩家唯一id
+		ret = rc.hkeys(sg_player_key,  notice_player);
+		if(ret != 0)
+		{
+			break;
+		}
+		if(get_more_redis_player(notice_player ,redis_players, sg_player_key, sg_redis_client, t1) != 0)
+		{
+			break;
+		}
+
+		std::vector<uint64_t> broadcast_ids;//在线玩家
+		for (std::set<uint64_t>::iterator iter = notice_player.begin(); iter != notice_player.end(); ++iter)
+		{
+
+			PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, *iter);
+			if (redis_player && redis_player->status == 0)
+			{
+				broadcast_ids.push_back(*iter);
+			}
+		}
+		/*for (std::vector<uint64_t>::iterator pp = broadcast_ids.begin(); pp != broadcast_ids.end(); ++pp)
+		{
+			LOG_ERR("当前在线玩家id[%lu]", *pp);
+		}*/
+		for(uint32_t i = 0; i <MAX_WORLD_BOSS_REALTINE_RANK_NUM && i < cur_world_boss_rank_info.size(); i++)
+		{
+			rank_info_point[noty.n_infos] = &rank_info[noty.n_infos];
+			rank_world_boss_info__init(&rank_info[noty.n_infos]);
+			rank_info[noty.n_infos].player_id = cur_world_boss_rank_info[i].first;
+			rank_info[noty.n_infos].score = cur_world_boss_rank_info[i].second;
+			PlayerRedisInfo *redis_player = find_redis_from_map(redis_players,rank_info[noty.n_infos].player_id);
+			memset(name[noty.n_infos], 0, MAX_PLAYER_NAME_LEN);
+			if(redis_player)
+			{
+				strcpy(name[noty.n_infos], redis_player->name);
+				rank_info[noty.n_infos].name = name[noty.n_infos];
+			}
+			rank_info[noty.n_infos].ranknum = i + 1;
+
+			noty.n_infos++;
+		}
+		if( broadcast_ids.size() > 0)
+		{
+			broadcast_message(MSG_ID_WORLDBOSS_CUR_RANK_INFO_NOTIFY, &noty, (pack_func)rank_world_boss_notify__pack,broadcast_ids);
+		}
+	}while(0);
+
+	/*LOG_ERR("广播的信息-----------------------------");
+	for(size_t j =0; j < noty.n_infos; j++)
+	{
+		LOG_ERR("bossid[%lu] 玩家id[%lu] 玩家名字[%s] 玩家名次[%u] 玩家积分[%u]", noty.bossid, noty.infos[j]->player_id, noty.infos[j]->name, noty.infos[j]->ranknum, noty.infos[j]->score);
+	}*/
+
+	return 0;
+}
+
+int conn_node_ranksrv::broadcast_message(uint16_t msg_id, void *msg_data, pack_func packer, std::vector<uint64_t> &players)
+{
+	PROTO_HEAD_CONN_BROADCAST *head;
+	PROTO_HEAD *real_head;
+
+	head = (PROTO_HEAD_CONN_BROADCAST *)conn_node_base::global_send_buf;
+	head->msg_id = ENDION_FUNC_2(SERVER_PROTO_BROADCAST);
+	real_head = &head->proto_head;
+
+	real_head->msg_id = ENDION_FUNC_2(msg_id);
+	real_head->seq = 0;
+//	memcpy(real_head->data, msg_data, len);
+	size_t len = 0;
+	if (msg_data && packer)
+	{
+		len = packer(msg_data, (uint8_t *)real_head->data);
+	}
+	real_head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD) + len);
+
+	uint64_t *ppp = (uint64_t*)((char *)&head->player_id + len);
+	head->num_player_id = 0;
+	for (std::vector<uint64_t>::iterator iter = players.begin(); iter != players.end(); ++iter)
+	{
+		ppp[head->num_player_id++] = *iter;
+	}
+	head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD_CONN_BROADCAST) + len + sizeof(uint64_t) * head->num_player_id);
+	if (conn_node_ranksrv::connecter.send_one_msg((PROTO_HEAD *)head, 1) != (int)(ENDION_FUNC_4(head->len)))
+	{
+		LOG_ERR("[%s:%d] send to conn_srv failed err[%d]", __FUNCTION__, __LINE__, errno);
+	}
+	return 0;
+}
+
+int conn_node_ranksrv::updata_player_cur_world_boss_info(uint64_t boss_id, EXTERN_DATA *extern_data)
+{
+
+	char*rank_key = get_world_boss_rank_key(boss_id);
+	if(rank_key == NULL)
+	{
+		LOG_ERR("[%s:%d]updata_player_cur_world_boss_info faild,boss_id[%lu],  player_id[%lu]", __FUNCTION__, __LINE__, boss_id, extern_data->player_id);
+		return -1;
+	}
+	RankWorldBossPlayerInfo noty;
+	
+	rank_world_boss_player_info__init(&noty);
+	//获取之前的排名
+	CRedisClient &rc = sg_redis_client;
+	uint64_t player_id = extern_data->player_id;
+	uint32_t out_rank = 0xffffffff;
+	uint32_t my_rank = 0;
+	uint32_t my_score = 0;
+	int ret = 0;
+
+	ret = rc.zget_rank(rank_key, player_id, out_rank);
+	if (ret == 0)
+	{
+		out_rank++;
+		my_rank = out_rank;
+	}
+	//获取积分
+	ret = rc.zget_score(rank_key, player_id, my_score);
+	my_rank = my_rank > MAX_WORLD_BOSS_SHANGBANG_NUM ? 0:my_rank;
+	
+	noty.bossid = boss_id;
+	noty.score = my_score;
+	noty.ranknum = my_rank;
+
+	//LOG_ERR("我的信息,bossid [%lu], 积分[%u], 排名[%u]", noty.bossid, noty.score, noty.ranknum);
+
+	fast_send_msg(&connecter, extern_data, MSG_ID_WORLDBOSS_CUR_PLAYER_INFO_NOTIFY, rank_world_boss_player_info__pack, noty);
+	return 0;
+}
+
+ int conn_node_ranksrv::handle_world_boss_zhu_jiemian_info_request(EXTERN_DATA *extern_data)
+{
+	RankWorldBossAllBossInfoAnswer answer;
+	rank_world_boss_all_boss_info_answer__init(&answer);
+	RankWorldBossAllBossInfo world_boss_info[MAX_WORLD_BOSS_NUM];
+	RankWorldBossAllBossInfo *world_boss_info_point[MAX_WORLD_BOSS_NUM];
+	char last_name[MAX_WORLD_BOSS_NUM][MAX_PLAYER_NAME_LEN];//最后一击玩家名字
+	char max_score_name[MAX_WORLD_BOSS_NUM][MAX_PLAYER_NAME_LEN];//上轮最高积分玩家名字
+	answer.info = world_boss_info_point;
+	answer.n_info = 0;
+
+	CAutoRedisReply autoR;			
+	redisReply *r = sg_redis_client.hgetall_bin(befor_world_boss_key, autoR);
+	if (!r || r->type != REDIS_REPLY_ARRAY)
+	{
+		LOG_ERR("%s:%d hgetall failed", __FUNCTION__, __LINE__);
+	}
+	else
+	{
+		uint32_t index = 0;
+		uint64_t boss_id;
+		while (index + 1 < r->elements && answer.n_info <= MAX_WORLD_BOSS_NUM)
+		{
+			struct redisReply *key = r->element[index];
+			struct redisReply *val = r->element[index + 1];
+			index += 2;
+			if (key->type != REDIS_REPLY_STRING || val->type != REDIS_REPLY_STRING)
+				continue;
+			boss_id = strtoull(key->str, NULL, 10);
+			if (boss_id == 0)
+				continue;
+			
+			BeforWorldBossRedisinfo *befor_info = NULL;
+			befor_info = befor_world_boss_redisinfo__unpack(NULL, val->len, (const uint8_t *)val->str);
+			if (befor_info == NULL)
+			{
+				LOG_ERR("%s:%d get world ifo fail, boss_id[%lu]", __FUNCTION__, __LINE__, boss_id);
+				continue;
+			}
+			
+			world_boss_info_point[answer.n_info] =  &world_boss_info[answer.n_info];
+			rank_world_boss_all_boss_info__init(&world_boss_info[answer.n_info]);
+			strcpy(last_name[answer.n_info], befor_info->name);
+			strcpy(max_score_name[answer.n_info], befor_info->max_score_name);
+			world_boss_info[answer.n_info].bossid = boss_id;
+			world_boss_info[answer.n_info].last_name = last_name[answer.n_info];
+			world_boss_info[answer.n_info].max_score_name = max_score_name[answer.n_info];
+			world_boss_info[answer.n_info].last_player_id = befor_info->player_id;
+			world_boss_info[answer.n_info].max_score_player_id = befor_info->max_score_player_id;
+			AutoReleaseRedisPlayer p1;
+			PlayerRedisInfo *last_player_redis = get_redis_player(world_boss_info[answer.n_info].last_player_id, sg_player_key, sg_redis_client, p1);
+			if(last_player_redis != NULL)
+			{
+				world_boss_info[answer.n_info].job = last_player_redis->job;
+				world_boss_info[answer.n_info].level  = last_player_redis->lv; 
+			}
+			CurWorldBossRedisinfo *cur_boss_redis = get_redis_cur_world_boss(boss_id, cur_world_boss_key, sg_redis_client, p1);
+			if(cur_boss_redis)
+			{
+				world_boss_info[answer.n_info].max_hp = cur_boss_redis->max_hp;
+				world_boss_info[answer.n_info].cur_hp = cur_boss_redis->cur_hp;
+			}
+
+			befor_world_boss_redisinfo__free_unpacked(befor_info, NULL);
+			answer.n_info++;
+		}
+		
+	}
+
+	fast_send_msg(&connecter, extern_data, MSG_ID_WORLDBOSS_ZHUJIEMIAN_INFO_ANSWER, rank_world_boss_all_boss_info_answer__pack, answer);
+	/*for(size_t i =0; i <  answer.n_info; i ++)
+	{
+		LOG_ERR("boss上轮信息和当前血量信息 bossid[%lu], 最后一击玩家名字[%s], 最后一击玩家id[%lu], 最高积分玩家名字[%s], 最高积分玩家id[%lu], 最大血量[%u], 最小血量[%u]", answer.info[i]->bossid, answer.info[i]->last_name,  answer.info[i]->last_player_id,  answer.info[i]->max_score_name,  answer.info[i]->max_score_player_id,  answer.info[i]->max_hp,  answer.info[i]->cur_hp);
+	}*/
+	return 0;
+}
+
+int conn_node_ranksrv::handle_world_boss_last_rank_info_request(EXTERN_DATA *extern_data)
+{
+
+	RankWorldBossLastInfoRequest *req = rank_world_boss_last_info_request__unpack(NULL, get_data_len(), get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+	uint64_t boss_id = req->bossid;
+	rank_world_boss_last_info_request__free_unpacked(req, NULL);
+
+
+	int ret = 0;
+	CRedisClient &rc = sg_redis_client;
+	char *rank_key = NULL;
+	std::vector<std::pair<uint64_t, uint32_t> > last_world_boss_rank_info;
+	uint64_t player_id = extern_data->player_id;
+	uint32_t out_rank = 0xffffffff;
+	uint32_t my_rank = 0;
+	uint32_t my_score = 0;
+
+
+	RankWorldBossLastInfoAnswer answer;
+	rank_world_boss_last_info_answer__init(&answer);
+	RankWorldBossInfo rank_info[MAX_WORLD_BOSS_LASTROUND_RANK_NUM];
+	RankWorldBossInfo *rank_info_point[MAX_WORLD_BOSS_LASTROUND_RANK_NUM];
+	RankWorldBossPlayerInfo my_info;
+	int endNO = MAX_WORLD_BOSS_LASTROUND_RANK_NUM -1;
+	char name[MAX_WORLD_BOSS_LASTROUND_RANK_NUM][MAX_PLAYER_NAME_LEN];
+
+	answer.bossid = boss_id;
+	answer.infos = rank_info_point;
+	answer.n_infos = 0;
+	do
+	{
+		rank_key = get_world_boss_rank_key(boss_id*10);
+		if( rank_key == NULL)
+		{
+			ret = 1;
+			break;
+		}
+
+		ret = rc.zget(rank_key, 0, endNO, last_world_boss_rank_info);
+		AutoReleaseBatchRedisPlayer t1;	
+		std::map<uint64_t, PlayerRedisInfo*> redis_players;
+		std::set<uint64_t> notice_player;//榜单内玩家唯一id
+		for(uint32_t i = 0;  i < last_world_boss_rank_info.size(); i++)
+		{
+			notice_player.insert(last_world_boss_rank_info[i].first);
+		}
+		
+	
+		get_more_redis_player(notice_player ,redis_players, sg_player_key, sg_redis_client, t1);
+		if(ret == 0 && last_world_boss_rank_info.size() >0)
+		{		
+			for(uint32_t i = 0; i < MAX_WORLD_BOSS_LASTROUND_RANK_NUM && i < last_world_boss_rank_info.size(); i++)
+			{
+				rank_info_point[answer.n_infos] = &rank_info[answer.n_infos];
+				rank_world_boss_info__init(&rank_info[answer.n_infos]);
+				rank_info[answer.n_infos].player_id = last_world_boss_rank_info[i].first;
+				rank_info[answer.n_infos].score = last_world_boss_rank_info[i].second;
+				PlayerRedisInfo *redis_player = find_redis_from_map(redis_players,rank_info[answer.n_infos].player_id);
+				memset(name[answer.n_infos], 0, MAX_PLAYER_NAME_LEN);
+				if(redis_player)
+				{
+					strcpy(name[answer.n_infos], redis_player->name);
+					rank_info[answer.n_infos].name = name[answer.n_infos];
+				}
+				rank_info[answer.n_infos].ranknum = i + 1;
+
+				answer.n_infos++;
+			}
+		}
+
+		//获取玩家自己的积分和排名信息
+		out_rank = 0xffffffff;
+		ret = rc.zget_rank(rank_key, player_id, out_rank);
+		if (ret == 0)
+		{
+			out_rank++;
+			my_rank = out_rank;
+		}
+		ret = rc.zget_score(rank_key, player_id, my_score);	
+
+		answer.my_rankinfo = &my_info;
+		rank_world_boss_player_info__init(&my_info);
+		my_info.bossid = boss_id;
+		my_info.score = my_score;
+		my_info.ranknum = my_rank;
+
+	}while(0);
+
+	fast_send_msg(&connecter, extern_data, MSG_ID_WORLDBOSS_LAST_RANK_INFO_ANSWER, rank_world_boss_last_info_answer__pack, answer);
+	return 0;
+}
+
+//世界boss刷新时时间到了，将当前轮信息更新到上轮，在跟新当前轮信息
+int conn_node_ranksrv::handle_world_timing_birth_updata_info(EXTERN_DATA *extern_data)
+{
+
+	RankWorldBossHpInfo *req = rank_world_boss_hp_info__unpack(NULL, get_data_len(), get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d]  unpack failed", __FUNCTION__, __LINE__);
+		return -1;
+	}
+	
+	uint64_t boss_id = req->bossid;
+	uint32_t max_hp = req->cur_hp;
+	uint32_t cur_hp = req->cur_hp;
+	rank_world_boss_hp_info__free_unpacked(req, NULL);
+	//LOG_ERR("世界boss出生信息,bossid[%lu], max_hp[%u], cur_hp[%u]", req->bossid, req->max_hp, req->cur_hp);
+
+	char *rank_key = NULL;
+	char *befor_rank_key = NULL;
+	befor_rank_key = get_world_boss_rank_key(boss_id*10);
+	rank_key = get_world_boss_rank_key(boss_id);
+	if(rank_key == NULL || befor_rank_key == NULL)
+	{	
+		LOG_ERR("[%s:%d] 世界boss刷新时更新数据有错", __FUNCTION__, __LINE__);		
+		return -2;
+	}
+	CRedisClient &rc = sg_redis_client;
+	char field[128];
+	int ret;
+	//世界boss不是被打死的，而是时间到了重新刷的，才更新数据
+	AutoReleaseRedisPlayer p1;
+	CurWorldBossRedisinfo *cur_boss_redis = get_redis_cur_world_boss(boss_id, cur_world_boss_key, sg_redis_client, p1);
+	if(cur_boss_redis != NULL)
+	{
+		BeforWorldBossRedisinfo befor_boss_dedis;
+		befor_world_boss_redisinfo__init(&befor_boss_dedis);
+		char last_name[MAX_PLAYER_NAME_LEN]; //上轮最后一击玩家名字
+		char max_score_name[MAX_PLAYER_NAME_LEN]; //上轮最高积分玩家名字
+		uint64_t max_score_player_id = 0;
+		memset(last_name, 0, MAX_PLAYER_NAME_LEN);
+		memset(max_score_name, 0, MAX_PLAYER_NAME_LEN);
+		befor_boss_dedis.boss_id = boss_id;
+		befor_boss_dedis.player_id = cur_boss_redis->player_id;
+		strcpy(last_name, cur_boss_redis->name);
+		//获取最高积分玩家的数据
+		std::vector<std::pair<uint64_t, uint32_t> > befor_world_boss_rank_info;
+		rc.zget(rank_key, 0, 0, befor_world_boss_rank_info);
+		if(befor_world_boss_rank_info.size() == 1)
+		{
+			max_score_player_id = befor_world_boss_rank_info[0].first;
+		}
+
+		AutoReleaseRedisPlayer p1;
+		PlayerRedisInfo *max_score_player_redis = get_redis_player(max_score_player_id, sg_player_key, sg_redis_client, p1);
+		if(max_score_player_redis)
+		{
+			strcpy(max_score_name, max_score_player_redis->name);
+			befor_boss_dedis.max_score_name = max_score_name;
+			befor_boss_dedis.max_score_player_id = max_score_player_id;
+		}
+		static uint8_t data_buffer[128 * 1024];
+		sprintf(field, "%lu", boss_id);
+		do
+		{
+			size_t data_len = befor_world_boss_redisinfo__pack(&befor_boss_dedis, data_buffer);
+			if (data_len == (size_t)-1)
+			{
+				LOG_ERR("[%s:%d] pack redis world_boss_info failed, bossid[%lu]", __FUNCTION__, __LINE__, boss_id);
+				break;
+			}
+
+			 ret = rc.hset_bin(befor_world_boss_key, field, (const char *)data_buffer, (int)data_len);
+			if (ret < 0)
+			{
+				LOG_ERR("[%s:%d] set befor world boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret);
+				break;
+			}
+		} while(0);
+		//将其在当前redis里面的数据清除
+		ret = rc.hdel(cur_world_boss_key, field);
+		if(ret < 0)
+		{
+			LOG_ERR("[%s:%d] del cur  world boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret)
+		}
+	}
+	//再重置下当前轮信息，主要是设置当前血量信息
+	CurWorldBossRedisinfo cur_world_boss_info;
+	cur_world_boss_redisinfo__init(&cur_world_boss_info);
+	cur_world_boss_info.boss_id = boss_id;
+	cur_world_boss_info.max_hp = max_hp;
+	cur_world_boss_info.cur_hp = cur_hp;
+	static uint8_t data_buffer[128 * 1024];
+	sprintf(field, "%lu", boss_id);
+	do
+	{
+		size_t data_len = cur_world_boss_redisinfo__pack(&cur_world_boss_info, data_buffer);
+		if (data_len == (size_t)-1)
+		{
+			LOG_ERR("[%s:%d] pack redis world_boss_info failed, bossid[%lu]", __FUNCTION__, __LINE__, boss_id);
+			break;
+		}
+
+		ret = rc.hset_bin(cur_world_boss_key, field, (const char *)data_buffer, (int)data_len);
+		if (ret < 0)
+		{
+			LOG_ERR("[%s:%d] set befor world boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret);
+			break;
+		}
+	} while(0);
+
+	//将当前排行榜信息跟新到上轮
+	do{
+		ret = rc.zdel_rank(befor_rank_key, 0, -1);
+		if(ret != 0)
+		{
+			LOG_ERR("[%s:%d]将本轮排行信息跟新到上轮时，清除上轮榜单信息失败[%lu]", __FUNCTION__, __LINE__, boss_id);
+			break;
+		}
+		std::vector<std::pair<uint64_t, uint32_t> > cur_world_boss_rank_info;
+		rc.zget(rank_key, 0, -1, cur_world_boss_rank_info);
+		for(size_t i =0; i < cur_world_boss_rank_info.size(); ++i)
+		{
+			ret = rc.zset(befor_rank_key, cur_world_boss_rank_info[i].first, cur_world_boss_rank_info[i].second);
+		}
+		ret = rc.zdel_rank(rank_key, 0, -1);
+		if(ret != 0)
+		{
+			LOG_ERR("[%s:%d]将本轮排行信息跟新到上轮时，清除本轮榜单信息失败[%lu]", __FUNCTION__, __LINE__, boss_id)	
+			break;
+		}
+	}while(0);
+
+	//发奖励
+	if(cur_boss_redis != NULL)
+	{
+		world_boss_provide_rank_reward(boss_id);
+	}
+
+	return 0;
+}
+
+//发排行奖励，奖励的发放是在将本轮数据更新到上轮后发放，所以用上轮数据发
+int conn_node_ranksrv::world_boss_provide_rank_reward(uint64_t boss_id)
+{
+	LOG_ERR("发奖调了几次");
+	//先发放世界boss击杀奖励
+	CRedisClient &rc = sg_redis_client;
+	AutoReleaseRedisPlayer p1;
+	int ret;
+	char *rank_key = NULL;
+	char field[64];
+	char world_boss_key[64] = {0};
+	uint32_t parame_id =0;
+	rank_key = get_world_boss_rank_key(boss_id*10);
+	if(rank_key == NULL )
+	{	
+		LOG_ERR("[%s:%d] 世界boss发放奖励是出错,错误的key:%s", __FUNCTION__, __LINE__, rank_key);		
+		return -2;
+	}
+	WorldBossTable *world_boss_config = get_config_by_id(boss_id, &rank_world_boss_config);
+	if(world_boss_config == NULL)
+	{
+		 LOG_ERR("[%s:%d] 世界boss发放奖励世界boss配置表出错", __FUNCTION__, __LINE__);
+		 return -4;
+	}
+
+	if(world_boss_config->Type == 1)
+	{
+		memcpy(world_boss_key, tou_mu_world_boss_reward_num, 64);
+		parame_id = tou_mu_parame_id;
+	}
+	if(world_boss_config->Type == 2)
+	{
+		memcpy(world_boss_key, shou_ling_world_boss_reward_num, 64);
+		parame_id = shou_ling_parame_id;
+	}
+	uint32_t can_receive_num =0; //可领取奖励最大次数
+	ParameterTable *parame_reward_config = get_config_by_id(parame_id, &parameter_config);
+	if(parame_reward_config == NULL)
+	{
+		LOG_ERR("[%s:%d] 世界boss发放排行奖励失败,获取可领取最大奖励次数失败,参数id:%u", __FUNCTION__, __LINE__, parame_id);
+		return -5;
+	}
+	if(parame_reward_config ->n_parameter1 > 0)
+	{
+		can_receive_num = parame_reward_config ->parameter1[0];
+	}
+
+
+	uint64_t now_time = rank_srv_get_now_time(); //获取当前时间
+	//发放排行榜奖励
+	std::vector<std::pair<uint64_t, uint32_t> > world_boss_rank_info;
+	rc.zget(rank_key, 0, -1, world_boss_rank_info);
+	for(size_t i =0; i < world_boss_rank_info.size(); ++i)
+	{
+		uint64_t player_id = world_boss_rank_info[i].first;
+		WorldBossReceiveRewardInfo* reward_info = get_redis_world_boss_receive_reward_info(player_id, world_boss_key, sg_redis_client, p1);
+		uint32_t new_num = 0; //新的可领取次数
+		if(reward_info != NULL)
+		{
+			uint64_t last_time = reward_info->last_time;	
+			uint32_t reward_num = reward_info->num;
+			int flag = judge_the_time_span(last_time, now_time, -1, -1, -1, 0, 0, 0);
+			//判断时间有误，报错，不给当前玩家奖励
+			if(flag < 0)
+			{
+				LOG_ERR("[%s:%d] 发放玩家排行奖励失败,player_id[%lu] last_time[%lu] now_time[%lu]", __FUNCTION__, __LINE__, last_time, now_time);
+				continue;
+			}
+			else if(flag == 0)
+			{
+				//没跨天，不能领了就滤过，可领就将次数加以
+				if(reward_num >= can_receive_num)
+				{
+					continue;
+				}
+				else
+				{
+					new_num = reward_num + 1;
+				}
+			}
+			else
+			{				
+				//跨天了,重新设置奖励次数为1
+				new_num = 1;
+			}
+		}
+
+		//重置可领取奖励次数,以及领奖时间到redis
+		if(new_num == 0 )
+		{
+			new_num = 1;
+		}
+		WorldBossReceiveRewardInfo new_reward_info;
+		world_boss_receive_reward_info__init(&new_reward_info);
+		new_reward_info.last_time = now_time;
+		new_reward_info.num = new_num;
+		if(reward_info != NULL)
+		{
+			new_reward_info.kill_time = reward_info->kill_time;
+			new_reward_info.kill_num = reward_info->kill_num;
+		}
+		static uint8_t data_buffer_reward[128 * 1024];
+		sprintf(field, "%lu", player_id);
+		do
+		{
+			size_t data_len = world_boss_receive_reward_info__pack(&new_reward_info, data_buffer_reward);
+			if (data_len == (size_t)-1)
+			{
+				LOG_ERR("[%s:%d] pack redis world_boss_info failed, bossid[%lu]", __FUNCTION__, __LINE__, boss_id);
+				break;
+			}
+
+			ret = rc.hset_bin(world_boss_key, field, (const char *)data_buffer_reward, (int)data_len);
+			if (ret < 0)
+			{
+				LOG_ERR("[%s:%d] set befor world boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret);
+				break;
+			}
+		} while(0);
+		uint32_t rank = i +1;
+		receive_world_boss_reward_to_player(rank, boss_id, player_id);
+		//最后发奖励
+	}
+	
+	return 0;
+}
+
+int conn_node_ranksrv::receive_world_boss_reward_to_player(uint32_t rank, uint64_t boss_id, uint64_t player_id)
+{
+	uint32_t id = 0;
+	if( rank == 1)
+	{
+		id = WORLD_BOSS_FIRST_GEAR_REWARD;
+	}
+	else if( rank == 2)
+	{
+		id = WORLD_BOSS_SECOND_GEAR_REWARD;
+	}
+	else if(rank == 3)
+	{
+		id = WORLD_BOSS_THIRD_GEAR_REWARD;
+	}
+	else if(rank >= 4 && rank <= 10)
+	{
+		id = WORLD_BOSS_FOURTH_GEAR_REWARD;
+	}
+	else if(rank >= 11 && rank <= 30)
+	{
+		id = WORLD_BOSS_FIFTH_GEAR_REWARD;
+	}
+	else if(rank >= 31 && rank <= 50)
+	{
+		id = WORLD_BOSS_SIXTH_GEAR_REWARD;
+	}
+	else if(rank >= 51 && rank <= 70)
+	{
+		id = WORLD_BOSS_SEVENTH_GEAR_REWARD;
+	}
+	else if(rank >= 71 && rank <= 100)
+	{
+		id = WORLD_BOSS_EIGHTH_GEAR_REWARD;
+	}
+	else
+	{
+		id = WORLD_BOSS_NINTH_GEAR_REWARD;
+	}
+
+	WorldBossRewardTable *reward_config = get_config_by_id(id, &world_boss_reward_config);
+	if(reward_config == NULL)
+	{
+		LOG_ERR("[%s:%d] 世界boss发奖失败,配置错误,player_id[%lu]", __FUNCTION__, __LINE__, player_id);
+		return -1;
+	}
+	std::map<uint32_t, uint32_t> attachs;
+	//固定奖励
+	if( reward_config->n_ItemID > 0 && reward_config->n_Num >0 && reward_config->n_ItemID == reward_config->n_Num)
+	{
+		for(size_t i = 0; i < reward_config->n_ItemID; i++)
+		{
+			attachs[reward_config->ItemID[i]] = reward_config->Num[i];
+		}
+	}
+	//从随机库抽取奖励
+	if(reward_config->Draw >0)
+	{
+		uint32_t luck_num = reward_config->Draw;
+		if(reward_config->n_Random >0)
+		{
+			for(uint32_t i =0; i < luck_num; i ++)
+			{
+				uint32_t xia_biao = rand() % reward_config->n_Random;
+				if(attachs.find(reward_config->Random[xia_biao]) != attachs.end())
+				{
+					attachs[reward_config->Random[xia_biao]] += 1;
+				}
+				else
+				{
+					attachs[reward_config->Random[xia_biao]] = 1;
+				}
+			}
+		}
+	}
+	//邮件发奖
+	send_mail(&connecter, player_id,reward_config->MailID , NULL, NULL, NULL, NULL, &attachs, MAGIC_TYPE_WORLDBOS_RANK_REWARD);
+
+	//通知玩家弹奖励界面
+	RankWorldBossRewardNotify notify;
+	RankWorldBossRewardInfo item_info[MAX_WORLD_BOSS_REWARD_ITEM_NUM];
+	RankWorldBossRewardInfo *item_info_point[MAX_WORLD_BOSS_REWARD_ITEM_NUM];
+	rank_world_boss_reward_notify__init(&notify);
+	notify.rank = rank;
+	notify.bossid = boss_id;
+	
+	if(attachs.size() >0)
+	{
+		notify.n_info = 0;
+		notify.info = item_info_point;
+		for(std::map<uint32_t, uint32_t>::iterator itr = attachs.begin(); itr !=  attachs.end(); itr++)
+		{
+			item_info_point[notify.n_info] = &item_info[notify.n_info];
+			rank_world_boss_reward_info__init(&item_info[notify.n_info]);
+			item_info[notify.n_info].item_id = itr->first;
+			item_info[notify.n_info].num = itr->second;
+			notify.n_info++;
+		}
+	}
+	
+	EXTERN_DATA extern_data;
+	extern_data.player_id = player_id;
+	fast_send_msg(&connecter, &extern_data, MSG_ID_WORLDBOSS_PLAYER_RANK_INFO_NOTIFY, rank_world_boss_reward_notify__pack, notify);
+	return 0;
+}
+
+//发放击杀奖励
+int conn_node_ranksrv::world_boss_provide_kill_reward(uint64_t boss_id)
+{
+	CRedisClient &rc = sg_redis_client;
+	AutoReleaseRedisPlayer p1;
+	uint64_t player_id =0;
+	int ret;
+	char *rank_key = NULL;
+	char world_boss_key[64] = {0};
+	uint32_t parame_id =0;
+	uint64_t now_time = rank_srv_get_now_time(); //获取当前时间
+	rank_key = get_world_boss_rank_key(boss_id*10);
+	if(rank_key == NULL )
+	{	
+		LOG_ERR("[%s:%d] 世界boss发放奖励是出错,错误的key:%s", __FUNCTION__, __LINE__, rank_key);		
+		return -1;
+	}
+	WorldBossTable *world_boss_config = get_config_by_id(boss_id, &rank_world_boss_config);
+	if(world_boss_config == NULL)
+	{
+		 LOG_ERR("[%s:%d] 世界boss发放奖励世界boss配置表出错", __FUNCTION__, __LINE__);
+		 return -2;
+	}
+	if(world_boss_config->Type == 1)
+	{
+		memcpy(world_boss_key, tou_mu_world_boss_reward_num, 64);
+		parame_id = tou_mu_parame_id;
+	}
+	if(world_boss_config->Type == 2)
+	{
+		memcpy(world_boss_key, shou_ling_world_boss_reward_num, 64);
+		parame_id = shou_ling_parame_id;
+	}
+	uint32_t can_receive_num =0; //可领取奖励最大次数
+	ParameterTable *parame_reward_config = get_config_by_id(parame_id, &parameter_config);
+	if(parame_reward_config == NULL)
+	{
+		LOG_ERR("[%s:%d] 世界boss发击杀奖励失败,获取可领取最大奖励次数失败,参数id:%u", __FUNCTION__, __LINE__, parame_id);
+		return -3;
+	}
+	if(parame_reward_config ->n_parameter1 > 0)
+	{
+		can_receive_num = parame_reward_config ->parameter1[0];
+	}
+
+	static uint8_t data_buffer[32 * 1024];
+	int data_len = sizeof(data_buffer);
+	char field[64];
+	sprintf(field, "%lu", boss_id);
+	ret = rc.hget_bin(befor_world_boss_key, field, (char *)data_buffer, &data_len);
+	if (ret != 0)
+	{
+		LOG_ERR("[%s:%d] 世界boss发最后一刀奖励获取redis信息失败boosid=%lu", __FUNCTION__, __LINE__, boss_id);
+		return -4;
+	}
+
+	BeforWorldBossRedisinfo *info = befor_world_boss_redisinfo__unpack(NULL, data_len, data_buffer);
+	if(info == NULL)
+	{
+		LOG_ERR("[%s:%d] befor world boss redisinfo unpack faild boosid=%lu", __FUNCTION__, __LINE__, boss_id);
+		return -5;
+	}
+
+	player_id = info->player_id;
+	if(player_id == 0)
+	{
+		return -6;
+	}
+	PlayerRedisInfo * last_player_info = get_redis_player( player_id, sg_player_key, sg_redis_client, p1);
+	if(last_player_info == NULL)
+	{
+		LOG_ERR("[%s:%d] 世界boss发最后一刀奖励获取玩家redis信息失败player_id=%lu", __FUNCTION__, __LINE__, player_id);
+		return -7;;
+	}
+	if(last_player_info->lv > world_boss_config->RewardLevel)
+	{
+		LOG_DEBUG("[%s:%d] 世界boss发最后一刀奖励失败,玩家等级超过等级限制player_id=%lu player_lv=%u max_lv=%lu", __FUNCTION__, __LINE__, player_id, last_player_info->lv, world_boss_config->RewardLevel);
+		return -8;
+	}
+	WorldBossReceiveRewardInfo* reward_info = get_redis_world_boss_receive_reward_info(player_id, world_boss_key, sg_redis_client, p1);
+	uint32_t new_num = 0; //新的可领取次数
+	if(reward_info != NULL)
+	{
+		uint64_t last_time = reward_info->kill_time;	
+		uint32_t reward_num = reward_info->kill_num;
+		int flag = judge_the_time_span(last_time, now_time, -1, -1, -1, 0, 0, 0);
+		//判断时间有误，报错，不给当前玩家奖励
+		if(flag < 0)
+		{
+			LOG_ERR("[%s:%d] 发放最后一刀奖励失败,player_id[%lu] last_time[%lu] now_time[%lu]", __FUNCTION__, __LINE__, last_time, now_time);
+			return -9;
+		}
+		else if(flag == 0)
+		{
+			//没跨天，不能领了就滤过，可领就将次数加以
+			if(reward_num >= can_receive_num)
+			{
+				return -10;
+			}
+			else
+			{
+				new_num = reward_num + 1;
+			}
+		}
+		else
+		{				
+			//跨天了,重新设置奖励次数为1
+			new_num = 1;
+		}
+	}
+
+	//重置可领取奖励次数,以及领奖时间到redis
+	if(new_num == 0 )
+	{
+		new_num = 1;
+	}
+	WorldBossReceiveRewardInfo new_reward_info;
+	world_boss_receive_reward_info__init(&new_reward_info);
+	if(reward_info != NULL)
+	{
+		new_reward_info.last_time = reward_info->last_time;
+		new_reward_info.num = reward_info->num;
+	}
+	new_reward_info.kill_time = now_time;
+	new_reward_info.kill_num = new_num;
+	static uint8_t data_buffer_reward[128 * 1024];
+	sprintf(field, "%lu", player_id);
+	do
+	{
+		size_t data_len = world_boss_receive_reward_info__pack(&new_reward_info, data_buffer_reward);
+		if (data_len == (size_t)-1)
+		{
+			LOG_ERR("[%s:%d] pack  world_boss_receive_reward_info failed, bossid[%lu]", __FUNCTION__, __LINE__, boss_id);
+			return -11;
+		}
+
+		ret = rc.hset_bin(world_boss_key, field, (const char *)data_buffer_reward, (int)data_len);
+		if (ret < 0)
+		{
+			LOG_ERR("[%s:%d] set bworld_boss_receive_reward_info failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret);
+			return -12;
+		}
+	} while(0);
+
+	ParameterTable *parame_config = get_config_by_id(161000326, &parameter_config);
+	std::map<uint32_t, uint32_t> attachs;
+	if( parame_config != NULL && parame_config->n_parameter1 != 0 && parame_config->n_parameter1%2 == 0)
+	{
+		for(size_t i =0; i < parame_config->n_parameter1; i=i+2)
+		{
+			attachs[parame_config->parameter1[i]] = parame_config->parameter1[i+1];
+		}
+		send_mail(&connecter, player_id,MAIL_ID_WORLDBOSS_KILL_REWAERD , NULL, NULL, NULL, NULL, &attachs, MAGIC_TYPE_WORLDBOS_KILL_REWARD);
+	}
+		
 	return 0;
 }

@@ -8,7 +8,7 @@ local ServerResTable = {
 		['Ip'] = '192.168.2.114',	--键值
 		['Port'] = 12686,	--键值
 		['ServerId'] = 1,	--键值
-		['OpenTime'] = 1501689600	--开服时间
+		['OpenTime'] = 1503849600	--开服时间
 		},
 	[2] = {
 		['ID'] = 2,
@@ -19,7 +19,7 @@ local ServerResTable = {
 		['Ip'] = '192.168.2.114',
 		['Port'] = 10686,
 		['ServerId'] = 2,
-		['OpenTime'] = 1501689600
+		['OpenTime'] = 1503849600
 		},
 	[3] = {
 		['ID'] = 3,
@@ -30,7 +30,7 @@ local ServerResTable = {
 		['Ip'] = '192.168.2.114',
 		['Port'] = 11686,
 		['ServerId'] = 3,
-		['OpenTime'] = 1501689600
+		['OpenTime'] = 1503849600
 		},
 	[4] = {
 		['ID'] = 4,
@@ -41,7 +41,7 @@ local ServerResTable = {
 		['Ip'] = '192.168.2.114',
 		['Port'] = 13686,
 		['ServerId'] = 4,
-		['OpenTime'] = 1501689600
+		['OpenTime'] = 1503849600
 		},
 	[5] = {
 		['ID'] = 5,
@@ -52,7 +52,7 @@ local ServerResTable = {
 		['Ip'] = '192.168.2.114',
 		['Port'] = 14686,
 		['ServerId'] = 5,
-		['OpenTime'] = 1501689600
+		['OpenTime'] = 1503849600
 		},
 	[6] = {
 		['ID'] = 6,
@@ -63,7 +63,7 @@ local ServerResTable = {
 		['Ip'] = '192.168.2.114',
 		['Port'] = 15686,
 		['ServerId'] = 6,
-		['OpenTime'] = 1501689600
+		['OpenTime'] = 1503849600
 		},
 	[7] = {
 		['ID'] = 7,
@@ -74,7 +74,7 @@ local ServerResTable = {
 		['Ip'] = '120.92.139.120',
 		['Port'] = 6686,
 		['ServerId'] = 7,
-		['OpenTime'] = 1501689600
+		['OpenTime'] = 1503849600
 		},
 	[8] = {
 		['ID'] = 8,
@@ -85,7 +85,7 @@ local ServerResTable = {
 		['Ip'] = '192.168.2.114',
 		['Port'] = 17686,
 		['ServerId'] = 8,
-		['OpenTime'] = 1501689600
+		['OpenTime'] = 1503849600
 		},
 	[9] = {
 		['ID'] = 9,
@@ -96,7 +96,7 @@ local ServerResTable = {
 		['Ip'] = '192.168.2.114',
 		['Port'] = 18686,
 		['ServerId'] = 9,
-		['OpenTime'] = 1501689600
+		['OpenTime'] = 1503849600
 		},
 	[10] = {
 		['ID'] = 10,
@@ -107,7 +107,7 @@ local ServerResTable = {
 		['Ip'] = '192.168.2.199',
 		['Port'] = 6686,
 		['ServerId'] = 10,
-		['OpenTime'] = 1501689600
+		['OpenTime'] = 1503849600
 		},
 	[11] = {
 		['ID'] = 11,
@@ -118,7 +118,7 @@ local ServerResTable = {
 		['Ip'] = '192.168.2.114',
 		['Port'] = 19686,
 		['ServerId'] = 11,
-		['OpenTime'] = 1501689600
+		['OpenTime'] = 1503849600
 		},
 	[12] = {
 		['ID'] = 12,
@@ -129,7 +129,7 @@ local ServerResTable = {
 		['Ip'] = '192.168.2.114',
 		['Port'] = 20686,
 		['ServerId'] = 12,
-		['OpenTime'] = 1501689600
+		['OpenTime'] = 1503849600
 		}
 	}
 return ServerResTable

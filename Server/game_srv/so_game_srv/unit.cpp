@@ -294,14 +294,16 @@ bool unit_struct::is_truck_in_sight(uint64_t uuid)
 int unit_struct::add_truck_to_sight(uint64_t uuid)
 {
 	int ret = 0;
-	ret = array_insert(&uuid, get_all_sight_truck(), get_cur_sight_truck(), sizeof(uint64_t), 1, comp_uint64);
+	if (on_truck_enter_sight(uuid))	
+		ret = array_insert(&uuid, get_all_sight_truck(), get_cur_sight_truck(), sizeof(uint64_t), 1, comp_uint64);
 	return ret;
 }
 
 int unit_struct::del_truck_from_sight(uint64_t uuid)
 {
 	int ret = 0;
-	ret = array_delete(&uuid, get_all_sight_truck(), get_cur_sight_truck(), sizeof(uint64_t), comp_uint64);
+	if (on_truck_leave_sight(uuid))	
+		ret = array_delete(&uuid, get_all_sight_truck(), get_cur_sight_truck(), sizeof(uint64_t), comp_uint64);
 	return ret;
 }
 
@@ -812,6 +814,19 @@ void unit_struct::delete_one_buff(buff_struct *buff)
 			m_buffs[i] = NULL;
 			return;
 		}
+	}
+}
+
+void unit_struct::delete_one_buff(uint32_t id)
+{
+	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
+	{
+		if (!m_buffs[i])
+			continue;
+		if (m_buffs[i]->config->ID != id)
+			continue;
+		m_buffs[i]->del_buff();
+		return;
 	}
 }
 

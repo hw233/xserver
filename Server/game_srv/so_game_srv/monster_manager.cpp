@@ -10,6 +10,10 @@
 #include "scene_manager.h"
 #include <stdio.h>
 #include <errno.h>
+#include "../proto/rank_db.pb-c.h"
+#include "conn_node.h"
+#include "chat.pb-c.h"
+#include "team.h"
 
 
 monster_manager::monster_manager()
@@ -37,12 +41,22 @@ monster_manager::~monster_manager()
 int monster_manager::add_monster(monster_struct *p)
 {
 	monster_manager_all_monsters_id[p->data->player_id] = p;
+	//世界boss表，已约定世界boss的怪物id是所有场景唯一的，所以以怪物id为索引
+	if(p->config->Type == 5 && monster_to_world_boss_config.find(p->data->monster_id) !=  monster_to_world_boss_config.end())
+	{
+		world_boss_all_monsters_id[p->data->monster_id] = p;
+	}
 	return (0);
 }
 
 int monster_manager::remove_monster(monster_struct *p)
 {
 	monster_manager_all_monsters_id.erase(p->data->player_id);
+	//世界boss表
+	if(p->config->Type == 5 && monster_to_world_boss_config.find(p->data->monster_id) !=  monster_to_world_boss_config.end())
+	{
+		world_boss_all_monsters_id.erase(p->data->monster_id);
+	}
 	return (0);
 }
 
@@ -495,7 +509,6 @@ monster_struct *monster_manager::add_monster(uint64_t monster_id, uint64_t lv, u
 	if (!ret)
 		return NULL;
 	ret->data->player_id = alloc_monster_uuid();
-	add_monster(ret);
 
 	// switch (ite->second->HateType)
 	// {
@@ -527,6 +540,7 @@ monster_struct *monster_manager::add_monster(uint64_t monster_id, uint64_t lv, u
 	ret->ai_state = AI_PATROL_STATE;
 	ret->set_ai_interface(ret->ai_type);
 	ret->data->monster_id = monster_id;
+	ret->data->birth_time = time_helper::get_cached_time()/1000;
 	ret->set_attr(PLAYER_ATTR_LEVEL, lv);
 		// 阵营模式, PK模式
 	ret->set_attr(PLAYER_ATTR_PK_TYPE, ret->config->PkType);
@@ -550,7 +564,7 @@ monster_struct *monster_manager::add_monster(uint64_t monster_id, uint64_t lv, u
 	// 		ret->set_attr(PLAYER_ATTR_PK_TYPE, 3);
 	// 		break;
 	// }
-
+	add_monster(ret);
 	if (owner && owner->get_unit_type() == UNIT_TYPE_PLAYER)
 	{
 		((player_struct *)owner)->add_pet(ret);
@@ -700,7 +714,6 @@ monster_struct *monster_manager::create_monster_by_config(scene_struct *scene, i
 	struct SceneCreateMonsterTable *create_config = (*scene->create_monster_config)[index];
 	if (!create_config)
 		return NULL;
-
 	monster_struct *monster = add_monster(create_config->ID, create_config->Level);
 	if (!monster)
 		return NULL;
@@ -870,7 +883,7 @@ int monster_manager::reinit_boss_min_heap()
 // 		p->data = NULL;
 // 	}
 // }
-int monster_manager::add_word_boss_monster()
+int monster_manager::add_world_boss_monster()
 {
 	uint32_t cd =0;
 	if(!check_active_open(WORD_BOSS_ACTIVE_ID, cd))
@@ -880,7 +893,7 @@ int monster_manager::add_word_boss_monster()
 	struct tm tm;
 	time_t now_time = time_helper::get_cached_time() / 1000;
 	localtime_r(&now_time, &tm);
-	//LOG_ERR("打印当前时间,时[%d] 分[%d] 秒[%d]",tm.tm_hour, tm.tm_min, tm.tm_sec)
+	//LOG_INFO("打印当前时间,时[%d] 分[%d] 秒[%d]",tm.tm_hour, tm.tm_min, tm.tm_sec)
 	for(std::map<uint64_t, WorldBossTable*>::iterator ite = world_boss_config.begin(); ite != world_boss_config.end(); ite++)
 	{
 		for(uint32_t i = 0; i < ite->second->n_Time; i++)
@@ -889,29 +902,104 @@ int monster_manager::add_word_boss_monster()
 			tm.tm_min = ite->second->Time[i] % 100;
 			tm.tm_sec = 0;
 			uint64_t st = mktime(&tm); 
-			if(st == time_helper::get_cached_time() / 1000)
+			/*if(i == 0 && ite->second->ID == 510100001)
 			{
-				monster_struct *monster = monster_manager::get_monster_by_id(ite->second->MonsterID);
-				if(monster != NULL && monster->data != NULL && monster->config != NULL && monster->config->Type == 5 && monster->data->scene_id == ite->second->SceneID)
+				LOG_INFO("打印刷怪时间,时[%d] 分[%d] 秒[%d]",tm.tm_hour, tm.tm_min, tm.tm_sec)
+				LOG_INFO("刷怪时间[%lu], 当前时间[%lu]", st, time_helper::get_cached_time() / 1000);
+			}*/
+			if(st == time_helper::get_cached_time() / 1000 /*&& st < time_helper::get_cached_time() / 1000 + 30*/)
+			{
+				//到了刷新时间点，上轮刷出的世界boss还没死，就重置
+				monster_struct *monster = monster_manager::get_world_boss_by_id(ite->second->MonsterID);
+			
+				if(monster != NULL && monster->data != NULL)
 				{
-					scene_struct *scene = scene_manager::get_scene(ite->second->SceneID);
-					if(scene != NULL)
+					if(monster->data->scene_id != ite->second->SceneID)
 					{
-						scene->delete_monster_from_scene(monster, true);
-						monster_manager::delete_monster(monster);
-						create_monster_by_id(scene, ite->second->MonsterID, 1);	
+						LOG_ERR("[%s:%d] 世界boss的怪物id应该是唯一的,现已经刷出的场景ID[%u],实际应该刷出的场景ID[%lu]", __FUNCTION__,__LINE__, monster->data->scene_id, ite->second->SceneID);
+						return -3;
 					}
+					if( monster->data->birth_time == time_helper::get_cached_time() / 1000)
+					{
+						LOG_DEBUG("[%s:%d] 当前刷新点已经刷过此世界boss，不再重复刷", __FUNCTION__, __LINE__);
+						return -2;
+					}
+					if(monster->data->attrData[PLAYER_ATTR_HP] >0)
+					{
+						monster->scene->delete_monster_from_scene(monster, true);
+					}
+					monster->data->birth_time = time_helper::get_cached_time() / 1000;
+					monster->target = NULL;
+					monster->area = NULL;
+					monster->ai_state = AI_PATROL_STATE;
+					monster->set_pos(monster->get_born_pos_x(),	monster->get_born_pos_z());
+					monster->data->attrData[PLAYER_ATTR_HP] = monster->data->attrData[PLAYER_ATTR_MAXHP];
+					monster->on_relive();
 				}
 				else
-				{		
+				{
 					scene_struct *scene = scene_manager::get_scene(ite->second->SceneID);
-					if(scene != NULL)
+					if(scene == NULL)
 					{
-						create_monster_by_id(scene, ite->second->MonsterID, 1);
+						LOG_ERR("[%s:%d] 世界boss刷新获取场景失败", __FUNCTION__, __LINE__);
+						return -4;
 					}
+					create_monster_by_id(scene, ite->second->MonsterID, 1);
 				}
+				//提醒rank服更新数据
+				monster = monster_manager::get_world_boss_by_id(ite->second->MonsterID);
+				if(monster != NULL && monster->data != NULL && monster->config != NULL && monster->config->Type == 5 && monster->data->scene_id == ite->second->SceneID)
+				{
+					RankWorldBossHpInfo info;
+					rank_world_boss_hp_info__init(&info);
+					info.bossid = ite->second->ID;
+					info.max_hp = monster->get_attr(PLAYER_ATTR_MAXHP);
+					info.cur_hp = monster->get_attr(PLAYER_ATTR_HP);	
+					EXTERN_DATA extern_data;
+					fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, SERVER_PROTO_WORLDBOSS_BIRTH_UPDATA_REDIS_INFO, rank_world_boss_hp_info__pack, info);
+				}
+
+				//世界boss刷新公告提示
+				NoticeTable *table = get_config_by_id(330510010, &notify_config);
+				if(table == NULL)
+					return -3;
+				SceneResTable *scen_config = get_config_by_id(ite->second->SceneID,&scene_res_config);
+				if(scen_config == NULL)
+					return -4;
+
+				char buff[512];
+				ChatHorse send;
+				chat_horse__init(&send);
+				send.id = 330510010;
+				send.prior = table->Priority;
+				send.content = buff;
+				uint32_t c[MAX_CHANNEL] = { 1,2,3,4,5,6 };
+				for (uint32_t i = 0; i < table->n_NoticeChannel; ++i)
+				{
+					c[i] = table->NoticeChannel[i];
+				}
+				send.channel = c;
+				send.n_channel = table->n_NoticeChannel;
+
+				snprintf(buff, 510, table->NoticeTxt, scen_config->SceneName, ite->second->Name);
+				conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_HORSE_NOTIFY, &send, (pack_func)chat_horse__pack);
 			}
 		}
 	}
 	return 0;
+}
+monster_struct * monster_manager::get_world_boss_by_id(uint64_t id)
+{
+	std::map<uint64_t, monster_struct *>::iterator it = world_boss_all_monsters_id.find(id);
+	if (it != world_boss_all_monsters_id.end())
+	{
+		if (it->second->mark_delete)
+		{
+			LOG_INFO("%s: monster[%lu] already mark delete", __FUNCTION__, id);
+			return NULL;
+		}
+		return it->second;
+	}
+	
+	return NULL;
 }

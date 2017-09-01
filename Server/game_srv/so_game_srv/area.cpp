@@ -1,6 +1,7 @@
 #include "game_event.h"
 #include "area.h"
 #include "sortarray.h"
+#include "partner_manager.h"
 #include <string.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -10,6 +11,17 @@
 
 int area_struct::clean_area_struct()
 {
+	for (int i = 0; i < cur_partner_num; ++i)
+	{
+		partner_struct *p = partner_manager::get_partner_by_uuid(m_partner_uuid[i]);
+		if (!p)
+		{
+			LOG_ERR("%s: can not find partner[%lu]", __FUNCTION__, m_partner_uuid[i]);
+			continue;
+		}
+		p->scene = NULL;
+	}
+	
 	free(m_monster_uuid);
 	free(m_collect_ids);
 	free(m_player_ids);

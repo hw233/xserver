@@ -12,44 +12,10 @@ int zhenying_raid_struct::init_special_raid_data(player_struct *player)
 {
 	raid_set_ai_interface(9);
 	init_scene_struct(m_id, true);
+	m_collect_pos.clear();
+	m_hit_flag.clear();
 	return (0);
 }
-
-// int zhenying_raid_struct::init_raid(player_struct */*player*/)
-// {
-// 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
-// 	{
-// 		m_player[i] = NULL;
-// 		m_player2[i] = NULL;
-// 		m_player3[i] = NULL;
-// 		m_player4[i] = NULL;		
-// 	}
-// 	m_raid_team = NULL;
-// 	m_raid_team2 = NULL;
-// 	m_raid_team3 = NULL;
-// 	m_raid_team4 = NULL;	
-// 	data->ID = m_id;
-// 	data->state = RAID_STATE_START;
-// 	m_monster.clear();
-
-// 	m_config = get_config_by_id(m_id, &all_raid_config);
-// 	assert(m_config);
-// 	m_control_config = get_config_by_id(m_config->ActivityControl, &all_control_config);
-// 	assert(m_control_config);
-
-// 	data->start_time = time_helper::get_cached_time();
-
-// 	raid_set_ai_interface(9);
-// 	LOG_DEBUG("%s: raid[%u][%lu] curtime = %lu", __FUNCTION__, data->ID, data->uuid, time_helper::get_cached_time());
-
-// 	init_scene_struct(m_id, true);
-
-// 	if (ai && ai->raid_on_init)
-// 		ai->raid_on_init(this, NULL);
-
-// //	add_player_to_zhenying_raid(player);
-// 	return (0);
-// }
 
 int zhenying_raid_struct::clear_m_player_and_player_info(player_struct *player, bool clear_player_info)
 {
@@ -69,23 +35,8 @@ int zhenying_raid_struct::add_player_to_zhenying_raid(player_struct *player)
 		return -1;
 		
 	}
-		// 检查能否进入
-	//if (raid_manager::check_player_enter_raid(player, ZHENYING_RAID_ID) != 0)
-	//{
-	//	LOG_INFO("%s: player[%lu] enter raid[%u] failed", __FUNCTION__, player->get_uuid(), ZHENYING_RAID_ID);
-	//	return;
-	//}
-	
+
 	assert(get_cur_player_num() < MAX_ZHENYING_RAID_PLAYER_NUM);
-	// player->set_enter_raid_pos_and_scene(this);
-
-	// EXTERN_DATA extern_data;
-	// extern_data.player_id = player->get_uuid();
-
-	// EnterRaidNotify notify;
-	// enter_raid_notify__init(&notify);
-	// notify.raid_id = m_id;
-	// fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ENTER_RAID_NOTIFY, enter_raid_notify__pack, notify);
 
 	float x, y, z;
 	UNUSED(y);
@@ -104,12 +55,8 @@ int zhenying_raid_struct::add_player_to_zhenying_raid(player_struct *player)
 		player->set_camp_id(ZHENYING__TYPE__WANYAOGU);
 	}
 
-	player_enter_raid_impl(player, 0, x, z);
+	player_enter_raid_impl(player, this->get_free_player_pos(), x, z);
 	
-	// player->send_scene_transfer(0, x, y, z, m_id, 0);
-
-	// on_player_enter_raid(player);
-
 	player->set_attr(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP);
 	player->broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP, false, true);
 	return (0);
@@ -117,12 +64,12 @@ int zhenying_raid_struct::add_player_to_zhenying_raid(player_struct *player)
 
 bool zhenying_raid_struct::check_raid_need_delete()
 {
-	if (data->state == RAID_STATE_START)
-		return false;
-	
-	if (get_cur_player_num() == 0)
-		return true;
-	return false;
+	//if (data->state == RAID_STATE_START)
+	//	return false;
+	//
+	//if (get_cur_player_num() == 0)
+	//	return true;
+	return false;  //一直开
 }
 
 void zhenying_raid_struct::on_monster_dead(monster_struct *monster, unit_struct *killer)

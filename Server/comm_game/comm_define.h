@@ -18,6 +18,7 @@
 #define MAX_FASHION_NUM           100 //最大时装数
 #define MAX_HORSE_NUM           100 //最大坐骑数
 #define DEFAULT_HORSE           180000001 //
+#define MAX_BATTLE_LINE_NUM     (8) //阵营战分线
 //最大副本数目
 #define MAX_RAID_NUM            1000 
 #define SCENCE_DEPART           (20000)
@@ -63,7 +64,7 @@
 #define MAX_PARTNER_NUM   150
 #define MAX_PARTNER_FORMATION_NUM   4
 #define MAX_PARTNER_SKILL_NUM   6
-#define MAX_PARTNER_BATTLE_NUM  2
+#define MAX_PARTNER_BATTLE_NUM  4
 #define MAX_PARTNER_BOND_NUM  100 //伙伴羁绊数
 
 #define MAX_ESCORT_NUM   2
@@ -317,6 +318,7 @@ enum MailIDDefine
 	MAIL_ID_GUILD_KICK = 270200008, //帮会踢人
 	MAIL_ID_GUILD_REPLACE_MASTER = 270200009, //帮主转让
 	MAIL_ID_GUILD_DAILY_REWAERD = 270200010, //帮会每日福利
+	MAIL_ID_WORLDBOSS_KILL_REWAERD = 270300041, //世界boss击杀
 };
 
 enum PlayerOfflineCacheType

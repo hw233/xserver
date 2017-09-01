@@ -30,7 +30,6 @@ struct _PlayerDBInfo;
 struct ItemsConfigTable;
 class partner_struct;
 class cash_truck_struct;
-struct AchievementHierarchyTable;
 
 typedef std::map<uint64_t, partner_struct *> PartnerMap;
 
@@ -792,6 +791,8 @@ public:
 //	int add_player_to_sight(uint64_t player_id);
 //	int del_player_from_sight(uint64_t player_id);
 
+	bool on_truck_leave_sight(uint64_t player_id);		
+	bool on_truck_enter_sight(uint64_t player_id);	
 	bool on_player_leave_sight(uint64_t player_id);
 	bool on_player_enter_sight(uint64_t player_id);
 	bool on_monster_leave_sight(uint64_t uuid);
@@ -902,6 +903,8 @@ public:
 	void add_zhenying_exp(uint32_t num);
 	void send_zhenying_info();
 	uint32_t get_zhenying_grade(void);
+	int add_currency(uint32_t id, uint32_t num, uint32_t statis_id, uint32_t limit = UINT32_MAX, bool isNty = true);
+	int sub_currency(uint32_t id, uint32_t num, uint32_t statis_id, bool isNty = true);
 
 	//背包
 	void item_find_pos_by_cache(uint32_t id, std::vector<uint32_t>& pos_list); //通过id查找pos
@@ -1047,6 +1050,7 @@ public:
 	void check_guoyu_expire();
 	bool go_down_cash_truck();
 	void down_horse();
+	uint32_t get_horse_num();
 
 	//装备
 	EquipInfo *get_equip(uint32_t type);
@@ -1140,6 +1144,8 @@ public:
 	bool is_partner_battle(void); //伙伴是否参战
 	bool is_partner_precedence(void); //主战伙伴是否优先出战
 	int add_partner_to_scene(uint64_t partner_uuid); //把伙伴加入到玩家所在的场景
+	int add_all_formation_partner_to_scene();	//把所有布阵中的伙伴加入场景
+//	int del_all_formation_partner_from_scene(bool send_msg);	//把所有布阵中的伙伴移出场景
 	int del_partner_from_scene(uint64_t partner_uuid, bool send_msg);
 	int del_partner_from_scene(partner_struct *partner, bool send_msg);
 	void del_battle_partner_from_scene();  //临时把所有出战伙伴移出场景(副本结束的时候用)
@@ -1151,6 +1157,8 @@ public:
 	void take_truck_out_sight_space(sight_space_struct *sp);  //角色离开位面后，把镖车拉出位面
 	
 	void adjust_battle_partner(void); //阵型变化，调整出战的伙伴
+	void add_battle_partner(int index); //在index上出战一个伙伴
+	void sub_battle_partner(int index); //把index的出战伙伴收回
 	uint64_t get_next_can_battle_partner(void); //获取能出战的伙伴
 	uint64_t get_fighting_partner(void);
 	void on_leave_scene(scene_struct *old_scene);
@@ -1165,6 +1173,7 @@ public:
 	int get_partner_fabao_main_attr(uint32_t card_id, AttrInfo &attr_val);
 	int get_partner_fabao_minor_attr(uint32_t card_id, AttrInfo *attrs);
 	uint32_t get_partner_quality_num(uint32_t quality);
+	uint32_t get_partner_battle_num(void);
 
 	bool is_too_high_to_beattack();   //是否飞的太高不能被攻击
 
@@ -1180,7 +1189,6 @@ public:
 	void add_achievement_progress(uint32_t type, uint32_t target1, uint32_t target2, uint32_t num);
 	AchievementInfo *get_achievement_info(uint32_t id);
 	void achievement_update_notify(AchievementInfo *info);
-	AchievementHierarchyTable *get_achievement_config(AchievementInfo *info);
 
 	//称号
 	TitleInfo *get_title_info(uint32_t id);

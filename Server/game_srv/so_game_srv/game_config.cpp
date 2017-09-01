@@ -204,10 +204,15 @@ static void generate_parameters(void)
 		sg_guild_raid_final_monster_id[i] = (uint32_t)pvp_raid_param->parameter1[i];
 
 	pvp_raid_param = get_config_by_id(161000230, &parameter_config);
-	for (int i = 0; i < 5; ++i)
+	sg_n_shishen_id = pvp_raid_param->n_parameter1;
+	sg_shishen_shouling_id = (uint32_t *)malloc(sizeof(uint32_t) * sg_n_shishen_id);
+	assert(sg_shishen_shouling_id);
+	sg_shishen_xiaoguai_id = (uint32_t *)malloc(sizeof(uint32_t) * sg_n_shishen_id);
+	assert(sg_shishen_xiaoguai_id);	
+	for (int i = 0; i < sg_n_shishen_id; ++i)
 		sg_shishen_xiaoguai_id[i] = (uint32_t)pvp_raid_param->parameter1[i];
 	pvp_raid_param = get_config_by_id(161000231, &parameter_config);
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < sg_n_shishen_id; ++i)
 		sg_shishen_shouling_id[i] = (uint32_t)pvp_raid_param->parameter1[i];	
 	
 	pvp_raid_param = get_config_by_id(161000068, &parameter_config);
@@ -472,6 +477,11 @@ static void generate_parameters(void)
 	{
 		sg_server_level_reward_item_id = config->parameter1[0];
 		sg_server_level_reward_item_num = config->parameter1[1];
+	}
+	config = get_config_by_id(161000329, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_exp_turn_zhenqi_percent = config->parameter1[0];
 	}
 }
 
@@ -886,6 +896,9 @@ WeekTable *get_rand_week_config()
 
 bool check_active_open(uint32_t id, uint32_t &cd)
 {
+	uint64_t times = time_helper::get_micro_time();
+	time_helper::set_cached_time(times / 1000);
+
 	cd = 0;
 	ControlTable *table = get_config_by_id(id, &all_control_config);
 	if (table == NULL)
@@ -1759,6 +1772,17 @@ GangsSkillTable *get_guild_skill_config(uint32_t type, uint32_t level)
 	return NULL;
 }
 
+AchievementHierarchyTable *get_achievement_config(uint32_t achievement_id, uint32_t star)
+{
+	AchievementFunctionTable *func_config = get_config_by_id(achievement_id, &achievement_function_config);
+	if (func_config && star < func_config->n_Hierarchys)
+	{
+		return get_config_by_id(func_config->Hierarchys[star], &achievement_hierarchy_config);
+	}
+
+	return NULL;
+}
+
 uint32_t get_item_relate_id(uint32_t id)
 {
 	std::map<uint64_t, ItemsConfigTable *>::iterator iter = item_config.find(id);
@@ -2076,12 +2100,21 @@ bool item_is_partner_fabao(uint32_t item_id)
 uint32_t get_friend_close_level(uint32_t closeness)
 {
 	uint32_t lv = 0;
+	uint32_t pre_val = 0;
 	for (std::map<uint64_t, DegreeTable*>::iterator iter = friend_close_config.begin(); iter != friend_close_config.end(); ++iter)
 	{
 		DegreeTable *config = iter->second;
-		if (closeness > config->Value)
+		if (closeness > pre_val)
 		{
 			lv = config->Stage;
+			if (closeness <= config->Value)
+			{
+				break;
+			}
+			else
+			{
+				pre_val = config->Value;
+			}
 		}
 		else
 		{
@@ -2485,6 +2518,11 @@ int read_all_excel_data()
 	type = sproto_type(sp, "CampTable");
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/CampTable.lua", (config_type)&zhenying_base_config);
+	assert(ret == 0); 
+
+	type = sproto_type(sp, "BattlefieldTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/BattlefieldTable.lua", (config_type)&zhenying_fight_config);
 	assert(ret == 0);
 
 	type = sproto_type(sp, "GradeTable");
@@ -2639,6 +2677,11 @@ int read_all_excel_data()
 	type = sproto_type(sp, "GangsSkillTable");
 	assert(type);		
 	ret = traverse_main_table(L, type, "../lua_data/GangsSkillTable.lua", (config_type)&guild_skill_config);
+	assert(ret == 0);	
+
+	type = sproto_type(sp, "DegreeTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/DegreeTable.lua", (config_type)&friend_close_config);
 	assert(ret == 0);	
 
 	type = sproto_type(sp, "TitleFunctionTable");

@@ -25,9 +25,92 @@ message RankInfoAnswer
 	required uint32 myRank = 3; //我的排名（0表示未上榜）
 }
 
+//世界boss玩家自己的排名信息(我的数据)
+message RankWorldBossPlayerInfo
+{
+	required uint32 bossid = 1; //世界bossid
+	required uint32 score = 2; //玩家积分
+	required uint32 rankNum = 3;//玩家名次
+}
+//世界boss排行玩家信息(排行榜玩家数据)
+message RankWorldBossInfo
+{
+	required uint64 player_id = 1;//玩家id
+	required string name = 2; //玩家名字
+	required uint32 score = 3; //玩家积分
+	required uint32 rankNum = 4;//玩家名次
+}
+//世界boss排行榜信息广播
+message RankWorldBossNotify
+{
+	required uint32 result = 1; //结果， 0成功，否则失败
+	required uint32 bossid = 2; //bossid
+	repeated RankWorldBossInfo infos = 3; //排行榜信息列表
+}
 
+//世界boss玩家请求实时排行信息
+message RankWorldBossRealInfoRequest
+{
+	required uint32 bossid = 1; //bossid
+}
 
+//世界boss玩家请求实时排行信息应答
+message RankWorldBossRealInfoAnswer
+{
+	required uint32 result = 1; //结果， 0成功，否则失败
+	required uint32 bossid = 2; //bossid
+	repeated RankWorldBossInfo infos = 3; //排行榜信息列表
+	required RankWorldBossPlayerInfo my_rankinfo = 4; //我的信息
+}
 
+//世界boss主界面信息
+message RankWorldBossAllBossInfo
+{
+	required uint32 bossid = 1; //bossid
+	required string last_name = 2; //上轮最后一击玩家名字
+	required uint64 last_player_id = 3; //上轮最后一击玩家id
+	required uint32 job = 4; //职业
+	required uint32 level = 5;; //玩家等级
+	required string max_score_name = 6; //上轮最高积分玩家名字
+	required uint64 max_score_player_id = 7; //上轮最高积分玩家id
+	required uint32 max_hp = 8; //boss最大血量
+	required uint32 cur_hp = 9; //当前血量
+}
 
+//世界boss主界面所有boss信息应答
+message RankWorldBossAllBossInfoAnswer
+{
+	required uint32 result = 1; //结果， 0成功，否则失败 
+	repeated RankWorldBossAllBossInfo info = 2; //具体信息
+}
 
+//世界boss玩家请求上轮排行信息
+message RankWorldBossLastInfoRequest
+{
+	required uint32 bossid = 1; //bossid
+}
+
+//世界boss玩家请求上轮排行信息应答
+message RankWorldBossLastInfoAnswer
+{
+	required uint32 result = 1; //结果， 0成功，否则失败
+	required uint32 bossid = 2; //bossid
+	repeated RankWorldBossInfo infos = 3; //排行榜信息列表
+	required RankWorldBossPlayerInfo my_rankinfo = 4; //我的信息
+}
+
+//世界boss奖励信息
+message RankWorldBossRewardInfo
+{
+	required uint32 item_id = 1; //物品id
+	required uint32 num = 2; //物品数量
+}
+
+//玩家奖励信息通知
+message RankWorldBossRewardNotify
+{
+	required uint32 bossid = 1; //bossid
+	required uint32 rank = 2;  //排名
+	repeated RankWorldBossRewardInfo info = 3; //奖励信息
+}
 

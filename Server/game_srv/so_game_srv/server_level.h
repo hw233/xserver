@@ -15,5 +15,6 @@ void broadcast_server_level_info(void);
 
 bool is_server_level_limit(uint32_t player_level);
 double get_server_exp_addition(uint32_t player_level);
+ServerLevelTable *get_server_level_config(void);
 
 #endif

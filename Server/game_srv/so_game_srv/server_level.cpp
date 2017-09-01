@@ -170,3 +170,8 @@ double get_server_exp_addition(uint32_t player_level)
 	return 0.0;
 }
 
+ServerLevelTable *get_server_level_config(void)
+{
+	return global_shared_data->server_level.config;
+}
+

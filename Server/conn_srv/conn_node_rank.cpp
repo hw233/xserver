@@ -72,6 +72,7 @@ int conn_node_rank::transfer_to_client()
 		case SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST:
 			return transfer_to_friendsrv();
 		case SERVER_PROTO_RANK_SYNC_RANK:
+		case SERVER_PROTO_RANK_SYNC_CHANGE:
 			return transfer_to_gamesrv();
 	}
 	

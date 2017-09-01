@@ -14,3 +14,4 @@ port=6379
 
 redis-cli -h ${host} -p ${port} --scan --pattern "server*_${server_id}" | awk '{print "del " $0}' | redis-cli -h ${host} -p ${port}
 redis-cli -h ${host} -p ${port} --scan --pattern "s${server_id}_*" | awk '{print "del " $0}' | redis-cli -h ${host} -p ${port}
+redis-cli -h ${host} -p ${port} --scan --pattern "*${server_id}" | awk '{print "del " $0}' | redis-cli -h ${host} -p ${port}

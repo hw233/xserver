@@ -10,6 +10,7 @@
 #include "game_config.h"
 #include "lua_config.h"
 #include "conn_node_gamesrv.h"
+#include "cash_truck_manager.h"
 #include <stdio.h>
 #include <errno.h>
 
@@ -312,6 +313,7 @@ player_struct * player_manager::create_doufachang_ai_player(DOUFACHANG_LOAD_PLAY
 	{
 		ret->data->attrData[PLAYER_ATTR_BAGUA] = 1;
 	}
+	ret->load_partner_end();
 	ret->calculate_attribute();
 
 	ret->data->attrData[PLAYER_ATTR_PK_TYPE] = PK_TYPE_MURDER;
@@ -534,6 +536,16 @@ player_struct * player_manager::create_player(PROTO_ENTER_GAME_RESP *proto, uint
 	ret->data->attrData[PLAYER_ATTR_REGION_ID] = -1;
 	ret->data->chengjie.rest = proto->chengjie_cd;
 	ret->data->guild_id = proto->guild_id;
+	if (ret->data->truck.truck_id != 0)
+	{
+		assert(ret->data->truck.scene_id > 0);
+		scene_struct *pScene = scene_manager::get_scene(ret->data->truck.scene_id);
+		if (pScene != NULL)
+		{
+			cash_truck_struct *truck = cash_truck_manager::create_cash_truck_at_pos(pScene, ret->data->truck.active_id, *ret, ret->data->truck.pos.pos_x, ret->data->truck.pos.pos_z, ret->data->truck.hp);
+			ret->data->truck.truck_id = truck->get_uuid();
+		}
+	}
 
 done:
 /*	

@@ -409,22 +409,29 @@ void Team::SetFollow(player_struct &player, bool follow)
 			note.state = follow;
 			note.playerid = player.get_uuid();
 			BroadcastToTeam(MSG_ID_TEAM_SET_FOLLOW_NOTIFY, &note, (pack_func)follow__pack);
-
-			//if (player.data->attrData[PLAYER_ATTR_ON_HORSE_STATE] == 1 
-			//	|| player.data->attrData[PLAYER_ATTR_CUR_HORSE] == 0)
-			//{
-			//	return;
-			//}
-			//player.data->attrData[PLAYER_ATTR_ON_HORSE_STATE] = 1;
-			//OnHorse send;
-			//on_horse__init(&send);
-			//send.playerid = player.get_uuid();
-			//send.horseid = player.data->attrData[PLAYER_ATTR_CUR_HORSE];
-			//player.broadcast_to_sight(MSG_ID_ON_HORSE_NOTIFY, &send, (pack_func)on_horse__pack, true);
-
 			return;
 		}
 	}
+}
+
+bool Team::IsFollow(player_struct &player)
+{
+	for (int i = 0; i < m_data->m_memSize; ++i)
+	{
+		if (m_data->m_mem[i].id == player.get_uuid())
+		{
+			if (m_data->m_mem[i].follow)
+			{
+				return true;
+			} 
+			else
+			{
+				return false;
+			}
+			
+		}
+	}
+	return false;
 }
 
 int Team::AddApply(player_struct &player)
@@ -710,9 +717,7 @@ bool Team::MemberOnLine(player_struct &player)
 
 bool Team::ChangeLeader(player_struct &player)
 {
-	MEM_INFO tmp;
-	tmp.id = player.get_uuid();
-
+	//tmp.id = player.get_uuid();
 	if (m_data->m_memSize < 2)
 	{
 		return false;
@@ -725,8 +730,11 @@ bool Team::ChangeLeader(player_struct &player)
 			{
 				return false;
 			}
+			MEM_INFO tmp;
+			tmp = m_data->m_mem[i];
 			m_data->m_mem[i] = m_data->m_mem[0];
 			m_data->m_mem[0] = tmp;
+			m_data->m_mem[0].follow = false;
 
 			pvp_match_on_team_member_changed(&player);
 			OnLeaderChange(m_data->m_mem[i].id, m_data->m_mem[0].id);
@@ -750,7 +758,8 @@ player_struct * Team::AutoChangeLeader()
 					MEM_INFO tmp = m_data->m_mem[i];
 					m_data->m_mem[i] = m_data->m_mem[0];
 					m_data->m_mem[0] = tmp;
-				}	
+				}
+				m_data->m_mem[0].follow = false;
 				return pMem;
 			}
 		}

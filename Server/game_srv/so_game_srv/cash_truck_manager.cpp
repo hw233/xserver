@@ -19,7 +19,6 @@ cash_truck_struct *cash_truck_manager::create_cash_truck_at_pos(scene_struct *sc
 
 cash_truck_struct *cash_truck_manager::create_cash_truck_at_pos(scene_struct *scene, uint64_t id, player_struct &player, float x, float z, uint32_t hp)
 {
-	
 	BiaocheTable *table = get_config_by_id(id, &cash_truck_config);
 	if (table == NULL)
 	{
@@ -46,6 +45,7 @@ cash_truck_struct *cash_truck_manager::create_cash_truck_at_pos(scene_struct *sc
 	ret->config = ite->second;
 	ret->data->fb_time = time_helper::get_cached_time() + ret->truck_config->Interval * 1000;
 
+	LOG_INFO("%s: player[%lu] create truck[%p][%lu]", __FUNCTION__, player.get_uuid(), ret, ret->get_uuid());
 
 	//下面可以初始化镖车属性
 	ret->set_attr(PLAYER_ATTR_LEVEL, player.get_attr(PLAYER_ATTR_LEVEL));
@@ -102,7 +102,7 @@ fail:
 
 void cash_truck_manager::delete_cash_truck(cash_truck_struct *p)
 {
-	LOG_DEBUG("%s %d: monster[%p] data[%p]", __FUNCTION__, __LINE__, p, p->data);
+	LOG_DEBUG("%s %d: monster[%p] data[%p] uuid[%lu]", __FUNCTION__, __LINE__, p, p->data, p->get_uuid());
 
 	//if (p->data && p->data->owner)
 	//{

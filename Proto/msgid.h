@@ -581,6 +581,26 @@
 #define MSG_ID_GET_ZHENYING_TASK_AWARD_ANSWER                 12421 //阵营任务领奖应答 comm_answer
 #define MSG_ID_ZHENYING_GET_LINE_INFO_REQUEST           12422 //阵营战分线信息请求 NULL
 #define MSG_ID_ZHENYING_GET_LINE_INFO_ANSWER            12423 //阵营战分线信息应答 ZhenyingLine
+
+#define MSG_ID_JOIN_ZHENYING_FIGHT_REQUEST           12424 //参加阵营战请求 NULL
+#define MSG_ID_JOIN_ZHENYING_FIGHT_ANSWER            12425 //参加阵营战应答 comm_answer
+#define MSG_ID_CANCEL_JOIN_ZHENYING_FIGHT_REQUEST           12426 //取消参加阵营战请求 NULL
+#define MSG_ID_CANCEL_JOIN_ZHENYING_FIGHT_ANSWER            12427 //取消参加阵营战应答 comm_answer
+#define MSG_ID_INTO_ZHENYING_FIGHT_REQUEST           12428 //进入阵营战请求 
+#define MSG_ID_INTO_ZHENYING_FIGHT_ANSWER            12429 //进入阵营战应答 comm_answer
+#define MSG_ID_JOIN_ZHENYING_FIGHT_NOTIFY           12430 //报名开始 NULL
+#define MSG_ID_ZHENYING_FIGHT_START_NOTIFY          12431 //开始阵营战 NULL
+#define MSG_ID_ZHENYING_FIGHT_SCORE_NOTIFY          12432 //阵营战双方总积分 TotalScore
+#define MSG_ID_ZHENYING_FIGHT_MY_SCORE_NOTIFY          12433 //阵营战我的积分 MyScore
+#define MSG_ID_ZHENYING_FIGHT_MYSIDE_SCORE_NOTIFY          12434 //阵营战我方积分 SideScore
+#define MSG_ID_ZHENYING_FIGHT_MYSIDE_SCORE_REQUEST           12435 //阵营战我方积分请求 NULL
+//#define MSG_ID_ZHENYING_FIGHT_FLAG_NOTIFY          12436 //阵营战旗帜 ZhenYingFlag
+#define MSG_ID_ZHENYING_FIGHT_READY_CD_NOTIFY          12437 //阵营战准备cd FbCD
+#define MSG_ID_ZHENYING_FIGHT_CD_NOTIFY          12438 //阵营战结束cd FbCD
+#define MSG_ID_ZHENYING_FIGHT_SETTLE_NOTIFY          12439 //阵营战结算ZhenYingResult
+#define MSG_ID_ZHENYING_FIGHT_START_FLAG_NOTIFY          12440 //阵营战开始夺旗 StartFlag
+#define MSG_ID_ZHENYING_FIGHT_INTERUPT_FLAG_NOTIFY          12441 //阵营战中断夺旗 StartFlag
+#define MSG_ID_ZHENYING_FIGHT_FINISH_FLAG_NOTIFY          12442 //阵营战中断夺旗 StartFlag
 #define MSG_ID_ZHENYING_MAX_REQUEST                 12500 //NULL
 
 //答题
@@ -791,5 +811,15 @@
 #define MSG_ID_DOUFACHANG_BUY_CHALLENGE_REQUEST           13710  //斗法场购买次数请求  doufachang_buy_challenge_request
 #define MSG_ID_DOUFACHANG_BUY_CHALLENGE_ANSWER            13711  //斗法场购买次数回复  doufachang_buy_challenge_answer
 
+//世界boss
+#define MSG_ID_WORLDBOSS_CUR_RANK_INFO_NOTIFY              13800 //广播世界boss实时排名信息 RankWorldBossNotify
+#define MSG_ID_WORLDBOSS_CUR_PLAYER_INFO_NOTIFY			   13801 //玩家在攻击世界boss时实时跟新客户端玩家当前轮，当前世界boss的信息 RankWorldBossPlayerInfo	
+#define MSG_ID_WORLDBOSS_REAL_RANK_INFO_REQUEST			   13802 //世界boss实时排名信息和玩家自己实时信息请求 RankWorldBossRealInfoRequest
+#define MSG_ID_WORLDBOSS_REAL_RANK_INFO_ANSWER			   13803 //世界boss实时排名信息和玩家自己实时信息应答 RankWorldBossRealInfoAnswer
+#define MSG_ID_WORLDBOSS_ZHUJIEMIAN_INFO_REQUEST		   13804 //世界boss主界面信息请求
+#define MSG_ID_WORLDBOSS_ZHUJIEMIAN_INFO_ANSWER            13805 //世界boss主界面信息应答 ankWorldBossAllBossInfoAnswer
+#define MSG_ID_WORLDBOSS_LAST_RANK_INFO_REQUEST			   13806 //世界boss上轮排名信息和玩家自己上轮信息请求 RankRankWorldBossLastInfoRequest
+#define MSG_ID_WORLDBOSS_LAST_RANK_INFO_ANSWER			   13807 //世界boss上轮排名信息和玩家自己上轮信息应答 RankRankWorldBossLastInfoAnswer
+#define MSG_ID_WORLDBOSS_PLAYER_RANK_INFO_NOTIFY		   13808 //世界boss刷新或者死亡玩家奖励信息通知 RankWorldBossRewardNotify
 #endif
 

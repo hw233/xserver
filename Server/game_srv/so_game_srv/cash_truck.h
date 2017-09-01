@@ -110,6 +110,8 @@ public:
 	int prepare_add_monster_to_sight(monster_struct *monster);
 	int prepare_add_partner_to_sight(partner_struct *partner);		
 
+	bool on_truck_leave_sight(uint64_t player_id);		
+	bool on_truck_enter_sight(uint64_t player_id);		
 	bool on_player_leave_sight(uint64_t player_id);
 	bool on_player_enter_sight(uint64_t player_id);
 	bool on_monster_leave_sight(uint64_t uuid);

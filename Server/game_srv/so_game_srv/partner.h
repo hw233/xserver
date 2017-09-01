@@ -146,6 +146,8 @@ public:
 	virtual struct unit_path *get_unit_path();
 	virtual float get_speed();
 	virtual void update_sight(area_struct *old_area, area_struct *new_area);
+	virtual bool on_truck_leave_sight(uint64_t player_id);		
+	virtual bool on_truck_enter_sight(uint64_t player_id);		
 	virtual bool on_player_leave_sight(uint64_t player_id);
 	virtual bool on_player_enter_sight(uint64_t player_id);
 	virtual bool on_monster_leave_sight(uint64_t uuid);

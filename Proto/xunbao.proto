@@ -25,6 +25,7 @@ message CashTruckInfo
 	required uint32 mapid = 4; //镖车位置
 	required uint32 x = 5;
 	required uint32 z = 6;
+	required uint32 task = 7;
 }
 
 message AcceptCashTruck

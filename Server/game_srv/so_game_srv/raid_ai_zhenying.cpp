@@ -19,7 +19,7 @@
 #include "player_manager.h"
 
 
-void update_task_process(uint32_t type, player_struct *player)
+static void update_task_process(uint32_t type, player_struct *player)
 {
 	if (player == NULL)
 	{
@@ -61,8 +61,9 @@ static void zhenying_raid_ai_init(raid_struct *raid, player_struct *)
 
 void zhenying_raid_ai_finished(raid_struct *raid)
 {
-	raid->clear_monster();
-	raid->data->state = RAID_STATE_PASS;
+	//raid->clear_monster();
+	//raid->data->state = RAID_STATE_PASS; 
+	//一直开
 }
 
 static void zhenying_raid_ai_player_enter(raid_struct *raid, player_struct *player)
@@ -102,6 +103,23 @@ static void zhenying_raid_ai_player_leave(raid_struct *raid, player_struct *play
 	zhenying_raid_struct *zhenying = (zhenying_raid_struct *)raid;
 	zhenying->m_hit_flag.erase(player->get_uuid());
 }
+
+static void UpdateOneTeamInfo(player_struct &player)
+{
+	ZhenyingTeamInfo send;
+	zhenying_team_info__init(&send);
+	send.playerid = player.get_uuid();
+	send.name = player.get_name();
+	send.job = player.get_attr(PLAYER_ATTR_JOB);
+	send.lv = player.get_attr(PLAYER_ATTR_LEVEL);
+	send.kill = player.data->zhenying.kill;
+	send.death = player.data->zhenying.death;
+	send.assist = player.data->zhenying.help;
+	send.score = player.data->zhenying.score;
+	EXTERN_DATA extern_data;
+	extern_data.player_id = player.get_uuid();
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_TEAM_INFO_NOTIFY, zhenying_team_info__pack, send);
+}
 static void zhenying_raid_ai_player_dead(raid_struct *raid, player_struct *player, unit_struct *killer)
 {
 	if (killer == NULL || player == NULL)
@@ -131,8 +149,8 @@ static void zhenying_raid_ai_player_dead(raid_struct *raid, player_struct *playe
 		}
 		player->data->zhenying.score = addScore; 
 
-		ZhenyingBattle::UpdateOneTeamInfo(*player);
-		ZhenyingBattle::UpdateOneTeamInfo(*pKill);
+		UpdateOneTeamInfo(*player);
+		UpdateOneTeamInfo(*pKill);
 
 		update_task_process(1, pKill);
 

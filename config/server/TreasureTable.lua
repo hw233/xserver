@@ -150,6 +150,38 @@ local TreasureTable = {
 		['PointY'] = 4778,
 		['PointZ'] = 33501,
 		['TransferPoint'] = 155000008
+		},
+	[430200020] = {
+		['ID'] = 430200020,
+		['MapId'] = 10012,
+		['PointX'] = 5212,
+		['PointY'] = 1774,
+		['PointZ'] = 12283,
+		['TransferPoint'] = 155000013
+		},
+	[430200021] = {
+		['ID'] = 430200021,
+		['MapId'] = 10012,
+		['PointX'] = 11072,
+		['PointY'] = 1804,
+		['PointZ'] = 21054,
+		['TransferPoint'] = 155000013
+		},
+	[430200022] = {
+		['ID'] = 430200022,
+		['MapId'] = 10012,
+		['PointX'] = 7666,
+		['PointY'] = 2014,
+		['PointZ'] = 31864,
+		['TransferPoint'] = 155000013
+		},
+	[430200023] = {
+		['ID'] = 430200023,
+		['MapId'] = 10012,
+		['PointX'] = 14524,
+		['PointY'] = 1909,
+		['PointZ'] = 34327,
+		['TransferPoint'] = 155000013
 		}
 	}
 return TreasureTable

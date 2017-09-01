@@ -82,8 +82,15 @@ static bool script_raid_check_finished(raid_struct *raid, struct raid_script_dat
 			return false;
 //		case SCRIPT_EVENT_MONSTER_DEAD_NUM: //指定怪物死亡
 //			return false;
-//		case SCRIPT_EVENT_MONSTER_DEAD_ALL: //所有指定怪物死亡 等同于检测副本内还存活指定怪物数量小于某值
-//			return false;
+		case SCRIPT_EVENT_MONSTER_DEAD_ALL: //所有指定怪物死亡 等同于检测副本内还存活指定怪物数量小于某值
+		{
+			for (size_t i = 0; i < config->n_Parameter1; i++)
+			{
+				if (raid->is_monster_alive(config->Parameter1[i]))
+					return false;
+			}
+			return true;
+		}
 //		case SCRIPT_EVENT_COLLECT_NUM: //采集指定采集物
 //			return false;
 		case SCRIPT_EVENT_ALIVE_MONSTER_EQUEL: //检测副本内还存活指定怪物数量等于某值
@@ -648,6 +655,24 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 			}
 			return true;
 		
+		}
+		case SCRIPT_EVENT_SET_REGION_BUFF:
+		{
+			assert(config->n_Parameter1 == 2);
+			script_data->region_config[script_data->cur_region_config++] = config;
+			return true;
+		}
+		case SCRIPT_EVENT_STOP_REGION_BUFF:
+		{
+			for (size_t i = 0; i < script_data->cur_region_config; ++i)
+			{
+				if (script_data->region_config[i]->Parameter1[0] == config->Parameter1[0])
+				{
+					script_data->region_config[i] = script_data->region_config[--script_data->cur_region_config];
+					break;
+				}
+			}
+			return true;
 		}
 		default:
 			return false;

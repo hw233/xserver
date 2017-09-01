@@ -27,6 +27,7 @@ std::set<monster_struct *> monster_manager_monster_used_list;
 struct minheap monster_manager_m_boss_minheap;
 struct comm_pool monster_manager_monster_data_pool;
 //struct comm_pool monster_manager_boss_data_pool;
+std::map<uint64_t, monster_struct *> world_boss_all_monsters_id;//怪物id为索引找世界boss,已约定世界boss的怪物id是唯一的
 
 std::list<cash_truck_struct *> cash_truck_manager_free_list;
 std::set<cash_truck_struct *> cash_truck_manager_used_list;
@@ -81,6 +82,8 @@ std::set<uint32_t> guild_battle_manager_final_guild_id; //参加决赛的帮会
 
 uint32_t guild_battle_manager_final_list_state = 0;
 uint32_t guild_battle_manager_final_list_tick = 0;
+
+std::set<uint64_t> guild_battle_manager_participate_players; //参加帮会战的玩家
 
 class guild_wait_raid_struct;
 std::map<uint64_t, guild_wait_raid_struct *> guild_wait_raid_manager_all_raid_id;

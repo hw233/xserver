@@ -33,6 +33,8 @@ private:
 
 extern uint64_t sg_next_copy_rank_time;
 
+void reinit_default_doufachang_info(PlayerDoufachangInfo *info);
+
 DoufachangRecordAnswer *get_player_doufachang_record(uint64_t player_id, char *player_key, CRedisClient &rc, AutoReleaseDoufachangRecord &_pool);
 int save_player_doufachang_record(DoufachangRecordAnswer *info, uint64_t player_id, char *player_key, CRedisClient &rc);
 
@@ -40,7 +42,7 @@ PlayerDoufachangInfo *get_player_doufachang_info(uint64_t player_id, char *playe
 int save_player_doufachang_info(PlayerDoufachangInfo *info, uint64_t player_id, char *player_key, CRedisClient &rc);
 
 //void init_doufachang_player_info(uint64_t player_id, PlayerDoufachangInfo *info, uint32_t now);
-void update_doufachang_player_info(uint64_t player_id, PlayerDoufachangInfo *info, uint32_t now);
+bool update_doufachang_player_info(uint64_t player_id, PlayerDoufachangInfo *info, uint32_t now);
 void copy_doufachang_rank(char *from, char *to, CRedisClient &rc);
 
 #endif /* DOUFACHANG_UTIL_H */

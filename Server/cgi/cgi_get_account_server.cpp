@@ -188,7 +188,7 @@ int main(void)
 				base_info->n_attrid++;
 				base_info->n_attrval++;
 				base_info->attrid[base_info->n_attrid] = PLAYER_ATTR_HEAD;
-				base_info->attrval[base_info->n_attrval] = (job > 5 ? sg_init_head[0] : sg_init_head[job]);
+				base_info->attrval[base_info->n_attrval] = (job > 5 ? sg_init_head[0] : sg_init_head[job - 1]);
 				base_info->n_attrid++;
 				base_info->n_attrval++;
 

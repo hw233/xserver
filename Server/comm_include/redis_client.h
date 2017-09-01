@@ -10,6 +10,7 @@
 #include <vector>
 #include <stdint.h>
 #include <sstream>
+#include <set>
 #include "stl_relation.h"
 #include "game_event.h"
 
@@ -200,6 +201,9 @@ public:
 	int get_all_val(const char* table, std::vector<std::string>& s1);
 
 	int incr(const char* key);
+
+	//获取hash中的所有field,用于field都是数字的
+	int hkeys(const char* table, std::set<uint64_t>& s1);
 
 	//////////////////////////////////////////////////////////////////
 	void clear();

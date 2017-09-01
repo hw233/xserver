@@ -114,6 +114,7 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	if (argc < 1)
 		return;
 
+	uint32_t now = time_helper::get_cached_time() / 1000;
 	if (strcasecmp(argv[0], "test") == 0)
 	{
 		do_test_cmd(player);
@@ -215,6 +216,16 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	else if (argc >= 2 && strcasecmp(argv[0], "accept_task") == 0)
 	{
 		gm_accept_task(player, atoi(argv[1]));
+	}
+	else if (argc >= 2 && strcasecmp(argv[0], "finish_task") == 0)
+	{
+		TaskInfo *info = player->get_task_info(atoi(argv[1]));
+		if (info)
+		{
+			info->status = TASK_STATUS__ACHIEVED;
+			player->touch_task_event(info->id, TEC_ACHIEVE);
+			player->task_update_notify(info);
+		}
 	}
 
 	else if (argc >= 2 && strcasecmp(argv[0], "enterraid") == 0)
@@ -465,15 +476,19 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 
 		send_chat_content(player, const_cast<char*>(os.str().c_str()));
 	}
-	else if (argc >=1 && strcasecmp(argv[0], "kill_partner") == 0)
+	else if (argc >=2 && strcasecmp(argv[0], "kill_partner") == 0)
 	{
-		uint64_t partner_uuid = player->get_fighting_partner();
-		partner_struct *partner = player->get_partner_by_uuid(partner_uuid);
-		if (partner)
+		int index = atoi(argv[1]);
+		if (index >= 0 && index < MAX_PARTNER_BATTLE_NUM)
 		{
-			partner->set_attr(PLAYER_ATTR_HP, 0);
-			partner->notify_one_attr_changed(PLAYER_ATTR_HP, 0);
-			partner->on_dead(player);
+			uint64_t partner_uuid = player->data->partner_battle[index];
+			partner_struct *partner = player->get_partner_by_uuid(partner_uuid);
+			if (partner && partner->scene)
+			{
+				partner->set_attr(PLAYER_ATTR_HP, 0);
+				partner->notify_one_attr_changed(PLAYER_ATTR_HP, 0);
+				partner->on_dead(player);
+			}
 		}
 	}
 	else if (argc >=1 && strcasecmp(argv[0], "clear_bag") == 0)
@@ -502,6 +517,38 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	else if (argc >=2 && strcasecmp(argv[0], "sub_title") == 0)
 	{
 		player->expire_title(atoi(argv[1]));
+	}
+	else if (argc >=2 && strcasecmp(argv[0], "add_murder") == 0)
+	{
+		int num = atoi(argv[1]);
+		if (num > 0)
+		{
+			player->add_murder_num(num);
+		}
+		else
+		{
+			player->sub_murder_num(-num);
+		}
+	}
+	else if (argc >=3 && strcasecmp(argv[0], "add_horse") == 0)
+	{
+		player->add_horse(atoi(argv[1]), atoi(argv[2]));
+	}
+	else if (argc >=2 && strcasecmp(argv[0], "sub_horse") == 0)
+	{
+		uint32_t horse_id = atoi(argv[1]);
+		for (uint32_t i = 0; i < player->data->n_horse; ++i)
+		{
+			if (player->data->horse[i].id == horse_id)
+			{
+				player->data->horse[i].timeout = now;
+				break;
+			}
+		}
+	}
+	else if (argc >=4 && strcasecmp(argv[0], "add_fashion") == 0)
+	{
+		player->add_fashion(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
 	}
 }
 

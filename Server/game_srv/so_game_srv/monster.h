@@ -86,6 +86,7 @@ struct monster_data
 	uint64_t relive_time;
 	uint64_t owner;  //主人
 	bool stop_ai; //停止AI
+	uint64_t birth_time;
 };
 
 typedef void (*ai_init)(monster_struct *, unit_struct *);
@@ -237,6 +238,8 @@ public:
 		return create_config->PointPosZ;
 	}
 
+	bool on_truck_leave_sight(uint64_t player_id);		
+	bool on_truck_enter_sight(uint64_t player_id);		
 	bool on_player_leave_sight(uint64_t player_id);
 	bool on_player_enter_sight(uint64_t player_id);
 	bool on_monster_leave_sight(uint64_t uuid);
@@ -338,6 +341,10 @@ public:
 		{
 			struct GenerateMonster *ai_24_config;
 		} type24_ai;
+		struct
+		{
+			uint16_t last_ai_state;  //之前的ai状态
+		} type26_ai;
 	} ai_data;
 
 	struct MonsterTable *config;
@@ -358,7 +365,7 @@ private:
 	void add_area_monster_to_sight(area_struct *area);
 	void add_area_truck_to_sight(area_struct *area);
 	void add_area_partner_to_sight(area_struct *area);			
-		
+	void update_region_id();		
 //	void add_to_area_player_sight(area_struct *area, uint64_t *ppp, uint16_t *index);
 //	int count_circle_unit(std::vector<unit_struct *> *ret, uint max, double radius);
 //	int count_fan_unit(std::vector<unit_struct *> *ret, uint max, double radius, double angle);

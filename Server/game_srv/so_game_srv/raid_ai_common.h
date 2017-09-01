@@ -52,7 +52,8 @@ enum
 	SCRIPT_EVENT_FAIL_RAID               = 47, //副本失败
 	SCRIPT_EVENT_SET_PLAYER_ATTR		  = 48, //修改玩家属性
 	SCRIPT_EVENT_RECOVER_PLAYER_ATTR	  = 49, //恢复玩家属性
-	
+	SCRIPT_EVENT_SET_REGION_BUFF          = 50, //设置区域buff信息
+	SCRIPT_EVENT_STOP_REGION_BUFF          = 51, //清除区域buff信息	
 };
 
 void do_script_raid_init_cond(raid_struct *raid, struct raid_script_data *script_data);

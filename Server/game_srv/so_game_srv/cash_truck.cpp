@@ -293,10 +293,9 @@ void cash_truck_struct::on_tick()
 		{
 			return;
 		}
-		
-		player->sight_space = sight_space_manager::create_sight_space(player, 2);
-		player->stop_move();
 		player->go_down_cash_truck();
+		player->sight_space = sight_space_manager::create_sight_space(player, 2);
+		//player->stop_move();
 		for (uint32_t num = 0; num < truck_config->Number[player->data->truck.jiefei]; ++num)
 		{
 			int lv = player->get_attr(PLAYER_ATTR_LEVEL) + truck_config->level[0] - rand() % (truck_config->level[0] * 2);
@@ -626,6 +625,18 @@ int cash_truck_struct::prepare_add_partner_to_sight(partner_struct *partner)
 
 	//todo 检查关系的优先级，然后删除低优先级的来腾出空间
 	return (-1);
+}
+
+bool cash_truck_struct::on_truck_leave_sight(uint64_t player_id)
+{
+//	LOG_DEBUG("%s player[%lu] monster[%p][%lu]", __FUNCTION__, player_id, this, get_uuid());
+
+	return true;
+}
+bool cash_truck_struct::on_truck_enter_sight(uint64_t player_id)
+{
+//	LOG_DEBUG("%s player[%lu] monster[%p][%lu]", __FUNCTION__, player_id, this, get_uuid());
+	return true;
 }
 
 bool cash_truck_struct::on_player_leave_sight(uint64_t player_id)

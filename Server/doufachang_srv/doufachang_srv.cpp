@@ -82,11 +82,11 @@ static struct event doufachang_event_timer;
 static struct timeval doufachang_timeout = {5, 0};
 static void cb_doufachang_timer(evutil_socket_t, short, void* /*arg*/)
 {
-	uint64_t now = time_helper::get_micro_time();
+	uint64_t now = time_helper::get_micro_time() / 1000000;
 	if (now >= sg_next_copy_rank_time)
 	{
 		sg_next_copy_rank_time = time_helper::nextOffsetTime(22 * 3600, now);
-		LOG_INFO("%s: next rank time = %lu", __FUNCTION__, sg_next_copy_rank_time);
+//		LOG_INFO("%s: next rank time = %lu", __FUNCTION__, sg_next_copy_rank_time);
 		
 		copy_doufachang_rank(conn_node_doufachangsrv::doufachang_rank2_key,
 			conn_node_doufachangsrv::doufachang_rank_reward_key, sg_redis_client);
@@ -107,7 +107,7 @@ int main(int argc, char **argv)
 	int check = 0;
 	struct sockaddr_in sin;
 	signal(SIGTERM, SIG_IGN);
-	uint64_t now = time_helper::get_micro_time();
+	uint64_t now = time_helper::get_micro_time() / 1000000;
 
 /*	std::string szMysqlIp;
 	std::string szMysqlDbName;
@@ -203,7 +203,7 @@ int main(int argc, char **argv)
 	sprintf(conn_node_doufachangsrv::doufachang_record_key, "doufachang_record_%u", sg_server_id);		
 	sprintf(conn_node_doufachangsrv::server_key, "server_%u", sg_server_id);
 	player_doufachang_info__init(&conn_node_doufachangsrv::default_info);
-	conn_node_doufachangsrv::default_info.challenge_count = DEFAULT_CHALLENGE_COUNT;
+	reinit_default_doufachang_info(&conn_node_doufachangsrv::default_info);
 
 	if (check)
 	{

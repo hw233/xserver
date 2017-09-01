@@ -5,6 +5,11 @@
 #include <stdint.h>
 
 uint64_t sg_next_copy_rank_time;
+void reinit_default_doufachang_info(PlayerDoufachangInfo *info)
+{
+	info->challenge_count = DEFAULT_CHALLENGE_COUNT;
+	info->next_add_count = 0;
+}
 
 AutoReleaseDoufachangInfo::AutoReleaseDoufachangInfo()
 {
@@ -70,9 +75,9 @@ int save_player_doufachang_record(DoufachangRecordAnswer *info, uint64_t player_
 	char field[64];
 	sprintf(field, "%lu", player_id);
 	int ret = rc.hset_bin(player_key, field, (char *)data_buffer, size);
-	if (ret != 0)
+	if (ret != 1)
 	{
-		LOG_ERR("%s: hset %lu failed, size = %u", __FUNCTION__, player_id, size);
+		LOG_ERR("%s: hset %lu failed, size = %u, ret = %d", __FUNCTION__, player_id, size, ret);
 		return (-1);		
 	}
 	return (0);
@@ -106,9 +111,9 @@ int save_player_doufachang_info(PlayerDoufachangInfo *info, uint64_t player_id, 
 	char field[64];
 	sprintf(field, "%lu", player_id);
 	int ret = rc.hset_bin(player_key, field, (char *)data_buffer, size);
-	if (ret != 0)
+	if (ret != 1)
 	{
-		LOG_ERR("%s: hset %lu failed, size = %u", __FUNCTION__, player_id, size);
+		LOG_ERR("%s: hset %lu failed, size = %u, ret = %d", __FUNCTION__, player_id, size, ret);
 		return (-1);		
 	}
 	return (0);
@@ -131,7 +136,11 @@ void copy_doufachang_rank(char *from, char *to, CRedisClient &rc)
 		struct redisReply *value = r->element[i+1];
 		if (field->type != REDIS_REPLY_STRING || value->type != REDIS_REPLY_STRING)
 			continue;
-		rc.hset_bin(to, field->str, value->str, value->len);
+		int ret = rc.hset_bin(to, field->str, value->str, value->len);
+		if (ret != 1)
+		{
+			LOG_ERR("%s: hsetbin failed[%d]", __FUNCTION__, ret);
+		}
 	}	
 }
 
@@ -156,7 +165,7 @@ static uint32_t get_player_reward_id(uint64_t player_id)
 		 ite != doufachang_reward_config.end(); ++ite)
 	{
 		struct ArenaRewardTable *config = ite->second;
-		if (rank >= config->Low && rank <= config->Max)
+		if (rank <= config->Low && rank >= config->Max)
 		{
 			return config->ID;
 		}
@@ -164,18 +173,25 @@ static uint32_t get_player_reward_id(uint64_t player_id)
 	return (0);
 }
 
-void update_doufachang_player_info(uint64_t player_id, PlayerDoufachangInfo *info, uint32_t now)
+bool update_doufachang_player_info(uint64_t player_id, PlayerDoufachangInfo *info, uint32_t now)
 {
+	int ret = false;
 	if (!info)
-		return;
+		return false;
 		//挑战次数
 	if (now >= info->next_add_count)
 	{
 		int num = (now - info->next_add_count) / ADD_COUNT_SECONDS + 1;
-		info->challenge_count += num;
-		if (info->challenge_count > DEFAULT_CHALLENGE_COUNT)
-			info->challenge_count = DEFAULT_CHALLENGE_COUNT;
+		if (info->challenge_count < DEFAULT_CHALLENGE_COUNT)
+		{
+			info->challenge_count += num;
+			if (info->challenge_count > DEFAULT_CHALLENGE_COUNT)
+				info->challenge_count = DEFAULT_CHALLENGE_COUNT;
+		}
+		
 		info->next_add_count += num * ADD_COUNT_SECONDS;
+		if (num > 0)
+			ret = true;
 	}
 
 		//购买挑战次数
@@ -184,6 +200,7 @@ void update_doufachang_player_info(uint64_t player_id, PlayerDoufachangInfo *inf
 	{
 		info->buy_count = 0;
 		info->refresh_buy_count = refresh;
+		ret = true;
 	}
 
 		//排名奖励
@@ -191,5 +208,7 @@ void update_doufachang_player_info(uint64_t player_id, PlayerDoufachangInfo *inf
 	{
 		info->reward_id = get_player_reward_id(player_id);
 		info->refresh_reward_id = sg_next_copy_rank_time;
+		ret = true;
 	}
+	return ret;
 }

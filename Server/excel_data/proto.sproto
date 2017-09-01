@@ -193,6 +193,7 @@
 	UseMounts 17 : integer
 	UseDelivery 18 : *integer
 	Recovery 19 : integer
+	Partner 20 : integer
 }
 
 .SkillTable {
@@ -276,13 +277,13 @@
 	Time 4 : integer
 	Interval 5 : integer
 	EffectID 6 : *integer
+	DelEffectID 7 : *integer
 	DfPro 8 : integer
 	TimeDelay 9 : integer
 	CoverType 10 : integer
 	DeleteType 11 : integer
 	IsDeBuff 12 : integer
 	IsControl 13 : integer
-	
 }
 
 .SkillEffectTable {
@@ -974,13 +975,13 @@
 	LowerLimitLv 2 : integer
 	UpperLimitLv 3 : integer
 	Map 4 : integer
-	BirthPoint1 5 : *integer
-	BirthPoint2 6 : *integer
+	BirthPoint1 5 : *double
+	BirthPoint2 6 : *double
 	FlagExp 7 : integer
 	BoxID 8 : integer
-	BoxReloadX 9 : *integer
-	BoxReloadY 10 : *integer
-	BoxReloadZ 11 : *integer
+	BoxReloadX 9 : *double
+	BoxReloadY 10 : *double
+	BoxReloadZ 11 : *double
 	BoxReloadTime 12 : integer
 	BoxReloadNum 13 : integer
 	BoxExp 14 : integer
@@ -1327,6 +1328,7 @@
 	LevelPlusEXP1 6 : integer
 	LevelPlusEXP2 7 : integer
 	Title 8 : integer
+	Truer 9 : integer
 }
 
 .AchievementFunctionTable {
@@ -1380,12 +1382,34 @@
 
 .WorldBossTable{
 	ID 1 : integer
-	Level 2 : integer
-	Type 3 : integer
-	SceneID 4 : integer
-	MonsterID 5 : integer
-	Time 6 : *integer
-	Coefficient 7 : double
-	RewardLevel 8 : integer
+	Name 2 : string
+	Level 3 : integer
+	Type 4 : integer
+	SceneID 5 : integer
+	MonsterID 6 : integer
+	Time 7 : *integer
+	Coefficient 8 : double
+	RewardLevel 9 : integer
+}
+.WorldBossRewardTable{
+	ID 1 : integer
+	ItemID 2 : *integer
+	Num 3 : *integer
+	Draw 4 : integer
+	Random 5 : *integer
+	MailID 6 : integer
 }
 
+.BattlefieldTable{
+	ID 1 : integer
+	LowerLimitLv 2 : integer
+	UpperLimitLv 3 : integer
+	Map 4 : integer
+	BirthPoint1 5 : *integer
+	BirthPoint2 6 : *integer
+	ReadyTime 7 : integer
+	WarSet 8 : *integer
+	MineSet 9 : *integer
+	ForestSet 10 : *integer
+	Kill 11 : integer
+}
