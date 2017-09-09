@@ -210,6 +210,28 @@ int raid_manager::check_player_enter_raid(player_struct *player, uint32_t raid_i
 			return (-32);
 		}
 
+		//英雄挑战副本检测总收益次数
+		if(raidid_to_hero_challenge_config.find(raid_id) != raidid_to_hero_challenge_config.end())
+		{
+			uint32_t all_challenge_num = 0;
+			uint32_t use_challenge_num = 0;
+			ParameterTable *param_config = get_config_by_id(161000332, &parameter_config); 
+			if(param_config && param_config->n_parameter1 >0)
+			{
+				all_challenge_num = param_config->parameter1[0];
+			}
+			for(std::map<uint64_t, ChallengeTable*>::iterator itr = raidid_to_hero_challenge_config.begin(); itr != raidid_to_hero_challenge_config.end(); itr++)
+			{
+				use_challenge_num += player->get_raid_reward_count(itr->second->DungeonID);
+			}
+			if(use_challenge_num >= all_challenge_num)
+			{
+				reason_player_id[0] = player->data->player_id;
+				send_enter_raid_fail(player, 10, 1, reason_player_id, 0);
+				return (-33);
+			}
+		}
+
 		ret = check_enter_raid_cost(player, r_config);
 		if (ret != 0)
 		{
@@ -320,11 +342,44 @@ int raid_manager::check_player_enter_raid(player_struct *player, uint32_t raid_i
 			pass = false;
 			reason_player_id[n_reason_player++] = player->m_team->m_data->m_mem[pos].id;
 		}
+
 	}
 	if (!pass)
 	{
 		send_enter_raid_fail(player, 10, n_reason_player, reason_player_id, r_config->CostItemID);
 		return (-62);
+	}
+//// 英雄挑战类型副本检测总收益次数
+	if(raidid_to_hero_challenge_config.find(raid_id) != raidid_to_hero_challenge_config.end())
+	{
+		for (int pos = 0; pos < player->m_team->m_data->m_memSize; ++pos)
+		{
+			player_struct *t_player = team_players[pos];
+			uint32_t all_challenge_num = 0;
+			uint32_t use_challenge_num = 0;
+			ParameterTable *param_config = get_config_by_id(161000332, &parameter_config); 
+			if(param_config && param_config->n_parameter1 >0)
+			{
+				all_challenge_num = param_config->parameter1[0];
+			}
+			for(std::map<uint64_t, ChallengeTable*>::iterator itr = raidid_to_hero_challenge_config.begin(); itr != raidid_to_hero_challenge_config.end(); itr++)
+			{
+				use_challenge_num += t_player->get_raid_reward_count(itr->second->DungeonID);
+			}
+			if(use_challenge_num >= all_challenge_num)
+			{
+
+				pass = false;
+				reason_player_id[n_reason_player++] = t_player->m_team->m_data->m_mem[pos].id;
+			}
+
+		}
+	
+	}
+	if (!pass)
+	{
+		send_enter_raid_fail(player, 10, n_reason_player, reason_player_id, r_config->CostItemID);
+		return (-63);
 	}
 //// 检查消耗
 	int fail_ret;

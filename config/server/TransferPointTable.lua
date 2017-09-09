@@ -208,6 +208,18 @@ local TransferPointTable = {
 		['NameId'] = '雷霆之怒',
 		['limitLevel'] = 1,
 		['MapId'] = {20045}
+		},
+	[155000036] = {
+		['ID'] = 155000036,
+		['NameId'] = '巨轮国入云村',
+		['limitLevel'] = 1,
+		['MapId'] = {10004,203048,18939,179541,-169644}
+		},
+	[155000037] = {
+		['ID'] = 155000037,
+		['NameId'] = '巨轮国黄大仙庙',
+		['limitLevel'] = 1,
+		['MapId'] = {10004,123903,57190,60633,159568}
 		}
 	}
 return TransferPointTable

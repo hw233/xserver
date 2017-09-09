@@ -77,7 +77,8 @@ float monster_struct::get_speed()
 
 UNIT_TYPE monster_struct::get_unit_type()
 {
-	if (config->HateType == MONSTER_TYPE_DEFINE_BOSS)
+	if (config->HateType == MONSTER_HATETYPE_DEFINE_BOSS
+		|| config->HateType == MONSTER_HATETYPE_DEFINE_AIBOSS)
 		return UNIT_TYPE_BOSS;
 	return UNIT_TYPE_MONSTER;
 }
@@ -173,6 +174,15 @@ void monster_struct::on_tick()
 		ai->on_tick(this);
 }
 
+void monster_struct::on_region_changed(uint16_t old_region_id, uint16_t new_region_id)
+{
+	raid_struct *raid = get_raid();
+	if (raid && raid->ai && raid->ai->raid_on_monster_region_changed)
+	{
+		raid->ai->raid_on_monster_region_changed(raid, this, old_region_id, new_region_id);
+	}
+}
+
 void monster_struct::update_region_id()
 {
 	if (!is_avaliable())
@@ -184,7 +194,7 @@ void monster_struct::update_region_id()
 	{
 		set_attr(PLAYER_ATTR_REGION_ID, new_region_id);
 //		send_enter_region_notify(new_region_id);
-//		on_region_changed(old_region_id, new_region_id);
+		on_region_changed(old_region_id, new_region_id);
 	}
 }
 
@@ -232,11 +242,33 @@ void monster_struct::set_timer(uint64_t time)
 }
 
 void monster_struct::on_go_back()
-{
+{	
 	target = NULL;
+	if (config->HateType == MONSTER_HATETYPE_DEFINE_BOSS)
+	{
+		memset(&hate_unit[0], 0, sizeof(hate_unit));	
+	}
 }
 void monster_struct::on_pursue()
 {
+	if (config->HateType == MONSTER_HATETYPE_DEFINE_BOSS)
+	{	
+		uint64_t now = time_helper::get_cached_time();
+		if (now < next_hate_reduce_time)
+		{
+			return;
+		}
+
+		int n = (now - next_hate_reduce_time) / 1000 + 1;
+		next_hate_reduce_time += n * 1000;
+		double delta = 0.9 * n;
+		for (int i = 0; i < MAX_HATE_UNIT; ++i)
+		{
+			if (hate_unit[i].uuid == 0)
+				continue;
+			hate_unit[i].hate_value *= delta;
+		}
+	}
 }
 
 void monster_struct::clear_monster_timer()
@@ -285,6 +317,9 @@ void monster_struct::init_monster()
 //	set_ai_interface(1);
 	memset(&ai_data, 0, sizeof(ai_data));
 	memset(&m_buffs[0], 0, sizeof(m_buffs));
+	
+	memset(&hate_unit[0], 0, sizeof(hate_unit));
+	next_hate_reduce_time = time_helper::get_cached_time() + 1000;
 }
 
 extern struct ai_interface *all_monster_ai_interface[MAX_MONSTER_AI_INTERFACE];
@@ -620,6 +655,12 @@ void monster_struct::on_beattack(unit_struct *player, uint32_t skill_id, int32_t
 {
 	if (!data || !scene)
 		return;
+
+	if (damage > 0)
+	{
+		count_hate(player, skill_id, damage);
+		update_target();
+	}	
 	
 	if (ai && ai->on_beattack)
 		ai->on_beattack(this, player);
@@ -640,18 +681,22 @@ void monster_struct::on_relive()
 	LOG_DEBUG("%s: %lu[%p] relive", __FUNCTION__, get_uuid(), this);
 	if (!scene)
 	{
-		if (data->scene_id < 30000)
+		if (data->raid_uuid)
 		{
-			if (data->raid_uuid)
-				scene = raid_manager::get_raid_by_uuid(data->raid_uuid);
+			DungeonTable* config = get_config_by_id(data->scene_id, &all_raid_config);
+			if (config != NULL && config->DengeonRank == DUNGEON_TYPE_ZHENYING)
+			{
+				scene = zhenying_raid_manager::get_zhenying_raid_by_uuid(data->raid_uuid);
+			}
 			else
 			{
-				scene = scene_manager::get_scene(data->scene_id);
+				scene = raid_manager::get_raid_by_uuid(data->raid_uuid);
 			}
 		}
-		else 
+
+		else
 		{
-			scene = zhenying_raid_manager::get_zhenying_raid_by_uuid(data->raid_uuid);
+			scene = scene_manager::get_scene(data->scene_id);
 		}
 	}
 
@@ -1780,16 +1825,7 @@ void monster_struct::world_boss_refresf_player_redis_info(unit_struct *murderer,
 	EXTERN_DATA extern_data;
 	extern_data.player_id = player->data->player_id;
 
-	//在数据开头增加一个类型
-	uint8_t *pData = conn_node_base::get_send_data();
-	size_t data_len = player_world_boss_redisinfo__pack(&info, pData + sizeof(uint32_t));
-	if (data_len != (size_t)-1)
-	{
-		*((uint32_t*)pData) = 1;
-		data_len += sizeof(uint32_t);
-		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, SERVER_PROTO_WORLDBOSS_PLAYER_REDIS_INFO
-, data_len, 0);
-	}
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, SERVER_PROTO_WORLDBOSS_PLAYER_REDIS_INFO, player_world_boss_redisinfo__pack, info);
 	
    //如果世界boss死了发公告
    if(get_attr(PLAYER_ATTR_HP) <= 0)
@@ -1818,4 +1854,109 @@ void monster_struct::world_boss_refresf_player_redis_info(unit_struct *murderer,
 	   snprintf(buff, 510, table->NoticeTxt, scen_config->SceneName,p->second->Name,player->get_name());
 	   conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_HORSE_NOTIFY, &send, (pack_func)chat_horse__pack);
    }	   
+}
+
+bool monster_struct::on_unit_leave_sight(uint64_t uuid)
+{
+	if (config->HateType != MONSTER_HATETYPE_DEFINE_BOSS)
+		return true;
+	
+	for (int i = 0; i < MAX_HATE_UNIT; ++i)
+	{
+		if (hate_unit[i].uuid == uuid)
+		{
+			hate_unit[i].uuid = 0;
+			hate_unit[i].hate_value = 0;
+			update_target();
+			break;
+		}
+	}
+	return true;
+}
+
+void monster_struct::update_target()
+{
+	if (config->HateType != MONSTER_HATETYPE_DEFINE_BOSS)
+		return;
+	
+	int max_hate = 0;
+	uint64_t target_uuid = 0;
+	for (int i = 0; i < MAX_HATE_UNIT; ++i)
+	{
+		if (hate_unit[i].uuid != 0 && hate_unit[i].hate_value > max_hate)
+		{
+			max_hate = hate_unit[i].hate_value;
+			target_uuid = hate_unit[i].uuid;
+		}
+	}
+
+	LOG_DEBUG("%s: monster %lu set target = %lu[%d]", __FUNCTION__, get_uuid(), target_uuid, max_hate);
+	
+	if (target_uuid > 0)
+	{
+		target = unit_struct::get_unit_by_uuid(target_uuid);
+		if (!target)
+		{
+			LOG_INFO("%s %d: no target %lu", __FUNCTION__, __LINE__, target_uuid);
+			return;
+		}
+		if (!target->is_avaliable())
+			target = NULL;
+	}
+	else
+	{
+		target = NULL;
+	}
+}
+
+void monster_struct::count_hate(unit_struct *player, uint32_t skill_id, int32_t damage)
+{
+	if (config->HateType != MONSTER_HATETYPE_DEFINE_BOSS)
+		return;
+	if (damage <= 0)
+		return;
+	SkillTable *_skill_config = get_config_by_id(skill_id, &skill_config);
+	assert(_skill_config);
+	double hate_job;
+	switch (player->get_job())
+	{
+		case JOB_DEFINE_MONSTER:
+			hate_job = config->HateMonster / 10000.0;
+			break;
+		case JOB_DEFINE_DAO:
+			hate_job = config->HateDao / 10000.0;
+			break;
+		case JOB_DEFINE_BI:
+			hate_job = config->HateBi / 10000.0;
+			break;
+		case JOB_DEFINE_QIANG:
+			hate_job = config->HateQiang / 10000.0;
+			break;
+		case JOB_DEFINE_FAZHANG:
+			hate_job = config->HateFazhang / 10000.0;
+			break;
+		case JOB_DEFINE_GONG:
+			hate_job = config->HateGong / 10000.0;
+			break;
+	}
+	uint64_t add_hate = hate_job * damage * _skill_config->HateAdd / 10000.0 + _skill_config->HateValue;
+	uint64_t uuid = player->get_uuid();
+	for (int i = 0; i < MAX_HATE_UNIT; ++i)
+	{
+		if (hate_unit[i].uuid == uuid)
+		{
+			assert(player->is_avaliable());
+			hate_unit[i].hate_value += add_hate;
+			return;
+		}
+	}
+	for (int i = 0; i < MAX_HATE_UNIT; ++i)
+	{
+		if (hate_unit[i].uuid == 0)
+		{
+			hate_unit[i].uuid = uuid;
+			hate_unit[i].hate_value += add_hate;
+			return;
+		}
+	}
 }

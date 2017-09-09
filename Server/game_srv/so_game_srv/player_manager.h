@@ -35,6 +35,7 @@ public:
 	static void delete_player(player_struct *p);                                       //玩家下线，并且数据被保存下来以后调用
 	static void delete_player_by_id(uint64_t player_id);
 	static player_struct * get_player_by_id(uint64_t id);
+	static player_struct * get_ai_player_by_id(uint64_t id);
 	static player_struct *get_online_player(uint64_t id);
 	static int send_to_player(uint64_t player_id, PROTO_HEAD *head);
 

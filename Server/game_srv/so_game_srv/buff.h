@@ -68,8 +68,9 @@ public:
 	int init_buff(struct BuffTable *buffconfig, uint64_t end_time, unit_struct *attack, unit_struct *owner);
 	int reinit_buff(struct BuffTable *buffconfig, uint64_t end_time, unit_struct *attack);
 	int reinit_type3_buff(struct BuffTable *buffconfig);
-	bool is_recoverable_buff();
-	bool is_attr_buff();
+	bool is_recoverable_buff();   //需要恢复的buff, 包括属性和状态
+	bool is_attr_buff();         //属性变更的buff，恢复的时候要恢复属性
+	bool is_hp_buff();          //血量变化的buff，不需要恢复
 	void on_tick();
 	void on_dead();
 	void set_next_timer();
@@ -77,9 +78,12 @@ public:
 	struct BuffTable *config;
 	struct SkillEffectTable *effect_config;
 	unit_struct *m_owner;
-	unit_struct *m_attacker;	//attacker下线，死亡等不会清除这个指针，注意，也许记录个UUID更好
+//	unit_struct *m_attacker;	//attacker下线，死亡等不会清除这个指针，注意，也许记录个UUID更好
 private:
-	bool do_buff_effect(bool check_dead);
+	bool do_hp_buff_effect(bool check_dead);
+	unit_struct *get_attacker();
+	void deal_with_del_effect();
+	void deal_with_recover_effect();		
 };
 
 #endif /* BUFF_H */

@@ -13,7 +13,7 @@ import datetime
 import get_one_msg
 
 WATCH_PLAYER = {4294968631}
-WATCH_ATTR_ID = {90}
+WATCH_ATTR_ID = {1}
 
 
 HOST='127.0.0.1'
@@ -40,10 +40,10 @@ while True:
     if ret == 0:
         continue
 #    data_len = data_len - 8 - 16
-#    msg_format = "=IHH" + str(data_len) + 'sQIHH' 
+#    msg_format = "=IHH" + str(data_len) + 'sQIHH'
 #    msg_len, msg_id, seq, pb_data, player_id, t1, t1, t1 = struct.unpack(msg_format, data)
 
-#    print "read msg:", msg_id	
+#    print "read msg:", msg_id
 
 #    if not player_id in WATCH_PLAYER:
 #        continue;
@@ -52,14 +52,13 @@ while True:
     if msg_id == 10400:
         req = role_pb2.PlayerAttrNotify()
         req.ParseFromString(pb_data)
-        oldtime=datetime.datetime.now()
+        oldtime = datetime.datetime.now()
         attrid = ''
 #        for t1 in req.attrs:
 #            attrid = attrid + ' {' + str(t1.id) + ':' + str(t1.val) + '}'
-        
-#       print oldtime.time(), ": player %lu attr[%d][%s] changed" % (player_id, len(req.attrs), attrid)       
+
+#       print oldtime.time(), ": player %lu attr[%d][%s] changed" % (player_id, len(req.attrs), attrid)
         for t1 in req.attrs:
-            if not t1.id in WATCH_ATTR_ID:
-                continue;
+            if t1.id not in WATCH_ATTR_ID:
+                continue
             print oldtime.time(), ": player %lu %lu attr[%s] to [%s]" % (player_id, req.player_id, t1.id, t1.val)
-        

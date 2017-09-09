@@ -166,7 +166,7 @@ uint32_t conn_node_doufachangsrv::add_challenge_rank(DOUFACHANG_CHALLENGE_ANSWER
 	return (rank[1] - rank[0]);
 }
 
-int conn_node_doufachangsrv::add_challenge_record(DOUFACHANG_CHALLENGE_ANSWER *ans)
+int conn_node_doufachangsrv::add_challenge_record(DOUFACHANG_CHALLENGE_ANSWER *ans, uint32_t rank_add)
 {
 	if (ans->result != 0)
 		return (0);
@@ -183,6 +183,7 @@ int conn_node_doufachangsrv::add_challenge_record(DOUFACHANG_CHALLENGE_ANSWER *a
 	entry.fight = player_info->fighting_capacity;
 	entry.job = player_info->job;
 	entry.name = player_info->name;
+	entry.rank_add = rank_add;
 
 	AutoReleaseDoufachangRecord t1;
 	DoufachangRecordAnswer *info;
@@ -236,7 +237,7 @@ int conn_node_doufachangsrv::handle_challenge_answer(EXTERN_DATA *extern_data)
 		// 计算排名
 	uint32_t rank_add = add_challenge_rank(ans);
 		// 记录record
-	add_challenge_record(ans);
+	add_challenge_record(ans, rank_add);
 		// 发送MSG_ID_DOUFACHANG_RAID_FINISHED_NOTIFY
 	if (ans->notify)
 	{

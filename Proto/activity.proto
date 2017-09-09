@@ -35,4 +35,42 @@ message ActiveRewardAnswer
 	required uint32 rewardId = 2; //奖励id
 }
 
+//英雄挑战活动主界面信息应答
+message HeroChallengeMainInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 all_num = 2; //今日已挑战总次数
+	repeated HeroChallengedata data = 3; //详细信息
+}
 
+//单个被挑战的英雄数据
+message HeroChallengedata
+{
+	required uint32 hero_id = 1; //id
+	required uint32 num = 2; //今日已经挑战次数
+	required uint32 star = 3; //历史最高星级
+}
+
+//英雄挑战扫荡请求
+message HeroChallengeSweepRequest
+{
+	required uint32 hero_id = 1; //英雄id
+	required uint32 item_flag = 2; //需要消耗的物品类型 1: 道具 2: 元宝或者绑定元宝
+}
+
+//英雄挑战扫荡应答
+message HeroChallengeSweepAnswer
+{
+	required uint32 result = 1; //应答结果 0:成功 其余失败
+	required uint32 silver = 2; //获得银两
+	required uint32 bind_acer = 3; //获得绑定元宝
+	required uint32 acer = 4; //获得元宝
+	required uint32 exp = 5; //获得经验
+	repeated HeroChallengeSweepItemInfo item_info = 6; //物品信息
+}
+
+message HeroChallengeSweepItemInfo
+{
+	required uint32 item_id = 1; //物品id
+	required uint32 item_num = 2; //物品数量
+}

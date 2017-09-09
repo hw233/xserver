@@ -14,6 +14,7 @@
 #include "send_mail.h"
 #include "app_data_statis.h"
 #include "rank_config.h"
+#include "rank_util.h" 
 
 conn_node_ranksrv conn_node_ranksrv::connecter;
 
@@ -118,8 +119,8 @@ static void init_rank_key_map()
 void init_redis_keys(uint32_t server_id)
 {
 	sprintf(sg_player_key, "server_%u", server_id);
-	sprintf(cur_world_boss_key, "cur_word_boss_server_%u", server_id);
-	sprintf(befor_world_boss_key, "befor_word_boss_server_%u", server_id);
+	sprintf(cur_world_boss_key, "cur_world_boss_server_%u", server_id);
+	sprintf(befor_world_boss_key, "befor_world_boss_server_%u", server_id);
 	sprintf(tou_mu_world_boss_reward_num, "world_boss_tou_mu_reward_server_%u", server_id);
 	sprintf(shou_ling_world_boss_reward_num, "world_boss_shou_ling_reward_server_%u", server_id);
 	init_rank_key_map();
@@ -839,11 +840,7 @@ int conn_node_ranksrv::handle_player_online_notify(EXTERN_DATA *extern_data)
 
 int conn_node_ranksrv::handle_refresh_player_world_boss_info(EXTERN_DATA *extern_data)
 {
-
-	
-	int proto_data_len = get_data_len();
-	uint8_t *proto_data = get_data();
-	PlayerWorldBossRedisinfo *req = player_world_boss_redisinfo__unpack(NULL, proto_data_len - sizeof(uint32_t), proto_data + sizeof(uint32_t));
+	PlayerWorldBossRedisinfo *req = player_world_boss_redisinfo__unpack(NULL, get_data_len(), get_data());
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack req failed, refresh_type:%u", __FUNCTION__, __LINE__, extern_data->player_id);
@@ -884,6 +881,7 @@ int conn_node_ranksrv::handle_refresh_player_world_boss_info(EXTERN_DATA *extern
 	if(rank_key == NULL || befor_rank_key == NULL)
 	{
 		LOG_ERR("[%s:%d]世界boss被击，跟新redis数据失败，redis key 获取出错，bossid[%lu]", __FUNCTION__, __LINE__, boss_id);
+		return -3;
 	}
 
 
@@ -1312,69 +1310,42 @@ int conn_node_ranksrv::updata_player_cur_world_boss_info(uint64_t boss_id, EXTER
 	answer.info = world_boss_info_point;
 	answer.n_info = 0;
 
-	CAutoRedisReply autoR;			
-	redisReply *r = sg_redis_client.hgetall_bin(befor_world_boss_key, autoR);
-	if (!r || r->type != REDIS_REPLY_ARRAY)
+	AutoReleaseRedisPlayer p1;
+	AutoReleaseRankRedisInfo p2;
+	for(std::set<uint64_t>::iterator itr = world_boss_id.begin(); itr != world_boss_id.end(); itr++)
 	{
-		LOG_ERR("%s:%d hgetall failed", __FUNCTION__, __LINE__);
-	}
-	else
-	{
-		uint32_t index = 0;
-		uint64_t boss_id;
-		while (index + 1 < r->elements && answer.n_info <= MAX_WORLD_BOSS_NUM)
+		uint64_t boss_id = *itr;
+		world_boss_info_point[answer.n_info] =  &world_boss_info[answer.n_info];
+		rank_world_boss_all_boss_info__init(&world_boss_info[answer.n_info]);
+		world_boss_info[answer.n_info].bossid = boss_id;
+		BeforWorldBossRedisinfo *befor_info = get_redis_befor_world_boss(boss_id, befor_world_boss_key, sg_redis_client, p2);
+		if(befor_info != NULL)
 		{
-			struct redisReply *key = r->element[index];
-			struct redisReply *val = r->element[index + 1];
-			index += 2;
-			if (key->type != REDIS_REPLY_STRING || val->type != REDIS_REPLY_STRING)
-				continue;
-			boss_id = strtoull(key->str, NULL, 10);
-			if (boss_id == 0)
-				continue;
-			
-			BeforWorldBossRedisinfo *befor_info = NULL;
-			befor_info = befor_world_boss_redisinfo__unpack(NULL, val->len, (const uint8_t *)val->str);
-			if (befor_info == NULL)
-			{
-				LOG_ERR("%s:%d get world ifo fail, boss_id[%lu]", __FUNCTION__, __LINE__, boss_id);
-				continue;
-			}
-			
-			world_boss_info_point[answer.n_info] =  &world_boss_info[answer.n_info];
-			rank_world_boss_all_boss_info__init(&world_boss_info[answer.n_info]);
 			strcpy(last_name[answer.n_info], befor_info->name);
 			strcpy(max_score_name[answer.n_info], befor_info->max_score_name);
-			world_boss_info[answer.n_info].bossid = boss_id;
 			world_boss_info[answer.n_info].last_name = last_name[answer.n_info];
 			world_boss_info[answer.n_info].max_score_name = max_score_name[answer.n_info];
 			world_boss_info[answer.n_info].last_player_id = befor_info->player_id;
 			world_boss_info[answer.n_info].max_score_player_id = befor_info->max_score_player_id;
-			AutoReleaseRedisPlayer p1;
-			PlayerRedisInfo *last_player_redis = get_redis_player(world_boss_info[answer.n_info].last_player_id, sg_player_key, sg_redis_client, p1);
-			if(last_player_redis != NULL)
-			{
-				world_boss_info[answer.n_info].job = last_player_redis->job;
-				world_boss_info[answer.n_info].level  = last_player_redis->lv; 
-			}
-			CurWorldBossRedisinfo *cur_boss_redis = get_redis_cur_world_boss(boss_id, cur_world_boss_key, sg_redis_client, p1);
-			if(cur_boss_redis)
-			{
-				world_boss_info[answer.n_info].max_hp = cur_boss_redis->max_hp;
-				world_boss_info[answer.n_info].cur_hp = cur_boss_redis->cur_hp;
-			}
 
-			befor_world_boss_redisinfo__free_unpacked(befor_info, NULL);
-			answer.n_info++;
 		}
-		
+		PlayerRedisInfo *last_player_redis = get_redis_player(world_boss_info[answer.n_info].last_player_id, sg_player_key, sg_redis_client, p1);
+		if(last_player_redis != NULL)
+		{
+			world_boss_info[answer.n_info].job = last_player_redis->head_icon;
+			world_boss_info[answer.n_info].level  = last_player_redis->lv; 
+		}
+		CurWorldBossRedisinfo *cur_boss_redis = get_redis_cur_world_boss(boss_id, cur_world_boss_key, sg_redis_client, p2);
+		if(cur_boss_redis != NULL)
+		{
+			world_boss_info[answer.n_info].max_hp = cur_boss_redis->max_hp;
+			world_boss_info[answer.n_info].cur_hp = cur_boss_redis->cur_hp;
+		}
+		answer.n_info++;
+	
 	}
 
 	fast_send_msg(&connecter, extern_data, MSG_ID_WORLDBOSS_ZHUJIEMIAN_INFO_ANSWER, rank_world_boss_all_boss_info_answer__pack, answer);
-	/*for(size_t i =0; i <  answer.n_info; i ++)
-	{
-		LOG_ERR("boss上轮信息和当前血量信息 bossid[%lu], 最后一击玩家名字[%s], 最后一击玩家id[%lu], 最高积分玩家名字[%s], 最高积分玩家id[%lu], 最大血量[%u], 最小血量[%u]", answer.info[i]->bossid, answer.info[i]->last_name,  answer.info[i]->last_player_id,  answer.info[i]->max_score_name,  answer.info[i]->max_score_player_id,  answer.info[i]->max_hp,  answer.info[i]->cur_hp);
-	}*/
 	return 0;
 }
 
@@ -1505,7 +1476,7 @@ int conn_node_ranksrv::handle_world_timing_birth_updata_info(EXTERN_DATA *extern
 	char field[128];
 	int ret;
 	//世界boss不是被打死的，而是时间到了重新刷的，才更新数据
-	AutoReleaseRedisPlayer p1;
+	AutoReleaseRankRedisInfo p1;
 	CurWorldBossRedisinfo *cur_boss_redis = get_redis_cur_world_boss(boss_id, cur_world_boss_key, sg_redis_client, p1);
 	if(cur_boss_redis != NULL)
 	{
@@ -1527,8 +1498,8 @@ int conn_node_ranksrv::handle_world_timing_birth_updata_info(EXTERN_DATA *extern
 			max_score_player_id = befor_world_boss_rank_info[0].first;
 		}
 
-		AutoReleaseRedisPlayer p1;
-		PlayerRedisInfo *max_score_player_redis = get_redis_player(max_score_player_id, sg_player_key, sg_redis_client, p1);
+		AutoReleaseRedisPlayer p2;
+		PlayerRedisInfo *max_score_player_redis = get_redis_player(max_score_player_id, sg_player_key, sg_redis_client, p2);
 		if(max_score_player_redis)
 		{
 			strcpy(max_score_name, max_score_player_redis->name);
@@ -1619,10 +1590,9 @@ int conn_node_ranksrv::handle_world_timing_birth_updata_info(EXTERN_DATA *extern
 //发排行奖励，奖励的发放是在将本轮数据更新到上轮后发放，所以用上轮数据发
 int conn_node_ranksrv::world_boss_provide_rank_reward(uint64_t boss_id)
 {
-	LOG_ERR("发奖调了几次");
 	//先发放世界boss击杀奖励
 	CRedisClient &rc = sg_redis_client;
-	AutoReleaseRedisPlayer p1;
+	AutoReleaseRankRedisInfo p1;
 	int ret;
 	char *rank_key = NULL;
 	char field[64];
@@ -1853,7 +1823,8 @@ int conn_node_ranksrv::receive_world_boss_reward_to_player(uint32_t rank, uint64
 int conn_node_ranksrv::world_boss_provide_kill_reward(uint64_t boss_id)
 {
 	CRedisClient &rc = sg_redis_client;
-	AutoReleaseRedisPlayer p1;
+	AutoReleaseRankRedisInfo p1;
+	AutoReleaseRedisPlayer p2;
 	uint64_t player_id =0;
 	int ret;
 	char *rank_key = NULL;
@@ -1894,21 +1865,10 @@ int conn_node_ranksrv::world_boss_provide_kill_reward(uint64_t boss_id)
 		can_receive_num = parame_reward_config ->parameter1[0];
 	}
 
-	static uint8_t data_buffer[32 * 1024];
-	int data_len = sizeof(data_buffer);
-	char field[64];
-	sprintf(field, "%lu", boss_id);
-	ret = rc.hget_bin(befor_world_boss_key, field, (char *)data_buffer, &data_len);
-	if (ret != 0)
-	{
-		LOG_ERR("[%s:%d] 世界boss发最后一刀奖励获取redis信息失败boosid=%lu", __FUNCTION__, __LINE__, boss_id);
-		return -4;
-	}
-
-	BeforWorldBossRedisinfo *info = befor_world_boss_redisinfo__unpack(NULL, data_len, data_buffer);
+	BeforWorldBossRedisinfo *info = get_redis_befor_world_boss(boss_id, befor_world_boss_key, sg_redis_client, p1);
 	if(info == NULL)
 	{
-		LOG_ERR("[%s:%d] befor world boss redisinfo unpack faild boosid=%lu", __FUNCTION__, __LINE__, boss_id);
+		LOG_ERR("[%s:%d] get redis befor world boss info faild boosid=%lu", __FUNCTION__, __LINE__, boss_id);
 		return -5;
 	}
 
@@ -1917,7 +1877,7 @@ int conn_node_ranksrv::world_boss_provide_kill_reward(uint64_t boss_id)
 	{
 		return -6;
 	}
-	PlayerRedisInfo * last_player_info = get_redis_player( player_id, sg_player_key, sg_redis_client, p1);
+	PlayerRedisInfo * last_player_info = get_redis_player( player_id, sg_player_key, sg_redis_client, p2);
 	if(last_player_info == NULL)
 	{
 		LOG_ERR("[%s:%d] 世界boss发最后一刀奖励获取玩家redis信息失败player_id=%lu", __FUNCTION__, __LINE__, player_id);
@@ -1975,6 +1935,7 @@ int conn_node_ranksrv::world_boss_provide_kill_reward(uint64_t boss_id)
 	new_reward_info.kill_time = now_time;
 	new_reward_info.kill_num = new_num;
 	static uint8_t data_buffer_reward[128 * 1024];
+	char field[64];
 	sprintf(field, "%lu", player_id);
 	do
 	{

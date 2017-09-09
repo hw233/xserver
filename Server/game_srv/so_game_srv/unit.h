@@ -106,6 +106,7 @@ public:
 	
 	void delete_state_buff(int state);
 	int get_free_buff_pos();
+	bool check_free_buff_pos(int index);
 	void set_one_buff(buff_struct *buff, int pos);	
 	void delete_one_buff(buff_struct *buff);
 	void delete_one_buff(uint32_t buff_id);

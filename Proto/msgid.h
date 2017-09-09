@@ -821,5 +821,12 @@
 #define MSG_ID_WORLDBOSS_LAST_RANK_INFO_REQUEST			   13806 //世界boss上轮排名信息和玩家自己上轮信息请求 RankRankWorldBossLastInfoRequest
 #define MSG_ID_WORLDBOSS_LAST_RANK_INFO_ANSWER			   13807 //世界boss上轮排名信息和玩家自己上轮信息应答 RankRankWorldBossLastInfoAnswer
 #define MSG_ID_WORLDBOSS_PLAYER_RANK_INFO_NOTIFY		   13808 //世界boss刷新或者死亡玩家奖励信息通知 RankWorldBossRewardNotify
+
+
+//英雄挑战
+#define MSG_ID_HERO_CHALLENGE_ZHUJIEMIAN_INFO_REQUEST	   13900 //英雄挑战主界面信息请求
+#define MSG_ID_HERO_CHALLENGE_ZHUJIEMIAN_INFO_ANSWER       13901 //英雄挑战主界面信息应答 HeroChallengeMainInfoAnswer
+#define MSG_ID_HERO_CHALLENGE_SWEEP_REQUEST				   13902 //英雄挑战扫荡请求 HeroChallengeSweepRequest
+#define MSG_ID_HERO_CHALLENGE_SWEEP_ANSWER			       13903 //英雄挑战扫荡应答 HeroChallengeSweepAnswer
 #endif
 

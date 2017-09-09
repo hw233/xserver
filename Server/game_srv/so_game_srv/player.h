@@ -343,6 +343,7 @@ struct ZhenYing
 	uint32_t mine; //挖宝次数
 	uint32_t kill_week; //战场一周杀人
 	uint32_t score_week; //战场周积分
+	int one_award;
 };
 
 static const int MAX_QUESTION_ANSWER = 4;
@@ -493,6 +494,20 @@ struct TitleInfo
 	uint32_t expire_time;
 	bool     is_new;
 	uint32_t active_time;
+};
+
+struct HeroChallengeRewardInfo
+{
+	uint32_t item_id;
+	uint32_t item_num;
+};
+
+struct HeroChallengeInfo
+{
+	uint32_t id;     //id
+	uint32_t star;   //最高星级
+	uint32_t reward_flag; //领奖标志1:表示身上有扫荡奖励未领取
+	HeroChallengeRewardInfo item_info[MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM];//未领取的奖励物品信息
 };
 
 struct player_data
@@ -680,6 +695,9 @@ struct player_data
 
 	AchievementInfo achievement_list[MAX_ACHIEVEMENT_NUM]; //成就列表
 	TitleInfo title_list[MAX_TITLE_NUM]; //称号列表
+
+	//英雄挑战数据
+	HeroChallengeInfo my_hero_info[MAX_HERO_CHALLENGE_MONSTER_NUM];
 };
 
 
@@ -1198,6 +1216,9 @@ public:
 	void title_update_notify(TitleInfo *info);
 	void check_title_expire(void);
 	void check_title_condition(uint32_t type, uint32_t target1, uint32_t target2);
+
+	//英雄挑战信息初始化
+	int init_hero_challenge_data();
 
 	uint64_t last_change_area_time;
 	sight_space_struct *sight_space;

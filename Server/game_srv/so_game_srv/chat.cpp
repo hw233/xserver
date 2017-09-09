@@ -15,6 +15,7 @@
 #include "zhenying_raid_manager.h"
 #include "guild_battle_manager.h"
 #include "guild_wait_raid_manager.h"
+#include "zhenying_battle.h"
 #include "msgid.h"
 #include "time_helper.h"
 #include "chat.pb-c.h"
@@ -124,7 +125,7 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 		do_test2_cmd(player, strtoul(argv[1], 0, 0));
 	}	
 
-	if (strcasecmp(argv[0], "pass") == 0)
+	else if (strcasecmp(argv[0], "pass") == 0)
 	{
 		player->broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, 0, false, false);
 		player->broadcast_one_attr_changed(PLAYER_ATTR_ZHENYING, 0, false, false);		
@@ -549,6 +550,14 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	else if (argc >=4 && strcasecmp(argv[0], "add_fashion") == 0)
 	{
 		player->add_fashion(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
+	}
+	else if (strcasecmp(argv[0], "battle") == 0)
+	{
+		ZhenyingBattle::GetInstance()->GmStartBattle();
+	}
+	else if (strcasecmp(argv[0], "intobattle") == 0)
+	{
+		ZhenyingBattle::GetInstance()->IntoBattle(*player);
 	}
 }
 

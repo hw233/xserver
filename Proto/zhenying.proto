@@ -1,5 +1,7 @@
 syntax = "proto2";
 
+import "comm_message.proto";
+
 enum ZHENYING_TYPE
 {
 	NULL = 0;
@@ -126,16 +128,20 @@ message OneScore
 	required uint32 score = 6;
 	required uint32 job = 7;
 	required uint32 lv = 8;
+	required bool online = 9;
 }
 message SideScore
 {
 	repeated OneScore side = 1;
+	required uint32 total = 2;
 }
 message ZhenYingResult
 {
 	repeated OneScore fulongguo = 1;
 	repeated OneScore dianfenggu = 2;
 	required TotalScore score = 3;
+	required int32 winer = 4;
+	repeated ItemData item = 5; //首胜奖励
 }
 message ZhenYingFlag
 {
@@ -146,4 +152,6 @@ message StartFlag
 {
 	required uint32 npc = 1;
 	required int32 zhenying = 2;
+	required uint32 cd = 3; //夺旗CD
+	required uint32 region = 4; 
 }

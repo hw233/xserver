@@ -164,6 +164,7 @@ int raid_struct::init_special_raid_data(player_struct *player)
 		}
 			break;
 		case DUNGEON_TYPE_BATTLE:
+		case DUNGEON_TYPE_BATTLE_NEW:
 		{
 			raid_set_ai_interface(15);
 			init_scene_struct(m_id, true);
@@ -831,6 +832,11 @@ int raid_struct::add_monster_to_scene(monster_struct *monster, uint32_t effectid
 
 int raid_struct::clear_m_player_and_player_info(player_struct *player, bool clear_player_info)
 {
+	if (m_config->DengeonRank == DUNGEON_TYPE_BATTLE || m_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW
+		|| m_config->DengeonRank == DUNGEON_TYPE_ZHENYING)
+	{
+		return 0; //阵营战
+	}
 	LOG_DEBUG("%s: raid[%u][%lu], player[%lu]", __FUNCTION__, data->ID, data->uuid, player->get_uuid());
 	int index;
 	if (!get_raid_player_info(player->get_uuid(), &index))
@@ -896,6 +902,28 @@ int raid_struct::player_offline(player_struct *player)
 	else //多人副本通知其他人
 	{
 		delete_player_from_scene(player);
+	}
+	return (0);
+}
+
+int raid_struct::check_all_monster_region_buff(struct RaidScriptTable *config)
+{
+	if (config->n_Parameter1 == 0)
+		return (0);
+
+	if (!ai || !ai->raid_on_monster_region_changed)
+		return (0);
+	
+	for (std::set<monster_struct *>::iterator ite = m_monster.begin(); ite != m_monster.end(); ++ite)
+	{
+		monster_struct *monster = *ite;
+		if (!monster->data || monster->mark_delete)
+			continue;
+		if (!monster->is_alive())
+			continue;
+		if (monster->get_attr(PLAYER_ATTR_REGION_ID) != config->Parameter1[0])
+			continue;
+		ai->raid_on_monster_region_changed(this, monster, 1, config->Parameter1[0]);
 	}
 	return (0);
 }
@@ -1052,7 +1080,7 @@ SCENE_TYPE_DEFINE raid_struct::get_scene_type()
 
 bool raid_struct::check_raid_failed()
 {
-	if (this->m_id > 30000)
+	if (m_config->DengeonRank == DUNGEON_TYPE_ZHENYING)
 	{
 		return false; //阵营战
 	}
@@ -1090,15 +1118,15 @@ int raid_struct::check_cond_finished(int index, uint64_t cond_type, uint64_t con
 	assert(index >= 0 && index < 3);
 	switch (cond_type)
 	{
-		// case 1://通关时间
-		// {
-		// 	*ret_param = (time_helper::get_cached_time() - data->start_time) / 1000;
-		// 	if (*ret_param <= cond_value)
-		// 		return (1);
-		// 	else
-		// 		return (0);
-		// }
-		// break;
+		case 1://通关时间
+			{
+				*ret_param = (time_helper::get_cached_time() - data->start_time) / 1000;
+				if (*ret_param <= cond_value)
+					return (1);
+				else
+					return (0);
+			}
+			break;
 		case 2: //击杀怪物
 		{
 			if (data->star_param[index] >= cond_value1)
@@ -1437,7 +1465,8 @@ void raid_struct::raid_add_ai_interface(int ai_type, struct raid_ai_interface *a
 
 bool raid_struct::check_can_add_team_mem(player_struct *player)
 {
-	return false;
+//	return false;
+	return scene_can_make_team(m_id);
 	
 	if (!m_config || !res_config)
 		return false;
@@ -1646,7 +1675,7 @@ void raid_struct::on_monster_attack(monster_struct *monster, player_struct *play
 void raid_struct::on_player_dead(player_struct *player, unit_struct *killer)
 {
 	LOG_DEBUG("%s: raid[%u][%lu], player[%lu]", __FUNCTION__, data->ID, data->uuid, player->get_uuid());
-	if (m_id < 30000)
+	if (m_config->DengeonRank != DUNGEON_TYPE_ZHENYING && m_config->DengeonRank != DUNGEON_TYPE_BATTLE)
 	{
 		++data->dead_count;
 

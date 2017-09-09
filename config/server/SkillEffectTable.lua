@@ -107,13 +107,13 @@ local SkillEffectTable = {
 	[115000016] = {
 		['ID'] = 115000016,
 		['Type'] = 170000001,
-		['Effect'] = {3},
-		['EffectAdd'] = {5000},
+		['Effect'] = {1},
+		['EffectAdd'] = {-500},
 		['EffectNum'] = {0}
 		},
 	[115000017] = {
 		['ID'] = 115000017,
-		['Type'] = 170000002,
+		['Type'] = 170000001,
 		['Effect'] = {1},
 		['EffectAdd'] = {6000},
 		['EffectNum'] = {0}
@@ -122,7 +122,7 @@ local SkillEffectTable = {
 		['ID'] = 115000019,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5000},
+		['EffectAdd'] = {-5000},
 		['EffectNum'] = {0}
 		},
 	[115000020] = {
@@ -247,29 +247,29 @@ local SkillEffectTable = {
 	[115000037] = {
 		['ID'] = 115000037,
 		['Type'] = 170000000,
-		['Effect'] = {2},
-		['EffectAdd'] = {500},
+		['Effect'] = {1},
+		['EffectAdd'] = {-500},
 		['EffectNum'] = {0}
 		},
 	[115000038] = {
 		['ID'] = 115000038,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {20000},
+		['EffectAdd'] = {10000},
 		['EffectNum'] = {0}
 		},
 	[115000039] = {
 		['ID'] = 115000039,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {20000},
+		['EffectAdd'] = {10000},
 		['EffectNum'] = {0}
 		},
 	[115000040] = {
 		['ID'] = 115000040,
 		['Type'] = 170000008,
 		['Effect'] = {4},
-		['EffectAdd'] = {20000},
+		['EffectAdd'] = {10000},
 		['EffectNum'] = {0}
 		},
 	[115000041] = {
@@ -290,35 +290,35 @@ local SkillEffectTable = {
 		['ID'] = 115000043,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {0}
 		},
 	[115000044] = {
 		['ID'] = 115000044,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {16000},
+		['EffectAdd'] = {6000},
 		['EffectNum'] = {0}
 		},
 	[115000045] = {
 		['ID'] = 115000045,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {17000},
+		['EffectAdd'] = {7000},
 		['EffectNum'] = {0}
 		},
 	[115000046] = {
 		['ID'] = 115000046,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {18000},
+		['EffectAdd'] = {8000},
 		['EffectNum'] = {0}
 		},
 	[115000047] = {
 		['ID'] = 115000047,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {19000},
+		['EffectAdd'] = {9000},
 		['EffectNum'] = {0}
 		},
 	[115000048] = {
@@ -381,7 +381,7 @@ local SkillEffectTable = {
 		['ID'] = 115000056,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {15000,15000},
+		['EffectAdd'] = {5000,5000},
 		['EffectNum'] = {0}
 		},
 	[115000057] = {
@@ -401,15 +401,15 @@ local SkillEffectTable = {
 	[115000059] = {
 		['ID'] = 115000059,
 		['Type'] = 170000001,
-		['Effect'] = {2},
-		['EffectAdd'] = {500},
+		['Effect'] = {1},
+		['EffectAdd'] = {-500},
 		['EffectNum'] = {0}
 		},
 	[115000060] = {
 		['ID'] = 115000060,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5000},
+		['EffectAdd'] = {-5000},
 		['EffectNum'] = {0}
 		},
 	[115000061] = {
@@ -437,189 +437,189 @@ local SkillEffectTable = {
 		['ID'] = 115000064,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {7400},
+		['EffectAdd'] = {-2600},
 		['EffectNum'] = {0}
 		},
 	[115000065] = {
 		['ID'] = 115000065,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {7300},
+		['EffectAdd'] = {-2700},
 		['EffectNum'] = {0}
 		},
 	[115000066] = {
 		['ID'] = 115000066,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {7200},
+		['EffectAdd'] = {-2800},
 		['EffectNum'] = {0}
 		},
 	[115000067] = {
 		['ID'] = 115000067,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {7100},
+		['EffectAdd'] = {-2900},
 		['EffectNum'] = {0}
 		},
 	[115000068] = {
 		['ID'] = 115000068,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {7000},
+		['EffectAdd'] = {-3000},
 		['EffectNum'] = {0}
 		},
 	[115000069] = {
 		['ID'] = 115000069,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {6900},
+		['EffectAdd'] = {-3100},
 		['EffectNum'] = {0}
 		},
 	[115000070] = {
 		['ID'] = 115000070,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {6800},
+		['EffectAdd'] = {-3200},
 		['EffectNum'] = {0}
 		},
 	[115000071] = {
 		['ID'] = 115000071,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {6700},
+		['EffectAdd'] = {-3300},
 		['EffectNum'] = {0}
 		},
 	[115000072] = {
 		['ID'] = 115000072,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {6600},
+		['EffectAdd'] = {-3400},
 		['EffectNum'] = {0}
 		},
 	[115000073] = {
 		['ID'] = 115000073,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {6500},
+		['EffectAdd'] = {-3500},
 		['EffectNum'] = {0}
 		},
 	[115000074] = {
 		['ID'] = 115000074,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {6400},
+		['EffectAdd'] = {-3600},
 		['EffectNum'] = {0}
 		},
 	[115000075] = {
 		['ID'] = 115000075,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {6300},
+		['EffectAdd'] = {-3700},
 		['EffectNum'] = {0}
 		},
 	[115000076] = {
 		['ID'] = 115000076,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {6200},
+		['EffectAdd'] = {-3800},
 		['EffectNum'] = {0}
 		},
 	[115000077] = {
 		['ID'] = 115000077,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {6100},
+		['EffectAdd'] = {-3900},
 		['EffectNum'] = {0}
 		},
 	[115000078] = {
 		['ID'] = 115000078,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {6000},
+		['EffectAdd'] = {-4000},
 		['EffectNum'] = {0}
 		},
 	[115000079] = {
 		['ID'] = 115000079,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5900},
+		['EffectAdd'] = {-4100},
 		['EffectNum'] = {0}
 		},
 	[115000080] = {
 		['ID'] = 115000080,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5800},
+		['EffectAdd'] = {-4200},
 		['EffectNum'] = {0}
 		},
 	[115000081] = {
 		['ID'] = 115000081,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5700},
+		['EffectAdd'] = {-4300},
 		['EffectNum'] = {0}
 		},
 	[115000082] = {
 		['ID'] = 115000082,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5600},
+		['EffectAdd'] = {-4400},
 		['EffectNum'] = {0}
 		},
 	[115000083] = {
 		['ID'] = 115000083,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5500},
+		['EffectAdd'] = {-4500},
 		['EffectNum'] = {0}
 		},
 	[115000084] = {
 		['ID'] = 115000084,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5400},
+		['EffectAdd'] = {-4600},
 		['EffectNum'] = {0}
 		},
 	[115000085] = {
 		['ID'] = 115000085,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5300},
+		['EffectAdd'] = {-4700},
 		['EffectNum'] = {0}
 		},
 	[115000086] = {
 		['ID'] = 115000086,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5200},
+		['EffectAdd'] = {-4800},
 		['EffectNum'] = {0}
 		},
 	[115000087] = {
 		['ID'] = 115000087,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5100},
+		['EffectAdd'] = {-4900},
 		['EffectNum'] = {0}
 		},
 	[115000088] = {
 		['ID'] = 115000088,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5000},
+		['EffectAdd'] = {-5000},
 		['EffectNum'] = {0}
 		},
 	[115000089] = {
 		['ID'] = 115000089,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {0}
 		},
 	[115000090] = {
 		['ID'] = 115000090,
 		['Type'] = 170000008,
 		['Effect'] = {4},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {0}
 		},
 	[115000091] = {
@@ -654,19 +654,19 @@ local SkillEffectTable = {
 		['ID'] = 115000095,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {20000},
+		['EffectAdd'] = {10000},
 		['EffectNum'] = {0}
 		},
 	[115000096] = {
 		['ID'] = 115000096,
 		['Type'] = 170000008,
 		['Effect'] = {3,4},
-		['EffectAdd'] = {9500,9500},
+		['EffectAdd'] = {-500,-500},
 		['EffectNum'] = {0}
 		},
 	[115000097] = {
 		['ID'] = 115000097,
-		['Type'] = 170000002,
+		['Type'] = 170000001,
 		['Effect'] = {1},
 		['EffectAdd'] = {10000},
 		['EffectNum'] = {0}
@@ -1249,7 +1249,7 @@ local SkillEffectTable = {
 		['ID'] = 115110002,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5000},
+		['EffectAdd'] = {-5000},
 		['EffectNum'] = {0}
 		},
 	[115110003] = {
@@ -1263,7 +1263,7 @@ local SkillEffectTable = {
 		['ID'] = 115110004,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {7000},
+		['EffectAdd'] = {-3000},
 		['EffectNum'] = {0}
 		},
 	[115110005] = {
@@ -1277,7 +1277,7 @@ local SkillEffectTable = {
 		['ID'] = 115110006,
 		['Type'] = 170000008,
 		['Effect'] = {2},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {0}
 		},
 	[115110008] = {
@@ -1304,10508 +1304,10508 @@ local SkillEffectTable = {
 	[115110100] = {
 		['ID'] = 115110100,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {10}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,1}
 		},
 	[115110101] = {
 		['ID'] = 115110101,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {20}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,3}
 		},
 	[115110102] = {
 		['ID'] = 115110102,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {30}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,4}
 		},
 	[115110103] = {
 		['ID'] = 115110103,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {40}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,5}
 		},
 	[115110104] = {
 		['ID'] = 115110104,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {50}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,6}
 		},
 	[115110105] = {
 		['ID'] = 115110105,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {60}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,7}
 		},
 	[115110106] = {
 		['ID'] = 115110106,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {70}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,8}
 		},
 	[115110107] = {
 		['ID'] = 115110107,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {80}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,9}
 		},
 	[115110108] = {
 		['ID'] = 115110108,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {90}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,10}
 		},
 	[115110109] = {
 		['ID'] = 115110109,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {100}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,11}
 		},
 	[115110110] = {
 		['ID'] = 115110110,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {110}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,13}
 		},
 	[115110111] = {
 		['ID'] = 115110111,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {120}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,14}
 		},
 	[115110112] = {
 		['ID'] = 115110112,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {130}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,15}
 		},
 	[115110113] = {
 		['ID'] = 115110113,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {140}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,17}
 		},
 	[115110114] = {
 		['ID'] = 115110114,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {150}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,18}
 		},
 	[115110115] = {
 		['ID'] = 115110115,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {160}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,19}
 		},
 	[115110116] = {
 		['ID'] = 115110116,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {170}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,21}
 		},
 	[115110117] = {
 		['ID'] = 115110117,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {180}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,22}
 		},
 	[115110118] = {
 		['ID'] = 115110118,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {190}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,24}
 		},
 	[115110119] = {
 		['ID'] = 115110119,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {200}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,26}
 		},
 	[115110120] = {
 		['ID'] = 115110120,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {210}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,27}
 		},
 	[115110121] = {
 		['ID'] = 115110121,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {220}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,29}
 		},
 	[115110122] = {
 		['ID'] = 115110122,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {230}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,31}
 		},
 	[115110123] = {
 		['ID'] = 115110123,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {240}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,32}
 		},
 	[115110124] = {
 		['ID'] = 115110124,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {250}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,34}
 		},
 	[115110125] = {
 		['ID'] = 115110125,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {260}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,36}
 		},
 	[115110126] = {
 		['ID'] = 115110126,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {270}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,38}
 		},
 	[115110127] = {
 		['ID'] = 115110127,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {280}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,40}
 		},
 	[115110128] = {
 		['ID'] = 115110128,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {290}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,42}
 		},
 	[115110129] = {
 		['ID'] = 115110129,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {300}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,44}
 		},
 	[115110130] = {
 		['ID'] = 115110130,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {310}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,46}
 		},
 	[115110131] = {
 		['ID'] = 115110131,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {320}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,48}
 		},
 	[115110132] = {
 		['ID'] = 115110132,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {330}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,50}
 		},
 	[115110133] = {
 		['ID'] = 115110133,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {340}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,52}
 		},
 	[115110134] = {
 		['ID'] = 115110134,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {350}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,54}
 		},
 	[115110135] = {
 		['ID'] = 115110135,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {360}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,57}
 		},
 	[115110136] = {
 		['ID'] = 115110136,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {370}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,59}
 		},
 	[115110137] = {
 		['ID'] = 115110137,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {380}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,61}
 		},
 	[115110138] = {
 		['ID'] = 115110138,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {390}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,64}
 		},
 	[115110139] = {
 		['ID'] = 115110139,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {400}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,66}
 		},
 	[115110140] = {
 		['ID'] = 115110140,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {410}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,68}
 		},
 	[115110141] = {
 		['ID'] = 115110141,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {420}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,71}
 		},
 	[115110142] = {
 		['ID'] = 115110142,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {430}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,73}
 		},
 	[115110143] = {
 		['ID'] = 115110143,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {440}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,76}
 		},
 	[115110144] = {
 		['ID'] = 115110144,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {450}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,78}
 		},
 	[115110145] = {
 		['ID'] = 115110145,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {460}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,81}
 		},
 	[115110146] = {
 		['ID'] = 115110146,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {470}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,84}
 		},
 	[115110147] = {
 		['ID'] = 115110147,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {480}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,86}
 		},
 	[115110148] = {
 		['ID'] = 115110148,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {490}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,89}
 		},
 	[115110149] = {
 		['ID'] = 115110149,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {500}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,92}
 		},
 	[115110150] = {
 		['ID'] = 115110150,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {510}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,95}
 		},
 	[115110151] = {
 		['ID'] = 115110151,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {520}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,97}
 		},
 	[115110152] = {
 		['ID'] = 115110152,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {530}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,100}
 		},
 	[115110153] = {
 		['ID'] = 115110153,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {540}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,103}
 		},
 	[115110154] = {
 		['ID'] = 115110154,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {550}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,106}
 		},
 	[115110155] = {
 		['ID'] = 115110155,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {560}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,109}
 		},
 	[115110156] = {
 		['ID'] = 115110156,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {570}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,112}
 		},
 	[115110157] = {
 		['ID'] = 115110157,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {580}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,115}
 		},
 	[115110158] = {
 		['ID'] = 115110158,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {590}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,119}
 		},
 	[115110159] = {
 		['ID'] = 115110159,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {600}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,122}
 		},
 	[115110160] = {
 		['ID'] = 115110160,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {610}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,125}
 		},
 	[115110161] = {
 		['ID'] = 115110161,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {620}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,128}
 		},
 	[115110162] = {
 		['ID'] = 115110162,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {630}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,131}
 		},
 	[115110163] = {
 		['ID'] = 115110163,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {640}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,135}
 		},
 	[115110164] = {
 		['ID'] = 115110164,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {650}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,138}
 		},
 	[115110165] = {
 		['ID'] = 115110165,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {660}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,141}
 		},
 	[115110166] = {
 		['ID'] = 115110166,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {670}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,145}
 		},
 	[115110167] = {
 		['ID'] = 115110167,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {680}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,148}
 		},
 	[115110168] = {
 		['ID'] = 115110168,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {690}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,152}
 		},
 	[115110169] = {
 		['ID'] = 115110169,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {700}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,155}
 		},
 	[115110170] = {
 		['ID'] = 115110170,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {710}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,159}
 		},
 	[115110171] = {
 		['ID'] = 115110171,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {720}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,163}
 		},
 	[115110172] = {
 		['ID'] = 115110172,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {730}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,166}
 		},
 	[115110173] = {
 		['ID'] = 115110173,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {740}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,170}
 		},
 	[115110174] = {
 		['ID'] = 115110174,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {750}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,174}
 		},
 	[115110175] = {
 		['ID'] = 115110175,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {760}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,177}
 		},
 	[115110176] = {
 		['ID'] = 115110176,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {770}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,181}
 		},
 	[115110177] = {
 		['ID'] = 115110177,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {780}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,185}
 		},
 	[115110178] = {
 		['ID'] = 115110178,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {790}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,189}
 		},
 	[115110179] = {
 		['ID'] = 115110179,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {800}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,193}
 		},
 	[115110180] = {
 		['ID'] = 115110180,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {810}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,197}
 		},
 	[115110181] = {
 		['ID'] = 115110181,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {820}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,201}
 		},
 	[115110182] = {
 		['ID'] = 115110182,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {830}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,205}
 		},
 	[115110183] = {
 		['ID'] = 115110183,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {840}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,209}
 		},
 	[115110184] = {
 		['ID'] = 115110184,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {850}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,213}
 		},
 	[115110185] = {
 		['ID'] = 115110185,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {860}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,217}
 		},
 	[115110186] = {
 		['ID'] = 115110186,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {870}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,221}
 		},
 	[115110187] = {
 		['ID'] = 115110187,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {880}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,226}
 		},
 	[115110188] = {
 		['ID'] = 115110188,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {890}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,230}
 		},
 	[115110189] = {
 		['ID'] = 115110189,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {900}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,234}
 		},
 	[115110190] = {
 		['ID'] = 115110190,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {910}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,239}
 		},
 	[115110191] = {
 		['ID'] = 115110191,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {920}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,243}
 		},
 	[115110192] = {
 		['ID'] = 115110192,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {930}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,247}
 		},
 	[115110193] = {
 		['ID'] = 115110193,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {940}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,252}
 		},
 	[115110194] = {
 		['ID'] = 115110194,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {950}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,256}
 		},
 	[115110195] = {
 		['ID'] = 115110195,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {960}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,261}
 		},
 	[115110196] = {
 		['ID'] = 115110196,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {970}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,265}
 		},
 	[115110197] = {
 		['ID'] = 115110197,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {980}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,270}
 		},
 	[115110198] = {
 		['ID'] = 115110198,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {990}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,275}
 		},
 	[115110199] = {
 		['ID'] = 115110199,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {10000},
-		['EffectNum'] = {1000}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,279}
 		},
 	[115110200] = {
 		['ID'] = 115110200,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {12}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,2}
 		},
 	[115110201] = {
 		['ID'] = 115110201,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {24}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,3}
 		},
 	[115110202] = {
 		['ID'] = 115110202,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {36}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,4}
 		},
 	[115110203] = {
 		['ID'] = 115110203,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {48}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,6}
 		},
 	[115110204] = {
 		['ID'] = 115110204,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {60}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,7}
 		},
 	[115110205] = {
 		['ID'] = 115110205,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {72}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,8}
 		},
 	[115110206] = {
 		['ID'] = 115110206,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {84}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,10}
 		},
 	[115110207] = {
 		['ID'] = 115110207,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {96}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,11}
 		},
 	[115110208] = {
 		['ID'] = 115110208,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {108}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,12}
 		},
 	[115110209] = {
 		['ID'] = 115110209,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {120}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,14}
 		},
 	[115110210] = {
 		['ID'] = 115110210,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {132}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,16}
 		},
 	[115110211] = {
 		['ID'] = 115110211,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {144}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,17}
 		},
 	[115110212] = {
 		['ID'] = 115110212,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {156}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,19}
 		},
 	[115110213] = {
 		['ID'] = 115110213,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {168}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,21}
 		},
 	[115110214] = {
 		['ID'] = 115110214,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {180}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,22}
 		},
 	[115110215] = {
 		['ID'] = 115110215,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {192}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,24}
 		},
 	[115110216] = {
 		['ID'] = 115110216,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {204}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,26}
 		},
 	[115110217] = {
 		['ID'] = 115110217,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {216}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,28}
 		},
 	[115110218] = {
 		['ID'] = 115110218,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {228}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,30}
 		},
 	[115110219] = {
 		['ID'] = 115110219,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {240}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,32}
 		},
 	[115110220] = {
 		['ID'] = 115110220,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {252}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,34}
 		},
 	[115110221] = {
 		['ID'] = 115110221,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {264}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,36}
 		},
 	[115110222] = {
 		['ID'] = 115110222,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {276}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,38}
 		},
 	[115110223] = {
 		['ID'] = 115110223,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {288}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,40}
 		},
 	[115110224] = {
 		['ID'] = 115110224,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {300}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,43}
 		},
 	[115110225] = {
 		['ID'] = 115110225,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {312}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,45}
 		},
 	[115110226] = {
 		['ID'] = 115110226,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {324}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,47}
 		},
 	[115110227] = {
 		['ID'] = 115110227,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {336}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,50}
 		},
 	[115110228] = {
 		['ID'] = 115110228,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {348}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,52}
 		},
 	[115110229] = {
 		['ID'] = 115110229,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {360}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,55}
 		},
 	[115110230] = {
 		['ID'] = 115110230,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {372}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,57}
 		},
 	[115110231] = {
 		['ID'] = 115110231,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {384}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,60}
 		},
 	[115110232] = {
 		['ID'] = 115110232,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {396}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,62}
 		},
 	[115110233] = {
 		['ID'] = 115110233,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {408}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,65}
 		},
 	[115110234] = {
 		['ID'] = 115110234,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {420}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,68}
 		},
 	[115110235] = {
 		['ID'] = 115110235,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {432}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,71}
 		},
 	[115110236] = {
 		['ID'] = 115110236,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {444}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,74}
 		},
 	[115110237] = {
 		['ID'] = 115110237,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {456}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,76}
 		},
 	[115110238] = {
 		['ID'] = 115110238,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {468}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,79}
 		},
 	[115110239] = {
 		['ID'] = 115110239,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {480}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,82}
 		},
 	[115110240] = {
 		['ID'] = 115110240,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {492}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,85}
 		},
 	[115110241] = {
 		['ID'] = 115110241,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {504}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,88}
 		},
 	[115110242] = {
 		['ID'] = 115110242,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {516}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,92}
 		},
 	[115110243] = {
 		['ID'] = 115110243,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {528}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,95}
 		},
 	[115110244] = {
 		['ID'] = 115110244,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {540}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,98}
 		},
 	[115110245] = {
 		['ID'] = 115110245,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {552}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,101}
 		},
 	[115110246] = {
 		['ID'] = 115110246,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {564}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,104}
 		},
 	[115110247] = {
 		['ID'] = 115110247,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {576}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,108}
 		},
 	[115110248] = {
 		['ID'] = 115110248,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {588}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,111}
 		},
 	[115110249] = {
 		['ID'] = 115110249,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {600}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,115}
 		},
 	[115110250] = {
 		['ID'] = 115110250,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {612}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,118}
 		},
 	[115110251] = {
 		['ID'] = 115110251,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {624}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,122}
 		},
 	[115110252] = {
 		['ID'] = 115110252,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {636}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,125}
 		},
 	[115110253] = {
 		['ID'] = 115110253,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {648}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,129}
 		},
 	[115110254] = {
 		['ID'] = 115110254,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {660}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,133}
 		},
 	[115110255] = {
 		['ID'] = 115110255,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {672}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,136}
 		},
 	[115110256] = {
 		['ID'] = 115110256,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {684}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,140}
 		},
 	[115110257] = {
 		['ID'] = 115110257,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {696}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,144}
 		},
 	[115110258] = {
 		['ID'] = 115110258,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {708}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,148}
 		},
 	[115110259] = {
 		['ID'] = 115110259,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {720}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,152}
 		},
 	[115110260] = {
 		['ID'] = 115110260,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {732}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,156}
 		},
 	[115110261] = {
 		['ID'] = 115110261,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {744}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,160}
 		},
 	[115110262] = {
 		['ID'] = 115110262,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {756}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,164}
 		},
 	[115110263] = {
 		['ID'] = 115110263,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {768}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,168}
 		},
 	[115110264] = {
 		['ID'] = 115110264,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {780}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,172}
 		},
 	[115110265] = {
 		['ID'] = 115110265,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {792}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,177}
 		},
 	[115110266] = {
 		['ID'] = 115110266,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {804}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,181}
 		},
 	[115110267] = {
 		['ID'] = 115110267,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {816}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,185}
 		},
 	[115110268] = {
 		['ID'] = 115110268,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {828}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,190}
 		},
 	[115110269] = {
 		['ID'] = 115110269,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {840}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,194}
 		},
 	[115110270] = {
 		['ID'] = 115110270,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {852}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,198}
 		},
 	[115110271] = {
 		['ID'] = 115110271,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {864}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,203}
 		},
 	[115110272] = {
 		['ID'] = 115110272,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {876}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,208}
 		},
 	[115110273] = {
 		['ID'] = 115110273,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {888}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,212}
 		},
 	[115110274] = {
 		['ID'] = 115110274,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {900}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,217}
 		},
 	[115110275] = {
 		['ID'] = 115110275,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {912}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,222}
 		},
 	[115110276] = {
 		['ID'] = 115110276,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {924}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,226}
 		},
 	[115110277] = {
 		['ID'] = 115110277,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {936}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,231}
 		},
 	[115110278] = {
 		['ID'] = 115110278,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {948}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,236}
 		},
 	[115110279] = {
 		['ID'] = 115110279,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {960}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,241}
 		},
 	[115110280] = {
 		['ID'] = 115110280,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {972}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,246}
 		},
 	[115110281] = {
 		['ID'] = 115110281,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {984}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,251}
 		},
 	[115110282] = {
 		['ID'] = 115110282,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {996}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,256}
 		},
 	[115110283] = {
 		['ID'] = 115110283,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1008}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,261}
 		},
 	[115110284] = {
 		['ID'] = 115110284,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1020}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,266}
 		},
 	[115110285] = {
 		['ID'] = 115110285,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1032}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,271}
 		},
 	[115110286] = {
 		['ID'] = 115110286,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1044}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,277}
 		},
 	[115110287] = {
 		['ID'] = 115110287,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1056}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,282}
 		},
 	[115110288] = {
 		['ID'] = 115110288,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1068}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,287}
 		},
 	[115110289] = {
 		['ID'] = 115110289,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1080}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,293}
 		},
 	[115110290] = {
 		['ID'] = 115110290,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1092}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,298}
 		},
 	[115110291] = {
 		['ID'] = 115110291,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1104}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,304}
 		},
 	[115110292] = {
 		['ID'] = 115110292,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1116}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,309}
 		},
 	[115110293] = {
 		['ID'] = 115110293,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1128}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,315}
 		},
 	[115110294] = {
 		['ID'] = 115110294,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1140}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,320}
 		},
 	[115110295] = {
 		['ID'] = 115110295,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1152}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,326}
 		},
 	[115110296] = {
 		['ID'] = 115110296,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1164}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,332}
 		},
 	[115110297] = {
 		['ID'] = 115110297,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1176}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,338}
 		},
 	[115110298] = {
 		['ID'] = 115110298,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1188}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,343}
 		},
 	[115110299] = {
 		['ID'] = 115110299,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {12000},
-		['EffectNum'] = {1200}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {6000,10000},
+		['EffectNum'] = {0,349}
 		},
 	[115110300] = {
 		['ID'] = 115110300,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {15}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,3}
 		},
 	[115110301] = {
 		['ID'] = 115110301,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {30}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,5}
 		},
 	[115110302] = {
 		['ID'] = 115110302,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {45}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,7}
 		},
 	[115110303] = {
 		['ID'] = 115110303,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {60}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,9}
 		},
 	[115110304] = {
 		['ID'] = 115110304,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {75}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,11}
 		},
 	[115110305] = {
 		['ID'] = 115110305,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {90}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,12}
 		},
 	[115110306] = {
 		['ID'] = 115110306,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {105}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,15}
 		},
 	[115110307] = {
 		['ID'] = 115110307,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {120}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,17}
 		},
 	[115110308] = {
 		['ID'] = 115110308,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {135}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,19}
 		},
 	[115110309] = {
 		['ID'] = 115110309,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {150}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,21}
 		},
 	[115110310] = {
 		['ID'] = 115110310,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {165}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,24}
 		},
 	[115110311] = {
 		['ID'] = 115110311,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {180}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,26}
 		},
 	[115110312] = {
 		['ID'] = 115110312,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {195}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,29}
 		},
 	[115110313] = {
 		['ID'] = 115110313,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {210}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,31}
 		},
 	[115110314] = {
 		['ID'] = 115110314,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {225}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,34}
 		},
 	[115110315] = {
 		['ID'] = 115110315,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {240}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,36}
 		},
 	[115110316] = {
 		['ID'] = 115110316,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {255}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,39}
 		},
 	[115110317] = {
 		['ID'] = 115110317,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {270}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,42}
 		},
 	[115110318] = {
 		['ID'] = 115110318,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {285}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,45}
 		},
 	[115110319] = {
 		['ID'] = 115110319,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {300}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,48}
 		},
 	[115110320] = {
 		['ID'] = 115110320,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {315}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,51}
 		},
 	[115110321] = {
 		['ID'] = 115110321,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {330}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,54}
 		},
 	[115110322] = {
 		['ID'] = 115110322,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {345}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,58}
 		},
 	[115110323] = {
 		['ID'] = 115110323,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {360}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,61}
 		},
 	[115110324] = {
 		['ID'] = 115110324,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {375}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,64}
 		},
 	[115110325] = {
 		['ID'] = 115110325,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {390}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,68}
 		},
 	[115110326] = {
 		['ID'] = 115110326,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {405}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,71}
 		},
 	[115110327] = {
 		['ID'] = 115110327,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {420}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,75}
 		},
 	[115110328] = {
 		['ID'] = 115110328,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {435}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,79}
 		},
 	[115110329] = {
 		['ID'] = 115110329,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {450}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,82}
 		},
 	[115110330] = {
 		['ID'] = 115110330,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {465}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,86}
 		},
 	[115110331] = {
 		['ID'] = 115110331,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {480}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,90}
 		},
 	[115110332] = {
 		['ID'] = 115110332,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {495}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,94}
 		},
 	[115110333] = {
 		['ID'] = 115110333,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {510}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,98}
 		},
 	[115110334] = {
 		['ID'] = 115110334,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {525}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,102}
 		},
 	[115110335] = {
 		['ID'] = 115110335,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {540}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,106}
 		},
 	[115110336] = {
 		['ID'] = 115110336,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {555}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,111}
 		},
 	[115110337] = {
 		['ID'] = 115110337,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {570}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,115}
 		},
 	[115110338] = {
 		['ID'] = 115110338,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {585}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,119}
 		},
 	[115110339] = {
 		['ID'] = 115110339,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {600}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,124}
 		},
 	[115110340] = {
 		['ID'] = 115110340,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {615}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,128}
 		},
 	[115110341] = {
 		['ID'] = 115110341,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {630}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,133}
 		},
 	[115110342] = {
 		['ID'] = 115110342,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {645}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,138}
 		},
 	[115110343] = {
 		['ID'] = 115110343,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {660}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,142}
 		},
 	[115110344] = {
 		['ID'] = 115110344,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {675}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,147}
 		},
 	[115110345] = {
 		['ID'] = 115110345,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {690}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,152}
 		},
 	[115110346] = {
 		['ID'] = 115110346,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {705}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,157}
 		},
 	[115110347] = {
 		['ID'] = 115110347,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {720}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,162}
 		},
 	[115110348] = {
 		['ID'] = 115110348,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {735}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,167}
 		},
 	[115110349] = {
 		['ID'] = 115110349,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {750}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,172}
 		},
 	[115110350] = {
 		['ID'] = 115110350,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {765}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,178}
 		},
 	[115110351] = {
 		['ID'] = 115110351,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {780}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,183}
 		},
 	[115110352] = {
 		['ID'] = 115110352,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {795}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,188}
 		},
 	[115110353] = {
 		['ID'] = 115110353,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {810}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,194}
 		},
 	[115110354] = {
 		['ID'] = 115110354,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {825}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,199}
 		},
 	[115110355] = {
 		['ID'] = 115110355,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {840}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,205}
 		},
 	[115110356] = {
 		['ID'] = 115110356,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {855}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,211}
 		},
 	[115110357] = {
 		['ID'] = 115110357,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {870}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,216}
 		},
 	[115110358] = {
 		['ID'] = 115110358,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {885}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,222}
 		},
 	[115110359] = {
 		['ID'] = 115110359,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {900}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,228}
 		},
 	[115110360] = {
 		['ID'] = 115110360,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {915}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,234}
 		},
 	[115110361] = {
 		['ID'] = 115110361,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {930}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,240}
 		},
 	[115110362] = {
 		['ID'] = 115110362,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {945}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,246}
 		},
 	[115110363] = {
 		['ID'] = 115110363,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {960}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,252}
 		},
 	[115110364] = {
 		['ID'] = 115110364,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {975}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,259}
 		},
 	[115110365] = {
 		['ID'] = 115110365,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {990}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,265}
 		},
 	[115110366] = {
 		['ID'] = 115110366,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1005}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,272}
 		},
 	[115110367] = {
 		['ID'] = 115110367,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1020}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,278}
 		},
 	[115110368] = {
 		['ID'] = 115110368,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1035}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,285}
 		},
 	[115110369] = {
 		['ID'] = 115110369,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1050}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,291}
 		},
 	[115110370] = {
 		['ID'] = 115110370,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1065}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,298}
 		},
 	[115110371] = {
 		['ID'] = 115110371,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1080}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,305}
 		},
 	[115110372] = {
 		['ID'] = 115110372,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1095}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,312}
 		},
 	[115110373] = {
 		['ID'] = 115110373,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1110}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,318}
 		},
 	[115110374] = {
 		['ID'] = 115110374,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1125}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,326}
 		},
 	[115110375] = {
 		['ID'] = 115110375,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1140}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,333}
 		},
 	[115110376] = {
 		['ID'] = 115110376,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1155}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,340}
 		},
 	[115110377] = {
 		['ID'] = 115110377,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1170}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,347}
 		},
 	[115110378] = {
 		['ID'] = 115110378,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1185}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,354}
 		},
 	[115110379] = {
 		['ID'] = 115110379,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1200}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,362}
 		},
 	[115110380] = {
 		['ID'] = 115110380,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1215}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,369}
 		},
 	[115110381] = {
 		['ID'] = 115110381,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1230}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,377}
 		},
 	[115110382] = {
 		['ID'] = 115110382,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1245}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,384}
 		},
 	[115110383] = {
 		['ID'] = 115110383,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1260}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,392}
 		},
 	[115110384] = {
 		['ID'] = 115110384,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1275}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,399}
 		},
 	[115110385] = {
 		['ID'] = 115110385,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1290}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,407}
 		},
 	[115110386] = {
 		['ID'] = 115110386,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1305}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,415}
 		},
 	[115110387] = {
 		['ID'] = 115110387,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1320}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,423}
 		},
 	[115110388] = {
 		['ID'] = 115110388,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1335}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,431}
 		},
 	[115110389] = {
 		['ID'] = 115110389,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1350}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,439}
 		},
 	[115110390] = {
 		['ID'] = 115110390,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1365}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,447}
 		},
 	[115110391] = {
 		['ID'] = 115110391,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1380}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,456}
 		},
 	[115110392] = {
 		['ID'] = 115110392,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1395}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,464}
 		},
 	[115110393] = {
 		['ID'] = 115110393,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1410}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,472}
 		},
 	[115110394] = {
 		['ID'] = 115110394,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1425}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,481}
 		},
 	[115110395] = {
 		['ID'] = 115110395,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1440}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,489}
 		},
 	[115110396] = {
 		['ID'] = 115110396,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1455}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,498}
 		},
 	[115110397] = {
 		['ID'] = 115110397,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1470}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,507}
 		},
 	[115110398] = {
 		['ID'] = 115110398,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1485}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,515}
 		},
 	[115110399] = {
 		['ID'] = 115110399,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1500}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {12000,10000},
+		['EffectNum'] = {0,524}
 		},
 	[115110400] = {
 		['ID'] = 115110400,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {4}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,3}
 		},
 	[115110401] = {
 		['ID'] = 115110401,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {8}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,5}
 		},
 	[115110402] = {
 		['ID'] = 115110402,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {12}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,8}
 		},
 	[115110403] = {
 		['ID'] = 115110403,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {16}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,10}
 		},
 	[115110404] = {
 		['ID'] = 115110404,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {20}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,13}
 		},
 	[115110405] = {
 		['ID'] = 115110405,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {24}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,16}
 		},
 	[115110406] = {
 		['ID'] = 115110406,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {28}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,18}
 		},
 	[115110407] = {
 		['ID'] = 115110407,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {32}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,21}
 		},
 	[115110408] = {
 		['ID'] = 115110408,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {36}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,24}
 		},
 	[115110409] = {
 		['ID'] = 115110409,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {40}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,28}
 		},
 	[115110410] = {
 		['ID'] = 115110410,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {44}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,31}
 		},
 	[115110411] = {
 		['ID'] = 115110411,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {48}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,34}
 		},
 	[115110412] = {
 		['ID'] = 115110412,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {52}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,38}
 		},
 	[115110413] = {
 		['ID'] = 115110413,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {56}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,41}
 		},
 	[115110414] = {
 		['ID'] = 115110414,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {60}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,45}
 		},
 	[115110415] = {
 		['ID'] = 115110415,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {64}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,49}
 		},
 	[115110416] = {
 		['ID'] = 115110416,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {68}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,53}
 		},
 	[115110417] = {
 		['ID'] = 115110417,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {72}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,56}
 		},
 	[115110418] = {
 		['ID'] = 115110418,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {76}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,61}
 		},
 	[115110419] = {
 		['ID'] = 115110419,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {80}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,65}
 		},
 	[115110420] = {
 		['ID'] = 115110420,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {84}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,69}
 		},
 	[115110421] = {
 		['ID'] = 115110421,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {88}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,73}
 		},
 	[115110422] = {
 		['ID'] = 115110422,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {92}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,78}
 		},
 	[115110423] = {
 		['ID'] = 115110423,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {96}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,82}
 		},
 	[115110424] = {
 		['ID'] = 115110424,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {100}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,87}
 		},
 	[115110425] = {
 		['ID'] = 115110425,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {104}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,92}
 		},
 	[115110426] = {
 		['ID'] = 115110426,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {108}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,96}
 		},
 	[115110427] = {
 		['ID'] = 115110427,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {112}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,101}
 		},
 	[115110428] = {
 		['ID'] = 115110428,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {116}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,107}
 		},
 	[115110429] = {
 		['ID'] = 115110429,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {120}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,112}
 		},
 	[115110430] = {
 		['ID'] = 115110430,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {124}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,117}
 		},
 	[115110431] = {
 		['ID'] = 115110431,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {128}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,122}
 		},
 	[115110432] = {
 		['ID'] = 115110432,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {132}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,128}
 		},
 	[115110433] = {
 		['ID'] = 115110433,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {136}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,133}
 		},
 	[115110434] = {
 		['ID'] = 115110434,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {140}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,139}
 		},
 	[115110435] = {
 		['ID'] = 115110435,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {144}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,145}
 		},
 	[115110436] = {
 		['ID'] = 115110436,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {148}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,150}
 		},
 	[115110437] = {
 		['ID'] = 115110437,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {152}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,156}
 		},
 	[115110438] = {
 		['ID'] = 115110438,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {156}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,162}
 		},
 	[115110439] = {
 		['ID'] = 115110439,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {160}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,168}
 		},
 	[115110440] = {
 		['ID'] = 115110440,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {164}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,175}
 		},
 	[115110441] = {
 		['ID'] = 115110441,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {168}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,181}
 		},
 	[115110442] = {
 		['ID'] = 115110442,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {172}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,188}
 		},
 	[115110443] = {
 		['ID'] = 115110443,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {176}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,194}
 		},
 	[115110444] = {
 		['ID'] = 115110444,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {180}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,201}
 		},
 	[115110445] = {
 		['ID'] = 115110445,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {184}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,207}
 		},
 	[115110446] = {
 		['ID'] = 115110446,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {188}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,214}
 		},
 	[115110447] = {
 		['ID'] = 115110447,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {192}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,221}
 		},
 	[115110448] = {
 		['ID'] = 115110448,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {196}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,228}
 		},
 	[115110449] = {
 		['ID'] = 115110449,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {200}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,235}
 		},
 	[115110450] = {
 		['ID'] = 115110450,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {204}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,243}
 		},
 	[115110451] = {
 		['ID'] = 115110451,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {208}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,250}
 		},
 	[115110452] = {
 		['ID'] = 115110452,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {212}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,257}
 		},
 	[115110453] = {
 		['ID'] = 115110453,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {216}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,265}
 		},
 	[115110454] = {
 		['ID'] = 115110454,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {220}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,273}
 		},
 	[115110455] = {
 		['ID'] = 115110455,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {224}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,280}
 		},
 	[115110456] = {
 		['ID'] = 115110456,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {228}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,288}
 		},
 	[115110457] = {
 		['ID'] = 115110457,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {232}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,296}
 		},
 	[115110458] = {
 		['ID'] = 115110458,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {236}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,304}
 		},
 	[115110459] = {
 		['ID'] = 115110459,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {240}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,312}
 		},
 	[115110460] = {
 		['ID'] = 115110460,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {244}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,320}
 		},
 	[115110461] = {
 		['ID'] = 115110461,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {248}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,329}
 		},
 	[115110462] = {
 		['ID'] = 115110462,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {252}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,337}
 		},
 	[115110463] = {
 		['ID'] = 115110463,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {256}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,346}
 		},
 	[115110464] = {
 		['ID'] = 115110464,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {260}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,354}
 		},
 	[115110465] = {
 		['ID'] = 115110465,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {264}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,363}
 		},
 	[115110466] = {
 		['ID'] = 115110466,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {268}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,372}
 		},
 	[115110467] = {
 		['ID'] = 115110467,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {272}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,381}
 		},
 	[115110468] = {
 		['ID'] = 115110468,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {276}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,390}
 		},
 	[115110469] = {
 		['ID'] = 115110469,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {280}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,399}
 		},
 	[115110470] = {
 		['ID'] = 115110470,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {284}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,408}
 		},
 	[115110471] = {
 		['ID'] = 115110471,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {288}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,418}
 		},
 	[115110472] = {
 		['ID'] = 115110472,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {292}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,427}
 		},
 	[115110473] = {
 		['ID'] = 115110473,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {296}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,436}
 		},
 	[115110474] = {
 		['ID'] = 115110474,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {300}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,446}
 		},
 	[115110475] = {
 		['ID'] = 115110475,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {304}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,456}
 		},
 	[115110476] = {
 		['ID'] = 115110476,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {308}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,466}
 		},
 	[115110477] = {
 		['ID'] = 115110477,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {312}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,476}
 		},
 	[115110478] = {
 		['ID'] = 115110478,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {316}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,486}
 		},
 	[115110479] = {
 		['ID'] = 115110479,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {320}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,496}
 		},
 	[115110480] = {
 		['ID'] = 115110480,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {324}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,506}
 		},
 	[115110481] = {
 		['ID'] = 115110481,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {328}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,516}
 		},
 	[115110482] = {
 		['ID'] = 115110482,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {332}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,527}
 		},
 	[115110483] = {
 		['ID'] = 115110483,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {336}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,537}
 		},
 	[115110484] = {
 		['ID'] = 115110484,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {340}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,548}
 		},
 	[115110485] = {
 		['ID'] = 115110485,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {344}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,558}
 		},
 	[115110486] = {
 		['ID'] = 115110486,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {348}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,569}
 		},
 	[115110487] = {
 		['ID'] = 115110487,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {352}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,580}
 		},
 	[115110488] = {
 		['ID'] = 115110488,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {356}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,591}
 		},
 	[115110489] = {
 		['ID'] = 115110489,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {360}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,602}
 		},
 	[115110490] = {
 		['ID'] = 115110490,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {364}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,614}
 		},
 	[115110491] = {
 		['ID'] = 115110491,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {368}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,625}
 		},
 	[115110492] = {
 		['ID'] = 115110492,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {372}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,636}
 		},
 	[115110493] = {
 		['ID'] = 115110493,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {376}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,648}
 		},
 	[115110494] = {
 		['ID'] = 115110494,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {380}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,660}
 		},
 	[115110495] = {
 		['ID'] = 115110495,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {384}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,671}
 		},
 	[115110496] = {
 		['ID'] = 115110496,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {388}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,683}
 		},
 	[115110497] = {
 		['ID'] = 115110497,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {392}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,695}
 		},
 	[115110498] = {
 		['ID'] = 115110498,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {396}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,707}
 		},
 	[115110499] = {
 		['ID'] = 115110499,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {4000},
-		['EffectNum'] = {400}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,719}
 		},
 	[115110500] = {
 		['ID'] = 115110500,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {30}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,16}
 		},
 	[115110501] = {
 		['ID'] = 115110501,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {60}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,33}
 		},
 	[115110502] = {
 		['ID'] = 115110502,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {90}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,50}
 		},
 	[115110503] = {
 		['ID'] = 115110503,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {120}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,67}
 		},
 	[115110504] = {
 		['ID'] = 115110504,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {150}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,86}
 		},
 	[115110505] = {
 		['ID'] = 115110505,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {180}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,105}
 		},
 	[115110506] = {
 		['ID'] = 115110506,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {210}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,125}
 		},
 	[115110507] = {
 		['ID'] = 115110507,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {240}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,145}
 		},
 	[115110508] = {
 		['ID'] = 115110508,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {270}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,167}
 		},
 	[115110509] = {
 		['ID'] = 115110509,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {300}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,190}
 		},
 	[115110510] = {
 		['ID'] = 115110510,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {330}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,211}
 		},
 	[115110511] = {
 		['ID'] = 115110511,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {360}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,236}
 		},
 	[115110512] = {
 		['ID'] = 115110512,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {390}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,259}
 		},
 	[115110513] = {
 		['ID'] = 115110513,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {420}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,283}
 		},
 	[115110514] = {
 		['ID'] = 115110514,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {450}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,309}
 		},
 	[115110515] = {
 		['ID'] = 115110515,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {480}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,335}
 		},
 	[115110516] = {
 		['ID'] = 115110516,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {510}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,363}
 		},
 	[115110517] = {
 		['ID'] = 115110517,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {540}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,390}
 		},
 	[115110518] = {
 		['ID'] = 115110518,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {570}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,419}
 		},
 	[115110519] = {
 		['ID'] = 115110519,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {600}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,448}
 		},
 	[115110520] = {
 		['ID'] = 115110520,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {630}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,476}
 		},
 	[115110521] = {
 		['ID'] = 115110521,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {660}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,508}
 		},
 	[115110522] = {
 		['ID'] = 115110522,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {690}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,538}
 		},
 	[115110523] = {
 		['ID'] = 115110523,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {720}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,570}
 		},
 	[115110524] = {
 		['ID'] = 115110524,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {750}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,603}
 		},
 	[115110525] = {
 		['ID'] = 115110525,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {780}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,636}
 		},
 	[115110526] = {
 		['ID'] = 115110526,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {810}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,669}
 		},
 	[115110527] = {
 		['ID'] = 115110527,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {840}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,704}
 		},
 	[115110528] = {
 		['ID'] = 115110528,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {870}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,740}
 		},
 	[115110529] = {
 		['ID'] = 115110529,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {900}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,774}
 		},
 	[115110530] = {
 		['ID'] = 115110530,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {930}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,812}
 		},
 	[115110531] = {
 		['ID'] = 115110531,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {960}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,849}
 		},
 	[115110532] = {
 		['ID'] = 115110532,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {990}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,887}
 		},
 	[115110533] = {
 		['ID'] = 115110533,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1020}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,926}
 		},
 	[115110534] = {
 		['ID'] = 115110534,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1050}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,965}
 		},
 	[115110535] = {
 		['ID'] = 115110535,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1080}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1005}
 		},
 	[115110536] = {
 		['ID'] = 115110536,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1110}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1047}
 		},
 	[115110537] = {
 		['ID'] = 115110537,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1140}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1087}
 		},
 	[115110538] = {
 		['ID'] = 115110538,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1170}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1130}
 		},
 	[115110539] = {
 		['ID'] = 115110539,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1200}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1172}
 		},
 	[115110540] = {
 		['ID'] = 115110540,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1230}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1217}
 		},
 	[115110541] = {
 		['ID'] = 115110541,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1260}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1260}
 		},
 	[115110542] = {
 		['ID'] = 115110542,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1290}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1306}
 		},
 	[115110543] = {
 		['ID'] = 115110543,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1320}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1350}
 		},
 	[115110544] = {
 		['ID'] = 115110544,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1350}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1397}
 		},
 	[115110545] = {
 		['ID'] = 115110545,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1380}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1444}
 		},
 	[115110546] = {
 		['ID'] = 115110546,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1410}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1492}
 		},
 	[115110547] = {
 		['ID'] = 115110547,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1440}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1541}
 		},
 	[115110548] = {
 		['ID'] = 115110548,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1470}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1589}
 		},
 	[115110549] = {
 		['ID'] = 115110549,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1500}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1640}
 		},
 	[115110550] = {
 		['ID'] = 115110550,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1530}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1690}
 		},
 	[115110551] = {
 		['ID'] = 115110551,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1560}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1741}
 		},
 	[115110552] = {
 		['ID'] = 115110552,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1590}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1793}
 		},
 	[115110553] = {
 		['ID'] = 115110553,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1620}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1846}
 		},
 	[115110554] = {
 		['ID'] = 115110554,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1650}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1899}
 		},
 	[115110555] = {
 		['ID'] = 115110555,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1680}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1952}
 		},
 	[115110556] = {
 		['ID'] = 115110556,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1710}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2007}
 		},
 	[115110557] = {
 		['ID'] = 115110557,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1740}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2063}
 		},
 	[115110558] = {
 		['ID'] = 115110558,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1770}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2119}
 		},
 	[115110559] = {
 		['ID'] = 115110559,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1800}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2176}
 		},
 	[115110560] = {
 		['ID'] = 115110560,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1830}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2233}
 		},
 	[115110561] = {
 		['ID'] = 115110561,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1860}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2291}
 		},
 	[115110562] = {
 		['ID'] = 115110562,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1890}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2350}
 		},
 	[115110563] = {
 		['ID'] = 115110563,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1920}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2409}
 		},
 	[115110564] = {
 		['ID'] = 115110564,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1950}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2469}
 		},
 	[115110565] = {
 		['ID'] = 115110565,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {1980}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2531}
 		},
 	[115110566] = {
 		['ID'] = 115110566,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2010}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2592}
 		},
 	[115110567] = {
 		['ID'] = 115110567,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2040}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2655}
 		},
 	[115110568] = {
 		['ID'] = 115110568,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2070}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2717}
 		},
 	[115110569] = {
 		['ID'] = 115110569,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2100}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2782}
 		},
 	[115110570] = {
 		['ID'] = 115110570,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2130}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2845}
 		},
 	[115110571] = {
 		['ID'] = 115110571,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2160}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2911}
 		},
 	[115110572] = {
 		['ID'] = 115110572,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2190}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2976}
 		},
 	[115110573] = {
 		['ID'] = 115110573,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2220}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3042}
 		},
 	[115110574] = {
 		['ID'] = 115110574,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2250}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3110}
 		},
 	[115110575] = {
 		['ID'] = 115110575,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2280}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3178}
 		},
 	[115110576] = {
 		['ID'] = 115110576,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2310}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3247}
 		},
 	[115110577] = {
 		['ID'] = 115110577,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2340}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3316}
 		},
 	[115110578] = {
 		['ID'] = 115110578,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2370}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3387}
 		},
 	[115110579] = {
 		['ID'] = 115110579,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2400}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3457}
 		},
 	[115110580] = {
 		['ID'] = 115110580,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2430}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3528}
 		},
 	[115110581] = {
 		['ID'] = 115110581,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2460}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3600}
 		},
 	[115110582] = {
 		['ID'] = 115110582,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2490}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3673}
 		},
 	[115110583] = {
 		['ID'] = 115110583,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2520}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3747}
 		},
 	[115110584] = {
 		['ID'] = 115110584,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2550}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3820}
 		},
 	[115110585] = {
 		['ID'] = 115110585,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2580}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3895}
 		},
 	[115110586] = {
 		['ID'] = 115110586,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2610}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3971}
 		},
 	[115110587] = {
 		['ID'] = 115110587,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2640}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4048}
 		},
 	[115110588] = {
 		['ID'] = 115110588,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2670}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4124}
 		},
 	[115110589] = {
 		['ID'] = 115110589,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2700}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4202}
 		},
 	[115110590] = {
 		['ID'] = 115110590,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2730}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4279}
 		},
 	[115110591] = {
 		['ID'] = 115110591,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2760}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4359}
 		},
 	[115110592] = {
 		['ID'] = 115110592,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2790}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4439}
 		},
 	[115110593] = {
 		['ID'] = 115110593,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2820}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4518}
 		},
 	[115110594] = {
 		['ID'] = 115110594,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2850}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4601}
 		},
 	[115110595] = {
 		['ID'] = 115110595,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2880}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4681}
 		},
 	[115110596] = {
 		['ID'] = 115110596,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2910}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4765}
 		},
 	[115110597] = {
 		['ID'] = 115110597,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2940}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4848}
 		},
 	[115110598] = {
 		['ID'] = 115110598,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {2970}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4932}
 		},
 	[115110599] = {
 		['ID'] = 115110599,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {30000},
-		['EffectNum'] = {3000}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5017}
 		},
 	[115110600] = {
 		['ID'] = 115110600,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {50}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {33,33}
 		},
 	[115110601] = {
 		['ID'] = 115110601,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {100}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {36,36}
 		},
 	[115110602] = {
 		['ID'] = 115110602,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {150}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {39,39}
 		},
 	[115110603] = {
 		['ID'] = 115110603,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {200}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {42,42}
 		},
 	[115110604] = {
 		['ID'] = 115110604,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {250}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {45,45}
 		},
 	[115110605] = {
 		['ID'] = 115110605,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {300}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {48,48}
 		},
 	[115110606] = {
 		['ID'] = 115110606,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {350}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {51,51}
 		},
 	[115110607] = {
 		['ID'] = 115110607,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {400}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {54,54}
 		},
 	[115110608] = {
 		['ID'] = 115110608,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {450}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {57,57}
 		},
 	[115110609] = {
 		['ID'] = 115110609,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {500}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {60,60}
 		},
 	[115110610] = {
 		['ID'] = 115110610,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {550}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {63,63}
 		},
 	[115110611] = {
 		['ID'] = 115110611,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {600}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {66,66}
 		},
 	[115110612] = {
 		['ID'] = 115110612,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {650}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {69,69}
 		},
 	[115110613] = {
 		['ID'] = 115110613,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {700}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {72,72}
 		},
 	[115110614] = {
 		['ID'] = 115110614,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {750}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {75,75}
 		},
 	[115110615] = {
 		['ID'] = 115110615,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {800}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {78,78}
 		},
 	[115110616] = {
 		['ID'] = 115110616,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {850}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {81,81}
 		},
 	[115110617] = {
 		['ID'] = 115110617,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {900}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {84,84}
 		},
 	[115110618] = {
 		['ID'] = 115110618,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {950}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {87,87}
 		},
 	[115110619] = {
 		['ID'] = 115110619,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1000}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {90,90}
 		},
 	[115110620] = {
 		['ID'] = 115110620,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1050}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {93,93}
 		},
 	[115110621] = {
 		['ID'] = 115110621,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1100}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {96,96}
 		},
 	[115110622] = {
 		['ID'] = 115110622,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1150}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {99,99}
 		},
 	[115110623] = {
 		['ID'] = 115110623,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1200}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {102,102}
 		},
 	[115110624] = {
 		['ID'] = 115110624,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1250}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {105,105}
 		},
 	[115110625] = {
 		['ID'] = 115110625,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1300}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {108,108}
 		},
 	[115110626] = {
 		['ID'] = 115110626,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1350}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {111,111}
 		},
 	[115110627] = {
 		['ID'] = 115110627,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1400}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {114,114}
 		},
 	[115110628] = {
 		['ID'] = 115110628,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1450}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {117,117}
 		},
 	[115110629] = {
 		['ID'] = 115110629,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1500}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {120,120}
 		},
 	[115110630] = {
 		['ID'] = 115110630,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1550}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {123,123}
 		},
 	[115110631] = {
 		['ID'] = 115110631,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1600}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {126,126}
 		},
 	[115110632] = {
 		['ID'] = 115110632,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1650}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {129,129}
 		},
 	[115110633] = {
 		['ID'] = 115110633,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1700}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {132,132}
 		},
 	[115110634] = {
 		['ID'] = 115110634,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1750}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {135,135}
 		},
 	[115110635] = {
 		['ID'] = 115110635,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1800}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {138,138}
 		},
 	[115110636] = {
 		['ID'] = 115110636,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1850}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {141,141}
 		},
 	[115110637] = {
 		['ID'] = 115110637,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1900}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {144,144}
 		},
 	[115110638] = {
 		['ID'] = 115110638,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1950}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {147,147}
 		},
 	[115110639] = {
 		['ID'] = 115110639,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2000}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {150,150}
 		},
 	[115110640] = {
 		['ID'] = 115110640,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2050}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {153,153}
 		},
 	[115110641] = {
 		['ID'] = 115110641,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2100}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {156,156}
 		},
 	[115110642] = {
 		['ID'] = 115110642,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2150}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {159,159}
 		},
 	[115110643] = {
 		['ID'] = 115110643,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2200}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {162,162}
 		},
 	[115110644] = {
 		['ID'] = 115110644,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2250}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {165,165}
 		},
 	[115110645] = {
 		['ID'] = 115110645,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2300}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {168,168}
 		},
 	[115110646] = {
 		['ID'] = 115110646,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2350}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {171,171}
 		},
 	[115110647] = {
 		['ID'] = 115110647,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2400}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {174,174}
 		},
 	[115110648] = {
 		['ID'] = 115110648,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2450}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {177,177}
 		},
 	[115110649] = {
 		['ID'] = 115110649,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2500}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {180,180}
 		},
 	[115110650] = {
 		['ID'] = 115110650,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2550}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {183,183}
 		},
 	[115110651] = {
 		['ID'] = 115110651,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2600}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {186,186}
 		},
 	[115110652] = {
 		['ID'] = 115110652,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2650}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {189,189}
 		},
 	[115110653] = {
 		['ID'] = 115110653,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2700}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {192,192}
 		},
 	[115110654] = {
 		['ID'] = 115110654,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2750}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {195,195}
 		},
 	[115110655] = {
 		['ID'] = 115110655,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2800}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {198,198}
 		},
 	[115110656] = {
 		['ID'] = 115110656,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2850}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {201,201}
 		},
 	[115110657] = {
 		['ID'] = 115110657,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2900}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {204,204}
 		},
 	[115110658] = {
 		['ID'] = 115110658,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2950}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {207,207}
 		},
 	[115110659] = {
 		['ID'] = 115110659,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3000}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {210,210}
 		},
 	[115110660] = {
 		['ID'] = 115110660,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3050}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {213,213}
 		},
 	[115110661] = {
 		['ID'] = 115110661,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3100}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {216,216}
 		},
 	[115110662] = {
 		['ID'] = 115110662,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3150}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {219,219}
 		},
 	[115110663] = {
 		['ID'] = 115110663,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3200}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {222,222}
 		},
 	[115110664] = {
 		['ID'] = 115110664,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3250}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {225,225}
 		},
 	[115110665] = {
 		['ID'] = 115110665,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3300}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {228,228}
 		},
 	[115110666] = {
 		['ID'] = 115110666,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3350}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {231,231}
 		},
 	[115110667] = {
 		['ID'] = 115110667,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3400}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {234,234}
 		},
 	[115110668] = {
 		['ID'] = 115110668,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3450}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {237,237}
 		},
 	[115110669] = {
 		['ID'] = 115110669,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3500}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {240,240}
 		},
 	[115110670] = {
 		['ID'] = 115110670,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3550}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {243,243}
 		},
 	[115110671] = {
 		['ID'] = 115110671,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3600}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {246,246}
 		},
 	[115110672] = {
 		['ID'] = 115110672,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3650}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {249,249}
 		},
 	[115110673] = {
 		['ID'] = 115110673,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3700}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {252,252}
 		},
 	[115110674] = {
 		['ID'] = 115110674,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3750}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {255,255}
 		},
 	[115110675] = {
 		['ID'] = 115110675,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3800}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {258,258}
 		},
 	[115110676] = {
 		['ID'] = 115110676,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3850}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {261,261}
 		},
 	[115110677] = {
 		['ID'] = 115110677,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3900}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {264,264}
 		},
 	[115110678] = {
 		['ID'] = 115110678,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3950}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {267,267}
 		},
 	[115110679] = {
 		['ID'] = 115110679,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4000}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {270,270}
 		},
 	[115110680] = {
 		['ID'] = 115110680,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4050}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {273,273}
 		},
 	[115110681] = {
 		['ID'] = 115110681,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4100}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {276,276}
 		},
 	[115110682] = {
 		['ID'] = 115110682,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4150}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {279,279}
 		},
 	[115110683] = {
 		['ID'] = 115110683,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4200}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {282,282}
 		},
 	[115110684] = {
 		['ID'] = 115110684,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4250}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {285,285}
 		},
 	[115110685] = {
 		['ID'] = 115110685,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4300}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {288,288}
 		},
 	[115110686] = {
 		['ID'] = 115110686,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4350}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {291,291}
 		},
 	[115110687] = {
 		['ID'] = 115110687,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4400}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {294,294}
 		},
 	[115110688] = {
 		['ID'] = 115110688,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4450}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {297,297}
 		},
 	[115110689] = {
 		['ID'] = 115110689,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4500}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {300,300}
 		},
 	[115110690] = {
 		['ID'] = 115110690,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4550}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {303,303}
 		},
 	[115110691] = {
 		['ID'] = 115110691,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4600}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {306,306}
 		},
 	[115110692] = {
 		['ID'] = 115110692,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4650}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {309,309}
 		},
 	[115110693] = {
 		['ID'] = 115110693,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4700}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {312,312}
 		},
 	[115110694] = {
 		['ID'] = 115110694,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4750}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {315,315}
 		},
 	[115110695] = {
 		['ID'] = 115110695,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4800}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {318,318}
 		},
 	[115110696] = {
 		['ID'] = 115110696,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4850}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {321,321}
 		},
 	[115110697] = {
 		['ID'] = 115110697,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4900}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {324,324}
 		},
 	[115110698] = {
 		['ID'] = 115110698,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4950}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {327,327}
 		},
 	[115110699] = {
 		['ID'] = 115110699,
 		['Type'] = 170000008,
-		['Effect'] = {4},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {5000}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {330,330}
 		},
 	[115110700] = {
 		['ID'] = 115110700,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,5}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,36}
 		},
 	[115110701] = {
 		['ID'] = 115110701,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,10}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,76}
 		},
 	[115110702] = {
 		['ID'] = 115110702,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,15}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,116}
 		},
 	[115110703] = {
 		['ID'] = 115110703,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,20}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,156}
 		},
 	[115110704] = {
 		['ID'] = 115110704,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,25}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,200}
 		},
 	[115110705] = {
 		['ID'] = 115110705,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,30}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,244}
 		},
 	[115110706] = {
 		['ID'] = 115110706,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,35}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,290}
 		},
 	[115110707] = {
 		['ID'] = 115110707,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,40}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,337}
 		},
 	[115110708] = {
 		['ID'] = 115110708,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,45}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,388}
 		},
 	[115110709] = {
 		['ID'] = 115110709,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,50}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,441}
 		},
 	[115110710] = {
 		['ID'] = 115110710,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,55}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,491}
 		},
 	[115110711] = {
 		['ID'] = 115110711,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,60}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,548}
 		},
 	[115110712] = {
 		['ID'] = 115110712,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,65}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,602}
 		},
 	[115110713] = {
 		['ID'] = 115110713,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,70}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,659}
 		},
 	[115110714] = {
 		['ID'] = 115110714,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,75}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,719}
 		},
 	[115110715] = {
 		['ID'] = 115110715,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,80}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,780}
 		},
 	[115110716] = {
 		['ID'] = 115110716,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,85}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,843}
 		},
 	[115110717] = {
 		['ID'] = 115110717,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,90}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,907}
 		},
 	[115110718] = {
 		['ID'] = 115110718,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,95}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,974}
 		},
 	[115110719] = {
 		['ID'] = 115110719,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,100}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,1041}
 		},
 	[115110720] = {
 		['ID'] = 115110720,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,105}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,1108}
 		},
 	[115110721] = {
 		['ID'] = 115110721,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,110}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,1182}
 		},
 	[115110722] = {
 		['ID'] = 115110722,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,115}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,1252}
 		},
 	[115110723] = {
 		['ID'] = 115110723,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,120}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,1326}
 		},
 	[115110724] = {
 		['ID'] = 115110724,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,125}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,1403}
 		},
 	[115110725] = {
 		['ID'] = 115110725,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,130}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,1480}
 		},
 	[115110726] = {
 		['ID'] = 115110726,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,135}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,1557}
 		},
 	[115110727] = {
 		['ID'] = 115110727,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,140}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,1637}
 		},
 	[115110728] = {
 		['ID'] = 115110728,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,145}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,1721}
 		},
 	[115110729] = {
 		['ID'] = 115110729,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,150}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,1801}
 		},
 	[115110730] = {
 		['ID'] = 115110730,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,155}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,1888}
 		},
 	[115110731] = {
 		['ID'] = 115110731,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,160}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,1976}
 		},
 	[115110732] = {
 		['ID'] = 115110732,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,165}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,2063}
 		},
 	[115110733] = {
 		['ID'] = 115110733,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,170}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,2153}
 		},
 	[115110734] = {
 		['ID'] = 115110734,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,175}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,2244}
 		},
 	[115110735] = {
 		['ID'] = 115110735,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,180}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,2337}
 		},
 	[115110736] = {
 		['ID'] = 115110736,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,185}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,2434}
 		},
 	[115110737] = {
 		['ID'] = 115110737,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,190}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,2528}
 		},
 	[115110738] = {
 		['ID'] = 115110738,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,195}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,2629}
 		},
 	[115110739] = {
 		['ID'] = 115110739,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,200}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,2726}
 		},
 	[115110740] = {
 		['ID'] = 115110740,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,205}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,2830}
 		},
 	[115110741] = {
 		['ID'] = 115110741,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,210}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,2930}
 		},
 	[115110742] = {
 		['ID'] = 115110742,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,215}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,3037}
 		},
 	[115110743] = {
 		['ID'] = 115110743,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,220}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,3141}
 		},
 	[115110744] = {
 		['ID'] = 115110744,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,225}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,3249}
 		},
 	[115110745] = {
 		['ID'] = 115110745,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,230}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,3359}
 		},
 	[115110746] = {
 		['ID'] = 115110746,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,235}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,3470}
 		},
 	[115110747] = {
 		['ID'] = 115110747,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,240}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,3584}
 		},
 	[115110748] = {
 		['ID'] = 115110748,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,245}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,3697}
 		},
 	[115110749] = {
 		['ID'] = 115110749,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,250}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,3815}
 		},
 	[115110750] = {
 		['ID'] = 115110750,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,255}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,3932}
 		},
 	[115110751] = {
 		['ID'] = 115110751,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,260}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,4049}
 		},
 	[115110752] = {
 		['ID'] = 115110752,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,265}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,4170}
 		},
 	[115110753] = {
 		['ID'] = 115110753,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,270}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,4294}
 		},
 	[115110754] = {
 		['ID'] = 115110754,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,275}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,4418}
 		},
 	[115110755] = {
 		['ID'] = 115110755,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,280}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,4542}
 		},
 	[115110756] = {
 		['ID'] = 115110756,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,285}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,4669}
 		},
 	[115110757] = {
 		['ID'] = 115110757,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,290}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,4800}
 		},
 	[115110758] = {
 		['ID'] = 115110758,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,295}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,4930}
 		},
 	[115110759] = {
 		['ID'] = 115110759,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,300}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,5061}
 		},
 	[115110760] = {
 		['ID'] = 115110760,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,305}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,5195}
 		},
 	[115110761] = {
 		['ID'] = 115110761,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,310}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,5329}
 		},
 	[115110762] = {
 		['ID'] = 115110762,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,315}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,5466}
 		},
 	[115110763] = {
 		['ID'] = 115110763,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,320}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,5604}
 		},
 	[115110764] = {
 		['ID'] = 115110764,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,325}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,5744}
 		},
 	[115110765] = {
 		['ID'] = 115110765,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,330}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,5888}
 		},
 	[115110766] = {
 		['ID'] = 115110766,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,335}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,6029}
 		},
 	[115110767] = {
 		['ID'] = 115110767,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,340}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,6176}
 		},
 	[115110768] = {
 		['ID'] = 115110768,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,345}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,6320}
 		},
 	[115110769] = {
 		['ID'] = 115110769,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,350}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,6471}
 		},
 	[115110770] = {
 		['ID'] = 115110770,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,355}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,6619}
 		},
 	[115110771] = {
 		['ID'] = 115110771,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,360}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,6773}
 		},
 	[115110772] = {
 		['ID'] = 115110772,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,365}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,6923}
 		},
 	[115110773] = {
 		['ID'] = 115110773,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,370}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,7078}
 		},
 	[115110774] = {
 		['ID'] = 115110774,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,375}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,7235}
 		},
 	[115110775] = {
 		['ID'] = 115110775,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,380}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,7392}
 		},
 	[115110776] = {
 		['ID'] = 115110776,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,385}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,7553}
 		},
 	[115110777] = {
 		['ID'] = 115110777,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,390}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,7714}
 		},
 	[115110778] = {
 		['ID'] = 115110778,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,395}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,7878}
 		},
 	[115110779] = {
 		['ID'] = 115110779,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,400}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,8042}
 		},
 	[115110780] = {
 		['ID'] = 115110780,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,405}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,8207}
 		},
 	[115110781] = {
 		['ID'] = 115110781,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,410}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,8374}
 		},
 	[115110782] = {
 		['ID'] = 115110782,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,415}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,8545}
 		},
 	[115110783] = {
 		['ID'] = 115110783,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,420}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,8716}
 		},
 	[115110784] = {
 		['ID'] = 115110784,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,425}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,8887}
 		},
 	[115110785] = {
 		['ID'] = 115110785,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,430}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,9061}
 		},
 	[115110786] = {
 		['ID'] = 115110786,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,435}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,9238}
 		},
 	[115110787] = {
 		['ID'] = 115110787,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,440}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,9416}
 		},
 	[115110788] = {
 		['ID'] = 115110788,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,445}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,9593}
 		},
 	[115110789] = {
 		['ID'] = 115110789,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,450}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,9774}
 		},
 	[115110790] = {
 		['ID'] = 115110790,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,455}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,9955}
 		},
 	[115110791] = {
 		['ID'] = 115110791,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,460}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,10139}
 		},
 	[115110792] = {
 		['ID'] = 115110792,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,465}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,10327}
 		},
 	[115110793] = {
 		['ID'] = 115110793,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,470}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,10511}
 		},
 	[115110794] = {
 		['ID'] = 115110794,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,475}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,10702}
 		},
 	[115110795] = {
 		['ID'] = 115110795,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,480}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,10890}
 		},
 	[115110796] = {
 		['ID'] = 115110796,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,485}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,11084}
 		},
 	[115110797] = {
 		['ID'] = 115110797,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,490}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,11278}
 		},
 	[115110798] = {
 		['ID'] = 115110798,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,495}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,11473}
 		},
 	[115110799] = {
 		['ID'] = 115110799,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {5000,5000},
-		['EffectNum'] = {0,500}
+		['EffectAdd'] = {20000,10000},
+		['EffectNum'] = {0,11670}
 		},
 	[115110900] = {
 		['ID'] = 115110900,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {24}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,3}
 		},
 	[115110901] = {
 		['ID'] = 115110901,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {48}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,5}
 		},
 	[115110902] = {
 		['ID'] = 115110902,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {72}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,8}
 		},
 	[115110903] = {
 		['ID'] = 115110903,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {96}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,10}
 		},
 	[115110904] = {
 		['ID'] = 115110904,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {120}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,13}
 		},
 	[115110905] = {
 		['ID'] = 115110905,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {144}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,16}
 		},
 	[115110906] = {
 		['ID'] = 115110906,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {168}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,18}
 		},
 	[115110907] = {
 		['ID'] = 115110907,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {192}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,21}
 		},
 	[115110908] = {
 		['ID'] = 115110908,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {216}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,24}
 		},
 	[115110909] = {
 		['ID'] = 115110909,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {240}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,28}
 		},
 	[115110910] = {
 		['ID'] = 115110910,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {264}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,31}
 		},
 	[115110911] = {
 		['ID'] = 115110911,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {288}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,34}
 		},
 	[115110912] = {
 		['ID'] = 115110912,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {312}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,38}
 		},
 	[115110913] = {
 		['ID'] = 115110913,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {336}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,41}
 		},
 	[115110914] = {
 		['ID'] = 115110914,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {360}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,45}
 		},
 	[115110915] = {
 		['ID'] = 115110915,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {384}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,49}
 		},
 	[115110916] = {
 		['ID'] = 115110916,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {408}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,53}
 		},
 	[115110917] = {
 		['ID'] = 115110917,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {432}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,56}
 		},
 	[115110918] = {
 		['ID'] = 115110918,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {456}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,61}
 		},
 	[115110919] = {
 		['ID'] = 115110919,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {480}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,65}
 		},
 	[115110920] = {
 		['ID'] = 115110920,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {504}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,69}
 		},
 	[115110921] = {
 		['ID'] = 115110921,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {528}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,73}
 		},
 	[115110922] = {
 		['ID'] = 115110922,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {552}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,78}
 		},
 	[115110923] = {
 		['ID'] = 115110923,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {576}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,82}
 		},
 	[115110924] = {
 		['ID'] = 115110924,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {600}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,87}
 		},
 	[115110925] = {
 		['ID'] = 115110925,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {624}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,92}
 		},
 	[115110926] = {
 		['ID'] = 115110926,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {648}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,96}
 		},
 	[115110927] = {
 		['ID'] = 115110927,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {672}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,101}
 		},
 	[115110928] = {
 		['ID'] = 115110928,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {696}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,107}
 		},
 	[115110929] = {
 		['ID'] = 115110929,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {720}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,112}
 		},
 	[115110930] = {
 		['ID'] = 115110930,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {744}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,117}
 		},
 	[115110931] = {
 		['ID'] = 115110931,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {768}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,122}
 		},
 	[115110932] = {
 		['ID'] = 115110932,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {792}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,128}
 		},
 	[115110933] = {
 		['ID'] = 115110933,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {816}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,133}
 		},
 	[115110934] = {
 		['ID'] = 115110934,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {840}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,139}
 		},
 	[115110935] = {
 		['ID'] = 115110935,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {864}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,145}
 		},
 	[115110936] = {
 		['ID'] = 115110936,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {888}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,150}
 		},
 	[115110937] = {
 		['ID'] = 115110937,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {912}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,156}
 		},
 	[115110938] = {
 		['ID'] = 115110938,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {936}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,162}
 		},
 	[115110939] = {
 		['ID'] = 115110939,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {960}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,168}
 		},
 	[115110940] = {
 		['ID'] = 115110940,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {984}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,175}
 		},
 	[115110941] = {
 		['ID'] = 115110941,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1008}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,181}
 		},
 	[115110942] = {
 		['ID'] = 115110942,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1032}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,188}
 		},
 	[115110943] = {
 		['ID'] = 115110943,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1056}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,194}
 		},
 	[115110944] = {
 		['ID'] = 115110944,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1080}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,201}
 		},
 	[115110945] = {
 		['ID'] = 115110945,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1104}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,207}
 		},
 	[115110946] = {
 		['ID'] = 115110946,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1128}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,214}
 		},
 	[115110947] = {
 		['ID'] = 115110947,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1152}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,221}
 		},
 	[115110948] = {
 		['ID'] = 115110948,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1176}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,228}
 		},
 	[115110949] = {
 		['ID'] = 115110949,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1200}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,235}
 		},
 	[115110950] = {
 		['ID'] = 115110950,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1224}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,243}
 		},
 	[115110951] = {
 		['ID'] = 115110951,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1248}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,250}
 		},
 	[115110952] = {
 		['ID'] = 115110952,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1272}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,257}
 		},
 	[115110953] = {
 		['ID'] = 115110953,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1296}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,265}
 		},
 	[115110954] = {
 		['ID'] = 115110954,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1320}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,273}
 		},
 	[115110955] = {
 		['ID'] = 115110955,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1344}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,280}
 		},
 	[115110956] = {
 		['ID'] = 115110956,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1368}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,288}
 		},
 	[115110957] = {
 		['ID'] = 115110957,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1392}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,296}
 		},
 	[115110958] = {
 		['ID'] = 115110958,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1416}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,304}
 		},
 	[115110959] = {
 		['ID'] = 115110959,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1440}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,312}
 		},
 	[115110960] = {
 		['ID'] = 115110960,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1464}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,320}
 		},
 	[115110961] = {
 		['ID'] = 115110961,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1488}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,329}
 		},
 	[115110962] = {
 		['ID'] = 115110962,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1512}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,337}
 		},
 	[115110963] = {
 		['ID'] = 115110963,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1536}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,346}
 		},
 	[115110964] = {
 		['ID'] = 115110964,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1560}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,354}
 		},
 	[115110965] = {
 		['ID'] = 115110965,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1584}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,363}
 		},
 	[115110966] = {
 		['ID'] = 115110966,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1608}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,372}
 		},
 	[115110967] = {
 		['ID'] = 115110967,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1632}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,381}
 		},
 	[115110968] = {
 		['ID'] = 115110968,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1656}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,390}
 		},
 	[115110969] = {
 		['ID'] = 115110969,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1680}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,399}
 		},
 	[115110970] = {
 		['ID'] = 115110970,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1704}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,408}
 		},
 	[115110971] = {
 		['ID'] = 115110971,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1728}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,418}
 		},
 	[115110972] = {
 		['ID'] = 115110972,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1752}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,427}
 		},
 	[115110973] = {
 		['ID'] = 115110973,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1776}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,436}
 		},
 	[115110974] = {
 		['ID'] = 115110974,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1800}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,446}
 		},
 	[115110975] = {
 		['ID'] = 115110975,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1824}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,456}
 		},
 	[115110976] = {
 		['ID'] = 115110976,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1848}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,466}
 		},
 	[115110977] = {
 		['ID'] = 115110977,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1872}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,476}
 		},
 	[115110978] = {
 		['ID'] = 115110978,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1896}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,486}
 		},
 	[115110979] = {
 		['ID'] = 115110979,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1920}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,496}
 		},
 	[115110980] = {
 		['ID'] = 115110980,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1944}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,506}
 		},
 	[115110981] = {
 		['ID'] = 115110981,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1968}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,516}
 		},
 	[115110982] = {
 		['ID'] = 115110982,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {1992}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,527}
 		},
 	[115110983] = {
 		['ID'] = 115110983,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2016}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,537}
 		},
 	[115110984] = {
 		['ID'] = 115110984,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2040}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,548}
 		},
 	[115110985] = {
 		['ID'] = 115110985,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2064}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,558}
 		},
 	[115110986] = {
 		['ID'] = 115110986,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2088}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,569}
 		},
 	[115110987] = {
 		['ID'] = 115110987,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2112}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,580}
 		},
 	[115110988] = {
 		['ID'] = 115110988,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2136}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,591}
 		},
 	[115110989] = {
 		['ID'] = 115110989,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2160}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,602}
 		},
 	[115110990] = {
 		['ID'] = 115110990,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2184}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,614}
 		},
 	[115110991] = {
 		['ID'] = 115110991,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2208}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,625}
 		},
 	[115110992] = {
 		['ID'] = 115110992,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2232}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,636}
 		},
 	[115110993] = {
 		['ID'] = 115110993,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2256}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,648}
 		},
 	[115110994] = {
 		['ID'] = 115110994,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2280}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,660}
 		},
 	[115110995] = {
 		['ID'] = 115110995,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2304}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,671}
 		},
 	[115110996] = {
 		['ID'] = 115110996,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2328}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,683}
 		},
 	[115110997] = {
 		['ID'] = 115110997,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2352}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,695}
 		},
 	[115110998] = {
 		['ID'] = 115110998,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2376}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,707}
 		},
 	[115110999] = {
 		['ID'] = 115110999,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {24000},
-		['EffectNum'] = {2400}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,719}
 		},
 	[115111000] = {
 		['ID'] = 115111000,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {4,4}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,3}
 		},
 	[115111001] = {
 		['ID'] = 115111001,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {8,8}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,5}
 		},
 	[115111002] = {
 		['ID'] = 115111002,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {12,12}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,8}
 		},
 	[115111003] = {
 		['ID'] = 115111003,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {16,16}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,10}
 		},
 	[115111004] = {
 		['ID'] = 115111004,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {20,20}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,13}
 		},
 	[115111005] = {
 		['ID'] = 115111005,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {24,24}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,16}
 		},
 	[115111006] = {
 		['ID'] = 115111006,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {28,28}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,18}
 		},
 	[115111007] = {
 		['ID'] = 115111007,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {32,32}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,21}
 		},
 	[115111008] = {
 		['ID'] = 115111008,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {36,36}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,24}
 		},
 	[115111009] = {
 		['ID'] = 115111009,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {40,40}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,28}
 		},
 	[115111010] = {
 		['ID'] = 115111010,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {44,44}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,31}
 		},
 	[115111011] = {
 		['ID'] = 115111011,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {48,48}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,34}
 		},
 	[115111012] = {
 		['ID'] = 115111012,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {52,52}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,38}
 		},
 	[115111013] = {
 		['ID'] = 115111013,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {56,56}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,41}
 		},
 	[115111014] = {
 		['ID'] = 115111014,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {60,60}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,45}
 		},
 	[115111015] = {
 		['ID'] = 115111015,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {64,64}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,49}
 		},
 	[115111016] = {
 		['ID'] = 115111016,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {68,68}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,53}
 		},
 	[115111017] = {
 		['ID'] = 115111017,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {72,72}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,56}
 		},
 	[115111018] = {
 		['ID'] = 115111018,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {76,76}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,61}
 		},
 	[115111019] = {
 		['ID'] = 115111019,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {80,80}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,65}
 		},
 	[115111020] = {
 		['ID'] = 115111020,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {84,84}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,69}
 		},
 	[115111021] = {
 		['ID'] = 115111021,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {88,88}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,73}
 		},
 	[115111022] = {
 		['ID'] = 115111022,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {92,92}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,78}
 		},
 	[115111023] = {
 		['ID'] = 115111023,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {96,96}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,82}
 		},
 	[115111024] = {
 		['ID'] = 115111024,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {100,100}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,87}
 		},
 	[115111025] = {
 		['ID'] = 115111025,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {104,104}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,92}
 		},
 	[115111026] = {
 		['ID'] = 115111026,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {108,108}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,96}
 		},
 	[115111027] = {
 		['ID'] = 115111027,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {112,112}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,101}
 		},
 	[115111028] = {
 		['ID'] = 115111028,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {116,116}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,107}
 		},
 	[115111029] = {
 		['ID'] = 115111029,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {120,120}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,112}
 		},
 	[115111030] = {
 		['ID'] = 115111030,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {124,124}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,117}
 		},
 	[115111031] = {
 		['ID'] = 115111031,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {128,128}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,122}
 		},
 	[115111032] = {
 		['ID'] = 115111032,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {132,132}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,128}
 		},
 	[115111033] = {
 		['ID'] = 115111033,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {136,136}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,133}
 		},
 	[115111034] = {
 		['ID'] = 115111034,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {140,140}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,139}
 		},
 	[115111035] = {
 		['ID'] = 115111035,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {144,144}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,145}
 		},
 	[115111036] = {
 		['ID'] = 115111036,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {148,148}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,150}
 		},
 	[115111037] = {
 		['ID'] = 115111037,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {152,152}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,156}
 		},
 	[115111038] = {
 		['ID'] = 115111038,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {156,156}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,162}
 		},
 	[115111039] = {
 		['ID'] = 115111039,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {160,160}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,168}
 		},
 	[115111040] = {
 		['ID'] = 115111040,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {164,164}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,175}
 		},
 	[115111041] = {
 		['ID'] = 115111041,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {168,168}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,181}
 		},
 	[115111042] = {
 		['ID'] = 115111042,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {172,172}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,188}
 		},
 	[115111043] = {
 		['ID'] = 115111043,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {176,176}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,194}
 		},
 	[115111044] = {
 		['ID'] = 115111044,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {180,180}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,201}
 		},
 	[115111045] = {
 		['ID'] = 115111045,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {184,184}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,207}
 		},
 	[115111046] = {
 		['ID'] = 115111046,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {188,188}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,214}
 		},
 	[115111047] = {
 		['ID'] = 115111047,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {192,192}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,221}
 		},
 	[115111048] = {
 		['ID'] = 115111048,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {196,196}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,228}
 		},
 	[115111049] = {
 		['ID'] = 115111049,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {200,200}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,235}
 		},
 	[115111050] = {
 		['ID'] = 115111050,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {204,204}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,243}
 		},
 	[115111051] = {
 		['ID'] = 115111051,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {208,208}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,250}
 		},
 	[115111052] = {
 		['ID'] = 115111052,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {212,212}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,257}
 		},
 	[115111053] = {
 		['ID'] = 115111053,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {216,216}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,265}
 		},
 	[115111054] = {
 		['ID'] = 115111054,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {220,220}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,273}
 		},
 	[115111055] = {
 		['ID'] = 115111055,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {224,224}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,280}
 		},
 	[115111056] = {
 		['ID'] = 115111056,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {228,228}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,288}
 		},
 	[115111057] = {
 		['ID'] = 115111057,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {232,232}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,296}
 		},
 	[115111058] = {
 		['ID'] = 115111058,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {236,236}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,304}
 		},
 	[115111059] = {
 		['ID'] = 115111059,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {240,240}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,312}
 		},
 	[115111060] = {
 		['ID'] = 115111060,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {244,244}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,320}
 		},
 	[115111061] = {
 		['ID'] = 115111061,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {248,248}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,329}
 		},
 	[115111062] = {
 		['ID'] = 115111062,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {252,252}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,337}
 		},
 	[115111063] = {
 		['ID'] = 115111063,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {256,256}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,346}
 		},
 	[115111064] = {
 		['ID'] = 115111064,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {260,260}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,354}
 		},
 	[115111065] = {
 		['ID'] = 115111065,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {264,264}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,363}
 		},
 	[115111066] = {
 		['ID'] = 115111066,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {268,268}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,372}
 		},
 	[115111067] = {
 		['ID'] = 115111067,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {272,272}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,381}
 		},
 	[115111068] = {
 		['ID'] = 115111068,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {276,276}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,390}
 		},
 	[115111069] = {
 		['ID'] = 115111069,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {280,280}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,399}
 		},
 	[115111070] = {
 		['ID'] = 115111070,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {284,284}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,408}
 		},
 	[115111071] = {
 		['ID'] = 115111071,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {288,288}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,418}
 		},
 	[115111072] = {
 		['ID'] = 115111072,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {292,292}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,427}
 		},
 	[115111073] = {
 		['ID'] = 115111073,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {296,296}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,436}
 		},
 	[115111074] = {
 		['ID'] = 115111074,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {300,300}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,446}
 		},
 	[115111075] = {
 		['ID'] = 115111075,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {304,304}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,456}
 		},
 	[115111076] = {
 		['ID'] = 115111076,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {308,308}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,466}
 		},
 	[115111077] = {
 		['ID'] = 115111077,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {312,312}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,476}
 		},
 	[115111078] = {
 		['ID'] = 115111078,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {316,316}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,486}
 		},
 	[115111079] = {
 		['ID'] = 115111079,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {320,320}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,496}
 		},
 	[115111080] = {
 		['ID'] = 115111080,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {324,324}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,506}
 		},
 	[115111081] = {
 		['ID'] = 115111081,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {328,328}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,516}
 		},
 	[115111082] = {
 		['ID'] = 115111082,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {332,332}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,527}
 		},
 	[115111083] = {
 		['ID'] = 115111083,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {336,336}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,537}
 		},
 	[115111084] = {
 		['ID'] = 115111084,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {340,340}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,548}
 		},
 	[115111085] = {
 		['ID'] = 115111085,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {344,344}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,558}
 		},
 	[115111086] = {
 		['ID'] = 115111086,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {348,348}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,569}
 		},
 	[115111087] = {
 		['ID'] = 115111087,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {352,352}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,580}
 		},
 	[115111088] = {
 		['ID'] = 115111088,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {356,356}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,591}
 		},
 	[115111089] = {
 		['ID'] = 115111089,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {360,360}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,602}
 		},
 	[115111090] = {
 		['ID'] = 115111090,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {364,364}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,614}
 		},
 	[115111091] = {
 		['ID'] = 115111091,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {368,368}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,625}
 		},
 	[115111092] = {
 		['ID'] = 115111092,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {372,372}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,636}
 		},
 	[115111093] = {
 		['ID'] = 115111093,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {376,376}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,648}
 		},
 	[115111094] = {
 		['ID'] = 115111094,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {380,380}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,660}
 		},
 	[115111095] = {
 		['ID'] = 115111095,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {384,384}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,671}
 		},
 	[115111096] = {
 		['ID'] = 115111096,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {388,388}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,683}
 		},
 	[115111097] = {
 		['ID'] = 115111097,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {392,392}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,695}
 		},
 	[115111098] = {
 		['ID'] = 115111098,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {396,396}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,707}
 		},
 	[115111099] = {
 		['ID'] = 115111099,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,4000},
-		['EffectNum'] = {400,400}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,719}
 		},
 	[115111100] = {
 		['ID'] = 115111100,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {4,8}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,3}
 		},
 	[115111101] = {
 		['ID'] = 115111101,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {8,16}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,5}
 		},
 	[115111102] = {
 		['ID'] = 115111102,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {12,24}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,8}
 		},
 	[115111103] = {
 		['ID'] = 115111103,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {16,32}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,10}
 		},
 	[115111104] = {
 		['ID'] = 115111104,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {20,40}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,13}
 		},
 	[115111105] = {
 		['ID'] = 115111105,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {24,48}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,16}
 		},
 	[115111106] = {
 		['ID'] = 115111106,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {28,56}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,18}
 		},
 	[115111107] = {
 		['ID'] = 115111107,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {32,64}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,21}
 		},
 	[115111108] = {
 		['ID'] = 115111108,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {36,72}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,24}
 		},
 	[115111109] = {
 		['ID'] = 115111109,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {40,80}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,28}
 		},
 	[115111110] = {
 		['ID'] = 115111110,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {44,88}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,31}
 		},
 	[115111111] = {
 		['ID'] = 115111111,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {48,96}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,34}
 		},
 	[115111112] = {
 		['ID'] = 115111112,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {52,104}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,38}
 		},
 	[115111113] = {
 		['ID'] = 115111113,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {56,112}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,41}
 		},
 	[115111114] = {
 		['ID'] = 115111114,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {60,120}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,45}
 		},
 	[115111115] = {
 		['ID'] = 115111115,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {64,128}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,49}
 		},
 	[115111116] = {
 		['ID'] = 115111116,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {68,136}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,53}
 		},
 	[115111117] = {
 		['ID'] = 115111117,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {72,144}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,56}
 		},
 	[115111118] = {
 		['ID'] = 115111118,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {76,152}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,61}
 		},
 	[115111119] = {
 		['ID'] = 115111119,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {80,160}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,65}
 		},
 	[115111120] = {
 		['ID'] = 115111120,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {84,168}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,69}
 		},
 	[115111121] = {
 		['ID'] = 115111121,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {88,176}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,73}
 		},
 	[115111122] = {
 		['ID'] = 115111122,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {92,184}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,78}
 		},
 	[115111123] = {
 		['ID'] = 115111123,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {96,192}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,82}
 		},
 	[115111124] = {
 		['ID'] = 115111124,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {100,200}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,87}
 		},
 	[115111125] = {
 		['ID'] = 115111125,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {104,208}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,92}
 		},
 	[115111126] = {
 		['ID'] = 115111126,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {108,216}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,96}
 		},
 	[115111127] = {
 		['ID'] = 115111127,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {112,224}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,101}
 		},
 	[115111128] = {
 		['ID'] = 115111128,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {116,232}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,107}
 		},
 	[115111129] = {
 		['ID'] = 115111129,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {120,240}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,112}
 		},
 	[115111130] = {
 		['ID'] = 115111130,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {124,248}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,117}
 		},
 	[115111131] = {
 		['ID'] = 115111131,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {128,256}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,122}
 		},
 	[115111132] = {
 		['ID'] = 115111132,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {132,264}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,128}
 		},
 	[115111133] = {
 		['ID'] = 115111133,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {136,272}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,133}
 		},
 	[115111134] = {
 		['ID'] = 115111134,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {140,280}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,139}
 		},
 	[115111135] = {
 		['ID'] = 115111135,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {144,288}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,145}
 		},
 	[115111136] = {
 		['ID'] = 115111136,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {148,296}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,150}
 		},
 	[115111137] = {
 		['ID'] = 115111137,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {152,304}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,156}
 		},
 	[115111138] = {
 		['ID'] = 115111138,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {156,312}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,162}
 		},
 	[115111139] = {
 		['ID'] = 115111139,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {160,320}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,168}
 		},
 	[115111140] = {
 		['ID'] = 115111140,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {164,328}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,175}
 		},
 	[115111141] = {
 		['ID'] = 115111141,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {168,336}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,181}
 		},
 	[115111142] = {
 		['ID'] = 115111142,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {172,344}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,188}
 		},
 	[115111143] = {
 		['ID'] = 115111143,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {176,352}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,194}
 		},
 	[115111144] = {
 		['ID'] = 115111144,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {180,360}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,201}
 		},
 	[115111145] = {
 		['ID'] = 115111145,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {184,368}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,207}
 		},
 	[115111146] = {
 		['ID'] = 115111146,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {188,376}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,214}
 		},
 	[115111147] = {
 		['ID'] = 115111147,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {192,384}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,221}
 		},
 	[115111148] = {
 		['ID'] = 115111148,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {196,392}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,228}
 		},
 	[115111149] = {
 		['ID'] = 115111149,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {200,400}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,235}
 		},
 	[115111150] = {
 		['ID'] = 115111150,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {204,408}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,243}
 		},
 	[115111151] = {
 		['ID'] = 115111151,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {208,416}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,250}
 		},
 	[115111152] = {
 		['ID'] = 115111152,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {212,424}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,257}
 		},
 	[115111153] = {
 		['ID'] = 115111153,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {216,432}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,265}
 		},
 	[115111154] = {
 		['ID'] = 115111154,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {220,440}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,273}
 		},
 	[115111155] = {
 		['ID'] = 115111155,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {224,448}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,280}
 		},
 	[115111156] = {
 		['ID'] = 115111156,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {228,456}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,288}
 		},
 	[115111157] = {
 		['ID'] = 115111157,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {232,464}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,296}
 		},
 	[115111158] = {
 		['ID'] = 115111158,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {236,472}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,304}
 		},
 	[115111159] = {
 		['ID'] = 115111159,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {240,480}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,312}
 		},
 	[115111160] = {
 		['ID'] = 115111160,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {244,488}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,320}
 		},
 	[115111161] = {
 		['ID'] = 115111161,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {248,496}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,329}
 		},
 	[115111162] = {
 		['ID'] = 115111162,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {252,504}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,337}
 		},
 	[115111163] = {
 		['ID'] = 115111163,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {256,512}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,346}
 		},
 	[115111164] = {
 		['ID'] = 115111164,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {260,520}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,354}
 		},
 	[115111165] = {
 		['ID'] = 115111165,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {264,528}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,363}
 		},
 	[115111166] = {
 		['ID'] = 115111166,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {268,536}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,372}
 		},
 	[115111167] = {
 		['ID'] = 115111167,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {272,544}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,381}
 		},
 	[115111168] = {
 		['ID'] = 115111168,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {276,552}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,390}
 		},
 	[115111169] = {
 		['ID'] = 115111169,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {280,560}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,399}
 		},
 	[115111170] = {
 		['ID'] = 115111170,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {284,568}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,408}
 		},
 	[115111171] = {
 		['ID'] = 115111171,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {288,576}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,418}
 		},
 	[115111172] = {
 		['ID'] = 115111172,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {292,584}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,427}
 		},
 	[115111173] = {
 		['ID'] = 115111173,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {296,592}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,436}
 		},
 	[115111174] = {
 		['ID'] = 115111174,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {300,600}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,446}
 		},
 	[115111175] = {
 		['ID'] = 115111175,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {304,608}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,456}
 		},
 	[115111176] = {
 		['ID'] = 115111176,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {308,616}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,466}
 		},
 	[115111177] = {
 		['ID'] = 115111177,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {312,624}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,476}
 		},
 	[115111178] = {
 		['ID'] = 115111178,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {316,632}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,486}
 		},
 	[115111179] = {
 		['ID'] = 115111179,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {320,640}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,496}
 		},
 	[115111180] = {
 		['ID'] = 115111180,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {324,648}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,506}
 		},
 	[115111181] = {
 		['ID'] = 115111181,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {328,656}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,516}
 		},
 	[115111182] = {
 		['ID'] = 115111182,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {332,664}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,527}
 		},
 	[115111183] = {
 		['ID'] = 115111183,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {336,672}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,537}
 		},
 	[115111184] = {
 		['ID'] = 115111184,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {340,680}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,548}
 		},
 	[115111185] = {
 		['ID'] = 115111185,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {344,688}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,558}
 		},
 	[115111186] = {
 		['ID'] = 115111186,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {348,696}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,569}
 		},
 	[115111187] = {
 		['ID'] = 115111187,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {352,704}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,580}
 		},
 	[115111188] = {
 		['ID'] = 115111188,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {356,712}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,591}
 		},
 	[115111189] = {
 		['ID'] = 115111189,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {360,720}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,602}
 		},
 	[115111190] = {
 		['ID'] = 115111190,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {364,728}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,614}
 		},
 	[115111191] = {
 		['ID'] = 115111191,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {368,736}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,625}
 		},
 	[115111192] = {
 		['ID'] = 115111192,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {372,744}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,636}
 		},
 	[115111193] = {
 		['ID'] = 115111193,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {376,752}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,648}
 		},
 	[115111194] = {
 		['ID'] = 115111194,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {380,760}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,660}
 		},
 	[115111195] = {
 		['ID'] = 115111195,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {384,768}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,671}
 		},
 	[115111196] = {
 		['ID'] = 115111196,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {388,776}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,683}
 		},
 	[115111197] = {
 		['ID'] = 115111197,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {392,784}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,695}
 		},
 	[115111198] = {
 		['ID'] = 115111198,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {396,792}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,707}
 		},
 	[115111199] = {
 		['ID'] = 115111199,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {4000,8000},
-		['EffectNum'] = {400,800}
+		['EffectAdd'] = {4000,10000},
+		['EffectNum'] = {0,719}
 		},
 	[115111200] = {
 		['ID'] = 115111200,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {60}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,21}
 		},
 	[115111201] = {
 		['ID'] = 115111201,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {120}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,44}
 		},
 	[115111202] = {
 		['ID'] = 115111202,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {180}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,67}
 		},
 	[115111203] = {
 		['ID'] = 115111203,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {240}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,90}
 		},
 	[115111204] = {
 		['ID'] = 115111204,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {300}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,115}
 		},
 	[115111205] = {
 		['ID'] = 115111205,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {360}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,140}
 		},
 	[115111206] = {
 		['ID'] = 115111206,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {420}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,167}
 		},
 	[115111207] = {
 		['ID'] = 115111207,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {480}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,193}
 		},
 	[115111208] = {
 		['ID'] = 115111208,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {540}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,222}
 		},
 	[115111209] = {
 		['ID'] = 115111209,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {600}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,253}
 		},
 	[115111210] = {
 		['ID'] = 115111210,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {660}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,282}
 		},
 	[115111211] = {
 		['ID'] = 115111211,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {720}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,314}
 		},
 	[115111212] = {
 		['ID'] = 115111212,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {780}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,345}
 		},
 	[115111213] = {
 		['ID'] = 115111213,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {840}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,378}
 		},
 	[115111214] = {
 		['ID'] = 115111214,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {900}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,412}
 		},
 	[115111215] = {
 		['ID'] = 115111215,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {960}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,447}
 		},
 	[115111216] = {
 		['ID'] = 115111216,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1020}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,483}
 		},
 	[115111217] = {
 		['ID'] = 115111217,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1080}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,520}
 		},
 	[115111218] = {
 		['ID'] = 115111218,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1140}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,558}
 		},
 	[115111219] = {
 		['ID'] = 115111219,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1200}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,597}
 		},
 	[115111220] = {
 		['ID'] = 115111220,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1260}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,635}
 		},
 	[115111221] = {
 		['ID'] = 115111221,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1320}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,677}
 		},
 	[115111222] = {
 		['ID'] = 115111222,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1380}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,718}
 		},
 	[115111223] = {
 		['ID'] = 115111223,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1440}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,760}
 		},
 	[115111224] = {
 		['ID'] = 115111224,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1500}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,804}
 		},
 	[115111225] = {
 		['ID'] = 115111225,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1560}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,848}
 		},
 	[115111226] = {
 		['ID'] = 115111226,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1620}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,892}
 		},
 	[115111227] = {
 		['ID'] = 115111227,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1680}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,938}
 		},
 	[115111228] = {
 		['ID'] = 115111228,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1740}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,986}
 		},
 	[115111229] = {
 		['ID'] = 115111229,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1800}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1033}
 		},
 	[115111230] = {
 		['ID'] = 115111230,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1860}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1082}
 		},
 	[115111231] = {
 		['ID'] = 115111231,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1920}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1132}
 		},
 	[115111232] = {
 		['ID'] = 115111232,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {1980}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1182}
 		},
 	[115111233] = {
 		['ID'] = 115111233,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2040}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1234}
 		},
 	[115111234] = {
 		['ID'] = 115111234,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2100}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1286}
 		},
 	[115111235] = {
 		['ID'] = 115111235,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2160}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1340}
 		},
 	[115111236] = {
 		['ID'] = 115111236,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2220}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1395}
 		},
 	[115111237] = {
 		['ID'] = 115111237,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2280}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1449}
 		},
 	[115111238] = {
 		['ID'] = 115111238,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2340}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1507}
 		},
 	[115111239] = {
 		['ID'] = 115111239,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2400}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1562}
 		},
 	[115111240] = {
 		['ID'] = 115111240,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2460}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1622}
 		},
 	[115111241] = {
 		['ID'] = 115111241,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2520}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1680}
 		},
 	[115111242] = {
 		['ID'] = 115111242,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2580}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1741}
 		},
 	[115111243] = {
 		['ID'] = 115111243,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2640}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1801}
 		},
 	[115111244] = {
 		['ID'] = 115111244,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2700}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1862}
 		},
 	[115111245] = {
 		['ID'] = 115111245,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2760}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1925}
 		},
 	[115111246] = {
 		['ID'] = 115111246,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2820}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1989}
 		},
 	[115111247] = {
 		['ID'] = 115111247,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2880}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2054}
 		},
 	[115111248] = {
 		['ID'] = 115111248,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {2940}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2119}
 		},
 	[115111249] = {
 		['ID'] = 115111249,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3000}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2186}
 		},
 	[115111250] = {
 		['ID'] = 115111250,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3060}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2254}
 		},
 	[115111251] = {
 		['ID'] = 115111251,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3120}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2321}
 		},
 	[115111252] = {
 		['ID'] = 115111252,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3180}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2390}
 		},
 	[115111253] = {
 		['ID'] = 115111253,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3240}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2461}
 		},
 	[115111254] = {
 		['ID'] = 115111254,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3300}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2532}
 		},
 	[115111255] = {
 		['ID'] = 115111255,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3360}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2603}
 		},
 	[115111256] = {
 		['ID'] = 115111256,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3420}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2676}
 		},
 	[115111257] = {
 		['ID'] = 115111257,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3480}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2751}
 		},
 	[115111258] = {
 		['ID'] = 115111258,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3540}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2826}
 		},
 	[115111259] = {
 		['ID'] = 115111259,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3600}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2901}
 		},
 	[115111260] = {
 		['ID'] = 115111260,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3660}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2977}
 		},
 	[115111261] = {
 		['ID'] = 115111261,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3720}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3054}
 		},
 	[115111262] = {
 		['ID'] = 115111262,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3780}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3133}
 		},
 	[115111263] = {
 		['ID'] = 115111263,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3840}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3212}
 		},
 	[115111264] = {
 		['ID'] = 115111264,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3900}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3292}
 		},
 	[115111265] = {
 		['ID'] = 115111265,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {3960}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3375}
 		},
 	[115111266] = {
 		['ID'] = 115111266,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4020}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3456}
 		},
 	[115111267] = {
 		['ID'] = 115111267,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4080}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3540}
 		},
 	[115111268] = {
 		['ID'] = 115111268,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4140}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3623}
 		},
 	[115111269] = {
 		['ID'] = 115111269,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4200}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3709}
 		},
 	[115111270] = {
 		['ID'] = 115111270,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4260}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3793}
 		},
 	[115111271] = {
 		['ID'] = 115111271,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4320}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3882}
 		},
 	[115111272] = {
 		['ID'] = 115111272,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4380}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3968}
 		},
 	[115111273] = {
 		['ID'] = 115111273,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4440}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4057}
 		},
 	[115111274] = {
 		['ID'] = 115111274,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4500}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4147}
 		},
 	[115111275] = {
 		['ID'] = 115111275,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4560}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4237}
 		},
 	[115111276] = {
 		['ID'] = 115111276,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4620}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4329}
 		},
 	[115111277] = {
 		['ID'] = 115111277,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4680}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4421}
 		},
 	[115111278] = {
 		['ID'] = 115111278,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4740}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4515}
 		},
 	[115111279] = {
 		['ID'] = 115111279,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4800}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4609}
 		},
 	[115111280] = {
 		['ID'] = 115111280,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4860}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4704}
 		},
 	[115111281] = {
 		['ID'] = 115111281,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4920}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4800}
 		},
 	[115111282] = {
 		['ID'] = 115111282,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {4980}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4897}
 		},
 	[115111283] = {
 		['ID'] = 115111283,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5040}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4995}
 		},
 	[115111284] = {
 		['ID'] = 115111284,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5100}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5093}
 		},
 	[115111285] = {
 		['ID'] = 115111285,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5160}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5193}
 		},
 	[115111286] = {
 		['ID'] = 115111286,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5220}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5295}
 		},
 	[115111287] = {
 		['ID'] = 115111287,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5280}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5397}
 		},
 	[115111288] = {
 		['ID'] = 115111288,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5340}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5498}
 		},
 	[115111289] = {
 		['ID'] = 115111289,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5400}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5602}
 		},
 	[115111290] = {
 		['ID'] = 115111290,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5460}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5706}
 		},
 	[115111291] = {
 		['ID'] = 115111291,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5520}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5811}
 		},
 	[115111292] = {
 		['ID'] = 115111292,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5580}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5919}
 		},
 	[115111293] = {
 		['ID'] = 115111293,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5640}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6025}
 		},
 	[115111294] = {
 		['ID'] = 115111294,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5700}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6134}
 		},
 	[115111295] = {
 		['ID'] = 115111295,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5760}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6241}
 		},
 	[115111296] = {
 		['ID'] = 115111296,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5820}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6353}
 		},
 	[115111297] = {
 		['ID'] = 115111297,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5880}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6464}
 		},
 	[115111298] = {
 		['ID'] = 115111298,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {5940}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6576}
 		},
 	[115111299] = {
 		['ID'] = 115111299,
 		['Type'] = 170000000,
-		['Effect'] = {3},
-		['EffectAdd'] = {60000},
-		['EffectNum'] = {6000}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6689}
 		},
 	[115111300] = {
 		['ID'] = 115111300,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {30,30}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,21}
 		},
 	[115111301] = {
 		['ID'] = 115111301,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {60,60}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,44}
 		},
 	[115111302] = {
 		['ID'] = 115111302,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {90,90}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,67}
 		},
 	[115111303] = {
 		['ID'] = 115111303,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {120,120}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,90}
 		},
 	[115111304] = {
 		['ID'] = 115111304,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {150,150}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,115}
 		},
 	[115111305] = {
 		['ID'] = 115111305,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {180,180}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,140}
 		},
 	[115111306] = {
 		['ID'] = 115111306,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {210,210}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,167}
 		},
 	[115111307] = {
 		['ID'] = 115111307,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {240,240}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,193}
 		},
 	[115111308] = {
 		['ID'] = 115111308,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {270,270}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,222}
 		},
 	[115111309] = {
 		['ID'] = 115111309,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {300,300}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,253}
 		},
 	[115111310] = {
 		['ID'] = 115111310,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {330,330}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,282}
 		},
 	[115111311] = {
 		['ID'] = 115111311,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {360,360}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,314}
 		},
 	[115111312] = {
 		['ID'] = 115111312,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {390,390}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,345}
 		},
 	[115111313] = {
 		['ID'] = 115111313,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {420,420}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,378}
 		},
 	[115111314] = {
 		['ID'] = 115111314,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {450,450}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,412}
 		},
 	[115111315] = {
 		['ID'] = 115111315,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {480,480}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,447}
 		},
 	[115111316] = {
 		['ID'] = 115111316,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {510,510}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,483}
 		},
 	[115111317] = {
 		['ID'] = 115111317,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {540,540}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,520}
 		},
 	[115111318] = {
 		['ID'] = 115111318,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {570,570}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,558}
 		},
 	[115111319] = {
 		['ID'] = 115111319,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {600,600}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,597}
 		},
 	[115111320] = {
 		['ID'] = 115111320,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {630,630}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,635}
 		},
 	[115111321] = {
 		['ID'] = 115111321,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {660,660}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,677}
 		},
 	[115111322] = {
 		['ID'] = 115111322,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {690,690}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,718}
 		},
 	[115111323] = {
 		['ID'] = 115111323,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {720,720}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,760}
 		},
 	[115111324] = {
 		['ID'] = 115111324,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {750,750}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,804}
 		},
 	[115111325] = {
 		['ID'] = 115111325,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {780,780}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,848}
 		},
 	[115111326] = {
 		['ID'] = 115111326,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {810,810}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,892}
 		},
 	[115111327] = {
 		['ID'] = 115111327,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {840,840}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,938}
 		},
 	[115111328] = {
 		['ID'] = 115111328,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {870,870}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,986}
 		},
 	[115111329] = {
 		['ID'] = 115111329,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {900,900}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1033}
 		},
 	[115111330] = {
 		['ID'] = 115111330,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {930,930}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1082}
 		},
 	[115111331] = {
 		['ID'] = 115111331,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {960,960}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1132}
 		},
 	[115111332] = {
 		['ID'] = 115111332,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {990,990}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1182}
 		},
 	[115111333] = {
 		['ID'] = 115111333,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1020,1020}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1234}
 		},
 	[115111334] = {
 		['ID'] = 115111334,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1050,1050}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1286}
 		},
 	[115111335] = {
 		['ID'] = 115111335,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1080,1080}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1340}
 		},
 	[115111336] = {
 		['ID'] = 115111336,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1110,1110}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1395}
 		},
 	[115111337] = {
 		['ID'] = 115111337,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1140,1140}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1449}
 		},
 	[115111338] = {
 		['ID'] = 115111338,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1170,1170}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1507}
 		},
 	[115111339] = {
 		['ID'] = 115111339,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1200,1200}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1562}
 		},
 	[115111340] = {
 		['ID'] = 115111340,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1230,1230}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1622}
 		},
 	[115111341] = {
 		['ID'] = 115111341,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1260,1260}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1680}
 		},
 	[115111342] = {
 		['ID'] = 115111342,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1290,1290}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1741}
 		},
 	[115111343] = {
 		['ID'] = 115111343,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1320,1320}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1801}
 		},
 	[115111344] = {
 		['ID'] = 115111344,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1350,1350}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1862}
 		},
 	[115111345] = {
 		['ID'] = 115111345,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1380,1380}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1925}
 		},
 	[115111346] = {
 		['ID'] = 115111346,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1410,1410}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1989}
 		},
 	[115111347] = {
 		['ID'] = 115111347,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1440,1440}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2054}
 		},
 	[115111348] = {
 		['ID'] = 115111348,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1470,1470}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2119}
 		},
 	[115111349] = {
 		['ID'] = 115111349,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1500,1500}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2186}
 		},
 	[115111350] = {
 		['ID'] = 115111350,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1530,1530}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2254}
 		},
 	[115111351] = {
 		['ID'] = 115111351,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1560,1560}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2321}
 		},
 	[115111352] = {
 		['ID'] = 115111352,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1590,1590}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2390}
 		},
 	[115111353] = {
 		['ID'] = 115111353,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1620,1620}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2461}
 		},
 	[115111354] = {
 		['ID'] = 115111354,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1650,1650}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2532}
 		},
 	[115111355] = {
 		['ID'] = 115111355,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1680,1680}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2603}
 		},
 	[115111356] = {
 		['ID'] = 115111356,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1710,1710}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2676}
 		},
 	[115111357] = {
 		['ID'] = 115111357,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1740,1740}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2751}
 		},
 	[115111358] = {
 		['ID'] = 115111358,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1770,1770}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2826}
 		},
 	[115111359] = {
 		['ID'] = 115111359,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1800,1800}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2901}
 		},
 	[115111360] = {
 		['ID'] = 115111360,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1830,1830}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2977}
 		},
 	[115111361] = {
 		['ID'] = 115111361,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1860,1860}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3054}
 		},
 	[115111362] = {
 		['ID'] = 115111362,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1890,1890}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3133}
 		},
 	[115111363] = {
 		['ID'] = 115111363,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1920,1920}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3212}
 		},
 	[115111364] = {
 		['ID'] = 115111364,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1950,1950}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3292}
 		},
 	[115111365] = {
 		['ID'] = 115111365,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {1980,1980}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3375}
 		},
 	[115111366] = {
 		['ID'] = 115111366,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2010,2010}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3456}
 		},
 	[115111367] = {
 		['ID'] = 115111367,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2040,2040}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3540}
 		},
 	[115111368] = {
 		['ID'] = 115111368,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2070,2070}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3623}
 		},
 	[115111369] = {
 		['ID'] = 115111369,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2100,2100}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3709}
 		},
 	[115111370] = {
 		['ID'] = 115111370,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2130,2130}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3793}
 		},
 	[115111371] = {
 		['ID'] = 115111371,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2160,2160}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3882}
 		},
 	[115111372] = {
 		['ID'] = 115111372,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2190,2190}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3968}
 		},
 	[115111373] = {
 		['ID'] = 115111373,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2220,2220}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4057}
 		},
 	[115111374] = {
 		['ID'] = 115111374,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2250,2250}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4147}
 		},
 	[115111375] = {
 		['ID'] = 115111375,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2280,2280}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4237}
 		},
 	[115111376] = {
 		['ID'] = 115111376,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2310,2310}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4329}
 		},
 	[115111377] = {
 		['ID'] = 115111377,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2340,2340}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4421}
 		},
 	[115111378] = {
 		['ID'] = 115111378,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2370,2370}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4515}
 		},
 	[115111379] = {
 		['ID'] = 115111379,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2400,2400}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4609}
 		},
 	[115111380] = {
 		['ID'] = 115111380,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2430,2430}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4704}
 		},
 	[115111381] = {
 		['ID'] = 115111381,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2460,2460}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4800}
 		},
 	[115111382] = {
 		['ID'] = 115111382,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2490,2490}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4897}
 		},
 	[115111383] = {
 		['ID'] = 115111383,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2520,2520}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4995}
 		},
 	[115111384] = {
 		['ID'] = 115111384,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2550,2550}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5093}
 		},
 	[115111385] = {
 		['ID'] = 115111385,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2580,2580}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5193}
 		},
 	[115111386] = {
 		['ID'] = 115111386,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2610,2610}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5295}
 		},
 	[115111387] = {
 		['ID'] = 115111387,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2640,2640}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5397}
 		},
 	[115111388] = {
 		['ID'] = 115111388,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2670,2670}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5498}
 		},
 	[115111389] = {
 		['ID'] = 115111389,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2700,2700}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5602}
 		},
 	[115111390] = {
 		['ID'] = 115111390,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2730,2730}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5706}
 		},
 	[115111391] = {
 		['ID'] = 115111391,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2760,2760}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5811}
 		},
 	[115111392] = {
 		['ID'] = 115111392,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2790,2790}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5919}
 		},
 	[115111393] = {
 		['ID'] = 115111393,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2820,2820}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6025}
 		},
 	[115111394] = {
 		['ID'] = 115111394,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2850,2850}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6134}
 		},
 	[115111395] = {
 		['ID'] = 115111395,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2880,2880}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6241}
 		},
 	[115111396] = {
 		['ID'] = 115111396,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2910,2910}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6353}
 		},
 	[115111397] = {
 		['ID'] = 115111397,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2940,2940}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6464}
 		},
 	[115111398] = {
 		['ID'] = 115111398,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {2970,2970}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6576}
 		},
 	[115111399] = {
 		['ID'] = 115111399,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,30000},
-		['EffectNum'] = {3000,3000}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6689}
 		},
 	[115111400] = {
 		['ID'] = 115111400,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {30,12}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,21}
 		},
 	[115111401] = {
 		['ID'] = 115111401,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {60,24}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,44}
 		},
 	[115111402] = {
 		['ID'] = 115111402,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {90,36}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,67}
 		},
 	[115111403] = {
 		['ID'] = 115111403,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {120,48}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,90}
 		},
 	[115111404] = {
 		['ID'] = 115111404,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {150,60}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,115}
 		},
 	[115111405] = {
 		['ID'] = 115111405,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {180,72}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,140}
 		},
 	[115111406] = {
 		['ID'] = 115111406,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {210,84}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,167}
 		},
 	[115111407] = {
 		['ID'] = 115111407,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {240,96}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,193}
 		},
 	[115111408] = {
 		['ID'] = 115111408,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {270,108}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,222}
 		},
 	[115111409] = {
 		['ID'] = 115111409,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {300,120}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,253}
 		},
 	[115111410] = {
 		['ID'] = 115111410,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {330,132}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,282}
 		},
 	[115111411] = {
 		['ID'] = 115111411,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {360,144}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,314}
 		},
 	[115111412] = {
 		['ID'] = 115111412,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {390,156}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,345}
 		},
 	[115111413] = {
 		['ID'] = 115111413,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {420,168}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,378}
 		},
 	[115111414] = {
 		['ID'] = 115111414,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {450,180}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,412}
 		},
 	[115111415] = {
 		['ID'] = 115111415,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {480,192}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,447}
 		},
 	[115111416] = {
 		['ID'] = 115111416,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {510,204}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,483}
 		},
 	[115111417] = {
 		['ID'] = 115111417,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {540,216}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,520}
 		},
 	[115111418] = {
 		['ID'] = 115111418,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {570,228}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,558}
 		},
 	[115111419] = {
 		['ID'] = 115111419,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {600,240}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,597}
 		},
 	[115111420] = {
 		['ID'] = 115111420,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {630,252}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,635}
 		},
 	[115111421] = {
 		['ID'] = 115111421,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {660,264}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,677}
 		},
 	[115111422] = {
 		['ID'] = 115111422,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {690,276}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,718}
 		},
 	[115111423] = {
 		['ID'] = 115111423,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {720,288}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,760}
 		},
 	[115111424] = {
 		['ID'] = 115111424,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {750,300}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,804}
 		},
 	[115111425] = {
 		['ID'] = 115111425,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {780,312}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,848}
 		},
 	[115111426] = {
 		['ID'] = 115111426,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {810,324}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,892}
 		},
 	[115111427] = {
 		['ID'] = 115111427,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {840,336}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,938}
 		},
 	[115111428] = {
 		['ID'] = 115111428,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {870,348}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,986}
 		},
 	[115111429] = {
 		['ID'] = 115111429,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {900,360}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1033}
 		},
 	[115111430] = {
 		['ID'] = 115111430,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {930,372}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1082}
 		},
 	[115111431] = {
 		['ID'] = 115111431,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {960,384}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1132}
 		},
 	[115111432] = {
 		['ID'] = 115111432,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {990,396}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1182}
 		},
 	[115111433] = {
 		['ID'] = 115111433,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1020,408}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1234}
 		},
 	[115111434] = {
 		['ID'] = 115111434,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1050,420}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1286}
 		},
 	[115111435] = {
 		['ID'] = 115111435,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1080,432}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1340}
 		},
 	[115111436] = {
 		['ID'] = 115111436,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1110,444}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1395}
 		},
 	[115111437] = {
 		['ID'] = 115111437,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1140,456}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1449}
 		},
 	[115111438] = {
 		['ID'] = 115111438,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1170,468}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1507}
 		},
 	[115111439] = {
 		['ID'] = 115111439,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1200,480}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1562}
 		},
 	[115111440] = {
 		['ID'] = 115111440,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1230,492}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1622}
 		},
 	[115111441] = {
 		['ID'] = 115111441,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1260,504}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1680}
 		},
 	[115111442] = {
 		['ID'] = 115111442,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1290,516}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1741}
 		},
 	[115111443] = {
 		['ID'] = 115111443,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1320,528}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1801}
 		},
 	[115111444] = {
 		['ID'] = 115111444,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1350,540}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1862}
 		},
 	[115111445] = {
 		['ID'] = 115111445,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1380,552}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1925}
 		},
 	[115111446] = {
 		['ID'] = 115111446,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1410,564}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,1989}
 		},
 	[115111447] = {
 		['ID'] = 115111447,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1440,576}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2054}
 		},
 	[115111448] = {
 		['ID'] = 115111448,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1470,588}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2119}
 		},
 	[115111449] = {
 		['ID'] = 115111449,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1500,600}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2186}
 		},
 	[115111450] = {
 		['ID'] = 115111450,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1530,612}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2254}
 		},
 	[115111451] = {
 		['ID'] = 115111451,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1560,624}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2321}
 		},
 	[115111452] = {
 		['ID'] = 115111452,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1590,636}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2390}
 		},
 	[115111453] = {
 		['ID'] = 115111453,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1620,648}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2461}
 		},
 	[115111454] = {
 		['ID'] = 115111454,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1650,660}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2532}
 		},
 	[115111455] = {
 		['ID'] = 115111455,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1680,672}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2603}
 		},
 	[115111456] = {
 		['ID'] = 115111456,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1710,684}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2676}
 		},
 	[115111457] = {
 		['ID'] = 115111457,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1740,696}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2751}
 		},
 	[115111458] = {
 		['ID'] = 115111458,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1770,708}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2826}
 		},
 	[115111459] = {
 		['ID'] = 115111459,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1800,720}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2901}
 		},
 	[115111460] = {
 		['ID'] = 115111460,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1830,732}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,2977}
 		},
 	[115111461] = {
 		['ID'] = 115111461,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1860,744}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3054}
 		},
 	[115111462] = {
 		['ID'] = 115111462,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1890,756}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3133}
 		},
 	[115111463] = {
 		['ID'] = 115111463,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1920,768}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3212}
 		},
 	[115111464] = {
 		['ID'] = 115111464,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1950,780}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3292}
 		},
 	[115111465] = {
 		['ID'] = 115111465,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {1980,792}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3375}
 		},
 	[115111466] = {
 		['ID'] = 115111466,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2010,804}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3456}
 		},
 	[115111467] = {
 		['ID'] = 115111467,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2040,816}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3540}
 		},
 	[115111468] = {
 		['ID'] = 115111468,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2070,828}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3623}
 		},
 	[115111469] = {
 		['ID'] = 115111469,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2100,840}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3709}
 		},
 	[115111470] = {
 		['ID'] = 115111470,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2130,852}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3793}
 		},
 	[115111471] = {
 		['ID'] = 115111471,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2160,864}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3882}
 		},
 	[115111472] = {
 		['ID'] = 115111472,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2190,876}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,3968}
 		},
 	[115111473] = {
 		['ID'] = 115111473,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2220,888}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4057}
 		},
 	[115111474] = {
 		['ID'] = 115111474,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2250,900}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4147}
 		},
 	[115111475] = {
 		['ID'] = 115111475,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2280,912}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4237}
 		},
 	[115111476] = {
 		['ID'] = 115111476,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2310,924}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4329}
 		},
 	[115111477] = {
 		['ID'] = 115111477,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2340,936}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4421}
 		},
 	[115111478] = {
 		['ID'] = 115111478,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2370,948}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4515}
 		},
 	[115111479] = {
 		['ID'] = 115111479,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2400,960}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4609}
 		},
 	[115111480] = {
 		['ID'] = 115111480,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2430,972}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4704}
 		},
 	[115111481] = {
 		['ID'] = 115111481,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2460,984}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4800}
 		},
 	[115111482] = {
 		['ID'] = 115111482,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2490,996}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4897}
 		},
 	[115111483] = {
 		['ID'] = 115111483,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2520,1008}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,4995}
 		},
 	[115111484] = {
 		['ID'] = 115111484,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2550,1020}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5093}
 		},
 	[115111485] = {
 		['ID'] = 115111485,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2580,1032}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5193}
 		},
 	[115111486] = {
 		['ID'] = 115111486,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2610,1044}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5295}
 		},
 	[115111487] = {
 		['ID'] = 115111487,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2640,1056}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5397}
 		},
 	[115111488] = {
 		['ID'] = 115111488,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2670,1068}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5498}
 		},
 	[115111489] = {
 		['ID'] = 115111489,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2700,1080}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5602}
 		},
 	[115111490] = {
 		['ID'] = 115111490,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2730,1092}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5706}
 		},
 	[115111491] = {
 		['ID'] = 115111491,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2760,1104}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5811}
 		},
 	[115111492] = {
 		['ID'] = 115111492,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2790,1116}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,5919}
 		},
 	[115111493] = {
 		['ID'] = 115111493,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2820,1128}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6025}
 		},
 	[115111494] = {
 		['ID'] = 115111494,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2850,1140}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6134}
 		},
 	[115111495] = {
 		['ID'] = 115111495,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2880,1152}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6241}
 		},
 	[115111496] = {
 		['ID'] = 115111496,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2910,1164}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6353}
 		},
 	[115111497] = {
 		['ID'] = 115111497,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2940,1176}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6464}
 		},
 	[115111498] = {
 		['ID'] = 115111498,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {2970,1188}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6576}
 		},
 	[115111499] = {
 		['ID'] = 115111499,
 		['Type'] = 170000000,
 		['Effect'] = {3,9},
-		['EffectAdd'] = {30000,12000},
-		['EffectNum'] = {3000,1200}
+		['EffectAdd'] = {11000,10000},
+		['EffectNum'] = {0,6689}
 		},
 	[115111500] = {
 		['ID'] = 115111500,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {50,50}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {33,33}
 		},
 	[115111501] = {
 		['ID'] = 115111501,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {100,100}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {36,36}
 		},
 	[115111502] = {
 		['ID'] = 115111502,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {150,150}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {39,39}
 		},
 	[115111503] = {
 		['ID'] = 115111503,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {200,200}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {42,42}
 		},
 	[115111504] = {
 		['ID'] = 115111504,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {250,250}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {45,45}
 		},
 	[115111505] = {
 		['ID'] = 115111505,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {300,300}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {48,48}
 		},
 	[115111506] = {
 		['ID'] = 115111506,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {350,350}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {51,51}
 		},
 	[115111507] = {
 		['ID'] = 115111507,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {400,400}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {54,54}
 		},
 	[115111508] = {
 		['ID'] = 115111508,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {450,450}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {57,57}
 		},
 	[115111509] = {
 		['ID'] = 115111509,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {500,500}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {60,60}
 		},
 	[115111510] = {
 		['ID'] = 115111510,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {550,550}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {63,63}
 		},
 	[115111511] = {
 		['ID'] = 115111511,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {600,600}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {66,66}
 		},
 	[115111512] = {
 		['ID'] = 115111512,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {650,650}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {69,69}
 		},
 	[115111513] = {
 		['ID'] = 115111513,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {700,700}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {72,72}
 		},
 	[115111514] = {
 		['ID'] = 115111514,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {750,750}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {75,75}
 		},
 	[115111515] = {
 		['ID'] = 115111515,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {800,800}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {78,78}
 		},
 	[115111516] = {
 		['ID'] = 115111516,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {850,850}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {81,81}
 		},
 	[115111517] = {
 		['ID'] = 115111517,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {900,900}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {84,84}
 		},
 	[115111518] = {
 		['ID'] = 115111518,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {950,950}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {87,87}
 		},
 	[115111519] = {
 		['ID'] = 115111519,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1000,1000}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {90,90}
 		},
 	[115111520] = {
 		['ID'] = 115111520,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1050,1050}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {93,93}
 		},
 	[115111521] = {
 		['ID'] = 115111521,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1100,1100}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {96,96}
 		},
 	[115111522] = {
 		['ID'] = 115111522,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1150,1150}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {99,99}
 		},
 	[115111523] = {
 		['ID'] = 115111523,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1200,1200}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {102,102}
 		},
 	[115111524] = {
 		['ID'] = 115111524,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1250,1250}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {105,105}
 		},
 	[115111525] = {
 		['ID'] = 115111525,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1300,1300}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {108,108}
 		},
 	[115111526] = {
 		['ID'] = 115111526,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1350,1350}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {111,111}
 		},
 	[115111527] = {
 		['ID'] = 115111527,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1400,1400}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {114,114}
 		},
 	[115111528] = {
 		['ID'] = 115111528,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1450,1450}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {117,117}
 		},
 	[115111529] = {
 		['ID'] = 115111529,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1500,1500}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {120,120}
 		},
 	[115111530] = {
 		['ID'] = 115111530,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1550,1550}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {123,123}
 		},
 	[115111531] = {
 		['ID'] = 115111531,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1600,1600}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {126,126}
 		},
 	[115111532] = {
 		['ID'] = 115111532,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1650,1650}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {129,129}
 		},
 	[115111533] = {
 		['ID'] = 115111533,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1700,1700}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {132,132}
 		},
 	[115111534] = {
 		['ID'] = 115111534,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1750,1750}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {135,135}
 		},
 	[115111535] = {
 		['ID'] = 115111535,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1800,1800}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {138,138}
 		},
 	[115111536] = {
 		['ID'] = 115111536,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1850,1850}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {141,141}
 		},
 	[115111537] = {
 		['ID'] = 115111537,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1900,1900}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {144,144}
 		},
 	[115111538] = {
 		['ID'] = 115111538,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {1950,1950}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {147,147}
 		},
 	[115111539] = {
 		['ID'] = 115111539,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2000,2000}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {150,150}
 		},
 	[115111540] = {
 		['ID'] = 115111540,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2050,2050}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {153,153}
 		},
 	[115111541] = {
 		['ID'] = 115111541,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2100,2100}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {156,156}
 		},
 	[115111542] = {
 		['ID'] = 115111542,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2150,2150}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {159,159}
 		},
 	[115111543] = {
 		['ID'] = 115111543,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2200,2200}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {162,162}
 		},
 	[115111544] = {
 		['ID'] = 115111544,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2250,2250}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {165,165}
 		},
 	[115111545] = {
 		['ID'] = 115111545,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2300,2300}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {168,168}
 		},
 	[115111546] = {
 		['ID'] = 115111546,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2350,2350}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {171,171}
 		},
 	[115111547] = {
 		['ID'] = 115111547,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2400,2400}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {174,174}
 		},
 	[115111548] = {
 		['ID'] = 115111548,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2450,2450}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {177,177}
 		},
 	[115111549] = {
 		['ID'] = 115111549,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2500,2500}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {180,180}
 		},
 	[115111550] = {
 		['ID'] = 115111550,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2550,2550}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {183,183}
 		},
 	[115111551] = {
 		['ID'] = 115111551,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2600,2600}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {186,186}
 		},
 	[115111552] = {
 		['ID'] = 115111552,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2650,2650}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {189,189}
 		},
 	[115111553] = {
 		['ID'] = 115111553,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2700,2700}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {192,192}
 		},
 	[115111554] = {
 		['ID'] = 115111554,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2750,2750}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {195,195}
 		},
 	[115111555] = {
 		['ID'] = 115111555,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2800,2800}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {198,198}
 		},
 	[115111556] = {
 		['ID'] = 115111556,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2850,2850}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {201,201}
 		},
 	[115111557] = {
 		['ID'] = 115111557,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2900,2900}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {204,204}
 		},
 	[115111558] = {
 		['ID'] = 115111558,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {2950,2950}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {207,207}
 		},
 	[115111559] = {
 		['ID'] = 115111559,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3000,3000}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {210,210}
 		},
 	[115111560] = {
 		['ID'] = 115111560,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3050,3050}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {213,213}
 		},
 	[115111561] = {
 		['ID'] = 115111561,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3100,3100}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {216,216}
 		},
 	[115111562] = {
 		['ID'] = 115111562,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3150,3150}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {219,219}
 		},
 	[115111563] = {
 		['ID'] = 115111563,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3200,3200}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {222,222}
 		},
 	[115111564] = {
 		['ID'] = 115111564,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3250,3250}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {225,225}
 		},
 	[115111565] = {
 		['ID'] = 115111565,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3300,3300}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {228,228}
 		},
 	[115111566] = {
 		['ID'] = 115111566,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3350,3350}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {231,231}
 		},
 	[115111567] = {
 		['ID'] = 115111567,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3400,3400}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {234,234}
 		},
 	[115111568] = {
 		['ID'] = 115111568,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3450,3450}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {237,237}
 		},
 	[115111569] = {
 		['ID'] = 115111569,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3500,3500}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {240,240}
 		},
 	[115111570] = {
 		['ID'] = 115111570,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3550,3550}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {243,243}
 		},
 	[115111571] = {
 		['ID'] = 115111571,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3600,3600}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {246,246}
 		},
 	[115111572] = {
 		['ID'] = 115111572,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3650,3650}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {249,249}
 		},
 	[115111573] = {
 		['ID'] = 115111573,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3700,3700}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {252,252}
 		},
 	[115111574] = {
 		['ID'] = 115111574,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3750,3750}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {255,255}
 		},
 	[115111575] = {
 		['ID'] = 115111575,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3800,3800}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {258,258}
 		},
 	[115111576] = {
 		['ID'] = 115111576,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3850,3850}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {261,261}
 		},
 	[115111577] = {
 		['ID'] = 115111577,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3900,3900}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {264,264}
 		},
 	[115111578] = {
 		['ID'] = 115111578,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {3950,3950}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {267,267}
 		},
 	[115111579] = {
 		['ID'] = 115111579,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4000,4000}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {270,270}
 		},
 	[115111580] = {
 		['ID'] = 115111580,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4050,4050}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {273,273}
 		},
 	[115111581] = {
 		['ID'] = 115111581,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4100,4100}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {276,276}
 		},
 	[115111582] = {
 		['ID'] = 115111582,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4150,4150}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {279,279}
 		},
 	[115111583] = {
 		['ID'] = 115111583,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4200,4200}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {282,282}
 		},
 	[115111584] = {
 		['ID'] = 115111584,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4250,4250}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {285,285}
 		},
 	[115111585] = {
 		['ID'] = 115111585,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4300,4300}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {288,288}
 		},
 	[115111586] = {
 		['ID'] = 115111586,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4350,4350}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {291,291}
 		},
 	[115111587] = {
 		['ID'] = 115111587,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4400,4400}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {294,294}
 		},
 	[115111588] = {
 		['ID'] = 115111588,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4450,4450}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {297,297}
 		},
 	[115111589] = {
 		['ID'] = 115111589,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4500,4500}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {300,300}
 		},
 	[115111590] = {
 		['ID'] = 115111590,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4550,4550}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {303,303}
 		},
 	[115111591] = {
 		['ID'] = 115111591,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4600,4600}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {306,306}
 		},
 	[115111592] = {
 		['ID'] = 115111592,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4650,4650}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {309,309}
 		},
 	[115111593] = {
 		['ID'] = 115111593,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4700,4700}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {312,312}
 		},
 	[115111594] = {
 		['ID'] = 115111594,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4750,4750}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {315,315}
 		},
 	[115111595] = {
 		['ID'] = 115111595,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4800,4800}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {318,318}
 		},
 	[115111596] = {
 		['ID'] = 115111596,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4850,4850}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {321,321}
 		},
 	[115111597] = {
 		['ID'] = 115111597,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4900,4900}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {324,324}
 		},
 	[115111598] = {
 		['ID'] = 115111598,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {4950,4950}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {327,327}
 		},
 	[115111599] = {
 		['ID'] = 115111599,
 		['Type'] = 170000008,
-		['Effect'] = {4,12},
-		['EffectAdd'] = {15000,15000},
-		['EffectNum'] = {5000,5000}
+		['Effect'] = {16,15},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {330,330}
 		},
 	[115111600] = {
 		['ID'] = 115111600,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {50}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {33,33}
 		},
 	[115111601] = {
 		['ID'] = 115111601,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {100}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {36,36}
 		},
 	[115111602] = {
 		['ID'] = 115111602,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {150}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {39,39}
 		},
 	[115111603] = {
 		['ID'] = 115111603,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {200}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {42,42}
 		},
 	[115111604] = {
 		['ID'] = 115111604,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {250}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {45,45}
 		},
 	[115111605] = {
 		['ID'] = 115111605,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {300}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {48,48}
 		},
 	[115111606] = {
 		['ID'] = 115111606,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {350}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {51,51}
 		},
 	[115111607] = {
 		['ID'] = 115111607,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {400}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {54,54}
 		},
 	[115111608] = {
 		['ID'] = 115111608,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {450}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {57,57}
 		},
 	[115111609] = {
 		['ID'] = 115111609,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {500}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {60,60}
 		},
 	[115111610] = {
 		['ID'] = 115111610,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {550}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {63,63}
 		},
 	[115111611] = {
 		['ID'] = 115111611,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {600}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {66,66}
 		},
 	[115111612] = {
 		['ID'] = 115111612,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {650}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {69,69}
 		},
 	[115111613] = {
 		['ID'] = 115111613,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {700}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {72,72}
 		},
 	[115111614] = {
 		['ID'] = 115111614,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {750}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {75,75}
 		},
 	[115111615] = {
 		['ID'] = 115111615,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {800}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {78,78}
 		},
 	[115111616] = {
 		['ID'] = 115111616,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {850}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {81,81}
 		},
 	[115111617] = {
 		['ID'] = 115111617,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {900}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {84,84}
 		},
 	[115111618] = {
 		['ID'] = 115111618,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {950}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {87,87}
 		},
 	[115111619] = {
 		['ID'] = 115111619,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1000}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {90,90}
 		},
 	[115111620] = {
 		['ID'] = 115111620,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1050}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {93,93}
 		},
 	[115111621] = {
 		['ID'] = 115111621,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1100}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {96,96}
 		},
 	[115111622] = {
 		['ID'] = 115111622,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1150}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {99,99}
 		},
 	[115111623] = {
 		['ID'] = 115111623,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1200}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {102,102}
 		},
 	[115111624] = {
 		['ID'] = 115111624,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1250}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {105,105}
 		},
 	[115111625] = {
 		['ID'] = 115111625,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1300}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {108,108}
 		},
 	[115111626] = {
 		['ID'] = 115111626,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1350}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {111,111}
 		},
 	[115111627] = {
 		['ID'] = 115111627,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1400}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {114,114}
 		},
 	[115111628] = {
 		['ID'] = 115111628,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1450}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {117,117}
 		},
 	[115111629] = {
 		['ID'] = 115111629,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1500}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {120,120}
 		},
 	[115111630] = {
 		['ID'] = 115111630,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1550}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {123,123}
 		},
 	[115111631] = {
 		['ID'] = 115111631,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1600}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {126,126}
 		},
 	[115111632] = {
 		['ID'] = 115111632,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1650}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {129,129}
 		},
 	[115111633] = {
 		['ID'] = 115111633,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1700}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {132,132}
 		},
 	[115111634] = {
 		['ID'] = 115111634,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1750}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {135,135}
 		},
 	[115111635] = {
 		['ID'] = 115111635,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1800}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {138,138}
 		},
 	[115111636] = {
 		['ID'] = 115111636,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1850}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {141,141}
 		},
 	[115111637] = {
 		['ID'] = 115111637,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1900}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {144,144}
 		},
 	[115111638] = {
 		['ID'] = 115111638,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {1950}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {147,147}
 		},
 	[115111639] = {
 		['ID'] = 115111639,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2000}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {150,150}
 		},
 	[115111640] = {
 		['ID'] = 115111640,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2050}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {153,153}
 		},
 	[115111641] = {
 		['ID'] = 115111641,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2100}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {156,156}
 		},
 	[115111642] = {
 		['ID'] = 115111642,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2150}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {159,159}
 		},
 	[115111643] = {
 		['ID'] = 115111643,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2200}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {162,162}
 		},
 	[115111644] = {
 		['ID'] = 115111644,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2250}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {165,165}
 		},
 	[115111645] = {
 		['ID'] = 115111645,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2300}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {168,168}
 		},
 	[115111646] = {
 		['ID'] = 115111646,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2350}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {171,171}
 		},
 	[115111647] = {
 		['ID'] = 115111647,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2400}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {174,174}
 		},
 	[115111648] = {
 		['ID'] = 115111648,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2450}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {177,177}
 		},
 	[115111649] = {
 		['ID'] = 115111649,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2500}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {180,180}
 		},
 	[115111650] = {
 		['ID'] = 115111650,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2550}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {183,183}
 		},
 	[115111651] = {
 		['ID'] = 115111651,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2600}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {186,186}
 		},
 	[115111652] = {
 		['ID'] = 115111652,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2650}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {189,189}
 		},
 	[115111653] = {
 		['ID'] = 115111653,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2700}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {192,192}
 		},
 	[115111654] = {
 		['ID'] = 115111654,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2750}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {195,195}
 		},
 	[115111655] = {
 		['ID'] = 115111655,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2800}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {198,198}
 		},
 	[115111656] = {
 		['ID'] = 115111656,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2850}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {201,201}
 		},
 	[115111657] = {
 		['ID'] = 115111657,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2900}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {204,204}
 		},
 	[115111658] = {
 		['ID'] = 115111658,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {2950}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {207,207}
 		},
 	[115111659] = {
 		['ID'] = 115111659,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3000}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {210,210}
 		},
 	[115111660] = {
 		['ID'] = 115111660,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3050}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {213,213}
 		},
 	[115111661] = {
 		['ID'] = 115111661,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3100}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {216,216}
 		},
 	[115111662] = {
 		['ID'] = 115111662,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3150}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {219,219}
 		},
 	[115111663] = {
 		['ID'] = 115111663,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3200}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {222,222}
 		},
 	[115111664] = {
 		['ID'] = 115111664,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3250}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {225,225}
 		},
 	[115111665] = {
 		['ID'] = 115111665,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3300}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {228,228}
 		},
 	[115111666] = {
 		['ID'] = 115111666,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3350}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {231,231}
 		},
 	[115111667] = {
 		['ID'] = 115111667,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3400}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {234,234}
 		},
 	[115111668] = {
 		['ID'] = 115111668,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3450}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {237,237}
 		},
 	[115111669] = {
 		['ID'] = 115111669,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3500}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {240,240}
 		},
 	[115111670] = {
 		['ID'] = 115111670,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3550}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {243,243}
 		},
 	[115111671] = {
 		['ID'] = 115111671,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3600}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {246,246}
 		},
 	[115111672] = {
 		['ID'] = 115111672,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3650}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {249,249}
 		},
 	[115111673] = {
 		['ID'] = 115111673,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3700}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {252,252}
 		},
 	[115111674] = {
 		['ID'] = 115111674,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3750}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {255,255}
 		},
 	[115111675] = {
 		['ID'] = 115111675,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3800}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {258,258}
 		},
 	[115111676] = {
 		['ID'] = 115111676,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3850}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {261,261}
 		},
 	[115111677] = {
 		['ID'] = 115111677,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3900}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {264,264}
 		},
 	[115111678] = {
 		['ID'] = 115111678,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {3950}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {267,267}
 		},
 	[115111679] = {
 		['ID'] = 115111679,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4000}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {270,270}
 		},
 	[115111680] = {
 		['ID'] = 115111680,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4050}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {273,273}
 		},
 	[115111681] = {
 		['ID'] = 115111681,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4100}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {276,276}
 		},
 	[115111682] = {
 		['ID'] = 115111682,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4150}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {279,279}
 		},
 	[115111683] = {
 		['ID'] = 115111683,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4200}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {282,282}
 		},
 	[115111684] = {
 		['ID'] = 115111684,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4250}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {285,285}
 		},
 	[115111685] = {
 		['ID'] = 115111685,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4300}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {288,288}
 		},
 	[115111686] = {
 		['ID'] = 115111686,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4350}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {291,291}
 		},
 	[115111687] = {
 		['ID'] = 115111687,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4400}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {294,294}
 		},
 	[115111688] = {
 		['ID'] = 115111688,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4450}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {297,297}
 		},
 	[115111689] = {
 		['ID'] = 115111689,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4500}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {300,300}
 		},
 	[115111690] = {
 		['ID'] = 115111690,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4550}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {303,303}
 		},
 	[115111691] = {
 		['ID'] = 115111691,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4600}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {306,306}
 		},
 	[115111692] = {
 		['ID'] = 115111692,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4650}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {309,309}
 		},
 	[115111693] = {
 		['ID'] = 115111693,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4700}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {312,312}
 		},
 	[115111694] = {
 		['ID'] = 115111694,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4750}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {315,315}
 		},
 	[115111695] = {
 		['ID'] = 115111695,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4800}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {318,318}
 		},
 	[115111696] = {
 		['ID'] = 115111696,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4850}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {321,321}
 		},
 	[115111697] = {
 		['ID'] = 115111697,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4900}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {324,324}
 		},
 	[115111698] = {
 		['ID'] = 115111698,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {4950}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {327,327}
 		},
 	[115111699] = {
 		['ID'] = 115111699,
 		['Type'] = 170000008,
-		['Effect'] = {9},
-		['EffectAdd'] = {15000},
-		['EffectNum'] = {5000}
+		['Effect'] = {3,9},
+		['EffectAdd'] = {3000,3000},
+		['EffectNum'] = {330,330}
 		},
 	[115120000] = {
 		['ID'] = 115120000,
 		['Type'] = 170000008,
 		['Effect'] = {4},
-		['EffectAdd'] = {8000},
+		['EffectAdd'] = {-2000},
 		['EffectNum'] = {0}
 		},
 	[115120001] = {
@@ -11819,7 +11819,7 @@ local SkillEffectTable = {
 		['ID'] = 115120002,
 		['Type'] = 170000008,
 		['Effect'] = {19},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {0}
 		},
 	[115120100] = {
@@ -14633,700 +14633,700 @@ local SkillEffectTable = {
 		['ID'] = 115120600,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {30}
 		},
 	[115120601] = {
 		['ID'] = 115120601,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {60}
 		},
 	[115120602] = {
 		['ID'] = 115120602,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {90}
 		},
 	[115120603] = {
 		['ID'] = 115120603,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {120}
 		},
 	[115120604] = {
 		['ID'] = 115120604,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {150}
 		},
 	[115120605] = {
 		['ID'] = 115120605,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {180}
 		},
 	[115120606] = {
 		['ID'] = 115120606,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {210}
 		},
 	[115120607] = {
 		['ID'] = 115120607,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {240}
 		},
 	[115120608] = {
 		['ID'] = 115120608,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {270}
 		},
 	[115120609] = {
 		['ID'] = 115120609,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {300}
 		},
 	[115120610] = {
 		['ID'] = 115120610,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {330}
 		},
 	[115120611] = {
 		['ID'] = 115120611,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {360}
 		},
 	[115120612] = {
 		['ID'] = 115120612,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {390}
 		},
 	[115120613] = {
 		['ID'] = 115120613,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {420}
 		},
 	[115120614] = {
 		['ID'] = 115120614,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {450}
 		},
 	[115120615] = {
 		['ID'] = 115120615,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {480}
 		},
 	[115120616] = {
 		['ID'] = 115120616,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {510}
 		},
 	[115120617] = {
 		['ID'] = 115120617,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {540}
 		},
 	[115120618] = {
 		['ID'] = 115120618,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {570}
 		},
 	[115120619] = {
 		['ID'] = 115120619,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {600}
 		},
 	[115120620] = {
 		['ID'] = 115120620,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {630}
 		},
 	[115120621] = {
 		['ID'] = 115120621,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {660}
 		},
 	[115120622] = {
 		['ID'] = 115120622,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {690}
 		},
 	[115120623] = {
 		['ID'] = 115120623,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {720}
 		},
 	[115120624] = {
 		['ID'] = 115120624,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {750}
 		},
 	[115120625] = {
 		['ID'] = 115120625,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {780}
 		},
 	[115120626] = {
 		['ID'] = 115120626,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {810}
 		},
 	[115120627] = {
 		['ID'] = 115120627,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {840}
 		},
 	[115120628] = {
 		['ID'] = 115120628,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {870}
 		},
 	[115120629] = {
 		['ID'] = 115120629,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {900}
 		},
 	[115120630] = {
 		['ID'] = 115120630,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {930}
 		},
 	[115120631] = {
 		['ID'] = 115120631,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {960}
 		},
 	[115120632] = {
 		['ID'] = 115120632,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {990}
 		},
 	[115120633] = {
 		['ID'] = 115120633,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1020}
 		},
 	[115120634] = {
 		['ID'] = 115120634,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1050}
 		},
 	[115120635] = {
 		['ID'] = 115120635,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1080}
 		},
 	[115120636] = {
 		['ID'] = 115120636,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1110}
 		},
 	[115120637] = {
 		['ID'] = 115120637,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1140}
 		},
 	[115120638] = {
 		['ID'] = 115120638,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1170}
 		},
 	[115120639] = {
 		['ID'] = 115120639,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1200}
 		},
 	[115120640] = {
 		['ID'] = 115120640,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1230}
 		},
 	[115120641] = {
 		['ID'] = 115120641,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1260}
 		},
 	[115120642] = {
 		['ID'] = 115120642,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1290}
 		},
 	[115120643] = {
 		['ID'] = 115120643,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1320}
 		},
 	[115120644] = {
 		['ID'] = 115120644,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1350}
 		},
 	[115120645] = {
 		['ID'] = 115120645,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1380}
 		},
 	[115120646] = {
 		['ID'] = 115120646,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1410}
 		},
 	[115120647] = {
 		['ID'] = 115120647,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1440}
 		},
 	[115120648] = {
 		['ID'] = 115120648,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1470}
 		},
 	[115120649] = {
 		['ID'] = 115120649,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1500}
 		},
 	[115120650] = {
 		['ID'] = 115120650,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1530}
 		},
 	[115120651] = {
 		['ID'] = 115120651,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1560}
 		},
 	[115120652] = {
 		['ID'] = 115120652,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1590}
 		},
 	[115120653] = {
 		['ID'] = 115120653,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1620}
 		},
 	[115120654] = {
 		['ID'] = 115120654,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1650}
 		},
 	[115120655] = {
 		['ID'] = 115120655,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1680}
 		},
 	[115120656] = {
 		['ID'] = 115120656,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1710}
 		},
 	[115120657] = {
 		['ID'] = 115120657,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1740}
 		},
 	[115120658] = {
 		['ID'] = 115120658,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1770}
 		},
 	[115120659] = {
 		['ID'] = 115120659,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1800}
 		},
 	[115120660] = {
 		['ID'] = 115120660,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1830}
 		},
 	[115120661] = {
 		['ID'] = 115120661,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1860}
 		},
 	[115120662] = {
 		['ID'] = 115120662,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1890}
 		},
 	[115120663] = {
 		['ID'] = 115120663,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1920}
 		},
 	[115120664] = {
 		['ID'] = 115120664,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1950}
 		},
 	[115120665] = {
 		['ID'] = 115120665,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {1980}
 		},
 	[115120666] = {
 		['ID'] = 115120666,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2010}
 		},
 	[115120667] = {
 		['ID'] = 115120667,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2040}
 		},
 	[115120668] = {
 		['ID'] = 115120668,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2070}
 		},
 	[115120669] = {
 		['ID'] = 115120669,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2100}
 		},
 	[115120670] = {
 		['ID'] = 115120670,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2130}
 		},
 	[115120671] = {
 		['ID'] = 115120671,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2160}
 		},
 	[115120672] = {
 		['ID'] = 115120672,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2190}
 		},
 	[115120673] = {
 		['ID'] = 115120673,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2220}
 		},
 	[115120674] = {
 		['ID'] = 115120674,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2250}
 		},
 	[115120675] = {
 		['ID'] = 115120675,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2280}
 		},
 	[115120676] = {
 		['ID'] = 115120676,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2310}
 		},
 	[115120677] = {
 		['ID'] = 115120677,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2340}
 		},
 	[115120678] = {
 		['ID'] = 115120678,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2370}
 		},
 	[115120679] = {
 		['ID'] = 115120679,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2400}
 		},
 	[115120680] = {
 		['ID'] = 115120680,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2430}
 		},
 	[115120681] = {
 		['ID'] = 115120681,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2460}
 		},
 	[115120682] = {
 		['ID'] = 115120682,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2490}
 		},
 	[115120683] = {
 		['ID'] = 115120683,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2520}
 		},
 	[115120684] = {
 		['ID'] = 115120684,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2550}
 		},
 	[115120685] = {
 		['ID'] = 115120685,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2580}
 		},
 	[115120686] = {
 		['ID'] = 115120686,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2610}
 		},
 	[115120687] = {
 		['ID'] = 115120687,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2640}
 		},
 	[115120688] = {
 		['ID'] = 115120688,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2670}
 		},
 	[115120689] = {
 		['ID'] = 115120689,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2700}
 		},
 	[115120690] = {
 		['ID'] = 115120690,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2730}
 		},
 	[115120691] = {
 		['ID'] = 115120691,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2760}
 		},
 	[115120692] = {
 		['ID'] = 115120692,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2790}
 		},
 	[115120693] = {
 		['ID'] = 115120693,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2820}
 		},
 	[115120694] = {
 		['ID'] = 115120694,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2850}
 		},
 	[115120695] = {
 		['ID'] = 115120695,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2880}
 		},
 	[115120696] = {
 		['ID'] = 115120696,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2910}
 		},
 	[115120697] = {
 		['ID'] = 115120697,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2940}
 		},
 	[115120698] = {
 		['ID'] = 115120698,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {2970}
 		},
 	[115120699] = {
 		['ID'] = 115120699,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {13000},
+		['EffectAdd'] = {3000},
 		['EffectNum'] = {3000}
 		},
 	[115120700] = {
@@ -18154,1400 +18154,1400 @@ local SkillEffectTable = {
 		['ID'] = 115121500,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {30,30}
 		},
 	[115121501] = {
 		['ID'] = 115121501,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {60,60}
 		},
 	[115121502] = {
 		['ID'] = 115121502,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {90,90}
 		},
 	[115121503] = {
 		['ID'] = 115121503,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {120,120}
 		},
 	[115121504] = {
 		['ID'] = 115121504,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {150,150}
 		},
 	[115121505] = {
 		['ID'] = 115121505,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {180,180}
 		},
 	[115121506] = {
 		['ID'] = 115121506,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {210,210}
 		},
 	[115121507] = {
 		['ID'] = 115121507,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {240,240}
 		},
 	[115121508] = {
 		['ID'] = 115121508,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {270,270}
 		},
 	[115121509] = {
 		['ID'] = 115121509,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {300,300}
 		},
 	[115121510] = {
 		['ID'] = 115121510,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {330,330}
 		},
 	[115121511] = {
 		['ID'] = 115121511,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {360,360}
 		},
 	[115121512] = {
 		['ID'] = 115121512,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {390,390}
 		},
 	[115121513] = {
 		['ID'] = 115121513,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {420,420}
 		},
 	[115121514] = {
 		['ID'] = 115121514,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {450,450}
 		},
 	[115121515] = {
 		['ID'] = 115121515,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {480,480}
 		},
 	[115121516] = {
 		['ID'] = 115121516,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {510,510}
 		},
 	[115121517] = {
 		['ID'] = 115121517,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {540,540}
 		},
 	[115121518] = {
 		['ID'] = 115121518,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {570,570}
 		},
 	[115121519] = {
 		['ID'] = 115121519,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {600,600}
 		},
 	[115121520] = {
 		['ID'] = 115121520,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {630,630}
 		},
 	[115121521] = {
 		['ID'] = 115121521,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {660,660}
 		},
 	[115121522] = {
 		['ID'] = 115121522,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {690,690}
 		},
 	[115121523] = {
 		['ID'] = 115121523,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {720,720}
 		},
 	[115121524] = {
 		['ID'] = 115121524,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {750,750}
 		},
 	[115121525] = {
 		['ID'] = 115121525,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {780,780}
 		},
 	[115121526] = {
 		['ID'] = 115121526,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {810,810}
 		},
 	[115121527] = {
 		['ID'] = 115121527,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {840,840}
 		},
 	[115121528] = {
 		['ID'] = 115121528,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {870,870}
 		},
 	[115121529] = {
 		['ID'] = 115121529,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {900,900}
 		},
 	[115121530] = {
 		['ID'] = 115121530,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {930,930}
 		},
 	[115121531] = {
 		['ID'] = 115121531,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {960,960}
 		},
 	[115121532] = {
 		['ID'] = 115121532,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {990,990}
 		},
 	[115121533] = {
 		['ID'] = 115121533,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1020,1020}
 		},
 	[115121534] = {
 		['ID'] = 115121534,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1050,1050}
 		},
 	[115121535] = {
 		['ID'] = 115121535,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1080,1080}
 		},
 	[115121536] = {
 		['ID'] = 115121536,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1110,1110}
 		},
 	[115121537] = {
 		['ID'] = 115121537,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1140,1140}
 		},
 	[115121538] = {
 		['ID'] = 115121538,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1170,1170}
 		},
 	[115121539] = {
 		['ID'] = 115121539,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1200,1200}
 		},
 	[115121540] = {
 		['ID'] = 115121540,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1230,1230}
 		},
 	[115121541] = {
 		['ID'] = 115121541,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1260,1260}
 		},
 	[115121542] = {
 		['ID'] = 115121542,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1290,1290}
 		},
 	[115121543] = {
 		['ID'] = 115121543,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1320,1320}
 		},
 	[115121544] = {
 		['ID'] = 115121544,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1350,1350}
 		},
 	[115121545] = {
 		['ID'] = 115121545,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1380,1380}
 		},
 	[115121546] = {
 		['ID'] = 115121546,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1410,1410}
 		},
 	[115121547] = {
 		['ID'] = 115121547,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1440,1440}
 		},
 	[115121548] = {
 		['ID'] = 115121548,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1470,1470}
 		},
 	[115121549] = {
 		['ID'] = 115121549,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1500,1500}
 		},
 	[115121550] = {
 		['ID'] = 115121550,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1530,1530}
 		},
 	[115121551] = {
 		['ID'] = 115121551,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1560,1560}
 		},
 	[115121552] = {
 		['ID'] = 115121552,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1590,1590}
 		},
 	[115121553] = {
 		['ID'] = 115121553,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1620,1620}
 		},
 	[115121554] = {
 		['ID'] = 115121554,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1650,1650}
 		},
 	[115121555] = {
 		['ID'] = 115121555,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1680,1680}
 		},
 	[115121556] = {
 		['ID'] = 115121556,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1710,1710}
 		},
 	[115121557] = {
 		['ID'] = 115121557,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1740,1740}
 		},
 	[115121558] = {
 		['ID'] = 115121558,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1770,1770}
 		},
 	[115121559] = {
 		['ID'] = 115121559,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1800,1800}
 		},
 	[115121560] = {
 		['ID'] = 115121560,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1830,1830}
 		},
 	[115121561] = {
 		['ID'] = 115121561,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1860,1860}
 		},
 	[115121562] = {
 		['ID'] = 115121562,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1890,1890}
 		},
 	[115121563] = {
 		['ID'] = 115121563,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1920,1920}
 		},
 	[115121564] = {
 		['ID'] = 115121564,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1950,1950}
 		},
 	[115121565] = {
 		['ID'] = 115121565,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1980,1980}
 		},
 	[115121566] = {
 		['ID'] = 115121566,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2010,2010}
 		},
 	[115121567] = {
 		['ID'] = 115121567,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2040,2040}
 		},
 	[115121568] = {
 		['ID'] = 115121568,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2070,2070}
 		},
 	[115121569] = {
 		['ID'] = 115121569,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2100,2100}
 		},
 	[115121570] = {
 		['ID'] = 115121570,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2130,2130}
 		},
 	[115121571] = {
 		['ID'] = 115121571,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2160,2160}
 		},
 	[115121572] = {
 		['ID'] = 115121572,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2190,2190}
 		},
 	[115121573] = {
 		['ID'] = 115121573,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2220,2220}
 		},
 	[115121574] = {
 		['ID'] = 115121574,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2250,2250}
 		},
 	[115121575] = {
 		['ID'] = 115121575,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2280,2280}
 		},
 	[115121576] = {
 		['ID'] = 115121576,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2310,2310}
 		},
 	[115121577] = {
 		['ID'] = 115121577,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2340,2340}
 		},
 	[115121578] = {
 		['ID'] = 115121578,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2370,2370}
 		},
 	[115121579] = {
 		['ID'] = 115121579,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2400,2400}
 		},
 	[115121580] = {
 		['ID'] = 115121580,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2430,2430}
 		},
 	[115121581] = {
 		['ID'] = 115121581,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2460,2460}
 		},
 	[115121582] = {
 		['ID'] = 115121582,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2490,2490}
 		},
 	[115121583] = {
 		['ID'] = 115121583,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2520,2520}
 		},
 	[115121584] = {
 		['ID'] = 115121584,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2550,2550}
 		},
 	[115121585] = {
 		['ID'] = 115121585,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2580,2580}
 		},
 	[115121586] = {
 		['ID'] = 115121586,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2610,2610}
 		},
 	[115121587] = {
 		['ID'] = 115121587,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2640,2640}
 		},
 	[115121588] = {
 		['ID'] = 115121588,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2670,2670}
 		},
 	[115121589] = {
 		['ID'] = 115121589,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2700,2700}
 		},
 	[115121590] = {
 		['ID'] = 115121590,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2730,2730}
 		},
 	[115121591] = {
 		['ID'] = 115121591,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2760,2760}
 		},
 	[115121592] = {
 		['ID'] = 115121592,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2790,2790}
 		},
 	[115121593] = {
 		['ID'] = 115121593,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2820,2820}
 		},
 	[115121594] = {
 		['ID'] = 115121594,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2850,2850}
 		},
 	[115121595] = {
 		['ID'] = 115121595,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2880,2880}
 		},
 	[115121596] = {
 		['ID'] = 115121596,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2910,2910}
 		},
 	[115121597] = {
 		['ID'] = 115121597,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2940,2940}
 		},
 	[115121598] = {
 		['ID'] = 115121598,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2970,2970}
 		},
 	[115121599] = {
 		['ID'] = 115121599,
 		['Type'] = 170000008,
 		['Effect'] = {3,8},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {3000,3000}
 		},
 	[115121600] = {
 		['ID'] = 115121600,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {30,30}
 		},
 	[115121601] = {
 		['ID'] = 115121601,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {60,60}
 		},
 	[115121602] = {
 		['ID'] = 115121602,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {90,90}
 		},
 	[115121603] = {
 		['ID'] = 115121603,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {120,120}
 		},
 	[115121604] = {
 		['ID'] = 115121604,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {150,150}
 		},
 	[115121605] = {
 		['ID'] = 115121605,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {180,180}
 		},
 	[115121606] = {
 		['ID'] = 115121606,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {210,210}
 		},
 	[115121607] = {
 		['ID'] = 115121607,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {240,240}
 		},
 	[115121608] = {
 		['ID'] = 115121608,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {270,270}
 		},
 	[115121609] = {
 		['ID'] = 115121609,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {300,300}
 		},
 	[115121610] = {
 		['ID'] = 115121610,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {330,330}
 		},
 	[115121611] = {
 		['ID'] = 115121611,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {360,360}
 		},
 	[115121612] = {
 		['ID'] = 115121612,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {390,390}
 		},
 	[115121613] = {
 		['ID'] = 115121613,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {420,420}
 		},
 	[115121614] = {
 		['ID'] = 115121614,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {450,450}
 		},
 	[115121615] = {
 		['ID'] = 115121615,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {480,480}
 		},
 	[115121616] = {
 		['ID'] = 115121616,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {510,510}
 		},
 	[115121617] = {
 		['ID'] = 115121617,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {540,540}
 		},
 	[115121618] = {
 		['ID'] = 115121618,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {570,570}
 		},
 	[115121619] = {
 		['ID'] = 115121619,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {600,600}
 		},
 	[115121620] = {
 		['ID'] = 115121620,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {630,630}
 		},
 	[115121621] = {
 		['ID'] = 115121621,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {660,660}
 		},
 	[115121622] = {
 		['ID'] = 115121622,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {690,690}
 		},
 	[115121623] = {
 		['ID'] = 115121623,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {720,720}
 		},
 	[115121624] = {
 		['ID'] = 115121624,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {750,750}
 		},
 	[115121625] = {
 		['ID'] = 115121625,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {780,780}
 		},
 	[115121626] = {
 		['ID'] = 115121626,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {810,810}
 		},
 	[115121627] = {
 		['ID'] = 115121627,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {840,840}
 		},
 	[115121628] = {
 		['ID'] = 115121628,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {870,870}
 		},
 	[115121629] = {
 		['ID'] = 115121629,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {900,900}
 		},
 	[115121630] = {
 		['ID'] = 115121630,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {930,930}
 		},
 	[115121631] = {
 		['ID'] = 115121631,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {960,960}
 		},
 	[115121632] = {
 		['ID'] = 115121632,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {990,990}
 		},
 	[115121633] = {
 		['ID'] = 115121633,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1020,1020}
 		},
 	[115121634] = {
 		['ID'] = 115121634,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1050,1050}
 		},
 	[115121635] = {
 		['ID'] = 115121635,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1080,1080}
 		},
 	[115121636] = {
 		['ID'] = 115121636,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1110,1110}
 		},
 	[115121637] = {
 		['ID'] = 115121637,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1140,1140}
 		},
 	[115121638] = {
 		['ID'] = 115121638,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1170,1170}
 		},
 	[115121639] = {
 		['ID'] = 115121639,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1200,1200}
 		},
 	[115121640] = {
 		['ID'] = 115121640,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1230,1230}
 		},
 	[115121641] = {
 		['ID'] = 115121641,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1260,1260}
 		},
 	[115121642] = {
 		['ID'] = 115121642,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1290,1290}
 		},
 	[115121643] = {
 		['ID'] = 115121643,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1320,1320}
 		},
 	[115121644] = {
 		['ID'] = 115121644,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1350,1350}
 		},
 	[115121645] = {
 		['ID'] = 115121645,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1380,1380}
 		},
 	[115121646] = {
 		['ID'] = 115121646,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1410,1410}
 		},
 	[115121647] = {
 		['ID'] = 115121647,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1440,1440}
 		},
 	[115121648] = {
 		['ID'] = 115121648,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1470,1470}
 		},
 	[115121649] = {
 		['ID'] = 115121649,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1500,1500}
 		},
 	[115121650] = {
 		['ID'] = 115121650,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1530,1530}
 		},
 	[115121651] = {
 		['ID'] = 115121651,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1560,1560}
 		},
 	[115121652] = {
 		['ID'] = 115121652,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1590,1590}
 		},
 	[115121653] = {
 		['ID'] = 115121653,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1620,1620}
 		},
 	[115121654] = {
 		['ID'] = 115121654,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1650,1650}
 		},
 	[115121655] = {
 		['ID'] = 115121655,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1680,1680}
 		},
 	[115121656] = {
 		['ID'] = 115121656,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1710,1710}
 		},
 	[115121657] = {
 		['ID'] = 115121657,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1740,1740}
 		},
 	[115121658] = {
 		['ID'] = 115121658,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1770,1770}
 		},
 	[115121659] = {
 		['ID'] = 115121659,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1800,1800}
 		},
 	[115121660] = {
 		['ID'] = 115121660,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1830,1830}
 		},
 	[115121661] = {
 		['ID'] = 115121661,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1860,1860}
 		},
 	[115121662] = {
 		['ID'] = 115121662,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1890,1890}
 		},
 	[115121663] = {
 		['ID'] = 115121663,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1920,1920}
 		},
 	[115121664] = {
 		['ID'] = 115121664,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1950,1950}
 		},
 	[115121665] = {
 		['ID'] = 115121665,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {1980,1980}
 		},
 	[115121666] = {
 		['ID'] = 115121666,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2010,2010}
 		},
 	[115121667] = {
 		['ID'] = 115121667,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2040,2040}
 		},
 	[115121668] = {
 		['ID'] = 115121668,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2070,2070}
 		},
 	[115121669] = {
 		['ID'] = 115121669,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2100,2100}
 		},
 	[115121670] = {
 		['ID'] = 115121670,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2130,2130}
 		},
 	[115121671] = {
 		['ID'] = 115121671,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2160,2160}
 		},
 	[115121672] = {
 		['ID'] = 115121672,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2190,2190}
 		},
 	[115121673] = {
 		['ID'] = 115121673,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2220,2220}
 		},
 	[115121674] = {
 		['ID'] = 115121674,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2250,2250}
 		},
 	[115121675] = {
 		['ID'] = 115121675,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2280,2280}
 		},
 	[115121676] = {
 		['ID'] = 115121676,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2310,2310}
 		},
 	[115121677] = {
 		['ID'] = 115121677,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2340,2340}
 		},
 	[115121678] = {
 		['ID'] = 115121678,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2370,2370}
 		},
 	[115121679] = {
 		['ID'] = 115121679,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2400,2400}
 		},
 	[115121680] = {
 		['ID'] = 115121680,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2430,2430}
 		},
 	[115121681] = {
 		['ID'] = 115121681,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2460,2460}
 		},
 	[115121682] = {
 		['ID'] = 115121682,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2490,2490}
 		},
 	[115121683] = {
 		['ID'] = 115121683,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2520,2520}
 		},
 	[115121684] = {
 		['ID'] = 115121684,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2550,2550}
 		},
 	[115121685] = {
 		['ID'] = 115121685,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2580,2580}
 		},
 	[115121686] = {
 		['ID'] = 115121686,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2610,2610}
 		},
 	[115121687] = {
 		['ID'] = 115121687,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2640,2640}
 		},
 	[115121688] = {
 		['ID'] = 115121688,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2670,2670}
 		},
 	[115121689] = {
 		['ID'] = 115121689,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2700,2700}
 		},
 	[115121690] = {
 		['ID'] = 115121690,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2730,2730}
 		},
 	[115121691] = {
 		['ID'] = 115121691,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2760,2760}
 		},
 	[115121692] = {
 		['ID'] = 115121692,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2790,2790}
 		},
 	[115121693] = {
 		['ID'] = 115121693,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2820,2820}
 		},
 	[115121694] = {
 		['ID'] = 115121694,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2850,2850}
 		},
 	[115121695] = {
 		['ID'] = 115121695,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2880,2880}
 		},
 	[115121696] = {
 		['ID'] = 115121696,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2910,2910}
 		},
 	[115121697] = {
 		['ID'] = 115121697,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2940,2940}
 		},
 	[115121698] = {
 		['ID'] = 115121698,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {2970,2970}
 		},
 	[115121699] = {
 		['ID'] = 115121699,
 		['Type'] = 170000008,
 		['Effect'] = {4,11},
-		['EffectAdd'] = {13000,13000},
+		['EffectAdd'] = {3000,3000},
 		['EffectNum'] = {3000,3000}
 		},
 	[115130000] = {
@@ -19561,14 +19561,14 @@ local SkillEffectTable = {
 		['ID'] = 115130001,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5000},
+		['EffectAdd'] = {-5000},
 		['EffectNum'] = {0}
 		},
 	[115130002] = {
 		['ID'] = 115130002,
 		['Type'] = 170000008,
 		['Effect'] = {3},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {0}
 		},
 	[115130003] = {
@@ -19582,7 +19582,7 @@ local SkillEffectTable = {
 		['ID'] = 115130004,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {11000},
+		['EffectAdd'] = {1000},
 		['EffectNum'] = {0}
 		},
 	[115130005] = {
@@ -23096,700 +23096,700 @@ local SkillEffectTable = {
 		['ID'] = 115130600,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {50}
 		},
 	[115130601] = {
 		['ID'] = 115130601,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {100}
 		},
 	[115130602] = {
 		['ID'] = 115130602,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {150}
 		},
 	[115130603] = {
 		['ID'] = 115130603,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {200}
 		},
 	[115130604] = {
 		['ID'] = 115130604,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {250}
 		},
 	[115130605] = {
 		['ID'] = 115130605,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {300}
 		},
 	[115130606] = {
 		['ID'] = 115130606,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {350}
 		},
 	[115130607] = {
 		['ID'] = 115130607,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {400}
 		},
 	[115130608] = {
 		['ID'] = 115130608,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {450}
 		},
 	[115130609] = {
 		['ID'] = 115130609,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {500}
 		},
 	[115130610] = {
 		['ID'] = 115130610,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {550}
 		},
 	[115130611] = {
 		['ID'] = 115130611,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {600}
 		},
 	[115130612] = {
 		['ID'] = 115130612,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {650}
 		},
 	[115130613] = {
 		['ID'] = 115130613,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {700}
 		},
 	[115130614] = {
 		['ID'] = 115130614,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {750}
 		},
 	[115130615] = {
 		['ID'] = 115130615,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {800}
 		},
 	[115130616] = {
 		['ID'] = 115130616,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {850}
 		},
 	[115130617] = {
 		['ID'] = 115130617,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {900}
 		},
 	[115130618] = {
 		['ID'] = 115130618,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {950}
 		},
 	[115130619] = {
 		['ID'] = 115130619,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1000}
 		},
 	[115130620] = {
 		['ID'] = 115130620,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1050}
 		},
 	[115130621] = {
 		['ID'] = 115130621,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1100}
 		},
 	[115130622] = {
 		['ID'] = 115130622,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1150}
 		},
 	[115130623] = {
 		['ID'] = 115130623,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1200}
 		},
 	[115130624] = {
 		['ID'] = 115130624,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1250}
 		},
 	[115130625] = {
 		['ID'] = 115130625,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1300}
 		},
 	[115130626] = {
 		['ID'] = 115130626,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1350}
 		},
 	[115130627] = {
 		['ID'] = 115130627,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1400}
 		},
 	[115130628] = {
 		['ID'] = 115130628,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1450}
 		},
 	[115130629] = {
 		['ID'] = 115130629,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1500}
 		},
 	[115130630] = {
 		['ID'] = 115130630,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1550}
 		},
 	[115130631] = {
 		['ID'] = 115130631,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1600}
 		},
 	[115130632] = {
 		['ID'] = 115130632,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1650}
 		},
 	[115130633] = {
 		['ID'] = 115130633,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1700}
 		},
 	[115130634] = {
 		['ID'] = 115130634,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1750}
 		},
 	[115130635] = {
 		['ID'] = 115130635,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1800}
 		},
 	[115130636] = {
 		['ID'] = 115130636,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1850}
 		},
 	[115130637] = {
 		['ID'] = 115130637,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1900}
 		},
 	[115130638] = {
 		['ID'] = 115130638,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {1950}
 		},
 	[115130639] = {
 		['ID'] = 115130639,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2000}
 		},
 	[115130640] = {
 		['ID'] = 115130640,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2050}
 		},
 	[115130641] = {
 		['ID'] = 115130641,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2100}
 		},
 	[115130642] = {
 		['ID'] = 115130642,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2150}
 		},
 	[115130643] = {
 		['ID'] = 115130643,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2200}
 		},
 	[115130644] = {
 		['ID'] = 115130644,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2250}
 		},
 	[115130645] = {
 		['ID'] = 115130645,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2300}
 		},
 	[115130646] = {
 		['ID'] = 115130646,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2350}
 		},
 	[115130647] = {
 		['ID'] = 115130647,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2400}
 		},
 	[115130648] = {
 		['ID'] = 115130648,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2450}
 		},
 	[115130649] = {
 		['ID'] = 115130649,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2500}
 		},
 	[115130650] = {
 		['ID'] = 115130650,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2550}
 		},
 	[115130651] = {
 		['ID'] = 115130651,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2600}
 		},
 	[115130652] = {
 		['ID'] = 115130652,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2650}
 		},
 	[115130653] = {
 		['ID'] = 115130653,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2700}
 		},
 	[115130654] = {
 		['ID'] = 115130654,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2750}
 		},
 	[115130655] = {
 		['ID'] = 115130655,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2800}
 		},
 	[115130656] = {
 		['ID'] = 115130656,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2850}
 		},
 	[115130657] = {
 		['ID'] = 115130657,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2900}
 		},
 	[115130658] = {
 		['ID'] = 115130658,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {2950}
 		},
 	[115130659] = {
 		['ID'] = 115130659,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3000}
 		},
 	[115130660] = {
 		['ID'] = 115130660,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3050}
 		},
 	[115130661] = {
 		['ID'] = 115130661,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3100}
 		},
 	[115130662] = {
 		['ID'] = 115130662,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3150}
 		},
 	[115130663] = {
 		['ID'] = 115130663,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3200}
 		},
 	[115130664] = {
 		['ID'] = 115130664,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3250}
 		},
 	[115130665] = {
 		['ID'] = 115130665,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3300}
 		},
 	[115130666] = {
 		['ID'] = 115130666,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3350}
 		},
 	[115130667] = {
 		['ID'] = 115130667,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3400}
 		},
 	[115130668] = {
 		['ID'] = 115130668,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3450}
 		},
 	[115130669] = {
 		['ID'] = 115130669,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3500}
 		},
 	[115130670] = {
 		['ID'] = 115130670,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3550}
 		},
 	[115130671] = {
 		['ID'] = 115130671,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3600}
 		},
 	[115130672] = {
 		['ID'] = 115130672,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3650}
 		},
 	[115130673] = {
 		['ID'] = 115130673,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3700}
 		},
 	[115130674] = {
 		['ID'] = 115130674,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3750}
 		},
 	[115130675] = {
 		['ID'] = 115130675,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3800}
 		},
 	[115130676] = {
 		['ID'] = 115130676,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3850}
 		},
 	[115130677] = {
 		['ID'] = 115130677,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3900}
 		},
 	[115130678] = {
 		['ID'] = 115130678,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {3950}
 		},
 	[115130679] = {
 		['ID'] = 115130679,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4000}
 		},
 	[115130680] = {
 		['ID'] = 115130680,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4050}
 		},
 	[115130681] = {
 		['ID'] = 115130681,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4100}
 		},
 	[115130682] = {
 		['ID'] = 115130682,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4150}
 		},
 	[115130683] = {
 		['ID'] = 115130683,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4200}
 		},
 	[115130684] = {
 		['ID'] = 115130684,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4250}
 		},
 	[115130685] = {
 		['ID'] = 115130685,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4300}
 		},
 	[115130686] = {
 		['ID'] = 115130686,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4350}
 		},
 	[115130687] = {
 		['ID'] = 115130687,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4400}
 		},
 	[115130688] = {
 		['ID'] = 115130688,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4450}
 		},
 	[115130689] = {
 		['ID'] = 115130689,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4500}
 		},
 	[115130690] = {
 		['ID'] = 115130690,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4550}
 		},
 	[115130691] = {
 		['ID'] = 115130691,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4600}
 		},
 	[115130692] = {
 		['ID'] = 115130692,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4650}
 		},
 	[115130693] = {
 		['ID'] = 115130693,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4700}
 		},
 	[115130694] = {
 		['ID'] = 115130694,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4750}
 		},
 	[115130695] = {
 		['ID'] = 115130695,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4800}
 		},
 	[115130696] = {
 		['ID'] = 115130696,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4850}
 		},
 	[115130697] = {
 		['ID'] = 115130697,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4900}
 		},
 	[115130698] = {
 		['ID'] = 115130698,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {4950}
 		},
 	[115130699] = {
 		['ID'] = 115130699,
 		['Type'] = 170000008,
 		['Effect'] = {17},
-		['EffectAdd'] = {15000},
+		['EffectAdd'] = {5000},
 		['EffectNum'] = {5000}
 		},
 	[115130700] = {
@@ -28696,1400 +28696,1400 @@ local SkillEffectTable = {
 		['ID'] = 115131500,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {50,0}
 		},
 	[115131501] = {
 		['ID'] = 115131501,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {100,0}
 		},
 	[115131502] = {
 		['ID'] = 115131502,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {150,0}
 		},
 	[115131503] = {
 		['ID'] = 115131503,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {200,0}
 		},
 	[115131504] = {
 		['ID'] = 115131504,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {250,0}
 		},
 	[115131505] = {
 		['ID'] = 115131505,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {300,0}
 		},
 	[115131506] = {
 		['ID'] = 115131506,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {350,0}
 		},
 	[115131507] = {
 		['ID'] = 115131507,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {400,0}
 		},
 	[115131508] = {
 		['ID'] = 115131508,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {450,0}
 		},
 	[115131509] = {
 		['ID'] = 115131509,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {500,0}
 		},
 	[115131510] = {
 		['ID'] = 115131510,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {550,0}
 		},
 	[115131511] = {
 		['ID'] = 115131511,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {600,0}
 		},
 	[115131512] = {
 		['ID'] = 115131512,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {650,0}
 		},
 	[115131513] = {
 		['ID'] = 115131513,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {700,0}
 		},
 	[115131514] = {
 		['ID'] = 115131514,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {750,0}
 		},
 	[115131515] = {
 		['ID'] = 115131515,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {800,0}
 		},
 	[115131516] = {
 		['ID'] = 115131516,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {850,0}
 		},
 	[115131517] = {
 		['ID'] = 115131517,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {900,0}
 		},
 	[115131518] = {
 		['ID'] = 115131518,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {950,0}
 		},
 	[115131519] = {
 		['ID'] = 115131519,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1000,0}
 		},
 	[115131520] = {
 		['ID'] = 115131520,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1050,0}
 		},
 	[115131521] = {
 		['ID'] = 115131521,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1100,0}
 		},
 	[115131522] = {
 		['ID'] = 115131522,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1150,0}
 		},
 	[115131523] = {
 		['ID'] = 115131523,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1200,0}
 		},
 	[115131524] = {
 		['ID'] = 115131524,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1250,0}
 		},
 	[115131525] = {
 		['ID'] = 115131525,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1300,0}
 		},
 	[115131526] = {
 		['ID'] = 115131526,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1350,0}
 		},
 	[115131527] = {
 		['ID'] = 115131527,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1400,0}
 		},
 	[115131528] = {
 		['ID'] = 115131528,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1450,0}
 		},
 	[115131529] = {
 		['ID'] = 115131529,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1500,0}
 		},
 	[115131530] = {
 		['ID'] = 115131530,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1550,0}
 		},
 	[115131531] = {
 		['ID'] = 115131531,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1600,0}
 		},
 	[115131532] = {
 		['ID'] = 115131532,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1650,0}
 		},
 	[115131533] = {
 		['ID'] = 115131533,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1700,0}
 		},
 	[115131534] = {
 		['ID'] = 115131534,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1750,0}
 		},
 	[115131535] = {
 		['ID'] = 115131535,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1800,0}
 		},
 	[115131536] = {
 		['ID'] = 115131536,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1850,0}
 		},
 	[115131537] = {
 		['ID'] = 115131537,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1900,0}
 		},
 	[115131538] = {
 		['ID'] = 115131538,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1950,0}
 		},
 	[115131539] = {
 		['ID'] = 115131539,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2000,0}
 		},
 	[115131540] = {
 		['ID'] = 115131540,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2050,0}
 		},
 	[115131541] = {
 		['ID'] = 115131541,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2100,0}
 		},
 	[115131542] = {
 		['ID'] = 115131542,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2150,0}
 		},
 	[115131543] = {
 		['ID'] = 115131543,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2200,0}
 		},
 	[115131544] = {
 		['ID'] = 115131544,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2250,0}
 		},
 	[115131545] = {
 		['ID'] = 115131545,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2300,0}
 		},
 	[115131546] = {
 		['ID'] = 115131546,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2350,0}
 		},
 	[115131547] = {
 		['ID'] = 115131547,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2400,0}
 		},
 	[115131548] = {
 		['ID'] = 115131548,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2450,0}
 		},
 	[115131549] = {
 		['ID'] = 115131549,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2500,0}
 		},
 	[115131550] = {
 		['ID'] = 115131550,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2550,0}
 		},
 	[115131551] = {
 		['ID'] = 115131551,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2600,0}
 		},
 	[115131552] = {
 		['ID'] = 115131552,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2650,0}
 		},
 	[115131553] = {
 		['ID'] = 115131553,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2700,0}
 		},
 	[115131554] = {
 		['ID'] = 115131554,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2750,0}
 		},
 	[115131555] = {
 		['ID'] = 115131555,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2800,0}
 		},
 	[115131556] = {
 		['ID'] = 115131556,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2850,0}
 		},
 	[115131557] = {
 		['ID'] = 115131557,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2900,0}
 		},
 	[115131558] = {
 		['ID'] = 115131558,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2950,0}
 		},
 	[115131559] = {
 		['ID'] = 115131559,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3000,0}
 		},
 	[115131560] = {
 		['ID'] = 115131560,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3050,0}
 		},
 	[115131561] = {
 		['ID'] = 115131561,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3100,0}
 		},
 	[115131562] = {
 		['ID'] = 115131562,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3150,0}
 		},
 	[115131563] = {
 		['ID'] = 115131563,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3200,0}
 		},
 	[115131564] = {
 		['ID'] = 115131564,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3250,0}
 		},
 	[115131565] = {
 		['ID'] = 115131565,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3300,0}
 		},
 	[115131566] = {
 		['ID'] = 115131566,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3350,0}
 		},
 	[115131567] = {
 		['ID'] = 115131567,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3400,0}
 		},
 	[115131568] = {
 		['ID'] = 115131568,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3450,0}
 		},
 	[115131569] = {
 		['ID'] = 115131569,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3500,0}
 		},
 	[115131570] = {
 		['ID'] = 115131570,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3550,0}
 		},
 	[115131571] = {
 		['ID'] = 115131571,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3600,0}
 		},
 	[115131572] = {
 		['ID'] = 115131572,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3650,0}
 		},
 	[115131573] = {
 		['ID'] = 115131573,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3700,0}
 		},
 	[115131574] = {
 		['ID'] = 115131574,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3750,0}
 		},
 	[115131575] = {
 		['ID'] = 115131575,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3800,0}
 		},
 	[115131576] = {
 		['ID'] = 115131576,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3850,0}
 		},
 	[115131577] = {
 		['ID'] = 115131577,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3900,0}
 		},
 	[115131578] = {
 		['ID'] = 115131578,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3950,0}
 		},
 	[115131579] = {
 		['ID'] = 115131579,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4000,0}
 		},
 	[115131580] = {
 		['ID'] = 115131580,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4050,0}
 		},
 	[115131581] = {
 		['ID'] = 115131581,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4100,0}
 		},
 	[115131582] = {
 		['ID'] = 115131582,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4150,0}
 		},
 	[115131583] = {
 		['ID'] = 115131583,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4200,0}
 		},
 	[115131584] = {
 		['ID'] = 115131584,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4250,0}
 		},
 	[115131585] = {
 		['ID'] = 115131585,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4300,0}
 		},
 	[115131586] = {
 		['ID'] = 115131586,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4350,0}
 		},
 	[115131587] = {
 		['ID'] = 115131587,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4400,0}
 		},
 	[115131588] = {
 		['ID'] = 115131588,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4450,0}
 		},
 	[115131589] = {
 		['ID'] = 115131589,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4500,0}
 		},
 	[115131590] = {
 		['ID'] = 115131590,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4550,0}
 		},
 	[115131591] = {
 		['ID'] = 115131591,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4600,0}
 		},
 	[115131592] = {
 		['ID'] = 115131592,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4650,0}
 		},
 	[115131593] = {
 		['ID'] = 115131593,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4700,0}
 		},
 	[115131594] = {
 		['ID'] = 115131594,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4750,0}
 		},
 	[115131595] = {
 		['ID'] = 115131595,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4800,0}
 		},
 	[115131596] = {
 		['ID'] = 115131596,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4850,0}
 		},
 	[115131597] = {
 		['ID'] = 115131597,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4900,0}
 		},
 	[115131598] = {
 		['ID'] = 115131598,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4950,0}
 		},
 	[115131599] = {
 		['ID'] = 115131599,
 		['Type'] = 170000008,
 		['Effect'] = {17,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {5000,0}
 		},
 	[115131600] = {
 		['ID'] = 115131600,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {50,0}
 		},
 	[115131601] = {
 		['ID'] = 115131601,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {100,0}
 		},
 	[115131602] = {
 		['ID'] = 115131602,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {150,0}
 		},
 	[115131603] = {
 		['ID'] = 115131603,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {200,0}
 		},
 	[115131604] = {
 		['ID'] = 115131604,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {250,0}
 		},
 	[115131605] = {
 		['ID'] = 115131605,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {300,0}
 		},
 	[115131606] = {
 		['ID'] = 115131606,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {350,0}
 		},
 	[115131607] = {
 		['ID'] = 115131607,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {400,0}
 		},
 	[115131608] = {
 		['ID'] = 115131608,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {450,0}
 		},
 	[115131609] = {
 		['ID'] = 115131609,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {500,0}
 		},
 	[115131610] = {
 		['ID'] = 115131610,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {550,0}
 		},
 	[115131611] = {
 		['ID'] = 115131611,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {600,0}
 		},
 	[115131612] = {
 		['ID'] = 115131612,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {650,0}
 		},
 	[115131613] = {
 		['ID'] = 115131613,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {700,0}
 		},
 	[115131614] = {
 		['ID'] = 115131614,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {750,0}
 		},
 	[115131615] = {
 		['ID'] = 115131615,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {800,0}
 		},
 	[115131616] = {
 		['ID'] = 115131616,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {850,0}
 		},
 	[115131617] = {
 		['ID'] = 115131617,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {900,0}
 		},
 	[115131618] = {
 		['ID'] = 115131618,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {950,0}
 		},
 	[115131619] = {
 		['ID'] = 115131619,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1000,0}
 		},
 	[115131620] = {
 		['ID'] = 115131620,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1050,0}
 		},
 	[115131621] = {
 		['ID'] = 115131621,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1100,0}
 		},
 	[115131622] = {
 		['ID'] = 115131622,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1150,0}
 		},
 	[115131623] = {
 		['ID'] = 115131623,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1200,0}
 		},
 	[115131624] = {
 		['ID'] = 115131624,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1250,0}
 		},
 	[115131625] = {
 		['ID'] = 115131625,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1300,0}
 		},
 	[115131626] = {
 		['ID'] = 115131626,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1350,0}
 		},
 	[115131627] = {
 		['ID'] = 115131627,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1400,0}
 		},
 	[115131628] = {
 		['ID'] = 115131628,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1450,0}
 		},
 	[115131629] = {
 		['ID'] = 115131629,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1500,0}
 		},
 	[115131630] = {
 		['ID'] = 115131630,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1550,0}
 		},
 	[115131631] = {
 		['ID'] = 115131631,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1600,0}
 		},
 	[115131632] = {
 		['ID'] = 115131632,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1650,0}
 		},
 	[115131633] = {
 		['ID'] = 115131633,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1700,0}
 		},
 	[115131634] = {
 		['ID'] = 115131634,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1750,0}
 		},
 	[115131635] = {
 		['ID'] = 115131635,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1800,0}
 		},
 	[115131636] = {
 		['ID'] = 115131636,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1850,0}
 		},
 	[115131637] = {
 		['ID'] = 115131637,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1900,0}
 		},
 	[115131638] = {
 		['ID'] = 115131638,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {1950,0}
 		},
 	[115131639] = {
 		['ID'] = 115131639,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2000,0}
 		},
 	[115131640] = {
 		['ID'] = 115131640,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2050,0}
 		},
 	[115131641] = {
 		['ID'] = 115131641,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2100,0}
 		},
 	[115131642] = {
 		['ID'] = 115131642,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2150,0}
 		},
 	[115131643] = {
 		['ID'] = 115131643,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2200,0}
 		},
 	[115131644] = {
 		['ID'] = 115131644,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2250,0}
 		},
 	[115131645] = {
 		['ID'] = 115131645,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2300,0}
 		},
 	[115131646] = {
 		['ID'] = 115131646,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2350,0}
 		},
 	[115131647] = {
 		['ID'] = 115131647,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2400,0}
 		},
 	[115131648] = {
 		['ID'] = 115131648,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2450,0}
 		},
 	[115131649] = {
 		['ID'] = 115131649,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2500,0}
 		},
 	[115131650] = {
 		['ID'] = 115131650,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2550,0}
 		},
 	[115131651] = {
 		['ID'] = 115131651,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2600,0}
 		},
 	[115131652] = {
 		['ID'] = 115131652,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2650,0}
 		},
 	[115131653] = {
 		['ID'] = 115131653,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2700,0}
 		},
 	[115131654] = {
 		['ID'] = 115131654,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2750,0}
 		},
 	[115131655] = {
 		['ID'] = 115131655,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2800,0}
 		},
 	[115131656] = {
 		['ID'] = 115131656,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2850,0}
 		},
 	[115131657] = {
 		['ID'] = 115131657,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2900,0}
 		},
 	[115131658] = {
 		['ID'] = 115131658,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {2950,0}
 		},
 	[115131659] = {
 		['ID'] = 115131659,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3000,0}
 		},
 	[115131660] = {
 		['ID'] = 115131660,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3050,0}
 		},
 	[115131661] = {
 		['ID'] = 115131661,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3100,0}
 		},
 	[115131662] = {
 		['ID'] = 115131662,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3150,0}
 		},
 	[115131663] = {
 		['ID'] = 115131663,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3200,0}
 		},
 	[115131664] = {
 		['ID'] = 115131664,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3250,0}
 		},
 	[115131665] = {
 		['ID'] = 115131665,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3300,0}
 		},
 	[115131666] = {
 		['ID'] = 115131666,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3350,0}
 		},
 	[115131667] = {
 		['ID'] = 115131667,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3400,0}
 		},
 	[115131668] = {
 		['ID'] = 115131668,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3450,0}
 		},
 	[115131669] = {
 		['ID'] = 115131669,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3500,0}
 		},
 	[115131670] = {
 		['ID'] = 115131670,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3550,0}
 		},
 	[115131671] = {
 		['ID'] = 115131671,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3600,0}
 		},
 	[115131672] = {
 		['ID'] = 115131672,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3650,0}
 		},
 	[115131673] = {
 		['ID'] = 115131673,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3700,0}
 		},
 	[115131674] = {
 		['ID'] = 115131674,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3750,0}
 		},
 	[115131675] = {
 		['ID'] = 115131675,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3800,0}
 		},
 	[115131676] = {
 		['ID'] = 115131676,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3850,0}
 		},
 	[115131677] = {
 		['ID'] = 115131677,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3900,0}
 		},
 	[115131678] = {
 		['ID'] = 115131678,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {3950,0}
 		},
 	[115131679] = {
 		['ID'] = 115131679,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4000,0}
 		},
 	[115131680] = {
 		['ID'] = 115131680,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4050,0}
 		},
 	[115131681] = {
 		['ID'] = 115131681,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4100,0}
 		},
 	[115131682] = {
 		['ID'] = 115131682,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4150,0}
 		},
 	[115131683] = {
 		['ID'] = 115131683,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4200,0}
 		},
 	[115131684] = {
 		['ID'] = 115131684,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4250,0}
 		},
 	[115131685] = {
 		['ID'] = 115131685,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4300,0}
 		},
 	[115131686] = {
 		['ID'] = 115131686,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4350,0}
 		},
 	[115131687] = {
 		['ID'] = 115131687,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4400,0}
 		},
 	[115131688] = {
 		['ID'] = 115131688,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4450,0}
 		},
 	[115131689] = {
 		['ID'] = 115131689,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4500,0}
 		},
 	[115131690] = {
 		['ID'] = 115131690,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4550,0}
 		},
 	[115131691] = {
 		['ID'] = 115131691,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4600,0}
 		},
 	[115131692] = {
 		['ID'] = 115131692,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4650,0}
 		},
 	[115131693] = {
 		['ID'] = 115131693,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4700,0}
 		},
 	[115131694] = {
 		['ID'] = 115131694,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4750,0}
 		},
 	[115131695] = {
 		['ID'] = 115131695,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4800,0}
 		},
 	[115131696] = {
 		['ID'] = 115131696,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4850,0}
 		},
 	[115131697] = {
 		['ID'] = 115131697,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4900,0}
 		},
 	[115131698] = {
 		['ID'] = 115131698,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {4950,0}
 		},
 	[115131699] = {
 		['ID'] = 115131699,
 		['Type'] = 170000008,
 		['Effect'] = {11,19},
-		['EffectAdd'] = {15000,12000},
+		['EffectAdd'] = {5000,12000},
 		['EffectNum'] = {5000,0}
 		},
 	[115140000] = {
@@ -30103,7 +30103,7 @@ local SkillEffectTable = {
 		['ID'] = 115140001,
 		['Type'] = 170000008,
 		['Effect'] = {3,4},
-		['EffectAdd'] = {10500,10500},
+		['EffectAdd'] = {-500,-500},
 		['EffectNum'] = {0}
 		},
 	[115140002] = {
@@ -30123,22 +30123,22 @@ local SkillEffectTable = {
 	[115140004] = {
 		['ID'] = 115140004,
 		['Type'] = 170000001,
-		['Effect'] = {3},
-		['EffectAdd'] = {5000},
+		['Effect'] = {1},
+		['EffectAdd'] = {-500},
 		['EffectNum'] = {0}
 		},
 	[115140005] = {
 		['ID'] = 115140005,
 		['Type'] = 170000008,
 		['Effect'] = {16},
-		['EffectAdd'] = {5000},
+		['EffectAdd'] = {-5000},
 		['EffectNum'] = {0}
 		},
 	[115140006] = {
 		['ID'] = 115140006,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {5000},
+		['EffectAdd'] = {-5000},
 		['EffectNum'] = {0}
 		},
 	[115140007] = {
@@ -30152,7 +30152,7 @@ local SkillEffectTable = {
 		['ID'] = 115140008,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {11000},
+		['EffectAdd'] = {1000},
 		['EffectNum'] = {0}
 		},
 	[115140100] = {
@@ -33659,700 +33659,700 @@ local SkillEffectTable = {
 		['ID'] = 115140600,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {20}
 		},
 	[115140601] = {
 		['ID'] = 115140601,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {40}
 		},
 	[115140602] = {
 		['ID'] = 115140602,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {60}
 		},
 	[115140603] = {
 		['ID'] = 115140603,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {80}
 		},
 	[115140604] = {
 		['ID'] = 115140604,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {100}
 		},
 	[115140605] = {
 		['ID'] = 115140605,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {120}
 		},
 	[115140606] = {
 		['ID'] = 115140606,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {140}
 		},
 	[115140607] = {
 		['ID'] = 115140607,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {160}
 		},
 	[115140608] = {
 		['ID'] = 115140608,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {180}
 		},
 	[115140609] = {
 		['ID'] = 115140609,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {200}
 		},
 	[115140610] = {
 		['ID'] = 115140610,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {220}
 		},
 	[115140611] = {
 		['ID'] = 115140611,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {240}
 		},
 	[115140612] = {
 		['ID'] = 115140612,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {260}
 		},
 	[115140613] = {
 		['ID'] = 115140613,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {280}
 		},
 	[115140614] = {
 		['ID'] = 115140614,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {300}
 		},
 	[115140615] = {
 		['ID'] = 115140615,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {320}
 		},
 	[115140616] = {
 		['ID'] = 115140616,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {340}
 		},
 	[115140617] = {
 		['ID'] = 115140617,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {360}
 		},
 	[115140618] = {
 		['ID'] = 115140618,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {380}
 		},
 	[115140619] = {
 		['ID'] = 115140619,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {400}
 		},
 	[115140620] = {
 		['ID'] = 115140620,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {420}
 		},
 	[115140621] = {
 		['ID'] = 115140621,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {440}
 		},
 	[115140622] = {
 		['ID'] = 115140622,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {460}
 		},
 	[115140623] = {
 		['ID'] = 115140623,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {480}
 		},
 	[115140624] = {
 		['ID'] = 115140624,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {500}
 		},
 	[115140625] = {
 		['ID'] = 115140625,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {520}
 		},
 	[115140626] = {
 		['ID'] = 115140626,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {540}
 		},
 	[115140627] = {
 		['ID'] = 115140627,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {560}
 		},
 	[115140628] = {
 		['ID'] = 115140628,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {580}
 		},
 	[115140629] = {
 		['ID'] = 115140629,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {600}
 		},
 	[115140630] = {
 		['ID'] = 115140630,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {620}
 		},
 	[115140631] = {
 		['ID'] = 115140631,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {640}
 		},
 	[115140632] = {
 		['ID'] = 115140632,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {660}
 		},
 	[115140633] = {
 		['ID'] = 115140633,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {680}
 		},
 	[115140634] = {
 		['ID'] = 115140634,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {700}
 		},
 	[115140635] = {
 		['ID'] = 115140635,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {720}
 		},
 	[115140636] = {
 		['ID'] = 115140636,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {740}
 		},
 	[115140637] = {
 		['ID'] = 115140637,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {760}
 		},
 	[115140638] = {
 		['ID'] = 115140638,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {780}
 		},
 	[115140639] = {
 		['ID'] = 115140639,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {800}
 		},
 	[115140640] = {
 		['ID'] = 115140640,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {820}
 		},
 	[115140641] = {
 		['ID'] = 115140641,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {840}
 		},
 	[115140642] = {
 		['ID'] = 115140642,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {860}
 		},
 	[115140643] = {
 		['ID'] = 115140643,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {880}
 		},
 	[115140644] = {
 		['ID'] = 115140644,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {900}
 		},
 	[115140645] = {
 		['ID'] = 115140645,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {920}
 		},
 	[115140646] = {
 		['ID'] = 115140646,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {940}
 		},
 	[115140647] = {
 		['ID'] = 115140647,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {960}
 		},
 	[115140648] = {
 		['ID'] = 115140648,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {980}
 		},
 	[115140649] = {
 		['ID'] = 115140649,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1000}
 		},
 	[115140650] = {
 		['ID'] = 115140650,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1020}
 		},
 	[115140651] = {
 		['ID'] = 115140651,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1040}
 		},
 	[115140652] = {
 		['ID'] = 115140652,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1060}
 		},
 	[115140653] = {
 		['ID'] = 115140653,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1080}
 		},
 	[115140654] = {
 		['ID'] = 115140654,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1100}
 		},
 	[115140655] = {
 		['ID'] = 115140655,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1120}
 		},
 	[115140656] = {
 		['ID'] = 115140656,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1140}
 		},
 	[115140657] = {
 		['ID'] = 115140657,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1160}
 		},
 	[115140658] = {
 		['ID'] = 115140658,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1180}
 		},
 	[115140659] = {
 		['ID'] = 115140659,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1200}
 		},
 	[115140660] = {
 		['ID'] = 115140660,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1220}
 		},
 	[115140661] = {
 		['ID'] = 115140661,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1240}
 		},
 	[115140662] = {
 		['ID'] = 115140662,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1260}
 		},
 	[115140663] = {
 		['ID'] = 115140663,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1280}
 		},
 	[115140664] = {
 		['ID'] = 115140664,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1300}
 		},
 	[115140665] = {
 		['ID'] = 115140665,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1320}
 		},
 	[115140666] = {
 		['ID'] = 115140666,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1340}
 		},
 	[115140667] = {
 		['ID'] = 115140667,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1360}
 		},
 	[115140668] = {
 		['ID'] = 115140668,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1380}
 		},
 	[115140669] = {
 		['ID'] = 115140669,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1400}
 		},
 	[115140670] = {
 		['ID'] = 115140670,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1420}
 		},
 	[115140671] = {
 		['ID'] = 115140671,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1440}
 		},
 	[115140672] = {
 		['ID'] = 115140672,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1460}
 		},
 	[115140673] = {
 		['ID'] = 115140673,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1480}
 		},
 	[115140674] = {
 		['ID'] = 115140674,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1500}
 		},
 	[115140675] = {
 		['ID'] = 115140675,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1520}
 		},
 	[115140676] = {
 		['ID'] = 115140676,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1540}
 		},
 	[115140677] = {
 		['ID'] = 115140677,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1560}
 		},
 	[115140678] = {
 		['ID'] = 115140678,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1580}
 		},
 	[115140679] = {
 		['ID'] = 115140679,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1600}
 		},
 	[115140680] = {
 		['ID'] = 115140680,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1620}
 		},
 	[115140681] = {
 		['ID'] = 115140681,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1640}
 		},
 	[115140682] = {
 		['ID'] = 115140682,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1660}
 		},
 	[115140683] = {
 		['ID'] = 115140683,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1680}
 		},
 	[115140684] = {
 		['ID'] = 115140684,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1700}
 		},
 	[115140685] = {
 		['ID'] = 115140685,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1720}
 		},
 	[115140686] = {
 		['ID'] = 115140686,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1740}
 		},
 	[115140687] = {
 		['ID'] = 115140687,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1760}
 		},
 	[115140688] = {
 		['ID'] = 115140688,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1780}
 		},
 	[115140689] = {
 		['ID'] = 115140689,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1800}
 		},
 	[115140690] = {
 		['ID'] = 115140690,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1820}
 		},
 	[115140691] = {
 		['ID'] = 115140691,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1840}
 		},
 	[115140692] = {
 		['ID'] = 115140692,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1860}
 		},
 	[115140693] = {
 		['ID'] = 115140693,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1880}
 		},
 	[115140694] = {
 		['ID'] = 115140694,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1900}
 		},
 	[115140695] = {
 		['ID'] = 115140695,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1920}
 		},
 	[115140696] = {
 		['ID'] = 115140696,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1940}
 		},
 	[115140697] = {
 		['ID'] = 115140697,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1960}
 		},
 	[115140698] = {
 		['ID'] = 115140698,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {1980}
 		},
 	[115140699] = {
 		['ID'] = 115140699,
 		['Type'] = 170000008,
 		['Effect'] = {15},
-		['EffectAdd'] = {12000},
+		['EffectAdd'] = {2000},
 		['EffectNum'] = {2000}
 		},
 	[115140700] = {
@@ -39259,1400 +39259,1400 @@ local SkillEffectTable = {
 		['ID'] = 115141500,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {20,20}
 		},
 	[115141501] = {
 		['ID'] = 115141501,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {40,40}
 		},
 	[115141502] = {
 		['ID'] = 115141502,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {60,60}
 		},
 	[115141503] = {
 		['ID'] = 115141503,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {80,80}
 		},
 	[115141504] = {
 		['ID'] = 115141504,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {100,100}
 		},
 	[115141505] = {
 		['ID'] = 115141505,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {120,120}
 		},
 	[115141506] = {
 		['ID'] = 115141506,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {140,140}
 		},
 	[115141507] = {
 		['ID'] = 115141507,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {160,160}
 		},
 	[115141508] = {
 		['ID'] = 115141508,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {180,180}
 		},
 	[115141509] = {
 		['ID'] = 115141509,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {200,200}
 		},
 	[115141510] = {
 		['ID'] = 115141510,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {220,220}
 		},
 	[115141511] = {
 		['ID'] = 115141511,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {240,240}
 		},
 	[115141512] = {
 		['ID'] = 115141512,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {260,260}
 		},
 	[115141513] = {
 		['ID'] = 115141513,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {280,280}
 		},
 	[115141514] = {
 		['ID'] = 115141514,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {300,300}
 		},
 	[115141515] = {
 		['ID'] = 115141515,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {320,320}
 		},
 	[115141516] = {
 		['ID'] = 115141516,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {340,340}
 		},
 	[115141517] = {
 		['ID'] = 115141517,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {360,360}
 		},
 	[115141518] = {
 		['ID'] = 115141518,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {380,380}
 		},
 	[115141519] = {
 		['ID'] = 115141519,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {400,400}
 		},
 	[115141520] = {
 		['ID'] = 115141520,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {420,420}
 		},
 	[115141521] = {
 		['ID'] = 115141521,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {440,440}
 		},
 	[115141522] = {
 		['ID'] = 115141522,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {460,460}
 		},
 	[115141523] = {
 		['ID'] = 115141523,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {480,480}
 		},
 	[115141524] = {
 		['ID'] = 115141524,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {500,500}
 		},
 	[115141525] = {
 		['ID'] = 115141525,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {520,520}
 		},
 	[115141526] = {
 		['ID'] = 115141526,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {540,540}
 		},
 	[115141527] = {
 		['ID'] = 115141527,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {560,560}
 		},
 	[115141528] = {
 		['ID'] = 115141528,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {580,580}
 		},
 	[115141529] = {
 		['ID'] = 115141529,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {600,600}
 		},
 	[115141530] = {
 		['ID'] = 115141530,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {620,620}
 		},
 	[115141531] = {
 		['ID'] = 115141531,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {640,640}
 		},
 	[115141532] = {
 		['ID'] = 115141532,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {660,660}
 		},
 	[115141533] = {
 		['ID'] = 115141533,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {680,680}
 		},
 	[115141534] = {
 		['ID'] = 115141534,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {700,700}
 		},
 	[115141535] = {
 		['ID'] = 115141535,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {720,720}
 		},
 	[115141536] = {
 		['ID'] = 115141536,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {740,740}
 		},
 	[115141537] = {
 		['ID'] = 115141537,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {760,760}
 		},
 	[115141538] = {
 		['ID'] = 115141538,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {780,780}
 		},
 	[115141539] = {
 		['ID'] = 115141539,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {800,800}
 		},
 	[115141540] = {
 		['ID'] = 115141540,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {820,820}
 		},
 	[115141541] = {
 		['ID'] = 115141541,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {840,840}
 		},
 	[115141542] = {
 		['ID'] = 115141542,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {860,860}
 		},
 	[115141543] = {
 		['ID'] = 115141543,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {880,880}
 		},
 	[115141544] = {
 		['ID'] = 115141544,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {900,900}
 		},
 	[115141545] = {
 		['ID'] = 115141545,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {920,920}
 		},
 	[115141546] = {
 		['ID'] = 115141546,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {940,940}
 		},
 	[115141547] = {
 		['ID'] = 115141547,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {960,960}
 		},
 	[115141548] = {
 		['ID'] = 115141548,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {980,980}
 		},
 	[115141549] = {
 		['ID'] = 115141549,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1000,1000}
 		},
 	[115141550] = {
 		['ID'] = 115141550,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1020,1020}
 		},
 	[115141551] = {
 		['ID'] = 115141551,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1040,1040}
 		},
 	[115141552] = {
 		['ID'] = 115141552,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1060,1060}
 		},
 	[115141553] = {
 		['ID'] = 115141553,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1080,1080}
 		},
 	[115141554] = {
 		['ID'] = 115141554,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1100,1100}
 		},
 	[115141555] = {
 		['ID'] = 115141555,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1120,1120}
 		},
 	[115141556] = {
 		['ID'] = 115141556,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1140,1140}
 		},
 	[115141557] = {
 		['ID'] = 115141557,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1160,1160}
 		},
 	[115141558] = {
 		['ID'] = 115141558,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1180,1180}
 		},
 	[115141559] = {
 		['ID'] = 115141559,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1200,1200}
 		},
 	[115141560] = {
 		['ID'] = 115141560,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1220,1220}
 		},
 	[115141561] = {
 		['ID'] = 115141561,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1240,1240}
 		},
 	[115141562] = {
 		['ID'] = 115141562,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1260,1260}
 		},
 	[115141563] = {
 		['ID'] = 115141563,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1280,1280}
 		},
 	[115141564] = {
 		['ID'] = 115141564,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1300,1300}
 		},
 	[115141565] = {
 		['ID'] = 115141565,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1320,1320}
 		},
 	[115141566] = {
 		['ID'] = 115141566,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1340,1340}
 		},
 	[115141567] = {
 		['ID'] = 115141567,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1360,1360}
 		},
 	[115141568] = {
 		['ID'] = 115141568,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1380,1380}
 		},
 	[115141569] = {
 		['ID'] = 115141569,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1400,1400}
 		},
 	[115141570] = {
 		['ID'] = 115141570,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1420,1420}
 		},
 	[115141571] = {
 		['ID'] = 115141571,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1440,1440}
 		},
 	[115141572] = {
 		['ID'] = 115141572,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1460,1460}
 		},
 	[115141573] = {
 		['ID'] = 115141573,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1480,1480}
 		},
 	[115141574] = {
 		['ID'] = 115141574,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1500,1500}
 		},
 	[115141575] = {
 		['ID'] = 115141575,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1520,1520}
 		},
 	[115141576] = {
 		['ID'] = 115141576,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1540,1540}
 		},
 	[115141577] = {
 		['ID'] = 115141577,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1560,1560}
 		},
 	[115141578] = {
 		['ID'] = 115141578,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1580,1580}
 		},
 	[115141579] = {
 		['ID'] = 115141579,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1600,1600}
 		},
 	[115141580] = {
 		['ID'] = 115141580,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1620,1620}
 		},
 	[115141581] = {
 		['ID'] = 115141581,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1640,1640}
 		},
 	[115141582] = {
 		['ID'] = 115141582,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1660,1660}
 		},
 	[115141583] = {
 		['ID'] = 115141583,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1680,1680}
 		},
 	[115141584] = {
 		['ID'] = 115141584,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1700,1700}
 		},
 	[115141585] = {
 		['ID'] = 115141585,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1720,1720}
 		},
 	[115141586] = {
 		['ID'] = 115141586,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1740,1740}
 		},
 	[115141587] = {
 		['ID'] = 115141587,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1760,1760}
 		},
 	[115141588] = {
 		['ID'] = 115141588,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1780,1780}
 		},
 	[115141589] = {
 		['ID'] = 115141589,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1800,1800}
 		},
 	[115141590] = {
 		['ID'] = 115141590,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1820,1820}
 		},
 	[115141591] = {
 		['ID'] = 115141591,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1840,1840}
 		},
 	[115141592] = {
 		['ID'] = 115141592,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1860,1860}
 		},
 	[115141593] = {
 		['ID'] = 115141593,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1880,1880}
 		},
 	[115141594] = {
 		['ID'] = 115141594,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1900,1900}
 		},
 	[115141595] = {
 		['ID'] = 115141595,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1920,1920}
 		},
 	[115141596] = {
 		['ID'] = 115141596,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1940,1940}
 		},
 	[115141597] = {
 		['ID'] = 115141597,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1960,1960}
 		},
 	[115141598] = {
 		['ID'] = 115141598,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1980,1980}
 		},
 	[115141599] = {
 		['ID'] = 115141599,
 		['Type'] = 170000008,
 		['Effect'] = {15,14},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {2000,2000}
 		},
 	[115141600] = {
 		['ID'] = 115141600,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {20,20}
 		},
 	[115141601] = {
 		['ID'] = 115141601,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {40,40}
 		},
 	[115141602] = {
 		['ID'] = 115141602,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {60,60}
 		},
 	[115141603] = {
 		['ID'] = 115141603,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {80,80}
 		},
 	[115141604] = {
 		['ID'] = 115141604,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {100,100}
 		},
 	[115141605] = {
 		['ID'] = 115141605,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {120,120}
 		},
 	[115141606] = {
 		['ID'] = 115141606,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {140,140}
 		},
 	[115141607] = {
 		['ID'] = 115141607,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {160,160}
 		},
 	[115141608] = {
 		['ID'] = 115141608,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {180,180}
 		},
 	[115141609] = {
 		['ID'] = 115141609,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {200,200}
 		},
 	[115141610] = {
 		['ID'] = 115141610,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {220,220}
 		},
 	[115141611] = {
 		['ID'] = 115141611,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {240,240}
 		},
 	[115141612] = {
 		['ID'] = 115141612,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {260,260}
 		},
 	[115141613] = {
 		['ID'] = 115141613,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {280,280}
 		},
 	[115141614] = {
 		['ID'] = 115141614,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {300,300}
 		},
 	[115141615] = {
 		['ID'] = 115141615,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {320,320}
 		},
 	[115141616] = {
 		['ID'] = 115141616,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {340,340}
 		},
 	[115141617] = {
 		['ID'] = 115141617,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {360,360}
 		},
 	[115141618] = {
 		['ID'] = 115141618,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {380,380}
 		},
 	[115141619] = {
 		['ID'] = 115141619,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {400,400}
 		},
 	[115141620] = {
 		['ID'] = 115141620,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {420,420}
 		},
 	[115141621] = {
 		['ID'] = 115141621,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {440,440}
 		},
 	[115141622] = {
 		['ID'] = 115141622,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {460,460}
 		},
 	[115141623] = {
 		['ID'] = 115141623,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {480,480}
 		},
 	[115141624] = {
 		['ID'] = 115141624,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {500,500}
 		},
 	[115141625] = {
 		['ID'] = 115141625,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {520,520}
 		},
 	[115141626] = {
 		['ID'] = 115141626,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {540,540}
 		},
 	[115141627] = {
 		['ID'] = 115141627,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {560,560}
 		},
 	[115141628] = {
 		['ID'] = 115141628,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {580,580}
 		},
 	[115141629] = {
 		['ID'] = 115141629,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {600,600}
 		},
 	[115141630] = {
 		['ID'] = 115141630,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {620,620}
 		},
 	[115141631] = {
 		['ID'] = 115141631,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {640,640}
 		},
 	[115141632] = {
 		['ID'] = 115141632,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {660,660}
 		},
 	[115141633] = {
 		['ID'] = 115141633,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {680,680}
 		},
 	[115141634] = {
 		['ID'] = 115141634,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {700,700}
 		},
 	[115141635] = {
 		['ID'] = 115141635,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {720,720}
 		},
 	[115141636] = {
 		['ID'] = 115141636,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {740,740}
 		},
 	[115141637] = {
 		['ID'] = 115141637,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {760,760}
 		},
 	[115141638] = {
 		['ID'] = 115141638,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {780,780}
 		},
 	[115141639] = {
 		['ID'] = 115141639,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {800,800}
 		},
 	[115141640] = {
 		['ID'] = 115141640,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {820,820}
 		},
 	[115141641] = {
 		['ID'] = 115141641,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {840,840}
 		},
 	[115141642] = {
 		['ID'] = 115141642,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {860,860}
 		},
 	[115141643] = {
 		['ID'] = 115141643,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {880,880}
 		},
 	[115141644] = {
 		['ID'] = 115141644,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {900,900}
 		},
 	[115141645] = {
 		['ID'] = 115141645,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {920,920}
 		},
 	[115141646] = {
 		['ID'] = 115141646,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {940,940}
 		},
 	[115141647] = {
 		['ID'] = 115141647,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {960,960}
 		},
 	[115141648] = {
 		['ID'] = 115141648,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {980,980}
 		},
 	[115141649] = {
 		['ID'] = 115141649,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1000,1000}
 		},
 	[115141650] = {
 		['ID'] = 115141650,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1020,1020}
 		},
 	[115141651] = {
 		['ID'] = 115141651,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1040,1040}
 		},
 	[115141652] = {
 		['ID'] = 115141652,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1060,1060}
 		},
 	[115141653] = {
 		['ID'] = 115141653,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1080,1080}
 		},
 	[115141654] = {
 		['ID'] = 115141654,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1100,1100}
 		},
 	[115141655] = {
 		['ID'] = 115141655,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1120,1120}
 		},
 	[115141656] = {
 		['ID'] = 115141656,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1140,1140}
 		},
 	[115141657] = {
 		['ID'] = 115141657,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1160,1160}
 		},
 	[115141658] = {
 		['ID'] = 115141658,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1180,1180}
 		},
 	[115141659] = {
 		['ID'] = 115141659,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1200,1200}
 		},
 	[115141660] = {
 		['ID'] = 115141660,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1220,1220}
 		},
 	[115141661] = {
 		['ID'] = 115141661,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1240,1240}
 		},
 	[115141662] = {
 		['ID'] = 115141662,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1260,1260}
 		},
 	[115141663] = {
 		['ID'] = 115141663,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1280,1280}
 		},
 	[115141664] = {
 		['ID'] = 115141664,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1300,1300}
 		},
 	[115141665] = {
 		['ID'] = 115141665,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1320,1320}
 		},
 	[115141666] = {
 		['ID'] = 115141666,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1340,1340}
 		},
 	[115141667] = {
 		['ID'] = 115141667,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1360,1360}
 		},
 	[115141668] = {
 		['ID'] = 115141668,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1380,1380}
 		},
 	[115141669] = {
 		['ID'] = 115141669,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1400,1400}
 		},
 	[115141670] = {
 		['ID'] = 115141670,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1420,1420}
 		},
 	[115141671] = {
 		['ID'] = 115141671,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1440,1440}
 		},
 	[115141672] = {
 		['ID'] = 115141672,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1460,1460}
 		},
 	[115141673] = {
 		['ID'] = 115141673,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1480,1480}
 		},
 	[115141674] = {
 		['ID'] = 115141674,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1500,1500}
 		},
 	[115141675] = {
 		['ID'] = 115141675,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1520,1520}
 		},
 	[115141676] = {
 		['ID'] = 115141676,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1540,1540}
 		},
 	[115141677] = {
 		['ID'] = 115141677,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1560,1560}
 		},
 	[115141678] = {
 		['ID'] = 115141678,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1580,1580}
 		},
 	[115141679] = {
 		['ID'] = 115141679,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1600,1600}
 		},
 	[115141680] = {
 		['ID'] = 115141680,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1620,1620}
 		},
 	[115141681] = {
 		['ID'] = 115141681,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1640,1640}
 		},
 	[115141682] = {
 		['ID'] = 115141682,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1660,1660}
 		},
 	[115141683] = {
 		['ID'] = 115141683,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1680,1680}
 		},
 	[115141684] = {
 		['ID'] = 115141684,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1700,1700}
 		},
 	[115141685] = {
 		['ID'] = 115141685,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1720,1720}
 		},
 	[115141686] = {
 		['ID'] = 115141686,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1740,1740}
 		},
 	[115141687] = {
 		['ID'] = 115141687,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1760,1760}
 		},
 	[115141688] = {
 		['ID'] = 115141688,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1780,1780}
 		},
 	[115141689] = {
 		['ID'] = 115141689,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1800,1800}
 		},
 	[115141690] = {
 		['ID'] = 115141690,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1820,1820}
 		},
 	[115141691] = {
 		['ID'] = 115141691,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1840,1840}
 		},
 	[115141692] = {
 		['ID'] = 115141692,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1860,1860}
 		},
 	[115141693] = {
 		['ID'] = 115141693,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1880,1880}
 		},
 	[115141694] = {
 		['ID'] = 115141694,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1900,1900}
 		},
 	[115141695] = {
 		['ID'] = 115141695,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1920,1920}
 		},
 	[115141696] = {
 		['ID'] = 115141696,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1940,1940}
 		},
 	[115141697] = {
 		['ID'] = 115141697,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1960,1960}
 		},
 	[115141698] = {
 		['ID'] = 115141698,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {1980,1980}
 		},
 	[115141699] = {
 		['ID'] = 115141699,
 		['Type'] = 170000008,
 		['Effect'] = {3,17},
-		['EffectAdd'] = {12000,12000},
+		['EffectAdd'] = {2000,2000},
 		['EffectNum'] = {2000,2000}
 		}
 	}

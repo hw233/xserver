@@ -950,6 +950,41 @@ local TaskMonsterTable = {
 		['MonsterLevel'] = 25,
 		['PointX'] = 155,
 		['PointZ'] = 170
+		},
+	[240720137] = {
+		['ID'] = 240720137,
+		['MonsterID'] = 151006002,
+		['MonsterLevel'] = 25,
+		['PointX'] = 187,
+		['PointZ'] = 152
+		},
+	[240720138] = {
+		['ID'] = 240720138,
+		['MonsterID'] = 151006002,
+		['MonsterLevel'] = 25,
+		['PointX'] = 129,
+		['PointZ'] = 42
+		},
+	[240720139] = {
+		['ID'] = 240720139,
+		['MonsterID'] = 151006002,
+		['MonsterLevel'] = 25,
+		['PointX'] = 226,
+		['PointZ'] = 236
+		},
+	[240720140] = {
+		['ID'] = 240720140,
+		['MonsterID'] = 151006002,
+		['MonsterLevel'] = 25,
+		['PointX'] = 213,
+		['PointZ'] = 221
+		},
+	[240720141] = {
+		['ID'] = 240720141,
+		['MonsterID'] = 151006002,
+		['MonsterLevel'] = 25,
+		['PointX'] = 207,
+		['PointZ'] = 214
 		}
 	}
 return TaskMonsterTable

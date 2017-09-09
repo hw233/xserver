@@ -1777,6 +1777,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	zhenying.help = data->zhenying.help;
 	zhenying.score = data->zhenying.score;
 	zhenying.mine = data->zhenying.mine;
+	zhenying.one_award = data->zhenying.one_award;
 
 	db_info.server_level_break_count = data->server_level_break_count;
 	db_info.server_level_break_notify = data->server_level_break_notify;
@@ -1822,6 +1823,36 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		title_data[db_info.n_title_list].is_new = data->title_list[i].is_new;
 		title_data[db_info.n_title_list].active_time = data->title_list[i].active_time;
 		db_info.n_title_list++;
+	}
+	//英雄挑战相关信息
+	DBHreoChallengeInfo hero_challenge_info[MAX_HERO_CHALLENGE_MONSTER_NUM];
+	DBHreoChallengeInfo* hero_challenge_info_point[MAX_HERO_CHALLENGE_MONSTER_NUM];
+	DBHreoChallengeItemInfo hero_challenge_item_info[MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM];
+	DBHreoChallengeItemInfo* hero_challenge_item_info_point[MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM];
+	db_info.hero_challenge_all_info = hero_challenge_info_point;
+	db_info.n_hero_challenge_all_info = 0;
+	for(size_t i = 0; i < MAX_HERO_CHALLENGE_MONSTER_NUM; i++)
+	{
+		if(data->my_hero_info[i].id == 0)
+		{
+			break;
+		}
+		hero_challenge_info_point[db_info.n_hero_challenge_all_info] = &hero_challenge_info[db_info.n_hero_challenge_all_info];
+		dbhreo_challenge_info__init(&hero_challenge_info[db_info.n_hero_challenge_all_info]);
+		hero_challenge_info[db_info.n_hero_challenge_all_info].id = data->my_hero_info[i].id;
+		hero_challenge_info[db_info.n_hero_challenge_all_info].star = data->my_hero_info[i].star;
+		hero_challenge_info[db_info.n_hero_challenge_all_info].reward_flag = data->my_hero_info[i].reward_flag;
+		hero_challenge_info[db_info.n_hero_challenge_all_info].item_info = hero_challenge_item_info_point;
+		hero_challenge_info[db_info.n_hero_challenge_all_info].n_item_info = 0;
+		for(size_t j = 0; j < MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM ; j++)
+		{
+			hero_challenge_item_info_point[j] = &hero_challenge_item_info[j];
+			dbhreo_challenge_item_info__init(&hero_challenge_item_info[j]);
+			hero_challenge_item_info[j].item_id = data->my_hero_info[i].item_info[j].item_id;
+			hero_challenge_item_info[j].item_num = data->my_hero_info[i].item_info[j].item_num;
+			hero_challenge_info[db_info.n_hero_challenge_all_info].n_item_info++;
+		}
+		db_info.n_hero_challenge_all_info++;
 	}
 
 	return player_dbinfo__pack(&db_info, out_data);
@@ -1877,6 +1908,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		 data->zhenying.help = db_info->zhenying->help;
 		 data->zhenying.score = db_info->zhenying->score;
 		 data->zhenying.mine = db_info->zhenying->mine;
+		 data->zhenying.one_award = db_info->zhenying->one_award;
 	}
 
 	//背包
@@ -2335,6 +2367,19 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		data->title_list[i].expire_time = db_info->title_list[i]->expire_time;
 		data->title_list[i].is_new = db_info->title_list[i]->is_new;
 		data->title_list[i].active_time = db_info->title_list[i]->active_time;
+	}
+
+	//英雄挑战相关信息
+	for(size_t i = 0; i < db_info->n_hero_challenge_all_info && i < MAX_HERO_CHALLENGE_MONSTER_NUM; i++)
+	{
+		data->my_hero_info[i].id = db_info->hero_challenge_all_info[i]->id;
+		data->my_hero_info[i].star = db_info->hero_challenge_all_info[i]->star;
+		data->my_hero_info[i].reward_flag = db_info->hero_challenge_all_info[i]->reward_flag;
+		for(size_t j = 0; j < MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM ; j++)
+		{
+			data->my_hero_info[i].item_info[j].item_id = db_info->hero_challenge_all_info[i]->item_info[j]->item_id;
+			data->my_hero_info[i].item_info[j].item_num = db_info->hero_challenge_all_info[i]->item_info[j]->item_num;
+		}
 	}
 
 	player_dbinfo__free_unpacked(db_info, NULL);
@@ -9316,16 +9361,20 @@ uint32_t player_struct::get_equip_num(void)
 
 uint64_t player_struct::reset_pvp_raid_level(uint16_t score, uint8_t *level, uint8_t *star)
 {
+//	std::map<uint64_t, struct StageTable*>::iterator begin = pvp_raid_config.begin();
+//	uint64_t ret = begin->first;
+//	assert(pvp_raid_config.begin()->second->StageScore == 0);
 	for (std::map<uint64_t, struct StageTable*>::iterator ite = pvp_raid_config.begin();
 		 ite != pvp_raid_config.end(); ++ite)
 	{
-		if (score < ite->second->StageScore)
+		if (score < ite->second->stageTotalScore)
 		{
 			*level = ite->second->Stage;
 			*star = ite->second->StageLevel;
 			return ite->first;
 		}
 	}
+
 	std::map<uint64_t, struct StageTable*>::reverse_iterator ite = pvp_raid_config.rbegin();
 	*level = ite->second->Stage;
 	*star = ite->second->StageLevel;
@@ -9366,7 +9415,9 @@ int player_struct::send_pvp_raid_score_changed(int type)
 	if (type == PVP_TYPE_DEFINE_3)
 	{
 		nty.level = data->pvp_raid_data.cur_level_id_3;
-		nty.score = data->pvp_raid_data.score_3;
+		struct StageTable *config = get_config_by_id(nty.level, &pvp_raid_config);
+		assert(config);
+		nty.score = data->pvp_raid_data.score_3 - config->stageLastScore;
 		nty.today_win_num = data->pvp_raid_data.oneday_win_num_3;
 		nty.max_level = data->pvp_raid_data.max_level_id_3;
 		nty.max_score = data->pvp_raid_data.max_score_3;
@@ -9386,7 +9437,9 @@ int player_struct::send_pvp_raid_score_changed(int type)
 	else
 	{
 		nty.level = data->pvp_raid_data.cur_level_id_5;
-		nty.score = data->pvp_raid_data.score_5;
+		struct StageTable *config = get_config_by_id(nty.level, &pvp_raid_config);
+		assert(config);
+		nty.score = data->pvp_raid_data.score_5 - config->stageLastScore;
 		nty.today_win_num = data->pvp_raid_data.oneday_win_num_5;
 		nty.max_level = data->pvp_raid_data.max_level_id_5;
 		nty.max_score = data->pvp_raid_data.max_score_5;
@@ -11093,7 +11146,10 @@ int player_struct::add_all_formation_partner_to_scene()
 {
 	for (int i = 0; i < MAX_PARTNER_FORMATION_NUM; ++i)
 	{
+		if (data->partner_formation[i] == 0)
+			continue;
 		partner_struct *partner = get_partner_by_uuid(data->partner_formation[i]);
+		LOG_DEBUG("%s: player[%lu] partner[%lu][%p]", __FUNCTION__, data->player_id, data->partner_formation[i], partner);
 		if (!partner)
 		{
 			continue;
@@ -11290,23 +11346,22 @@ void player_struct::adjust_battle_partner(void)
 	do
 	{
 		//在角色上坐骑、上镖车、死亡的时候，要把伙伴隐藏起来
-		if (!is_partner_battle() || is_on_horse() || is_on_truck() || !is_alive())
-		{
-			for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
-			{
-				if (data->partner_battle[i] == 0)
-				{
-					continue;
-				}
+		bool partner_out = !(!is_partner_battle() || is_on_horse() || is_on_truck() || !is_alive());
 
-				del_partner_from_scene(data->partner_battle[i], true);
-				// partner_struct *partner = get_partner_by_uuid(data->partner_battle[i]);
-				// if (partner && partner->scene)
-				// {
-				//	partner->scene->delete_partner_from_scene(partner, true);
-				// }
+		//先把下阵和死亡的伙伴撤下来
+		for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
+		{
+			uint64_t uuid = data->partner_battle[i];
+			if (uuid == 0)
+			{
+				continue;
 			}
-			break;
+
+			partner_struct *partner = get_partner_by_uuid(uuid);
+			if (!partner_is_in_formation(uuid) || !partner || !partner->is_alive())
+			{
+				sub_battle_partner(i);
+			}
 		}
 
 		//主战优先出战的时候，确保主战伙伴出战
@@ -11330,62 +11385,77 @@ void player_struct::adjust_battle_partner(void)
 
 			if (data->partner_battle[0] > 0)
 			{
-				del_partner_from_scene(data->partner_battle[0], true);
-				// partner_struct *down_partner = get_partner_by_uuid(data->partner_battle[0]);
-				// if (down_partner && down_partner->scene)
-				// {
-				//	down_partner->scene->delete_partner_from_scene(down_partner, true);
-				// }
+				sub_battle_partner(0);
 			}
 
 			data->partner_battle[0] = main_partner_uuid;
-			add_partner_to_scene(data->partner_battle[0]);
-			add_task_progress(TCT_PARTNER_OUT_FIGHT, main_partner->data->partner_id, 1);
 			reset_partner_anger();
 		} while(0);
 
 		//出战伙伴数减少，先把部分伙伴收回
-		uint32_t cur_battle_num = get_partner_battle_num();
-		if (cur_battle_num > battle_num)
-		{
-			uint32_t count = 0;
-			for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
-			{
-				if (data->partner_battle[i] == 0)
-				{
-					continue;
-				}
-
-				if (count == battle_num)
-				{
-					sub_battle_partner(i);
-				}
-				else
-				{
-					count++;
-				}
-			}
-		}
-
-		for (int i = 0; i < MAX_PARTNER_BATTLE_NUM && i < (int)battle_num; ++i)
+		for (int i = battle_num; i < MAX_PARTNER_BATTLE_NUM; ++i)
 		{
 			if (data->partner_battle[i] == 0)
 			{
-				add_battle_partner(i);
+				continue;
+			}
+
+			sub_battle_partner(i);
+		}
+
+		//中间有空位的，先由上阵未出战伙伴补上，如果空缺，再把后面的往前挪
+		for (int i = 0; i < MAX_PARTNER_BATTLE_NUM && i < (int)battle_num; ++i)
+		{
+			if (data->partner_battle[i] != 0)
+			{
+				continue;
+			}
+
+			data->partner_battle[i] = get_next_can_battle_partner();
+			if (data->partner_battle[i] == 0)
+			{
+				for (int j = i; j < MAX_PARTNER_BATTLE_NUM && j < (int)battle_num; ++j)
+				{
+					if (data->partner_battle[j] != 0)
+					{
+						data->partner_battle[i] = data->partner_battle[j];
+						data->partner_battle[j] = 0;
+						if (i == 0)
+						{
+							reset_partner_anger();
+						}
+						i++;
+					}
+				}
+
+				break;
+			}
+			else if (i == 0)
+			{
+				reset_partner_anger();
+			}
+		}
+
+		for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
+		{
+			uint64_t uuid = data->partner_battle[i];
+			if (uuid == 0)
+			{
+				continue;
+			}
+
+			if (partner_out)
+			{
+				partner_struct *partner = get_partner_by_uuid(uuid);
+				if (partner && partner->is_alive() && ((sight_space && !partner->partner_sight_space) || (!partner->scene)))
+				{
+					add_partner_to_scene(uuid);
+					add_task_progress(TCT_PARTNER_OUT_FIGHT, partner->data->partner_id, 1);
+				}
 			}
 			else
 			{
-				partner_struct *partner = get_partner_by_uuid(data->partner_battle[i]);
-				if (!partner_is_in_formation(data->partner_battle[i]) || !partner || !partner->is_alive())
-				{
-					sub_battle_partner(i);
-					add_battle_partner(i);
-				}
-				else if (partner_is_in_formation(data->partner_battle[i]) && partner && partner->is_alive() && ((sight_space && !partner->partner_sight_space) || (!partner->scene)))
-				{
-					add_partner_to_scene(data->partner_battle[i]);
-					add_task_progress(TCT_PARTNER_OUT_FIGHT, partner->data->partner_id, 1);
-				}
+				del_partner_from_scene(uuid, true);
 			}
 		}
 	} while(0);
@@ -14956,5 +15026,30 @@ void player_struct::check_title_condition(uint32_t type, uint32_t target1, uint3
 	}
 }
 
-
+int player_struct::init_hero_challenge_data()
+{
+	for(std::map<uint64_t, ChallengeTable*>::iterator ite = hero_challenge_config.begin(); ite != hero_challenge_config.end(); ite++)
+	{
+		int dex = -1;
+		for(uint32_t i =0; i < MAX_HERO_CHALLENGE_MONSTER_NUM; i++)
+		{
+			if(data->my_hero_info[i].id == 0)
+			{
+				dex = i;
+				break;
+			}
+			else if(data->my_hero_info[i].id == ite->second->ID)
+			{
+				break;
+			}
+		}
+		if(dex == -1)
+			continue;
+		
+		data->my_hero_info[dex].id = ite->second->ID;
+		data->my_hero_info[dex].star = 0;
+	}
+	
+	return 0;
+}
 

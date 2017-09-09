@@ -29,6 +29,8 @@ int zhenying_raid_struct::set_m_player_and_player_info(player_struct *player, in
 
 int zhenying_raid_struct::add_player_to_zhenying_raid(player_struct *player)
 {
+		// TODO: check_player_enter_raid
+	
 	FactionBattleTable *table = get_zhenying_battle_table(player->get_attr(PLAYER_ATTR_LEVEL));
 	if (table == NULL)
 	{

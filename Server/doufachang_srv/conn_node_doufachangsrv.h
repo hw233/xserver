@@ -49,7 +49,7 @@ private:
 	int handle_server_add_reward_answer(EXTERN_DATA *extern_data);
 
 	uint32_t add_challenge_rank(DOUFACHANG_CHALLENGE_ANSWER *ans);	
-	int add_challenge_record(DOUFACHANG_CHALLENGE_ANSWER *ans);
+	int add_challenge_record(DOUFACHANG_CHALLENGE_ANSWER *ans, uint32_t rank_add);
 	int is_player_locked(uint64_t player_id, uint64_t now);
 	int set_player_locked(uint64_t player_id, uint64_t target_id, uint64_t now);
 	int set_player_unlocked(uint64_t player_id, uint64_t target_id);

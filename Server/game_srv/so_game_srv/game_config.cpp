@@ -574,6 +574,11 @@ bool is_guild_battle_raid(uint32_t id)
 	return (id == (uint32_t)sg_guild_raid_param1[0] || id == (uint32_t)sg_guild_raid_final_param1[0]);
 }
 
+bool scene_can_make_team(uint32_t scene_id)
+{
+	return (scene_id <= SCENCE_DEPART || is_guild_wait_raid(scene_id));
+}
+
 int get_scene_birth_pos(uint32_t scene_id, float *pos_x, float *pos_y, float *pos_z, float *face_y)
 {
 	SceneResTable *config = get_config_by_id(scene_id, &scene_res_config);
@@ -1365,6 +1370,21 @@ static void adjust_fighting_capacity_coefficient(void)
 	}
 }
 
+static void adjust_stage_tables()
+{
+	uint64_t total = 0;
+	uint64_t last = 0;
+	for (std::map<uint64_t, struct StageTable*>::iterator ite = pvp_raid_config.begin();
+		 ite != pvp_raid_config.end(); ++ite)
+	{
+		struct StageTable *config = ite->second;
+		total += config->StageScore;
+		config->stageLastScore = last;
+		config->stageTotalScore = total;
+		last = total;
+	}
+}
+
 static void adjust_yuqidao_tables(void)
 {
 	for (std::map<uint64_t, struct AcupunctureTable*>::iterator iter = yuqidao_acupoint_config.begin(); iter != yuqidao_acupoint_config.end(); ++iter)
@@ -1534,6 +1554,14 @@ static void adjust_worldboss_table()
 	for (ite = world_boss_config.begin(); ite != world_boss_config.end(); ++ite)
 	{
 		monster_to_world_boss_config.insert(std::make_pair((uint64_t)(ite->second->MonsterID), ite->second));
+	}
+}
+static void adjust_herochallenge_table()
+{
+	std::map<uint64_t, struct ChallengeTable *>::iterator ite;
+	for (ite = hero_challenge_config.begin(); ite != hero_challenge_config.end(); ++ite)
+	{
+		raidid_to_hero_challenge_config.insert(std::make_pair((uint64_t)(ite->second->DungeonID), ite->second));
 	}
 }
 
@@ -2420,6 +2448,7 @@ int read_all_excel_data()
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/StageTable.lua", (config_type)&pvp_raid_config);
 	assert(ret == 0);
+	adjust_stage_tables();
 
 	type = sproto_type(sp, "BaguaTable");
 	assert(type);
@@ -2694,6 +2723,12 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/WorldBossTable.lua", (config_type)&world_boss_config);
 	assert(ret == 0);	
 	adjust_worldboss_table();
+
+	type = sproto_type(sp, "ChallengeTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/ChallengeTable.lua", (config_type)&hero_challenge_config);
+	assert(ret == 0);	
+	adjust_herochallenge_table();
 
 	adjust_escort_config();
 	adjust_achievement_config();

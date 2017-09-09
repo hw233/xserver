@@ -122,6 +122,8 @@ extern std::map<uint64_t, struct ArenaRewardTable*> doufachang_reward_config; //
 extern std::map<uint64_t, struct TitleFunctionTable*> title_function_config; //称号功能点表
 extern std::map<uint64_t, struct WorldBossTable*> world_boss_config; //世界boss表
 extern std::map<uint64_t, struct WorldBossTable*> monster_to_world_boss_config; //世界boss表(以怪物id为索引)
+extern std::map<uint64_t, struct ChallengeTable*> hero_challenge_config; //英雄挑战
+extern std::map<uint64_t, struct ChallengeTable*> raidid_to_hero_challenge_config; //英雄挑战(以副本id为索引)
 
 
 //////////////////

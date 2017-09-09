@@ -17,6 +17,7 @@ extern std::set<zhenying_raid_struct *> zhenying_raid_manager_raid_used_list;
 extern struct comm_pool zhenying_raid_manager_raid_data_pool;
 extern uint64_t zhenying_raid_manager_reflesh_collect;
 
+//日常阵营战
 class zhenying_raid_manager
 {
 public:

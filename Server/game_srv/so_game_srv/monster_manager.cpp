@@ -125,7 +125,8 @@ void monster_manager::monster_ontick_settimer(monster_struct *p)
 	assert(p->mark_delete == false);
 	switch (p->config->HateType)
 	{
-		case MONSTER_TYPE_DEFINE_BOSS:
+		case MONSTER_HATETYPE_DEFINE_BOSS:
+		case MONSTER_HATETYPE_DEFINE_AIBOSS:			
 			push_heap(&monster_manager_m_boss_minheap, p);			
 			break;
 		default:
@@ -139,7 +140,8 @@ void monster_manager::monster_ontick_reset_timer(monster_struct *p)
 	assert(p->mark_delete == false);
 	switch (p->config->HateType)
 	{
-		case MONSTER_TYPE_DEFINE_BOSS:
+		case MONSTER_HATETYPE_DEFINE_BOSS:
+		case MONSTER_HATETYPE_DEFINE_AIBOSS:			
 			adjust_heap_node(&monster_manager_m_boss_minheap, p);			
 			break;
 		default:
@@ -162,7 +164,8 @@ void monster_manager::monster_ontick_delete(monster_struct *p)
 {
 	switch (p->config->HateType)
 	{
-		case MONSTER_TYPE_DEFINE_BOSS:
+		case MONSTER_HATETYPE_DEFINE_BOSS:
+		case MONSTER_HATETYPE_DEFINE_AIBOSS:			
 			if (is_node_in_heap(&monster_manager_m_boss_minheap, p))
 				erase_heap_node(&monster_manager_m_boss_minheap, p);
 			break;

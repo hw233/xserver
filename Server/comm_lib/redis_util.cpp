@@ -3,8 +3,6 @@
 AutoReleaseRedisPlayer::AutoReleaseRedisPlayer()
 {
 	pointer = NULL;
-	world_boss_pointer = NULL;
-	world_boss_reward = NULL;
 }
 
 AutoReleaseRedisPlayer::~AutoReleaseRedisPlayer()
@@ -12,11 +10,6 @@ AutoReleaseRedisPlayer::~AutoReleaseRedisPlayer()
 	if (pointer)	
 		player_redis_info__free_unpacked(pointer, NULL);
 
-	if(world_boss_pointer)
-		cur_world_boss_redisinfo__free_unpacked(world_boss_pointer, NULL);
-
-	if (world_boss_reward)
-		world_boss_receive_reward_info__free_unpacked(world_boss_reward, NULL);		
 }
 void AutoReleaseRedisPlayer::set(PlayerRedisInfo* r)
 {
@@ -27,22 +20,6 @@ void AutoReleaseRedisPlayer::set(PlayerRedisInfo* r)
 	pointer = r;
 }
 
-void AutoReleaseRedisPlayer::set_world_boss(CurWorldBossRedisinfo* r)
-{
-	if (world_boss_pointer)
-	{
-		cur_world_boss_redisinfo__free_unpacked(world_boss_pointer, NULL);		
-	}
-	world_boss_pointer = r;
-}
-void AutoReleaseRedisPlayer::set_world_boss_reward(WorldBossReceiveRewardInfo* r)
-{
-	if (world_boss_reward)
-	{
-		world_boss_receive_reward_info__free_unpacked(world_boss_reward, NULL);		
-	}
-	world_boss_reward = r;
-}
 
 AutoReleaseBatchRedisPlayer::AutoReleaseBatchRedisPlayer()
 {
@@ -71,7 +48,8 @@ PlayerRedisInfo *get_redis_player(uint64_t player_id, char *player_key, CRedisCl
 	if (ret == 0)
 	{
 		PlayerRedisInfo *ret = player_redis_info__unpack(NULL, data_len, data_buffer);
-		_pool.set(ret);
+		if (ret)
+			_pool.set(ret);
 		return ret;
 	}
 
@@ -88,7 +66,8 @@ PlayerRedisInfo *get_redis_player(uint64_t player_id, char *player_key, CRedisCl
 	if (ret == 0)
 	{
 		PlayerRedisInfo *ret = player_redis_info__unpack(NULL, data_len, data_buffer);
-		_pool.push_back(ret);
+		if (ret)
+			_pool.push_back(ret);
 		return ret;
 	}
 
@@ -137,37 +116,4 @@ int get_more_redis_player(std::set<uint64_t> &player_ids, std::map<uint64_t, Pla
 	}
 
 	return ret;
-}
-CurWorldBossRedisinfo *get_redis_cur_world_boss(uint64_t boss_id, char *world_boss_key, CRedisClient &rc, AutoReleaseRedisPlayer &_pool)
-{
-	static uint8_t data_buffer[32 * 1024];
-	int data_len = sizeof(data_buffer);
-	char field[64];
-	sprintf(field, "%lu", boss_id);
-	int ret = rc.hget_bin(world_boss_key, field, (char *)data_buffer, &data_len);
-	if (ret == 0)
-	{
-		CurWorldBossRedisinfo *ret = cur_world_boss_redisinfo__unpack(NULL, data_len, data_buffer);
-		_pool.set_world_boss(ret);
-		return ret;
-	}
-
-	return NULL;
-}
-
-WorldBossReceiveRewardInfo *get_redis_world_boss_receive_reward_info(uint64_t player_id, char *world_boss_key, CRedisClient &rc, AutoReleaseRedisPlayer &_pool)
-{
-	static uint8_t data_buffer[32 * 1024];
-	int data_len = sizeof(data_buffer);
-	char field[64];
-	sprintf(field, "%lu", player_id);
-	int ret = rc.hget_bin(world_boss_key, field, (char *)data_buffer, &data_len);
-	if (ret == 0)
-	{
-		WorldBossReceiveRewardInfo *ret = world_boss_receive_reward_info__unpack(NULL, data_len, data_buffer);
-		_pool.set_world_boss_reward(ret);
-		return ret;
-	}
-
-	return NULL;
 }

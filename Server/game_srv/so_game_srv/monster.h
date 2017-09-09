@@ -39,6 +39,13 @@ struct fight_attr
 #define MAX_TRUCK_IN_MONSTER_SIGHT (30)
 #define MAX_PARTNER_IN_MONSTER_SIGHT (30)
 #define MAX_MONSTER_SKILL (10)
+#define MAX_HATE_UNIT 20
+
+struct hate_unit_struct
+{
+	uint64_t uuid;
+	double hate_value;
+};
 
 struct monster_data
 {
@@ -365,11 +372,20 @@ private:
 	void add_area_monster_to_sight(area_struct *area);
 	void add_area_truck_to_sight(area_struct *area);
 	void add_area_partner_to_sight(area_struct *area);			
-	void update_region_id();		
+	void update_region_id();
+	void on_region_changed(uint16_t old_region_id, uint16_t new_region_id);	
 //	void add_to_area_player_sight(area_struct *area, uint64_t *ppp, uint16_t *index);
 //	int count_circle_unit(std::vector<unit_struct *> *ret, uint max, double radius);
 //	int count_fan_unit(std::vector<unit_struct *> *ret, uint max, double radius, double angle);
-//	int count_rect_unit_at_pos(struct position *pos, std::vector<unit_struct *> *ret, uint max, double length, double width);	
+//	int count_rect_unit_at_pos(struct position *pos, std::vector<unit_struct *> *ret, uint max, double length, double width);
+
+private:
+	void count_hate(unit_struct *player, uint32_t skill_id, int32_t damage);  //计算仇恨
+	void update_target();
+	bool on_unit_leave_sight(uint64_t unid);
+	
+	hate_unit_struct hate_unit[MAX_HATE_UNIT];
+	uint64_t next_hate_reduce_time;
 };
 
 #endif /* MONSTER_H */

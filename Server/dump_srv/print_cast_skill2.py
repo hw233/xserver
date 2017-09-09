@@ -47,28 +47,40 @@ while True:
 #    if not player_id in WATCH_PLAYER:
 #        continue;
 
-#MSG_ID_SKILL_HIT_NOTIFY
-    if msg_id == 10205:
-        req = cast_skill_pb2.skill_hit_notify()
+    if msg_id == 10200:
+        req = cast_skill_pb2.skill_cast_request()
         req.ParseFromString(pb_data)
-        if len(req.target_player) == 0:
-            continue
+        print "cast skillid = %d" % (req.skillid)
+
+    if msg_id == 10203:
+        req = cast_skill_pb2.skill_hit_request()
+        req.ParseFromString(pb_data)	    
+        for t1 in req.target_playerid:
+            print "hit target %lu" % (t1)
         
-        damage = req.target_player[0].hp_delta;
-        cur_hp = req.target_player[0].cur_hp
-        oldtime=datetime.datetime.now()        
-        print oldtime.time(), "attack life_steal[%u] damage_return[%u] cur_hp[%d] damage[%u] target_cur_hp[%d]" % (req.life_steal, req.damage_return, req.attack_cur_hp, damage, cur_hp);
+        
+#MSG_ID_SKILL_HIT_NOTIFY
+#    if msg_id == 10205:
+#        req = cast_skill_pb2.skill_hit_notify()
+#        req.ParseFromString(pb_data)
+#        if len(req.target_player) == 0:
+#            continue
+#        
+#        damage = req.target_player[0].hp_delta;
+#        cur_hp = req.target_player[0].cur_hp
+#        oldtime=datetime.datetime.now()        
+#        print oldtime.time(), "attack life_steal[%u] damage_return[%u] cur_hp[%d] damage[%u] target_cur_hp[%d]" % (req.life_steal, req.damage_return, req.attack_cur_hp, damage, cur_hp);
         
 #MSG_ID_SKILL_HIT_IMMEDIATE_NOTIFY
-    if msg_id == 10206:
-        req = cast_skill_pb2.skill_hit_immediate_notify()
-        req.ParseFromString(pb_data)
-        damage = req.target_player.hp_delta;
-        cur_hp = req.target_player.cur_hp        
-        oldtime=datetime.datetime.now()        
-        print oldtime.time(), "monster attack life_steal[%u] damage_return[%u] cur_hp[%d] damage[%u] target_cur_hp[%d]" % (req.life_steal, req.damage_return, req.attack_cur_hp, damage, cur_hp);
+#    if msg_id == 10206:
+#        req = cast_skill_pb2.skill_hit_immediate_notify()
+#        req.ParseFromString(pb_data)
+#        damage = req.target_player.hp_delta;
+#        cur_hp = req.target_player.cur_hp        
+#        oldtime=datetime.datetime.now()        
+#        print oldtime.time(), "monster attack life_steal[%u] damage_return[%u] cur_hp[%d] damage[%u] target_cur_hp[%d]" % (req.life_steal, req.damage_return, req.attack_cur_hp, damage, cur_hp);
 
     
-    if msg_id == 10809:
-        oldtime=datetime.datetime.now()                
-        print oldtime.time(), "离开位面"
+#    if msg_id == 10809:
+#        oldtime=datetime.datetime.now()                
+#        print oldtime.time(), "离开位面"

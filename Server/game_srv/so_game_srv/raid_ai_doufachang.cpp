@@ -41,9 +41,12 @@ static void doufachang_send_raid_result(player_struct *attack, player_struct *de
 
 static void doufachang_raid_ai_player_leave(raid_struct *raid, player_struct *player)
 {
+	player->data->attrData[PLAYER_ATTR_HP] = player->data->attrData[PLAYER_ATTR_MAXHP];
+	player->notify_one_attr_changed(PLAYER_ATTR_HP, player->data->attrData[PLAYER_ATTR_HP]);
+	
 	if (raid->data->state == RAID_STATE_PASS)
 		return;
-	raid->data->state = RAID_STATE_PASS;
+	raid->data->state = RAID_STATE_PASS;	
 	player->add_item(sg_doufachang_raid_lose_reward[0], sg_doufachang_raid_lose_reward[1], MAGIC_TYPE_DOUFACHANG_REWARD, true);
 
 	doufachang_send_raid_result(player, raid->m_player2[0], 1, sg_doufachang_raid_lose_reward[1], false);
@@ -97,6 +100,8 @@ static void doufachang_raid_ai_player_ready(raid_struct *raid, player_struct *pl
 		player->ai_patrol_config = robot_patrol_config[0];				
 		return;
 	}
+	player->data->attrData[PLAYER_ATTR_HP] = player->data->attrData[PLAYER_ATTR_MAXHP];
+	player->notify_one_attr_changed(PLAYER_ATTR_HP, player->data->attrData[PLAYER_ATTR_HP]);	
 	raid->DOUFACHANG_DATA.pvp_raid_state = PVP_RAID_STATE_WAIT_START;
 	raid->data->start_time = time_helper::get_cached_time() + 10 * 1000;
 }

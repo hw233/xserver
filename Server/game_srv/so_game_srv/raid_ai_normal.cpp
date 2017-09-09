@@ -66,6 +66,7 @@ void normal_raid_ai_finished(raid_struct *raid)
 	if (star > raid->m_config->n_Rewards || star == 0)
 		star = 1;
 
+
 	RaidFinishNotify notify;
 	raid_finish_notify__init(&notify);
 	notify.result = 0;
@@ -137,6 +138,27 @@ void normal_raid_ai_finished(raid_struct *raid)
 	{
 		if (!raid->m_player[i])
 			continue;
+
+		//英雄挑战副本星级要存到人物身上
+		std::map<uint64_t, ChallengeTable*>::iterator itr = raidid_to_hero_challenge_config.find(raid->data->ID);
+		if(itr != raidid_to_hero_challenge_config.end())
+		{
+			for(size_t j = 0; j < MAX_HERO_CHALLENGE_MONSTER_NUM; j++)
+			{
+				if(raid->m_player[i]->data->my_hero_info[j].id == 0)
+				{
+					LOG_ERR("%s: can not find hero info id[%lu]", __FUNCTION__, itr->second->ID);
+					break;
+				}
+				if(raid->m_player[i]->data->my_hero_info[j].id != itr->second->ID)
+					continue;
+				if(star > raid->m_player[i]->data->my_hero_info[j].star)
+					raid->m_player[i]->data->my_hero_info[j].star = star;
+				break;
+			}
+		}
+
+
 		extern_data.player_id = raid->m_player[i]->get_uuid();
 
 		uint32_t num = raid->m_player[i]->get_raid_reward_count(raid->data->ID);

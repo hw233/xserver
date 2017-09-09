@@ -775,7 +775,7 @@ local ModelTable = {
 		},
 	[130300037] = {
 		['ModelId'] = 130300037,
-		['ModelPath'] = 'Prefabs/Actor/gw_036',
+		['ModelPath'] = 'Prefabs/Actor/gw_037',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',
@@ -811,7 +811,7 @@ local ModelTable = {
 		},
 	[130300041] = {
 		['ModelId'] = 130300041,
-		['ModelPath'] = 'Prefabs/Actor/gw_039',
+		['ModelPath'] = 'Prefabs/Actor/gw_041',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',
@@ -883,7 +883,7 @@ local ModelTable = {
 		},
 	[130300049] = {
 		['ModelId'] = 130300049,
-		['ModelPath'] = 'Prefabs/Actor/gw_047',
+		['ModelPath'] = 'Prefabs/Actor/gw_049',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',
@@ -910,7 +910,7 @@ local ModelTable = {
 		},
 	[130300052] = {
 		['ModelId'] = 130300052,
-		['ModelPath'] = 'Prefabs/Actor/gw_047',
+		['ModelPath'] = 'Prefabs/Actor/gw_052',
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',

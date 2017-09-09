@@ -786,6 +786,11 @@ void unit_struct::delete_state_buff(int state)
 	}
 }
 
+bool unit_struct::check_free_buff_pos(int index)
+{
+	return (m_buffs[index] == NULL);
+}
+
 int unit_struct::get_free_buff_pos()
 {
 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
@@ -971,8 +976,10 @@ void unit_struct::calculate_buff_fight_attr(bool isNty)
 			continue;
 		if (!m_buffs[i]->is_attr_buff())
 			continue;
-		double base_attr = attr[m_buffs[i]->effect_config->Effect[0]];
-		m_buffs[i]->data->effect.attr_effect.added_attr_value = base_attr * (m_buffs[i]->effect_config->EffectAdd[0] / 10000.0 - 1) + m_buffs[i]->effect_config->EffectNum[0];
+
+			//沿用之前的变化值，因为有些效果是攻击者的属性算出来的，这个时候攻击者已经无法找到了
+//		double base_attr = attr[m_buffs[i]->effect_config->Effect[0]];
+//		m_buffs[i]->data->effect.attr_effect.added_attr_value = base_attr * (m_buffs[i]->effect_config->EffectAdd[0] / 10000.0 - 1) + m_buffs[i]->effect_config->EffectNum[0];
 
 					//速度变化要特殊处理并通知
 		if (m_buffs[i]->data->effect.attr_effect.attr_id == PLAYER_ATTR_MOVE_SPEED)

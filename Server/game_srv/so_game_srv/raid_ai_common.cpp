@@ -658,8 +658,9 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 		}
 		case SCRIPT_EVENT_SET_REGION_BUFF:
 		{
-			assert(config->n_Parameter1 == 2);
+			assert(config->n_Parameter1 >= 3);
 			script_data->region_config[script_data->cur_region_config++] = config;
+			raid->check_all_monster_region_buff(config);
 			return true;
 		}
 		case SCRIPT_EVENT_STOP_REGION_BUFF:
@@ -672,6 +673,11 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 					break;
 				}
 			}
+			return true;
+		}
+		case SCRIPT_EVENT_ADD_RAID_PASS_VALUE:
+		{
+			raid->add_raid_pass_value(5, raid->get_raid_config());
 			return true;
 		}
 		default:

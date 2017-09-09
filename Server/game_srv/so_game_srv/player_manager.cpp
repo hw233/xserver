@@ -1,4 +1,5 @@
 #include "game_event.h"
+#include "so_game_srv/partner_manager.h"
 #include "player_manager.h"
 #include "scene_manager.h"
 #include "scene.h"
@@ -48,6 +49,14 @@ player_struct * player_manager::get_player_by_id(uint64_t id)
 	if (it != player_manager_all_players_id.end())
 		return it->second;
 	return NULL;	
+}
+
+player_struct * player_manager::get_ai_player_by_id(uint64_t id)
+{
+	std::map<uint64_t, player_struct *>::iterator it = player_manager_all_ai_players_id.find(id);
+	if (it != player_manager_all_ai_players_id.end())
+		return it->second;
+	return NULL;
 }
 
 player_struct *player_manager::get_online_player(uint64_t id)
@@ -361,7 +370,24 @@ player_struct *player_manager::create_doufachang_ai_player(player_struct *player
 	ret->m_skill.copy(&player->m_skill);
 	
 	ret->data->attrData[PLAYER_ATTR_HP] = ret->data->attrData[PLAYER_ATTR_MAXHP];
-	ret->data->attrData[PLAYER_ATTR_MOVE_SPEED] = 5;	
+	ret->data->attrData[PLAYER_ATTR_MOVE_SPEED] = 5;
+
+	int i = 0;
+	for (PartnerMap::iterator iter = player->m_partners.begin(); i < MAX_PARTNER_FORMATION_NUM && iter != player->m_partners.end(); ++iter)	
+	{
+		partner_struct *src = iter->second;
+		partner_struct *partner = partner_manager::create_partner(src->data->partner_id, ret, 0);
+		if (partner == NULL)
+			continue;
+		partner->data->attrData[PLAYER_ATTR_MAXHP] = src->data->attrData[PLAYER_ATTR_MAXHP];
+		partner->data->attrData[PLAYER_ATTR_HP] = partner->data->attrData[PLAYER_ATTR_MAXHP];
+		partner->data->attrData[PLAYER_ATTR_MOVE_SPEED] = src->data->attrData[PLAYER_ATTR_MOVE_SPEED];
+		
+		memcpy(&partner->data->buff_fight_attr[0], &src->data->buff_fight_attr[0], sizeof(partner->data->buff_fight_attr));
+		ret->m_partners.insert(std::make_pair(partner->data->uuid, partner));
+		ret->data->partner_formation[i] = partner->data->uuid;
+		++i;
+	}
 	
 		//登陆成功
 	ret->data->status = ONLINE;

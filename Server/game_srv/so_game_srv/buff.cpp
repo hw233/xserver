@@ -11,12 +11,17 @@
 #include "player_manager.h"
 #include "monster_manager.h"
 
+static double count_added_attr_value(double base_attr, struct SkillEffectTable *effect_config)
+{
+	return base_attr * ((int64_t)(effect_config->EffectAdd[0]) / 10000.0) + (int64_t)(effect_config->EffectNum[0]);
+}
+
 int buff_struct::init_buff(struct BuffTable *buffconfig, uint64_t end_time, unit_struct *attack, unit_struct *owner)
 {
 	assert(data);
 	effect_config = NULL;
 	m_owner = NULL;
-	m_attacker = NULL;
+//	m_attacker = NULL;
 	config = buffconfig;//get_config_by_id(id, &buff_config);
 	if (config->n_EffectID > 0)
 	{
@@ -32,18 +37,21 @@ int buff_struct::init_buff(struct BuffTable *buffconfig, uint64_t end_time, unit
 	data->owner = owner->get_uuid();
 	m_owner = owner;
 	data->attacker = attack->get_uuid();
-	m_attacker = attack;
+//	m_attacker = attack;
 
 	uint32_t old_buff_state = owner->buff_state;
 	
 	data->start_time = time_helper::get_cached_time();
 	data->end_time = end_time;
 
-	if (config->Interval > 0)
+	if (is_hp_buff())
 	{
-		data->effect.hp_effect.hp_delta = count_skill_effect(attack->get_all_attr(), owner->get_all_attr(),
-			attack->get_all_buff_fight_attr(), owner->get_all_buff_fight_attr(), effect_config);
-		do_buff_effect(false);
+//		data->effect.hp_effect.hp_delta = -(count_skill_effect(attack->get_all_attr(), owner->get_all_attr(),
+//				attack->get_all_buff_fight_attr(), owner->get_all_buff_fight_attr(), effect_config));
+		double *attr = owner->get_all_attr();		
+		double base_attr = attr[PLAYER_ATTR_MAXHP];
+		data->effect.hp_effect.hp_delta = count_added_attr_value(base_attr, effect_config);
+		do_hp_buff_effect(false);
 	}
 	else if (is_recoverable_buff())
 	{
@@ -56,7 +64,7 @@ int buff_struct::init_buff(struct BuffTable *buffconfig, uint64_t end_time, unit
 				assert(attr && fight_attr);
 				data->effect.attr_effect.attr_id = effect_config->Effect[0];
 				double base_attr = attr[effect_config->Effect[0]];
-				data->effect.attr_effect.added_attr_value = base_attr * (effect_config->EffectAdd[0] / 10000.0 - 1) + effect_config->EffectNum[0];
+				data->effect.attr_effect.added_attr_value = count_added_attr_value(base_attr, effect_config);
 				
 					//速度变化要特殊处理并且通知
 				if (data->effect.attr_effect.attr_id == PLAYER_ATTR_MOVE_SPEED)
@@ -182,6 +190,13 @@ uint32_t buff_struct::get_skill_effect_by_buff_state(int state)
 	return (0);
 }
 
+bool buff_struct::is_hp_buff()
+{
+	if (effect_config && effect_config->Type == 170000001)
+		return true;
+	return false;
+}
+
 bool buff_struct::is_attr_buff()
 {
 	if (effect_config && effect_config->Type == 170000008)
@@ -234,11 +249,15 @@ int buff_struct::reinit_buff(struct BuffTable *buffconfig, uint64_t end_time, un
 	data->buff_id = config->ID;
 	data->start_time = time_helper::get_cached_time();
 	data->end_time = end_time;
-	if (config->Interval > 0)
+	if (is_hp_buff())	
+//	if (config->Interval > 0)
 	{
-		data->effect.hp_effect.hp_delta = count_skill_effect(attack->get_all_attr(), m_owner->get_all_attr(),
-			attack->get_all_buff_fight_attr(), m_owner->get_all_buff_fight_attr(), effect_config);
-		do_buff_effect(false);
+//		data->effect.hp_effect.hp_delta = -(count_skill_effect(attack->get_all_attr(), m_owner->get_all_attr(),
+//				attack->get_all_buff_fight_attr(), m_owner->get_all_buff_fight_attr(), effect_config));
+		double *attr = m_owner->get_all_attr();		
+		double base_attr = attr[PLAYER_ATTR_MAXHP];
+		data->effect.hp_effect.hp_delta = count_added_attr_value(base_attr, effect_config);		
+		do_hp_buff_effect(false);
 	}
 	else if (is_recoverable_buff() && is_attr_buff())
 	{
@@ -256,8 +275,7 @@ int buff_struct::reinit_buff(struct BuffTable *buffconfig, uint64_t end_time, un
 			uint32_t old_attr = attr[data->effect.attr_effect.attr_id];
 			attr[data->effect.attr_effect.attr_id] -= data->effect.attr_effect.added_attr_value;
 			base_attr = attr[effect_config->Effect[0]];			
-//			data->effect.attr_effect.added_attr_value = base_attr * effect_config->EffectAdd[0] / 10000 + effect_config->EffectNum[0];
-			data->effect.attr_effect.added_attr_value = base_attr * (effect_config->EffectAdd[0] / 10000.0 - 1) + effect_config->EffectNum[0];
+			data->effect.attr_effect.added_attr_value = count_added_attr_value(base_attr, effect_config);
 			
 			attr[effect_config->Effect[0]] += data->effect.attr_effect.added_attr_value;			
 			uint32_t new_attr = attr[data->effect.attr_effect.attr_id];
@@ -272,8 +290,7 @@ int buff_struct::reinit_buff(struct BuffTable *buffconfig, uint64_t end_time, un
 		{
 			assert(MAX_BUFF_FIGHT_ATTR > effect_config->Effect[0]);			
 			fight_attr[data->effect.attr_effect.attr_id] -= data->effect.attr_effect.added_attr_value;
-//			data->effect.attr_effect.added_attr_value = base_attr * effect_config->EffectAdd[0] / 10000 + effect_config->EffectNum[0];
-			data->effect.attr_effect.added_attr_value = base_attr * (effect_config->EffectAdd[0] / 10000.0 - 1) + effect_config->EffectNum[0];			
+			data->effect.attr_effect.added_attr_value = count_added_attr_value(base_attr, effect_config);
 			fight_attr[effect_config->Effect[0]] += data->effect.attr_effect.added_attr_value;
 			LOG_DEBUG("%s: player[%lu] reinit[%u] attr[%d] delta[%.1f] to[%.1f]",
 				__FUNCTION__, m_owner->get_uuid(), data->buff_id, data->effect.attr_effect.attr_id,
@@ -285,7 +302,15 @@ int buff_struct::reinit_buff(struct BuffTable *buffconfig, uint64_t end_time, un
 	return (0);
 }
 
-bool buff_struct::do_buff_effect(bool check_dead)
+unit_struct *buff_struct::get_attacker()
+{
+	unit_struct *ret = unit_struct::get_unit_by_uuid(data->attacker);
+	if (ret)
+		return ret;
+	return m_owner;
+}
+
+bool buff_struct::do_hp_buff_effect(bool check_dead)
 {
 //	double *attr = unit_struct::get_attr_by_uuid(data->owner);
 	if (m_owner->buff_state & BUFF_STATE_GOD)
@@ -293,12 +318,23 @@ bool buff_struct::do_buff_effect(bool check_dead)
 
 	if (data->effect.hp_effect.hp_delta == 0)
 		return true;
+
+	if (data->effect.hp_effect.hp_delta < 0
+		&& m_owner->buff_state & BUFF_STATE_ONEBLOOD)
+		return true;
 	
 	double *attr = m_owner->get_all_attr();
 	assert(attr);
-	attr[PLAYER_ATTR_HP] -= data->effect.hp_effect.hp_delta;
-	m_owner->on_hp_changed(data->effect.hp_effect.hp_delta);
+	int old = attr[PLAYER_ATTR_HP];
+	attr[PLAYER_ATTR_HP] += data->effect.hp_effect.hp_delta;
+	if (attr[PLAYER_ATTR_HP] > attr[PLAYER_ATTR_MAXHP])
+		attr[PLAYER_ATTR_HP] = attr[PLAYER_ATTR_MAXHP];
+	
+	m_owner->on_hp_changed(-data->effect.hp_effect.hp_delta);
 
+	if (attr[PLAYER_ATTR_HP] == old)
+		return true;
+	
 	m_owner->broadcast_one_attr_changed(PLAYER_ATTR_HP, attr[PLAYER_ATTR_HP], true, true);
 
 	LOG_DEBUG("%s: unit[%lu][%p] damage[%d] hp[%f] check_dead[%d]", __FUNCTION__, m_owner->get_uuid(),
@@ -306,7 +342,8 @@ bool buff_struct::do_buff_effect(bool check_dead)
 
 	if (check_dead && !m_owner->is_alive())
 	{
-		m_owner->on_dead(m_attacker);
+		unit_struct *attacker = get_attacker();
+		m_owner->on_dead(attacker);
 		return false;
 	}
 	return true;
@@ -322,31 +359,70 @@ void buff_struct::set_next_timer()
 	}
 	else
 	{
+		assert(is_hp_buff());
 		data->ontick_time = time_helper::get_cached_time() + config->Interval;
 	}
 	buff_manager::buff_ontick_settimer(this);
 }
 
-void buff_struct::del_buff()
+void buff_struct::deal_with_del_effect()
 {
-	if (m_owner)
+	if (config->n_DelEffectID <= 0)
+		return;
+	if (config->DelEffectID[0] == 0)
+		return;
+	struct SkillEffectTable *del_config = get_config_by_id(config->DelEffectID[0], &skill_effect_config);
+	assert(del_config);
+	if (del_config->Type == 170000001)//-血量变化
 	{
-		m_owner->delete_one_buff(this);
-		if (config->n_DelEffectID > 0 && config->DelEffectID[0] != 0)
+		double *attr = m_owner->get_all_attr();				
+		double base_attr = attr[PLAYER_ATTR_MAXHP];
+		int added_attr_value = count_added_attr_value(base_attr, del_config);
+		data->effect.hp_effect.hp_delta = added_attr_value;
+		do_hp_buff_effect(false);
+	}
+	else if (del_config->Type == 170000008)//-改变属性的buff
+	{
+		double *attr = m_owner->get_all_attr();
+		double *fight_attr = m_owner->get_all_buff_fight_attr();				
+		assert(attr && fight_attr);
+		double base_attr = attr[del_config->Effect[0]];
+		int added_attr_value = count_added_attr_value(base_attr, del_config);
+				
+			//速度变化要特殊处理并且通知
+		if (data->effect.attr_effect.attr_id == PLAYER_ATTR_MOVE_SPEED)
 		{
-			struct SkillEffectTable *del_config = get_config_by_id(config->DelEffectID[0], &skill_effect_config);
-			assert(del_config);
-			assert(del_config->Type == 170000008);//-改变属性的buff
+			attr[del_config->Effect[0]] += added_attr_value;
+			m_owner->broadcast_one_attr_changed(PLAYER_ATTR_MOVE_SPEED, attr[PLAYER_ATTR_MOVE_SPEED], true, true);
+			LOG_DEBUG("%s: player[%lu] add buff[%lu] attr[%lu] delta[%.1f] to[%.1f]",
+				__FUNCTION__, m_owner->get_uuid(), config->ID, del_config->Effect[0],
+				data->effect.attr_effect.added_attr_value, attr[del_config->Effect[0]]);					
+		}
+		else
+		{
+			assert(MAX_BUFF_FIGHT_ATTR > del_config->Effect[0]);
+			fight_attr[del_config->Effect[0]] += added_attr_value;
+			LOG_DEBUG("%s: player[%lu] add buff[%lu] attr[%lu] delta[%.1f] to[%.1f]",
+				__FUNCTION__, m_owner->get_uuid(), config->ID, del_config->Effect[0],
+				data->effect.attr_effect.added_attr_value, fight_attr[del_config->Effect[0]]);
+		}
+	}
+}
+
+void buff_struct::deal_with_recover_effect()
+{
+	switch (effect_config->Type)
+	{
+		case 170000008: //-改变属性的buff
+		{
 			double *attr = m_owner->get_all_attr();
 			double *fight_attr = m_owner->get_all_buff_fight_attr();				
 			assert(attr && fight_attr);
-			double base_attr = attr[effect_config->Effect[0]];
-			int added_attr_value = base_attr * (effect_config->EffectAdd[0] / 10000.0 - 1) + effect_config->EffectNum[0];
-				
-				//速度变化要特殊处理并且通知
+
+				//速度变化要通知
 			if (data->effect.attr_effect.attr_id == PLAYER_ATTR_MOVE_SPEED)
 			{
-				attr[effect_config->Effect[0]] += added_attr_value;
+				attr[data->effect.attr_effect.attr_id] -= data->effect.attr_effect.added_attr_value;					
 				m_owner->broadcast_one_attr_changed(PLAYER_ATTR_MOVE_SPEED, attr[PLAYER_ATTR_MOVE_SPEED], true, true);
 				LOG_DEBUG("%s: player[%lu] add buff[%lu] attr[%lu] delta[%.1f] to[%.1f]",
 					__FUNCTION__, m_owner->get_uuid(), config->ID, effect_config->Effect[0],
@@ -354,68 +430,51 @@ void buff_struct::del_buff()
 			}
 			else
 			{
-				assert(MAX_BUFF_FIGHT_ATTR > effect_config->Effect[0]);
-				fight_attr[effect_config->Effect[0]] += added_attr_value;
+				assert(MAX_BUFF_FIGHT_ATTR > effect_config->Effect[0]);								
+				fight_attr[data->effect.attr_effect.attr_id] -= data->effect.attr_effect.added_attr_value;
 				LOG_DEBUG("%s: player[%lu] add buff[%lu] attr[%lu] delta[%.1f] to[%.1f]",
 					__FUNCTION__, m_owner->get_uuid(), config->ID, effect_config->Effect[0],
 					data->effect.attr_effect.added_attr_value, fight_attr[effect_config->Effect[0]]);
 			}
 		}
+		break;
+		case 170000004: //-眩晕，不能移动不能攻击
+		case 170000006: //-无敌，不受任何伤害
+		case 170000022: //-嘲讽
+		case 170000024: //-免控
+		case 170000028: //-免疫PVP阴区域BUFF
+		case 170000026: //-免疫PVP阳区域BUFF
+		case 170000027: //-免疫PVP阴阳区域BUFF
+		{
+			if (m_owner)
+				m_owner->reset_unit_buff_state();
+		}
+		break;
+		case 170000029: //-剩余一点血不死
+		{
+			if (m_owner)
+				m_owner->reset_unit_buff_state();
+			if (m_owner->is_alive())
+			{
+				uint32_t maxhp = m_owner->get_attr(PLAYER_ATTR_MAXHP);
+				m_owner->broadcast_one_attr_changed(PLAYER_ATTR_HP, maxhp, true, true);
+			}
+		}
+		break;
+	}
+}
+
+void buff_struct::del_buff()
+{
+	if (m_owner)
+	{
+		m_owner->delete_one_buff(this);
+		deal_with_del_effect();
 	}
 	
 	if (is_recoverable_buff())
 	{
-		switch (effect_config->Type)
-		{
-			case 170000008: //-改变属性的buff
-			{
-				double *attr = m_owner->get_all_attr();
-				double *fight_attr = m_owner->get_all_buff_fight_attr();				
-				assert(attr && fight_attr);
-
-					//速度变化要通知
-				if (data->effect.attr_effect.attr_id == PLAYER_ATTR_MOVE_SPEED)
-				{
-					attr[data->effect.attr_effect.attr_id] -= data->effect.attr_effect.added_attr_value;					
-					m_owner->broadcast_one_attr_changed(PLAYER_ATTR_MOVE_SPEED, attr[PLAYER_ATTR_MOVE_SPEED], true, true);
-					LOG_DEBUG("%s: player[%lu] add buff[%lu] attr[%lu] delta[%.1f] to[%.1f]",
-						__FUNCTION__, m_owner->get_uuid(), config->ID, effect_config->Effect[0],
-						data->effect.attr_effect.added_attr_value, attr[effect_config->Effect[0]]);					
-				}
-				else
-				{
-					assert(MAX_BUFF_FIGHT_ATTR > effect_config->Effect[0]);								
-					fight_attr[data->effect.attr_effect.attr_id] -= data->effect.attr_effect.added_attr_value;
-					LOG_DEBUG("%s: player[%lu] add buff[%lu] attr[%lu] delta[%.1f] to[%.1f]",
-						__FUNCTION__, m_owner->get_uuid(), config->ID, effect_config->Effect[0],
-						data->effect.attr_effect.added_attr_value, fight_attr[effect_config->Effect[0]]);
-				}
-			}
-			break;
-			case 170000004: //-眩晕，不能移动不能攻击
-			case 170000006: //-无敌，不受任何伤害
-			case 170000022: //-嘲讽
-			case 170000024: //-免控
-			case 170000028: //-免疫PVP阴区域BUFF
-			case 170000026: //-免疫PVP阳区域BUFF
-			case 170000027: //-免疫PVP阴阳区域BUFF
-			{
-				if (m_owner)
-					m_owner->reset_unit_buff_state();
-			}
-			break;
-			case 170000029: //-剩余一点血不死
-			{
-				if (m_owner)
-					m_owner->reset_unit_buff_state();
-				if (m_owner->is_alive())
-				{
-					uint32_t maxhp = m_owner->get_attr(PLAYER_ATTR_MAXHP);
-					m_owner->broadcast_one_attr_changed(PLAYER_ATTR_HP, maxhp, true, true);
-				}
-			}
-			break;
-		}
+		deal_with_recover_effect();
 	}
 	buff_manager::delete_buff(this);
 }
@@ -433,9 +492,9 @@ void buff_struct::on_tick()
 	{
 		return del_buff();
 	}
-	else		//buff间隔效果
+	else		//buff间隔效果, 只有血量变化
 	{
-		if (!do_buff_effect(true))
+		if (!do_hp_buff_effect(true))
 			return;
 	}
 

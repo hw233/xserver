@@ -847,7 +847,7 @@ void Team::RemoveMember(uint64_t playerid, bool kick)
 
 int Team::CreateTeam(player_struct &player, int type, int target)
 {
-	if (player.data->scene_id > SCENCE_DEPART)
+	if (!scene_can_make_team(player.data->scene_id))
 	{
 		return 190500002;
 	}

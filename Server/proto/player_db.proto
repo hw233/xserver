@@ -348,6 +348,7 @@ message DBZhenying
 	required uint32 death = 15;
 	required uint32 help = 16;
 	required uint32 score = 17;
+	required bool one_award = 18; //首胜
 }
 
 message DBAchievement
@@ -454,6 +455,7 @@ message PlayerDBInfo
 	repeated DBAchievement achievement_list = 82; //成就列表
 	required bool partner_recruit_first = 83; //首次招募标志
 	repeated DBTitle title_list = 84; //称号列表
+	repeated DBHreoChallengeInfo hero_challenge_all_info = 85; //英雄挑战总信息
 }
 
 message DBAutoAddHp
@@ -507,3 +509,16 @@ message DBServerLevel
 	repeated uint64 break_reward = 4;
 }
 
+message DBHreoChallengeInfo
+{
+	required uint32 id = 1;      //英雄id
+	required uint32 star = 2;	 //历史最高星级
+	required uint32 reward_flag = 3; //是否有未领取奖励标志 1:是
+	repeated DBHreoChallengeItemInfo item_info = 4; //奖励物品信息
+}
+
+message DBHreoChallengeItemInfo
+{
+	required uint32 item_id = 1;    //物品id
+	required uint32 item_num = 2;	//物品数量
+}

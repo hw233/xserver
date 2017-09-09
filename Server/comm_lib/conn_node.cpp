@@ -63,7 +63,7 @@ done:
 		PROTO_HEAD *real_head;
 		PROTO_HEAD_CONN_BROADCAST *t_head = (PROTO_HEAD_CONN_BROADCAST *)head;
 		real_head = &t_head->proto_head;
-		LOG_DEBUG("%s %d: send msg[%d] len[%d], seq[%d], ret [%d]", __PRETTY_FUNCTION__, fd, ENDION_FUNC_2(real_head->msg_id), ENDION_FUNC_4(real_head->len), ENDION_FUNC_2(real_head->seq), ret);
+		LOG_DEBUG("%s %d: %d send msg[%d] len[%d], seq[%d], ret [%d]", __PRETTY_FUNCTION__, fd, __LINE__, ENDION_FUNC_2(real_head->msg_id), ENDION_FUNC_4(real_head->len), ENDION_FUNC_2(real_head->seq), ret);
 #ifdef CALC_NET_MSG
 	uint16_t id = ENDION_FUNC_2(real_head->msg_id);
 	if (id < CS__MESSAGE__ID__MAX_MSG_ID) {
@@ -73,7 +73,7 @@ done:
 #endif
 	}
 	else if (likely(head->msg_id != 0))
-		LOG_DEBUG("%s %d: send msg[%d] len[%d], seq[%d], ret [%d]", __PRETTY_FUNCTION__, fd, ENDION_FUNC_2(head->msg_id), ENDION_FUNC_4(head->len), ENDION_FUNC_2(head->seq), ret);
+		LOG_DEBUG("%s %d: %d send msg[%d] len[%d], seq[%d], ret [%d]", __PRETTY_FUNCTION__, fd, __LINE__, ENDION_FUNC_2(head->msg_id), ENDION_FUNC_4(head->len), ENDION_FUNC_2(head->seq), ret);
 #ifdef CALC_NET_MSG
 	uint16_t id = ENDION_FUNC_2(head->msg_id);
 	if (id < CS__MESSAGE__ID__MAX_MSG_ID) {

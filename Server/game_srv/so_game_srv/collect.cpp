@@ -528,7 +528,8 @@ bool Collect::OnTick()
 
 			if (m_raid_uuid)
 			{
-				if (m_scenceId > 30000)
+				DungeonTable* config = get_config_by_id(m_scenceId, &all_raid_config);
+				if (config != NULL && config->DengeonRank == DUNGEON_TYPE_ZHENYING)
 				{
 					pScence = zhenying_raid_manager::get_zhenying_raid_by_uuid(m_raid_uuid);
 				}

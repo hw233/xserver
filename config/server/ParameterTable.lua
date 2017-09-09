@@ -1361,7 +1361,7 @@ local ParameterTable = {
 		},
 	[161000276] = {
 		['ID'] = 161000276,
-		['parameter1'] = {1},
+		['parameter1'] = {0.5},
 		['parameter2'] = ''
 		},
 	[161000277] = {
@@ -1371,12 +1371,12 @@ local ParameterTable = {
 		},
 	[161000278] = {
 		['ID'] = 161000278,
-		['parameter1'] = {2},
+		['parameter1'] = {1},
 		['parameter2'] = ''
 		},
 	[161000279] = {
 		['ID'] = 161000279,
-		['parameter1'] = {0.5},
+		['parameter1'] = {0.1},
 		['parameter2'] = ''
 		},
 	[161000280] = {
@@ -1627,6 +1627,31 @@ local ParameterTable = {
 	[161000329] = {
 		['ID'] = 161000329,
 		['parameter1'] = {0.5},
+		['parameter2'] = ''
+		},
+	[161000330] = {
+		['ID'] = 161000330,
+		['parameter1'] = {},
+		['parameter2'] = '世界BOSS说明'
+		},
+	[161000331] = {
+		['ID'] = 161000331,
+		['parameter1'] = {},
+		['parameter2'] = '哈哈哈哈哈哈'
+		},
+	[161000332] = {
+		['ID'] = 161000332,
+		['parameter1'] = {10},
+		['parameter2'] = ''
+		},
+	[161000333] = {
+		['ID'] = 161000333,
+		['parameter1'] = {201070104,1},
+		['parameter2'] = ''
+		},
+	[161000334] = {
+		['ID'] = 161000334,
+		['parameter1'] = {100},
 		['parameter2'] = ''
 		}
 	}

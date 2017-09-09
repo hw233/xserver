@@ -2484,6 +2484,7 @@ int pack_player_online(player_struct *player, EXTERN_DATA *extern_data, bool loa
 		player->clear_team_task();
 		player->load_partner_end();
 		player->load_achievement_end();
+		player->init_hero_challenge_data();
 	}
 
 	if (player->data->attrData[PLAYER_ATTR_HP] < __DBL_EPSILON__)
@@ -4523,9 +4524,13 @@ int handle_apply_team_request_impl(player_struct &player, uint64_t teamid)
 	{
 		return 190500064;
 	}
-	if (pTeam->m_data->m_raid_uuid > SCENCE_DEPART)
+	if (pTeam->m_data->m_raid_uuid > 0)
 	{
-		return 190500066;
+		raid_struct *raid = raid_manager::get_raid_by_uuid(pTeam->m_data->m_raid_uuid);
+		if (!raid || !raid->check_can_add_team_mem(&player))
+		{
+			return 190500066;
+		}
 	}
 	if (pTeam->IsFull())
 	{
@@ -4906,7 +4911,7 @@ int handle_team_invite_request_impl(player_struct *player, uint64_t id)
 	{
 		return 190500033;
 	}
-	if (otherPlayer->data->scene_id > SCENCE_DEPART)
+	if (!scene_can_make_team(otherPlayer->data->scene_id))
 	{
 		return 190500065;
 	}
@@ -4948,7 +4953,7 @@ int handle_team_invite_request(player_struct *player, EXTERN_DATA *extern_data)
 		return (-1);
 	}
 
-	if (player->data->scene_id > SCENCE_DEPART)
+	if (!scene_can_make_team(player->data->scene_id))
 	{
 		return 3;
 	}
@@ -5005,7 +5010,7 @@ int handle_team_invite_handle_request(player_struct *player, EXTERN_DATA *extern
 	{
 		return 3;
 	}
-	if (otherPlayer->data->scene_id > SCENCE_DEPART)
+	if (!scene_can_make_team(otherPlayer->data->scene_id))
 	{
 		return 4;
 	}
@@ -12684,8 +12689,6 @@ static int handle_accept_cash_truck_request(player_struct *player, EXTERN_DATA *
 				player->broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP, true, true);
 			}
 		}
-
-		
 	}
 
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_ACCEPT_CASH_TRUCK_ANSWER, res_accept_cash_truck__pack, send);
@@ -13432,7 +13435,17 @@ static int handle_into_zhenying_battle_request(player_struct *player, EXTERN_DAT
 		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 		return (-1);
 	}
-
+	FactionBattleTable *table = get_zhenying_battle_table(player->get_attr(PLAYER_ATTR_LEVEL));
+	if (table == NULL)
+	{
+		return -2;
+	}
+	int ret = raid_manager::check_player_enter_raid(player, table->Map);
+	if (ret != 0)
+	{
+		send_comm_answer(MSG_ID_INTO_ZHENYING_BATTLE_ANSWER, ret, extern_data);
+		return -3;
+	}
 	zhenying_raid_struct *raid = zhenying_raid_manager::add_player_to_zhenying_raid(player);
 	if (raid == NULL)
 	{
@@ -13484,6 +13497,35 @@ static int handle_into_zhenying_fight_request(player_struct *player, EXTERN_DATA
 	}
 	
 	send_comm_answer(MSG_ID_INTO_ZHENYING_FIGHT_ANSWER, ZhenyingBattle::GetInstance()->IntoBattle(*player), extern_data);
+
+	return 0;
+}
+static int handle_zhenying_fight_myside_score_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (comm_check_player_valid(player, extern_data->player_id) != 0)
+	{
+		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
+		return (-1);
+	}
+
+	raid_struct *raid = player->get_raid();
+	if (raid == NULL)
+	{
+		return -2;
+	}
+	if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE)
+	{
+		ZhenyingBattle::GetInstance()->GetMySideScore(*player);
+	}
+	else
+	{
+		ZhenyingBattle *battel = ZhenyingBattle::GetPrivateBattle(raid->data->uuid);
+		if (battel == NULL)
+		{
+			return -3;
+		}
+		battel->GetMySideScore(*player);
+	}
 
 	return 0;
 }
@@ -13746,6 +13788,15 @@ static int handle_change_zhenying_request(player_struct *player, EXTERN_DATA *ex
 		return (-1);
 	}
 
+	if (player->scene->get_scene_type() == SCENE_TYPE_RAID)
+	{
+		raid_struct *raid = (raid_struct *)player->scene;
+		if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE || raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW)
+		{
+			return -4;
+		}
+	}
+	
 	ChoseZhenying *req = chose_zhenying__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req)
 	{
@@ -14331,7 +14382,7 @@ static int handle_answer_award_question_request(player_struct *player, EXTERN_DA
 		player->data->award_answer.question = get_rand_question(sg_award_question);
 	}
 
-	player->add_task_progress(TCT_QUESTION, 0, 1);
+	//player->add_task_progress(TCT_QUESTION, 0, 1);
 
 	return 0;
 }
@@ -18358,6 +18409,253 @@ static int handle_title_mark_old_request(player_struct *player, EXTERN_DATA *ext
 	return 0;
 }
 
+static int handle_hero_challenge_main_info_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	HeroChallengedata hero_data[MAX_HERO_CHALLENGE_MONSTER_NUM];
+	HeroChallengedata* hero_data_point[MAX_HERO_CHALLENGE_MONSTER_NUM];
+
+	HeroChallengeMainInfoAnswer ans;
+	hero_challenge_main_info_answer__init(&ans);
+	ans.data = hero_data_point;
+	ans.n_data = 0;
+
+	for(size_t i =0; i <MAX_HERO_CHALLENGE_MONSTER_NUM; i++)
+	{
+		if(player->data->my_hero_info[i].id == 0)
+		{
+			break;
+		}
+		std::map<uint64_t, ChallengeTable*>::iterator itr = hero_challenge_config.find(player->data->my_hero_info[i].id);
+		if(itr != hero_challenge_config.end())
+		{
+			hero_data_point[ans.n_data] = &hero_data[ans.n_data];
+			hero_challengedata__init(&hero_data[ans.n_data]);
+			hero_data[ans.n_data].num = player->get_raid_reward_count(itr->second->DungeonID);
+			hero_data[ans.n_data].star = player->data->my_hero_info[i].star;
+			ans.all_num +=  hero_data[ans.n_data].num;
+
+		}
+	}
+
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_HERO_CHALLENGE_ZHUJIEMIAN_INFO_ANSWER, hero_challenge_main_info_answer__pack, ans);
+	return 0;
+}
+
+static int handle_hero_challenge_sweep_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+	HeroChallengeSweepRequest *req = hero_challenge_sweep_request__unpack(NULL, get_data_len(), (uint8_t*)get_data());
+	if(req == NULL)
+	{
+		LOG_ERR("[%s:%d] hero_challenge_sweep_request__unpack faild player_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -2;
+	}
+	uint32_t hero_id = req->hero_id;
+	uint32_t item_flag = req->item_flag;
+	hero_challenge_sweep_request__free_unpacked(req, NULL);
+	HeroChallengeSweepAnswer ans;
+	HeroChallengeSweepItemInfo itme_info[MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM];
+	HeroChallengeSweepItemInfo *itme_info_point[MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM];
+	hero_challenge_sweep_answer__init(&ans);
+	ans.n_item_info = 0;
+	ans.item_info = itme_info_point;
+	uint32_t ret = 0;
+	uint32_t use_item_id = 0;
+	uint32_t use_item_num = 0;
+	do{
+		std::map<uint64_t, ChallengeTable*>::iterator itr = hero_challenge_config.begin();
+		if(itr == hero_challenge_config.end())
+		{
+			ret = 121212;   //英雄挑战表内无对应的id的英雄
+			LOG_ERR("[%s:%d] hero challenge receive reward faild ,hero_id erro hero_id[%u]", __FUNCTION__, __LINE__, hero_id);
+			break;
+		}
+
+		if(item_flag != 1 && item_flag != 2 )
+		{
+			ret = 4554545; //英雄挑战要是用的物品标志有误
+			LOG_ERR("[%s:%d] hero challenge receive reward faild ,item_flag erro item_flag[%u]", __FUNCTION__, __LINE__, item_flag);
+			break;
+		}
+		HeroChallengeInfo *hero_info = NULL;
+		for(uint32_t j = 0; j < MAX_HERO_CHALLENGE_MONSTER_NUM; j++)
+		{
+			if(player->data->my_hero_info[j].id == hero_id)
+			{
+				hero_info = &(player->data->my_hero_info[j]);
+				break;
+			}
+		}
+		if(hero_info == NULL)
+		{
+			ret = 4554545; //玩家身上无对应id的英雄的数据
+			LOG_ERR("[%s:%d] hero challenge receive reward faild ,hero_id is erro hero_id[%u]", __FUNCTION__, __LINE__, hero_id);
+			break;
+		}
+		if(hero_info->reward_flag ==1)
+		{
+			ret = 5454545; //玩家身上有奖未领取
+			LOG_ERR("[%s:%d] hero challenge receive reward faild ,player have reward no lingqu hero_id[%u]", __FUNCTION__, __LINE__, hero_id);
+			break;
+		}
+
+
+
+		//判断消耗物品够不够
+		ParameterTable *parame_config = NULL;
+		if(item_flag == 1)
+		{
+			parame_config = get_config_by_id(161000333, &parameter_config);
+			if(parame_config == NULL || parame_config->n_parameter1 != 2)
+			{				
+				ret = 343434; //参数表有误
+				LOG_ERR("[%s:%d] hero challenge receive reward faild ,parame_config erro", __FUNCTION__, __LINE__);
+				break;
+			}
+			use_item_id = parame_config->parameter1[0];
+			use_item_num = parame_config->parameter1[1];
+
+			uint32_t has_num = player->get_item_can_use_num(use_item_id);
+			if (has_num < use_item_num)
+			{
+				ret = ERROR_ID_PROP_NOT_ENOUGH;
+				LOG_ERR("[%s:%d] player[%lu] prop not enough, item_id:%lu, need_num:%lu, has_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, use_item_id, use_item_num, has_num);
+				break;
+			}
+			
+		}
+		else
+		{
+			parame_config = get_config_by_id(161000334, &parameter_config);
+			if(parame_config == NULL || parame_config->n_parameter1 != 1)
+			{				
+				ret = 343434; //参数表有误
+				LOG_ERR("[%s:%d] hero challenge receive reward faild ,parame_config erro", __FUNCTION__, __LINE__);
+				break;
+			}
+			use_item_num = parame_config->parameter1[0];
+			uint32_t has_num = player->get_attr(PLAYER_ATTR_GOLD) + player->get_attr(PLAYER_ATTR_BIND_GOLD);
+			if(has_num < use_item_num)
+			{
+				ret = ERROR_ID_PROP_NOT_ENOUGH;
+				LOG_ERR("[%s:%d] player[%lu] yuanbao not enough, need_num:%lu, has_num:%u", __FUNCTION__, __LINE__, extern_data->player_id,use_item_num, has_num);
+				break;
+			}
+		}
+		
+		//判断星级够不够
+		uint32_t has_star = hero_info->star;
+		if(has_star < 3)
+		{
+			ret = 34343434; //星级不够
+			LOG_ERR("[%s:%d] player[%lu] hero challenge star not enough, need_num:3, has_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, has_star);
+			break;
+		}
+
+		//判断今日次数够不够
+		uint32_t raid_id = itr->second->DungeonID;
+		DungeonTable* dun_config = get_config_by_id(raid_id, &all_raid_config);
+		if(dun_config == NULL && dun_config->n_Rewards < 3)
+		{
+			LOG_ERR("[%s:%d] player[%lu] hero challenge saodang reward faild config erro", __FUNCTION__, __LINE__, extern_data->player_id);
+			ret = 4528988; //配置不对
+			break;
+		}
+		struct ControlTable *control_config = get_config_by_id(dun_config->ActivityControl, &all_control_config);
+		if(control_config == NULL)
+		{
+			LOG_ERR("[%s:%d] player[%lu] hero challenge saodang reward faild config erro", __FUNCTION__, __LINE__, extern_data->player_id);
+			ret = 4528988; //配置不对
+			break;
+		}
+		uint32_t use_count = player->get_raid_reward_count(raid_id); //已经被使用的次数
+		if(use_count >= control_config->RewardTime)
+		{
+			LOG_ERR("[%s:%d] player[%lu] hero challenge saodang faild reward num not enough used_num:%u max_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, use_count, control_config->RewardTime);
+			ret = 4528988; //领奖次数不够
+			break;
+		}
+
+		//扣消耗物品和次数
+		if(item_flag == 1)
+		{
+			player->del_item(use_item_id, use_item_num, MAGIC_TYPE_HEROCHALLENGE_SWEEP_REWARD);
+		}
+		else
+		{
+			if(use_item_num > player->get_attr(PLAYER_ATTR_BIND_GOLD))
+			{
+				use_item_num = use_item_num - player->get_attr(PLAYER_ATTR_BIND_GOLD);
+				player->data->attrData[PLAYER_ATTR_BIND_GOLD] = 0;
+				player->data->attrData[PLAYER_ATTR_GOLD] = player->get_attr(PLAYER_ATTR_GOLD) - use_item_num;
+			}
+			else
+			{
+				player->data->attrData[PLAYER_ATTR_BIND_GOLD] = player->get_attr(PLAYER_ATTR_BIND_GOLD) - use_item_num;
+			}
+			player->broadcast_one_attr_changed(PLAYER_ATTR_BIND_GOLD, player->data->attrData[PLAYER_ATTR_BIND_GOLD], false, true);
+			player->broadcast_one_attr_changed(PLAYER_ATTR_GOLD, player->data->attrData[PLAYER_ATTR_GOLD], false, true);
+		}
+		player->add_raid_reward_count(raid_id);
+
+		//通过副本的奖励id获取一堆奖励物品
+		std::map<uint32_t, uint32_t> item_list;
+		uint32_t acer = 0, bind_acer = 0, silver = 0, exp = 0;
+		uint32_t reward_id = dun_config->Rewards[2];
+		uint32_t reward_num = 0;
+		if (get_drop_item(reward_id, item_list) == 0)
+		{
+			for (std::map<uint32_t, uint32_t>::iterator ite = item_list.begin(); ite != item_list.end() && ans.n_item_info < MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM; ++ite)
+			{
+				int type = get_item_type(ite->first);
+				switch (type)
+				{
+					case ITEM_TYPE_COIN:
+						silver += ite->second;
+						break;
+					case ITEM_TYPE_BIND_GOLD:
+						bind_acer += ite->second;
+						break;
+					case ITEM_TYPE_GOLD:
+						acer += ite->second;
+						break;
+					case ITEM_TYPE_EXP:
+						exp += ite->second;
+						break;
+					default:
+						itme_info_point[ans.n_item_info] = &itme_info[ans.n_item_info];
+						hero_challenge_sweep_item_info__init(&itme_info[ans.n_item_info]);
+						itme_info[ans.n_item_info].item_id = ite->first;
+						itme_info[ans.n_item_info].item_num = ite->second;
+						ans.n_item_info++;
+				}
+				//奖励信息记录到玩家身上
+				hero_info->item_info[reward_num].item_id = ite->first;
+				hero_info->item_info[reward_num].item_num = ite->first;
+				reward_num++;
+			}
+		}
+		ans.silver = silver;
+		ans.bind_acer = bind_acer;
+		ans.acer = acer;
+		ans.exp = exp;
+		
+
+	}while(0);
+	ans.result = ret;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_HERO_CHALLENGE_SWEEP_ANSWER, hero_challenge_sweep_answer__pack, ans);
+	return 0;
+}
 
 void install_msg_handle()
 {
@@ -18411,6 +18709,7 @@ void install_msg_handle()
 
 	add_msg_handle(MSG_ID_JOIN_ZHENYING_FIGHT_REQUEST, handle_join_zhenying_battle_request);
 	add_msg_handle(MSG_ID_INTO_ZHENYING_FIGHT_REQUEST, handle_into_zhenying_fight_request);
+	add_msg_handle(MSG_ID_ZHENYING_FIGHT_MYSIDE_SCORE_REQUEST, handle_zhenying_fight_myside_score_request);
 
 	//妖师国御
 	add_msg_handle(MSG_ID_ACCECT_GUOYU_TASK_REQUEST, handle_accect_guoyu_task_request);
@@ -18654,6 +18953,8 @@ void install_msg_handle()
 
 	add_msg_handle(MSG_ID_TITLE_WEAR_REQUEST, handle_title_wear_request);
 	add_msg_handle(MSG_ID_TITLE_MARK_OLD_REQUEST, handle_title_mark_old_request);
+	add_msg_handle(MSG_ID_HERO_CHALLENGE_ZHUJIEMIAN_INFO_REQUEST, handle_hero_challenge_main_info_request);
+	add_msg_handle(MSG_ID_HERO_CHALLENGE_SWEEP_REQUEST, handle_hero_challenge_sweep_request);
 }
 
 void uninstall_msg_handle()

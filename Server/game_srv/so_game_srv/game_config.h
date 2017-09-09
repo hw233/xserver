@@ -29,6 +29,7 @@ bool is_wanyaogu_raid(uint32_t id);
 bool is_guild_scene_id(uint32_t id);
 bool is_guild_wait_raid(uint32_t id);
 bool is_guild_battle_raid(uint32_t id);
+bool scene_can_make_team(uint32_t scene_id); //场景是否能组队
 int get_scene_birth_pos(uint32_t scene_id, float *pos_x, float *pos_y, float *pos_z, float *face_y);
 int bagua_card_to_bind_item(uint32_t card_id);
 RandomMonsterTable *get_random_monster_config(uint32_t type, uint64_t level);

@@ -1059,7 +1059,7 @@
         ['PointPosX'] = 410.5175,
         ['PointPosY'] = 13.11404,
         ['PointPosZ'] = 302.2333,
-        ['Yaw'] = 180.0002,
+        ['Yaw'] = 180.0003,
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }
@@ -1732,7 +1732,7 @@
         ['PointPosY'] = 17.9271,
         ['PointPosZ'] = 100,
         ['Yaw'] = 0,
-        ['Level'] = 1,
+        ['Level'] = 30,
         ['TargetInfoList'] = {
         }
     },

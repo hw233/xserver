@@ -27,6 +27,7 @@ struct BreakTable;
 struct BuffTable;
 struct CampTable;
 struct CastSpiritTable;
+struct ChallengeTable;
 struct ChangeSpecialty;
 struct CharmTable;
 struct ChivalrousTable;
@@ -602,6 +603,16 @@ struct CastSpiritTable
 	uint64_t *AdvancedLv; //11
 	uint32_t n_AdvancedGet; //12
 	uint64_t *AdvancedGet; //12
+}__attribute__ ((packed));
+
+struct ChallengeTable
+{
+	uint64_t  ID; //1
+	uint64_t  TypeLevel; //2
+	uint64_t  MonsterID; //3
+	uint64_t  OpenLevel; //4
+	uint64_t  DungeonID; //5
+	uint64_t  Times; //6
 }__attribute__ ((packed));
 
 struct ChangeSpecialty
@@ -1711,6 +1722,8 @@ struct StageTable
 	uint64_t *VictoryReward3; //9
 	uint32_t n_VictoryReward5; //10
 	uint64_t *VictoryReward5; //10
+	uint64_t  stageTotalScore; //11
+	uint64_t  stageLastScore; //12
 }__attribute__ ((packed));
 
 struct TargetInfoEntry

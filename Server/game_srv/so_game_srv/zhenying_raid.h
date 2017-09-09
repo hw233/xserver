@@ -3,6 +3,7 @@
 
 #include "raid.h"
 
+//日常阵营战
 class zhenying_raid_struct : public raid_struct
 {
 public:

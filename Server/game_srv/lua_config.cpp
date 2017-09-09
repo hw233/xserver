@@ -131,6 +131,8 @@ std::map<uint64_t, struct ArenaRewardTable*> doufachang_reward_config; //斗法�
 std::map<uint64_t, struct TitleFunctionTable*> title_function_config; //称号功能点表
 std::map<uint64_t, struct WorldBossTable*> world_boss_config; //世界boss表(以id为索引)
 std::map<uint64_t, struct WorldBossTable*> monster_to_world_boss_config; //世界boss表(以怪物id为索引)
+std::map<uint64_t, struct ChallengeTable*> hero_challenge_config; //英雄挑战
+std::map<uint64_t, struct ChallengeTable*> raidid_to_hero_challenge_config; //英雄挑战(以副本id为索引)
 
 /////////////////////
 uint32_t sg_bag_unlock_base_price;

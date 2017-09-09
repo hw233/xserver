@@ -204,6 +204,13 @@ buff_struct *buff_manager::create_buff(uint64_t id, uint64_t end_time, unit_stru
 		delete_buff(ret);
 		return NULL;
 	}
+
+	if (!owner->is_alive() || !owner->check_free_buff_pos(buff_pos))
+	{
+		delete_buff(ret);		
+		return NULL;
+	}
+	
 	owner->set_one_buff(ret, buff_pos);
 
 	LOG_DEBUG("%s: %lu add buff %lu endtime[%lu]", __FUNCTION__, owner->get_uuid(), id, ret->data->end_time);
@@ -350,7 +357,7 @@ int buff_manager::load_item_buff(player_struct *player, ItemBuff *db_item_buff)
 		player->m_buffs[i]->data->owner = player->get_uuid();
 		player->m_buffs[i]->m_owner = player;
 		player->m_buffs[i]->data->attacker = player->m_buffs[i]->data->owner;
-		player->m_buffs[i]->m_attacker = player;
+//		player->m_buffs[i]->m_attacker = player;
 		
 		player->m_buffs[i]->data->start_time = time_helper::get_cached_time();
 		player->m_buffs[i]->data->end_time = db_item_buff->end_time;
@@ -372,8 +379,9 @@ int buff_manager::load_item_buff(player_struct *player, ItemBuff *db_item_buff)
 				assert(attr && fight_attr);
 				player->m_buffs[i]->data->effect.attr_effect.attr_id = effect_config->Effect[0];
 				double base_attr = attr[effect_config->Effect[0]];
-				player->m_buffs[i]->data->effect.attr_effect.added_attr_value = base_attr * (effect_config->EffectAdd[0] / 10000.0 - 1) + effect_config->EffectNum[0];
-
+				player->m_buffs[i]->data->effect.attr_effect.added_attr_value = 
+					base_attr * ((int64_t)(effect_config->EffectAdd[0]) / 10000.0) +
+						(int64_t)(effect_config->EffectNum[0]);
 
 				assert(MAX_BUFF_FIGHT_ATTR > effect_config->Effect[0]);
 

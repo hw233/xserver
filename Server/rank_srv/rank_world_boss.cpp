@@ -100,10 +100,13 @@ int init_cur_world_boss_info()
 			ret = rc.hset_bin(cur_world_boss_key, field, (const char *)data_buffer, (int)data_len);
 			if (ret < 0)
 			{
-				LOG_ERR("[%s:%d] set befor world boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret);
+				LOG_ERR("[%s:%d] set cur world boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret);
 				break;
 			}
 		} while(0);
+
+
+		//删除排行榜信息
 		char *rank_key = NULL;
 		rank_key = get_world_boss_rank_key(boss_id);
 		if(rank_key == NULL)

@@ -8,7 +8,7 @@ local AttributeTypeTable = {
 	[2] = {
 		['ID'] = 2,
 		['Effect'] = 'MaxHP',
-		['FightRatio'] = 0.1,
+		['FightRatio'] = 7.4999999999999997E-2,
 		['ShowType'] = 0
 		},
 	[3] = {
@@ -20,7 +20,7 @@ local AttributeTypeTable = {
 	[4] = {
 		['ID'] = 4,
 		['Effect'] = 'DfWuDel',
-		['FightRatio'] = 1,
+		['FightRatio'] = 2,
 		['ShowType'] = 0
 		},
 	[5] = {
@@ -56,37 +56,37 @@ local AttributeTypeTable = {
 	[10] = {
 		['ID'] = 10,
 		['Effect'] = 'AtGoldDf',
-		['FightRatio'] = 1,
+		['FightRatio'] = 0.4,
 		['ShowType'] = 0
 		},
 	[11] = {
 		['ID'] = 11,
 		['Effect'] = 'AtWoodDf',
-		['FightRatio'] = 1,
+		['FightRatio'] = 0.4,
 		['ShowType'] = 0
 		},
 	[12] = {
 		['ID'] = 12,
 		['Effect'] = 'AtWaterDf',
-		['FightRatio'] = 1,
+		['FightRatio'] = 0.4,
 		['ShowType'] = 0
 		},
 	[13] = {
 		['ID'] = 13,
 		['Effect'] = 'AtFireDf',
-		['FightRatio'] = 1,
+		['FightRatio'] = 0.4,
 		['ShowType'] = 0
 		},
 	[14] = {
 		['ID'] = 14,
 		['Effect'] = 'AtEarthDf',
-		['FightRatio'] = 1,
+		['FightRatio'] = 0.4,
 		['ShowType'] = 0
 		},
 	[15] = {
 		['ID'] = 15,
 		['Effect'] = 'Dodge',
-		['FightRatio'] = 1,
+		['FightRatio'] = 2,
 		['ShowType'] = 0
 		},
 	[16] = {
@@ -98,25 +98,25 @@ local AttributeTypeTable = {
 	[17] = {
 		['ID'] = 17,
 		['Effect'] = 'Critical',
-		['FightRatio'] = 1,
+		['FightRatio'] = 5,
 		['ShowType'] = 0
 		},
 	[18] = {
 		['ID'] = 18,
 		['Effect'] = 'CriticalDf',
-		['FightRatio'] = 1,
+		['FightRatio'] = 5,
 		['ShowType'] = 0
 		},
 	[19] = {
 		['ID'] = 19,
 		['Effect'] = 'CtDmg',
-		['FightRatio'] = 500,
+		['FightRatio'] = 3000,
 		['ShowType'] = 1
 		},
 	[20] = {
 		['ID'] = 20,
 		['Effect'] = 'CtDmgDf',
-		['FightRatio'] = 10000,
+		['FightRatio'] = 2000,
 		['ShowType'] = 1
 		},
 	[21] = {
@@ -128,7 +128,7 @@ local AttributeTypeTable = {
 	[22] = {
 		['ID'] = 22,
 		['Effect'] = 'DodgeDf',
-		['FightRatio'] = 1,
+		['FightRatio'] = 2,
 		['ShowType'] = 0
 		},
 	[23] = {

@@ -79,6 +79,11 @@
 
 #define MAX_RANK_TYPE  100 //排行榜类型数
 
+//最大英雄挑战怪物个数
+#define MAX_HERO_CHALLENGE_MONSTER_NUM 100
+//扫荡奖励物品最大数量
+#define MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM 20
+
 
 //玩家状态
 enum PlayerStatus
@@ -131,6 +136,14 @@ enum MonsterTypeDefine
 	MONSTER_TYPE_DEFINE_BOSS = 3, //BOSS怪物
 	MONSTER_TYPE_DEFINE_JIANTA = 4, //箭塔
 	MONSTER_TYPE_DEFINE_TRAP = 5, //陷阱
+};
+
+enum MonsterHateTypeDefine
+{
+	MONSTER_HATETYPE_DEFINE_NORMAL = 1, //普通怪物
+	MONSTER_HATETYPE_DEFINE_ELITE = 2, //精英怪物
+	MONSTER_HATETYPE_DEFINE_BOSS = 3, //BOSS怪物
+	MONSTER_HATETYPE_DEFINE_AIBOSS = 4, //BOSS怪物
 };
 
 enum AddItemDealWay

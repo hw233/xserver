@@ -44,6 +44,7 @@ enum DUNGEON_TYPE_DEFINE
 	DUNGEON_TYPE_GUILD_RAID = 11,
 	DUNGEON_TYPE_GUILD_FINAL_RAID = 12,	
 	DUNGEON_TYPE_BATTLE = 15,
+	DUNGEON_TYPE_BATTLE_NEW = 16,
 };
 
 enum RAID_STATE_DEFINE
@@ -186,6 +187,11 @@ union raid_ai_data
 //		uint16_t cur_player_num;  //当前人数
 		int m_line;   //第几条线		
 	} zhenying_data;
+	struct
+	{
+		uint32_t step;   //
+		uint32_t room;   //
+	} battle_data;
 
 	struct
 	{
@@ -296,7 +302,7 @@ public:
 	bool is_monster_alive(uint32_t id);	
 	int get_id_monster_num(uint32_t id);	
 	int get_id_collect_num(uint32_t id);
-
+	int check_all_monster_region_buff(struct RaidScriptTable *config);
 	int add_monster_to_scene(monster_struct *monster, uint32_t effectid);
 //	int add_player_to_scene(player_struct *player);
 	int add_collect_to_scene(Collect *pCollect);

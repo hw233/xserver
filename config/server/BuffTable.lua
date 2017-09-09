@@ -999,7 +999,7 @@ local BuffTable = {
 		['BuffEffectId'] = 135190013,
 		['EndEffectId'] = 0,
 		['IsFollow'] = 0,
-		['Time'] = 100000,
+		['Time'] = 9000000,
 		['DfTime'] = 0,
 		['TimeDelay'] = 0,
 		['Interval'] = 1000,
@@ -1382,7 +1382,7 @@ local BuffTable = {
 		['Time'] = 210000000,
 		['DfTime'] = 0,
 		['TimeDelay'] = 0,
-		['Interval'] = 100,
+		['Interval'] = 1000,
 		['EffectID'] = {115000017},
 		['DelEffectID'] = {0}
 		},

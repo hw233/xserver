@@ -24,8 +24,8 @@ local RandomDungeonTable = {
 		['TypeLevel'] = 1,
 		['ResID'] = 20025,
 		['ResProbability'] = 2000,
-		['PointX'] = {-3,41,50,43,-51},
-		['PointZ'] = {-10,37,-7,-65,-47},
+		['PointX'] = {-3,41,48,43,-51},
+		['PointZ'] = {-6,35,-7,-65,-47},
 		['FaceY'] = {0,180,-90,0,90},
 		['GroupProbability'] = {2000,2000,2000,2000,2000}
 		},
@@ -44,8 +44,8 @@ local RandomDungeonTable = {
 		['TypeLevel'] = 1,
 		['ResID'] = 20027,
 		['ResProbability'] = 2000,
-		['PointX'] = {94,179,90,148,61},
-		['PointZ'] = {227,180,157,205,169},
+		['PointX'] = {94,179,90,148,83},
+		['PointZ'] = {227,180,157,205,180},
 		['FaceY'] = {180,-90,80,-90,0},
 		['GroupProbability'] = {2000,2000,2000,2000,2000}
 		},
@@ -74,8 +74,8 @@ local RandomDungeonTable = {
 		['TypeLevel'] = 2,
 		['ResID'] = 20025,
 		['ResProbability'] = 2000,
-		['PointX'] = {-3,41,50,43,-51},
-		['PointZ'] = {-10,37,-7,-65,-47},
+		['PointX'] = {-3,41,48,43,-51},
+		['PointZ'] = {-6,35,-7,-65,-47},
 		['FaceY'] = {0,180,-90,0,90},
 		['GroupProbability'] = {2000,2000,2000,2000,2000}
 		},
@@ -94,8 +94,8 @@ local RandomDungeonTable = {
 		['TypeLevel'] = 2,
 		['ResID'] = 20027,
 		['ResProbability'] = 2000,
-		['PointX'] = {94,179,90,148,61},
-		['PointZ'] = {227,180,157,205,169},
+		['PointX'] = {94,179,90,148,83},
+		['PointZ'] = {227,180,157,205,180},
 		['FaceY'] = {180,-90,80,-90,0},
 		['GroupProbability'] = {2000,2000,2000,2000,2000}
 		},
@@ -124,8 +124,8 @@ local RandomDungeonTable = {
 		['TypeLevel'] = 3,
 		['ResID'] = 20025,
 		['ResProbability'] = 2000,
-		['PointX'] = {-3,41,50,43,-51},
-		['PointZ'] = {-10,37,-7,-65,-47},
+		['PointX'] = {-3,41,48,43,-51},
+		['PointZ'] = {-6,35,-7,-65,-47},
 		['FaceY'] = {0,180,-90,0,90},
 		['GroupProbability'] = {2000,2000,2000,2000,2000}
 		},
@@ -144,8 +144,8 @@ local RandomDungeonTable = {
 		['TypeLevel'] = 3,
 		['ResID'] = 20027,
 		['ResProbability'] = 2000,
-		['PointX'] = {94,179,90,148,61},
-		['PointZ'] = {227,180,157,205,169},
+		['PointX'] = {94,179,90,148,83},
+		['PointZ'] = {227,180,157,205,180},
 		['FaceY'] = {180,-90,80,-90,0},
 		['GroupProbability'] = {2000,2000,2000,2000,2000}
 		},
@@ -174,8 +174,8 @@ local RandomDungeonTable = {
 		['TypeLevel'] = 4,
 		['ResID'] = 20025,
 		['ResProbability'] = 2000,
-		['PointX'] = {-3,41,50,43,-51},
-		['PointZ'] = {-10,37,-7,-65,-47},
+		['PointX'] = {-3,41,48,43,-51},
+		['PointZ'] = {-6,35,-7,-65,-47},
 		['FaceY'] = {0,180,-90,0,90},
 		['GroupProbability'] = {2000,2000,2000,2000,2000}
 		},
@@ -194,8 +194,8 @@ local RandomDungeonTable = {
 		['TypeLevel'] = 4,
 		['ResID'] = 20027,
 		['ResProbability'] = 2000,
-		['PointX'] = {94,179,90,148,61},
-		['PointZ'] = {227,180,157,205,169},
+		['PointX'] = {94,179,90,148,83},
+		['PointZ'] = {227,180,157,205,180},
 		['FaceY'] = {180,-90,80,-90,0},
 		['GroupProbability'] = {2000,2000,2000,2000,2000}
 		}

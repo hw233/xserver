@@ -657,6 +657,8 @@
 	VictoryTime 8 : *integer
 	VictoryReward3 9 : *integer
 	VictoryReward5 10 : *integer
+	stageTotalScore 11 : integer
+	stageLastScore 12 : integer	
 }
 
 #八卦牌主表
@@ -1412,4 +1414,13 @@
 	MineSet 9 : *integer
 	ForestSet 10 : *integer
 	Kill 11 : integer
+}
+
+.ChallengeTable{
+	ID 1 : integer
+	TypeLevel 2 : integer
+	MonsterID 3 : integer
+	OpenLevel 4 : integer
+	DungeonID 5 : integer
+	Times 6 : integer
 }

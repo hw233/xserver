@@ -723,7 +723,6 @@ void cash_truck_struct::del_sight_player_in_area(int n_del, area_struct **del_ar
 			del_sight_player[index++] = player;
 		}
 	}
-	//todo
 	for (i = 0; i < index; ++i)
 		del_sight_player[i]->del_cash_truck_from_sight_both(this);
 }
