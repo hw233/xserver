@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include "uuid.h"
+#include "so_game_srv/zhenying_raid.h"
+#include "so_game_srv/zhenying_battle.h"
 #include <stdlib.h>
 #include <errno.h>
 #include <evhttp.h>
@@ -60,6 +63,7 @@ static void cb_signal2(evutil_socket_t fd, short events, void *arg)
 	LOG_INFO("%s: fd = %d, events = %d, arg = %p", __FUNCTION__, fd, events, arg);
 }
 
+extern void install_zhenyingzhan_ai_player_handle();
 static void install_all_msg()
 {
 	install_msg_handle();
@@ -68,11 +72,16 @@ static void install_all_msg()
 	install_raid_ai();
 	install_db_msg_handle();
 	install_pvp_ai_player_handle();
-	install_doufachang_ai_player_handle();	
+	install_doufachang_ai_player_handle();
+	install_zhenyingzhan_ai_player_handle();
 }
 
 static void	clear_all_mem()
 {
+		//game_srv退出很慢，只是为了减少MEMERR报内存泄漏
+#ifndef MEMERR
+	return;
+#endif	
 		//player
 	for (std::list<player_struct *>::iterator ite = player_manager_player_free_list.begin();
 		 ite != player_manager_player_free_list.end(); ++ite)
@@ -801,6 +810,7 @@ void on_http_request(struct evhttp_request *req, void *arg)
 	{
 		struct evbuffer *returnbuffer = evbuffer_new();
 		evbuffer_add_printf(returnbuffer, "player: %lu/%u<br><br>\n", player_manager_all_players_id.size(), player_manager::get_pool_max_num());
+		evbuffer_add_printf(returnbuffer, "ai_data: [used]%lu [free]%lu<br><br>\n", player_manager_ai_data_used_list.size(), player_manager_ai_data_free_list.size());
 		evbuffer_add_printf(returnbuffer, "monster: %lu/%u<br><br>\n", monster_manager_all_monsters_id.size(), monster_manager::get_monster_pool_max_num());
 //		evbuffer_add_printf(returnbuffer, "boss: %lu/%u<br><br>\n", monster_manager_all_boss_id.size(), monster_manager::get_boss_pool_max_num());
 		evbuffer_add_printf(returnbuffer, "raid: %lu/%u<br><br>\n", raid_manager_all_raid_id.size(), raid_manager::get_raid_pool_max_num());
@@ -816,7 +826,10 @@ void on_http_request(struct evhttp_request *req, void *arg)
 			guild_wait_raid_manager::get_guild_wait_raid_pool_max_num());
 		evbuffer_add_printf(returnbuffer, "partner: %lu/%u<br><br>\n", partner_manager_all_partner_id.size(), partner_manager_partner_data_pool.num);
 
-		evbuffer_add_printf(returnbuffer, "truck: %lu/%u<br><br>\n", cash_truck_manager_all_id.size(), cash_truck_manager_data_pool.num);		
+		evbuffer_add_printf(returnbuffer, "truck: %lu/%u<br><br>\n", cash_truck_manager_all_id.size(), cash_truck_manager_data_pool.num);
+
+		evbuffer_add_printf(returnbuffer, "zhenyingraid: %d<br><br>\n", zhenying_raid_struct::raid_num);
+		evbuffer_add_printf(returnbuffer, "zhenyingbattle: %d<br><br>\n", ZhenyingBattle::battle_num);
 
 		evhttp_send_reply(req, HTTP_OK, "Client", returnbuffer);					
 		evbuffer_free(returnbuffer);			
@@ -863,6 +876,7 @@ void cb_gamesrv_timer()
 		monster_manager::on_tick_30();
 		sight_space_manager::on_tick();
 		buff_manager::on_tick_30();
+		ZhenyingBattle::GetInstance()->Tick();
 	}
 
 	run_with_period(50)
@@ -879,8 +893,6 @@ void cb_gamesrv_timer()
 		Collect::Tick();
 		pvp_match_manager_on_tick();
 //		guild_battle_manager_on_tick();
-		//Team::Timer();
-		ZhenyingBattle::GetInstance()->Tick();
 	}
 
 	run_with_period(500)
@@ -970,7 +982,10 @@ int game_recv_func(evutil_socket_t fd, conn_node_gamesrv *node)
 			std::map<uint64_t, player_struct *>::iterator it = player_manager_all_players_id.begin();
 			for (; it!=player_manager_all_players_id.end(); ++it) {
 				player_struct* player = it->second;
-				if (!player)
+				if (!player || !player->data)
+					continue;
+
+				if (get_entity_type(player->get_uuid()) != ENTITY_TYPE_PLAYER)
 					continue;
 
 				player->data->status = ONLINE;

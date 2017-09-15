@@ -176,7 +176,7 @@ local ParameterTable = {
 		},
 	[161000034] = {
 		['ID'] = 161000034,
-		['parameter1'] = {1},
+		['parameter1'] = {20},
 		['parameter2'] = ''
 		},
 	[161000035] = {
@@ -1371,7 +1371,7 @@ local ParameterTable = {
 		},
 	[161000278] = {
 		['ID'] = 161000278,
-		['parameter1'] = {1},
+		['parameter1'] = {2},
 		['parameter2'] = ''
 		},
 	[161000279] = {
@@ -1381,12 +1381,12 @@ local ParameterTable = {
 		},
 	[161000280] = {
 		['ID'] = 161000280,
-		['parameter1'] = {2},
+		['parameter1'] = {2.3},
 		['parameter2'] = ''
 		},
 	[161000281] = {
 		['ID'] = 161000281,
-		['parameter1'] = {10},
+		['parameter1'] = {0},
 		['parameter2'] = ''
 		},
 	[161000282] = {
@@ -1401,7 +1401,7 @@ local ParameterTable = {
 		},
 	[161000284] = {
 		['ID'] = 161000284,
-		['parameter1'] = {0.2},
+		['parameter1'] = {0.5},
 		['parameter2'] = ''
 		},
 	[161000285] = {

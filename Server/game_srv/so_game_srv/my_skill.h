@@ -14,7 +14,7 @@ class MySkill
 {
 public:
 	static const int MAX_SKILL_NUM = 20;
-	typedef std::map<uint32_t, skill_struct *> SKILL_CONTAIN;
+	typedef std::vector<skill_struct *> SKILL_CONTAIN;
 
 	void copy(MySkill *skill);  //复制一份，机器人用
 
@@ -29,7 +29,7 @@ public:
 	void SendAllSkill();
 	skill_struct *GetSkillStructFromFuwen(uint32_t fuwen_id);  //根据符文id获取对应技能的对象
 	uint32_t GetFirstSkillId();
-	uint32_t GetRandSkillId();  //这个接口已经变成了获取下一个没有在CD的技能ID
+	uint32_t GetRandSkillId(struct ai_player_data *ai_data);  //这个接口已经变成了获取下一个没有在CD的技能ID
 	int GetSkillLevelNum(uint32_t lv); //获取超过指定等级的技能数（三段技只算1个）
 	int GetFuwenUnlockNum(void); //获取解锁的符文数量
 	int GetFuwenWearNum(void); //获取装备的符文数量
@@ -46,7 +46,7 @@ public:
 	uint32_t m_index; //套餐下标
 private:
 //	skill_struct *GetNoFuwenSkillStruct(uint32_t skill_id);  //没有设置符文的技能ID对应的技能等级,被GetFuwenSkillLevel使用
-	void IteratorLevelUp(uint32_t id, uint32_t num);  //升级关联技能 
+	void IteratorLevelUp(uint32_t id, uint32_t num);  //升级关联技能
 	SKILL_CONTAIN m_skill;
 	player_struct *m_owner;
 };

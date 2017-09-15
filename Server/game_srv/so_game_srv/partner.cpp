@@ -1302,7 +1302,7 @@ int partner_struct::broadcast_partner_create()
 	if (!area)
 		return (0);
 
-	LOG_DEBUG("%s %d: create partner %u %lu at area %ld[%.1f][%.1f]", __FUNCTION__, __LINE__, data->partner_id, get_uuid(),
+	LOG_DEBUG("%s %d: create partner %u %lu at area %ld[%.1f][%.1f]", __PRETTY_FUNCTION__, __LINE__, data->partner_id, get_uuid(),
 		area - scene->m_area, get_pos()->pos_x, get_pos()->pos_z);
 	
 	SightChangedNotify notify;
@@ -1583,7 +1583,7 @@ int partner_struct::count_skill_hit_unit(std::vector<unit_struct *> *ret, struct
 		case SKILL_RANGE_TYPE_RECT:
 			return count_rect_unit(data->angle, ret, config->MaxCount, config->Radius, config->Angle);
 		case SKILL_RANGE_TYPE_CIRCLE:
-			return count_circle_unit(ret, config->MaxCount, config->Radius);			
+			return count_circle_unit(ret, config->MaxCount, get_pos(), config->Radius);			
 		case SKILL_RANGE_TYPE_FAN:
 			return count_fan_unit(ret, config->MaxCount, config->Radius, config->Angle);
 		default:

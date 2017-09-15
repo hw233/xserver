@@ -159,6 +159,11 @@ void player_struct::clear_cur_skill()
 	data->cur_skill.start_time = 0;
 }
 
+bool player_struct::is_ai_player()
+{
+	return (get_entity_type(data->player_id) == ENTITY_TYPE_AI_PLAYER);
+}
+
 struct unit_path *player_struct::get_unit_path()
 {
 	return &data->move_path;
@@ -464,10 +469,11 @@ void player_struct::init_player()
 	bagua_buffs.clear();
 //	guild_id = 0;
 //	memset(guild_name, 0, sizeof(guild_name));
-	ai_patrol_config = NULL;
+//	ai_patrol_config = NULL;
 //	memset(&fc_data, 0, sizeof(FightingCapacity));
 	m_partners.clear();
 	chengjie_kill = 0;
+	ai_data = NULL;
 }
 
 void player_struct::clear(void)
@@ -490,6 +496,13 @@ void player_struct::clear(void)
 	clear_temp_data();
 	clear_all_partners();
 	clear_all_escort();
+
+	if (ai_data)
+	{
+		player_manager_ai_data_free_list.push_back(ai_data);
+		player_manager_ai_data_used_list.erase(ai_data);
+		ai_data = NULL;
+	}
 }
 
 bool player_struct::is_in_pvp_raid()
@@ -1844,7 +1857,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		hero_challenge_info[db_info.n_hero_challenge_all_info].reward_flag = data->my_hero_info[i].reward_flag;
 		hero_challenge_info[db_info.n_hero_challenge_all_info].item_info = hero_challenge_item_info_point;
 		hero_challenge_info[db_info.n_hero_challenge_all_info].n_item_info = 0;
-		for(size_t j = 0; j < MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM ; j++)
+		for(size_t j = 0; j < MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM && data->my_hero_info[i].item_info[j].item_id != 0; j++)
 		{
 			hero_challenge_item_info_point[j] = &hero_challenge_item_info[j];
 			dbhreo_challenge_item_info__init(&hero_challenge_item_info[j]);
@@ -2375,7 +2388,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		data->my_hero_info[i].id = db_info->hero_challenge_all_info[i]->id;
 		data->my_hero_info[i].star = db_info->hero_challenge_all_info[i]->star;
 		data->my_hero_info[i].reward_flag = db_info->hero_challenge_all_info[i]->reward_flag;
-		for(size_t j = 0; j < MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM ; j++)
+		for(size_t j = 0; j < MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM && j < db_info->hero_challenge_all_info[i]->n_item_info; j++)
 		{
 			data->my_hero_info[i].item_info[j].item_id = db_info->hero_challenge_all_info[i]->item_info[j]->item_id;
 			data->my_hero_info[i].item_info[j].item_num = db_info->hero_challenge_all_info[i]->item_info[j]->item_num;
@@ -3119,9 +3132,16 @@ void player_struct::update_player_pos_and_sight()
 	if (!is_unit_in_move())
 		return;
 
-	if (scene->get_scene_type() == SCENE_TYPE_RAID
-		&& ((raid_struct *)scene)->data->state != RAID_STATE_START)
-		return;
+	if (scene->get_scene_type() == SCENE_TYPE_RAID)
+	{
+		if (!((raid_struct *)scene)->data)
+		{
+			LOG_ERR("%s: player[%lu] scene destoryed", __FUNCTION__, data->player_id);
+			return;
+		}
+		if (((raid_struct *)scene)->data->state != RAID_STATE_START)
+			return;
+	}
 
 	struct position *pos = get_pos();
 	float pos_x = pos->pos_x;
@@ -11223,7 +11243,11 @@ void player_struct::take_partner_out_sight_space(sight_space_struct *sp)
 			partner_struct *partner = partner_manager::get_partner_by_uuid(data->partner_battle[i]);
 			if (!partner)
 				continue;
-			assert(partner->partner_sight_space == sp);			
+			if (partner->partner_sight_space != sp)
+			{
+				assert(partner->partner_sight_space == NULL);
+				continue;
+			}
 			sp->broadcast_partner_delete(partner);
 				//关闭定时器
 			if (is_node_in_heap(&partner_manager_minheap, partner))
@@ -11312,13 +11336,13 @@ void player_struct::take_partner_into_scene(void)
 	}
 
 	adjust_battle_partner();
-	for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
-	{
-		if (data->partner_battle[i] > 0)
-		{
-			add_partner_to_scene(data->partner_battle[i]);
-		}
-	}
+	// for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
+	// {
+	// 	if (data->partner_battle[i] > 0)
+	// 	{
+	// 		add_partner_to_scene(data->partner_battle[i]);
+	// 	}
+	// }
 }
 
 void player_struct::del_battle_partner_from_scene()
@@ -11892,21 +11916,24 @@ void player_struct::on_kill_player(player_struct *dead)
 		//	notify_attr_changed(1, id, value);
 		// }
 
-		//通知好友服增加仇人
-		PROTO_HEAD *head = conn_node_base::get_send_buf(SERVER_PROTO_FRIEND_ADD_ENEMY, 0);
-		head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD) + sizeof(uint64_t));
-		uint64_t *pData = (uint64_t*)head->data;
-		*pData++ = data->player_id;
-
-		EXTERN_DATA ext_data;
-		ext_data.player_id = dead->data->player_id;
-		conn_node_base::add_extern_data(head, &ext_data);
-		if (conn_node_gamesrv::connecter.send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len))
+		if (!this->is_ai_player() && !dead->is_ai_player())
 		{
-			LOG_ERR("[%s:%d] player[%lu] send to friend_srv failed, err:%u", __FUNCTION__, __LINE__, ext_data.player_id, errno);
-		}
+			//通知好友服增加仇人
+			PROTO_HEAD *head = conn_node_base::get_send_buf(SERVER_PROTO_FRIEND_ADD_ENEMY, 0);
+			head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD) + sizeof(uint64_t));
+			uint64_t *pData = (uint64_t*)head->data;
+			*pData++ = data->player_id;
 
-		add_achievement_progress(ACType_MURDER_KILL, 0, 0, 1);
+			EXTERN_DATA ext_data;
+			ext_data.player_id = dead->data->player_id;
+			conn_node_base::add_extern_data(head, &ext_data);
+			if (conn_node_gamesrv::connecter.send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len))
+			{
+				LOG_ERR("[%s:%d] player[%lu] send to friend_srv failed, err:%u", __FUNCTION__, __LINE__, ext_data.player_id, errno);
+			}
+
+			add_achievement_progress(ACType_MURDER_KILL, 0, 0, 1);
+		}
 	}
 
 		//当玩家杀戮值超过10点时，死亡后会掉落经验，杀戮值越高，掉落经验越多，具体点数以及掉落经验读取配置表；
@@ -11932,7 +11959,10 @@ void player_struct::on_kill_player(player_struct *dead)
 		//	dead->set_attr(PLAYER_ATTR_MURDER, value[0]);
 		//	dead->notify_attr_changed(1, id, value);
 		// }
-		dead->add_achievement_progress(ACType_MURDER_DEAD, 0, 0, 1);
+		if (!this->is_ai_player() && !dead->is_ai_player())
+		{
+			dead->add_achievement_progress(ACType_MURDER_DEAD, 0, 0, 1);
+		}
 	}
 
 
@@ -11959,10 +11989,13 @@ void player_struct::on_kill_player(player_struct *dead)
 	//	}
 	// }
 
-	add_task_progress(TCT_KILL_PLAYER, data->player_id, 1);
-	if (get_attr(PLAYER_ATTR_PK_TYPE) == PK_TYPE_CAMP && dead->get_attr(PLAYER_ATTR_PK_TYPE) == PK_TYPE_CAMP)
+	if (!this->is_ai_player() && !dead->is_ai_player())
 	{
-		add_achievement_progress(ACType_ZHENYING_KILL, 0, 0, 1);
+		add_task_progress(TCT_KILL_PLAYER, dead->data->player_id, 1);
+		if (get_attr(PLAYER_ATTR_PK_TYPE) == PK_TYPE_CAMP && dead->get_attr(PLAYER_ATTR_PK_TYPE) == PK_TYPE_CAMP)
+		{
+			add_achievement_progress(ACType_ZHENYING_KILL, 0, 0, 1);
+		}
 	}
 
 	if (data->chengjie.cur_task != 0 && data->chengjie.target == dead->get_uuid())
@@ -12859,6 +12892,8 @@ int player_struct::set_out_raid_pos()
 
 int player_struct::set_out_raid_pos_and_clear_scene()
 {
+	LOG_DEBUG("%s: player[%lu] scene[%p] set out pos[%u][%.2f][%.2f]", __FUNCTION__, data->player_id, scene,
+		data->leaveraid.scene_id, data->leaveraid.ExitPointX, data->leaveraid.ExitPointZ);
 //	raid_struct *raid = (raid_struct *)scene;
 //	data->raid_uuid = 0;
 	set_out_raid_pos();
@@ -15048,6 +15083,15 @@ int player_struct::init_hero_challenge_data()
 		
 		data->my_hero_info[dex].id = ite->second->ID;
 		data->my_hero_info[dex].star = 0;
+	}
+
+	for(size_t j = 0; j < MAX_HERO_CHALLENGE_MONSTER_NUM && data->my_hero_info[j].id != 0; j++)
+	{
+		if(hero_challenge_config.find(data->my_hero_info[j].id) == hero_challenge_config.end())
+		{
+			memmove(&data->my_hero_info[j], &data->my_hero_info[j+1], sizeof(HeroChallengeInfo)*(MAX_HERO_CHALLENGE_MONSTER_NUM - j - 1));
+			memset(&data->my_hero_info[MAX_HERO_CHALLENGE_MONSTER_NUM - 1], 0, sizeof(HeroChallengeInfo));
+		}
 	}
 	
 	return 0;

@@ -1,0 +1,11 @@
+message RedDot
+{
+	required uint32 nType = 1; //类型
+	required bool state = 2;   //状态
+	repeated uint32 id = 3;    //需要存放的数据
+}
+
+message RedDotList
+{
+	repeated RedDot dotList = 1;
+}

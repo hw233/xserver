@@ -600,7 +600,12 @@
 #define MSG_ID_ZHENYING_FIGHT_SETTLE_NOTIFY          12439 //阵营战结算ZhenYingResult
 #define MSG_ID_ZHENYING_FIGHT_START_FLAG_NOTIFY          12440 //阵营战开始夺旗 StartFlag
 #define MSG_ID_ZHENYING_FIGHT_INTERUPT_FLAG_NOTIFY          12441 //阵营战中断夺旗 StartFlag
-#define MSG_ID_ZHENYING_FIGHT_FINISH_FLAG_NOTIFY          12442 //阵营战中断夺旗 StartFlag
+#define MSG_ID_ZHENYING_FIGHT_FINISH_FLAG_NOTIFY          12442 //阵营战完成夺旗 StartFlag
+
+//阵营日常
+//#define MSG_ID_INTO_ZHENYING_DAILY_REQUEST           12450 //进入阵营日常请求 
+//#define MSG_ID_INTO_ZHENYING_DAILY_ANSWER            12451 //进入阵营日常应答 comm_answer
+#define MSG_ID_ZHENYING_DAILY_CD_NOTIFY          12438 //阵营日常结束cd FbCD
 #define MSG_ID_ZHENYING_MAX_REQUEST                 12500 //NULL
 
 //答题
@@ -828,5 +833,9 @@
 #define MSG_ID_HERO_CHALLENGE_ZHUJIEMIAN_INFO_ANSWER       13901 //英雄挑战主界面信息应答 HeroChallengeMainInfoAnswer
 #define MSG_ID_HERO_CHALLENGE_SWEEP_REQUEST				   13902 //英雄挑战扫荡请求 HeroChallengeSweepRequest
 #define MSG_ID_HERO_CHALLENGE_SWEEP_ANSWER			       13903 //英雄挑战扫荡应答 HeroChallengeSweepAnswer
+#define MSG_ID_HERO_CHALLENGE_SWEEP_RECIVE_REQUEST		   13904 //英雄挑战扫荡奖励领取请求 HeroChallengeReciveSweepRewardRequest
+#define MSG_ID_HERO_CHALLENGE_SWEEP_RECIVE_ANSWER		   13905 //英雄挑战扫荡奖励领取应答 comm_answer
+#define MSG_ID_HERO_CHALLENGE_SWEEP_REWARD_INFO_REQUEST	   13906 //英雄挑战扫荡奖励信息请求 HeroChallengeReciveSweepRewardRequest
+#define MSG_ID_HERO_CHALLENGE_SWEEP_REWARD_INFO_NOTIFY	   13907 //英雄挑战扫荡奖励信息应答 HeroChallengeSweepAnswer
 #endif
 

@@ -696,7 +696,7 @@ int conn_node_mailsrv::handle_mail_del_request(EXTERN_DATA *extern_data)
 	char *p = NULL;
 
 	std::vector<uint64_t> del_ids;
-
+	std::vector<MailDBInfo*> mail_details;
 	do
 	{
 		if (mail_id > 0) //删除指定邮件
@@ -729,6 +729,7 @@ int conn_node_mailsrv::handle_mail_del_request(EXTERN_DATA *extern_data)
 				LOG_ERR("[%s:%d] player[%lu] mail_dbinfo__unpack failed, mail_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, mail_id);
 				break;
 			}
+			mail_details.push_back(detail);
 
 			if (detail->n_attach > 0 && extract == 0)
 			{
@@ -776,6 +777,7 @@ int conn_node_mailsrv::handle_mail_del_request(EXTERN_DATA *extern_data)
 					LOG_ERR("[%s:%d] player[%lu] mail_dbinfo__unpack failed, mail_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, mail_id);
 					continue;
 				}
+				mail_details.push_back(detail);
 
 				if (!(detail->n_attach > 0 && extract == 0))
 				{
@@ -825,6 +827,11 @@ int conn_node_mailsrv::handle_mail_del_request(EXTERN_DATA *extern_data)
 	resp.n_mail_id = del_ids.size();
 
 	fast_send_msg(&connecter, extern_data, MSG_ID_MAIL_DEL_ANSWER, mail_multi_answer__pack, resp);
+
+	for (std::vector<MailDBInfo*>::iterator iter = mail_details.begin(); iter != mail_details.end(); ++iter)
+	{
+		mail_dbinfo__free_unpacked(*iter, NULL);
+	}
 
 	return 0;
 }

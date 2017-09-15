@@ -30,6 +30,8 @@ struct raid_player_info
 /* 10=公会准备区副本 */
 /* 11=预赛 */
 /* 12=决赛" */
+/* 15=普通阵营战 */
+/* 16=新手阵营战 */
 enum DUNGEON_TYPE_DEFINE
 {
 	DUNGEON_TYPE_NORMAL = 0,
@@ -89,17 +91,6 @@ struct assist_data
 	uint32_t damage_time;  //造成伤害的时间
 };
 
-struct ai_player_data
-{
-	uint16_t ai_state;
-	uint64_t ontick_time;
-	uint32_t skill_id;  //即将释放的技能
-	double angle;     //技能的角度
-	struct position skill_target_pos;  //技能释放的位置
-	uint64_t relive_time;
-	uint64_t target_player_id;
-};
-
 struct pvp_player_praise_record
 {
 	bool praise[MAX_TEAM_MEM * 2];  //有没有点赞
@@ -146,14 +137,12 @@ union raid_ai_data
 		uint8_t assist_record[MAX_TEAM_MEM * 2];   //助攻次数记录
 		struct assist_data assist_data[MAX_TEAM_MEM * 2][MAX_TEAM_MEM]; //伤害记录，用来计算助攻
 		struct pvp_player_praise_record praise_index[MAX_TEAM_MEM * 2];  //对应的玩家下标
-		struct ai_player_data ai_player_data[MAX_TEAM_MEM * 2];  //ai玩家数据
 		bool pvp_raid_ready[MAX_TEAM_MEM * 2];  //是否已经进入游戏了
 	} pvp_data;
 
 	struct
 	{
 		PVP_RAID_STATE pvp_raid_state;
-		struct ai_player_data ai_player_data;  //ai玩家数据		
 	} doufachang_data;
 
 	struct
@@ -296,7 +285,7 @@ public:
 	/* int team3_enter_raid(Team *team); */
 	/* int team4_enter_raid(Team *team);		 */
 	int player_return_raid(player_struct *player);
-	int player_enter_raid(player_struct *player, double pos_x, double pos_z);
+	int player_enter_raid(player_struct *player, double pos_x, double pos_z, double direct = 0);
 	int player_enter_raid_impl(player_struct *player, int index, double pos_x, double pos_z, double direct = 0);
 	int player_leave_raid(player_struct *player);
 	bool is_monster_alive(uint32_t id);	

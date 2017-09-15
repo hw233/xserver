@@ -11,15 +11,18 @@ class raid_struct;
 class monster_struct;
 class Collect;
 class ZhenyingBattle;
+struct _OneScore;
+struct BattlefieldTable;
 
 enum BATTLE_STATE
 {
-	JOIN_STATE,
-	RUN_STATE,
-	REST_STATE
+	JOIN_STATE,  //报名的时间
+	AI_PLAYER_WAIT_STATE, //空气墙开启，AI玩家等待
+	RUN_STATE,   //副本开始
+	REST_STATE   //副本结束了
 };
 
-static const uint32_t MAX_ROOM_SIDE = 15;
+static const uint32_t MAX_ROOM_SIDE = 30;
 static const uint32_t MAX_ROOM_FLAG = 3;
 
 struct BATTLE_JOINER
@@ -70,12 +73,14 @@ public:
 	static ZhenyingBattle *GetInstance();
 	static const int MAX_STEP = 4;
 	static const uint32_t s_border[MAX_STEP];
+	static int battle_num;
 
 	static ZhenyingBattle *CreatePrivateBattle(player_struct &player, raid_struct *raid);
 	static ZhenyingBattle *GetPrivateBattle(uint64_t raid);
 	static void DestroyPrivateBattle(uint64_t raid);
 
-	void Join(player_struct &player);
+	~ZhenyingBattle();
+	int Join(player_struct &player);
 	void Tick();
 	int IntoBattle(player_struct &player);   //进入阵营战
 	uint32_t GetStep(player_struct &player);
@@ -87,6 +92,11 @@ public:
 	void BroadMessageRoom(uint32_t room, uint16_t msg_id, void *msg_data, pack_func func, uint64_t except = 0);
 	void OnRegionChanged(raid_struct *raid, player_struct *player, uint32_t old_region, uint32_t new_region);
 	void ClearRob();
+	void ClearRob(uint32_t room);
+	void StartRob();	
+
+	bool PackOneScore(_OneScore *side, uint32_t rank, BATTLE_JOINER *join, uint64_t playerid);
+	void GetRelivePos(BattlefieldTable *table, int zhenying, int *x, int *z, double *direct);
 
 	void GmStartBattle();
 

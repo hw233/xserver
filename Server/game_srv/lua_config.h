@@ -68,7 +68,8 @@ extern std::map<uint64_t, struct BaguaStarTable*> bagua_star_config; //八卦牌
 extern std::map<uint64_t, struct BaguaViceAttributeTable*> bagua_vice_attr_config; //八卦牌洗炼配置
 extern std::map<uint64_t, struct BaguaSuitTable*> bagua_suit_config; //八卦牌套装配置
 extern std::vector<struct BootNameTable*> rand_name_config; //随机名字
-extern std::vector<struct ActorRobotTable*> robot_config; //机器人
+#define ROBOT_CONFIG_TYPE_SIZE 5
+extern std::vector<struct ActorRobotTable*> robot_config[ROBOT_CONFIG_TYPE_SIZE]; //机器人
 extern std::map<uint64_t, struct RandomMonsterTable*> random_monster; //
 extern std::map<uint64_t, struct SpecialtyLevelTable*> specialty_level_config; //妖师专精
 extern std::map<uint64_t, struct TypeLevelTable*> guoyu_level_config; //国御难度
@@ -91,6 +92,7 @@ extern std::map<uint64_t, struct BattlefieldTable*> zhenying_fight_config; //阵
 extern std::map<char *, std::vector<struct RaidScriptTable*> *> all_raid_script_config; //副本AI配置表
 extern std::map<uint64_t, struct QuestionTable*> questions_config; //考题表
 extern std::vector<struct RobotPatrolTable*> robot_patrol_config; //机器人巡逻
+extern std::vector<struct RobotPatrolTable*> robot_zhenyingzhan_config; //阵营战机器人移动路径
 extern std::vector<struct FactionBattleTable*> zhenying_battle_config; //战场
 extern std::map<uint64_t, struct LifeSkillTable*> medicine_config; //炼药表
 extern std::map<uint64_t, struct NoticeTable*> notify_config; //公告表

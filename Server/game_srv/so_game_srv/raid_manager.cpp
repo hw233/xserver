@@ -249,6 +249,7 @@ int raid_manager::check_player_enter_raid(player_struct *player, uint32_t raid_i
 		case DUNGEON_TYPE_PVP_3: //PVP副本
 		case DUNGEON_TYPE_PVP_5: //PVP副本
 		case DUNGEON_TYPE_ZHENYING: //阵营战副本
+		case DUNGEON_TYPE_BATTLE: //阵营战副本
 		case DUNGEON_TYPE_GUILD_WAIT: //帮会等待副本
 			return (0);
 		default:

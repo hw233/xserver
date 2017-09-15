@@ -17,30 +17,37 @@
 
 static void add_patrol_index(player_struct *player)
 {
-	player->data->patrol_index++;
-	if (player->data->patrol_index >= player->ai_patrol_config->n_patrol)
-		player->data->patrol_index = 0;
+	if (!player->ai_data)
+		return;
+	player->ai_data->patrol_index++;
+	if (player->ai_data->patrol_index >= player->ai_data->ai_patrol_config->n_patrol)
+		player->ai_data->patrol_index = 0;
 }
 static void sub_patrol_index(player_struct *player)
 {
-	if (player->data->patrol_index == 0)
-		player->data->patrol_index = player->ai_patrol_config->n_patrol - 1;
-	else
-		player->data->patrol_index--;
+	if (!player->ai_data)
+		return;
+	
+	if (player->ai_data->patrol_index == 0)
+		player->ai_data->patrol_index = player->ai_data->ai_patrol_config->n_patrol - 1;
+	else 
+		player->ai_data->patrol_index--;
 }
 
 void reset_patrol_index(player_struct *player)
 {
+	if (!player->ai_data)
+		return;
 	uint64_t min_distance = UINT64_MAX;
 	int min_index = 0;
 	
 	struct position *pos = player->get_pos();
-	int max_index = player->ai_patrol_config->n_patrol;
+	int max_index = player->ai_data->ai_patrol_config->n_patrol;
 	max_index = (max_index + 2) / 2;
 	for (int i = 0; i < max_index; ++i)
 	{
-		double x = pos->pos_x - player->ai_patrol_config->patrol[i]->pos_x;
-		double z = pos->pos_z - player->ai_patrol_config->patrol[i]->pos_z;		
+		double x = pos->pos_x - player->ai_data->ai_patrol_config->patrol[i]->pos_x;
+		double z = pos->pos_z - player->ai_data->ai_patrol_config->patrol[i]->pos_z;		
 		uint64_t distance = x * x + z * z;
 		if (distance <= min_distance)
 		{
@@ -48,20 +55,22 @@ void reset_patrol_index(player_struct *player)
 			min_index = i;
 		}
 	}
-	player->data->patrol_index = min_index;
+	player->ai_data->patrol_index = min_index;
 	sub_patrol_index(player);
 }
 
 void find_next_position(player_struct *player)
 {
+	if (!player->ai_data)
+		return;
 	add_patrol_index(player);
-	player->data->move_path.pos[1].pos_x = player->ai_patrol_config->patrol[player->data->patrol_index]->pos_x;
-	player->data->move_path.pos[1].pos_z = player->ai_patrol_config->patrol[player->data->patrol_index]->pos_z;	
+	player->data->move_path.pos[1].pos_x = player->ai_data->ai_patrol_config->patrol[player->ai_data->patrol_index]->pos_x;
+	player->data->move_path.pos[1].pos_z = player->ai_data->ai_patrol_config->patrol[player->ai_data->patrol_index]->pos_z;	
 }
 
 uint32_t choose_rand_skill(player_struct *player)
 {
-	return player->m_skill.GetRandSkillId();
+	return player->m_skill.GetRandSkillId(player->ai_data);
 }
 
 void pvp_player_ai_send_move(player_struct *player)
@@ -130,7 +139,7 @@ static void ai_player_hit_notify_to_many_player(uint64_t skill_id, player_struct
 			continue;
 		}
 
-		LOG_DEBUG("aitest: [%s]attack target %lu", monster->get_name(), player->get_uuid());
+//		LOG_DEBUG("aitest: [%s]attack target %lu", monster->get_name(), player->get_uuid());
 
 		cached_hit_effect_point[n_hit_effect] = &cached_hit_effect[n_hit_effect];
 		skill_hit_effect__init(&cached_hit_effect[n_hit_effect]);
@@ -156,7 +165,7 @@ static void ai_player_hit_notify_to_many_player(uint64_t skill_id, player_struct
 				raid->on_player_attack(monster, t, damage);
 		}
 
-		LOG_DEBUG("aitest: [%s] unit[%lu][%p] damage[%d] hp[%f]", monster->get_name(), player->get_uuid(), player, damage, player->get_attr(PLAYER_ATTR_HP));
+//		LOG_DEBUG("aitest: [%s] unit[%lu][%p] damage[%d] hp[%f]", monster->get_name(), player->get_uuid(), player, damage, player->get_attr(PLAYER_ATTR_HP));
 
 		LOG_DEBUG("%s: unit[%lu][%p] damage[%d] hp[%f]", __FUNCTION__, player->get_uuid(), player, damage, player->get_attr(PLAYER_ATTR_HP));
 
@@ -296,7 +305,7 @@ static void ai_player_cast_immediate_skill_to_player(uint64_t skill_id, player_s
 			raid->on_player_attack(monster, t, damage);
 	}
 
-	LOG_DEBUG("aitest: %s [%s] unit[%lu] damage[%d] hp[%f]", __FUNCTION__, monster->get_name(), player->get_uuid(), damage, player->get_attr(PLAYER_ATTR_HP));
+//	LOG_DEBUG("aitest: %s [%s] unit[%lu] damage[%d] hp[%f]", __FUNCTION__, monster->get_name(), player->get_uuid(), damage, player->get_attr(PLAYER_ATTR_HP));
 
 	LOG_DEBUG("%s: unit[%lu][%p] damage[%d] hp[%f]", __FUNCTION__, player->get_uuid(), player, damage, player->get_attr(PLAYER_ATTR_HP));
 
@@ -341,7 +350,7 @@ static void ai_player_cast_immediate_skill_to_player(uint64_t skill_id, player_s
 
 	if (!player->is_alive())
 	{
-		player->on_dead(player);
+		player->on_dead(monster);
 	}
 	else
 	{
@@ -381,7 +390,7 @@ bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, pla
 	struct position *my_pos = player->get_pos();
 	struct position *his_pos = target->get_pos();
 
-	LOG_DEBUG("aitest: %s: [%s]skill_id = %u", __FUNCTION__, player->get_name(), skill_id);
+//	LOG_DEBUG("aitest: %s: [%s]skill_id = %u", __FUNCTION__, player->get_name(), skill_id);
 	
 	if (skill_id == 0)
 		return false;
@@ -419,12 +428,12 @@ bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, pla
 			pvp_player_ai_send_move(player);
 			return true;
 		}
-		LOG_DEBUG("aitest: %s %d: [%s]no target", __FUNCTION__, __LINE__, player->get_name());	
+//		LOG_DEBUG("aitest: %s %d: [%s]no target", __FUNCTION__, __LINE__, player->get_name());	
 		return false;
 	}
 
 
-	LOG_DEBUG("aitest: %s %d: [%s]skill_type = %lu", __FUNCTION__, __LINE__, player->get_name(), config->SkillType);	
+//	LOG_DEBUG("aitest: %s %d: [%s]skill_type = %lu", __FUNCTION__, __LINE__, player->get_name(), config->SkillType);	
 
 		//主动技能
 	if (config->SkillType == 2 || config->SkillType == 1)
@@ -433,6 +442,7 @@ bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, pla
 		if (!act_config)
 			return false;
 		uint64_t now = time_helper::get_cached_time();
+
 		if (act_config->ActionTime > 0)
 		{
 			ai_player_data->ontick_time = now + act_config->ActionTime;// + 1500;
@@ -449,7 +459,7 @@ bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, pla
 
 			skill_struct->add_cd(lv_config1, act_config);
 
-			LOG_DEBUG("aitest: %s %d: [%s]onticktime = %lu", __FUNCTION__, __LINE__, player->get_name(), act_config->ActionTime);	
+//			LOG_DEBUG("aitest: %s %d: [%s]onticktime = %lu", __FUNCTION__, __LINE__, player->get_name(), act_config->ActionTime);	
 			return true;
 		}
 		else
@@ -464,7 +474,7 @@ bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, pla
 
 			skill_struct->add_cd(lv_config1, act_config);
 
-			LOG_DEBUG("aitest: %s %d: [%s]onticktime = %lu", __FUNCTION__, __LINE__, player->get_name(), act_config->ActionTime);	
+//			LOG_DEBUG("aitest: %s %d: [%s]onticktime = %lu", __FUNCTION__, __LINE__, player->get_name(), act_config->ActionTime);	
 			return true;
 		}
 	}
@@ -482,7 +492,7 @@ bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, pla
 	uint32_t t = count_skill_delay_time(config);
 	ai_player_data->ontick_time += t;
 
-	LOG_DEBUG("aitest: %s %d: [%s]onticktime += %u", __FUNCTION__, __LINE__, player->get_name(), t);		
+//	LOG_DEBUG("aitest: %s %d: [%s]onticktime += %u", __FUNCTION__, __LINE__, player->get_name(), t);		
 	return true;
 }
 
@@ -499,18 +509,18 @@ __attribute_used__ static void try_attack_target(player_struct *monster, player_
 	}
 }
 
-static void try_attack(player_struct *monster, struct SkillTable *config, struct ai_player_data *ai_player_data, player_struct **enemy, int enemy_num)
+static void try_attack(player_struct *player, struct SkillTable *config, struct ai_player_data *ai_player_data, player_struct **enemy, int enemy_num)
 {
 	assert(config && (config->SkillType == 2 || config->SkillType == 1));
 
 	std::vector<unit_struct *> target;
 
-	if (count_skill_hit_unit(monster->get_pos(), &ai_player_data->skill_target_pos, ai_player_data->angle, ai_player_data->skill_id, &target, enemy, enemy_num) != 0)
+	if (count_skill_hit_unit(player, &ai_player_data->skill_target_pos, ai_player_data->angle, ai_player_data->skill_id, &target, enemy, enemy_num) != 0)
 	{
-		LOG_DEBUG("aitest: [%s]can not find target", monster->get_name());
+//		LOG_DEBUG("aitest: [%s]can not find target", monster->get_name());
 		return;
 	}
-	ai_player_hit_notify_to_many_player(config->ID, monster, &target);
+	ai_player_hit_notify_to_many_player(config->ID, player, &target);
 }
 
 // static player_struct **get_enemy_team_player(player_struct *player, struct ai_player_data **ai_player_data)
@@ -588,7 +598,7 @@ void do_ai_player_attack(player_struct *monster, struct ai_player_data *ai_playe
 
 	struct SkillTable *config = get_config_by_id(ai_player_data->skill_id, &skill_config);
 
-	LOG_DEBUG("aitest: [%s]skill = %d", monster->get_name(), ai_player_data->skill_id);
+//	LOG_DEBUG("aitest: [%s]skill = %d", monster->get_name(), ai_player_data->skill_id);
 
 	monster->reset_pos();
 
@@ -599,7 +609,7 @@ void do_ai_player_attack(player_struct *monster, struct ai_player_data *ai_playe
 	{
 
 		ai_player_data->ontick_time += act_config->TotalSkillDelay;
-		LOG_DEBUG("aitest: %s %d: [%s]onticktime += %lu", __FUNCTION__, __LINE__, monster->get_name(), act_config->TotalSkillDelay);
+//		LOG_DEBUG("aitest: %s %d: [%s]onticktime += %lu", __FUNCTION__, __LINE__, monster->get_name(), act_config->TotalSkillDelay);
 		// for (size_t i = 0; i < act_config->n_SkillLength; ++i)
 		// {
 		// 	ai_player_data->ontick_time += act_config->SkillLength[i];
@@ -616,8 +626,15 @@ void do_ai_player_attack(player_struct *monster, struct ai_player_data *ai_playe
 		try_attack(monster, config, ai_player_data, enemy, enemy_num);
 	}
 
+		//普攻三连击
 	if (act_config && act_config->NextSkill)
-		ai_player_data->skill_id = act_config->NextSkill;
+	{
+		ai_player_data->normal_skill_id = act_config->NextSkill;
+		ai_player_data->normal_skill_timeout = time_helper::get_cached_time() + 800;
+	}
 	else
+	{
+		ai_player_data->normal_skill_id = 0;
 		ai_player_data->skill_id = 0;
+	}
 }

@@ -475,6 +475,20 @@ local ShopTable = {
 		['Reset'] = 0,
 		['RestrictionTime'] = 0
 		},
+	[281020017] = {
+		['ID'] = 281020017,
+		['ItemID'] = 201070104,
+		['ShopType'] = 280001012,
+		['Acc'] = 1,
+		['ConsumptionType'] = 2,
+		['Purchasetype'] = 0,
+		['Condition'] = 0,
+		['Price'] = 0,
+		['Discount'] = 20,
+		['BuyNum'] = -1,
+		['Reset'] = 0,
+		['RestrictionTime'] = 0
+		},
 	[281050001] = {
 		['ID'] = 281050001,
 		['ItemID'] = 201061011,

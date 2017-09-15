@@ -126,6 +126,22 @@ local StoryTable = {
 		['PlayerInvincible'] = 1,
 		['StoryTime'] = 5.50,
 		['FileID'] = 'FB_BBJ_jiangxici'
+		},
+	[450000018] = {
+		['ID'] = 450000018,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 5.20,
+		['FileID'] = 'ZIMU_TX'
+		},
+	[450000019] = {
+		['ID'] = 450000019,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 27.00,
+		['FileID'] = 'DFG_FYYD'
 		}
 	}
 return StoryTable

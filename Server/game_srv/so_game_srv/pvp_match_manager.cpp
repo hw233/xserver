@@ -1285,21 +1285,23 @@ int pvp_match_single_ai_player_3(player_struct *player)
 	player_struct *ai_player;
 	for (int i = 1; i < PVP_MATCH_PLAYER_NUM_3; ++i)
 	{
-		ai_player = player_manager::create_ai_player(player, NULL, name_index);
+		ai_player = player_manager::create_ai_player(player, NULL, name_index, 1);
 		name_index ++;
 		team->team1[i] = ai_player->get_uuid();
 
-		ai_player->data->patrol_index = UINT8_MAX - 1;
+		if (ai_player->ai_data)
+			ai_player->ai_data->patrol_index = UINT8_MAX - 1;
 		ai_player->data->pvp_raid_data.matched_index = matched_index;
 		ai_player->data->pvp_raid_data.state = pvp_match_state_ready_3;
 	}
 	for (int i = 0; i < PVP_MATCH_PLAYER_NUM_3; ++i)
 	{
-		ai_player = player_manager::create_ai_player(player, NULL, name_index);
+		ai_player = player_manager::create_ai_player(player, NULL, name_index, 1);
 		name_index ++;
 		team->team2[i] = ai_player->get_uuid();
 
-		ai_player->data->patrol_index = UINT8_MAX - 1;		
+		if (ai_player->ai_data)
+			ai_player->ai_data->patrol_index = UINT8_MAX - 1;		
 		ai_player->data->pvp_raid_data.matched_index = matched_index;
 		ai_player->data->pvp_raid_data.state = pvp_match_state_ready_3;
 	}

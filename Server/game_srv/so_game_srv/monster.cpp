@@ -1440,7 +1440,7 @@ uint64_t monster_struct::count_rand_patrol_time()
 	return random() % (ai_config->StopMax - ai_config->StopMin) + ai_config->StopMin;
 }
 
-int monster_struct::count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct *target)
+int monster_struct::count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct */*target*/)
 {
 //	struct SkillTable *config = get_config_by_id(data->skill_id, &skill_config);
 	if (!config)
@@ -1450,7 +1450,7 @@ int monster_struct::count_skill_hit_unit(std::vector<unit_struct *> *ret, struct
 		case SKILL_RANGE_TYPE_RECT:
 			return count_rect_unit(data->angle, ret, config->MaxCount, config->Radius, config->Angle);
 		case SKILL_RANGE_TYPE_CIRCLE:
-			return count_circle_unit(ret, config->MaxCount, config->Radius);			
+			return count_circle_unit(ret, config->MaxCount, get_pos(), config->Radius);			
 		case SKILL_RANGE_TYPE_FAN:
 			return count_fan_unit(ret, config->MaxCount, config->Radius, config->Angle);
 		case SKILL_RANGE_TYPE_TARGET_RECT:

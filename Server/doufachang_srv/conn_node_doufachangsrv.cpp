@@ -737,11 +737,12 @@ int conn_node_doufachangsrv::handle_record_request(EXTERN_DATA *extern_data)
 {
 	AutoReleaseDoufachangRecord t1;
 	DoufachangRecordAnswer *info;
+	DoufachangRecordAnswer _default;
 	info = get_player_doufachang_record(extern_data->player_id, doufachang_record_key, sg_redis_client, t1);
 	if (!info)
 	{
-			// TODO: default record
-		return (0);
+		info = &_default;
+		doufachang_record_answer__init(info);
 	}
 	fast_send_msg(connecter, extern_data, MSG_ID_DOUFACHANG_RECORD_ANSWER, doufachang_record_answer__pack, *info);
 	return (0);

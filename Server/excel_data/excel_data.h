@@ -292,6 +292,7 @@ struct ActorRobotTable
 	uint64_t *FightPro; //10
 	uint64_t  ActiveAttackRange; //11
 	uint64_t  ChaseRange; //12
+	uint64_t  Type; //13
 }__attribute__ ((packed));
 
 struct ActorTable
@@ -462,6 +463,11 @@ struct BattlefieldTable
 	uint32_t n_ForestSet; //10
 	uint64_t *ForestSet; //10
 	uint64_t  Kill; //11
+	uint32_t n_FirstReward; //12
+	uint64_t *FirstReward; //12
+	uint32_t n_Num; //13
+	uint64_t *Num; //13
+	double  Ratio; //14
 }__attribute__ ((packed));
 
 struct BiaocheRewardTable

@@ -262,10 +262,12 @@ void player_manager::on_tick_5()
 		player_struct *player = iter->second;
 		if (!player->scene)
 			continue;
-		if (player->data->player_ai_index > 0
-			&& player->data->player_ai_index < MAX_PLAYER_AI_TYPE
-			&& m_ai_player_handle[player->data->player_ai_index])
-			m_ai_player_handle[player->data->player_ai_index](player);
+		if (!player->ai_data)
+			continue;
+		if (player->ai_data->player_ai_index > 0
+			&& player->ai_data->player_ai_index < MAX_PLAYER_AI_TYPE
+			&& m_ai_player_handle[player->ai_data->player_ai_index])
+			m_ai_player_handle[player->ai_data->player_ai_index](player);
 	}
 }
 
@@ -301,13 +303,15 @@ player_struct * player_manager::create_doufachang_ai_player(DOUFACHANG_LOAD_PLAY
 	
 //	scene_struct *scene = NULL;
 //	bool can_delete_when_fail = true;
-	LOG_DEBUG("%s %d: player_id[%lu][%lu][%lu]", __FUNCTION__, __LINE__, ans->player_id, ans->target_id, player_id);
 
 	ret = add_player(player_id);
 	if (!ret) {
 		LOG_ERR("%s %d: add player[%lu] fail", __FUNCTION__, __LINE__, player_id);		
 		return NULL;
 	}
+
+	LOG_DEBUG("%s %d: player_id[%lu][%lu][%lu] player[%p][%p]", __FUNCTION__, __LINE__, ans->player_id, ans->target_id, player_id, ret, ret->data);
+	
 	if (ret->unpack_dbinfo_to_playerinfo(ans->data, ans->data_size) != 0) {
 		LOG_ERR("%s %d: unpack info[%lu] fail", __FUNCTION__, __LINE__, player_id);
 		delete_player(ret);
@@ -327,19 +331,22 @@ player_struct * player_manager::create_doufachang_ai_player(DOUFACHANG_LOAD_PLAY
 
 	ret->data->attrData[PLAYER_ATTR_PK_TYPE] = PK_TYPE_MURDER;
 		//ai
-	ret->data->origin_player_id = ans->target_id;
-	ret->data->active_attack_range = sg_doufachang_ai[0];
-	ret->data->chase_range = sg_doufachang_ai[1];
-	ret->data->player_ai_index = 2;
-	
+	ret->ai_data = create_ai_data();
+	if (ret->ai_data)
+	{
+		ret->ai_data->origin_player_id = ans->target_id;
+		ret->ai_data->active_attack_range = sg_doufachang_ai[0];
+		ret->ai_data->chase_range = sg_doufachang_ai[1];
+		ret->ai_data->player_ai_index = 2;
+			//停止AI
+		ret->ai_data->stop_ai = true;
+	}
 	ret->data->attrData[PLAYER_ATTR_HP] = ret->data->attrData[PLAYER_ATTR_MAXHP];
 	ret->data->attrData[PLAYER_ATTR_MOVE_SPEED] = 5;	
 	
 		//登陆成功
 	ret->data->status = ONLINE;
 
-		//停止AI
-	ret->data->stop_ai = true;
 
 	player_manager_all_ai_players_id[player_id] = ret;
 	return ret;
@@ -356,17 +363,23 @@ player_struct *player_manager::create_doufachang_ai_player(player_struct *player
 		return NULL;
 	}
 
-	LOG_DEBUG("%s %d: player_id[%lu] id[%lu] player[%p]", __FUNCTION__, __LINE__, player->get_uuid(), player_id, ret);
+	LOG_DEBUG("%s %d: player_id[%lu] id[%lu] player[%p][%p]", __FUNCTION__, __LINE__, player->get_uuid(), player_id, ret, ret->data);
 
 	strcpy(ret->data->name, player->get_name());
 	memcpy(&ret->data->attrData[0], &player->data->attrData[0], sizeof(ret->data->attrData));
 	memcpy(&ret->data->buff_fight_attr[0], &player->data->buff_fight_attr[0], sizeof(ret->data->buff_fight_attr));	
 	ret->data->attrData[PLAYER_ATTR_PK_TYPE] = PK_TYPE_MURDER;
 		//ai
-	ret->data->origin_player_id = player->get_uuid();
-	ret->data->active_attack_range = sg_doufachang_ai[0];
-	ret->data->chase_range = sg_doufachang_ai[1];
-	ret->data->player_ai_index = 2;	
+	ret->ai_data = create_ai_data();
+	if (ret->ai_data)
+	{
+		ret->ai_data->origin_player_id = player->get_uuid();
+		ret->ai_data->active_attack_range = sg_doufachang_ai[0];
+		ret->ai_data->chase_range = sg_doufachang_ai[1];
+		ret->ai_data->player_ai_index = 2;
+			//停止AI
+		ret->ai_data->stop_ai = true;
+	}
 	ret->m_skill.copy(&player->m_skill);
 	
 	ret->data->attrData[PLAYER_ATTR_HP] = ret->data->attrData[PLAYER_ATTR_MAXHP];
@@ -392,21 +405,22 @@ player_struct *player_manager::create_doufachang_ai_player(player_struct *player
 		//登陆成功
 	ret->data->status = ONLINE;
 
-		//停止AI
-	ret->data->stop_ai = true;
-
 	player_manager_all_ai_players_id[player_id] = ret;
 	return ret;
 }
 
-player_struct * player_manager::create_ai_player(player_struct *player, scene_struct *scene, int name_index)
+player_struct * player_manager::create_ai_player(player_struct *player, scene_struct *scene, int name_index, int type)
 {
 	player_struct *ret;
 	uint64_t player_id = alloc_ai_player_uuid();
+
+	type -= 1;
+	if (type < 0 || type >= ROBOT_CONFIG_TYPE_SIZE || robot_config[type].size() == 0)
+	{
+		LOG_ERR("%s: type[%d] wrong", __FUNCTION__, type);
+		return NULL;
+	}
 	
-	LOG_DEBUG("%s %d: player_id[%lu] ai[%lu]", __FUNCTION__, __LINE__, player->get_uuid(), player_id);
-
-
 	ret = get_player_by_id(player_id);
 	ret = add_player(player_id);
 	if (!ret) {
@@ -414,19 +428,25 @@ player_struct * player_manager::create_ai_player(player_struct *player, scene_st
 		return NULL;
 	}
 
+	LOG_DEBUG("%s %d: player_id[%lu] [%p][%p] ai[%lu] type[%d]", __FUNCTION__, __LINE__, player->get_uuid(),
+		ret, ret->data, player_id, type);
+
 	strcpy(ret->data->name, get_rand_player_name(name_index));
 
 	if (scene)
 		ret->data->scene_id = scene->m_id;
 
-	int index = random() % robot_config.size();	
+//	const std::vector<struct ActorRobotTable*> &t = robot_config[type];
+
+	int index = random() % robot_config[type].size();
+	struct ActorRobotTable *t = (robot_config[type])[index];
 
 	int fight = player->get_attr(PLAYER_ATTR_FIGHTING_CAPACITY);
 //	fight += random() % (sg_pvp_raid_fighting_capacity_range[1] - sg_pvp_raid_fighting_capacity_range[0])
 //		+ sg_pvp_raid_fighting_capacity_range[0];
 
-	fight += random() % (robot_config[index]->FightPro[1] - robot_config[index]->FightPro[0])
-		+ robot_config[index]->FightPro[0];
+	fight += random() % (t->FightPro[1] - t->FightPro[0])
+		+ t->FightPro[0];
 	if (fight < 100)
 		fight = 100;
 
@@ -441,33 +461,39 @@ player_struct * player_manager::create_ai_player(player_struct *player, scene_st
 //		TEAM_LEVEL2_DIFF_R, TEAM_LEVEL2_DIFF_L, ret->get_level());
 	
 	ret->data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY] = fight;
-	ret->data->attrData[PLAYER_ATTR_JOB] = robot_config[index]->ID % 16;//index + 1;
-	ret->data->attrData[PLAYER_ATTR_HEAD] = robot_config[index]->InitialHead;
+	ret->data->attrData[PLAYER_ATTR_JOB] = t->ID % 16;//index + 1;
+	ret->data->attrData[PLAYER_ATTR_HEAD] = t->InitialHead;
 
 		//时装，武器，头饰
-	ret->data->attrData[PLAYER_ATTR_WEAPON] = robot_config[index]->WeaponId[random() % robot_config[index]->n_WeaponId];
-	ret->data->attrData[PLAYER_ATTR_CLOTHES] = robot_config[index]->ResId[random() % robot_config[index]->n_ResId];
-	ret->data->attrData[PLAYER_ATTR_HAT] = robot_config[index]->HairResId[random() % robot_config[index]->n_HairResId];
+	ret->data->attrData[PLAYER_ATTR_WEAPON] = t->WeaponId[random() % t->n_WeaponId];
+	ret->data->attrData[PLAYER_ATTR_CLOTHES] = t->ResId[random() % t->n_ResId];
+	ret->data->attrData[PLAYER_ATTR_HAT] = t->HairResId[random() % t->n_HairResId];
 
 		//ai
-	ret->data->active_attack_range = robot_config[index]->ActiveAttackRange;
-	ret->data->chase_range = robot_config[index]->ChaseRange;
-	ret->data->player_ai_index = 1;
+	ret->ai_data = create_ai_data();
+	if (ret->ai_data)
+	{
+		ret->ai_data->active_attack_range = t->ActiveAttackRange;
+		ret->ai_data->chase_range = t->ChaseRange;
+		ret->ai_data->player_ai_index = 1;
+			//停止AI
+		ret->ai_data->stop_ai = true;
+	}
 	
 	int max_rate = 0;
-	for (size_t i = 0; i < robot_config[index]->n_AttributeType; ++i)
+	for (size_t i = 0; i < t->n_AttributeType; ++i)
 	{
-		max_rate += robot_config[index]->AttributePro[i];
+		max_rate += t->AttributePro[i];
 	}
-	for (size_t i = 0; i < robot_config[index]->n_AttributeType; ++i)
+	for (size_t i = 0; i < t->n_AttributeType; ++i)
 	{
-		int value = fight * robot_config[index]->AttributePro[i] / max_rate;
-		ret->set_attr(robot_config[index]->AttributeType[i], value);
+		int value = fight * t->AttributePro[i] / max_rate;
+		ret->set_attr(t->AttributeType[i], value);
 	}
 
-	for (size_t i = 0; i < robot_config[index]->n_Skill; ++i)
+	for (size_t i = 0; i < t->n_Skill; ++i)
 	{
-		ret->m_skill.InsertSkill(robot_config[index]->Skill[i]);
+		ret->m_skill.InsertSkill(t->Skill[i]);
 	}
 
 	ret->data->attrData[PLAYER_ATTR_HP] = ret->data->attrData[PLAYER_ATTR_MAXHP];
@@ -481,11 +507,30 @@ player_struct * player_manager::create_ai_player(player_struct *player, scene_st
 	
 		//登陆成功
 	ret->data->status = ONLINE;
-
-		//停止AI
-	ret->data->stop_ai = true;
-
+	
 	player_manager_all_ai_players_id[player_id] = ret;
+	return ret;
+}
+
+struct ai_player_data *player_manager::create_ai_data()
+{
+	struct ai_player_data *ret;
+	if (player_manager_ai_data_free_list.empty())
+	{
+		ret = (struct ai_player_data *)malloc(sizeof(struct ai_player_data));
+		if (!ret)
+		{
+			LOG_ERR("%s: malloc ai_data failed\n");
+			return NULL;
+		}
+	}
+	else
+	{
+		ret = player_manager_ai_data_free_list.back();
+		player_manager_ai_data_free_list.pop_back();
+	}
+	memset(ret, 0, sizeof(struct ai_player_data));
+	player_manager_ai_data_used_list.insert(ret);
 	return ret;
 }
 

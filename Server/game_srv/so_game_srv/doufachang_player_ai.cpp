@@ -18,13 +18,16 @@
 
 static void doufachang_player_ai_tick(player_struct *player)
 {
+	if (!player->ai_data)
+		return;
+	
 	if (player->buff_state & BUFF_STATE_STUN)
 	{
-		LOG_DEBUG("aitest: [%s] lock", player->get_name());		
+//		LOG_DEBUG("aitest: [%s] lock", player->get_name());		
 		return;
 	}
 	
-	if (player->data->stop_ai)
+	if (player->ai_data->stop_ai)
 		return;
 	if (player->is_unit_in_move())
 		return;
@@ -41,7 +44,8 @@ static void doufachang_player_ai_tick(player_struct *player)
 	if (!enemy[0] || !enemy[0]->is_avaliable())
 		return;
 
-	struct ai_player_data *ai_player_data = &raid->DOUFACHANG_DATA.ai_player_data;
+//	struct ai_player_data *ai_player_data = &raid->DOUFACHANG_DATA.ai_player_data;
+	struct ai_player_data *ai_player_data = player->ai_data;
 
 	if (time_helper::get_cached_time() < ai_player_data->ontick_time)
 		return;
@@ -52,7 +56,7 @@ static void doufachang_player_ai_tick(player_struct *player)
 		return;
 	}
 
-	LOG_DEBUG("aitest: [%s]ai_state = %d", player->get_name(), ai_player_data->ai_state);
+//	LOG_DEBUG("aitest: [%s]ai_state = %d", player->get_name(), ai_player_data->ai_state);
 
 
 	if (ai_player_data->ai_state == AI_ATTACK_STATE)
@@ -72,12 +76,12 @@ static void doufachang_player_ai_tick(player_struct *player)
 				//检查追击距离
 			struct position *his_pos = enemy[0]->get_pos();
 			struct position ori_pos;
-			ori_pos.pos_x = player->ai_patrol_config->patrol[player->data->patrol_index]->pos_x;
-			ori_pos.pos_z = player->ai_patrol_config->patrol[player->data->patrol_index]->pos_z;
-			if (!check_distance_in_range(his_pos, &ori_pos, player->data->chase_range))
+			ori_pos.pos_x = player->ai_data->ai_patrol_config->patrol[player->ai_data->patrol_index]->pos_x;
+			ori_pos.pos_z = player->ai_data->ai_patrol_config->patrol[player->ai_data->patrol_index]->pos_z;
+			if (!check_distance_in_range(his_pos, &ori_pos, player->ai_data->chase_range))
 			{
-				LOG_DEBUG("aitest: [%s] chase distance = %.1f %.1f", player->get_name(),
-					his_pos->pos_x - ori_pos.pos_x, his_pos->pos_z - ori_pos.pos_z);
+//				LOG_DEBUG("aitest: [%s] chase distance = %.1f %.1f", player->get_name(),
+//					his_pos->pos_x - ori_pos.pos_x, his_pos->pos_z - ori_pos.pos_z);
 //				break;
 			}
 		}
@@ -86,7 +90,7 @@ static void doufachang_player_ai_tick(player_struct *player)
 				//检查主动攻击距离
 			struct position *my_pos = player->get_pos();
 			struct position *his_pos = enemy[0]->get_pos();
-			if (!check_distance_in_range(my_pos, his_pos, player->data->active_attack_range))
+			if (!check_distance_in_range(my_pos, his_pos, player->ai_data->active_attack_range))
 			{
 //				continue;
 			}
@@ -100,7 +104,7 @@ static void doufachang_player_ai_tick(player_struct *player)
 		}
 	}
 
-	LOG_DEBUG("aitest: [%s]rand move, index = %u, skill_id = %u", player->get_name(), player->data->patrol_index, skill_id);
+//	LOG_DEBUG("aitest: [%s]rand move, index = %u, skill_id = %u", player->get_name(), player->data->patrol_index, skill_id);
 	ai_player_data->target_player_id = 0;
 
 //	if (find_rand_position(player->scene, &player->data->move_path.pos[0],

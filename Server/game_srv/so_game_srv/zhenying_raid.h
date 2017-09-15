@@ -7,6 +7,10 @@
 class zhenying_raid_struct : public raid_struct
 {
 public:
+	static int raid_num;
+	zhenying_raid_struct();
+	~zhenying_raid_struct();
+	
 	bool check_raid_need_delete();
 //	int init_raid(player_struct *player);
 	int init_special_raid_data(player_struct *player);	
@@ -27,7 +31,6 @@ protected:
 	int set_m_player_and_player_info(player_struct *player, int index);	
 	int clear_m_player_and_player_info(player_struct *player, bool clear_player_info);
 
-//	int m_line;
 	std::set<uint64_t> m_collect_pos;  //采集点, 宝箱位置
 	
 };

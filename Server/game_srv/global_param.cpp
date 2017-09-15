@@ -5,6 +5,9 @@ std::map<uint64_t, player_struct *> player_manager_all_players_id;
 std::map<uint64_t, player_struct *> player_manager_all_ai_players_id;
 std::list<player_struct *> player_manager_player_free_list;
 std::set<player_struct *> player_manager_player_used_list;
+std::list<struct ai_player_data *> player_manager_ai_data_free_list;
+std::set<struct ai_player_data *> player_manager_ai_data_used_list;
+
 struct comm_pool player_manager_player_data_pool;
 
 class buff_struct;

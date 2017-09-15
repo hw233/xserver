@@ -799,6 +799,23 @@ static void gen_random_monster_arr()
 		}
 	}
 }
+
+static void	adjust_robot_config(std::vector<struct ActorRobotTable*> *config)
+{
+//std::vector<struct ActorRobotTable*> robot_config[ROBOT_CONFIG_TYPE_SIZE]; //机器人
+	for (size_t i = 0; i < config->size(); ++i)
+	{
+		struct ActorRobotTable *t = (*config)[i];
+		int index = t->Type - 1;
+		if (index >= ROBOT_CONFIG_TYPE_SIZE || index < 0)
+		{
+			LOG_ERR("%s: [%lu]type[%lu] wrong", __FUNCTION__, t->ID, t->Type);
+			continue;
+		}
+		robot_config[index].push_back(t);
+	}
+}
+
 static void gen_random_guoyu_fb_arr()
 {
 	std::map<uint64_t, struct RandomDungeonTable*>::iterator it = random_guoyu_dungenon_config.begin();
@@ -1067,6 +1084,107 @@ static void	adjust_robotpatrol_entry(struct RobotPatrolTable *config, uint64_t *
 //		(*ite)->patrol[(*ite)->n_patrol]->pos_z = (*ite)->patrol1[1];		
 }
 
+static void adjust_robotzhenyingzhan_table()
+{
+	for (std::vector<struct RobotPatrolTable*>::iterator ite = robot_zhenyingzhan_config.begin();
+		 ite != robot_zhenyingzhan_config.end(); ++ite)
+	{
+		struct sproto_config_pos *t = (struct sproto_config_pos *)malloc(22 * sizeof(struct sproto_config_pos));
+		(*ite)->patrol = (struct sproto_config_pos **)malloc(22 * sizeof(void *));
+		for (size_t i = 0; i < 22; ++i)
+		{
+			(*ite)->patrol[i] = &t[i];
+		}		
+		
+		if ((*ite)->n_patrol1 != 2)
+		{
+				//至少要一个巡逻点
+			assert(0);
+			continue;
+		}
+		adjust_robotpatrol_entry(*ite, (*ite)->patrol1);			
+		(*ite)->n_patrol += 1;
+		
+		if ((*ite)->n_patrol2 != 2)
+		{
+			continue;
+		}
+		adjust_robotpatrol_entry(*ite, (*ite)->patrol2);
+		(*ite)->n_patrol += 1;
+		
+		if ((*ite)->n_patrol3 != 2)
+		{
+			continue;
+		}
+		adjust_robotpatrol_entry(*ite, (*ite)->patrol3);
+		(*ite)->n_patrol += 1;
+
+		if ((*ite)->n_patrol4 != 2)
+		{
+			continue;
+		}
+		adjust_robotpatrol_entry(*ite, (*ite)->patrol4);
+		(*ite)->n_patrol += 1;
+
+		if ((*ite)->n_patrol5 != 2)
+		{
+			continue;
+		}
+		adjust_robotpatrol_entry(*ite, (*ite)->patrol5);
+		(*ite)->n_patrol += 1;
+
+		if ((*ite)->n_patrol6 != 2)
+		{
+			continue;
+		}
+		adjust_robotpatrol_entry(*ite, (*ite)->patrol6);
+		(*ite)->n_patrol += 1;
+
+		if ((*ite)->n_patrol7 != 2)
+		{
+			continue;
+		}
+		adjust_robotpatrol_entry(*ite, (*ite)->patrol7);
+		(*ite)->n_patrol += 1;
+
+		if ((*ite)->n_patrol8 != 2)
+		{
+			continue;
+		}
+		adjust_robotpatrol_entry(*ite, (*ite)->patrol8);
+		(*ite)->n_patrol += 1;
+
+		if ((*ite)->n_patrol9 != 2)
+		{
+			continue;
+		}
+		adjust_robotpatrol_entry(*ite, (*ite)->patrol9);
+		(*ite)->n_patrol += 1;
+
+		if ((*ite)->n_patrol10 != 2)
+		{
+			continue;
+		}
+		adjust_robotpatrol_entry(*ite, (*ite)->patrol10);
+		(*ite)->n_patrol += 1;
+
+		if ((*ite)->n_patrol11 != 2)
+		{
+			continue;
+		}
+		adjust_robotpatrol_entry(*ite, (*ite)->patrol11);
+		(*ite)->n_patrol += 1;
+
+		if ((*ite)->n_patrol12 != 2)
+		{
+			continue;
+		}
+		adjust_robotpatrol_entry(*ite, (*ite)->patrol12);
+		(*ite)->n_patrol += 1;
+	}
+	std::sort(robot_zhenyingzhan_config.begin(), robot_zhenyingzhan_config.end(), robot_patrol_cmp_func);			
+}
+
 static void adjust_robotpatrol_table()
 {
 	for (std::vector<struct RobotPatrolTable*>::iterator ite = robot_patrol_config.begin();
@@ -1082,6 +1200,8 @@ static void adjust_robotpatrol_table()
 		
 		if ((*ite)->n_patrol1 != 2)
 		{
+				//至少要一个巡逻点
+			assert(0);
 			continue;
 		}
 		adjust_robotpatrol_entry(*ite, (*ite)->patrol1);			
@@ -2526,8 +2646,10 @@ int read_all_excel_data()
 
 	type = sproto_type(sp, "ActorRobotTable");
 	assert(type);
-	ret = traverse_vector_table(L, type, "../lua_data/ActorRobotTable.lua", (std::vector<void *> *)&robot_config);
+	std::vector<struct ActorRobotTable*> _robot_config;
+	ret = traverse_vector_table(L, type, "../lua_data/ActorRobotTable.lua", (std::vector<void *> *)&_robot_config);
 	assert(ret == 0);
+	adjust_robot_config(&_robot_config);
 	
 	type = sproto_type(sp, "EventCalendarTable");
 	assert(type);
@@ -2637,6 +2759,9 @@ int read_all_excel_data()
 	ret = traverse_vector_table(L, type, "../lua_data/RobotPatrolTable.lua", (std::vector<void *> *)&robot_patrol_config);	
 	assert(ret == 0);
 	adjust_robotpatrol_table();
+	ret = traverse_vector_table(L, type, "../lua_data/RobotBattlrTable.lua", (std::vector<void *> *)&robot_zhenyingzhan_config);	
+	assert(ret == 0);
+	adjust_robotzhenyingzhan_table();
 
 	type = sproto_type(sp, "FactionBattleTable");
 	assert(type);

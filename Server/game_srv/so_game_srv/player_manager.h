@@ -14,6 +14,9 @@ extern std::map<uint64_t, player_struct *> player_manager_all_players_id;
 extern std::map<uint64_t, player_struct *> player_manager_all_ai_players_id;
 extern std::list<player_struct *> player_manager_player_free_list;
 extern std::set<player_struct *> player_manager_player_used_list;
+extern std::list<struct ai_player_data *> player_manager_ai_data_free_list;
+extern std::set<struct ai_player_data *> player_manager_ai_data_used_list;
+
 extern struct comm_pool player_manager_player_data_pool;
 #define MAX_PLAYER_AI_TYPE 10
 
@@ -29,7 +32,7 @@ public:
 
 	static player_struct *create_doufachang_ai_player(DOUFACHANG_LOAD_PLAYER_ANSWER *ans);
 	static player_struct *create_doufachang_ai_player(player_struct *player);	//生成斗法场ai玩家
-	static player_struct *create_ai_player(player_struct *player, scene_struct *scene, int name_index);	  //根据玩家战斗力生成随机ai玩家
+	static player_struct *create_ai_player(player_struct *player, scene_struct *scene, int name_index, int type);	  //根据玩家战斗力生成随机ai玩家
 	static player_struct *create_tmp_player(uint64_t player_id);   //临时测试用	
 	static player_struct *create_player(PROTO_ENTER_GAME_RESP *proto, uint64_t player_id);  //玩家登陆的时候调用，创建玩家并加入主城
 	static void delete_player(player_struct *p);                                       //玩家下线，并且数据被保存下来以后调用
@@ -55,6 +58,7 @@ private:
 	static int remove_player(player_struct *p);
 	static player_struct *alloc_player();
 	static char *get_rand_player_name(int index);
+	static struct ai_player_data *create_ai_data();
 	
 private:
 //	static std::list<player_struct *> player_free_list;

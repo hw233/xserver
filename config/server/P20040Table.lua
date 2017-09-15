@@ -32,7 +32,7 @@ local P20040Table = {
 	[351001006] = {
 		['ID'] = 351001006,
 		['TypeID'] = 9,
-		['Parameter1'] = {2},
+		['Parameter1'] = {4},
 		['Parameter2'] = {''}
 		},
 	[351001007] = {

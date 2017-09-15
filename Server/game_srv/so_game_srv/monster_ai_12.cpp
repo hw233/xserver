@@ -41,7 +41,8 @@ static void ai_dead_12(monster_struct *monster, scene_struct *scene)
 		monster_struct *p = *ite;
 		if (p->data->monster_id == monster_id)
 		{
-			raid->delete_monster_from_scene(p, true);
+			p->broadcast_one_attr_changed(PLAYER_ATTR_HP, 0, false, false);
+			raid->delete_monster_from_scene(p, false);
 			monster_manager::delete_monster(p);
 		}
 		ite = next_ite;

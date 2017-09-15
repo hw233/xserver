@@ -2944,6 +2944,24 @@ local ErrorBoxTable = {
 		['Type'] = 1,
 		['Text'] = '目标达到三星可使用扫荡',
 		['SystemChannel'] = 0
+		},
+	[190500412] = {
+		['ID'] = 190500412,
+		['Type'] = 4,
+		['Text'] = '当前没有加入阵营，请加入阵营',
+		['SystemChannel'] = 0
+		},
+	[190500413] = {
+		['ID'] = 190500413,
+		['Type'] = 4,
+		['Text'] = '购买挑战次数成功',
+		['SystemChannel'] = 0
+		},
+	[190500414] = {
+		['ID'] = 190500414,
+		['Type'] = 3,
+		['Text'] = '等级超过10级，将无法获得积分和奖励，仍要前往么？',
+		['SystemChannel'] = 0
 		}
 	}
 return ErrorBoxTable

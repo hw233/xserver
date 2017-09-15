@@ -105,19 +105,36 @@ static int count_fan_unit(struct position *my_pos, std::vector<unit_struct *> *r
 	return (0);	
 }
 
-int count_skill_hit_unit(struct position *my_pos, struct position *target_pos, double angle, uint32_t skill_id, std::vector<unit_struct *> *ret, player_struct **team_player, int team_num)
+int count_skill_hit_unit(player_struct *player, struct position *target_pos, double angle, uint32_t skill_id, std::vector<unit_struct *> *ret, player_struct **team_player, int team_num)
 {
 	struct SkillTable *_config = get_config_by_id(skill_id, &skill_config);
 	if (!_config)
 		return (-1);
+
+	if (!team_player)
+	{
+		switch (_config->RangeType)
+		{
+			case SKILL_RANGE_TYPE_RECT:
+				return player->count_rect_unit(angle, ret, _config->MaxCount, _config->Radius, _config->Angle);
+			case SKILL_RANGE_TYPE_CIRCLE:
+				return player->count_circle_unit(ret, _config->MaxCount, target_pos, _config->Radius);			
+			case SKILL_RANGE_TYPE_FAN:
+				return player->count_fan_unit(ret, _config->MaxCount, _config->Radius, _config->Angle);
+			default:
+				return -10;
+		}
+		return (0);
+	}
+	
 	switch (_config->RangeType)
 	{
 		case SKILL_RANGE_TYPE_RECT:
-			return count_rect_unit(my_pos, angle, ret, _config->MaxCount, _config->Radius, _config->Angle, team_player, team_num);
+			return count_rect_unit(player->get_pos(), angle, ret, _config->MaxCount, _config->Radius, _config->Angle, team_player, team_num);
 		case SKILL_RANGE_TYPE_CIRCLE:
 			return count_circle_unit(target_pos, ret, _config->MaxCount, _config->Radius, team_player, team_num);			
 		case SKILL_RANGE_TYPE_FAN:
-			return count_fan_unit(my_pos, ret, _config->MaxCount, _config->Radius, _config->Angle, team_player, team_num);
+			return count_fan_unit(player->get_pos(), ret, _config->MaxCount, _config->Radius, _config->Angle, team_player, team_num);
 		default:
 			return -10;
 	}

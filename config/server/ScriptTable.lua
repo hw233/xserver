@@ -166,8 +166,8 @@ local ScriptTable = {
 		},
 	[171000017] = {
 		['ID'] = 171000017,
-		['Path'] = 'Skill/Effect/CircleFollowEffect',
-		['paramList'] = {5,270,-0.5,1.5,135100034,15,1.5,10,10,0.1}
+		['Path'] = 'Skill/Effect/SelectBulletSkillEffect',
+		['paramList'] = {12,135173004,0,1}
 		},
 	[171000018] = {
 		['ID'] = 171000018,

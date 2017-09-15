@@ -6172,7 +6172,17 @@ static int handle_enter_raid_request(player_struct *player, EXTERN_DATA *extern_
 			}
 			else
 			{
-				if (raid->player_enter_raid(player, raid->res_config->BirthPointX, raid->res_config->BirthPointZ) != 0)
+				int x = raid->res_config->BirthPointX, z = raid->res_config->BirthPointZ;
+				double direct = 0;
+				if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW)
+				{
+					BattlefieldTable *table = zhenying_fight_config.begin()->second;
+					if (table != NULL)
+					{
+						ZhenyingBattle::GetInstance()->GetRelivePos(table, player->get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
+					}
+				}
+				if (raid->player_enter_raid(player, x, z, direct) != 0)
 				{
 					LOG_ERR("%s: player[%lu] enter raid failed", __FUNCTION__, player->get_uuid());
 					return (-30);
@@ -13483,8 +13493,8 @@ static int handle_join_zhenying_battle_request(player_struct *player, EXTERN_DAT
 		return (-1);
 	}
 
-	ZhenyingBattle::GetInstance()->Join(*player);
-	send_comm_answer(MSG_ID_JOIN_ZHENYING_FIGHT_ANSWER, 0, extern_data);
+	int ret = ZhenyingBattle::GetInstance()->Join(*player);
+	send_comm_answer(MSG_ID_JOIN_ZHENYING_FIGHT_ANSWER, ret, extern_data);
 
 	return 0;
 }
@@ -18436,10 +18446,12 @@ static int handle_hero_challenge_main_info_request(player_struct *player, EXTERN
 		{
 			hero_data_point[ans.n_data] = &hero_data[ans.n_data];
 			hero_challengedata__init(&hero_data[ans.n_data]);
+			hero_data[ans.n_data].hero_id = player->data->my_hero_info[i].id;
 			hero_data[ans.n_data].num = player->get_raid_reward_count(itr->second->DungeonID);
 			hero_data[ans.n_data].star = player->data->my_hero_info[i].star;
+			hero_data[ans.n_data].reward_flag = player->data->my_hero_info[i].reward_flag;
 			ans.all_num +=  hero_data[ans.n_data].num;
-
+			ans.n_data++;
 		}
 	}
 
@@ -18473,19 +18485,17 @@ static int handle_hero_challenge_sweep_request(player_struct *player, EXTERN_DAT
 	uint32_t use_item_id = 0;
 	uint32_t use_item_num = 0;
 	do{
-		std::map<uint64_t, ChallengeTable*>::iterator itr = hero_challenge_config.begin();
+		std::map<uint64_t, ChallengeTable*>::iterator itr = hero_challenge_config.find(hero_id);
 		if(itr == hero_challenge_config.end())
 		{
-			ret = 121212;   //英雄挑战表内无对应的id的英雄
 			LOG_ERR("[%s:%d] hero challenge receive reward faild ,hero_id erro hero_id[%u]", __FUNCTION__, __LINE__, hero_id);
-			break;
+			return -3;
 		}
 
 		if(item_flag != 1 && item_flag != 2 )
 		{
-			ret = 4554545; //英雄挑战要是用的物品标志有误
 			LOG_ERR("[%s:%d] hero challenge receive reward faild ,item_flag erro item_flag[%u]", __FUNCTION__, __LINE__, item_flag);
-			break;
+			return -4;
 		}
 		HeroChallengeInfo *hero_info = NULL;
 		for(uint32_t j = 0; j < MAX_HERO_CHALLENGE_MONSTER_NUM; j++)
@@ -18498,15 +18508,13 @@ static int handle_hero_challenge_sweep_request(player_struct *player, EXTERN_DAT
 		}
 		if(hero_info == NULL)
 		{
-			ret = 4554545; //玩家身上无对应id的英雄的数据
 			LOG_ERR("[%s:%d] hero challenge receive reward faild ,hero_id is erro hero_id[%u]", __FUNCTION__, __LINE__, hero_id);
-			break;
+			return -5;
 		}
 		if(hero_info->reward_flag ==1)
 		{
-			ret = 5454545; //玩家身上有奖未领取
-			LOG_ERR("[%s:%d] hero challenge receive reward faild ,player have reward no lingqu hero_id[%u]", __FUNCTION__, __LINE__, hero_id);
-			break;
+			LOG_ERR("[%s:%d] hero challenge receive reward faild ,player have reward no lingqu hero_id[%u] reward_flag[%u]", __FUNCTION__, __LINE__, hero_id, hero_info->reward_flag);
+			return -6;
 		}
 
 
@@ -18518,7 +18526,7 @@ static int handle_hero_challenge_sweep_request(player_struct *player, EXTERN_DAT
 			parame_config = get_config_by_id(161000333, &parameter_config);
 			if(parame_config == NULL || parame_config->n_parameter1 != 2)
 			{				
-				ret = 343434; //参数表有误
+				ret = ERROR_ID_CONFIG; //参数表有误
 				LOG_ERR("[%s:%d] hero challenge receive reward faild ,parame_config erro", __FUNCTION__, __LINE__);
 				break;
 			}
@@ -18539,7 +18547,7 @@ static int handle_hero_challenge_sweep_request(player_struct *player, EXTERN_DAT
 			parame_config = get_config_by_id(161000334, &parameter_config);
 			if(parame_config == NULL || parame_config->n_parameter1 != 1)
 			{				
-				ret = 343434; //参数表有误
+				ret = ERROR_ID_CONFIG; //参数表有误
 				LOG_ERR("[%s:%d] hero challenge receive reward faild ,parame_config erro", __FUNCTION__, __LINE__);
 				break;
 			}
@@ -18557,7 +18565,7 @@ static int handle_hero_challenge_sweep_request(player_struct *player, EXTERN_DAT
 		uint32_t has_star = hero_info->star;
 		if(has_star < 3)
 		{
-			ret = 34343434; //星级不够
+			ret = 190500411; //星级不够
 			LOG_ERR("[%s:%d] player[%lu] hero challenge star not enough, need_num:3, has_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, has_star);
 			break;
 		}
@@ -18568,21 +18576,42 @@ static int handle_hero_challenge_sweep_request(player_struct *player, EXTERN_DAT
 		if(dun_config == NULL && dun_config->n_Rewards < 3)
 		{
 			LOG_ERR("[%s:%d] player[%lu] hero challenge saodang reward faild config erro", __FUNCTION__, __LINE__, extern_data->player_id);
-			ret = 4528988; //配置不对
+			ret = ERROR_ID_CONFIG; //配置不对
 			break;
 		}
 		struct ControlTable *control_config = get_config_by_id(dun_config->ActivityControl, &all_control_config);
 		if(control_config == NULL)
 		{
 			LOG_ERR("[%s:%d] player[%lu] hero challenge saodang reward faild config erro", __FUNCTION__, __LINE__, extern_data->player_id);
-			ret = 4528988; //配置不对
+			ret = ERROR_ID_CONFIG; //配置不对
 			break;
 		}
-		uint32_t use_count = player->get_raid_reward_count(raid_id); //已经被使用的次数
+		//单个已经被使用的次数判断
+		uint32_t use_count = player->get_raid_reward_count(raid_id); 
 		if(use_count >= control_config->RewardTime)
 		{
 			LOG_ERR("[%s:%d] player[%lu] hero challenge saodang faild reward num not enough used_num:%u max_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, use_count, control_config->RewardTime);
-			ret = 4528988; //领奖次数不够
+			ret = 190500410; //领奖次数不够
+			break;
+		}
+		//判断总次数
+		ParameterTable *hero_param_config = get_config_by_id(161000332, &parameter_config); 
+		if(hero_param_config == NULL && hero_param_config->n_parameter1 < 1)
+		{
+			LOG_ERR("[%s:%d] player[%lu] hero challenge saodang reward faild config erro", __FUNCTION__, __LINE__, extern_data->player_id);
+			ret = ERROR_ID_CONFIG; //配置不对
+			break;
+		}
+		uint32_t max_all_count = hero_param_config->parameter1[0];
+		uint32_t use_all_count = 0;
+		for(std::map<uint64_t, ChallengeTable*>::iterator itr = raidid_to_hero_challenge_config.begin(); itr != raidid_to_hero_challenge_config.end(); itr++)
+		{
+			use_all_count += player->get_raid_reward_count(itr->second->DungeonID);
+		}
+		if(use_all_count >= max_all_count)
+		{
+			LOG_ERR("[%s:%d] player[%lu] hero challenge saodang faild reward num not enough used_num:%u max_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, use_all_count, max_all_count);
+			ret = 190500409;
 			break;
 		}
 
@@ -18641,7 +18670,8 @@ static int handle_hero_challenge_sweep_request(player_struct *player, EXTERN_DAT
 				}
 				//奖励信息记录到玩家身上
 				hero_info->item_info[reward_num].item_id = ite->first;
-				hero_info->item_info[reward_num].item_num = ite->first;
+				hero_info->item_info[reward_num].item_num = ite->second;
+				hero_info->reward_flag = 1;
 				reward_num++;
 			}
 		}
@@ -18654,6 +18684,209 @@ static int handle_hero_challenge_sweep_request(player_struct *player, EXTERN_DAT
 	}while(0);
 	ans.result = ret;
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_HERO_CHALLENGE_SWEEP_ANSWER, hero_challenge_sweep_answer__pack, ans);
+	return 0;
+}
+
+static int handle_hero_challenge_sweep_recive_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+	HeroChallengeReciveSweepRewardRequest *req = hero_challenge_recive_sweep_reward_request__unpack(NULL, get_data_len(), (uint8_t*)get_data());
+	if(req == NULL)
+	{
+		LOG_ERR("[%s:%d] hero_challenge_recive_sweep_reward_request__unpack faild player_di:%lu", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -2;
+	}
+	uint32_t hero_id = req->hero_id;
+	hero_challenge_recive_sweep_reward_request__free_unpacked(req, NULL);
+
+	uint32_t ret = 0;
+	do{
+		HeroChallengeInfo* my_hero_info = NULL;
+		for(size_t i =0; i < MAX_HERO_CHALLENGE_MONSTER_NUM; i++)
+		{
+			if(player->data->my_hero_info[i].id == hero_id)
+			{
+				my_hero_info = &(player->data->my_hero_info[i]);
+				break;
+			}
+		}
+
+		if(my_hero_info == NULL)
+		{
+			LOG_ERR("[%s:%d] hero challenge recive reward faild, hero_id:%u", __FUNCTION__, __LINE__, hero_id);
+			return -3;
+		}
+		if(my_hero_info->star < 3)
+		{	
+			LOG_ERR("[%s:%d] hero challenge recive reward faild,star not enough hero_id:%u", __FUNCTION__, __LINE__, hero_id);
+			return -4;
+		}
+		if(my_hero_info->reward_flag != 1)
+		{
+			LOG_ERR("[%s:%d] hero challenge recive reward faild,no reward can recive hero_id:%u", __FUNCTION__, __LINE__, hero_id);
+			return -5;
+		}
+
+
+		std::map<uint32_t, uint32_t> item_list;
+		uint32_t acer = 0, bind_acer = 0, silver = 0, exp = 0;
+		for (size_t j =0; j < MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM && my_hero_info->item_info[j].item_id != 0; ++j)
+		{
+			int type = get_item_type(my_hero_info->item_info[j].item_id);
+			switch (type)
+			{
+				case ITEM_TYPE_COIN:
+					silver += my_hero_info->item_info[j].item_num;
+					break;
+				case ITEM_TYPE_BIND_GOLD:
+					bind_acer += my_hero_info->item_info[j].item_num;
+					break;
+				case ITEM_TYPE_GOLD:
+					acer += my_hero_info->item_info[j].item_num;
+					break;
+				case ITEM_TYPE_EXP:
+					exp += my_hero_info->item_info[j].item_num;
+					break;
+				default:
+					item_list[my_hero_info->item_info[j].item_id] += my_hero_info->item_info[j].item_num;
+			}
+		}
+
+		//判断包过空位够不够
+		if (!player->check_can_add_item_list(item_list))
+		{
+			ret = 190500407;
+			LOG_INFO("[%s:%d] player[%lu] bag grid not enough", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+		//物品进包裹
+		player->add_item_list(item_list, MAGIC_TYPE_HEROCHALLENGE_SWEEP_REWARD_RECIVE);
+		
+		//货币类和经验直接加属性
+		if(acer != 0)
+		{
+			player->add_unbind_gold(acer, MAGIC_TYPE_HEROCHALLENGE_SWEEP_REWARD_RECIVE);
+		}
+		if(bind_acer != 0 )
+		{
+			player->add_bind_gold(acer, MAGIC_TYPE_HEROCHALLENGE_SWEEP_REWARD_RECIVE);
+		}
+		if(silver != 0)
+		{
+			player->add_coin(silver, MAGIC_TYPE_HEROCHALLENGE_SWEEP_REWARD_RECIVE);
+		}
+		if(exp != 0)
+		{
+			player->add_exp(exp, MAGIC_TYPE_HEROCHALLENGE_SWEEP_REWARD_RECIVE);
+		}
+
+		//清空玩家身上奖励信息
+		my_hero_info->reward_flag = 0;
+		memset(&my_hero_info->item_info[0], 0, sizeof(HeroChallengeRewardInfo) * MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM);
+		
+	}while(0);
+	CommAnswer resp;
+	comm_answer__init(&resp);
+
+	resp.result = ret;
+
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_HERO_CHALLENGE_SWEEP_RECIVE_ANSWER, comm_answer__pack, resp);
+	return 0;
+}
+
+static int handle_hero_challenge_sweep_reward_info_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	HeroChallengeReciveSweepRewardRequest *req = hero_challenge_recive_sweep_reward_request__unpack(NULL, get_data_len(), (uint8_t*)get_data());
+	if(req == NULL)
+	{
+		LOG_ERR("[%s:%d] hero_challenge_recive_sweep_reward_request__unpack faild player_di:%lu", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -2;
+	}
+	uint32_t hero_id = req->hero_id;
+	hero_challenge_recive_sweep_reward_request__free_unpacked(req, NULL);
+
+	HeroChallengeSweepAnswer ans;
+	HeroChallengeSweepItemInfo itme_info[MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM];
+	HeroChallengeSweepItemInfo *itme_info_point[MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM];
+	hero_challenge_sweep_answer__init(&ans);
+	ans.n_item_info = 0;
+	ans.item_info = itme_info_point;
+
+	uint32_t ret = 0;
+	do{
+		HeroChallengeInfo* my_hero_info = NULL;
+		for(size_t i =0; i < MAX_HERO_CHALLENGE_MONSTER_NUM; i++)
+		{
+			if(player->data->my_hero_info[i].id == hero_id)
+			{
+				my_hero_info = &(player->data->my_hero_info[i]);
+				break;
+			}
+		}
+
+		if(my_hero_info == NULL)
+		{
+			LOG_ERR("[%s:%d] hero challenge recive reward faild, hero_id:%u", __FUNCTION__, __LINE__, hero_id);
+			return -3;
+		}
+		if(my_hero_info->star < 3)
+		{	
+			LOG_ERR("[%s:%d] hero challenge recive reward faild,star not enough hero_id:%u", __FUNCTION__, __LINE__, hero_id);
+			return -4;
+		}
+		if(my_hero_info->reward_flag != 1)
+		{
+			LOG_ERR("[%s:%d] hero challenge recive reward faild,no reward can recive hero_id:%u", __FUNCTION__, __LINE__, hero_id);
+			return -5;
+		}
+
+		uint32_t acer = 0, bind_acer = 0, silver = 0, exp = 0;
+		for (size_t j =0; j < MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM && my_hero_info->item_info[j].item_id != 0; ++j)
+		{
+			int type = get_item_type(my_hero_info->item_info[j].item_id);
+			switch (type)
+			{
+				case ITEM_TYPE_COIN:
+					silver += my_hero_info->item_info[j].item_num;
+					break;
+				case ITEM_TYPE_BIND_GOLD:
+					bind_acer += my_hero_info->item_info[j].item_num;
+					break;
+				case ITEM_TYPE_GOLD:
+					acer += my_hero_info->item_info[j].item_num;
+					break;
+				case ITEM_TYPE_EXP:
+					exp += my_hero_info->item_info[j].item_num;
+					break;
+				default:
+					itme_info_point[ans.n_item_info] = &itme_info[ans.n_item_info];
+					hero_challenge_sweep_item_info__init(&itme_info[ans.n_item_info]);
+					itme_info[ans.n_item_info].item_id = my_hero_info->item_info[j].item_id;
+					itme_info[ans.n_item_info].item_num = my_hero_info->item_info[j].item_num;
+					ans.n_item_info++;
+			}
+		}
+		ans.silver = silver;
+		ans.bind_acer = bind_acer;
+	    ans.acer = acer;
+		ans.exp = exp;
+
+	}while(0);
+
+	ans.result = ret;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_HERO_CHALLENGE_SWEEP_REWARD_INFO_NOTIFY, hero_challenge_sweep_answer__pack, ans);
+
 	return 0;
 }
 
@@ -18955,6 +19188,8 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_TITLE_MARK_OLD_REQUEST, handle_title_mark_old_request);
 	add_msg_handle(MSG_ID_HERO_CHALLENGE_ZHUJIEMIAN_INFO_REQUEST, handle_hero_challenge_main_info_request);
 	add_msg_handle(MSG_ID_HERO_CHALLENGE_SWEEP_REQUEST, handle_hero_challenge_sweep_request);
+	add_msg_handle(MSG_ID_HERO_CHALLENGE_SWEEP_RECIVE_REQUEST, handle_hero_challenge_sweep_recive_request);
+	add_msg_handle(MSG_ID_HERO_CHALLENGE_SWEEP_REWARD_INFO_REQUEST, handle_hero_challenge_sweep_reward_info_request);
 }
 
 void uninstall_msg_handle()

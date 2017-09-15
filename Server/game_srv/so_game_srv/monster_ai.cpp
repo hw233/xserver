@@ -466,7 +466,7 @@ void monster_cast_immediate_skill_to_player(uint64_t skill_id, monster_struct *m
 
 	if (!player->is_alive())
 	{
-		player->on_dead(player);
+		player->on_dead(monster);
 	}
 	else
 	{

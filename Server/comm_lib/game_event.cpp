@@ -377,6 +377,9 @@ int game_add_connect_event(struct sockaddr *sa, int socklen, conn_node_base *cli
 	int ret;
 	struct event *event_conn = &client->event_recv;
 	int fd = 0;
+	char buf[128];
+	struct sockaddr_in *sin = (struct sockaddr_in *)sa;
+	evutil_inet_ntop(AF_INET, &sin->sin_addr, buf, sizeof(buf));
 	
 	fd = create_new_socket(0);
 	if (0 != event_assign(event_conn, base, fd, EV_READ|EV_PERSIST, cb_recv, client)) {
@@ -398,7 +401,7 @@ int game_add_connect_event(struct sockaddr *sa, int socklen, conn_node_base *cli
 	game_set_socket_opt(fd);
 	client->fd = fd;
 
-	LOG_INFO("%s: connect fd = %d", __FUNCTION__, fd);
+	LOG_INFO("%s: connect[%s][%u] fd = %d", __FUNCTION__, buf, htons(sin->sin_port), fd);
 	
 	return (fd);
 fail:

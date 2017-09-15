@@ -1736,5 +1736,17 @@
         ['TargetInfoList'] = {
         }
     },
+    [1000163] = {
+        ['uid'] = 1000163,
+        ['ID'] = 152007037,
+        ['ResType'] = "Npc",
+        ['PointPosX'] = 313.8843,
+        ['PointPosY'] = 13.15,
+        ['PointPosZ'] = 304.4797,
+        ['Yaw'] = 180.0466,
+        ['Level'] = 1,
+        ['TargetInfoList'] = {
+        }
+    },
 }
 return map_bbj_002

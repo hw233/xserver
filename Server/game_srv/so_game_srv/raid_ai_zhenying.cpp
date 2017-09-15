@@ -1,3 +1,4 @@
+#if 0
 #include <math.h>
 #include <stdlib.h>
 #include <algorithm>
@@ -350,3 +351,4 @@ struct raid_ai_interface raid_ai_zhenying_interface =
 	zhenying_raid_ai_finished,
 	zhenying_raid_ai_attack,
 };
+#endif

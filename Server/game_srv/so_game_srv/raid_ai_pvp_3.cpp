@@ -321,22 +321,6 @@ static void pvp_raid_ai_tick(raid_struct *raid)
 	// if (raid->data->state == RAID_STATE_PASS)
 	//	return;
 
-	assert(raid->m_config->n_Score == 1);
-	assert(raid->m_config->Score[0] == 1);
-	if (delta_time > (int)(raid->m_config->ScoreValue[0]))
-	{
-			// 时间到了，副本结束
-		int team_kill_1, team_kill_2;
-		get_team_kill_num(raid, &team_kill_1, &team_kill_2);
-		if (team_kill_1 > team_kill_2)
-			finished_raid(raid, 1);
-		else if (team_kill_1 < team_kill_2)
-			finished_raid(raid, 2);
-		else
-			finished_raid(raid, 0);
-		return;
-	}
-
 	if (raid->PVP_DATA.refresh_monster_time != 0 && now > raid->PVP_DATA.refresh_monster_time)
 	{
 		pvp_raid_refresh_monster(raid);
@@ -906,17 +890,19 @@ static void pvp_raid_ai_player_ready(raid_struct *raid, player_struct *player)
 	if (pos >= MAX_TEAM_MEM)
 	{
 			//这里和配置对应，不用宏PVP_MATCH_PLAYER_NUM_3, 而是写死了3
-		player->ai_patrol_config = robot_patrol_config[pos - MAX_TEAM_MEM + 3];		
+		if (player->ai_data)
+			player->ai_data->ai_patrol_config = robot_patrol_config[pos - MAX_TEAM_MEM + 3];		
 		player->set_camp_id(2);
 	}
 	else
 	{
-		player->ai_patrol_config = robot_patrol_config[pos];				
+		if (player->ai_data)		
+			player->ai_data->ai_patrol_config = robot_patrol_config[pos];				
 		player->set_camp_id(1);
 	}
-	assert(player->ai_patrol_config);
-	LOG_DEBUG("%s: player[%s] ID[%lu] camp[%d] pos[%d]", __FUNCTION__, player->get_name(), player->ai_patrol_config->ID
-		, player->data->camp_id, pos);
+//	assert(player->ai_patrol_config);
+//	LOG_DEBUG("%s: player[%s] ID[%lu] camp[%d] pos[%d]", __FUNCTION__, player->get_name(), player->ai_patrol_config->ID
+//		, player->data->camp_id, pos);
 
 	if (raid->PVP_DATA.pvp_raid_state != PVP_RAID_STATE_INIT)
 	{
@@ -947,6 +933,25 @@ static void pvp_raid_ai_player_ready(raid_struct *raid, player_struct *player)
 	pvp_raid_wait_start(raid);
 }
 
+static void pvp_raid_ai_timeout(raid_struct *raid)
+{
+//	assert(raid->m_config->n_Score == 1);
+//	assert(raid->m_config->Score[0] == 1);
+//	if (delta_time > (int)(raid->m_config->ScoreValue[0]))
+	{
+			// 时间到了，副本结束
+		int team_kill_1, team_kill_2;
+		get_team_kill_num(raid, &team_kill_1, &team_kill_2);
+		if (team_kill_1 > team_kill_2)
+			finished_raid(raid, 1);
+		else if (team_kill_1 < team_kill_2)
+			finished_raid(raid, 2);
+		else
+			finished_raid(raid, 0);
+		return;
+	}
+}
+
 struct raid_ai_interface raid_ai_pvp3_interface =
 {
 	pvp_raid_ai_init,
@@ -961,5 +966,8 @@ struct raid_ai_interface raid_ai_pvp3_interface =
 	NULL,// pvp_raid_ai_finished,
 	pvp_raid_ai_player_attack,
 	pvp_raid_ai_player_region_changed,
-
+	NULL,
+	NULL,
+	NULL,
+	.raid_on_failed = pvp_raid_ai_timeout,
 };

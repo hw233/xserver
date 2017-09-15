@@ -49,6 +49,7 @@ message HeroChallengedata
 	required uint32 hero_id = 1; //id
 	required uint32 num = 2; //今日已经挑战次数
 	required uint32 star = 3; //历史最高星级
+	required uint32 reward_flag = 4; //玩家身上是否有扫荡奖励未领取
 }
 
 //英雄挑战扫荡请求
@@ -74,3 +75,10 @@ message HeroChallengeSweepItemInfo
 	required uint32 item_id = 1; //物品id
 	required uint32 item_num = 2; //物品数量
 }
+
+//英雄挑战请求领取扫荡奖励，扫荡奖励信息请求共用
+message HeroChallengeReciveSweepRewardRequest
+{
+	required uint32 hero_id = 1; //英雄id
+}
+

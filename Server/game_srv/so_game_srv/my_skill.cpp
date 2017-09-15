@@ -27,7 +27,7 @@ void MySkill::clear()
 {
 	for (SKILL_CONTAIN::iterator it = m_skill.begin(); it != m_skill.end(); ++it)
 	{
-		skill_manager::delete_skill(it->second);
+		skill_manager::delete_skill(*it);
 	}
 	m_skill.clear();
 }
@@ -78,19 +78,19 @@ void MySkill::OpenAllSkill()
 
 int MySkill::Learn(uint32_t id, uint32_t num)
 {
-	SKILL_CONTAIN::iterator it = m_skill.find(id);
-	if (it == m_skill.end())
+	skill_struct *it = GetSkill(id);
+	if (it == NULL)
 	{
 		return 0;
 	}
-	std::map<uint64_t, struct SkillLvTable *>::iterator iter = skill_lv_config.find(it->second->config->SkillLv + it->second->data->lv + num - 1);
+	std::map<uint64_t, struct SkillLvTable *>::iterator iter = skill_lv_config.find(it->config->SkillLv + it->data->lv + num - 1);
 	if (iter == skill_lv_config.end())
 		return 1;
 	if (iter->second->NeedLv > m_owner->get_attr(PLAYER_ATTR_LEVEL))
 	{
 		return 190500068;
 	}
-	uint32_t cost = CalcCost(it->second->config->SkillLv, it->second->data->lv, num);
+	uint32_t cost = CalcCost(it->config->SkillLv, it->data->lv, num);
 	if (m_owner->sub_coin(cost, MAGIC_TYPE_SKILL) != 0)
 	{
 		return 190500063;
@@ -104,14 +104,14 @@ int MySkill::Learn(uint32_t id, uint32_t num)
 }
 void MySkill::IteratorLevelUp(uint32_t id, uint32_t num)
 {
-	SKILL_CONTAIN::iterator it = m_skill.find(id);
-	if (it == m_skill.end())
+	skill_struct *it = GetSkill(id);
+	if (it == NULL)
 	{
 		return;
 	}
-	it->second->data->lv += num;
+	it->data->lv += num;
 
-	std::map<uint64_t, struct ActiveSkillTable *>::iterator itCon  = active_skill_config.find(it->second->config->SkillAffectId);
+	std::map<uint64_t, struct ActiveSkillTable *>::iterator itCon  = active_skill_config.find(it->config->SkillAffectId);
 	if (itCon == active_skill_config.end())
 	{
 		return;
@@ -124,7 +124,7 @@ skill_struct *MySkill::InsertSkill(uint32_t id)
 	skill_struct * pSkillStruct = skill_manager::create_skill(id, m_owner->get_uuid(), 0);
 	if (pSkillStruct != NULL)
 	{
-		m_skill.insert(std::make_pair(id, pSkillStruct));
+		m_skill.push_back(pSkillStruct);
 	}
 	return pSkillStruct;
 }
@@ -142,8 +142,8 @@ void MySkill::OnPlayerLevelUp(uint32_t lv)
 		{
 			continue;
 		}
-		SKILL_CONTAIN::iterator itS = m_skill.find(it->first);
-		if (itS != m_skill.end())
+		skill_struct *itS = GetSkill(it->first);
+		if (itS != NULL)
 		{
 			continue;
 		}
@@ -190,20 +190,20 @@ void MySkill::OnPlayerLevelUp(uint32_t lv)
 
 fuwen_data * MySkill::GetCurFuwen(uint32_t id)
 {
-	SKILL_CONTAIN::iterator it = m_skill.find(id);
-	if (it == m_skill.end())
+	skill_struct *it = GetSkill(id);
+	if (it == NULL)
 	{
 		return NULL;
 	}
-	if (it->second->data->cur_fuwen[m_index - 1] == 0)
+	if (it->data->cur_fuwen[m_index - 1] == 0)
 	{
 		return NULL;
 	}
-	for (int i = 0; i < it->second->data->fuwen_num; ++i)
+	for (int i = 0; i < it->data->fuwen_num; ++i)
 	{
-		if (it->second->data->fuwen[i].id == it->second->data->cur_fuwen[m_index - 1])
+		if (it->data->fuwen[i].id == it->data->cur_fuwen[m_index - 1])
 		{
-			return &it->second->data->fuwen[i];
+			return &it->data->fuwen[i];
 		}
 	}
 	return NULL;
@@ -211,32 +211,32 @@ fuwen_data * MySkill::GetCurFuwen(uint32_t id)
 
 int MySkill::SetFuwen(uint32_t id, uint32_t fuwen)
 {
-	SKILL_CONTAIN::iterator it = m_skill.find(id);
-	if (it == m_skill.end())
+	skill_struct *it = GetSkill(id);
+	if (it == NULL)
 	{
 		return 1;
 	}
 
 	if (fuwen == 0)
 	{
-		it->second->data->cur_fuwen[m_index - 1] = fuwen;
+		it->data->cur_fuwen[m_index - 1] = fuwen;
 		return 0;
 	}
 
-	for (int i = 0; i < it->second->data->fuwen_num; ++i)
+	for (int i = 0; i < it->data->fuwen_num; ++i)
 	{
-		if (it->second->data->fuwen[i].id == fuwen)
+		if (it->data->fuwen[i].id == fuwen)
 		{
 			std::map<uint64_t, struct SkillTable *>::iterator itCon = skill_config.find(fuwen);
 			if (itCon == skill_config.end())
 			{
 				return 190500069;
 			}
-			if (it->second->data->lv < itCon->second->OpenLv)
+			if (it->data->lv < itCon->second->OpenLv)
 			{
 				return 190500069;
 			}
-			it->second->data->cur_fuwen[m_index - 1] = fuwen;
+			it->data->cur_fuwen[m_index - 1] = fuwen;
 			return 0;
 		}
 	}
@@ -277,8 +277,11 @@ skill_struct *MySkill::GetSkillStructFromFuwen(uint32_t fuwen_id)
 
 static uint32_t avoid_skill[] = {111100106, 111100206, 111100306, 111100406, 111100506, 111100102};
 
-uint32_t MySkill::GetRandSkillId()
+uint32_t MySkill::GetRandSkillId(struct ai_player_data *ai_data)
 {
+	if (!ai_data)
+		return (0);
+	
 //	if (m_skill.empty())
 //		return (0);
 
@@ -291,21 +294,34 @@ uint32_t MySkill::GetRandSkillId()
 //	return 111100101;
 		//计算CD的时候有200毫秒误差
 	uint64_t now = time_helper::get_cached_time() - 200;
+
+	if (ai_data->normal_skill_id != 0)
+	{
+		if (now > ai_data->normal_skill_timeout)
+		{
+			ai_data->normal_skill_id = 0;
+		}
+		else
+		{
+			return ai_data->normal_skill_id;
+		}
+	}
+	
 		//只有第一个普攻可以被选中
 	bool first_normal_attack = true;
 	
 	for (SKILL_CONTAIN::iterator ite = m_skill.begin(); ite != m_skill.end(); ++ite)
 	{
-		if (now < ite->second->data->cd_time)
+		if (now < (*ite)->data->cd_time)
 			continue;
 
-		if (ite->second->config->SkillType == 1)
+		if ((*ite)->config->SkillType == 1)
 		{
 			if (!first_normal_attack)
 				continue;
 			first_normal_attack = false;
 		}
-		else if (ite->second->config->SkillType != 2)
+		else if ((*ite)->config->SkillType != 2)
 		{
 			continue;
 		}
@@ -313,7 +329,7 @@ uint32_t MySkill::GetRandSkillId()
 		bool avoid = false;
 		for (size_t i = 0; i < ARRAY_SIZE(avoid_skill); ++i)
 		{
-			if (ite->first == avoid_skill[i])
+			if ((*ite)->data->skill_id == avoid_skill[i])
 			{
 				avoid = true;
 				break;
@@ -329,7 +345,7 @@ uint32_t MySkill::GetRandSkillId()
 		// 	//旋风斩不能释放
 		// if (ite->first == 111100102)
 		// 	continue;
-		return ite->first;
+		return (*ite)->data->skill_id;
 	}
 	return (0);
 }
@@ -338,7 +354,7 @@ uint32_t MySkill::GetFirstSkillId()
 {
 	if (m_skill.empty())
 		return (0);
-	return m_skill.begin()->second->data->skill_id;
+	return (*m_skill.begin())->data->skill_id;
 }
 
 int MySkill::GetSkillLevelNum(uint32_t lv)
@@ -346,7 +362,7 @@ int MySkill::GetSkillLevelNum(uint32_t lv)
 	int num = 0;
 	for (SKILL_CONTAIN::iterator iter = m_skill.begin(); iter != m_skill.end(); ++iter)
 	{
-		skill_struct *pSkill = iter->second;
+		skill_struct *pSkill = (*iter);
 		if (pSkill->config->IsRune == 1)
 		{
 			continue;
@@ -369,7 +385,7 @@ int MySkill::GetFuwenUnlockNum(void)
 	int num = 0;
 	for (SKILL_CONTAIN::iterator iter = m_skill.begin(); iter != m_skill.end(); ++iter)
 	{
-		skill_struct *pSkill = iter->second;
+		skill_struct *pSkill = (*iter);
 		for (int i = 0; i < MAX_FUWEN; ++i)
 		{
 			uint32_t fuwen_id = pSkill->data->fuwen[i].id;
@@ -397,7 +413,7 @@ int MySkill::GetFuwenWearNum(void)
 	int num = 0;
 	for (SKILL_CONTAIN::iterator iter = m_skill.begin(); iter != m_skill.end(); ++iter)
 	{
-		skill_struct *pSkill = iter->second;
+		skill_struct *pSkill = *iter;
 		for (int i = 0; i < MAX_CUR_FUWEN; ++i)
 		{
 			if (pSkill->data->cur_fuwen[i] > 0)
@@ -414,7 +430,7 @@ int MySkill::GetFuwenLevelNum(uint32_t lv)
 	int num = 0;
 	for (SKILL_CONTAIN::iterator iter = m_skill.begin(); iter != m_skill.end(); ++iter)
 	{
-		skill_struct *pSkill = iter->second;
+		skill_struct *pSkill = *iter;
 		for (int i = 0; i < MAX_FUWEN; ++i)
 		{
 			fuwen_data *pFuwen = &pSkill->data->fuwen[i];
@@ -436,37 +452,37 @@ void MySkill::SendAllSkill()
 	int i = 0;
 	for (; it != m_skill.end(); ++it)
 	{
-		if (it->second->config->SkillAcc == 0)
+		if ((*it)->config->SkillAcc == 0)
 		{
 			continue;
 		}
 		skill_data__init(skillData + i);
-		skillData[i].id = it->first;
-		skillData[i].lv = it->second->data->lv;
-		skillData[i].cur_fuwen = it->second->data->cur_fuwen[0];
-		skillData[i].n_fuwen = it->second->data->fuwen_num;
-		for (int j = 0; j < it->second->data->fuwen_num; ++j)
+		skillData[i].id = (*it)->data->skill_id;
+		skillData[i].lv = (*it)->data->lv;
+		skillData[i].cur_fuwen = (*it)->data->cur_fuwen[0];
+		skillData[i].n_fuwen = (*it)->data->fuwen_num;
+		for (int j = 0; j < (*it)->data->fuwen_num; ++j)
 		{
 			fuwen_data__init(&fuwenData[i][j]);
-			fuwenData[i][j].id = it->second->data->fuwen[j].id;
-			fuwenData[i][j].lv = it->second->data->fuwen[j].lv;
-			fuwenData[i][j].is_new = it->second->data->fuwen[j].isNew;
+			fuwenData[i][j].id = (*it)->data->fuwen[j].id;
+			fuwenData[i][j].lv = (*it)->data->fuwen[j].lv;
+			fuwenData[i][j].is_new = (*it)->data->fuwen[j].isNew;
 			fuwenDataPoint[i][j] = &fuwenData[i][j];
 		}
 		skillData[i].fuwen = fuwenDataPoint[i];
 		skillDataPoint[i] = skillData + i;
 
 		skill_data__init(skillData1 + i);
-		skillData1[i].id = it->first;
-		skillData1[i].lv = it->second->data->lv;
-		skillData1[i].cur_fuwen = it->second->data->cur_fuwen[1];
-		skillData1[i].n_fuwen = it->second->data->fuwen_num;
-		for (int j = 0; j < it->second->data->fuwen_num; ++j)
+		skillData1[i].id = (*it)->data->skill_id;
+		skillData1[i].lv = (*it)->data->lv;
+		skillData1[i].cur_fuwen = (*it)->data->cur_fuwen[1];
+		skillData1[i].n_fuwen = (*it)->data->fuwen_num;
+		for (int j = 0; j < (*it)->data->fuwen_num; ++j)
 		{
 			fuwen_data__init(&fuwenData1[i][j]);
-			fuwenData1[i][j].id = it->second->data->fuwen[j].id;
-			fuwenData1[i][j].lv = it->second->data->fuwen[j].lv;
-			fuwenData1[i][j].is_new = it->second->data->fuwen[j].isNew;
+			fuwenData1[i][j].id = (*it)->data->fuwen[j].id;
+			fuwenData1[i][j].lv = (*it)->data->fuwen[j].lv;
+			fuwenData1[i][j].is_new = (*it)->data->fuwen[j].isNew;
 			fuwenDataPoint1[i][j] = &fuwenData1[i][j];
 		}
 		skillData1[i].fuwen = fuwenDataPoint1[i];
@@ -487,12 +503,12 @@ void MySkill::SendAllSkill()
 
 skill_struct * MySkill::GetSkill(uint32_t id)
 {
-	SKILL_CONTAIN::iterator it = m_skill.find(id);
-	if (it == m_skill.end())
+	for (SKILL_CONTAIN::iterator it = m_skill.begin(); it != m_skill.end(); ++it)
 	{
-		return NULL;
+		if ((*it)->data->skill_id == id)
+			return (*it);
 	}
-	return it->second;
+	return NULL;
 }
 
 uint32_t MySkill::GetLevelUpTo(uint32_t id, uint32_t initLv, uint32_t maxLv)
@@ -552,17 +568,17 @@ void MySkill::PackAllSkill(_PlayerDBInfo &pb)
 	for (SKILL_CONTAIN::iterator it = m_skill.begin(); it != m_skill.end(); ++it)
 	{
 		skill_one_db_data__init(one + i);
-		one[i].id = it->first;
-		one[i].lv = it->second->data->lv;
-		one[i].cur_fuwen = it->second->data->cur_fuwen;
+		one[i].id = (*it)->data->skill_id;
+		one[i].lv = (*it)->data->lv;
+		one[i].cur_fuwen = (*it)->data->cur_fuwen;
 		one[i].n_cur_fuwen = MAX_CUR_FUWEN;
-		one[i].n_fuwen = it->second->data->fuwen_num;
-		for (int j = 0; j < it->second->data->fuwen_num; ++j)
+		one[i].n_fuwen = (*it)->data->fuwen_num;
+		for (int j = 0; j < (*it)->data->fuwen_num; ++j)
 		{
 			fuwen_data__init(&fuwenData[i][j]);
-			fuwenData[i][j].id = it->second->data->fuwen[j].id;
-			fuwenData[i][j].lv = it->second->data->fuwen[j].lv;
-			fuwenData[i][j].is_new = it->second->data->fuwen[j].isNew;
+			fuwenData[i][j].id = (*it)->data->fuwen[j].id;
+			fuwenData[i][j].lv = (*it)->data->fuwen[j].lv;
+			fuwenData[i][j].is_new = (*it)->data->fuwen[j].isNew;
 			fuwenDataPoint[i][j] = &fuwenData[i][j];
 		}
 		one[i].fuwen = (FuwenDb**)fuwenDataPoint[i];
@@ -609,9 +625,9 @@ void MySkill::copy(MySkill *skill)
 	m_index = skill->m_index;
 	for (SKILL_CONTAIN::iterator ite = skill->m_skill.begin(); ite != skill->m_skill.end(); ++ite)
 	{
-		skill_struct *skill_ = skill_manager::copy_skill(ite->second);
+		skill_struct *skill_ = skill_manager::copy_skill(*ite);
 		if (!skill_)
 			continue;
-		m_skill[ite->first] = skill_;
+		m_skill.push_back(skill_);
 	}
 }

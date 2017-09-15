@@ -826,7 +826,7 @@ void unit_struct::delete_one_buff(uint32_t id)
 {
 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
 	{
-		if (!m_buffs[i])
+		if (!m_buffs[i] || !m_buffs[i]->data)
 			continue;
 		if (m_buffs[i]->config->ID != id)
 			continue;
@@ -1107,9 +1107,9 @@ int unit_struct::count_rect_unit(double angle, std::vector<unit_struct *> *ret, 
 	struct position *my_pos = get_pos();
 	return count_rect_unit_at_pos(angle, my_pos, ret, max, length, width);
 }
-int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, double radius)
+int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, struct position *pos, double radius)
 {
-	struct position *my_pos = get_pos();	
+//	struct position *my_pos = get_pos();	
 	radius = radius * radius;
 	int cur_sight_player = *get_cur_sight_player();
 	uint64_t *sight_player = get_all_sight_player();
@@ -1130,8 +1130,8 @@ int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, do
 		if (player->is_too_high_to_beattack())
 			continue;
 		
-		double x = my_pos->pos_x - player->get_pos()->pos_x;
-		double z = my_pos->pos_z - player->get_pos()->pos_z;
+		double x = pos->pos_x - player->get_pos()->pos_x;
+		double z = pos->pos_z - player->get_pos()->pos_z;
 		if (x * x + z * z > radius)
 			continue;
 		ret->push_back(player);
@@ -1154,8 +1154,8 @@ int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, do
 			continue;
 		}
 		
-		double x = my_pos->pos_x - monster->get_pos()->pos_x;
-		double z = my_pos->pos_z - monster->get_pos()->pos_z;
+		double x = pos->pos_x - monster->get_pos()->pos_x;
+		double z = pos->pos_z - monster->get_pos()->pos_z;
 		if (x * x + z * z > radius)
 			continue;
 		ret->push_back(monster);

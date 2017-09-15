@@ -16,18 +16,20 @@
 #include "skill.h"
 #include "count_pvp_skill_unit.h"
 
-static player_struct **get_enemy_team_player(player_struct *player, struct ai_player_data **ai_player_data);
+static player_struct **get_enemy_team_player(player_struct *player);
 static void do_ai_player_relive(raid_struct *raid, player_struct *player, struct ai_player_data *ai_player_data, player_struct **enemy);
 
 static void pvp_player_ai_tick(player_struct *player)
 {
+	if (!player->ai_data)
+		return;
 	if (player->buff_state & BUFF_STATE_STUN)
 	{
-		LOG_DEBUG("aitest: [%s] lock", player->get_name());		
+//		LOG_DEBUG("aitest: [%s] lock", player->get_name());		
 		return;
 	}
 	
-	if (player->data->stop_ai)
+	if (player->ai_data->stop_ai)
 		return;
 	if (player->is_unit_in_move())
 		return;
@@ -41,8 +43,8 @@ static void pvp_player_ai_tick(player_struct *player)
 
 		// try attack others
 	player_struct **enemy = NULL;
-	struct ai_player_data *ai_player_data = NULL;
-	enemy = get_enemy_team_player(player, &ai_player_data);
+	struct ai_player_data *ai_player_data = player->ai_data;
+	enemy = get_enemy_team_player(player);
 	assert(enemy);
 
 	if (time_helper::get_cached_time() < ai_player_data->ontick_time)
@@ -53,7 +55,7 @@ static void pvp_player_ai_tick(player_struct *player)
 		return do_ai_player_relive((raid_struct *)player->scene, player, ai_player_data, enemy);
 	}
 
-	LOG_DEBUG("aitest: [%s]ai_state = %d", player->get_name(), ai_player_data->ai_state);
+//	LOG_DEBUG("aitest: [%s]ai_state = %d", player->get_name(), ai_player_data->ai_state);
 
 
 	if (ai_player_data->ai_state == AI_ATTACK_STATE)
@@ -77,12 +79,12 @@ static void pvp_player_ai_tick(player_struct *player)
 					//检查追击距离
 				struct position *his_pos = enemy[i]->get_pos();
 				struct position ori_pos;
-				ori_pos.pos_x = player->ai_patrol_config->patrol[player->data->patrol_index]->pos_x;
-				ori_pos.pos_z = player->ai_patrol_config->patrol[player->data->patrol_index]->pos_z;
-				if (!check_distance_in_range(his_pos, &ori_pos, player->data->chase_range))
+				ori_pos.pos_x = player->ai_data->ai_patrol_config->patrol[player->ai_data->patrol_index]->pos_x;
+				ori_pos.pos_z = player->ai_data->ai_patrol_config->patrol[player->ai_data->patrol_index]->pos_z;
+				if (!check_distance_in_range(his_pos, &ori_pos, player->ai_data->chase_range))
 				{
-					LOG_DEBUG("aitest: [%s] chase distance = %.1f %.1f", player->get_name(),
-						his_pos->pos_x - ori_pos.pos_x, his_pos->pos_z - ori_pos.pos_z);
+//					LOG_DEBUG("aitest: [%s] chase distance = %.1f %.1f", player->get_name(),
+//						his_pos->pos_x - ori_pos.pos_x, his_pos->pos_z - ori_pos.pos_z);
 					break;
 				}
 			}
@@ -91,7 +93,7 @@ static void pvp_player_ai_tick(player_struct *player)
 					//检查主动攻击距离
 				struct position *my_pos = player->get_pos();
 				struct position *his_pos = enemy[i]->get_pos();
-				if (!check_distance_in_range(my_pos, his_pos, player->data->active_attack_range))
+				if (!check_distance_in_range(my_pos, his_pos, player->ai_data->active_attack_range))
 				{
 //					LOG_DEBUG("aitest: [%s] active attack distance = %.1f %.1f", player->get_name(),
 //						his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z);
@@ -108,7 +110,7 @@ static void pvp_player_ai_tick(player_struct *player)
 		}
 	}
 
-	LOG_DEBUG("aitest: [%s]rand move, index = %u, skill_id = %u", player->get_name(), player->data->patrol_index, skill_id);
+//	LOG_DEBUG("aitest: [%s]rand move, index = %u, skill_id = %u", player->get_name(), player->data->patrol_index, skill_id);
 	ai_player_data->target_player_id = 0;
 
 //	if (find_rand_position(player->scene, &player->data->move_path.pos[0],
@@ -135,25 +137,22 @@ static void pvp_player_ai_tick(player_struct *player)
 }
 
 
-static player_struct **get_enemy_team_player(player_struct *player, struct ai_player_data **ai_player_data)
+static player_struct **get_enemy_team_player(player_struct *player)
 {
 	raid_struct *raid = (raid_struct *)player->scene;
 	assert(raid->m_config->DengeonRank == DUNGEON_TYPE_PVP_3 || raid->m_config->DengeonRank == DUNGEON_TYPE_PVP_5);
 
 	player_struct **enemy = NULL;
-	*ai_player_data = NULL;
 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
 	{
 		if (player == raid->m_player[i])
 		{
 			enemy = raid->m_player2;
-			*ai_player_data = &raid->PVP_DATA.ai_player_data[i];
 			return enemy;
 		}
 		if (player == raid->m_player2[i])
 		{
 			enemy = raid->m_player;
-			*ai_player_data = &raid->PVP_DATA.ai_player_data[i + MAX_TEAM_MEM];
 			return enemy;
 		}
 	}

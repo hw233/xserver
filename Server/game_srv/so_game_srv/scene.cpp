@@ -283,7 +283,8 @@ int scene_struct::add_player_to_scene(player_struct *player)
 	area->add_player_to_area(player->data->player_id);
 	player->area = area;
 	player->data->scene_id = m_id;
-	player->set_camp_id(0);
+	if (get_scene_type() != SCENE_TYPE_RAID)
+		player->set_camp_id(0);
 	player->scene = this;
 //	player->data->player_is_in_loading = false;	
 	broadcast_player_create(player);

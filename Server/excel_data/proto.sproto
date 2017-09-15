@@ -733,6 +733,7 @@
 	FightPro 10 : *integer
 	ActiveAttackRange 11 : integer
 	ChaseRange 12 : integer
+	Type 13 : integer
 }
 
 #随机名字
@@ -1414,6 +1415,9 @@
 	MineSet 9 : *integer
 	ForestSet 10 : *integer
 	Kill 11 : integer
+	FirstReward 12 : *integer
+	Num 13 : *integer
+	Ratio 14 : double
 }
 
 .ChallengeTable{

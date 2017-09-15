@@ -29,7 +29,10 @@ static void doufachang_send_raid_result(player_struct *attack, player_struct *de
 {
 	DOUFACHANG_CHALLENGE_ANSWER *ans = (DOUFACHANG_CHALLENGE_ANSWER *)conn_node_gamesrv::connecter.get_send_data();
 	ans->attack = attack->get_uuid();
-	ans->defence = defence->data->origin_player_id;
+	if (defence->ai_data)
+		ans->defence = defence->ai_data->origin_player_id;
+	else
+		ans->defence = defence->get_uuid();
 	ans->result = result;
 	ans->add_gold = add_gold;
 	ans->notify = notify;
@@ -90,14 +93,16 @@ static void doufachang_raid_ai_player_dead(raid_struct *raid, player_struct *pla
 		doufachang_send_raid_result(raid->m_player[0], raid->m_player2[0], 0, sg_doufachang_raid_win_reward[1], true);
 	}
 //	raid->m_player[0]->del_all_formation_partner_from_scene(false);
-	raid->m_player2[0]->data->stop_ai = true;
+	if (raid->m_player2[0]->ai_data)
+		raid->m_player2[0]->ai_data->stop_ai = true;
 }
 
 static void doufachang_raid_ai_player_ready(raid_struct *raid, player_struct *player)
 {
 	if (get_entity_type(player->get_uuid()) != ENTITY_TYPE_PLAYER)
 	{
-		player->ai_patrol_config = robot_patrol_config[0];				
+		if (player->ai_data)
+			player->ai_data->ai_patrol_config = robot_patrol_config[0];				
 		return;
 	}
 	player->data->attrData[PLAYER_ATTR_HP] = player->data->attrData[PLAYER_ATTR_MAXHP];

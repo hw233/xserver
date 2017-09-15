@@ -636,14 +636,6 @@ struct player_data
 
 	uint64_t next_update;
 
-		//ai相关
-	uint8_t player_ai_index;
-	uint64_t origin_player_id;   //原玩家ID
-	bool stop_ai; //停止AI
-	uint8_t patrol_index; //巡逻路径
-	uint8_t active_attack_range; //主动攻击范围
-	uint8_t chase_range;  //追击范围
-
 	//个人信息
 	uint32_t personality_sex; //性别
 	uint32_t personality_birthday; //生日（格式：20170410）
@@ -700,6 +692,29 @@ struct player_data
 	HeroChallengeInfo my_hero_info[MAX_HERO_CHALLENGE_MONSTER_NUM];
 };
 
+struct ai_player_data
+{
+	uint16_t ai_state;
+	uint64_t ontick_time;
+	uint32_t skill_id;  //即将释放的技能
+	double angle;     //技能的角度
+	struct position skill_target_pos;  //技能释放的位置
+	uint64_t relive_time;
+	uint64_t target_player_id;
+		//ai巡逻配置
+	struct RobotPatrolTable *ai_patrol_config;
+
+	uint8_t player_ai_index;
+	uint64_t origin_player_id;   //原玩家ID
+	bool stop_ai; //停止AI
+	uint8_t patrol_index; //巡逻路径
+	uint8_t active_attack_range; //主动攻击范围
+	uint8_t chase_range;  //追击范围
+
+		//普攻三连击
+	uint32_t normal_skill_id;  //下一个三连击技能ID，0表示没有
+	uint64_t normal_skill_timeout;  //三连击的超时时间
+};
 
 class player_struct: public unit_struct
 {
@@ -708,6 +723,7 @@ public:
 
 	ItemPosMap item_pos_cache;
 	TaskSet task_finish_set;
+	struct ai_player_data *ai_data;
 public:
 	player_struct();
 	virtual ~player_struct();
@@ -738,6 +754,7 @@ public:
 	double *get_all_buff_fight_attr();
 	double get_buff_fight_attr(uint32_t id);
 	void clear_cur_skill();
+	bool is_ai_player();
 
 	void add_attr(uint32_t id, double value);		
 	void set_attr(uint32_t id, double value);	
@@ -1235,8 +1252,6 @@ public:
 	PartnerMap m_partners;
 	uint32_t chengjie_kill; //悬赏目标被杀
 
-		//ai巡逻配置
-	struct RobotPatrolTable *ai_patrol_config;
 private:
 	void calculate_lv2_attribute();
 	void calculate_lv3_attribute();

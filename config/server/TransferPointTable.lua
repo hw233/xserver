@@ -220,6 +220,12 @@ local TransferPointTable = {
 		['NameId'] = '巨轮国黄大仙庙',
 		['limitLevel'] = 1,
 		['MapId'] = {10004,123903,57190,60633,159568}
+		},
+	[155000038] = {
+		['ID'] = 155000038,
+		['NameId'] = '新手阵营战',
+		['limitLevel'] = 1,
+		['MapId'] = {30008}
 		}
 	}
 return TransferPointTable

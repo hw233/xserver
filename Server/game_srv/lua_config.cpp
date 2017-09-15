@@ -73,7 +73,7 @@ std::map<uint64_t, struct BaguaTable*> bagua_config; //八卦牌配置
 std::map<uint64_t, struct BaguaStarTable*> bagua_star_config; //八卦牌炼星配置
 std::map<uint64_t, struct BaguaViceAttributeTable*> bagua_vice_attr_config; //八卦牌洗炼配置
 std::map<uint64_t, struct BaguaSuitTable*> bagua_suit_config; //八卦牌套装配置
-std::vector<struct ActorRobotTable*> robot_config; //机器人
+std::vector<struct ActorRobotTable*> robot_config[ROBOT_CONFIG_TYPE_SIZE]; //机器人
 std::vector<struct BootNameTable*> rand_name_config; //随机名字
 std::map<uint64_t, struct RandomMonsterTable*> random_monster;
 std::map<uint64_t, struct SpecialtyLevelTable*> specialty_level_config;
@@ -97,6 +97,7 @@ std::map<uint64_t, struct WeekTable*> zhenying_week_config; //阵营周目标表
 std::map<uint64_t, struct QuestionTable*> questions_config; //考题表
 std::map<char *, std::vector<struct RaidScriptTable*> *> all_raid_script_config; //副本AI配置表
 std::vector<struct RobotPatrolTable*> robot_patrol_config; //机器人巡逻
+std::vector<struct RobotPatrolTable*> robot_zhenyingzhan_config; //阵营战机器人移动路径
 std::vector<struct FactionBattleTable*> zhenying_battle_config; //战场
 std::map<uint64_t, struct LifeSkillTable*> medicine_config; //炼药表
 std::map<uint64_t, struct NoticeTable*> notify_config; //公告表

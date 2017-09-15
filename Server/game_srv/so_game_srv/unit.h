@@ -75,7 +75,7 @@ public:
 
 	int count_rect_unit_at_pos(double angle, struct position *start_pos, std::vector<unit_struct *> *ret, uint max, double length, double width);	
 	int count_rect_unit(double angle, std::vector<unit_struct *> *ret, uint max, double length, double width);
-	int count_circle_unit(std::vector<unit_struct *> *ret, uint max, double radius);
+	int count_circle_unit(std::vector<unit_struct *> *ret, uint max, struct position *pos, double radius);
 	int count_fan_unit(std::vector<unit_struct *> *ret, uint max, double radius, double angle);
 
 	virtual bool is_too_high_to_beattack();   //是否飞的太高不能被攻击

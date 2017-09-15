@@ -1,3 +1,4 @@
+
 #include "zhenying_raid.h"
 #include "time_helper.h"
 #include "raid.pb-c.h"
@@ -7,6 +8,18 @@
 #include "raid_manager.h"
 #include "camp_judge.h"
 #include "collect.h"
+
+int zhenying_raid_struct::raid_num;
+
+zhenying_raid_struct::zhenying_raid_struct()
+{
+	++raid_num;
+}
+
+zhenying_raid_struct::~zhenying_raid_struct()
+{
+	--raid_num;
+}
 
 int zhenying_raid_struct::init_special_raid_data(player_struct *player)
 {

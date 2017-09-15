@@ -36,8 +36,9 @@ static void battle_raid_ai_init(raid_struct *raid, player_struct *player)
 {
 	if (raid->m_config->DengeonRank != DUNGEON_TYPE_BATTLE)
 	{
-		ZhenyingBattle *battel = ZhenyingBattle::CreatePrivateBattle(*player, raid);
-		assert(battel != NULL);
+		ZhenyingBattle::CreatePrivateBattle(*player, raid);
+		//ZhenyingBattle *battel = 
+		//assert(battel != NULL);
 	}
 }
 
@@ -49,7 +50,7 @@ void battle_raid_ai_finished(raid_struct *raid)
 static void battle_raid_ai_failed(raid_struct *raid)
 {
 	raid->clear_monster();
-	if (raid->m_config->DengeonRank != DUNGEON_TYPE_BATTLE)
+	if (raid->m_config->DengeonRank != DUNGEON_TYPE_BATTLE)  //新手阵营战
 	{
 		ZhenyingBattle *battel = ZhenyingBattle::GetPrivateBattle(raid->data->uuid);
 		if (battel == NULL)
@@ -60,10 +61,12 @@ static void battle_raid_ai_failed(raid_struct *raid)
 		battel->ClearRob();
 		ZhenyingBattle::DestroyPrivateBattle(raid->data->uuid);
 	}
-	else
+	else  //普通阵营战
 	{
 		ZhenyingBattle::GetInstance()->Settle(raid, raid->data->ai_data.battle_data.room);
-	}	
+		ZhenyingBattle::GetInstance()->ClearRob();
+	}
+//	raid->stop_player_ai();
 }
 
 static void battle_raid_ai_player_enter(raid_struct *raid, player_struct *player)
@@ -197,16 +200,12 @@ static void battle_raid_ai_player_relive(raid_struct *raid, player_struct *playe
 		BattlefieldTable *table = get_config_by_id(raid->data->ai_data.battle_data.step + 360500001, &zhenying_fight_config);
 		if (table != NULL)
 		{
-			if (player->get_attr(PLAYER_ATTR_ZHENYING) == ZHENYING__TYPE__FULONGGUO)
-			{
-				nty.pos_x = table->BirthPoint1[0];
-				nty.pos_z = table->BirthPoint1[2];
-			}
-			else
-			{
-				nty.pos_x = table->BirthPoint2[0];
-				nty.pos_z = table->BirthPoint2[2];
-			}
+			int x, z;
+			double direct = 0;
+			ZhenyingBattle::GetInstance()->GetRelivePos(table, player->get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
+			nty.pos_x = x;
+			nty.pos_z = z;
+			nty.direct = direct;
 		}
 		LOG_DEBUG("%s: player[%lu] relive to pos[%d][%d][%d]", __FUNCTION__, player->get_uuid(), nty.pos_x, nty.pos_z, nty.direct);
 		EXTERN_DATA extern_data;
@@ -268,8 +267,8 @@ struct raid_ai_interface raid_ai_battle_interface =
 	battle_raid_ai_attack,
 	battle_raid_ai_player_region_changed,
 	NULL, //护送结果
-NULL, //和npc对话
-NULL, //获取配置，主要是万妖谷的配置
-battle_raid_ai_failed, //失败
-NULL	
+	NULL, //和npc对话
+	NULL, //获取配置，主要是万妖谷的配置
+	battle_raid_ai_failed, //失败
+	NULL	
 };

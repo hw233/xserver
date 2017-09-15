@@ -3,9 +3,9 @@
         ['uid'] = 1000001,
         ['ID'] = 152140002,
         ['ResType'] = "Npc",
-        ['PointPosX'] = 118.6749,
+        ['PointPosX'] = 125.6,
         ['PointPosY'] = 51.22429,
-        ['PointPosZ'] = 214.9188,
+        ['PointPosZ'] = 204,
         ['Yaw'] = 0,
         ['Level'] = 1,
         ['TargetInfoList'] = {
@@ -27,9 +27,9 @@
         ['uid'] = 1000003,
         ['ID'] = 152140003,
         ['ResType'] = "Npc",
-        ['PointPosX'] = 129.7412,
+        ['PointPosX'] = 127.62,
         ['PointPosY'] = 50.6501,
-        ['PointPosZ'] = 52.24983,
+        ['PointPosZ'] = 59.03,
         ['Yaw'] = 0,
         ['Level'] = 1,
         ['TargetInfoList'] = {

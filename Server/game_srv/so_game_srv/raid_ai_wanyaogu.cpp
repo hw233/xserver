@@ -1,4 +1,5 @@
 #include <math.h>
+#include "cast_skill.pb-c.h"
 #include "so_game_srv/buff_manager.h"
 #include <stdlib.h>
 #include "game_event.h"
@@ -599,6 +600,11 @@ static void wanyaogu_raid_ai_monster_region_changed(raid_struct *raid, monster_s
 		else if (data->region_config[i]->Parameter1[0] == old_id)
 		{
 			monster->delete_one_buff(data->region_config[i]->Parameter1[1]);
+			AddBuffNotify notify;
+			add_buff_notify__init(&notify);
+			notify.buff_id = data->region_config[i]->Parameter1[1];
+			notify.playerid = monster->get_uuid();
+			monster->broadcast_to_sight(MSG_ID_DEL_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, false);
 			return;
 		}
 	}	

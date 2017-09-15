@@ -14,6 +14,7 @@
 #include "role.pb-c.h"
 #include "relive.pb-c.h"
 #include "zhenying.pb-c.h"
+#include "zhenying_battle.h"
 #include "guild_wait_raid_manager.h"
 #include "guild_battle_manager.h"
 #include <math.h>
@@ -234,13 +235,13 @@ void raid_struct::stop_player_ai()
 {
 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
 	{
-		if (m_player[i] && m_player[i]->data)
+		if (m_player[i] && m_player[i]->ai_data)
 		{
-			m_player[i]->data->stop_ai = true;
+			m_player[i]->ai_data->stop_ai = true;
 		}
-		if (m_player2[i] && m_player2[i]->data)
+		if (m_player2[i] && m_player2[i]->ai_data)
 		{
-			m_player2[i]->data->stop_ai = true;
+			m_player2[i]->ai_data->stop_ai = true;
 		}
 	}
 }
@@ -249,13 +250,13 @@ void raid_struct::start_player_ai()
 //	return;
 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
 	{
-		if (m_player[i] && m_player[i]->data)
+		if (m_player[i] && m_player[i]->ai_data)
 		{
-			m_player[i]->data->stop_ai = false;
+			m_player[i]->ai_data->stop_ai = false;
 		}
-		if (m_player2[i] && m_player2[i]->data)
+		if (m_player2[i] && m_player2[i]->ai_data)
 		{
-			m_player2[i]->data->stop_ai = false;
+			m_player2[i]->ai_data->stop_ai = false;
 		}
 	}
 }
@@ -338,30 +339,60 @@ void raid_struct::team_destoryed(Team *team)
 
 void raid_struct::clear()
 {
+	if (m_config->DengeonRank == DUNGEON_TYPE_BATTLE)
+	{
+		ZhenyingBattle::GetInstance()->ClearRob(data->ai_data.battle_data.room);
+	}
+	else if (m_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW)
+	{
+		ZhenyingBattle *battel = ZhenyingBattle::GetPrivateBattle(data->uuid);
+		if (battel != NULL)
+		{
+			battel->ClearRob(data->ai_data.battle_data.room);
+		}
+	}
+
+	
 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
 	{
 		if (m_player[i] && m_player[i]->data && get_entity_type(m_player[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
+		{
 			player_manager::delete_player(m_player[i]);
+			m_player[i] = NULL;
+		}
 		if (m_player2[i] && m_player2[i]->data && get_entity_type(m_player2[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
+		{
 			player_manager::delete_player(m_player2[i]);
+			m_player2[i] = NULL;			
+		}
 		if (m_player3[i] && m_player3[i]->data && get_entity_type(m_player3[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
+		{
 			player_manager::delete_player(m_player3[i]);
+			m_player3[i] = NULL;			
+		}
 		if (m_player4[i] && m_player4[i]->data && get_entity_type(m_player4[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
-			player_manager::delete_player(m_player4[i]);		
+		{
+			player_manager::delete_player(m_player4[i]);
+			m_player4[i] = NULL;			
+		}
 	}
 
 	scene_struct::clear();
 	
 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
 	{
-		if (m_player[i] && m_player[i]->is_avaliable())
-			m_player[i]->set_out_raid_pos_and_clear_scene();
-		if (m_player2[i] && m_player2[i]->is_avaliable())
-			m_player2[i]->set_out_raid_pos_and_clear_scene();
-		if (m_player3[i] && m_player3[i]->is_avaliable())
-			m_player3[i]->set_out_raid_pos_and_clear_scene();
-		if (m_player4[i] && m_player4[i]->is_avaliable())
-			m_player4[i]->set_out_raid_pos_and_clear_scene();				
+		assert(m_player[i] == NULL);
+		assert(m_player2[i] == NULL);
+		assert(m_player3[i] == NULL);
+		assert(m_player4[i] == NULL);
+		// if (m_player[i] && m_player[i]->is_avaliable())
+		// 	m_player[i]->set_out_raid_pos_and_clear_scene();
+		// if (m_player2[i] && m_player2[i]->is_avaliable())
+		// 	m_player2[i]->set_out_raid_pos_and_clear_scene();
+		// if (m_player3[i] && m_player3[i]->is_avaliable())
+		// 	m_player3[i]->set_out_raid_pos_and_clear_scene();
+		// if (m_player4[i] && m_player4[i]->is_avaliable())
+		// 	m_player4[i]->set_out_raid_pos_and_clear_scene();				
 	}
 	if (m_raid_team)
 	{
@@ -676,6 +707,8 @@ int raid_struct::set_player_info(player_struct *player, struct raid_player_info 
 
 int raid_struct::set_m_player_and_player_info(player_struct *player, int index)
 {
+	if (index < 0)
+		return 0;
 	player_struct **t;
 	switch (index / MAX_TEAM_MEM)
 	{
@@ -762,7 +795,7 @@ int raid_struct::player_enter_raid_impl(player_struct *player, int index, double
 	return (0);
 }
 
-int raid_struct::player_enter_raid(player_struct *player, double pos_x, double pos_z)
+int raid_struct::player_enter_raid(player_struct *player, double pos_x, double pos_z, double direct)
 {
 	LOG_DEBUG("%s: raid[%u][%lu], player[%lu]", __FUNCTION__, data->ID, data->uuid, player->get_uuid());
 	int index = get_free_player_pos();
@@ -771,7 +804,7 @@ int raid_struct::player_enter_raid(player_struct *player, double pos_x, double p
 		LOG_ERR("%s: player[%lu] can not add raid[%u %lu]", __FUNCTION__, player->get_uuid(), data->ID, data->uuid);
 		return (-1);
 	}
-	return player_enter_raid_impl(player, index, pos_x, pos_z);
+	return player_enter_raid_impl(player, index, pos_x, pos_z, direct);
 }
 
 // int raid_struct::add_player_to_scene(player_struct *player)
@@ -832,7 +865,7 @@ int raid_struct::add_monster_to_scene(monster_struct *monster, uint32_t effectid
 
 int raid_struct::clear_m_player_and_player_info(player_struct *player, bool clear_player_info)
 {
-	if (m_config->DengeonRank == DUNGEON_TYPE_BATTLE || m_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW
+	if (m_config->DengeonRank == DUNGEON_TYPE_BATTLE //|| m_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW
 		|| m_config->DengeonRank == DUNGEON_TYPE_ZHENYING)
 	{
 		return 0; //阵营战
@@ -1675,7 +1708,9 @@ void raid_struct::on_monster_attack(monster_struct *monster, player_struct *play
 void raid_struct::on_player_dead(player_struct *player, unit_struct *killer)
 {
 	LOG_DEBUG("%s: raid[%u][%lu], player[%lu]", __FUNCTION__, data->ID, data->uuid, player->get_uuid());
-	if (m_config->DengeonRank != DUNGEON_TYPE_ZHENYING && m_config->DengeonRank != DUNGEON_TYPE_BATTLE)
+	if (m_config->DengeonRank != DUNGEON_TYPE_ZHENYING
+		&& m_config->DengeonRank != DUNGEON_TYPE_BATTLE
+		&& m_config->DengeonRank != DUNGEON_TYPE_BATTLE_NEW)
 	{
 		++data->dead_count;
 
