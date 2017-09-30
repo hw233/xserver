@@ -7,6 +7,7 @@
 #include "time_helper.h"
 #include "unit.h"
 #include "buff.h"
+#include "raid.h"
 #include "check_range.h"
 #include "cached_hit_effect.h"
 #include "count_skill_damage.h"
@@ -30,8 +31,18 @@ static void do_type22_ai_wait(monster_struct *monster)
 {
 	monster->ai_state = AI_PATROL_STATE;
 	float pos_x, pos_z;
-	if(!get_22_ai_next_pos(monster, &pos_x, &pos_z))
+	if (!get_22_ai_next_pos(monster, &pos_x, &pos_z))
+	{
+		if (monster->scene->get_scene_type() == SCENE_TYPE_RAID)
+		{
+			raid_struct *raid = (raid_struct *)monster->scene;
+			if (raid->ai != NULL && raid->ai->raid_on_escort_end_piont != NULL)
+			{
+				raid->ai->raid_on_escort_end_piont(raid, monster);
+			}
+		}
 		return;
+	}	
 	monster->reset_pos();
 	monster->data->move_path.pos[1].pos_x = pos_x;
 	monster->data->move_path.pos[1].pos_z = pos_z;

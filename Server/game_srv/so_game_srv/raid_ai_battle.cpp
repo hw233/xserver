@@ -125,21 +125,19 @@ static void battle_raid_ai_player_dead(raid_struct *raid, player_struct *player,
 	{
 		return;
 	}
-	if (killer->get_unit_type() == UNIT_TYPE_PLAYER)
+
+	if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE)
 	{
-		if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE)
+		ZhenyingBattle::GetInstance()->KillEnemy(killer, *player);
+	}
+	else
+	{
+		ZhenyingBattle *battel = ZhenyingBattle::GetPrivateBattle(raid->data->uuid);
+		if (battel == NULL)
 		{
-			ZhenyingBattle::GetInstance()->KillEnemy(*(player_struct *)killer, *player);
+			return;
 		}
-		else
-		{
-			ZhenyingBattle *battel = ZhenyingBattle::GetPrivateBattle(raid->data->uuid);
-			if (battel == NULL)
-			{
-				return;
-			}
-			battel->KillEnemy(*(player_struct *)killer, *player);
-		}
+		battel->KillEnemy(killer, *player);
 	}
 }
 static void battle_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)

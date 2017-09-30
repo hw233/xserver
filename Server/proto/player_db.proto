@@ -369,6 +369,20 @@ message DBTitle
 	required uint32 active_time = 5;
 }
 
+message DBStrongGoal
+{
+	required uint32 id = 1; //目标ID
+	required uint32 progress = 2; //当前进度
+	required uint32 state = 3; //领奖状态
+}
+
+message DBStrongChapter
+{
+	required uint32 id = 1; //章节ID
+	required uint32 progress = 2; //当前进度
+	required uint32 state = 3; //领奖状态
+}
+
 message PlayerDBInfo
 {
 	required uint64 exp = 1; //经验
@@ -456,6 +470,14 @@ message PlayerDBInfo
 	required bool partner_recruit_first = 83; //首次招募标志
 	repeated DBTitle title_list = 84; //称号列表
 	repeated DBHreoChallengeInfo hero_challenge_all_info = 85; //英雄挑战总信息
+	required uint32 mijing_task_id = 86; //秘境试炼任务当前身上已接未提交任务id
+	required uint32 mijing_time_statu = 87; //秘境试炼任务时间标志0:今日接 1:昨日接的
+	required uint32 mijing_reward_beilv = 88; //秘境试炼任务当前奖励倍率
+	required uint32 mijing_huan_num = 89; //秘境试炼任务今日已完成总环数
+	required uint32 mijing_lun_num = 90;  //秘境试炼任务今日已完成总轮数
+	required uint32 fishing_bait_id = 91;  //钓鱼鱼饵ID
+	repeated DBStrongGoal strong_goals = 92; //变强目标
+	repeated DBStrongChapter strong_chapters = 93; //变强章节
 }
 
 message DBAutoAddHp
@@ -522,3 +544,4 @@ message DBHreoChallengeItemInfo
 	required uint32 item_id = 1;    //物品id
 	required uint32 item_num = 2;	//物品数量
 }
+

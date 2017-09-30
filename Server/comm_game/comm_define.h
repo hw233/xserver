@@ -17,7 +17,7 @@
 #define MAX_WEAPON_COLOR_NUM           100 //最大颜色数
 #define MAX_FASHION_NUM           100 //最大时装数
 #define MAX_HORSE_NUM           100 //最大坐骑数
-#define DEFAULT_HORSE           180000001 //
+//#define DEFAULT_HORSE           180000001 //
 #define MAX_BATTLE_LINE_NUM     (8) //阵营战分线
 //最大副本数目
 #define MAX_RAID_NUM            1000 
@@ -64,7 +64,7 @@
 #define MAX_PARTNER_NUM   150
 #define MAX_PARTNER_FORMATION_NUM   4
 #define MAX_PARTNER_SKILL_NUM   6
-#define MAX_PARTNER_BATTLE_NUM  4
+#define MAX_PARTNER_BATTLE_NUM  4  //出战伙伴
 #define MAX_PARTNER_BOND_NUM  100 //伙伴羁绊数
 
 #define MAX_ESCORT_NUM   2
@@ -83,6 +83,9 @@
 #define MAX_HERO_CHALLENGE_MONSTER_NUM 100
 //扫荡奖励物品最大数量
 #define MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM 20
+
+#define MAX_STRONG_GOAL_NUM 200
+#define MAX_STRONG_CHAPTER_NUM 10
 
 
 //玩家状态
@@ -233,6 +236,10 @@ enum TaskConditionType
 	TCT_HORSE_ADD_EXP = 54, //坐骑修灵
 	TCT_QUESTION_JOIN = 55, //参与答题
 	TCT_TRUCK_NUM = 56, //押镖次数
+	TCT_BOAT = 57, //坐船
+	TCT_FISHING = 58, //钓鱼
+	TCT_PUZZLE = 59, //拼图
+	TCT_MIJING_XIULIANG = 60, //秘境修炼
 };
 
 enum TaskBasicCondition
@@ -243,6 +250,8 @@ enum TaskBasicCondition
 	TBC_EXP = 4, //经验
 	TBC_COIN = 5, //银两
 	TBC_GOLD = 6, //元宝
+	TBC_MAX_LEVEL = 7, //等级以下
+	TBC_ZHENYING = 8, //阵营
 };
 
 enum TaskType

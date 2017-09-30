@@ -62,6 +62,7 @@
 	PassiveSkill 6 : *integer
 	MapDisplay 7 : integer
 	BaseID 8 : integer
+	Recovery 9 : integer
 	HateDao 10 : integer
 	HateGong 11 : integer
 	HateBi 12 : integer
@@ -992,6 +993,7 @@
 	BoxOpenNum 16 : integer
 	SkillIntegral 17 : integer
 	FlagIntegral 18 : integer
+	Level 19 : integer
 }
 
 .LifeItemTable {
@@ -1428,3 +1430,50 @@
 	DungeonID 5 : integer
 	Times 6 : integer
 }
+
+.UndergroundTask{
+	ID 1 : integer 
+	LevelSection 2 : *integer 
+	TaskID 3 : integer 
+	CoinType 4 : *integer 
+	CoinValue 5 : *integer 
+	StarProbability 6 : *integer 
+	Rate 7 : *integer 
+	DropID 8 : integer
+}
+
+.CampDefenseTable{
+	ID 1 : integer 
+	TruckID 2 : integer 
+	TruckRouteX 3 : *integer 
+	TruckRouteY 4 : *integer 
+	TruckPlan 5 : integer 
+	ResurrectionTime 6 : integer 
+	TruckDrop 7 : integer 
+	CollectionIntegral 8 : *integer 
+	MineralIntegral 9 : integer 
+	SupportMine 10 : *integer
+	TaskID 11 : integer
+}
+
+.FishingTable {
+	ID 1 : integer
+	Stosh 2 : integer
+	TimeMin 3 : integer
+	TimeMax 4 : integer
+	Response 5 : integer
+	Drop 6 : integer
+}
+
+.GrowupTable {
+	ID 1 : integer
+	Type 2 : integer
+	ConditionType 3 : integer
+	ConditionTarget1 4 : integer
+	ConditionTarget2 5 : integer
+	ConditionNum 6 : integer
+	RewardType 7 : *integer
+	RewardValue 8 : *integer
+	Reward 9 : integer
+}
+

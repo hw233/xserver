@@ -134,6 +134,11 @@ std::map<uint64_t, struct WorldBossTable*> world_boss_config; //世界boss表(�
 std::map<uint64_t, struct WorldBossTable*> monster_to_world_boss_config; //世界boss表(以怪物id为索引)
 std::map<uint64_t, struct ChallengeTable*> hero_challenge_config; //英雄挑战
 std::map<uint64_t, struct ChallengeTable*> raidid_to_hero_challenge_config; //英雄挑战(以副本id为索引)
+std::map<uint64_t, struct UndergroundTask*> mijing_xiulian_config; //秘境修炼任务信息
+std::map<uint64_t, struct UndergroundTask*> taskid_to_mijing_xiulian_config; //秘境修炼任务信息(以任务id为索引)
+std::map<uint64_t, struct CampDefenseTable*> zhenying_daily_config; //日常阵营战
+std::map<uint64_t, struct FishingTable*> fishing_config; //钓鱼表
+std::map<uint64_t, struct GrowupTable*> strong_config; //变强表
 
 /////////////////////
 uint32_t sg_bag_unlock_base_price;
@@ -331,7 +336,14 @@ uint32_t sg_doufachang_raid_id;
 uint32_t sg_doufachang_raid_win_reward[2];
 uint32_t sg_doufachang_raid_lose_reward[2];
 
+uint32_t DEFAULT_HORSE;
+
 std::map<uint32_t, GangsSkillTable*> skill_config_map;
 
 double sg_exp_turn_zhenqi_percent;
+
+SceneCreateMonsterTable sg_zhenying_truck[2];
+
+std::map<uint32_t, uint32_t> sg_strong_chapter_map;
+std::map<uint64_t, GrowupTable*> sg_strong_chapter_reward;
 

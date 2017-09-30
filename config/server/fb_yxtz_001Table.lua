@@ -1,13 +1,13 @@
 ﻿local fb_yxtz_001 = {
     [1000001] = {
         ['uid'] = 1000001,
-        ['ID'] = 151200001,
+        ['ID'] = 151005085,
         ['ResType'] = "Monster",
-        ['PointPosX'] = -0.5912342,
-        ['PointPosY'] = -1.3,
-        ['PointPosZ'] = 114.6351,
-        ['Yaw'] = 279.28,
-        ['Level'] = 1,
+        ['PointPosX'] = 68.52143,
+        ['PointPosY'] = 59.5217,
+        ['PointPosZ'] = 44.55162,
+        ['Yaw'] = 0,
+        ['Level'] = 15,
         ['TargetInfoList'] = {
         }
     },

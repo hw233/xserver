@@ -95,5 +95,89 @@
         ['TargetInfoList'] = {
         }
     },
+    [1000009] = {
+        ['uid'] = 1000009,
+        ['ID'] = 151007001,
+        ['ResType'] = "Monster",
+        ['PointPosX'] = 122.2131,
+        ['PointPosY'] = 29.96311,
+        ['PointPosZ'] = 15.72109,
+        ['Yaw'] = 0,
+        ['Level'] = 20,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000010] = {
+        ['uid'] = 1000010,
+        ['ID'] = 151007001,
+        ['ResType'] = "Monster",
+        ['PointPosX'] = 121.7492,
+        ['PointPosY'] = 29.96311,
+        ['PointPosZ'] = 6.258942,
+        ['Yaw'] = 0,
+        ['Level'] = 20,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000011] = {
+        ['uid'] = 1000011,
+        ['ID'] = 151007001,
+        ['ResType'] = "Monster",
+        ['PointPosX'] = 100.3646,
+        ['PointPosY'] = 29.96311,
+        ['PointPosZ'] = 4.741842,
+        ['Yaw'] = 0,
+        ['Level'] = 20,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000012] = {
+        ['uid'] = 1000012,
+        ['ID'] = 151007001,
+        ['ResType'] = "Monster",
+        ['PointPosX'] = 98.50775,
+        ['PointPosY'] = 29.96311,
+        ['PointPosZ'] = 15.81506,
+        ['Yaw'] = 0,
+        ['Level'] = 20,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000013] = {
+        ['uid'] = 1000013,
+        ['ID'] = 151007001,
+        ['ResType'] = "Monster",
+        ['PointPosX'] = 107.6684,
+        ['PointPosY'] = 28.85984,
+        ['PointPosZ'] = 9.361135,
+        ['Yaw'] = 0,
+        ['Level'] = 20,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000014] = {
+        ['uid'] = 1000014,
+        ['ID'] = 151007001,
+        ['ResType'] = "Monster",
+        ['PointPosX'] = 110.9476,
+        ['PointPosY'] = 29.95984,
+        ['PointPosZ'] = 18.89911,
+        ['Yaw'] = 0,
+        ['Level'] = 20,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000015] = {
+        ['uid'] = 1000015,
+        ['ID'] = 151007001,
+        ['ResType'] = "Monster",
+        ['PointPosX'] = 119.7455,
+        ['PointPosY'] = 29.95984,
+        ['PointPosZ'] = 20.66752,
+        ['Yaw'] = 0,
+        ['Level'] = 20,
+        ['TargetInfoList'] = {
+        }
+    },
 }
 return fb_cb_003

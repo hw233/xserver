@@ -102,6 +102,12 @@ sight_space_struct *sight_space_manager::create_sight_space(player_struct *playe
 {
 	assert(player->sight_space == NULL);
 
+	if (!player->scene)
+	{
+		LOG_ERR("%s: player[%lu] do not have scene", __FUNCTION__, player->data->player_id);
+		return NULL;
+	}
+
 	struct sight_space_data *data = NULL;
 	data = (sight_space_data *)comm_pool_alloc(&sight_space_manager_sight_space_data_pool);
 	if (!data)

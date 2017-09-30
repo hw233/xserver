@@ -69,7 +69,7 @@ static void ai_tick_13(monster_struct *monster)
 	normal_ai_tick(monster);
 }
 
-static int next_leiminggu_percent[] = {100, 90, 82, 74, 66, 58, 50, 42, 34, 26, 18, 10, 2};
+const static int next_leiminggu_percent[] = {100, 90, 82, 74, 66, 58, 50, 42, 34, 26, 18, 10, 2};
 static int count_next_leiminggu_hp_percent(int cur_percent)
 {
 	for (size_t i = 0; i < ARRAY_SIZE(next_leiminggu_percent); ++i)

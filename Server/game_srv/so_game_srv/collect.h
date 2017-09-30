@@ -58,8 +58,8 @@ public:
 	uint64_t m_liveTime;
 	int32_t m_state;
 	uint32_t m_dropId; //
-	int32_t m_minType;
-	uint32_t m_ownerLv;
+	int32_t m_minType; //根据类型掉落
+	uint32_t m_ownerLv; //根据所有者的等级掉落
 	uint64_t m_active; //镖车活动表id 
 	float m_y;
 	float m_yaw;  //朝向

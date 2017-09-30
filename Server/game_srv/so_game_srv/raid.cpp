@@ -350,6 +350,11 @@ void raid_struct::clear()
 		{
 			battel->ClearRob(data->ai_data.battle_data.room);
 		}
+		else
+		{
+			LOG_ERR("%s: raid[%p][%lu] can not find battle", __FUNCTION__, this, data->uuid);
+		}
+		ZhenyingBattle::DestroyPrivateBattle(data->uuid);
 	}
 
 	

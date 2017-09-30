@@ -138,6 +138,7 @@ union raid_ai_data
 		struct assist_data assist_data[MAX_TEAM_MEM * 2][MAX_TEAM_MEM]; //伤害记录，用来计算助攻
 		struct pvp_player_praise_record praise_index[MAX_TEAM_MEM * 2];  //对应的玩家下标
 		bool pvp_raid_ready[MAX_TEAM_MEM * 2];  //是否已经进入游戏了
+		uint32_t average_lv;   //平均等级，用来做怪物等级
 	} pvp_data;
 
 	struct
@@ -174,7 +175,13 @@ union raid_ai_data
 	struct
 	{
 //		uint16_t cur_player_num;  //当前人数
-		int m_line;   //第几条线		
+		int m_line;   //第几条线	
+		uint32_t cur;
+		uint64_t truck; //矿车
+		uint64_t camp; //攻守表ID
+		uint64_t lv; //阵营表ID
+		uint64_t time_rest;
+		int progress;
 	} zhenying_data;
 	struct
 	{
@@ -244,6 +251,7 @@ typedef void(*raid_ai_player_region_changed)(raid_struct *, player_struct *, uin
 typedef void(*raid_ai_monster_region_changed)(raid_struct *, monster_struct *, uint32_t, uint32_t);
 typedef void(*raid_ai_escort_stop)(raid_struct *, player_struct *, uint32_t, bool);
 typedef void(*raid_ai_npc_talk)(raid_struct *, player_struct *, uint32_t);
+typedef void(*raid_ai_escort_end_piont)(raid_struct *, monster_struct *);
 typedef struct DungeonTable* (*raid_ai_get_config)(raid_struct *);
 
 struct raid_ai_interface
@@ -265,6 +273,7 @@ struct raid_ai_interface
 	raid_ai_get_config raid_get_config; //获取配置，主要是万妖谷的配置
 	raid_ai_failed raid_on_failed; //失败
 	raid_ai_monster_region_changed raid_on_monster_region_changed; //区域变化	
+	raid_ai_escort_end_piont raid_on_escort_end_piont; //矿车到达终点
 };
 
 class raid_struct : public scene_struct

@@ -97,6 +97,92 @@ unsigned int zhenying_raid_manager::get_zhenying_raid_pool_max_num()
 	return zhenying_raid_manager_raid_data_pool.num;
 }
 
+uint64_t GetOpenZhenyingDaily()
+{
+	ParameterTable *table = get_config_by_id(161000339, &parameter_config);
+	if (table == NULL)
+	{
+		return 0;
+	}
+	for (uint64_t i = 0; i < table->n_parameter1; ++i)
+	{
+		EventCalendarTable *tableCon = get_config_by_id(table->parameter1[0], &activity_config);
+		if (tableCon == NULL)
+		{
+			return 0;
+		}
+		ControlTable * tableEv = get_config_by_id(tableCon->RelationID, &all_control_config);
+			if (tableEv == NULL)
+			{
+				return 0;
+			}
+		bool open = false;
+		for (uint32_t i = 0; i < tableEv->n_OpenDay; ++i)
+		{
+			if (time_helper::getWeek() == tableEv->OpenDay[i])
+			{
+				open = true;
+				break;
+			}
+		}
+		if (!open)
+		{
+			return 0;
+		}
+		open = false;
+		struct tm tm;
+		time_t tmp = time_helper::get_cached_time() / 1000;
+		localtime_r(&tmp, &tm);
+		for (uint32_t i = 0; i < tableEv->n_OpenTime; ++i)
+		{
+			tm.tm_hour = tableEv->OpenTime[i] / 100;
+			tm.tm_min = tableEv->OpenTime[i] % 100;
+			tm.tm_sec = 0;
+			uint64_t st = mktime(&tm);
+			tm.tm_hour = tableEv->CloseTime[i] / 100;
+			tm.tm_min = tableEv->CloseTime[i] % 100;
+			tm.tm_sec = 59;
+			uint64_t end = mktime(&tm);
+			if (time_helper::get_cached_time() / 1000 >= st && time_helper::get_cached_time() / 1000 <= end)
+			{
+				open = true;
+				break;
+			}
+		}
+		if (!open)
+		{
+			return 0;
+		}
+		if (tableCon->ActivityValue == 4)
+		{
+			return 360600001;
+		} 
+		else
+		{
+			return 360600002;
+		}
+	}
+	return 360600001;
+}
+
+void zhenying_raid_manager::GetRelivePos(FactionBattleTable *table, int zhenying, int *x, int *z, double *direct)
+{
+	if (zhenying == 1)
+	{
+		*x = table->BirthPoint1[0];
+		*z = table->BirthPoint1[2];
+		*direct = (int64_t)(table->BirthPoint1[3]);
+	}
+	else
+	{
+		*x = table->BirthPoint2[0];
+		*z = table->BirthPoint2[2];
+		*direct = (int64_t)(table->BirthPoint2[3]);
+	}
+	*x += 2 - random() % 5;
+	*z += 2 - random() % 5;
+}
+
 zhenying_raid_struct *zhenying_raid_manager::add_player_to_zhenying_raid(player_struct *player)
 {
 	FactionBattleTable *table = get_zhenying_battle_table(player->get_attr(PLAYER_ATTR_LEVEL));
@@ -107,6 +193,8 @@ zhenying_raid_struct *zhenying_raid_manager::add_player_to_zhenying_raid(player_
 	zhenying_raid_struct *ret = get_avaliable_zhenying_raid(table->Map);
 	if (ret)
 	{
+		ret->data->ai_data.zhenying_data.camp = GetOpenZhenyingDaily();
+		ret->data->ai_data.zhenying_data.lv = player->get_attr(PLAYER_ATTR_LEVEL);
 		if (ret->add_player_to_zhenying_raid(player) != 0)
 			return NULL;
 	}
@@ -201,6 +289,9 @@ void zhenying_raid_manager::create_all_line()
 		{
 			zhenying_raid_struct *raid = zhenying_raid_manager::create_zhenying_raid((*it)->Map);
 			raid->set_line_num(i);
+			raid->data->ai_data.zhenying_data.progress = 4;
+			raid->data->ai_data.zhenying_data.camp = GetOpenZhenyingDaily();
+			raid->data->ai_data.zhenying_data.lv = (*it)->LowerLimitLv;
 			//LOG_DEBUG("%s: %s", __FUNCTION__, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		}
 	}

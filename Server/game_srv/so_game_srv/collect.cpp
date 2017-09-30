@@ -14,8 +14,7 @@
 
 //uint32_t Collect::collect_manager_s_id = 1;
 //Collect::COLLECT_MAP Collect::collect_manager_s_collectContain;
-
-static int g_collect_num;
+extern int collect_g_collect_num;
 
 Collect::Collect()
 {
@@ -34,13 +33,13 @@ Collect::Collect()
 	m_active = 0;
 	m_raid_uuid = 0;
 	m_dropId = 0;
-	++g_collect_num;
+	++collect_g_collect_num;
 }
 
 
 Collect::~Collect()
 {
-	--g_collect_num;
+	--collect_g_collect_num;
 }
 
 void Collect::BroadcastToSight(uint16_t msg_id, void *msg_data, pack_func func)
@@ -284,9 +283,9 @@ void Collect::AddAreaPlayerToSight(area_struct *area, uint16_t *add_player_id_in
 uint32_t Collect::get_total_collect_num()
 {
 	uint32_t ret = collect_manager_s_collectContain.size();
-	if ((int)ret != g_collect_num)
+	if ((int)ret != collect_g_collect_num)
 	{
-		LOG_ERR("%s: container_size[%u], collect_num[%d], maybe bug", __FUNCTION__, ret, g_collect_num);
+		LOG_ERR("%s: container_size[%u], collect_num[%d], maybe bug", __FUNCTION__, ret, collect_g_collect_num);
 	}
 	return ret;
 }
@@ -321,7 +320,7 @@ int Collect::BegingGather(player_struct *player, uint32_t step)
 	float lz = player->get_pos()->pos_z - this->m_pos.pos_z;
 	if (lx * lx + lz * lz > 2.0 * (3.0 + it->second->CollectionSize)*(3.0 + it->second->CollectionSize))
 	{
-		LOG_ERR("%s: x=%f,z=%f,ox=%f,oz=%f", __FUNCTION__, player->get_pos()->pos_x, player->get_pos()->pos_z, this->m_pos.pos_x, this->m_pos.pos_z);
+		LOG_ERR("%s: %lu x=%f,z=%f,ox=%f,oz=%f", __FUNCTION__, player->get_uuid(), player->get_pos()->pos_x, player->get_pos()->pos_z, this->m_pos.pos_x, this->m_pos.pos_z);
 		return 7;
 	}
 
@@ -445,23 +444,35 @@ int Collect::GatherComplete(player_struct *player)
 			BroadcastToSight(MSG_ID_COLLECT_COMMPLETE_NOTIFY, &send, (pack_func)notify_collect__pack);
 		}
 
-		if (m_ownerLv != 0)
+		if (m_minType == 2)
 		{
-			CashTruckDrop(*player);
-		}
-		else
-		{
-			std::map<uint32_t, uint32_t> item_list;
-			get_drop_item(m_dropId, item_list);
-			if (item_list.empty())
+			CampDefenseTable *tableDaily = get_config_by_id(360600001, &zhenying_daily_config);
+			if (tableDaily != NULL)
 			{
-				CommAnswer resp;
-				comm_answer__init(&resp);
-				resp.result = 190500406;
-				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_COLLECT_BEGIN_ANSWER, comm_answer__pack, resp);
+				player->add_task_progress(TCT_ZHENYING_SCORE, 0, tableDaily->CollectionIntegral[0] + rand() % (tableDaily->CollectionIntegral[1] - tableDaily->CollectionIntegral[0]));
 			}
-			player->give_drop_item(m_dropId, MAGIC_TYPE_GATHER, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
 		}
+		else 
+		{
+			if (m_ownerLv != 0)
+			{
+				CashTruckDrop(*player);
+			}
+			else
+			{
+				std::map<uint32_t, uint32_t> item_list;
+				get_drop_item(m_dropId, item_list);
+				if (item_list.empty())
+				{
+					CommAnswer resp;
+					comm_answer__init(&resp);
+					resp.result = 190500406;
+					fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_COLLECT_BEGIN_ANSWER, comm_answer__pack, resp);
+				}
+				player->give_drop_item(m_dropId, MAGIC_TYPE_GATHER, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
+			}
+		}
+		
 		if (m_minType == 1)
 		{
 			fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);

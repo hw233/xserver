@@ -120,3 +120,9 @@ struct minheap partner_manager_minheap;
 const char g_tmp_name[MAX_PLAYER_NAME_LEN + 1] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 UNIT_FIGHT_TYPE pk_type_to_fight_type[MAX_PK_TYPE][MAX_PK_TYPE];
 
+ZhenyingBattle *g_battle_ins;
+PRIVATE_BATTLE_T g_battle_private;
+
+int collect_g_collect_num;
+
+

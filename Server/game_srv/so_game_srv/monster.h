@@ -234,15 +234,17 @@ public:
 
 	inline float get_born_pos_x()
 	{
-		assert(create_config);
+//		assert(create_config);
 //		assert(ai_type != AI_TYPE_CIRCLE);
-		return create_config->PointPosX;
+//		return create_config->PointPosX;
+		return born_pos.pos_x;
 	}
 	inline float get_born_pos_z()
 	{
-		assert(create_config);
+//		assert(create_config);
 //		assert(ai_type != AI_TYPE_CIRCLE);
-		return create_config->PointPosZ;
+//		return create_config->PointPosZ;
+		return born_pos.pos_z;		
 	}
 
 	bool on_truck_leave_sight(uint64_t player_id);		
@@ -353,6 +355,7 @@ public:
 			uint16_t last_ai_state;  //之前的ai状态
 		} type26_ai;
 	} ai_data;
+	struct position born_pos; //出生点
 
 	struct MonsterTable *config;
 	struct BaseAITable *ai_config;

@@ -14,6 +14,7 @@
 #include "conn_node.h"
 #include "chat.pb-c.h"
 #include "team.h"
+#include "../proto/rank.pb-c.h"
 
 
 monster_manager::monster_manager()
@@ -126,7 +127,7 @@ void monster_manager::monster_ontick_settimer(monster_struct *p)
 	switch (p->config->HateType)
 	{
 		case MONSTER_HATETYPE_DEFINE_BOSS:
-		case MONSTER_HATETYPE_DEFINE_AIBOSS:			
+		case MONSTER_HATETYPE_DEFINE_AIBOSS:
 			push_heap(&monster_manager_m_boss_minheap, p);			
 			break;
 		default:
@@ -600,6 +601,8 @@ monster_struct *monster_manager::create_call_monster(player_struct *player, Skil
 	if (!monster)
 		return NULL;
 	monster->create_config = NULL;
+	monster->born_pos.pos_x = player->get_pos()->pos_x;
+	monster->born_pos.pos_z = player->get_pos()->pos_z;			
 	monster->data->create_config_index = -1;
 	monster->set_pos(player->get_pos()->pos_x, player->get_pos()->pos_z);
 	if (player->scene->add_monster_to_scene(monster, lv_config->MonsterEff) != 0)
@@ -623,6 +626,8 @@ monster_struct *monster_manager::create_sight_space_monster(sight_space_struct *
 			return NULL;
 
 		monster->create_config = NULL;
+		monster->born_pos.pos_x = pos_x;
+		monster->born_pos.pos_z = pos_z;		
 		monster->data->create_config_index = -1;
 		monster->set_pos(pos_x, pos_z);
 		monster->sight_space = sight_space;
@@ -682,12 +687,18 @@ monster_struct *monster_manager::create_monster_at_pos(scene_struct *scene, uint
 		return NULL;
 	monster->data->create_config_index = 0;
 	monster->create_config = NULL;
+	monster->born_pos.pos_x = pos_x;
+	monster->born_pos.pos_z = pos_z;
 	monster->set_pos(pos_x, pos_z);
 
-	if (scene->add_monster_to_scene(monster, effectid) != 0)
+	if (scene != NULL)
 	{
-		LOG_ERR("%s: uuid[%lu] monster[%lu] scene[%u]", __FUNCTION__, monster->data->player_id, id, scene->m_id);
+		if (scene->add_monster_to_scene(monster, effectid) != 0)
+		{
+			LOG_ERR("%s: uuid[%lu] monster[%lu] scene[%u]", __FUNCTION__, monster->data->player_id, id, scene->m_id);
+		}
 	}
+	
 	return monster;
 }
 
@@ -723,6 +734,8 @@ monster_struct *monster_manager::create_monster_by_config(scene_struct *scene, i
 	monster->data->create_config_index = index;
 	monster->data->born_direct = create_config->Yaw;
 	monster->create_config = create_config;
+	monster->born_pos.pos_x = create_config->PointPosX;
+	monster->born_pos.pos_z = create_config->PointPosZ;	
 	switch (monster->ai_type)
 	{
 		case AI_TYPE_CIRCLE:
@@ -986,6 +999,11 @@ int monster_manager::add_world_boss_monster()
 
 				snprintf(buff, 510, table->NoticeTxt, scen_config->SceneName, ite->second->Name);
 				conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_HORSE_NOTIFY, &send, (pack_func)chat_horse__pack);
+
+				RankWorldBossRefreshNotify refresh_noty;
+				rank_world_boss_refresh_notify__init(&refresh_noty);
+				refresh_noty.bossid = ite->second->ID;;
+				conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_HORSE_NOTIFY, &refresh_noty, (pack_func)rank_world_boss_refresh_notify__pack);
 			}
 		}
 	}

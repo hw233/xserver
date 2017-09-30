@@ -207,7 +207,7 @@ local ControlTable = {
 		['OpenTime'] = {0},
 		['CloseTime'] = {2359},
 		['TimeType'] = 2,
-		['RewardTime'] = 3
+		['RewardTime'] = 0
 		},
 	[330400022] = {
 		['ID'] = 330400022,
@@ -217,7 +217,7 @@ local ControlTable = {
 		['OpenTime'] = {0},
 		['CloseTime'] = {2359},
 		['TimeType'] = 2,
-		['RewardTime'] = 3
+		['RewardTime'] = 0
 		},
 	[330400023] = {
 		['ID'] = 330400023,
@@ -265,26 +265,6 @@ local ControlTable = {
 		['MaxActor'] = 1,
 		['OpenDay'] = {0,1,2,3,4,5,6},
 		['OpenTime'] = {1000},
-		['CloseTime'] = {2359},
-		['TimeType'] = 1,
-		['RewardTime'] = 1
-		},
-	[330400028] = {
-		['ID'] = 330400028,
-		['MinActor'] = 1,
-		['MaxActor'] = 1,
-		['OpenDay'] = {0,1,2,3,4,5,6},
-		['OpenTime'] = {0},
-		['CloseTime'] = {2359},
-		['TimeType'] = 1,
-		['RewardTime'] = 1
-		},
-	[330400029] = {
-		['ID'] = 330400029,
-		['MinActor'] = 1,
-		['MaxActor'] = 1,
-		['OpenDay'] = {0,1,2,3,4,5,6},
-		['OpenTime'] = {0},
 		['CloseTime'] = {2359},
 		['TimeType'] = 1,
 		['RewardTime'] = 1
@@ -347,7 +327,7 @@ local ControlTable = {
 		['OpenTime'] = {0},
 		['CloseTime'] = {2359},
 		['TimeType'] = 1,
-		['RewardTime'] = 3
+		['RewardTime'] = 2
 		},
 	[330400036] = {
 		['ID'] = 330400036,
@@ -357,7 +337,7 @@ local ControlTable = {
 		['OpenTime'] = {0},
 		['CloseTime'] = {2359},
 		['TimeType'] = 1,
-		['RewardTime'] = 3
+		['RewardTime'] = 2
 		},
 	[330400037] = {
 		['ID'] = 330400037,
@@ -387,7 +367,7 @@ local ControlTable = {
 		['OpenTime'] = {0},
 		['CloseTime'] = {2359},
 		['TimeType'] = 1,
-		['RewardTime'] = 0
+		['RewardTime'] = 3
 		},
 	[330400040] = {
 		['ID'] = 330400040,
@@ -404,8 +384,8 @@ local ControlTable = {
 		['MinActor'] = 30,
 		['MaxActor'] = 30,
 		['OpenDay'] = {0,1,2,3,4,5,6},
-		['OpenTime'] = {0},
-		['CloseTime'] = {2359},
+		['OpenTime'] = {2000},
+		['CloseTime'] = {2100},
 		['TimeType'] = 1,
 		['RewardTime'] = 3
 		},
@@ -417,7 +397,7 @@ local ControlTable = {
 		['OpenTime'] = {0},
 		['CloseTime'] = {2359},
 		['TimeType'] = 1,
-		['RewardTime'] = 5
+		['RewardTime'] = 2
 		},
 	[330400043] = {
 		['ID'] = 330400043,
@@ -427,7 +407,7 @@ local ControlTable = {
 		['OpenTime'] = {0},
 		['CloseTime'] = {2359},
 		['TimeType'] = 1,
-		['RewardTime'] = 5
+		['RewardTime'] = 2
 		},
 	[330400044] = {
 		['ID'] = 330400044,
@@ -437,7 +417,67 @@ local ControlTable = {
 		['OpenTime'] = {0},
 		['CloseTime'] = {2359},
 		['TimeType'] = 1,
+		['RewardTime'] = 2
+		},
+	[330400045] = {
+		['ID'] = 330400045,
+		['MinActor'] = 1,
+		['MaxActor'] = 5,
+		['OpenDay'] = {0,1,2,3,4,5,6},
+		['OpenTime'] = {0},
+		['CloseTime'] = {2359},
+		['TimeType'] = 1,
+		['RewardTime'] = 0
+		},
+	[330400046] = {
+		['ID'] = 330400046,
+		['MinActor'] = 1,
+		['MaxActor'] = 5,
+		['OpenDay'] = {0,1,2,3,4,5,6},
+		['OpenTime'] = {0},
+		['CloseTime'] = {2359},
+		['TimeType'] = 1,
+		['RewardTime'] = 0
+		},
+	[330400047] = {
+		['ID'] = 330400047,
+		['MinActor'] = 1,
+		['MaxActor'] = 5,
+		['OpenDay'] = {0,1,2,3,4,5,6},
+		['OpenTime'] = {0},
+		['CloseTime'] = {2359},
+		['TimeType'] = 1,
+		['RewardTime'] = 0
+		},
+	[330400048] = {
+		['ID'] = 330400048,
+		['MinActor'] = 1,
+		['MaxActor'] = 5,
+		['OpenDay'] = {0,1,2,3,4,5,6},
+		['OpenTime'] = {0},
+		['CloseTime'] = {2359},
+		['TimeType'] = 1,
+		['RewardTime'] = 0
+		},
+	[330400049] = {
+		['ID'] = 330400049,
+		['MinActor'] = 1,
+		['MaxActor'] = 1,
+		['OpenDay'] = {0,1,2,3,4,5,6},
+		['OpenTime'] = {0},
+		['CloseTime'] = {2359},
+		['TimeType'] = 1,
 		['RewardTime'] = 5
+		},
+	[330400050] = {
+		['ID'] = 330400050,
+		['MinActor'] = 1,
+		['MaxActor'] = 1,
+		['OpenDay'] = {0,1,2,3,4,5,6},
+		['OpenTime'] = {0},
+		['CloseTime'] = {2359},
+		['TimeType'] = 1,
+		['RewardTime'] = 15
 		}
 	}
 return ControlTable

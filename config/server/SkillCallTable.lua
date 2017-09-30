@@ -143,6 +143,12 @@ local SkillCallTable = {
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
+	[112720034] = {
+		['ID'] = 112720034,
+		['CallScriptPath'] = 172000034,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
 	[112720036] = {
 		['ID'] = 112720036,
 		['CallScriptPath'] = 172000036,
@@ -158,6 +164,18 @@ local SkillCallTable = {
 	[112720041] = {
 		['ID'] = 112720041,
 		['CallScriptPath'] = 172000041,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112720043] = {
+		['ID'] = 112720043,
+		['CallScriptPath'] = 172000043,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112720044] = {
+		['ID'] = 112720044,
+		['CallScriptPath'] = 172000044,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},

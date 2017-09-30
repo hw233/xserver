@@ -25,6 +25,7 @@ struct BiaocheTable;
 struct BootNameTable;
 struct BreakTable;
 struct BuffTable;
+struct CampDefenseTable;
 struct CampTable;
 struct CastSpiritTable;
 struct ChallengeTable;
@@ -45,6 +46,7 @@ struct EscortTask;
 struct EventCalendarTable;
 struct FactionBattleTable;
 struct FetterTable;
+struct FishingTable;
 struct FlySkillTable;
 struct FunctionUnlockTable;
 struct GangsDungeonTable;
@@ -56,6 +58,7 @@ struct GenerateMonster;
 struct GiftTable;
 struct GodYaoAttributeTable;
 struct GradeTable;
+struct GrowupTable;
 struct ItemsConfigTable;
 struct LifeItemTable;
 struct LifeMagicTable;
@@ -112,6 +115,7 @@ struct TitleFunctionTable;
 struct TransferPointTable;
 struct TreasureTable;
 struct TypeLevelTable;
+struct UndergroundTask;
 struct WeaponsEffectTable;
 struct WeekTable;
 struct WorldBossRewardTable;
@@ -574,6 +578,25 @@ struct BuffTable
 	uint64_t  IsControl; //13
 }__attribute__ ((packed));
 
+struct CampDefenseTable
+{
+	uint64_t  ID; //1
+	uint64_t  TruckID; //2
+	uint32_t n_TruckRouteX; //3
+	uint64_t *TruckRouteX; //3
+	uint32_t n_TruckRouteY; //4
+	uint64_t *TruckRouteY; //4
+	uint64_t  TruckPlan; //5
+	uint64_t  ResurrectionTime; //6
+	uint64_t  TruckDrop; //7
+	uint32_t n_CollectionIntegral; //8
+	uint64_t *CollectionIntegral; //8
+	uint64_t  MineralIntegral; //9
+	uint32_t n_SupportMine; //10
+	uint64_t *SupportMine; //10
+	uint64_t  TaskID; //11
+}__attribute__ ((packed));
+
 struct CampTable
 {
 	uint64_t  ID; //1
@@ -902,6 +925,7 @@ struct FactionBattleTable
 	uint64_t  BoxOpenNum; //16
 	uint64_t  SkillIntegral; //17
 	uint64_t  FlagIntegral; //18
+	uint64_t  Level; //19
 }__attribute__ ((packed));
 
 struct FetterTable
@@ -914,6 +938,16 @@ struct FetterTable
 	uint64_t  AttributeNum; //6
 	uint64_t  LevelItem; //7
 	uint64_t  ItemNum; //8
+}__attribute__ ((packed));
+
+struct FishingTable
+{
+	uint64_t  ID; //1
+	uint64_t  Stosh; //2
+	uint64_t  TimeMin; //3
+	uint64_t  TimeMax; //4
+	uint64_t  Response; //5
+	uint64_t  Drop; //6
 }__attribute__ ((packed));
 
 struct FlySkillTable
@@ -1041,6 +1075,21 @@ struct GradeTable
 	uint64_t  ID; //1
 	uint64_t  LevelExp; //2
 	uint64_t  Level; //3
+}__attribute__ ((packed));
+
+struct GrowupTable
+{
+	uint64_t  ID; //1
+	uint64_t  Type; //2
+	uint64_t  ConditionType; //3
+	uint64_t  ConditionTarget1; //4
+	uint64_t  ConditionTarget2; //5
+	uint64_t  ConditionNum; //6
+	uint32_t n_RewardType; //7
+	uint64_t *RewardType; //7
+	uint32_t n_RewardValue; //8
+	uint64_t *RewardValue; //8
+	uint64_t  Reward; //9
 }__attribute__ ((packed));
 
 struct ItemsConfigTable
@@ -1223,6 +1272,7 @@ struct MonsterTable
 	uint64_t *PassiveSkill; //6
 	uint64_t  MapDisplay; //7
 	uint64_t  BaseID; //8
+	uint64_t  Recovery; //9
 	uint64_t  HateDao; //10
 	uint64_t  HateGong; //11
 	uint64_t  HateBi; //12
@@ -1878,6 +1928,23 @@ struct TypeLevelTable
 	uint64_t  OpenProbability; //9
 	uint64_t  SpecialtyPlus; //10
 	uint64_t  ShowTimes; //11
+}__attribute__ ((packed));
+
+struct UndergroundTask
+{
+	uint64_t  ID; //1
+	uint32_t n_LevelSection; //2
+	uint64_t *LevelSection; //2
+	uint64_t  TaskID; //3
+	uint32_t n_CoinType; //4
+	uint64_t *CoinType; //4
+	uint32_t n_CoinValue; //5
+	uint64_t *CoinValue; //5
+	uint32_t n_StarProbability; //6
+	uint64_t *StarProbability; //6
+	uint32_t n_Rate; //7
+	uint64_t *Rate; //7
+	uint64_t  DropID; //8
 }__attribute__ ((packed));
 
 struct WeaponsEffectTable

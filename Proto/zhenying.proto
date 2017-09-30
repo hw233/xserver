@@ -155,3 +155,26 @@ message StartFlag
 	required uint32 cd = 3; //夺旗CD
 	required uint32 region = 4; 
 }
+
+message DailyScore
+{
+	required uint32 point = 1; //积分
+}
+
+message DailyMine
+{
+	required uint32 cur = 1;
+	required uint32 max = 2;
+}
+
+enum DAILY
+{
+	MINE_STATE_RUN = 1; //移动到目的地
+	MINE_STATE_DEAD = 2; //死亡
+	MINE_STATE_COMPLETE = 3;  //到达目的地
+	MINE_STATE_REST = 4; //进度条增长状态 
+}
+message MineState
+{
+	required uint32 state = 1; //DAILY_MINE_STATE
+}

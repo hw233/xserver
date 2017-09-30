@@ -102,9 +102,11 @@ static void doufachang_raid_ai_player_ready(raid_struct *raid, player_struct *pl
 	if (get_entity_type(player->get_uuid()) != ENTITY_TYPE_PLAYER)
 	{
 		if (player->ai_data)
-			player->ai_data->ai_patrol_config = robot_patrol_config[0];				
+			player->ai_data->ai_patrol_config = robot_patrol_config[0];
+		player->set_camp_id(2);
 		return;
 	}
+	player->set_camp_id(1);	
 	player->data->attrData[PLAYER_ATTR_HP] = player->data->attrData[PLAYER_ATTR_MAXHP];
 	player->notify_one_attr_changed(PLAYER_ATTR_HP, player->data->attrData[PLAYER_ATTR_HP]);	
 	raid->DOUFACHANG_DATA.pvp_raid_state = PVP_RAID_STATE_WAIT_START;

@@ -223,3 +223,9 @@ message monster_talk_notify
 	required uint64 uuid = 1;	//唯一ID
 	required uint32 talkid = 2; //NpcTalkTable表中的索引ID
 }
+
+message boating_start_request
+{
+	required uint32 type = 1;  //1: 去湖畔村(皆悦岛里面的一个小岛)，2：去皆悦岛
+}
+

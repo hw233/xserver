@@ -1,4 +1,5 @@
 #include "camp_judge.h"
+#include "so_game_srv/partner.h"
 #include "monster.h"
 #include "player.h"
 
@@ -37,7 +38,7 @@
 // };
 
 #define MAX_ZHENYING_TYPE 3
-static UNIT_FIGHT_TYPE zhenying_type_to_fight_type[MAX_ZHENYING_TYPE][MAX_ZHENYING_TYPE] =
+const static UNIT_FIGHT_TYPE zhenying_type_to_fight_type[MAX_ZHENYING_TYPE][MAX_ZHENYING_TYPE] =
 {
 	{UNIT_FIGHT_TYPE_NONE, UNIT_FIGHT_TYPE_NONE, UNIT_FIGHT_TYPE_NONE},
 	{UNIT_FIGHT_TYPE_NONE, UNIT_FIGHT_TYPE_NONE, UNIT_FIGHT_TYPE_ENEMY},
@@ -66,6 +67,20 @@ static UNIT_FIGHT_TYPE adjust_unit_fight_type(unit_struct *attack, unit_struct *
 
 UNIT_FIGHT_TYPE get_unit_fight_type(unit_struct *attack, unit_struct *defence)
 {
+		//伙伴使用主人的攻击关系
+	if (defence->get_unit_type() == UNIT_TYPE_PARTNER)
+	{
+		partner_struct *t = (partner_struct *)defence;
+		if (t->m_owner)
+			defence = t->m_owner;
+	}
+	if (attack->get_unit_type() == UNIT_TYPE_PARTNER)
+	{
+		partner_struct *t = (partner_struct *)attack;
+		if (t->m_owner)
+			attack = t->m_owner;
+	}
+	
 	if (attack == defence)
 		return UNIT_FIGHT_TYPE_MYSELF;
 

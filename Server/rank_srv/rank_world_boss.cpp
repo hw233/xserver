@@ -117,7 +117,7 @@ int init_cur_world_boss_info()
 		ret = rc.zdel_rank(rank_key, 0, -1);
 		if(ret != 0)
 		{
-			LOG_ERR("[%s:%d]务器重启是，清除本轮榜单信息失败[%lu]", __FUNCTION__, __LINE__, boss_id)	
+			LOG_ERR("[%s:%d]务器重启是，清除本轮榜单信息失败[%lu]", __FUNCTION__, __LINE__, boss_id);
 		}
 
 	}

@@ -1296,12 +1296,19 @@ void monster_struct::go_back()
 	if (data->ontick_time < t)
 		data->ontick_time = t;
 	ai_state = AI_PATROL_STATE;
+
+		//脱战回血
+	if (config->Recovery != 0 && data->attrData[PLAYER_ATTR_HP] != data->attrData[PLAYER_ATTR_MAXHP])
+	{
+		data->attrData[PLAYER_ATTR_HP] = data->attrData[PLAYER_ATTR_MAXHP];
+		broadcast_one_attr_changed(PLAYER_ATTR_HP, data->attrData[PLAYER_ATTR_HP], false, false);		
+	}
 	
 	if (ai && ai->on_monster_ai_do_goback)
 		return ai->on_monster_ai_do_goback(this);
 	
-	if (!create_config)
-		return;
+//	if (!create_config)
+//		return;
 	on_go_back();
 	reset_pos();
 	// if(ai_type == 22)

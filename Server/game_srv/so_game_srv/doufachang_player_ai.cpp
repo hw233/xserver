@@ -18,7 +18,9 @@
 
 static void doufachang_player_ai_tick(player_struct *player)
 {
-	if (!player->ai_data)
+	struct ai_player_data *ai_player_data = player->ai_data;
+	
+	if (!ai_player_data)
 		return;
 	
 	if (player->buff_state & BUFF_STATE_STUN)
@@ -26,10 +28,10 @@ static void doufachang_player_ai_tick(player_struct *player)
 //		LOG_DEBUG("aitest: [%s] lock", player->get_name());		
 		return;
 	}
-	
-	if (player->ai_data->stop_ai)
+
+	if (ai_player_data->stop_ai)
 		return;
-	if (player->is_unit_in_move())
+	if (player->is_unit_in_move() && time_helper::get_cached_time() - 1000 < ai_player_data->ontick_time)
 		return;
 	if (player->scene->get_scene_type() != SCENE_TYPE_RAID)
 		return;
@@ -45,10 +47,9 @@ static void doufachang_player_ai_tick(player_struct *player)
 		return;
 
 //	struct ai_player_data *ai_player_data = &raid->DOUFACHANG_DATA.ai_player_data;
-	struct ai_player_data *ai_player_data = player->ai_data;
 
-	if (time_helper::get_cached_time() < ai_player_data->ontick_time)
-		return;
+//	if (time_helper::get_cached_time() < ai_player_data->ontick_time)
+//		return;
 
 	if (!player->is_alive())
 	{
@@ -56,16 +57,19 @@ static void doufachang_player_ai_tick(player_struct *player)
 		return;
 	}
 
-//	LOG_DEBUG("aitest: [%s]ai_state = %d", player->get_name(), ai_player_data->ai_state);
+//	LOG_DEBUG("aitest: now[%lu] timeout[%lu]", time_helper::get_cached_time(), ai_player_data->ontick_time);
+	ai_player_data->ontick_time = time_helper::get_cached_time();
 
+//	LOG_DEBUG("aitest: [%s]ai_state = %d", player->get_name(), ai_player_data->ai_state);
 
 	if (ai_player_data->ai_state == AI_ATTACK_STATE)
 		return do_ai_player_attack(player, ai_player_data, enemy, 1);
 
-	uint32_t skill_id;
-	if (ai_player_data->skill_id != 0)
-		skill_id = ai_player_data->skill_id;
-	else skill_id = choose_rand_skill(player);
+//	uint32_t skill_id;
+//	if (ai_player_data->skill_id != 0)
+//		skill_id = ai_player_data->skill_id;
+//	else skill_id = choose_rand_skill(player);
+	uint32_t skill_id = choose_rand_skill(player);	
 
 	if (skill_id != 0 && enemy[0] && enemy[0]->is_avaliable())
 	{

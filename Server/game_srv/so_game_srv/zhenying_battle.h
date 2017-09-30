@@ -2,6 +2,7 @@
 #define _ZHENYING_BATTLE_H__
 
 #include <map>
+#include "global_param.h"
 #include "conn_node_gamesrv.h"
 #include "scene.h"
 
@@ -64,7 +65,6 @@ struct ROOM_INFO
 typedef std::map<uint64_t, BATTLE_JOINER> JOIN_T;
 typedef std::vector<uint64_t> STEP_JOIN_T;
 typedef std::map<uint32_t, ROOM_INFO> ROOM_T;
-typedef std::map<uint64_t, ZhenyingBattle *> PRIVATE_BATTLE_T;
 
 //普通阵营战
 class ZhenyingBattle //
@@ -86,7 +86,7 @@ public:
 	uint32_t GetStep(player_struct &player);
 	void SendMyScore(player_struct &player);
 	void GetMySideScore(player_struct &player);
-	void KillEnemy(player_struct &player, player_struct &dead);
+	void KillEnemy(unit_struct *killer, player_struct &dead);
 	BATTLE_JOINER *GetJoins(uint64_t pid);
 	void Settle(scene_struct *scence, uint32_t room);
 	void BroadMessageRoom(uint32_t room, uint16_t msg_id, void *msg_data, pack_func func, uint64_t except = 0);
@@ -95,8 +95,11 @@ public:
 	void ClearRob(uint32_t room);
 	void StartRob();	
 
-	bool PackOneScore(_OneScore *side, uint32_t rank, BATTLE_JOINER *join, uint64_t playerid);
+	bool PackOneScore(_OneScore *side, uint32_t rank, uint64_t playerid);
 	void GetRelivePos(BattlefieldTable *table, int zhenying, int *x, int *z, double *direct);
+
+	static int get_private_battle_num();
+	int get_room_num();	
 
 	void GmStartBattle();
 
@@ -105,9 +108,8 @@ protected:
 
 	void CreateRoom();
 	void FlagOnTick();
+	void LeaveRegion(uint32_t room, player_struct *player, uint32_t old_region);
 private:
-	static ZhenyingBattle *ins;
-	static PRIVATE_BATTLE_T s_private;
 	JOIN_T m_allJoin;   //所有报名的人
 	ROOM_T m_room;
 	uint32_t m_state;

@@ -154,17 +154,31 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 		{
 			LOG_DEBUG("%s: [%lu] player pos x=%f, z= %f", __FUNCTION__, player->get_uuid(), player->get_pos()->pos_x, player->get_pos()->pos_z);
 		}
-		ChatHorse send;
-		chat_horse__init(&send);
-		send.id = 0;
-		send.prior = 1;
-		send.content = argv[3];
-		send.gap = atoi(argv[1]);
-		send.cd = atoi(argv[2]);
-		uint32_t c[7] = { 1,2,3,4,5,6 };
-		send.channel = c;
-		send.n_channel = 6;
-		conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_HORSE_NOTIFY, &send, (pack_func)chat_horse__pack);
+
+		uint32_t raid_id = 30008;
+
+
+		raid_struct *raid = raid_manager::create_raid(raid_id, player);
+		if (!raid)
+		{
+			LOG_ERR("%s: player[%lu] create raid[%u] failed", __FUNCTION__, player->get_uuid(), raid_id);
+			return ;
+		}
+
+		if (raid->player_enter_raid(player, 265, 130) != 0)
+		{
+			LOG_ERR("%s: player[%lu] enter raid failed", __FUNCTION__, player->get_uuid());
+			return ;
+		}
+
+	}
+	else if (strcasecmp(argv[0], "mon5") == 0)
+	{
+		//raid_struct *raid = (raid_struct *)player->scene;
+		CampDefenseTable *table = get_config_by_id(360600001, &zhenying_daily_config);
+		monster_struct *pMon = monster_manager::create_monster_at_pos(player->scene, table->TruckID, 1, table->TruckRouteX[0], table->TruckRouteY[0], 0, NULL);
+		pMon->create_config = get_daily_zhenying_truck_config(360600001);
+		//pMon->ai_state = AI_WAIT_STATE;
 	}
 	else if (strcasecmp(argv[0], "uid") == 0)
 	{
@@ -604,6 +618,8 @@ void chat_mod::gm_add_sight_space_monster(player_struct *player, int val)
 	if (player->sight_space)
 		return;
 	sight_space_struct *sight = sight_space_manager::create_sight_space(player);
+	if (!sight)
+		return;
 
 //	uint32_t monster_id[] = {151000001,	151000033, 	151000034,	151000036};
 	uint32_t monster_id[] = {151005042};
@@ -629,6 +645,8 @@ void chat_mod::gm_add_19_monster(player_struct *player, int type)
 //	monster_struct *monster = monster_manager::add_monster(151001016, 1, NULL);
 	if (!monster)
 		return;
+	monster->born_pos.pos_x = player->get_pos()->pos_x;
+	monster->born_pos.pos_z = player->get_pos()->pos_z;	
 	monster->set_pos(player->get_pos()->pos_x, player->get_pos()->pos_z);
 //	set_leixinye_type(monster, type);
 	if (player->scene->add_monster_to_scene(monster, 0) != 0)
@@ -654,6 +672,8 @@ void chat_mod::gm_add_monster(player_struct *player, int val)
 	monster_struct *monster = monster_manager::add_monster(val, 1, player);
 	if (!monster)
 		return;
+	monster->born_pos.pos_x = player->get_pos()->pos_x;
+	monster->born_pos.pos_z = player->get_pos()->pos_z;	
 	monster->set_pos(player->get_pos()->pos_x, player->get_pos()->pos_z);
 	if (player->scene->add_monster_to_scene(monster, 0) != 0)
 	{
@@ -706,6 +726,8 @@ void chat_mod::gm_add_pet_monster(player_struct *player)
 	monster_struct *monster = monster_manager::add_monster(151000017, 1, player);
 	if (!monster)
 		return;
+	monster->born_pos.pos_x = player->get_pos()->pos_x;
+	monster->born_pos.pos_z = player->get_pos()->pos_z;		
 	monster->set_pos(player->get_pos()->pos_x, player->get_pos()->pos_z);
 	monster->set_ai_interface(7);
 	if (player->scene->add_monster_to_scene(monster, 0) != 0)

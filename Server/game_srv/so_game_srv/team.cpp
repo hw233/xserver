@@ -272,6 +272,22 @@ bool Team::AddMember(player_struct &player)
 			return false;
 		}
 	}
+	player_struct *lead = GetLead();
+	if (lead != NULL && lead->scene->get_scene_type() == SCENE_TYPE_RAID)
+	{
+		raid = (raid_struct *)lead->scene;
+		if (!raid->check_can_add_team_mem(&player))
+		{
+			return false;
+		}
+		else if (raid->is_in_zhenying_raid())
+		{
+			if (player.get_attr(PLAYER_ATTR_ZHENYING) != lead->get_attr(PLAYER_ATTR_ZHENYING))
+			{
+				return false;
+			}
+		}
+	}
 	int pos = FindMember(player.get_uuid());
 	if (pos >= 0)
 	{

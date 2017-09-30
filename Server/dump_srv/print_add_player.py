@@ -12,7 +12,7 @@ import horse_pb2
 import datetime
 import get_one_msg
 
-WATCH_PLAYER = {4294968631}
+WATCH_PLAYER = {4294968631, 8589938012, 8589938011}
 
 sight_player = {}
 
@@ -46,29 +46,33 @@ while True:
 
 #    print "read msg:", msg_id	
 
-#    if not player_id in WATCH_PLAYER:
-#        continue;
+    if player_id not in WATCH_PLAYER:
+        continue
 
 #视野变化    
     if msg_id == 10103:
+#        print "get 10103 msg playerid[%lu]" % (player_id)
         req = move_pb2.sight_changed_notify()
         req.ParseFromString(pb_data)
-        oldtime=datetime.datetime.now()        
+        oldtime = datetime.datetime.now()        
         for t1 in req.add_player:
+            if sight_player.has_key(t1.playerid):
+                print oldtime.time(), "err, add dup player %s [%lu]" % (t1.name, t1.playerid)
+                continue
+                
             sight_player[t1.playerid] = t1.name
-#            buffdata = get_buff_data(t1)
-#            print oldtime.time(), ": %lu add player %lx buf[%s]" % (player_id, t1.playerid, buffdata)
-            print  oldtime.time(), ": %lu add player[%s] %lu horse[%u] y[%.2f]" % (player_id, t1.name, t1.playerid, t1.horse, t1.pos_y)
+            print oldtime.time(), ": add player[%s] %lu horse[%u] y[%.2f]" % (t1.name, t1.playerid, t1.horse, t1.pos_y)
 
         for t1 in req.delete_player:
             if sight_player.has_key(t1):
-                print oldtime.time(), ": %lu del player %lu[%s]" % (player_id, t1, sight_player[t1])
+                print oldtime.time(), ": del player %lu[%s]" % (t1, sight_player[t1])
+                del sight_player[t1]
             else:
-                print oldtime.time(), ": %lu del player %lu" % (player_id, t1)
+                print oldtime.time(), "err: 删除不存在的玩家 del player %lu" % (t1)
 
     if msg_id == 11211:
         req = horse_pb2.OnHorseRequest()
         req.ParseFromString(pb_data)
-        oldtime=datetime.datetime.now()
+        oldtime = datetime.datetime.now()
         print oldtime.time(), ": %lu onhorse [%s]" % (player_id, req.pos_y)
         

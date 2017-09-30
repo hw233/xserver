@@ -512,5 +512,32 @@
         ['TargetInfoList'] = {
         }
     },
+    [1000047] = {
+        ['uid'] = 1000047,
+        ['ID'] = 154000026,
+        ['ResType'] = "Collection",
+        ['PointPosX'] = -56.544,
+        ['PointPosY'] = 1.135143,
+        ['PointPosZ'] = -14.72,
+        ['Yaw'] = 0,
+    },
+    [1000048] = {
+        ['uid'] = 1000048,
+        ['ID'] = 154000026,
+        ['ResType'] = "Collection",
+        ['PointPosX'] = -41.14494,
+        ['PointPosY'] = 1.346452,
+        ['PointPosZ'] = 1.574898,
+        ['Yaw'] = 0,
+    },
+    [1000049] = {
+        ['uid'] = 1000049,
+        ['ID'] = 154000026,
+        ['ResType'] = "Collection",
+        ['PointPosX'] = -55.40574,
+        ['PointPosY'] = 0.1365955,
+        ['PointPosZ'] = -26.93,
+        ['Yaw'] = 0,
+    },
 }
 return fb_cb_001

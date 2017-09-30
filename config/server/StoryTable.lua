@@ -142,6 +142,54 @@ local StoryTable = {
 		['PlayerInvincible'] = 1,
 		['StoryTime'] = 27.00,
 		['FileID'] = 'DFG_FYYD'
+		},
+	[450000020] = {
+		['ID'] = 450000020,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JLG_01'
+		},
+	[450000021] = {
+		['ID'] = 450000021,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JLG_02'
+		},
+	[450000022] = {
+		['ID'] = 450000022,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JLG_03'
+		},
+	[450000023] = {
+		['ID'] = 450000023,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JLG_04'
+		},
+	[450000024] = {
+		['ID'] = 450000024,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_02'
+		},
+	[450000025] = {
+		['ID'] = 450000025,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 9.00,
+		['FileID'] = 'FB_SG_sg'
 		}
 	}
 return StoryTable

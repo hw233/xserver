@@ -8,6 +8,7 @@
 extern struct ai_interface monster_ai_normal_interface;
 extern struct ai_interface monster_ai_circle_interface;
 extern struct ai_interface monster_ai_0_interface;
+extern struct ai_interface monster_ai_3_interface;
 extern struct ai_interface monster_ai_4_interface;
 extern struct ai_interface monster_ai_5_interface;
 extern struct ai_interface monster_ai_7_interface;

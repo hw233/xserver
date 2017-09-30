@@ -1868,6 +1868,53 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		db_info.n_hero_challenge_all_info++;
 	}
 
+	//秘境试炼任务信息
+	db_info.mijing_task_id = data->mi_jing_xiu_lian.task_id;
+	db_info.mijing_time_statu = data->mi_jing_xiu_lian.time_state;
+	db_info.mijing_reward_beilv = data->mi_jing_xiu_lian.reward_beilv;
+	db_info.mijing_huan_num = data->mi_jing_xiu_lian.huan_num;
+	db_info.mijing_lun_num = data->mi_jing_xiu_lian.lun_num;
+	
+	db_info.fishing_bait_id = data->fishing_bait_id;
+
+	//变强
+	DBStrongGoal  strong_goal_data[MAX_STRONG_GOAL_NUM];
+	DBStrongGoal* strong_goal_point[MAX_STRONG_GOAL_NUM];
+	DBStrongChapter  strong_chapter_data[MAX_STRONG_CHAPTER_NUM];
+	DBStrongChapter* strong_chapter_point[MAX_STRONG_CHAPTER_NUM];
+	db_info.strong_goals = strong_goal_point;
+	db_info.n_strong_goals = 0;
+	for (int i = 0; i < MAX_STRONG_GOAL_NUM; ++i)
+	{
+		if (data->strong_goals[i].id == 0)
+		{
+			break;
+		}
+
+		strong_goal_point[db_info.n_strong_goals] = &strong_goal_data[db_info.n_strong_goals];
+		dbstrong_goal__init(&strong_goal_data[db_info.n_strong_goals]);
+		strong_goal_data[db_info.n_strong_goals].id = data->strong_goals[i].id;
+		strong_goal_data[db_info.n_strong_goals].progress = data->strong_goals[i].progress;
+		strong_goal_data[db_info.n_strong_goals].state = data->strong_goals[i].state;
+		db_info.n_strong_goals++;
+	}
+	db_info.strong_chapters = strong_chapter_point;
+	db_info.n_strong_chapters = 0;
+	for (int i = 0; i < MAX_STRONG_CHAPTER_NUM; ++i)
+	{
+		if (data->strong_chapters[i].id == 0)
+		{
+			break;
+		}
+
+		strong_chapter_point[db_info.n_strong_chapters] = &strong_chapter_data[db_info.n_strong_chapters];
+		dbstrong_chapter__init(&strong_chapter_data[db_info.n_strong_chapters]);
+		strong_chapter_data[db_info.n_strong_chapters].id = data->strong_chapters[i].id;
+		strong_chapter_data[db_info.n_strong_chapters].progress = data->strong_chapters[i].progress;
+		strong_chapter_data[db_info.n_strong_chapters].state = data->strong_chapters[i].state;
+		db_info.n_strong_chapters++;
+	}
+
 	return player_dbinfo__pack(&db_info, out_data);
 }
 
@@ -2395,6 +2442,29 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		}
 	}
 
+	//秘境试炼任务信息
+	data->mi_jing_xiu_lian.task_id = db_info->mijing_task_id;
+	data->mi_jing_xiu_lian.time_state = db_info->mijing_time_statu;
+	data->mi_jing_xiu_lian.reward_beilv = db_info->mijing_reward_beilv;
+	data->mi_jing_xiu_lian.huan_num = db_info->mijing_huan_num;
+	data->mi_jing_xiu_lian.lun_num = db_info->mijing_lun_num;
+
+	data->fishing_bait_id = db_info->fishing_bait_id;
+
+	//我要变强
+	for (size_t i = 0; i < db_info->n_strong_goals && i < MAX_STRONG_GOAL_NUM; ++i)
+	{
+		data->strong_goals[i].id = db_info->strong_goals[i]->id;
+		data->strong_goals[i].progress = db_info->strong_goals[i]->progress;
+		data->strong_goals[i].state = db_info->strong_goals[i]->state;
+	}
+	for (size_t i = 0; i < db_info->n_strong_chapters && i < MAX_STRONG_CHAPTER_NUM; ++i)
+	{
+		data->strong_chapters[i].id = db_info->strong_chapters[i]->id;
+		data->strong_chapters[i].progress = db_info->strong_chapters[i]->progress;
+		data->strong_chapters[i].state = db_info->strong_chapters[i]->state;
+	}
+
 	player_dbinfo__free_unpacked(db_info, NULL);
 
 	return 0;
@@ -2428,6 +2498,9 @@ void player_struct::add_area_partner_to_sight(area_struct *area, int *add_partne
 			LOG_ERR("%s %d: %lu can not find sight partner %lu", __FUNCTION__, __LINE__, data->player_id, area->m_partner_uuid[j]);
 			continue;
 		}
+		if (!partner->is_alive())
+			continue;
+		
 		if (add_partner_to_sight_both(partner) < 0)
 			continue;
 
@@ -2449,6 +2522,9 @@ void player_struct::add_area_monster_to_sight(area_struct *area, int *add_monste
 			LOG_ERR("%s %d: %lu can not find sight monster %lu", __FUNCTION__, __LINE__, data->player_id, area->m_monster_uuid[j]);
 			continue;
 		}
+		if (!monster->is_alive())
+			continue;
+		
 		if (add_monster_to_sight_both(monster) < 0)
 			continue;
 
@@ -2635,6 +2711,9 @@ void player_struct::send_clear_sight()
 	int del_collect_uuid_index = 0;
 	notify.n_delete_cash_truck = data->cur_sight_truck;
 	notify.delete_cash_truck = data->sight_truck;
+
+	notify.n_delete_partner = data->cur_sight_partner;
+	notify.delete_partner = data->sight_partner;
 
 	//if (data->truck.on_truck)
 	//{
@@ -3033,7 +3112,7 @@ void player_struct::update_sight(area_struct *old_area, area_struct *new_area)
 
 
 		//把自己发送给别的玩家
-	if (*get_cur_sight_player() > 0 && !data->truck.on_truck)
+	if (add_player_id_index > 0 && !data->truck.on_truck)
 	{
 		sight_changed_notify__init(&notify);
 		SightPlayerBaseInfo my_player_info[1];
@@ -3045,8 +3124,10 @@ void player_struct::update_sight(area_struct *old_area, area_struct *new_area)
 		notify.n_add_player = 1;
 
 		ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SIGHT_CHANGED_NOTIFY, &notify, (pack_func)sight_changed_notify__pack);
-		for (int i = 0; i < *get_cur_sight_player(); ++i)
-			conn_node_gamesrv::broadcast_msg_add_players(data->sight_player[i], ppp);
+		for (int i = 0; i < add_player_id_index; ++i)
+			conn_node_gamesrv::broadcast_msg_add_players(player_info[i].playerid, ppp);
+//		for (int i = 0; i < *get_cur_sight_player(); ++i)
+//			conn_node_gamesrv::broadcast_msg_add_players(data->sight_player[i], ppp);
 		conn_node_gamesrv::broadcast_msg_send();
 	}
 	reset_pools();
@@ -4324,6 +4405,10 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 		{
 			player.sight_space = sight_space_manager::create_sight_space(&player, 1);
 		}
+
+		if (!player.sight_space)
+			break;
+		
 		for (uint32_t num = 0; num < sTable->Parameter2[i]; ++num)
 		{
 			monster_manager::create_sight_space_monster(player.sight_space, player.scene, sTable->Parameter1[i], player.get_attr(PLAYER_ATTR_LEVEL), x + sTable->Parameter2[i] - rand()% 2*sTable->Parameter2[i], z + sTable->Parameter2[i] - rand() % 2*sTable->Parameter2[i]);
@@ -4981,7 +5066,11 @@ int player_struct::check_can_transfer()
 {
 	if (is_in_raid())
 	{
-		return ERROR_ID_CAN_NOT_TRANSFER;
+		raid_struct *raid = (raid_struct *)this->scene;
+		if (raid->m_config->DengeonRank != DUNGEON_TYPE_ZHENYING)
+		{
+			return ERROR_ID_CAN_NOT_TRANSFER;
+		}
 	}
 
 	if (sight_space)
@@ -6689,8 +6778,9 @@ int player_struct::deal_level_up(uint32_t level_old, uint32_t level_new)
 	// nty_list[PLAYER_ATTR_EXP] = data->attrData[PLAYER_ATTR_EXP];
 	// notify_attr(nty_list);
 	std::vector<uint32_t> attr_id;
-	std::vector<double> attr_value;	
-	for (uint32_t i = PLAYER_ATTR_FIGHT_MAX; i >=1; --i)
+	std::vector<double> attr_value;
+//	for (uint32_t i = PLAYER_ATTR_FIGHT_MAX; i >=1; --i)
+	for (uint32_t i = PLAYER_ATTR_LEVEL; i >=1; --i)
 	{
 		attr_id.push_back(i);
 		attr_value.push_back(data->attrData[i]);
@@ -6991,6 +7081,19 @@ bool player_struct::check_task_accept_condition(uint32_t type, uint32_t target, 
 						return ((uint32_t)data->attrData[PLAYER_ATTR_COIN] >= val);
 					case TBC_GOLD:
 						return ((uint32_t)get_comm_gold() >= val);
+					case TBC_MAX_LEVEL:
+						return ((uint32_t)data->attrData[PLAYER_ATTR_LEVEL] <= val);
+					case TBC_ZHENYING:
+						{
+							if (val == 0)
+							{
+								return ((uint32_t)data->attrData[PLAYER_ATTR_ZHENYING] > 0);
+							}
+							else
+							{
+								return ((uint32_t)data->attrData[PLAYER_ATTR_ZHENYING] == val);
+							}
+						}
 				}
 			}
 			break;
@@ -7024,6 +7127,9 @@ bool player_struct::check_task_accept_condition(uint32_t type, uint32_t target, 
 		case TCT_CARRY_ITEM:
 			return ((uint32_t)get_item_num_by_id(target) >= val);
 		case TCT_TRUE:
+			return true;
+		case TCT_MIJING_XIULIANG:
+		case 61:
 			return true;
 	}
 
@@ -7350,6 +7456,11 @@ int player_struct::execute_task_event(uint32_t event_id, uint32_t event_class, b
 					sight_space = sight_space_manager::create_sight_space(this);
 				}
 
+				if (!sight_space)
+				{
+					break;
+				}
+
 				if (sight_space->is_task_event_exist(event_id))
 				{
 					break;
@@ -7434,6 +7545,7 @@ int player_struct::add_finish_task(uint32_t task_id)
 {
 	uint32_t task_type = get_task_type(task_id);
 	int empty_idx = -1;
+	
 	switch (task_type)
 	{
 		case TT_TRUNK:
@@ -7455,6 +7567,15 @@ int player_struct::add_finish_task(uint32_t task_id)
 				}
 			}
 			break;
+	}
+	
+	EventCalendarTable *table = get_config_by_id(AWARD_QUESTION_ACTIVE_ID, &activity_config);
+	if (table != NULL)
+	{
+		if (task_id == table->AuxiliaryValue[0])
+		{
+			empty_idx = -1;
+		}
 	}
 
 	if (empty_idx >= 0)
@@ -7847,16 +7968,16 @@ void player_struct::init_task_progress(TaskInfo *info)
 				break;
 			case TCT_PARTNER_OUT_FIGHT:
 				{
-					for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
+					for (int i = 0; i < MAX_PARTNER_FORMATION_NUM; ++i)
 					{
-						uint64_t uuid = data->partner_battle[i];
+						uint64_t uuid = data->partner_formation[i];
 						if (uuid == 0)
 						{
 							continue;
 						}
 
 						partner_struct *partner = get_partner_by_uuid(uuid);
-						if (partner && partner->is_alive())
+						if (partner)
 						{
 							if (config->ConditionTarget == 0 || partner->data->partner_id == (uint32_t)config->ConditionTarget)
 							{
@@ -8422,6 +8543,29 @@ int player_struct::accept_task(uint32_t task_id, bool check_condition)
 		}
 	}
 
+	//秘境修炼任务轮数和环数判断
+	std::map<uint64_t, UndergroundTask*>::iterator mijing_config = taskid_to_mijing_xiulian_config.find(task_id);
+	if(mijing_config != taskid_to_mijing_xiulian_config.end())
+	{
+		ParameterTable *mijing_parame = get_config_by_id(161000336, &parameter_config);
+		if(mijing_parame == NULL || mijing_parame->n_parameter1 != 2)
+		{
+			ret = ERROR_ID_NO_CONFIG;
+			return ret;
+		}
+		uint32_t max_huan_num =  mijing_parame->parameter1[0];
+		uint32_t max_lun_num  =  mijing_parame->parameter1[1];
+		uint32_t use_num = data->mi_jing_xiu_lian.huan_num * max_lun_num + data->mi_jing_xiu_lian.lun_num;
+		uint32_t all_num = max_huan_num * max_lun_num;
+		if(use_num >= all_num)
+		{
+			ret = ERROR_ID_TASK_CONDITION;
+			return ret;
+		}
+	
+	}
+	
+
 	TaskInfo *info = this->get_task_info(task_id);
 	if (info)
 	{
@@ -8444,6 +8588,10 @@ int player_struct::accept_task(uint32_t task_id, bool check_condition)
 		info = this->get_task_info(task_id);
 	}
 
+	if(mijing_config != taskid_to_mijing_xiulian_config.end())
+	{
+		data->mi_jing_xiu_lian.task_id = task_id;
+	}
 	this->init_task_progress(info);
 	bool achieved = task_is_achieved(info);
 	if (achieved)
@@ -11474,7 +11622,6 @@ void player_struct::adjust_battle_partner(void)
 				if (partner && partner->is_alive() && ((sight_space && !partner->partner_sight_space) || (!partner->scene)))
 				{
 					add_partner_to_scene(uuid);
-					add_task_progress(TCT_PARTNER_OUT_FIGHT, partner->data->partner_id, 1);
 				}
 			}
 			else
@@ -11500,7 +11647,6 @@ void player_struct::add_battle_partner(int index)
 		if (partner_on && partner_on->is_alive())
 		{
 			add_partner_to_scene(data->partner_battle[index]);
-			add_task_progress(TCT_PARTNER_OUT_FIGHT, partner_on->data->partner_id, 1);
 		}
 	}
 	if (index == 0)
@@ -12280,6 +12426,15 @@ void player_struct::refresh_oneday_job()
 	}
 
 	data->server_level_break_count = 0;
+	if(data->mi_jing_xiu_lian.task_id != 0)
+	{
+		data->mi_jing_xiu_lian.time_state = 1;
+	}
+	else 
+	{
+		data->mi_jing_xiu_lian.lun_num = 0;
+		data->mi_jing_xiu_lian.huan_num = 0;
+	}
 }
 
 void player_struct::refresh_shop_daily(void)
@@ -12519,6 +12674,11 @@ int player_struct::transfer_to_new_scene_impl(scene_struct *new_scene, double po
 		{
 			data->last_scene_id = data->scene_id;
 		}
+		else if (scene->get_scene_type() == SCENE_TYPE_RAID)
+		{
+			raid_struct *raid = (raid_struct *)this->scene;
+			raid->on_player_leave_raid(this);
+		}
 		scene->delete_player_from_scene(this);
 		data->scene_id = new_scene->m_id;
 		set_pos(pos_x, pos_z);
@@ -12607,8 +12767,17 @@ int player_struct::transfer_to_birth_position(EXTERN_DATA *extern_data)
 {
 	if (!scene)
 	{
-		LOG_ERR("[%s:%d] player[%lu] isn't in a scene, scene_id:%u", __FUNCTION__, __LINE__, data->player_id, data->scene_id);
-		return -1;
+		scene_struct *new_scene = scene_manager::get_scene(data->scene_id);
+		if (!new_scene)
+		{
+			LOG_ERR("[%s:%d] player[%lu] get scene failed, scene_id[%u]", __FUNCTION__, __LINE__, data->player_id, data->scene_id);
+			return -1;
+		}
+
+		set_pos(new_scene->m_born_x, new_scene->m_born_z);
+		new_scene->add_player_to_scene(this);
+		take_partner_into_scene();
+		return 0;
 	}
 
 	return transfer_to_new_scene_impl(scene, scene->m_born_x, scene->m_born_y, scene->m_born_z, scene->m_born_direct, extern_data);
@@ -14081,6 +14250,10 @@ void player_struct::clear_award_question()
 			if (data->task_list[i].id != 0)
 			{
 				TaskTable *config = get_config_by_id(data->task_list[i].id, &task_config);
+				if (config == NULL)
+				{
+					continue;
+				}
 				if (config->TaskType == TT_QUESTION)
 				{
 					set_task_fail(&data->task_list[i]);
@@ -14432,6 +14605,188 @@ void player_struct::load_achievement_end(void)
 	}
 }
 
+void player_struct::init_achievement_progress_internal(uint32_t &progress, uint32_t type, uint32_t config_target1, uint32_t config_target2)
+{
+	switch(type)
+	{
+		case ACType_PLAYER_LEVEL:
+			{
+				progress = 0;
+				if (get_level() >= config_target1)
+				{
+					progress++;
+				}
+			}
+			break;
+		case ACType_PLAYER_FC:
+			{
+				progress = 0;
+				if ((uint32_t)get_attr(PLAYER_ATTR_FIGHTING_CAPACITY) >= config_target1)
+				{
+					progress++;
+				}
+			}
+			break;
+		case ACType_SKILL_ALL_LEVEL:
+			{
+				progress = m_skill.GetSkillLevelNum(config_target1);
+			}
+			break;
+		case ACType_SKILL_FUWEN_UNLOCK:
+			{
+				progress = m_skill.GetFuwenUnlockNum();
+			}
+			break;
+		case ACType_SKILL_FUWEN_WEAR:
+			{
+				progress = m_skill.GetFuwenWearNum();
+			}
+			break;
+		case ACType_SKILL_FUWEN_LEVEL_NUM:
+			{
+				progress = m_skill.GetFuwenLevelNum(config_target1);
+			}
+			break;
+		case ACType_LIVE_SKILL_LEVEL:
+			{
+				progress = 0;
+				if (data->live_skill.level[config_target1] >= config_target2)
+				{
+					progress++;
+				}
+			}
+			break;
+		case ACType_EQUIP_NUM:
+			{
+				progress = get_equip_num();
+			}
+			break;
+		case ACType_EQUIP_STAIR:
+			{
+				progress = 0;
+				if (data->equip_list[0].stair >= config_target1)
+				{
+					progress++;
+				}
+			}
+			break;
+		case ACType_EQUIP_INLAY_QULITY_NUM:
+			{
+				progress = get_equip_inlay_quality_num(config_target1);
+			}
+			break;
+		case ACType_BAGUA_SUIT:
+			{
+				progress = 0;
+				for (int k = 0; k < MAX_BAGUAPAI_STYLE_NUM; ++k)
+				{
+					if (get_bagua_suit_id(&data->baguapai_dress[k]) == (int)config_target1)
+					{
+						progress++;
+					}
+				}
+			}
+			break;
+		case ACType_BAGUA_MIN_STAR:
+			{
+				progress = 0;
+				for (int k = 0; k < MAX_BAGUAPAI_STYLE_NUM; ++k)
+				{
+					if (get_bagua_min_star(&data->baguapai_dress[k]) >= (int)config_target1)
+					{
+						progress++;
+					}
+				}
+			}
+			break;
+		case ACType_YUQIDAO_BREAK_OPEN:
+			{
+				progress = 0;
+				if (get_yuqidao_break(config_target1))
+				{
+					progress++;
+				}
+			}
+			break;
+		case ACType_HORSE_NUM:
+			{
+				progress = get_horse_num();
+			}
+			break;
+		case ACType_PARTNER_NUM:
+			{
+				progress = get_partner_quality_num(config_target1);
+			}
+			break;
+		case ACType_FRIEND_NUM:
+			{
+				progress = get_friend_num();
+			}
+			break;
+		case ACType_FRIEND_CLOSE_NUM:
+			{
+				progress = get_friend_close_num(config_target1);
+			}
+			break;
+		case ACType_GUILD_SKILL_LEVEL_NUM:
+			{
+				progress = get_guild_skill_level_num(config_target1);
+			}
+			break;
+		case ACType_GUILD_JOIN:
+			{
+				progress = 0;
+				if (data->guild_id > 0)
+				{
+					progress++;
+				}
+			}
+			break;
+		case ACType_ZHENYING_GRADE:
+			{
+				progress = 0;
+				if (get_zhenying_grade() >= config_target1)
+				{
+					progress++;
+				}
+			}
+			break;
+		case ACType_TASK_CHAPTER:
+			{
+				progress = 0;
+				if (get_task_chapter_id() > config_target1)
+				{
+					progress++;
+				}
+			}
+			break;
+		case ACType_FASHION_NUM:
+			{
+				progress = data->n_fashion;
+			}
+			break;
+		case ACType_FASHION_CHARM:
+			{
+				progress = data->charm_level;
+			}
+			break;
+		case ACType_HEAD_NUM:
+			{
+				progress = get_head_num();
+			}
+			break;
+		case ACType_RANKING_RANK:
+			{
+				progress = 0;
+				if (get_rank_ranking(config_target1) <= config_target2)
+				{
+					progress++;
+				}
+			}
+			break;
+	}
+}
+
 void player_struct::init_achievement_progress(AchievementInfo *info)
 {
 	uint32_t now = time_helper::get_cached_time() / 1000;
@@ -14453,186 +14808,7 @@ void player_struct::init_achievement_progress(AchievementInfo *info)
 			break;
 		}
 
-		uint32_t config_target1 = hier_config->ConditionTarget1;
-		uint32_t config_target2 = hier_config->ConditionTarget2;
-		switch(hier_config->ConditionType)
-		{
-			case ACType_PLAYER_LEVEL:
-				{
-					info->progress = 0;
-					if (get_level() >= config_target1)
-					{
-						info->progress++;
-					}
-				}
-				break;
-			case ACType_PLAYER_FC:
-				{
-					info->progress = 0;
-					if ((uint32_t)get_attr(PLAYER_ATTR_FIGHTING_CAPACITY) >= config_target1)
-					{
-						info->progress++;
-					}
-				}
-				break;
-			case ACType_SKILL_ALL_LEVEL:
-				{
-					info->progress = m_skill.GetSkillLevelNum(config_target1);
-				}
-				break;
-			case ACType_SKILL_FUWEN_UNLOCK:
-				{
-					info->progress = m_skill.GetFuwenUnlockNum();
-				}
-				break;
-			case ACType_SKILL_FUWEN_WEAR:
-				{
-					info->progress = m_skill.GetFuwenWearNum();
-				}
-				break;
-			case ACType_SKILL_FUWEN_LEVEL_NUM:
-				{
-					info->progress = m_skill.GetFuwenLevelNum(config_target1);
-				}
-				break;
-			case ACType_LIVE_SKILL_LEVEL:
-				{
-					info->progress = 0;
-					if (data->live_skill.level[config_target1] >= config_target2)
-					{
-						info->progress++;
-					}
-				}
-				break;
-			case ACType_EQUIP_NUM:
-				{
-					info->progress = get_equip_num();
-				}
-				break;
-			case ACType_EQUIP_STAIR:
-				{
-					info->progress = 0;
-					if (data->equip_list[0].stair >= config_target1)
-					{
-						info->progress++;
-					}
-				}
-				break;
-			case ACType_EQUIP_INLAY_QULITY_NUM:
-				{
-					info->progress = get_equip_inlay_quality_num(config_target1);
-				}
-				break;
-			case ACType_BAGUA_SUIT:
-				{
-					info->progress = 0;
-					for (int k = 0; k < MAX_BAGUAPAI_STYLE_NUM; ++k)
-					{
-						if (get_bagua_suit_id(&data->baguapai_dress[k]) == (int)config_target1)
-						{
-							info->progress++;
-						}
-					}
-				}
-				break;
-			case ACType_BAGUA_MIN_STAR:
-				{
-					info->progress = 0;
-					for (int k = 0; k < MAX_BAGUAPAI_STYLE_NUM; ++k)
-					{
-						if (get_bagua_min_star(&data->baguapai_dress[k]) >= (int)config_target1)
-						{
-							info->progress++;
-						}
-					}
-				}
-				break;
-			case ACType_YUQIDAO_BREAK_OPEN:
-				{
-					info->progress = 0;
-					if (get_yuqidao_break(config_target1))
-					{
-						info->progress++;
-					}
-				}
-				break;
-			case ACType_HORSE_NUM:
-				{
-					info->progress = get_horse_num();
-				}
-				break;
-			case ACType_PARTNER_NUM:
-				{
-					info->progress = get_partner_quality_num(config_target1);
-				}
-				break;
-			case ACType_FRIEND_NUM:
-				{
-					info->progress = get_friend_num();
-				}
-				break;
-			case ACType_FRIEND_CLOSE_NUM:
-				{
-					info->progress = get_friend_close_num(config_target1);
-				}
-				break;
-			case ACType_GUILD_SKILL_LEVEL_NUM:
-				{
-					info->progress = get_guild_skill_level_num(config_target1);
-				}
-				break;
-			case ACType_GUILD_JOIN:
-				{
-					info->progress = 0;
-					if (data->guild_id > 0)
-					{
-						info->progress++;
-					}
-				}
-				break;
-			case ACType_ZHENYING_GRADE:
-				{
-					info->progress = 0;
-					if (get_zhenying_grade() >= config_target1)
-					{
-						info->progress++;
-					}
-				}
-				break;
-			case ACType_TASK_CHAPTER:
-				{
-					info->progress = 0;
-					if (get_task_chapter_id() > config_target1)
-					{
-						info->progress++;
-					}
-				}
-				break;
-			case ACType_FASHION_NUM:
-				{
-					info->progress = data->n_fashion;
-				}
-				break;
-			case ACType_FASHION_CHARM:
-				{
-					info->progress = data->charm_level;
-				}
-				break;
-			case ACType_HEAD_NUM:
-				{
-					info->progress = get_head_num();
-				}
-				break;
-			case ACType_RANKING_RANK:
-				{
-					info->progress = 0;
-					if (get_rank_ranking(config_target1) <= config_target2)
-					{
-						info->progress++;
-					}
-				}
-				break;
-		}
+		init_achievement_progress_internal(info->progress, hier_config->ConditionType, hier_config->ConditionTarget1, hier_config->ConditionTarget2);
 
 		if (info->progress >= (uint32_t)hier_config->ConditionNum)
 		{
@@ -14640,6 +14816,110 @@ void player_struct::init_achievement_progress(AchievementInfo *info)
 			info->state = Achievement_State_Achieved;
 		}
 	} while(0);
+}
+
+void player_struct::add_achievement_progress_internal(uint32_t &progress, uint32_t type, uint32_t config_target1, uint32_t config_target2, uint32_t target1, uint32_t target2, uint32_t num)
+{
+	switch(type)
+	{
+		case ACType_PLAYER_LEVEL:
+		case ACType_PLAYER_FC:
+		case ACType_ZHENYING_GRADE:
+			{
+				if (target1 >= config_target1)
+				{
+					progress += num;
+				}
+			}
+			break;
+		case ACType_LIVE_SKILL_LEVEL:
+			{
+				if (target1 == config_target1 && target2 >= config_target2)
+				{
+					progress+= num;
+				}
+			}
+			break;
+		case ACType_SKILL_ALL_LEVEL:
+			{
+				progress = m_skill.GetSkillLevelNum(config_target1);
+			}
+			break;
+		case ACType_SKILL_FUWEN_LEVEL_NUM:
+			{
+				progress = m_skill.GetFuwenLevelNum(config_target1);
+			}
+			break;
+		case ACType_EQUIP_INLAY_QULITY_NUM:
+			{
+				progress = get_equip_inlay_quality_num(config_target1);
+			}
+			break;
+		case ACType_BAGUA_MIN_STAR:
+			{
+				progress = 0;
+				for (int k = 0; k < MAX_BAGUAPAI_STYLE_NUM; ++k)
+				{
+					if (get_bagua_min_star(&data->baguapai_dress[k]) >= (int)config_target1)
+					{
+						progress++;
+					}
+				}
+			}
+			break;
+		case ACType_PARTNER_NUM:
+			{
+				progress = get_partner_quality_num(config_target1);
+			}
+			break;
+		case ACType_FRIEND_CLOSE_NUM:
+			{
+				progress = get_friend_close_num(config_target1);
+			}
+			break;
+		case ACType_GUILD_SKILL_LEVEL_NUM:
+			{
+				progress = get_guild_skill_level_num(config_target1);
+			}
+			break;
+		case ACType_USE_PROP:
+		case ACType_RAID_PASS_STAR:
+			{
+				if (!((config_target1 > 0 && config_target1 != target1) || (config_target2 > 0 && config_target2 != target2)))
+				{
+					progress += num;
+				}
+			}
+			break;
+		case ACType_RANKING_RANK:
+			{
+				if (!((config_target1 > 0 && config_target1 != target1) || (config_target2 > 0 && config_target2 < target2)))
+				{
+					progress += num;
+				}
+			}
+			break;
+		case ACType_SKILL_FUWEN_UNLOCK:
+		case ACType_SKILL_FUWEN_WEAR:
+		case ACType_EQUIP_NUM:
+		case ACType_HORSE_NUM:
+		case ACType_FRIEND_NUM:
+		case ACType_FASHION_NUM:
+		case ACType_FASHION_CHARM:
+		case ACType_HEAD_NUM:
+			{
+				progress = num;
+			}
+			break;
+		default:
+			{
+				if (config_target1 == 0 || (config_target1 > 0 && config_target1 == target1))
+				{
+					progress += num;
+				}
+			}
+			break;
+	}
 }
 
 void player_struct::add_achievement_progress(uint32_t type, uint32_t target1, uint32_t target2, uint32_t num)
@@ -14675,109 +14955,8 @@ void player_struct::add_achievement_progress(uint32_t type, uint32_t target1, ui
 
 		bool achieve_before = (info->state >= Achievement_State_Achieved);
 
-		uint32_t config_target1 = (uint32_t)hier_config->ConditionTarget1;
-		uint32_t config_target2 = (uint32_t)hier_config->ConditionTarget2;
 		uint32_t pre_progress = info->progress;
-		switch(type)
-		{
-			case ACType_PLAYER_LEVEL:
-			case ACType_PLAYER_FC:
-			case ACType_ZHENYING_GRADE:
-				{
-					if (target1 >= config_target1)
-					{
-						info->progress += num;
-					}
-				}
-				break;
-			case ACType_LIVE_SKILL_LEVEL:
-				{
-					if (target1 == config_target1 && target2 >= config_target2)
-					{
-						info->progress+= num;
-					}
-				}
-				break;
-			case ACType_SKILL_ALL_LEVEL:
-				{
-					info->progress = m_skill.GetSkillLevelNum(config_target1);
-				}
-				break;
-			case ACType_SKILL_FUWEN_LEVEL_NUM:
-				{
-					info->progress = m_skill.GetFuwenLevelNum(config_target1);
-				}
-				break;
-			case ACType_EQUIP_INLAY_QULITY_NUM:
-				{
-					info->progress = get_equip_inlay_quality_num(config_target1);
-				}
-				break;
-			case ACType_BAGUA_MIN_STAR:
-				{
-					info->progress = 0;
-					for (int k = 0; k < MAX_BAGUAPAI_STYLE_NUM; ++k)
-					{
-						if (get_bagua_min_star(&data->baguapai_dress[k]) >= (int)config_target1)
-						{
-							info->progress++;
-						}
-					}
-				}
-				break;
-			case ACType_PARTNER_NUM:
-				{
-					info->progress = get_partner_quality_num(config_target1);
-				}
-				break;
-			case ACType_FRIEND_CLOSE_NUM:
-				{
-					info->progress = get_friend_close_num(config_target1);
-				}
-				break;
-			case ACType_GUILD_SKILL_LEVEL_NUM:
-				{
-					info->progress = get_guild_skill_level_num(config_target1);
-				}
-				break;
-			case ACType_USE_PROP:
-			case ACType_RAID_PASS_STAR:
-				{
-					if (!((config_target1 > 0 && config_target1 != target1) || (config_target2 > 0 && config_target2 != target2)))
-					{
-						info->progress += num;
-					}
-				}
-				break;
-			case ACType_RANKING_RANK:
-				{
-					if (!((config_target1 > 0 && config_target1 != target1) || (config_target2 > 0 && config_target2 < target2)))
-					{
-						info->progress += num;
-					}
-				}
-				break;
-			case ACType_SKILL_FUWEN_UNLOCK:
-			case ACType_SKILL_FUWEN_WEAR:
-			case ACType_EQUIP_NUM:
-			case ACType_HORSE_NUM:
-			case ACType_FRIEND_NUM:
-			case ACType_FASHION_NUM:
-			case ACType_FASHION_CHARM:
-			case ACType_HEAD_NUM:
-				{
-					info->progress = num;
-				}
-				break;
-			default:
-				{
-					if (config_target1 == 0 || (config_target1 > 0 && config_target1 == target1))
-					{
-						info->progress += num;
-					}
-				}
-				break;
-		}
+		add_achievement_progress_internal(info->progress, type, hier_config->ConditionTarget1, hier_config->ConditionTarget2, target1, target2, num);
 
 		//计数没变化
 		if (info->progress == pre_progress)
@@ -14800,6 +14979,8 @@ void player_struct::add_achievement_progress(uint32_t type, uint32_t target1, ui
 			achievement_update_notify(info);
 		}
 	}
+
+	add_strong_goal_progress(type, target1, target2, num);
 }
 
 AchievementInfo *player_struct::get_achievement_info(uint32_t id)
@@ -15096,4 +15277,341 @@ int player_struct::init_hero_challenge_data()
 	
 	return 0;
 }
+
+int player_struct::mijing_shilian_info_notify(uint32_t type)
+{
+	MiJingXiuLianTaskInfoAnswer ans;
+	mi_jing_xiu_lian_task_info_answer__init(&ans);
+
+	uint64_t task_id = 0;
+	if(data->mi_jing_xiu_lian.task_id == 0)
+	{
+		std::map<uint64_t, UndergroundTask*>::iterator itr = mijing_xiulian_config.begin();
+		for(; itr != mijing_xiulian_config.end(); itr++)
+		{
+			if(itr->second->n_LevelSection != 2)
+			{
+				break;
+			}
+			if(data->attrData[PLAYER_ATTR_LEVEL] >= itr->second->LevelSection[0] && data->attrData[PLAYER_ATTR_LEVEL] <= itr->second->LevelSection[1])
+			{
+				task_id = itr->second->TaskID;
+			}
+		}
+		if(task_id == 0)
+		{
+			LOG_ERR("[%s:%d] get mi jing xiu lian task info faild player_id[%lu]", __FUNCTION__, __LINE__, data->player_id);
+			return -2;
+		}
+
+	}
+	else 
+	{
+		task_id = data->mi_jing_xiu_lian.task_id;
+	}
+
+	UndergroundTask* info = get_config_by_id(task_id, &taskid_to_mijing_xiulian_config);
+	if(info == NULL)
+	{
+		LOG_ERR("[%s:%d] get mi jing xiu lian task info faild player_id[%lu]", __FUNCTION__, __LINE__, data->player_id);
+		return -3;
+	}
+	//初始奖励倍率为0，随机获取一个
+	if(data->mi_jing_xiu_lian.reward_beilv == 0)
+	{
+		//根据概率获取对应的倍率
+		uint64_t total_gailv = 0;
+		for(size_t	i = 0; i < info->n_StarProbability; ++i)
+		{
+			total_gailv += info->StarProbability[i];
+		}
+		if(total_gailv <= 0)
+		{
+			LOG_ERR("[%s:%d] get mi jing xiu lian task info faild player_id[%lu]", __FUNCTION__, __LINE__, data->player_id);
+			return -4;
+		}
+
+		total_gailv = rand() % total_gailv + 1;
+		int flag = -1;
+		uint64_t gailv_begin = 0;
+		uint64_t gailv_end = 0;
+		for(size_t j = 0; j < info->n_StarProbability; ++j)
+		{
+			gailv_end = gailv_begin + info->StarProbability[j];
+			if(total_gailv > gailv_begin && total_gailv <= gailv_end)
+			{
+				flag = j;
+				break;	
+			}
+			gailv_begin = gailv_end;
+		}
+
+
+		if(flag < 0 || flag >= (int)info->n_Rate)
+		{
+			LOG_ERR("[%s:%d] get mi jing xiu lian task info faild player_id[%lu]", __FUNCTION__, __LINE__, data->player_id);
+			return -5;
+		}
+		data->mi_jing_xiu_lian.reward_beilv = info->Rate[flag];
+	}
+	//根据倍率获取下标
+	int xiabiao = -1;
+	for(uint32_t i = 0; i <  info->n_Rate; i++)
+	{
+		if(data->mi_jing_xiu_lian.reward_beilv == info->Rate[i])
+		{
+			xiabiao = i;
+		}
+	}
+	if(xiabiao < 0)
+	{
+		LOG_ERR("[%s:%d] get mi jing xiu lian task info faild player_id[%lu]", __FUNCTION__, __LINE__, data->player_id);
+		return -6;
+	}
+
+	ans.info_flag = type;
+	ans.task_id = task_id;
+	ans.reward_beilv = xiabiao;
+	ans.huan_num = data->mi_jing_xiu_lian.huan_num;
+	ans.lun_num = data->mi_jing_xiu_lian.lun_num;
+	EXTERN_DATA extern_data;
+	extern_data.player_id = data->player_id;
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_MIJING_XIULIAN_TASK_INFO_ANSWER, mi_jing_xiu_lian_task_info_answer__pack, ans);
+	
+	return 0;
+
+}
+
+void player_struct::load_strong_end(void)
+{
+	std::set<uint64_t> strong_goal_ids;
+	uint32_t goal_free_idx = 0;
+	for (; goal_free_idx < MAX_STRONG_GOAL_NUM; ++goal_free_idx)
+	{
+		StrongGoalInfo *info = &data->strong_goals[goal_free_idx];
+		if (info->id == 0)
+		{
+			break;
+		}
+		else
+		{
+			strong_goal_ids.insert(info->id);
+		}
+	}
+
+	std::set<uint64_t> strong_chapter_ids;
+	uint32_t chapter_free_idx = 0;
+	for (; chapter_free_idx < MAX_STRONG_CHAPTER_NUM; ++chapter_free_idx)
+	{
+		StrongChapterInfo *info = &data->strong_chapters[chapter_free_idx];
+		if (info->id == 0)
+		{
+			break;
+		}
+		else
+		{
+			strong_chapter_ids.insert(info->id);
+		}
+	}
+
+	for (std::map<uint64_t, GrowupTable*>::iterator iter = strong_config.begin(); iter != strong_config.end(); ++iter)
+	{
+		GrowupTable *config = iter->second;
+		if (strong_chapter_ids.find(config->Type) == strong_chapter_ids.end())
+		{
+			if (chapter_free_idx < MAX_STRONG_CHAPTER_NUM)
+			{
+				StrongChapterInfo *info = &data->strong_chapters[chapter_free_idx];
+				chapter_free_idx++;
+				memset(info, 0, sizeof(StrongChapterInfo));
+				info->id = config->Type;
+				info->state = Strong_State_Achieving;
+			}
+			else
+			{
+				LOG_ERR("[%s:%d] player[%lu] strong chapter memory not enough", __FUNCTION__, __LINE__, data->player_id);
+			}
+		}
+
+		if (strong_goal_ids.find(iter->first) == strong_goal_ids.end())
+		{
+			if (goal_free_idx < MAX_STRONG_GOAL_NUM)
+			{
+				StrongGoalInfo *info = &data->strong_goals[goal_free_idx];
+				goal_free_idx++;
+				memset(info, 0, sizeof(StrongGoalInfo));
+				info->id = iter->first;
+				info->state = Strong_State_Achieving;
+				init_strong_goal_progress(info);
+			}
+			else
+			{
+				LOG_ERR("[%s:%d] player[%lu] strong goal memory not enough", __FUNCTION__, __LINE__, data->player_id);
+			}
+		}
+	}
+}
+
+void player_struct::init_strong_goal_progress(StrongGoalInfo *info)
+{
+	do
+	{
+		GrowupTable *config = get_config_by_id(info->id, &strong_config);
+		if (!config)
+		{
+			break;
+		}
+
+		init_achievement_progress_internal(info->progress, config->ConditionType, config->ConditionTarget1, config->ConditionTarget2);
+
+		if (info->progress >= (uint32_t)config->ConditionNum)
+		{
+			info->state = Strong_State_Achieved;
+			add_strong_chapter_progress(config->Type);
+		}
+	} while(0);
+}
+
+void player_struct::add_strong_goal_progress(uint32_t type, uint32_t target1, uint32_t target2, uint32_t num)
+{
+	for (int i = 0; i < MAX_STRONG_GOAL_NUM; ++i)
+	{
+		StrongGoalInfo *info = &data->strong_goals[i];
+		if (info->id == 0)
+		{
+			continue;
+		}
+
+		if (info->state != Strong_State_Achieving)
+		{
+			continue;
+		}
+
+		GrowupTable *config = get_config_by_id(info->id, &strong_config);
+		if (!config)
+		{
+			continue;
+		}
+		if ((uint32_t)config->ConditionType != type)
+		{
+			continue;
+		}
+
+		uint32_t pre_progress = info->progress;
+		add_achievement_progress_internal(info->progress, type, config->ConditionTarget1, config->ConditionTarget2, target1, target2, num);
+
+		//计数没变化
+		if (info->progress == pre_progress)
+		{
+			continue;
+		}
+
+		//目标已达成
+		if (info->progress >= (uint32_t)config->ConditionNum)
+		{
+			info->state = Strong_State_Achieved;
+			add_strong_chapter_progress(config->Type);
+		}
+
+		strong_goal_update_notify(info);
+	}
+}
+
+void player_struct::strong_goal_update_notify(StrongGoalInfo *info)
+{
+	if (!data->login_notify)
+	{
+		return;
+	}
+
+	StrongGoalData nty;
+	strong_goal_data__init(&nty);
+
+	nty.id = info->id;
+	nty.progress = info->progress;
+	nty.state = info->state;
+
+	EXTERN_DATA ext_data;
+	ext_data.player_id = data->player_id;
+
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_STRONG_GOAL_UPDATE_NOTIFY, strong_goal_data__pack, nty);
+}
+
+StrongGoalInfo *player_struct::get_strong_goal_info(uint32_t goal_id)
+{
+	for (int i = 0; i < MAX_STRONG_GOAL_NUM; ++i)
+	{
+		if (data->strong_goals[i].id == 0)
+		{
+			break;
+		}
+		else if (data->strong_goals[i].id == goal_id)
+		{
+			return &data->strong_goals[i];
+		}
+	}
+
+	return NULL;
+}
+
+void player_struct::add_strong_chapter_progress(uint32_t chapter_id)
+{
+	StrongChapterInfo *info = get_strong_chapter_info(chapter_id);
+	if (!info)
+	{
+		return ;
+	}
+
+	if (info->state != Strong_State_Achieving)
+	{
+		return;
+	}
+
+	info->progress++;
+	uint32_t total_num = sg_strong_chapter_map[chapter_id];
+	if (info->progress >= total_num)
+	{
+		info->state = Strong_State_Achieved;
+	}
+
+	strong_chapter_update_notify(info);
+}
+
+void player_struct::strong_chapter_update_notify(StrongChapterInfo *info)
+{
+	if (!data->login_notify)
+	{
+		return;
+	}
+
+	StrongChapterData nty;
+	strong_chapter_data__init(&nty);
+
+	nty.id = info->id;
+	nty.progress = info->progress;
+	nty.state = info->state;
+
+	EXTERN_DATA ext_data;
+	ext_data.player_id = data->player_id;
+
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_STRONG_CHAPTER_UPDATE_NOTIFY, strong_chapter_data__pack, nty);
+}
+
+StrongChapterInfo *player_struct::get_strong_chapter_info(uint32_t chapter_id)
+{
+	for (int i = 0; i < MAX_STRONG_CHAPTER_NUM; ++i)
+	{
+		if (data->strong_chapters[i].id == 0)
+		{
+			break;
+		}
+		else if (data->strong_chapters[i].id == chapter_id)
+		{
+			return &data->strong_chapters[i];
+		}
+	}
+
+	return NULL;
+}
+
 

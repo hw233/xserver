@@ -53,7 +53,7 @@ local NpcTalkTable = {
 		['NpcId'] = 152030027,
 		['Type'] = 1,
 		['EventNum1'] = 0,
-		['EventNum2'] = {8,14}
+		['EventNum2'] = {8,11}
 		},
 	[156000009] = {
 		['ID'] = 156000009,
@@ -383,6 +383,41 @@ local NpcTalkTable = {
 		['Type'] = 1,
 		['EventNum1'] = 0,
 		['EventNum2'] = {10}
+		},
+	[152000001] = {
+		['ID'] = 152000001,
+		['NpcId'] = 152030005,
+		['Type'] = 1,
+		['EventNum1'] = 0,
+		['EventNum2'] = {2}
+		},
+	[152000002] = {
+		['ID'] = 152000002,
+		['NpcId'] = 152030018,
+		['Type'] = 1,
+		['EventNum1'] = 0,
+		['EventNum2'] = {5}
+		},
+	[152000003] = {
+		['ID'] = 152000003,
+		['NpcId'] = 152030020,
+		['Type'] = 1,
+		['EventNum1'] = 0,
+		['EventNum2'] = {8}
+		},
+	[152000004] = {
+		['ID'] = 152000004,
+		['NpcId'] = 152030019,
+		['Type'] = 1,
+		['EventNum1'] = 0,
+		['EventNum2'] = {11}
+		},
+	[152000005] = {
+		['ID'] = 152000005,
+		['NpcId'] = 152030042,
+		['Type'] = 1,
+		['EventNum1'] = 0,
+		['EventNum2'] = {3,3,3,3}
 		}
 	}
 return NpcTalkTable

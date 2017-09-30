@@ -93,6 +93,7 @@
 
 #define ERROR_ID_ACTIVE_REWARD_HAS_GOT     2000 //该活跃度奖励已领取
 #define ERROR_ID_ACTIVENESS_NOT_ENOUGH     2001 //活跃度不够，无法领奖励
+#define ERROR_ID_ACTIVITY_NOT_OPEN		2002 //活动未开启
 
 #define ERROR_ID_TRANSFER_OUT_STUCK_CDING     2100 //脱离卡死正在CD中
 #define ERROR_ID_TRANSFER_OUT_STUCK_FAIL      2101 //脱离卡死传送失败
@@ -165,6 +166,13 @@
 
 #define ERROR_ID_TITLE_ID                     2530 //称号ID错误
 #define ERROR_ID_TITLE_NOT_ACTIVE             2531 //称号未激活
+
+#define ERROR_ID_NOT_IN_FISHING_REGION		  2600 //不在钓鱼区域
+
+#define ERROR_ID_STRONG_CHAPTER_ID			2700 //变强章节id错误
+#define ERROR_ID_STRONG_CHAPTER_STATE		2701 //变强章节奖励状态错误
+#define ERROR_ID_STRONG_GOAL_ID				2702 //变强目标id错误
+#define ERROR_ID_STRONG_GOAL_STATE			2702 //变强目标奖励状态错误
 
 
 /*******************以下是前端提示专用*********************/

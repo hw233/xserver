@@ -11,6 +11,8 @@
 #define ZHENYING_RAID_ID 30001
 #define MAX_ZHENYING_RAID_PLAYER_NUM 2
 
+struct FactionBattleTable;
+
 extern std::map<uint64_t, zhenying_raid_struct *> zhenying_raid_manager_all_raid_id;
 extern std::list<zhenying_raid_struct *> zhenying_raid_manager_raid_free_list;
 extern std::set<zhenying_raid_struct *> zhenying_raid_manager_raid_used_list;
@@ -34,6 +36,8 @@ public:
 	static zhenying_raid_struct *add_player_to_zhenying_raid(player_struct *player); //把玩家加入阵营副本
 
 	static unsigned int get_zhenying_raid_pool_max_num();	
+
+	static void GetRelivePos(FactionBattleTable *table, int zhenying, int *x, int *z, double *direct);
 		
 private:
 	static int add_zhenying_raid(zhenying_raid_struct *p);

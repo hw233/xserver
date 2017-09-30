@@ -55,18 +55,18 @@ while True:
 #    msg_format = "=IHH" + str(data_len) + 'sQIHH' 
 #    msg_len, msg_id, seq, pb_data, player_id, t1, t1, t1 = struct.unpack(msg_format, data)
 
-    if not player_id in WATCH_PLAYER:
-        continue;
+#    if player_id not in WATCH_PLAYER:
+#        continue;
 # 移动停止
     if msg_id == 10108:
         req = move_direct_pb2.move_stop_request()
         req.ParseFromString(pb_data)
-        oldtime=datetime.datetime.now()                
-        print oldtime.time() , " move stop[%.1f][%.1f]" % (req.cur_pos.pos_x, req.cur_pos.pos_z)        
+        oldtime = datetime.datetime.now()                
+        print oldtime.time(), " move stop[%.1f][%.1f]" % (req.cur_pos.pos_x, req.cur_pos.pos_z)        
 
 #移动开始        
     if msg_id == 10105:
         req = move_direct_pb2.move_start_request()
         req.ParseFromString(pb_data)
-        oldtime=datetime.datetime.now()                
-        print oldtime.time() ," move start[%.1f][%.1f]" % (req.cur_pos.pos_x, req.cur_pos.pos_z)
+        oldtime = datetime.datetime.now()                
+        print oldtime.time(), " move start[%.1f][%.1f]" % (req.cur_pos.pos_x, req.cur_pos.pos_z)

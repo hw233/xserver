@@ -1071,7 +1071,7 @@ int unit_struct::count_rect_unit_at_pos(double angle, struct position *start_pos
 		player_struct *player = player_manager::get_player_by_id(sight_player[i]);
 		if (!player || !player->is_alive())
 		{
-			LOG_ERR("%s %d: player[%lu] in sight", __FUNCTION__, __LINE__, sight_player[i]);
+			LOG_ERR("%s %d: unit[%lu] can't find player[%lu][%p] in sight", __FUNCTION__, __LINE__, get_uuid(), player, sight_player[i]);
 			continue;
 		}
 		if (player->is_too_high_to_beattack())
@@ -1118,7 +1118,7 @@ int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, st
 		player_struct *player = player_manager::get_player_by_id(sight_player[i]);
 		if (!player || !player->is_alive())
 		{
-			LOG_ERR("%s %d: player[%lu] in sight", __FUNCTION__, __LINE__, sight_player[i]);
+			LOG_ERR("%s %d: unit[%lu] can't find player[%lu][%p] in sight", __FUNCTION__, __LINE__, get_uuid(), player, sight_player[i]);			
 			continue;
 		}
 

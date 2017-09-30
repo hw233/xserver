@@ -295,6 +295,10 @@ void cash_truck_struct::on_tick()
 		}
 		player->go_down_cash_truck();
 		player->sight_space = sight_space_manager::create_sight_space(player, 2);
+
+		if (!player->sight_space)
+			return;
+		
 		//player->stop_move();
 		for (uint32_t num = 0; num < truck_config->Number[player->data->truck.jiefei]; ++num)
 		{

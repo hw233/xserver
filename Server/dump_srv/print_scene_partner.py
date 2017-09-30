@@ -38,14 +38,14 @@ while True:
 
 #视野变化    
     if msg_id == 10103:
-        print "get 10103"
+#        print "get 10103"
         req = move_pb2.sight_changed_notify()
         req.ParseFromString(pb_data)
         oldtime = datetime.datetime.now()        
         for t1 in req.add_partner:
             print oldtime.time(),
             print ": 添加伙伴",
-            print "%lu owner[%lu]" % (t1.uuid, t1.owner)            
+            print "%lu owner[%lu] pos[%.1f %.1f]" % (t1.uuid, t1.owner, t1.data[0].pos_x, t1.data[0].pos_z)            
 
         for t1 in req.delete_partner:
             print oldtime.time(),

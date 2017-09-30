@@ -345,7 +345,7 @@ local CharmTable = {
 	[108000050] = {
 		['ID'] = 108000050,
 		['Level'] = 50,
-		['Exp'] = 590,
+		['Exp'] = 600,
 		['AttributeType'] = {89,90,91,92},
 		['AttributeNum'] = {250,250,250,250}
 		}

@@ -69,15 +69,15 @@ int save_player_doufachang_record(DoufachangRecordAnswer *info, uint64_t player_
 	size_t size = doufachang_record_answer__pack(info, data_buffer);
 	if (size <= 0 || size >= sizeof(data_buffer))
 	{
-		LOG_ERR("%s: pack %lu failed, size = %u", __FUNCTION__, player_id, size);
+		LOG_ERR("%s: pack %lu failed, size = %zu", __FUNCTION__, player_id, size);
 		return (-1);
 	}
 	char field[64];
 	sprintf(field, "%lu", player_id);
 	int ret = rc.hset_bin(player_key, field, (char *)data_buffer, size);
-	if (ret != 1)
+	if (ret != 1 && ret != 0)
 	{
-		LOG_ERR("%s: hset %lu failed, size = %u, ret = %d", __FUNCTION__, player_id, size, ret);
+		LOG_ERR("%s: hset %lu failed, size = %zu, ret = %d", __FUNCTION__, player_id, size, ret);
 		return (-1);		
 	}
 	return (0);
@@ -105,15 +105,15 @@ int save_player_doufachang_info(PlayerDoufachangInfo *info, uint64_t player_id, 
 	size_t size = player_doufachang_info__pack(info, data_buffer);
 	if (size <= 0 || size >= sizeof(data_buffer))
 	{
-		LOG_ERR("%s: pack %lu failed, size = %u", __FUNCTION__, player_id, size);
+		LOG_ERR("%s: pack %lu failed, size = %zu", __FUNCTION__, player_id, size);
 		return (-1);
 	}
 	char field[64];
 	sprintf(field, "%lu", player_id);
 	int ret = rc.hset_bin(player_key, field, (char *)data_buffer, size);
-	if (ret != 1)
+	if (ret != 1 && ret != 0)
 	{
-		LOG_ERR("%s: hset %lu failed, size = %u, ret = %d", __FUNCTION__, player_id, size, ret);
+		LOG_ERR("%s: hset %lu failed, size = %zu, ret = %d", __FUNCTION__, player_id, size, ret);
 		return (-1);		
 	}
 	return (0);
@@ -137,7 +137,7 @@ void copy_doufachang_rank(char *from, char *to, CRedisClient &rc)
 		if (field->type != REDIS_REPLY_STRING || value->type != REDIS_REPLY_STRING)
 			continue;
 		int ret = rc.hset_bin(to, field->str, value->str, value->len);
-		if (ret != 1)
+		if (ret != 1 && ret != 0)
 		{
 			LOG_ERR("%s: hsetbin failed[%d]", __FUNCTION__, ret);
 		}

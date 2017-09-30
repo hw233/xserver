@@ -888,6 +888,8 @@ int conn_node_loginsrv::handle_create_player(EXTERN_DATA *extern_data)
 			info.auto_add_hp->open_auto_add_hp = 1;
 			info.auto_add_hp->auto_add_hp_item_id = 201070049;
 
+			info.fishing_bait_id = 440400001;
+
 			const static int MAX_CREATE_ATTR = 20;
 			int arrNum = 0;
 			uint32_t arrId[MAX_CREATE_ATTR] = {0};

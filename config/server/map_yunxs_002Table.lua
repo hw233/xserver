@@ -691,7 +691,19 @@
         ['PointPosY'] = 37.0023,
         ['PointPosZ'] = 35.39211,
         ['Yaw'] = 0,
-        ['Level'] = 40,
+        ['Level'] = 70,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000061] = {
+        ['uid'] = 1000061,
+        ['ID'] = 151601002,
+        ['ResType'] = "Monster",
+        ['PointPosX'] = 119.9946,
+        ['PointPosY'] = 33.002,
+        ['PointPosZ'] = 34.92884,
+        ['Yaw'] = 0,
+        ['Level'] = 70,
         ['TargetInfoList'] = {
         }
     },

@@ -843,7 +843,7 @@ int conn_node_ranksrv::handle_refresh_player_world_boss_info(EXTERN_DATA *extern
 	PlayerWorldBossRedisinfo *req = player_world_boss_redisinfo__unpack(NULL, get_data_len(), get_data());
 	if (!req)
 	{
-		LOG_ERR("[%s:%d] player[%lu] unpack req failed, refresh_type:%u", __FUNCTION__, __LINE__, extern_data->player_id);
+		LOG_ERR("[%s:%d] player[%lu] unpack req failed", __FUNCTION__, __LINE__, extern_data->player_id);
 		return -1;
 	}
 
@@ -860,7 +860,7 @@ int conn_node_ranksrv::handle_refresh_player_world_boss_info(EXTERN_DATA *extern
 	std::set<uint64_t>::iterator itr = world_boss_id.find(boss_id);
 	if(itr == world_boss_id.end())
 	{
-		LOG_ERR("[%s:%d]更新世界boss数据失败，无对应的世界boss,bossid[%u]", __FUNCTION__, __LINE__, boss_id);
+		LOG_ERR("[%s:%d]更新世界boss数据失败，无对应的世界boss,bossid[%lu]", __FUNCTION__, __LINE__, boss_id);
 		return -2;
 	}
 
@@ -997,7 +997,7 @@ int conn_node_ranksrv::handle_refresh_player_world_boss_info(EXTERN_DATA *extern
 		ret = rc.hdel(cur_world_boss_key, field);
 		if(ret < 0)
 		{
-			LOG_ERR("[%s:%d] del cur  world boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret)
+			LOG_ERR("[%s:%d] del cur  world boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret);
 		}
 		//世界boss死了发奖
 		world_boss_provide_rank_reward(boss_id);
@@ -1528,7 +1528,7 @@ int conn_node_ranksrv::handle_world_timing_birth_updata_info(EXTERN_DATA *extern
 		ret = rc.hdel(cur_world_boss_key, field);
 		if(ret < 0)
 		{
-			LOG_ERR("[%s:%d] del cur  world boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret)
+			LOG_ERR("[%s:%d] del cur  world boss failed, bossid[%lu] ret = %d", __FUNCTION__, __LINE__, boss_id, ret);
 		}
 	}
 	//再重置下当前轮信息，主要是设置当前血量信息
@@ -1573,7 +1573,7 @@ int conn_node_ranksrv::handle_world_timing_birth_updata_info(EXTERN_DATA *extern
 		ret = rc.zdel_rank(rank_key, 0, -1);
 		if(ret != 0)
 		{
-			LOG_ERR("[%s:%d]将本轮排行信息跟新到上轮时，清除本轮榜单信息失败[%lu]", __FUNCTION__, __LINE__, boss_id)	
+			LOG_ERR("[%s:%d]将本轮排行信息跟新到上轮时，清除本轮榜单信息失败[%lu]", __FUNCTION__, __LINE__, boss_id);
 			break;
 		}
 	}while(0);
@@ -1651,7 +1651,8 @@ int conn_node_ranksrv::world_boss_provide_rank_reward(uint64_t boss_id)
 			//判断时间有误，报错，不给当前玩家奖励
 			if(flag < 0)
 			{
-				LOG_ERR("[%s:%d] 发放玩家排行奖励失败,player_id[%lu] last_time[%lu] now_time[%lu]", __FUNCTION__, __LINE__, last_time, now_time);
+				LOG_ERR("[%s:%d] 发放玩家排行奖励失败,player_id[%lu] last_time[%lu] now_time[%lu]",
+					__FUNCTION__, __LINE__, player_id, last_time, now_time);
 				continue;
 			}
 			else if(flag == 0)
@@ -1898,7 +1899,8 @@ int conn_node_ranksrv::world_boss_provide_kill_reward(uint64_t boss_id)
 		//判断时间有误，报错，不给当前玩家奖励
 		if(flag < 0)
 		{
-			LOG_ERR("[%s:%d] 发放最后一刀奖励失败,player_id[%lu] last_time[%lu] now_time[%lu]", __FUNCTION__, __LINE__, last_time, now_time);
+			LOG_ERR("[%s:%d] 发放最后一刀奖励失败,player_id[%lu] last_time[%lu] now_time[%lu]",
+				__FUNCTION__, __LINE__, player_id, last_time, now_time);
 			return -9;
 		}
 		else if(flag == 0)

@@ -346,6 +346,7 @@ player_struct * player_manager::create_doufachang_ai_player(DOUFACHANG_LOAD_PLAY
 	
 		//登陆成功
 	ret->data->status = ONLINE;
+	ret->down_horse();
 
 
 	player_manager_all_ai_players_id[player_id] = ret;
@@ -404,6 +405,7 @@ player_struct *player_manager::create_doufachang_ai_player(player_struct *player
 	
 		//登陆成功
 	ret->data->status = ONLINE;
+	ret->down_horse();	
 
 	player_manager_all_ai_players_id[player_id] = ret;
 	return ret;
@@ -520,7 +522,7 @@ struct ai_player_data *player_manager::create_ai_data()
 		ret = (struct ai_player_data *)malloc(sizeof(struct ai_player_data));
 		if (!ret)
 		{
-			LOG_ERR("%s: malloc ai_data failed\n");
+			LOG_ERR("%s: malloc ai_data failed\n", __FUNCTION__);
 			return NULL;
 		}
 	}

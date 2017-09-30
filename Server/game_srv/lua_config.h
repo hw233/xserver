@@ -126,6 +126,11 @@ extern std::map<uint64_t, struct WorldBossTable*> world_boss_config; //世界bos
 extern std::map<uint64_t, struct WorldBossTable*> monster_to_world_boss_config; //世界boss表(以怪物id为索引)
 extern std::map<uint64_t, struct ChallengeTable*> hero_challenge_config; //英雄挑战
 extern std::map<uint64_t, struct ChallengeTable*> raidid_to_hero_challenge_config; //英雄挑战(以副本id为索引)
+extern std::map<uint64_t, struct UndergroundTask*> mijing_xiulian_config; //秘境修炼任务信息
+extern std::map<uint64_t, struct UndergroundTask*> taskid_to_mijing_xiulian_config; //秘境修炼任务信息(以任务id为索引)
+extern std::map<uint64_t, struct CampDefenseTable*> zhenying_daily_config; //日常阵营战
+extern std::map<uint64_t, struct FishingTable*> fishing_config; //钓鱼表
+extern std::map<uint64_t, struct GrowupTable*> strong_config; //变强表
 
 
 //////////////////
@@ -342,6 +347,13 @@ extern uint32_t sg_doufachang_raid_id;
 extern uint32_t sg_doufachang_raid_win_reward[2];
 extern uint32_t sg_doufachang_raid_lose_reward[2];
 
+extern uint32_t DEFAULT_HORSE;
+
 extern double sg_exp_turn_zhenqi_percent;
+
+extern SceneCreateMonsterTable sg_zhenying_truck[2];
+
+extern std::map<uint32_t, uint32_t> sg_strong_chapter_map;
+extern std::map<uint64_t, GrowupTable*> sg_strong_chapter_reward;
 
 #endif /* __LUA_CONFIG_H__ */

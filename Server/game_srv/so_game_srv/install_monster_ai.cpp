@@ -35,6 +35,7 @@ void install_monster_ai()
 {
 	monster_struct::add_ai_interface(AI_TYPE_NORMAL, &monster_ai_normal_interface);
 	monster_struct::add_ai_interface(AI_TYPE_CIRCLE, &monster_ai_circle_interface);
+	monster_struct::add_ai_interface(3, &monster_ai_3_interface);	
 	monster_struct::add_ai_interface(6, &monster_ai_0_interface);
 	monster_struct::add_ai_interface(4, &monster_ai_4_interface);
 	monster_struct::add_ai_interface(5, &monster_ai_5_interface);

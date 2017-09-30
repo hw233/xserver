@@ -46,6 +46,8 @@ private:
 	void handle_zhenying_power();
 	void handle_zhenying_change_power();
 	void handle_zhenying_add_kill();
+	void handle_zhenying_fight_myside_score();
+	void handle_zhenying_fight_settle();
 
 	void handle_friend_info_request();
 	void handle_friend_add_contact_request();

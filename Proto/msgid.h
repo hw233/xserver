@@ -42,6 +42,9 @@
 #define MSG_ID_SIGHT_PLAYER_CHANGE_NOTIFY	           10124   //视野玩家信息变更通知 sight_player_info_change_notify
 #define MSG_ID_MONSTER_ID_CHANGED_NOTIFY               10125   //视野中的怪物ID变更(怪物变身) sight_monster_id_changed_notify
 #define MSG_ID_MONSTER_TALK_NOTIFY                     10126   //视野中的怪物冒泡说话  monster_talk_notify
+#define MSG_ID_BOATING_START_REQUEST                   10127   //开始划船，从视野删除 boating_start_request
+#define MSG_ID_BOATING_START_ANSWER                    10128   //comm_answer
+#define MSG_ID_BOATING_STOP_REQUEST                    10129   //划船结束  NULL
 
 //技能模块
 #define MSG_ID_SKILL_CAST_REQUEST 		10200   //施法请求  skill_cast_request
@@ -132,6 +135,10 @@
 #define MSG_ID_TRANSFER_OUT_STUCK_INFO_NOTIFY     10426 //脱离卡死信息通知 TransferOutStuckInfoNotify
 #define MSG_ID_SERVER_LEVEL_INFO_NOTIFY     10427 //服务器等级信息通知 ServerLevelInfoNotify
 #define MSG_ID_SERVER_LEVEL_BREAK_NOTIFY    10428 //服务器等级突破通知 NULL
+#define MSG_ID_FISHING_REWARD_REQUEST        10429 //钓鱼收杆请求 FishingRewardRequest
+#define MSG_ID_FISHING_REWARD_ANSWER         10430 //钓鱼收杆应答 FishingRewardAnswer
+#define MSG_ID_FISHING_SET_BAIT_REQUEST      10431 //钓鱼设置鱼饵请求 FishingSetBaitRequest
+#define MSG_ID_FISHING_SET_BAIT_ANSWER       10432 //钓鱼设置鱼饵应答 FishingSetBaitAnswer
 
 //复活
 #define MSG_ID_RELIVE_REQUEST               10500  //复活 relive_request
@@ -605,7 +612,10 @@
 //阵营日常
 //#define MSG_ID_INTO_ZHENYING_DAILY_REQUEST           12450 //进入阵营日常请求 
 //#define MSG_ID_INTO_ZHENYING_DAILY_ANSWER            12451 //进入阵营日常应答 comm_answer
-#define MSG_ID_ZHENYING_DAILY_CD_NOTIFY          12438 //阵营日常结束cd FbCD
+#define MSG_ID_ZHENYING_DAILY_CD_NOTIFY          12452 //阵营日常结束cd FbCD
+#define MSG_ID_ZHENYING_DAILY_SCORE_NOTIFY       12453 //阵营日常积分 DailyScore
+#define MSG_ID_ZHENYING_DAILY_MINE_NOTIFY        12454 //阵营日常矿车进度 DailyMine
+#define MSG_ID_ZHENYING_DAILY_MINE_STATE_NOTIFY        12455 //阵营日常矿车状态 MineState
 #define MSG_ID_ZHENYING_MAX_REQUEST                 12500 //NULL
 
 //答题
@@ -803,6 +813,15 @@
 #define MSG_ID_TITLE_MARK_OLD_REQUEST                       13635 //称号置旧请求 TitleMarkOldRequest
 #define MSG_ID_TITLE_MARK_OLD_ANSWER                        13636 //称号置旧应答 TitleMarkOldAnswer
 
+//变强
+#define MSG_ID_STRONG_INFO_NOTIFY							13661 //变强信息通知 StrongInfoNotify
+#define MSG_ID_STRONG_GOAL_UPDATE_NOTIFY                    13662 //变强目标更新通知 StrongGoalData
+#define MSG_ID_STRONG_GOAL_REWARD_REQUEST                   13663 //变强目标奖励请求 StrongGoalRewardRequest
+#define MSG_ID_STRONG_GOAL_REWARD_ANSWER                    13664 //变强目标奖励应答 comm_answer
+#define MSG_ID_STRONG_CHAPTER_UPDATE_NOTIFY                 13665 //变强章节更新通知 StrongChapterData
+#define MSG_ID_STRONG_CHAPTER_REWARD_REQUEST                13666 //变强章节奖励请求 StrongChapterRewardRequest
+#define MSG_ID_STRONG_CHAPTER_REWARD_ANSWER                 13667 //变强章节奖励应答 comm_answer
+
 //斗法场
 #define MSG_ID_DOUFACHANG_INFO_REQUEST						13701  //请求斗法场主界面信息 NULL
 #define MSG_ID_DOUFACHANG_INFO_ANSWER						13702  //斗法场主界面信息 doufachang_info_answer
@@ -826,6 +845,7 @@
 #define MSG_ID_WORLDBOSS_LAST_RANK_INFO_REQUEST			   13806 //世界boss上轮排名信息和玩家自己上轮信息请求 RankRankWorldBossLastInfoRequest
 #define MSG_ID_WORLDBOSS_LAST_RANK_INFO_ANSWER			   13807 //世界boss上轮排名信息和玩家自己上轮信息应答 RankRankWorldBossLastInfoAnswer
 #define MSG_ID_WORLDBOSS_PLAYER_RANK_INFO_NOTIFY		   13808 //世界boss刷新或者死亡玩家奖励信息通知 RankWorldBossRewardNotify
+#define MSG_ID_WORLDBOSS_REFRESH_NOTIFY		               13809 //世界boss刷新通知 RankWorldBossRefreshNotify
 
 
 //英雄挑战
@@ -837,5 +857,11 @@
 #define MSG_ID_HERO_CHALLENGE_SWEEP_RECIVE_ANSWER		   13905 //英雄挑战扫荡奖励领取应答 comm_answer
 #define MSG_ID_HERO_CHALLENGE_SWEEP_REWARD_INFO_REQUEST	   13906 //英雄挑战扫荡奖励信息请求 HeroChallengeReciveSweepRewardRequest
 #define MSG_ID_HERO_CHALLENGE_SWEEP_REWARD_INFO_NOTIFY	   13907 //英雄挑战扫荡奖励信息应答 HeroChallengeSweepAnswer
+
+//秘境修炼任务
+#define MSG_ID_MIJING_XIULIAN_TASK_INFO_REQUEST			   14000 //秘境修炼任务信息请求
+#define MSG_ID_MIJING_XIULIAN_TASK_INFO_ANSWER			   14001 //秘境修炼任务信息应答 MiJingXiuLianTaskInfoAnswer
+#define MSG_ID_MIJING_XIULIAN_TASK_SHUAXING_REQUEST		   14002 //秘境修炼刷星请求
+#define MSG_ID_MIJING_XIULIAN_TASK_SHUAXING_ANSWER		   14003 //秘境修炼刷星信息应答 MiJingXiuLianTaskShuaXingAnswer
 #endif
 

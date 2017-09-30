@@ -433,6 +433,21 @@ static int get_rank_player(int cur_rank, uint64_t player_id, uint64_t *rank_play
 		sg_redis_client.mget_uint64(conn_node_doufachangsrv::doufachang_rank_key, MAX_CHALLENGE_PLAYER, rank_player_rank, rank_player_id);
 		return (0);
 	}
+
+	if (cur_rank <= 10)
+	{
+		uint64_t size = sg_redis_client.size(conn_node_doufachangsrv::doufachang_rank_key);		
+		rank_player_rank[0] = cur_rank - 2;
+		rank_player_rank[1] = cur_rank - 1;
+		rank_player_rank[2] = cur_rank;
+//		if (rank_player_rank[2] > size && cur_rank - 3 > 0)
+//			rank_player_rank[2] = cur_rank - 3;
+		rank_player_rank[3] = cur_rank + 1;
+		if (rank_player_rank[3] > size && cur_rank - 3 > 0)
+			rank_player_rank[3] = cur_rank - 3;		
+		sg_redis_client.mget_uint64(conn_node_doufachangsrv::doufachang_rank_key, MAX_CHALLENGE_PLAYER, rank_player_rank, rank_player_id);
+		return (0);
+	}
 	
 
 	if (cur_rank <= 30)

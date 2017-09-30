@@ -117,7 +117,8 @@ int raid_manager::check_player_enter_raid(player_struct *player, uint32_t raid_i
 	}
 
 		//当前在副本中
-	if (player->scene && player->scene->get_scene_type() == SCENE_TYPE_RAID)
+	if (player->scene && player->scene->get_scene_type() == SCENE_TYPE_RAID 
+		&& r_config->DengeonRank != DUNGEON_TYPE_ZHENYING)
 	{
 		raid_struct *t_raid = (raid_struct *)(player->scene);
 		LOG_ERR("%s %d: player[%lu] raid[%u] already in raid[%u][%lu]", __FUNCTION__, __LINE__,
@@ -143,6 +144,11 @@ int raid_manager::check_player_enter_raid(player_struct *player, uint32_t raid_i
 	{
 		send_enter_raid_fail(player, 190500305, 0, NULL, 0);
 		return -(11);
+	}
+
+	if (r_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW && player->get_attr(PLAYER_ATTR_ZHENYING) == 0)
+	{
+		return 190500258;
 	}
 
 		//检查时间

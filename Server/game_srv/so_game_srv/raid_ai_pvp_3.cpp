@@ -386,7 +386,7 @@ static void pvp_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster,
 static void pvp_raid_refresh_monster(raid_struct *raid)
 {
 	uint32_t rand = random() % 3;
-	monster_manager::create_monster_at_pos(raid, sg_3v3_pvp_monster_id[rand], 1, sg_3v3_pvp_monster_place[rand * 4 + 1], sg_3v3_pvp_monster_place[rand * 4 + 3], 0, NULL);
+	monster_manager::create_monster_at_pos(raid, sg_3v3_pvp_monster_id[rand], raid->PVP_DATA.average_lv, sg_3v3_pvp_monster_place[rand * 4 + 1], sg_3v3_pvp_monster_place[rand * 4 + 3], 0, NULL);
 	raid->PVP_DATA.refresh_monster_time = 0;
 }
 

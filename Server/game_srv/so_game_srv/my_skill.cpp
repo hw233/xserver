@@ -275,7 +275,7 @@ skill_struct *MySkill::GetSkillStructFromFuwen(uint32_t fuwen_id)
 // 	return t;
 }
 
-static uint32_t avoid_skill[] = {111100106, 111100206, 111100306, 111100406, 111100506, 111100102};
+const static uint32_t avoid_skill[] = {111100106, 111100206, 111100306, 111100406, 111100506, 111100102};
 
 uint32_t MySkill::GetRandSkillId(struct ai_player_data *ai_data)
 {

@@ -470,7 +470,9 @@ static void generate_parameters(void)
 	sg_doufachang_raid_win_reward[0] = get_config_by_id(161000320, &parameter_config)->parameter1[0];
 	sg_doufachang_raid_win_reward[1] = get_config_by_id(161000320, &parameter_config)->parameter1[1];
 	sg_doufachang_raid_lose_reward[0] = get_config_by_id(161000321, &parameter_config)->parameter1[0];
-	sg_doufachang_raid_lose_reward[1] = get_config_by_id(161000321, &parameter_config)->parameter1[1];		
+	sg_doufachang_raid_lose_reward[1] = get_config_by_id(161000321, &parameter_config)->parameter1[1];
+
+	DEFAULT_HORSE = get_config_by_id(161000302, &parameter_config)->parameter1[0];
 
 	config = get_config_by_id(161000308, &parameter_config);
 	if (config && config->n_parameter1 >= 2)
@@ -576,7 +578,16 @@ bool is_guild_battle_raid(uint32_t id)
 
 bool scene_can_make_team(uint32_t scene_id)
 {
+	DungeonTable *table = get_config_by_id(scene_id, &all_raid_config);
+	if (table != NULL)
+	{
+		if (table->DengeonRank == DUNGEON_TYPE_ZHENYING)
+		{
+			return true;
+		} 
+	}
 	return (scene_id <= SCENCE_DEPART || is_guild_wait_raid(scene_id));
+
 }
 
 int get_scene_birth_pos(uint32_t scene_id, float *pos_x, float *pos_y, float *pos_z, float *face_y)
@@ -813,6 +824,25 @@ static void	adjust_robot_config(std::vector<struct ActorRobotTable*> *config)
 			continue;
 		}
 		robot_config[index].push_back(t);
+	}
+}
+
+static void adjust_zhenying_daily_truck()
+{
+	std::map<uint64_t, struct CampDefenseTable*>::iterator it = zhenying_daily_config.begin();
+	for (int i = 0; it != zhenying_daily_config.end(); ++it,++i)
+	{
+		sg_zhenying_truck[i].n_TargetInfoList = it->second->n_TruckRouteX;
+		TargetInfoEntry *pEntry = new struct TargetInfoEntry[it->second->n_TruckRouteX];
+		sg_zhenying_truck[i].TargetInfoList = new struct TargetInfoEntry *[it->second->n_TruckRouteX];
+		for (uint64_t p = 0; p < it->second->n_TruckRouteX; ++p)
+		{
+			sg_zhenying_truck[i].TargetInfoList[p] = &pEntry[p];
+			pEntry[p].TargetPos = new struct TargetPos;
+			pEntry[p].TargetPos->TargetPosX = it->second->TruckRouteX[p];
+			pEntry[p].TargetPos->TargetPosZ = it->second->TruckRouteY[p];
+			pEntry[p].RemainTime = 0;
+		}
 	}
 }
 
@@ -1685,6 +1715,15 @@ static void adjust_herochallenge_table()
 	}
 }
 
+static void adjust_mijingxiulian_table()
+{
+	std::map<uint64_t, struct UndergroundTask *>::iterator ite;
+	for (ite = mijing_xiulian_config.begin(); ite != mijing_xiulian_config.end(); ++ite)
+	{
+		taskid_to_mijing_xiulian_config.insert(std::make_pair((uint64_t)(ite->second->TaskID), ite->second));
+	}
+}
+
 static void adjust_achievement_config(void)
 {
 	std::map<uint64_t, AchievementFunctionTable*> func_hier_map;
@@ -1792,6 +1831,11 @@ TypeLevelTable *get_guoyu_level_table(int level)
 	return NULL;
 }
 
+SceneCreateMonsterTable *get_daily_zhenying_truck_config(uint32_t id)
+{
+	return &sg_zhenying_truck[id % 10 - 1];
+}
+
 ChangeSpecialty *get_change_special_table(int level)
 {
 	uint64_t comb_id = 325000000 + level;
@@ -1819,6 +1863,10 @@ MoneyQuestTable *get_shangjin_task_table(uint32_t level)
 	std::map<uint64_t, MoneyQuestTable *>::iterator iter = shangjin_task_config.begin();
 	for (; iter != shangjin_task_config.end(); ++iter)
 	{
+		if (level == 1)
+		{
+			return iter->second;
+		}
 		if (level >= iter->second->LevelSection[0] && level <= iter->second->LevelSection[1])
 		{
 			return iter->second;
@@ -2272,6 +2320,72 @@ uint32_t get_friend_close_level(uint32_t closeness)
 	return lv;
 }
 
+bool activity_is_open(uint32_t activity_id)
+{
+	uint32_t now = time_helper::get_cached_time() / 1000;
+
+	bool in_time = false;
+	do
+	{
+		EventCalendarTable *act_config = get_config_by_id(activity_id, &activity_config);
+		if (!act_config)
+		{
+			break;
+		}
+
+		ControlTable *ctrl_config = get_config_by_id(act_config->RelationID, &all_control_config);
+		if (!ctrl_config)
+		{
+			break;
+		}
+
+		//检查时间
+		if (ctrl_config->n_OpenDay > 0)
+		{
+			bool pass = false;
+			uint32_t week = time_helper::getWeek(now);
+			for (size_t i = 0; i < ctrl_config->n_OpenDay; ++i)
+			{
+				if (week == ctrl_config->OpenDay[i])
+				{
+					pass = true;
+					break;
+				}
+			}
+			if (pass == false)
+			{
+				break;
+			}
+		}
+		assert(ctrl_config->n_OpenTime == ctrl_config->n_CloseTime);
+		if (ctrl_config->n_OpenTime > 0)
+		{
+			bool pass = false;
+			for (size_t i = 0; i < ctrl_config->n_OpenTime; ++i)
+			{
+				uint32_t start = time_helper::get_timestamp_by_day(ctrl_config->OpenTime[i] / 100,
+						ctrl_config->OpenTime[i] % 100, now);
+				uint32_t end = time_helper::get_timestamp_by_day(ctrl_config->CloseTime[i] / 100,
+						ctrl_config->CloseTime[i] % 100, now);
+				if (now >= start && now <= end)
+				{
+					pass = true;
+					break;
+				}
+			}
+			if (pass == false)
+			{
+				break;
+			}
+		}
+
+		in_time = true;
+		break;
+	} while(0);
+
+	return in_time;
+}
+
 static void adjust_guild_skill_config(void)
 {
 	for (std::map<uint64_t, GangsSkillTable*>::iterator iter = guild_skill_config.begin(); iter != guild_skill_config.end(); ++iter)
@@ -2279,6 +2393,28 @@ static void adjust_guild_skill_config(void)
 		GangsSkillTable *config = iter->second;
 		uint32_t key_new = config->skillType * 1e3 + config->skillLeve;
 		skill_config_map[key_new] = config;
+	}
+}
+
+static void adjust_strong_config(void)
+{
+	sg_strong_chapter_map.clear();
+	for (std::map<uint64_t, GrowupTable*>::iterator iter = strong_config.begin(); iter != strong_config.end(); ++iter)
+	{
+		GrowupTable *config = iter->second;
+		if (sg_strong_chapter_map.find(config->Type) == sg_strong_chapter_map.end())
+		{
+			sg_strong_chapter_map.insert(std::make_pair(config->Type, 1));
+		}
+		else
+		{
+			sg_strong_chapter_map[config->Type]++;
+		}
+
+		if (sg_strong_chapter_reward.find(config->Type) == sg_strong_chapter_reward.end())
+		{
+			sg_strong_chapter_reward.insert(std::make_pair(config->Type, config));
+		}
 	}
 }
 
@@ -2855,9 +2991,32 @@ int read_all_excel_data()
 	assert(ret == 0);	
 	adjust_herochallenge_table();
 
+	type = sproto_type(sp, "UndergroundTask");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/UndergroundTask.lua", (config_type)&mijing_xiulian_config);
+	assert(ret == 0);	
+	adjust_mijingxiulian_table();
+
+	type = sproto_type(sp, "CampDefenseTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/CampDefenseTable.lua", (config_type)&zhenying_daily_config);
+	assert(ret == 0);
+	adjust_zhenying_daily_truck();
+
+	type = sproto_type(sp, "FishingTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/FishingTable.lua", (config_type)&fishing_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "GrowupTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/GrowupTable.lua", (config_type)&strong_config);
+	assert(ret == 0);
+
 	adjust_escort_config();
 	adjust_achievement_config();
 	adjust_guild_skill_config();
+	adjust_strong_config();
 
 	lua_close(L);
 	sproto_release(sp);

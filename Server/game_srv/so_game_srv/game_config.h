@@ -65,6 +65,7 @@ SkillLvTable *get_skill_level_config(uint32_t skill_id, uint32_t level);
 RecruitTable *get_partner_recruit_config(uint32_t type);
 GangsSkillTable *get_guild_skill_config(uint32_t type, uint32_t level);
 AchievementHierarchyTable *get_achievement_config(uint32_t achievement_id, uint32_t star);
+SceneCreateMonsterTable *get_daily_zhenying_truck_config(uint32_t id);
 
 uint32_t get_item_relate_id(uint32_t id);
 int get_item_bind_and_unbind_id(uint32_t id, uint32_t *bind_id, uint32_t *unbind_id);
@@ -82,5 +83,6 @@ int bagua_item_to_card(uint32_t item_id);
 int get_actor_skill_index(uint32_t job, uint32_t skill_id);
 bool item_is_partner_fabao(uint32_t item_id);
 uint32_t get_friend_close_level(uint32_t closeness);
+bool activity_is_open(uint32_t activity_id);
 
 #endif /* GAME_CONFIG_H */

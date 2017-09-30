@@ -71,4 +71,30 @@ message ServerLevelInfoNotify
 	required bool   breaking = 4; //是否正在突破（true表示有经验加成效果）
 }
 
+//钓鱼收杆请求
+message FishingRewardRequest
+{
+	required uint32 type = 1; //1.普通钓鱼 2.任务钓鱼
+}
+
+//钓鱼收杆应答
+message FishingRewardAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated ItemData rewards = 2; //钓到的东西
+}
+
+//钓鱼设置鱼饵请求
+message FishingSetBaitRequest
+{
+	required uint32 baitId = 1; //鱼饵ID
+}
+
+//钓鱼设置鱼饵应答
+message FishingSetBaitAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 baitId = 2; //鱼饵ID
+}
+
 

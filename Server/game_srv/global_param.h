@@ -66,4 +66,7 @@ enum UNIT_FIGHT_TYPE
 #define MAX_PK_TYPE 21
 extern UNIT_FIGHT_TYPE pk_type_to_fight_type[MAX_PK_TYPE][MAX_PK_TYPE];
 
+class ZhenyingBattle;
+typedef std::map<uint64_t, ZhenyingBattle *> PRIVATE_BATTLE_T;
+
 #endif /* GLOBAL_PARAM_H */

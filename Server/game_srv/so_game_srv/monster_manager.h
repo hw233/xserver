@@ -24,7 +24,7 @@ extern struct comm_pool monster_manager_monster_data_pool;
 extern std::map<uint64_t, monster_struct *> monster_manager_all_monsters_id;
 extern std::map<uint64_t, monster_struct *> world_boss_all_monsters_id;
 //extern std::map<uint64_t, boss_struct *> monster_manager_all_boss_id;
-static const int WORD_BOSS_ACTIVE_ID = 330400039; //世界boss活动id
+static const int WORD_BOSS_ACTIVE_ID = 330400039; //世界boss ControlTable表id
 
 class monster_manager
 {

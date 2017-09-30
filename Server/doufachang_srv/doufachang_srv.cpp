@@ -53,7 +53,7 @@ static void	doufachang_check()
 	{
 		if (t && player_id[i] != 0)
 		{
-			LOG_ERR("%s: failed, i = %lu, player_id = %lu", __FUNCTION__, i, player_id[i]);
+			LOG_ERR("%s: failed, i = %d, player_id = %lu", __FUNCTION__, i, player_id[i]);
 			break;
 		}
 		if (player_id[i] == 0)
@@ -68,7 +68,7 @@ static void	doufachang_check()
 			break;
 		if (rank_check[i] != rank[i])
 		{
-			LOG_ERR("%s: failed, i = %lu, player_id = %lu", __FUNCTION__, i, player_id[i]);
+			LOG_ERR("%s: failed, i = %d, player_id = %lu", __FUNCTION__, i, player_id[i]);
 			break;			
 		}
 	}

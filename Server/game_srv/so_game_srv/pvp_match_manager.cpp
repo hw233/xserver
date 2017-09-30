@@ -144,6 +144,9 @@ static int start_pvp_raid_3(struct matched_team_3 *team)
 
 	create_tmp_team_3(raid, team);
 
+	uint32_t max_lv = 0;
+	uint32_t player_num = 0;
+
 	player_struct *player;
 //	EXTERN_DATA extern_data;
 //	EnterRaidNotify notify;
@@ -154,6 +157,10 @@ static int start_pvp_raid_3(struct matched_team_3 *team)
 	{
 		player = player_manager::get_player_by_id(team->team1[i]);
 		assert(player);
+
+		player_num++;
+		max_lv += player->get_level();
+		
 // 		raid->m_player[i] = player;
 // //		memset(&raid->data->player_info[i], 0, sizeof(raid->data->player_info[i]));
 // //		raid->data->player_info[i].player_id = player->get_uuid();
@@ -214,6 +221,10 @@ static int start_pvp_raid_3(struct matched_team_3 *team)
 
 		// raid->on_player_enter_raid(player);
 	}
+
+	raid->PVP_DATA.average_lv = max_lv / player_num;
+	LOG_INFO("%s: start pvp raid[%p][%lu], average lv = %u", __FUNCTION__, raid, raid->data->uuid, raid->PVP_DATA.average_lv);
+	assert(raid->PVP_DATA.average_lv > 0);
 	return (0);
 }
 static int start_pvp_raid_5(struct matched_team_5 *team)

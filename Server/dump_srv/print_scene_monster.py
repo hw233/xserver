@@ -64,7 +64,7 @@ while True:
     if msg_id == 10103:
         req = move_pb2.sight_changed_notify()
         req.ParseFromString(pb_data)
-        oldtime=datetime.datetime.now()        
+        oldtime = datetime.datetime.now()        
         for t1 in req.add_monster:
             if t1.uuid in WATCH_MONSTER:
                 print 'err add ', t1.uuid
@@ -84,16 +84,16 @@ while True:
     if msg_id == 10205:
         req = cast_skill_pb2.skill_hit_notify()
         req.ParseFromString(pb_data)
-        oldtime=datetime.datetime.now()
+        oldtime = datetime.datetime.now()
         print_head = " %lu " % player_id
         movedata = ""
         for t1 in req.target_player:
             if t1.cur_hp <= 0:
-                if not t1.playerid in WATCH_MONSTER:
+                if t1.playerid not in WATCH_MONSTER:
                     print 'err delete ', t1.playerid
                 WATCH_MONSTER.discard(t1.playerid)
                 movedata = movedata + " killed[%lx]" % (t1.playerid)
         if len(movedata) > 0:
-            print oldtime.time() , print_head, len(WATCH_MONSTER), movedata
+            print oldtime.time(), print_head, len(WATCH_MONSTER), movedata
 
     

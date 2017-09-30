@@ -749,7 +749,7 @@ void do_normal_pursue(monster_struct *monster)
 		if (monster->ai->on_monster_ai_check_goback(monster))
 			return monster->go_back();
 	}
-	else if (monster->create_config &&
+	else if (//monster->create_config &&
 		(fabsf(my_pos->pos_x - monster->get_born_pos_x()) > (int)(monster->ai_config->ChaseRange)
 			|| fabsf(my_pos->pos_z - monster->get_born_pos_z()) > (int)(monster->ai_config->ChaseRange)))
 	{

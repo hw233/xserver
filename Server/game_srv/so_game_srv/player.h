@@ -343,6 +343,8 @@ struct ZhenYing
 	uint32_t mine; //挖宝次数
 	uint32_t kill_week; //战场一周杀人
 	uint32_t score_week; //战场周积分
+	uint64_t score_time; //护送矿车给积分的时间
+	uint32_t protect_num; //护矿次数
 	int one_award;
 };
 
@@ -508,6 +510,36 @@ struct HeroChallengeInfo
 	uint32_t star;   //最高星级
 	uint32_t reward_flag; //领奖标志1:表示身上有扫荡奖励未领取
 	HeroChallengeRewardInfo item_info[MAX_HERO_CHALLENGE_SAOTANGREWARD_NUM];//未领取的奖励物品信息
+};
+
+struct MiJingXiuLianTaskInfo
+{
+	uint32_t task_id; //当前任务id(0表示未接任务)
+	uint32_t time_state; //任务时间标志(0:今日接,1:昨日接)
+	uint32_t reward_beilv; //当前奖励倍率
+	uint32_t huan_num; //今日已完成总环数
+	uint32_t lun_num;  //当前环已完成轮数
+};
+
+struct StrongGoalInfo
+{
+	uint32_t id; //成长ID
+	uint32_t progress;
+	uint32_t state;
+};
+
+struct StrongChapterInfo
+{
+	uint32_t id; //章节ID
+	uint32_t progress;
+	uint32_t state;
+};
+
+enum
+{
+	Strong_State_Achieving = 0, //奖励不可领
+	Strong_State_Achieved = 1, //奖励可领
+	Strong_State_Rewarded = 2, //奖励已领
 };
 
 struct player_data
@@ -690,6 +722,15 @@ struct player_data
 
 	//英雄挑战数据
 	HeroChallengeInfo my_hero_info[MAX_HERO_CHALLENGE_MONSTER_NUM];
+	//秘境修炼任务信息
+	MiJingXiuLianTaskInfo mi_jing_xiu_lian;
+
+	//钓鱼
+	uint32_t fishing_bait_id; //钓鱼鱼饵ID
+
+	//我要变强
+	StrongGoalInfo    strong_goals[MAX_STRONG_GOAL_NUM];
+	StrongChapterInfo strong_chapters[MAX_STRONG_CHAPTER_NUM];
 };
 
 struct ai_player_data
@@ -1220,7 +1261,9 @@ public:
 
 	//成就
 	void load_achievement_end(void);
+	void init_achievement_progress_internal(uint32_t &progress, uint32_t type, uint32_t config_target1, uint32_t config_target2);
 	void init_achievement_progress(AchievementInfo *info);
+	void add_achievement_progress_internal(uint32_t &progress, uint32_t type, uint32_t config_target1, uint32_t config_target2, uint32_t target1, uint32_t target2, uint32_t num);
 	void add_achievement_progress(uint32_t type, uint32_t target1, uint32_t target2, uint32_t num);
 	AchievementInfo *get_achievement_info(uint32_t id);
 	void achievement_update_notify(AchievementInfo *info);
@@ -1236,6 +1279,18 @@ public:
 
 	//英雄挑战信息初始化
 	int init_hero_challenge_data();
+	//秘境试炼任务信息推送
+	int mijing_shilian_info_notify(uint32_t type);
+
+	//我要变强
+	void load_strong_end(void);
+	void init_strong_goal_progress(StrongGoalInfo *info);
+	void add_strong_goal_progress(uint32_t type, uint32_t target1, uint32_t target2, uint32_t num);
+	void strong_goal_update_notify(StrongGoalInfo *info);
+	StrongGoalInfo *get_strong_goal_info(uint32_t goal_id);
+	void add_strong_chapter_progress(uint32_t chapter_id);
+	void strong_chapter_update_notify(StrongChapterInfo *info);
+	StrongChapterInfo *get_strong_chapter_info(uint32_t chapter_id);
 
 	uint64_t last_change_area_time;
 	sight_space_struct *sight_space;

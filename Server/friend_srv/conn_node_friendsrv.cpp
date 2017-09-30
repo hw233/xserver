@@ -32,7 +32,7 @@
 #include "role.pb-c.h"
 #include "redis_util.h"
 
-static const int MIN_ZHENYING_PLAYER_NUM = 500;
+//static const int MIN_ZHENYING_PLAYER_NUM = 500;
 
 typedef size_t(*pack_func)(const void *message, uint8_t *out);
 
@@ -326,6 +326,7 @@ void conn_node_friendsrv::handle_zhenying_change_power()
 	LOG_DEBUG("%s: team info %lu len[%d] ret", __FUNCTION__, extern_data->player_id, data_len);
 }
 
+// TODO: 这个函数可能会崩溃
 void conn_node_friendsrv::handle_zhenying_add_kill()
 {
 	//LOG_DEBUG("%s: team info", __FUNCTION__);
@@ -340,52 +341,63 @@ void conn_node_friendsrv::handle_zhenying_add_kill()
 		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
 		return;
 	}
-
+	
 	data_len = MAX_GLOBAL_SEND_BUF;
 	int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
-	ZhenyingPower send;
-	zhenying_power__init(&send);
 	if (ret >= 0)
 	{
 		//LOG_DEBUG("%s: team info", __FUNCTION__);
 		ZhenyingRedis *rzhenying = zhenying_redis__unpack(NULL, data_len, conn_node_base::global_send_buf);
 		if (rzhenying != NULL)
 		{
-			bool save = false;
+			ZhenyingRedis send;
+			zhenying_redis__init(&send);
+//			bool save = false;
+			char *save = NULL;
 			if (req->zhenying == ZHENYING__TYPE__FULONGGUO)
 			{
 				if (req->kill > rzhenying->power_man_kill_fulongguo)
 				{
 					rzhenying->power_man_fulongguo = extern_data->player_id;
+					save = rzhenying->power_name_fulongguo;
 					rzhenying->power_name_fulongguo = req->name;
-					save = true;
 				}
 			}
 			else if (req->zhenying == ZHENYING__TYPE__WANYAOGU)
 			{
 				rzhenying->power_man_wanyaogu = extern_data->player_id;
+				save = rzhenying->power_name_wanyaogu;
 				rzhenying->power_name_wanyaogu = req->name;
-				save = true;
 			}
 
 			if (save)
 			{
-				LOG_DEBUG("%s: team info", __FUNCTION__);
+				LOG_DEBUG("%s: save team info", __FUNCTION__);
 				data_len = zhenying_redis__pack(rzhenying, (uint8_t *)conn_node_base::global_send_buf);
 				ret = sg_redis_client.hset_bin(server_key, key, (char *)conn_node_base::global_send_buf, data_len);
+				if (req->zhenying == ZHENYING__TYPE__FULONGGUO)
+				{
+					rzhenying->power_name_fulongguo = save;
+				}
+				else 
+				{
+					assert(req->zhenying == ZHENYING__TYPE__WANYAOGU);
+					rzhenying->power_name_wanyaogu = save;
+				}
+
+				
 				if (ret < 0)
 				{
 					LOG_ERR("%s: oper failed, ret = %d", __FUNCTION__, ret);
 				}//LOG_DEBUG("%s: team info", __FUNCTION__);
 			}
-			zhenying_redis__free_unpacked(rzhenying, NULL); //LOG_DEBUG("%s: team info", __FUNCTION__);
+			zhenying_redis__free_unpacked(rzhenying, NULL);
+			LOG_DEBUG("%s: rzhenying != NULL, team info", __FUNCTION__);
 		}
 	}
-
 	add_zhenying_player__free_unpacked(req, NULL);
-
 	//LOG_DEBUG("%s: team info %lu len[%d] ret", __FUNCTION__, extern_data->player_id, data_len);
-	//LOG_DEBUG("%s: team info", __FUNCTION__);
+	LOG_DEBUG("%s: team info", __FUNCTION__);
 }
 
 void conn_node_friendsrv::handle_change_zhenying()
@@ -491,7 +503,7 @@ void pack_team_mem_info(TeamMemInfo *mem, PlayerRedisInfo *rplayer)
 	mem->head_icon = rplayer->head_icon;
 }
 
-char allname[5 * 20 * 2][MAX_PLAYER_NAME_LEN];
+//char allname[5 * 20 * 2][MAX_PLAYER_NAME_LEN];
 void conn_node_friendsrv::handle_team_info()
 {
 	PROTO_HEAD *head = get_head();
@@ -618,6 +630,97 @@ void conn_node_friendsrv::handle_team_list()
 	}
 	fast_send_msg(&conn_node_friendsrv::connecter, extern_data, head->msg_id, team_list__pack, *req);
 	team_list__free_unpacked(req, NULL);
+
+	LOG_DEBUG("%s: team info %lu len[%d] ret", __FUNCTION__, extern_data->player_id, data_len);
+}
+
+void conn_node_friendsrv::handle_zhenying_fight_myside_score()
+{
+	PROTO_HEAD *head = get_head();
+	EXTERN_DATA *extern_data = get_extern_data(head);
+	char key[128];
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+
+	SideScore *req = side_score__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return;
+	}
+	for (size_t t = 0; t < req->n_side; ++t)
+	{
+		OneScore *pOne = req->side[t];
+		if (!pOne->online)
+		{
+			sprintf(key, "%lu", pOne->playerid);
+			data_len = MAX_GLOBAL_SEND_BUF;
+			int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+			if (ret < 0)
+			{
+				continue;
+			}
+			PlayerRedisInfo *rplayer = player_redis_info__unpack(NULL, data_len, conn_node_base::global_send_buf);
+			if (rplayer == NULL)
+			{
+				continue;
+			}
+			strcpy(pOne->name, rplayer->name);
+
+			player_redis_info__free_unpacked(rplayer, NULL);
+		}
+	}
+	fast_send_msg(&conn_node_friendsrv::connecter, extern_data, head->msg_id, side_score__pack, *req);
+	side_score__free_unpacked(req, NULL);
+
+	LOG_DEBUG("%s: team info %lu len[%d] ret", __FUNCTION__, extern_data->player_id, data_len);
+}
+void conn_node_friendsrv::handle_zhenying_fight_settle()
+{
+	PROTO_HEAD *head = get_head();
+	EXTERN_DATA *extern_data = get_extern_data(head);
+	char key[128];
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+
+	ZhenYingResult *req = zhen_ying_result__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return;
+	}
+	OneScore **oneArr[2];
+	uint32_t oneNum[2];
+	oneArr[0] = req->fulongguo;
+	oneArr[1] = req->dianfenggu;
+	oneNum[0] = req->n_fulongguo;
+	oneNum[1] = req->n_dianfenggu;
+	for (uint32_t i = 0; i < 2; ++i)
+	{
+		for (size_t t = 0; t < oneNum[i]; ++t)
+		{
+			OneScore *pOne = oneArr[i][t];
+			if (!pOne->online)
+			{
+				sprintf(key, "%lu", pOne->playerid);
+				data_len = MAX_GLOBAL_SEND_BUF;
+				int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+				if (ret < 0)
+				{
+					continue;
+				}
+				PlayerRedisInfo *rplayer = player_redis_info__unpack(NULL, data_len, conn_node_base::global_send_buf);
+				if (rplayer == NULL)
+				{
+					continue;
+				}
+				strcpy(pOne->name, rplayer->name);
+
+				player_redis_info__free_unpacked(rplayer, NULL);
+			}
+		}
+	}
+	
+	fast_send_msg(&conn_node_friendsrv::connecter, extern_data, head->msg_id, zhen_ying_result__pack, *req);
+	zhen_ying_result__free_unpacked(req, NULL);
 
 	LOG_DEBUG("%s: team info %lu len[%d] ret", __FUNCTION__, extern_data->player_id, data_len);
 }
@@ -1037,6 +1140,12 @@ int conn_node_friendsrv::recv_func(evutil_socket_t fd)
 					break;
 				case MSG_ID_TEAM_INFO_NOTIFY:
 					handle_team_info();
+					break;
+				case MSG_ID_ZHENYING_FIGHT_MYSIDE_SCORE_NOTIFY:
+					handle_zhenying_fight_myside_score();
+					break;
+				case MSG_ID_ZHENYING_FIGHT_SETTLE_NOTIFY:
+					handle_zhenying_fight_settle();
 					break;
 				case MSG_ID_APPLYERLIST_TEAM_NOTIFY:
 					handle_team_apply_list();

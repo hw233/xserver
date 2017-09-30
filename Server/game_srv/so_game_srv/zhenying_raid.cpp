@@ -43,6 +43,8 @@ int zhenying_raid_struct::set_m_player_and_player_info(player_struct *player, in
 int zhenying_raid_struct::add_player_to_zhenying_raid(player_struct *player)
 {
 		// TODO: check_player_enter_raid
+
+	LOG_INFO("%s: player[%lu]", __FUNCTION__, player->get_uuid());
 	
 	FactionBattleTable *table = get_zhenying_battle_table(player->get_attr(PLAYER_ATTR_LEVEL));
 	if (table == NULL)
@@ -53,24 +55,13 @@ int zhenying_raid_struct::add_player_to_zhenying_raid(player_struct *player)
 
 	assert(get_cur_player_num() < MAX_ZHENYING_RAID_PLAYER_NUM);
 
-	float x, y, z;
+	int x, y, z;
 	UNUSED(y);
-	if (player->get_attr(PLAYER_ATTR_ZHENYING) == ZHENYING__TYPE__FULONGGUO)
-	{
-		x = table->BirthPoint1[0];
-		y = table->BirthPoint1[1];
-		z = table->BirthPoint1[2];
-		player->set_camp_id(ZHENYING__TYPE__FULONGGUO);
-	}
-	else
-	{
-		x = table->BirthPoint2[0];
-		y = table->BirthPoint2[1];
-		z = table->BirthPoint2[2];
-		player->set_camp_id(ZHENYING__TYPE__WANYAOGU);
-	}
+	double direct = 0;
+	zhenying_raid_manager::GetRelivePos(table, player->get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
 
-	player_enter_raid_impl(player, this->get_free_player_pos(), x, z);
+
+	player_enter_raid_impl(player, this->get_free_player_pos(), x, z, direct);
 	
 	player->set_attr(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP);
 	player->broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP, false, true);

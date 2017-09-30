@@ -114,3 +114,8 @@ message RankWorldBossRewardNotify
 	repeated RankWorldBossRewardInfo info = 3; //奖励信息
 }
 
+//世界boss刷新通知
+message RankWorldBossRefreshNotify
+{
+	required uint32 bossid = 1; //世界bossid
+}

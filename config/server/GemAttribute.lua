@@ -7,7 +7,7 @@ local GemAttribute = {
 		['AttributeValue'] = 25,	--属性值
 		['GemSynthetic'] = 0,	--宝石合成
 		['Number'] = 0,	--数量
-		['Consumption'] = 100	--合成消耗
+		['Consumption'] = 5000	--合成消耗
 		},
 	[264010002] = {
 		['ID'] = 264010002,
@@ -17,7 +17,7 @@ local GemAttribute = {
 		['AttributeValue'] = 50,
 		['GemSynthetic'] = 201080101,
 		['Number'] = 4,
-		['Consumption'] = 200
+		['Consumption'] = 6000
 		},
 	[264010003] = {
 		['ID'] = 264010003,
@@ -27,7 +27,7 @@ local GemAttribute = {
 		['AttributeValue'] = 75,
 		['GemSynthetic'] = 201080102,
 		['Number'] = 4,
-		['Consumption'] = 400
+		['Consumption'] = 7000
 		},
 	[264010004] = {
 		['ID'] = 264010004,
@@ -37,7 +37,7 @@ local GemAttribute = {
 		['AttributeValue'] = 100,
 		['GemSynthetic'] = 201080103,
 		['Number'] = 4,
-		['Consumption'] = 800
+		['Consumption'] = 8000
 		},
 	[264010005] = {
 		['ID'] = 264010005,
@@ -47,7 +47,7 @@ local GemAttribute = {
 		['AttributeValue'] = 125,
 		['GemSynthetic'] = 201080104,
 		['Number'] = 4,
-		['Consumption'] = 1500
+		['Consumption'] = 9000
 		},
 	[264010006] = {
 		['ID'] = 264010006,
@@ -57,7 +57,7 @@ local GemAttribute = {
 		['AttributeValue'] = 150,
 		['GemSynthetic'] = 201080105,
 		['Number'] = 4,
-		['Consumption'] = 3000
+		['Consumption'] = 10000
 		},
 	[264010007] = {
 		['ID'] = 264010007,
@@ -67,7 +67,7 @@ local GemAttribute = {
 		['AttributeValue'] = 180,
 		['GemSynthetic'] = 201080106,
 		['Number'] = 4,
-		['Consumption'] = 4500
+		['Consumption'] = 11000
 		},
 	[264010008] = {
 		['ID'] = 264010008,
@@ -77,7 +77,7 @@ local GemAttribute = {
 		['AttributeValue'] = 210,
 		['GemSynthetic'] = 201080107,
 		['Number'] = 4,
-		['Consumption'] = 6000
+		['Consumption'] = 12000
 		},
 	[264010009] = {
 		['ID'] = 264010009,
@@ -87,7 +87,7 @@ local GemAttribute = {
 		['AttributeValue'] = 240,
 		['GemSynthetic'] = 201080108,
 		['Number'] = 4,
-		['Consumption'] = 7500
+		['Consumption'] = 13000
 		},
 	[264010010] = {
 		['ID'] = 264010010,
@@ -97,7 +97,7 @@ local GemAttribute = {
 		['AttributeValue'] = 270,
 		['GemSynthetic'] = 201080109,
 		['Number'] = 4,
-		['Consumption'] = 9000
+		['Consumption'] = 14000
 		},
 	[264010011] = {
 		['ID'] = 264010011,
@@ -107,7 +107,7 @@ local GemAttribute = {
 		['AttributeValue'] = 300,
 		['GemSynthetic'] = 201080110,
 		['Number'] = 4,
-		['Consumption'] = 10500
+		['Consumption'] = 15000
 		},
 	[264010012] = {
 		['ID'] = 264010012,
@@ -117,7 +117,7 @@ local GemAttribute = {
 		['AttributeValue'] = 330,
 		['GemSynthetic'] = 201080111,
 		['Number'] = 4,
-		['Consumption'] = 12000
+		['Consumption'] = 16000
 		},
 	[264010013] = {
 		['ID'] = 264010013,
@@ -127,7 +127,7 @@ local GemAttribute = {
 		['AttributeValue'] = 360,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 13500
+		['Consumption'] = 17000
 		},
 	[264010014] = {
 		['ID'] = 264010014,
@@ -137,7 +137,7 @@ local GemAttribute = {
 		['AttributeValue'] = 400,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 15000
+		['Consumption'] = 18000
 		},
 	[264010015] = {
 		['ID'] = 264010015,
@@ -147,7 +147,7 @@ local GemAttribute = {
 		['AttributeValue'] = 450,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 16500
+		['Consumption'] = 19000
 		},
 	[264010016] = {
 		['ID'] = 264010016,
@@ -157,7 +157,7 @@ local GemAttribute = {
 		['AttributeValue'] = 500,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 18000
+		['Consumption'] = 20000
 		},
 	[264010017] = {
 		['ID'] = 264010017,
@@ -167,7 +167,7 @@ local GemAttribute = {
 		['AttributeValue'] = 550,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 19500
+		['Consumption'] = 21000
 		},
 	[264010018] = {
 		['ID'] = 264010018,
@@ -177,7 +177,7 @@ local GemAttribute = {
 		['AttributeValue'] = 600,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 21000
+		['Consumption'] = 22000
 		},
 	[264010019] = {
 		['ID'] = 264010019,
@@ -187,7 +187,7 @@ local GemAttribute = {
 		['AttributeValue'] = 650,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 22500
+		['Consumption'] = 23000
 		},
 	[264010020] = {
 		['ID'] = 264010020,
@@ -207,7 +207,7 @@ local GemAttribute = {
 		['AttributeValue'] = 25,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 100
+		['Consumption'] = 5000
 		},
 	[264020002] = {
 		['ID'] = 264020002,
@@ -217,7 +217,7 @@ local GemAttribute = {
 		['AttributeValue'] = 50,
 		['GemSynthetic'] = 201080201,
 		['Number'] = 4,
-		['Consumption'] = 200
+		['Consumption'] = 6000
 		},
 	[264020003] = {
 		['ID'] = 264020003,
@@ -227,7 +227,7 @@ local GemAttribute = {
 		['AttributeValue'] = 75,
 		['GemSynthetic'] = 201080202,
 		['Number'] = 4,
-		['Consumption'] = 400
+		['Consumption'] = 7000
 		},
 	[264020004] = {
 		['ID'] = 264020004,
@@ -237,7 +237,7 @@ local GemAttribute = {
 		['AttributeValue'] = 100,
 		['GemSynthetic'] = 201080203,
 		['Number'] = 4,
-		['Consumption'] = 800
+		['Consumption'] = 8000
 		},
 	[264020005] = {
 		['ID'] = 264020005,
@@ -247,7 +247,7 @@ local GemAttribute = {
 		['AttributeValue'] = 125,
 		['GemSynthetic'] = 201080204,
 		['Number'] = 4,
-		['Consumption'] = 1500
+		['Consumption'] = 9000
 		},
 	[264020006] = {
 		['ID'] = 264020006,
@@ -257,7 +257,7 @@ local GemAttribute = {
 		['AttributeValue'] = 150,
 		['GemSynthetic'] = 201080205,
 		['Number'] = 4,
-		['Consumption'] = 3000
+		['Consumption'] = 10000
 		},
 	[264020007] = {
 		['ID'] = 264020007,
@@ -267,7 +267,7 @@ local GemAttribute = {
 		['AttributeValue'] = 180,
 		['GemSynthetic'] = 201080206,
 		['Number'] = 4,
-		['Consumption'] = 4500
+		['Consumption'] = 11000
 		},
 	[264020008] = {
 		['ID'] = 264020008,
@@ -277,7 +277,7 @@ local GemAttribute = {
 		['AttributeValue'] = 210,
 		['GemSynthetic'] = 201080207,
 		['Number'] = 4,
-		['Consumption'] = 6000
+		['Consumption'] = 12000
 		},
 	[264020009] = {
 		['ID'] = 264020009,
@@ -287,7 +287,7 @@ local GemAttribute = {
 		['AttributeValue'] = 240,
 		['GemSynthetic'] = 201080208,
 		['Number'] = 4,
-		['Consumption'] = 7500
+		['Consumption'] = 13000
 		},
 	[264020010] = {
 		['ID'] = 264020010,
@@ -297,7 +297,7 @@ local GemAttribute = {
 		['AttributeValue'] = 270,
 		['GemSynthetic'] = 201080209,
 		['Number'] = 4,
-		['Consumption'] = 9000
+		['Consumption'] = 14000
 		},
 	[264020011] = {
 		['ID'] = 264020011,
@@ -307,7 +307,7 @@ local GemAttribute = {
 		['AttributeValue'] = 300,
 		['GemSynthetic'] = 201080210,
 		['Number'] = 4,
-		['Consumption'] = 10500
+		['Consumption'] = 15000
 		},
 	[264020012] = {
 		['ID'] = 264020012,
@@ -317,7 +317,7 @@ local GemAttribute = {
 		['AttributeValue'] = 330,
 		['GemSynthetic'] = 201080211,
 		['Number'] = 4,
-		['Consumption'] = 12000
+		['Consumption'] = 16000
 		},
 	[264020013] = {
 		['ID'] = 264020013,
@@ -327,7 +327,7 @@ local GemAttribute = {
 		['AttributeValue'] = 360,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 13500
+		['Consumption'] = 17000
 		},
 	[264020014] = {
 		['ID'] = 264020014,
@@ -337,7 +337,7 @@ local GemAttribute = {
 		['AttributeValue'] = 400,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 15000
+		['Consumption'] = 18000
 		},
 	[264020015] = {
 		['ID'] = 264020015,
@@ -347,7 +347,7 @@ local GemAttribute = {
 		['AttributeValue'] = 450,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 16500
+		['Consumption'] = 19000
 		},
 	[264020016] = {
 		['ID'] = 264020016,
@@ -357,7 +357,7 @@ local GemAttribute = {
 		['AttributeValue'] = 500,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 18000
+		['Consumption'] = 20000
 		},
 	[264020017] = {
 		['ID'] = 264020017,
@@ -367,7 +367,7 @@ local GemAttribute = {
 		['AttributeValue'] = 550,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 19500
+		['Consumption'] = 21000
 		},
 	[264020018] = {
 		['ID'] = 264020018,
@@ -377,7 +377,7 @@ local GemAttribute = {
 		['AttributeValue'] = 600,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 21000
+		['Consumption'] = 22000
 		},
 	[264020019] = {
 		['ID'] = 264020019,
@@ -387,7 +387,7 @@ local GemAttribute = {
 		['AttributeValue'] = 650,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 22500
+		['Consumption'] = 23000
 		},
 	[264020020] = {
 		['ID'] = 264020020,
@@ -407,7 +407,7 @@ local GemAttribute = {
 		['AttributeValue'] = 25,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 100
+		['Consumption'] = 5000
 		},
 	[264030002] = {
 		['ID'] = 264030002,
@@ -417,7 +417,7 @@ local GemAttribute = {
 		['AttributeValue'] = 50,
 		['GemSynthetic'] = 201080301,
 		['Number'] = 4,
-		['Consumption'] = 200
+		['Consumption'] = 6000
 		},
 	[264030003] = {
 		['ID'] = 264030003,
@@ -427,7 +427,7 @@ local GemAttribute = {
 		['AttributeValue'] = 75,
 		['GemSynthetic'] = 201080302,
 		['Number'] = 4,
-		['Consumption'] = 400
+		['Consumption'] = 7000
 		},
 	[264030004] = {
 		['ID'] = 264030004,
@@ -437,7 +437,7 @@ local GemAttribute = {
 		['AttributeValue'] = 100,
 		['GemSynthetic'] = 201080303,
 		['Number'] = 4,
-		['Consumption'] = 800
+		['Consumption'] = 8000
 		},
 	[264030005] = {
 		['ID'] = 264030005,
@@ -447,7 +447,7 @@ local GemAttribute = {
 		['AttributeValue'] = 125,
 		['GemSynthetic'] = 201080304,
 		['Number'] = 4,
-		['Consumption'] = 1500
+		['Consumption'] = 9000
 		},
 	[264030006] = {
 		['ID'] = 264030006,
@@ -457,7 +457,7 @@ local GemAttribute = {
 		['AttributeValue'] = 150,
 		['GemSynthetic'] = 201080305,
 		['Number'] = 4,
-		['Consumption'] = 3000
+		['Consumption'] = 10000
 		},
 	[264030007] = {
 		['ID'] = 264030007,
@@ -467,7 +467,7 @@ local GemAttribute = {
 		['AttributeValue'] = 180,
 		['GemSynthetic'] = 201080306,
 		['Number'] = 4,
-		['Consumption'] = 4500
+		['Consumption'] = 11000
 		},
 	[264030008] = {
 		['ID'] = 264030008,
@@ -477,7 +477,7 @@ local GemAttribute = {
 		['AttributeValue'] = 210,
 		['GemSynthetic'] = 201080307,
 		['Number'] = 4,
-		['Consumption'] = 6000
+		['Consumption'] = 12000
 		},
 	[264030009] = {
 		['ID'] = 264030009,
@@ -487,7 +487,7 @@ local GemAttribute = {
 		['AttributeValue'] = 240,
 		['GemSynthetic'] = 201080308,
 		['Number'] = 4,
-		['Consumption'] = 7500
+		['Consumption'] = 13000
 		},
 	[264030010] = {
 		['ID'] = 264030010,
@@ -497,7 +497,7 @@ local GemAttribute = {
 		['AttributeValue'] = 270,
 		['GemSynthetic'] = 201080309,
 		['Number'] = 4,
-		['Consumption'] = 9000
+		['Consumption'] = 14000
 		},
 	[264030011] = {
 		['ID'] = 264030011,
@@ -507,7 +507,7 @@ local GemAttribute = {
 		['AttributeValue'] = 300,
 		['GemSynthetic'] = 201080310,
 		['Number'] = 4,
-		['Consumption'] = 10500
+		['Consumption'] = 15000
 		},
 	[264030012] = {
 		['ID'] = 264030012,
@@ -517,7 +517,7 @@ local GemAttribute = {
 		['AttributeValue'] = 330,
 		['GemSynthetic'] = 201080311,
 		['Number'] = 4,
-		['Consumption'] = 12000
+		['Consumption'] = 16000
 		},
 	[264030013] = {
 		['ID'] = 264030013,
@@ -527,7 +527,7 @@ local GemAttribute = {
 		['AttributeValue'] = 360,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 13500
+		['Consumption'] = 17000
 		},
 	[264030014] = {
 		['ID'] = 264030014,
@@ -537,7 +537,7 @@ local GemAttribute = {
 		['AttributeValue'] = 400,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 15000
+		['Consumption'] = 18000
 		},
 	[264030015] = {
 		['ID'] = 264030015,
@@ -547,7 +547,7 @@ local GemAttribute = {
 		['AttributeValue'] = 450,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 16500
+		['Consumption'] = 19000
 		},
 	[264030016] = {
 		['ID'] = 264030016,
@@ -557,7 +557,7 @@ local GemAttribute = {
 		['AttributeValue'] = 500,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 18000
+		['Consumption'] = 20000
 		},
 	[264030017] = {
 		['ID'] = 264030017,
@@ -567,7 +567,7 @@ local GemAttribute = {
 		['AttributeValue'] = 550,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 19500
+		['Consumption'] = 21000
 		},
 	[264030018] = {
 		['ID'] = 264030018,
@@ -577,7 +577,7 @@ local GemAttribute = {
 		['AttributeValue'] = 600,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 21000
+		['Consumption'] = 22000
 		},
 	[264030019] = {
 		['ID'] = 264030019,
@@ -587,7 +587,7 @@ local GemAttribute = {
 		['AttributeValue'] = 650,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 22500
+		['Consumption'] = 23000
 		},
 	[264030020] = {
 		['ID'] = 264030020,
@@ -607,7 +607,7 @@ local GemAttribute = {
 		['AttributeValue'] = 25,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 100
+		['Consumption'] = 5000
 		},
 	[264040002] = {
 		['ID'] = 264040002,
@@ -617,7 +617,7 @@ local GemAttribute = {
 		['AttributeValue'] = 50,
 		['GemSynthetic'] = 201080401,
 		['Number'] = 4,
-		['Consumption'] = 200
+		['Consumption'] = 6000
 		},
 	[264040003] = {
 		['ID'] = 264040003,
@@ -627,7 +627,7 @@ local GemAttribute = {
 		['AttributeValue'] = 75,
 		['GemSynthetic'] = 201080402,
 		['Number'] = 4,
-		['Consumption'] = 400
+		['Consumption'] = 7000
 		},
 	[264040004] = {
 		['ID'] = 264040004,
@@ -637,7 +637,7 @@ local GemAttribute = {
 		['AttributeValue'] = 100,
 		['GemSynthetic'] = 201080403,
 		['Number'] = 4,
-		['Consumption'] = 800
+		['Consumption'] = 8000
 		},
 	[264040005] = {
 		['ID'] = 264040005,
@@ -647,7 +647,7 @@ local GemAttribute = {
 		['AttributeValue'] = 125,
 		['GemSynthetic'] = 201080404,
 		['Number'] = 4,
-		['Consumption'] = 1500
+		['Consumption'] = 9000
 		},
 	[264040006] = {
 		['ID'] = 264040006,
@@ -657,7 +657,7 @@ local GemAttribute = {
 		['AttributeValue'] = 150,
 		['GemSynthetic'] = 201080405,
 		['Number'] = 4,
-		['Consumption'] = 3000
+		['Consumption'] = 10000
 		},
 	[264040007] = {
 		['ID'] = 264040007,
@@ -667,7 +667,7 @@ local GemAttribute = {
 		['AttributeValue'] = 180,
 		['GemSynthetic'] = 201080406,
 		['Number'] = 4,
-		['Consumption'] = 4500
+		['Consumption'] = 11000
 		},
 	[264040008] = {
 		['ID'] = 264040008,
@@ -677,7 +677,7 @@ local GemAttribute = {
 		['AttributeValue'] = 210,
 		['GemSynthetic'] = 201080407,
 		['Number'] = 4,
-		['Consumption'] = 6000
+		['Consumption'] = 12000
 		},
 	[264040009] = {
 		['ID'] = 264040009,
@@ -687,7 +687,7 @@ local GemAttribute = {
 		['AttributeValue'] = 240,
 		['GemSynthetic'] = 201080408,
 		['Number'] = 4,
-		['Consumption'] = 7500
+		['Consumption'] = 13000
 		},
 	[264040010] = {
 		['ID'] = 264040010,
@@ -697,7 +697,7 @@ local GemAttribute = {
 		['AttributeValue'] = 270,
 		['GemSynthetic'] = 201080409,
 		['Number'] = 4,
-		['Consumption'] = 9000
+		['Consumption'] = 14000
 		},
 	[264040011] = {
 		['ID'] = 264040011,
@@ -707,7 +707,7 @@ local GemAttribute = {
 		['AttributeValue'] = 300,
 		['GemSynthetic'] = 201080410,
 		['Number'] = 4,
-		['Consumption'] = 10500
+		['Consumption'] = 15000
 		},
 	[264040012] = {
 		['ID'] = 264040012,
@@ -717,7 +717,7 @@ local GemAttribute = {
 		['AttributeValue'] = 330,
 		['GemSynthetic'] = 201080411,
 		['Number'] = 4,
-		['Consumption'] = 12000
+		['Consumption'] = 16000
 		},
 	[264040013] = {
 		['ID'] = 264040013,
@@ -727,7 +727,7 @@ local GemAttribute = {
 		['AttributeValue'] = 360,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 13500
+		['Consumption'] = 17000
 		},
 	[264040014] = {
 		['ID'] = 264040014,
@@ -737,7 +737,7 @@ local GemAttribute = {
 		['AttributeValue'] = 400,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 15000
+		['Consumption'] = 18000
 		},
 	[264040015] = {
 		['ID'] = 264040015,
@@ -747,7 +747,7 @@ local GemAttribute = {
 		['AttributeValue'] = 450,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 16500
+		['Consumption'] = 19000
 		},
 	[264040016] = {
 		['ID'] = 264040016,
@@ -757,7 +757,7 @@ local GemAttribute = {
 		['AttributeValue'] = 500,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 18000
+		['Consumption'] = 20000
 		},
 	[264040017] = {
 		['ID'] = 264040017,
@@ -767,7 +767,7 @@ local GemAttribute = {
 		['AttributeValue'] = 550,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 19500
+		['Consumption'] = 21000
 		},
 	[264040018] = {
 		['ID'] = 264040018,
@@ -777,7 +777,7 @@ local GemAttribute = {
 		['AttributeValue'] = 600,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 21000
+		['Consumption'] = 22000
 		},
 	[264040019] = {
 		['ID'] = 264040019,
@@ -787,7 +787,7 @@ local GemAttribute = {
 		['AttributeValue'] = 650,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 22500
+		['Consumption'] = 23000
 		},
 	[264040020] = {
 		['ID'] = 264040020,
@@ -807,7 +807,7 @@ local GemAttribute = {
 		['AttributeValue'] = 25,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 100
+		['Consumption'] = 5000
 		},
 	[264050002] = {
 		['ID'] = 264050002,
@@ -817,7 +817,7 @@ local GemAttribute = {
 		['AttributeValue'] = 50,
 		['GemSynthetic'] = 201080501,
 		['Number'] = 4,
-		['Consumption'] = 200
+		['Consumption'] = 6000
 		},
 	[264050003] = {
 		['ID'] = 264050003,
@@ -827,7 +827,7 @@ local GemAttribute = {
 		['AttributeValue'] = 75,
 		['GemSynthetic'] = 201080502,
 		['Number'] = 4,
-		['Consumption'] = 400
+		['Consumption'] = 7000
 		},
 	[264050004] = {
 		['ID'] = 264050004,
@@ -837,7 +837,7 @@ local GemAttribute = {
 		['AttributeValue'] = 100,
 		['GemSynthetic'] = 201080503,
 		['Number'] = 4,
-		['Consumption'] = 800
+		['Consumption'] = 8000
 		},
 	[264050005] = {
 		['ID'] = 264050005,
@@ -847,7 +847,7 @@ local GemAttribute = {
 		['AttributeValue'] = 125,
 		['GemSynthetic'] = 201080504,
 		['Number'] = 4,
-		['Consumption'] = 1500
+		['Consumption'] = 9000
 		},
 	[264050006] = {
 		['ID'] = 264050006,
@@ -857,7 +857,7 @@ local GemAttribute = {
 		['AttributeValue'] = 150,
 		['GemSynthetic'] = 201080505,
 		['Number'] = 4,
-		['Consumption'] = 3000
+		['Consumption'] = 10000
 		},
 	[264050007] = {
 		['ID'] = 264050007,
@@ -867,7 +867,7 @@ local GemAttribute = {
 		['AttributeValue'] = 180,
 		['GemSynthetic'] = 201080506,
 		['Number'] = 4,
-		['Consumption'] = 4500
+		['Consumption'] = 11000
 		},
 	[264050008] = {
 		['ID'] = 264050008,
@@ -877,7 +877,7 @@ local GemAttribute = {
 		['AttributeValue'] = 210,
 		['GemSynthetic'] = 201080507,
 		['Number'] = 4,
-		['Consumption'] = 6000
+		['Consumption'] = 12000
 		},
 	[264050009] = {
 		['ID'] = 264050009,
@@ -887,7 +887,7 @@ local GemAttribute = {
 		['AttributeValue'] = 240,
 		['GemSynthetic'] = 201080508,
 		['Number'] = 4,
-		['Consumption'] = 7500
+		['Consumption'] = 13000
 		},
 	[264050010] = {
 		['ID'] = 264050010,
@@ -897,7 +897,7 @@ local GemAttribute = {
 		['AttributeValue'] = 270,
 		['GemSynthetic'] = 201080509,
 		['Number'] = 4,
-		['Consumption'] = 9000
+		['Consumption'] = 14000
 		},
 	[264050011] = {
 		['ID'] = 264050011,
@@ -907,7 +907,7 @@ local GemAttribute = {
 		['AttributeValue'] = 300,
 		['GemSynthetic'] = 201080510,
 		['Number'] = 4,
-		['Consumption'] = 10500
+		['Consumption'] = 15000
 		},
 	[264050012] = {
 		['ID'] = 264050012,
@@ -917,7 +917,7 @@ local GemAttribute = {
 		['AttributeValue'] = 330,
 		['GemSynthetic'] = 201080511,
 		['Number'] = 4,
-		['Consumption'] = 12000
+		['Consumption'] = 16000
 		},
 	[264050013] = {
 		['ID'] = 264050013,
@@ -927,7 +927,7 @@ local GemAttribute = {
 		['AttributeValue'] = 360,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 13500
+		['Consumption'] = 17000
 		},
 	[264050014] = {
 		['ID'] = 264050014,
@@ -937,7 +937,7 @@ local GemAttribute = {
 		['AttributeValue'] = 400,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 15000
+		['Consumption'] = 18000
 		},
 	[264050015] = {
 		['ID'] = 264050015,
@@ -947,7 +947,7 @@ local GemAttribute = {
 		['AttributeValue'] = 450,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 16500
+		['Consumption'] = 19000
 		},
 	[264050016] = {
 		['ID'] = 264050016,
@@ -957,7 +957,7 @@ local GemAttribute = {
 		['AttributeValue'] = 500,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 18000
+		['Consumption'] = 20000
 		},
 	[264050017] = {
 		['ID'] = 264050017,
@@ -967,7 +967,7 @@ local GemAttribute = {
 		['AttributeValue'] = 550,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 19500
+		['Consumption'] = 21000
 		},
 	[264050018] = {
 		['ID'] = 264050018,
@@ -977,7 +977,7 @@ local GemAttribute = {
 		['AttributeValue'] = 600,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 21000
+		['Consumption'] = 22000
 		},
 	[264050019] = {
 		['ID'] = 264050019,
@@ -987,7 +987,7 @@ local GemAttribute = {
 		['AttributeValue'] = 650,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 22500
+		['Consumption'] = 23000
 		},
 	[264050020] = {
 		['ID'] = 264050020,
@@ -1007,7 +1007,7 @@ local GemAttribute = {
 		['AttributeValue'] = 25,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 100
+		['Consumption'] = 5000
 		},
 	[264060002] = {
 		['ID'] = 264060002,
@@ -1017,7 +1017,7 @@ local GemAttribute = {
 		['AttributeValue'] = 50,
 		['GemSynthetic'] = 201080601,
 		['Number'] = 4,
-		['Consumption'] = 200
+		['Consumption'] = 6000
 		},
 	[264060003] = {
 		['ID'] = 264060003,
@@ -1027,7 +1027,7 @@ local GemAttribute = {
 		['AttributeValue'] = 75,
 		['GemSynthetic'] = 201080602,
 		['Number'] = 4,
-		['Consumption'] = 400
+		['Consumption'] = 7000
 		},
 	[264060004] = {
 		['ID'] = 264060004,
@@ -1037,7 +1037,7 @@ local GemAttribute = {
 		['AttributeValue'] = 100,
 		['GemSynthetic'] = 201080603,
 		['Number'] = 4,
-		['Consumption'] = 800
+		['Consumption'] = 8000
 		},
 	[264060005] = {
 		['ID'] = 264060005,
@@ -1047,7 +1047,7 @@ local GemAttribute = {
 		['AttributeValue'] = 125,
 		['GemSynthetic'] = 201080604,
 		['Number'] = 4,
-		['Consumption'] = 1500
+		['Consumption'] = 9000
 		},
 	[264060006] = {
 		['ID'] = 264060006,
@@ -1057,7 +1057,7 @@ local GemAttribute = {
 		['AttributeValue'] = 150,
 		['GemSynthetic'] = 201080605,
 		['Number'] = 4,
-		['Consumption'] = 3000
+		['Consumption'] = 10000
 		},
 	[264060007] = {
 		['ID'] = 264060007,
@@ -1067,7 +1067,7 @@ local GemAttribute = {
 		['AttributeValue'] = 180,
 		['GemSynthetic'] = 201080606,
 		['Number'] = 4,
-		['Consumption'] = 4500
+		['Consumption'] = 11000
 		},
 	[264060008] = {
 		['ID'] = 264060008,
@@ -1077,7 +1077,7 @@ local GemAttribute = {
 		['AttributeValue'] = 210,
 		['GemSynthetic'] = 201080607,
 		['Number'] = 4,
-		['Consumption'] = 6000
+		['Consumption'] = 12000
 		},
 	[264060009] = {
 		['ID'] = 264060009,
@@ -1087,7 +1087,7 @@ local GemAttribute = {
 		['AttributeValue'] = 240,
 		['GemSynthetic'] = 201080608,
 		['Number'] = 4,
-		['Consumption'] = 7500
+		['Consumption'] = 13000
 		},
 	[264060010] = {
 		['ID'] = 264060010,
@@ -1097,7 +1097,7 @@ local GemAttribute = {
 		['AttributeValue'] = 270,
 		['GemSynthetic'] = 201080609,
 		['Number'] = 4,
-		['Consumption'] = 9000
+		['Consumption'] = 14000
 		},
 	[264060011] = {
 		['ID'] = 264060011,
@@ -1107,7 +1107,7 @@ local GemAttribute = {
 		['AttributeValue'] = 300,
 		['GemSynthetic'] = 201080610,
 		['Number'] = 4,
-		['Consumption'] = 10500
+		['Consumption'] = 15000
 		},
 	[264060012] = {
 		['ID'] = 264060012,
@@ -1117,7 +1117,7 @@ local GemAttribute = {
 		['AttributeValue'] = 330,
 		['GemSynthetic'] = 201080611,
 		['Number'] = 4,
-		['Consumption'] = 12000
+		['Consumption'] = 16000
 		},
 	[264060013] = {
 		['ID'] = 264060013,
@@ -1127,7 +1127,7 @@ local GemAttribute = {
 		['AttributeValue'] = 360,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 13500
+		['Consumption'] = 17000
 		},
 	[264060014] = {
 		['ID'] = 264060014,
@@ -1137,7 +1137,7 @@ local GemAttribute = {
 		['AttributeValue'] = 400,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 15000
+		['Consumption'] = 18000
 		},
 	[264060015] = {
 		['ID'] = 264060015,
@@ -1147,7 +1147,7 @@ local GemAttribute = {
 		['AttributeValue'] = 450,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 16500
+		['Consumption'] = 19000
 		},
 	[264060016] = {
 		['ID'] = 264060016,
@@ -1157,7 +1157,7 @@ local GemAttribute = {
 		['AttributeValue'] = 500,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 18000
+		['Consumption'] = 20000
 		},
 	[264060017] = {
 		['ID'] = 264060017,
@@ -1167,7 +1167,7 @@ local GemAttribute = {
 		['AttributeValue'] = 550,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 19500
+		['Consumption'] = 21000
 		},
 	[264060018] = {
 		['ID'] = 264060018,
@@ -1177,7 +1177,7 @@ local GemAttribute = {
 		['AttributeValue'] = 600,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 21000
+		['Consumption'] = 22000
 		},
 	[264060019] = {
 		['ID'] = 264060019,
@@ -1187,7 +1187,7 @@ local GemAttribute = {
 		['AttributeValue'] = 650,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 22500
+		['Consumption'] = 23000
 		},
 	[264060020] = {
 		['ID'] = 264060020,
@@ -1207,7 +1207,7 @@ local GemAttribute = {
 		['AttributeValue'] = 25,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 100
+		['Consumption'] = 5000
 		},
 	[264070002] = {
 		['ID'] = 264070002,
@@ -1217,7 +1217,7 @@ local GemAttribute = {
 		['AttributeValue'] = 50,
 		['GemSynthetic'] = 201080701,
 		['Number'] = 4,
-		['Consumption'] = 200
+		['Consumption'] = 6000
 		},
 	[264070003] = {
 		['ID'] = 264070003,
@@ -1227,7 +1227,7 @@ local GemAttribute = {
 		['AttributeValue'] = 75,
 		['GemSynthetic'] = 201080702,
 		['Number'] = 4,
-		['Consumption'] = 400
+		['Consumption'] = 7000
 		},
 	[264070004] = {
 		['ID'] = 264070004,
@@ -1237,7 +1237,7 @@ local GemAttribute = {
 		['AttributeValue'] = 100,
 		['GemSynthetic'] = 201080703,
 		['Number'] = 4,
-		['Consumption'] = 800
+		['Consumption'] = 8000
 		},
 	[264070005] = {
 		['ID'] = 264070005,
@@ -1247,7 +1247,7 @@ local GemAttribute = {
 		['AttributeValue'] = 125,
 		['GemSynthetic'] = 201080704,
 		['Number'] = 4,
-		['Consumption'] = 1500
+		['Consumption'] = 9000
 		},
 	[264070006] = {
 		['ID'] = 264070006,
@@ -1257,7 +1257,7 @@ local GemAttribute = {
 		['AttributeValue'] = 150,
 		['GemSynthetic'] = 201080705,
 		['Number'] = 4,
-		['Consumption'] = 3000
+		['Consumption'] = 10000
 		},
 	[264070007] = {
 		['ID'] = 264070007,
@@ -1267,7 +1267,7 @@ local GemAttribute = {
 		['AttributeValue'] = 180,
 		['GemSynthetic'] = 201080706,
 		['Number'] = 4,
-		['Consumption'] = 4500
+		['Consumption'] = 11000
 		},
 	[264070008] = {
 		['ID'] = 264070008,
@@ -1277,7 +1277,7 @@ local GemAttribute = {
 		['AttributeValue'] = 210,
 		['GemSynthetic'] = 201080707,
 		['Number'] = 4,
-		['Consumption'] = 6000
+		['Consumption'] = 12000
 		},
 	[264070009] = {
 		['ID'] = 264070009,
@@ -1287,7 +1287,7 @@ local GemAttribute = {
 		['AttributeValue'] = 240,
 		['GemSynthetic'] = 201080708,
 		['Number'] = 4,
-		['Consumption'] = 7500
+		['Consumption'] = 13000
 		},
 	[264070010] = {
 		['ID'] = 264070010,
@@ -1297,7 +1297,7 @@ local GemAttribute = {
 		['AttributeValue'] = 270,
 		['GemSynthetic'] = 201080709,
 		['Number'] = 4,
-		['Consumption'] = 9000
+		['Consumption'] = 14000
 		},
 	[264070011] = {
 		['ID'] = 264070011,
@@ -1307,7 +1307,7 @@ local GemAttribute = {
 		['AttributeValue'] = 300,
 		['GemSynthetic'] = 201080710,
 		['Number'] = 4,
-		['Consumption'] = 10500
+		['Consumption'] = 15000
 		},
 	[264070012] = {
 		['ID'] = 264070012,
@@ -1317,7 +1317,7 @@ local GemAttribute = {
 		['AttributeValue'] = 330,
 		['GemSynthetic'] = 201080711,
 		['Number'] = 4,
-		['Consumption'] = 12000
+		['Consumption'] = 16000
 		},
 	[264070013] = {
 		['ID'] = 264070013,
@@ -1327,7 +1327,7 @@ local GemAttribute = {
 		['AttributeValue'] = 360,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 13500
+		['Consumption'] = 17000
 		},
 	[264070014] = {
 		['ID'] = 264070014,
@@ -1337,7 +1337,7 @@ local GemAttribute = {
 		['AttributeValue'] = 400,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 15000
+		['Consumption'] = 18000
 		},
 	[264070015] = {
 		['ID'] = 264070015,
@@ -1347,7 +1347,7 @@ local GemAttribute = {
 		['AttributeValue'] = 450,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 16500
+		['Consumption'] = 19000
 		},
 	[264070016] = {
 		['ID'] = 264070016,
@@ -1357,7 +1357,7 @@ local GemAttribute = {
 		['AttributeValue'] = 500,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 18000
+		['Consumption'] = 20000
 		},
 	[264070017] = {
 		['ID'] = 264070017,
@@ -1367,7 +1367,7 @@ local GemAttribute = {
 		['AttributeValue'] = 550,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 19500
+		['Consumption'] = 21000
 		},
 	[264070018] = {
 		['ID'] = 264070018,
@@ -1377,7 +1377,7 @@ local GemAttribute = {
 		['AttributeValue'] = 600,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 21000
+		['Consumption'] = 22000
 		},
 	[264070019] = {
 		['ID'] = 264070019,
@@ -1387,7 +1387,7 @@ local GemAttribute = {
 		['AttributeValue'] = 650,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 22500
+		['Consumption'] = 23000
 		},
 	[264070020] = {
 		['ID'] = 264070020,
@@ -1407,7 +1407,7 @@ local GemAttribute = {
 		['AttributeValue'] = 25,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 100
+		['Consumption'] = 5000
 		},
 	[264080002] = {
 		['ID'] = 264080002,
@@ -1417,7 +1417,7 @@ local GemAttribute = {
 		['AttributeValue'] = 50,
 		['GemSynthetic'] = 201080801,
 		['Number'] = 4,
-		['Consumption'] = 200
+		['Consumption'] = 6000
 		},
 	[264080003] = {
 		['ID'] = 264080003,
@@ -1427,7 +1427,7 @@ local GemAttribute = {
 		['AttributeValue'] = 75,
 		['GemSynthetic'] = 201080802,
 		['Number'] = 4,
-		['Consumption'] = 400
+		['Consumption'] = 7000
 		},
 	[264080004] = {
 		['ID'] = 264080004,
@@ -1437,7 +1437,7 @@ local GemAttribute = {
 		['AttributeValue'] = 100,
 		['GemSynthetic'] = 201080803,
 		['Number'] = 4,
-		['Consumption'] = 800
+		['Consumption'] = 8000
 		},
 	[264080005] = {
 		['ID'] = 264080005,
@@ -1447,7 +1447,7 @@ local GemAttribute = {
 		['AttributeValue'] = 125,
 		['GemSynthetic'] = 201080804,
 		['Number'] = 4,
-		['Consumption'] = 1500
+		['Consumption'] = 9000
 		},
 	[264080006] = {
 		['ID'] = 264080006,
@@ -1457,7 +1457,7 @@ local GemAttribute = {
 		['AttributeValue'] = 150,
 		['GemSynthetic'] = 201080805,
 		['Number'] = 4,
-		['Consumption'] = 3000
+		['Consumption'] = 10000
 		},
 	[264080007] = {
 		['ID'] = 264080007,
@@ -1467,7 +1467,7 @@ local GemAttribute = {
 		['AttributeValue'] = 180,
 		['GemSynthetic'] = 201080806,
 		['Number'] = 4,
-		['Consumption'] = 4500
+		['Consumption'] = 11000
 		},
 	[264080008] = {
 		['ID'] = 264080008,
@@ -1477,7 +1477,7 @@ local GemAttribute = {
 		['AttributeValue'] = 210,
 		['GemSynthetic'] = 201080807,
 		['Number'] = 4,
-		['Consumption'] = 6000
+		['Consumption'] = 12000
 		},
 	[264080009] = {
 		['ID'] = 264080009,
@@ -1487,7 +1487,7 @@ local GemAttribute = {
 		['AttributeValue'] = 240,
 		['GemSynthetic'] = 201080808,
 		['Number'] = 4,
-		['Consumption'] = 7500
+		['Consumption'] = 13000
 		},
 	[264080010] = {
 		['ID'] = 264080010,
@@ -1497,7 +1497,7 @@ local GemAttribute = {
 		['AttributeValue'] = 270,
 		['GemSynthetic'] = 201080809,
 		['Number'] = 4,
-		['Consumption'] = 9000
+		['Consumption'] = 14000
 		},
 	[264080011] = {
 		['ID'] = 264080011,
@@ -1507,7 +1507,7 @@ local GemAttribute = {
 		['AttributeValue'] = 300,
 		['GemSynthetic'] = 201080810,
 		['Number'] = 4,
-		['Consumption'] = 10500
+		['Consumption'] = 15000
 		},
 	[264080012] = {
 		['ID'] = 264080012,
@@ -1517,7 +1517,7 @@ local GemAttribute = {
 		['AttributeValue'] = 330,
 		['GemSynthetic'] = 201080811,
 		['Number'] = 4,
-		['Consumption'] = 12000
+		['Consumption'] = 16000
 		},
 	[264080013] = {
 		['ID'] = 264080013,
@@ -1527,7 +1527,7 @@ local GemAttribute = {
 		['AttributeValue'] = 360,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 13500
+		['Consumption'] = 17000
 		},
 	[264080014] = {
 		['ID'] = 264080014,
@@ -1537,7 +1537,7 @@ local GemAttribute = {
 		['AttributeValue'] = 400,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 15000
+		['Consumption'] = 18000
 		},
 	[264080015] = {
 		['ID'] = 264080015,
@@ -1547,7 +1547,7 @@ local GemAttribute = {
 		['AttributeValue'] = 450,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 16500
+		['Consumption'] = 19000
 		},
 	[264080016] = {
 		['ID'] = 264080016,
@@ -1557,7 +1557,7 @@ local GemAttribute = {
 		['AttributeValue'] = 500,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 18000
+		['Consumption'] = 20000
 		},
 	[264080017] = {
 		['ID'] = 264080017,
@@ -1567,7 +1567,7 @@ local GemAttribute = {
 		['AttributeValue'] = 550,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 19500
+		['Consumption'] = 21000
 		},
 	[264080018] = {
 		['ID'] = 264080018,
@@ -1577,7 +1577,7 @@ local GemAttribute = {
 		['AttributeValue'] = 600,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 21000
+		['Consumption'] = 22000
 		},
 	[264080019] = {
 		['ID'] = 264080019,
@@ -1587,7 +1587,7 @@ local GemAttribute = {
 		['AttributeValue'] = 650,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 22500
+		['Consumption'] = 23000
 		},
 	[264080020] = {
 		['ID'] = 264080020,
@@ -1607,7 +1607,7 @@ local GemAttribute = {
 		['AttributeValue'] = 25,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 100
+		['Consumption'] = 5000
 		},
 	[264090002] = {
 		['ID'] = 264090002,
@@ -1617,7 +1617,7 @@ local GemAttribute = {
 		['AttributeValue'] = 50,
 		['GemSynthetic'] = 201080901,
 		['Number'] = 4,
-		['Consumption'] = 200
+		['Consumption'] = 6000
 		},
 	[264090003] = {
 		['ID'] = 264090003,
@@ -1627,7 +1627,7 @@ local GemAttribute = {
 		['AttributeValue'] = 75,
 		['GemSynthetic'] = 201080902,
 		['Number'] = 4,
-		['Consumption'] = 400
+		['Consumption'] = 7000
 		},
 	[264090004] = {
 		['ID'] = 264090004,
@@ -1637,7 +1637,7 @@ local GemAttribute = {
 		['AttributeValue'] = 100,
 		['GemSynthetic'] = 201080903,
 		['Number'] = 4,
-		['Consumption'] = 800
+		['Consumption'] = 8000
 		},
 	[264090005] = {
 		['ID'] = 264090005,
@@ -1647,7 +1647,7 @@ local GemAttribute = {
 		['AttributeValue'] = 125,
 		['GemSynthetic'] = 201080904,
 		['Number'] = 4,
-		['Consumption'] = 1500
+		['Consumption'] = 9000
 		},
 	[264090006] = {
 		['ID'] = 264090006,
@@ -1657,7 +1657,7 @@ local GemAttribute = {
 		['AttributeValue'] = 150,
 		['GemSynthetic'] = 201080905,
 		['Number'] = 4,
-		['Consumption'] = 3000
+		['Consumption'] = 10000
 		},
 	[264090007] = {
 		['ID'] = 264090007,
@@ -1667,7 +1667,7 @@ local GemAttribute = {
 		['AttributeValue'] = 180,
 		['GemSynthetic'] = 201080906,
 		['Number'] = 4,
-		['Consumption'] = 4500
+		['Consumption'] = 11000
 		},
 	[264090008] = {
 		['ID'] = 264090008,
@@ -1677,7 +1677,7 @@ local GemAttribute = {
 		['AttributeValue'] = 210,
 		['GemSynthetic'] = 201080907,
 		['Number'] = 4,
-		['Consumption'] = 6000
+		['Consumption'] = 12000
 		},
 	[264090009] = {
 		['ID'] = 264090009,
@@ -1687,7 +1687,7 @@ local GemAttribute = {
 		['AttributeValue'] = 240,
 		['GemSynthetic'] = 201080908,
 		['Number'] = 4,
-		['Consumption'] = 7500
+		['Consumption'] = 13000
 		},
 	[264090010] = {
 		['ID'] = 264090010,
@@ -1697,7 +1697,7 @@ local GemAttribute = {
 		['AttributeValue'] = 270,
 		['GemSynthetic'] = 201080909,
 		['Number'] = 4,
-		['Consumption'] = 9000
+		['Consumption'] = 14000
 		},
 	[264090011] = {
 		['ID'] = 264090011,
@@ -1707,7 +1707,7 @@ local GemAttribute = {
 		['AttributeValue'] = 300,
 		['GemSynthetic'] = 201080910,
 		['Number'] = 4,
-		['Consumption'] = 10500
+		['Consumption'] = 15000
 		},
 	[264090012] = {
 		['ID'] = 264090012,
@@ -1717,7 +1717,7 @@ local GemAttribute = {
 		['AttributeValue'] = 330,
 		['GemSynthetic'] = 201080911,
 		['Number'] = 4,
-		['Consumption'] = 12000
+		['Consumption'] = 16000
 		},
 	[264090013] = {
 		['ID'] = 264090013,
@@ -1727,7 +1727,7 @@ local GemAttribute = {
 		['AttributeValue'] = 360,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 13500
+		['Consumption'] = 17000
 		},
 	[264090014] = {
 		['ID'] = 264090014,
@@ -1737,7 +1737,7 @@ local GemAttribute = {
 		['AttributeValue'] = 400,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 15000
+		['Consumption'] = 18000
 		},
 	[264090015] = {
 		['ID'] = 264090015,
@@ -1747,7 +1747,7 @@ local GemAttribute = {
 		['AttributeValue'] = 450,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 16500
+		['Consumption'] = 19000
 		},
 	[264090016] = {
 		['ID'] = 264090016,
@@ -1757,7 +1757,7 @@ local GemAttribute = {
 		['AttributeValue'] = 500,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 18000
+		['Consumption'] = 20000
 		},
 	[264090017] = {
 		['ID'] = 264090017,
@@ -1767,7 +1767,7 @@ local GemAttribute = {
 		['AttributeValue'] = 550,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 19500
+		['Consumption'] = 21000
 		},
 	[264090018] = {
 		['ID'] = 264090018,
@@ -1777,7 +1777,7 @@ local GemAttribute = {
 		['AttributeValue'] = 600,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 21000
+		['Consumption'] = 22000
 		},
 	[264090019] = {
 		['ID'] = 264090019,
@@ -1787,7 +1787,7 @@ local GemAttribute = {
 		['AttributeValue'] = 650,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 22500
+		['Consumption'] = 23000
 		},
 	[264090020] = {
 		['ID'] = 264090020,
@@ -1807,7 +1807,7 @@ local GemAttribute = {
 		['AttributeValue'] = 25,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 100
+		['Consumption'] = 5000
 		},
 	[264100002] = {
 		['ID'] = 264100002,
@@ -1817,7 +1817,7 @@ local GemAttribute = {
 		['AttributeValue'] = 50,
 		['GemSynthetic'] = 201081001,
 		['Number'] = 4,
-		['Consumption'] = 200
+		['Consumption'] = 6000
 		},
 	[264100003] = {
 		['ID'] = 264100003,
@@ -1827,7 +1827,7 @@ local GemAttribute = {
 		['AttributeValue'] = 75,
 		['GemSynthetic'] = 201081002,
 		['Number'] = 4,
-		['Consumption'] = 400
+		['Consumption'] = 7000
 		},
 	[264100004] = {
 		['ID'] = 264100004,
@@ -1837,7 +1837,7 @@ local GemAttribute = {
 		['AttributeValue'] = 100,
 		['GemSynthetic'] = 201081003,
 		['Number'] = 4,
-		['Consumption'] = 800
+		['Consumption'] = 8000
 		},
 	[264100005] = {
 		['ID'] = 264100005,
@@ -1847,7 +1847,7 @@ local GemAttribute = {
 		['AttributeValue'] = 125,
 		['GemSynthetic'] = 201081004,
 		['Number'] = 4,
-		['Consumption'] = 1500
+		['Consumption'] = 9000
 		},
 	[264100006] = {
 		['ID'] = 264100006,
@@ -1857,7 +1857,7 @@ local GemAttribute = {
 		['AttributeValue'] = 150,
 		['GemSynthetic'] = 201081005,
 		['Number'] = 4,
-		['Consumption'] = 3000
+		['Consumption'] = 10000
 		},
 	[264100007] = {
 		['ID'] = 264100007,
@@ -1867,7 +1867,7 @@ local GemAttribute = {
 		['AttributeValue'] = 180,
 		['GemSynthetic'] = 201081006,
 		['Number'] = 4,
-		['Consumption'] = 4500
+		['Consumption'] = 11000
 		},
 	[264100008] = {
 		['ID'] = 264100008,
@@ -1877,7 +1877,7 @@ local GemAttribute = {
 		['AttributeValue'] = 210,
 		['GemSynthetic'] = 201081007,
 		['Number'] = 4,
-		['Consumption'] = 6000
+		['Consumption'] = 12000
 		},
 	[264100009] = {
 		['ID'] = 264100009,
@@ -1887,7 +1887,7 @@ local GemAttribute = {
 		['AttributeValue'] = 240,
 		['GemSynthetic'] = 201081008,
 		['Number'] = 4,
-		['Consumption'] = 7500
+		['Consumption'] = 13000
 		},
 	[264100010] = {
 		['ID'] = 264100010,
@@ -1897,7 +1897,7 @@ local GemAttribute = {
 		['AttributeValue'] = 270,
 		['GemSynthetic'] = 201081009,
 		['Number'] = 4,
-		['Consumption'] = 9000
+		['Consumption'] = 14000
 		},
 	[264100011] = {
 		['ID'] = 264100011,
@@ -1907,7 +1907,7 @@ local GemAttribute = {
 		['AttributeValue'] = 300,
 		['GemSynthetic'] = 201081010,
 		['Number'] = 4,
-		['Consumption'] = 10500
+		['Consumption'] = 15000
 		},
 	[264100012] = {
 		['ID'] = 264100012,
@@ -1917,7 +1917,7 @@ local GemAttribute = {
 		['AttributeValue'] = 330,
 		['GemSynthetic'] = 201081011,
 		['Number'] = 4,
-		['Consumption'] = 12000
+		['Consumption'] = 16000
 		},
 	[264100013] = {
 		['ID'] = 264100013,
@@ -1927,7 +1927,7 @@ local GemAttribute = {
 		['AttributeValue'] = 360,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 13500
+		['Consumption'] = 17000
 		},
 	[264100014] = {
 		['ID'] = 264100014,
@@ -1937,7 +1937,7 @@ local GemAttribute = {
 		['AttributeValue'] = 400,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 15000
+		['Consumption'] = 18000
 		},
 	[264100015] = {
 		['ID'] = 264100015,
@@ -1947,7 +1947,7 @@ local GemAttribute = {
 		['AttributeValue'] = 450,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 16500
+		['Consumption'] = 19000
 		},
 	[264100016] = {
 		['ID'] = 264100016,
@@ -1957,7 +1957,7 @@ local GemAttribute = {
 		['AttributeValue'] = 500,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 18000
+		['Consumption'] = 20000
 		},
 	[264100017] = {
 		['ID'] = 264100017,
@@ -1967,7 +1967,7 @@ local GemAttribute = {
 		['AttributeValue'] = 550,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 19500
+		['Consumption'] = 21000
 		},
 	[264100018] = {
 		['ID'] = 264100018,
@@ -1977,7 +1977,7 @@ local GemAttribute = {
 		['AttributeValue'] = 600,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 21000
+		['Consumption'] = 22000
 		},
 	[264100019] = {
 		['ID'] = 264100019,
@@ -1987,7 +1987,7 @@ local GemAttribute = {
 		['AttributeValue'] = 650,
 		['GemSynthetic'] = 0,
 		['Number'] = 0,
-		['Consumption'] = 22500
+		['Consumption'] = 23000
 		},
 	[264100020] = {
 		['ID'] = 264100020,

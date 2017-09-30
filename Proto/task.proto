@@ -64,4 +64,19 @@ message TaskUpdateChapterRewardNotify
 	required uint32 chapterState = 3; //当前章节状态，0：不可领，非0：可领
 }
 
+//秘境修炼任务信息应答
+message MiJingXiuLianTaskInfoAnswer
+{
+	required uint32 info_flag = 1; // 推送状态标志(0:登录主动推送 1:客户端请求推送 2:完成任务后主动推送)
+	required uint32 task_id = 2; //当前任务id
+	required uint32 reward_beilv = 3; //当前奖励倍率下标
+	required uint32 huan_num = 4; //今日已完成总环数
+	required uint32 lun_num = 5;  //今日已完成总轮数
+}
 
+//秘境修炼任务刷星信息应答
+message MiJingXiuLianTaskShuaXingAnswer
+{
+	required uint32 result = 1; //结果
+	required uint32 reward_beilv = 2; //当前奖励倍率下标
+}

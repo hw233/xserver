@@ -1994,6 +1994,25 @@ local BuffTable = {
 		['EffectID'] = {115000054},
 		['DelEffectID'] = {0}
 		},
+	[114500008] = {
+		['ID'] = 114500008,
+		['BuffType'] = 1,
+		['IsDeBuff'] = 0,
+		['IsControl'] = 0,
+		['CoverType'] = 112,
+		['DeleteType'] = 0,
+		['NeedPro'] = 11000,
+		['DfPro'] = 0,
+		['BuffEffectId'] = 0,
+		['EndEffectId'] = 0,
+		['IsFollow'] = 1,
+		['Time'] = 480000,
+		['DfTime'] = 0,
+		['TimeDelay'] = 0,
+		['Interval'] = 3000,
+		['EffectID'] = {115000098},
+		['DelEffectID'] = {0}
+		},
 	[114110000] = {
 		['ID'] = 114110000,
 		['BuffType'] = 1,
