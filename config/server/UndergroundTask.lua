@@ -1,8 +1,8 @@
 local UndergroundTask = {
 	[540100001] = {
 		['ID'] = 540100001,	--索引
-		['LevelSection'] = {91,92},	--等级区间
-		['TaskID'] = 240130038,	--任务ID
+		['LevelSection'] = {31,42},	--等级区间
+		['TaskID'] = 240191001,	--任务ID
 		['CoinType'] = {201010001,201010002},	--初始奖励货币类型
 		['CoinValue'] = {10000,100},	--初始奖励货币值
 		['StarProbability'] = {1000,1000,2000,2000,2000,2000},	--概率
@@ -12,8 +12,8 @@ local UndergroundTask = {
 		},
 	[540100002] = {
 		['ID'] = 540100002,
-		['LevelSection'] = {93,94},
-		['TaskID'] = 240130039,
+		['LevelSection'] = {43,54},
+		['TaskID'] = 240191002,
 		['CoinType'] = {201010001,201010002},
 		['CoinValue'] = {20000,200},
 		['StarProbability'] = {1000,1000,2000,2000,2000,2000},
@@ -23,8 +23,8 @@ local UndergroundTask = {
 		},
 	[540100003] = {
 		['ID'] = 540100003,
-		['LevelSection'] = {95,96},
-		['TaskID'] = 240130040,
+		['LevelSection'] = {55,66},
+		['TaskID'] = 240191003,
 		['CoinType'] = {201010001,201010002},
 		['CoinValue'] = {30000,300},
 		['StarProbability'] = {1000,1000,2000,2000,2000,2000},
@@ -34,8 +34,8 @@ local UndergroundTask = {
 		},
 	[540100004] = {
 		['ID'] = 540100004,
-		['LevelSection'] = {97,98},
-		['TaskID'] = 240130041,
+		['LevelSection'] = {67,78},
+		['TaskID'] = 240191004,
 		['CoinType'] = {201010001,201010002},
 		['CoinValue'] = {40000,400},
 		['StarProbability'] = {500,1000,2500,2500,2000,1500},
@@ -45,8 +45,8 @@ local UndergroundTask = {
 		},
 	[540100005] = {
 		['ID'] = 540100005,
-		['LevelSection'] = {99,100},
-		['TaskID'] = 240130042,
+		['LevelSection'] = {79,100},
+		['TaskID'] = 240191005,
 		['CoinType'] = {201010001,201010002},
 		['CoinValue'] = {50000,500},
 		['StarProbability'] = {500,1000,2500,2500,2000,1500},

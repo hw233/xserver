@@ -10663,7 +10663,7 @@ local TaskEventTable = {
 		['Num2'] = 0,
 		['SceneId'] = 155000008,
 		['PointX'] = 303,
-		['PointY'] = 18,
+		['PointY'] = 18.899999999999999,
 		['PointZ'] = 170,
 		['Orientation'] = 24
 		},

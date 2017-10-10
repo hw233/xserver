@@ -6816,6 +6816,18 @@ int player_struct::deal_level_up(uint32_t level_old, uint32_t level_new)
 	m_skill.OnPlayerLevelUp(level_new);
 	open_new_fashion(level_old, level_new);
 	cache_to_dbserver();
+	
+	//秘境修炼任务等级触发
+	for(std::map<uint64_t, UndergroundTask*>::iterator itr = mijing_xiulian_config.begin(); itr != mijing_xiulian_config.end(); itr++)
+	{
+		if(itr->second->n_LevelSection < 1)
+			continue;
+		if(level_old < itr->second->LevelSection[0] && level_new >= itr->second->LevelSection[0] && level_new <= itr->second->LevelSection[1])
+		{
+			this->mijing_shilian_info_notify(0);
+		}
+
+	}
 
 	return 0;
 }

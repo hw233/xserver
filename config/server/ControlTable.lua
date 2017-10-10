@@ -478,6 +478,16 @@ local ControlTable = {
 		['CloseTime'] = {2359},
 		['TimeType'] = 1,
 		['RewardTime'] = 15
+		},
+	[330400051] = {
+		['ID'] = 330400051,
+		['MinActor'] = 1,
+		['MaxActor'] = 1,
+		['OpenDay'] = {0,1,2,3,4,5,6},
+		['OpenTime'] = {0},
+		['CloseTime'] = {2359},
+		['TimeType'] = 1,
+		['RewardTime'] = 15
 		}
 	}
 return ControlTable

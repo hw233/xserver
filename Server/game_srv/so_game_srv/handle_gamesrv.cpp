@@ -19126,7 +19126,7 @@ static int handle_mijing_xiulian_shuaxing_request(player_struct *player, EXTERN_
 	{
 		if(itr->second->n_LevelSection < 2)
 			continue;
-		if(player_level >= itr->second->LevelSection[0] && player_level <= itr->second->LevelSection[0])
+		if(player_level >= itr->second->LevelSection[0] && player_level <= itr->second->LevelSection[1])
 		{
 			id = itr->second->ID;
 		}
@@ -19468,23 +19468,26 @@ static int handle_strong_goal_reward_request(player_struct *player, EXTERN_DATA 
 			break;
 		}
 
-		std::map<uint32_t, uint32_t> reward_map;
 		for (uint32_t i = 0; i < config->n_RewardType; ++i)
 		{
-			reward_map[config->RewardType[i]] += config->RewardValue[i];
-		}
+			switch (config->RewardType[i])
+			{
+				case 1: //经验
+					player->add_exp(config->RewardValue[i], MAGIC_TYPE_STRONG_GOAL);
+					break;
+				case 2: //银两
+					player->add_coin(config->RewardValue[i], MAGIC_TYPE_STRONG_GOAL);
+					break;
+				case 3: //元宝
+					player->add_bind_gold(config->RewardValue[i], MAGIC_TYPE_STRONG_GOAL);
+					break;
+			}
 
-		if (!player->check_can_add_item_list(reward_map))
-		{
-			ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
-			LOG_ERR("[%s:%d] player[%lu] bag space, goal_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, goal_id);
-			break;
 		}
 
 		info->state = Strong_State_Rewarded;
 		player->strong_goal_update_notify(info);
 
-		player->add_item_list(reward_map, MAGIC_TYPE_STRONG_GOAL);
 	} while(0);
 	
 	CommAnswer resp;
