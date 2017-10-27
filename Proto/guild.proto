@@ -22,6 +22,19 @@ message GuildBriefData
 	required bool joinApplied = 16; //是否已申请
 }
 
+message GuildPermissionData
+{
+	required uint32 office = 1; //职位
+	repeated uint32 bits = 2; //权限
+}
+
+message GuildLogData
+{
+	required uint32 type = 1; //类型
+	required uint32 time = 2; //时间
+	repeated string args = 3; //参数
+}
+
 //帮会信息
 message GuildData
 {
@@ -41,6 +54,10 @@ message GuildData
 	required uint64 masterId = 14; //帮主ID
 	required string masterName = 15; //帮主名字
 	required uint32 renameTime = 16; //上次改名的时间
+	required uint32 zhenying = 17; //阵营
+	repeated GuildPermissionData permissions = 18; //权限
+	repeated GuildLogData usual_logs = 19; //动态
+	repeated GuildLogData important_logs = 20; //大事记
 }
 
 //帮会个人信息
@@ -80,6 +97,7 @@ message GuildMemberData
 	required uint32 taskCount = 12; //内政次数
 	required uint32 cfCount = 13; //阵营次数
 	required uint32 joinTime = 14; //入帮时间
+	required uint32 curWeekTreasure = 15; //本周资金
 }
 
 //帮会入帮申请玩家信息
@@ -293,6 +311,21 @@ message GuildExitAnswer
 	required uint32 exitTime = 3; //退帮时间
 }
 
+//帮会设置权限请求
+message GuildSetPermissionRequest
+{
+	required uint32 office = 1; //职位
+	required uint32 type = 2; //权限类型
+}
+
+//帮会权限更新通知
+message GuildUpdatePermissionNotify
+{
+	required uint32 office = 1; //职位
+	required uint32 type = 2; //权限类型
+	required uint32 state = 3; //权限状态
+}
+
 
 
 //帮会建筑信息应答
@@ -386,4 +419,43 @@ message GuildUpdateObjectAttrNotify
 	repeated GuildObjectAttrData attrs = 1; //属性列表
 }
 
+//帮会入侵活动玩家信息
+message GuildRuqinActivePlayerInfo 
+{
+	required uint64 player_id = 1;
+	required uint32 damage = 2;
+	required bool   on_land = 3;
+}
+//帮会入侵活动结束,奖励信息到guild服通知
+message GuildRuqinActiveRewardNotify
+{
+	required uint32 guild_id = 1;    //帮会id
+	required uint32 all_damage = 2;  //总伤害
+	required uint32 boshu = 3;      //守住波数
+	required uint32 all_bushu = 4; //总波数
+	repeated GuildRuqinActivePlayerInfo all_palyer = 5; //玩家信息
+}
 
+message GuildRuqinRewardItemInfo
+{
+	required uint32 item_id = 1;
+	required uint32 item_num = 2;
+}
+message GuildRuqinPlayerRewardInfo
+{
+	required string name = 1; //帮会成员名字
+	required uint32 lv = 2; //帮会玩家等级
+	required uint32 job = 3; //帮会玩家职业
+	required uint32 damage = 4; //输出伤害
+	repeated GuildRuqinRewardItemInfo item = 5; //奖励物品
+}
+//奖励信息按输出伤害排行发给玩家
+message GuildRuqinActiveRewardAndRankNotify
+{
+	repeated GuildRuqinPlayerRewardInfo reward_info = 1; //奖励信息
+}
+
+message GuildRuqinBossCreatNotify
+{
+	required uint32 guild_id = 1; //帮会id
+}

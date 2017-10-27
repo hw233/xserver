@@ -146,7 +146,7 @@ local dfg_geren = {
 	[350201025] = {
 		['ID'] = 350201025,
 		['TypeID'] = 52,
-		['Parameter1'] = {},
+		['Parameter1'] = {2},
 		['Parameter2'] = {''}
 		},
 	[350201026] = {
@@ -284,7 +284,7 @@ local dfg_geren = {
 	[350201048] = {
 		['ID'] = 350201048,
 		['TypeID'] = 52,
-		['Parameter1'] = {},
+		['Parameter1'] = {5},
 		['Parameter2'] = {''}
 		},
 	[350201049] = {

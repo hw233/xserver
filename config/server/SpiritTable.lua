@@ -40,7 +40,7 @@ local SpiritTable = {
 		['AttributeCeiling'] = {500,55,55,22},
 		['SpiritExpend'] = 201060021,
 		['ExpendNum'] = 3,
-		['GradeNum'] = {5,5,5,5},
+		['GradeNum'] = {10,10,10,10},
 		['OrderAttribute'] = {0,0,0,0}
 		},
 	[5] = {
@@ -73,7 +73,7 @@ local SpiritTable = {
 		['AttributeCeiling'] = {1850,170,170,79},
 		['SpiritExpend'] = 201060021,
 		['ExpendNum'] = 5,
-		['GradeNum'] = {10,10,10,10},
+		['GradeNum'] = {15,15,15,15},
 		['OrderAttribute'] = {0,0,0,0}
 		},
 	[8] = {
@@ -106,7 +106,7 @@ local SpiritTable = {
 		['AttributeCeiling'] = {4530,380,380,178},
 		['SpiritExpend'] = 201060021,
 		['ExpendNum'] = 7,
-		['GradeNum'] = {15,15,15,15},
+		['GradeNum'] = {20,20,20,20},
 		['OrderAttribute'] = {0,0,0,0}
 		},
 	[11] = {
@@ -139,7 +139,7 @@ local SpiritTable = {
 		['AttributeCeiling'] = {9030,710,710,328},
 		['SpiritExpend'] = 201060021,
 		['ExpendNum'] = 9,
-		['GradeNum'] = {20,20,20,20},
+		['GradeNum'] = {25,25,25,25},
 		['OrderAttribute'] = {0,0,0,0}
 		},
 	[14] = {
@@ -172,7 +172,7 @@ local SpiritTable = {
 		['AttributeCeiling'] = {15800,1190,1190,565},
 		['SpiritExpend'] = 201060021,
 		['ExpendNum'] = 11,
-		['GradeNum'] = {25,25,25,25},
+		['GradeNum'] = {30,30,30,30},
 		['OrderAttribute'] = {0,0,0,0}
 		},
 	[17] = {

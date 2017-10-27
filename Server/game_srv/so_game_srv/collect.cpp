@@ -1,4 +1,5 @@
 #include "collect.h"
+#include "so_game_srv/sight_space.h"
 
 #include "player_manager.h"
 #include "scene_manager.h"
@@ -24,6 +25,7 @@ Collect::Collect()
 	m_gatherPlayer = 0;
 	area = NULL;
 	scene = NULL;
+	sight_space = NULL;
 	m_state = COLLECT_NORMOR;
 	m_y = 34;
 	m_scenceId = 0;
@@ -39,6 +41,18 @@ Collect::Collect()
 
 Collect::~Collect()
 {
+	if (sight_space)
+	{
+		for (int i = 0; i < MAX_COLLECT_IN_SIGHT_SPACE; ++i)
+		{
+			if (sight_space->collects[i] == this)
+			{
+				sight_space->collects[i] = NULL;
+				break;
+			}
+		}
+	}
+	
 	--collect_g_collect_num;
 }
 
@@ -70,24 +84,29 @@ void Collect::NotifyCollectCreate(player_struct *player)
 	sight_changed_notify__init(&notify);
 	SightCollectInfo collect_info[1];
 	SightCollectInfo *collect_info_point[1];
+	
 	collect_info_point[0] = &collect_info[0];
 	notify.n_add_collect = 1;
 	notify.add_collect = collect_info_point;
-
-	sight_collect_info__init(collect_info_point[0]);
-	collect_info_point[0]->uuid = m_uuid;
-	collect_info_point[0]->collectid = m_collectId;
-	collect_info_point[0]->y = m_y;
-	collect_info_point[0]->yaw = m_yaw;
 	PosData pos;
-	pos_data__init(&pos);
-	pos.pos_x = m_pos.pos_x;
-	pos.pos_z = m_pos.pos_z;
-	collect_info_point[0]->data = &pos;
+	pack_sight_collect_info(collect_info_point[0], &pos);
 
 	EXTERN_DATA extern_data;
 	extern_data.player_id = player->get_uuid();
 	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);
+}
+
+void Collect::pack_sight_collect_info(SightCollectInfo *point, PosData *pos)
+{
+	sight_collect_info__init(point);
+	point->uuid = m_uuid;
+	point->collectid = m_collectId;
+	point->y = m_y;
+	point->yaw = m_yaw;	
+	pos_data__init(pos);
+	pos->pos_x = m_pos.pos_x;
+	pos->pos_z = m_pos.pos_z;
+	point->data = pos;
 }
 
 void Collect::BroadcastCollectCreate()
@@ -102,60 +121,22 @@ void Collect::BroadcastCollectCreate()
 	collect_info_point[0] = &collect_info[0];
 	notify.n_add_collect = 1;
 	notify.add_collect = collect_info_point;
-
-	sight_collect_info__init(collect_info_point[0]);
-	collect_info_point[0]->uuid = m_uuid;
-	collect_info_point[0]->collectid = m_collectId;
-	collect_info_point[0]->y = m_y;
-	collect_info_point[0]->yaw = m_yaw;	
 	PosData pos;
-	pos_data__init(&pos);
-	pos.pos_x = m_pos.pos_x;
-	pos.pos_z = m_pos.pos_z;
-	collect_info_point[0]->data = &pos;
+	pack_sight_collect_info(collect_info_point[0], &pos);
 
 	BroadcastToSight(MSG_ID_SIGHT_CHANGED_NOTIFY, &notify, (pack_func)sight_changed_notify__pack);
-	//uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SIGHT_CHANGED_NOTIFY, &notify, (pack_func)sight_changed_notify__pack);
-	//PROTO_HEAD_CONN_BROADCAST *head;
-	//head = (PROTO_HEAD_CONN_BROADCAST *)conn_node_base::global_send_buf;
-
-	//add_area_player_to_sight(area, &head->num_player_id, ppp);
-	//for (int i = 0; i < MAX_NEIGHBOUR_AREA; ++i)
-	//{
-	//	add_area_player_to_sight(area->neighbour[i], &head->num_player_id, ppp);
-	//}
-	//if (head->num_player_id > 0)
-	//{
-	//	head->len += sizeof(uint64_t) * head->num_player_id;
-	//	conn_node_gamesrv::broadcast_msg_send();
-	//}
 }
 
 void Collect::BroadcastCollectDelete()
 {
-	//SightChangedNotify notify;
-	//sight_changed_notify__init(&notify);
-	//notify.n_delete_collect = 1;
-	//uint32_t ar[1];
-	//ar[0] = m_uuid;
-	//notify.delete_collect = ar;
+	SightChangedNotify notify;
+	sight_changed_notify__init(&notify);
+	notify.n_delete_collect = 1;
+	uint32_t ar[1];
+	ar[0] = m_uuid;
+	notify.delete_collect = ar;
 
-	//BroadcastToSight(MSG_ID_SIGHT_CHANGED_NOTIFY, &notify, (pack_func)sight_changed_notify__pack);
-}
-
-Collect * Collect::CreateCollect(scene_struct *scene, int index)
-{
-	Collect * pCollect = new Collect();
-	pCollect->m_collectId = index;
-	pCollect->m_uuid = ++collect_manager_s_id;
-	pCollect->m_pos.pos_x = 202;
-	pCollect->m_pos.pos_z = 46;
-
-	scene->add_collect_to_scene(pCollect);
-	//pCollect->BroadcastCollectCreate();
-
-	collect_manager_s_collectContain.insert(std::make_pair(pCollect->m_uuid, pCollect));
-	return pCollect;
+	BroadcastToSight(MSG_ID_SIGHT_CHANGED_NOTIFY, &notify, (pack_func)sight_changed_notify__pack);
 }
 
 int Collect::CreateCollectByID(scene_struct *scene, uint32_t id, uint32_t num)
@@ -183,13 +164,6 @@ Collect * Collect::CreateCollectByConfig(scene_struct *scene, int index)
 	struct SceneCreateMonsterTable *create_config = (*scene->create_monster_config)[index];
 	if (!create_config)
 		return NULL;
-
-	//std::map<uint64_t, struct CollectTable *>::iterator it = collect_config.find(create_config->ID);
-	//if (it == collect_config.end())
-	//{
-	//	return NULL;
-	//}
-
 	return CreateCollectByPos(scene, create_config->ID, create_config->PointPosX, create_config->PointPosY, create_config->PointPosZ, create_config->Yaw);
 }
 
@@ -200,32 +174,59 @@ Collect *Collect::CreateCollectByPos(scene_struct *scene, uint32_t id, double x,
 		return NULL;
 	}
 
-	CollectTable *table = get_config_by_id(id, &collect_config);
-	if (table == NULL)
+	Collect * pCollect = CreateCollectImp(id, x, y, z, yaw);
+	if (pCollect == NULL)
 	{
 		return NULL;
 	}
-	//if (table->LifeTime == 0)
-	//{
-	//	return NULL;
-	//}
-	Collect * pCollect = new Collect();
-	pCollect->m_collectId = id;
-	pCollect->m_uuid = ++collect_manager_s_id;
-	pCollect->m_pos.pos_x = x;
-	pCollect->m_pos.pos_z = z;
-	pCollect->m_y = y;
-	pCollect->m_yaw = yaw;
-	//pCollect->m_liveTime = time_helper::get_cached_time() / 1000 + table->LifeTime;
-
 	pCollect->NotifyCollectCreate(player);
-
-	collect_manager_s_collectContain.insert(std::make_pair(pCollect->m_uuid, pCollect));
 
 	return pCollect;
 }
 
+Collect *Collect::create_sight_space_collect(sight_space_struct *sight_space, uint32_t id, double x, double y, double z, float yaw)
+{
+	for (int i = 0; i < MAX_COLLECT_IN_SIGHT_SPACE; ++i)
+	{
+		if (sight_space->collects[i] != NULL)
+			continue;
+		CollectTable *table = get_config_by_id(id, &collect_config);
+		if (table == NULL)
+		{
+			return NULL;
+		}
+		Collect * pCollect = new Collect();
+		pCollect->m_collectId = id;
+		pCollect->m_uuid = ++collect_manager_s_id;
+		pCollect->m_pos.pos_x = x;
+		pCollect->m_pos.pos_z = z;
+		pCollect->m_y = y;
+		pCollect->m_yaw = yaw;
+		pCollect->sight_space = sight_space;
+
+		sight_space->collects[i] = pCollect;
+		sight_space->broadcast_collect_create(pCollect);
+
+		collect_manager_s_collectContain.insert(std::make_pair(pCollect->m_uuid, pCollect));
+
+		return pCollect;
+	}
+	return NULL;
+}
+
 Collect *Collect::CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw)
+{
+	Collect * pCollect = CreateCollectImp(id, x, y, z, yaw);
+	if (pCollect == NULL)
+	{
+		return NULL;
+	}
+	scene->add_collect_to_scene(pCollect);
+
+	return pCollect;
+}
+
+Collect *Collect::CreateCollectImp(uint32_t id, double x, double y, double z, float yaw)
 {
 	CollectTable *table = get_config_by_id(id, &collect_config);
 	if (table == NULL)
@@ -244,9 +245,6 @@ Collect *Collect::CreateCollectByPos(scene_struct *scene, uint32_t id, double x,
 		pCollect->m_liveTime = time_helper::get_cached_time() / 1000 + table->LifeTime;
 	}
 
-	scene->add_collect_to_scene(pCollect);
-	//pCollect->BroadcastCollectCreate();
-
 	collect_manager_s_collectContain.insert(std::make_pair(pCollect->m_uuid, pCollect));
 
 	return pCollect;
@@ -260,6 +258,23 @@ void Collect::DestroyCollect(uint64_t id)
 		delete it->second;
 		collect_manager_s_collectContain.erase(it);
 	}
+}
+
+void Collect::RemoveFromSceneAndDestroyCollect(Collect *pCollect, bool send_msg)
+{
+	if (pCollect == NULL)
+	{
+		return;
+	}
+	if (pCollect->scene != NULL)
+	{
+		pCollect->scene->delete_collect_from_scene(pCollect, send_msg);
+	}
+	else
+	{
+		LOG_ERR("[%s : %d]: collect = %lld no scene", __FUNCTION__, __LINE__, pCollect->m_uuid);
+	}
+	Collect::DestroyCollect(pCollect->m_uuid);
 }
 
 void Collect::AddAreaPlayerToSight(area_struct *area, uint16_t *add_player_id_index, uint64_t *add_player)
@@ -315,7 +330,7 @@ int Collect::BegingGather(player_struct *player, uint32_t step)
 	{
 		return 2;
 	}
-	//todo 验证距离
+
 	float lx = player->get_pos()->pos_x - this->m_pos.pos_x;
 	float lz = player->get_pos()->pos_z - this->m_pos.pos_z;
 	if (lx * lx + lz * lz > 2.0 * (3.0 + it->second->CollectionSize)*(3.0 + it->second->CollectionSize))
@@ -419,7 +434,7 @@ int Collect::GatherComplete(player_struct *player)
 			m_reliveTime = time_helper::get_cached_time() / 1000 + it->second->Regeneration;
 			if (scene != NULL)
 			{
-				scene->delete_collect_to_scene(this);
+				scene->delete_collect_from_scene(this);
 			}
 		}
 		else if (it->second->Regeneration == 0)
@@ -427,7 +442,7 @@ int Collect::GatherComplete(player_struct *player)
 			m_state = COLLECT_DESTROY;
 			if (scene != NULL)
 			{
-				scene->delete_collect_to_scene(this);
+				scene->delete_collect_from_scene(this);
 			}
 		}
 		else
@@ -462,7 +477,7 @@ int Collect::GatherComplete(player_struct *player)
 			{
 				std::map<uint32_t, uint32_t> item_list;
 				get_drop_item(m_dropId, item_list);
-				if (item_list.empty())
+				if (item_list.empty() && it->second->ConsumeTeyp != 1)
 				{
 					CommAnswer resp;
 					comm_answer__init(&resp);
@@ -531,10 +546,9 @@ bool Collect::OnTick()
 	}
 	if (m_liveTime != 0 && m_liveTime < time_helper::get_cached_time() /1000 )
 	{
-		BroadcastCollectDelete();
 		if (scene != NULL)
 		{
-			scene->delete_collect_to_scene(this);
+			scene->delete_collect_from_scene(this, true);
 		}
 		return false;
 	}
@@ -560,14 +574,7 @@ bool Collect::OnTick()
 			}
 			else
 			{
-				if (is_guild_scene_id(m_scenceId))
-				{
-					pScence = scene_manager::get_guild_scene(m_guild_id);
-				}
-				else
-				{
-					pScence = scene_manager::get_scene(m_scenceId);
-				}
+				pScence = scene_manager::get_scene(m_scenceId);
 			}
 			
 			if (pScence != NULL)

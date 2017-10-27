@@ -35,10 +35,11 @@
 // static uint32_t guild_battle_manager_action_round = 0;
 // static uint32_t guild_battle_manager_action_act = 0;
 
-// static std::map<uint32_t, std::string> guild_battle_manager_guild_name;
 // static std::map<uint32_t, uint32_t> guild_battle_manager_guild_participate;
 // static std::map<uint32_t, uint32_t> guild_battle_manager_guild_call_cd;
 // static std::set<uint32_t> guild_battle_manager_final_guild_id; //参加决赛的帮会
+
+extern std::map<uint32_t, ProtoGuildInfo> guild_summary_map;
 
 extern std::vector<player_struct *> guild_battle_manager_cant_matched_player;   //不能组成队伍的人
 extern std::set<player_struct *> guild_battle_manager_waiting_player;   //个人
@@ -51,7 +52,6 @@ extern uint32_t guild_battle_manager_action_state;
 extern uint32_t guild_battle_manager_action_round;
 extern uint32_t guild_battle_manager_action_act;
 
-extern std::map<uint32_t, std::string> guild_battle_manager_guild_name;
 extern std::map<uint32_t, uint32_t> guild_battle_manager_guild_participate;
 extern std::map<uint32_t, uint32_t> guild_battle_manager_guild_call_cd;
 extern std::set<uint32_t> guild_battle_manager_final_guild_id; //参加决赛的帮会
@@ -1034,6 +1034,9 @@ void call_all_guild_player()
 	std::vector<uint64_t> playerIds;
 	for (std::map<uint64_t, player_struct *>::iterator iter = player_manager_all_players_id.begin(); iter != player_manager_all_players_id.end(); ++iter)
 	{
+		if (get_entity_type(iter->first) == ENTITY_TYPE_AI_PLAYER)
+			continue;
+		
 		player_struct *player = iter->second;
 		if (!player->is_online())
 		{
@@ -1528,14 +1531,15 @@ int player_can_participate_guild_battle(player_struct *player)
 	return 0;
 }
 
-void update_guild_name(uint32_t guild_id, char *name)
+ProtoGuildInfo *get_guild_summary(uint32_t guild_id)
 {
-	if (guild_id == 0)
+	std::map<uint32_t, ProtoGuildInfo>::iterator iter = guild_summary_map.find(guild_id);
+	if (iter != guild_summary_map.end())
 	{
-		return;
+		return &iter->second;
 	}
 
-	guild_battle_manager_guild_name[guild_id].assign(name);
+	return NULL;
 }
 
 uint32_t get_guild_participate_num(uint32_t guild_id)
@@ -1675,10 +1679,10 @@ int pack_guild_wait_info(uint32_t guild_id, uint8_t *out_data)
 
 char *get_guild_name(uint32_t guild_id)
 {
-	std::map<uint32_t, std::string>::iterator iter = guild_battle_manager_guild_name.find(guild_id);
-	if (iter != guild_battle_manager_guild_name.end())
+	ProtoGuildInfo *info = get_guild_summary(guild_id);
+	if (info)
 	{
-		return const_cast<char*>(iter->second.c_str());
+		return info->name;
 	}
 	return NULL;
 }

@@ -2990,12 +2990,17 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 			if (redis_player)
 			{
 				std::vector<char*> args;
-				std::stringstream ss_id, ss_num;
-				ss_id << config->TypeId;
-				ss_num << gift_num;
+				std::stringstream ss;
+				std::string sz_id, sz_num;
+				ss << config->TypeId;
+				ss >> sz_id;
+				ss.str("");
+				ss.clear();
+				ss << gift_num;
+				ss >> sz_num;
 				args.push_back(redis_player->name);
-				args.push_back(const_cast<char*>(ss_num.str().c_str()));
-				args.push_back(const_cast<char*>(ss_id.str().c_str()));
+				args.push_back(const_cast<char*>(sz_num.c_str()));
+				args.push_back(const_cast<char*>(sz_id.c_str()));
 
 				SystemNoticeNotify sys;
 				system_notice_notify__init(&sys);
@@ -3033,15 +3038,11 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 
 	if (ret != 0 && internal)
 	{
-		PROTO_UNDO_COST *proto = (PROTO_UNDO_COST*)get_send_buf(SERVER_PROTO_UNDO_COST, 0);
-		proto->head.len = ENDION_FUNC_4(sizeof(PROTO_UNDO_COST));
-		memset(proto->head.data, 0, sizeof(PROTO_UNDO_COST) - sizeof(PROTO_HEAD));
+		PROTO_UNDO_COST *proto = (PROTO_UNDO_COST*)get_send_data();
+		uint32_t data_len = sizeof(PROTO_UNDO_COST);
+		memset(proto, 0, data_len);
 		memcpy(&proto->cost, &res->cost, sizeof(SRV_COST_INFO));
-		conn_node_base::add_extern_data(&proto->head, extern_data);
-		if (connecter.send_one_msg(&proto->head, 1) != (int)ENDION_FUNC_4(proto->head.len))
-		{
-			LOG_ERR("[%s:%d] send to gamesrv failed err[%d]", __FUNCTION__, __LINE__, errno);
-		}
+		fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_UNDO_COST, data_len, 0);
 	}
 }
 

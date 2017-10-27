@@ -40,6 +40,8 @@ public:
 	void PackAllSkill(_PlayerDBInfo &pb);
 	void UnPackAllSkill(_PlayerDBInfo &pb);
 
+	void adjust_ai_player_skill();	
+
 	skill_struct * GetSkill(uint32_t id);
 	uint32_t GetLevelUpTo(uint32_t id, uint32_t initLv, uint32_t maxLv);
 	uint32_t CalcCost(uint32_t id, uint32_t oldLv, uint32_t num);
@@ -47,6 +49,7 @@ public:
 private:
 //	skill_struct *GetNoFuwenSkillStruct(uint32_t skill_id);  //没有设置符文的技能ID对应的技能等级,被GetFuwenSkillLevel使用
 	void IteratorLevelUp(uint32_t id, uint32_t num);  //升级关联技能
+	bool is_second_skill(skill_struct *skill);  //是否是第二段技能
 	SKILL_CONTAIN m_skill;
 	player_struct *m_owner;
 };

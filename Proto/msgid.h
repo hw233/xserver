@@ -561,6 +561,11 @@
 #define MSG_ID_GUILD_SHORT_INFO_NOTIFY            12147 //帮会简短信息通知 GuildShortInfoNotify
 #define MSG_ID_GUILD_UPDATE_STR_ATTR_NOTIFY       12148 //帮会字符属性更新通知 GuildUpdateStrAttrNotify
 #define MSG_ID_GUILD_UPDATE_OBJECT_ATTR_NOTIFY    12149 //帮会结构属性更新通知 GuildUpdateObjectAttrNotify
+#define MSG_ID_GUILD_SET_PERMISSION_REQUEST       12150 //帮会设置权限请求 GuildSetPermissionRequest
+#define MSG_ID_GUILD_SET_PERMISSION_ANSWER        12151 //帮会设置权限应答 comm_answer
+#define MSG_ID_GUILD_UPDATE_PERMISSION_NOTIFY     12152 //帮会权限更新通知 GuildUpdatePermissionNotify
+#define MSG_ID_GUILD_ADD_USUAL_LOG_NOTIFY         12153 //帮会动态增加通知 GuildLogData
+#define MSG_ID_GUILD_ADD_IMPORTANT_LOG_NOTIFY     12154 //帮会大事记增加通知 GuildLogData
 
 
 //阵营
@@ -573,14 +578,14 @@
 #define MSG_ID_ZHENYING_INFO_NOTIFY                  12406 //上线所有阵营信息通知 ZhenyingInfo
 #define MSG_ID_ZHENYING_EXP_NOTIFY                  12407 //阵营等级经验通知 ZhenyingExp
 //#define MSG_ID_ZHENYING_TASK_COMMPLETE_NOTIFY       12408 //完成阵营任务通知 NULL
-#define MSG_ID_INTO_ZHENYING_BATTLE_REQUEST           12409 //进入阵营战请求 comm_answer 0不接任务 1接
-#define MSG_ID_INTO_ZHENYING_BATTLE_ANSWER            12410 //进入阵营战应答 comm_answer
+#define MSG_ID_INTO_ZHENYING_BATTLE_REQUEST           12409 //进入日常阵营战(野外场景表现)请求 comm_answer 0不接任务 1接
+#define MSG_ID_INTO_ZHENYING_BATTLE_ANSWER            12410 //进入日常阵营战应答 comm_answer
 #define MSG_ID_ZHENYING_CHANGE_LINE_REQUEST           12411 //阵营战换线请求 ZhenyingLineInfo
 #define MSG_ID_ZHENYING_CHANGE_LINE_ANSWER            12412 //阵营战换线应答 comm_answer
 #define MSG_ID_ZHENYING_TEAM_INFO_REQUEST           12413 //阵营战队伍信息请求 NULL
 #define MSG_ID_ZHENYING_TEAM_INFO_ANSWER            12414 //阵营战队伍信息应答 ZhenyingTeam
-#define MSG_ID_EXIT_ZHENYING_BATTLE_REQUEST           12415 //退出阵营战请求 NULL
-#define MSG_ID_EXIT_ZHENYING_BATTLE_ANSWER            12416 //退出阵营战应答 comm_answer
+//#define MSG_ID_EXIT_ZHENYING_BATTLE_REQUEST           12415 //退出日常阵营战请求 NULL
+//#define MSG_ID_EXIT_ZHENYING_BATTLE_ANSWER            12416 //退出日常阵营战应答 comm_answer
 #define MSG_ID_ZHENYING_TASK_PROCESS_NOTIFY       12417 //阵营任务进度通知 ZhenyingTaskProcess
 #define MSG_ID_NEW_ZHENYING_TASK_NOTIFY          12418 //新阵营任务通知 NewZhenyingTask
 #define MSG_ID_ZHENYING_TEAM_INFO_NOTIFY            12419 //阵营战队伍信息通知 ZhenyingTeamInfo
@@ -589,14 +594,14 @@
 #define MSG_ID_ZHENYING_GET_LINE_INFO_REQUEST           12422 //阵营战分线信息请求 NULL
 #define MSG_ID_ZHENYING_GET_LINE_INFO_ANSWER            12423 //阵营战分线信息应答 ZhenyingLine
 
-#define MSG_ID_JOIN_ZHENYING_FIGHT_REQUEST           12424 //参加阵营战请求 NULL
-#define MSG_ID_JOIN_ZHENYING_FIGHT_ANSWER            12425 //参加阵营战应答 comm_answer
-#define MSG_ID_CANCEL_JOIN_ZHENYING_FIGHT_REQUEST           12426 //取消参加阵营战请求 NULL
-#define MSG_ID_CANCEL_JOIN_ZHENYING_FIGHT_ANSWER            12427 //取消参加阵营战应答 comm_answer
-#define MSG_ID_INTO_ZHENYING_FIGHT_REQUEST           12428 //进入阵营战请求 
-#define MSG_ID_INTO_ZHENYING_FIGHT_ANSWER            12429 //进入阵营战应答 comm_answer
+#define MSG_ID_JOIN_ZHENYING_FIGHT_REQUEST           12424 //报名副本阵营战(阵营攻防)请求 NULL
+#define MSG_ID_JOIN_ZHENYING_FIGHT_ANSWER            12425 //报名副本阵营战应答 comm_answer
+#define MSG_ID_ZHENYING_FIGHT_SET_READY_STATE_REQUEST       12426 //副本阵营战设置准备状态请求 ZhenyingSetReady
+#define MSG_ID_ZHENYING_FIGHT_READY_STATE_NOTIFY        12427 //副本阵营战准备人数 ZhenyingReadyState
+#define MSG_ID_INTO_ZHENYING_FIGHT_REQUEST           12428 //进入副本阵营战请求 
+#define MSG_ID_INTO_ZHENYING_FIGHT_ANSWER            12429 //进入副本阵营战应答 comm_answer
 #define MSG_ID_JOIN_ZHENYING_FIGHT_NOTIFY           12430 //报名开始 NULL
-#define MSG_ID_ZHENYING_FIGHT_START_NOTIFY          12431 //开始阵营战 NULL
+#define MSG_ID_ZHENYING_FIGHT_START_NOTIFY          12431 //开始副本阵营战 NULL
 #define MSG_ID_ZHENYING_FIGHT_SCORE_NOTIFY          12432 //阵营战双方总积分 TotalScore
 #define MSG_ID_ZHENYING_FIGHT_MY_SCORE_NOTIFY          12433 //阵营战我的积分 MyScore
 #define MSG_ID_ZHENYING_FIGHT_MYSIDE_SCORE_NOTIFY          12434 //阵营战我方积分 SideScore
@@ -609,7 +614,7 @@
 #define MSG_ID_ZHENYING_FIGHT_INTERUPT_FLAG_NOTIFY          12441 //阵营战中断夺旗 StartFlag
 #define MSG_ID_ZHENYING_FIGHT_FINISH_FLAG_NOTIFY          12442 //阵营战完成夺旗 StartFlag
 
-//阵营日常
+//日常阵营(野外场景表现)
 //#define MSG_ID_INTO_ZHENYING_DAILY_REQUEST           12450 //进入阵营日常请求 
 //#define MSG_ID_INTO_ZHENYING_DAILY_ANSWER            12451 //进入阵营日常应答 comm_answer
 #define MSG_ID_ZHENYING_DAILY_CD_NOTIFY          12452 //阵营日常结束cd FbCD
@@ -863,5 +868,36 @@
 #define MSG_ID_MIJING_XIULIAN_TASK_INFO_ANSWER			   14001 //秘境修炼任务信息应答 MiJingXiuLianTaskInfoAnswer
 #define MSG_ID_MIJING_XIULIAN_TASK_SHUAXING_REQUEST		   14002 //秘境修炼刷星请求
 #define MSG_ID_MIJING_XIULIAN_TASK_SHUAXING_ANSWER		   14003 //秘境修炼刷星信息应答 MiJingXiuLianTaskShuaXingAnswer
+
+//交易
+#define MSG_ID_TRADE_INFO_NOTIFY						   14101 //交易信息通知 TradeInfoNotify
+#define MSG_ID_TRADE_SHELF_UPDATE_NOTIFY				   14102 //货架格子更新通知 TradeShelfData
+#define MSG_ID_TRADE_ON_SHELF_REQUEST					   14103 //物品上架请求 TradeOnShelfRequest
+#define MSG_ID_TRADE_ON_SHELF_ANSWER					   14104 //物品上架应答 comm_answer
+#define MSG_ID_TRADE_OFF_SHELF_REQUEST					   14105 //物品下架请求 TradeOffShelfRequest
+#define MSG_ID_TRADE_OFF_SHELF_ANSWER					   14106 //物品下架应答 comm_answer
+#define MSG_ID_TRADE_RESHELF_REQUEST					   14107 //物品重新上架请求 TradeReshelfRequest
+#define MSG_ID_TRADE_RESHELF_ANSWER					       14108 //物品重新上架应答 comm_answer
+#define MSG_ID_TRADE_ENLARGE_SHELF_REQUEST				   14109 //扩充寄售格请求 NULL
+#define MSG_ID_TRADE_ENLARGE_SHELF_ANSWER				   14110 //扩充寄售格应答 TradeEnlargeShelfAnswer
+#define MSG_ID_TRADE_SOLD_NOTIFY				           14112 //售出通知 TradeSoldNotify
+#define MSG_ID_TRADE_ITEM_SUMMARY_REQUEST				   14113 //交易货品总览请求 NULL
+#define MSG_ID_TRADE_ITEM_SUMMARY_ANSWER				   14114 //交易货品总览应答 TradeItemSummaryAnswer
+#define MSG_ID_TRADE_ITEM_DETAIL_REQUEST				   14115 //交易货品信息请求 TradeItemDetailRequest
+#define MSG_ID_TRADE_ITEM_DETAIL_ANSWER				       14116 //交易货品信息应答 TradeItemDetailAnswer
+#define MSG_ID_TRADE_BUY_REQUEST				           14117 //交易行购买请求 TradeBuyRequest
+#define MSG_ID_TRADE_BUY_ANSWER				               14118 //交易行购买应答 comm_answer
+#define MSG_ID_AUCTION_BID_REQUEST				           14119 //拍卖竞价请求 AuctionBidRequest
+#define MSG_ID_AUCTION_BID_ANSWER				           14120 //拍卖竞价应答 AuctionBidAnswer
+#define MSG_ID_AUCTION_BUY_NOW_REQUEST				       14122 //拍卖一口价请求 AuctionBuyNowRequest
+#define MSG_ID_AUCTION_BUY_NOW_ANSWER				       14123 //拍卖一口价应答 AuctionBuyNowAnswer
+#define MSG_ID_TRADE_GET_EARNING_REQUEST				   14124 //交易行领取收益请求 NULL
+#define MSG_ID_TRADE_GET_EARNING_ANSWER				       14125 //交易行领取收益应答 comm_answer
+#define MSG_ID_AUCTION_INFO_REQUEST				           14126 //拍卖信息请求 AuctionInfoRequest
+#define MSG_ID_AUCTION_INFO_ANSWER				           14127 //拍卖信息应答 AuctionInfoAnswer
+#define MSG_ID_TRADE_ITEM_SUMMARY_UPDATE_NOTIFY			   14128 //交易货品总览更新通知 TradeItemSummaryData
+
+//帮会入侵活动
+#define MSG_ID_GUILD_RUQIN_REWARD_INFO_NOTIFY              14200 //帮会入侵活动广播奖励信息 GuildRuqinActiveRewardAndRankNotify
 #endif
 

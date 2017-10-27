@@ -43,6 +43,7 @@ private:
 	int handle_gamesrv_reward_answer(EXTERN_DATA *extern_data);
 	int handle_add_guild_resrouce_request(EXTERN_DATA *extern_data);
 	int handle_disband_request(EXTERN_DATA *extern_data);
+	int handle_gamesrv_start(EXTERN_DATA *extern_data);
 
 	int handle_guild_building_info_request(EXTERN_DATA *extern_data);
 	int handle_guild_building_upgrade_request(EXTERN_DATA *extern_data);
@@ -58,6 +59,7 @@ private:
 	int handle_guild_chat_request(EXTERN_DATA *extern_data);
 	int handle_guild_prodece_medicine_request(EXTERN_DATA *extern_data);
 	int handle_get_other_info_request(EXTERN_DATA *extern_data);
+	int handle_trade_lot_insert(EXTERN_DATA *extern_data);
 
 	int handle_guild_battle_call_request(EXTERN_DATA *extern_data);
 	int handle_guild_battle_enter_wait_request(EXTERN_DATA *extern_data);
@@ -69,6 +71,9 @@ private:
 	int notify_guild_battle_activity_settle(EXTERN_DATA *extern_data);
 	int handle_guild_battle_final_list_request(EXTERN_DATA *extern_data);
 	int handle_guild_battle_add_final_id(EXTERN_DATA *extern_data);
+	int handle_guild_ruqin_creat_monster_level_request(EXTERN_DATA *extern_data);
+	int guild_ruqin_reward_info_notify(EXTERN_DATA *extern_data);
+	int guild_ruqin_boss_creat_notify(EXTERN_DATA *extern_data);
 
 private:
 	HandleMap   m_handleMap;

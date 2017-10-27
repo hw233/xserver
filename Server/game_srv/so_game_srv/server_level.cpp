@@ -4,6 +4,7 @@
 #include "game_config.h"
 #include "time_helper.h"
 #include "player.h"
+#include "uuid.h"
 #include "app_data_statis.h"
 #include "msgid.h"
 #include "role.pb-c.h"
@@ -145,6 +146,9 @@ void broadcast_server_level_info(void)
 	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SERVER_LEVEL_INFO_NOTIFY, &nty, (pack_func)server_level_info_notify__pack);
 	for (std::map<uint64_t, player_struct *>::iterator iter = player_manager_all_players_id.begin(); iter != player_manager_all_players_id.end(); ++iter)
 	{
+		if (get_entity_type(iter->first) == ENTITY_TYPE_AI_PLAYER)
+			continue;
+		
 		player_struct *player = iter->second;
 		if (player->is_online())
 		{

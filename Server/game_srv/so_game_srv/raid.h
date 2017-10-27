@@ -32,6 +32,8 @@ struct raid_player_info
 /* 12=决赛" */
 /* 15=普通阵营战 */
 /* 16=新手阵营战 */
+/* 17=帮会领地副本活动 */
+/* 18=猫鬼乐园副本*/
 enum DUNGEON_TYPE_DEFINE
 {
 	DUNGEON_TYPE_NORMAL = 0,
@@ -47,6 +49,8 @@ enum DUNGEON_TYPE_DEFINE
 	DUNGEON_TYPE_GUILD_FINAL_RAID = 12,	
 	DUNGEON_TYPE_BATTLE = 15,
 	DUNGEON_TYPE_BATTLE_NEW = 16,
+	DUNGEON_TYPE_GUILD_LAND = 17,
+	DUNGEON_TYPE_MAOGUI_LEYUAN = 18,
 };
 
 enum RAID_STATE_DEFINE
@@ -67,6 +71,7 @@ enum RAID_STATE_DEFINE
 #define GUILD_DATA data->ai_data.guild_data
 #define GUILD_FINAL_DATA data->ai_data.guild_final_data
 #define GUILD_WAIT_DATA data->ai_data.guild_wait_data
+#define GUILD_LAND_DATA data->ai_data.guild_land_data
 
 enum WANYAOGU_STATE
 {
@@ -83,6 +88,14 @@ enum PVP_RAID_STATE
 	PVP_RAID_STATE_WAIT_START,  //开始10秒倒计时
 	PVP_RAID_STATE_START,    //关卡开始
 	PVP_RAID_STATE_FINISH,   //所有关卡结束
+};
+enum GUILD_RUQIN_ACTIVE
+{
+	GUILD_RUQIN_ACTIVE_INIT,  //还没开始
+	GUILD_RUQIN_ACTIVE_START,	//活动开始
+	GUILD_RUQIN_ACTIVE_FINISH,  //活动成功
+	GUILD_RUQIN_ACTIVE_FAILD,  //活动失败
+	GUILD_RUQIN_ACTIVE_BBQ,   //活动结束，挂机得经验
 };
 
 struct assist_data
@@ -196,9 +209,52 @@ union raid_ai_data
 
 	struct
 	{
+		uint32_t guild_id; //对应的帮会ID
+		struct raid_script_data script_data;		
+	} guild_land_data;
+
+	struct
+	{
 		bool note_boss;   //
 		uint32_t target;
 	}guoyu_data;
+	struct
+	{
+		struct raid_script_data script_data;		
+		uint32_t diaoxiang_id;   //雕像怪物id
+		uint32_t diaoxiang_colour; //雕像颜色
+		uint32_t gui_wang_id; //鬼王怪物id
+		uint32_t po_buff_time; //破除猫鬼王buff时长
+		uint64_t buff_time;  //猫鬼王buff时间
+	}maogui_data;
+};
+
+//帮会入侵玩家数据
+struct guild_ruqin_player_data
+{
+	uint64_t player_id;   //玩家id
+	uint32_t damage_to_monster; //玩家对怪物造成的伤害
+	uint32_t exp; //玩家获得的经验
+};
+
+//帮会入侵活动数据
+struct guild_ruqin_data{
+	bool guild_ruqin; //帮会入侵活动是否已经开启，在开启状态不再重复开启的操作
+	bool boss_creat; //boss是否刷新
+	uint64_t open_time; //本轮开启时间
+	uint32_t zhengying; //帮会阵营
+	uint32_t level; //活动刷怪等级
+	uint32_t monster_boshu; //刷出第几波怪物
+	uint32_t all_boshu;   //总共要刷出的波数
+	uint32_t monster_id; //火堆怪物id
+	uint64_t space_time; //上次获得经验时间
+	uint32_t pos_x;     //位置
+	uint32_t pos_z;     //位置
+	uint32_t juli;     //范围
+	uint64_t huodui_time; //火堆持续的时间点
+	uint32_t exp;     //一次加多少经验
+	GUILD_RUQIN_ACTIVE status; //帮会入侵活动状态
+	std::map<uint64_t, guild_ruqin_player_data> palyer_data;
 };
 
 struct raid_data
@@ -232,6 +288,7 @@ struct raid_data
 	int ai_type;
 	uint64_t raid_ai_event; //有些副本ai事件需要客户端执行完毕后通知后台继续副本ai，次参数用来记录客户端发回的副本事件id
 	union raid_ai_data ai_data;
+	uint32_t monster_level; //刷怪等级
 };
 
 class raid_struct;
@@ -253,6 +310,8 @@ typedef void(*raid_ai_escort_stop)(raid_struct *, player_struct *, uint32_t, boo
 typedef void(*raid_ai_npc_talk)(raid_struct *, player_struct *, uint32_t);
 typedef void(*raid_ai_escort_end_piont)(raid_struct *, monster_struct *);
 typedef struct DungeonTable* (*raid_ai_get_config)(raid_struct *);
+typedef void(*raid_ai_monster_attack)(raid_struct *, monster_struct *, unit_struct *, int32_t, int32_t);
+typedef void(*raid_ai_monster_relive)(raid_struct *, monster_struct *);
 
 struct raid_ai_interface
 {
@@ -274,6 +333,8 @@ struct raid_ai_interface
 	raid_ai_failed raid_on_failed; //失败
 	raid_ai_monster_region_changed raid_on_monster_region_changed; //区域变化	
 	raid_ai_escort_end_piont raid_on_escort_end_piont; //矿车到达终点
+	raid_ai_monster_attack raid_on_monster_attacked; //怪物被击
+	raid_ai_monster_relive raid_on_monster_relive;  //怪物复活或者创建
 };
 
 class raid_struct : public scene_struct
@@ -285,16 +346,23 @@ public:
 	virtual	int player_offline(player_struct *player);
 	virtual uint32_t get_area_width();
 
+		//进入另外一个野外场景，为空表示下线	
+//	virtual int enter_other_scene(player_struct *player, scene_struct *new_scene, double pos_x, double pos_y, double pos_z, double direct);
+//	virtual int enter_other_raid(player_struct *player, raid_struct *new_raid);	//进入另外一个副本，为空表示下线
+	virtual int player_leave_scene(player_struct *player);
+	virtual int player_enter_raid(player_struct *player, double pos_x, double pos_z, double direct);
+	virtual int team_enter_raid(Team *team);
+	virtual bool use_m_player();
+
 	virtual int init_raid(player_struct *player);
 	void raid_set_ai_interface(int ai_type);
 	static void raid_add_ai_interface(int ai_type, struct raid_ai_interface *ai);
-	int team_enter_raid(Team *team);
 	void team_destoryed(Team *team);
 	/* int team2_enter_raid(Team *team); */
 	/* int team3_enter_raid(Team *team); */
 	/* int team4_enter_raid(Team *team);		 */
 	int player_return_raid(player_struct *player);
-	int player_enter_raid(player_struct *player, double pos_x, double pos_z, double direct = 0);
+//	int player_enter_raid(player_struct *player, double pos_x, double pos_z, double direct = 0);
 	int player_enter_raid_impl(player_struct *player, int index, double pos_x, double pos_z, double direct = 0);
 	int player_leave_raid(player_struct *player);
 	bool is_monster_alive(uint32_t id);	
@@ -334,7 +402,7 @@ public:
 	void start_monster_ai();
 	void stop_player_ai();
 	void start_player_ai();		
-	void clear_monster();
+	virtual void clear_monster();
 	int set_player_info(player_struct *player, struct raid_player_info *info);	
 	int get_monster_num() { return m_monster.size(); }
 	uint16_t get_cur_player_num() {return player_num;};
@@ -358,6 +426,7 @@ public:
 	struct ControlTable *m_control_config;
 	std::set<monster_struct *> m_monster;
 	int mark_finished;   //副本是否结束了, 0表示没结束，1表示失败了，其他表示通过结束了
+	guild_ruqin_data ruqin_data;	//帮会入侵活动数据
 	
 protected:
 	uint16_t player_num;  //记录玩家数目，没有玩家了才可以删除

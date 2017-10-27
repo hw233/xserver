@@ -1,4 +1,5 @@
 #include "chengjie.h"
+#include "uuid.h"
 
 #include "player_manager.h"
 #include "scene_manager.h"
@@ -862,6 +863,9 @@ void CheckGuoyuCriticalTask()
 		std::map<uint64_t, player_struct *>::iterator it = player_manager_all_players_id.begin();
 		for (; it != player_manager_all_players_id.end(); ++it)
 		{
+			if (get_entity_type(it->first) == ENTITY_TYPE_AI_PLAYER)
+				continue;
+			
 			player_struct *player = it->second;
 			if (now > player->data->guoyu.critical_next_refresh)
 			{
@@ -904,6 +908,8 @@ void CheckAwardQuestionTask()
 			std::map<uint64_t, player_struct *>::iterator it = player_manager_all_players_id.begin();
 			for (; it != player_manager_all_players_id.end(); ++it)
 			{
+				if (get_entity_type(it->first) == ENTITY_TYPE_AI_PLAYER)
+					continue;
 				player_struct *player = it->second;
 				player->clear_award_question();
 			}

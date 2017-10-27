@@ -6,6 +6,7 @@
 //unit包括player，npc，monster，还有掉落物(droppeditem)
 
 #include "area.h"
+#include "game_config.h"
 #include "map_config.h"
 #include "minheap.h"
 #include <string.h>
@@ -18,17 +19,12 @@ class partner_struct;
 class Collect;
 class unit_struct;
 class cash_truck_struct;
-
-enum SCENE_TYPE_DEFINE
-{
-	SCENE_TYPE_WILD,
-	SCENE_TYPE_GUILD,
-	SCENE_TYPE_RAID,
-};
+class raid_struct;
 
 class scene_struct
 {
 public:
+	scene_struct();
 	virtual ~scene_struct();
 	virtual void clear();
 	int create_all_monster();
@@ -44,12 +40,13 @@ public:
 	
 	virtual int delete_player_from_scene(player_struct *player);
 	virtual int delete_monster_from_scene(monster_struct *monster, bool send_msg);	
-	virtual int delete_collect_to_scene(Collect *pCollect);
+	virtual int delete_collect_from_scene(Collect *pCollect, bool send_msg = false);
 	virtual int delete_cash_truck_from_scene(cash_truck_struct *pTruck);
 	virtual int delete_partner_from_scene(partner_struct *partner, bool send_msg);
 	
 	void get_relive_pos(float pos_x, float pos_z, int32_t *ret_pos_x, int32_t *ret_pos_z, int32_t *ret_direct);
-	virtual SCENE_TYPE_DEFINE get_scene_type();
+	virtual SCENE_TYPE_DEFINE get_scene_type();  //实际的场景类型，野外或副本
+	
 	virtual void on_monster_dead(monster_struct *monster, unit_struct *killer);
 	virtual void on_player_dead(player_struct *player, unit_struct *killer);
 	virtual void on_collect(player_struct *player, Collect *collect);
@@ -57,6 +54,13 @@ public:
 	bool can_use_horse();
 	bool can_transfer(uint32_t type);	
 	void get_all_player(std::set<uint64_t> &playerIds);
+
+//进入另外一个野外场景，为空表示下线	
+//	virtual int enter_other_scene(player_struct *player, scene_struct *new_scene, double pos_x, double pos_y, double pos_z, double direct);
+//	virtual int enter_other_raid(player_struct *player, raid_struct *new_raid);	//进入另外一个副本，为空表示下线
+
+	virtual int player_leave_scene(player_struct *player);
+	virtual int player_enter_scene(player_struct *player, double pos_x, double pos_y, double pos_z, double direct);
 public:
 	struct map_config *map_config;
 	struct region_config *region_config;

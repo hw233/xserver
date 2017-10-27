@@ -44,7 +44,7 @@ static void guoyu_raid_ai_init(raid_struct *raid, player_struct *player)
 		avLv = it->second->MaxLevel;
 	}
 	raid->data->ai_data.guoyu_data.target = it->second->MonsterID;
-	monster_manager::create_monster_at_pos(raid, it->second->MonsterID, avLv, itFb->second->PointX[i], itFb->second->PointZ[i], 0, NULL);
+	monster_manager::create_monster_at_pos(raid, it->second->MonsterID, avLv, itFb->second->PointX[i], itFb->second->PointZ[i], 0, NULL, 0);
 }
 
 static void guoyu_raid_ai_finished(raid_struct *raid)

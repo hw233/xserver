@@ -43,10 +43,10 @@ while True:
     if msg_id == 10009:
         continue
     
-    if not player_id in WATCH_PLAYER:
-        continue
+#    if not player_id in WATCH_PLAYER:
+#        continue
 
-    print 'msgid = ', msg_id
+#    print 'msgid = ', msg_id
 
 #MSG_ID_MOVE_NOTIFY  			10102 //移动通知
 #    if msg_id == 10102:
@@ -92,25 +92,29 @@ while True:
             (player_id, req.skillid, req.cur_pos.pos_x, req.cur_pos.pos_z, req.direct_x, req.direct_z)
 
 #MSG_ID_SKILL_CAST_NOTIFY
-#    if msg_id == 10202:
-#        req = cast_skill_pb2.skill_cast_notify()
-#        req.ParseFromString(pb_data)
-#        oldtime=datetime.datetime.now()
-# 
+    if msg_id == 10202:
+	req = cast_skill_pb2.skill_cast_notify()
+	req.ParseFromString(pb_data)
+	oldtime=datetime.datetime.now()
+
+	print oldtime.time(), "[%lu] attack [%u] pos[%.1f][%.1f] direct[%.1f %.1f]" % (req.playerid, req.skillid, req.cur_pos.pos_x, req.cur_pos.pos_z, req.direct_x, req.direct_z)
+ 
 #	if get_uuid_type.get_uuid_type(req.playerid) != get_uuid_type.ENTITY_TYPE_MONSTER:
 #	    continue
-#        print oldtime.time(), "[%lu] attack [%u] pos[%.1f][%.1f] target_pos[%.1f %.1f]" % (req.playerid, req.skillid, req.cur_pos.pos_x, req.cur_pos.pos_z, req.target_pos.pos_x, req.target_pos.pos_z)
+#	print oldtime.time(), "[%lu] attack [%u] pos[%.1f][%.1f] target_pos[%.1f %.1f]" % (req.playerid, req.skillid, req.cur_pos.pos_x, req.cur_pos.pos_z, req.target_pos.pos_x, req.target_pos.pos_z)
 #	print "have target_pos = %s" % (req.HasField('target_pos'))
 
 #MSG_ID_SKILL_HIT_NOTIFY
-#    if msg_id == 10205:
-#        req = cast_skill_pb2.skill_hit_notify()
-#        req.ParseFromString(pb_data)
-#        oldtime=datetime.datetime.now()
-#        if len(req.target_player) == 0:
-#            continue;
-#        if get_uuid_type.get_uuid_type(req.playerid) == get_uuid_type.ENTITY_TYPE_MONSTER:
-#            print oldtime.time(), "[%lu] hit skill[%u] pos[%.1f][%.1f] [%s %s]" % (req.playerid, req.skillid, req.attack_pos.pos_x, req.attack_pos.pos_z, req.target_player[0].hp_delta, req.target_player[0].cur_hp)
+    if msg_id == 10205:
+	req = cast_skill_pb2.skill_hit_notify()
+	req.ParseFromString(pb_data)
+	oldtime=datetime.datetime.now()
+
+	print oldtime.time(), "[%lu] hit skill[%u] pos[%.1f][%.1f]" % (req.playerid, req.skillid, req.attack_pos.pos_x, req.attack_pos.pos_z)
+#	if len(req.target_player) == 0:
+#	    continue;
+#	if get_uuid_type.get_uuid_type(req.playerid) == get_uuid_type.ENTITY_TYPE_MONSTER:
+#	    print oldtime.time(), "[%lu] hit skill[%u] pos[%.1f][%.1f] [%s %s]" % (req.playerid, req.skillid, req.attack_pos.pos_x, req.attack_pos.pos_z, req.target_player[0].hp_delta, req.target_player[0].cur_hp)
 
 #MSG_ID_SKILL_HIT_IMMEDIATE_NOTIFY
 #    if msg_id == 10206:

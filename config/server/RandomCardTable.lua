@@ -36,7 +36,7 @@ local RandomCardTable = {
 		['CardDengeon'] = 20020,
 		['Condition'] = {1,2},
 		['Parameter1'] = {0,151005022},
-		['Parameter2'] = {0,10},
+		['Parameter2'] = {0,8},
 		['Probability'] = 10000
 		},
 	[80006] = {
@@ -45,6 +45,54 @@ local RandomCardTable = {
 		['Condition'] = {1,2},
 		['Parameter1'] = {0,151005027},
 		['Parameter2'] = {0,1},
+		['Probability'] = 10000
+		},
+	[80007] = {
+		['CardID'] = 80007,
+		['CardDengeon'] = 20038,
+		['Condition'] = {1,5},
+		['Parameter1'] = {0,151005052},
+		['Parameter2'] = {0,50},
+		['Probability'] = 10000
+		},
+	[80008] = {
+		['CardID'] = 80008,
+		['CardDengeon'] = 20038,
+		['Condition'] = {1,2},
+		['Parameter1'] = {0,151005057},
+		['Parameter2'] = {0,1},
+		['Probability'] = 10000
+		},
+	[80009] = {
+		['CardID'] = 80009,
+		['CardDengeon'] = 20039,
+		['Condition'] = {1,2},
+		['Parameter1'] = {0,151005064},
+		['Parameter2'] = {0,15},
+		['Probability'] = 10000
+		},
+	[80010] = {
+		['CardID'] = 80010,
+		['CardDengeon'] = 20039,
+		['Condition'] = {1,2},
+		['Parameter1'] = {0,151005067},
+		['Parameter2'] = {0,1},
+		['Probability'] = 10000
+		},
+	[80011] = {
+		['CardID'] = 80011,
+		['CardDengeon'] = 20040,
+		['Condition'] = {1,2,2,2,2},
+		['Parameter1'] = {0,151005071,151005073,151005077,151005079},
+		['Parameter2'] = {0,1,1,1,1},
+		['Probability'] = 10000
+		},
+	[80012] = {
+		['CardID'] = 80012,
+		['CardDengeon'] = 20040,
+		['Condition'] = {1,4},
+		['Parameter1'] = {0,2},
+		['Parameter2'] = {0,0},
 		['Probability'] = 10000
 		}
 	}

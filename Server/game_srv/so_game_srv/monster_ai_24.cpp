@@ -35,7 +35,7 @@ void ai_tick_24(monster_struct *monster)
 	
 	struct position *pos = monster->get_pos();
 	monster_struct *t_monster = monster_manager::create_monster_at_pos(monster->scene, monster->ai_data.type24_ai.ai_24_config->MonsterID,
-		1, pos->pos_x, pos->pos_z, 0, NULL);
+		1, pos->pos_x, pos->pos_z, 0, NULL, 0);
 	if (t_monster)
 	{
 		t_monster->set_ai_interface(25);

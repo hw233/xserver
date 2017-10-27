@@ -22,6 +22,7 @@
 #include "server_level.h"
 #include <sstream>
 #include <math.h>
+#include "guild_land_active_manager.h"
 
 chat_mod::chat_mod()
 {
@@ -92,17 +93,6 @@ static void do_test2_cmd(player_struct *player, uint64_t target_id)
 
 static void do_test_cmd(player_struct *player)
 {
-	raid_struct *raid = raid_manager::create_raid(sg_doufachang_raid_id, NULL);
-	if (!raid)
-	{
-		LOG_ERR("%s: create raid failed", __FUNCTION__);
-		return;
-	}
-
-	raid->player_enter_raid_impl(player, 0, sg_3v3_pvp_raid_param1[1], sg_3v3_pvp_raid_param1[3]);
-	player = player_manager::create_doufachang_ai_player(player);
-	assert(player);
-	raid->player_enter_raid_impl(player, MAX_TEAM_MEM, sg_3v3_pvp_raid_param2[1], sg_3v3_pvp_raid_param2[3]);
 	return;
 }
 
@@ -110,10 +100,10 @@ extern int send_mail(conn_node_base *connecter, uint64_t player_id, uint32_t typ
 	char *title, char *sender_name, char *content, std::vector<char *> *args,
 	std::map<uint32_t, uint32_t> *attachs, uint32_t statis_id);
 
-void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
+int chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 {
 	if (argc < 1)
-		return;
+		return -1;
 
 	uint32_t now = time_helper::get_cached_time() / 1000;
 	if (strcasecmp(argv[0], "test") == 0)
@@ -148,42 +138,18 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 		if (raid)
 			raid->on_raid_finished();
 	}
-	else if (argc >= 4 && strcasecmp(argv[0], "print") == 0)
-	{
-		if (strcasecmp(argv[1], "pos") == 0)
-		{
-			LOG_DEBUG("%s: [%lu] player pos x=%f, z= %f", __FUNCTION__, player->get_uuid(), player->get_pos()->pos_x, player->get_pos()->pos_z);
-		}
-
-		uint32_t raid_id = 30008;
-
-
-		raid_struct *raid = raid_manager::create_raid(raid_id, player);
-		if (!raid)
-		{
-			LOG_ERR("%s: player[%lu] create raid[%u] failed", __FUNCTION__, player->get_uuid(), raid_id);
-			return ;
-		}
-
-		if (raid->player_enter_raid(player, 265, 130) != 0)
-		{
-			LOG_ERR("%s: player[%lu] enter raid failed", __FUNCTION__, player->get_uuid());
-			return ;
-		}
-
-	}
 	else if (strcasecmp(argv[0], "mon5") == 0)
 	{
 		//raid_struct *raid = (raid_struct *)player->scene;
 		CampDefenseTable *table = get_config_by_id(360600001, &zhenying_daily_config);
-		monster_struct *pMon = monster_manager::create_monster_at_pos(player->scene, table->TruckID, 1, table->TruckRouteX[0], table->TruckRouteY[0], 0, NULL);
+		monster_struct *pMon = monster_manager::create_monster_at_pos(player->scene, table->TruckID, 1, table->TruckRouteX[0], table->TruckRouteY[0], 0, NULL, 0);
 		pMon->create_config = get_daily_zhenying_truck_config(360600001);
 		//pMon->ai_state = AI_WAIT_STATE;
 	}
 	else if (strcasecmp(argv[0], "uid") == 0)
 	{
 		LOG_ERR("%s: player uid = %lu 0x%lx", __FUNCTION__, player->get_uuid(), player->get_uuid());
-		return;
+		return -1;
 	}
 	else if (argc >= 3 && strcasecmp(argv[0], "add") == 0 && strcasecmp(argv[1], "coin") == 0)
 	{
@@ -228,6 +194,10 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	{
 		gm_del_sight_space(player);
 	}
+	else if (argc >= 2 && strcasecmp(argv[0], "addcollect") == 0)
+	{
+		gm_add_collect(player, atoi(argv[1]));
+	}
 	else if (argc >= 2 && strcasecmp(argv[0], "accept_task") == 0)
 	{
 		gm_accept_task(player, atoi(argv[1]));
@@ -241,15 +211,6 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 			player->touch_task_event(info->id, TEC_ACHIEVE);
 			player->task_update_notify(info);
 		}
-	}
-
-	else if (argc >= 2 && strcasecmp(argv[0], "enterraid") == 0)
-	{
-		gm_enter_raid(player, atoi(argv[1]));
-	}
-	else if (argc >= 1 && strcasecmp(argv[0], "leftraid") == 0)
-	{
-		gm_leave_raid(player);
 	}
 	else if (argc >= 3 && strcasecmp(argv[0], "add") == 0 && strcasecmp(argv[1], "equip") == 0)
 	{
@@ -271,12 +232,20 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	{
 		gm_set_attr(player, atoi(argv[1]), atoi(argv[2]));
 	}
+	else if (argc >= 2 && strcasecmp(argv[0], "getattr") == 0)
+	{
+		int attr = player->get_attr(atoi(argv[1]));
+		char tmpbuf[128];
+		sprintf(tmpbuf, "attr %s = %d", argv[1], attr);
+		send_chat_content(player, tmpbuf);
+	}
 	else if (argc >= 2 && strcasecmp(argv[0], "goto") == 0)
 	{
-		EXTERN_DATA extern_data;
-		extern_data.player_id = player->get_uuid();
-		int id = atoi(argv[1]);
-		player->transfer_to_new_scene_by_config(id, &extern_data);
+		// EXTERN_DATA extern_data;
+		// extern_data.player_id = player->get_uuid();
+		// int id = atoi(argv[1]);
+		// player->transfer_to_new_scene_by_config(id, &extern_data);
+		gm_goto(player, atoi(argv[1]));
 	}
 	else if (argc >= 2 && strcasecmp(argv[0], "go_task") == 0)
 	{
@@ -373,7 +342,7 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	}
 	else if (argc >= 3 && strcasecmp(argv[0], "blink") == 0)
 	{
-		gm_blink(player, atoi(argv[1]), atoi(argv[2]));
+		gm_blink(player, atof(argv[1]), atof(argv[2]));
 	}
 	else if (argc >= 2 && strcasecmp(argv[0], "add_partner") == 0)
 	{
@@ -390,7 +359,7 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 		unit_struct *target = partner->ai->choose_target(partner);
 		if (!target)
 		{
-			return;
+			return -1;
 		}
 		partner->attack_target(skill_id, -1, target);
 	}
@@ -415,7 +384,7 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 			partner = partner_manager::get_partner_by_uuid(uuid);
 		}
 		if (!partner)
-			return;
+			return -1;
 
 		for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
 		{
@@ -432,8 +401,6 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 		// partner->set_pos(pos.pos_x, pos.pos_z);
 		// player->scene->add_partner_to_scene(partner);
 		// partner->set_timer(time_helper::get_cached_time() + 1000 + random() % 1500);
-		return;
-		
 	}
 	else if (argc >=2 && strcasecmp(argv[0], "pkmode") == 0)
 	{
@@ -573,6 +540,36 @@ void chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	{
 		ZhenyingBattle::GetInstance()->IntoBattle(*player);
 	}
+	else if (argc >= 1 && strcasecmp(argv[0], "guild_ruqin_open") == 0)
+	{
+		guild_land_active_manager::guild_ruqin_active_open();
+	}
+	else if (argc >= 1 && strcasecmp(argv[0], "guild_ruqin_stop") == 0)
+	{
+		guild_land_active_manager::guild_ruqin_active_stop();
+	}
+	else if (argc >= 2 && strcasecmp(argv[0], "add_lot") == 0)
+	{
+		uint32_t lot_id = atoi(argv[1]);
+		AuctionTable *config = get_config_by_id(lot_id, &auction_config);
+		if (player->data->guild_id > 0 && config)
+		{
+			TRADE_LOT_INSERT *proto = (TRADE_LOT_INSERT *)conn_node_gamesrv::get_send_data();
+			uint32_t data_len = sizeof(TRADE_LOT_INSERT);
+			memset(proto, 0, data_len);
+			proto->lot_id = lot_id;
+			proto->guild_id = player->data->guild_id;
+			proto->masters[0] = player->data->player_id;
+			EXTERN_DATA extern_data;
+			fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, SERVER_PROTO_TRADE_LOT_INSERT, data_len, 0);
+		}
+	}
+	else
+	{
+		return (-1);
+	}
+	return (0);
+	
 }
 
 void chat_mod::add_coin(player_struct *player, int val)
@@ -622,19 +619,19 @@ void chat_mod::gm_add_sight_space_monster(player_struct *player, int val)
 		return;
 
 //	uint32_t monster_id[] = {151000001,	151000033, 	151000034,	151000036};
-	uint32_t monster_id[] = {151005042};
+//	uint32_t monster_id[] = {151005042};
 //	uint32_t monster_id[] = {};	
 
-	for (size_t i = 0; i < ARRAY_SIZE(monster_id); ++i)
-	{
+//	for (size_t i = 0; i < ARRAY_SIZE(monster_id); ++i)
+//	{
 		monster_manager::create_sight_space_monster(sight, player->scene,
-			monster_id[i], 90, player->get_pos()->pos_x, player->get_pos()->pos_z);
+			val, 90, player->get_pos()->pos_x, player->get_pos()->pos_z);
 //	if (!monster)
 //	{
 //		LOG_ERR("%s: create monster fail", __FUNCTION__);
 //		return;
 //	}
-	}
+//	}
 	return;
 }
 
@@ -652,6 +649,18 @@ void chat_mod::gm_add_19_monster(player_struct *player, int type)
 	if (player->scene->add_monster_to_scene(monster, 0) != 0)
 	{
 		LOG_ERR("%s: uuid[%lu] monster[%u] scene[%u]", __FUNCTION__, monster->data->player_id, 151001016, player->scene->m_id);
+	}
+}
+
+void chat_mod::gm_add_collect(player_struct *player, int id)
+{
+	if (player->sight_space)
+	{
+		Collect::create_sight_space_collect(player->sight_space, id,
+			player->get_pos()->pos_x,
+			0,
+			player->get_pos()->pos_z,
+			0);
 	}
 }
 
@@ -685,35 +694,6 @@ void chat_mod::gm_add_monster(player_struct *player, int val)
 void chat_mod::gm_accept_task(player_struct *player, int task_id)
 {
 	player->accept_task(task_id, false);
-}
-
-void chat_mod::gm_enter_raid(player_struct *player, int raid_id)
-{
-	raid_struct *raid = raid_manager::create_raid(raid_id, player);
-	if (!raid)
-	{
-		return;
-	}
-
-	assert(raid->res_config);
-
-	if (player->m_team)
-	{
-//		player_team_enter_raid(player, raid);
-		raid->team_enter_raid(player->m_team);
-	}
-	else if (raid->player_enter_raid(player, raid->res_config->BirthPointX, raid->res_config->BirthPointZ) != 0)
-	{
-		LOG_ERR("%s: player[%lu] enter raid failed", __FUNCTION__, player->get_uuid());		
-		return;
-	}
-}
-
-void chat_mod::gm_leave_raid(player_struct *player)
-{
-	raid_struct *raid = player->get_raid();
-	if (raid)
-		raid->player_leave_raid(player);	
 }
 
 void chat_mod::gm_add_equip(player_struct *player, int type)
@@ -859,20 +839,27 @@ void chat_mod::gm_add_guild_donation(player_struct *player, int val)
 	player->add_guild_resource(4, val);
 }
 
-void chat_mod::gm_blink(player_struct *player, int pos_x, int pos_z)
+void chat_mod::gm_blink(player_struct *player, float pos_x, float pos_z)
 {
 	if (!player->scene)
 	{
 		return;
 	}
 
-	scene_struct *scene = player->scene;
-	player->send_clear_sight();
-	scene->delete_player_from_scene(player);
-	player->set_pos(pos_x, pos_z);
-	scene->add_player_to_scene(player);
-	player->send_scene_transfer(0, pos_x, 0, pos_z, player->data->scene_id, 0);
+	player->cur_scene_jump(pos_x, pos_z, 0, NULL);
+//	scene_struct *scene = player->scene;
+//	scene->
+//	player->send_clear_sight();
+//	scene->delete_player_from_scene(player);
+//	player->set_pos(pos_x, pos_z);
+//	scene->add_player_to_scene(player);
+//	player->send_scene_transfer(0, pos_x, 0, pos_z, player->data->scene_id, 0);
 }
 
-
+void chat_mod::gm_goto(player_struct *player, uint32_t scene_id)
+{
+	EXTERN_DATA extern_data;
+	extern_data.player_id = player->get_uuid();
+	player->move_to_scene(scene_id, &extern_data);
+}
 

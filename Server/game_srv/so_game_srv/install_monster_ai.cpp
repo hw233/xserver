@@ -30,6 +30,12 @@
 // 23=优先攻击护送怪的AI
 // 24=定时刷怪的AI 配置在GenerateMonster表里面
 // 25=定时刷出的怪, 先走到指定坐标，然后再执行自己的AI
+// 26=阵营战守卫
+// 27=猫鬼乐园-猫鬼雕像
+// 28=猫鬼乐园-可爱猫鬼
+// 29=猫鬼乐园-恐惧猫鬼
+// 30=阵营战镖车
+// 31=猫鬼乐园召唤怪首领
 
 void install_monster_ai()
 {
@@ -58,6 +64,11 @@ void install_monster_ai()
 	monster_struct::add_ai_interface(24, &monster_ai_24_interface);
 	monster_struct::add_ai_interface(25, &monster_ai_25_interface);
 	monster_struct::add_ai_interface(26, &monster_ai_26_interface);					
+	monster_struct::add_ai_interface(27, &monster_ai_27_interface);
+	monster_struct::add_ai_interface(28, &monster_ai_28_interface);
+	monster_struct::add_ai_interface(29, &monster_ai_29_interface);		
+	monster_struct::add_ai_interface(30, &monster_ai_30_interface);
+	monster_struct::add_ai_interface(31, &monster_ai_31_interface);
 }
 void uninstall_monster_ai()
 {

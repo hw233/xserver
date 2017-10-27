@@ -282,7 +282,7 @@
         ['PointPosX'] = 30.8,
         ['PointPosY'] = 52.60981,
         ['PointPosZ'] = 134.7884,
-        ['Yaw'] = 180.0001,
+        ['Yaw'] = 180.0002,
         ['Level'] = 90,
         ['TargetInfoList'] = {
         }
@@ -318,7 +318,7 @@
         ['PointPosX'] = 21.86795,
         ['PointPosY'] = 52.60981,
         ['PointPosZ'] = 134.5244,
-        ['Yaw'] = 180.0001,
+        ['Yaw'] = 180.0002,
         ['Level'] = 90,
         ['TargetInfoList'] = {
         }
@@ -330,7 +330,7 @@
         ['PointPosX'] = 12.59008,
         ['PointPosY'] = 52.60981,
         ['PointPosZ'] = 134.4014,
-        ['Yaw'] = 180.0001,
+        ['Yaw'] = 180.0002,
         ['Level'] = 90,
         ['TargetInfoList'] = {
         }
@@ -342,7 +342,7 @@
         ['PointPosX'] = 220.36,
         ['PointPosY'] = 50.8,
         ['PointPosZ'] = 135.5835,
-        ['Yaw'] = 180.0001,
+        ['Yaw'] = 180.0002,
         ['Level'] = 90,
         ['TargetInfoList'] = {
         }
@@ -378,7 +378,7 @@
         ['PointPosX'] = 225.06,
         ['PointPosY'] = 51.66,
         ['PointPosZ'] = 135.521,
-        ['Yaw'] = 180.0001,
+        ['Yaw'] = 180.0002,
         ['Level'] = 90,
         ['TargetInfoList'] = {
         }
@@ -402,7 +402,7 @@
         ['PointPosX'] = 229.74,
         ['PointPosY'] = 51.44,
         ['PointPosZ'] = 135.6,
-        ['Yaw'] = 180.0001,
+        ['Yaw'] = 180.0002,
         ['Level'] = 90,
         ['TargetInfoList'] = {
         }
@@ -426,7 +426,7 @@
         ['PointPosX'] = 259.16,
         ['PointPosY'] = 53.26,
         ['PointPosZ'] = 134.536,
-        ['Yaw'] = 180.0001,
+        ['Yaw'] = 180.0002,
         ['Level'] = 90,
         ['TargetInfoList'] = {
         }
@@ -568,8 +568,8 @@
         ['ID'] = 152140005,
         ['ResType'] = "Npc",
         ['PointPosX'] = 17.19843,
-        ['PointPosY'] = 52.3897,
-        ['PointPosZ'] = 105.8763,
+        ['PointPosY'] = 52.55,
+        ['PointPosZ'] = 113.3,
         ['Yaw'] = 0,
         ['Level'] = 1,
         ['TargetInfoList'] = {

@@ -30,6 +30,7 @@ struct _PlayerDBInfo;
 struct ItemsConfigTable;
 class partner_struct;
 class cash_truck_struct;
+struct partner_cur_fabao;
 
 typedef std::map<uint64_t, partner_struct *> PartnerMap;
 
@@ -56,33 +57,15 @@ struct ItemUseEffectInfo
 	~ItemUseEffectInfo();
 };
 
-struct AttrInfo
-{
-	uint32_t id;
-	double val;
-};
 
 struct cast_skill_data
 {
-	float direct_x;
-	float direct_z;	
+//	float direct_x;
+//	float direct_z;	
 	uint32_t skill_id;
 	uint64_t start_time;
 };
 
-union EspecialItemInfo
-{
-	struct{
-		uint32_t star;
-		double main_attr_val;
-		AttrInfo minor_attrs[MAX_BAGUAPAI_MINOR_ATTR_NUM];
-	}baguapai;
-
-	struct{
-		AttrInfo main_attr;	   //主属性
-		AttrInfo minor_attr[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];//副属性
-	}fabao;
-};
 
 struct bag_grid_data
 {
@@ -760,6 +743,21 @@ struct ai_player_data
 class player_struct: public unit_struct
 {
 public:
+		//场景跳转相关接口
+	int move_to_scene_pos(uint32_t scene_id, double pos_x, double pos_z, double direct, EXTERN_DATA *extern_data);  //进入野外/副本		
+	int move_to_scene(uint32_t scene_id, EXTERN_DATA *extern_data);  //进入野外/副本	
+	int move_to_transfer(uint32_t transfer_id, EXTERN_DATA *extern_data);  //进入野外/副本
+	int cur_scene_jump(double pos_x, double pos_z, double direct, EXTERN_DATA *extern_data);	//当前场景跳转
+	
+	int check_scene_enter_cond(uint32_t scene_id);	//进入地图的条件是否满足(镖车和进入等级)
+	int check_raid_enter_cond(uint32_t raid_id);
+
+	int check_enter_raid_cost(struct DungeonTable *r_config);
+	int do_enter_raid_cost(uint32_t item_id, uint32_t item_num);
+	int do_team_enter_raid_cost(uint32_t raid_id);	
+	int check_enter_raid_reward_time(uint32_t id, struct ControlTable *config);
+	int send_enter_raid_fail(uint32_t err_code, uint32_t n_reason_player, uint64_t *reason_player_id, uint32_t item_id);	
+public:
 	typedef std::multimap<uint32_t, uint32_t> ItemPosMap;
 
 	ItemPosMap item_pos_cache;
@@ -811,6 +809,7 @@ public:
 	virtual uint64_t *get_all_sight_partner();	
 	void try_return_raid();
 	void try_return_zhenying_raid();	
+	void try_return_guild_land_raid();	
 	void try_return_guild_wait_raid();	
 	void try_return_guild_battle_raid();
 
@@ -824,8 +823,6 @@ public:
 	int transfer_to_new_scene(uint32_t scene_id, double pos_x, double pos_y, double pos_z, double direct, EXTERN_DATA *extern_data);
 	int transfer_to_new_scene_impl(scene_struct *new_scene, double pos_x, double pos_y, double pos_z, double direct, EXTERN_DATA *extern_data);
 	int transfer_to_birth_position(EXTERN_DATA *extern_data); //将玩家传送回地图出生点
-	int transfer_to_guild_scene(EXTERN_DATA *extern_data); //将玩家传送到帮会地图
-	int transfer_out_guild_scene(EXTERN_DATA *extern_data); //将玩家拉出帮会地图
 	void send_chat(int channal, char *conten);
 
 //	int get_pk_type();
@@ -835,6 +832,8 @@ public:
 	void set_camp_id(int id);
 	
 	Team *get_team();
+
+	void relive();
 	
 	void on_tick();
 	void on_tick_10();
@@ -957,15 +956,19 @@ public:
 	int add_bind_gold(uint32_t num, uint32_t statis_id, bool isNty = true); //增加绑定元宝
 	int sub_unbind_gold(uint32_t num, uint32_t statis_id, bool isNty = true); //消耗非绑定元宝
 	int sub_comm_gold(uint32_t num, uint32_t statis_id, bool isNty = true); //消耗通用元宝，先消耗绑定元宝
-	int add_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //增加银两
-	int sub_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //消耗银两
+	int add_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //增加银票
+	int sub_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //消耗银票
+	int sub_comm_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //消耗银票，不够就消耗银币
+	int add_silver(uint32_t num, uint32_t statis_id, bool isNty = true); //增加银两
+	int sub_silver(uint32_t num, uint32_t statis_id, bool isNty = true); //消耗银两
 	int add_chengjie_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
 	int sub_chengjie_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
 	int add_guoyu_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
 	int sub_guoyu_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
 	int add_shangjin_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
 	int sub_shangjin_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
-	uint32_t get_coin(void); //获取银两
+	uint32_t get_coin(void); //获取银票
+	uint32_t get_silver(void); //获取银两	
 	int add_zhenqi(uint32_t num, uint32_t statis_id, bool isNty = true); //增加真气
 	int sub_zhenqi(uint32_t num, uint32_t statis_id, bool isNty = true); //消耗真气
 	uint32_t get_zhenqi(void); //获取真气
@@ -1016,7 +1019,11 @@ public:
 	bool is_item_expire(uint32_t pos); //判断道具是否到期
 	void check_bag_expire(bool isNty = false);
 
+	//将已有道具从其他系统移动到背包里
 	int move_baguapai_to_bag(BaguapaiCardInfo &card);
+	int move_fabao_to_bag(partner_cur_fabao &fabao);
+	int move_trade_item_to_bag(uint32_t item_id, uint32_t num, EspecialItemInfo &especial);
+	//道具飞向背包效果
 	void noitfy_item_flow_to_bag(std::map<uint32_t, uint32_t> &item_list);
 	void notify_one_item_flow_to_bag(uint32_t id, uint32_t num);
 
@@ -1044,6 +1051,7 @@ public:
 	TaskInfo *get_task_info(uint32_t task_id);
 	int add_task(uint32_t task_id, uint32_t status, bool isNty = false);
 	void task_update_notify(TaskInfo *info);
+	void check_task_collect(TaskInfo *info); //是否要增加 删除采集点
 	void get_task_event_item(uint32_t task_id, uint32_t event_class, std::map<uint32_t, uint32_t> &item_list);
 	int touch_task_event(uint32_t task_id, uint32_t event_class);
 	int execute_task_event(uint32_t event_id, uint32_t event_class, bool internal);
@@ -1237,6 +1245,7 @@ public:
 	void sub_battle_partner(int index); //把index的出战伙伴收回
 	uint64_t get_next_can_battle_partner(void); //获取能出战的伙伴
 	uint64_t get_fighting_partner(void);
+	void on_enter_scene(scene_struct *new_scene);
 	void on_leave_scene(scene_struct *old_scene);
 	int add_partner_anger(uint32_t num, bool isNty = true);
 	int reset_partner_anger(bool isNty = true);
@@ -1308,6 +1317,10 @@ public:
 	uint32_t chengjie_kill; //悬赏目标被杀
 
 private:
+	int move_to_wild(uint32_t scene_id);  //进入野外
+	int move_to_wild_pos(uint32_t scene_id, double pos_x, double pos_z, double direct); //进入野外
+	int move_to_raid(uint32_t raid_id, EXTERN_DATA *extern_data);  //进入副本
+	
 	void calculate_lv2_attribute();
 	void calculate_lv3_attribute();
 	void calculate_lv4_attribute();			
@@ -1341,6 +1354,7 @@ private:
 };
 
 void init_sight_unit_info_point();
-bool notice_use_art(uint32_t statis_id);
+bool notice_use_art_exp(uint32_t statis_id);
+bool notice_use_art_coin(uint32_t statis_id);
 int check_qiecuo_finished(player_struct *p1, player_struct *p2);
 #endif

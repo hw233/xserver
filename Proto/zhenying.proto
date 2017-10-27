@@ -178,3 +178,18 @@ message MineState
 {
 	required uint32 state = 1; //DAILY_MINE_STATE
 }
+
+message ZhenyingSetReady
+{
+	required bool ready = 1; //ture 准备 false取消
+}
+message ZhenyingReadyState
+{
+	required uint32 fulongguo = 1; //准备人数 
+	required uint32 dianfenggu = 2; 
+}
+message AnsJoinZhenying
+{
+	required int32 ret = 1; //返回码
+	required uint32 cd = 2; //匹配CD 
+}

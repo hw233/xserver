@@ -190,6 +190,7 @@ int monster_manager::init_monster_struct(int num, unsigned long key)
 		monster = new monster_struct();
 		monster_manager_monster_free_list.push_back(monster);
 	}
+	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(monster_struct) * num, sizeof(monster_data) * num);			
 	return init_comm_pool(0, sizeof(monster_data), num, key, &monster_manager_monster_data_pool);
 }
 /*
@@ -680,8 +681,10 @@ monster_struct *monster_manager::create_sight_space_monster(sight_space_struct *
 // 	return monster;
 // }
 
-monster_struct *monster_manager::create_monster_at_pos(scene_struct *scene, uint64_t id, uint32_t lv, int32_t pos_x, int32_t pos_z, uint32_t effectid, unit_struct *owner)
+monster_struct *monster_manager::create_monster_at_pos(scene_struct *scene, uint64_t id, uint32_t lv, int32_t pos_x, int32_t pos_z, uint32_t effectid, unit_struct *owner, float direct)
 {
+	if(lv <= 0)
+		return NULL;
 	monster_struct *monster = add_monster(id, lv, owner);
 	if (!monster)
 		return NULL;
@@ -689,6 +692,7 @@ monster_struct *monster_manager::create_monster_at_pos(scene_struct *scene, uint
 	monster->create_config = NULL;
 	monster->born_pos.pos_x = pos_x;
 	monster->born_pos.pos_z = pos_z;
+	monster->data->born_direct = direct;
 	monster->set_pos(pos_x, pos_z);
 
 	if (scene != NULL)
@@ -702,7 +706,7 @@ monster_struct *monster_manager::create_monster_at_pos(scene_struct *scene, uint
 	return monster;
 }
 
-int monster_manager::create_monster_by_id(scene_struct *scene, uint32_t id, uint32_t num)
+int monster_manager::create_monster_by_id(scene_struct *scene, uint32_t id, uint32_t num, uint64_t  monster_level)
 {
 	if (!scene->create_monster_config)
 	{
@@ -716,19 +720,21 @@ int monster_manager::create_monster_by_id(scene_struct *scene, uint32_t id, uint
 			continue;
 		if (create_config->ID != id)
 			continue;
-		create_monster_by_config(scene, i);
+		create_monster_by_config(scene, i, monster_level);
 		--num;
 	}
 
 	return (0);
 }
 
-monster_struct *monster_manager::create_monster_by_config(scene_struct *scene, int index)
+monster_struct *monster_manager::create_monster_by_config(scene_struct *scene, int index, uint64_t monster_level)
 {
 	struct SceneCreateMonsterTable *create_config = (*scene->create_monster_config)[index];
 	if (!create_config)
 		return NULL;
-	monster_struct *monster = add_monster(create_config->ID, create_config->Level);
+
+	monster_level = (monster_level == 0 ? create_config->Level : monster_level);
+	monster_struct *monster = add_monster(create_config->ID, monster_level);
 	if (!monster)
 		return NULL;
 	monster->data->create_config_index = index;
@@ -932,7 +938,7 @@ int monster_manager::add_world_boss_monster()
 				{
 					if(monster->data->scene_id != ite->second->SceneID)
 					{
-						LOG_ERR("[%s:%d] 世界boss的怪物id应该是唯一的,现已经刷出的场景ID[%u],实际应该刷出的场景ID[%lu]", __FUNCTION__,__LINE__, monster->data->scene_id, ite->second->SceneID);
+						LOG_ERR("[%s:%d] 世界boss的怪物id应该是唯一的,现已经刷出的场景ID[%u],实际应该刷出的场景ID[%lu]怪物id[%u]", __FUNCTION__,__LINE__, monster->data->scene_id, ite->second->SceneID, monster->data->monster_id);
 						return -3;
 					}
 					if( monster->data->birth_time == time_helper::get_cached_time() / 1000)
@@ -960,7 +966,7 @@ int monster_manager::add_world_boss_monster()
 						LOG_ERR("[%s:%d] 世界boss刷新获取场景失败", __FUNCTION__, __LINE__);
 						return -4;
 					}
-					create_monster_by_id(scene, ite->second->MonsterID, 1);
+					create_monster_by_id(scene, ite->second->MonsterID, 1, 0);
 				}
 				//提醒rank服更新数据
 				monster = monster_manager::get_world_boss_by_id(ite->second->MonsterID);

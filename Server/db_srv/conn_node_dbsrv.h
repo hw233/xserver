@@ -29,6 +29,7 @@ private:
 	void handle_load_server_level(EXTERN_DATA *extern_data);
 	void handle_save_server_level(EXTERN_DATA *extern_data);
 	void handle_break_server_level(EXTERN_DATA *extern_data);
+	void handle_trade_statis_insert(EXTERN_DATA *extern_data);
 };
 
 #endif

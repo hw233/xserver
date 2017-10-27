@@ -12,7 +12,7 @@ public:
 	~chat_mod();
 
 	static void parse_cmd(char *line, int *argc, char *argv[]); 
-	static void do_gm_cmd(player_struct *player, int argc, char *argv[]);
+	static int do_gm_cmd(player_struct *player, int argc, char *argv[]);
 
 	static void add_coin(player_struct *player, int val);
 	static void add_bind_gold(player_struct *player, int val);
@@ -20,6 +20,7 @@ public:
 	static void add_prop(player_struct *player, int prop_id, int prop_num);
 	static void add_exp(player_struct *player, int val);
 	static void gm_add_monster(player_struct *player, int val);
+	static void gm_add_collect(player_struct *player, int id);
 	static void gm_add_19_monster(player_struct *player, int type);
 	static void gm_add_sight_space_monster(player_struct *player, int val);
 	static void gm_del_sight_space(player_struct *player);
@@ -40,7 +41,8 @@ public:
 	static void gm_add_guild_treasure(player_struct *player, int val);	
 	static void gm_add_guild_build_board(player_struct *player, int val);	
 	static void gm_add_guild_donation(player_struct *player, int val);	
-	static void gm_blink(player_struct *player, int pos_x, int pos_z);	
+	static void gm_blink(player_struct *player, float pos_x, float pos_z);
+	static void gm_goto(player_struct *player, uint32_t scene_id);	
 };
 
 #endif

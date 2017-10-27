@@ -62,7 +62,7 @@ local P20042Table = {
 	[350901011] = {
 		['ID'] = 350901011,
 		['TypeID'] = 52,
-		['Parameter1'] = {},
+		['Parameter1'] = {2},
 		['Parameter2'] = {''}
 		},
 	[350901012] = {

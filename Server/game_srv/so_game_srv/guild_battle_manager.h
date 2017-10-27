@@ -63,6 +63,8 @@ void print_waiting_player(struct evbuffer *buffer);
 //int guild_raid_on_player_add_team(player_struct *player, Team *team);
 //int guild_raid_on_player_leave_team(player_struct *player, Team *team);
 
+ProtoGuildInfo *get_guild_summary(uint32_t guild_id);
+
 void broadcast_guild_battle_call_notify(std::vector<uint64_t> &playerIds, uint64_t caller_id = 0, char *caller_name = NULL);
 void start_guild_battle_activity();
 void start_final_guild_battle_activity();
@@ -70,7 +72,6 @@ bool is_guild_battle_opening(); //活动是否开启
 bool is_guild_battle_settling(); //活动是否在结算时间
 bool player_can_return_guild_battle(player_struct *player);
 int player_can_participate_guild_battle(player_struct *player);
-void update_guild_name(uint32_t guild_id, char *name);
 void check_guild_participate_num(uint32_t guild_id);
 uint32_t set_guild_call_cd(uint32_t guild_id);
 uint32_t get_guild_call_cd(uint32_t guild_id);

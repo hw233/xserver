@@ -14,6 +14,7 @@ struct ActorTable;
 struct AcupunctureTable;
 struct ArenaRewardTable;
 struct AttributeTypeTable;
+struct AuctionTable;
 struct BaguaStarTable;
 struct BaguaSuitTable;
 struct BaguaTable;
@@ -44,6 +45,7 @@ struct EquipStarLv;
 struct EquipmentTable;
 struct EscortTask;
 struct EventCalendarTable;
+struct FactionActivity;
 struct FactionBattleTable;
 struct FetterTable;
 struct FishingTable;
@@ -64,6 +66,11 @@ struct LifeItemTable;
 struct LifeMagicTable;
 struct LifeProbabilitytable;
 struct LifeSkillTable;
+struct MGLYdiaoxiangTable;
+struct MGLYmaoguiTable;
+struct MGLYmaoguiwangTable;
+struct MGLYshoulingTable;
+struct MGLYyanseTable;
 struct MagicAttributeTable;
 struct MagicTable;
 struct MoneyQuestTable;
@@ -96,6 +103,7 @@ struct ShopListTable;
 struct ShopTable;
 struct SkillEffectTable;
 struct SkillLvTable;
+struct SkillMoveTable;
 struct SkillTable;
 struct SpecialTitleTable;
 struct SpecialtyLevelTable;
@@ -112,6 +120,7 @@ struct TaskMonsterTable;
 struct TaskRewardTable;
 struct TaskTable;
 struct TitleFunctionTable;
+struct TradingTable;
 struct TransferPointTable;
 struct TreasureTable;
 struct TypeLevelTable;
@@ -160,7 +169,8 @@ struct ActiveSkillTable
 	uint64_t  FlyId; //9
 	uint64_t  CanMove; //10
 	uint64_t  NextSkill; //11
-	uint64_t  TotalSkillDelay; //12
+	uint64_t  AutoNextSkill; //12
+	uint64_t  TotalSkillDelay; //13
 }__attribute__ ((packed));
 
 struct ActiveTable
@@ -352,6 +362,18 @@ struct AttributeTypeTable
 {
 	uint64_t  ID; //1
 	double  FightRatio; //2
+}__attribute__ ((packed));
+
+struct AuctionTable
+{
+	uint64_t  ID; //1
+	char  *ItemName; //2
+	uint64_t  ItemID; //3
+	uint64_t  Num; //4
+	uint64_t  DefaultPrice; //5
+	uint64_t  Fare; //6
+	uint64_t  Price; //7
+	uint64_t  Time; //8
 }__attribute__ ((packed));
 
 struct BaguaStarTable
@@ -689,6 +711,8 @@ struct CollectTable
 	uint32_t n_Parameter2; //13
 	uint64_t *Parameter2; //13
 	double  CollectionSize; //14
+	uint32_t n_TaskIdShow; //15
+	uint64_t *TaskIdShow; //15
 }__attribute__ ((packed));
 
 struct ColourTable
@@ -898,6 +922,20 @@ struct EventCalendarTable
 	uint64_t *AuxiliaryValue; //9
 	uint64_t  Sum; //10
 	uint64_t  Active; //11
+}__attribute__ ((packed));
+
+struct FactionActivity
+{
+	uint64_t  ID; //1
+	uint64_t  ControlID; //2
+	char  *DungeonPass1; //3
+	char  *DungeonPass2; //4
+	uint32_t n_FailType; //5
+	uint64_t *FailType; //5
+	uint32_t n_FailValue; //6
+	uint64_t *FailValue; //6
+	uint32_t n_FailValue1; //7
+	uint64_t *FailValue1; //7
 }__attribute__ ((packed));
 
 struct FactionBattleTable
@@ -1190,6 +1228,70 @@ struct LifeSkillTable
 	uint64_t  NeedJingli; //16
 }__attribute__ ((packed));
 
+struct MGLYdiaoxiangTable
+{
+	uint64_t  ID; //1
+	uint64_t  MonsterPointID; //2
+	uint64_t  Scene; //3
+	uint64_t  MonsterID; //4
+	uint32_t n_MovePointX; //5
+	double *MovePointX; //5
+	uint32_t n_MovePointZ; //6
+	double *MovePointZ; //6
+	uint32_t n_StopTime; //7
+	uint64_t *StopTime; //7
+	char  *Effects; //8
+	uint64_t  MonsterTime; //9
+	uint64_t  MonsterMax; //10
+	uint32_t n_EffectsParameter; //11
+	uint64_t *EffectsParameter; //11
+}__attribute__ ((packed));
+
+struct MGLYmaoguiTable
+{
+	uint64_t  ID; //1
+	uint64_t  MonsterID; //2
+	uint64_t  Separate; //3
+	uint32_t n_SeparateMonster; //4
+	uint64_t *SeparateMonster; //4
+	uint64_t  SeparateNum; //5
+	uint64_t  SeparateRange; //6
+	char  *Effects; //7
+	uint32_t n_EffectsParameter; //8
+	uint64_t *EffectsParameter; //8
+}__attribute__ ((packed));
+
+struct MGLYmaoguiwangTable
+{
+	uint64_t  ID; //1
+	uint64_t  BossID; //2
+	uint32_t n_Monster1; //3
+	uint64_t *Monster1; //3
+	uint32_t n_Monster2; //4
+	uint64_t *Monster2; //4
+	uint64_t  SeparateRange; //5
+	uint64_t  Time; //6
+	char  *Effects; //7
+	uint32_t n_EffectsParameter; //8
+	uint64_t *EffectsParameter; //8
+}__attribute__ ((packed));
+
+struct MGLYshoulingTable
+{
+	uint64_t  ID; //1
+	uint64_t  BossID; //2
+	uint32_t n_MonsterID; //3
+	uint64_t *MonsterID; //3
+}__attribute__ ((packed));
+
+struct MGLYyanseTable
+{
+	uint64_t  ID; //1
+	uint64_t  MonsterID; //2
+	uint64_t  Type; //3
+	uint64_t  Colour; //4
+}__attribute__ ((packed));
+
 struct MagicAttributeTable
 {
 	uint64_t  Effect; //1
@@ -1315,6 +1417,7 @@ struct NoticeTable
 	char  *NoticeTxt; //3
 	uint32_t n_NoticeChannel; //4
 	uint64_t *NoticeChannel; //4
+	uint64_t  Effect; //5
 }__attribute__ ((packed));
 
 struct NpcTalkTable
@@ -1692,6 +1795,16 @@ struct SkillLvTable
 	uint64_t  NeedLv; //14
 }__attribute__ ((packed));
 
+struct SkillMoveTable
+{
+	uint64_t  ID; //1
+	uint64_t  MoveType; //2
+	uint64_t  DmgType; //3
+	uint64_t  MoveDistance; //4
+	uint64_t  EndType; //5
+	double  EndDistance; //6
+}__attribute__ ((packed));
+
 struct SkillTable
 {
 	uint64_t  ID; //1
@@ -1719,6 +1832,7 @@ struct SkillTable
 	uint64_t *RuneID; //21
 	uint64_t  SkillAcc; //22
 	uint64_t  IsRune; //23
+	uint64_t  pre_skill; //24
 }__attribute__ ((packed));
 
 struct SpecialTitleTable
@@ -1893,6 +2007,13 @@ struct TitleFunctionTable
 	uint64_t  Continued; //9
 	uint64_t  Value2; //10
 	uint64_t  NoticeID; //11
+}__attribute__ ((packed));
+
+struct TradingTable
+{
+	uint64_t  ID; //1
+	uint64_t  ItemID; //2
+	uint64_t  GuidePrice; //3
 }__attribute__ ((packed));
 
 struct TransferPointTable

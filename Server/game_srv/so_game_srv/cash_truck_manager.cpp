@@ -9,6 +9,7 @@ int cash_truck_manager::init_cash_truck_struct(int num, unsigned long key)
 		truck = new cash_truck_struct();
 		cash_truck_manager_free_list.push_back(truck);
 	}
+	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(cash_truck_struct) * num, sizeof(cash_truck_data) * num);					
 	return init_comm_pool(0, sizeof(cash_truck_data), num, key, &cash_truck_manager_data_pool);
 } 
 

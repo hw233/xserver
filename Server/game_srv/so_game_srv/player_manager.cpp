@@ -93,6 +93,7 @@ int player_manager::init_player_struct(int num, unsigned long key)
 		player = new player_struct();
 		player_manager_player_free_list.push_back(player);
 	}
+	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(player_struct) * num, sizeof(player_data) * num);
 	return init_comm_pool(0, sizeof(player_data), num, key, &player_manager_player_data_pool);
 }
 /*
@@ -342,7 +343,9 @@ player_struct * player_manager::create_doufachang_ai_player(DOUFACHANG_LOAD_PLAY
 		ret->ai_data->stop_ai = true;
 	}
 	ret->data->attrData[PLAYER_ATTR_HP] = ret->data->attrData[PLAYER_ATTR_MAXHP];
-	ret->data->attrData[PLAYER_ATTR_MOVE_SPEED] = 5;	
+	ret->data->attrData[PLAYER_ATTR_MOVE_SPEED] = 5;
+
+	ret->m_skill.adjust_ai_player_skill();
 	
 		//登陆成功
 	ret->data->status = ONLINE;
@@ -382,14 +385,21 @@ player_struct *player_manager::create_doufachang_ai_player(player_struct *player
 		ret->ai_data->stop_ai = true;
 	}
 	ret->m_skill.copy(&player->m_skill);
+	ret->m_skill.adjust_ai_player_skill();
 	
 	ret->data->attrData[PLAYER_ATTR_HP] = ret->data->attrData[PLAYER_ATTR_MAXHP];
 	ret->data->attrData[PLAYER_ATTR_MOVE_SPEED] = 5;
 
-	int i = 0;
-	for (PartnerMap::iterator iter = player->m_partners.begin(); i < MAX_PARTNER_FORMATION_NUM && iter != player->m_partners.end(); ++iter)	
+	memset(&ret->data->partner_formation[0], 0, sizeof(ret->data->partner_formation));
+	memset(&ret->data->partner_battle[0], 0, sizeof(ret->data->partner_battle));
+
+	for (int i = 0; i < MAX_PARTNER_FORMATION_NUM; ++i)	
 	{
-		partner_struct *src = iter->second;
+		partner_struct *src = player->get_partner_by_uuid(player->data->partner_formation[i]);
+		if (src == NULL || src->data == NULL)
+		{
+			continue;
+		}
 		partner_struct *partner = partner_manager::create_partner(src->data->partner_id, ret, 0);
 		if (partner == NULL)
 			continue;
@@ -400,7 +410,6 @@ player_struct *player_manager::create_doufachang_ai_player(player_struct *player
 		memcpy(&partner->data->buff_fight_attr[0], &src->data->buff_fight_attr[0], sizeof(partner->data->buff_fight_attr));
 		ret->m_partners.insert(std::make_pair(partner->data->uuid, partner));
 		ret->data->partner_formation[i] = partner->data->uuid;
-		++i;
 	}
 	
 		//登陆成功
@@ -447,8 +456,12 @@ player_struct * player_manager::create_ai_player(player_struct *player, scene_st
 //	fight += random() % (sg_pvp_raid_fighting_capacity_range[1] - sg_pvp_raid_fighting_capacity_range[0])
 //		+ sg_pvp_raid_fighting_capacity_range[0];
 
-	fight += random() % (t->FightPro[1] - t->FightPro[0])
-		+ t->FightPro[0];
+	float rate = random() % (t->FightPro[1] - t->FightPro[0]) + t->FightPro[0];
+	rate = rate * 0.01;
+	fight = fight * rate;
+//	fight = random() % (t->FightPro[1] - t->FightPro[0])
+//		+ t->FightPro[0];
+	
 	if (fight < 100)
 		fight = 100;
 
@@ -491,12 +504,18 @@ player_struct * player_manager::create_ai_player(player_struct *player, scene_st
 	{
 		int value = fight * t->AttributePro[i] / max_rate;
 		ret->set_attr(t->AttributeType[i], value);
+
+		if (t->AttributeType[i] < MAX_BUFF_FIGHT_ATTR)
+		{
+			ret->data->buff_fight_attr[t->AttributeType[i]] = value;
+		}
 	}
 
 	for (size_t i = 0; i < t->n_Skill; ++i)
 	{
 		ret->m_skill.InsertSkill(t->Skill[i]);
 	}
+	ret->m_skill.adjust_ai_player_skill();
 
 	ret->data->attrData[PLAYER_ATTR_HP] = ret->data->attrData[PLAYER_ATTR_MAXHP];
 	

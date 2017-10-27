@@ -339,7 +339,7 @@ static void zhenying_raid_ai_monster_dead(raid_struct *raid, monster_struct *mon
 			if (raid->data->ai_data.zhenying_data.cur >= tableDaily->TruckPlan && old < tableDaily->TruckPlan)
 			{
 				FactionBattleTable *table = get_zhenying_battle_table(raid->data->ai_data.zhenying_data.lv);
-				monster_struct *pMon = monster_manager::create_monster_at_pos(NULL, tableDaily->TruckID, table->Level, tableDaily->TruckRouteX[0], tableDaily->TruckRouteY[0], 0, NULL);
+				monster_struct *pMon = monster_manager::create_monster_at_pos(NULL, tableDaily->TruckID, table->Level, tableDaily->TruckRouteX[0], tableDaily->TruckRouteY[0], 0, NULL, 0);
 				pMon->create_config = get_daily_zhenying_truck_config(raid->data->ai_data.zhenying_data.camp);
 				//pMon->set_attr(PLAYER_ATTR_ZHENYING, raid->data->ai_data.zhenying_data.camp % 10);
 				pMon->set_camp_id(raid->data->ai_data.zhenying_data.camp % 10);

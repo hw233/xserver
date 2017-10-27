@@ -221,7 +221,7 @@
 	RuneID 21 : *integer
 	SkillAcc 22 : integer
 	IsRune 23 : integer
-
+	pre_skill 24 : integer
 }
 
 .ActiveSkillTable {
@@ -236,7 +236,8 @@
 	  FlyId 9 : integer
 	  CanMove 10 : integer
 	  NextSkill 11 : integer
-	  TotalSkillDelay 12 : integer
+	  AutoNextSkill 12 : integer	  
+	  TotalSkillDelay 13 : integer
 }
 
 .PassiveSkillTable {
@@ -369,6 +370,7 @@
 	Parameter1 12 : *integer
 	Parameter2 13 : *integer
 	CollectionSize 14 : double
+	TaskIdShow 15 : *integer
 }
 
 .TaskTable {
@@ -852,6 +854,15 @@
 	RewardNum 4 : *integer
 }
 
+.SkillMoveTable {
+	ID 1 : integer
+	MoveType 2 : integer
+	DmgType 3 : integer
+	MoveDistance 4 : integer
+	EndType	5 : integer
+	EndDistance 6 : double
+}
+
 .ChivalrousTable {
 	ID 1 : integer
 	Condition1 2 : integer
@@ -1027,6 +1038,7 @@
 	Priority 2 : integer
 	NoticeTxt 3 : string
 	NoticeChannel 4 : *integer
+	Effect 5 : integer
 }
 
 .GangsDungeonTable {
@@ -1476,4 +1488,75 @@
 	RewardValue 8 : *integer
 	Reward 9 : integer
 }
+.FactionActivity{
+	ID 1 : integer 
+	ControlID 2 : integer	
+	DungeonPass1 3 : string 
+	DungeonPass2 4 : string 
+	FailType 5 : *integer 
+	FailValue 6 : *integer 
+	FailValue1 7 : *integer 
+}
 
+.TradingTable {
+	ID 1 : integer 
+	ItemID 2 : integer 
+	GuidePrice 3 : integer 
+}
+
+.AuctionTable {
+	ID 1 : integer 
+	ItemName 2 : string 
+	ItemID 3 : integer 
+	Num 4 : integer 
+	DefaultPrice 5 : integer 
+	Fare 6 : integer 
+	Price 7 : integer 
+	Time 8 : integer 
+}
+.MGLYdiaoxiangTable{
+	ID 1 : integer 
+	MonsterPointID 2 : integer 
+	Scene 3 : integer 
+	MonsterID 4 : integer 
+	MovePointX 5 : *double 
+	MovePointZ 6 : *double
+	StopTime 7 : *integer 
+	Effects 8 : string 
+	MonsterTime 9 : integer 
+	MonsterMax 10 : integer
+	EffectsParameter 11 : *integer
+}
+.MGLYmaoguiTable{
+	ID 1 : integer 
+	MonsterID 2 : integer 
+	Separate 3 : integer 
+	SeparateMonster 4 : *integer 
+	SeparateNum 5 : integer 
+	SeparateRange 6 : integer
+	Effects 7 : string
+	EffectsParameter 8 : *integer
+}
+.MGLYyanseTable{
+	ID 1 : integer 
+	MonsterID 2 : integer	
+	Type 3 : integer
+	Colour 4 : integer
+}
+.MGLYmaoguiwangTable
+{
+	ID 1 : integer
+	BossID 2 : integer 
+	Monster1 3 : *integer
+	Monster2 4 : *integer
+	SeparateRange 5 : integer 
+	Time 6 : integer
+	Effects 7 : string
+	EffectsParameter 8 : *integer
+}
+.MGLYshoulingTable
+{
+	ID 1 : integer 
+	BossID 2 : integer 
+	MonsterID 3 : *integer
+}

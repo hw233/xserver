@@ -53,6 +53,7 @@ static void player_enter_sight_space(sight_space_struct *sight_space, player_str
 
 int sight_space_manager::init_sight_space(int num, unsigned long key)
 {
+	LOG_DEBUG("%s: init mem[%d]", __FUNCTION__, sizeof(sight_space_data) * num);			
 	return init_comm_pool(0, sizeof(sight_space_data), num, key, &sight_space_manager_sight_space_data_pool);
 }
 

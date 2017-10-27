@@ -1,4 +1,5 @@
 #include <math.h>
+#include "so_game_srv/player_manager.h"
 #include "uuid.h"
 #include <stdlib.h>
 #include "game_event.h"
@@ -11,19 +12,6 @@
 #include "unit.h"
 #include "msgid.h"
 #include "raid.pb-c.h"
-
-void doufachang_raid_ai_finished(raid_struct *raid)
-{
-	raid->clear_monster();
-// 	EXTERN_DATA extern_data;
-// 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
-// 	{
-// 		if (!raid->m_player[i])
-// 			continue;
-// 		extern_data.player_id = raid->m_player[i]->get_uuid();
-//		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_DOUFACHANG_FB_PASS_NOTIFY, 0, 0);
-// 	}
-}
 
 static void doufachang_send_raid_result(player_struct *attack, player_struct *defence, int result, uint32_t add_gold, bool notify)
 {
@@ -40,6 +28,18 @@ static void doufachang_send_raid_result(player_struct *attack, player_struct *de
 	EXTERN_DATA extern_data;
 	extern_data.player_id = ans->attack;
 	fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, SERVER_PROTO_DOUFACHANG_CHALLENGE_ANSWER, sizeof(*ans), 0);
+}
+
+void doufachang_raid_ai_finished(raid_struct *raid)
+{
+	raid->data->state = RAID_STATE_PASS;	
+	raid->clear_monster();
+
+	raid->m_player[0]->add_item(sg_doufachang_raid_lose_reward[0], sg_doufachang_raid_lose_reward[1], MAGIC_TYPE_DOUFACHANG_REWARD, true);
+	doufachang_send_raid_result(raid->m_player[0], raid->m_player2[0], 1, sg_doufachang_raid_lose_reward[1], true);
+
+	player_manager::delete_player(raid->m_player2[0]);
+	raid->m_player2[0] = NULL;
 }
 
 static void doufachang_raid_ai_player_leave(raid_struct *raid, player_struct *player)
@@ -152,11 +152,11 @@ struct raid_ai_interface raid_ai_doufachang_interface =
 	NULL,
 	NULL,
 	.raid_on_player_ready = doufachang_raid_ai_player_ready,
-	doufachang_raid_ai_finished,
+	.raid_on_finished = doufachang_raid_ai_finished,
 	NULL,
 	NULL,
 	NULL,
 	NULL,
 	NULL,
-	doufachang_raid_ai_finished
+	.raid_on_failed = doufachang_raid_ai_finished
 };

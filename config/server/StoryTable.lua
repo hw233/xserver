@@ -190,6 +190,70 @@ local StoryTable = {
 		['PlayerInvincible'] = 1,
 		['StoryTime'] = 9.00,
 		['FileID'] = 'FB_SG_sg'
+		},
+	[450000026] = {
+		['ID'] = 450000026,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JLG_05'
+		},
+	[450000027] = {
+		['ID'] = 450000027,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 5.00,
+		['FileID'] = 'CC_NPC_YHT'
+		},
+	[450000028] = {
+		['ID'] = 450000028,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 5.00,
+		['FileID'] = 'CC_NPC_LFX'
+		},
+	[450000029] = {
+		['ID'] = 450000029,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 5.00,
+		['FileID'] = 'CC_NPC_HZ'
+		},
+	[450000030] = {
+		['ID'] = 450000030,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 5.00,
+		['FileID'] = 'CC_NPC_QYY'
+		},
+	[450000031] = {
+		['ID'] = 450000031,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_03'
+		},
+	[450000032] = {
+		['ID'] = 450000032,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_04'
+		},
+	[450000033] = {
+		['ID'] = 450000033,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 25.00,
+		['FileID'] = 'MAP_JLG_MY'
 		}
 	}
 return StoryTable

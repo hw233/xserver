@@ -60,6 +60,9 @@ cd ../rank_srv
 cd ../doufachang_srv
 ./doufachang_srv -d
 
+cd ../trade_srv
+./trade_srv -d
+
 cd ..
 ./show_all_pid.sh 
 ./check_srv_alive.sh

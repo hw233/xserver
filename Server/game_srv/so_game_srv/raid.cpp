@@ -171,6 +171,12 @@ int raid_struct::init_special_raid_data(player_struct *player)
 			init_scene_struct(m_id, true);
 		}
 			break;
+		case DUNGEON_TYPE_MAOGUI_LEYUAN:
+		{
+			raid_set_ai_interface(18);
+			init_scene_struct(m_id, false);
+		}
+			break;
 		default:
 			init_scene_struct(m_id, true);			
 			break;
@@ -194,6 +200,7 @@ int raid_struct::init_raid(player_struct *player)
 	m_raid_team3 = NULL;
 	m_raid_team4 = NULL;		
 	data->ID = m_id;
+	player_num = 0;
 	data->state = RAID_STATE_START;
 	m_monster.clear();
 	m_config = get_config_by_id(m_id, &all_raid_config);
@@ -203,6 +210,22 @@ int raid_struct::init_raid(player_struct *player)
 	
 	data->start_time = time_helper::get_cached_time();
 	LOG_DEBUG("%s: raid[%p][%u][%lu] data[%p] curtime = %lu", __FUNCTION__, this, data->ID, data->uuid, data, time_helper::get_cached_time());
+	ruqin_data.guild_ruqin = false;
+	ruqin_data.boss_creat = false;
+	ruqin_data.zhengying = 0;
+	ruqin_data.level = 0;
+	ruqin_data.open_time = 0;
+	ruqin_data.all_boshu = 0;
+	ruqin_data.monster_boshu = 0;
+	ruqin_data.monster_id = 0;
+	ruqin_data.space_time = 0; 
+	ruqin_data.pos_x = 0;
+	ruqin_data.pos_z = 0;
+	ruqin_data.juli = 0;
+	ruqin_data.huodui_time = 0;
+	ruqin_data.exp = 0;
+	ruqin_data.status = GUILD_RUQIN_ACTIVE_INIT;
+	ruqin_data.palyer_data.clear();
 
 	init_special_raid_data(player);
 
@@ -349,12 +372,12 @@ void raid_struct::clear()
 		if (battel != NULL)
 		{
 			battel->ClearRob(data->ai_data.battle_data.room);
+			ZhenyingBattle::DestroyPrivateBattle(data->uuid);
 		}
 		else
 		{
 			LOG_ERR("%s: raid[%p][%lu] can not find battle", __FUNCTION__, this, data->uuid);
 		}
-		ZhenyingBattle::DestroyPrivateBattle(data->uuid);
 	}
 
 	
@@ -458,10 +481,12 @@ int raid_struct::team_enter_raid(Team *team)
 			LOG_ERR("%s %d: can not find player[%lu] to enter raid %u", __FUNCTION__, __LINE__, team->m_data->m_mem[i].id, data->ID);
 			continue;
 		}
-		if (t_player->sight_space != NULL && t_player->sight_space->data->type == 2)
-		{
-			continue;
-		}
+
+		// 	//如果在押镖的位面，就不跟随进副本
+		// if (t_player->sight_space != NULL && t_player->sight_space->data->type == 2)
+		// {
+		// 	continue;
+		// }
 		player_enter_raid_impl(t_player, index++, res_config->BirthPointX, res_config->BirthPointZ);
 	}
 	team->m_data->m_raid_uuid = data->uuid;
@@ -712,6 +737,9 @@ int raid_struct::set_player_info(player_struct *player, struct raid_player_info 
 
 int raid_struct::set_m_player_and_player_info(player_struct *player, int index)
 {
+	if (!use_m_player())
+		return (0);
+	
 	if (index < 0)
 		return 0;
 	player_struct **t;
@@ -800,17 +828,17 @@ int raid_struct::player_enter_raid_impl(player_struct *player, int index, double
 	return (0);
 }
 
-int raid_struct::player_enter_raid(player_struct *player, double pos_x, double pos_z, double direct)
-{
-	LOG_DEBUG("%s: raid[%u][%lu], player[%lu]", __FUNCTION__, data->ID, data->uuid, player->get_uuid());
-	int index = get_free_player_pos();
-	if (index < 0)
-	{
-		LOG_ERR("%s: player[%lu] can not add raid[%u %lu]", __FUNCTION__, player->get_uuid(), data->ID, data->uuid);
-		return (-1);
-	}
-	return player_enter_raid_impl(player, index, pos_x, pos_z, direct);
-}
+// int raid_struct::player_enter_raid(player_struct *player, double pos_x, double pos_z, double direct)
+// {
+// 	LOG_DEBUG("%s: raid[%u][%lu], player[%lu]", __FUNCTION__, data->ID, data->uuid, player->get_uuid());
+// 	int index = get_free_player_pos();
+// 	if (index < 0)
+// 	{
+// 		LOG_ERR("%s: player[%lu] can not add raid[%u %lu]", __FUNCTION__, player->get_uuid(), data->ID, data->uuid);
+// 		return (-1);
+// 	}
+// 	return player_enter_raid_impl(player, index, pos_x, pos_z, direct);
+// }
 
 // int raid_struct::add_player_to_scene(player_struct *player)
 // {
@@ -857,6 +885,11 @@ int raid_struct::add_monster_to_scene(monster_struct *monster, uint32_t effectid
 	m_monster.insert(monster);
 	monster->data->raid_uuid = data->uuid;
 
+	if(ai && ai->raid_on_monster_relive)
+	{
+		ai->raid_on_monster_relive(this, monster);
+	}
+
 	// if (monster->config->Camp == 2)
 	// {
 	// 	monster->set_camp_id(ZHENYING__TYPE__FULONGGUO);
@@ -870,11 +903,9 @@ int raid_struct::add_monster_to_scene(monster_struct *monster, uint32_t effectid
 
 int raid_struct::clear_m_player_and_player_info(player_struct *player, bool clear_player_info)
 {
-	if (m_config->DengeonRank == DUNGEON_TYPE_BATTLE //|| m_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW
-		|| m_config->DengeonRank == DUNGEON_TYPE_ZHENYING)
-	{
-		return 0; //阵营战
-	}
+	if (!use_m_player())
+		return (0);
+
 	LOG_DEBUG("%s: raid[%u][%lu], player[%lu]", __FUNCTION__, data->ID, data->uuid, player->get_uuid());
 	int index;
 	if (!get_raid_player_info(player->get_uuid(), &index))
@@ -932,15 +963,15 @@ int raid_struct::player_offline(player_struct *player)
 	}
 	
 		//单人副本，直接删除
-	if (m_config->DengeonType == 2)
-	{
-		player->set_out_raid_pos_and_clear_scene();
-		raid_manager::delete_raid(this);
-	}
-	else //多人副本通知其他人
-	{
+//	if (m_config->DengeonType == 2)
+//	{
+//		player->set_out_raid_pos_and_clear_scene();
+//		raid_manager::delete_raid(this);
+//	}
+//	else //多人副本通知其他人
+//	{
 		delete_player_from_scene(player);
-	}
+//	}
 	return (0);
 }
 
@@ -1003,113 +1034,122 @@ int raid_struct::get_id_monster_num(uint32_t id)
 
 int raid_struct::player_leave_raid(player_struct *player)
 {
-	if (get_entity_type(player->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
-	{
-		LOG_ERR("%s: ai player[%lu] can not leave raid[%u] uuid[%lu]", __FUNCTION__, player->get_uuid(), m_id, data->uuid);
-		return (-1);
-	}
-
-//	get_raid_player_info(player->get_uuid(), NULL);
-	
-	LOG_DEBUG("%s: player[%lu] leave raid %u[%lu]", __FUNCTION__, player->get_uuid(), data->ID, data->uuid);
-	if (clear_m_player_and_player_info(player, true) != 0)
-		return -1;
-//	int index = get_player_pos(player);
-//	if (index < 0)
-//	{
-//		LOG_ERR("%s: player[%lu] not in raid[%u %lu]", __FUNCTION__, player->get_uuid(), data->ID, data->uuid);
-//		return (-1);
-//	}
-	if (player->scene != this)
-	{
-		LOG_ERR("%s: player[%lu] not in raid[%u %lu]", __FUNCTION__, player->get_uuid(), data->ID, data->uuid);
-		return (-1);
-	}
-//	//新手副本，删除玩家不死buff
-//	if (player->scene->m_id == 20035)
-//	{
-//		player->clear_one_buff(114400018);
-//	}
-	player->set_out_raid_pos_and_clear_scene();
-//	m_player[index] = NULL;
-//	data->player_info[index].player_id = 0;
-	delete_player_from_scene(player);
-
-	on_player_leave_raid(player);
-
-		//单人副本，直接删除
-//	if (m_config->DengeonType == 2 && m_config->DengeonRank != DUNGEON_TYPE_ZHENYING)
-//	{
-//		raid_manager::delete_raid(this);
-//	}
-
-	//如果是在帮战副本里退帮，把玩家拉到野外场景
-	if (is_guild_battle_raid())
-	{
-		if (player->data->guild_id == 0)
-		{
-			player->data->scene_id = player->data->last_scene_id;
-			float pos_x = 0.0, pos_y = 0.0, pos_z = 0.0, face_y = 0.0;
-			get_scene_birth_pos(player->data->scene_id, &pos_x, &pos_y, &pos_z, &face_y);
-			player->set_pos(pos_x, pos_z);
-			player->data->m_angle = unity_angle_to_c_angle(face_y);
-			
-			EXTERN_DATA extern_data;
-			extern_data.player_id = player->get_uuid();	
-			fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEAVE_RAID_NOTIFY, 0, 0);
-
-			player->data->m_angle = unity_angle_to_c_angle(face_y);			
-			player->send_scene_transfer(face_y, pos_x, pos_y, pos_z, player->data->scene_id, 0);
-			return 0;
-		}
-	}
-
-		//帮会战返回帮会准备副本
-	if (m_config->DengeonRank == DUNGEON_TYPE_GUILD_RAID || m_config->DengeonRank == DUNGEON_TYPE_GUILD_FINAL_RAID)
-	{
-		if (is_guild_battle_opening())
-		{
-			if (guild_wait_raid_manager::add_player_to_guild_wait_raid(player))
-				return (0);
-		}
-		else
-		{
-			struct DungeonTable* r_config = get_config_by_id(m_config->ExitScene, &all_raid_config);
-			if (r_config)
-			{
-				player->data->scene_id = r_config->ExitScene;
-				player->set_pos(r_config->ExitPointX, r_config->BirthPointZ);
-				player->data->m_angle = r_config->BirthPointY;
-
-				EXTERN_DATA extern_data;
-				extern_data.player_id = player->get_uuid();	
-				fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEAVE_RAID_NOTIFY, 0, 0);
-
-				player->send_scene_transfer(r_config->FaceY, r_config->ExitPointX, r_config->BirthPointY,
-						r_config->BirthPointZ, r_config->ExitScene, 0);
-				return 0;
-			}
-		}
-	}
-	
-	// else
-	// {
-	// 		//组队副本如果没结束，那么踢出队伍
-	// 	if (data->state == RAID_STATE_START && player->m_team)
-	// 	{
-	// 		player->m_team->RemoveMember(*player, true);
-	// 	}
-	// }
-
-	EXTERN_DATA extern_data;
-	extern_data.player_id = player->get_uuid();	
-	fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEAVE_RAID_NOTIFY, 0, 0);
-
+	player_leave_scene(player);
 	player->data->m_angle = unity_angle_to_c_angle(player->data->leaveraid.direct);
 	player->send_scene_transfer(player->data->leaveraid.direct, player->data->leaveraid.ExitPointX, player->data->leaveraid.ExitPointY,
 		player->data->leaveraid.ExitPointZ, player->data->leaveraid.scene_id, 0);
 	return (0);
 }
+
+// int raid_struct::player_leave_raid(player_struct *player)
+// {
+// 	if (get_entity_type(player->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
+// 	{
+// 		LOG_ERR("%s: ai player[%lu] can not leave raid[%u] uuid[%lu]", __FUNCTION__, player->get_uuid(), m_id, data->uuid);
+// 		return (-1);
+// 	}
+
+// //	get_raid_player_info(player->get_uuid(), NULL);
+	
+// 	LOG_DEBUG("%s: player[%lu] leave raid %u[%lu]", __FUNCTION__, player->get_uuid(), data->ID, data->uuid);
+// 	if (clear_m_player_and_player_info(player, true) != 0)
+// 		return -1;
+// //	int index = get_player_pos(player);
+// //	if (index < 0)
+// //	{
+// //		LOG_ERR("%s: player[%lu] not in raid[%u %lu]", __FUNCTION__, player->get_uuid(), data->ID, data->uuid);
+// //		return (-1);
+// //	}
+// 	if (player->scene != this)
+// 	{
+// 		LOG_ERR("%s: player[%lu] not in raid[%u %lu]", __FUNCTION__, player->get_uuid(), data->ID, data->uuid);
+// 		return (-1);
+// 	}
+// //	//新手副本，删除玩家不死buff
+// //	if (player->scene->m_id == 20035)
+// //	{
+// //		player->clear_one_buff(114400018);
+// //	}
+// 	player->set_out_raid_pos_and_clear_scene();
+// //	m_player[index] = NULL;
+// //	data->player_info[index].player_id = 0;
+// 	delete_player_from_scene(player);
+
+// 	on_player_leave_raid(player);
+
+// 		//单人副本，直接删除
+// //	if (m_config->DengeonType == 2 && m_config->DengeonRank != DUNGEON_TYPE_ZHENYING)
+// //	{
+// //		raid_manager::delete_raid(this);
+// //	}
+
+// 	//如果是在帮战副本里退帮，把玩家拉到野外场景
+// 	if (is_guild_battle_raid())
+// 	{
+// 		if (player->data->guild_id == 0)
+// 		{
+// 			player->data->scene_id = player->data->last_scene_id;
+// 			float pos_x = 0.0, pos_y = 0.0, pos_z = 0.0, face_y = 0.0;
+// 			get_scene_birth_pos(player->data->scene_id, &pos_x, &pos_y, &pos_z, &face_y);
+// 			player->set_pos(pos_x, pos_z);
+// 			player->data->m_angle = unity_angle_to_c_angle(face_y);
+			
+// 			EXTERN_DATA extern_data;
+// 			extern_data.player_id = player->get_uuid();	
+// 			fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEAVE_RAID_NOTIFY, 0, 0);
+
+// 			player->data->m_angle = unity_angle_to_c_angle(face_y);			
+// 			player->send_scene_transfer(face_y, pos_x, pos_y, pos_z, player->data->scene_id, 0);
+// 			return 0;
+// 		}
+// 	}
+
+// 		//帮会战返回帮会准备副本
+// 	if (m_config->DengeonRank == DUNGEON_TYPE_GUILD_RAID || m_config->DengeonRank == DUNGEON_TYPE_GUILD_FINAL_RAID)
+// 	{
+// 		if (is_guild_battle_opening())
+// 		{
+// 			if (guild_wait_raid_manager::add_player_to_guild_wait_raid(player))
+// 				return (0);
+// 		}
+// 		else
+// 		{
+// 			struct DungeonTable* r_config = get_config_by_id(m_config->ExitScene, &all_raid_config);
+// 			if (r_config)
+// 			{
+// 				player->data->scene_id = r_config->ExitScene;
+// 				player->set_pos(r_config->ExitPointX, r_config->BirthPointZ);
+// 				player->data->m_angle = r_config->BirthPointY;
+
+// 				EXTERN_DATA extern_data;
+// 				extern_data.player_id = player->get_uuid();	
+// 				fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEAVE_RAID_NOTIFY, 0, 0);
+
+// 				player->send_scene_transfer(r_config->FaceY, r_config->ExitPointX, r_config->BirthPointY,
+// 						r_config->BirthPointZ, r_config->ExitScene, 0);
+// 				return 0;
+// 			}
+// 		}
+// 	}
+	
+// 	// else
+// 	// {
+// 	// 		//组队副本如果没结束，那么踢出队伍
+// 	// 	if (data->state == RAID_STATE_START && player->m_team)
+// 	// 	{
+// 	// 		player->m_team->RemoveMember(*player, true);
+// 	// 	}
+// 	// }
+
+// 	EXTERN_DATA extern_data;
+// 	extern_data.player_id = player->get_uuid();	
+// 	fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEAVE_RAID_NOTIFY, 0, 0);
+
+// 	player->data->m_angle = unity_angle_to_c_angle(player->data->leaveraid.direct);
+// 	player->send_scene_transfer(player->data->leaveraid.direct, player->data->leaveraid.ExitPointX, player->data->leaveraid.ExitPointY,
+// 		player->data->leaveraid.ExitPointZ, player->data->leaveraid.scene_id, 0);
+// 	return (0);
+// }
 
 SCENE_TYPE_DEFINE raid_struct::get_scene_type()
 {
@@ -1289,31 +1329,32 @@ void raid_struct::on_player_leave_raid(player_struct *player)
 		//如果死亡，就给予复活
 	if (!player->is_alive())
 	{
-		uint32_t maxhp = player->get_attr(PLAYER_ATTR_MAXHP);
-		player->set_attr(PLAYER_ATTR_HP, maxhp);
+		player->relive();
+		// uint32_t maxhp = player->get_attr(PLAYER_ATTR_MAXHP);
+		// player->set_attr(PLAYER_ATTR_HP, maxhp);
 
-		ReliveNotify nty;
-		relive_notify__init(&nty);
-		nty.playerid = player->data->player_id;
-		EXTERN_DATA extern_data;
-		extern_data.player_id = player->data->player_id;
-		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RELIVE_NOTIFY, relive_notify__pack, nty);			
+		// ReliveNotify nty;
+		// relive_notify__init(&nty);
+		// nty.playerid = player->data->player_id;
+		// EXTERN_DATA extern_data;
+		// extern_data.player_id = player->data->player_id;
+		// fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RELIVE_NOTIFY, relive_notify__pack, nty);			
 		
-		if (player->m_team)
-		{
-			PlayerAttrNotify nty;
-			player_attr_notify__init(&nty);
-			AttrData attr_data[1];
-			AttrData *attr_data_point[1];
-			nty.player_id = player->data->player_id;
-			nty.n_attrs = 1;
-			nty.attrs = attr_data_point;
-			attr_data_point[0] = &attr_data[0];
-			attr_data__init(&attr_data[0]);
-			attr_data[0].id = PLAYER_ATTR_HP;
-			attr_data[0].val = maxhp;
-			player->m_team->BroadcastToTeam(MSG_ID_PLAYER_ATTR_NOTIFY, &nty, (pack_func)player_attr_notify__pack);
-		}
+		// if (player->m_team)
+		// {
+		// 	PlayerAttrNotify nty;
+		// 	player_attr_notify__init(&nty);
+		// 	AttrData attr_data[1];
+		// 	AttrData *attr_data_point[1];
+		// 	nty.player_id = player->data->player_id;
+		// 	nty.n_attrs = 1;
+		// 	nty.attrs = attr_data_point;
+		// 	attr_data_point[0] = &attr_data[0];
+		// 	attr_data__init(&attr_data[0]);
+		// 	attr_data[0].id = PLAYER_ATTR_HP;
+		// 	attr_data[0].val = maxhp;
+		// 	player->m_team->BroadcastToTeam(MSG_ID_PLAYER_ATTR_NOTIFY, &nty, (pack_func)player_attr_notify__pack);
+		// }
 	}
 	
 	player->data->player_raid_uuid = 0;
@@ -1533,50 +1574,6 @@ bool raid_struct::check_can_add_team_mem(player_struct *player)
 bool raid_struct::check_raid_need_delete()
 {
 	return get_cur_player_num() == 0;
-// 	bool empty = true;;
-// 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
-// 	{
-// 		if (m_player[i] && m_player[i]->data && get_entity_type(m_player[i]->get_uuid()) != ENTITY_TYPE_AI_PLAYER)
-// 		{
-// 			empty = false;
-// 			data->delete_time = 0;
-// 			break;
-// 		}
-// 		if (m_player2[i] && m_player2[i]->data && get_entity_type(m_player2[i]->get_uuid()) != ENTITY_TYPE_AI_PLAYER)
-// 		{
-// 			empty = false;
-// 			data->delete_time = 0;
-// 			break;
-// 		}
-// 		if (m_player3[i] && m_player3[i]->data && get_entity_type(m_player3[i]->get_uuid()) != ENTITY_TYPE_AI_PLAYER)
-// 		{
-// 			empty = false;
-// 			data->delete_time = 0;
-// 			break;
-// 		}
-// 		if (m_player4[i] && m_player4[i]->data && get_entity_type(m_player4[i]->get_uuid()) != ENTITY_TYPE_AI_PLAYER)
-// 		{
-// 			empty = false;
-// 			data->delete_time = 0;
-// 			break;
-// 		}
-// 	}
-// 	if (empty)
-// 	{
-// 		if (data->delete_time == 0)
-// 		{
-// 			data->delete_time = time_helper::get_cached_time() + g_raid_keep_time;
-// 		}
-// 		else
-// 		{
-// 			if (time_helper::get_cached_time() >= data->delete_time)
-// 			{
-// //				raid_manager::delete_raid(this);
-// 				return true;
-// 			}
-// 		}
-// 	}
-// 	return false;
 }
 
 static void do_raid_failed(raid_struct *raid)
@@ -1708,6 +1705,7 @@ void raid_struct::on_monster_attack(monster_struct *monster, player_struct *play
 
 	if (monster->ai && monster->ai->on_raid_attack_player)
 		monster->ai->on_raid_attack_player(monster, player, damage);
+
 }
 
 void raid_struct::on_player_dead(player_struct *player, unit_struct *killer)
@@ -1715,7 +1713,8 @@ void raid_struct::on_player_dead(player_struct *player, unit_struct *killer)
 	LOG_DEBUG("%s: raid[%u][%lu], player[%lu]", __FUNCTION__, data->ID, data->uuid, player->get_uuid());
 	if (m_config->DengeonRank != DUNGEON_TYPE_ZHENYING
 		&& m_config->DengeonRank != DUNGEON_TYPE_BATTLE
-		&& m_config->DengeonRank != DUNGEON_TYPE_BATTLE_NEW)
+		&& m_config->DengeonRank != DUNGEON_TYPE_BATTLE_NEW
+		&& m_config->DengeonRank != DUNGEON_TYPE_GUILD_LAND)
 	{
 		++data->dead_count;
 
@@ -1966,3 +1965,70 @@ monster_struct *raid_struct::get_first_boss()
 	return NULL;
 }
 
+// int raid_struct::player_enter(player_struct *player, double pos_x, double pos_y, double pos_z, double direct)
+// {
+// 	return (0);
+// }
+// int raid_struct::player_leave(player_struct *player, bool send_clear_sight)
+// {
+// 	if (m_config->DengeonType != 2 && data->state == RAID_STATE_START && player->m_team)
+// 	{
+// 			//组队副本如果没结束，那么踢出队伍
+// 		player->m_team->RemoveMember(*player, false);
+// 	}
+// 	else
+// 	{
+// 		player_leave_raid(player);
+// 	}
+// 	return (0);
+// }
+
+bool raid_struct::use_m_player()
+{
+	if (m_config->DengeonRank == DUNGEON_TYPE_BATTLE //|| m_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW
+		|| m_config->DengeonRank == DUNGEON_TYPE_ZHENYING)
+	{
+		return false; //阵营战
+	}
+	return true;
+}
+
+int raid_struct::player_leave_scene(player_struct *player)
+{
+	if (get_entity_type(player->get_uuid()) == ENTITY_TYPE_AI_PLAYER)
+	{
+		LOG_ERR("%s: ai player[%lu] can not leave raid[%u] uuid[%lu]", __FUNCTION__, player->get_uuid(), m_id, data->uuid);
+		return (-1);
+	}
+
+	LOG_DEBUG("%s: player[%lu] leave raid %u[%lu]", __FUNCTION__, player->get_uuid(), data->ID, data->uuid);
+	if (clear_m_player_and_player_info(player, true) != 0)
+		return -1;
+	if (player->scene != this)
+	{
+		LOG_ERR("%s: player[%lu] not in raid[%u %lu]", __FUNCTION__, player->get_uuid(), data->ID, data->uuid);
+		return (-1);
+	}
+
+	player->set_out_raid_pos_and_clear_scene();
+	delete_player_from_scene(player);
+	on_player_leave_raid(player);
+
+	EXTERN_DATA extern_data;
+	extern_data.player_id = player->get_uuid();	
+	fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEAVE_RAID_NOTIFY, 0, 0);
+
+	player->data->m_angle = unity_angle_to_c_angle(player->data->leaveraid.direct);
+	return (0);
+}
+int raid_struct::player_enter_raid(player_struct *player, double pos_x, double pos_z, double direct)
+{
+	LOG_DEBUG("%s: raid[%u][%lu], player[%lu]", __FUNCTION__, data->ID, data->uuid, player->get_uuid());
+	int index = get_free_player_pos();
+	if (index < 0)
+	{
+		LOG_ERR("%s: player[%lu] can not add raid[%u %lu]", __FUNCTION__, player->get_uuid(), data->ID, data->uuid);
+		return (-1);
+	}
+	return player_enter_raid_impl(player, index, pos_x, pos_z, direct);
+}

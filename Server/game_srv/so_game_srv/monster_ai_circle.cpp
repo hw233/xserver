@@ -70,6 +70,19 @@ void do_circlea_or_type22_ai_patrol(monster_struct *monster)
 	monster->data->ontick_time = time_helper::get_cached_time() + get_circle_ai_wait_time(monster) * 10;
 	return;
 }
+void do_type30_ai_patrol(monster_struct *monster)
+{
+	if (!monster->config)
+		return;
+
+	if (monster->is_unit_in_move())
+		return;
+
+	monster->ai_state = AI_WAIT_STATE;
+	monster->data->ontick_time = time_helper::get_cached_time() + get_circle_ai_wait_time(monster) * 10;
+	return;
+}
+
 
 // static void	do_pursue(monster_struct *monster)
 // {

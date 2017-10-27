@@ -9,6 +9,7 @@
 #define MAX_PLAYER_IN_SIGHT_SPACE 2
 #define MAX_PARTNER_IN_SIGHT_SPACE (MAX_PLAYER_IN_SIGHT_SPACE * MAX_PARTNER_BATTLE_NUM)
 #define MAX_MONSTER_IN_SIGHT_SPACE 30
+#define MAX_COLLECT_IN_SIGHT_SPACE 20
 
 struct sight_space_data
 {
@@ -30,20 +31,23 @@ public:
 	int broadcast_monster_create(monster_struct *monster);
 	int broadcast_partner_create(partner_struct *partner);
 	int broadcast_truck_create(cash_truck_struct *partner);
+	int broadcast_collect_create(Collect *collect);	
 	
 	int broadcast_player_delete(player_struct *player, bool enter_scene);
 	int broadcast_monster_delete(monster_struct *monster);
 	int broadcast_partner_delete(partner_struct *partner);
-	int broadcast_truck_delete(cash_truck_struct *truck);	
+	int broadcast_truck_delete(cash_truck_struct *truck);
+//	int broadcast_collect_delete(Collect *collect);		
 	
 	bool is_task_event_exist(uint64_t event_id);
 	int insert_task_event(uint64_t event_id);
-	
+
 //	struct position players_prev_pos[MAX_PLAYER_IN_SIGHT_SPACE];
 	player_struct *players[MAX_PLAYER_IN_SIGHT_SPACE];
 	monster_struct *monsters[MAX_MONSTER_IN_SIGHT_SPACE];
 	partner_struct *partners[MAX_PARTNER_IN_SIGHT_SPACE];
 	cash_truck_struct *trucks[MAX_PLAYER_IN_SIGHT_SPACE];
+	Collect *collects[MAX_COLLECT_IN_SIGHT_SPACE];
 
 	sight_space_data *data;
 };

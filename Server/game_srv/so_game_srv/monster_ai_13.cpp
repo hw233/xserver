@@ -121,9 +121,9 @@ static void use_leiminggu_skill(monster_struct *monster)
 	Collect *c = Collect::GetById(monster->ai_data.leixinye_ai.leiminggu_collect_id);
 	if (c)
 	{
-		monster->scene->delete_collect_to_scene(c);	
-		monster->scene->m_collect.erase(monster->ai_data.leixinye_ai.leiminggu_collect_id);
-		Collect::DestroyCollect(monster->ai_data.leixinye_ai.leiminggu_collect_id);
+		//monster->scene->delete_collect_from_scene(c);	
+		//monster->scene->m_collect.erase(monster->ai_data.leixinye_ai.leiminggu_collect_id);
+		Collect::RemoveFromSceneAndDestroyCollect(c);
 	}
 }
 

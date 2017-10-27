@@ -250,6 +250,48 @@ local TransferPointTable = {
 		['NameId'] = '90级阵营战场',
 		['limitLevel'] = 1,
 		['MapId'] = {30003}
+		},
+	[155000043] = {
+		['ID'] = 155000043,
+		['NameId'] = '十八年前',
+		['limitLevel'] = 1,
+		['MapId'] = {20073}
+		},
+	[155000044] = {
+		['ID'] = 155000044,
+		['NameId'] = '地宫1层',
+		['limitLevel'] = 1,
+		['MapId'] = {10018}
+		},
+	[155000045] = {
+		['ID'] = 155000045,
+		['NameId'] = '地宫2层',
+		['limitLevel'] = 1,
+		['MapId'] = {10019}
+		},
+	[155000046] = {
+		['ID'] = 155000046,
+		['NameId'] = '地宫3层',
+		['limitLevel'] = 1,
+		['MapId'] = {10020}
+		},
+	[155000047] = {
+		['ID'] = 155000047,
+		['NameId'] = '地宫4层',
+		['limitLevel'] = 1,
+		['MapId'] = {10021}
+		},
+	[155000048] = {
+		['ID'] = 155000048,
+		['NameId'] = '地宫5层',
+		['limitLevel'] = 1,
+		['MapId'] = {10022}
+		},
+	[155000049] = {
+		['ID'] = 155000049,
+		['NameId'] = '血咀妖巢穴',
+		['limitLevel'] = 1,
+		['MapId'] = {20074}
 		}
 	}
 return TransferPointTable

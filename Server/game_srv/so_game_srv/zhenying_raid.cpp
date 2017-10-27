@@ -42,30 +42,26 @@ int zhenying_raid_struct::set_m_player_and_player_info(player_struct *player, in
 
 int zhenying_raid_struct::add_player_to_zhenying_raid(player_struct *player)
 {
-		// TODO: check_player_enter_raid
-
 	LOG_INFO("%s: player[%lu]", __FUNCTION__, player->get_uuid());
-	
 	FactionBattleTable *table = get_zhenying_battle_table(player->get_attr(PLAYER_ATTR_LEVEL));
 	if (table == NULL)
 	{
 		return -1;
-		
 	}
-
 	assert(get_cur_player_num() < MAX_ZHENYING_RAID_PLAYER_NUM);
 
-	int x, y, z;
-	UNUSED(y);
+	int x, z;
 	double direct = 0;
 	zhenying_raid_manager::GetRelivePos(table, player->get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
-
-
 	player_enter_raid_impl(player, this->get_free_player_pos(), x, z, direct);
-	
 	player->set_attr(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP);
 	player->broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP, false, true);
 	return (0);
+}
+
+bool zhenying_raid_struct::use_m_player()
+{
+	return false;
 }
 
 bool zhenying_raid_struct::check_raid_need_delete()

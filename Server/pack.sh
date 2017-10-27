@@ -12,6 +12,7 @@ mkdir -p pack_dir/mail_srv/logs
 mkdir -p pack_dir/guild_srv/logs
 mkdir -p pack_dir/rank_srv/logs
 mkdir -p pack_dir/doufachang_srv/logs
+mkdir -p pack_dir/trade_srv/logs
 mkdir pack_dir/excel_data
 
 cp game_srv/game_srv pack_dir/game_srv/
@@ -45,6 +46,9 @@ cp rank_srv/log4crc pack_dir/rank_srv/
 
 cp doufachang_srv/doufachang_srv pack_dir/doufachang_srv/
 cp doufachang_srv/log4crc pack_dir/doufachang_srv/
+
+cp trade_srv/trade_srv pack_dir/trade_srv/
+cp trade_srv/log4crc pack_dir/trade_srv/
 
 cp *.sh  pack_dir
 cp lua_data/*.lua pack_dir/lua_data/

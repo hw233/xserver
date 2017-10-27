@@ -38,6 +38,26 @@ local EscortTask = {
 		['MonsterID4'] = {0},
 		['PointXZ4'] = {0},
 		['talkID'] = {156000016,156000017,156000018}
+		},
+	[46000003] = {
+		['ID'] = 46000003,
+		['NpcID'] = 151004032,
+		['Scene'] = 20073,
+		['Time'] = 0,
+		['Team'] = 1,
+		['Distance'] = 20,
+		['BlockedStop'] = 1,
+		['Range'] = 5,
+		['MonsterID'] = {151004025,151004026,151004027,151004028,151004029,151004030,151004033,151004034,151004035},
+		['MonsterID1'] = {0},
+		['PointXZ1'] = {0},
+		['MonsterID2'] = {0},
+		['PointXZ2'] = {0},
+		['MonsterID3'] = {0},
+		['PointXZ3'] = {0},
+		['MonsterID4'] = {0},
+		['PointXZ4'] = {0},
+		['talkID'] = {0}
 		}
 	}
 return EscortTask

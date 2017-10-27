@@ -16,6 +16,7 @@
 #include "excel_data.h"
 #include "check_range.h"
 #include "raid_ai_common.h"
+#include "server_level.h"
 
 extern void set_leixinye_type(monster_struct *monster, uint32_t type);
 static player_struct *get_script_raid_event_player(raid_struct *raid)
@@ -311,6 +312,12 @@ static bool script_raid_check_finished(raid_struct *raid, struct raid_script_dat
 			}
 		}
 		return false;
+		case SCRIPT_EVENT_CREATE_WAIT_MONSTER_LEVEL:
+		{
+			if(raid->ruqin_data.level != 0)
+				return true;
+		}
+		return false;
 		default:
 			return false;
 	}
@@ -339,11 +346,11 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 	{
 		case SCRIPT_EVENT_CREATE_MONSTER_NUM: //刷新配置表内指定怪物
 			for (size_t i = 0; i + 1 < config->n_Parameter1; i = i+2)
-				monster_manager::create_monster_by_id(raid, config->Parameter1[i], config->Parameter1[i + 1]);
+				monster_manager::create_monster_by_id(raid, config->Parameter1[i], config->Parameter1[i + 1], raid->data->monster_level);
 			return true;
 		case SCRIPT_EVENT_CREATE_MONSTER_ALL: //刷新配置表内所有指定怪物
 			for (size_t i = 0; i < config->n_Parameter1; ++i)
-				monster_manager::create_monster_by_id(raid, config->Parameter1[i], 9999);			
+				monster_manager::create_monster_by_id(raid, config->Parameter1[i], 9999, raid->data->monster_level);
 			return true;
 		case SCRIPT_EVENT_CREATE_COLLECT_NUM: //刷新配置表内指定采集物
 			for (size_t i = 0; i + 1 < config->n_Parameter1; i = i+2)
@@ -359,9 +366,8 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 				{
 					return false;
 				}
-
 				double pos_x = config->Parameter1[0];
-				double pos_y = config->Parameter1[1];
+//				double pos_y = config->Parameter1[1];
 				double pos_z = config->Parameter1[2];
 				double direct = config->Parameter1[3];
 				for (int i = 0; i < MAX_TEAM_MEM; ++i)
@@ -371,13 +377,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 					{
 						continue;
 					}
-
-					player->send_clear_sight();
-					raid->delete_player_from_scene(player);
-					player->set_pos(pos_x, pos_z);
-					raid->add_player_to_scene(player);
-					player->data->m_angle = unity_angle_to_c_angle(direct);
-					player->send_scene_transfer(direct, pos_x, pos_y, pos_z, raid->m_id, 0);
+					player->cur_scene_jump(pos_x, pos_z, direct, NULL);
 				}
 			}
 			return true;
@@ -446,6 +446,23 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 				script_data->cur_finished_num[0] = time_helper::get_cached_time() / 1000 + config->Parameter1[0];
 			}
 			return false;
+		case SCRIPT_EVENT_PLAY_ANIMATION:
+		{
+			player_struct *player = get_script_raid_event_player(raid);
+			if (player)
+			{
+				player->stop_move();
+			}
+			RaidEventNotify nty;
+			raid_event_notify__init(&nty);
+			nty.type = config->TypeID;
+			nty.param1 = config->Parameter1;
+			nty.n_param1 = config->n_Parameter1;
+			nty.param2 = config->Parameter2;
+			nty.n_param2 = config->n_Parameter2;
+			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
+			return true;
+		}
 		case SCRIPT_EVENT_CREATE_NPC_NUM: //刷新配置表内指定NPC
 		case SCRIPT_EVENT_CREATE_NPC_ALL: //刷新配置表内所有指定NPC
 		case SCRIPT_EVENT_CREATE_TRANSFER_NUM: //刷新配置表内指定传送点
@@ -454,9 +471,9 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 		case SCRIPT_EVENT_REMOVE_AIR_WALL: //删除空气墙
 		case SCRIPT_EVENT_REMOVE_NPC:
 		case SCRIPT_EVENT_PLAY_NPC_ACTION:
-		case SCRIPT_EVENT_PLAY_ANIMATION:
 		case SCRIPT_EVENT_START_GONGCHENGCHUI:
 		case SCRIPT_EVENT_PLAY_EFFECT:
+		case SCRIPT_EVENT_POPUP_TALK:
 		{
 			RaidEventNotify nty;
 			raid_event_notify__init(&nty);
@@ -558,6 +575,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 		case SCRIPT_EVENT_PLAYER_ARRIVE_POSITION:
 		case SCRIPT_EVENT_MONSTER_DEAD_NUM: //指定怪物死亡
 		case SCRIPT_EVENT_WAIT_MONST_HP:
+		case SCRIPT_EVENT_CREATE_WAIT_MONSTER_LEVEL:
 			return script_raid_check_finished(raid, script_data);
 		case SCRIPT_EVENT_TIME_OUT: //副本计时
 			assert(config->n_Parameter1 >= 1);
@@ -677,9 +695,92 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 		}
 		case SCRIPT_EVENT_ADD_RAID_PASS_VALUE:
 		{
+			if (config->n_Parameter1 >=1)
+			{
+				int tid = (int)config->Parameter1[0];
+				if ((int)raid->data->pass_index != tid - 1)
+					return true;
+			}
+			
 			raid->add_raid_pass_value(5, raid->get_raid_config());
 			return true;
 		}
+		case SCRIPT_EVENT_REPLACE_MONSTER_CONFIG:
+		{
+			assert(config->n_Parameter2 == 1);
+			std::vector<struct SceneCreateMonsterTable *> *monster_config = get_config_by_name(config->Parameter2[0], &all_raid_ai_monster_config);
+			if(monster_config != NULL)
+			{
+				raid->create_monster_config = monster_config;	
+			}
+		}
+			return true;
+		case SCRIPT_EVENT_CREATE_MONSTER_LEVEL_NUM: //刷新配置表内指定怪物(等级使用服务器等级)
+		{
+			uint64_t monster_level = 0;
+			if(raid->ruqin_data.guild_ruqin == true)
+			{
+				monster_level =  raid->ruqin_data.level;
+				raid->ruqin_data.monster_boshu += 1;
+				{
+					raid->ruqin_data.boss_creat = true;
+				}
+			}
+			for (size_t i = 0; i + 1 < config->n_Parameter1; i = i+2)
+			{
+				monster_manager::create_monster_by_id(raid, config->Parameter1[i], config->Parameter1[i + 1], monster_level);
+				if(raid->ruqin_data.guild_ruqin == true && raid->ruqin_data.boss_creat == false && (config->Parameter1[i] == sg_guild_ruqin_renzu_bossid || config->Parameter1[i] == sg_guild_ruqin_yaozu_bossid))
+				{
+					raid->ruqin_data.boss_creat = true;
+				}
+			}
+		}
+			return true;
+		case SCRIPT_EVENT_CREATE_MONSTER_LEVEL_ALL: //刷新配置表内指定所有怪物(等级使用服务器等级)
+		{
+			uint64_t monster_level = 0;
+			if(raid->ruqin_data.guild_ruqin == true)
+			{
+				monster_level =  raid->ruqin_data.level;
+				raid->ruqin_data.monster_boshu += 1;
+			}
+			for (size_t i = 0; i < config->n_Parameter1; ++i)
+			{
+				monster_manager::create_monster_by_id(raid, config->Parameter1[i], 9999, monster_level);
+				if(raid->ruqin_data.guild_ruqin == true && raid->ruqin_data.boss_creat == false && (config->Parameter1[i] == sg_guild_ruqin_renzu_bossid || config->Parameter1[i] == sg_guild_ruqin_yaozu_bossid))
+				{
+					raid->ruqin_data.boss_creat = true;
+				}
+			}
+		}
+			return true;
+		case SCRIPT_EVENT_GUILD_RUQIN_MONSTER_BOSHU:
+		{
+			assert(config->n_Parameter1 == 1);
+			if(raid->ruqin_data.guild_ruqin == true)
+			{
+				raid->ruqin_data.all_boshu = config->Parameter1[0];
+			}
+		}
+			return true;
+		case SCRIPT_EVENT_GUILD_RUQIN_FINISH_FLAG:
+			if(raid->ruqin_data.guild_ruqin == true)
+			{
+				raid->ruqin_data.status = GUILD_RUQIN_ACTIVE_FINISH;
+			}
+			return true;
+		case SCRIPT_EVENT_SUIJI_CREATE_MONSTER:
+		{
+			assert(config->n_Parameter1 > 1 && config->n_Parameter2 >= 3);
+			uint32_t i = rand()%config->n_Parameter1;
+			uint32_t monster_id = config->Parameter1[i];
+			
+			uint32_t pos_x = atoi(config->Parameter2[0]);
+			uint32_t pos_z = atoi(config->Parameter2[1]);
+			float direct = atoi(config->Parameter2[2]);
+			monster_manager::create_monster_at_pos(raid, monster_id, raid->data->monster_level, pos_x, pos_z, 0, NULL, direct);
+		}
+			return true;
 		default:
 			return false;
 	}
@@ -831,6 +932,23 @@ void script_ai_common_player_ready(raid_struct *raid, player_struct *player, str
 
 		switch (config->TypeID)
 		{
+			case SCRIPT_EVENT_PLAY_ANIMATION:
+			{
+				player->stop_move();				
+				RaidEventNotify nty;
+				raid_event_notify__init(&nty);
+				nty.type = config->TypeID;
+				nty.param1 = config->Parameter1;
+				nty.n_param1 = config->n_Parameter1;
+				nty.param2 = config->Parameter2;
+				nty.n_param2 = config->n_Parameter2;
+
+				EXTERN_DATA ext_data;
+				ext_data.player_id = player->get_uuid();
+
+				fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_RAID_EVENT_NOTIFY, raid_event_notify__pack, nty);
+				break;
+			}
 			case SCRIPT_EVENT_CREATE_NPC_NUM: //刷新配置表内指定NPC
 			case SCRIPT_EVENT_CREATE_NPC_ALL: //刷新配置表内所有指定NPC
 			case SCRIPT_EVENT_CREATE_TRANSFER_NUM: //刷新配置表内指定传送点
@@ -839,30 +957,29 @@ void script_ai_common_player_ready(raid_struct *raid, player_struct *player, str
 			case SCRIPT_EVENT_REMOVE_AIR_WALL: //删除空气墙
 			case SCRIPT_EVENT_REMOVE_NPC:
 			case SCRIPT_EVENT_PLAY_NPC_ACTION:
-			case SCRIPT_EVENT_PLAY_ANIMATION:
 			case SCRIPT_EVENT_AUTOMATIC_NPC_TALK:
 			case SCRIPT_EVENT_PLAY_EFFECT:
 				//case SCRIPT_EVENT_START_GONGCHENGCHUI:
-				{
-					RaidEventNotify nty;
-					raid_event_notify__init(&nty);
-					nty.type = config->TypeID;
-					nty.param1 = config->Parameter1;
-					nty.n_param1 = config->n_Parameter1;
-					nty.param2 = config->Parameter2;
-					nty.n_param2 = config->n_Parameter2;
+			{
+				RaidEventNotify nty;
+				raid_event_notify__init(&nty);
+				nty.type = config->TypeID;
+				nty.param1 = config->Parameter1;
+				nty.n_param1 = config->n_Parameter1;
+				nty.param2 = config->Parameter2;
+				nty.n_param2 = config->n_Parameter2;
 
-					EXTERN_DATA ext_data;
-					ext_data.player_id = player->get_uuid();
+				EXTERN_DATA ext_data;
+				ext_data.player_id = player->get_uuid();
 
-					fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_RAID_EVENT_NOTIFY, raid_event_notify__pack, nty);
-				}
-				break;
+				fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_RAID_EVENT_NOTIFY, raid_event_notify__pack, nty);
+			}
+			break;
 		}
 	}
 
 	//单人副本在玩家进入副本后初始化
-	if (raid->m_config->DengeonType == 2)
+	if (raid->m_config->DengeonType == 2 && raid->m_config->DengeonRank != DUNGEON_TYPE_GUILD_LAND)
 	{
 		do_script_raid_init_cond(raid, script_data);
 	}

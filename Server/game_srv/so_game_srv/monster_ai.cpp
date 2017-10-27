@@ -285,7 +285,7 @@ void monster_cast_call_monster_skill(monster_struct *monster, uint64_t skill_id)
 		{
 			struct position *t_pos = monster->get_pos();
 			monster_manager::create_monster_at_pos(monster->scene, lv_config->MonsterID,
-				lv_config->MonsterLv, t_pos->pos_x, t_pos->pos_z, lv_config->MonsterEff, monster);
+				lv_config->MonsterLv, t_pos->pos_x, t_pos->pos_z, lv_config->MonsterEff, monster, 0);
 		}
 	}	
 }
@@ -676,7 +676,7 @@ void do_normal_attack(monster_struct *monster)
 		if (get_circle_random_position_v3(monster->scene, t_pos, CALL_SKILL_RADIUS, &pos))
 		{
 			monster_struct *t_monster = monster_manager::create_monster_at_pos(monster->scene, lv_config->MonsterID,
-			 	lv_config->MonsterLv, pos.pos_x, pos.pos_z, lv_config->MonsterEff, monster);
+			 	lv_config->MonsterLv, pos.pos_x, pos.pos_z, lv_config->MonsterEff, monster, 0);
 			if (!t_monster)
 			{
 				LOG_ERR("%s: create monster at scene[%u] pos[%.1f][%.1f] failed", __FUNCTION__, monster->scene->m_id, pos.pos_x, pos.pos_z);

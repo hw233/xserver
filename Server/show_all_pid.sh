@@ -12,6 +12,7 @@ mail_srv
 guild_srv
 rank_srv
 doufachang_srv
+trade_srv
 )
 
 for srv_name in ${srv_list[*]}

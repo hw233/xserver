@@ -25,6 +25,7 @@ int skill_manager::init_skill_struct(int num, unsigned long key)
 		skill = new skill_struct();
 		skill_manager_skill_free_list.push_back(skill);
 	}
+	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(skill_struct) * num, sizeof(skill_data) * num);	
 	return init_comm_pool(0, sizeof(skill_data), num, key, &skill_manager_skill_data_pool);
 }
 

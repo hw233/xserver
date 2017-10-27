@@ -1,7 +1,7 @@
 local UndergroundTask = {
 	[540100001] = {
 		['ID'] = 540100001,	--索引
-		['LevelSection'] = {31,42},	--等级区间
+		['LevelSection'] = {25,34},	--等级区间
 		['TaskID'] = 240191001,	--任务ID
 		['CoinType'] = {201010001,201010002},	--初始奖励货币类型
 		['CoinValue'] = {10000,100},	--初始奖励货币值
@@ -12,7 +12,7 @@ local UndergroundTask = {
 		},
 	[540100002] = {
 		['ID'] = 540100002,
-		['LevelSection'] = {43,54},
+		['LevelSection'] = {35,44},
 		['TaskID'] = 240191002,
 		['CoinType'] = {201010001,201010002},
 		['CoinValue'] = {20000,200},
@@ -23,7 +23,7 @@ local UndergroundTask = {
 		},
 	[540100003] = {
 		['ID'] = 540100003,
-		['LevelSection'] = {55,66},
+		['LevelSection'] = {45,54},
 		['TaskID'] = 240191003,
 		['CoinType'] = {201010001,201010002},
 		['CoinValue'] = {30000,300},
@@ -34,7 +34,7 @@ local UndergroundTask = {
 		},
 	[540100004] = {
 		['ID'] = 540100004,
-		['LevelSection'] = {67,78},
+		['LevelSection'] = {55,64},
 		['TaskID'] = 240191004,
 		['CoinType'] = {201010001,201010002},
 		['CoinValue'] = {40000,400},
@@ -45,7 +45,7 @@ local UndergroundTask = {
 		},
 	[540100005] = {
 		['ID'] = 540100005,
-		['LevelSection'] = {79,100},
+		['LevelSection'] = {65,100},
 		['TaskID'] = 240191005,
 		['CoinType'] = {201010001,201010002},
 		['CoinValue'] = {50000,500},

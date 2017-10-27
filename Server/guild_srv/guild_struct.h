@@ -113,6 +113,8 @@ struct GuildPlayer
 	GuildShopReset shop_reset;
 	uint32_t battle_score; //帮战积分
 	uint32_t act_battle_score; //本场帮战积分
+	uint32_t guild_land_active_reward_id[MAX_GUILD_LAND_ACTIVE_NUM]; //帮会活动FactionActivity表id
+	uint32_t guild_land_active_reward_num[MAX_GUILD_LAND_ACTIVE_NUM]; //帮会活动收益次数
 };
 
 struct GuildInfo
@@ -120,6 +122,7 @@ struct GuildInfo
 	uint32_t guild_id;
 	char name[MAX_GUILD_NAME_LEN + 1]; //帮名
 	uint32_t icon; //图标
+	uint32_t zhenying; //帮派阵营，load数据库的时候赋值
 	uint64_t master_id; //帮主ID
 	uint32_t approve_state; //审核开关，0：不需要审批，非0：需要审批
 	uint32_t recruit_state; //招募开关，0：不开启招募，非0：开启招募

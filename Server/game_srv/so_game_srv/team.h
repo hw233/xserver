@@ -134,8 +134,8 @@ public:
 	void broadcast_leader_pos(struct position *pos, uint32_t scene_id, uint64_t playerid);  //广播所有人的位置变化，不止是队长
 	void Disband();
 
-	static Team *CreateTeam(player_struct **player, int size);	
-	static int CreateTeam(player_struct &player, int type = 2, int target = 0);
+	static Team *CreateTeam(player_struct **player, int size, int type = 2, int target = 0);
+	//static int CreateTeam(player_struct &player, int type = 2, int target = 0);
 	static Team *  GetTeam(uint64_t teamid);
 	static void DestroyTeam(Team *pTeam);
 	static void DestroyTeamAndNotify(Team *pTeam);

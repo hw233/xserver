@@ -84,5 +84,18 @@ int get_actor_skill_index(uint32_t job, uint32_t skill_id);
 bool item_is_partner_fabao(uint32_t item_id);
 uint32_t get_friend_close_level(uint32_t closeness);
 bool activity_is_open(uint32_t activity_id);
+int get_dungeon_type(uint32_t raid_id);
+int item_id_to_trade_id(uint32_t item_id);
+int trade_id_to_item_id(uint32_t trade_id);
+
+#define DEFAULT_SCENE_ID  (10012) 
+
+enum SCENE_TYPE_DEFINE
+{
+	SCENE_TYPE_WILD,
+	SCENE_TYPE_RAID,
+};
+//场景表现上的类型，比如帮会领地，实际上是副本，但是表现上是野外，相关的一些进出规则要和野外一样
+SCENE_TYPE_DEFINE get_scene_looks_type(uint32_t scene_id);
 
 #endif /* GAME_CONFIG_H */

@@ -21,6 +21,7 @@
 
 std::map<uint64_t, struct PassiveSkillTable *> passive_skill_config;
 std::map<uint64_t, struct ActiveSkillTable *> active_skill_config;
+std::map<uint64_t, struct SkillMoveTable *> move_skill_config;
 std::map<uint64_t, struct MonsterTable *> monster_config;
 std::map<uint64_t, struct ActorTable *> actor_config;
 std::map<uint64_t, struct ActorAttributeTable *> actor_attribute_config;
@@ -139,6 +140,20 @@ std::map<uint64_t, struct UndergroundTask*> taskid_to_mijing_xiulian_config; //�
 std::map<uint64_t, struct CampDefenseTable*> zhenying_daily_config; //日常阵营战
 std::map<uint64_t, struct FishingTable*> fishing_config; //钓鱼表
 std::map<uint64_t, struct GrowupTable*> strong_config; //变强表
+std::map<uint64_t, struct FactionActivity*> guild_activ_config; //帮会活动表
+std::map<char *, std::vector<struct SceneCreateMonsterTable*> *> all_raid_ai_monster_config; //副本AI表里面配置的怪物刷新表
+std::set<char* > some_monster_config_name; //有些场景会配置多个怪物刷新表文件，这里集合表名 
+std::map<uint64_t, struct TradingTable*> trade_item_config; //交易物品表
+std::map<uint64_t, struct AuctionTable*> auction_config; //拍卖品表
+std::map<uint64_t, struct MGLYdiaoxiangTable*> maogui_diaoxiang_config; //猫鬼乐园雕像表
+std::map<uint64_t, struct MGLYmaoguiTable*> maogui_monster_config; //猫鬼乐园相关猫鬼怪物表
+std::map<uint64_t, struct MGLYyanseTable*> maogui_colour_config; //猫鬼乐园猫鬼颜色配置表
+std::map<uint64_t, struct MGLYyanseTable*> maogui_diaoxiang_colour_config; //猫鬼乐园猫鬼雕像颜色配置表
+std::map<uint64_t, struct MGLYyanseTable*> maogui_zhengning_colour_config; //猫鬼乐园狰狞猫鬼颜色配置表
+std::map<uint64_t, struct MGLYyanseTable*> maogui_shouling_colour_config; //猫鬼乐园鬼王召唤的首领怪颜色配置表
+std::map<uint64_t, struct MGLYyanseTable*> maogui_xiaoguai_colour_config;  //猫鬼乐园鬼王召唤的小怪颜色配置表
+std::map<uint64_t, struct MGLYmaoguiwangTable*> maogui_maogui_wang_config; //猫鬼乐园猫鬼王配置表
+std::map<uint64_t, struct MGLYshoulingTable*> maogui_shouling_to_xiaoguai_config; //猫鬼乐园猫首领死亡删除对应小怪
 
 /////////////////////
 uint32_t sg_bag_unlock_base_price;
@@ -268,6 +283,7 @@ std::map<uint32_t, struct SpecialtySkillTable*> sg_yaoshi_skill_map; //
 std::map<uint32_t, std::vector<RandomMonsterTable *> > sg_random_monster_map; //
 std::map<uint64_t, struct SearchTable*> sg_xunbao; //寻宝表
 std::map<uint64_t, std::vector<uint64_t> > sg_xunbao_map; //寻宝地图
+std::map<uint64_t, uint64_t> sg_show_collect; //任务ID 采集点ID
 std::map<uint64_t, struct FunctionUnlockTable*> sg_jijiangopen; //即将开启表
 
 uint32_t sg_transfer_out_stuck_cd_time;
@@ -346,4 +362,22 @@ SceneCreateMonsterTable sg_zhenying_truck[2];
 
 std::map<uint32_t, uint32_t> sg_strong_chapter_map;
 std::map<uint64_t, GrowupTable*> sg_strong_chapter_reward;
+
+//队员和队长的最大距离20米，太远就要传送过来
+const uint64_t max_team_mem_distance = 20 * 20;
+
+std::map<uint32_t, uint32_t> sg_item_trade_map;
+double sg_on_shelf_fee_percent;
+
+//帮会入侵相关数据
+uint32_t sg_guild_ruqin_huodui_monster_id;
+int sg_guild_ruqin_huodui_fanwei;
+uint32_t sg_guild_ruqin_huodui_exp;
+uint32_t sg_guild_ruqin_huodui_jiange;
+uint32_t sg_guild_ruqin_huodui_chixutime;
+uint64_t sg_guild_ruqin_renzu_bossid;
+uint64_t sg_guild_ruqin_yaozu_bossid;
+
+uint32_t sg_maogui_diaoxiang_stop_buff;
+uint32_t sg_maogui_guiwang_wudi_buff;
 

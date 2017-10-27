@@ -3,6 +3,10 @@
 
 int get_item_type(uint32_t item_id)
 {
+	if (item_id == 201010020)
+	{
+		return ITEM_TYPE_SILVER;		
+	}
 	if (item_id == 201010001)
 	{
 		return ITEM_TYPE_COIN;

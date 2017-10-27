@@ -82,6 +82,13 @@ local TaskDropTable = {
 		['SceneID'] = 10007,
 		['DropItem'] = 201050068,
 		['DropPro'] = 5000
+		},
+	[240500013] = {
+		['ID'] = 240500013,
+		['MonsterID'] = 151006023,
+		['SceneID'] = 10004,
+		['DropItem'] = 201050071,
+		['DropPro'] = 8000
 		}
 	}
 return TaskDropTable

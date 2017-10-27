@@ -244,6 +244,7 @@ int zhenying_raid_manager::init_zhenying_raid_struct(int num, unsigned long key)
 		raid = new zhenying_raid_struct();
 		zhenying_raid_manager_raid_free_list.push_back(raid);
 	}
+	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(zhenying_raid_struct) * num, sizeof(raid_data) * num);	
 	return init_comm_pool(0, sizeof(raid_data), num, key, &zhenying_raid_manager_raid_data_pool);
 }
 

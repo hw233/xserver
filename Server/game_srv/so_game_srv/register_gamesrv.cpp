@@ -43,12 +43,14 @@
 #include "pvp_match_manager.h"
 #include "guild_battle_manager.h"
 #include "guild_wait_raid_manager.h"
+#include "guild_land_raid_manager.h"
 #include "chengjie.h"
 #include "global_shared_data.h"
 #include "team.h"
 #include "deamon.h"
 #include "flow_record.h"
 #include "server_level.h"
+#include "guild_land_active_manager.h"
 //#define run_with_period(_ms_) if ((_ms_ <= 1000/server.hz) || !(server.cronloops%((_ms_)/(1000/server.hz))))
 #define run_with_period(_ms_) if (timer_loop_count % _ms_ == 0)
 
@@ -159,11 +161,6 @@ static void	clear_all_mem()
 		delete ite->second;
 	}
 
-	for (std::map<uint64_t, scene_struct *>::iterator ite = scene_manager_guild_scene_map.begin();
-		 ite != scene_manager_guild_scene_map.end(); ++ite)
-	{
-		delete ite->second;
-	}
 		//位面的析构里面会有删除怪物等操作，可能会引发别的问题
 	// for (std::vector<sight_space_struct *>::iterator ite = sight_space_manager_mark_delete_sight_space.begin();
 	// 	 ite != sight_space_manager_mark_delete_sight_space.end(); ++ite)
@@ -202,6 +199,18 @@ static void	clear_all_mem()
 	}
 	for (std::set<guild_wait_raid_struct *>::iterator ite = guild_wait_raid_manager_raid_used_list.begin();
 		 ite != guild_wait_raid_manager_raid_used_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+
+	//guild land raid
+	for (std::list<guild_land_raid_struct *>::iterator ite = guild_land_raid_manager_raid_free_list.begin();
+		 ite != guild_land_raid_manager_raid_free_list.end(); ++ite)
+	{
+		delete (*ite);
+	}
+	for (std::set<guild_land_raid_struct *>::iterator ite = guild_land_raid_manager_raid_used_list.begin();
+		 ite != guild_land_raid_manager_raid_used_list.end(); ++ite)
 	{
 		delete (*ite);
 	}
@@ -467,6 +476,28 @@ int install(int argc, char **argv)
 		}
 		if (guild_wait_raid_manager::init_guild_wait_raid_struct(player_num, player_key) != 0) {
 			LOG_ERR("init guild_wait raid struct failed");
+			ret = -1;
+			goto done;
+		}
+	}
+
+	{
+		line = get_first_key(file, (char *)"game_srv_guild_land_raid_num");
+		player_num = atoi(get_value(line));
+		if (player_num <= 0) {
+			LOG_ERR("config file wrong, no game_srv_guild_land_raid_num");
+			ret = -1;
+			goto done;
+		}
+		line = get_first_key(file, (char *)"game_srv_guild_land_raid_key");
+		player_key = strtoul(get_value(line), NULL, 0);
+		if (player_key == 0 || player_key == ULONG_MAX) {
+			LOG_ERR("config file wrong, no game_srv_guild_land_raid_key");
+			ret = -1;
+			goto done;
+		}
+		if (guild_land_raid_manager::init_guild_land_raid_struct(player_num, player_key) != 0) {
+			LOG_ERR("init guild_land raid struct failed");
 			ret = -1;
 			goto done;
 		}
@@ -824,6 +855,7 @@ void on_http_request(struct evhttp_request *req, void *arg)
 			zhenying_raid_manager::get_zhenying_raid_pool_max_num());
 		evbuffer_add_printf(returnbuffer, "guild_wait_raid: %lu/%u<br><br>\n", guild_wait_raid_manager_all_raid_id.size(),
 			guild_wait_raid_manager::get_guild_wait_raid_pool_max_num());
+		evbuffer_add_printf(returnbuffer, "guild_land_raid: %lu/%u<br><br>\n", guild_land_raid_manager_all_raid_id.size(), guild_land_raid_manager::get_guild_land_raid_pool_max_num());
 		evbuffer_add_printf(returnbuffer, "partner: %lu/%u<br><br>\n", partner_manager_all_partner_id.size(), partner_manager_partner_data_pool.num);
 
 		evbuffer_add_printf(returnbuffer, "truck: %lu/%u<br><br>\n", cash_truck_manager_all_id.size(), cash_truck_manager_data_pool.num);
@@ -864,6 +896,7 @@ void cb_gamesrv_timer()
 		raid_manager::on_tick_10();
 		zhenying_raid_manager::on_tick_10();
 		guild_wait_raid_manager::on_tick_10();				
+		guild_land_raid_manager::on_tick_10();				
 		test_run_timer10();	
 		//test
 		TeamMatch::Timer();
@@ -871,6 +904,7 @@ void cb_gamesrv_timer()
 		partner_manager::on_tick_5();
 		check_server_level();
 		monster_manager::add_world_boss_monster();
+		guild_land_active_manager::on_tick_10();
 	}
 
 	run_with_period(30)
@@ -934,7 +968,12 @@ int game_recv_func(evutil_socket_t fd, conn_node_gamesrv *node)
 					node->transfer_to_dbsrv();
 					break;
 				case SERVER_PROTO_GUILD_BATTLE_FINAL_LIST_ANSWER:
+				case SERVER_PROTO_GUILD_SYNC_ALL:
+				case SERVER_PROTO_GUILD_CREATE:
+				case SERVER_PROTO_GUILD_DISBAND:
+				case SERVER_PROTO_GUILD_RENAME:
 				case SERVER_PROTO_RANK_SYNC_CHANGE:
+				case SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_ANSWER:
 					{
 						GameHandleMap::iterator it = m_game_handle_map.find(cmd);
 						if (it != m_game_handle_map.end())
@@ -997,6 +1036,7 @@ int game_recv_func(evutil_socket_t fd, conn_node_gamesrv *node)
 				EXTERN_DATA ext_data;
 				ext_data.player_id = player->data->player_id;
 				player->cache_to_dbserver(false, &ext_data);
+				player->refresh_player_redis_info(true);
 			}
 
 			save_server_level_info();

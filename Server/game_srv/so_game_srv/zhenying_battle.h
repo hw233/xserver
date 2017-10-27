@@ -18,6 +18,7 @@ struct BattlefieldTable;
 enum BATTLE_STATE
 {
 	JOIN_STATE,  //报名的时间
+	BATTLE_READY_STATE, //准备
 	AI_PLAYER_WAIT_STATE, //空气墙开启，AI玩家等待
 	RUN_STATE,   //副本开始
 	REST_STATE   //副本结束了
@@ -35,6 +36,7 @@ struct BATTLE_JOINER
 	uint32_t dead;
 	uint32_t point;
 	bool in;
+	bool ready;
 };
 
 struct REGION_INFO
@@ -43,7 +45,7 @@ struct REGION_INFO
 	int own;
 	uint32_t id;
 	uint32_t npc;
-	uint64_t startTime;
+	uint64_t endTime;
 	std::set<uint64_t> playerarr[2];
 };
 
@@ -57,8 +59,11 @@ typedef std::vector<uint64_t> ROOM_MAN_T;
 struct ROOM_INFO
 {
 	uint32_t step;
+	uint32_t m_state;
+	uint64_t m_nextTick;
 	uint64_t uid;
 	uint32_t totalPoint[2];
+	uint32_t readyNum[2];
 	ROOM_MAN_T fighter[2];
 	REGION_INFO flag[MAX_ROOM_FLAG];
 };
@@ -81,9 +86,11 @@ public:
 
 	~ZhenyingBattle();
 	int Join(player_struct &player);
+	int SetReady(player_struct &player, bool ready);
 	void Tick();
 	int IntoBattle(player_struct &player);   //进入阵营战
 	uint32_t GetStep(player_struct &player);
+	uint32_t CalcStep(player_struct &player);
 	void SendMyScore(player_struct &player);
 	void GetMySideScore(player_struct &player);
 	void KillEnemy(unit_struct *killer, player_struct &dead);
@@ -109,10 +116,12 @@ protected:
 	void CreateRoom();
 	void FlagOnTick();
 	void LeaveRegion(uint32_t room, player_struct *player, uint32_t old_region);
+	uint32_t CalcFlagTime(int state, uint64_t end); //计算夺旗时间
 private:
 	JOIN_T m_allJoin;   //所有报名的人
 	ROOM_T m_room;
 	uint32_t m_state;
+	uint32_t m_tmpRoom[MAX_STEP];
 	uint64_t m_nextTick;
 };
 

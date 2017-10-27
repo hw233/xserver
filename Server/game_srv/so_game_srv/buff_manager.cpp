@@ -98,6 +98,7 @@ int buff_manager::init_buff_struct(int num, unsigned long key)
 		buff = new buff_struct();
 		buff_manager_buff_free_list.push_back(buff);
 	}
+	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(buff_struct) * num, sizeof(buff_data) * num);		
 	return init_mass_pool(0, sizeof(buff_data), num, key, &buff_manager_buff_data_pool);
 }
 

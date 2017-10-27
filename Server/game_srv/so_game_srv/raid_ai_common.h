@@ -55,6 +55,14 @@ enum
 	SCRIPT_EVENT_SET_REGION_BUFF          = 50, //设置区域buff信息
 	SCRIPT_EVENT_STOP_REGION_BUFF          = 51, //清除区域buff信息
 	SCRIPT_EVENT_ADD_RAID_PASS_VALUE          = 52, //完成当前通关条件
+	SCRIPT_EVENT_REPLACE_MONSTER_CONFIG   = 53, //替换场景刷怪文件
+	SCRIPT_EVENT_CREATE_MONSTER_LEVEL_NUM        = 54, //刷新配置表内指定的怪物（帮会入侵活动指定等级刷怪）
+	SCRIPT_EVENT_CREATE_MONSTER_LEVEL_ALL        = 55, //刷新配置表内所有指定怪物（帮会入侵活动指定等级刷怪）
+	SCRIPT_EVENT_CREATE_WAIT_MONSTER_LEVEL        = 56, //帮会入侵活动等待从guild服返回刷怪等级
+	SCRIPT_EVENT_GUILD_RUQIN_MONSTER_BOSHU        = 57, //获取帮会入侵活动刷怪波数
+	SCRIPT_EVENT_GUILD_RUQIN_FINISH_FLAG      = 58, //帮会入侵活动完成标志
+	SCRIPT_EVENT_SUIJI_CREATE_MONSTER        = 59, //随机刷新怪物表里面配置的怪物中的一只
+	SCRIPT_EVENT_POPUP_TALK		         = 60, //发送弹框对话
 };
 
 void do_script_raid_init_cond(raid_struct *raid, struct raid_script_data *script_data);

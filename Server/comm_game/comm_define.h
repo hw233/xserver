@@ -59,6 +59,7 @@
 #define MAX_GUILD_BATTLE_FINAL_GUILD_NUM  4 //帮战决赛只有四个帮会参加
 #define MAX_GUILD_NAME_LEN     32 //帮会名字最大长度
 #define MAX_GUILD_SKILL_NUM     20 //帮会技能最大数
+#define MAX_GUILD_MEMBER_NUM 500 //每个帮会最大成员数
 
 #define MAX_PARTNER_TYPE   100
 #define MAX_PARTNER_NUM   150
@@ -87,6 +88,13 @@
 #define MAX_STRONG_GOAL_NUM 200
 #define MAX_STRONG_CHAPTER_NUM 10
 
+//交易行
+#define MAX_TRADE_SHELF_NUM  20 //单个玩家货架格子数
+#define MAX_TRADE_SOLD_NUM  200 //单个玩家已出售记录数
+#define MAX_AUCTION_LOT_NUM  200 //拍卖品数
+#define MAX_AUCTION_MASTER_NUM  (MAX_GUILD_MEMBER_NUM) //拍卖品数
+#define MAX_GUILD_LAND_ACTIVE_NUM            1000 
+
 
 //玩家状态
 enum PlayerStatus
@@ -98,7 +106,7 @@ enum PlayerStatus
 //道具类型
 enum ItemType
 {
-	ITEM_TYPE_COIN = 1, //银两
+	ITEM_TYPE_COIN = 1, //银票
 	ITEM_TYPE_BIND_GOLD = 2, //绑定元宝
 	ITEM_TYPE_GOLD = 3, //元宝
 	ITEM_TYPE_EXP = 4, //经验
@@ -113,6 +121,7 @@ enum ItemType
 	ITEM_TYPE_GUILD_TREASURE = 13, //帮会资金
 	ITEM_TYPE_GUILD_DONATION = 14, //帮贡
 	ITEM_TYPE_PARTNER_EXP = 15, //伙伴经验
+	ITEM_TYPE_SILVER = 16, //银币
 };
 
 enum JobDefine
@@ -341,6 +350,7 @@ enum MailIDDefine
 	MAIL_ID_GUILD_REPLACE_MASTER = 270200009, //帮主转让
 	MAIL_ID_GUILD_DAILY_REWAERD = 270200010, //帮会每日福利
 	MAIL_ID_WORLDBOSS_KILL_REWAERD = 270300041, //世界boss击杀
+	MAIL_ID_GUILD_RUQIN_REWARD = 270300042, //世界boss击杀
 };
 
 enum PlayerOfflineCacheType
@@ -365,6 +375,7 @@ enum ActivityMatter
 	AM_ANSWER = 4, //答题
 	AM_TRUCK = 5, //押镖
 	AM_YAOSHI = 6, //妖师客栈
+	AM_MIJINGXIULIAN = 7, //秘境修炼
 };
 
 enum AchievementConditionType
@@ -468,6 +479,5 @@ enum
 	TCType_HORSE_ID = 4, //拥有指定坐骑
 };
 
-#define MAX_GUILD_MEMBER_NUM 500 //每个帮会最大成员数
 
 #endif

@@ -121,36 +121,28 @@ void Team::BroadcastToTeamNotinSight(player_struct &player, uint16_t msg_id, voi
 	}
 }
 
-Team *Team::CreateTeam(player_struct **player, int size)
+Team *Team::CreateTeam(player_struct **player, int size, int type, int target)
 {
+	if (!scene_can_make_team(player[0]->data->scene_id))
+	{
+		return NULL;
+	}
 	if (size > MAX_TEAM_MEM)
 		return NULL;
 	
 	Team *pTeam = new Team();
 //	pTeam->m_data->m_id = ++s_id;
 	pTeam->m_data->m_id = ++global_shared_data->g_team_id;
+	pTeam->m_data->m_lvType = type;
+	pTeam->m_data->m_targrt = target;
 	
 	team_manager_s_teamContain.insert(std::make_pair(pTeam->m_data->m_id, pTeam));
 	pTeam->m_data->m_memSize = size;
-	
+	LOG_INFO("%s: teamid[%lu],point=%p,data=%p", __FUNCTION__, pTeam->m_data->m_id, pTeam, pTeam->m_data);
 	assert(size > 0);
 	for (int i = 0; i < size; ++i)
 	{
 		player[i]->m_team = pTeam;
-//		pTeam->AddMember(player[i]);
-
-		// MEM_INFO tmp;
-		// tmp.id = player[i]->get_uuid();
-		// tmp.level = player[i]->get_attr(PLAYER_ATTR_LEVEL);
-
-	// if (m_data->m_memSize > 0)
-	// {
-	// 	TeamMemInfo notice;
-	// 	PackMemberInfo(notice, player);
-	// 	BroadcastToTeam(MSG_ID_TEAM_ADD_MEMBER_NOTIFY, &notice, (pack_func)team_mem_info__pack);
-	// }
-	
-//		pTeam->m_data->m_mem[i] = tmp;
 		pTeam->m_data->m_mem[i].id = player[i]->get_uuid();
 		pTeam->m_data->m_mem[i].level = player[i]->get_attr(PLAYER_ATTR_LEVEL);
 		pTeam->m_team_player[i] = player[i];
@@ -273,7 +265,10 @@ bool Team::AddMember(player_struct &player)
 		}
 	}
 	player_struct *lead = GetLead();
-	if (lead != NULL && lead->scene->get_scene_type() == SCENE_TYPE_RAID)
+	if (!lead || !lead->scene)
+		return false;
+	
+	if (lead->scene->get_scene_type() == SCENE_TYPE_RAID)
 	{
 		raid = (raid_struct *)lead->scene;
 		if (!raid->check_can_add_team_mem(&player))
@@ -324,7 +319,7 @@ bool Team::AddMember(player_struct &player)
 	if (raid && raid->data->state == RAID_STATE_START)
 	{
 		assert(raid->res_config);
-		raid->player_enter_raid(&player, raid->res_config->BirthPointX, raid->res_config->BirthPointZ);
+		raid->player_enter_raid(&player, raid->res_config->BirthPointX, raid->res_config->BirthPointZ, raid->res_config->FaceY);
 	}
 
 	player.refresh_player_redis_info();
@@ -805,7 +800,7 @@ void Team::RemoveMember(player_struct &player, bool kick /* = false */)
 	if (m_data->m_raid_uuid != 0)
 	{
 		raid_struct *raid = raid_manager::get_raid_by_uuid(m_data->m_raid_uuid);
-		if (raid)
+		if (raid && get_scene_looks_type(raid->m_id) == SCENE_TYPE_RAID)
 		{
 			raid->player_leave_raid(&player);
 		}
@@ -860,7 +855,7 @@ void Team::RemoveMember(uint64_t playerid, bool kick)
 		OnLeaderChange(playerid, GetLeadId());
 	}
 }
-
+/*
 int Team::CreateTeam(player_struct &player, int type, int target)
 {
 	if (!scene_can_make_team(player.data->scene_id))
@@ -875,14 +870,14 @@ int Team::CreateTeam(player_struct &player, int type, int target)
 	pTeam->m_data->m_lvType = type;
 	pTeam->m_data->m_targrt = target;
 
-	LOG_INFO("%s: teamid[%lu]", __FUNCTION__, pTeam->m_data->m_id);
+	LOG_INFO("%s: teamid[%lu],point=%p,data=%p", __FUNCTION__, pTeam->m_data->m_id, pTeam, pTeam->m_data);
 
 	player.m_team = pTeam;
 	player.m_team->AddMember(player);
 
 	return 0;
 }
-
+*/
 void Team::DestroyTeam(Team *pTeam)
 {
 	if (pTeam != NULL)
@@ -1423,6 +1418,7 @@ int Team::FindMember(uint64_t id)
 
 int Team::InitTeamData(int num, unsigned long key)
 {
+	LOG_DEBUG("%s: init mem[%d]", __FUNCTION__, sizeof(Team_data) * num);		
 	return init_comm_pool(0, sizeof(Team_data), num, key, &team_manager_teamDataPool);
 }
 

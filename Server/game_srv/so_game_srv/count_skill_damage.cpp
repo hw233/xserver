@@ -633,7 +633,7 @@ int32_t count_skill_total_damage(UNIT_FIGHT_TYPE type, struct SkillTable *skillc
 	//世界boss数据处理
 	if(defence_unit->get_unit_type() == UNIT_TYPE_MONSTER || defence_unit->get_unit_type() == UNIT_TYPE_BOSS)
 	{
-		((monster_struct*)defence_unit)->world_boss_refresf_player_redis_info(attack_unit, defence_cur_hp, ret);
+		((monster_struct*)defence_unit)->monster_suffer_damage(attack_unit, defence_cur_hp, ret);
 	}
 	if (!defence_unit->is_alive())
 		return ret;

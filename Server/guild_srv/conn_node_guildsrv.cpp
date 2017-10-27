@@ -17,12 +17,15 @@
 #include "guild_answer.h"
 #include "guild_battle.pb-c.h"
 #include "send_mail.h"
+#include "guild.pb-c.h"
+#include <math.h>
 
 
 conn_node_guildsrv conn_node_guildsrv::connecter;
 //static char sql[1024];
 
-
+#define GUILD_RUQIN_MAX_REWARD_ITEM_NUM 5 //帮会入侵最大奖励物品数量
+static const int GUILD_INTRUSION_CONTROLTABLE_ID = 440500001; //帮会入侵 FactionActivity表id
 static int handle_guild_create_cost(int data_len, uint8_t *data, int result, EXTERN_DATA *extern_data);
 static int handle_guild_rename_cost(int data_len, uint8_t *data, int result, EXTERN_DATA *extern_data);
 static int handle_guild_skill_practice_cost(int data_len, uint8_t *data, int result, EXTERN_DATA *extern_data);
@@ -53,6 +56,7 @@ conn_node_guildsrv::conn_node_guildsrv()
 	add_msg_handle(SERVER_PROTO_GUILDSRV_REWARD_ANSWER, &conn_node_guildsrv::handle_gamesrv_reward_answer);
 	add_msg_handle(SERVER_PROTO_ADD_GUILD_RESOURCE, &conn_node_guildsrv::handle_add_guild_resrouce_request);
 	add_msg_handle(SERVER_PROTO_GM_DISBAND_GUILD, &conn_node_guildsrv::handle_disband_request);
+	add_msg_handle(SERVER_PROTO_GAMESRV_START, &conn_node_guildsrv::handle_gamesrv_start);
 
 	add_msg_handle(MSG_ID_GUILD_BUILDING_INFO_REQUEST, &conn_node_guildsrv::handle_guild_building_info_request);
 	add_msg_handle(MSG_ID_GUILD_BUILDING_UPGRADE_REQUEST, &conn_node_guildsrv::handle_guild_building_upgrade_request);
@@ -68,6 +72,7 @@ conn_node_guildsrv::conn_node_guildsrv()
 	add_msg_handle(SERVER_PROTO_GUILD_CHAT, &conn_node_guildsrv::handle_guild_chat_request);
 	add_msg_handle(SERVER_PROTO_GUILD_PRODUCE_MEDICINE, &conn_node_guildsrv::handle_guild_prodece_medicine_request);
 	add_msg_handle(MSG_ID_GET_OTHER_INFO_ANSWER, &conn_node_guildsrv::handle_get_other_info_request);
+	add_msg_handle(SERVER_PROTO_TRADE_LOT_INSERT, &conn_node_guildsrv::handle_trade_lot_insert);
 
 	add_msg_handle(MSG_ID_GUILD_BATTLE_CALL_REQUEST, &conn_node_guildsrv::handle_guild_battle_call_request);
 	add_msg_handle(SERVER_PROTO_GUILD_BATTLE_ENTER_WAIT, &conn_node_guildsrv::handle_guild_battle_enter_wait_request);
@@ -80,6 +85,9 @@ conn_node_guildsrv::conn_node_guildsrv()
 	add_msg_handle(SERVER_PROTO_GUILD_ADD_FINAL_BATTLE_GUILD, &conn_node_guildsrv::handle_guild_battle_add_final_id);
 
 	add_msg_handle(MSG_ID_OPEN_FACTION_QUESTION_REQUEST, &conn_node_guildsrv::handle_open_guild_answer_request);
+	add_msg_handle(SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_REQUEST, &conn_node_guildsrv::handle_guild_ruqin_creat_monster_level_request);
+	add_msg_handle(SERVER_PROTO_GUILD_RUQIN_REWARD_INFO_NOTIFY, &conn_node_guildsrv::guild_ruqin_reward_info_notify);
+	add_msg_handle(SERVER_PROTO_GUILD_RUQIN_BOSS_CREAT_NOTIFY, &conn_node_guildsrv::guild_ruqin_boss_creat_notify);
 }
 
 conn_node_guildsrv::~conn_node_guildsrv()
@@ -105,15 +113,12 @@ int conn_node_guildsrv::recv_func(evutil_socket_t fd)
 			switch (cmd)
 			{
 				case SERVER_PROTO_GAMESRV_START:
-					{
-						LOG_INFO("[%s:%d] game_srv start notify.", __FUNCTION__, __LINE__);
-					}
-					break;
 				case SERVER_PROTO_GUILD_BATTLE_REWARD:
 				case SERVER_PROTO_GUILD_BATTLE_BEGIN:
 				case SERVER_PROTO_GUILD_BATTLE_END:
 				case SERVER_PROTO_GUILD_BATTLE_SETTLE:
 				case SERVER_PROTO_GUILD_BATTLE_FINAL_LIST_REQUEST:
+				case SERVER_PROTO_TRADE_LOT_INSERT:
 					{
 						HandleMap::iterator iter = m_handleMap.find(cmd);
 						if (iter != m_handleMap.end())
@@ -459,6 +464,13 @@ int conn_node_guildsrv::handle_guild_create_request(EXTERN_DATA *extern_data)
 			break;
 		}
 
+		if (redis_player->zhenying == 0)
+		{
+			ret = ERROR_ID_GUILD_CREATE_NEED_ZHENYING;
+			LOG_ERR("[%s:%d] player[%lu] not join zhenying", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
 		if (sg_guild_create_coin == 0)
 		{
 			ret = ERROR_ID_NO_CONFIG;
@@ -474,18 +486,15 @@ int conn_node_guildsrv::handle_guild_create_request(EXTERN_DATA *extern_data)
 	else
 	{
 		//请求扣除消耗
-		PROTO_GUILDSRV_CHECK_AND_COST_REQ *cost_req = (PROTO_GUILDSRV_CHECK_AND_COST_REQ *)get_send_buf(SERVER_PROTO_GUILDSRV_COST_REQUEST, get_seq());
-		cost_req->head.len = ENDION_FUNC_4(sizeof(PROTO_GUILDSRV_CHECK_AND_COST_REQ) + get_data_len());
-		memset(cost_req->head.data, 0, sizeof(PROTO_GUILDSRV_CHECK_AND_COST_REQ) - sizeof(PROTO_HEAD));
+		PROTO_SRV_CHECK_AND_COST_REQ *cost_req = (PROTO_SRV_CHECK_AND_COST_REQ *)get_send_data();
+		uint32_t data_len = sizeof(PROTO_SRV_CHECK_AND_COST_REQ) + get_data_len();
+		memset(cost_req, 0, data_len);
 		cost_req->cost.statis_id = MAGIC_TYPE_GUILD_CREATE;
 		cost_req->cost.coin = sg_guild_create_coin;
 		cost_req->data_size = get_data_len();
 		memcpy(cost_req->data, get_data(), cost_req->data_size);
-		add_extern_data(&cost_req->head, extern_data);
-		if (connecter.send_one_msg(&cost_req->head, 1) != (int)ENDION_FUNC_4(cost_req->head.len))
-		{
-			LOG_ERR("[%s:%d] send to gamesrv failed err[%d]", __FUNCTION__, __LINE__, errno);
-		}
+
+		fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_GUILDSRV_COST_REQUEST, data_len, 0);
 	}
 
 	return 0;
@@ -1162,7 +1171,7 @@ int conn_node_guildsrv::handle_guild_set_words_request(EXTERN_DATA *extern_data)
 
 		strcpy(pWord, words.c_str());
 		save_announcement(guild, type);
-		broadcast_guild_str_attr_update(guild, attr_id, pWord, player->player_id);
+		broadcast_guild_str_attr_update(guild, attr_id, pWord);
 	} while(0);
 
 	GuildSetWordsAnswer resp;
@@ -1338,19 +1347,15 @@ int conn_node_guildsrv::handle_guild_rename_request(EXTERN_DATA *extern_data)
 	if (ret == 0)
 	{
 		//请求扣除消耗
-		PROTO_GUILDSRV_CHECK_AND_COST_REQ *cost_req = (PROTO_GUILDSRV_CHECK_AND_COST_REQ *)get_send_buf(SERVER_PROTO_GUILDSRV_COST_REQUEST, get_seq());
-		cost_req->head.len = ENDION_FUNC_4(sizeof(PROTO_GUILDSRV_CHECK_AND_COST_REQ) + get_data_len());
-		memset(cost_req->head.data, 0, sizeof(PROTO_GUILDSRV_CHECK_AND_COST_REQ) - sizeof(PROTO_HEAD));
+		PROTO_SRV_CHECK_AND_COST_REQ *cost_req = (PROTO_SRV_CHECK_AND_COST_REQ *)get_send_data();
+		uint32_t data_len = sizeof(PROTO_SRV_CHECK_AND_COST_REQ) + get_data_len();
+		memset(cost_req, 0, data_len);
 		cost_req->cost.statis_id = MAGIC_TYPE_GUILD_RENAME;
 		cost_req->cost.item_id[0] = sg_guild_rename_item_id;
 		cost_req->cost.item_num[0] = sg_guild_rename_item_num;
 		cost_req->data_size = get_data_len();
 		memcpy(cost_req->data, get_data(), cost_req->data_size);
-		add_extern_data(&cost_req->head, extern_data);
-		if (connecter.send_one_msg(&cost_req->head, 1) != (int)ENDION_FUNC_4(cost_req->head.len))
-		{
-			LOG_ERR("[%s:%d] send to gamesrv failed err[%d]", __FUNCTION__, __LINE__, errno);
-		}
+		fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_GUILDSRV_COST_REQUEST, data_len, 0);
 	}
 	else
 	{
@@ -1418,6 +1423,7 @@ static int handle_guild_rename_cost(int data_len, uint8_t *data, int result, EXT
 		player->guild->rename_time = time_helper::get_cached_time() / 1000;
 		save_guild_info(player->guild);
 
+		sync_guild_rename_to_gamesrv(guild);
 		std::vector<uint64_t> broadcast_ids;
 		for (uint32_t i = 0; i < guild->member_num; ++i)
 		{
@@ -1427,7 +1433,7 @@ static int handle_guild_rename_cost(int data_len, uint8_t *data, int result, EXT
 			//同步所有在线玩家数据到game_srv
 			if (member->player_id == player->player_id)
 			{
-				sync_guild_info_to_gamesrv(member);
+				//sync_guild_info_to_gamesrv(member);
 			}
 			else
 			{
@@ -1436,7 +1442,7 @@ static int handle_guild_rename_cost(int data_len, uint8_t *data, int result, EXT
 				{
 					if (redis_member->status == 0)
 					{
-						sync_guild_info_to_gamesrv(member);
+						//sync_guild_info_to_gamesrv(member);
 						broadcast_ids.push_back(member->player_id);
 					}
 				}
@@ -1603,7 +1609,7 @@ int conn_node_guildsrv::handle_player_online_notify(EXTERN_DATA *extern_data)
 
 int conn_node_guildsrv::handle_check_and_cost_answer(EXTERN_DATA *extern_data)
 {
-	PROTO_GUILDSRV_CHECK_AND_COST_RES *res = (PROTO_GUILDSRV_CHECK_AND_COST_RES*)buf_head();
+	PROTO_SRV_CHECK_AND_COST_RES *res = (PROTO_SRV_CHECK_AND_COST_RES*)get_data();
 	int ret = 0;
 	switch(res->cost.statis_id)
 	{
@@ -1620,15 +1626,11 @@ int conn_node_guildsrv::handle_check_and_cost_answer(EXTERN_DATA *extern_data)
 
 	if (ret != 0)
 	{
-		PROTO_UNDO_COST *proto = (PROTO_UNDO_COST*)get_send_buf(SERVER_PROTO_UNDO_COST, 0);
-		proto->head.len = ENDION_FUNC_4(sizeof(PROTO_UNDO_COST));
-		memset(proto->head.data, 0, sizeof(PROTO_UNDO_COST) - sizeof(PROTO_HEAD));
+		PROTO_UNDO_COST *proto = (PROTO_UNDO_COST*)get_send_data();
+		uint32_t data_len = sizeof(PROTO_UNDO_COST);
+		memset(proto, 0, data_len);
 		memcpy(&proto->cost, &res->cost, sizeof(SRV_COST_INFO));
-		conn_node_base::add_extern_data(&proto->head, extern_data);
-		if (connecter.send_one_msg(&proto->head, 1) != (int)ENDION_FUNC_4(proto->head.len))
-		{
-			LOG_ERR("[%s:%d] send to gamesrv failed err[%d]", __FUNCTION__, __LINE__, errno);
-		}
+		fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_UNDO_COST, data_len, 0);
 	}
 
 	return 0;
@@ -1688,6 +1690,14 @@ int conn_node_guildsrv::handle_disband_request(EXTERN_DATA *extern_data)
 	{
 		disband_guild(guild);
 	}
+	return 0;
+}
+
+int conn_node_guildsrv::handle_gamesrv_start(EXTERN_DATA *extern_data)
+{
+	LOG_INFO("[%s:%d] game_srv start notify.", __FUNCTION__, __LINE__);
+
+	sync_all_guild_to_gamesrv();
 	return 0;
 }
 
@@ -2094,9 +2104,9 @@ int conn_node_guildsrv::handle_guild_skill_pratice_request(EXTERN_DATA *extern_d
 
 		{
 			//请求扣除消耗
-			PROTO_GUILDSRV_CHECK_AND_COST_REQ *cost_req = (PROTO_GUILDSRV_CHECK_AND_COST_REQ *)get_send_buf(SERVER_PROTO_GUILDSRV_COST_REQUEST, get_seq());
-			cost_req->head.len = ENDION_FUNC_4(sizeof(PROTO_GUILDSRV_CHECK_AND_COST_REQ) + sizeof(GUILD_SKILL_PRACTICE_CARRY));
-			memset(cost_req->head.data, 0, sizeof(PROTO_GUILDSRV_CHECK_AND_COST_REQ) - sizeof(PROTO_HEAD));
+			PROTO_SRV_CHECK_AND_COST_REQ *cost_req = (PROTO_SRV_CHECK_AND_COST_REQ *)get_send_data();
+			uint32_t data_len = sizeof(PROTO_SRV_CHECK_AND_COST_REQ) + sizeof(GUILD_SKILL_PRACTICE_CARRY);
+			memset(cost_req, 0, data_len);
 			cost_req->cost.statis_id = MAGIC_TYPE_GUILD_SKILL_PRACTICE;
 			cost_req->cost.coin = need_coin;
 			cost_req->data_size = sizeof(GUILD_SKILL_PRACTICE_CARRY);
@@ -2104,11 +2114,7 @@ int conn_node_guildsrv::handle_guild_skill_pratice_request(EXTERN_DATA *extern_d
 			pCarry->skill_id = skill_id;
 			pCarry->level_num = level_num;
 			pCarry->need_donation = need_donation;
-			add_extern_data(&cost_req->head, extern_data);
-			if (connecter.send_one_msg(&cost_req->head, 1) != (int)ENDION_FUNC_4(cost_req->head.len))
-			{
-				LOG_ERR("[%s:%d] send to gamesrv failed err[%d]", __FUNCTION__, __LINE__, errno);
-			}
+			fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_GUILDSRV_COST_REQUEST, data_len, 0);
 		}
 	} while(0);
 
@@ -2425,7 +2431,7 @@ int conn_node_guildsrv::handle_guild_chat_request(EXTERN_DATA *extern_data)
 
 int conn_node_guildsrv::handle_guild_prodece_medicine_request(EXTERN_DATA *extern_data)
 {
-	PROTO_UNDO_COST *req = (PROTO_UNDO_COST*)buf_head();
+	PROTO_UNDO_COST *req = (PROTO_UNDO_COST*)get_data();
 
 	do
 	{
@@ -2449,7 +2455,8 @@ int conn_node_guildsrv::handle_guild_prodece_medicine_request(EXTERN_DATA *exter
 		}
 	} while (0);
 	
-	if (conn_node_guildsrv::connecter.send_one_msg((PROTO_HEAD *)req, 1) != (int)ENDION_FUNC_4(req->head.len))
+	PROTO_HEAD *head = get_head();
+	if (conn_node_guildsrv::connecter.send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len))
 	{
 		LOG_ERR("[%s:%d] send to gamesrv failed err[%d]", __FUNCTION__, __LINE__, errno);
 	}
@@ -2501,6 +2508,22 @@ int conn_node_guildsrv::handle_get_other_info_request(EXTERN_DATA *extern_data)
 	}
 
 	get_other_info_answer__free_unpacked(req, NULL);
+	return 0;
+}
+
+int conn_node_guildsrv::handle_trade_lot_insert(EXTERN_DATA * /*extern_data*/)
+{
+	TRADE_LOT_INSERT *req = (TRADE_LOT_INSERT *)get_data();
+
+	GuildInfo *guild = get_guild(req->guild_id);
+	if (guild)
+	{
+		for (uint32_t i = 0; i < guild->member_num; ++i)
+		{
+			send_mail(&connecter, guild->members[i]->player_id, 270100002, NULL, NULL, NULL, NULL, NULL, 0);
+		}
+	}
+
 	return 0;
 }
 
@@ -3226,7 +3249,350 @@ int conn_node_guildsrv::handle_guild_battle_add_final_id(EXTERN_DATA *extern_dat
 	return 0;
 }
 
+int conn_node_guildsrv::handle_guild_ruqin_creat_monster_level_request(EXTERN_DATA *extern_data)
+{
+	uint32_t *pData = (uint32_t*)get_data();
+	uint32_t guild_id = *pData++;
+	
+	GuildInfo *guild = get_guild(guild_id);
+	AutoReleaseBatchRedisPlayer t1;
+	uint32_t all_level = 0;
+	uint32_t all_num   = 0;
+	uint32_t now_time =time_helper::get_cached_time() / 1000;
+	if(guild == NULL)
+	{
+		LOG_ERR("[%s:%d] 帮会入侵活动获取game刷怪等级失败,没找到帮会数据,guild_id[%d]", __FUNCTION__, __LINE__,guild_id );
+		return -1;
+	}
+	for(size_t i = 0; i < MAX_GUILD_MEMBER_NUM; i++)
+	{
+		if(guild->members[i] == NULL)
+			break;
+		if(guild->members[i]->player_id == 0)
+			break;
+		PlayerRedisInfo *redis_player = get_redis_player(guild->members[i]->player_id, sg_player_key, sg_redis_client, t1);
+		if(redis_player == NULL)
+			continue;
+		if(redis_player->status ==0)
+		{
+			all_level += redis_player->lv;
+			all_num += 1;
+		}
+		else 
+		{
+			if(now_time - redis_player->status < 3 * 3600 * 24)
+			{
+				all_level += redis_player->lv;
+				all_num += 1; 
+			}
+			
+		}
+	}
+	if(all_level == 0 || all_num ==0)
+	{
+		LOG_ERR("[%s:%d] 帮会入侵活动获取game刷怪等级,总等级或者总人数出错all_level[%d] all_num", __FUNCTION__, __LINE__,all_level, all_num );
+		return -2;
+	}
 
 
+	uint32_t level = all_level / all_num;
 
 
+	PROTO_HEAD_RUQIN *req = (PROTO_HEAD_RUQIN*)conn_node_base::get_send_buf(SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_ANSWER, 0);
+	req->guild_id = guild_id;
+	req->level    = level;
+	req->head.len = ENDION_FUNC_4(sizeof(PROTO_HEAD_RUQIN));
+
+	EXTERN_DATA ext_data;
+	conn_node_base::add_extern_data(&req->head, &ext_data);
+	if (conn_node_guildsrv::connecter.send_one_msg(&req->head, 1) != (int)ENDION_FUNC_4(req->head.len))
+	{
+		LOG_ERR("[%s:%d] send to gamesrv failed err[%d]", __FUNCTION__, __LINE__, errno);
+	}
+	return 0;
+}
+
+int conn_node_guildsrv::guild_ruqin_reward_info_notify(EXTERN_DATA *extern_data)
+{
+	GuildRuqinActiveRewardNotify *req = guild_ruqin_active_reward_notify__unpack(NULL, get_data_len(), get_data());
+	if(req == NULL)
+	{
+		LOG_ERR("[%s:%d]  unpack failed", __FUNCTION__, __LINE__);
+		return -1;
+	}
+	AutoReleaseBatchRedisPlayer t1;
+	uint32_t guild_id = req->guild_id;
+	double all_damage = req->all_damage;
+	uint32_t all_boshu = req->all_bushu;
+	uint32_t boshu = req->boshu;
+	uint32_t member_num = req->n_all_palyer;
+	ParameterTable *param_config = NULL;
+	if(boshu <=0 || all_boshu <=0)
+	{
+		LOG_ERR("[%s:%d]  帮会入侵发奖波数出错boshu[%u] all_boshu[%u]", __FUNCTION__, __LINE__, boshu, all_boshu);
+		return -2;
+	}
+	param_config = get_config_by_id(161000349, &parameter_config);
+	if(param_config == NULL || param_config->n_parameter1 <1)
+	{
+		LOG_ERR("[%s:%d]  获取参数表配置错误,id[161000349]", __FUNCTION__, __LINE__);
+		return -3;
+	}
+	double canshu_a = param_config->parameter1[0];
+
+	param_config = get_config_by_id(161000350, &parameter_config);
+	if(param_config == NULL || param_config->n_parameter1 <1)
+	{
+		LOG_ERR("[%s:%d]  获取参数表配置错误,id[161000350]", __FUNCTION__, __LINE__);
+		return -4;
+	}
+	double canshu_b = param_config->parameter1[0];
+
+	param_config = get_config_by_id(161000351, &parameter_config);
+	if(param_config == NULL || param_config->n_parameter1 <1)
+	{
+		LOG_ERR("[%s:%d]  获取参数表配置错误,id[161000351]", __FUNCTION__, __LINE__);
+		return -5;
+	}
+	double canshu_c = param_config->parameter1[0];
+
+	param_config = get_config_by_id(161000352, &parameter_config);
+	if(param_config == NULL || param_config->n_parameter1 <1)
+	{
+		LOG_ERR("[%s:%d]  获取参数表配置错误,id[161000352]", __FUNCTION__, __LINE__);
+		return -6;
+	}
+	double canshu_d = param_config->parameter1[0];
+
+	param_config = get_config_by_id(161000353, &parameter_config);
+	if(param_config == NULL || param_config->n_parameter1 <1)
+	{
+		LOG_ERR("[%s:%d]  获取参数表配置错误,id[161000353]", __FUNCTION__, __LINE__);
+		return -7;
+	}
+	double canshu_e = param_config->parameter1[0];
+
+	param_config = get_config_by_id(161000354, &parameter_config);
+	if(param_config == NULL || param_config->n_parameter1 <1)
+	{
+		LOG_ERR("[%s:%d]  获取参数表配置错误,id[161000354]", __FUNCTION__, __LINE__);
+		return -8;
+	}
+	double canshu_f = param_config->parameter1[0];
+
+	param_config = get_config_by_id(161000356, &parameter_config);
+	if(param_config == NULL || param_config->n_parameter1 <3)
+	{
+		LOG_ERR("[%s:%d]  获取参数表配置错误,id[161000356]", __FUNCTION__, __LINE__);
+		return -9;
+	}
+	uint32_t coin_item_id = param_config->parameter1[0];
+	uint32_t exp_item_id = param_config->parameter1[1];
+	uint32_t banggong_item_id = param_config->parameter1[2];
+
+
+	FactionActivity *faction_table = get_config_by_id(GUILD_INTRUSION_CONTROLTABLE_ID, &guild_land_active_config);
+	if(faction_table == NULL)
+	{
+		LOG_ERR("[%s:%d]  获取帮会领地活动参数表出错", __FUNCTION__, __LINE__);
+		return -10;
+	}
+	ControlTable *contro_table =  get_config_by_id(faction_table->ControlID, &all_control_config);
+	if(contro_table == NULL)
+	{
+		LOG_ERR("[%s:%d]  获取帮会领地活动控制表出错", __FUNCTION__, __LINE__);
+		return -11;
+	}
+	uint32_t reward_type = contro_table->TimeType;
+	uint32_t all_reward_num  = contro_table->RewardTime;
+	
+	std::vector<uint64_t> braod_player; //需要广播奖励信息的玩家
+	braod_player.clear();
+	GuildRuqinActiveRewardAndRankNotify notify;
+	GuildRuqinPlayerRewardInfo player_reward_info[MAX_GUILD_MEMBER_NUM];
+	GuildRuqinPlayerRewardInfo *player_reward_info_point[MAX_GUILD_MEMBER_NUM];
+	GuildRuqinRewardItemInfo   reward_item_info[MAX_GUILD_MEMBER_NUM][GUILD_RUQIN_MAX_REWARD_ITEM_NUM];
+	GuildRuqinRewardItemInfo *reward_item_info_point[MAX_GUILD_MEMBER_NUM][GUILD_RUQIN_MAX_REWARD_ITEM_NUM];
+	char name[MAX_GUILD_MEMBER_NUM][MAX_PLAYER_NAME_LEN];
+	uint32_t player_num = 0;
+	guild_ruqin_active_reward_and_rank_notify__init(&notify);
+	notify.reward_info = player_reward_info_point;
+	for(size_t i = 0; i < req->n_all_palyer && req->all_palyer[i] != NULL && player_num < MAX_GUILD_MEMBER_NUM; i++)
+	{
+		PlayerRedisInfo *redis_player = get_redis_player(req->all_palyer[i]->player_id, sg_player_key, sg_redis_client, t1);
+		if(redis_player == NULL)
+		{
+			LOG_ERR("[%s:%d]帮会入侵活动给奖励失败，获取玩家redis信息失败player_id[%lu]", req->all_palyer[i]->player_id);
+			continue;
+		}
+		if(guild_id != redis_player->guild_id)
+		{
+			LOG_INFO("[%s:%d]帮会入侵活动给奖励失败，玩家换了帮会或者退帮了this_guild_id[%u] player_guild_id[%u]", guild_id, redis_player->guild_id);
+			continue;
+		}
+		GuildPlayer *guild_player_data = get_guild_player(req->all_palyer[i]->player_id);
+		if(guild_player_data == NULL)
+		{
+			LOG_ERR("[%s:%d]帮会入侵活动给奖励失败，获取玩家GuildPlayer数据失败player_id[%lu]", req->all_palyer[i]->player_id);
+			continue;
+		}
+		uint32_t reward_num = get_guild_land_active_reward_count(guild_player_data, GUILD_INTRUSION_CONTROLTABLE_ID);
+
+		uint64_t level = redis_player->lv;
+		uint64_t id = 1041*100000 + level;
+		ActorLevelTable *level_config = get_config_by_id(id, &actor_level_config);
+		if(level_config == NULL)
+		{
+			LOG_INFO("[%s:%d]帮会入侵活动给奖励失败，获取ActorLevelTable等级配置失败id[%lu]", id);
+			continue;
+		}
+		
+		uint64_t quelvexp = level_config->QueLvExp;
+		uint64_t quelvcoin = level_config->QueLvCoin;
+		double damage_bi = req->all_palyer[i]->damage/all_damage;
+		double reward_xishu = damage_bi * member_num * canshu_a;
+		double real_reward_xishu = (reward_xishu < canshu_b ? reward_xishu : canshu_b);
+		uint32_t  exp_reward = ceil((quelvexp * real_reward_xishu + quelvexp * member_num * canshu_c * damage_bi) * (boshu -1) / all_boshu);
+		uint32_t  coin_reward = ceil((quelvcoin * real_reward_xishu + quelvcoin * member_num * canshu_c * damage_bi) * (boshu -1) / all_boshu);
+		double banggong_xishu = damage_bi * member_num * canshu_e;
+		double real_banggong_xishu = banggong_xishu < canshu_f ? banggong_xishu : canshu_f;
+		uint32_t banggong_reward = ceil(canshu_d * real_banggong_xishu * (boshu -1) / all_boshu);
+		
+		if(reward_type == 2)
+		{
+			if(reward_num >= all_reward_num)
+			{
+				coin_reward = 0;
+				exp_reward = 0;
+				banggong_reward = 0;
+			}
+		}
+		std::map<uint32_t, uint32_t> attachs;
+		if(exp_reward != 0 || coin_reward != 0 || banggong_reward !=0)
+		{
+			if(reward_type == 2)
+			{
+				add_guild_land_active_reward_count(guild_player_data, GUILD_INTRUSION_CONTROLTABLE_ID);
+			}
+			attachs[coin_item_id] += coin_reward;
+			attachs[exp_item_id] += exp_reward;
+			attachs[banggong_item_id] += banggong_reward;
+			send_mail(&connecter, req->all_palyer[i]->player_id,MAIL_ID_GUILD_RUQIN_REWARD , NULL, NULL, NULL, NULL, &attachs, MAGIC_TYPE_GUILD_RUQIN_REWARD);
+			
+		}
+
+		//奖励信息需要广播给当前正在帮会领地以及有输出伤害的玩家
+		if(req->all_palyer[i]->on_land == true)
+		{
+			braod_player.push_back(req->all_palyer[i]->player_id);
+		}
+		player_reward_info_point[player_num] = &player_reward_info[player_num];
+		guild_ruqin_player_reward_info__init(&player_reward_info[player_num]);
+		player_reward_info[player_num].damage = req->all_palyer[i]->damage;
+		player_reward_info[player_num].lv = level;
+		player_reward_info[player_num].job = redis_player->head_icon;
+		player_reward_info[player_num].item = reward_item_info_point[player_num];
+		strcpy(name[player_num], redis_player->name);
+		player_reward_info[player_num].name = name[player_num];
+		uint32_t item_num = 0;
+		for(std::map<uint32_t, uint32_t>::iterator itr = attachs.begin(); itr != attachs.end() && item_num < GUILD_RUQIN_MAX_REWARD_ITEM_NUM; itr++)
+		{
+			reward_item_info_point[player_num][item_num] = &reward_item_info[player_num][item_num];
+			guild_ruqin_reward_item_info__init(&reward_item_info[player_num][item_num]);
+			reward_item_info[player_num][item_num].item_id = itr->first;		
+			reward_item_info[player_num][item_num].item_num = itr->second;		
+			item_num++;
+		}
+		player_reward_info[player_num].n_item = item_num;
+		player_num++;
+	}
+	notify.n_reward_info = player_num;
+	if(braod_player.size() != 0 && player_num !=0)
+	{
+		broadcast_message(MSG_ID_GUILD_RUQIN_REWARD_INFO_NOTIFY, &notify, (pack_func)guild_ruqin_active_reward_and_rank_notify__pack, braod_player);
+	}
+
+
+	std::vector<uint64_t> braod_guild_player; //广播给本帮会的玩家
+	GuildInfo *guild = get_guild(guild_id);
+	if(guild == NULL)
+	{
+		LOG_ERR("[%s:%d] 帮会入侵活动结束公告失败", __FUNCTION__, __LINE__);
+		return -10;
+	}
+	for(size_t i = 0; i < MAX_GUILD_MEMBER_NUM; i++)
+	{
+		if(guild->members[i] == NULL)
+			break;
+		if(guild->members[i]->player_id == 0)
+			break;
+		braod_guild_player.push_back(guild->members[i]->player_id);
+	}
+	uint64_t id = 0;
+	char buff[512];
+	Chat send;
+	chat__init(&send);
+	send.contain = buff;
+	send.channel = CHANNEL__family;
+	send.sendname = NULL;
+	send.sendplayerid = 0;
+	send.sendplayerlv = 0;
+	send.sendplayerjob = 0;
+	if(boshu > all_boshu)
+	{
+		id = 161000362;
+
+	}
+	else 
+	{
+		id =161000363;
+	}
+	param_config = get_config_by_id(id, &parameter_config);
+	if(param_config == NULL || param_config->parameter2 == NULL)
+	{
+		return -11;
+	}
+	strcpy(buff, param_config->parameter2);
+	broadcast_message(MSG_ID_CHAT_NOTIFY, &send, (pack_func)chat__pack, braod_guild_player);
+
+	return 0;
+}
+int conn_node_guildsrv::guild_ruqin_boss_creat_notify(EXTERN_DATA *extern_data)
+{
+	GuildRuqinBossCreatNotify *req = guild_ruqin_boss_creat_notify__unpack(NULL, get_data_len(), get_data());
+	if(req == NULL)
+	{
+		LOG_ERR("[%s:%d]  unpack failed", __FUNCTION__, __LINE__);
+		return -1;
+	}
+	ParameterTable *param_config = get_config_by_id(161000364, &parameter_config);
+	if(param_config == NULL || param_config->parameter2 == NULL)
+	{
+		LOG_ERR("[%s:%d] 帮会入侵活动boss刷新公告获取配置失败", __FUNCTION__, __LINE__);
+		return -10;
+	}
+	std::vector<uint64_t> braod_guild_player; //广播给本帮会的玩家
+	GuildInfo *guild = get_guild(req->guild_id);
+	for(size_t i = 0; i < MAX_GUILD_MEMBER_NUM; i++)
+	{
+		if(guild->members[i] == NULL)
+			break;
+		if(guild->members[i]->player_id == 0)
+			break;
+		braod_guild_player.push_back(guild->members[i]->player_id);
+	}
+	char buff[512];
+	Chat send;
+	chat__init(&send);
+	send.contain = buff;
+	send.channel = CHANNEL__family;
+	send.sendname = NULL;
+	send.sendplayerid = 0;
+	send.sendplayerlv = 0;
+	send.sendplayerjob = 0;
+	strcpy(buff, param_config->parameter2);
+	broadcast_message(MSG_ID_CHAT_NOTIFY, &send, (pack_func)chat__pack, braod_guild_player);
+
+
+	return 0;
+}

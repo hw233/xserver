@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "comm_define.h"
 #include "attr_id.h"
+#include "game_helper.h"
 #pragma pack(1)
 enum SERVER_PROTO
 {
@@ -29,6 +30,7 @@ enum SERVER_PROTO
 	SERVER_PROTO_SAVE_SERVER_LEVEL_REQUEST,     //保存服务器等级请求
 	SERVER_PROTO_BREAK_SERVER_LEVEL_REQUEST,     //突破服务器等级请求
 	SERVER_PROTO_BREAK_SERVER_LEVEL_ANSWER,      //突破服务器等级应答
+	SERVER_PROTO_TRADE_STATIS,      //交易操作记录
 
 
 	SERVER_PROTO_PLAYER_ONLINE_NOTIFY,			// 用户上线通知
@@ -64,6 +66,7 @@ enum SERVER_PROTO
 	SERVER_PROTO_SAVE_WANYAOKA,       //保存万妖卡信息
 	SERVER_PROTO_LIST_WANYAOKA,       //读取万妖卡信息	
 
+	//帮会服消息
 	SERVER_PROTO_GUILDSRV_COST_REQUEST, //帮会服扣除消耗请求
 	SERVER_PROTO_GUILDSRV_COST_ANSWER, //帮会服扣除消耗应答
 	SERVER_PROTO_GUILDSRV_REWARD_REQUEST, //帮会服发放奖励请求
@@ -87,6 +90,9 @@ enum SERVER_PROTO
 	SERVER_PROTO_GUILD_PRODUCE_MEDICINE, //炼药
 	SERVER_PROTO_GUILD_SYNC_DONATION, //同步帮贡
 	SERVER_PROTO_GUILD_SKILL_LEVEL_UP, //帮会技能升级成功
+	SERVER_PROTO_GUILD_CREATE, //帮会创建
+	SERVER_PROTO_GUILD_SYNC_ALL, //同步所有帮会信息到game_srv
+	SERVER_PROTO_GUILD_RENAME, //帮会改名
 
 	SERVER_PROTO_CHOSE_ZHENYING_REQUEST, //加入阵营
 	SERVER_PROTO_CHANGE_ZHENYING_REQUEST, //改变阵营
@@ -108,6 +114,22 @@ enum SERVER_PROTO
 	SERVER_PROTO_DOUFACHANG_BUY_CHALLENGE_REQUEST,   //扣元宝  doufachang -> game_srv
 	SERVER_PROTO_DOUFACHANG_BUY_CHALLENGE_ANSWER,   //扣元宝   game_srv -> doufachang
 
+	//交易服消息
+	SERVER_PROTO_TRADESRV_COST_REQUEST, //交易服扣除消耗请求
+	SERVER_PROTO_TRADESRV_COST_ANSWER,  //交易服扣除消耗应答
+	SERVER_PROTO_TRADE_ON_SHELF_REQUEST, //交易上架请求
+	SERVER_PROTO_TRADE_ON_SHELF_DELETE_ITEM_REQUEST, //交易上架删除物品请求
+	SERVER_PROTO_TRADE_ON_SHELF_DELETE_ITEM_ANSWER, //交易上架删除物品应答
+	SERVER_PROTO_TRADE_OFF_SHELF_ADD_ITEM_REQUEST, //交易下架请求
+	SERVER_PROTO_TRADE_OFF_SHELF_ADD_ITEM_ANSWER, //交易下架应答
+	SERVER_PROTO_TRADE_RE_SHELF_CHANGE_REQUEST, //交易重新上架改变请求
+	SERVER_PROTO_TRADE_RE_SHELF_CHANGE_ANSWER,  //交易重新上架改变应答
+	SERVER_PROTO_TRADE_BUY_EXECUTE_REQUEST, //交易购买执行请求
+	SERVER_PROTO_TRADE_BUY_EXECUTE_ANSWER,  //交易购买执行应答
+	SERVER_PROTO_TRADE_GET_EARNING_GIVE_REQUEST, //交易领取收益发放请求
+	SERVER_PROTO_TRADE_LOT_INSERT, //交易新增拍卖品
+	SERVER_PROTO_TRADE_BID_FAIL_RETURN, //拍卖失败返还
+
 	SERVER_PROTO_GET_OFFLINE_CACHE_REQUEST = 8000, //获取玩家离线缓存请求 game_srv --> friend_srv
 	SERVER_PROTO_GET_OFFLINE_CACHE_ANSWER = 8001,  //获取玩家离线缓存应答 friend_srv --> game_srv
 	SERVER_PROTO_CLEAR_OFFLINE_CACHE = 8002,       //清除玩家离线缓存 game_srv --> friend_srv
@@ -124,6 +146,10 @@ enum SERVER_PROTO
 
 	SERVER_PROTO_WORLDBOSS_PLAYER_REDIS_INFO,  // 玩家世界boss数据存redis
 	SERVER_PROTO_WORLDBOSS_BIRTH_UPDATA_REDIS_INFO,  //世界boss出生时间点,更新数据(非服务器启动时的出生)  
+	SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_REQUEST, //帮会入侵活动刷怪等级请求game_srv到guild_srv
+	SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_ANSWER, //帮会入侵活动刷怪等级回复guild_srv到game_srv
+	SERVER_PROTO_GUILD_RUQIN_REWARD_INFO_NOTIFY,		//帮会入侵活动奖励信息game_srv到guild_srv
+	SERVER_PROTO_GUILD_RUQIN_BOSS_CREAT_NOTIFY,    //帮会入侵boss创建通知game_srv到guild_srv
 
 	SERVER_PROTO_TIREN_LIST_NOTIFY,				// 外挂踢人
 };
@@ -312,22 +338,20 @@ typedef struct srv_cost_info
 	uint32_t item_num[10];
 } SRV_COST_INFO;
 
-typedef struct proto_guildsrv_check_and_cost_req
+typedef struct proto_srv_check_and_cost_req
 {
-	PROTO_HEAD head;
 	SRV_COST_INFO cost;
 	uint32_t data_size;
 	uint8_t data[0];
-} PROTO_GUILDSRV_CHECK_AND_COST_REQ;
+} PROTO_SRV_CHECK_AND_COST_REQ;
 
-typedef struct proto_guildsrv_check_and_cost_res
+typedef struct proto_srv_check_and_cost_res
 {
-	PROTO_HEAD head;
 	uint32_t result;
 	SRV_COST_INFO cost;
 	uint32_t data_size;
 	uint8_t data[0];
-} PROTO_GUILDSRV_CHECK_AND_COST_RES;
+} PROTO_SRV_CHECK_AND_COST_RES;
 
 typedef struct proto_guildsrv_reward_req
 {
@@ -364,6 +388,20 @@ typedef struct guild_shop_buy_carry
 	uint32_t need_donation;
 } GUILD_SHOP_BUY_CARRY;
 
+struct guild_player_data{
+	uint64_t player_id;
+	uint32_t level;
+	uint32_t status; //0表示在线,非0表示下线时间
+};
+struct ProtoGuildInfo
+{
+	uint32_t guild_id;
+	char name[MAX_GUILD_NAME_LEN + 1]; //帮名
+	uint32_t zhenying; //帮派阵营
+	uint64_t master_id; //帮主ID
+	guild_player_data player_data[MAX_GUILD_MEMBER_NUM];
+};
+
 struct ProtoGuildSkill
 {
 	uint32_t skill_id;
@@ -381,7 +419,6 @@ typedef struct proto_sync_guild_info
 	PROTO_HEAD head;
 	uint32_t guild_id;
 	uint32_t guild_office;
-	char guild_name[300];
 } PROTO_SYNC_GUILD_INFO;
 
 typedef struct proto_sync_guild_donation
@@ -390,6 +427,21 @@ typedef struct proto_sync_guild_donation
 	uint32_t is_change; //0没变化，1增加，2减少
 	uint32_t change_val; //变化值
 } PROTO_SYNC_GUILD_DONATION;
+
+typedef struct proto_sync_all_guild
+{
+	PROTO_HEAD head;
+	uint32_t   guild_num;
+	ProtoGuildInfo guilds[0];
+} PROTO_SYNC_ALL_GUILD;
+
+typedef struct proto_sync_guild_rename
+{
+	uint32_t guild_id;
+	char     name[MAX_GUILD_NAME_LEN + 1]; //帮名
+	uint32_t member_num;
+	uint64_t member_ids[MAX_GUILD_MEMBER_NUM];
+} PROTO_SYNC_GUILD_RENAME;
 
 typedef struct proto_friend_recommend
 {
@@ -448,6 +500,13 @@ typedef struct proto_guild_disband
 	char data[0];
 } PROTO_GUILD_DISBAND;
 
+typedef struct proto_guild_ruqin 
+{
+	PROTO_HEAD head;
+	uint32_t guild_id;
+	uint32_t level;
+}PROTO_HEAD_RUQIN;
+
 //同个帮会的成员的帮战奖励
 typedef struct proto_guild_battle_reward
 {
@@ -480,7 +539,6 @@ typedef struct proto_guild_battle_settle
 
 typedef struct proto_undo_cost
 {
-	PROTO_HEAD head;
 	SRV_COST_INFO cost;
 } PROTO_UNDO_COST;
 
@@ -568,6 +626,108 @@ typedef struct doufachang_get_reward_answer
 {
 	uint32_t result;
 } DOUFACHANG_GET_REWARD_ANSWER;
+
+typedef struct trade_on_shelf_request
+{
+	uint32_t bag_index;
+	uint32_t num;
+	uint32_t price;
+	uint32_t fee;
+	uint32_t trade_id;
+	EspecialItemInfo especial;
+} TRADE_ON_SHELF_REQUEST;
+
+typedef struct trade_on_shelf_delete_item_request
+{
+	uint32_t bag_index;
+	uint32_t num;
+	uint32_t price;
+	uint32_t fee;
+	uint32_t trade_id;
+	uint32_t shelf_index;
+} TRADE_ON_SHELF_DELETE_ITEM_REQUEST;
+
+typedef struct trade_on_shelf_delete_item_answer
+{
+	uint32_t result;
+	uint32_t shelf_index;
+} TRADE_ON_SHELF_DELETE_ITEM_ANSWER;
+
+typedef struct trade_off_shelf_add_item_request
+{
+	uint32_t shelf_index;
+	uint32_t trade_id;
+	uint32_t num;
+	EspecialItemInfo especial;
+} TRADE_OFF_SHELF_ADD_ITEM_REQUEST;
+
+typedef struct trade_off_shelf_add_item_answer
+{
+	uint32_t result;
+	uint32_t shelf_index;
+} TRADE_OFF_SHELF_ADD_ITEM_ANSWER;
+
+typedef struct trade_re_shelf_change_request
+{
+	uint32_t shelf_index;
+	uint32_t num;
+	uint32_t price; //前面的都是夹带的参数
+	uint32_t trade_id;
+	uint32_t off_num; //下架数量
+	EspecialItemInfo especial;
+} TRADE_RE_SHELF_CHANGE_REQUEST;
+
+typedef struct trade_re_shelf_change_answer
+{
+	uint32_t result;
+	uint32_t shelf_index;
+	uint32_t num;
+	uint32_t price; //前面的都是夹带的参数
+} TRADE_RE_SHELF_CHANGE_ANSWER;
+
+typedef struct trade_buy_execute_request
+{
+	uint64_t seller_id;
+	uint32_t shelf_index;
+	uint32_t buy_num; //前面的都是夹带的参数
+	uint32_t trade_id;
+	uint32_t buy_price;
+	EspecialItemInfo especial;
+} TRADE_BUY_EXECUTE_REQUEST;
+
+typedef struct trade_buy_execute_answer
+{
+	uint32_t result;
+	uint64_t seller_id;
+	uint32_t shelf_index;
+	uint32_t buy_num; //前面的都是夹带的参数
+} TRADE_BUY_EXECUTE_ANSWER;
+
+typedef struct trade_lot_insert
+{
+	uint32_t lot_id; //拍卖品ID
+	uint32_t guild_id; //激活的帮会ID
+	uint64_t masters[MAX_AUCTION_MASTER_NUM]; //激活的成员
+} TRADE_LOT_INSERT;
+
+typedef struct trade_bid_check_carry
+{
+	uint64_t lot_uuid;
+	uint32_t cur_price;
+	uint32_t bid_price;
+} TRADE_BID_CHECK_CARRY;
+
+typedef struct trade_statis_insert
+{
+	uint64_t player_id;
+	uint32_t operate_id;
+	uint32_t ext_num1;
+	uint32_t ext_num2;
+	uint32_t ext_num3;
+	uint32_t ext_num4;
+	uint32_t ext_num5;
+	uint64_t ext_num6;
+} TRADE_STATIS_INSERT;
 
 #pragma pack() 
 #endif

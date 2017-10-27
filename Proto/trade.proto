@@ -1,0 +1,163 @@
+syntax = "proto2";
+//import "comm_message.proto";
+
+//单品商家信息
+message TradeSellerData
+{
+	required uint64 playerId = 1; //所属玩家ID
+	required uint32 shelfIndex = 2; //货架索引
+	required uint32 num = 3; //出售数量
+	required uint32 price = 4; //单价
+}
+
+//交易单品信息
+message TradeItemSummaryData
+{
+	required uint32 itemId = 1; //货品ID
+	required uint32 onSellNum = 2; //在售数量
+	required uint32 averagePrice = 3; //平均价格
+}
+
+//交易货架信息
+message TradeShelfData
+{
+	required uint32 index = 1; //货架索引
+	required uint32 itemId = 2; //货品ID
+	required uint32 num = 3; //出售数量
+	required uint32 price = 4; //单价
+	required uint32 state = 5; //状态
+	required uint32 time = 6; //倒计时
+}
+
+//已出售货品信息
+message TradeSoldData
+{
+	required uint32 itemId = 1; //货品ID
+	required uint32 num = 3; //出售数量
+	required uint32 price = 4; //单价
+}
+
+//拍卖品信息
+message AuctionLotData
+{
+	required uint64 uuid = 1; //唯一ID
+	required uint32 lotId = 2; //拍卖品ID
+	required uint32 price = 4; //当前竞价
+	required uint32 time = 5; //倒计时
+	required uint32 state = 7; //状态（未竞价，已竞价，竞价失败）
+}
+
+message TradeInfoNotify
+{
+	repeated TradeShelfData shelfList = 2; //我的店铺货品列表
+	required uint32 shelfNum = 3; //当前寄售格数
+	repeated TradeSoldData soldList = 4; //已出售信息
+	required uint32 soldEarning = 5; //已出售收益
+}
+
+//上架请求
+message TradeOnShelfRequest
+{
+	required uint32 bagIndex = 1; //背包格子索引
+	required uint32 num = 2; //出售数量
+	required uint32 price = 3; //出售单价
+}
+
+//下架请求
+message TradeOffShelfRequest
+{
+	required uint32 shelfIndex = 1; //货架索引
+}
+
+//重新上架请求
+message TradeReshelfRequest
+{
+	required uint32 shelfIndex = 1; //货架索引
+	required uint32 num = 2; //出售数量
+	required uint32 price = 3; //出售单价
+}
+
+//扩充寄售格应答
+message TradeEnlargeShelfAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 shelfNum = 2; //当前寄售格数
+}
+
+//售出通知
+message TradeSoldNotify
+{
+	required TradeSoldData item = 1; //售出物品信息
+	required uint32 earning = 2; //收益
+}
+
+//交易货品总览应答
+message TradeItemSummaryAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated TradeItemSummaryData itemList = 2; //所有在售货品列表
+}
+
+//交易货品信息请求
+message TradeItemDetailRequest
+{
+	required uint32 itemId = 1; //货品ID
+}
+
+//交易货品信息应答
+message TradeItemDetailAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 itemId = 2; //货品ID
+	repeated TradeSellerData sellers = 3; //在售商家信息
+}
+
+//交易行购买请求
+message TradeBuyRequest
+{
+	required uint64 playerId = 1; //所属玩家ID
+	required uint32 shelfIndex = 2; //货架索引
+	required uint32 num = 3; //购买数量
+}
+
+
+//拍卖信息请求
+message AuctionInfoRequest
+{
+	required uint32 type = 1; //拍卖类型，1：门宗拍卖，2：全服拍卖
+}
+
+//拍卖信息应答
+message AuctionInfoAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated AuctionLotData auctionList = 2; //拍卖品列表
+}
+
+//拍卖竞价请求
+message AuctionBidRequest
+{
+	required uint64 uuid = 1; //拍卖品唯一ID
+	required uint32 curPrice = 2; //ID
+}
+
+//拍卖竞价应答
+message AuctionBidAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required AuctionLotData lot = 2; //拍卖品信息
+}
+
+//拍卖一口价请求
+message AuctionBuyNowRequest
+{
+	required uint64 uuid = 1; //拍卖品唯一ID
+}
+
+//拍卖一口价应答
+message AuctionBuyNowAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint64 uuid = 2; //拍卖品唯一ID
+}
+

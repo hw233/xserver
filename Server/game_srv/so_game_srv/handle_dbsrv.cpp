@@ -1,4 +1,5 @@
 #include "game_event.h"
+#include "uuid.h"
 #include "so_game_srv/raid_manager.h"
 #include "time_helper.h"
 #include "player.h"
@@ -163,7 +164,6 @@ static int handle_doufachang_load_player_answer(EXTERN_DATA *extern_data)
 
 	raid->player_enter_raid_impl(player1, 0, sg_3v3_pvp_raid_param1[1], sg_3v3_pvp_raid_param1[3]);
 	raid->player_enter_raid_impl(player, MAX_TEAM_MEM, sg_3v3_pvp_raid_param2[1], sg_3v3_pvp_raid_param2[3]);
-	player->add_all_formation_partner_to_scene();
 	return 0;
 }
 
@@ -449,6 +449,9 @@ static int handle_break_server_level_answer(EXTERN_DATA *extern_data)
 		uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SERVER_LEVEL_BREAK_NOTIFY, NULL, (pack_func)NULL);
 		for (std::map<uint64_t, player_struct *>::iterator iter = player_manager_all_players_id.begin(); iter != player_manager_all_players_id.end(); ++iter)
 		{
+			if (get_entity_type(iter->first) == ENTITY_TYPE_AI_PLAYER)
+				continue;
+
 			player_struct *player = iter->second;
 			if (player->is_online())
 			{

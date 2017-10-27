@@ -86,7 +86,7 @@ void handle_daily_reset_timeout(void)
 			if (vault_config)
 			{
 				std::map<uint32_t, uint32_t> attachs;
-				attachs[201010001] = config->parameter3;
+				attachs[201010001] = vault_config->parameter3;
 				for (uint32_t i = 0; i < guild->member_num; ++i)
 				{
 					send_mail(&conn_node_guildsrv::connecter, guild->members[i]->player_id, MAIL_ID_GUILD_DAILY_REWAERD, NULL, NULL, NULL, NULL, &attachs, 0);
@@ -155,6 +155,15 @@ void handle_daily_reset_timeout(void)
 				info->bought_num = 0;
 			}
 		}
+		if(day_reset)
+		{
+			for (int i = 0; i < MAX_GUILD_LAND_ACTIVE_NUM; ++i)
+			{
+				if (player->guild_land_active_reward_id[i] == 0)
+					break;
+				player->guild_land_active_reward_num[i] = 0;
+			}
+		}
 
 		if (save)
 		{
@@ -214,6 +223,11 @@ int dbdata_to_guild_player(DBGuildPlayer *db_player, GuildPlayer *player)
 	player->week_reset_time = db_player->week_reset_time;
 	player->battle_score = db_player->battle_score;
 	player->act_battle_score = db_player->act_battle_score;
+	for (uint32_t i = 0; i < db_player->n_guild_land_active_reward_id; ++i)
+	{
+		player->guild_land_active_reward_id[i] = db_player->guild_land_active_reward_id[i];
+		player->guild_land_active_reward_num[i] = db_player->guild_land_active_reward_num[i];
+	}
 
 	return 0;
 }
@@ -371,6 +385,15 @@ int pack_guild_player(GuildPlayer *player, uint8_t *out_data)
 	db_player->week_reset_time = player->week_reset_time;
 	db_player->battle_score = player->battle_score;
 	db_player->act_battle_score = player->act_battle_score;
+	int i;
+	for (i = 0; i < MAX_GUILD_LAND_ACTIVE_NUM; ++i)
+	{
+		if (player->guild_land_active_reward_id[i] == 0)
+			break;
+	}
+	db_info.n_guild_land_active_reward_id = db_info.n_guild_land_active_reward_num = i;
+	db_info.guild_land_active_reward_id = &player->guild_land_active_reward_id[0];
+	db_info.guild_land_active_reward_num = &player->guild_land_active_reward_num[0];
 
 	return dbguild_player__pack(db_player, out_data);
 }
@@ -533,6 +556,13 @@ int load_all_guilds(void)
 		memcpy(guild->recruit_notice, row[7], lengths[7]);
 		memcpy(guild->announcement, row[8], lengths[8]);
 
+		AutoReleaseRedisPlayer release_master;
+		PlayerRedisInfo *redis_master = get_redis_player(guild->master_id, sg_player_key, sg_redis_client, release_master);
+		if (redis_master)
+		{
+			guild->zhenying = redis_master->zhenying;
+		}
+
 		guild_map[guild_id] = guild;
 	}
 
@@ -546,6 +576,42 @@ void load_guild_module(void)
 	//先加载帮会数据，再加载玩家数据
 	load_all_guilds();
 	load_all_guild_player();
+
+	sync_all_guild_to_gamesrv();
+}
+
+void sync_all_guild_to_gamesrv(void)
+{
+	PROTO_SYNC_ALL_GUILD *req = (PROTO_SYNC_ALL_GUILD*)conn_node_guildsrv::get_send_buf(SERVER_PROTO_GUILD_SYNC_ALL, 0);
+	req->guild_num = 0;
+	for (std::map<uint32_t, GuildInfo*>::iterator iter = guild_map.begin(); iter != guild_map.end(); ++iter)
+	{
+		GuildInfo *guild = iter->second;
+		ProtoGuildInfo *info = &req->guilds[req->guild_num];
+		memset(info, 0, sizeof(ProtoGuildInfo));
+		info->guild_id = guild->guild_id;
+		memcpy(info->name, guild->name, sizeof(guild->name));
+		info->zhenying = guild->zhenying;
+		info->master_id = guild->master_id;
+		for(size_t i = 0; i < MAX_GUILD_MEMBER_NUM; i++)
+		{
+			if(guild->members[i] == NULL)
+				break;
+			AutoReleaseRedisPlayer release_master;
+			PlayerRedisInfo *redis_master = get_redis_player(guild->members[i]->player_id, sg_player_key, sg_redis_client, release_master);
+			if(redis_master == NULL)
+				continue;
+			info->player_data[i].player_id = guild->members[i]->player_id;
+			info->player_data[i].level     = redis_master->lv;
+			info->player_data[i].status    = redis_master->status;
+		}
+		req->guild_num++;
+	}
+	req->head.len = ENDION_FUNC_4(sizeof(PROTO_SYNC_ALL_GUILD) + req->guild_num * sizeof(ProtoGuildInfo));
+	if (conn_node_guildsrv::connecter.send_one_msg(&req->head, 1) != (int)ENDION_FUNC_4(req->head.len))
+	{
+		LOG_ERR("[%s:%d] send to game_srv failed err[%d]", __FUNCTION__, __LINE__, errno);
+	}
 }
 
 
@@ -1038,6 +1104,23 @@ bool office_has_permission(uint32_t office, uint32_t type)
 	return (value == 1);
 }
 
+void sync_guild_rename_to_gamesrv(GuildInfo *guild)
+{
+	PROTO_SYNC_GUILD_RENAME *pData = (PROTO_SYNC_GUILD_RENAME *)conn_node_base::get_send_data();
+	memset(pData, 0, sizeof(PROTO_SYNC_GUILD_RENAME));
+	pData->guild_id = guild->guild_id;
+	memcpy(pData->name, guild->name, sizeof(guild->name));
+	pData->member_num = guild->member_num;
+	for (uint32_t i = 0; i < guild->member_num; ++i)
+	{
+		pData->member_ids[i] = guild->members[i]->player_id;
+	}
+
+	EXTERN_DATA ext_data;
+
+	fast_send_msg_base(&conn_node_guildsrv::connecter, &ext_data, SERVER_PROTO_GUILD_RENAME, sizeof(PROTO_SYNC_GUILD_RENAME), 0);
+}
+
 void sync_guild_info_to_gamesrv(GuildPlayer *player)
 {
 	PROTO_SYNC_GUILD_INFO *req = (PROTO_SYNC_GUILD_INFO *)conn_node_base::get_send_buf(SERVER_PROTO_SYNC_GUILD_INFO, 0);
@@ -1047,7 +1130,6 @@ void sync_guild_info_to_gamesrv(GuildPlayer *player)
 	{
 		req->guild_id = player->guild->guild_id;
 		req->guild_office = player->office;
-		strcpy(req->guild_name, player->guild->name);
 	}
 
 	EXTERN_DATA ext_data;
@@ -1058,6 +1140,20 @@ void sync_guild_info_to_gamesrv(GuildPlayer *player)
 	{
 		LOG_ERR("[%s:%d] send to conn_srv failed err[%d]", __FUNCTION__, __LINE__, errno);
 	}
+}
+
+void sync_guild_create_to_gamesrv(GuildInfo *guild)
+{
+	ProtoGuildInfo *pData = (ProtoGuildInfo *)conn_node_base::get_send_data();
+	memset(pData, 0, sizeof(ProtoGuildInfo));
+	pData->guild_id = guild->guild_id;
+	memcpy(pData->name, guild->name, sizeof(guild->name));
+	pData->zhenying = guild->zhenying;
+	pData->master_id = guild->master_id;
+
+	EXTERN_DATA ext_data;
+
+	fast_send_msg_base(&conn_node_guildsrv::connecter, &ext_data, SERVER_PROTO_GUILD_CREATE, sizeof(ProtoGuildInfo), 0);
 }
 
 static int insert_new_guild_to_db(GuildInfo *guild)
@@ -1115,6 +1211,14 @@ int create_guild(uint64_t player_id, uint32_t icon, std::string &name, GuildPlay
 	GuildInfo *guild = NULL;
 	do
 	{
+		AutoReleaseRedisPlayer arp_redis;
+		PlayerRedisInfo *redis_player = get_redis_player(player_id, sg_player_key, sg_redis_client, arp_redis);
+		if (!redis_player)
+		{
+			ret = ERROR_ID_SERVER;
+			break;
+		}
+		
 		player = get_guild_player(player_id);
 		if (!player)
 		{
@@ -1139,6 +1243,7 @@ int create_guild(uint64_t player_id, uint32_t icon, std::string &name, GuildPlay
 		memcpy(guild->name, name.c_str(), name.size());
 		guild->name[name.size()] = '\0';
 		guild->icon = icon;
+		guild->zhenying = redis_player->zhenying;
 		guild->master_id = player_id;
 		guild->approve_state = 0;
 		guild->recruit_state = 1;
@@ -1184,6 +1289,7 @@ int create_guild(uint64_t player_id, uint32_t icon, std::string &name, GuildPlay
 		}
 		guild_map[guild->guild_id] = guild;
 		delete_player_join_apply(player->player_id);
+		sync_guild_create_to_gamesrv(guild);
 		sync_guild_info_to_gamesrv(player);
 		update_redis_player_guild(player);
 	} while(0);
@@ -2519,3 +2625,41 @@ bool is_in_guild_battle_activity_time()
 	return in_time;
 }
 
+uint32_t get_guild_land_active_reward_count(GuildPlayer *player, uint32_t guild_active_id)
+{
+	if(player == NULL)
+		return 0;
+	for (int i = 0; i < MAX_GUILD_LAND_ACTIVE_NUM; ++i)
+	{
+		if (player->guild_land_active_reward_id[i] == 0)
+		{
+			return 0;
+		}
+		if (player->guild_land_active_reward_id[i] == guild_active_id)
+		{
+			return player->guild_land_active_reward_num[i];
+		}
+	}
+	return 0;
+}
+void  add_guild_land_active_reward_count(GuildPlayer *player, uint32_t guild_active_id)
+{
+
+	if(player == NULL)
+		return;
+	for (int i = 0; i < MAX_GUILD_LAND_ACTIVE_NUM; ++i)
+	{
+		if (player->guild_land_active_reward_id[i] == 0)
+		{
+			player->guild_land_active_reward_id[i] = guild_active_id;
+			player->guild_land_active_reward_num[i] = 1;
+			return;
+		}
+
+		if (player->guild_land_active_reward_id[i] == guild_active_id)
+		{
+			player->guild_land_active_reward_num[i]++;
+			return;
+		}
+	}
+}

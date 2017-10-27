@@ -277,8 +277,8 @@ public:
 	bool try_active_attack();	
 //特定怪物死亡在特定情况下需要创建采集点
 	void monster_dead_creat_collect(unit_struct *murderer);
-//世界boss死亡或受击更新玩家数据
-	void world_boss_refresf_player_redis_info(unit_struct *murderer, double befor_hp,int32_t damage);
+//怪物受到伤害
+	void monster_suffer_damage(unit_struct *murderer, double befor_hp,int32_t damage);
 	struct monster_data *data;
 
 	struct ai_interface *ai;
@@ -295,6 +295,7 @@ public:
 		{
 			struct position ret_pos;  //被吸引进战斗的地点，只会返回该地点
 			uint8_t cur_pos_index;			
+			struct MGLYmaoguiTable *ai_config; //28类型ai怪物使用
 //			uint8_t n_circle;
 //			struct position circle[MAX_CIRCLE_POS_NUM];
 		} circle_ai; //转圈怪物AI以及单线不返回巡逻怪
@@ -354,12 +355,21 @@ public:
 		{
 			uint16_t last_ai_state;  //之前的ai状态
 		} type26_ai;
+		struct
+		{
+			struct MGLYdiaoxiangTable *ai_27_config; 
+		} type27_ai;
+		struct
+		{
+			struct MGLYmaoguiTable *ai_config; //28类型ai怪物使用
+		} type29_ai;
 	} ai_data;
 	struct position born_pos; //出生点
 
 	struct MonsterTable *config;
 	struct BaseAITable *ai_config;
 	struct SceneCreateMonsterTable *create_config;  
+	struct MGLYdiaoxiangTable *maogui_config;
 
 	uint32_t drop_id;
 	sight_space_struct *sight_space;

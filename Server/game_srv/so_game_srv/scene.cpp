@@ -1,4 +1,5 @@
 #include "scene.h"
+#include "team.h"
 #include "game_event.h"
 #include "game_config.h"
 #include "monster_manager.h"
@@ -35,6 +36,13 @@ __attribute__((unused)) static void	dump_map_config(struct map_config *map_confi
 scene_struct::~scene_struct()
 {
 	clear();
+}
+
+scene_struct::scene_struct()
+{
+	m_area_size = 0;
+	m_area = NULL;
+	m_guild_id = 0;
 }
 
 void scene_struct::clear()
@@ -193,7 +201,7 @@ int scene_struct::create_all_monster()
 	int len = create_monster_config->size();
 	for (int i = 0; i < len; ++i)
 	{
-		if (monster_manager::create_monster_by_config(this, i) == NULL)
+		if (monster_manager::create_monster_by_config(this, i, 0) == NULL)
 			Collect::CreateCollectByConfig(this, i) ;
 	}
 //	std::vector<struct SceneCreateMonsterTable *>::iterator ite;
@@ -290,6 +298,7 @@ int scene_struct::add_player_to_scene(player_struct *player)
 	broadcast_player_create(player);
 	
 	player->update_region_id();
+	player->on_enter_scene(this);
 	return (0);
 }
 
@@ -398,19 +407,22 @@ int scene_struct::delete_cash_truck_from_scene(cash_truck_struct *pTruck)
 	return 0;
 }
 
-int scene_struct::delete_collect_to_scene(Collect *pCollect)
+int scene_struct::delete_collect_from_scene(Collect *pCollect, bool send_msg)
 {
 	area_struct *area = pCollect->area;
 	if (!area)
 		return -1;
 	LOG_DEBUG("%s %d: scene[%d] collect[%u] area[%p]", __FUNCTION__, __LINE__, m_id, pCollect->m_uuid, area);
-	pCollect->BroadcastCollectDelete();
+	if (send_msg)
+	{
+		pCollect->BroadcastCollectDelete();
+	}
 	if (area->del_collect_from_area(pCollect->m_uuid) != 0)
 	{
 		LOG_ERR("%s %d: can not del collect[%u] from area[%ld]", __FUNCTION__, __LINE__, pCollect->m_uuid, area - m_area);
 	}
 
-//	m_collect.erase(pCollect->m_id);
+	m_collect.erase(pCollect->m_uuid);
 	pCollect->scene = NULL;
 	pCollect->area = NULL;
 	return (0);
@@ -418,10 +430,6 @@ int scene_struct::delete_collect_to_scene(Collect *pCollect)
 
 SCENE_TYPE_DEFINE scene_struct::get_scene_type()
 {
-	if (m_id == sg_guild_scene_id)
-	{
-		return SCENE_TYPE_GUILD;
-	}
 	return SCENE_TYPE_WILD;
 }
 
@@ -506,3 +514,93 @@ void scene_struct::clear_all_collet()
 	m_collect.clear();
 }
 
+// int scene_struct::enter_other_scene(player_struct *player, scene_struct *new_scene, double pos_x, double pos_y, double pos_z, double direct)
+// {
+// //  是否需要检查能否传送 ?
+// //	int ret = player->check_can_transfer();
+// //  player->scene->can_transfer(type))
+
+// 	if (player->sight_space)
+// 	{
+// 		LOG_ERR("%s: player[%lu] in sightspace, can not transfer", __FUNCTION__, player->data->player_id);
+// 		return (-1);
+// 	}
+// 	if (!player->scene)
+// 	{
+// 		LOG_ERR("%s: player[%lu] not in scene, can not transfer", __FUNCTION__, player->data->player_id);
+// 		return (-10);
+// 	}
+// 	assert(player->scene->get_scene_type() == SCENE_TYPE_WILD);
+
+// 	if (new_scene->m_id == player->data->scene_id)
+// 	{
+// 		assert(player->scene == new_scene);
+// 		player->send_clear_sight();
+// 		player->scene->delete_player_from_scene(player);
+// 		player->set_pos(pos_x, pos_z);
+// 		new_scene->add_player_to_scene(player);
+// 		player->take_partner_into_scene();
+// 	}
+// 	else
+// 	{
+// 		player->data->last_scene_id = player->data->scene_id;
+// 		player->scene->delete_player_from_scene(player);
+// 		player->data->scene_id = new_scene->m_id;
+// 		player->set_pos(pos_x, pos_z);
+// 	}
+// 	player->data->pos_y = pos_y;
+
+// 	player->data->m_angle = unity_angle_to_c_angle(direct);
+// 	player->send_scene_transfer(direct, pos_x, pos_y, pos_z, new_scene->m_id, 0);
+
+// 	player->interrupt();
+
+// 	if (player->m_team !=  NULL)
+// 	{
+// 		if (player->m_team->GetLeadId() == player->get_uuid())
+// 		{
+// 			player->m_team->FollowLeadTrans(new_scene->m_id, pos_x, pos_y, pos_z, direct);
+// 		}
+// 		player->m_team->broadcast_leader_pos(player->get_pos(), player->data->scene_id, player->get_uuid());
+// 	}
+// 	return (0);
+// }
+// int scene_struct::enter_other_raid(player_struct *player, raid_struct *new_raid)
+// {
+// 	return (0);
+// }
+	
+int scene_struct::player_leave_scene(player_struct *player)
+{
+	assert(player->scene == this);
+//	if (send_clear_sight)
+//		player->send_clear_sight();
+		
+	delete_player_from_scene(player);	
+	return (0);
+}
+int scene_struct::player_enter_scene(player_struct *player, double pos_x, double pos_y, double pos_z, double direct)
+{
+	assert(!player->sight_space);
+	assert(!player->scene);
+
+	player->data->last_scene_id = player->data->scene_id;
+	player->data->scene_id = m_id;
+	player->set_pos(pos_x, pos_z);
+	player->data->pos_y = pos_y;
+
+	player->data->m_angle = unity_angle_to_c_angle(direct);
+	player->send_scene_transfer(direct, pos_x, pos_y, pos_z, m_id, 0);
+
+	player->interrupt();
+
+	if (player->m_team !=  NULL)
+	{
+		if (player->m_team->GetLeadId() == player->get_uuid())
+		{
+			player->m_team->FollowLeadTrans(m_id, pos_x, pos_y, pos_z, direct);
+		}
+		player->m_team->broadcast_leader_pos(player->get_pos(), player->data->scene_id, player->get_uuid());
+	}
+	return (0);
+}

@@ -59,7 +59,7 @@ static void battle_raid_ai_failed(raid_struct *raid)
 		}
 		battel->Settle(raid, raid->data->ai_data.battle_data.room);
 		battel->ClearRob();
-		ZhenyingBattle::DestroyPrivateBattle(raid->data->uuid);
+//		ZhenyingBattle::DestroyPrivateBattle(raid->data->uuid);
 	}
 	else  //普通阵营战
 	{
@@ -250,6 +250,7 @@ static void battle_raid_ai_player_region_changed(raid_struct *raid, player_struc
 	
 }
 
+//副本阵营战(阵营攻防)  新手阵营战
 struct raid_ai_interface raid_ai_battle_interface =
 {
 	battle_raid_ai_init,

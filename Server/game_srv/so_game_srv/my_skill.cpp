@@ -275,7 +275,16 @@ skill_struct *MySkill::GetSkillStructFromFuwen(uint32_t fuwen_id)
 // 	return t;
 }
 
-const static uint32_t avoid_skill[] = {111100106, 111100206, 111100306, 111100406, 111100506, 111100102};
+// const static uint32_t avoid_skill[] = {
+// 	111100106,   //大刀-躲避-滚地
+// 	111100206,  //弓箭-躲避-前滚翻
+// 	111100306,   //毛笔-躲避
+// 	111100406,   //长枪-躲避
+// 	111100506,  //笛子-躲避
+// 	111100102,  //大刀-技能1-旋风斩
+// 	111100113,  //大刀-技能2-冲锋-第2段
+// //	111100103, //大刀-技能2-冲锋
+// };
 
 uint32_t MySkill::GetRandSkillId(struct ai_player_data *ai_data)
 {
@@ -307,47 +316,47 @@ uint32_t MySkill::GetRandSkillId(struct ai_player_data *ai_data)
 		}
 	}
 	
-		//只有第一个普攻可以被选中
-	bool first_normal_attack = true;
+		//只有第一个普攻可以被选中, 优先选择非普攻技能
+//	bool first_normal_attack = true;
+	uint32_t normal_attack_id = 0;
 	
 	for (SKILL_CONTAIN::iterator ite = m_skill.begin(); ite != m_skill.end(); ++ite)
 	{
 		if (now < (*ite)->data->cd_time)
 			continue;
 
+		if (is_second_skill(*ite))
+			continue;
+
 		if ((*ite)->config->SkillType == 1)
 		{
-			if (!first_normal_attack)
-				continue;
-			first_normal_attack = false;
+//			if (!first_normal_attack)
+//				continue;
+//			first_normal_attack = false;
+			normal_attack_id = (*ite)->data->skill_id;
+			continue;
 		}
 		else if ((*ite)->config->SkillType != 2)
 		{
 			continue;
 		}
 
-		bool avoid = false;
-		for (size_t i = 0; i < ARRAY_SIZE(avoid_skill); ++i)
-		{
-			if ((*ite)->data->skill_id == avoid_skill[i])
-			{
-				avoid = true;
-				break;
-			}
-		}
-		if (avoid)
-			continue;
-		
-		// 	//躲避-滚地不能释放
-		// if (ite->first == 111100106)
+		// bool avoid = false;
+		// for (size_t i = 0; i < ARRAY_SIZE(avoid_skill); ++i)
+		// {
+		// 	if ((*ite)->data->skill_id == avoid_skill[i])
+		// 	{
+		// 		avoid = true;
+		// 		break;
+		// 	}
+		// }
+		// if (avoid)
 		// 	continue;
 
-		// 	//旋风斩不能释放
-		// if (ite->first == 111100102)
-		// 	continue;
+//		LOG_DEBUG("%s: jacktang choose skill id = %u cd = %lu now = %lu", __FUNCTION__, (*ite)->data->skill_id, (*ite)->data->cd_time, now);
 		return (*ite)->data->skill_id;
 	}
-	return (0);
+	return (normal_attack_id);
 }
 
 uint32_t MySkill::GetFirstSkillId()
@@ -555,6 +564,65 @@ uint32_t MySkill::CalcCost(uint32_t id, uint32_t oldLv, uint32_t num)
 		cost += iter->second->CostCoin;
 	}
 	return cost;
+}
+
+bool MySkill::is_second_skill(skill_struct *skill)
+{
+	if (skill->config->pre_skill != 0)
+		return true;
+	return false;
+}
+
+void MySkill::adjust_ai_player_skill()
+{
+	for (SKILL_CONTAIN::iterator ite = m_skill.begin(); ite != m_skill.end();)
+	{
+		skill_struct *skill = (*ite);
+		if (skill->config->SkillType == 1)  //普攻
+		{
+			++ite;
+		}
+		else if (skill->config->SkillType == 2)  //主动技能
+		{
+			struct ActiveSkillTable *act_config = get_config_by_id(skill->config->SkillAffectId, &active_skill_config);
+			if (!act_config)
+			{
+				ite = m_skill.erase(ite);
+				continue;
+			}
+			if (act_config->CanMove == 1) //旋风斩
+			{
+				ite = m_skill.erase(ite);
+				continue;
+			}
+
+				//翻滚类技能
+			if (act_config->FlyId != 0 && act_config->CanMove == 2)
+			{
+				struct SkillMoveTable *move_config = get_config_by_id(act_config->FlyId, &move_skill_config);
+				if (!move_config)
+				{
+					ite = m_skill.erase(ite);
+					continue;
+				}
+				if (move_config->MoveType == 0 || move_config->DmgType == 2)
+				{
+					ite = m_skill.erase(ite);
+					continue;
+				}
+			}
+			++ite;			
+		}
+		else
+		{
+			ite = m_skill.erase(ite);
+		}
+	}
+
+	// for (SKILL_CONTAIN::iterator ite = m_skill.begin(); ite != m_skill.end(); ++ite)
+	// {
+	// 	LOG_DEBUG("jacktang: skill[%u]", (*ite)->config->ID);
+	// }
 }
 
 void MySkill::PackAllSkill(_PlayerDBInfo &pb)

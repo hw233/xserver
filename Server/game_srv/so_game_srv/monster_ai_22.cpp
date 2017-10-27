@@ -12,7 +12,7 @@
 #include "cached_hit_effect.h"
 #include "count_skill_damage.h"
 #include "msgid.h"
-static bool get_22_ai_next_pos(monster_struct * monster, float *pos_x, float *pos_z)
+bool get_22_ai_next_pos(monster_struct * monster, float *pos_x, float *pos_z)
 {
 	assert(monster->create_config->n_TargetInfoList > 0);
 	if (monster->ai_data.circle_ai.cur_pos_index < 0 || monster->ai_data.circle_ai.cur_pos_index >= monster->create_config->n_TargetInfoList)
@@ -27,7 +27,7 @@ static bool get_22_ai_next_pos(monster_struct * monster, float *pos_x, float *po
 	return true;
 }
 
-static void do_type22_ai_wait(monster_struct *monster)
+void do_type22_ai_wait(monster_struct *monster)
 {
 	monster->ai_state = AI_PATROL_STATE;
 	float pos_x, pos_z;
@@ -50,7 +50,7 @@ static void do_type22_ai_wait(monster_struct *monster)
 	return;
 }
 
-static void type22_ai_do_goback(monster_struct *monster)
+void type22_ai_do_goback(monster_struct *monster)
 {
 	monster->on_go_back();	
 	monster->reset_pos();

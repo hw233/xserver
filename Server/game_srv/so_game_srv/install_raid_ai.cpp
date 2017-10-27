@@ -19,6 +19,8 @@ void install_raid_ai()
 	raid_struct::raid_add_ai_interface(13, &raid_ai_xunbao_interface);
 	raid_struct::raid_add_ai_interface(14, &raid_ai_doufachang_interface);
 	raid_struct::raid_add_ai_interface(15, &raid_ai_battle_interface);
+	raid_struct::raid_add_ai_interface(17, &raid_ai_guild_intrusion_interface);
+	raid_struct::raid_add_ai_interface(18, &raid_ai_maogui_interface);
 }
 void uninstall_raid_ai()
 {
@@ -36,5 +38,7 @@ void uninstall_raid_ai()
 	raid_struct::raid_add_ai_interface(13, NULL);
 	raid_struct::raid_add_ai_interface(14, NULL);
 	raid_struct::raid_add_ai_interface(15, NULL);
+	raid_struct::raid_add_ai_interface(17, NULL);
+	raid_struct::raid_add_ai_interface(18, NULL);
 }
 

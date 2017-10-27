@@ -27,6 +27,8 @@ extern std::map<uint64_t, struct ShopTable*> shop_config; //商品配置
 extern std::map<uint64_t, struct GangsDungeonTable*> guild_battle_reward_config; //帮会战奖励表
 extern std::map<uint64_t, struct EventCalendarTable*> activity_config; //活动配置
 extern std::map<uint64_t, struct ControlTable*> all_control_config; //副本进入条件收益次数配置
+extern std::map<uint64_t, struct ActorLevelTable *> actor_level_config; //角色等级配置
+extern std::map<uint64_t, struct FactionActivity *> guild_land_active_config; //帮会领地活动表
 
 int read_all_excel_data();
 

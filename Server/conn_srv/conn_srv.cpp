@@ -25,6 +25,7 @@
 #include "listen_node_guild.h"
 #include "listen_node_rank.h"
 #include "listen_node_doufachang.h"
+#include "listen_node_trade.h"
 #include "../proto/login.pb-c.h"
 #include "oper_config.h"
 #include "deamon.h"
@@ -61,7 +62,8 @@ int init_conn_client_map()
 
 static void cb_signal(evutil_socket_t fd, short events, void *arg)
 {
-	shutdown(conn_node_gamesrv::server_node->fd, SHUT_WR);
+	if (conn_node_gamesrv::server_node)
+		shutdown(conn_node_gamesrv::server_node->fd, SHUT_WR);
 //	evutil_closesocket(conn_node_server::server_node->fd);
 	conn_node_gamesrv::server_node = NULL;
 	LOG_DEBUG("%s: fd = %d, events = %d, arg = %p", __FUNCTION__, fd, events, arg);
@@ -121,6 +123,7 @@ static listen_node_mail mail_listener; //mail_srv连接
 static listen_node_guild guild_listener; //guild_srv连接
 static listen_node_rank rank_listener; //rank_srv连接
 static listen_node_doufachang doufachang_listener; //doufachang_srv连接
+static listen_node_trade trade_listener; //trade_srv连接
 
 uint32_t sg_server_id;
 
@@ -288,6 +291,19 @@ int main(int argc, char **argv)
 	}
 
 	ret = game_add_listen_event(port, &rank_listener, "ranksrv");
+	if (ret != 0)
+		goto done;
+	
+	//listen trade_srv_port
+	line = get_first_key(file, (char *)"conn_srv_trade_port");
+	port = atoi(get_value(line));
+	if (port <= 0) {
+		LOG_ERR("config file wrong, no conn_srv_trade_port");
+		ret = -1;
+		goto done;
+	}
+
+	ret = game_add_listen_event(port, &trade_listener, "tradesrv");
 	if (ret != 0)
 		goto done;
 

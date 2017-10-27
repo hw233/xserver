@@ -39,6 +39,8 @@ std::map<uint64_t, struct ShopTable*> shop_config; //商品配置
 std::map<uint64_t, struct GangsDungeonTable*> guild_battle_reward_config; //帮会战奖励表
 std::map<uint64_t, struct EventCalendarTable*> activity_config; //活动配置
 std::map<uint64_t, struct ControlTable*> all_control_config; //副本进入条件收益次数配置
+std::map<uint64_t, struct ActorLevelTable *> actor_level_config; //角色等级配置
+std::map<uint64_t, struct FactionActivity *> guild_land_active_config; //帮会领地活动表
 
 static void gen_question_arr()
 {
@@ -178,6 +180,16 @@ int read_all_excel_data()
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/ControlTable.lua", (config_type)&all_control_config);
 	assert(ret == 0);
+
+	type = sproto_type(sp, "ActorLevelTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/ActorLevelTable.lua", (config_type)&actor_level_config);
+	assert(ret == 0);	
+
+	type = sproto_type(sp, "FactionActivity");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/FactionActivity.lua", (config_type)&guild_land_active_config);
+	assert(ret == 0);	
 
 	lua_close(L);	
 	free(buf);

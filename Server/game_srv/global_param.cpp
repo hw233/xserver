@@ -1,4 +1,5 @@
 #include "global_param.h"
+#include "server_proto.h"
 
 class player_struct;
 std::map<uint64_t, player_struct *> player_manager_all_players_id;
@@ -46,8 +47,6 @@ struct comm_pool raid_manager_raid_data_pool;
 
 class scene_struct;
 std::map<uint64_t, scene_struct *> scene_manager_scene_map;
-std::map<uint64_t, scene_struct *> scene_manager_guild_scene_map;
-uint32_t scene_manager_guild_scene_id;
 
 class sight_space_struct;
 comm_pool sight_space_manager_sight_space_data_pool;
@@ -65,6 +64,9 @@ std::set<zhenying_raid_struct *> zhenying_raid_manager_raid_used_list;
 struct comm_pool zhenying_raid_manager_raid_data_pool;
 uint64_t zhenying_raid_manager_reflesh_collect;
 
+//struct ProtoGuildInfo;
+std::map<uint32_t, ProtoGuildInfo> guild_summary_map;
+
 class Team;
 struct matched_team;
 std::vector<player_struct *> guild_battle_manager_cant_matched_player;   //不能组成队伍的人
@@ -78,7 +80,6 @@ uint32_t guild_battle_manager_action_state = 0;
 uint32_t guild_battle_manager_action_round = 0;
 uint32_t guild_battle_manager_action_act = 0;
 
-std::map<uint32_t, std::string> guild_battle_manager_guild_name;
 std::map<uint32_t, uint32_t> guild_battle_manager_guild_participate;
 std::map<uint32_t, uint32_t> guild_battle_manager_guild_call_cd;
 std::set<uint32_t> guild_battle_manager_final_guild_id; //参加决赛的帮会
@@ -94,6 +95,13 @@ std::list<guild_wait_raid_struct *> guild_wait_raid_manager_raid_free_list;
 std::set<guild_wait_raid_struct *> guild_wait_raid_manager_raid_used_list;
 struct comm_pool guild_wait_raid_manager_raid_data_pool;
 std::map<uint32_t, guild_wait_raid_struct *> guild_wait_raid_manager_raid_map;
+
+class guild_land_raid_struct;
+std::map<uint64_t, guild_land_raid_struct *> guild_land_raid_manager_all_raid_id;
+std::list<guild_land_raid_struct *> guild_land_raid_manager_raid_free_list;
+std::set<guild_land_raid_struct *> guild_land_raid_manager_raid_used_list;
+struct comm_pool guild_land_raid_manager_raid_data_pool;
+std::map<uint32_t, guild_land_raid_struct *> guild_land_raid_manager_raid_map;
 
 TEAM_MAP team_manager_s_teamContain;
 struct comm_pool team_manager_teamDataPool;

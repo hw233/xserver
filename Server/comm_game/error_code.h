@@ -20,6 +20,10 @@
 #define ERROR_ID_COIN_NOT_ENOUGH         1051 //银两不足
 #define ERROR_ID_LEVEL_NOT_ENOUGH        1052 //等级不足
 #define ERROR_ID_ZHENQI_NOT_ENOUGH       1053 //真气不足
+#define ERROR_ID_CHIVALRY_NOT_ENOUGH     1054 //侠义值不足
+#define ERROR_ID_SHANGJIN_COIN_NOT_ENOUGH     1055 //赏金货币不足
+#define ERROR_ID_CHENGJIE_COIN_NOT_ENOUGH     1056 //惩戒货币不足
+#define ERROR_ID_GUOYU_COIN_NOT_ENOUGH     1057 //国御货币不足
 
 #define ERROR_ID_BAG_UNLOCK_ALL          1100 //已解锁所有背包格子
 #define ERROR_ID_BAG_GRID_NOT_ENOUGH     1101 //背包格子不足
@@ -174,6 +178,19 @@
 #define ERROR_ID_STRONG_GOAL_ID				2702 //变强目标id错误
 #define ERROR_ID_STRONG_GOAL_STATE			2702 //变强目标奖励状态错误
 
+#define ERROR_ID_TRADE_ITEM_CANT_TRADE      2800 //该道具不能交易
+#define ERROR_ID_TRADE_PRICE                2801 //交易价格错误
+#define ERROR_ID_TRADE_SHELF_INDEX          2803 //货架索引范围出错
+#define ERROR_ID_TRADE_ITEM_OFF_SHELF       2804 //货品已下架
+#define ERROR_ID_TRADE_ITEM_ADJUSTING       2805 //货品正在调整
+#define ERROR_ID_TRADE_ITEM_NUM             2806 //货品数量只能下调
+#define ERROR_ID_TRADE_SHELF_NUM_MAX        2807 //货架格子已达最大
+#define ERROR_ID_TRADE_ITEM_LEFT_NUM        2808 //货品剩余数量不足
+#define ERROR_ID_TRADE_OPERATE_NUM          2809 //操作数量不能为0
+#define ERROR_ID_TRADE_NO_EARNING           2810 //当前没有收益
+#define ERROR_ID_AUCTION_SOLD               2811 //拍卖品已出售
+#define ERROR_ID_AUCTION_PRICE              2812 //拍卖品竞价失败
+
 
 /*******************以下是前端提示专用*********************/
 
@@ -231,5 +248,6 @@
 #define ERROR_ID_BAG_NOT_ABLE_ADD_TASK_DROP     190500325 //背包空位不足，无法获得任务道具
 #define ERROR_ID_PARTNER_LEVEL_LIMIT            190500334 //当前伙伴经验已满
 #define ERROR_ID_BAG_NOT_ABLE_BAGUA_DECOMPOSE   190500337 //当前背包已满
+#define ERROR_ID_GUILD_CREATE_NEED_ZHENYING     190500345 //您未加入阵营，无法创建帮派
 
 #endif

@@ -280,7 +280,6 @@ static void generate_parameters(void)
 	if (config && config->n_parameter1 >= 1)
 	{
 		sg_guild_scene_id = config->parameter1[0];
-		scene_manager::set_guild_scene_id(sg_guild_scene_id);
 	}
 
 	sg_guild_battle_match_time = get_config_by_id(161000184, &parameter_config)->parameter1[0];
@@ -485,6 +484,21 @@ static void generate_parameters(void)
 	{
 		sg_exp_turn_zhenqi_percent = config->parameter1[0];
 	}
+	config = get_config_by_id(161000342, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_on_shelf_fee_percent = config->parameter1[0];
+	}
+	sg_guild_ruqin_huodui_monster_id = get_config_by_id(161000357, &parameter_config)->parameter1[0];
+	sg_guild_ruqin_huodui_fanwei = get_config_by_id(161000358, &parameter_config)->parameter1[0];
+	sg_guild_ruqin_huodui_exp = get_config_by_id(161000359, &parameter_config)->parameter1[0];
+	sg_guild_ruqin_huodui_jiange = get_config_by_id(161000360, &parameter_config)->parameter1[0];
+	sg_guild_ruqin_huodui_chixutime = get_config_by_id(161000361, &parameter_config)->parameter1[0];
+	sg_guild_ruqin_yaozu_bossid = get_config_by_id(161000348, &parameter_config)->parameter1[0];
+	sg_guild_ruqin_renzu_bossid = get_config_by_id(161000348, &parameter_config)->parameter1[1];
+
+	sg_maogui_diaoxiang_stop_buff = get_config_by_id(161000139, &parameter_config)->parameter1[0];
+	sg_maogui_guiwang_wudi_buff = get_config_by_id(161000138, &parameter_config)->parameter1[0];
 }
 
 	// 读取刷怪配置
@@ -543,13 +557,6 @@ bool is_wanyaogu_raid(uint32_t id)
 	return false;
 }
 
-bool is_raid_scene_id(uint32_t id)
-{
-	if (id > 20000)
-		return true;
-	return false;
-}
-
 int bagua_card_to_bind_item(uint32_t card_id)
 {
 	std::map<uint32_t, uint32_t>::iterator iter = sg_bagua_bind_item_map.find(card_id);
@@ -578,16 +585,28 @@ bool is_guild_battle_raid(uint32_t id)
 
 bool scene_can_make_team(uint32_t scene_id)
 {
-	DungeonTable *table = get_config_by_id(scene_id, &all_raid_config);
-	if (table != NULL)
-	{
-		if (table->DengeonRank == DUNGEON_TYPE_ZHENYING)
-		{
-			return true;
-		} 
-	}
-	return (scene_id <= SCENCE_DEPART || is_guild_wait_raid(scene_id));
+	if (get_scene_looks_type(scene_id) == SCENE_TYPE_WILD)
+		return true;
+	return false;
+	
+	// if (scene_id <= SCENCE_DEPART)
+	// {
+	// 	return true;
+	// }
 
+	// DungeonTable *table = get_config_by_id(scene_id, &all_raid_config);
+	// if (table != NULL)
+	// {
+	// 	switch (table->DengeonRank)
+	// 	{
+	// 		case DUNGEON_TYPE_ZHENYING:
+	// 		case DUNGEON_TYPE_GUILD_WAIT:
+	// 		case DUNGEON_TYPE_GUILD_LAND:
+	// 			return true;
+	// 	} 
+	// }
+
+	// return false;
 }
 
 int get_scene_birth_pos(uint32_t scene_id, float *pos_x, float *pos_y, float *pos_z, float *face_y)
@@ -664,6 +683,22 @@ static void adjust_skill_entry(struct SkillTable *config)
 	if (config->RangeType == SKILL_RANGE_TYPE_FAN)
 	{
 		config->Angle = config->Angle / 180 * M_PI;
+	}
+
+	std::map<uint64_t, struct SkillTable *>::iterator ite;	
+	for (ite = skill_config.begin(); ite != skill_config.end(); ++ite)
+	{
+		struct SkillTable *t = ite->second;
+		if (t->SkillType != 1 && t->SkillType != 2)
+			continue;
+		struct ActiveSkillTable *act_config = get_config_by_id(t->SkillAffectId, &active_skill_config);
+		if (!act_config)
+			continue;
+		if (act_config->NextSkill == config->ID || act_config->AutoNextSkill == config->ID)
+		{
+			config->pre_skill = t->ID;
+			return;
+		}
 	}
 
 //	add_passive_skill(config);
@@ -762,6 +797,18 @@ static void adjust_xunbao_map_table()
 		else
 		{
 			it->second.push_back(ite->first);
+		}
+	}
+}
+
+static void gen_show_collect()
+{
+	std::map<uint64_t, struct CollectTable *>::iterator ite;
+	for (ite = collect_config.begin(); ite != collect_config.end(); ++ite)
+	{
+		for (uint32_t i = 0; i < ite->second->n_TaskIdShow; ++i)
+		{
+			sg_show_collect.insert(std::make_pair(ite->second->TaskIdShow[i], ite->first));
 		}
 	}
 }
@@ -1106,6 +1153,15 @@ static bool script_cmp_func(const struct RaidScriptTable *l, const struct RaidSc
 	return false;
 }
 
+static bool raid_ai_monster_cmp_func(const struct SceneCreateMonsterTable *l, const struct SceneCreateMonsterTable *r)
+{
+	if (l->uid <= r->uid)
+	{
+		return true;
+	}
+	return false;
+}
+
 static void	adjust_robotpatrol_entry(struct RobotPatrolTable *config, uint64_t *data)
 {
 	config->patrol[config->n_patrol]->pos_x = data[0];
@@ -1374,6 +1430,28 @@ static void	add_wanyaoka_id(struct DungeonTable *config)
 	assert(max_cond_param <= MAX_WANYAOKA_COND_PARAM);
 }
 
+static void add_raid_ai_monster_config(lua_State *L, struct sproto_type *type)
+{
+	for(std::set<char*>::iterator itr = some_monster_config_name.begin(); itr != some_monster_config_name.end(); itr++)
+	{
+		char* config_name = *itr;
+		if(config_name == NULL)
+			continue;
+
+		std::vector<struct SceneCreateMonsterTable *> *monster_config = get_config_by_name(config_name, &all_raid_ai_monster_config);
+		if(monster_config)
+		{
+			return;
+		}
+		char full_name[255];
+		sprintf(full_name, "../lua_data/%s.lua", config_name);
+		monster_config = new std::vector<struct SceneCreateMonsterTable *>;
+		int ret = traverse_vector_table(L, type, full_name, (std::vector<void *> *)monster_config);
+		std::sort(monster_config->begin(), monster_config->end(), raid_ai_monster_cmp_func);
+		assert(ret == 0);
+		all_raid_ai_monster_config[config_name] = monster_config;
+	}
+}
 static void add_raid_script_config(lua_State *L, struct sproto_type *type, struct DungeonTable *config, char *config_name)
 {
 	assert(config_name);
@@ -1400,6 +1478,12 @@ static void add_raid_script_config(lua_State *L, struct sproto_type *type, struc
 			case 26:
 			case 30:
 				break;
+			case 53:
+				for (uint32_t i = 0; i < tmp_config->n_Parameter2; ++i)
+				{
+					some_monster_config_name.insert(tmp_config->Parameter2[i]);
+				}
+				continue;
 			default:
 				continue;
 		}
@@ -1433,17 +1517,32 @@ static void adjust_dungeon_table(lua_State *L, struct sproto_type *type)
 			if (config->DungeonPass[0] != '\0')
 				add_raid_script_config(L, type, config, config->DungeonPass);			
 		}
-		else if (config->DengeonRank == DUNGEON_TYPE_SCRIPT)
+		else if (config->DengeonRank == DUNGEON_TYPE_SCRIPT || config->DengeonRank ==DUNGEON_TYPE_MAOGUI_LEYUAN)
 		{
 			add_raid_script_config(L, type, config, config->DungeonPass);
 		}
-		else if (config->DengeonRank == DUNGEON_TYPE_GUILD_WAIT)
-		{
-			config->DengeonType = 1;
-		}
+		// else if (config->DengeonRank == DUNGEON_TYPE_GUILD_WAIT)
+		// {
+		// 	config->DengeonType = 1;
+		// }
 	}
 }
 
+static void add_guild_raid_ai_config(lua_State *L, struct sproto_type *type)
+{
+	for(std::map<uint64_t, struct FactionActivity*>::iterator itr = guild_activ_config.begin(); itr != guild_activ_config.end(); itr++)
+	{
+		if(itr->second->DungeonPass1)
+		{
+			add_raid_script_config(L, type, NULL, itr->second->DungeonPass1);
+		}
+		if(itr->second->DungeonPass2)
+		{
+			add_raid_script_config(L, type, NULL, itr->second->DungeonPass2);
+		}
+	}
+
+}
 static void adjust_task_tables(void)
 {
 	sg_first_trunk_task_id = 0;
@@ -1602,6 +1701,11 @@ static void adjust_active_skill_tables(void)
 		struct ActiveSkillTable *config = iter->second;
 		for (size_t i = 0; i < config->n_SkillLength; ++i)
 			config->TotalSkillDelay += config->SkillLength[i];
+
+		if (config->TotalSkillDelay <= config->ActionTime)
+			config->TotalSkillDelay = 0;
+		else
+			config->TotalSkillDelay -= config->ActionTime;
 	}
 }
 
@@ -2386,6 +2490,64 @@ bool activity_is_open(uint32_t activity_id)
 	return in_time;
 }
 
+bool is_raid_scene_id(uint32_t id)
+{
+	if (id > SCENCE_DEPART)
+		return true;
+	return false;
+}
+
+SCENE_TYPE_DEFINE get_scene_looks_type(uint32_t scene_id)
+{
+	if (scene_id <= SCENCE_DEPART)
+		return SCENE_TYPE_WILD;
+	struct DungeonTable *r_config = get_config_by_id(scene_id, &all_raid_config);
+	if (!r_config)
+		return SCENE_TYPE_RAID;
+	switch (r_config->DengeonRank)
+	{
+		case DUNGEON_TYPE_GUILD_LAND:
+		case DUNGEON_TYPE_GUILD_WAIT:
+		case DUNGEON_TYPE_ZHENYING:
+			return SCENE_TYPE_WILD;
+		default:
+			return SCENE_TYPE_RAID;			
+	}
+	return SCENE_TYPE_RAID;
+}
+
+int get_dungeon_type(uint32_t raid_id)
+{
+	DungeonTable *config = get_config_by_id(raid_id, &all_raid_config);
+	if (config)
+	{
+		return config->DengeonRank;
+	}
+	
+	return 0;
+}
+
+int item_id_to_trade_id(uint32_t item_id)
+{
+	std::map<uint32_t, uint32_t>::iterator iter = sg_item_trade_map.find(item_id);
+	if (iter != sg_item_trade_map.end())
+	{
+		return iter->second;
+	}
+
+	return 0;
+}
+
+int trade_id_to_item_id(uint32_t trade_id)
+{
+	TradingTable *config = get_config_by_id(trade_id, &trade_item_config);
+	if (config)
+	{
+		return config->ItemID;
+	}
+	return 0;
+}
+
 static void adjust_guild_skill_config(void)
 {
 	for (std::map<uint64_t, GangsSkillTable*>::iterator iter = guild_skill_config.begin(); iter != guild_skill_config.end(); ++iter)
@@ -2418,6 +2580,91 @@ static void adjust_strong_config(void)
 	}
 }
 
+static void adjust_trade_config(void)
+{
+	sg_item_trade_map.clear();
+	for (std::map<uint64_t, TradingTable*>::iterator iter = trade_item_config.begin(); iter != trade_item_config.end(); ++iter)
+	{
+		TradingTable *config = iter->second;
+		if (!item_is_bind(config->ItemID))
+		{
+			sg_item_trade_map.insert(std::make_pair(config->ItemID, config->ID));
+		}
+	}
+}
+
+static void	adjust_maogui_diaoxiang_config()
+{
+	std::map<uint64_t, struct MGLYdiaoxiangTable*> tmp = maogui_diaoxiang_config;
+	maogui_diaoxiang_config.clear();
+	for (std::map<uint64_t, struct MGLYdiaoxiangTable*>::iterator ite = tmp.begin(); ite != tmp.end(); ++ite)
+	{
+		struct MGLYdiaoxiangTable* t = ite->second;
+		maogui_diaoxiang_config[ite->second->MonsterPointID] = t;
+	}
+}
+
+static void	adjust_maogui_monster_config()
+{
+	std::map<uint64_t, struct MGLYmaoguiTable*> tmp = maogui_monster_config;
+	maogui_monster_config.clear();
+	for (std::map<uint64_t, struct MGLYmaoguiTable*>::iterator ite = tmp.begin(); ite != tmp.end(); ++ite)
+	{
+		struct MGLYmaoguiTable* t = ite->second;
+		maogui_monster_config[ite->second->MonsterID] = t;
+	}
+}
+
+
+static void	adjust_maogui_colour_config()
+{
+	std::map<uint64_t, struct MGLYyanseTable*> tmp = maogui_colour_config;
+	maogui_colour_config.clear();
+	for (std::map<uint64_t, struct MGLYyanseTable*>::iterator ite = tmp.begin(); ite != tmp.end(); ++ite)
+	{
+		struct MGLYyanseTable* t = ite->second;
+		maogui_colour_config[ite->second->MonsterID] = t;
+		switch(ite->second->Type)
+		{
+			case 1:
+				maogui_zhengning_colour_config[ite->second->MonsterID] = t;
+			break;
+			case 2:
+				maogui_shouling_colour_config[ite->second->MonsterID] = t;
+			break;
+			case 3:
+				maogui_diaoxiang_colour_config[ite->second->MonsterID] = t;
+			break;
+			case 4:
+				maogui_xiaoguai_colour_config[ite->second->MonsterID] = t;
+			default:
+			break;
+			
+		}
+	}
+}
+
+static void	adjust_maogui_maogui_wang_config()
+{
+	std::map<uint64_t, struct MGLYmaoguiwangTable*> tmp = maogui_maogui_wang_config;
+	maogui_maogui_wang_config.clear();
+	for (std::map<uint64_t, struct MGLYmaoguiwangTable*>::iterator ite = tmp.begin(); ite != tmp.end(); ++ite)
+	{
+		struct MGLYmaoguiwangTable* t = ite->second;
+		maogui_maogui_wang_config[ite->second->BossID] = t;
+	}
+}
+
+static void	adjust_maogui_shouling_to_xiaoguai_config()
+{
+	std::map<uint64_t, struct MGLYshoulingTable*> tmp = maogui_shouling_to_xiaoguai_config;
+	maogui_shouling_to_xiaoguai_config.clear();
+	for (std::map<uint64_t, struct MGLYshoulingTable*>::iterator ite = tmp.begin(); ite != tmp.end(); ++ite)
+	{
+		struct MGLYshoulingTable* t = ite->second;
+		maogui_shouling_to_xiaoguai_config[ite->second->BossID] = t;
+	}
+}
 
 typedef std::map<uint64_t, void *> *config_type;
 #define READ_SPB_MAX_LEN (1024 * 1024)
@@ -2443,6 +2690,11 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/ActiveSkillTable.lua", (config_type)&active_skill_config);
 	assert(ret == 0);
 	adjust_active_skill_tables();
+
+	type = sproto_type(sp, "SkillMoveTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/SkillMoveTable.lua", (config_type)&move_skill_config);
+	assert(ret == 0);
 
 	type = sproto_type(sp, "MonsterPkTypeTable");
 	assert(type);
@@ -2545,6 +2797,7 @@ int read_all_excel_data()
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/CollectionTable.lua", (config_type)&collect_config);
 	assert(ret == 0);
+	gen_show_collect();
 	
 	type = sproto_type(sp, "TaskTable");
 	assert(type);		
@@ -3013,10 +3266,62 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/GrowupTable.lua", (config_type)&strong_config);
 	assert(ret == 0);
 
+	type = sproto_type(sp, "FactionActivity");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/FactionActivity.lua", (config_type)&guild_activ_config);
+	assert(ret == 0);	
+	type = sproto_type(sp, "RaidScriptTable");
+	assert(type);
+	add_guild_raid_ai_config(L, type);
+	type = sproto_type(sp, "SceneCreateMonsterTable");
+	assert(type);
+	add_raid_ai_monster_config(L, type);
+
+	type = sproto_type(sp, "TradingTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/TradingTable.lua", (config_type)&trade_item_config);
+	assert(ret == 0);	
+
+	type = sproto_type(sp, "AuctionTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/AuctionTable.lua", (config_type)&auction_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "MGLYdiaoxiangTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/MGLYdiaoxiangTable.lua", (config_type)&maogui_diaoxiang_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "MGLYmaoguiTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/MGLYmaoguiTable.lua", (config_type)&maogui_monster_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "MGLYyanseTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/MGLYyanseTable.lua", (config_type)&maogui_colour_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "MGLYmaoguiwangTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/MGLYmaoguiwangTable.lua", (config_type)&maogui_maogui_wang_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "MGLYshoulingTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/MGLYshoulingTable.lua", (config_type)&maogui_shouling_to_xiaoguai_config);
+	assert(ret == 0);
+
 	adjust_escort_config();
 	adjust_achievement_config();
 	adjust_guild_skill_config();
 	adjust_strong_config();
+	adjust_trade_config();
+	adjust_maogui_diaoxiang_config();
+	adjust_maogui_monster_config();
+	adjust_maogui_colour_config();
+	adjust_maogui_maogui_wang_config();
+	adjust_maogui_shouling_to_xiaoguai_config();
 
 	lua_close(L);
 	sproto_release(sp);

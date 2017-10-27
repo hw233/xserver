@@ -1,4 +1,5 @@
 #include "raid_manager.h"
+#include "so_game_srv/guild_battle_manager.h"
 #include "player_manager.h"
 #include "game_event.h"
 #include "uuid.h"
@@ -7,9 +8,7 @@
 #include "app_data_statis.h"
 #include "zhenying_raid_manager.h"
 #include "guild_wait_raid_manager.h"
-
-//队员和队长的最大距离20米，太远就要传送过来
-static const uint64_t max_team_mem_distance = 20 * 20;
+#include "guild_land_raid_manager.h"
 
 // std::map<uint64_t, raid_struct *> raid_manager::raid_manager_all_raid_id;
 // std::list<raid_struct *> raid_manager::raid_manager_raid_free_list;
@@ -94,6 +93,36 @@ int raid_manager::check_player_enter_raid(player_struct *player, uint32_t raid_i
 	uint32_t n_reason_player = 0;
 	uint64_t reason_player_id[MAX_TEAM_MEM];
 	struct DungeonTable *r_config = get_config_by_id(raid_id, &all_raid_config);
+
+	if (r_config->DengeonRank == DUNGEON_TYPE_GUILD_LAND)
+	{
+		if (player->data->guild_id == 0)
+		{
+			LOG_ERR("[%s:%d] player[%lu] not join guild", __FUNCTION__, __LINE__, player->get_uuid())
+			return (-1);
+		}
+	}	
+	else if (r_config->DengeonRank == DUNGEON_TYPE_GUILD_WAIT)
+	{
+		if (!is_guild_battle_opening())
+		{
+			LOG_ERR("[%s:%d] player[%lu] guild battle not open, raid_id:%u", __FUNCTION__, __LINE__, player->get_uuid(), raid_id);
+			return (-1);
+		}
+
+		int ret = player_can_participate_guild_battle(player);
+		if (ret != 0)
+		{
+			LOG_ERR("[%s:%d] player[%lu] can't participate, raid_id:%u", __FUNCTION__, __LINE__, player->get_uuid(), raid_id);
+			return (-1);
+		}
+
+		if (player->m_team)
+		{
+			LOG_ERR("[%s:%d] player[%lu] in team, raid_id:%u", __FUNCTION__, __LINE__, player->get_uuid(), raid_id);
+			return (-1);
+		}
+	}
 
 	struct SceneResTable *s_config = get_config_by_id(raid_id, &scene_res_config);
 	if (!r_config || !s_config)
@@ -546,6 +575,10 @@ raid_struct * raid_manager::get_raid_by_uuid(uint64_t id)
 		return ret;
 
 	ret = guild_wait_raid_manager::get_guild_wait_raid_by_uuid(id);
+	if (ret)
+		return ret;
+
+	ret = guild_land_raid_manager::get_guild_land_raid_by_uuid(id);
 	return ret;	
 }
 
@@ -569,11 +602,19 @@ int raid_manager::init_raid_struct(int num, unsigned long key)
 		raid = new raid_struct();
 		raid_manager_raid_free_list.push_back(raid);
 	}
+	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(raid_struct) * num, sizeof(raid_data) * num);
 	return init_comm_pool(0, sizeof(raid_data), num, key, &raid_manager_raid_data_pool);
 }
 
 int raid_manager::reset_all_raid_ai()
 {
+	{
+		std::map<uint64_t, guild_land_raid_struct *>::iterator it = guild_land_raid_manager_all_raid_id.begin();
+		for (; it != guild_land_raid_manager_all_raid_id.end(); ++it)
+		{
+			it->second->raid_set_ai_interface(it->second->data->ai_type);
+		}
+	}
 	{
 		std::map<uint64_t, guild_wait_raid_struct *>::iterator it = guild_wait_raid_manager_all_raid_id.begin();
 		for (; it != guild_wait_raid_manager_all_raid_id.end(); ++it)

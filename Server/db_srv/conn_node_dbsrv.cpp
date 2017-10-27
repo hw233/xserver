@@ -329,6 +329,9 @@ int conn_node_dbsrv::recv_func(evutil_socket_t fd)
 				case SERVER_PROTO_BREAK_SERVER_LEVEL_REQUEST:
 					handle_break_server_level(extern_data);
 					break;
+				case SERVER_PROTO_TRADE_STATIS:
+					handle_trade_statis_insert(extern_data);
+					break;
 
 				default:
 					break;
@@ -897,6 +900,20 @@ void conn_node_dbsrv::handle_break_server_level(EXTERN_DATA *extern_data)
 	uint32_t *send_data = (uint32_t*)get_send_data();
 	*send_data++ = num;
 	fast_send_msg_base(server_node, extern_data, SERVER_PROTO_BREAK_SERVER_LEVEL_ANSWER, sizeof(uint32_t), 0);
+}
+
+void conn_node_dbsrv::handle_trade_statis_insert(EXTERN_DATA * /*extern_data*/)
+{
+	TRADE_STATIS_INSERT *req = (TRADE_STATIS_INSERT *)get_data();
+	uint64_t effect = 0;
+
+	sprintf(sql, "insert into trade_statis set `player_id` = %lu, `operate_id` = %u, `time` = now(), `ext_num1` = %u, `ext_num2` = %u, `ext_num3` = %u, `ext_num4` = %u, `ext_num5` = %u, `ext_num6` = %lu", req->player_id, req->operate_id, req->ext_num1, req->ext_num2, req->ext_num3, req->ext_num4, req->ext_num5, req->ext_num6);
+
+	query(sql, 1, &effect);	
+	if (effect <= 0) 
+	{
+		LOG_ERR("[%s:%d] save failed, sql:%s", __FUNCTION__, __LINE__, sql);
+	}
 }
 
 //////////////////////////// 涓嬮潰鏄痵tatic 鍑芥暟

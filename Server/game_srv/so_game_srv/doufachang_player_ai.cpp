@@ -36,6 +36,9 @@ static void doufachang_player_ai_tick(player_struct *player)
 	if (player->scene->get_scene_type() != SCENE_TYPE_RAID)
 		return;
 
+	if (time_helper::get_cached_time() < ai_player_data->ontick_time)
+		return;
+
 	player->reset_pos();
 
 	raid_struct *raid = (raid_struct *)player->scene;
@@ -69,7 +72,7 @@ static void doufachang_player_ai_tick(player_struct *player)
 //	if (ai_player_data->skill_id != 0)
 //		skill_id = ai_player_data->skill_id;
 //	else skill_id = choose_rand_skill(player);
-	uint32_t skill_id = choose_rand_skill(player);	
+	uint32_t skill_id = choose_rand_skill(player);
 
 	if (skill_id != 0 && enemy[0] && enemy[0]->is_avaliable())
 	{
@@ -99,11 +102,10 @@ static void doufachang_player_ai_tick(player_struct *player)
 //				continue;
 			}
 		}
-			
+
 		if (do_attack(player, ai_player_data, enemy[0], skill_id))
 		{
 			ai_player_data->target_player_id = enemy[0]->get_uuid();
-//				LOG_DEBUG("aitest: [%s] try attack %s", player->get_name(), enemy[i]->get_name());
 			return;
 		}
 	}

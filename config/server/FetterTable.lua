@@ -4,8 +4,8 @@ local FetterTable = {
 		['Relation'] = 0,	--羁绊关联
 		['Level'] = 0,	--等级关联
 		['Partner'] = {420104001},	--羁绊
-		['AttributeType'] = 3,	--属性类型
-		['AttributeNum'] = 500,	--属性值
+		['AttributeType'] = 89,	--属性类型
+		['AttributeNum'] = 20,	--属性值
 		['LevelItem'] = 0,	--升级道具
 		['ItemNum'] = 0	--道具数量
 		},
@@ -14,8 +14,8 @@ local FetterTable = {
 		['Relation'] = 0,
 		['Level'] = 0,
 		['Partner'] = {420104002},
-		['AttributeType'] = 3,
-		['AttributeNum'] = 500,
+		['AttributeType'] = 91,
+		['AttributeNum'] = 20,
 		['LevelItem'] = 0,
 		['ItemNum'] = 0
 		},
@@ -24,8 +24,8 @@ local FetterTable = {
 		['Relation'] = 0,
 		['Level'] = 0,
 		['Partner'] = {420104003},
-		['AttributeType'] = 3,
-		['AttributeNum'] = 500,
+		['AttributeType'] = 90,
+		['AttributeNum'] = 20,
 		['LevelItem'] = 0,
 		['ItemNum'] = 0
 		},
@@ -34,8 +34,8 @@ local FetterTable = {
 		['Relation'] = 0,
 		['Level'] = 0,
 		['Partner'] = {420105001},
-		['AttributeType'] = 3,
-		['AttributeNum'] = 500,
+		['AttributeType'] = 16,
+		['AttributeNum'] = 30,
 		['LevelItem'] = 0,
 		['ItemNum'] = 0
 		},
@@ -44,8 +44,8 @@ local FetterTable = {
 		['Relation'] = 0,
 		['Level'] = 0,
 		['Partner'] = {420105002},
-		['AttributeType'] = 3,
-		['AttributeNum'] = 500,
+		['AttributeType'] = 15,
+		['AttributeNum'] = 15,
 		['LevelItem'] = 0,
 		['ItemNum'] = 0
 		},
@@ -55,7 +55,7 @@ local FetterTable = {
 		['Level'] = 0,
 		['Partner'] = {420106001},
 		['AttributeType'] = 3,
-		['AttributeNum'] = 500,
+		['AttributeNum'] = 50,
 		['LevelItem'] = 0,
 		['ItemNum'] = 0
 		},
@@ -64,8 +64,8 @@ local FetterTable = {
 		['Relation'] = 0,
 		['Level'] = 0,
 		['Partner'] = {420106002},
-		['AttributeType'] = 3,
-		['AttributeNum'] = 500,
+		['AttributeType'] = 2,
+		['AttributeNum'] = 1000,
 		['LevelItem'] = 0,
 		['ItemNum'] = 0
 		}

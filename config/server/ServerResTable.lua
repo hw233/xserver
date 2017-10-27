@@ -52,7 +52,7 @@ local ServerResTable = {
 		['Ip'] = '192.168.2.114',
 		['Port'] = 14686,
 		['ServerId'] = 5,
-		['OpenTime'] = 1506700800
+		['OpenTime'] = 1507996800
 		},
 	[6] = {
 		['ID'] = 6,

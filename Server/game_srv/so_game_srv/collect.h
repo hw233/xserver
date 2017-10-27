@@ -3,10 +3,12 @@
 
 #include "conn_node_gamesrv.h"
 #include "unit_path.h"
+#include "move.pb-c.h"
 #include <map>
 
 class player_struct;
 class scene_struct;
+class sight_space_struct;
 struct area_struct;
 
 enum COLLECT_STATE
@@ -29,7 +31,7 @@ public:
 	~Collect();
 
 	void AddAreaPlayerToSight(area_struct *area, uint16_t *add_player_id_index, uint64_t *add_player);
-
+	void pack_sight_collect_info(SightCollectInfo *point, PosData *pos);
 	void BroadcastCollectCreate();
 	void BroadcastCollectDelete();
 	void BroadcastToSight(uint16_t msg_id, void *msg_data, pack_func func);
@@ -49,6 +51,7 @@ public:
 
 	scene_struct *scene;
 	area_struct *area;
+	sight_space_struct *sight_space;
 	position m_pos;
 	uint32_t m_uuid; //唯一id
 	uint32_t m_collectId;  //采集点ID
@@ -67,16 +70,20 @@ public:
 	uint32_t m_guild_id;
 	uint64_t m_raid_uuid; //副本唯一ID
 
-	static Collect * CreateCollect(scene_struct *scene, int index);
+	static Collect *create_sight_space_collect(sight_space_struct *sight_space, uint32_t id, double x, double y, double z, float yaw);	
 	static Collect *CreateCollectByConfig(scene_struct *scene, int index);
 	static Collect *CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw);
 	static Collect *CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw, player_struct *player);
-	static int CreateCollectByID(scene_struct *scene, uint32_t id, uint32_t num);
+	static int CreateCollectByID(scene_struct *scene, uint32_t id, uint32_t num); //创建相同ID 最多num个不同位置的采集点
+	static void RemoveFromSceneAndDestroyCollect(Collect *pCollect, bool send_msg = false);
 	static void DestroyCollect(uint64_t id);
 	static Collect * GetById(const uint32_t id);
 	static void Tick();
 	
 	static uint32_t get_total_collect_num();
+
+private:
+	static Collect *CreateCollectImp(uint32_t id, double x, double y, double z, float yaw);
 };
 
 #endif

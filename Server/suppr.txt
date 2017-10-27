@@ -12,3 +12,5 @@ leak:get_friend_player
 leak:create_sight_space
 leak:create_guild
 leak:join_guild
+leak:create_trade_player
+leak:create_ai_data

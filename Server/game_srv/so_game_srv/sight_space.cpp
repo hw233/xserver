@@ -1,4 +1,5 @@
 #include "sight_space.h"
+#include "so_game_srv/collect.h"
 #include "monster_manager.h"
 #include "cash_truck_manager.h"
 #include "time_helper.h"
@@ -15,6 +16,8 @@ sight_space_struct::sight_space_struct()
 		monsters[i] = NULL;
 	for (int i = 0; i < MAX_PARTNER_IN_SIGHT_SPACE; ++i)	
 		partners[i] = NULL;
+	for (int i = 0; i < MAX_COLLECT_IN_SIGHT_SPACE; ++i)	
+		collects[i] = NULL;
 	
 	LOG_DEBUG("%s %p", __FUNCTION__, this);
 }
@@ -37,6 +40,15 @@ sight_space_struct::~sight_space_struct()
 		monsters[i]->sight_space = NULL;
 		monster_manager::delete_monster(monsters[i]);
 	}
+
+	for (int i = 0; i < MAX_COLLECT_IN_SIGHT_SPACE; ++i)
+	{
+		if (collects[i] == NULL)
+			continue;
+		Collect::DestroyCollect(collects[i]->m_uuid);
+		collects[i] = NULL;
+	}
+	
 	LOG_DEBUG("%s %p", __FUNCTION__, this);	
 }
 
@@ -55,7 +67,6 @@ int sight_space_struct::broadcast_player_delete(player_struct *player, bool ente
 		if (player->scene)
 		{
 			player->scene->add_player_to_scene(player);
-			player->take_partner_into_scene();
 			player->take_truck_into_scene();			
 			
 			// cash_truck_struct *truck = cash_truck_manager::get_cash_truck_by_id(player->data->truck.truck_id);
@@ -75,6 +86,19 @@ int sight_space_struct::broadcast_player_delete(player_struct *player, bool ente
 	//}
 	return (0);
 }
+
+// int sight_space_struct::broadcast_collect_delete(Collect *collect)
+// {
+// 	LOG_DEBUG("%s %d: delete sightspace collect %u %lu at %p [%.1f][%.1f]", __FUNCTION__, __LINE__,
+// 		collect->m_collectId, collect->m_uuid, this, 
+// 		collect->m_pos.pos_x, collect->m_pos.pos_z);
+	
+// 	for (int i = 0; i < MAX_PLAYER_IN_SIGHT_SPACE; ++i)
+// 	{
+		
+// 	}
+// }
+
 int sight_space_struct::broadcast_truck_delete(cash_truck_struct *truck)
 {
 	LOG_DEBUG("%s %d: delete sightspace truck %u %lu at %p [%.1f][%.1f]", __FUNCTION__, __LINE__,
@@ -121,6 +145,23 @@ int sight_space_struct::broadcast_monster_delete(monster_struct *monster)
 
 int sight_space_struct::broadcast_player_create(player_struct *player)
 {
+	return (0);
+}
+
+int sight_space_struct::broadcast_collect_create(Collect *collect)
+{
+	assert(!collect->area);
+
+	LOG_DEBUG("%s %d: create collect %u %u at %p [%.1f][%.1f]", __FUNCTION__, __LINE__,
+		collect->m_collectId, collect->m_uuid, this, 
+		collect->m_pos.pos_x, collect->m_pos.pos_z);
+
+	for (int i = 0; i < MAX_PLAYER_IN_SIGHT_SPACE; ++i)
+	{
+		if (!players[i])
+			continue;
+		collect->NotifyCollectCreate(players[i]);
+	}
 	return (0);
 }
 
@@ -286,4 +327,5 @@ int sight_space_struct::insert_task_event(uint64_t event_id)
 
 	return 0;
 }
+
 

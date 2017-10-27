@@ -232,22 +232,22 @@ __attribute_used__ static void ai_player_hit_notify_to_player(uint64_t skill_id,
 	ai_player_hit_notify_to_many_player(skill_id, monster, &target);
 }
 
-static void ai_player_cast_skill_to_player(uint64_t skill_id, player_struct *monster, unit_struct *player)
+static void ai_player_cast_skill_to_player(uint64_t skill_id, uint64_t player_id, struct position *player_pos, struct position *target_pos, unit_struct *target)
 {
 	SkillCastNotify notify;
 	skill_cast_notify__init(&notify);
 	notify.skillid = skill_id;
-	notify.playerid = monster->data->player_id;
+	notify.playerid = player_id;
 	PosData cur_pos;
 	pos_data__init(&cur_pos);
-	struct position *pos = monster->get_pos();
-	struct position *player_pos = player->get_pos();
-	cur_pos.pos_x = pos->pos_x;
-	cur_pos.pos_z = pos->pos_z;
+//	struct position *pos = monster->get_pos();
+//	struct position *player_pos = player->get_pos();
+	cur_pos.pos_x = player_pos->pos_x;
+	cur_pos.pos_z = player_pos->pos_z;
 	notify.cur_pos = &cur_pos;
-	notify.direct_x = player_pos->pos_x - pos->pos_x;
-	notify.direct_z = player_pos->pos_z - pos->pos_z;
-	player->broadcast_to_sight(MSG_ID_SKILL_CAST_NOTIFY, &notify, (pack_func)skill_cast_notify__pack, true);
+	notify.direct_x = target_pos->pos_x;
+	notify.direct_z = target_pos->pos_z;
+	target->broadcast_to_sight(MSG_ID_SKILL_CAST_NOTIFY, &notify, (pack_func)skill_cast_notify__pack, true);
 }
 
 static void ai_player_cast_immediate_skill_to_player(uint64_t skill_id, player_struct *monster, unit_struct *player)
@@ -441,6 +441,33 @@ bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, pla
 		struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
 		if (!act_config)
 			return false;
+
+		struct position save_pos, new_pos;
+		save_pos.pos_x = my_pos->pos_x;
+		save_pos.pos_z = my_pos->pos_z;
+		new_pos.pos_x = his_pos->pos_x - my_pos->pos_x;
+		new_pos.pos_z = his_pos->pos_z - my_pos->pos_z;
+
+			//攻击的时候, 计算位移
+		if (act_config->FlyId != 0 && act_config->CanMove == 2)
+		{
+			struct SkillMoveTable *move_config = get_config_by_id(act_config->FlyId, &move_skill_config);
+			if (move_config && move_config->MoveType == 1 && move_config->DmgType == 1 && move_config->MoveDistance > 0)
+			{
+				double cur_distance = getdistance(my_pos, his_pos);
+				if (cur_distance != 0)
+				{
+					double rate = move_config->EndDistance / cur_distance;
+					float delta_x = rate * (my_pos->pos_x - his_pos->pos_x);
+					float delta_z = rate * (my_pos->pos_z - his_pos->pos_z);
+					my_pos->pos_x = his_pos->pos_x + delta_x;
+					my_pos->pos_z = his_pos->pos_z + delta_z;
+					new_pos.pos_x = my_pos->pos_x;
+					new_pos.pos_z = my_pos->pos_z;		
+				}
+			}
+		}
+		
 		uint64_t now = time_helper::get_cached_time();
 
 		if (act_config->ActionTime > 0)
@@ -450,33 +477,29 @@ bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, pla
 			ai_player_data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
 			ai_player_data->skill_target_pos.pos_x = his_pos->pos_x;
 			ai_player_data->skill_target_pos.pos_z = his_pos->pos_z;			
-//			LOG_DEBUG("%s: jacktang: mypos[%.2f][%.2f] hispos[%.2f][%.2f] angle = %.3f", __FUNCTION__,
-//				my_pos->pos_x, my_pos->pos_z, his_pos->pos_x, his_pos->pos_z, ai_player_data->angle);
 			ai_player_data->ai_state = AI_ATTACK_STATE;
-
-			player->reset_pos();
-			ai_player_cast_skill_to_player(skill_id, player, target);
-
-			skill_struct->add_cd(lv_config1, act_config);
-
-//			LOG_DEBUG("aitest: %s %d: [%s]onticktime = %lu", __FUNCTION__, __LINE__, player->get_name(), act_config->ActionTime);	
-			return true;
 		}
 		else
 		{
-			ai_player_data->ontick_time = now + act_config->TotalSkillDelay;
+			ai_player_data->ontick_time = now + act_config->TotalSkillDelay + 1500;
 			ai_player_data->skill_id = 0;
 			ai_player_data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
 			ai_player_data->ai_state = AI_PURSUE_STATE;
-
-			player->reset_pos();
-			ai_player_cast_skill_to_player(skill_id, player, target);
-
-			skill_struct->add_cd(lv_config1, act_config);
-
-//			LOG_DEBUG("aitest: %s %d: [%s]onticktime = %lu", __FUNCTION__, __LINE__, player->get_name(), act_config->ActionTime);	
-			return true;
 		}
+		player->reset_pos();
+		ai_player_cast_skill_to_player(skill_id, player->get_uuid(), &save_pos, &new_pos, target);
+		skill_struct->add_cd(lv_config1, act_config);
+
+// 		LOG_DEBUG("%s: skillid[%u] cur_pos = %.1f %.1f, target_pos %.1f %.1f new_pos %.1f %.1f, now[%lu] tick[%lu] act[%lu] delay[%lu]",
+// 			__FUNCTION__, skill_id,
+// 			save_pos.pos_x, save_pos.pos_z,
+// 			his_pos->pos_x, his_pos->pos_z,
+// 			my_pos->pos_x, my_pos->pos_z,
+// 			now, ai_player_data->ontick_time,
+// 			act_config->ActionTime, act_config->TotalSkillDelay);
+		
+		return true;
+		
 	}
 
 	player->reset_pos();
@@ -632,9 +655,38 @@ void do_ai_player_attack(player_struct *monster, struct ai_player_data *ai_playe
 		ai_player_data->normal_skill_id = act_config->NextSkill;
 		ai_player_data->normal_skill_timeout = time_helper::get_cached_time() + 800;
 	}
+	else if (act_config && act_config->AutoNextSkill)
+	{
+		ai_player_data->normal_skill_id = act_config->AutoNextSkill;
+		ai_player_data->normal_skill_timeout = time_helper::get_cached_time() + 800;
+	}
 	else
 	{
 		ai_player_data->normal_skill_id = 0;
 		ai_player_data->skill_id = 0;
 	}
+	ai_player_data->ontick_time = time_helper::get_cached_time() + act_config->TotalSkillDelay;	
+
+	// 	//攻击的时候, 计算位移
+	// if (act_config->FlyId != 0 && act_config->CanMove == 2)
+	// {
+	// 	struct SkillMoveTable *move_config = get_config_by_id(act_config->FlyId, &move_skill_config);
+	// 	if (move_config && move_config->MoveDistance > 0)
+	// 	{
+	// 		monster->reset_pos();
+	// 		int distance = move_config->MoveDistance;
+	// 		struct position *my_pos = monster->get_pos();
+	// 		struct position save_pos;
+	// 		save_pos.pos_x = my_pos->pos_x;
+	// 		save_pos.pos_z = my_pos->pos_z;			
+	// 		my_pos->pos_x += distance * qFastCos(-ai_player_data->angle);
+	// 		my_pos->pos_z += distance * qFastSin(-ai_player_data->angle);
+
+	// 		LOG_DEBUG("%s: jacktang: cur_pos = %.1f %.1f, target_pos %.1f %.1f new_pos %.1f %.1f, angle %.1f sin %.1f cos %.1f distance = %d", __FUNCTION__,
+	// 			save_pos.pos_x, save_pos.pos_z,
+	// 			ai_player_data->skill_target_pos.pos_x, ai_player_data->skill_target_pos.pos_z,
+	// 			my_pos->pos_x, my_pos->pos_z,
+	// 			ai_player_data->angle, qFastSin(ai_player_data->angle), qFastCos(ai_player_data->angle), distance);
+	// 	}
+	// }
 }

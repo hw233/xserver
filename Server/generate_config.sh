@@ -84,6 +84,9 @@ port=`expr ${port} + 1`
 echo "//斗法场服务器连接端口"
 echo "conn_srv_doufachang_port=${port}"
 port=`expr ${port} + 1`
+echo "//交易服务器连接端口"
+echo "conn_srv_trade_port=${port}"
+port=`expr ${port} + 1`
 
 
 echo "game_srv_tick_time = 50"
@@ -143,6 +146,11 @@ echo -n "game_srv_guild_wait_raid_key=0x"
 echo "obase=16;${shm_addr}" | bc
 ((shm_addr=${shm_addr}+1))
 echo "game_srv_guild_wait_raid_num=200"
+
+echo -n "game_srv_guild_land_raid_key=0x"
+echo "obase=16;${shm_addr}" | bc
+((shm_addr=${shm_addr}+1))
+echo "game_srv_guild_land_raid_num=200"
 
 echo -n "global_data_key=0x"
 echo "obase=16;${shm_addr}" | bc

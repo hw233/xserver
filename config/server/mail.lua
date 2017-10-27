@@ -418,6 +418,96 @@ local mail = {
 		['RewardID'] = {},
 		['RewardNum'] = {},
 		['time'] = ''
+		},
+	[270300042] = {
+		['ID'] = 270300042,
+		['MailType'] = 3,
+		['Title'] = '门宗入侵活动奖励',
+		['Content'] = '您在门宗入侵活动中获得奖励如下：',
+		['Sender'] = '系统',
+		['RewardID'] = {},
+		['RewardNum'] = {},
+		['time'] = ''
+		},
+	[270100002] = {
+		['ID'] = 270100002,
+		['MailType'] = 1,
+		['Title'] = '拍卖行',
+		['Content'] = '您的门宗在门宗活动中激活了门宗拍卖，请去拍卖行查看！',
+		['Sender'] = '门宗主管',
+		['RewardID'] = {},
+		['RewardNum'] = {},
+		['time'] = ''
+		},
+	[270100003] = {
+		['ID'] = 270100003,
+		['MailType'] = 1,
+		['Title'] = '拍卖行',
+		['Content'] = '恭喜您从门宗拍卖场购买到%s，您所花费%s',
+		['Sender'] = '门宗主管',
+		['RewardID'] = {},
+		['RewardNum'] = {},
+		['time'] = ''
+		},
+	[270100004] = {
+		['ID'] = 270100004,
+		['MailType'] = 1,
+		['Title'] = '拍卖行',
+		['Content'] = '恭喜您从世界拍卖场购买到%s，您所花费%s',
+		['Sender'] = '门宗主管',
+		['RewardID'] = {},
+		['RewardNum'] = {},
+		['time'] = ''
+		},
+	[270100005] = {
+		['ID'] = 270100005,
+		['MailType'] = 1,
+		['Title'] = '拍卖行',
+		['Content'] = '恭喜您从门宗拍卖场竞拍到%s，您所花费%s',
+		['Sender'] = '门宗主管',
+		['RewardID'] = {},
+		['RewardNum'] = {},
+		['time'] = ''
+		},
+	[270100006] = {
+		['ID'] = 270100006,
+		['MailType'] = 1,
+		['Title'] = '拍卖行',
+		['Content'] = '恭喜您从世界拍卖场竞拍到%s，您所花费%s',
+		['Sender'] = '门宗主管',
+		['RewardID'] = {},
+		['RewardNum'] = {},
+		['time'] = ''
+		},
+	[270100007] = {
+		['ID'] = 270100007,
+		['MailType'] = 1,
+		['Title'] = '拍卖行',
+		['Content'] = '恭喜您在本次竞拍的%s，价格为%s，您的分红为%s',
+		['Sender'] = '门宗主管',
+		['RewardID'] = {},
+		['RewardNum'] = {},
+		['time'] = ''
+		},
+	[270100008] = {
+		['ID'] = 270100008,
+		['MailType'] = 1,
+		['Title'] = '拍卖行',
+		['Content'] = '您在门宗拍卖竞价已被其他玩家超越。',
+		['Sender'] = '门宗主管',
+		['RewardID'] = {},
+		['RewardNum'] = {},
+		['time'] = ''
+		},
+	[270100009] = {
+		['ID'] = 270100009,
+		['MailType'] = 1,
+		['Title'] = '拍卖行',
+		['Content'] = '您在世界拍卖竞价已被其他玩家超越。',
+		['Sender'] = '门宗主管',
+		['RewardID'] = {},
+		['RewardNum'] = {},
+		['time'] = ''
 		}
 	}
 return mail

@@ -1,0 +1,28 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+message DBAttr
+{
+	required uint32 id = 1;
+	required double val = 2;
+}
+
+message DBItemBagua
+{
+	required uint32 star = 1;
+	required double main_attr_val = 2;
+	repeated DBAttr minor_attrs = 3;
+}
+
+message DBItemPartnerFabao
+{
+	required DBAttr main_attr = 1;	//伙伴法宝主属性
+	repeated DBAttr minor_attr = 2;	//伙伴法宝副属性
+}
+
+message DBCurPartnerFabao
+{
+	required uint32 fabao_id = 1;
+	optional DBItemPartnerFabao fabao_attr = 2;
+}
+

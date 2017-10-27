@@ -10,7 +10,8 @@ public:
 	static int raid_num;
 	zhenying_raid_struct();
 	~zhenying_raid_struct();
-	
+
+	virtual bool use_m_player();	
 	bool check_raid_need_delete();
 //	int init_raid(player_struct *player);
 	int init_special_raid_data(player_struct *player);	

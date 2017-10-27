@@ -54,7 +54,7 @@
         ['PointPosX'] = 1.95,
         ['PointPosY'] = -1.4,
         ['PointPosZ'] = 123.02,
-        ['Yaw'] = 200.2657,
+        ['Yaw'] = 200.2658,
         ['Level'] = 110,
         ['TargetInfoList'] = {
         }
@@ -438,7 +438,7 @@
         ['PointPosX'] = -54.32,
         ['PointPosY'] = -1.19,
         ['PointPosZ'] = 115.23,
-        ['Yaw'] = 180.0004,
+        ['Yaw'] = 180.0005,
         ['Level'] = 110,
         ['TargetInfoList'] = {
         }
@@ -450,7 +450,7 @@
         ['PointPosX'] = -33.95647,
         ['PointPosY'] = -1.42,
         ['PointPosZ'] = 115.316,
-        ['Yaw'] = 180.0004,
+        ['Yaw'] = 180.0005,
         ['Level'] = 110,
         ['TargetInfoList'] = {
         }
@@ -546,7 +546,7 @@
         ['PointPosX'] = 22.48674,
         ['PointPosY'] = 8.69,
         ['PointPosZ'] = 5.67987,
-        ['Yaw'] = 1.6723,
+        ['Yaw'] = 1.672301,
     },
     [1000047] = {
         ['uid'] = 1000047,
@@ -639,7 +639,7 @@
         ['PointPosX'] = 20.10485,
         ['PointPosY'] = 8.21575,
         ['PointPosZ'] = 22.00026,
-        ['Yaw'] = 204.271,
+        ['Yaw'] = 204.2711,
         ['Level'] = 110,
         ['TargetInfoList'] = {
         }
@@ -794,8 +794,8 @@
         ['ResType'] = "Npc",
         ['PointPosX'] = 22.48674,
         ['PointPosY'] = 8.69,
-        ['PointPosZ'] = 5.67987,
-        ['Yaw'] = 1.6723,
+        ['PointPosZ'] = 4.68,
+        ['Yaw'] = 1.672301,
         ['Level'] = 110,
         ['TargetInfoList'] = {
         }
@@ -951,7 +951,7 @@
         ['PointPosX'] = -21.2361,
         ['PointPosY'] = -1.43,
         ['PointPosZ'] = 115.7938,
-        ['Yaw'] = 192.5121,
+        ['Yaw'] = 192.5122,
         ['Level'] = 110,
         ['TargetInfoList'] = {
         }

@@ -54,9 +54,9 @@ public:
 		//刷出一个技能召唤的怪物
 	static monster_struct *create_call_monster(player_struct *player, SkillTable *skill_config);
 		//刷出一个地图编辑器配置的怪物
-	static monster_struct *create_monster_at_pos(scene_struct *scene, uint64_t id, uint32_t lv, int32_t pos_x, int32_t pos_z, uint32_t effectid, unit_struct *owner);
-	static monster_struct *create_monster_by_config(scene_struct *scene, int index);
-	static int create_monster_by_id(scene_struct *scene, uint32_t id, uint32_t num);	
+	static monster_struct *create_monster_at_pos(scene_struct *scene, uint64_t id, uint32_t lv, int32_t pos_x, int32_t pos_z, uint32_t effectid, unit_struct *owner, float direct);
+	static monster_struct *create_monster_by_config(scene_struct *scene, int index, uint64_t monster_level);
+	static int create_monster_by_id(scene_struct *scene, uint32_t id, uint32_t num, uint64_t  monster_level);	
 	static monster_struct *add_monster(uint64_t monster_id, uint64_t lv, unit_struct *owner = NULL);
 	static void delete_monster(monster_struct *p);
 	static monster_struct * get_monster_by_id(uint64_t id);

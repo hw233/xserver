@@ -90,7 +90,7 @@
         ['PointPosX'] = 74.83,
         ['PointPosY'] = 19.99,
         ['PointPosZ'] = 247.65,
-        ['Yaw'] = 184.4352,
+        ['Yaw'] = 184.4353,
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }
@@ -1785,10 +1785,10 @@
         ['uid'] = 1000155,
         ['ID'] = 152060032,
         ['ResType'] = "Npc",
-        ['PointPosX'] = 126.93,
-        ['PointPosY'] = 18.12,
-        ['PointPosZ'] = 291.69,
-        ['Yaw'] = 348.4,
+        ['PointPosX'] = 127,
+        ['PointPosY'] = 16.56,
+        ['PointPosZ'] = 235.98,
+        ['Yaw'] = 194.3,
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }

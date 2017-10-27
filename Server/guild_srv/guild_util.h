@@ -25,6 +25,7 @@ extern struct timeval second_timeout;
 void handle_daily_reset_timeout(void);
 void cb_second_timer(evutil_socket_t, short, void* /*arg*/);
 void load_guild_module(void);
+void sync_all_guild_to_gamesrv(void);
 
 PlayerRedisInfo *find_redis_from_map(std::map<uint64_t, PlayerRedisInfo*> &redis_players, uint64_t player_id);
 void update_redis_player_guild(GuildPlayer *player);
@@ -53,6 +54,7 @@ int delete_guild(uint32_t guild_id);
 int save_guild_popularity(GuildInfo *guild);
 bool office_has_permission(uint32_t office, uint32_t type); //查看职位是否有操作权限
 
+void sync_guild_rename_to_gamesrv(GuildInfo *guild);
 void sync_guild_info_to_gamesrv(GuildPlayer *player);
 int create_guild(uint64_t player_id, uint32_t icon, std::string &name, GuildPlayer *&player); //创建帮会
 int join_guild(uint64_t player_id, GuildInfo *guild); //加入帮会
@@ -115,6 +117,8 @@ void save_guild_battle_final_list(std::vector<uint32_t> &guild_ids);
 int load_guild_battle_final_list(std::vector<uint32_t> &guild_ids);
 bool is_guild_battle_opening();
 bool is_in_guild_battle_activity_time();
+uint32_t get_guild_land_active_reward_count(GuildPlayer *player, uint32_t guild_active_id);
+void  add_guild_land_active_reward_count(GuildPlayer *player, uint32_t guild_active_id);
 
 
 #endif

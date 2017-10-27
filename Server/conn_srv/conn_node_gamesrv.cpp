@@ -6,6 +6,7 @@
 #include "conn_node_guild.h"
 #include "conn_node_rank.h"
 #include "conn_node_doufachang.h"
+#include "conn_node_trade.h"
 #include "game_event.h"
 #include "flow_record.h"
 #include <assert.h>
@@ -33,8 +34,8 @@ int conn_node_gamesrv::recv_func(evutil_socket_t fd)
 	for (;;) {
 		int ret = get_one_buf();
 		if (ret == 0) {
-			if (transfer_to_client() != 0) {
-				LOG_INFO("%s %d: transfer to client failed", __FUNCTION__, __LINE__);
+			if (dispatch_message() != 0) {
+				LOG_INFO("%s %d: dispatch message failed", __FUNCTION__, __LINE__);
 //				ret = remove_one_buf();
 //				return (0);
 			}
@@ -48,6 +49,88 @@ int conn_node_gamesrv::recv_func(evutil_socket_t fd)
 		ret = remove_one_buf();
 	}
 	return (0);
+}
+
+//分发消息到不同的服
+int conn_node_gamesrv::dispatch_message()
+{
+	PROTO_HEAD *head = (PROTO_HEAD *)buf_head();
+	uint32_t cmd = ENDION_FUNC_2(head->msg_id);
+	switch (cmd)
+	{
+		case SERVER_PROTO_BROADCAST:
+			return broadcast_to_client();
+		case SERVER_PROTO_BROADCAST_ALL:
+			return broadcast_to_all_client();
+		case SERVER_PROTO_KICK_ROLE_ANSWER:
+			return kick_answer();
+		case SERVER_PROTO_GAME_TO_FRIEND:
+			return game_to_friendsrv();
+		case SERVER_PROTO_GET_OFFLINE_CACHE_REQUEST:
+		case SERVER_PROTO_CLEAR_OFFLINE_CACHE:
+		case SERVER_PROTO_INSERT_OFFLINE_CACHE:
+		case SERVER_PROTO_FRIEND_CHAT:
+		case SERVER_PROTO_FRIEND_ADD_ENEMY:
+		case SERVER_PROTO_FRIEND_RECOMMEND:
+		case SERVER_PROTO_FRIEND_EXTEND_CONTACT_REQUEST:
+		case SERVER_PROTO_FRIENDSRV_COST_ANSWER:
+		case SERVER_PROTO_FRIEND_GIFT_COST_ANSWER:
+		case SERVER_PROTO_FRIEND_TURN_SWITCH:
+		case SERVER_PROTO_FRIEND_SYNC_RENAME:
+			return transfer_to_friendsrv(); 
+		case SERVER_PROTO_GAMESRV_START:
+			transfer_to_guildsrv();
+			return transfer_to_mailsrv();
+		case SERVER_PROTO_MAIL_INSERT:
+		case SERVER_PROTO_MAIL_GIVE_ATTACH_ANSWER:
+			return transfer_to_mailsrv();
+		case SERVER_PROTO_GUILDSRV_COST_ANSWER:
+		case SERVER_PROTO_GUILDSRV_REWARD_ANSWER:
+		case SERVER_PROTO_ADD_GUILD_RESOURCE:
+		case SERVER_PROTO_SUB_GUILD_BUILDING_TIME:
+		case SERVER_PROTO_GUILD_CHAT:
+		case MSG_ID_GET_OTHER_INFO_ANSWER:
+		case SERVER_PROTO_GM_DISBAND_GUILD:
+		case SERVER_PROTO_GUILD_BATTLE_REWARD:
+		case SERVER_PROTO_GUILD_BATTLE_ENTER_WAIT:
+		case MSG_ID_GUILD_BATTLE_INFO_REQUEST:
+		case SERVER_PROTO_GUILD_BATTLE_BEGIN:
+		case SERVER_PROTO_GUILD_BATTLE_END:
+		case SERVER_PROTO_GUILD_BATTLE_SETTLE:
+		case SERVER_PROTO_GUILD_BATTLE_FINAL_LIST_REQUEST:
+		case SERVER_PROTO_GUILD_PRODUCE_MEDICINE:
+		case SERVER_PROTO_GUILD_ADD_FINAL_BATTLE_GUILD:
+		case SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_REQUEST:
+		case SERVER_PROTO_GUILD_RUQIN_REWARD_INFO_NOTIFY:
+		case SERVER_PROTO_GUILD_RUQIN_BOSS_CREAT_NOTIFY:
+			return transfer_to_guildsrv();
+		case SERVER_PROTO_REFRESH_PLAYER_REDIS_INFO:
+		case SERVER_PROTO_WORLDBOSS_PLAYER_REDIS_INFO:
+		case SERVER_PROTO_WORLDBOSS_BIRTH_UPDATA_REDIS_INFO:
+			return transfer_to_ranksrv();
+		case SERVER_PROTO_PLAYER_ONLINE_NOTIFY:
+			transfer_to_ranksrv();
+			transfer_to_friendsrv(); 
+			transfer_to_tradesrv();
+			return transfer_to_guildsrv();
+		case SERVER_PROTO_DOUFACHANG_ADD_REWARD_ANSWER:
+		case SERVER_PROTO_DOUFACHANG_CHALLENGE_ANSWER:
+		case SERVER_PROTO_DOUFACHANG_BUY_CHALLENGE_ANSWER:			
+			return transfer_to_doufachang();
+		case SERVER_PROTO_TRADE_ON_SHELF_REQUEST:
+		case SERVER_PROTO_TRADE_ON_SHELF_DELETE_ITEM_ANSWER:
+		case SERVER_PROTO_TRADE_OFF_SHELF_ADD_ITEM_ANSWER:
+		case SERVER_PROTO_TRADE_RE_SHELF_CHANGE_ANSWER:
+		case SERVER_PROTO_TRADESRV_COST_ANSWER:
+		case SERVER_PROTO_TRADE_BUY_EXECUTE_ANSWER:
+			return transfer_to_tradesrv();
+		case SERVER_PROTO_TRADE_LOT_INSERT:
+			transfer_to_guildsrv();
+			return transfer_to_tradesrv();
+		default:
+			return transfer_to_client();
+	}
+	return 0;
 }
 
 int conn_node_gamesrv::game_to_friendsrv()
@@ -196,6 +279,30 @@ done:
 	return (ret);
 }
 
+int conn_node_gamesrv::transfer_to_tradesrv()
+{
+	int ret = 0;
+	PROTO_HEAD *head;
+	head = (PROTO_HEAD *)buf_head();
+
+	if (!conn_node_trade::server_node) {
+		LOG_ERR("[%s:%d] do not have trade server connected", __FUNCTION__, __LINE__);
+		ret = -1;
+		goto done;
+	}
+
+	if (conn_node_trade::server_node->send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len)) {
+		LOG_ERR("[%s:%d] send to trade failed err[%d]", __FUNCTION__, __LINE__, errno);
+		ret = -2;
+		goto done;
+	}
+#ifdef FLOW_MONITOR
+	add_on_other_server_answer_msg(head);
+#endif
+done:	
+	return (ret);
+}
+
 int conn_node_gamesrv::transfer_to_client()
 {
 	uint32_t old_len;
@@ -210,63 +317,6 @@ int conn_node_gamesrv::transfer_to_client()
 #ifdef FLOW_MONITOR
 	add_one_other_server_request_msg(head);
 #endif
-
-	switch (cmd)
-	{
-		case SERVER_PROTO_BROADCAST:
-			return broadcast_to_client();
-		case SERVER_PROTO_BROADCAST_ALL:
-			return broadcast_to_all_client();
-		case SERVER_PROTO_KICK_ROLE_ANSWER:
-			return kick_answer();
-		case SERVER_PROTO_GAME_TO_FRIEND:
-			return game_to_friendsrv();
-		case SERVER_PROTO_GET_OFFLINE_CACHE_REQUEST:
-		case SERVER_PROTO_CLEAR_OFFLINE_CACHE:
-		case SERVER_PROTO_INSERT_OFFLINE_CACHE:
-		case SERVER_PROTO_FRIEND_CHAT:
-		case SERVER_PROTO_FRIEND_ADD_ENEMY:
-		case SERVER_PROTO_FRIEND_RECOMMEND:
-		case SERVER_PROTO_FRIEND_EXTEND_CONTACT_REQUEST:
-		case SERVER_PROTO_FRIENDSRV_COST_ANSWER:
-		case SERVER_PROTO_FRIEND_GIFT_COST_ANSWER:
-		case SERVER_PROTO_FRIEND_TURN_SWITCH:
-		case SERVER_PROTO_FRIEND_SYNC_RENAME:
-			return transfer_to_friendsrv(); 
-		case SERVER_PROTO_GAMESRV_START:
-		case SERVER_PROTO_MAIL_INSERT:
-		case SERVER_PROTO_MAIL_GIVE_ATTACH_ANSWER:
-			return transfer_to_mailsrv();
-		case SERVER_PROTO_GUILDSRV_COST_ANSWER:
-		case SERVER_PROTO_GUILDSRV_REWARD_ANSWER:
-		case SERVER_PROTO_ADD_GUILD_RESOURCE:
-		case SERVER_PROTO_SUB_GUILD_BUILDING_TIME:
-		case SERVER_PROTO_GUILD_CHAT:
-		case MSG_ID_GET_OTHER_INFO_ANSWER:
-		case SERVER_PROTO_GM_DISBAND_GUILD:
-		case SERVER_PROTO_GUILD_BATTLE_REWARD:
-		case SERVER_PROTO_GUILD_BATTLE_ENTER_WAIT:
-		case MSG_ID_GUILD_BATTLE_INFO_REQUEST:
-		case SERVER_PROTO_GUILD_BATTLE_BEGIN:
-		case SERVER_PROTO_GUILD_BATTLE_END:
-		case SERVER_PROTO_GUILD_BATTLE_SETTLE:
-		case SERVER_PROTO_GUILD_BATTLE_FINAL_LIST_REQUEST:
-		case SERVER_PROTO_GUILD_PRODUCE_MEDICINE:
-		case SERVER_PROTO_GUILD_ADD_FINAL_BATTLE_GUILD:
-			return transfer_to_guildsrv();
-		case SERVER_PROTO_REFRESH_PLAYER_REDIS_INFO:
-		case SERVER_PROTO_WORLDBOSS_PLAYER_REDIS_INFO:
-		case SERVER_PROTO_WORLDBOSS_BIRTH_UPDATA_REDIS_INFO:
-			return transfer_to_ranksrv();
-		case SERVER_PROTO_PLAYER_ONLINE_NOTIFY:
-			transfer_to_ranksrv();
-			transfer_to_friendsrv(); 
-			return transfer_to_guildsrv();
-		case SERVER_PROTO_DOUFACHANG_ADD_REWARD_ANSWER:
-		case SERVER_PROTO_DOUFACHANG_CHALLENGE_ANSWER:
-		case SERVER_PROTO_DOUFACHANG_BUY_CHALLENGE_ANSWER:			
-			return transfer_to_doufachang();
-	}
 	
 	extern_data = get_extern_data(head);
 	LOG_DEBUG("[%s:%d]: Send Cmd To client, [%lu], cmd: %d", __FUNCTION__, __LINE__, extern_data->player_id, cmd);

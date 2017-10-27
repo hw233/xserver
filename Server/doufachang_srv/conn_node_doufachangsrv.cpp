@@ -698,18 +698,12 @@ int conn_node_doufachangsrv::handle_server_buy_challenge_answer(EXTERN_DATA *ext
 		LOG_INFO("%s: player[%lu] undo cost %u %u", __FUNCTION__, extern_data->player_id, server_ans->count, server_ans->gold_num);
 		ans.result = 1;
 
-		PROTO_UNDO_COST *proto = (PROTO_UNDO_COST*)get_send_buf(SERVER_PROTO_UNDO_COST, 0);
-		proto->head.len = ENDION_FUNC_4(sizeof(PROTO_UNDO_COST));
-		proto->head.msg_id = SERVER_PROTO_UNDO_COST;
-		proto->head.seq = 0;
+		PROTO_UNDO_COST *proto = (PROTO_UNDO_COST*)get_send_data();
+		uint32_t data_len = sizeof(PROTO_UNDO_COST);
 		memset(&proto->cost, 0, sizeof(proto->cost));
 		proto->cost.statis_id = MAGIC_TYPE_DOUFACHANG_BUY_CHALLENGE_COUNT;
 		proto->cost.gold = server_ans->gold_num;
-		conn_node_base::add_extern_data(&proto->head, extern_data);
-		if (connecter->send_one_msg(&proto->head, 1) != (int)ENDION_FUNC_4(proto->head.len))
-		{
-			LOG_ERR("[%s:%d] send to gamesrv failed err[%d]", __FUNCTION__, __LINE__, errno);
-		}
+		fast_send_msg_base(connecter, extern_data, SERVER_PROTO_UNDO_COST, data_len, 0);
 	}
 	else
 	{

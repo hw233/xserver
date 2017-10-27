@@ -117,17 +117,17 @@ local ScriptTable = {
 	[171000007] = {
 		['ID'] = 171000007,
 		['Path'] = 'Skill/Effect/ThrowEffect',
-		['paramList'] = {0.5,5,9,135172004}
+		['paramList'] = {0.65,5,9,135172004}
 		},
 	[171000008] = {
 		['ID'] = 171000008,
 		['Path'] = 'Skill/Effect/ThrowEffect',
-		['paramList'] = {0.5,5,9,135172005}
+		['paramList'] = {0.65,5,9,135172005}
 		},
 	[171000009] = {
 		['ID'] = 171000009,
 		['Path'] = 'Skill/Effect/ThrowEffect',
-		['paramList'] = {0.5,8,9,135172004}
+		['paramList'] = {0.65,8,9,135172004}
 		},
 	[171000010] = {
 		['ID'] = 171000010,
@@ -152,22 +152,22 @@ local ScriptTable = {
 	[171000014] = {
 		['ID'] = 171000014,
 		['Path'] = 'Skill/Effect/SelectBulletSkillEffect',
-		['paramList'] = {15,135173001,0,1}
+		['paramList'] = {18,135173001,0,1}
 		},
 	[171000015] = {
 		['ID'] = 171000015,
 		['Path'] = 'Skill/Effect/SelectBulletSkillEffect',
-		['paramList'] = {15,135173002,0,1}
+		['paramList'] = {18,135173002,0,1}
 		},
 	[171000016] = {
 		['ID'] = 171000016,
 		['Path'] = 'Skill/Effect/SelectBulletSkillEffect',
-		['paramList'] = {15,135173003,0,1}
+		['paramList'] = {16,135173003,0,1}
 		},
 	[171000017] = {
 		['ID'] = 171000017,
-		['Path'] = 'Skill/Effect/SelectBulletSkillEffect',
-		['paramList'] = {12,135173004,0,1}
+		['Path'] = 'Skill/Effect/BulletForwardEffect',
+		['paramList'] = {0,0.5,16,135173004}
 		},
 	[171000018] = {
 		['ID'] = 171000018,
@@ -212,7 +212,7 @@ local ScriptTable = {
 	[172000034] = {
 		['ID'] = 172000034,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {40,135200004}
+		['paramList'] = {30,135200015}
 		},
 	[172000036] = {
 		['ID'] = 172000036,
@@ -227,7 +227,7 @@ local ScriptTable = {
 	[172000041] = {
 		['ID'] = 172000041,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {40,135200014}
+		['paramList'] = {35,135200014}
 		},
 	[172000043] = {
 		['ID'] = 172000043,
@@ -258,6 +258,11 @@ local ScriptTable = {
 		['ID'] = 172000063,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
 		['paramList'] = {10,135200007}
+		},
+	[172000411] = {
+		['ID'] = 172000411,
+		['Path'] = 'Skill/Effect/ThrowEffect',
+		['paramList'] = {0.85,4,6,135202011}
 		}
 	}
 return ScriptTable

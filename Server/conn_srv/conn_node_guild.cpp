@@ -78,6 +78,10 @@ int conn_node_guild::transfer_to_client()
 		case SERVER_PROTO_GUILD_PRODUCE_MEDICINE:
 		case SERVER_PROTO_GUILD_SYNC_DONATION:
 		case SERVER_PROTO_GUILD_SKILL_LEVEL_UP:
+		case SERVER_PROTO_GUILD_SYNC_ALL:
+		case SERVER_PROTO_GUILD_CREATE:
+		case SERVER_PROTO_GUILD_RENAME:
+		case SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_ANSWER:
 			return transfer_to_gamesrv();
 		case SERVER_PROTO_MAIL_INSERT:
 			return transfer_to_mailsrv();

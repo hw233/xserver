@@ -51,5 +51,7 @@ message DBGuildPlayer
 	required uint32 battle_score = 11;
 	required uint32 act_battle_score = 12;
 	optional DBGuildShopReset shop_reset = 13;
+	repeated uint32 guild_land_active_reward_id = 14;  //记录帮会领地活动收益次数id
+	repeated uint32 guild_land_active_reward_num = 15;  //记录帮会领地活动收益次数
 }
 

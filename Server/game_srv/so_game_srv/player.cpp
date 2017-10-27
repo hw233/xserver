@@ -1,5 +1,6 @@
 //
 #include <unistd.h>
+#include "so_game_srv/zhenying_battle.h"
 #include "comm.h"
 #include "path_algorithm.h"
 #include "player.h"
@@ -76,6 +77,7 @@
 #include "guild_battle_manager.h"
 #include "chengjie.h"
 #include "guild_wait_raid_manager.h"
+#include "guild_land_raid_manager.h"
 #include "partner_manager.h"
 #include "partner.pb-c.h"
 #include "server_level.h"
@@ -265,6 +267,37 @@ void player_struct::try_return_zhenying_raid()
 	raid->on_player_enter_raid(this);
 }
 
+void player_struct::try_return_guild_land_raid()
+{
+	do
+	{
+		if (data->guild_id == 0)
+		{
+			break;
+		}
+
+		guild_land_raid_struct *raid = guild_land_raid_manager::get_guild_land_raid(data->guild_id);
+		if (!raid)
+		{
+			break;
+		}
+
+		scene = raid;
+
+		raid->on_player_enter_raid(this);
+
+		return;
+	} while(0);
+
+	//如果已经离帮，把玩家拉出地图
+	data->scene_id = data->last_scene_id;
+	scene_struct *scene = scene_manager::get_scene(data->scene_id);
+	if (scene)
+	{
+		set_pos(scene->m_born_x, scene->m_born_z);
+	}
+}
+
 void player_struct::try_return_guild_wait_raid()
 {
 	do
@@ -297,12 +330,13 @@ void player_struct::try_return_guild_wait_raid()
 		return;
 	} while(0);
 
-//	try_out_raid();
-	{
-		data->scene_id = sg_guild_scene_id;
+	{ //回帮会领地
+		data->scene_id = GUILD_LAND_RAID_ID;
 		float pos_x = 0.0, pos_z = 0.0;
 		get_scene_birth_pos(data->scene_id, &pos_x, NULL, &pos_z, NULL);
 		set_pos(pos_x, pos_z);
+
+		try_return_guild_land_raid();
 	}
 }
 
@@ -369,10 +403,12 @@ void player_struct::try_return_guild_battle_raid()
 	}
 	else
 	{ //回帮会领地
-		data->scene_id = sg_guild_scene_id;
+		data->scene_id = GUILD_LAND_RAID_ID;
 		float pos_x = 0.0, pos_z = 0.0;
 		get_scene_birth_pos(data->scene_id, &pos_x, NULL, &pos_z, NULL);
 		set_pos(pos_x, pos_z);
+
+		try_return_guild_land_raid();
 	}
 }
 
@@ -381,6 +417,10 @@ void player_struct::try_return_raid()
 	if (data->scene_id == ZHENYING_RAID_ID)
 	{
 		return try_return_zhenying_raid();
+	}
+	else if (data->scene_id == GUILD_LAND_RAID_ID)
+	{
+		return try_return_guild_land_raid();
 	}
 	else if (is_guild_wait_raid(data->scene_id))
 	{
@@ -2591,38 +2631,6 @@ void player_struct::add_area_player_to_sight(area_struct *area, int *add_player_
 	}
 }
 
-static PosData collect_pos[MAX_COLLECT_IN_PLAYER_SIGHT];
-void player_struct::add_area_collect_to_sight(area_struct *area, int *add_collect_id_index, SightCollectInfo *add_collect)
-{
-	if (!area)
-		return;
-	for (int j = 0; j < area->cur_collect_num; ++j)
-	{
-		Collect *pCollect = Collect::GetById(area->m_collect_ids[j]);
-		if (pCollect == NULL)
-		{
-			continue;
-		}
-		sight_collect_info__init(&add_collect[*add_collect_id_index]);
-		add_collect[*add_collect_id_index].uuid = pCollect->m_uuid;
-		add_collect[*add_collect_id_index].collectid = pCollect->m_collectId;
-		add_collect[*add_collect_id_index].y = pCollect->m_y;
-		add_collect[*add_collect_id_index].yaw = pCollect->m_yaw;
-		pos_data__init(&collect_pos[*add_collect_id_index]);
-		collect_pos[*add_collect_id_index].pos_x = pCollect->m_pos.pos_x;
-		collect_pos[*add_collect_id_index].pos_z = pCollect->m_pos.pos_z;
-		add_collect[*add_collect_id_index].data = &collect_pos[*add_collect_id_index];
-
-		//PosData pos;
-		//pos_data__init(&pos);
-		//pos.pos_x = pCollect->m_pos.pos_x;
-		//pos.pos_z = pCollect->m_pos.pos_z;
-		//add_collect[*add_collect_id_index].data = &pos;
-
-		(*add_collect_id_index)++;
-	}
-}
-
 
 	//在栈上的话怕溢出
 static SightPlayerBaseInfo player_info[MAX_PLAYER_IN_PLAYER_SIGHT];
@@ -2630,6 +2638,7 @@ static SightPlayerBaseInfo *player_info_point[MAX_PLAYER_IN_PLAYER_SIGHT];
 static SightMonsterInfo monster_info[MAX_MONSTER_IN_PLAYER_SIGHT];
 static SightMonsterInfo *monster_info_point[MAX_MONSTER_IN_PLAYER_SIGHT];
 static SightCollectInfo collect_info[MAX_COLLECT_IN_PLAYER_SIGHT];
+static PosData collect_pos[MAX_COLLECT_IN_PLAYER_SIGHT];
 static SightCollectInfo *collect_info_point[MAX_COLLECT_IN_PLAYER_SIGHT];
 static SightCashTruckInfo cash_truck_info[MAX_TRUCK_IN_PLAYER_SIGHT];
 static SightCashTruckInfo *cash_truck_info_point[MAX_TRUCK_IN_PLAYER_SIGHT];
@@ -2643,11 +2652,33 @@ void init_sight_unit_info_point()
 	for (int i = 0; i < MAX_MONSTER_IN_PLAYER_SIGHT; ++i)
 		monster_info_point[i] = &monster_info[i];
 	for (int i = 0; i < MAX_COLLECT_IN_PLAYER_SIGHT; ++i)
+	{
 		collect_info_point[i] = &collect_info[i];
+		collect_info[i].data = &collect_pos[i];
+	}
 	for (int i = 0; i < MAX_TRUCK_IN_PLAYER_SIGHT; ++i)
 		cash_truck_info_point[i] = &cash_truck_info[i];
 	for (int i = 0; i < MAX_PARTNER_IN_PLAYER_SIGHT; ++i)
 		partner_info_point[i] = &partner_info[i];
+}
+
+void player_struct::add_area_collect_to_sight(area_struct *area, int *add_collect_id_index, SightCollectInfo *add_collect)
+{
+	if (!area)
+		return;
+	for (int j = 0; j < area->cur_collect_num; ++j)
+	{
+		if (*add_collect_id_index >= MAX_COLLECT_IN_PLAYER_SIGHT)
+			break;
+
+		Collect *pCollect = Collect::GetById(area->m_collect_ids[j]);
+		if (pCollect == NULL)
+		{
+			continue;
+		}
+		pCollect->pack_sight_collect_info(&add_collect[*add_collect_id_index], &collect_pos[*add_collect_id_index]);
+		(*add_collect_id_index)++;
+	}
 }
 
 void player_struct::clear_player_sight()
@@ -3031,7 +3062,6 @@ void player_struct::update_sight(area_struct *old_area, area_struct *new_area)
 	del_sight_monster_in_area(n_del, &del_area[0], &delete_monster_uuid_index, &delete_monster_uuid[0]);
 	del_sight_truck_in_area(n_del, &del_area[0], &delete_truck_uuid_index, &delete_truck_uuid[0]);
 	del_sight_partner_in_area(n_del, &del_area[0], &delete_partner_uuid_index, &delete_partner_uuid[0]);
-
 	for (int i = 0; i < n_del; ++i)
 	{
 		for (int j = 0; j < del_area[i]->cur_collect_num; ++j)
@@ -4370,7 +4400,7 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 	case 4:
 	{
 		player.send_system_notice(190500288, &args);
-		monster_struct *mon = monster_manager::create_monster_at_pos(player.scene, sTable->Parameter1[i], player.get_attr(PLAYER_ATTR_LEVEL), x, z, 0, NULL);
+		monster_struct *mon = monster_manager::create_monster_at_pos(player.scene, sTable->Parameter1[i], player.get_attr(PLAYER_ATTR_LEVEL), x, z, 0, NULL, 0);
 		if (mon != NULL)
 		{
 			mon->data->owner = player.get_uuid();
@@ -4379,7 +4409,8 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 			char str[512] = "bbbbbbbbbbbbbbbbbbbbbbbbb";
 			if (player.m_team == NULL)
 			{
-				Team::CreateTeam(player);
+				player_struct *tmpArr[MAX_TEAM_MEM] = {&player};
+				Team::CreateTeam(tmpArr, 1);
 			}
 			if (config != NULL && player.m_team != NULL)
 			{
@@ -4411,7 +4442,7 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 		
 		for (uint32_t num = 0; num < sTable->Parameter2[i]; ++num)
 		{
-			monster_manager::create_sight_space_monster(player.sight_space, player.scene, sTable->Parameter1[i], player.get_attr(PLAYER_ATTR_LEVEL), x + sTable->Parameter2[i] - rand()% 2*sTable->Parameter2[i], z + sTable->Parameter2[i] - rand() % 2*sTable->Parameter2[i]);
+			monster_manager::create_sight_space_monster(player.sight_space, player.scene, sTable->Parameter1[i], player.get_attr(PLAYER_ATTR_LEVEL), x + sTable->Parameter3[i] - rand()% 2*sTable->Parameter3[i], z + sTable->Parameter3[i] - rand() % 2*sTable->Parameter3[i]);
 		}
 
 	}
@@ -4445,7 +4476,8 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 		char str[512] = "aaaaaaaaaaaaaaaaaaa";
 		if (player.m_team == NULL)
 		{
-			Team::CreateTeam(player);
+			player_struct *tmpArr[MAX_TEAM_MEM] = { &player };
+			Team::CreateTeam(tmpArr, 1);
 		}
 		if (config != NULL && player.m_team != NULL)
 		{
@@ -4526,9 +4558,11 @@ int player_struct::add_unbind_gold(uint32_t num, uint32_t statis_id, bool isNty)
 
 	//系统提示
 	std::vector<char *> args;
-	std::stringstream ss_num;
-	ss_num << realNum;
-	args.push_back(const_cast<char*>(ss_num.str().c_str()));
+	std::string sz_num;
+	std::stringstream ss;
+	ss << realNum;
+	ss >> sz_num;
+	args.push_back(const_cast<char*>(sz_num.c_str()));
 	uint32_t notice_id = SNT_ADD_GOLD_TEXT;
 	send_system_notice(notice_id, &args);
 
@@ -4570,9 +4604,11 @@ int player_struct::add_bind_gold(uint32_t num, uint32_t statis_id, bool isNty)
 
 	//系统提示
 	std::vector<char *> args;
-	std::stringstream ss_num;
-	ss_num << realNum;
-	args.push_back(const_cast<char*>(ss_num.str().c_str()));
+	std::string sz_num;
+	std::stringstream ss;
+	ss << realNum;
+	ss >> sz_num;
+	args.push_back(const_cast<char*>(sz_num.c_str()));
 	uint32_t notice_id = SNT_ADD_GOLD_TEXT;
 	send_system_notice(notice_id, &args);
 
@@ -4666,6 +4702,57 @@ int player_struct::sub_comm_gold(uint32_t num, uint32_t statis_id, bool isNty)
 
 	return 0;
 }
+int player_struct::sub_comm_coin(uint32_t num, uint32_t statis_id, bool isNty)
+{
+	if (num == 0)
+	{
+		return 0;
+	}
+
+	uint32_t prevBindGold = data->attrData[PLAYER_ATTR_COIN];
+	uint32_t prevGold = data->attrData[PLAYER_ATTR_SILVER];
+	if (prevBindGold + prevGold < num)
+	{
+		LOG_ERR("[%s:%d] player[%lu] common gold not enough, prevBindGold:%u, prevGold:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevBindGold, prevGold, num);
+		return -1;
+	}
+
+	AttrMap attrs;
+	if (prevBindGold >= num)
+	{
+		data->attrData[PLAYER_ATTR_COIN] -= num;
+		uint32_t curBindGold = data->attrData[PLAYER_ATTR_COIN];
+		LOG_INFO("[%s:%d] player[%lu] coin, prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevBindGold, curBindGold, num);
+
+		attrs[PLAYER_ATTR_COIN] = data->attrData[PLAYER_ATTR_COIN];
+	}
+	else
+	{
+		uint32_t left_num = num;
+		if (prevBindGold > 0)
+		{
+			left_num = num - prevBindGold;
+			data->attrData[PLAYER_ATTR_COIN] = 0;
+			LOG_INFO("[%s:%d] player[%lu] coin, prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevBindGold, 0, prevBindGold);
+			attrs[PLAYER_ATTR_COIN] = 0;
+		}
+
+		data->attrData[PLAYER_ATTR_SILVER] -= left_num;
+		uint32_t curGold = data->attrData[PLAYER_ATTR_SILVER];
+		LOG_INFO("[%s:%d] player[%lu] silver, prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevGold, curGold, left_num);
+		attrs[PLAYER_ATTR_SILVER] = data->attrData[PLAYER_ATTR_SILVER];
+	}
+
+	this->add_task_progress(TCT_BASIC, TBC_COIN, data->attrData[PLAYER_ATTR_COIN]);	
+	if (isNty)
+	{
+		this->notify_attr(attrs);
+	}
+
+	refresh_player_redis_info();
+
+	return 0;
+}
 
 int player_struct::add_coin(uint32_t num, uint32_t statis_id, bool isNty)
 {
@@ -4695,10 +4782,12 @@ int player_struct::add_coin(uint32_t num, uint32_t statis_id, bool isNty)
 
 		//系统提示
 		std::vector<char *> args;
-		std::stringstream ss_num;
-		ss_num << realNum;
-		args.push_back(const_cast<char*>(ss_num.str().c_str()));
-		uint32_t notice_id = (notice_use_art(statis_id) ? SNT_ADD_COIN_ART : SNT_ADD_COIN_TEXT);
+		std::string sz_num;
+		std::stringstream ss;
+		ss << realNum;
+		ss >> sz_num;
+		args.push_back(const_cast<char*>(sz_num.c_str()));
+		uint32_t notice_id = (notice_use_art_coin(statis_id) ? SNT_ADD_COIN_TEXT : SNT_ADD_COIN_ART );
 		send_system_notice(notice_id, &args);
 	}
 
@@ -4712,27 +4801,101 @@ int player_struct::add_coin(uint32_t num, uint32_t statis_id, bool isNty)
 
 int player_struct::sub_coin(uint32_t num, uint32_t statis_id, bool isNty)
 {
+	return sub_comm_coin(num, statis_id, isNty);
+	// if (num == 0)
+	// {
+	// 	return 0;
+	// }
+
+	// uint32_t prevVal = data->attrData[PLAYER_ATTR_COIN];
+	// if (prevVal < num)
+	// {
+	// 	LOG_ERR("[%s:%d] player[%lu] coin not enough, prevVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevVal, num);
+	// 	return -1;
+	// }
+
+	// data->attrData[PLAYER_ATTR_COIN] -= num;
+	// uint32_t curVal = data->attrData[PLAYER_ATTR_COIN];
+	// LOG_INFO("[%s:%d] player[%lu] prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevVal, curVal, num);
+
+	// this->add_task_progress(TCT_BASIC, TBC_COIN, curVal);
+	// if (isNty)
+	// {
+	// 	AttrMap attrs;
+	// 	attrs[PLAYER_ATTR_COIN] = data->attrData[PLAYER_ATTR_COIN];
+	// 	this->notify_attr(attrs);
+	// }
+
+	// refresh_player_redis_info();
+
+	// return 0;
+}
+int player_struct::add_silver(uint32_t num, uint32_t statis_id, bool isNty)
+{
 	if (num == 0)
 	{
 		return 0;
 	}
 
-	uint32_t prevVal = data->attrData[PLAYER_ATTR_COIN];
+	uint32_t prevVal = data->attrData[PLAYER_ATTR_SILVER];
+	if (prevVal >= (uint32_t)MAX_MONEY_VALUE)
+	{
+		return 0;
+	}
+
+	data->attrData[PLAYER_ATTR_SILVER] = std::min(prevVal + num, (uint32_t)MAX_MONEY_VALUE);
+	uint32_t curVal = data->attrData[PLAYER_ATTR_SILVER];
+	uint32_t realNum = curVal - prevVal;
+	LOG_INFO("[%s:%d] player[%lu] prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevVal, curVal, num);
+
+//	this->add_task_progress(TCT_BASIC, TBC_COIN, curVal);
+//	add_achievement_progress(ACType_ADD_CURRENCY, ACurrency_COIN, 0, realNum);
+	if (isNty)
+	{
+		AttrMap attrs;
+		attrs[PLAYER_ATTR_SILVER] = data->attrData[PLAYER_ATTR_SILVER];
+		this->notify_attr(attrs);
+
+		//系统提示
+		// std::vector<char *> args;
+		// std::stringstream ss_num;
+		// ss_num << realNum;
+		// args.push_back(const_cast<char*>(ss_num.str().c_str()));
+		// uint32_t notice_id = (notice_use_art(statis_id) ? SNT_ADD_COIN_TEXT : SNT_ADD_COIN_ART );
+		// send_system_notice(notice_id, &args);
+	}
+
+	if (realNum > 0)
+	{
+		refresh_player_redis_info();
+	}
+
+	return 0;
+}
+
+int player_struct::sub_silver(uint32_t num, uint32_t statis_id, bool isNty)
+{
+	if (num == 0)
+	{
+		return 0;
+	}
+
+	uint32_t prevVal = data->attrData[PLAYER_ATTR_SILVER];
 	if (prevVal < num)
 	{
 		LOG_ERR("[%s:%d] player[%lu] coin not enough, prevVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevVal, num);
 		return -1;
 	}
 
-	data->attrData[PLAYER_ATTR_COIN] -= num;
-	uint32_t curVal = data->attrData[PLAYER_ATTR_COIN];
+	data->attrData[PLAYER_ATTR_SILVER] -= num;
+	uint32_t curVal = data->attrData[PLAYER_ATTR_SILVER];
 	LOG_INFO("[%s:%d] player[%lu] prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevVal, curVal, num);
 
-	this->add_task_progress(TCT_BASIC, TBC_COIN, curVal);
+//	this->add_task_progress(TCT_BASIC, TBC_SILVER, curVal);
 	if (isNty)
 	{
 		AttrMap attrs;
-		attrs[PLAYER_ATTR_COIN] = data->attrData[PLAYER_ATTR_COIN];
+		attrs[PLAYER_ATTR_SILVER] = data->attrData[PLAYER_ATTR_SILVER];
 		this->notify_attr(attrs);
 	}
 
@@ -4758,9 +4921,11 @@ int player_struct::add_chengjie_coin(uint32_t num, uint32_t statis_id, bool isNt
 		this->notify_attr(attrs);
 
 		std::vector<char *> args;
-		std::stringstream ss_num;
-		ss_num << num;
-		args.push_back(const_cast<char*>(ss_num.str().c_str()));
+		std::string sz_num;
+		std::stringstream ss;
+		ss << num;
+		ss >> sz_num;
+		args.push_back(const_cast<char*>(sz_num.c_str()));
 		send_system_notice(190500170, &args);
 	}
 
@@ -4807,9 +4972,11 @@ int player_struct::add_guoyu_coin(uint32_t num, uint32_t statis_id, bool isNty)
 		this->notify_attr(attrs);
 
 		std::vector<char *> args;
-		std::stringstream ss_num;
-		ss_num << num;
-		args.push_back(const_cast<char*>(ss_num.str().c_str()));
+		std::string sz_num;
+		std::stringstream ss;
+		ss << num;
+		ss >> sz_num;
+		args.push_back(const_cast<char*>(sz_num.c_str()));
 		send_system_notice(190500169, &args);
 	}
 
@@ -4856,9 +5023,11 @@ int player_struct::add_shangjin_coin(uint32_t num, uint32_t statis_id, bool isNt
 		this->notify_attr(attrs);
 
 		std::vector<char *> args;
-		std::stringstream ss_num;
-		ss_num << num;
-		args.push_back(const_cast<char*>(ss_num.str().c_str()));
+		std::string sz_num;
+		std::stringstream ss;
+		ss << num;
+		ss >> sz_num;
+		args.push_back(const_cast<char*>(sz_num.c_str()));
 		send_system_notice(190500171, &args);
 	}
 
@@ -4892,6 +5061,10 @@ int player_struct::sub_shangjin_coin(uint32_t num, uint32_t statis_id, bool isNt
 uint32_t player_struct::get_coin(void)
 {
 	return (data ? data->attrData[PLAYER_ATTR_COIN] : 0);
+}
+uint32_t player_struct::get_silver(void)
+{
+	return (data ? data->attrData[PLAYER_ATTR_SILVER] : 0);
 }
 
 int player_struct::add_zhenqi(uint32_t num, uint32_t statis_id, bool isNty)
@@ -5067,7 +5240,7 @@ int player_struct::check_can_transfer()
 	if (is_in_raid())
 	{
 		raid_struct *raid = (raid_struct *)this->scene;
-		if (raid->m_config->DengeonRank != DUNGEON_TYPE_ZHENYING)
+		if (raid->m_config->DengeonRank != DUNGEON_TYPE_ZHENYING && raid->m_config->DengeonRank != DUNGEON_TYPE_GUILD_LAND)
 		{
 			return ERROR_ID_CAN_NOT_TRANSFER;
 		}
@@ -5269,16 +5442,21 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 	int ret = 0;
 	switch (get_item_type(id))
 	{
-		case ITEM_TYPE_COIN: //银两
-			{
-				add_coin(num, statis_id, isNty);
-			}
-			break;
+		case ITEM_TYPE_SILVER: //银币
+		{
+			add_silver(num, statis_id, isNty);
+		}
+		break;
+		case ITEM_TYPE_COIN: //银票
+		{
+			add_coin(num, statis_id, isNty);
+		}
+		break;
 		case ITEM_TYPE_BIND_GOLD: //绑定元宝
-			{
-				add_bind_gold(num, statis_id, isNty);
-			}
-			break;
+		{
+			add_bind_gold(num, statis_id, isNty);
+		}
+		break;
 		case ITEM_TYPE_GUOYU_EXP:
 			add_guoyu_exp(num);
 			break;
@@ -5469,11 +5647,16 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 
 				//系统提示
 				std::vector<char *> args;
-				std::stringstream ss_id, ss_num;
-				ss_id << id;
-				ss_num << num;
-				args.push_back(const_cast<char*>(ss_id.str().c_str()));
-				args.push_back(const_cast<char*>(ss_num.str().c_str()));
+				std::string sz_id, sz_num;
+				std::stringstream ss;
+				ss << id;
+				ss >> sz_id;
+				ss.str("");
+				ss.clear();
+				ss << num;
+				ss >> sz_num;
+				args.push_back(const_cast<char*>(sz_id.c_str()));
+				args.push_back(const_cast<char*>(sz_num.c_str()));
 				send_system_notice(SNT_ADD_ITEM_TEXT, &args);
 
 				//道具飞背包
@@ -6394,6 +6577,12 @@ int player_struct::use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInfo *i
 		return ERROR_ID_NO_CONFIG;
 	}
 
+	//当非绑定的道具，使用之后还有剩余的可能，就要有对应的绑定ID
+	if (prop_config->BindType == 0 && (prop_config->Stackable > 1 || prop_config->UseDegree > 1) && prop_config->ItemRelation == 0)
+	{
+		return ERROR_ID_PROP_CAN_NOT_USE;
+	}
+
 	uint32_t item_id = grid.id;
 	uint32_t use_count = (use_all == 0 ? 1 : (prop_config->UseDegree * grid.num - grid.used_count));
 
@@ -6410,6 +6599,11 @@ int player_struct::use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInfo *i
 	else
 	{
 		del_num = grid.num;
+	}
+
+	if (grid.num - del_num > 0 && prop_config->BindType == 0)
+	{ //非绑定道具要变成绑定
+		grid.id = prop_config->ItemRelation;
 	}
 
 	if (del_num > 0)
@@ -6588,6 +6782,62 @@ int player_struct::move_baguapai_to_bag(BaguapaiCardInfo &card)
 	return -1;
 }
 
+int player_struct::move_fabao_to_bag(partner_cur_fabao &fabao)
+{
+	for(uint32_t i =0; i < data->bag_grid_num; ++i)
+	{
+		bag_grid_data& fabao_grid = data->bag[i];
+		if(fabao_grid.id == 0)
+		{
+			fabao_grid.id = fabao.fabao_id;
+			fabao_grid.num = 1;
+			fabao_grid.especial_item.fabao.main_attr.id = fabao.main_attr.id;
+			fabao_grid.especial_item.fabao.main_attr.val = fabao.main_attr.val;
+			memcpy(&fabao_grid.especial_item.fabao.minor_attr, &fabao.minor_attr, sizeof(AttrInfo) * MAX_HUOBAN_FABAO_MINOR_ATTR_NUM);
+			this->add_item_pos_cache(fabao_grid.id, i);
+			this->update_bag_grid(i);	
+			this->add_task_progress(TCT_CARRY_ITEM, fabao_grid.id, fabao_grid.num);
+
+			return 0;
+		}
+	}
+
+	return -1;
+}
+
+int player_struct::move_trade_item_to_bag(uint32_t item_id, uint32_t num, EspecialItemInfo &especial)
+{
+	std::map<uint32_t, uint32_t> add_list;
+	if (check_can_add_item(item_id, num, &add_list) == false)
+	{
+		LOG_ERR("[%s:%d] player[%lu] bag space, item_id:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, item_id, num);
+		return ERROR_ID_BAG_GRID_NOT_ENOUGH;
+	}
+
+	for (std::map<uint32_t, uint32_t>::iterator iter = add_list.begin(); iter != add_list.end(); ++iter)
+	{
+		bag_grid_data *grid = &data->bag[iter->first];
+		if (grid->id > 0)
+		{
+			grid->num += iter->second;
+		}
+		else
+		{
+			grid->id = item_id;
+			grid->num = iter->second;
+			memcpy(&grid->especial_item, &especial, sizeof(EspecialItemInfo));
+
+			this->add_item_pos_cache(item_id, iter->first);
+		}
+
+		this->update_bag_grid(iter->first);
+	}
+
+	this->add_task_progress(TCT_CARRY_ITEM, item_id, num);
+
+	return 0;
+}
+
 void player_struct::noitfy_item_flow_to_bag(std::map<uint32_t, uint32_t> &item_list)
 {
 	if (item_list.empty())
@@ -6737,10 +6987,12 @@ int player_struct::add_exp(uint32_t val, uint32_t statis_id, bool isNty)
 
 	//系统提示
 	std::vector<char *> args;
-	std::stringstream ss_num;
-	ss_num << val;
-	args.push_back(const_cast<char*>(ss_num.str().c_str()));
-	uint32_t notice_id = (notice_use_art(statis_id) ? SNT_ADD_EXP_ART : SNT_ADD_EXP_TEXT);
+	std::string sz_num;
+	std::stringstream ss;
+	ss << val;
+	ss >> sz_num;
+	args.push_back(const_cast<char*>(sz_num.c_str()));
+	uint32_t notice_id = (notice_use_art_exp(statis_id) ? SNT_ADD_EXP_ART : SNT_ADD_EXP_TEXT);
 	send_system_notice(notice_id, &args);
 
 	return 0;
@@ -7282,6 +7534,58 @@ int player_struct::add_task(uint32_t task_id, uint32_t status, bool isNty)
 	return 0;
 }
 
+void player_struct::check_task_collect(TaskInfo *info)
+{
+	if (info == NULL)
+	{
+		return;
+	}
+	std::map<uint64_t, uint64_t>::iterator it = sg_show_collect.find(info->id);
+	if (it == sg_show_collect.end())
+	{
+		return;
+	}
+	int add_collect_uuid_index = 0;
+	if (!scene || !area)
+		return;
+
+	add_area_collect_to_sight(area, &add_collect_uuid_index, collect_info);
+	for (int i = 0; i < MAX_NEIGHBOUR_AREA; ++i)
+	{
+		add_area_collect_to_sight(area->neighbour[i], &add_collect_uuid_index, collect_info);
+	}
+	if (add_collect_uuid_index == 0)
+	{
+		return;
+	}
+	int i = 0;
+	for (; i < add_collect_uuid_index; ++i)
+	{
+		if (collect_info[i].collectid == it->second)
+		{
+			break;
+		}
+	}
+	if (i == add_collect_uuid_index)
+	{
+		return;
+	}
+	EXTERN_DATA ext_data;
+	ext_data.player_id = data->player_id; 
+	SightChangedNotify notify;
+	sight_changed_notify__init(&notify);
+	if (info->status == TASK_STATUS__ACCEPTED)
+	{
+		notify.n_add_collect = 1;
+		notify.add_collect = &collect_info_point[i];
+	} 
+	else
+	{
+		notify.delete_collect = &(collect_info[i].uuid);
+		notify.n_add_collect = 1;
+	}
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);
+}
 void player_struct::task_update_notify(TaskInfo *info)
 {
 	TaskUpdateNotify nty;
@@ -8162,7 +8466,7 @@ void player_struct::add_task_progress(uint32_t type, uint32_t target, uint32_t n
 	}
 
 	//只有原始玩家会向其他组员传递
-	if (teammate_id == 0 && m_team != NULL)
+	if (teammate_id == 0 && m_team != NULL && m_team->m_data != NULL)
 	{
 		for (int i = 0; i < MAX_TEAM_MEM; ++i)
 		{
@@ -9114,6 +9418,10 @@ void player_struct::send_rock_notice(player_struct &player, uint32_t notify_id)
 {
 	NoticeTable *table = get_config_by_id(notify_id, &notify_config);
 	if (table == NULL)
+	{
+		return;
+	}
+	if (table->Effect != 1)
 	{
 		return;
 	}
@@ -10576,6 +10884,19 @@ void player_struct::add_guild_resource(uint32_t type, uint32_t num)
 	{
 		LOG_ERR("[%s:%d] send to conn_srv failed err[%d]", __FUNCTION__, __LINE__, errno);
 	}
+	
+	//增加帮贡系统提示
+	if(type == 4)
+	{
+		//系统提示
+		std::vector<char *> args;
+		std::string sz_num;
+		std::stringstream  ss;
+		ss << num;
+		ss >> sz_num;
+		args.push_back(const_cast<char*>(sz_num.c_str()));
+		send_system_notice(190500425, &args);
+	}
 }
 
 void player_struct::sub_guild_building_time(uint32_t time)
@@ -10670,7 +10991,7 @@ int player_struct::start_escort(uint32_t escort_id)
 		return -1;
 	}
 
-	monster_struct *escort_monster = monster_manager::create_monster_by_config(scene, config->MonsterIndex);
+	monster_struct *escort_monster = monster_manager::create_monster_by_config(scene, config->MonsterIndex, 0);
 	if (!escort_monster)
 	{
 		LOG_ERR("[%s:%d] player[%lu] create escort monster failed, escort_id:%u", __FUNCTION__, __LINE__, data->player_id, escort_id);
@@ -10927,7 +11248,7 @@ static void escort_summon_monster(player_struct *player, monster_struct *monster
 			continue;
 		}
 
-		monster_struct *summon_monster = monster_manager::create_monster_at_pos(monster->scene, create_config->MonsterID, create_config->MonsterLevel, create_config->PointX, create_config->PointZ, 0, NULL);
+		monster_struct *summon_monster = monster_manager::create_monster_at_pos(monster->scene, create_config->MonsterID, create_config->MonsterLevel, create_config->PointX, create_config->PointZ, 0, NULL, 0);
 		if (!summon_monster)
 		{
 			continue;
@@ -11408,6 +11729,7 @@ void player_struct::take_partner_out_sight_space(sight_space_struct *sp)
 				assert(partner->partner_sight_space == NULL);
 				continue;
 			}
+			partner->scene = NULL; //这里把它置空，是为了在adjust_battle_partner里能把伙伴加入场景
 			sp->broadcast_partner_delete(partner);
 				//关闭定时器
 			if (is_node_in_heap(&partner_manager_minheap, partner))
@@ -11730,6 +12052,11 @@ uint64_t player_struct::get_fighting_partner(void)
 	return uuid;
 }
 
+void player_struct::on_enter_scene(scene_struct *new_scene)
+{
+	take_partner_into_scene();
+}
+
 void player_struct::on_leave_scene(scene_struct *old_scene)
 {
 	for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
@@ -11973,6 +12300,9 @@ void player_struct::do_auto_add_hp()
 
 void player_struct::on_tick_10()
 {
+	if (get_entity_type(data->player_id) == ENTITY_TYPE_AI_PLAYER)
+		return;
+	
 	//todo 代码优化
 	check_fashion_expire();
 	check_horse_expire();
@@ -11997,6 +12327,12 @@ void player_struct::on_tick_10()
 		data->zhenying.task_num = 0;
 
 		send_zhenying_info();
+
+		ParameterTable *param_config = get_config_by_id(161000106, &parameter_config);
+		if (param_config != NULL)
+		{
+			data->shangjin.shangjin_num = param_config->parameter1[0];
+		}
 	}
 
 	do_auto_add_hp();
@@ -12298,6 +12634,35 @@ void player_struct::on_relive_in_raid(raid_struct *raid, uint32_t type)
 	m_team == NULL ? true : m_team->OnMemberHpChange(*this);
 }
 
+void player_struct::relive()
+{
+	uint32_t maxhp = get_attr(PLAYER_ATTR_MAXHP);
+	set_attr(PLAYER_ATTR_HP, maxhp);
+
+	ReliveNotify nty;
+	relive_notify__init(&nty);
+	nty.playerid = data->player_id;
+	EXTERN_DATA extern_data;
+	extern_data.player_id = data->player_id;
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RELIVE_NOTIFY, relive_notify__pack, nty);			
+	m_team == NULL ? true : m_team->OnMemberHpChange(*this);		
+	// if (m_team)
+	// {
+	// 	PlayerAttrNotify nty;
+	// 	player_attr_notify__init(&nty);
+	// 	AttrData attr_data[1];
+	// 	AttrData *attr_data_point[1];
+	// 	nty.player_id = data->player_id;
+	// 	nty.n_attrs = 1;
+	// 	nty.attrs = attr_data_point;
+	// 	attr_data_point[0] = &attr_data[0];
+	// 	attr_data__init(&attr_data[0]);
+	// 	attr_data[0].id = PLAYER_ATTR_HP;
+	// 	attr_data[0].val = maxhp;
+	// 	m_team->BroadcastToTeam(MSG_ID_PLAYER_ATTR_NOTIFY, &nty, (pack_func)player_attr_notify__pack);
+	// }
+}
+
 void player_struct::on_relive(uint32_t type)
 {
 	if (!data)
@@ -12359,6 +12724,7 @@ void player_struct::on_relive(uint32_t type)
 			scene->delete_player_from_scene(this);
 			set_pos(nty.pos_x, nty.pos_z);
 			t_scene->add_player_to_scene(this);
+			//cur_scene_jump(nty.pos_x, nty.pos_z, 0, NULL);
 		}
 
 		data->attrData[PLAYER_ATTR_HP] = data->attrData[PLAYER_ATTR_MAXHP];
@@ -12678,7 +13044,6 @@ int player_struct::transfer_to_new_scene_impl(scene_struct *new_scene, double po
 		scene->delete_player_from_scene(this);
 		set_pos(pos_x, pos_z);
 		new_scene->add_player_to_scene(this);
-		take_partner_into_scene();
 	}
 	else
 	{
@@ -12702,13 +13067,14 @@ int player_struct::transfer_to_new_scene_impl(scene_struct *new_scene, double po
 
 	interrupt();
 
+		//从副本回到野外
 	if (old_scence > SCENCE_DEPART && new_scene->m_id < SCENCE_DEPART)
 	{
 		return 0;
 	}
 	if (m_team !=  NULL)
 	{
-		if (m_team->GetLeadId() == this->get_uuid())
+		if (m_team->GetLeadId() == this->get_uuid() && old_scence != new_scene->m_id)
 		{
 			m_team->FollowLeadTrans(new_scene->m_id, pos_x, pos_y, pos_z, direct);
 		}
@@ -12766,19 +13132,22 @@ int player_struct::transfer_to_new_scene_by_config(uint32_t transfer_id, EXTERN_
 
 int player_struct::transfer_to_new_scene(uint32_t scene_id, double pos_x, double pos_y, double pos_z, double direct, EXTERN_DATA *extern_data)
 {
-	scene_struct *new_scene = scene_manager::get_scene(scene_id);
-	if (!new_scene)
-	{
-		LOG_ERR("%s %d: player[%lu] transfer to the wrong scene[%u]", __FUNCTION__, __LINE__, data->player_id, scene_id);
-		return (-30);
-	}
-	return transfer_to_new_scene_impl(new_scene, pos_x, pos_y, pos_z, direct, extern_data);
+	return move_to_scene_pos(scene_id, pos_x, pos_z, direct, extern_data);
+	// scene_struct *new_scene = scene_manager::get_scene(scene_id);
+	// if (!new_scene)
+	// {
+	// 	LOG_ERR("%s %d: player[%lu] transfer to the wrong scene[%u]", __FUNCTION__, __LINE__, data->player_id, scene_id);
+	// 	return (-30);
+	// }
+	// return transfer_to_new_scene_impl(new_scene, pos_x, pos_y, pos_z, direct, extern_data);
 }
 
 int player_struct::transfer_to_birth_position(EXTERN_DATA *extern_data)
 {
 	if (!scene)
 	{
+		if (data->scene_id == 0)
+			data->scene_id = DEFAULT_SCENE_ID;
 		scene_struct *new_scene = scene_manager::get_scene(data->scene_id);
 		if (!new_scene)
 		{
@@ -12788,45 +13157,12 @@ int player_struct::transfer_to_birth_position(EXTERN_DATA *extern_data)
 
 		set_pos(new_scene->m_born_x, new_scene->m_born_z);
 		new_scene->add_player_to_scene(this);
-		take_partner_into_scene();
 		return 0;
 	}
 
-	return transfer_to_new_scene_impl(scene, scene->m_born_x, scene->m_born_y, scene->m_born_z, scene->m_born_direct, extern_data);
-}
-
-int player_struct::transfer_to_guild_scene(EXTERN_DATA *extern_data)
-{
-	if (data->guild_id == 0)
-	{
-		LOG_ERR("%s: %lu not join guild", __FUNCTION__, data->player_id);
-		return ERROR_ID_GUILD_PLAYER_NOT_JOIN;
-	}
-
-	scene_struct *scene = scene_manager::get_guild_scene(data->guild_id);
-	if (!scene)
-	{
-		LOG_ERR("[%s:%d] player[%lu] get guild_scene failed, guild_id:%u", __FUNCTION__, __LINE__, data->player_id, data->guild_id);
-		return (-30);
-	}
-	return transfer_to_new_scene_impl(scene, scene->m_born_x, scene->m_born_y, scene->m_born_z, scene->m_born_direct, extern_data);
-}
-
-int player_struct::transfer_out_guild_scene(EXTERN_DATA *extern_data)
-{
-	if (!is_guild_scene_id(data->scene_id))
-	{
-		return 0;
-	}
-
-	scene_struct *scene = scene_manager::get_scene(data->last_scene_id);
-	if (!scene)
-	{
-		LOG_ERR("[%s:%d] player[%lu] get last scene failed, last_scene_id:%u", __FUNCTION__, __LINE__, data->player_id, data->last_scene_id);
-		return -1;
-	}
-
-	return transfer_to_new_scene_impl(scene, scene->m_born_x, scene->m_born_y, scene->m_born_z, scene->m_born_direct, extern_data);
+	go_down_cash_truck();
+	return move_to_scene(scene->m_id, extern_data);
+//	return transfer_to_new_scene_impl(scene, scene->m_born_x, scene->m_born_y, scene->m_born_z, scene->m_born_direct, extern_data);
 }
 
 
@@ -13017,6 +13353,7 @@ void player_struct::refresh_player_redis_info(bool offline)
 	}
 	info.textintro = data->personality_text_intro;
 	info.coin = get_coin();
+	info.silver = get_silver();	
 	info.gold = get_attr(PLAYER_ATTR_GOLD);
 	info.bind_gold = get_attr(PLAYER_ATTR_BIND_GOLD);
 	info.equip_fc = data->fc_data.equip;
@@ -13066,8 +13403,50 @@ int player_struct::set_enter_raid_pos_and_scene(raid_struct *raid, double pos_x,
 
 int player_struct::set_out_raid_pos()
 {
-	data->scene_id = data->leaveraid.scene_id;
-	set_pos(data->leaveraid.ExitPointX, data->leaveraid.ExitPointZ);
+	raid_struct *raid = get_raid();
+	data->scene_id = 0;
+
+	//如果是在帮战副本里退帮，把玩家拉到野外场景
+	if (raid && raid->is_guild_battle_raid())
+	{
+		if (data->guild_id == 0)
+		{
+			goto done;
+		}
+	}
+	
+		//帮会战已经结束了
+	if (raid && raid->m_config
+		&& (raid->m_config->DengeonRank == DUNGEON_TYPE_GUILD_RAID || raid->m_config->DengeonRank == DUNGEON_TYPE_GUILD_FINAL_RAID)
+		&& !is_guild_battle_opening())
+	{
+		struct DungeonTable* r_config = get_config_by_id(raid->m_config->ExitScene, &all_raid_config);
+		if (r_config)
+		{
+			data->scene_id = r_config->ExitScene;
+			set_pos(r_config->ExitPointX, r_config->BirthPointZ);
+			data->m_angle = r_config->BirthPointY;
+			return (0);
+		}
+	}
+	else if (data->leaveraid.scene_id != 0)
+	{
+		data->scene_id = data->leaveraid.scene_id;		
+		set_pos(data->leaveraid.ExitPointX, data->leaveraid.ExitPointZ);
+	}
+
+done:	
+	if (data->scene_id == 0)
+	{
+		data->scene_id = data->last_scene_id;
+		if (data->scene_id == 0)
+			data->scene_id = DEFAULT_SCENE_ID;
+		float pos_x = 0.0, pos_y = 0.0, pos_z = 0.0, face_y = 0.0;
+		get_scene_birth_pos(data->scene_id, &pos_x, &pos_y, &pos_z, &face_y);
+		set_pos(pos_x, pos_z);
+		data->m_angle = unity_angle_to_c_angle(face_y);
+	}
+	
 	return (0);
 }
 
@@ -13104,7 +13483,7 @@ int player_struct::conserve_out_raid_pos_and_scene(raid_struct *raid)
 	}
 	return (0);
 }
-bool notice_use_art(uint32_t statis_id)
+bool notice_use_art_exp(uint32_t statis_id)
 {
 	switch(statis_id)
 	{
@@ -13112,6 +13491,21 @@ bool notice_use_art(uint32_t statis_id)
 		case MAGIC_TYPE_MONSTER_DEAD:
 		case MAGIC_TYPE_TASK_REWARD:
 		case MAGIC_TYPE_WANYAOGU_BBQ:
+		case MAGIC_TYPE_GUILD_RUQIN_BBQ:
+			return true;
+	}
+
+	return false;
+}
+bool notice_use_art_coin(uint32_t statis_id)
+{
+	switch(statis_id)
+	{
+//		case MAGIC_TYPE_GATHER:
+		case MAGIC_TYPE_MONSTER_DEAD:
+		case MAGIC_TYPE_TASK_REWARD:
+		case MAGIC_TYPE_WANYAOGU_BBQ:
+		case MAGIC_TYPE_GUILD_RUQIN_REWARD:
 			return true;
 	}
 
@@ -13869,8 +14263,8 @@ void player_struct::do_taunt_action()
 		{
 			data->cur_skill.start_time = time_helper::get_cached_time();
 			data->cur_skill.skill_id = skill_id;
-			data->cur_skill.direct_x = his_pos->pos_x - my_pos->pos_x;
-			data->cur_skill.direct_z = his_pos->pos_z - my_pos->pos_z;
+//			data->cur_skill.direct_x = his_pos->pos_x - my_pos->pos_x;
+//			data->cur_skill.direct_z = his_pos->pos_z - my_pos->pos_z;
 
 			SkillCastNotify notify;
 			PosData pos_data;
@@ -13882,8 +14276,8 @@ void player_struct::do_taunt_action()
 			notify.playerid = data->player_id;
 			notify.skillid = skill_id;
 			notify.cur_pos = &pos_data;
-			notify.direct_x = data->cur_skill.direct_x;
-			notify.direct_z = data->cur_skill.direct_z;
+			notify.direct_x = his_pos->pos_x - my_pos->pos_x;
+			notify.direct_z = his_pos->pos_z - my_pos->pos_z;
 			broadcast_to_sight(MSG_ID_SKILL_CAST_NOTIFY, &notify, (pack_func)skill_cast_notify__pack, true);
 		}
 		else
@@ -13981,9 +14375,11 @@ void player_struct::add_chengjie_exp(uint32_t num)
 
 	//系统提示
 	std::vector<char *> args;
-	std::stringstream ss_num;
-	ss_num << num;
-	args.push_back(const_cast<char*>(ss_num.str().c_str()));
+	std::string sz_num;
+	std::stringstream ss;
+	ss << num;
+	ss >> sz_num;
+	args.push_back(const_cast<char*>(sz_num.c_str()));
 	send_system_notice(190500167, &args);
 }
 
@@ -13998,9 +14394,11 @@ void player_struct::add_chengjie_courage(uint32_t num)
 
 	//系统提示
 	std::vector<char *> args;
-	std::stringstream ss_num;
-	ss_num << num;
-	args.push_back(const_cast<char*>(ss_num.str().c_str()));
+	std::string sz_num;
+	std::stringstream ss;
+	ss << num;
+	ss >> sz_num;
+	args.push_back(const_cast<char*>(sz_num.c_str()));
 	send_system_notice(190500170, &args);
 
 }
@@ -14062,9 +14460,11 @@ void player_struct::add_shangjin_exp(uint32_t num)
 
 	//系统提示
 	std::vector<char *> args;
-	std::stringstream ss_num;
-	ss_num << num;
-	args.push_back(const_cast<char*>(ss_num.str().c_str()));
+	std::string sz_num;
+	std::stringstream ss;
+	ss << num;
+	ss >> sz_num;
+	args.push_back(const_cast<char*>(sz_num.c_str()));
 	send_system_notice(190500168, &args);
 }
 
@@ -14097,16 +14497,16 @@ void player_struct::refresh_yaoshi_oneday()
 		data->chengjie.chengjie_num = param_config->parameter1[0];
 	}
 
-	param_config = get_config_by_id(161000106, &parameter_config);
-	if (param_config != NULL)
-	{
-		data->shangjin.shangjin_num = param_config->parameter1[0];
-	}
-	SpecialtySkillTable *tableSkill = get_yaoshi_skill_config(SHANGJIN_THREE, data->shangjin.level);
-	if (tableSkill != NULL)
-	{
-		data->shangjin.free = tableSkill->EffectValue[0];
-	}
+	//param_config = get_config_by_id(161000106, &parameter_config);
+	//if (param_config != NULL)
+	//{
+	//	data->shangjin.shangjin_num = param_config->parameter1[0];
+	//}
+	//SpecialtySkillTable *tableSkill = get_yaoshi_skill_config(SHANGJIN_THREE, data->shangjin.level);
+	//if (tableSkill != NULL)
+	//{
+	//	data->shangjin.free = tableSkill->EffectValue[0];
+	//}
 
 	send_all_yaoshi_num();
 
@@ -15438,6 +15838,7 @@ void player_struct::load_strong_end(void)
 				memset(info, 0, sizeof(StrongChapterInfo));
 				info->id = config->Type;
 				info->state = Strong_State_Achieving;
+				strong_chapter_ids.insert(info->id);
 			}
 			else
 			{
@@ -15455,6 +15856,7 @@ void player_struct::load_strong_end(void)
 				info->id = iter->first;
 				info->state = Strong_State_Achieving;
 				init_strong_goal_progress(info);
+				strong_goal_ids.insert(info->id);
 			}
 			else
 			{
@@ -15626,4 +16028,818 @@ StrongChapterInfo *player_struct::get_strong_chapter_info(uint32_t chapter_id)
 	return NULL;
 }
 
+int player_struct::move_to_wild_pos(uint32_t scene_id, double pos_x, double pos_z, double direct)
+{
+	int ret = check_scene_enter_cond(scene_id);
+	if (ret != 0)
+	{
+		LOG_ERR("%s %d: player[%lu] transfer scene[%lu] cond wrong, ret = %d", __FUNCTION__, __LINE__, data->player_id, scene_id, ret);		
+		return (-1);
+	}
+	
+	scene_struct *new_scene = scene_manager::get_scene(scene_id);
+	if (!new_scene)
+	{
+		LOG_ERR("%s %d: player[%lu] transfer to the wrong scene[%lu]", __FUNCTION__, __LINE__, data->player_id, scene_id);
+		return (-30);
+	}
 
+	if (sight_space)
+		sight_space_manager::del_player_from_sight_space(sight_space, this, false);		
+	scene->player_leave_scene(this);
+		
+	new_scene->player_enter_scene(this, pos_x, data->pos_y, pos_z, direct);		
+	return (0);
+}
+
+int player_struct::move_to_wild(uint32_t scene_id)
+{
+	int ret = check_scene_enter_cond(scene_id);
+	if (ret != 0)
+	{
+		LOG_ERR("%s %d: player[%lu] transfer scene[%lu] cond wrong, ret = %d", __FUNCTION__, __LINE__, data->player_id, scene_id, ret);		
+		return (-1);
+	}
+	
+	scene_struct *new_scene = scene_manager::get_scene(scene_id);
+	if (!new_scene)
+	{
+		LOG_ERR("%s %d: player[%lu] transfer to the wrong scene[%lu]", __FUNCTION__, __LINE__, data->player_id, scene_id);
+		return (-30);
+	}
+
+	double pos_x;
+	double pos_z;
+	double direct;
+	pos_x = new_scene->m_born_x;
+	pos_z = new_scene->m_born_z;
+	direct = new_scene->m_born_direct;
+	return move_to_wild_pos(scene_id, pos_x, pos_z, direct);
+}
+int player_struct::move_to_raid(uint32_t raid_id, EXTERN_DATA *extern_data)
+{
+	int ret;
+	ret = check_raid_enter_cond(raid_id);
+	if (ret != 0)
+	{
+		LOG_ERR("[%s:%d] player[%lu] check enter raid failed, raid_id:%u, ret = %d", __FUNCTION__, __LINE__, extern_data->player_id, raid_id, ret);		
+		return (ret);
+	}
+	
+	DungeonTable *config = get_config_by_id(raid_id, &all_raid_config);
+	if (!config)
+	{
+		LOG_ERR("[%s:%d] player[%lu] get config failed, raid_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, raid_id);
+		return -1;
+	}
+	
+	if (sight_space)
+		sight_space_manager::del_player_from_sight_space(sight_space, this, false);		
+	scene->player_leave_scene(this);
+
+	if (config->DengeonRank == DUNGEON_TYPE_GUILD_LAND)
+	{
+		int ret = 0;
+		do
+		{
+			guild_land_raid_struct *raid = guild_land_raid_manager::get_guild_land_raid(data->guild_id);
+			if (!raid)
+			{
+				ret = ERROR_ID_SERVER;
+				LOG_ERR("[%s:%d] player[%lu] get raid failed", __FUNCTION__, __LINE__, extern_data->player_id);
+				break;
+			}
+
+			raid->player_enter_raid(this, raid->res_config->BirthPointX, raid->res_config->BirthPointZ, 0);
+//			raid->player_enter_raid(this, raid->res_config->BirthPointX, raid->res_config->BirthPointZ);
+		} while(0);
+
+		if (ret != 0)
+		{
+			raid_manager::send_enter_raid_fail(this, ret, 0, NULL, 0);
+		}
+		return 0;
+	}
+	else if (config->DengeonRank == DUNGEON_TYPE_GUILD_WAIT)
+	{
+		guild_wait_raid_manager::add_player_to_guild_wait_raid(this);
+		return 0;
+	}
+	else if (config->DengeonRank == DUNGEON_TYPE_ZHENYING)
+	{
+		FactionBattleTable *table = get_zhenying_battle_table(get_attr(PLAYER_ATTR_LEVEL));
+		if (table == NULL)
+		{
+			LOG_ERR("%s: player[%lu] enter zhenying batttle, get battle table failed", __FUNCTION__, get_uuid());
+			return -1;
+		}
+		zhenying_raid_struct *raid = zhenying_raid_manager::add_player_to_zhenying_raid(this);
+		if (raid == NULL)
+		{
+			LOG_ERR("[%s] :player[%lu] fail", __FUNCTION__, get_uuid());
+			return (-10);
+		}
+
+//		send_comm_answer(MSG_ID_INTO_ZHENYING_BATTLE_ANSWER, 0, extern_data);
+		add_achievement_progress(ACType_ZHENYING_BATTLE, 0, 0, 1);
+		
+		return 0; 
+	}
+	else if (config->DengeonRank == DUNGEON_TYPE_BATTLE)
+	{
+		ret = ZhenyingBattle::GetInstance()->IntoBattle(*this);
+		if (ret != 0)
+		{
+			LOG_ERR("%s: player[%lu] enter battle %u failed, ret = %d", __FUNCTION__, get_uuid(), ret);
+		}
+		return ret;
+	}
+
+	raid_struct *raid = raid_manager::create_raid(raid_id, this);
+	if (!raid)
+	{
+		LOG_ERR("%s: player[%lu] create raid[%u] failed", __FUNCTION__, extern_data->player_id, raid_id);
+		return (-20);
+	}
+
+	assert(raid->res_config);
+
+	if (m_team)
+	{
+		raid->team_enter_raid(m_team);
+	}
+	else
+	{
+		int x = raid->res_config->BirthPointX, z = raid->res_config->BirthPointZ;
+		double direct = 0;
+		if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW)
+		{
+			BattlefieldTable *table = zhenying_fight_config.begin()->second;
+			if (table != NULL)
+			{
+				ZhenyingBattle::GetInstance()->GetRelivePos(table, get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
+			}
+		}
+		// if (raid->player_enter_raid(this, x, z, direct) != 0)
+		// {
+		// 	LOG_ERR("%s: player[%lu] enter raid failed", __FUNCTION__, get_uuid());
+		// 	return (-30);
+		// }
+		raid->player_enter_raid(this, x, z, direct);
+	}
+ 	return (0);
+}
+
+int player_struct::move_to_scene_pos(uint32_t scene_id, double pos_x, double pos_z, double direct, EXTERN_DATA *extern_data)
+{
+	if (scene_id == data->scene_id)
+	{
+		return cur_scene_jump(pos_x, pos_z, direct, extern_data);		
+	}
+	if (scene_id <= SCENCE_DEPART)
+	{
+		return move_to_wild(scene_id);		
+	}
+	else
+	{
+		return move_to_raid(scene_id, extern_data);
+	}
+}
+
+int player_struct::move_to_transfer(uint32_t transfer_id, EXTERN_DATA *extern_data)
+{
+	LOG_INFO("%s: player[%lu] transfer to id[%u]", __FUNCTION__, extern_data->player_id, transfer_id);
+	struct TransferPointTable* t_config = get_config_by_id(transfer_id, &transfer_config);
+	if (!t_config || t_config->n_MapId == 0)
+	{
+		LOG_ERR("%s: player[%lu] transfer to %u, no config", __FUNCTION__, get_uuid(), transfer_id);
+		return (-1);
+	}
+
+	double pos_x;
+	double pos_z;
+	double direct;
+
+	if (t_config->MapId[0] == data->scene_id)
+	{
+		assert(scene);
+		if (t_config->n_MapId >= 5)
+		{
+			pos_x = (int64_t)t_config->MapId[1] / 1000.0;
+			pos_z = (int64_t)t_config->MapId[3] / 1000.0;
+			direct = (int64_t)t_config->MapId[4];			
+		}
+		else
+		{
+			pos_x = scene->m_born_x;
+			pos_z = scene->m_born_z;
+			direct = scene->m_born_direct;			
+		}
+		
+		return cur_scene_jump(pos_x, pos_z, direct, extern_data);
+	}
+
+	if (t_config->MapId[0] <= SCENCE_DEPART)
+	{
+		scene_struct *new_scene = scene_manager::get_scene(t_config->MapId[0]);
+		if (!new_scene)
+		{
+			LOG_ERR("%s %d: player[%lu] transfer to the wrong scene[%lu]", __FUNCTION__, __LINE__, data->player_id, t_config->MapId[0]);
+			return (-30);
+		}
+
+		if (t_config->n_MapId >= 5)
+		{
+			pos_x = (int64_t)t_config->MapId[1] / 1000.0;
+			pos_z = (int64_t)t_config->MapId[3] / 1000.0;
+			direct = (int64_t)t_config->MapId[4];
+		}
+		else
+		{
+			pos_x = new_scene->m_born_x;
+			pos_z = new_scene->m_born_z;
+			direct = new_scene->m_born_direct;
+		}
+		return move_to_wild_pos(new_scene->m_id, pos_x, pos_z, direct);
+	}
+	else
+	{
+		return move_to_raid(t_config->MapId[0], extern_data);
+	}
+	
+	return (0);
+}
+
+int player_struct::check_scene_enter_cond(uint32_t scene_id)
+{
+	if (!data || !scene)
+		return -1;
+	if (data->truck.truck_id != 0)
+		return -1;
+	SceneResTable *scene_config = get_config_by_id(scene_id, &scene_res_config);
+	if (!scene_config)
+		return -10;
+
+	if (get_level() < scene_config->Level)
+		return -20;
+	return 0;
+}
+
+int player_struct::send_enter_raid_fail(uint32_t err_code, uint32_t n_reason_player, uint64_t *reason_player_id, uint32_t item_id)
+{
+	EnterRaidAnswer resp;
+	enter_raid_answer__init(&resp);
+	resp.result = err_code;
+	resp.n_reson_player_id = n_reason_player;
+	resp.reson_player_id = reason_player_id;
+	resp.item_id = item_id;
+
+	EXTERN_DATA extern_data;
+	extern_data.player_id = get_uuid();
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ENTER_RAID_ANSWER, enter_raid_answer__pack, resp);
+	return (0);
+}
+
+int player_struct::check_enter_raid_cost(struct DungeonTable *r_config)
+{
+		//不消耗
+	if (r_config->CostItemID == 0)
+		return (0);
+
+	switch (get_item_type(r_config->CostItemID))
+	{
+		case ITEM_TYPE_COIN: //金钱
+			if (get_attr(PLAYER_ATTR_COIN) < r_config->CostNum)
+				return 5;
+			break;
+		case ITEM_TYPE_BIND_GOLD: //元宝
+		case ITEM_TYPE_GOLD:
+			if (get_comm_gold() < (int)r_config->CostNum)
+				return 6;
+			break;
+		default: //道具
+			if (get_item_can_use_num(r_config->CostItemID) < (int)r_config->CostNum)
+				return 4;
+			break;
+	}
+	return (0);
+}
+
+int player_struct::do_enter_raid_cost(uint32_t item_id, uint32_t item_num)
+{
+	if (item_id == 0 || item_num == 0)
+		return (0);
+	switch (get_item_type(item_id))
+	{
+		case ITEM_TYPE_COIN: //金钱
+			sub_coin(item_num, MAGIC_TYPE_ENTER_RAID, true);
+			break;
+		case ITEM_TYPE_BIND_GOLD: //元宝
+		case ITEM_TYPE_GOLD:
+			sub_comm_gold(item_num, MAGIC_TYPE_ENTER_RAID, true);
+			break;
+		default: //道具
+			del_item(item_id, item_num, MAGIC_TYPE_ENTER_RAID, true);
+			break;
+	}
+	return (0);
+}
+
+int player_struct::do_team_enter_raid_cost(uint32_t raid_id)
+{
+	struct DungeonTable *r_config = get_config_by_id(raid_id, &all_raid_config);	
+	
+	assert(r_config->DengeonType != 2);
+	assert(m_team);
+
+	for (int pos = 0; pos < m_team->m_data->m_memSize; ++pos)
+	{
+		player_struct *t_player = player_manager::get_player_by_id(m_team->m_data->m_mem[pos].id);
+		assert(t_player);
+		t_player->do_enter_raid_cost(r_config->CostItemID, r_config->CostNum);
+	}
+	return (0);
+}
+
+
+int player_struct::check_enter_raid_reward_time(uint32_t id, struct ControlTable *config)
+{
+	if (config->TimeType != 1)
+		return (0);
+	uint32_t count = get_raid_reward_count(id);
+	if (count >= config->RewardTime)
+		return 10;
+	return (0);
+}
+
+int player_struct::check_raid_enter_cond(uint32_t raid_id)
+{
+	if (!scene || !data)
+	{
+		LOG_ERR("%s: player[%lu] can not enter raid[%p][%p]", __FUNCTION__, get_uuid(), scene, data);
+		return -1;
+	}
+
+	uint32_t n_reason_player = 0;
+	uint64_t reason_player_id[MAX_TEAM_MEM];
+	struct DungeonTable *r_config = get_config_by_id(raid_id, &all_raid_config);
+
+	if (r_config->DengeonRank == DUNGEON_TYPE_GUILD_LAND)
+	{
+		if (data->guild_id == 0)
+		{
+			LOG_ERR("[%s:%d] player[%lu] not join guild", __FUNCTION__, __LINE__, get_uuid())
+			return (-10);
+		}
+	}	
+	else if (r_config->DengeonRank == DUNGEON_TYPE_GUILD_WAIT)
+	{
+		if (!is_guild_battle_opening())
+		{
+			LOG_ERR("[%s:%d] player[%lu] guild battle not open, raid_id:%u", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+			return (-20);
+		}
+
+		int ret = player_can_participate_guild_battle(this);
+		if (ret != 0)
+		{
+			LOG_ERR("[%s:%d] player[%lu] can't participate, raid_id:%u", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+			return (-30);
+		}
+
+		if (m_team)
+		{
+			LOG_ERR("[%s:%d] player[%lu] in team, raid_id:%u", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+			return (-40);
+		}
+	}
+
+	struct SceneResTable *s_config = get_config_by_id(raid_id, &scene_res_config);
+	if (!r_config || !s_config)
+	{
+		LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+		return (-50);
+	}
+
+	struct ControlTable *control_config = get_config_by_id(r_config->ActivityControl, &all_control_config);
+	if (!control_config)
+	{
+		LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+		return (-60);
+	}
+
+		//万妖谷小关卡不能直接进入
+	if (r_config->DengeonRank == DUNGEON_TYPE_RAND_SLAVE)
+	{
+		LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+		return (-70);
+	}
+
+		//当前在副本中
+	// if (scene && scene->get_scene_type() == SCENE_TYPE_RAID 
+	// 	&& r_config->DengeonRank != DUNGEON_TYPE_ZHENYING)
+	// {
+	// 	raid_struct *t_raid = (raid_struct *)(scene);
+	// 	LOG_ERR("%s %d: player[%lu] raid[%u] already in raid[%u][%lu]", __FUNCTION__, __LINE__,
+	// 		get_uuid(), raid_id, t_raid->data->ID, t_raid->data->uuid);
+	// 	return (-5);
+	// }
+
+	// 	//当前在位面副本中
+	// if (sight_space)
+	// {
+	// 	LOG_ERR("%s %d: player[%lu] sightspace[%p]", __FUNCTION__, __LINE__, get_uuid(), sight_space);
+	// 	return (-6);
+	// }
+
+		//检查等级
+	if (get_attr(PLAYER_ATTR_LEVEL) < s_config->Level)
+	{
+		LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+		return (-80);
+	}
+
+	if (data->truck.truck_id != 0)
+	{
+		LOG_ERR("%s %d: player[%lu] in truck, raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+		send_enter_raid_fail(190500305, 0, NULL, 0);
+		return -(90);
+	}
+
+	if (r_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW
+		|| r_config->DengeonRank == DUNGEON_TYPE_BATTLE
+		|| r_config->DengeonRank == DUNGEON_TYPE_ZHENYING)
+	{
+		if (get_attr(PLAYER_ATTR_ZHENYING) == 0)
+		{
+			LOG_ERR("%s %d: player[%lu] not in zhenying, raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);			
+			send_enter_raid_fail(190500258, 0, NULL, 0);
+			return -100;
+		}
+	}
+
+		//检查时间
+	if (control_config->n_OpenDay > 0)
+	{
+		bool pass = false;
+		uint32_t week = time_helper::getWeek(time_helper::get_cached_time() / 1000);
+		for (size_t i = 0; i < control_config->n_OpenDay; ++i)
+		{
+			if (week == control_config->OpenDay[i])
+			{
+				pass = true;
+				break;
+			}
+		}
+		if (pass == false)
+		{
+			LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+			send_enter_raid_fail(8, 0, NULL, 0);
+			return (-110);
+		}
+	}
+	assert(control_config->n_OpenTime == control_config->n_CloseTime);
+	if (control_config->n_OpenTime > 0)
+	{
+		bool pass = false;
+
+		uint32_t now = time_helper::get_cached_time() / 1000;
+
+		for (size_t i = 0; i < control_config->n_OpenTime; ++i)
+		{
+			uint32_t start = time_helper::get_timestamp_by_day(control_config->OpenTime[i] / 100,
+				control_config->OpenTime[i] % 100, now);
+			uint32_t end = time_helper::get_timestamp_by_day(control_config->CloseTime[i] / 100,
+				control_config->CloseTime[i] % 100, now);
+			if (now >= start && now <= end)
+			{
+				pass = true;
+				break;
+			}
+		}
+		if (pass == false)
+		{
+			LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+			send_enter_raid_fail(8, 0, NULL, 0);
+			return (-120);
+		}
+	}
+
+		//个人副本通过
+	if (r_config->DengeonType == 2)
+	{
+		if (m_team)
+		{
+			LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+			return (-130);
+		}
+
+		int ret = check_enter_raid_reward_time(raid_id, control_config);
+		if (ret != 0)
+		{
+			LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);			
+			reason_player_id[0] = data->player_id;
+			send_enter_raid_fail(10, 1, reason_player_id, 0);
+			return (-140);
+		}
+
+		//英雄挑战副本检测总收益次数
+		if(raidid_to_hero_challenge_config.find(raid_id) != raidid_to_hero_challenge_config.end())
+		{
+			uint32_t all_challenge_num = 0;
+			uint32_t use_challenge_num = 0;
+			ParameterTable *param_config = get_config_by_id(161000332, &parameter_config); 
+			if(param_config && param_config->n_parameter1 >0)
+			{
+				all_challenge_num = param_config->parameter1[0];
+			}
+			for(std::map<uint64_t, ChallengeTable*>::iterator itr = raidid_to_hero_challenge_config.begin(); itr != raidid_to_hero_challenge_config.end(); itr++)
+			{
+				use_challenge_num += get_raid_reward_count(itr->second->DungeonID);
+			}
+			if(use_challenge_num >= all_challenge_num)
+			{
+				LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);			
+				reason_player_id[0] = data->player_id;
+				send_enter_raid_fail(10, 1, reason_player_id, 0);
+				return (-150);
+			}
+		}
+
+		ret = check_enter_raid_cost(r_config);
+		if (ret != 0)
+		{
+			LOG_ERR("%s %d: player[%lu] raid[%u] check enter cost failed", __FUNCTION__, __LINE__, get_uuid(), raid_id);						
+			reason_player_id[0] = data->player_id;
+			send_enter_raid_fail(ret, 1, reason_player_id, r_config->CostItemID);
+			return (-160);
+		}
+		do_enter_raid_cost(r_config->CostItemID, r_config->CostNum);
+
+		return (0);
+	}
+
+	// switch (r_config->DengeonRank)
+	// {
+	// 	case DUNGEON_TYPE_PVP_3: //PVP副本
+	// 	case DUNGEON_TYPE_PVP_5: //PVP副本
+	// 	case DUNGEON_TYPE_ZHENYING: //阵营战副本
+	// 	case DUNGEON_TYPE_BATTLE: //阵营战副本
+	// 	case DUNGEON_TYPE_GUILD_WAIT: //帮会等待副本
+	// 		return (0);
+	// 	default:
+	// 		break;
+	// }
+	
+		//组队副本检查队伍
+	if (!m_team)
+	{
+		LOG_ERR("%s %d: player[%lu] raid[%u] do not have team", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+		return (-170);
+	}
+
+		//是否是队长
+	if (get_uuid() != m_team->GetLeadId())
+	{
+		LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+		return (-180);
+	}
+
+		//检查人数
+	uint32_t team_mem_num = m_team->GetMemberSize();
+	if (control_config->MinActor > team_mem_num
+		|| control_config->MaxActor < team_mem_num)
+	{
+		LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+		return (-190);
+	}
+
+	bool pass = true;
+		//检查是否有人离线
+	for (int pos = 0; pos < m_team->m_data->m_memSize; ++pos)
+	{
+		if (m_team->m_data->m_mem[pos].timeremove != 0)
+		{
+//			send_enter_raid_fail(7, m_team->m_data->m_mem[pos].id, 0);
+//			return (-70);
+			reason_player_id[n_reason_player++] = m_team->m_data->m_mem[pos].id;
+			pass = false;
+		}
+	}
+	if (!pass)
+	{
+		send_enter_raid_fail(7, n_reason_player, reason_player_id, 0);
+		return (-200);
+	}
+
+
+		//检查等级, 消耗
+	player_struct *team_players[MAX_TEAM_MEM];
+	uint32_t i = 0;
+	for (int pos = 0; pos < m_team->m_data->m_memSize; ++pos)
+	{
+		player_struct *t_player = player_manager::get_player_by_id(m_team->m_data->m_mem[pos].id);
+		if (!t_player)
+		{
+			LOG_ERR("%s: can not find team mem %lu", __FUNCTION__, m_team->m_data->m_mem[pos].id);
+//			send_enter_raid_fail(2, m_team->m_data->m_mem[pos].id, 0);
+			return (-210);
+		}
+		if (t_player->get_attr(PLAYER_ATTR_LEVEL) < s_config->Level)
+		{
+			pass = false;
+			reason_player_id[n_reason_player++] = m_team->m_data->m_mem[pos].id;
+//			send_enter_raid_fail(2, t_player->get_uuid(), 0);
+//			return (-60);
+		}
+
+//		int ret = check_enter_raid_cost(t_player, r_config);
+//		if (ret != 0)
+//		{
+//			send_enter_raid_fail(ret, t_player->data->player_id, r_config->CostItemID);
+//			return (-65);
+//		}
+
+		team_players[i++] = t_player;
+	}
+	if (!pass)
+	{
+		send_enter_raid_fail(2, n_reason_player, reason_player_id, 0);
+		return (-220);
+	}
+
+//// 检查收益次数
+	for (int pos = 0; pos < m_team->m_data->m_memSize; ++pos)
+	{
+		player_struct *t_player = team_players[pos];
+		int ret = t_player->check_enter_raid_reward_time(raid_id, control_config);
+		if (ret != 0)
+		{
+			pass = false;
+			reason_player_id[n_reason_player++] = m_team->m_data->m_mem[pos].id;
+		}
+
+	}
+	if (!pass)
+	{
+		send_enter_raid_fail(10, n_reason_player, reason_player_id, r_config->CostItemID);
+		return (-230);
+	}
+//// 英雄挑战类型副本检测总收益次数
+	if(raidid_to_hero_challenge_config.find(raid_id) != raidid_to_hero_challenge_config.end())
+	{
+		for (int pos = 0; pos < m_team->m_data->m_memSize; ++pos)
+		{
+			player_struct *t_player = team_players[pos];
+			uint32_t all_challenge_num = 0;
+			uint32_t use_challenge_num = 0;
+			ParameterTable *param_config = get_config_by_id(161000332, &parameter_config); 
+			if(param_config && param_config->n_parameter1 >0)
+			{
+				all_challenge_num = param_config->parameter1[0];
+			}
+			for(std::map<uint64_t, ChallengeTable*>::iterator itr = raidid_to_hero_challenge_config.begin(); itr != raidid_to_hero_challenge_config.end(); itr++)
+			{
+				use_challenge_num += t_player->get_raid_reward_count(itr->second->DungeonID);
+			}
+			if(use_challenge_num >= all_challenge_num)
+			{
+
+				pass = false;
+				reason_player_id[n_reason_player++] = t_player->m_team->m_data->m_mem[pos].id;
+			}
+
+		}
+	
+	}
+	if (!pass)
+	{
+		send_enter_raid_fail(10, n_reason_player, reason_player_id, r_config->CostItemID);
+		return (-240);
+	}
+//// 检查消耗
+	int fail_ret;
+	for (int pos = 0; pos < m_team->m_data->m_memSize; ++pos)
+	{
+		player_struct *t_player = team_players[pos];
+		int ret = t_player->check_enter_raid_cost(r_config);
+		if (ret != 0)
+		{
+			fail_ret = ret;
+			pass = false;
+			reason_player_id[n_reason_player++] = m_team->m_data->m_mem[pos].id;
+//			send_enter_raid_fail(ret, t_player->data->player_id, r_config->CostItemID);
+//			return (-65);
+		}
+	}
+	if (!pass)
+	{
+		send_enter_raid_fail(fail_ret, n_reason_player, reason_player_id, r_config->CostItemID);
+		return (-250);
+	}
+////
+
+
+//	if (i != team_mem_num)
+//	{
+//		LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+//		return (-70);
+//	}
+
+		//检查距离
+	struct position *leader_pos = get_pos();
+//	uint64_t too_far_player_id = 0;
+	for (i = 1; i < team_mem_num; ++i)
+	{
+		player_struct *t_player = team_players[i];
+
+		if (scene != t_player->scene)
+		{
+			pass = false;
+			reason_player_id[n_reason_player++] = t_player->get_uuid();
+			continue;
+		}
+
+		struct position *pos = t_player->get_pos();
+		uint64_t x = (pos->pos_x - leader_pos->pos_x);
+		uint64_t z = (pos->pos_z - leader_pos->pos_z);
+		if (x * x + z * z > max_team_mem_distance)
+		{
+			pass = false;
+			reason_player_id[n_reason_player++] = t_player->get_uuid();
+//			too_far_player_id = t_player->get_uuid();
+//			send_transfer_to_leader_notify(too_far_player_id);
+		}
+	}
+
+//	if (too_far_player_id != 0)
+	if (!pass)
+	{
+		send_enter_raid_fail(3, n_reason_player, reason_player_id, 0);
+		return (-260);
+	}
+
+	// for (int pos = 0; pos < m_team->m_data->m_memSize; ++pos)
+	// {
+	// 	player_struct *t_player = player_manager::get_player_by_id(m_team->m_data->m_mem[pos].id);
+	// 	do_enter_raid_cost(t_player, r_config->CostItemID, r_config->CostNum);
+	// }
+	return 0;
+}
+
+int player_struct::cur_scene_jump(double pos_x, double pos_z, double direct, EXTERN_DATA */*extern_data*/)
+{
+	if (sight_space)
+	{
+	 	sight_space_manager::del_player_from_sight_space(sight_space, this, false);
+		send_clear_sight();
+	}
+
+	assert(scene);
+	
+	set_pos_with_broadcast(pos_x, pos_z);
+	send_scene_transfer(direct, pos_x, data->pos_y, pos_z, scene->m_id, 0);
+	// assert(scene);
+	// scene_struct *old = scene;
+	// if (sight_space)
+	// 	sight_space_manager::del_player_from_sight_space(sight_space, this, false);		
+	// send_clear_sight();
+	// scene->delete_player_from_scene(this);
+	// set_pos(pos_x, pos_z);
+	// old->add_player_to_scene(this);
+	// take_partner_into_scene();
+	// send_scene_transfer(direct, pos_x, data->pos_y, pos_z, old->m_id, 0);
+	return (0);
+}
+
+int player_struct::move_to_scene(uint32_t scene_id, EXTERN_DATA *extern_data)
+{
+	if (scene_id == data->scene_id)
+	{
+		assert(scene);
+		return cur_scene_jump(scene->m_born_x, scene->m_born_z, scene->m_born_direct, extern_data);
+	}
+	
+	if (scene_id <= SCENCE_DEPART)
+	{
+		return move_to_wild(scene_id);		
+	}
+	else
+	{
+		return move_to_raid(scene_id, extern_data);
+	}
+	return (0);
+}
+
+// TODO: 组队副本进入，位面退出，进入条件检查
+// TODO: 副本进入是否检查同一个队伍，副本里能否组队，退队是否踢出队伍
+// TODO: 进入是否有队伍检查
+//       能否加入队伍
+//       退队是否踢出
+//       离开是否退队
+
+// TODO: 检查同一个场景的跳转
+// TODO: use_m_player()
+// TODO: scene_can_make_team()
+// TODO: check_can_transfer()
+// TODO: player_leave_raid => player_leave_scene_v2

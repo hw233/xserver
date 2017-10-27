@@ -7,6 +7,7 @@
 #include "conn_node_doufachang.h"
 #include "conn_node_guild.h"
 #include "conn_node_rank.h"
+#include "conn_node_trade.h"
 #include "time_helper.h"
 #include "game_event.h"
 #include "tea.h"
@@ -345,6 +346,17 @@ int conn_node_client::dispatch_message()
 		case MSG_ID_DOUFACHANG_RECORD_REQUEST:
 		case MSG_ID_DOUFACHANG_BUY_CHALLENGE_REQUEST:
 			return transfer_to_doufachang();
+		case MSG_ID_TRADE_OFF_SHELF_REQUEST:
+		case MSG_ID_TRADE_RESHELF_REQUEST:
+		case MSG_ID_TRADE_ENLARGE_SHELF_REQUEST:
+		case MSG_ID_TRADE_ITEM_SUMMARY_REQUEST:
+		case MSG_ID_TRADE_ITEM_DETAIL_REQUEST:
+		case MSG_ID_TRADE_BUY_REQUEST:
+		case MSG_ID_TRADE_GET_EARNING_REQUEST:
+		case MSG_ID_AUCTION_BID_REQUEST:
+		case MSG_ID_AUCTION_BUY_NOW_REQUEST:
+		case MSG_ID_AUCTION_INFO_REQUEST:
+			return transfer_to_tradesrv();
 		default:
 			return transfer_to_gameserver();
 	}
@@ -545,6 +557,27 @@ int conn_node_client::transfer_to_doufachang()
 		goto done;
 	}
 done:
+	return (ret);
+}
+
+int conn_node_client::transfer_to_tradesrv()
+{
+	int ret = 0;
+	PROTO_HEAD *head;
+	head = (PROTO_HEAD *)buf_head();
+
+	if (!conn_node_trade::server_node) {
+		LOG_ERR("[%s:%d] do not have trade server connected", __FUNCTION__, __LINE__);
+		ret = -1;
+		goto done;
+	}
+
+	if (conn_node_trade::server_node->send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len)) {
+		LOG_ERR("[%s:%d] send to trade failed err[%d]", __FUNCTION__, __LINE__, errno);
+		ret = -2;
+		goto done;
+	}
+done:	
 	return (ret);
 }
 

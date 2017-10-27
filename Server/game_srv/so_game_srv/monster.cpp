@@ -1775,16 +1775,21 @@ void monster_struct::monster_dead_creat_collect(unit_struct *murderer)
 
 }
 
-void monster_struct::world_boss_refresf_player_redis_info(unit_struct *murderer, double befor_hp, int32_t damage)
+void monster_struct::monster_suffer_damage(unit_struct *murderer, double befor_hp, int32_t damage)
 {
 
-	//世界boss被击，在活动开启期间特殊处理
 	if(befor_hp > get_attr(PLAYER_ATTR_MAXHP) || damage <= 0)
 		return;
 	if(murderer == NULL)
 		return;
 	if(this->config == NULL)
 		return;
+	raid_struct *raid = murderer->get_raid();
+	if(raid && raid->ai && raid->ai->raid_on_monster_attacked)
+	{
+		raid->ai->raid_on_monster_attacked(raid, this, murderer, damage, befor_hp);
+	}
+	//世界boss被击，在活动开启期间特殊处理
 	if(this->config->Type != 5)
 		return;
 	uint32_t cd =0;
@@ -1801,7 +1806,7 @@ void monster_struct::world_boss_refresf_player_redis_info(unit_struct *murderer,
 	else if(murderer->get_unit_type() == UNIT_TYPE_PARTNER)
 	{
 	
-		murderer = ((partner_struct*)murderer)->m_owner;
+		player = ((partner_struct*)murderer)->m_owner;
 	}
 	else
 	{

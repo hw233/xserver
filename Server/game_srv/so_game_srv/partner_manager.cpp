@@ -64,6 +64,7 @@ int partner_manager::init_partner_struct(int num, unsigned long key)
 		partner = new partner_struct();
 		partner_manager_partner_free_list.push_back(partner);
 	}
+	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(partner_struct) * num, sizeof(partner_data) * num);				
 	return init_mass_pool(0, sizeof(partner_data), num, key, &partner_manager_partner_data_pool);
 }
 
