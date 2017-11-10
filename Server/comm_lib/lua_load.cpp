@@ -86,6 +86,7 @@ int traverse_array(lua_State *L, struct field *f, void *data, uint32_t *n_size)
 			default:  //只需要支持数字和string的数组
 			{
 				assert(0);
+				exit(0);
 //				printf("value = none\n");
 				break;
 			}
@@ -213,6 +214,7 @@ int traverse_table(lua_State *L, struct sproto_type *sproto_type, void *data)
 				break;
 			default:
 				assert(0);
+				exit(0);
 //				printf("value = none\n");
 				break;
 				

@@ -328,4 +328,63 @@ int sight_space_struct::insert_task_event(uint64_t event_id)
 	return 0;
 }
 
+void sight_space_struct::stop_monster_ai()
+{
+	for (int i = 0; i < MAX_MONSTER_IN_SIGHT_SPACE; ++i)
+	{
+		if (monsters[i] == NULL)
+			continue;
+		monsters[i]->data->stop_ai = true;
+	}	
+}
+void sight_space_struct::start_monster_ai()
+{
+	for (int i = 0; i < MAX_MONSTER_IN_SIGHT_SPACE; ++i)
+	{
+		if (monsters[i] == NULL)
+			continue;
+		monsters[i]->data->stop_ai = false;
+	}	
+}
+
+void sight_space_struct::delete_monster(monster_struct *monster)
+{
+	if (monster->sight_space != this || !players[0] || !players[0]->data)
+		return;
+	monster->data->stop_ai = true;
+	broadcast_monster_delete(monster);
+	SightChangedNotify notify;
+	sight_changed_notify__init(&notify);
+
+	//发送给需要在视野里面删除怪物的通知
+	notify.n_delete_monster = 1;
+	uint64_t player_ids[1];
+	player_ids[0] = monster->get_uuid();
+	notify.delete_monster = player_ids;
+
+	EXTERN_DATA extern_data;
+	extern_data.player_id = players[0]->get_uuid();
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);	
+}
+void sight_space_struct::delete_collect(Collect *collect)
+{
+	if (collect->sight_space != this || !players[0] || !players[0]->data)
+		return;
+	
+	SightChangedNotify notify;
+	sight_changed_notify__init(&notify);
+
+	//发送给需要在视野里面删除怪物的通知
+	notify.n_delete_collect = 1;
+	uint32_t collect_ids[1];
+	collect_ids[0] = collect->m_uuid;
+	notify.delete_collect = collect_ids;
+
+	EXTERN_DATA extern_data;
+	extern_data.player_id = players[0]->get_uuid();
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGHT_CHANGED_NOTIFY, sight_changed_notify__pack, notify);
+
+//	delete collect;
+	Collect::DestroyCollect(collect->m_uuid);	
+}
 

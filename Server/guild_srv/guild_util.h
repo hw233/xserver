@@ -52,10 +52,11 @@ void replace_guild_master(uint32_t guild_id, uint64_t master_id); //转让帮主
 int save_guild_name(GuildInfo *guild);
 int delete_guild(uint32_t guild_id);
 int save_guild_popularity(GuildInfo *guild);
-bool office_has_permission(uint32_t office, uint32_t type); //查看职位是否有操作权限
+bool player_has_permission(GuildPlayer *player, uint32_t type); //查看职位是否有操作权限
 
 void sync_guild_rename_to_gamesrv(GuildInfo *guild);
 void sync_guild_info_to_gamesrv(GuildPlayer *player);
+void sync_guild_task_to_gamesrv(GuildPlayer *player);
 int create_guild(uint64_t player_id, uint32_t icon, std::string &name, GuildPlayer *&player); //创建帮会
 int join_guild(uint64_t player_id, GuildInfo *guild); //加入帮会
 int appoint_office(GuildPlayer *appointor, GuildPlayer *appointee, uint32_t office);
@@ -75,6 +76,7 @@ int add_guild_popularity(GuildInfo *guild, uint32_t num);
 int add_guild_treasure(GuildInfo *guild, uint32_t num);
 int add_guild_build_board(GuildInfo *guild, uint32_t num);
 int add_player_donation(GuildPlayer *player, uint32_t num);
+int add_player_contribute_treasure(GuildPlayer *player, uint32_t num);
 int sub_guild_popularity(GuildInfo *guild, uint32_t num);
 int sub_guild_treasure(GuildInfo *guild, uint32_t num, bool save = true);
 int sub_guild_build_board(GuildInfo *guild, uint32_t num, bool save = true);
@@ -83,6 +85,13 @@ int add_guild_battle_score(GuildInfo *guild, uint32_t num);
 int add_player_battle_score(GuildPlayer *player, uint32_t num);
 void broadcast_guild_battle_score(GuildInfo *guild, std::vector<uint64_t> &player_ids);
 void sync_player_donation_to_game_srv(GuildPlayer *player, uint32_t is_change = 0, uint32_t change_val = 0);
+
+void init_guild_permission(GuildInfo *guild);
+void broadcast_permission_update(GuildInfo *guild, uint32_t office, uint32_t type, uint32_t state, uint64_t except_id = 0);
+GuildLog *get_usual_insert_log(GuildInfo *guild);
+void broadcast_usual_log_add(GuildInfo *guild, GuildLog *log);
+GuildLog *get_important_insert_log(GuildInfo *guild);
+void broadcast_important_log_add(GuildInfo *guild, GuildLog *log);
 
 //帮会建筑
 int init_guild_building(GuildInfo *guild);

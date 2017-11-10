@@ -524,7 +524,7 @@ void conn_node_dbsrv::handle_rename_request(EXTERN_DATA *extern_data)
 	PlayerRenameRequest* req = player_rename_request__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req) {
 		LOG_ERR("[%s : %d]: unpack rename pack failed", __FUNCTION__, __LINE__);
-		ret = ERROR_ID_NAME_EXIST;
+		ret = 190100005;
 		goto done;
 	}
 
@@ -541,7 +541,7 @@ void conn_node_dbsrv::handle_rename_request(EXTERN_DATA *extern_data)
 	query(sql, 1, &effect);
 
 	if (effect == 0) {
-		ret = ERROR_ID_NAME_EXIST;
+		ret = 190100005;
 	}
 	
 done:

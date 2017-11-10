@@ -50,6 +50,7 @@ void monster_cast_call_monster_skill(monster_struct *monster, uint64_t skill_id)
 void monster_cast_skill_to_direct(uint64_t skill_id, monster_struct *monster, float direct_x, float direct_z);
 void monster_cast_skill_to_pos(uint64_t skill_id, monster_struct *monster, float pos_x, float pos_z);
 void monster_cast_immediate_skill_to_player(uint64_t skill_id, monster_struct *monster, player_struct *owner, unit_struct *player);
+void monster_cast_skill_to_friend(monster_struct *monster, struct SkillTable *config);
 //void monster_cast_delay_skill_to_player(uint64_t skill_id, monster_struct *monster, unit_struct *player);
 bool check_monster_relive(monster_struct *monster);
 void normal_ai_dead(monster_struct *monster, scene_struct *scene);

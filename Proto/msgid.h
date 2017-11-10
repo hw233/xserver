@@ -184,6 +184,8 @@
 #define MSG_ID_TASK_CHAPTER_REWARD_REQUEST  10617 //任务章节奖励请求 NULL
 #define MSG_ID_TASK_CHAPTER_REWARD_ANSWER   10618 //任务章节奖励应答 comm_answer
 #define MSG_ID_TASK_UPDATE_CHAPTER_REWARD_NOTIFY   10619 //任务章节奖励更新通知 TaskUpdateChapterRewardNotify
+#define MSG_ID_TASK_ENTER_PLANES_REQUEST    10620 //任务进入位面请求 TaskCommRequest
+#define MSG_ID_TASK_ENTER_PLANES_ANSWER     10621 //任务进入位面应答 TaskEnterPlanesAnswer
 
 //组队
 #define MSG_ID_CREATE_TEAM_REQUEST         10630 //创建队伍请求 TeamTarget
@@ -307,6 +309,8 @@
 #define MSG_ID_EQUIP_GEM_COMPOSE_REQUEST       10916 //宝石合成请求 EquipGemComposeRequest
 #define MSG_ID_EQUIP_GEM_COMPOSE_ANSWER        10917 //宝石合成应答 EquipGemComposeAnswer
 #define MSG_ID_EQUIP_ADD_NOTIFY                10918 //装备开启通知 EquipData
+#define MSG_ID_EQUIP_GEM_ONEKEY_COMPOSE_REQUEST       10919 //宝石一键合成请求 EquipGemOnekeyComposeRequest
+#define MSG_ID_EQUIP_GEM_ONEKEY_COMPOSE_ANSWER        10920 //宝石一键合成应答 EquipGemOnekeyComposeAnswer
 
 //邮件
 #define MSG_ID_MAIL_INSERT_NOTIFY              11000 //新邮件通知 MailData
@@ -535,9 +539,9 @@
 #define MSG_ID_GUILD_SET_WORDS_REQUEST            12116 //帮会设置公告请求 GuildSetWordsRequest
 #define MSG_ID_GUILD_SET_WORDS_ANSWER             12117 //帮会设置公告应答 GuildSetWordsAnswer
 #define MSG_ID_GUILD_APPOINT_OFFICE_REQUEST       12118 //帮会任命请求 GuildAppointOfficeRequest
-#define MSG_ID_GUILD_APPOINT_OFFICE_ANSWER        12119 //帮会任命应答 comm_answer
+#define MSG_ID_GUILD_APPOINT_OFFICE_ANSWER        12119 //帮会任命应答 GuildAppointOfficeAnswer
 #define MSG_ID_GUILD_KICK_REQUEST                 12120 //帮会踢人请求 GuildKickReuqest
-#define MSG_ID_GUILD_KICK_ANSWER                  12121 //帮会踢人应答 comm_answer
+#define MSG_ID_GUILD_KICK_ANSWER                  12121 //帮会踢人应答 GuildKickAnswer
 #define MSG_ID_GUILD_KICK_NOTIFY                  12122 //帮会踢人通知 NULL
 #define MSG_ID_GUILD_UPDATE_ATTR_NOTIFY           12123 //帮会属性更新通知 GuildUpdateAttrNotify
 //#define MSG_ID_GUILD_DAILY_REWARD_REQUEST         12124 //帮会领取每日奖励请求 NULL
@@ -566,6 +570,8 @@
 #define MSG_ID_GUILD_UPDATE_PERMISSION_NOTIFY     12152 //帮会权限更新通知 GuildUpdatePermissionNotify
 #define MSG_ID_GUILD_ADD_USUAL_LOG_NOTIFY         12153 //帮会动态增加通知 GuildLogData
 #define MSG_ID_GUILD_ADD_IMPORTANT_LOG_NOTIFY     12154 //帮会大事记增加通知 GuildLogData
+#define MSG_ID_GUILD_ACCEPT_TASK_REQUEST          12155 //帮会接取建设任务请求 NULL
+#define MSG_ID_GUILD_ACCEPT_TASK_ANSWER           12156 //帮会接取建设任务应答 comm_answer
 
 
 //阵营
@@ -613,6 +619,9 @@
 #define MSG_ID_ZHENYING_FIGHT_START_FLAG_NOTIFY          12440 //阵营战开始夺旗 StartFlag
 #define MSG_ID_ZHENYING_FIGHT_INTERUPT_FLAG_NOTIFY          12441 //阵营战中断夺旗 StartFlag
 #define MSG_ID_ZHENYING_FIGHT_FINISH_FLAG_NOTIFY          12442 //阵营战完成夺旗 StartFlag
+#define MSG_ID_JOIN_ZHENYING_FIGHT_STATE_NOTIFY            12443 //报名副本阵营战cd FbCD
+#define MSG_ID_CANCEL_JOIN_ZHENYING_FIGHT_REQUEST           12444 //取消报名副本阵营战(阵营攻防)请求 NULL
+#define MSG_ID_CANCEL_JOIN_ZHENYING_FIGHT_ANSWER            12445 //取消报名副本阵营战应答 comm_answer
 
 //日常阵营(野外场景表现)
 //#define MSG_ID_INTO_ZHENYING_DAILY_REQUEST           12450 //进入阵营日常请求 

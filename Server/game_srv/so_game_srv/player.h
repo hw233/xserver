@@ -624,6 +624,8 @@ struct player_data
 	uint32_t guild_donation;
 	uint32_t guild_battle_activity_time; //所参加的帮会战活动开始时间
 	ProtoGuildSkill guild_skills[MAX_GUILD_SKILL_NUM];
+	uint32_t guild_task_count;
+	uint32_t guild_task_config_id;
 
 	//八卦牌
 	BaguapaiDressInfo baguapai_dress[MAX_BAGUAPAI_STYLE_NUM]; //八卦牌装备列表
@@ -961,12 +963,21 @@ public:
 	int sub_comm_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //消耗银票，不够就消耗银币
 	int add_silver(uint32_t num, uint32_t statis_id, bool isNty = true); //增加银两
 	int sub_silver(uint32_t num, uint32_t statis_id, bool isNty = true); //消耗银两
-	int add_chengjie_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
-	int sub_chengjie_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
-	int add_guoyu_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
-	int sub_guoyu_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
-	int add_shangjin_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
-	int sub_shangjin_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
+//	int add_chengjie_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
+//	int sub_chengjie_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
+//	int add_guoyu_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
+//	int sub_guoyu_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
+//	int add_shangjin_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
+//	int sub_shangjin_coin(uint32_t num, uint32_t statis_id, bool isNty = true); //
+	int add_gongxun(uint32_t num, uint32_t statis_id, bool isNty = true); //
+	int sub_gongxun(uint32_t num, uint32_t statis_id, bool isNty = true); //
+	int add_xuejing(uint32_t num, uint32_t statis_id, bool isNty = true); //
+	int sub_xuejing(uint32_t num, uint32_t statis_id, bool isNty = true); //	
+	int add_lingshi(uint32_t num, uint32_t statis_id, bool isNty = true); //
+	int sub_lingshi(uint32_t num, uint32_t statis_id, bool isNty = true); //	
+	int add_shengwang(uint32_t num, uint32_t statis_id, bool isNty = true); //
+	int sub_shengwang(uint32_t num, uint32_t statis_id, bool isNty = true); //	
+	
 	uint32_t get_coin(void); //获取银票
 	uint32_t get_silver(void); //获取银两	
 	int add_zhenqi(uint32_t num, uint32_t statis_id, bool isNty = true); //增加真气
@@ -974,7 +985,7 @@ public:
 	uint32_t get_zhenqi(void); //获取真气
 	void add_guoyu_exp(uint32_t num);
 	void add_chengjie_exp(uint32_t num);
-	void add_chengjie_courage(uint32_t num);
+//	void add_chengjie_courage(uint32_t num);
 	void add_shangjin_exp(uint32_t num);
 	void refresh_yaoshi_oneday();
 	void refresh_zhenying_task_oneday();
@@ -1083,10 +1094,20 @@ public:
 	void task_finish_del_notify(uint32_t task_id);
 	void leave_team(player_struct *leader);
 	void hand_out_team_leader(player_struct *leader); //把组队队长数据移交给新队长
+	void clear_guild_task(void);
+	void on_leave_guild(void);
 
 	int get_task_chapter_info(uint32_t &id, uint32_t &state);
 	void update_task_chapter_info(void);
 	uint32_t get_task_chapter_id(void);
+
+	bool is_task_event_execute(uint32_t event_id);
+	void insert_task_event_execute(uint32_t event_id);
+	void clear_task_event_execute(void);
+	void add_task_planes_unit(uint32_t refresh_id, uint64_t unit_uuid);
+	void del_task_planes_unit(uint32_t refresh_id, uint32_t type);
+	void clear_task_planes_uints(void);
+	void on_leave_sight_space(sight_space_struct *sight_space);
 
 	void do_taunt_action();
 	void update_region_id();
@@ -1186,10 +1207,10 @@ public:
 	uint32_t get_activeness(void);
 	bool activity_is_unlock(uint32_t act_id);
 	int check_activity_progress(uint32_t matter, uint32_t value);
-	int activity_finish_check_chivalry(uint32_t chivalry_id);
-	int add_chivalry(uint32_t num, uint32_t statis_id, bool isNty = true);
-	int sub_chivalry(uint32_t num, uint32_t statis_id, bool isNty = true);
-	uint32_t get_chivalry(void);
+//	int activity_finish_check_chivalry(uint32_t chivalry_id);
+//	int add_chivalry(uint32_t num, uint32_t statis_id, bool isNty = true);
+//	int sub_chivalry(uint32_t num, uint32_t statis_id, bool isNty = true);
+//	uint32_t get_chivalry(void);
 	void update_daily_activity_item(DailyActivityInfo *info);
 	void update_chivalry_activity_item(ChivalryActivityInfo *info);
 	void refresh_activity_daily(void);
@@ -1300,6 +1321,7 @@ public:
 	void add_strong_chapter_progress(uint32_t chapter_id);
 	void strong_chapter_update_notify(StrongChapterInfo *info);
 	StrongChapterInfo *get_strong_chapter_info(uint32_t chapter_id);
+	void check_strong_chapter_open(uint32_t old_lv, uint32_t new_lv);
 
 	uint64_t last_change_area_time;
 	sight_space_struct *sight_space;
@@ -1315,6 +1337,8 @@ public:
 	std::map<uint32_t, uint32_t> xun_map_id;  //second: 藏宝图对应的出生点, first:藏宝图ID(物品表)
 	PartnerMap m_partners;
 	uint32_t chengjie_kill; //悬赏目标被杀
+	std::set<uint32_t> m_task_planes_events;
+	std::multimap<uint32_t, uint64_t> m_task_planes_units;
 
 private:
 	int move_to_wild(uint32_t scene_id);  //进入野外
@@ -1354,7 +1378,8 @@ private:
 };
 
 void init_sight_unit_info_point();
-bool notice_use_art_exp(uint32_t statis_id);
-bool notice_use_art_coin(uint32_t statis_id);
+int get_exp_notice_id(uint32_t statis_id);
+int get_coin_notice_id(uint32_t statis_id);
+int get_partner_exp_notice_id(uint32_t statis_id);
 int check_qiecuo_finished(player_struct *p1, player_struct *p2);
 #endif

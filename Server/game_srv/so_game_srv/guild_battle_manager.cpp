@@ -1525,7 +1525,7 @@ int player_can_participate_guild_battle(player_struct *player)
 
 	if (guild_battle_is_final() && guild_battle_manager_final_guild_id.find(player->data->guild_id) == guild_battle_manager_final_guild_id.end())
 	{
-		return ERROR_ID_GUILD_BATTLE_FINAL_QUALIFICATION;
+		return 190411003;
 	}
 
 	return 0;

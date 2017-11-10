@@ -753,7 +753,7 @@ int ChengJieTaskManage::NotifyTargetPos(player_struct *player)
 	CommAnswer send;
 	comm_answer__init(&send);
 	send.result = 190500154;
-	if (!target->add_watched_list(target->get_uuid()))
+	if (!target->add_watched_list(player->get_uuid()))
 	{
 		send.result = 190500156;
 	}

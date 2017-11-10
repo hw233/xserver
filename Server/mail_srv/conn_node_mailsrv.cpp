@@ -643,7 +643,7 @@ int conn_node_mailsrv::handle_mail_give_attach_answer(EXTERN_DATA *extern_data)
 	//领取失败的，清除标记
 	if (req->n_failids > 0)
 	{
-		ret = ERROR_ID_GET_MAIL_ATTACH_BAG_FULL;
+		ret = 190500081;
 		len = sprintf(sql, "update mail set state = 0 where player_id = %lu and mail_id in (", extern_data->player_id);
 		p = sql + len;
 		for (size_t i = 0; i < req->n_failids; ++i)

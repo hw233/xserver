@@ -91,6 +91,7 @@ std::map<uint64_t, struct ChivalrousTable*> activity_chivalry_config; //侠义�
 std::map<uint64_t, struct GangsTable*> guild_building_config; //帮会建筑表
 std::map<uint64_t, struct GangsJurisdictionTable*> guild_office_config; //帮会职权表
 std::map<uint64_t, struct GangsSkillTable*> guild_skill_config; //帮会技能表
+std::map<uint64_t, struct GangsBuildTaskTable*> guild_build_task_config; //帮会建设任务表
 std::map<uint64_t, struct CampTable*> zhenying_base_config; //阵营基础信息表
 std::map<uint64_t, struct BattlefieldTable*> zhenying_fight_config; //阵营战表
 std::map<uint64_t, struct GradeTable*> zhenying_level_config; //阵营等级表
@@ -154,6 +155,7 @@ std::map<uint64_t, struct MGLYyanseTable*> maogui_shouling_colour_config; //猫�
 std::map<uint64_t, struct MGLYyanseTable*> maogui_xiaoguai_colour_config;  //猫鬼乐园鬼王召唤的小怪颜色配置表
 std::map<uint64_t, struct MGLYmaoguiwangTable*> maogui_maogui_wang_config; //猫鬼乐园猫鬼王配置表
 std::map<uint64_t, struct MGLYshoulingTable*> maogui_shouling_to_xiaoguai_config; //猫鬼乐园猫首领死亡删除对应小怪
+std::map<uint64_t, struct MonsterIDTable*> raid_jincheng_suiji_kill_monster; //副本进程击杀id对应此表的随机一只怪物，进程加一
 
 /////////////////////
 uint32_t sg_bag_unlock_base_price;

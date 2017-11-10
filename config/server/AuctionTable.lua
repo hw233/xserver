@@ -6,7 +6,7 @@ local AuctionTable = {
 		['Num'] = 1,	--数量
 		['TradingList'] = 550191001,	--交易类型
 		['DefaultPrice'] = 100000,	--默认竞价
-		['Fare'] = 2000,	--每次加价
+		['Fare'] = 1000,	--每次加价
 		['Price'] = 1000000,	--一口价
 		['Time'] = 10800	--拍卖时间
 		},
@@ -17,7 +17,7 @@ local AuctionTable = {
 		['Num'] = 2,
 		['TradingList'] = 550191001,
 		['DefaultPrice'] = 100000,
-		['Fare'] = 2000,
+		['Fare'] = 1000,
 		['Price'] = 1000000,
 		['Time'] = 10800
 		},

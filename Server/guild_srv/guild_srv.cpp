@@ -49,6 +49,9 @@ int main(int argc, char **argv)
 	std::string szMysqlDbUser;
 	std::string szMysqlDbPwd;
 	int nMysqlPort = 0;
+
+	srandom(time(NULL));
+	srand(time(NULL));
 	
 	ret = log4c_init();
 	if (ret != 0) {

@@ -77,12 +77,12 @@ while True:
 #        for t1 in req.target_playerid:
 #            print "hit target %lu" % (t1)
 # 命中广播
-    if msg_id == 10205:
-        req = cast_skill_pb2.skill_hit_notify()
-        req.ParseFromString(pb_data)
-        oldtime = datetime.datetime.now()
-        for t1 in req.target_player:
-            print "%s: hit notify id[%lu] effect[%d] hpdelta[%d] hp[%d]" % (oldtime, t1.playerid, t1.effect, t1.hp_delta, t1.cur_hp)
+#    if msg_id == 10205:
+#        req = cast_skill_pb2.skill_hit_notify()
+#        req.ParseFromString(pb_data)
+#        oldtime = datetime.datetime.now()
+#        for t1 in req.target_player:
+#            print "%s: hit notify id[%lu] effect[%d] hpdelta[%d] hp[%d]" % (oldtime, t1.playerid, t1.effect, t1.hp_delta, t1.cur_hp)
 #            for t2 in t1.add_buff:
 #                print "hit[%lu] notify add buff %d" % (t1.playerid, t2)
 

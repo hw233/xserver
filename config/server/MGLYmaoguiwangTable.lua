@@ -6,8 +6,9 @@ local MGLYmaoguiwangTable = {
 		['Monster2'] = {151005133,151005134,151005135,151005136,151005137,151005138},	--召唤怪物ID
 		['SeparateRange'] = 6,	--召唤怪物范围
 		['Time'] = 10000,	--时间
-		['Effects'] = 'Prefabs/Effect/ef_boss006Magic_cast2',	--特效路径
-		['EffectsParameter'] = {180,3}	--特效参数
+		['Effects'] = 'Prefabs/Effect/ef_gw_chusheng',	--特效路径
+		['EffectsParameter'] = {180,3},	--特效参数
+		['CallTime'] = 3	--开始召怪时间
 		}
 	}
 return MGLYmaoguiwangTable

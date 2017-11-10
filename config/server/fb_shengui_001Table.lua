@@ -486,7 +486,7 @@
         ['PointPosX'] = -46.73,
         ['PointPosY'] = 22.71869,
         ['PointPosZ'] = 60.69,
-        ['Yaw'] = 223.5375,
+        ['Yaw'] = 223.5376,
         ['Level'] = 5,
         ['TargetInfoList'] = {
         }
@@ -550,24 +550,6 @@
     },
     [1000047] = {
         ['uid'] = 1000047,
-        ['ID'] = 154000023,
-        ['ResType'] = "Collection",
-        ['PointPosX'] = -83.38593,
-        ['PointPosY'] = 22.73024,
-        ['PointPosZ'] = 49.26809,
-        ['Yaw'] = 0,
-    },
-    [1000048] = {
-        ['uid'] = 1000048,
-        ['ID'] = 154000023,
-        ['ResType'] = "Collection",
-        ['PointPosX'] = -85.12,
-        ['PointPosY'] = 22.73024,
-        ['PointPosZ'] = 50.54,
-        ['Yaw'] = 0,
-    },
-    [1000049] = {
-        ['uid'] = 1000049,
         ['ID'] = 152030057,
         ['ResType'] = "Npc",
         ['PointPosX'] = -52.604,
@@ -577,6 +559,33 @@
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }
+    },
+    [1000048] = {
+        ['uid'] = 1000048,
+        ['ID'] = 154000049,
+        ['ResType'] = "Collection",
+        ['PointPosX'] = -46.43,
+        ['PointPosY'] = 22.65626,
+        ['PointPosZ'] = 61.13,
+        ['Yaw'] = 0,
+    },
+    [1000049] = {
+        ['uid'] = 1000049,
+        ['ID'] = 154000023,
+        ['ResType'] = "Collection",
+        ['PointPosX'] = -88.6143,
+        ['PointPosY'] = 22.71,
+        ['PointPosZ'] = 52.03755,
+        ['Yaw'] = 0,
+    },
+    [1000050] = {
+        ['uid'] = 1000050,
+        ['ID'] = 154000023,
+        ['ResType'] = "Collection",
+        ['PointPosX'] = -85.35143,
+        ['PointPosY'] = 22.73024,
+        ['PointPosZ'] = 50.8154,
+        ['Yaw'] = 0,
     },
 }
 return fb_shengui_001

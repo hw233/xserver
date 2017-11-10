@@ -97,6 +97,13 @@ message TaskRewardData
 	required uint32 exp = 3; //
 }
 
+//任务环数
+message TaskNumberData
+{
+	required uint32 current = 1; //当前环数
+	required uint32 total = 2; //总环数
+}
+
 //任务信息
 message TaskData
 {
@@ -105,6 +112,7 @@ message TaskData
 	required uint32 expireTime = 3; //过期时间戳，0表示不限时
 	repeated TaskCount progress = 4; //任务进度
 	optional TaskRewardData reward = 5; //任务奖励
+	optional TaskNumberData number = 6; //任务环数
 }
 
 message PlayerOnlineState

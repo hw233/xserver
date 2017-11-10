@@ -10,6 +10,10 @@
 #define MAX_GUILD_BUILDING_NUM 5 //每个帮会最大建筑数
 #define MAX_GUILD_ANNOUNCEMENT_LEN     200 //帮会公告最大长度
 #define MAX_GUILD_GOODS_NUM     30 //帮会商品最大数
+#define MAX_GUILD_OFFICE 4
+#define MAX_GUILD_LOG_ARG_NUM 5
+#define MAX_GUILD_LOG_ARG_LEN 100
+#define MAX_GUILD_LOG_NUM 50
 
 enum GuildBuildingType
 {
@@ -28,17 +32,38 @@ enum PlayerExitGuildReason
 
 enum GuildOfficePermissionType
 {
-	GOPT_APPOINT_VICE = 1, //任命或撤职副帮主
-	GOPT_APPOINT_ELDER = 2, //任命或撤职长老
-	GOPT_OPEN_ACTIVITY = 3, //开启活动
-	GOPT_DEAL_JOIN = 4, //处理入帮申请
-	GOPT_KICK_VICE = 5, //踢副帮主
-	GOPT_KICK_ELDER = 6, //踢长老
-	GOPT_KICK_MASS = 7, //踢帮众
-	GOPT_RECRUIT_SETTING = 8, //招募设置
-	GOPT_ANNOUNCEMENT_SETTING = 9, //公告设置
-	GOPT_DEVELOP_SKILL = 10, //研发技能
-	GOPT_RENAME = 11, //改名
+	GOPT_APPOINT = 1, //任命
+	GOPT_ANNOUNCEMENT_SETTING = 2, //公告设置
+	GOPT_BUILDING_UP = 3, //建筑升级
+	GOPT_OPEN_ACTIVITY = 4, //开启活动
+	GOPT_RECRUIT_SETTING = 5, //招募设置
+	GOPT_DEVELOP_SKILL = 6, //研发技能
+	GOPT_RENAME = 7, //改名
+	GOPT_DEAL_JOIN = 8, //处理入帮申请
+	GOPT_KICK = 9, //请离门宗
+	GOPT_INVITATION = 10, //邀请
+	GOPT_END,
+};
+
+enum GuildUsualLogType
+{
+	GULT_JOIN = 1, //加入
+	GULT_QUIT = 2, //退出
+	GULT_KICK = 3, //被踢
+	GULT_PRAY1 = 4, //祈福1
+	GULT_PRAY2 = 5, //祈福2
+	GULT_PRAY3 = 6, //祈福3
+	GULT_ADD_TREASURE = 7, //贡献资金
+};
+
+enum GuildImportantLogType
+{
+	GILT_CREATE = 1, //创建
+	GILT_OFFICE_UP = 2, //职位提升
+	GILT_OFFICE_DOWN = 3, //职位降低
+	GILT_BUILDING_UP = 4, //建筑升级
+	GILT_SKILL_DEVELOP = 5, //技能研发
+	GILT_RENAME = 6, //帮会改名
 };
 
 //class AutoReleaseRedisPlayer
@@ -104,6 +129,9 @@ struct GuildPlayer
 	uint32_t all_history_donation; //所有帮会历史帮贡
 	uint32_t cur_history_donation; //当前帮会历史帮贡
 	uint32_t cur_week_donation; //本周帮贡
+	uint32_t cur_week_treasure; //本周资金
+	uint32_t cur_week_task; //本周内政，即建设任务次数
+	uint32_t cur_week_task_config_id; //本周建设任务配置id
 	uint32_t office; //职位
 	uint32_t week_reset_time; //每周重置时间
 	uint32_t join_time; //入帮时间
@@ -115,6 +143,19 @@ struct GuildPlayer
 	uint32_t act_battle_score; //本场帮战积分
 	uint32_t guild_land_active_reward_id[MAX_GUILD_LAND_ACTIVE_NUM]; //帮会活动FactionActivity表id
 	uint32_t guild_land_active_reward_num[MAX_GUILD_LAND_ACTIVE_NUM]; //帮会活动收益次数
+};
+
+struct GuildPermission
+{
+	uint32_t office;
+	uint32_t permission[GOPT_END];
+};
+
+struct GuildLog
+{
+	uint32_t type;
+	uint32_t time;
+	char     args[MAX_GUILD_LOG_ARG_NUM][MAX_GUILD_LOG_ARG_LEN];
 };
 
 struct GuildInfo
@@ -144,6 +185,10 @@ struct GuildInfo
 	GuildSkill skills[MAX_GUILD_SKILL_NUM]; //研发技能列表
 	GuildAnswer answer; // 帮会答题
 	uint32_t battle_score; //帮战积分
+
+	GuildPermission permissions[MAX_GUILD_OFFICE]; //权限
+	GuildLog usual_logs[MAX_GUILD_LOG_NUM]; //动态
+	GuildLog important_logs[MAX_GUILD_LOG_NUM]; //大事记
 };
 
 #endif

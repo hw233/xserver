@@ -105,6 +105,8 @@ void partner_manager::delete_partner(partner_struct *p)
 
 	if (is_node_in_heap(&partner_manager_minheap, p))
 		partner_ontick_delete(p);
+
+	p->clear_all_buffs();
 	
 	if (p->data) {
 		remove_partner(p);

@@ -93,6 +93,10 @@ enum SERVER_PROTO
 	SERVER_PROTO_GUILD_CREATE, //帮会创建
 	SERVER_PROTO_GUILD_SYNC_ALL, //同步所有帮会信息到game_srv
 	SERVER_PROTO_GUILD_RENAME, //帮会改名
+	SERVER_PROTO_GUILD_ACCEPT_TASK_REQUEST, //接取帮会建设任务请求
+	SERVER_PROTO_GUILD_ACCEPT_TASK_ANSWER,  //接取帮会建设任务应答
+	SERVER_PROTO_GUILD_TASK_FINISH,  //帮会建设任务完成
+	SERVER_PROTO_GUILD_SYNC_TASK, //同步帮会建设任务进度
 
 	SERVER_PROTO_CHOSE_ZHENYING_REQUEST, //加入阵营
 	SERVER_PROTO_CHANGE_ZHENYING_REQUEST, //改变阵营
@@ -728,6 +732,18 @@ typedef struct trade_statis_insert
 	uint32_t ext_num5;
 	uint64_t ext_num6;
 } TRADE_STATIS_INSERT;
+
+typedef struct guild_accept_task_answer
+{
+	uint32_t result;
+	uint32_t task_id;
+} GUILD_ACCEPT_TASK_ANSWER;
+
+typedef struct guild_sync_task
+{
+	uint32_t task_count;
+	uint32_t config_id;
+} GUILD_SYNC_TASK;
 
 #pragma pack() 
 #endif

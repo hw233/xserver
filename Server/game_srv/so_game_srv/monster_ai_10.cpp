@@ -69,7 +69,10 @@ static void ai_tick_10(monster_struct *monster)
 		return;
 
 	if (!monster->is_alive())
+	{
 		assert(0);
+		exit(0);
+	}
 	
 	if (monster->ai_data.muxue_jiangshi_ai.state == 1 && monster->data->next_skill_id == 0)
 	{

@@ -474,6 +474,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 		case SCRIPT_EVENT_START_GONGCHENGCHUI:
 		case SCRIPT_EVENT_PLAY_EFFECT:
 		case SCRIPT_EVENT_POPUP_TALK:
+		case SCRIPT_EVENT_PLAYER_DUMIAO_CARTOON:
 		{
 			RaidEventNotify nty;
 			raid_event_notify__init(&nty);
@@ -722,17 +723,10 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 			{
 				monster_level =  raid->ruqin_data.level;
 				raid->ruqin_data.monster_boshu += 1;
-				{
-					raid->ruqin_data.boss_creat = true;
-				}
 			}
 			for (size_t i = 0; i + 1 < config->n_Parameter1; i = i+2)
 			{
 				monster_manager::create_monster_by_id(raid, config->Parameter1[i], config->Parameter1[i + 1], monster_level);
-				if(raid->ruqin_data.guild_ruqin == true && raid->ruqin_data.boss_creat == false && (config->Parameter1[i] == sg_guild_ruqin_renzu_bossid || config->Parameter1[i] == sg_guild_ruqin_yaozu_bossid))
-				{
-					raid->ruqin_data.boss_creat = true;
-				}
 			}
 		}
 			return true;
@@ -747,10 +741,6 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 			for (size_t i = 0; i < config->n_Parameter1; ++i)
 			{
 				monster_manager::create_monster_by_id(raid, config->Parameter1[i], 9999, monster_level);
-				if(raid->ruqin_data.guild_ruqin == true && raid->ruqin_data.boss_creat == false && (config->Parameter1[i] == sg_guild_ruqin_renzu_bossid || config->Parameter1[i] == sg_guild_ruqin_yaozu_bossid))
-				{
-					raid->ruqin_data.boss_creat = true;
-				}
 			}
 		}
 			return true;
@@ -959,6 +949,7 @@ void script_ai_common_player_ready(raid_struct *raid, player_struct *player, str
 			case SCRIPT_EVENT_PLAY_NPC_ACTION:
 			case SCRIPT_EVENT_AUTOMATIC_NPC_TALK:
 			case SCRIPT_EVENT_PLAY_EFFECT:
+			case SCRIPT_EVENT_PLAYER_DUMIAO_CARTOON:
 				//case SCRIPT_EVENT_START_GONGCHENGCHUI:
 			{
 				RaidEventNotify nty;

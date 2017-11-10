@@ -477,11 +477,18 @@ int Collect::GatherComplete(player_struct *player)
 			{
 				std::map<uint32_t, uint32_t> item_list;
 				get_drop_item(m_dropId, item_list);
-				if (item_list.empty() && it->second->ConsumeTeyp != 1)
+				if (item_list.empty())
 				{
 					CommAnswer resp;
 					comm_answer__init(&resp);
-					resp.result = 190500406;
+					if (it->second->ConsumeTeyp != 1)
+					{
+						resp.result = 190500406;
+					} 
+					else
+					{
+						resp.result = 190500442;
+					}
 					fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_COLLECT_BEGIN_ANSWER, comm_answer__pack, resp);
 				}
 				player->give_drop_item(m_dropId, MAGIC_TYPE_GATHER, ADD_ITEM_AS_MUCH_AS_POSSIBLE);

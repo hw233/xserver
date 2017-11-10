@@ -395,6 +395,7 @@ int buff_manager::load_item_buff(player_struct *player, ItemBuff *db_item_buff)
 			break;
 			default:
 				assert(0);
+				exit(0);				
 		}
 		break;
 	}

@@ -408,7 +408,7 @@ void monster_manager::on_tick_10()
 			monster->on_tick();
 		if (monster->m_liveTime != 0 && now > monster->m_liveTime)
 		{
-			if (monster->config->Type == 4)
+			if (monster->config->Type == 4)  //寻宝boss
 			{
 				player_struct *player = player_manager::get_player_by_id(monster->data->owner);
 				if (player != NULL)

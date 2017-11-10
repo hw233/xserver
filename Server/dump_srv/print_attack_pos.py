@@ -68,35 +68,35 @@ while True:
 #        print oldtime.time(), "%lu: movedata %s" % (req.playerid, movedata)
 
 #MSG_ID_MOVE_START_REQUEST 			10105 //移动开始请求
-    if msg_id == 10105:
-        req = move_direct_pb2.move_start_request()
-        req.ParseFromString(pb_data)
-        oldtime=datetime.datetime.now()
-        print oldtime.time(), "[%lu] move_start_request cur_pos[%.1f][%.1f] direct[%.1f %.1f]" % \
-            (player_id, req.cur_pos.pos_x, req.cur_pos.pos_z, req.direct_x, req.direct_z)
+#    if msg_id == 10105:
+#        req = move_direct_pb2.move_start_request()
+#        req.ParseFromString(pb_data)
+#        oldtime=datetime.datetime.now()
+#        print oldtime.time(), "[%lu] move_start_request cur_pos[%.1f][%.1f] direct[%.1f %.1f]" % \
+#            (player_id, req.cur_pos.pos_x, req.cur_pos.pos_z, req.direct_x, req.direct_z)
 
 #MSG_ID_MOVE_STOP_REQUEST 			10108 //移动停止请求
-    if msg_id == 10108:
-        req = move_direct_pb2.move_stop_request()
-        req.ParseFromString(pb_data)
-        oldtime=datetime.datetime.now()
-        print oldtime.time(), "[%lu] move_stop_request cur_pos[%.1f][%.1f]" % \
-            (player_id, req.cur_pos.pos_x, req.cur_pos.pos_z)
+#    if msg_id == 10108:
+#        req = move_direct_pb2.move_stop_request()
+#        req.ParseFromString(pb_data)
+#        oldtime=datetime.datetime.now()
+#        print oldtime.time(), "[%lu] move_stop_request cur_pos[%.1f][%.1f]" % \
+#            (player_id, req.cur_pos.pos_x, req.cur_pos.pos_z)
 
 #MSG_ID_SKILL_CAST_REQUEST 		10200  //施法请求  skill_cast_request
-    if msg_id == 10200:
-        req = cast_skill_pb2.skill_cast_request()
-        req.ParseFromString(pb_data)
-        oldtime=datetime.datetime.now()
-        print oldtime.time(), "[%lu] skill_cast_request [%u] pos[%.1f][%.1f] direct[%.1f %.1f]" % \
-            (player_id, req.skillid, req.cur_pos.pos_x, req.cur_pos.pos_z, req.direct_x, req.direct_z)
+#    if msg_id == 10200:
+#        req = cast_skill_pb2.skill_cast_request()
+#        req.ParseFromString(pb_data)
+#        oldtime=datetime.datetime.now()
+#        print oldtime.time(), "[%lu] skill_cast_request [%u] pos[%.1f][%.1f] direct[%.1f %.1f]" % \
+#            (player_id, req.skillid, req.cur_pos.pos_x, req.cur_pos.pos_z, req.direct_x, req.direct_z)
 
 #MSG_ID_SKILL_CAST_NOTIFY
     if msg_id == 10202:
 	req = cast_skill_pb2.skill_cast_notify()
 	req.ParseFromString(pb_data)
 	oldtime=datetime.datetime.now()
-
+ 
 	print oldtime.time(), "[%lu] attack [%u] pos[%.1f][%.1f] direct[%.1f %.1f]" % (req.playerid, req.skillid, req.cur_pos.pos_x, req.cur_pos.pos_z, req.direct_x, req.direct_z)
  
 #	if get_uuid_type.get_uuid_type(req.playerid) != get_uuid_type.ENTITY_TYPE_MONSTER:
@@ -105,12 +105,12 @@ while True:
 #	print "have target_pos = %s" % (req.HasField('target_pos'))
 
 #MSG_ID_SKILL_HIT_NOTIFY
-    if msg_id == 10205:
-	req = cast_skill_pb2.skill_hit_notify()
-	req.ParseFromString(pb_data)
-	oldtime=datetime.datetime.now()
-
-	print oldtime.time(), "[%lu] hit skill[%u] pos[%.1f][%.1f]" % (req.playerid, req.skillid, req.attack_pos.pos_x, req.attack_pos.pos_z)
+#    if msg_id == 10205:
+#        req = cast_skill_pb2.skill_hit_notify()
+#        req.ParseFromString(pb_data)
+#        oldtime=datetime.datetime.now()
+# 
+#        print oldtime.time(), "[%lu] hit skill[%u] pos[%.1f][%.1f]" % (req.playerid, req.skillid, req.attack_pos.pos_x, req.attack_pos.pos_z)
 #	if len(req.target_player) == 0:
 #	    continue;
 #	if get_uuid_type.get_uuid_type(req.playerid) == get_uuid_type.ENTITY_TYPE_MONSTER:

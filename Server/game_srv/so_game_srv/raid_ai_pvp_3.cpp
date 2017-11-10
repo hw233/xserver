@@ -531,22 +531,22 @@ static int32_t calc_score_changed(raid_struct *raid, player_struct *player, doub
 		ret = 0;
 	return ret;
 }
-static int32_t calc_courage_gold_changed(raid_struct *raid, player_struct *player, int index, int team_kill, int team_assist, double param)
-{
-//结算货币=段位基础货币*胜/负/平货币系数*（基础贡献值+杀人货币系数*个人杀人数/团队杀人数+辅助货币系数*个人辅助数/团队辅助数）
-	struct StageTable *config = get_config_by_id(player->data->pvp_raid_data.cur_level_id_3, &pvp_raid_config);
-	if (!config)
-		return 0;
+// static int32_t calc_courage_gold_changed(raid_struct *raid, player_struct *player, int index, int team_kill, int team_assist, double param)
+// {
+// //结算货币=段位基础货币*胜/负/平货币系数*（基础贡献值+杀人货币系数*个人杀人数/团队杀人数+辅助货币系数*个人辅助数/团队辅助数）
+// 	struct StageTable *config = get_config_by_id(player->data->pvp_raid_data.cur_level_id_3, &pvp_raid_config);
+// 	if (!config)
+// 		return 0;
 
-	if (team_kill == 0)
-		team_kill = 1;
-	if (team_assist == 0)
-		team_assist = 1;
+// 	if (team_kill == 0)
+// 		team_kill = 1;
+// 	if (team_assist == 0)
+// 		team_assist = 1;
 
-	double rate = sg_pvp_raid_basic_param + sg_pvp_raid_kill_param * raid->PVP_DATA.kill_record[index] / team_kill;
-	rate += sg_pvp_raid_assist_param * raid->PVP_DATA.assist_record[index] / team_assist;
-	return config->BasicsCoinValue * param * rate;
-}
+// 	double rate = sg_pvp_raid_basic_param + sg_pvp_raid_kill_param * raid->PVP_DATA.kill_record[index] / team_kill;
+// 	rate += sg_pvp_raid_assist_param * raid->PVP_DATA.assist_record[index] / team_assist;
+// 	return config->BasicsCoinValue * param * rate;
+// }
 
 // static int32_t calc_win_courage_gold(raid_struct *raid, player_struct *player, int index, int team_kill, int team_assist)
 // {
@@ -671,6 +671,8 @@ static void	finished_raid(raid_struct *raid, int win_team)
 	EXTERN_DATA extern_data;
 	double param1, param2;
 	double gold_param1, gold_param2;
+	UNUSED(gold_param1);
+	UNUSED(gold_param2);	
 	switch (win_team)
 	{
 		case 1:
@@ -716,8 +718,8 @@ static void	finished_raid(raid_struct *raid, int win_team)
 			}
 			else
 			{
-				nty.courage_gold_changed = calc_courage_gold_changed(raid, raid->m_player[i], i, team1_kill, team1_assist, gold_param1);
-				raid->m_player[i]->add_attr(PLAYER_ATTR_COURAGE_GOLD, nty.courage_gold_changed);
+//				nty.courage_gold_changed = calc_courage_gold_changed(raid, raid->m_player[i], i, team1_kill, team1_assist, gold_param1);
+//				raid->m_player[i]->add_attr(PLAYER_ATTR_COURAGE_GOLD, nty.courage_gold_changed);
 				raid->m_player[i]->add_raid_reward_count(sg_3v3_pvp_raid_param1[0]);				
 			}
 			extern_data.player_id = raid->m_player[i]->get_uuid();
@@ -740,8 +742,8 @@ static void	finished_raid(raid_struct *raid, int win_team)
 			}
 			else
 			{
-				nty.courage_gold_changed = calc_courage_gold_changed(raid, raid->m_player2[i], i + MAX_TEAM_MEM, team2_kill, team2_assist, gold_param2);
-				raid->m_player2[i]->add_attr(PLAYER_ATTR_COURAGE_GOLD, nty.courage_gold_changed);
+//				nty.courage_gold_changed = calc_courage_gold_changed(raid, raid->m_player2[i], i + MAX_TEAM_MEM, team2_kill, team2_assist, gold_param2);
+//				raid->m_player2[i]->add_attr(PLAYER_ATTR_COURAGE_GOLD, nty.courage_gold_changed);
 				raid->m_player2[i]->add_raid_reward_count(sg_3v3_pvp_raid_param1[0]);
 			}
 			extern_data.player_id = raid->m_player2[i]->get_uuid();

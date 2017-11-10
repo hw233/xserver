@@ -64,6 +64,14 @@ message TaskUpdateChapterRewardNotify
 	required uint32 chapterState = 3; //当前章节状态，0：不可领，非0：可领
 }
 
+//任务进入位面应答
+message TaskEnterPlanesAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 task_id = 2; //任务id
+	repeated uint32 events = 3; //需要客户端进入位面后执行的事件
+}
+
 //秘境修炼任务信息应答
 message MiJingXiuLianTaskInfoAnswer
 {

@@ -35,17 +35,17 @@ int get_item_type(uint32_t item_id)
 	{
 		return ITEM_TYPE_SHANGJIN_EXP;
 	}
-	if (item_id == 201010008)
-	{
-		return ITEM_TYPE_GUOYU_COIN;
-	}
-	if (item_id == 201010009)
-	{
-		return ITEM_TYPE_CHENGJIE_COIN;
-	}
+	// if (item_id == 201010008)
+	// {
+	// 	return ITEM_TYPE_GUOYU_COIN;
+	// }
+	// if (item_id == 201010009)
+	// {
+	// 	return ITEM_TYPE_CHENGJIE_COIN;
+	// }
 	if (item_id == 201010010)
 	{
-		return ITEM_TYPE_SHANGJIN_COIN;
+		return ITEM_TYPE_LINGSHI;
 	}
 	if (item_id == 201010011)
 	{
@@ -58,6 +58,18 @@ int get_item_type(uint32_t item_id)
 	if (item_id == 201010013)
 	{
 		return ITEM_TYPE_PARTNER_EXP;
+	}
+	if (item_id == 201010021)
+	{
+		return ITEM_TYPE_GONGXUN;
+	}
+	if (item_id == 201010022)
+	{
+		return ITEM_TYPE_XUEJING;
+	}
+	if (item_id == 201010023)
+	{
+		return ITEM_TYPE_SHENGWANG;
 	}
 	if (item_id >= 201070027 && item_id <= 201070036)
 	{

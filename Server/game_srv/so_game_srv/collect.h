@@ -73,7 +73,7 @@ public:
 	static Collect *create_sight_space_collect(sight_space_struct *sight_space, uint32_t id, double x, double y, double z, float yaw);	
 	static Collect *CreateCollectByConfig(scene_struct *scene, int index);
 	static Collect *CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw);
-	static Collect *CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw, player_struct *player);
+	static Collect *CreateCollectByPos(scene_struct *scene, uint32_t id, double x, double y, double z, float yaw, player_struct *player); //只自己看得见的采集点
 	static int CreateCollectByID(scene_struct *scene, uint32_t id, uint32_t num); //创建相同ID 最多num个不同位置的采集点
 	static void RemoveFromSceneAndDestroyCollect(Collect *pCollect, bool send_msg = false);
 	static void DestroyCollect(uint64_t id);

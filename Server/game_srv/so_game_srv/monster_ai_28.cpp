@@ -47,6 +47,21 @@
 	}
 }*/
 
+static int monster_ai_28_arrive_end_point(monster_struct * monster)
+{
+	if(monster == NULL || monster->data == NULL)
+		return -1;
+	if(monster->maogui_config->n_MovePointX <= 0)
+		return -2;
+	if(monster->ai_data.circle_ai.cur_pos_index < monster->maogui_config->n_MovePointX)
+		return -3;
+	if(monster->is_unit_in_move() || monster->ai_state != AI_PATROL_STATE)
+		return -4;
+	monster->ai_type = 29;
+	monster->set_ai_interface(monster->ai_type);
+	return 0;
+
+}
 
 static int get_monster_ai_28_wait_time(monster_struct * monster)
 {
@@ -86,9 +101,25 @@ static int monster_ai_hp_deal_with(monster_struct *monster, scene_struct *scene)
 	struct position *pos = monster->get_pos();
 	for(size_t i = 0; i <  monster->ai_data.circle_ai.ai_config->SeparateNum; i++)
 	{
-		uint32_t xiabiao = rand() % monster->ai_data.circle_ai.ai_config->n_SeparateMonster;
-		int32_t pos_x =  pos->pos_x + monster->ai_data.circle_ai.ai_config->SeparateRange - rand()%2*monster->ai_data.circle_ai.ai_config->SeparateRange;
-		int32_t pos_z =  pos->pos_z + monster->ai_data.circle_ai.ai_config->SeparateRange - rand()%2*monster->ai_data.circle_ai.ai_config->SeparateRange;
+		int32_t pos_x = 0;
+		int32_t pos_z = 0;
+		int j = 0;
+		while(1)
+		{
+			if(j > 6)
+			{
+				pos_x = pos->pos_x;
+				pos_z = pos->pos_z;
+				break;
+			}
+			pos_x =  pos->pos_x + monster->ai_data.circle_ai.ai_config->SeparateRange - rand()%(2*monster->ai_data.circle_ai.ai_config->SeparateRange);
+			pos_z =  pos->pos_z + monster->ai_data.circle_ai.ai_config->SeparateRange - rand()%(2*monster->ai_data.circle_ai.ai_config->SeparateRange);
+			struct map_block *block_start = get_map_block(o_scene->map_config, pos_x, pos_z);
+			if (block_start != NULL && block_start->can_walk == true)
+				break;
+			j++;
+
+		}
 		if(monster->ai_data.circle_ai.ai_config->Effects != NULL && monster->ai_data.circle_ai.ai_config->n_EffectsParameter >= 2)
 		{
 			double parama[5];
@@ -106,6 +137,7 @@ static int monster_ai_hp_deal_with(monster_struct *monster, scene_struct *scene)
 			nty.n_param2 = 1;
 			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
 		}
+		uint32_t xiabiao = rand() % monster->ai_data.circle_ai.ai_config->n_SeparateMonster;
 		monster_struct *t_monster = monster_manager::create_monster_at_pos(o_scene, monster->ai_data.circle_ai.ai_config->SeparateMonster[xiabiao], raid->data->monster_level, pos_x, pos_z, 0, NULL, 0);
 		if(t_monster)
 		{
@@ -200,6 +232,8 @@ static void ai_tick_28(monster_struct *monster)
 		assert(0);
 	
 	assert(monster->scene);
+	if(monster_ai_28_arrive_end_point(monster) == 0)
+		return;
 	switch (monster->ai_state)
 	{
 		case AI_WAIT_STATE:

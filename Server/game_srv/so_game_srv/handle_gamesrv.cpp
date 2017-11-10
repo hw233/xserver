@@ -2930,7 +2930,7 @@ static int handle_transfer_request(player_struct *player, EXTERN_DATA *extern_da
 		LOG_ERR("%s player[%lu] can not transfer type[%u] scene[%u]", __FUNCTION__, extern_data->player_id, type, player->scene->m_id);
 		SceneTransferAnswer resp;
 		scene_transfer_answer__init(&resp);
-		resp.result = ERROR_ID_CAN_NOT_TRANSFER;
+		resp.result = 190500045;
 		fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_TRANSFER_ANSWER, scene_transfer_answer__pack, resp);
 		return (-30);
 	}
@@ -3294,7 +3294,7 @@ static int handle_bag_unlock_grid_request(player_struct *player, EXTERN_DATA *ex
 		if (player_gold < need_gold)
 		{
 			LOG_ERR("[%s:%d] player[%lu] gold not enough, need_gold:%u, player_gold:%u", __FUNCTION__, __LINE__, extern_data->player_id, need_gold, player_gold);
-			ret = ERROR_ID_UNLOCK_BAG_GOLD_NOT_ENOUGH;
+			ret = 190300004;
 			break;
 		}
 
@@ -3443,7 +3443,7 @@ static int handle_bag_use_request(player_struct *player, EXTERN_DATA *extern_dat
 	{
 		if (player->is_item_expire(pos))
 		{
-			ret = ERROR_ID_USE_PROP_IS_EXPIRE;
+			ret = 190300010;
 			LOG_ERR("[%s:%d] player[%lu] item is expire, pos:%u", __FUNCTION__, __LINE__, extern_data->player_id, pos);
 			break;
 		}
@@ -3679,7 +3679,7 @@ static int handle_rename_request(player_struct *player, EXTERN_DATA *extern_data
 		uint32_t bag_num = player->get_item_can_use_num(item_id);
 		if (bag_num < item_num)
 		{
-			ret = ERROR_ID_RENAME_PROP_NOT_ENOUGH;
+			ret = 190300011;
 			LOG_ERR("[%s:%d] player[%lu] item not enough, id:%u, need_num:%u, bag_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, item_id, item_num, bag_num);
 			break;
 		}
@@ -3908,6 +3908,7 @@ static int notify_task_list(player_struct *player, EXTERN_DATA *extern_data)
 	TaskData* task_data_point[MAX_TASK_ACCEPTED_NUM];
 	TaskCount count_data[MAX_TASK_ACCEPTED_NUM][MAX_TASK_TARGET_NUM];
 	TaskCount* count_data_point[MAX_TASK_ACCEPTED_NUM][MAX_TASK_TARGET_NUM];
+	TaskNumberData number_data[MAX_TASK_ACCEPTED_NUM];
 	resp.result = 0;
 	resp.n_ongoing_list = 0;
 	resp.ongoing_list = task_data_point;
@@ -3941,7 +3942,8 @@ static int notify_task_list(player_struct *player, EXTERN_DATA *extern_data)
 		task_data[resp.n_ongoing_list].n_progress = nTarget;
 		task_data[resp.n_ongoing_list].progress = count_data_point[i];
 
-		if (get_task_type(info.id) == TT_SHANGJIN)
+		uint32_t task_type = get_task_type(info.id);
+		if (task_type == TT_SHANGJIN)
 		{//只发当前赏金任务奖励
 			task_reward_data__init(&reward_data[resp.n_ongoing_list]);
 			task_data[resp.n_ongoing_list].reward = &reward_data[resp.n_ongoing_list];
@@ -3957,7 +3959,7 @@ static int notify_task_list(player_struct *player, EXTERN_DATA *extern_data)
 				item_data[resp.n_ongoing_list][n_item].num = player->data->shangjin.task[player->data->shangjin.cur_task].award[n_item].val;
 			}
 		}
-		else if (get_task_type(info.id) == TT_CASH_TRUCK)
+		else if (task_type == TT_CASH_TRUCK)
 		{
 			BiaocheTable *table = get_config_by_id(player->data->truck.active_id, &cash_truck_config);
 			if (table != NULL)
@@ -3984,6 +3986,17 @@ static int notify_task_list(player_struct *player, EXTERN_DATA *extern_data)
 					item_data[resp.n_ongoing_list][n_item].num = reward_config->RewardLv1 * player->get_attr(PLAYER_ATTR_LEVEL);
 					++n_item;
 				}
+			}
+		}
+		else if (task_type == TT_GUILD_BUILD)
+		{
+			GangsBuildTaskTable *config = get_config_by_id(player->data->guild_task_config_id, &guild_build_task_config);
+			if (config)
+			{
+				task_number_data__init(&number_data[resp.n_ongoing_list]);
+				task_data[resp.n_ongoing_list].number = &number_data[resp.n_ongoing_list];
+				number_data[resp.n_ongoing_list].current = player->data->guild_task_count + 1;
+				number_data[resp.n_ongoing_list].total = config->Times;
 			}
 		}
 		resp.n_ongoing_list++;
@@ -4113,8 +4126,18 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 			break;
 		}
 
+		GangsBuildTaskTable *build_config = get_config_by_id(player->data->guild_task_config_id, &guild_build_task_config);
+		if (config->TaskType == TT_GUILD_BUILD && !build_config)
+		{
+			ret = ERROR_ID_NO_CONFIG;
+			LOG_ERR("[%s:%d] player[%lu] get guild task config faild, task_id:%u, build_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, task_id, player->data->guild_task_config_id);
+			break;
+		}
+
 		//检查背包空间
 		std::map<uint32_t, uint32_t> item_list;
+		std::map<uint32_t, uint32_t> mijing_drop;
+		std::map<uint32_t, uint32_t> build_drop;
 		player->get_task_event_item(task_id, TEC_SUBMIT, item_list);
 		player->get_task_reward_item(task_id, item_list);
 		//秘境修炼任务获取额外奖励
@@ -4128,12 +4151,24 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 			}
 			if(player->data->mi_jing_xiu_lian.lun_num + 1 >=  mijing_parame->parameter1[1])
 			{
-				get_drop_item(mijing_config->DropID, item_list);
+				get_drop_item(mijing_config->DropID, mijing_drop);
+				for (std::map<uint32_t, uint32_t>::iterator iter = mijing_drop.begin(); iter != mijing_drop.end(); ++iter)
+				{
+					item_list[iter->first] += iter->second;
+				}
+			}
+		}
+		if (config->TaskType == TT_GUILD_BUILD)
+		{
+			get_drop_item(build_config->DropID, build_drop);
+			for (std::map<uint32_t, uint32_t>::iterator iter = build_drop.begin(); iter != build_drop.end(); ++iter)
+			{
+				item_list[iter->first] += iter->second;
 			}
 		}
 		if (item_list.size() > 0 && !player->check_can_add_item_list(item_list))
 		{
-			ret = ERROR_ID_BAG_NOT_ABLE_ADD_TASK_SUBMIT;
+			ret = 190300007;
 			LOG_ERR("[%s:%d] player[%lu] bag not enough, id:%u", __FUNCTION__, __LINE__, extern_data->player_id, task_id);
 			break;
 		}
@@ -4162,9 +4197,7 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 				{
 					player->data->mi_jing_xiu_lian.huan_num += 1;
 					player->data->mi_jing_xiu_lian.lun_num = 0;
-					std::map<uint32_t, uint32_t> mijing_item_list;
-					get_drop_item(mijing_config->DropID, mijing_item_list);
-					player->add_item_list(mijing_item_list, MAGIC_TYPE_TASK_REWARD);
+					player->add_item_list(mijing_drop, MAGIC_TYPE_TASK_REWARD);
 				}
 			
 			}
@@ -4199,9 +4232,19 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 				}
 			}
 		}
-		if (config->TaskType == TT_SHANGJIN)
+		else if (config->TaskType == TT_SHANGJIN)
 		{
 			shangJin = true;
+		}
+		else if (config->TaskType == TT_GUILD_BUILD)
+		{
+			uint32_t *resp = (uint32_t*)get_send_data();
+			uint32_t data_len = sizeof(uint32_t);
+			memset(resp, 0, data_len);
+			*resp = task_id;
+			fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_GUILD_TASK_FINISH, data_len, 0);
+
+			player->add_item_list(build_drop, MAGIC_TYPE_TASK_REWARD);
 		}
 	} while(0);
 
@@ -4683,6 +4726,104 @@ static int handle_task_chapter_reward_request(player_struct *player, EXTERN_DATA
 	return 0;
 }
 
+//任务进入位面请求
+static int handle_task_enter_planes_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	LOG_INFO("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	TaskCommRequest *req = task_comm_request__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-10);
+	}
+
+	uint32_t task_id = req->task_id;
+	task_comm_request__free_unpacked(req, NULL);
+
+	int ret = 0;
+	std::vector<uint32_t> client_events;
+	std::vector<std::pair<uint32_t, uint32_t> > events;
+	do
+	{
+		TaskInfo *info = player->get_task_info(task_id);
+		if (!info || info->status != TASK_STATUS__ACCEPTED)
+		{
+			ret = ERROR_ID_TASK_ID;
+			LOG_ERR("[%s:%d] player[%lu] get task failed, task_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, task_id);
+			break;
+		}
+
+		TaskTable *config = get_config_by_id(task_id, &task_config);
+		if (!config)
+		{
+			ret = ERROR_ID_NO_CONFIG;
+			LOG_ERR("[%s:%d] player[%lu] get task failed, task_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, task_id);
+			break;
+		}
+
+		for (uint32_t i = 0; i < config->n_EventID; ++i)
+		{
+			uint32_t event_id = config->EventID[i];
+			TaskEventTable *event_config = get_config_by_id(event_id, &task_event_config);
+			if (!event_config)
+			{
+				continue;
+			}
+
+			uint32_t event_class = (uint32_t)event_config->EventClass;
+			if (!(event_class == TEC_ACCEPT || event_class == TEC_TALK))
+			{
+				continue;
+			}
+
+			switch (event_config->EventType)
+			{
+				case TET_ADD_MONSTER:
+				case TET_PLANES_ADD_COLLECT:
+					events.push_back(std::make_pair(event_id, event_class));
+					break;
+				case TET_PLANES_ADD_NPC:
+					client_events.push_back(event_id);
+					break;
+			}
+		}
+
+		if (events.empty() && client_events.empty())
+		{
+			ret = ERROR_ID_TASK_EVENT_ID;
+			LOG_ERR("[%s:%d] player[%lu] has not enter planes event, task_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, task_id);
+			break;
+		}
+
+		for (std::vector<std::pair<uint32_t, uint32_t> >::iterator iter = events.begin(); iter != events.end(); ++iter)
+		{
+			player->execute_task_event(iter->first, iter->second, false);
+		}
+
+		if (events.empty() && !client_events.empty() && !player->sight_space)
+		{
+			player->sight_space = sight_space_manager::create_sight_space(player);
+		}
+	} while(0);
+
+	TaskEnterPlanesAnswer resp;
+	task_enter_planes_answer__init(&resp);
+
+	resp.result = ret;
+	resp.task_id = task_id;
+	resp.events = &client_events[0];
+	resp.n_events = client_events.size();
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_TASK_ENTER_PLANES_ANSWER, task_enter_planes_answer__pack, resp);
+
+	return 0;
+}
+
 int handle_create_team_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (!player || !player->is_online())
@@ -5123,7 +5264,7 @@ int handle_team_invite_request_impl(player_struct *player, uint64_t id)
 	}
 	if (otherPlayer->data->team_invite_switch != 0)
 	{
-		return ERROR_ID_TEAM_INVITE_CLOSE;
+		return 190500159;
 	}
 	if (player->m_team != NULL && !player->m_team->CheckLevel(otherPlayer->get_attr(PLAYER_ATTR_LEVEL)))
 	{
@@ -5232,14 +5373,12 @@ int handle_team_invite_handle_request(player_struct *player, EXTERN_DATA *extern
 			{
 				ret = 190500002;
 			}
-			//if (ret != 0)
-			{
-				send_comm_answer(MSG_ID_CREATE_TEAM_ANSWER, ret, &ext_data);
-				//return 2;
-			}
-
+			send_comm_answer(MSG_ID_CREATE_TEAM_ANSWER, ret, &ext_data);
 		}
-		//otherPlayer->m_team->AddMember(*player);
+		if (otherPlayer->m_team != NULL)
+		{
+			otherPlayer->m_team->AddMember(*player);
+		}
 	}
 	else if (otherPlayer != NULL)
 	{
@@ -6376,7 +6515,7 @@ static int handle_enter_raid_request(player_struct *player, EXTERN_DATA *extern_
 		{
 			if (!is_guild_battle_opening())
 			{
-				ret = ERROR_ID_GUILD_BATTLE_ACTIVITY_NOT_OPEN;
+				ret = 190411002;
 				LOG_ERR("[%s:%d] player[%lu] guild battle not open, raid_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, raid_id);
 				break;
 			}
@@ -7723,6 +7862,208 @@ static int handle_equip_gem_compose_request(player_struct *player, EXTERN_DATA *
 	return 0;
 }
 
+//宝石一键合成请求
+static int handle_equip_gem_onekey_compose_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	LOG_INFO("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	EquipGemOnekeyComposeRequest *req = equip_gem_onekey_compose_request__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-10);
+	}
+
+	uint32_t gem_id = req->gemid;
+	uint32_t material_type = req->materialtype;
+
+	equip_gem_onekey_compose_request__free_unpacked(req, NULL);
+
+	int ret = 0;
+	std::map<uint32_t, uint32_t> product_map;
+	do
+	{
+		GemAttribute *gem_config = get_gem_config(gem_id);
+		if (!gem_config)
+		{
+			ret = ERROR_ID_NO_CONFIG;
+			LOG_ERR("[%s:%d] player[%lu] get gem config failed, gem_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, gem_id);
+			break;
+		}
+
+		uint32_t material_id = gem_config->GemSynthetic;
+		if (material_id == 0)
+		{
+			ret = ERROR_ID_GEM_CAN_NOT_COMPOSE;
+			LOG_ERR("[%s:%d] player[%lu] gem can't compose, gem_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, gem_id);
+			break;
+		}
+
+		uint32_t gem_bind = 0, gem_unbind = 0;
+		uint32_t material_bind = 0, material_unbind = 0;
+		if (item_is_bind(gem_id))
+		{
+			gem_bind = gem_id;
+			gem_unbind = get_item_relate_id(gem_id);
+		}
+		else
+		{
+			gem_bind = get_item_relate_id(gem_id);
+			gem_unbind = gem_id;
+		}
+
+		if (item_is_bind(material_id))
+		{
+			material_bind = material_id;
+			material_unbind = get_item_relate_id(material_id);
+		}
+		else
+		{
+			material_bind = get_item_relate_id(material_id);
+			material_unbind = material_id;
+		}
+
+		if (gem_bind == 0 || gem_unbind == 0 || material_bind == 0 || material_unbind == 0)
+		{
+			ret = ERROR_ID_NO_CONFIG;
+			LOG_ERR("[%s:%d] player[%lu], gem_bind:%u, gem_unbind:%u, material_bind:%u, material_unbind:%u", __FUNCTION__, __LINE__, extern_data->player_id, gem_bind, gem_unbind, material_bind, material_unbind);
+			break;
+		}
+
+		uint32_t coin_per_time = gem_config->Consumption;
+		uint32_t player_coin = player->get_attr(PLAYER_ATTR_COIN);
+		if (player_coin < coin_per_time)
+		{
+			ret = ERROR_ID_COIN_NOT_ENOUGH;
+			LOG_ERR("[%s:%d] player[%lu] coin not enough, need_coin:%u, has_coin:%u", __FUNCTION__, __LINE__, extern_data->player_id, coin_per_time, player_coin);
+			break;
+		}
+
+		uint32_t material_num_per_time = gem_config->Number;
+		std::map<uint32_t, uint32_t> material_map;
+		uint32_t material_bind_num = player->get_item_num_by_id(material_bind);
+		uint32_t material_unbind_num = player->get_item_num_by_id(material_unbind);
+
+		uint32_t total_product_num = 0;
+		if (material_bind_num >= material_num_per_time || material_unbind_num >= material_num_per_time)
+		{ //只合成同类材料的
+			uint32_t coin_can_num = player_coin / coin_per_time;
+			if (material_type == 1)
+			{ //优先合成绑定
+				if (material_bind_num >= material_num_per_time)
+				{
+					uint32_t product_bind_num = material_bind_num / material_num_per_time;
+					if (coin_can_num > 0)
+					{
+						product_bind_num = std::min(product_bind_num, coin_can_num);
+						material_map.insert(std::make_pair(material_bind, material_num_per_time * product_bind_num));
+						product_map.insert(std::make_pair(gem_bind, product_bind_num));
+						coin_can_num -= product_bind_num;
+						total_product_num += product_bind_num;
+					}
+				}
+				if (material_unbind_num >= material_num_per_time)
+				{
+					uint32_t product_unbind_num = material_unbind_num / material_num_per_time;
+					if (coin_can_num > 0)
+					{
+						product_unbind_num = std::min(product_unbind_num, coin_can_num);
+						material_map.insert(std::make_pair(material_unbind, material_num_per_time * product_unbind_num));
+						product_map.insert(std::make_pair(gem_unbind, product_unbind_num));
+						coin_can_num -= product_unbind_num;
+						total_product_num += product_unbind_num;
+					}
+				}
+			}
+			else
+			{ //优先合成非绑
+				if (material_unbind_num >= material_num_per_time)
+				{
+					uint32_t product_unbind_num = material_unbind_num / material_num_per_time;
+					if (coin_can_num > 0)
+					{
+						product_unbind_num = std::min(product_unbind_num, coin_can_num);
+						material_map.insert(std::make_pair(material_unbind, material_num_per_time * product_unbind_num));
+						product_map.insert(std::make_pair(gem_unbind, product_unbind_num));
+						coin_can_num -= product_unbind_num;
+						total_product_num += product_unbind_num;
+					}
+				}
+				if (material_bind_num >= material_num_per_time)
+				{
+					uint32_t product_bind_num = material_bind_num / material_num_per_time;
+					if (coin_can_num > 0)
+					{
+						product_bind_num = std::min(product_bind_num, coin_can_num);
+						material_map.insert(std::make_pair(material_bind, material_num_per_time * product_bind_num));
+						product_map.insert(std::make_pair(gem_bind, product_bind_num));
+						coin_can_num -= product_bind_num;
+						total_product_num += product_bind_num;
+					}
+				}
+			}
+		}
+		else
+		{ //只合成混合材料的
+			if (material_bind_num + material_unbind_num < material_num_per_time)
+			{
+				ret = ERROR_ID_GEM_COMPOSE_MATERIAL_NOT_ENOUGH;
+				LOG_ERR("[%s:%d] player[%lu] need_num:%u, bind_num:%u, unbind_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, material_num_per_time, material_bind_num, material_unbind_num);
+				break;
+			}
+
+			material_map[material_bind] = material_bind_num;
+			material_map[material_unbind] = material_num_per_time - material_bind_num;
+			product_map[gem_bind] = 1;
+			total_product_num = 1;
+		}
+
+		if (!player->check_can_add_item_list(product_map))
+		{
+			ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
+			LOG_ERR("[%s:%d] player[%lu] bag not enough", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+
+		player->sub_coin(coin_per_time * total_product_num, MAGIC_TYPE_GEM_COMPOSE);
+		for (std::map<uint32_t, uint32_t>::iterator iter = material_map.begin(); iter != material_map.end(); ++iter)
+		{
+			player->del_item_by_id(iter->first, iter->second, MAGIC_TYPE_GEM_COMPOSE);
+		}
+
+		player->add_item_list(product_map, MAGIC_TYPE_GEM_COMPOSE);
+		player->add_task_progress(TCT_GEM_COMPOSE, 0, total_product_num);
+	} while(0);
+
+	EquipGemOnekeyComposeAnswer resp;
+	equip_gem_onekey_compose_answer__init(&resp);
+
+	ItemData  product_data[2];
+	ItemData* product_point[2];
+
+	resp.result = ret;
+	resp.gems = product_point;
+	resp.n_gems = 0;
+	for (std::map<uint32_t, uint32_t>::iterator iter = product_map.begin(); iter != product_map.end() && resp.n_gems < 2; iter++)
+	{
+		product_point[resp.n_gems] = &product_data[resp.n_gems];
+		item_data__init(&product_data[resp.n_gems]);
+		product_data[resp.n_gems].id = iter->first;
+		product_data[resp.n_gems].num = iter->second;
+		resp.n_gems++;
+	}
+
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_EQUIP_GEM_ONEKEY_COMPOSE_ANSWER, equip_gem_onekey_compose_answer__pack, resp);
+
+	return 0;
+}
+
 //邮件附件发放请求
 static int handle_mail_give_attach_request(player_struct *player, EXTERN_DATA *extern_data)
 {
@@ -8859,7 +9200,7 @@ static int handle_on_horse_request(player_struct *player, EXTERN_DATA *extern_da
 	{
 		return 2;
 	}
-	if (player->data->truck.truck_id != 0)
+	if (player->data->truck.on_truck)
 	{
 		return 4;
 	}
@@ -9121,7 +9462,7 @@ static int handle_shop_buy_request(player_struct *player, EXTERN_DATA *extern_da
 		uint32_t item_id = goods_config->ItemID;
 		if (!player->check_can_add_item(item_id, buy_num, NULL))
 		{
-			ret = ERROR_ID_SHOP_BUY_BAG_FULL;
+			ret = 190300016;
 			LOG_ERR("[%s:%d] player[%lu] bag not enough, goods_id:%u, want_buy_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, goods_id, buy_num);
 			break;
 		}
@@ -9151,22 +9492,22 @@ static int handle_shop_buy_request(player_struct *player, EXTERN_DATA *extern_da
 				break;
 			case 6: //竞技场积分
 				break;
-			case 7: //侠义值
-				has_money = player->get_chivalry();
-				error_id = ERROR_ID_CHIVALRY_NOT_ENOUGH;
-				break;
-			case 8: //赏金货币
-				has_money = (uint32_t)player->get_attr(PLAYER_ATTR_SHANGJIN_COIN);
-				error_id = ERROR_ID_SHANGJIN_COIN_NOT_ENOUGH;
-				break;
-			case 9: //惩戒货币
-				has_money = (uint32_t)player->get_attr(PLAYER_ATTR_CHENGJIE_COIN);
-				error_id = ERROR_ID_CHENGJIE_COIN_NOT_ENOUGH;
-				break;
-			case 10: //国御货币
-				has_money = (uint32_t)player->get_attr(PLAYER_ATTR_GUOYU_COIN);
-				error_id = ERROR_ID_GUOYU_COIN_NOT_ENOUGH;
-				break;
+			// case 7: //侠义值
+			// 	has_money = player->get_chivalry();
+			// 	error_id = ERROR_ID_CHIVALRY_NOT_ENOUGH;
+			// 	break;
+			// case 8: //赏金货币
+			// 	has_money = (uint32_t)player->get_attr(PLAYER_ATTR_SHANGJIN_COIN);
+			// 	error_id = ERROR_ID_SHANGJIN_COIN_NOT_ENOUGH;
+			// 	break;
+			// case 9: //惩戒货币
+			// 	has_money = (uint32_t)player->get_attr(PLAYER_ATTR_CHENGJIE_COIN);
+			// 	error_id = ERROR_ID_CHENGJIE_COIN_NOT_ENOUGH;
+			// 	break;
+			// case 10: //国御货币
+			// 	has_money = (uint32_t)player->get_attr(PLAYER_ATTR_GUOYU_COIN);
+			// 	error_id = ERROR_ID_GUOYU_COIN_NOT_ENOUGH;
+			// 	break;
 		}
 
 		if (has_money < need_money)
@@ -9193,18 +9534,18 @@ static int handle_shop_buy_request(player_struct *player, EXTERN_DATA *extern_da
 				break;
 			case 6: //竞技场积分
 				break;
-			case 7: //侠义值
-				player->sub_chivalry(need_money, MAGIC_TYPE_SHOP_BUY);
-				break;
-			case 8: //赏金货币
-				player->sub_shangjin_coin(need_money, MAGIC_TYPE_SHOP_BUY);
-				break;
-			case 9: //惩戒货币
-				player->sub_chengjie_coin(need_money, MAGIC_TYPE_SHOP_BUY);
-				break;
-			case 10: //国御货币
-				player->sub_guoyu_coin(need_money, MAGIC_TYPE_SHOP_BUY);
-				break;
+			// case 7: //侠义值
+			// 	player->sub_chivalry(need_money, MAGIC_TYPE_SHOP_BUY);
+			// 	break;
+			// case 8: //赏金货币
+			// 	player->sub_shangjin_coin(need_money, MAGIC_TYPE_SHOP_BUY);
+			// 	break;
+			// case 9: //惩戒货币
+			// 	player->sub_chengjie_coin(need_money, MAGIC_TYPE_SHOP_BUY);
+			// 	break;
+			// case 10: //国御货币
+			// 	player->sub_guoyu_coin(need_money, MAGIC_TYPE_SHOP_BUY);
+			// 	break;
 		}
 
 		player->add_item(item_id, buy_num, MAGIC_TYPE_SHOP_BUY);
@@ -9353,7 +9694,7 @@ static int handle_yuqidao_fill_request(player_struct *player, EXTERN_DATA *exter
 		uint32_t has_coin = player->get_coin();
 		if (has_coin < need_coin)
 		{
-			ret = ERROR_ID_COIN_IS_NOT_ENOUGH;
+			ret = 190500100;
 			LOG_ERR("[%s:%d] player[%lu] coin not enough, mai_id:%u, acupoint_id:%u, need_coin:%u, has_coin:%u", __FUNCTION__, __LINE__, extern_data->player_id, mai_id, mai_info->acupoint_id, need_coin, has_coin);
 			break;
 		}
@@ -9362,7 +9703,7 @@ static int handle_yuqidao_fill_request(player_struct *player, EXTERN_DATA *exter
 		uint32_t has_zhenqi = player->get_zhenqi();
 		if (has_zhenqi < need_zhenqi)
 		{
-			ret = ERROR_ID_ZHENQI_IS_NOT_ENOUGH;
+			ret = 190500101;
 			LOG_ERR("[%s:%d] player[%lu] zhenqi not enough, mai_id:%u, acupoint_id:%u, need_zhenqi:%u, has_zhenqi:%u", __FUNCTION__, __LINE__, extern_data->player_id, mai_id, mai_info->acupoint_id, need_zhenqi, has_zhenqi);
 			break;
 		}
@@ -9854,7 +10195,7 @@ static int handle_qiecuo_request(player_struct *player, EXTERN_DATA *extern_data
 	//检查目标是否关闭了邀请
 	if (target->data->qiecuo_invite_switch != 0)
 	{
-		send_comm_answer(MSG_ID_QIECUO_ANSWER, ERROR_ID_QIECUO_INVITE_CLOSE, extern_data);
+		send_comm_answer(MSG_ID_QIECUO_ANSWER, 190500158, extern_data);
 		return (0);
 	}
 
@@ -10975,7 +11316,7 @@ static int handle_baguapai_decompose_request(player_struct *player, EXTERN_DATA 
 
 		if (!player->check_can_add_item_list(gain_map))
 		{
-			ret = ERROR_ID_BAG_NOT_ABLE_BAGUA_DECOMPOSE;
+			ret = 190500337;
 			LOG_ERR("[%s:%d] player[%lu] bag not enough", __FUNCTION__, __LINE__, extern_data->player_id);
 			break;
 		}
@@ -11082,7 +11423,7 @@ static int handle_baguapai_refine_star_request(player_struct *player, EXTERN_DAT
 		uint32_t need_coin = config->StarCoin;
 		if (has_coin < need_coin)
 		{
-			ret = ERROR_ID_COIN_IS_NOT_ENOUGH;
+			ret = ERROR_ID_COIN_NOT_ENOUGH;
 			LOG_ERR("[%s:%d] player[%lu] coin not enough, style_id:%u, part_id:%u, need_num:%u, has_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, style_id, part_id, need_coin, has_coin);
 			break;
 		}
@@ -11191,7 +11532,7 @@ static int handle_baguapai_refine_main_attr_request(player_struct *player, EXTER
 		uint32_t has_coin = player->get_coin();
 		if (has_coin < need_coin)
 		{
-			ret = ERROR_ID_COIN_IS_NOT_ENOUGH;
+			ret = ERROR_ID_COIN_NOT_ENOUGH;
 			LOG_ERR("[%s:%d] player[%lu] coin not enough, style_id:%u, part_id:%u, need_num:%u, has_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, style_id, part_id, need_coin, has_coin);
 			break;
 		}
@@ -11360,7 +11701,7 @@ static int handle_baguapai_refine_minor_attr_request(player_struct *player, EXTE
 		uint32_t has_coin = player->get_coin();
 		if (has_coin < need_coin)
 		{
-			ret = ERROR_ID_COIN_IS_NOT_ENOUGH;
+			ret = ERROR_ID_COIN_NOT_ENOUGH;
 			LOG_ERR("[%s:%d] player[%lu] coin not enough, style_id:%u, part_id:%u, need_num:%u, has_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, style_id, part_id, need_coin, has_coin);
 			break;
 		}
@@ -12603,7 +12944,7 @@ static int handle_submit_chengjie_task_request(player_struct *player, EXTERN_DAT
 	}
 	player->add_coin(pTask->shuangjin * (10000 + cost)/10000, MAGIC_TYPE_YAOSHI);
 	player->add_chengjie_exp(pTask->exp * (10000 + expadd)/10000);
-	player->add_chengjie_courage(pTask->courage * (10000 + expadd) / 10000);
+//	player->add_chengjie_courage(pTask->courage * (10000 + expadd) / 10000);
 	send.taskid = player->data->chengjie.cur_task;
 
 	ChengJieTaskManage::DelTask(player->data->chengjie.cur_task);
@@ -13244,7 +13585,7 @@ static int handle_srv_check_and_cost_request(player_struct *player, EXTERN_DATA 
 			uint32_t has_coin = player->get_coin();
 			if (has_coin < req->cost.coin)
 			{
-				ret = ERROR_ID_COIN_IS_NOT_ENOUGH;
+				ret = ERROR_ID_COIN_NOT_ENOUGH;
 				break;
 			}
 		}
@@ -13467,14 +13808,7 @@ static int handle_sync_guild_info_request(player_struct *player, EXTERN_DATA *ex
 	//原来在帮会，现在退出了
 	if (old_guild_id > 0 && player->data->guild_id == 0)
 	{
-		raid_struct *raid = player->get_raid();
-		if (raid)
-		{
-			if (raid->is_guild_battle_raid() || raid->m_config->DengeonRank == DUNGEON_TYPE_GUILD_LAND)
-			{
-				raid->player_leave_raid(player);
-			}
-		}
+		player->on_leave_guild();
 	}
 	else if (old_guild_id == 0 && player->data->guild_id > 0)
 	{
@@ -13591,16 +13925,7 @@ static int handle_sync_guild_disband(player_struct * /*player*/, EXTERN_DATA * /
 		player_struct *member = player_manager::get_player_by_id(member_id);
 		if (member)
 		{
-			member->data->guild_id = 0;
-
-			raid_struct *raid = member->get_raid();
-			if (raid)
-			{
-				if (raid->is_guild_battle_raid() || raid->m_config->DengeonRank == DUNGEON_TYPE_GUILD_LAND)
-				{
-					raid->player_leave_raid(member);
-				}
-			}
+			member->on_leave_guild();
 		}
 	}
 	guild_summary_map.erase(req->guild_id);
@@ -13680,7 +14005,7 @@ static int handle_guild_battle_call_request(player_struct *player, EXTERN_DATA *
 	{
 		if (!is_guild_battle_opening())
 		{
-			ret = ERROR_ID_GUILD_BATTLE_ACTIVITY_NOT_OPEN;
+			ret = 190411002;
 			LOG_ERR("[%s:%d] player[%lu] guild battle not open", __FUNCTION__, __LINE__, extern_data->player_id);
 			break;
 		}
@@ -13722,7 +14047,7 @@ static int handle_guild_battle_info_request(player_struct *player, EXTERN_DATA *
 	{
 		if (!is_guild_battle_opening())
 		{
-			ret = ERROR_ID_GUILD_BATTLE_ACTIVITY_NOT_OPEN;
+			ret = 190411002;
 			LOG_ERR("[%s:%d] player[%lu] guild battle not open", __FUNCTION__, __LINE__, extern_data->player_id);
 			break;
 		}
@@ -13795,6 +14120,85 @@ static int handle_guild_skill_level_up(player_struct * player, EXTERN_DATA * ext
 	}
 
 	player->add_achievement_progress(ACType_GUILD_SKILL_LEVEL_UP, 0, 0, 1);
+
+	return 0;
+}
+
+static int handle_guild_accept_task_request(player_struct * player, EXTERN_DATA * extern_data)
+{
+	LOG_INFO("[%s:%d]", __FUNCTION__, __LINE__);
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	uint32_t *req = (uint32_t *)get_data();
+	uint32_t task_id = *req;
+
+	int ret = 0;
+	do
+	{
+		for (int i = 0; i < MAX_TASK_ACCEPTED_NUM; ++i)
+		{
+			TaskInfo *task = &player->data->task_list[i];
+			if (task->id == 0)
+			{
+				continue;
+			}
+
+			if (get_task_type(task->id) == TT_GUILD_BUILD)
+			{
+				ret = ERROR_ID_GUILD_TASK_ON_GOING;
+				break;
+			}
+		}
+
+		if (ret != 0)
+		{
+			break;
+		}
+
+		ret = player->accept_task(task_id, false);
+	} while(0);
+
+	GUILD_ACCEPT_TASK_ANSWER *resp = (GUILD_ACCEPT_TASK_ANSWER*)get_send_data();
+	uint32_t data_len = sizeof(GUILD_ACCEPT_TASK_ANSWER);
+	memset(resp, 0, data_len);
+	resp->result = ret;
+	resp->task_id = task_id;
+	fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_GUILD_ACCEPT_TASK_ANSWER, data_len, 0);
+
+	return 0;
+}
+
+static int handle_guild_sync_task(player_struct * player, EXTERN_DATA * extern_data)
+{
+	LOG_INFO("[%s:%d]", __FUNCTION__, __LINE__);
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	GUILD_SYNC_TASK *req = (GUILD_SYNC_TASK *)get_data();
+	player->data->guild_task_count = req->task_count;
+	player->data->guild_task_config_id = req->config_id;
+
+	for (int i = 0; i < MAX_TASK_ACCEPTED_NUM; ++i)
+	{
+		TaskInfo *task = &player->data->task_list[i];
+		if (task->id == 0)
+		{
+			continue;
+		}
+
+		if (get_task_type(task->id) == TT_GUILD_BUILD)
+		{
+			player->task_update_notify(task);
+			break;
+		}
+	}
 
 	return 0;
 }
@@ -13886,6 +14290,19 @@ static int handle_join_zhenying_battle_request(player_struct *player, EXTERN_DAT
 
 	return 0;
 }
+static int handle_cancel_join_zhenying_battle_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (comm_check_player_valid(player, extern_data->player_id) != 0)
+	{
+		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
+		return (-1);
+	}
+
+	int ret = ZhenyingBattle::GetInstance()->CancelJoin(*player);
+	send_comm_answer(MSG_ID_CANCEL_JOIN_ZHENYING_FIGHT_ANSWER, ret, extern_data);
+
+	return 0;
+}
 static int handle_into_zhenying_fight_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (comm_check_player_valid(player, extern_data->player_id) != 0)
@@ -13894,7 +14311,12 @@ static int handle_into_zhenying_fight_request(player_struct *player, EXTERN_DATA
 		return (-1);
 	}
 	
-	send_comm_answer(MSG_ID_INTO_ZHENYING_FIGHT_ANSWER, ZhenyingBattle::GetInstance()->IntoBattle(*player), extern_data);
+	int ret = ZhenyingBattle::GetInstance()->IntoBattle(*player);
+	if (ret != 0)
+	{
+		LOG_ERR("%s: %lu into fb zhengyinzhan failed ret = %d", __FUNCTION__, extern_data->player_id, ret);
+	}
+	send_comm_answer(MSG_ID_INTO_ZHENYING_FIGHT_ANSWER, ret, extern_data);
 
 	return 0;
 }
@@ -13932,19 +14354,19 @@ static int handle_zhenying_fight_myside_score_request(player_struct *player, EXT
 	{
 		return -2;
 	}
-	if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE)
+	//if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE)
 	{
 		ZhenyingBattle::GetInstance()->GetMySideScore(*player);
 	}
-	else
-	{
-		ZhenyingBattle *battel = ZhenyingBattle::GetPrivateBattle(raid->data->uuid);
-		if (battel == NULL)
-		{
-			return -3;
-		}
-		battel->GetMySideScore(*player);
-	}
+	//else
+	//{
+	//	ZhenyingBattle *battel = ZhenyingBattle::GetPrivateBattle(raid->data->uuid);
+	//	if (battel == NULL)
+	//	{
+	//		return -3;
+	//	}
+	//	battel->GetMySideScore(*player);
+	//}
 
 	return 0;
 }
@@ -15508,7 +15930,7 @@ static int handle_friend_search_request(player_struct *player, EXTERN_DATA *exte
 	{
 		if (req->playerid == player->get_uuid() || strcmp(req->playername, player->data->name) == 0)
 		{
-			ret = ERROR_ID_FRIEND_SEARCH_SELF;
+			ret = 190500220;
 			break;
 		}
 
@@ -16626,7 +17048,7 @@ static int handle_partner_use_exp_item_request(player_struct *player, EXTERN_DAT
 		uint32_t partner_level = partner->get_level();
 		if (partner_level >= player_level)
 		{
-			ret = ERROR_ID_PARTNER_LEVEL_LIMIT;
+			ret = 190500334;
 			LOG_ERR("[%s:%d] player[%lu] partner level limit, partner:%lu, item_id:%u, partner_lv:%u, player_lv:%u", __FUNCTION__, __LINE__, extern_data->player_id, partner_uuid, item_id, partner_level, player_level);
 			break;
 		}
@@ -18272,7 +18694,7 @@ static int handle_gift_receive_request(player_struct *player, EXTERN_DATA *exter
 			if (player->add_item(iter->second->ItemID, iter->second->ItemNum, MAGIC_TYPE_RECEIVE_JIJIANGOPEN) != 0)
 			{
 				receive_answer.gift_type = player->data->Receive_type;
-				receive_answer.result = ERROR_ID_GIJIANGOPEN_GIFT_FAIL;
+				receive_answer.result = 190500315;
 			}
 			else
 			{
@@ -19413,6 +19835,7 @@ static int handle_mijing_xiulian_shuaxing_request(player_struct *player, EXTERN_
 	return 0;
 }
 
+#define ERROR_ID_HAS_NOT_FISHING_TASK		  2601 //当前没有钓鱼任务
 static int handle_fishing_reward_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (!player || !player->is_online())
@@ -19436,44 +19859,97 @@ static int handle_fishing_reward_request(player_struct *player, EXTERN_DATA *ext
 	std::map<uint32_t, uint32_t> reward_map;
 	do
 	{
-		if (type != 1)
+		TaskInfo *task = NULL;
+		TaskConditionTable *cond_config = NULL;
+		if (type == 1)
+		{ //普通钓鱼
+			//检查区域
+			uint32_t region_id = player->get_attr(PLAYER_ATTR_REGION_ID);
+			if (region_id != 20)
+			{
+				ret = ERROR_ID_NOT_IN_FISHING_REGION;
+				LOG_ERR("[%s:%d] player[%lu] not in fishing region, region_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, region_id);
+				break;
+			}
+
+			//检查活动时间
+			const uint32_t activity_id = 330000037;
+			if (!activity_is_open(activity_id))
+			{
+				ret = 190500420;
+				LOG_ERR("[%s:%d] player[%lu] activity not open, activity_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, activity_id);
+				break;
+			}
+		}
+		else if (type == 2)
+		{ //任务钓鱼
+			for (int i = 0; i < MAX_TASK_ACCEPTED_NUM; ++i)
+			{
+				TaskInfo *info = &player->data->task_list[i];
+				if (info->id == 0)
+				{
+					continue;
+				}
+
+				for (int j = 0; j < MAX_TASK_TARGET_NUM; ++j)
+				{
+					TaskCountInfo &count_info = info->progress[j];
+					TaskConditionTable *config = get_config_by_id(count_info.id, &task_condition_config);
+					if (!config)
+					{
+						continue;
+					}
+
+					if (config->ConditionType != TCT_FISHING)
+					{
+						continue;
+					}
+
+					task = info;
+					cond_config = config;
+					break;
+				}
+				if (task != NULL)
+				{
+					break;
+				}
+			}
+
+			if (!task)
+			{
+				ret = ERROR_ID_HAS_NOT_FISHING_TASK;
+				LOG_ERR("[%s:%d] player[%lu] has not fishing task, type:%u", __FUNCTION__, __LINE__, extern_data->player_id, type);
+				break;
+			}
+
+			ret = check_task_complete_pos(cond_config, player, task->id, cond_config->ID);
+			if (ret != 0)
+			{
+				break;
+			}
+		}
+		else
 		{
 			ret = ERROR_ID_SERVER;
 			LOG_ERR("[%s:%d] player[%lu] type, type:%u", __FUNCTION__, __LINE__, extern_data->player_id, type);
 			break;
 		}
 
-		//检查区域
-		uint32_t region_id = player->get_attr(PLAYER_ATTR_REGION_ID);
-		if (region_id != 20)
-		{
-			ret = ERROR_ID_NOT_IN_FISHING_REGION;
-			LOG_ERR("[%s:%d] player[%lu] not in fishing region, region_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, region_id);
-			break;
-		}
 
 		if (player->is_on_horse())
 		{
 			ret = ERROR_ID_NOT_IN_FISHING_REGION;
-			LOG_ERR("[%s:%d] player[%lu] is on horse, region_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, region_id);
+			LOG_ERR("[%s:%d] player[%lu] is on horse", __FUNCTION__, __LINE__, extern_data->player_id);
 			break;
 		}
 
-		//检查活动时间
-		const uint32_t activity_id = 330000037;
-		if (!activity_is_open(activity_id))
-		{
-			ret = 190500420;
-			LOG_ERR("[%s:%d] player[%lu] activity not open, activity_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, activity_id);
-			break;
-		}
 
 		uint32_t bait_id = player->data->fishing_bait_id;
 		FishingTable *bait_config = get_config_by_id(bait_id, &fishing_config);
 		if (!bait_config)
 		{
 			ret = 190500418;
-			LOG_ERR("[%s:%d] player[%lu] bait error, activity_id:%u, bait_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, activity_id, bait_id);
+			LOG_ERR("[%s:%d] player[%lu] bait error, bait_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, bait_id);
 			break;
 		}
 		
@@ -19509,7 +19985,10 @@ static int handle_fishing_reward_request(player_struct *player, EXTERN_DATA *ext
 			player->add_item_list(reward_map, MAGIC_TYPE_FISHING);
 		}
 
-		player->add_task_progress(TCT_FISHING, bait_id, 1);
+		if (type == 2 && task && cond_config)
+		{
+			player->add_task_progress(TCT_FISHING, bait_id, 1, task->id, cond_config->ID);
+		}
 	} while(0);
 	
 	FishingRewardAnswer resp;
@@ -19596,6 +20075,11 @@ static int notify_strong_info(player_struct *player, EXTERN_DATA *extern_data)
 		if (player->data->strong_goals[i].id == 0)
 		{
 			break;
+		}
+
+		if (!strong_goal_is_open(player->data->strong_goals[i].id, player->get_level()))
+		{
+			continue;
 		}
 
 		goal_point[nty.n_goals] = &goal_data[nty.n_goals];
@@ -19844,7 +20328,7 @@ static int handle_trade_on_shelf_request(player_struct *player, EXTERN_DATA *ext
 		uint32_t has_coin = player->get_coin();
 		if (has_coin < need_coin)
 		{
-			ret = ERROR_ID_COIN_IS_NOT_ENOUGH;
+			ret = ERROR_ID_COIN_NOT_ENOUGH;
 			LOG_ERR("[%s:%d] player[%lu] coin, has:%u, need:%u", __FUNCTION__, __LINE__, extern_data->player_id, has_coin, need_coin);
 			break;
 		}
@@ -19908,7 +20392,7 @@ static int handle_trade_on_shelf_delete_item_request(player_struct *player, EXTE
 		uint32_t has_coin = player->get_coin();
 		if (has_coin < req->fee)
 		{
-			ret = ERROR_ID_COIN_IS_NOT_ENOUGH;
+			ret = ERROR_ID_COIN_NOT_ENOUGH;
 			LOG_ERR("[%s:%d] player[%lu] coin, has:%u, need:%u", __FUNCTION__, __LINE__, extern_data->player_id, has_coin, req->fee);
 			break;
 		}
@@ -19983,7 +20467,7 @@ static int handle_trade_re_shelf_change_request(player_struct *player, EXTERN_DA
 		uint32_t has_coin = player->get_coin();
 		if (has_coin < need_coin)
 		{
-			ret = ERROR_ID_COIN_IS_NOT_ENOUGH;
+			ret = ERROR_ID_COIN_NOT_ENOUGH;
 			LOG_ERR("[%s:%d] player[%lu] coin, has:%u, need:%u", __FUNCTION__, __LINE__, extern_data->player_id, has_coin, need_coin);
 			break;
 		}
@@ -20200,7 +20684,8 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_ZHENYING_GET_LINE_INFO_REQUEST, handle_zhenying_get_line_info_request);
 	add_msg_handle(MSG_ID_ZHENYING_CHANGE_LINE_REQUEST, handle_zhenying_change_line_request);
 
-	add_msg_handle(MSG_ID_JOIN_ZHENYING_FIGHT_REQUEST, handle_join_zhenying_battle_request);
+	add_msg_handle(MSG_ID_JOIN_ZHENYING_FIGHT_REQUEST, handle_join_zhenying_battle_request); 
+	add_msg_handle(MSG_ID_CANCEL_JOIN_ZHENYING_FIGHT_REQUEST, handle_cancel_join_zhenying_battle_request);
 	add_msg_handle(MSG_ID_INTO_ZHENYING_FIGHT_REQUEST, handle_into_zhenying_fight_request);
 	add_msg_handle(MSG_ID_ZHENYING_FIGHT_SET_READY_STATE_REQUEST, handle_zhenying_fight_set_ready_request);
 	add_msg_handle(MSG_ID_ZHENYING_FIGHT_MYSIDE_SCORE_REQUEST, handle_zhenying_fight_myside_score_request);
@@ -20311,6 +20796,7 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_TASK_COMPLETE_REQUEST, handle_task_complete_request);
 	add_msg_handle(MSG_ID_TASK_FAIL_REQUEST, handle_task_fail_request);
 	add_msg_handle(MSG_ID_TASK_CHAPTER_REWARD_REQUEST, handle_task_chapter_reward_request);
+	add_msg_handle(MSG_ID_TASK_ENTER_PLANES_REQUEST, handle_task_enter_planes_request);
 
 	//add_msg_handle(MSG_ID_SET_FASHION, handle_set_fashion_request);
 
@@ -20334,6 +20820,7 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_EQUIP_INLAY_REQUEST, handle_equip_inlay_request);
 	add_msg_handle(MSG_ID_EQUIP_STRIP_REQUEST, handle_equip_strip_request);
 	add_msg_handle(MSG_ID_EQUIP_GEM_COMPOSE_REQUEST, handle_equip_gem_compose_request);
+	add_msg_handle(MSG_ID_EQUIP_GEM_ONEKEY_COMPOSE_REQUEST, handle_equip_gem_onekey_compose_request);
 
 	add_msg_handle(MSG_ID_LEAVE_PLANES_RAID_REQUEST, handle_planes_raid_request);
 
@@ -20394,6 +20881,8 @@ void install_msg_handle()
 	add_msg_handle(SERVER_PROTO_GUILD_BATTLE_FINAL_LIST_ANSWER, handle_guild_battle_final_list_answer);
 	add_msg_handle(SERVER_PROTO_GUILD_SYNC_DONATION, handle_guild_sync_donation);
 	add_msg_handle(SERVER_PROTO_GUILD_SKILL_LEVEL_UP, handle_guild_skill_level_up);
+	add_msg_handle(SERVER_PROTO_GUILD_ACCEPT_TASK_REQUEST, handle_guild_accept_task_request);
+	add_msg_handle(SERVER_PROTO_GUILD_SYNC_TASK, handle_guild_sync_task);
 
 	add_msg_handle(MSG_ID_PERSONALITY_INFO_REQUEST, handle_personality_info_request);
 	add_msg_handle(MSG_ID_PERSONALITY_SET_GENERAL_REQUEST, handle_personality_set_general_request);

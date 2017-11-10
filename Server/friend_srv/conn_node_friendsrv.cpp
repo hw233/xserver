@@ -2069,14 +2069,14 @@ void conn_node_friendsrv::handle_friend_create_group_request()
 
 		if (!pGroup)
 		{
-			ret = ERROR_ID_FRIEND_GROUP_MAX;
+			ret = 190500217;
 			LOG_ERR("[%s:%d] player[%lu] group num max", __FUNCTION__, __LINE__, extern_data->player_id);
 			break;
 		}
 
 		if (pGroup->group_id > 0)
 		{
-			ret = ERROR_ID_FRIEND_GROUP_NAME_USED;
+			ret = 190500215;
 			LOG_ERR("[%s:%d] player[%lu] group name used, group_name:%s", __FUNCTION__, __LINE__, extern_data->player_id, pGroup->group_name);
 			break;
 		}
@@ -2257,7 +2257,7 @@ void conn_node_friendsrv::handle_friend_edit_group_request()
 
 		if (bNameExist)
 		{
-			ret = ERROR_ID_FRIEND_GROUP_NAME_USED;
+			ret = 190500215;
 			LOG_ERR("[%s:%d] player[%lu] group name used, group_name:%s", __FUNCTION__, __LINE__, extern_data->player_id, group_name.c_str());
 			break;
 		}
@@ -2768,14 +2768,14 @@ void conn_node_friendsrv::handle_friend_send_gift_request()
 		int target_idx = get_contact_idx(player, target->player_id);
 		if (target_idx < 0)
 		{
-			ret = ERROR_ID_FRIEND_SEND_GIFT_EACH_OTHER;
+			ret = 190500198;
 			LOG_ERR("[%s:%d] player[%lu] target not friend, target_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
 			break;
 		}
 
 		if (!is_in_contact(target, player->player_id))
 		{
-			ret = ERROR_ID_FRIEND_SEND_GIFT_EACH_OTHER;
+			ret = 190500198;
 			LOG_ERR("[%s:%d] player[%lu] not target friend, target_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
 			break;
 		}
@@ -2795,13 +2795,13 @@ void conn_node_friendsrv::handle_friend_send_gift_request()
 		//检查单个玩家赠送数量
 		if (player->contacts[target_idx].gift_num >= sg_friend_gift_send_num)
 		{
-			ret = ERROR_ID_FRIEND_GIFT_SEND_MAX;
+			ret = 190500199;
 			break;
 		}
 
 		if (player->contacts[target_idx].gift_num + gift_num > sg_friend_gift_send_num)
 		{
-			ret = ERROR_ID_FRIEND_GIFT_SEND_WILL_OVER;
+			ret = 190500201;
 			LOG_ERR("[%s:%d] player[%lu] can't send, target_id:%lu, send_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, target_id, player->contacts[target_idx].gift_num);
 			break;
 		}
@@ -2809,7 +2809,7 @@ void conn_node_friendsrv::handle_friend_send_gift_request()
 		//检查每日最多接受数量
 		if (target->gift_accept + gift_num > sg_friend_gift_accept_num)
 		{
-			ret = ERROR_ID_FRIEND_GIFT_ACCEPT_MAX;
+			ret = 190500200;
 			LOG_ERR("[%s:%d] player[%lu] target can't accept, target_id:%lu, accept_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, target_id, target->gift_accept);
 			break;
 		}
@@ -2893,7 +2893,7 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 		int target_idx = get_contact_idx(player, target->player_id);
 		if (target_idx < 0)
 		{
-			ret = ERROR_ID_FRIEND_SEND_GIFT_EACH_OTHER;
+			ret = 190500198;
 			LOG_ERR("[%s:%d] player[%lu] target not friend, target_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
 			break;
 		}
@@ -2901,7 +2901,7 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 		int player_idx = get_contact_idx(target, player->player_id);
 		if (player_idx < 0)
 		{
-			ret = ERROR_ID_FRIEND_SEND_GIFT_EACH_OTHER;
+			ret = 190500198;
 			LOG_ERR("[%s:%d] player[%lu] not target friend, target_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
 			break;
 		}

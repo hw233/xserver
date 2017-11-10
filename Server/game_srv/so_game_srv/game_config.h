@@ -87,6 +87,7 @@ bool activity_is_open(uint32_t activity_id);
 int get_dungeon_type(uint32_t raid_id);
 int item_id_to_trade_id(uint32_t item_id);
 int trade_id_to_item_id(uint32_t trade_id);
+bool strong_goal_is_open(uint32_t goal_id, uint32_t player_lv);
 
 #define DEFAULT_SCENE_ID  (10012) 
 

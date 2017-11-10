@@ -431,8 +431,10 @@
 	ID 1 : integer
 	MonsterID 2 : integer
 	MonsterLevel 3 : integer
-	PointX 4 : integer
-	PointZ 5 : integer
+	PointX 4 : double
+	PointZ 5 : double
+	PointY 6 : double
+	Orientation 7 : double
 }
 
 .TaskChapterTable {
@@ -885,21 +887,22 @@
 	parameter2 13 : integer
 	parameter3 14 : integer
 	parameter4 15 : *integer
+	BuildingName 16 : string
 }
 
 .GangsJurisdictionTable {
 	Position 1 : integer
-	Appoint1 2 : integer
-	Appoint2 3 : integer
-	OpenActivity 4 : integer
-	Recruit 5 : integer
-	Expel1 6 : integer
-	Expel2 7 : integer
-	Expel3 8 : integer
-	RecruitSetup 9 : integer
-	NoticeSetup 10 : integer
-	skill 11 : integer
-	GangsName 12 : integer
+	Appoint 2 : integer
+	NoticeSetup 3 : integer
+	BuildingUp 4 : integer
+	OpenActivity 5 : integer
+	RecruitSetup 6 : integer
+	skill 7 : integer
+	GangsName 8 : integer
+	Recruit 9 : integer
+	Expel 10 : integer
+	Invitation 11 : integer
+	Name 12 : string
 }
 
 .GangsSkillTable {
@@ -912,6 +915,16 @@
 	UseMoney1 7 : integer
 	UseMoney2 8 : integer
 	BuildingLeve 9 : integer
+	skillName 10 : string
+}
+
+.GangsBuildTaskTable {
+	ID 1 : integer
+	Level 2 : *integer
+	Tasklibrary 3 : *integer
+	DropID 4 : integer
+	LeveTime 5 : integer
+	Times 6 : integer
 }
 
 .ControlTable {
@@ -1487,6 +1500,7 @@
 	RewardType 7 : *integer
 	RewardValue 8 : *integer
 	Reward 9 : integer
+	LevelRange 10 : *integer
 }
 .FactionActivity{
 	ID 1 : integer 
@@ -1553,10 +1567,16 @@
 	Time 6 : integer
 	Effects 7 : string
 	EffectsParameter 8 : *integer
+	CallTime 9 : integer
 }
 .MGLYshoulingTable
 {
 	ID 1 : integer 
 	BossID 2 : integer 
 	MonsterID 3 : *integer
+}
+.MonsterIDTable
+{
+	ID 1 : integer 
+	MonseterID 2 : *integer
 }

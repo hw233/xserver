@@ -297,7 +297,7 @@ static int handle_friend_search_answer(EXTERN_DATA *extern_data)
 	{
 		if (proto->player_id == 0)
 		{
-			ret = ERROR_ID_FRIEND_SEARCH_NOT_EXIST;
+			ret = 190500219;
 			break;
 		}
 
@@ -310,7 +310,7 @@ static int handle_friend_search_answer(EXTERN_DATA *extern_data)
 		target = player_manager::create_player(proto, proto->player_id);
 		if (!target)
 		{
-			ret = ERROR_ID_FRIEND_SEARCH_NOT_EXIST;
+			ret = 190500219;
 			break;
 		}
 		

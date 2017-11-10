@@ -140,7 +140,7 @@ local StoryTable = {
 		['ShowUI'] = 0,
 		['PlayerOperation'] = 1,
 		['PlayerInvincible'] = 1,
-		['StoryTime'] = 27.00,
+		['StoryTime'] = 28.10,
 		['FileID'] = 'DFG_FYYD'
 		},
 	[450000020] = {
@@ -254,6 +254,46 @@ local StoryTable = {
 		['PlayerInvincible'] = 1,
 		['StoryTime'] = 25.00,
 		['FileID'] = 'MAP_JLG_MY'
+		},
+	[450000034] = {
+		['ID'] = 450000034,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 7.00,
+		['FileID'] = 'CC_huanye'
+		},
+	[450000035] = {
+		['ID'] = 450000035,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 7.00,
+		['FileID'] = 'CC_poxiao'
+		},
+	[450000036] = {
+		['ID'] = 450000036,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 7.00,
+		['FileID'] = 'CC_yuming'
+		},
+	[450000037] = {
+		['ID'] = 450000037,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 17.00,
+		['FileID'] = 'JYD_TT'
+		},
+	[450000038] = {
+		['ID'] = 450000038,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 15.00,
+		['FileID'] = 'FB_BBJ_START'
 		}
 	}
 return StoryTable

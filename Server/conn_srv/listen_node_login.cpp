@@ -44,6 +44,7 @@ conn_node_base * listen_node_login::get_conn_node(evutil_socket_t fd)
 		}
 	}
 	assert(0);
+	exit(0);
 	return NULL;
 }
 

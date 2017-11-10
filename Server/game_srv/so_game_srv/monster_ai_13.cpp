@@ -244,6 +244,7 @@ void set_leixinye_type(monster_struct *monster, uint32_t type)
 			break;
 		default:
 			assert(0);
+			exit(0);
 	}
 	monster->ai_data.leixinye_ai.type = type;
 }

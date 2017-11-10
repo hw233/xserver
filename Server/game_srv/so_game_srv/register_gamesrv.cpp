@@ -863,7 +863,7 @@ void on_http_request(struct evhttp_request *req, void *arg)
 		evbuffer_add_printf(returnbuffer, "zhenyingraid: %d<br><br>\n", zhenying_raid_struct::raid_num);
 		evbuffer_add_printf(returnbuffer, "zhenyingbattle: %d<br><br>\n", ZhenyingBattle::battle_num);
 		evbuffer_add_printf(returnbuffer, "zhenyingbattle room: %d<br><br>\n", ZhenyingBattle::GetInstance()->get_room_num());
-		evbuffer_add_printf(returnbuffer, "private zhenyingbattle: %d<br><br>\n", ZhenyingBattle::get_private_battle_num());		
+		//evbuffer_add_printf(returnbuffer, "private zhenyingbattle: %d<br><br>\n", ZhenyingBattle::get_private_battle_num());		
 
 		evhttp_send_reply(req, HTTP_OK, "Client", returnbuffer);					
 		evbuffer_free(returnbuffer);			

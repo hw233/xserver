@@ -51,6 +51,7 @@ struct FetterTable;
 struct FishingTable;
 struct FlySkillTable;
 struct FunctionUnlockTable;
+struct GangsBuildTaskTable;
 struct GangsDungeonTable;
 struct GangsJurisdictionTable;
 struct GangsSkillTable;
@@ -74,6 +75,7 @@ struct MGLYyanseTable;
 struct MagicAttributeTable;
 struct MagicTable;
 struct MoneyQuestTable;
+struct MonsterIDTable;
 struct MonsterPkTypeTable;
 struct MonsterTable;
 struct MountsTable;
@@ -1008,6 +1010,18 @@ struct FunctionUnlockTable
 	uint64_t  ItemNum; //6
 }__attribute__ ((packed));
 
+struct GangsBuildTaskTable
+{
+	uint64_t  ID; //1
+	uint32_t n_Level; //2
+	uint64_t *Level; //2
+	uint32_t n_Tasklibrary; //3
+	uint64_t *Tasklibrary; //3
+	uint64_t  DropID; //4
+	uint64_t  LeveTime; //5
+	uint64_t  Times; //6
+}__attribute__ ((packed));
+
 struct GangsDungeonTable
 {
 	uint64_t  ID; //1
@@ -1024,17 +1038,17 @@ struct GangsDungeonTable
 struct GangsJurisdictionTable
 {
 	uint64_t  Position; //1
-	uint64_t  Appoint1; //2
-	uint64_t  Appoint2; //3
-	uint64_t  OpenActivity; //4
-	uint64_t  Recruit; //5
-	uint64_t  Expel1; //6
-	uint64_t  Expel2; //7
-	uint64_t  Expel3; //8
-	uint64_t  RecruitSetup; //9
-	uint64_t  NoticeSetup; //10
-	uint64_t  skill; //11
-	uint64_t  GangsName; //12
+	uint64_t  Appoint; //2
+	uint64_t  NoticeSetup; //3
+	uint64_t  BuildingUp; //4
+	uint64_t  OpenActivity; //5
+	uint64_t  RecruitSetup; //6
+	uint64_t  skill; //7
+	uint64_t  GangsName; //8
+	uint64_t  Recruit; //9
+	uint64_t  Expel; //10
+	uint64_t  Invitation; //11
+	char  *Name; //12
 }__attribute__ ((packed));
 
 struct GangsSkillTable
@@ -1048,6 +1062,7 @@ struct GangsSkillTable
 	uint64_t  UseMoney1; //7
 	uint64_t  UseMoney2; //8
 	uint64_t  BuildingLeve; //9
+	char  *skillName; //10
 }__attribute__ ((packed));
 
 struct GangsTable
@@ -1067,6 +1082,7 @@ struct GangsTable
 	uint64_t  parameter3; //14
 	uint32_t n_parameter4; //15
 	uint64_t *parameter4; //15
+	char  *BuildingName; //16
 }__attribute__ ((packed));
 
 struct GemAttribute
@@ -1128,6 +1144,8 @@ struct GrowupTable
 	uint32_t n_RewardValue; //8
 	uint64_t *RewardValue; //8
 	uint64_t  Reward; //9
+	uint32_t n_LevelRange; //10
+	uint64_t *LevelRange; //10
 }__attribute__ ((packed));
 
 struct ItemsConfigTable
@@ -1274,6 +1292,7 @@ struct MGLYmaoguiwangTable
 	char  *Effects; //7
 	uint32_t n_EffectsParameter; //8
 	uint64_t *EffectsParameter; //8
+	uint64_t  CallTime; //9
 }__attribute__ ((packed));
 
 struct MGLYshoulingTable
@@ -1333,6 +1352,13 @@ struct MoneyQuestTable
 	uint64_t *RewardGroup4; //9
 	uint32_t n_RewardGroup5; //10
 	uint64_t *RewardGroup5; //10
+}__attribute__ ((packed));
+
+struct MonsterIDTable
+{
+	uint64_t  ID; //1
+	uint32_t n_MonseterID; //2
+	uint64_t *MonseterID; //2
 }__attribute__ ((packed));
 
 struct MonsterPkTypeTable
@@ -1950,8 +1976,10 @@ struct TaskMonsterTable
 	uint64_t  ID; //1
 	uint64_t  MonsterID; //2
 	uint64_t  MonsterLevel; //3
-	uint64_t  PointX; //4
-	uint64_t  PointZ; //5
+	double  PointX; //4
+	double  PointZ; //5
+	double  PointY; //6
+	double  Orientation; //7
 }__attribute__ ((packed));
 
 struct TaskRewardTable

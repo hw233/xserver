@@ -1964,7 +1964,7 @@ int conn_node_ranksrv::world_boss_provide_kill_reward(uint64_t boss_id)
 		{
 			attachs[parame_config->parameter1[i]] = parame_config->parameter1[i+1];
 		}
-		send_mail(&connecter, player_id,MAIL_ID_WORLDBOSS_KILL_REWAERD , NULL, NULL, NULL, NULL, &attachs, MAGIC_TYPE_WORLDBOS_KILL_REWARD);
+		send_mail(&connecter, player_id, 270300041, NULL, NULL, NULL, NULL, &attachs, MAGIC_TYPE_WORLDBOS_KILL_REWARD);
 	}
 		
 	return 0;

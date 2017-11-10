@@ -226,6 +226,9 @@ union raid_ai_data
 		uint32_t gui_wang_id; //鬼王怪物id
 		uint32_t po_buff_time; //破除猫鬼王buff时长
 		uint64_t buff_time;  //猫鬼王buff时间
+		uint32_t creat_time; //鬼王被攻击多少秒后召唤小怪
+		uint64_t creat_monster_time; //鬼王召唤小怪时间点
+		bool first_creat; //鬼王是否是第一次召唤小怪
 	}maogui_data;
 };
 
@@ -240,7 +243,6 @@ struct guild_ruqin_player_data
 //帮会入侵活动数据
 struct guild_ruqin_data{
 	bool guild_ruqin; //帮会入侵活动是否已经开启，在开启状态不再重复开启的操作
-	bool boss_creat; //boss是否刷新
 	uint64_t open_time; //本轮开启时间
 	uint32_t zhengying; //帮会阵营
 	uint32_t level; //活动刷怪等级

@@ -295,7 +295,7 @@ public:
 		{
 			struct position ret_pos;  //被吸引进战斗的地点，只会返回该地点
 			uint8_t cur_pos_index;			
-			struct MGLYmaoguiTable *ai_config; //28类型ai怪物使用
+			struct MGLYmaoguiTable *ai_config; //28和29类型ai怪物使用
 //			uint8_t n_circle;
 //			struct position circle[MAX_CIRCLE_POS_NUM];
 		} circle_ai; //转圈怪物AI以及单线不返回巡逻怪
@@ -359,10 +359,6 @@ public:
 		{
 			struct MGLYdiaoxiangTable *ai_27_config; 
 		} type27_ai;
-		struct
-		{
-			struct MGLYmaoguiTable *ai_config; //28类型ai怪物使用
-		} type29_ai;
 	} ai_data;
 	struct position born_pos; //出生点
 

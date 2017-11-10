@@ -23,6 +23,19 @@ message DBGuildShopReset
 	required uint32 next_month_time = 3;
 }
 
+message DBGuildPermission
+{
+	required uint32 office = 1;
+	repeated uint32 permissions = 2;
+}
+
+message DBGuildLog
+{
+	required uint32 type = 1;
+	required uint32 time = 2;
+	repeated string args = 3;
+}
+
 message DBGuild
 {
 	required uint32 rename_time = 1;
@@ -34,6 +47,9 @@ message DBGuild
 	required uint32 building_upgrade_end = 7;
 	repeated DBGuildSkill skills = 8;
 	required uint32 battle_score = 9;
+	repeated DBGuildPermission permissions = 10;
+	repeated DBGuildLog usual_logs = 11;
+	repeated DBGuildLog important_logs = 12;
 }
 
 message DBGuildPlayer
@@ -53,5 +69,8 @@ message DBGuildPlayer
 	optional DBGuildShopReset shop_reset = 13;
 	repeated uint32 guild_land_active_reward_id = 14;  //记录帮会领地活动收益次数id
 	repeated uint32 guild_land_active_reward_num = 15;  //记录帮会领地活动收益次数
+	required uint32 cur_week_treasure = 16;
+	required uint32 cur_week_task = 17;
+	required uint32 cur_week_task_config_id = 18;
 }
 

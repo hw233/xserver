@@ -1581,12 +1581,12 @@ local ParameterTable = {
 		},
 	[161000320] = {
 		['ID'] = 161000320,
-		['parameter1'] = {201010009,100},
+		['parameter1'] = {201010010,100},
 		['parameter2'] = ''
 		},
 	[161000321] = {
 		['ID'] = 161000321,
-		['parameter1'] = {201010009,10},
+		['parameter1'] = {201010010,10},
 		['parameter2'] = ''
 		},
 	[161000322] = {
@@ -1756,7 +1756,7 @@ local ParameterTable = {
 		},
 	[161000355] = {
 		['ID'] = 161000355,
-		['parameter1'] = {10},
+		['parameter1'] = {10,30,15},
 		['parameter2'] = ''
 		},
 	[161000356] = {
@@ -1918,6 +1918,11 @@ local ParameterTable = {
 		['ID'] = 161000387,
 		['parameter1'] = {},
 		['parameter2'] = '[516D88FF]门宗[f69e40]%s[-]技能研发完成'
+		},
+	[161000388] = {
+		['ID'] = 161000388,
+		['parameter1'] = {},
+		['parameter2'] = '[516D88FF]门宗名称被[f69e40]%s[-]成功修改为【%s】'
 		}
 	}
 return ParameterTable

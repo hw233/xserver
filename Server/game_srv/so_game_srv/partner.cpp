@@ -537,9 +537,10 @@ int partner_struct::init_end(bool isNty)
 	return 0;
 }
 
-void partner_struct::clear(void)
-{
-}
+// void partner_struct::clear(void)
+// {
+// 	clear_all_buffs();
+// }
 
 void partner_struct::send_patrol_move()
 {

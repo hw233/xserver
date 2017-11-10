@@ -1,4 +1,5 @@
 #include "raid.h"
+#include "so_game_srv/sight_space_manager.h"
 #include "msgid.h"
 #include "monster_manager.h"
 #include "uuid.h"
@@ -211,7 +212,6 @@ int raid_struct::init_raid(player_struct *player)
 	data->start_time = time_helper::get_cached_time();
 	LOG_DEBUG("%s: raid[%p][%u][%lu] data[%p] curtime = %lu", __FUNCTION__, this, data->ID, data->uuid, data, time_helper::get_cached_time());
 	ruqin_data.guild_ruqin = false;
-	ruqin_data.boss_creat = false;
 	ruqin_data.zhengying = 0;
 	ruqin_data.level = 0;
 	ruqin_data.open_time = 0;
@@ -362,22 +362,10 @@ void raid_struct::team_destoryed(Team *team)
 
 void raid_struct::clear()
 {
-	if (m_config->DengeonRank == DUNGEON_TYPE_BATTLE)
+	if (m_config->DengeonRank == DUNGEON_TYPE_BATTLE || m_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW)
 	{
 		ZhenyingBattle::GetInstance()->ClearRob(data->ai_data.battle_data.room);
-	}
-	else if (m_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW)
-	{
-		ZhenyingBattle *battel = ZhenyingBattle::GetPrivateBattle(data->uuid);
-		if (battel != NULL)
-		{
-			battel->ClearRob(data->ai_data.battle_data.room);
-			ZhenyingBattle::DestroyPrivateBattle(data->uuid);
-		}
-		else
-		{
-			LOG_ERR("%s: raid[%p][%lu] can not find battle", __FUNCTION__, this, data->uuid);
-		}
+		ZhenyingBattle::GetInstance()->DestroyRoom(data->ai_data.battle_data.room);
 	}
 
 	
@@ -794,6 +782,11 @@ int raid_struct::player_enter_raid_impl(player_struct *player, int index, double
 	// }
 	// t[index % MAX_TEAM_MEM] = player;
 	set_m_player_and_player_info(player, index);
+	
+	if (player->sight_space)
+		sight_space_manager::del_player_from_sight_space(player->sight_space, player, false);
+	if (player->scene)
+		player->scene->player_leave_scene(player);
 	
 	player->conserve_out_raid_pos_and_scene(this);
 	player->set_enter_raid_pos_and_scene(this, pos_x, pos_z);
@@ -1862,6 +1855,29 @@ void raid_struct::on_monster_dead(monster_struct *monster, unit_struct *killer)
 			{
 				monster_manager::delete_monster(monster);
 				return;
+			}
+		}
+	}
+	if (data->pass_index < t_config->n_PassType && t_config->PassType[data->pass_index] == 7)
+	{
+		uint32_t config_id = t_config->PassValue[data->pass_index];
+		MonsterIDTable* monsterid_config =  get_config_by_id(config_id, &raid_jincheng_suiji_kill_monster);
+		if(monsterid_config != NULL)
+		{
+			bool flag = false;
+			for(size_t i = 0; i < monsterid_config->n_MonseterID; i++)
+			{
+				if(monster->config->ID == monsterid_config->MonseterID[i])
+					flag = true;
+			}
+			if(flag == true)
+			{
+				if (add_raid_pass_value(1, t_config))
+				{
+					monster_manager::delete_monster(monster);
+					return;
+				}
+				
 			}
 		}
 	}

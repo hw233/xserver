@@ -21,24 +21,18 @@
 
 void battle_raid_ai_tick(raid_struct *raid)
 {
-	if (raid->m_config->DengeonRank != DUNGEON_TYPE_BATTLE)
-	{
-		ZhenyingBattle *battel = ZhenyingBattle::GetPrivateBattle(raid->data->uuid);
-		if (battel == NULL)
-		{
-			return;
-		}
-		battel->Tick();
-	}
+	ZhenyingBattle::GetInstance()->Tick(raid->data->ai_data.battle_data.room, raid);
 }
 
 static void battle_raid_ai_init(raid_struct *raid, player_struct *player)
 {
 	if (raid->m_config->DengeonRank != DUNGEON_TYPE_BATTLE)
 	{
-		ZhenyingBattle::CreatePrivateBattle(*player, raid);
-		//ZhenyingBattle *battel = 
-		//assert(battel != NULL);
+		int ret = ZhenyingBattle::GetInstance()->CreatePrivateBattle(*player, raid);
+		if (ret != 0)
+		{
+			LOG_INFO("%s: player[%lu] ret = %lu", __FUNCTION__, player->get_uuid(), ret);
+		}
 	}
 }
 
@@ -50,23 +44,10 @@ void battle_raid_ai_finished(raid_struct *raid)
 static void battle_raid_ai_failed(raid_struct *raid)
 {
 	raid->clear_monster();
-	if (raid->m_config->DengeonRank != DUNGEON_TYPE_BATTLE)  //新手阵营战
-	{
-		ZhenyingBattle *battel = ZhenyingBattle::GetPrivateBattle(raid->data->uuid);
-		if (battel == NULL)
-		{
-			return;
-		}
-		battel->Settle(raid, raid->data->ai_data.battle_data.room);
-		battel->ClearRob();
-//		ZhenyingBattle::DestroyPrivateBattle(raid->data->uuid);
-	}
-	else  //普通阵营战
-	{
-		ZhenyingBattle::GetInstance()->Settle(raid, raid->data->ai_data.battle_data.room);
-		ZhenyingBattle::GetInstance()->ClearRob();
-	}
-//	raid->stop_player_ai();
+	
+	ZhenyingBattle::GetInstance()->Settle(raid, raid->data->ai_data.battle_data.room);
+		ZhenyingBattle::GetInstance()->ClearRob(raid->data->ai_data.battle_data.room);
+	
 }
 
 static void battle_raid_ai_player_enter(raid_struct *raid, player_struct *player)
@@ -98,20 +79,7 @@ static void battle_raid_ai_player_enter(raid_struct *raid, player_struct *player
 	}
 	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_FIGHT_CD_NOTIFY, fb_cd__pack, notify);
 
-	if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE)
-	{
-		ZhenyingBattle::GetInstance()->SendMyScore(*player);
-	}
-	else
-	{
-		ZhenyingBattle *battel = ZhenyingBattle::GetPrivateBattle(raid->data->uuid);
-		if (battel == NULL)
-		{
-			return;
-		}
-		battel->SendMyScore(*player);
-	}
-	
+	ZhenyingBattle::GetInstance()->SendMyScore(*player);
 }
 static void battle_raid_ai_player_leave(raid_struct *raid, player_struct *player)
 {
@@ -125,20 +93,7 @@ static void battle_raid_ai_player_dead(raid_struct *raid, player_struct *player,
 	{
 		return;
 	}
-
-	if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE)
-	{
-		ZhenyingBattle::GetInstance()->KillEnemy(killer, *player);
-	}
-	else
-	{
-		ZhenyingBattle *battel = ZhenyingBattle::GetPrivateBattle(raid->data->uuid);
-		if (battel == NULL)
-		{
-			return;
-		}
-		battel->KillEnemy(killer, *player);
-	}
+	ZhenyingBattle::GetInstance()->KillEnemy(killer, *player);
 }
 static void battle_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
 {
@@ -234,20 +189,7 @@ static void battle_raid_ai_attack(raid_struct *raid, player_struct *player, unit
 
 static void battle_raid_ai_player_region_changed(raid_struct *raid, player_struct *player, uint32_t old_region, uint32_t new_region)
 {
-	if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE)
-	{
-		ZhenyingBattle::GetInstance()->OnRegionChanged(raid, player, old_region, new_region);
-	}
-	else
-	{
-		ZhenyingBattle *battel = ZhenyingBattle::GetPrivateBattle(raid->data->uuid);
-		if (battel == NULL)
-		{
-			return;
-		}
-		battel->OnRegionChanged(raid, player, old_region, new_region);
-	}
-	
+	ZhenyingBattle::GetInstance()->OnRegionChanged(raid, player, old_region, new_region);
 }
 
 //副本阵营战(阵营攻防)  新手阵营战

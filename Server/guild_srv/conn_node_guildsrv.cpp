@@ -18,6 +18,7 @@
 #include "guild_battle.pb-c.h"
 #include "send_mail.h"
 #include "guild.pb-c.h"
+#include "role.pb-c.h"
 #include <math.h>
 
 
@@ -50,6 +51,7 @@ conn_node_guildsrv::conn_node_guildsrv()
 	add_msg_handle(MSG_ID_GUILD_KICK_REQUEST, &conn_node_guildsrv::handle_guild_kick_request);
 	add_msg_handle(MSG_ID_GUILD_RENAME_REQUEST, &conn_node_guildsrv::handle_guild_rename_request);
 	add_msg_handle(MSG_ID_GUILD_EXIT_REQUEST, &conn_node_guildsrv::handle_guild_exit_request);
+	add_msg_handle(MSG_ID_GUILD_SET_PERMISSION_REQUEST, &conn_node_guildsrv::handle_guild_set_permission_request);
 
 	add_msg_handle(SERVER_PROTO_PLAYER_ONLINE_NOTIFY, &conn_node_guildsrv::handle_player_online_notify);
 	add_msg_handle(SERVER_PROTO_GUILDSRV_COST_ANSWER, &conn_node_guildsrv::handle_check_and_cost_answer);
@@ -61,6 +63,9 @@ conn_node_guildsrv::conn_node_guildsrv()
 	add_msg_handle(MSG_ID_GUILD_BUILDING_INFO_REQUEST, &conn_node_guildsrv::handle_guild_building_info_request);
 	add_msg_handle(MSG_ID_GUILD_BUILDING_UPGRADE_REQUEST, &conn_node_guildsrv::handle_guild_building_upgrade_request);
 	add_msg_handle(SERVER_PROTO_SUB_GUILD_BUILDING_TIME, &conn_node_guildsrv::handle_sub_guild_building_time_request);
+	add_msg_handle(MSG_ID_GUILD_ACCEPT_TASK_REQUEST, &conn_node_guildsrv::handle_guild_accept_task_request);
+	add_msg_handle(SERVER_PROTO_GUILD_ACCEPT_TASK_ANSWER, &conn_node_guildsrv::handle_game_accept_task_answer);
+	add_msg_handle(SERVER_PROTO_GUILD_TASK_FINISH, &conn_node_guildsrv::handle_game_task_finish_notify);
 
 	add_msg_handle(MSG_ID_GUILD_SKILL_INFO_REQUEST, &conn_node_guildsrv::handle_guild_skill_info_request);
 	add_msg_handle(MSG_ID_GUILD_SKILL_DEVELOP_REQUEST, &conn_node_guildsrv::handle_guild_skill_develop_request);
@@ -159,6 +164,29 @@ int conn_node_guildsrv::recv_func(evutil_socket_t fd)
 	return (0);
 }
 
+void conn_node_guildsrv::send_system_notice(uint64_t player_id, uint32_t id, std::vector<char*> *args, uint64_t target_id)
+{
+	SystemNoticeNotify nty;
+	system_notice_notify__init(&nty);
+
+	nty.id = id;
+	if (args)
+	{
+		nty.n_args = args->size();
+		nty.args = &((*args)[0]);
+	}
+	if (target_id > 0)
+	{
+		nty.targetid = target_id;
+		nty.has_targetid = true;
+	}
+
+	EXTERN_DATA ext_data;
+	ext_data.player_id = player_id;
+
+	fast_send_msg(&conn_node_guildsrv::connecter, &ext_data, MSG_ID_SYSTEM_NOTICE_NOTIFY, system_notice_notify__pack, nty);
+}
+
 int conn_node_guildsrv::broadcast_message(uint16_t msg_id, void *msg_data, pack_func packer, std::vector<uint64_t> &players)
 {
 	PROTO_HEAD_CONN_BROADCAST *head;
@@ -223,31 +251,41 @@ int conn_node_guildsrv::handle_guild_list_request(EXTERN_DATA *extern_data)
 		guild_data[resp.n_guilds].recruitstate = guild->recruit_state;
 		guild_data[resp.n_guilds].recruitnotice = guild->recruit_notice;
 		guild_data[resp.n_guilds].joinapplied = (std::find(applied_guild_ids.begin(), applied_guild_ids.end(), guild->guild_id) != applied_guild_ids.end());
+		guild_data[resp.n_guilds].masterid = guild->master_id;
+		guild_data[resp.n_guilds].mastercamp = guild->zhenying;
 
-		for (uint32_t i = 0; i < guild->member_num; ++i)
+		PlayerRedisInfo *redis_player = get_redis_player(guild->master_id, sg_player_key, sg_redis_client, t1);
+		if (redis_player)
 		{
-			GuildPlayer *player = guild->members[i];
-			if (!player)
-			{
-				continue;
-			}
-
-			PlayerRedisInfo *redis_player = get_redis_player(player->player_id, sg_player_key, sg_redis_client, t1);
-			if (!redis_player)
-			{
-				continue;
-			}
-
-			guild_data[resp.n_guilds].totalfc += redis_player->fighting_capacity;
-			if (player->player_id == guild->master_id)
-			{
-				guild_data[resp.n_guilds].masterid = player->player_id;
-				guild_data[resp.n_guilds].mastername = redis_player->name;
-				guild_data[resp.n_guilds].masterjob = redis_player->job;
-				guild_data[resp.n_guilds].masterhead = redis_player->head_icon;
-				guild_data[resp.n_guilds].mastercamp = redis_player->zhenying;
-			}
+			guild_data[resp.n_guilds].mastername = redis_player->name;
+			guild_data[resp.n_guilds].masterjob = redis_player->job;
+			guild_data[resp.n_guilds].masterhead = redis_player->head_icon;
 		}
+
+//		for (uint32_t i = 0; i < guild->member_num; ++i)
+//		{
+//			GuildPlayer *player = guild->members[i];
+//			if (!player)
+//			{
+//				continue;
+//			}
+//
+//			PlayerRedisInfo *redis_player = get_redis_player(player->player_id, sg_player_key, sg_redis_client, t1);
+//			if (!redis_player)
+//			{
+//				continue;
+//			}
+//
+//			guild_data[resp.n_guilds].totalfc += redis_player->fighting_capacity;
+//			if (player->player_id == guild->master_id)
+//			{
+//				guild_data[resp.n_guilds].masterid = player->player_id;
+//				guild_data[resp.n_guilds].mastername = redis_player->name;
+//				guild_data[resp.n_guilds].masterjob = redis_player->job;
+//				guild_data[resp.n_guilds].masterhead = redis_player->head_icon;
+//				guild_data[resp.n_guilds].mastercamp = redis_player->zhenying;
+//			}
+//		}
 
 		resp.n_guilds++;
 	}
@@ -267,6 +305,14 @@ void resp_guild_info(conn_node_guildsrv *node, EXTERN_DATA *extern_data, uint32_
 	GuildPersonalData personal_data;
 	guild_personal_data__init(&personal_data);
 
+	GuildPermissionData  permission_data[MAX_GUILD_OFFICE];
+	GuildPermissionData* permission_point[MAX_GUILD_OFFICE];
+	GuildLogData  usual_log_data[MAX_GUILD_LOG_NUM];
+	GuildLogData* usual_log_point[MAX_GUILD_LOG_NUM];
+	char*         usual_log_args[MAX_GUILD_LOG_NUM][MAX_GUILD_LOG_NUM];
+	GuildLogData  important_log_data[MAX_GUILD_LOG_NUM];
+	GuildLogData* important_log_point[MAX_GUILD_LOG_NUM];
+	char*         important_log_args[MAX_GUILD_LOG_NUM][MAX_GUILD_LOG_NUM];
 	GuildBuildingData building_data[MAX_GUILD_BUILDING_NUM];
 	GuildBuildingData* building_data_point[MAX_GUILD_BUILDING_NUM];
 
@@ -296,6 +342,67 @@ void resp_guild_info(conn_node_guildsrv *node, EXTERN_DATA *extern_data, uint32_
 			if (redis_master)
 			{
 				basic_data.mastername = redis_master->name;
+			}
+			basic_data.permissions = permission_point;
+			basic_data.n_permissions = 0;
+			for (int i = 0; i < MAX_GUILD_OFFICE; ++i)
+			{
+				permission_point[basic_data.n_permissions] = &permission_data[basic_data.n_permissions];
+				guild_permission_data__init(&permission_data[basic_data.n_permissions]);
+				permission_data[basic_data.n_permissions].office = guild->permissions[i].office;
+				permission_data[basic_data.n_permissions].bits = &guild->permissions[i].permission[GOPT_APPOINT];
+				permission_data[basic_data.n_permissions].n_bits = GOPT_END - 1;
+				basic_data.n_permissions++;
+			}
+			basic_data.usual_logs = usual_log_point;
+			basic_data.n_usual_logs = 0;
+			for (int i = 0; i < MAX_GUILD_LOG_NUM; ++i)
+			{
+				if (guild->usual_logs[i].type == 0)
+				{
+					break;
+				}
+				usual_log_point[basic_data.n_usual_logs] = &usual_log_data[basic_data.n_usual_logs];
+				guild_log_data__init(&usual_log_data[basic_data.n_usual_logs]);
+				usual_log_data[basic_data.n_usual_logs].type = guild->usual_logs[i].type;
+				usual_log_data[basic_data.n_usual_logs].time = guild->usual_logs[i].time;
+				usual_log_data[basic_data.n_usual_logs].args = usual_log_args[basic_data.n_usual_logs];
+				usual_log_data[basic_data.n_usual_logs].n_args = 0;
+				for (int j = 0; j < MAX_GUILD_LOG_ARG_NUM; ++j)
+				{
+					if (guild->usual_logs[i].args[j][0] == '\0')
+					{
+						break;
+					}
+					usual_log_data[basic_data.n_usual_logs].args[usual_log_data[basic_data.n_usual_logs].n_args] = guild->usual_logs[i].args[j];
+					usual_log_data[basic_data.n_usual_logs].n_args++;
+				}
+				basic_data.n_usual_logs++;
+			}
+			basic_data.important_logs = important_log_point;
+			basic_data.n_important_logs = 0;
+			for (int i = 0; i < MAX_GUILD_LOG_NUM; ++i)
+			{
+				if (guild->important_logs[i].type == 0)
+				{
+					break;
+				}
+				important_log_point[basic_data.n_important_logs] = &important_log_data[basic_data.n_important_logs];
+				guild_log_data__init(&important_log_data[basic_data.n_important_logs]);
+				important_log_data[basic_data.n_important_logs].type = guild->important_logs[i].type;
+				important_log_data[basic_data.n_important_logs].time = guild->important_logs[i].time;
+				important_log_data[basic_data.n_important_logs].args = important_log_args[basic_data.n_important_logs];
+				important_log_data[basic_data.n_important_logs].n_args = 0;
+				for (int j = 0; j < MAX_GUILD_LOG_ARG_NUM; ++j)
+				{
+					if (guild->important_logs[i].args[j][0] == '\0')
+					{
+						break;
+					}
+					important_log_data[basic_data.n_important_logs].args[important_log_data[basic_data.n_important_logs].n_args] = guild->important_logs[i].args[j];
+					important_log_data[basic_data.n_important_logs].n_args++;
+				}
+				basic_data.n_important_logs++;
 			}
 
 			resp.buildings = building_data_point;
@@ -370,6 +477,8 @@ int conn_node_guildsrv::handle_guild_member_list_request(EXTERN_DATA *extern_dat
 			member_data[resp.n_members].donation = member->donation;
 			member_data[resp.n_members].curhistorydonation = member->cur_history_donation;
 			member_data[resp.n_members].curweekdonation = member->cur_week_donation;
+			member_data[resp.n_members].curweektreasure = member->cur_week_treasure;
+			member_data[resp.n_members].taskcount = member->cur_week_task;
 			member_data[resp.n_members].jointime = member->join_time;
 
 			PlayerRedisInfo *redis_player = get_redis_player(member->player_id, sg_player_key, sg_redis_client, t1);
@@ -422,7 +531,7 @@ int conn_node_guildsrv::handle_guild_create_request(EXTERN_DATA *extern_data)
 
 			if (!check_guild_join_cd(player))
 			{
-				ret = ERROR_ID_GUILD_JOIN_CD;
+				ret = 190500255;
 				LOG_ERR("[%s:%d] player[%lu] join cd, exit_time:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->exit_time);
 				break;
 			}
@@ -430,19 +539,19 @@ int conn_node_guildsrv::handle_guild_create_request(EXTERN_DATA *extern_data)
 
 		if (name.size() == 0)
 		{
-			ret = ERROR_ID_GUILD_NAME_LEN_TOO_SHORT;
+			ret = 190500227;
 			break;
 		}
 		if (name.size() >= MAX_GUILD_NAME_LEN)
 		{
-			ret = ERROR_ID_GUILD_NAME_LEN_TOO_LONG;
+			ret = 190500228;
 			break;
 		}
 
 		//检查是否同名
 		if (check_guild_name(name))
 		{
-			ret = ERROR_ID_GUILD_NAME_USED;
+			ret = 190500230;
 			LOG_ERR("[%s:%d] player[%lu] guild name exist, name:%s", __FUNCTION__, __LINE__, extern_data->player_id, name.c_str());
 			break;
 		}
@@ -459,22 +568,22 @@ int conn_node_guildsrv::handle_guild_create_request(EXTERN_DATA *extern_data)
 		uint32_t player_level = redis_player->lv;
 		if (player_level < need_level)
 		{
-			ret = ERROR_ID_GUILD_CREATE_OR_JOIN_LEVEL;
+			ret = 190500231;
 			LOG_ERR("[%s:%d] player[%lu] level not enough, need_level:%u, player_level:%u", __FUNCTION__, __LINE__, extern_data->player_id, need_level, player_level);
 			break;
 		}
 
 		if (redis_player->zhenying == 0)
 		{
-			ret = ERROR_ID_GUILD_CREATE_NEED_ZHENYING;
+			ret = 190500345;
 			LOG_ERR("[%s:%d] player[%lu] not join zhenying", __FUNCTION__, __LINE__, extern_data->player_id);
 			break;
 		}
 
-		if (sg_guild_create_coin == 0)
+		if (sg_guild_create_gold == 0)
 		{
 			ret = ERROR_ID_NO_CONFIG;
-			LOG_ERR("[%s:%d] player[%lu] config error, coin:%u", __FUNCTION__, __LINE__, extern_data->player_id, sg_guild_create_coin);
+			LOG_ERR("[%s:%d] player[%lu] config error, coin:%u", __FUNCTION__, __LINE__, extern_data->player_id, sg_guild_create_gold);
 			break;
 		}
 	} while(0);
@@ -490,7 +599,7 @@ int conn_node_guildsrv::handle_guild_create_request(EXTERN_DATA *extern_data)
 		uint32_t data_len = sizeof(PROTO_SRV_CHECK_AND_COST_REQ) + get_data_len();
 		memset(cost_req, 0, data_len);
 		cost_req->cost.statis_id = MAGIC_TYPE_GUILD_CREATE;
-		cost_req->cost.coin = sg_guild_create_coin;
+		cost_req->cost.gold = sg_guild_create_gold;
 		cost_req->data_size = get_data_len();
 		memcpy(cost_req->data, get_data(), cost_req->data_size);
 
@@ -520,9 +629,9 @@ static int handle_guild_create_cost(int data_len, uint8_t *data, int result, EXT
 	{
 		if (ret != 0)
 		{
-			if (ret == ERROR_ID_COIN_IS_NOT_ENOUGH)
+			if (ret == ERROR_ID_GOLD_NOT_ENOUGH)
 			{
-				ret = ERROR_ID_GUILD_CREATE_COIN;
+				ret = 190500232;
 			}
 			break;
 		}
@@ -608,7 +717,7 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 
 			if (!check_guild_join_cd(player))
 			{
-				ret = ERROR_ID_GUILD_JOIN_CD;
+				ret = 190500255;
 				LOG_ERR("[%s:%d] player[%lu] join cd, guild_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild_id);
 				break;
 			}
@@ -626,7 +735,7 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 		uint32_t player_level = redis_player->lv;
 		if (player_level < need_level)
 		{
-			ret = ERROR_ID_GUILD_CREATE_OR_JOIN_LEVEL;
+			ret = 190500231;
 			LOG_ERR("[%s:%d] player[%lu] level not enough, need_level:%u, player_level:%u", __FUNCTION__, __LINE__, extern_data->player_id, need_level, player_level);
 			break;
 		}
@@ -643,7 +752,7 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 
 			if (guild->recruit_state == 0)
 			{
-				ret = ERROR_ID_GUILD_RECRUIT_CLOSE;
+				ret = 190500243;
 				LOG_ERR("[%s:%d] player[%lu] guild close recruit, guild_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild_id);
 				break;
 			}
@@ -651,23 +760,20 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 			uint32_t max_member = get_guild_max_member(guild);
 			if (guild->member_num >= max_member || guild->member_num >= MAX_GUILD_MEMBER_NUM)
 			{
-				ret = ERROR_ID_GUILD_MEMBER_MAX;
+				ret = 190500248;
 				LOG_ERR("[%s:%d] player[%lu] guild member max, guild_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild_id);
 				break;
 			}
 
-			PlayerRedisInfo *redis_master = get_redis_player(guild->master_id, sg_player_key, sg_redis_client, t1);
-			if (!redis_master)
+			//检查阵营是否符合
+			if (redis_player->zhenying == 0)
 			{
-				ret = ERROR_ID_SERVER;
-				LOG_ERR("[%s:%d] player[%lu] get master redis info failed, guild_id:%u, master_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, guild_id, guild->master_id);
+				ret = 190500347;
 				break;
 			}
-
-			//检查阵营是否符合
-			if (redis_player->zhenying != redis_master->zhenying)
+			if (redis_player->zhenying != guild->zhenying)
 			{
-				ret = ERROR_ID_GUILD_CAMP;
+				ret = 190500346;
 				LOG_ERR("[%s:%d] player[%lu] camp not match, guild_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild_id);
 				break;
 			}
@@ -712,14 +818,9 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 				{
 					continue;
 				}
-				PlayerRedisInfo *redis_master = get_redis_player(guild->master_id, sg_player_key, sg_redis_client, t1);
-				if (!redis_master)
-				{
-					continue;
-				}
 
 				//检查阵营是否符合
-				if (redis_player->zhenying != redis_master->zhenying)
+				if (redis_player->zhenying != guild->zhenying)
 				{
 					continue;
 				}
@@ -775,6 +876,14 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 	GuildPersonalData personal_data;
 	guild_personal_data__init(&personal_data);
 
+	GuildPermissionData  permission_data[MAX_GUILD_OFFICE];
+	GuildPermissionData* permission_point[MAX_GUILD_OFFICE];
+	GuildLogData  usual_log_data[MAX_GUILD_LOG_NUM];
+	GuildLogData* usual_log_point[MAX_GUILD_LOG_NUM];
+	char*         usual_log_args[MAX_GUILD_LOG_NUM][MAX_GUILD_LOG_NUM];
+	GuildLogData  important_log_data[MAX_GUILD_LOG_NUM];
+	GuildLogData* important_log_point[MAX_GUILD_LOG_NUM];
+	char*         important_log_args[MAX_GUILD_LOG_NUM][MAX_GUILD_LOG_NUM];
 	GuildBuildingData building_data[MAX_GUILD_BUILDING_NUM];
 	GuildBuildingData* building_data_point[MAX_GUILD_BUILDING_NUM];
 
@@ -804,6 +913,67 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 			if (redis_master)
 			{
 				basic_data.mastername = redis_master->name;
+			}
+			basic_data.permissions = permission_point;
+			basic_data.n_permissions = 0;
+			for (int i = 0; i < MAX_GUILD_OFFICE; ++i)
+			{
+				permission_point[basic_data.n_permissions] = &permission_data[basic_data.n_permissions];
+				guild_permission_data__init(&permission_data[basic_data.n_permissions]);
+				permission_data[basic_data.n_permissions].office = guild->permissions[i].office;
+				permission_data[basic_data.n_permissions].bits = &guild->permissions[i].permission[GOPT_APPOINT];
+				permission_data[basic_data.n_permissions].n_bits = GOPT_END - 1;
+				basic_data.n_permissions++;
+			}
+			basic_data.usual_logs = usual_log_point;
+			basic_data.n_usual_logs = 0;
+			for (int i = 0; i < MAX_GUILD_LOG_NUM; ++i)
+			{
+				if (guild->usual_logs[i].type == 0)
+				{
+					break;
+				}
+				usual_log_point[basic_data.n_usual_logs] = &usual_log_data[basic_data.n_usual_logs];
+				guild_log_data__init(&usual_log_data[basic_data.n_usual_logs]);
+				usual_log_data[basic_data.n_usual_logs].type = guild->usual_logs[i].type;
+				usual_log_data[basic_data.n_usual_logs].time = guild->usual_logs[i].time;
+				usual_log_data[basic_data.n_usual_logs].args = usual_log_args[basic_data.n_usual_logs];
+				usual_log_data[basic_data.n_usual_logs].n_args = 0;
+				for (int j = 0; j < MAX_GUILD_LOG_ARG_NUM; ++j)
+				{
+					if (guild->usual_logs[i].args[j][0] == '\0')
+					{
+						break;
+					}
+					usual_log_data[basic_data.n_usual_logs].args[usual_log_data[basic_data.n_usual_logs].n_args] = guild->usual_logs[i].args[j];
+					usual_log_data[basic_data.n_usual_logs].n_args++;
+				}
+				basic_data.n_usual_logs++;
+			}
+			basic_data.important_logs = important_log_point;
+			basic_data.n_important_logs = 0;
+			for (int i = 0; i < MAX_GUILD_LOG_NUM; ++i)
+			{
+				if (guild->important_logs[i].type == 0)
+				{
+					break;
+				}
+				important_log_point[basic_data.n_important_logs] = &important_log_data[basic_data.n_important_logs];
+				guild_log_data__init(&important_log_data[basic_data.n_important_logs]);
+				important_log_data[basic_data.n_important_logs].type = guild->important_logs[i].type;
+				important_log_data[basic_data.n_important_logs].time = guild->important_logs[i].time;
+				important_log_data[basic_data.n_important_logs].args = important_log_args[basic_data.n_important_logs];
+				important_log_data[basic_data.n_important_logs].n_args = 0;
+				for (int j = 0; j < MAX_GUILD_LOG_ARG_NUM; ++j)
+				{
+					if (guild->important_logs[i].args[j][0] == '\0')
+					{
+						break;
+					}
+					important_log_data[basic_data.n_important_logs].args[important_log_data[basic_data.n_important_logs].n_args] = guild->important_logs[i].args[j];
+					important_log_data[basic_data.n_important_logs].n_args++;
+				}
+				basic_data.n_important_logs++;
 			}
 
 			resp.buildings = building_data_point;
@@ -854,7 +1024,7 @@ int conn_node_guildsrv::handle_guild_join_list_request(EXTERN_DATA *extern_data)
 			break;
 		}
 
-		if (!office_has_permission(player->office, GOPT_DEAL_JOIN))
+		if (!player_has_permission(player, GOPT_DEAL_JOIN))
 		{
 			ret = ERROR_ID_GUILD_PLAYER_NO_PERMISSION;
 			LOG_ERR("[%s:%d] player[%lu] no permission, office:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->office);
@@ -934,7 +1104,7 @@ int conn_node_guildsrv::handle_guild_deal_join_request(EXTERN_DATA *extern_data)
 			break;
 		}
 
-		if (!office_has_permission(player->office, GOPT_DEAL_JOIN))
+		if (!player_has_permission(player, GOPT_DEAL_JOIN))
 		{
 			ret = ERROR_ID_GUILD_PLAYER_NO_PERMISSION;
 			LOG_ERR("[%s:%d] player[%lu] no permission, office:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->office);
@@ -949,7 +1119,7 @@ int conn_node_guildsrv::handle_guild_deal_join_request(EXTERN_DATA *extern_data)
 			{
 				if (!check_player_applied_join(deal_id, guild->guild_id))
 				{
-					ret = ERROR_ID_GUILD_JOIN_APPLY_GONE;
+					ret = 190500253;
 					LOG_ERR("[%s:%d] player[%lu] no this player, deal_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, deal_id);
 					break;
 				}
@@ -957,7 +1127,7 @@ int conn_node_guildsrv::handle_guild_deal_join_request(EXTERN_DATA *extern_data)
 				GuildPlayer *deal_player = get_guild_player(deal_id);
 				if (deal_player && deal_player->guild)
 				{
-					ret = ERROR_ID_GUILD_JOIN_OTHER_GUILD;
+					ret = 190500247;
 					LOG_ERR("[%s:%d] player[%lu] already in guild, deal_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, deal_id);
 					delete_player_join_apply(deal_id);
 					break;
@@ -965,7 +1135,7 @@ int conn_node_guildsrv::handle_guild_deal_join_request(EXTERN_DATA *extern_data)
 
 				if (guild->member_num >= max_member)
 				{
-					ret = ERROR_ID_GUILD_MEMBER_MAX;
+					ret = 190500248;
 					LOG_ERR("[%s:%d] player[%lu] guild member max, deal_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, deal_id);
 					break;
 				}
@@ -1055,7 +1225,7 @@ int conn_node_guildsrv::handle_guild_turn_switch_request(EXTERN_DATA *extern_dat
 			break;
 		}
 
-		if (!office_has_permission(player->office, GOPT_RECRUIT_SETTING))
+		if (!player_has_permission(player, GOPT_RECRUIT_SETTING))
 		{
 			ret = ERROR_ID_GUILD_PLAYER_NO_PERMISSION;
 			LOG_ERR("[%s:%d] player[%lu] no permission, office:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->office);
@@ -1148,7 +1318,7 @@ int conn_node_guildsrv::handle_guild_set_words_request(EXTERN_DATA *extern_data)
 		{
 			permission_type = GOPT_ANNOUNCEMENT_SETTING;
 		}
-		if (!office_has_permission(player->office, permission_type))
+		if (!player_has_permission(player, permission_type))
 		{
 			ret = ERROR_ID_GUILD_PLAYER_NO_PERMISSION;
 			LOG_ERR("[%s:%d] player[%lu] no permission, office:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->office);
@@ -1218,14 +1388,14 @@ int conn_node_guildsrv::handle_guild_appoint_office_request(EXTERN_DATA *extern_
 		GuildPlayer *appointee = get_guild_player(appoint_id);
 		if (!appointee || !appointee->guild)
 		{
-			ret = ERROR_ID_GUILD_PLYAER_EXIT;
+			ret = 190500274;
 			LOG_ERR("[%s:%d] player[%lu] appoint not in guild, appoint_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, appoint_id);
 			break;
 		}
 
 		if (appointee->guild != player->guild)
 		{
-			ret = ERROR_ID_GUILD_JOIN_OTHER_GUILD;
+			ret = 190500247;
 			LOG_ERR("[%s:%d] player[%lu] appoint not in same guild, appoint_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, appoint_id);
 			break;
 		}
@@ -1233,12 +1403,14 @@ int conn_node_guildsrv::handle_guild_appoint_office_request(EXTERN_DATA *extern_
 		ret = appoint_office(player, appointee, office);
 	} while(0);
 
-	CommAnswer resp;
-	comm_answer__init(&resp);
+	GuildAppointOfficeAnswer resp;
+	guild_appoint_office_answer__init(&resp);
 
 	resp.result = ret;
+	resp.playerid = appoint_id;
+	resp.playeroffice = office;
 
-	fast_send_msg(&connecter, extern_data, MSG_ID_GUILD_APPOINT_OFFICE_ANSWER, comm_answer__pack, resp);
+	fast_send_msg(&connecter, extern_data, MSG_ID_GUILD_APPOINT_OFFICE_ANSWER, guild_appoint_office_answer__pack, resp);
 	return 0;
 }
 
@@ -1268,12 +1440,13 @@ int conn_node_guildsrv::handle_guild_kick_request(EXTERN_DATA *extern_data)
 		ret = kick_member(player, kick_id);
 	} while(0);
 
-	CommAnswer resp;
-	comm_answer__init(&resp);
+	GuildKickAnswer resp;
+	guild_kick_answer__init(&resp);
 
 	resp.result = ret;
+	resp.playerid = kick_id;
 
-	fast_send_msg(&connecter, extern_data, MSG_ID_GUILD_KICK_ANSWER, comm_answer__pack, resp);
+	fast_send_msg(&connecter, extern_data, MSG_ID_GUILD_KICK_ANSWER, guild_kick_answer__pack, resp);
 	return 0;
 }
 
@@ -1302,7 +1475,7 @@ int conn_node_guildsrv::handle_guild_rename_request(EXTERN_DATA *extern_data)
 		}
 
 		guild = player->guild;
-		if (!office_has_permission(player->office, GOPT_RENAME))
+		if (!player_has_permission(player, GOPT_RENAME))
 		{
 			ret = ERROR_ID_GUILD_PLAYER_NO_PERMISSION;
 			LOG_ERR("[%s:%d] player[%lu] no permission, office:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->office);
@@ -1312,26 +1485,26 @@ int conn_node_guildsrv::handle_guild_rename_request(EXTERN_DATA *extern_data)
 		uint32_t now = time_helper::get_cached_time() / 1000;
 		if (now < player->guild->rename_time + sg_guild_rename_cd)
 		{
-			ret = ERROR_ID_GUILD_RENAME_CD;
+			ret = 190500245;
 			LOG_ERR("[%s:%d] player[%lu] rename cd, guild_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->guild->guild_id);
 			break;
 		}
 
 		if (name.size() == 0)
 		{
-			ret = ERROR_ID_GUILD_NAME_LEN_TOO_SHORT;
+			ret = 190500227;
 			break;
 		}
 		if (name.size() >= MAX_GUILD_NAME_LEN)
 		{
-			ret = ERROR_ID_GUILD_NAME_LEN_TOO_LONG;
+			ret = 190500228;
 			break;
 		}
 
 		//检查是否同名
 		if (check_guild_name(name))
 		{
-			ret = ERROR_ID_GUILD_NAME_USED;
+			ret = 190500230;
 			LOG_ERR("[%s:%d] player[%lu] guild name exist, name:%s", __FUNCTION__, __LINE__, extern_data->player_id, name.c_str());
 			break;
 		}
@@ -1397,7 +1570,7 @@ static int handle_guild_rename_cost(int data_len, uint8_t *data, int result, EXT
 		{
 			if (ret == ERROR_ID_PROP_NOT_ENOUGH)
 			{
-				ret = ERROR_ID_GUILD_RENAME_ITEM;
+				ret = 190500244;
 			}
 			break;
 		}
@@ -1420,7 +1593,20 @@ static int handle_guild_rename_cost(int data_len, uint8_t *data, int result, EXT
 		guild = player->guild;
 		strcpy(player->guild->name, name.c_str());
 		save_guild_name(player->guild);
-		player->guild->rename_time = time_helper::get_cached_time() / 1000;
+		uint32_t now = time_helper::get_cached_time() / 1000;
+		player->guild->rename_time = now;
+
+		PlayerRedisInfo *redis_player = get_redis_player(player->player_id, sg_player_key, sg_redis_client, t1);
+		if (redis_player)
+		{
+			GuildLog *log = get_important_insert_log(guild);
+			log->type = GILT_RENAME;
+			log->time = now;
+			snprintf(log->args[0], MAX_GUILD_LOG_ARG_LEN, "%s", redis_player->name);
+			snprintf(log->args[1], MAX_GUILD_LOG_ARG_LEN, "%s", player->guild->name);
+			broadcast_important_log_add(guild, log);
+		}
+
 		save_guild_info(player->guild);
 
 		sync_guild_rename_to_gamesrv(guild);
@@ -1509,6 +1695,92 @@ int conn_node_guildsrv::handle_guild_exit_request(EXTERN_DATA *extern_data)
 	return 0;
 }
 
+int conn_node_guildsrv::handle_guild_set_permission_request(EXTERN_DATA *extern_data)
+{
+	GuildSetPermissionRequest *req = guild_set_permission_request__unpack(NULL, get_data_len(), get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	uint32_t office = req->office;
+	uint32_t type = req->type;
+
+	guild_set_permission_request__free_unpacked(req, NULL);
+
+	int ret = 0;
+	do
+	{
+		GuildPlayer *player = get_guild_player(extern_data->player_id);
+		if (!player || !player->guild)
+		{
+			ret = ERROR_ID_GUILD_PLAYER_NOT_JOIN;
+			LOG_ERR("[%s:%d] player[%lu] not in guild", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+		GuildInfo *guild = player->guild;
+		if (player->player_id != guild->master_id)
+		{
+			ret = ERROR_ID_GUILD_PLAYER_NO_PERMISSION;
+			LOG_ERR("[%s:%d] player[%lu] has not permission", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+		if (office == GUILD_OFFICE_TYPE__OFFICE_MASTER)
+		{
+			ret = 1;
+			LOG_ERR("[%s:%d] player[%lu] can not change master permission", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+		GuildPermission *pOffice = NULL;
+		for (int i = 0; i < MAX_GUILD_OFFICE; ++i)
+		{
+			if (guild->permissions[i].office == office)
+			{
+				pOffice = &guild->permissions[i];
+				break;
+			}
+		}
+
+		if (!pOffice)
+		{
+			ret = 1;
+			LOG_ERR("[%s:%d] player[%lu] office error, office:%u", __FUNCTION__, __LINE__, extern_data->player_id, office);
+			break;
+		}
+
+		if (type == 0 || type >= GOPT_END)
+		{
+			ret = 1;
+			LOG_ERR("[%s:%d] player[%lu] type error, office:%u, type:%u", __FUNCTION__, __LINE__, extern_data->player_id, office, type);
+			break;
+		}
+
+		if (pOffice->permission[type] == 0)
+		{
+			pOffice->permission[type] = 1;
+		}
+		else
+		{
+			pOffice->permission[type] = 0;
+		}
+
+		broadcast_permission_update(guild, office, type, pOffice->permission[type]);
+		save_guild_info(guild);
+	} while(0);
+
+	CommAnswer resp;
+	comm_answer__init(&resp);
+
+	resp.result = ret;
+
+	fast_send_msg(&connecter, extern_data, MSG_ID_GUILD_SET_PERMISSION_ANSWER, comm_answer__pack, resp);
+	return 0;
+}
+
 int conn_node_guildsrv::handle_open_guild_answer_request(EXTERN_DATA *extern_data)
 {
 	int ret = 0;
@@ -1560,6 +1832,7 @@ int conn_node_guildsrv::handle_player_online_notify(EXTERN_DATA *extern_data)
 		sync_guild_info_to_gamesrv(player);
 		sync_guild_skill_to_gamesrv(player);
 		sync_player_donation_to_game_srv(player);
+		sync_guild_task_to_gamesrv(player);
 		//聊天发送
 		do
 		{
@@ -1669,6 +1942,7 @@ int conn_node_guildsrv::handle_add_guild_resrouce_request(EXTERN_DATA *extern_da
 			break;
 		case 2:
 			add_guild_treasure(player->guild, num);
+			add_player_contribute_treasure(player, num);
 			break;
 		case 3:
 			add_guild_build_board(player->guild, num);
@@ -1773,7 +2047,7 @@ int conn_node_guildsrv::handle_guild_building_upgrade_request(EXTERN_DATA *exter
 		GuildInfo *guild = player->guild;
 		if (guild->building_upgrade_id > 0)
 		{
-			ret = ERROR_ID_GUILD_HAS_BUILDING_UPGRADE;
+			ret = 190500250;
 			LOG_ERR("[%s:%d] player[%lu] guild has building upgrade, upgrade_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->building_upgrade_id);
 			break;
 		}
@@ -1805,7 +2079,7 @@ int conn_node_guildsrv::handle_guild_building_upgrade_request(EXTERN_DATA *exter
 		uint32_t need_hall_level = config->HallLeve;
 		if (hall_level < need_hall_level)
 		{
-			ret = ERROR_ID_GUILD_HALL_LEVEL;
+			ret = 190500239;
 			LOG_ERR("[%s:%d] player[%lu] hall level not enough, building_id:%u, level:%u, hall_level:%u, need_hall_level:%u", __FUNCTION__, __LINE__, extern_data->player_id, building_id, building_level, hall_level, need_hall_level);
 			break;
 		}
@@ -1813,7 +2087,7 @@ int conn_node_guildsrv::handle_guild_building_upgrade_request(EXTERN_DATA *exter
 		uint32_t need_treasure = config->Leve1Expend;
 		if (guild->treasure < need_treasure)
 		{
-			ret = ERROR_ID_GUILD_BUILDING_UPGRADE_RESOURCE;
+			ret = 190500238;
 			LOG_ERR("[%s:%d] player[%lu] guild treasure not enough, building_id:%u, level:%u, has_treasure:%u, need_treasure:%u", __FUNCTION__, __LINE__, extern_data->player_id, building_id, building_level, guild->treasure, need_treasure);
 			break;
 		}
@@ -1821,7 +2095,7 @@ int conn_node_guildsrv::handle_guild_building_upgrade_request(EXTERN_DATA *exter
 		uint32_t need_board = config->Leve2Expend;
 		if (guild->build_board < need_board)
 		{
-			ret = ERROR_ID_GUILD_BUILDING_UPGRADE_RESOURCE;
+			ret = 190500238;
 			LOG_ERR("[%s:%d] player[%lu] guild board not enough, building_id:%u, level:%u, has_board:%u, need_board:%u", __FUNCTION__, __LINE__, extern_data->player_id, building_id, building_level, guild->build_board, need_board);
 			break;
 		}
@@ -1861,6 +2135,122 @@ int conn_node_guildsrv::handle_sub_guild_building_time_request(EXTERN_DATA *exte
 	}
 
 	sub_building_upgrade_time(player->guild, time);
+
+	return 0;
+}
+
+int conn_node_guildsrv::handle_guild_accept_task_request(EXTERN_DATA *extern_data)
+{
+	int ret = 0;
+	GuildPlayer *player = NULL;
+	do
+	{
+		player = get_guild_player(extern_data->player_id);
+		if (!player || !player->guild)
+		{
+			ret = ERROR_ID_GUILD_PLAYER_NOT_JOIN;
+			LOG_ERR("[%s:%d] player[%lu] not join guild yet", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+		GangsBuildTaskTable *config = get_config_by_id(player->cur_week_task_config_id, &guild_build_task_config);
+		if (!config || config->n_Tasklibrary == 0)
+		{
+			ret = ERROR_ID_NO_CONFIG;
+			LOG_ERR("[%s:%d] player[%lu] get task config failed, id:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->cur_week_task_config_id);
+			break;
+		}
+
+		uint32_t total_count = config->Times;
+		if (player->cur_week_task >= total_count)
+		{
+			ret = 190500444;
+			LOG_ERR("[%s:%d] player[%lu] already finish all, id:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->cur_week_task_config_id);
+			break;
+		}
+
+		uint32_t task_idx = rand() % config->n_Tasklibrary;
+		uint32_t task_id = config->Tasklibrary[task_idx];
+
+		{
+			uint32_t *pData = (uint32_t *)get_send_data();
+			uint32_t data_len = sizeof(uint32_t);
+			memset(pData, 0, data_len);
+			*pData = task_id;
+			fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_GUILD_ACCEPT_TASK_REQUEST, data_len, 0);
+		}
+	} while(0);
+
+	if (ret != 0)
+	{
+		CommAnswer resp;
+		comm_answer__init(&resp);
+
+		resp.result = ret;
+		fast_send_msg(&connecter, extern_data, MSG_ID_GUILD_ACCEPT_TASK_ANSWER, comm_answer__pack, resp);
+	}
+
+	return 0;
+}
+
+int conn_node_guildsrv::handle_game_accept_task_answer(EXTERN_DATA *extern_data)
+{
+	GUILD_ACCEPT_TASK_ANSWER *ans = (GUILD_ACCEPT_TASK_ANSWER*)get_data();
+
+	int ret = 0;
+	GuildPlayer *player = NULL;
+	do
+	{
+		if (ans->result != 0)
+		{
+			ret = ans->result;
+			break;
+		}
+
+		player = get_guild_player(extern_data->player_id);
+		if (!player || !player->guild)
+		{
+			ret = ERROR_ID_GUILD_PLAYER_NOT_JOIN;
+			LOG_ERR("[%s:%d] player[%lu] not join guild yet", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+	} while(0);
+
+	CommAnswer resp;
+	comm_answer__init(&resp);
+
+	resp.result = ret;
+	fast_send_msg(&connecter, extern_data, MSG_ID_GUILD_ACCEPT_TASK_ANSWER, comm_answer__pack, resp);
+
+	return 0;
+}
+
+int conn_node_guildsrv::handle_game_task_finish_notify(EXTERN_DATA *extern_data)
+{
+	GuildPlayer *player = NULL;
+	do
+	{
+		player = get_guild_player(extern_data->player_id);
+		if (!player || !player->guild)
+		{
+			LOG_ERR("[%s:%d] player[%lu] not join guild yet", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+		GangsBuildTaskTable *config = get_config_by_id(player->cur_week_task_config_id, &guild_build_task_config);
+		if (!config)
+		{
+			LOG_ERR("[%s:%d] player[%lu] get task config failed, id:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->cur_week_task_config_id);
+			break;
+		}
+
+		sub_building_upgrade_time(player->guild, config->LeveTime);
+
+		player->cur_week_task++;
+		save_guild_player(player);
+		sync_guild_task_to_gamesrv(player);
+	} while(0);
 
 	return 0;
 }
@@ -1958,7 +2348,7 @@ int conn_node_guildsrv::handle_guild_skill_develop_request(EXTERN_DATA *extern_d
 		}
 
 		GuildInfo *guild = player->guild;
-		if (!office_has_permission(player->office, GOPT_DEVELOP_SKILL))
+		if (!player_has_permission(player, GOPT_DEVELOP_SKILL))
 		{
 			ret = ERROR_ID_GUILD_PLAYER_NO_PERMISSION;
 			LOG_ERR("[%s:%d] player[%lu] no permission, office:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->office);
@@ -1986,7 +2376,7 @@ int conn_node_guildsrv::handle_guild_skill_develop_request(EXTERN_DATA *extern_d
 		uint32_t library_level = get_building_level(guild, Building_Library);
 		if (library_level < need_lib_lv)
 		{
-			ret = ERROR_ID_GUILD_LIBRARY_LEVEL;
+			ret = 190500237;
 			LOG_ERR("[%s:%d] player[%lu] guild library level, guild_id:%u, skill_id:%u, skill_lv:%u, need_lv:%u, lib_lv:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, skill_id, next_lv, need_lib_lv, library_level);
 			break;
 		}
@@ -1994,7 +2384,7 @@ int conn_node_guildsrv::handle_guild_skill_develop_request(EXTERN_DATA *extern_d
 		uint32_t need_treasure = config->CreateMnoney;
 		if (guild->treasure < need_treasure)
 		{
-			ret = ERROR_ID_GUILD_SKILL_DEVELOP_TREASURE;
+			ret = 190500236;
 			LOG_ERR("[%s:%d] player[%lu] guild treasure not enough, guild_id:%u, skill_id:%u, skill_id:%u, has_treasure:%u, need_treasure:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, skill_id, next_lv, guild->treasure, need_treasure);
 			break;
 		}
@@ -2003,9 +2393,17 @@ int conn_node_guildsrv::handle_guild_skill_develop_request(EXTERN_DATA *extern_d
 
 		pSkill->skill_id = skill_id;
 		pSkill->skill_lv++;
-		save_guild_info(guild);
 		broadcast_skill_develop_update(guild, pSkill);
 		broadcast_guild_object_attr_update(guild, GUILD_OBJECT_ATTR_TYPE__ATTR_SKILL_DEVELOP, skill_id, pSkill->skill_lv);
+
+		uint32_t now = time_helper::get_cached_time() / 1000;
+		GuildLog *log = get_important_insert_log(guild);
+		log->type = GILT_SKILL_DEVELOP;
+		log->time = now;
+		snprintf(log->args[0], MAX_GUILD_LOG_ARG_LEN, "%s", config->skillName);
+		broadcast_important_log_add(guild, log);
+
+		save_guild_info(guild);
 	} while(0);
 
 	GuildSkillUpgradeAnswer resp;
@@ -2067,27 +2465,27 @@ int conn_node_guildsrv::handle_guild_skill_pratice_request(EXTERN_DATA *extern_d
 
 		uint32_t need_coin = 0;
 		uint32_t need_donation = 0;
-		uint32_t next_lv = pSkill->skill_lv;
+		uint32_t cur_lv = pSkill->skill_lv;
 		for (uint32_t i = 0; i < level_num; ++i)
 		{
-			if (next_lv > pGuildSkill->skill_lv)
+			if (cur_lv >= pGuildSkill->skill_lv)
 			{
-				ret = ERROR_ID_GUILD_SKILL_DEVELOP_FIRST;
-				LOG_ERR("[%s:%d] player[%lu] skill develop level, guild_id:%u, skill_id:%u, skill_lv:%u, develop_lv:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, skill_id, next_lv, pGuildSkill->skill_lv);
+				ret = 190500235;
+				LOG_ERR("[%s:%d] player[%lu] skill develop level, guild_id:%u, skill_id:%u, skill_lv:%u, develop_lv:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, skill_id, cur_lv, pGuildSkill->skill_lv);
 				break;
 			}
 
-			GangsSkillTable *config = get_guild_skill_config(skill_id, next_lv);
+			GangsSkillTable *config = get_guild_skill_config(skill_id, cur_lv);
 			if (!config)
 			{
 				ret = ERROR_ID_GUILD_SKILL_LEVEL_MAX;
-				LOG_ERR("[%s:%d] player[%lu] get skill config failed, guild_id:%u, skill_id:%u, skill_lv:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, skill_id, next_lv);
+				LOG_ERR("[%s:%d] player[%lu] get skill config failed, guild_id:%u, skill_id:%u, skill_lv:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, skill_id, cur_lv);
 				break;
 			}
 
 			need_donation += config->UseMoney1;
 			need_coin += config->UseMoney2;
-			next_lv++;
+			cur_lv++;
 		}
 
 		if (ret != 0)
@@ -2097,8 +2495,8 @@ int conn_node_guildsrv::handle_guild_skill_pratice_request(EXTERN_DATA *extern_d
 
 		if (player->donation < need_donation)
 		{
-			ret = ERROR_ID_GUILD_SKILL_PRACTICE_RESOURCE;
-			LOG_ERR("[%s:%d] player[%lu] donation not enough, guild_id:%u, skill_id:%u, skill_id:%u, has_donation:%u, need_donation:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, skill_id, next_lv, player->donation, need_donation);
+			ret = 190500234;
+			LOG_ERR("[%s:%d] player[%lu] donation not enough, guild_id:%u, skill_id:%u, skill_id:%u, has_donation:%u, need_donation:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, skill_id, cur_lv, player->donation, need_donation);
 			break;
 		}
 
@@ -2149,9 +2547,9 @@ static int handle_guild_skill_practice_cost(int data_len, uint8_t *data, int res
 	{
 		if (ret != 0)
 		{
-			if (ret == ERROR_ID_COIN_IS_NOT_ENOUGH)
+			if (ret == ERROR_ID_COIN_NOT_ENOUGH)
 			{
-				ret = ERROR_ID_GUILD_SKILL_PRACTICE_RESOURCE;
+				ret = 190500234;
 			}
 			break;
 		}
@@ -2238,7 +2636,7 @@ int conn_node_guildsrv::handle_guild_shop_buy_request(EXTERN_DATA *extern_data)
 		player = get_guild_player(extern_data->player_id);
 		if (!player || !player->guild)
 		{
-			ret = ERROR_ID_GUILD_SHOP_JOIN;
+			ret = 190500269;
 			LOG_ERR("[%s:%d] player[%lu] not join guild yet", __FUNCTION__, __LINE__, extern_data->player_id);
 			break;
 		}
@@ -2246,7 +2644,7 @@ int conn_node_guildsrv::handle_guild_shop_buy_request(EXTERN_DATA *extern_data)
 		GuildInfo *guild = player->guild;
 		if (!goods_is_on_sell(guild, goods_id))
 		{
-			ret = ERROR_ID_GUILD_SHOP_LEVEL;
+			ret = 190500268;
 			LOG_ERR("[%s:%d] player[%lu] goods not on sell, guild_id:%u, goods_id:%u, buy_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, goods_id, buy_num);
 			break;
 		}
@@ -2795,6 +3193,7 @@ int conn_node_guildsrv::handle_guild_battle_fight_reward_request(EXTERN_DATA * /
 			add_player_donation(player, req->donation[i]);
 			add_player_battle_score(player, req->score[i]);
 			total_treasure += req->treasure[i];
+			add_player_contribute_treasure(player, req->treasure[i]);
 			total_score += req->score[i];
 		}
 
@@ -3477,7 +3876,7 @@ int conn_node_guildsrv::guild_ruqin_reward_info_notify(EXTERN_DATA *extern_data)
 			attachs[coin_item_id] += coin_reward;
 			attachs[exp_item_id] += exp_reward;
 			attachs[banggong_item_id] += banggong_reward;
-			send_mail(&connecter, req->all_palyer[i]->player_id,MAIL_ID_GUILD_RUQIN_REWARD , NULL, NULL, NULL, NULL, &attachs, MAGIC_TYPE_GUILD_RUQIN_REWARD);
+			send_mail(&connecter, req->all_palyer[i]->player_id, 270300042, NULL, NULL, NULL, NULL, &attachs, MAGIC_TYPE_GUILD_RUQIN_REWARD);
 			
 		}
 

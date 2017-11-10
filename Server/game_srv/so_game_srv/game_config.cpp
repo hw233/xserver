@@ -2548,6 +2548,16 @@ int trade_id_to_item_id(uint32_t trade_id)
 	return 0;
 }
 
+bool strong_goal_is_open(uint32_t goal_id, uint32_t player_lv)
+{
+	GrowupTable *config = get_config_by_id(goal_id, &strong_config);
+	if (config && config->n_LevelRange >= 1 && player_lv >= (uint32_t)config->LevelRange[0])
+	{
+		return true;
+	}
+	return false;
+}
+
 static void adjust_guild_skill_config(void)
 {
 	for (std::map<uint64_t, GangsSkillTable*>::iterator iter = guild_skill_config.begin(); iter != guild_skill_config.end(); ++iter)
@@ -3311,6 +3321,16 @@ int read_all_excel_data()
 	assert(type);		
 	ret = traverse_main_table(L, type, "../lua_data/MGLYshoulingTable.lua", (config_type)&maogui_shouling_to_xiaoguai_config);
 	assert(ret == 0);
+
+	type = sproto_type(sp, "GangsBuildTaskTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/GangsBuildTaskTable.lua", (config_type)&guild_build_task_config);
+	assert(ret == 0);	
+
+	type = sproto_type(sp, "MonsterIDTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/MonsterIDTable.lua", (config_type)&raid_jincheng_suiji_kill_monster);
+	assert(ret == 0);	
 
 	adjust_escort_config();
 	adjust_achievement_config();

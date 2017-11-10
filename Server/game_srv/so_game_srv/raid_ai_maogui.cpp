@@ -34,6 +34,7 @@
 #include "guild_land_raid.h"
 #include "wanyaogu.pb-c.h"
 #include "../proto/cast_skill.pb-c.h"
+#include "raid_ai_normal.h"
 static void magui_raid_creat_zhengning_maogui(raid_struct *raid, monster_struct *monster)
 {
 	if(raid == NULL || raid->data == NULL || monster == NULL || monster->data == NULL)
@@ -70,14 +71,30 @@ static void magui_raid_creat_zhengning_maogui(raid_struct *raid, monster_struct 
 	}
 
 	struct position *pos = monster->get_pos();
-	int32_t pos_x =  pos->pos_x + itr->second->SeparateRange - rand()% (2*itr->second->SeparateRange);
-	int32_t pos_z =  pos->pos_z + itr->second->SeparateRange - rand()% (2*itr->second->SeparateRange);
+	int32_t pos_x =  0;
+	int32_t pos_z =  0;
+	int j = 0;
+	while(1)
+	{
+		if(j > 6)
+		{
+			pos_x = pos->pos_x;
+			pos_z = pos->pos_z;
+			break;
+		}
+		pos_x =  pos->pos_x + itr->second->SeparateRange - rand()% (2*itr->second->SeparateRange);
+		pos_z =  pos->pos_z + itr->second->SeparateRange - rand()% (2*itr->second->SeparateRange);
+		struct map_block *block_start = get_map_block(raid->map_config, pos_x, pos_z);
+		if (block_start != NULL && block_start->can_walk == true)
+			break;
+		j++;
+	}
 	if(itr->second->Effects != NULL && itr->second->n_EffectsParameter >= 2)
 	{
 		double parama[5];
-		parama[0] = pos->pos_x;
+		parama[0] = pos_x;
 		parama[1] = 10000;
-		parama[2] = pos->pos_z;
+		parama[2] = pos_z;
 		parama[3] = itr->second->EffectsParameter[0];
 		parama[4] = itr->second->EffectsParameter[1];
 		RaidEventNotify nty;
@@ -93,14 +110,30 @@ static void magui_raid_creat_zhengning_maogui(raid_struct *raid, monster_struct 
 
 	for(size_t j = 0; j < itr->second->n_Monster1 - 1; j++)
 	{
-		int32_t pos_x =  pos->pos_x + itr->second->SeparateRange - rand()% (2*itr->second->SeparateRange);
-		int32_t pos_z =  pos->pos_z + itr->second->SeparateRange - rand()% (2*itr->second->SeparateRange);
+		int32_t pos_x =  0;
+		int32_t pos_z =  0;
+		int k =0;
+		while(1)
+		{
+			if(k > 6)
+			{
+				pos_x = pos->pos_x;
+				pos_z = pos->pos_z;
+				break;
+			}
+			pos_x =  pos->pos_x + itr->second->SeparateRange - rand()% (2*itr->second->SeparateRange);
+			pos_z =  pos->pos_z + itr->second->SeparateRange - rand()% (2*itr->second->SeparateRange);
+			struct map_block *block_start = get_map_block(raid->map_config, pos_x, pos_z);
+			if (block_start != NULL && block_start->can_walk == true)
+				break;
+			k++;
+		}
 		if(itr->second->Effects != NULL && itr->second->n_EffectsParameter >= 2)
 		{
 			double parama[5];
-			parama[0] = pos->pos_x;
+			parama[0] = pos_x;
 			parama[1] = 10000;
-			parama[2] = pos->pos_z;
+			parama[2] = pos_z;
 			parama[3] = itr->second->EffectsParameter[0];
 			parama[4] = itr->second->EffectsParameter[1];
 			RaidEventNotify nty;
@@ -116,6 +149,53 @@ static void magui_raid_creat_zhengning_maogui(raid_struct *raid, monster_struct 
 	}
 
 }
+
+static void magui_raid_first_call_small_monster(raid_struct *raid)
+{
+	if(time_helper::get_cached_time() < raid->data->ai_data.maogui_data.creat_monster_time || raid->data->ai_data.maogui_data.creat_monster_time == 0)
+		return; 
+
+	raid->data->ai_data.maogui_data.creat_monster_time = 0;
+	monster_struct *monster = NULL;
+	for(std::set<monster_struct *>::iterator ite =  raid->m_monster.begin(); ite != raid->m_monster.end(); ite++)
+	{
+		monster_struct *p = *ite;
+		if(p->data->monster_id == raid->data->ai_data.maogui_data.gui_wang_id)
+		{
+			monster = p;
+			break; 
+		}
+
+	}
+	if(monster == NULL)
+		return;
+	magui_raid_creat_zhengning_maogui(raid, monster);
+}
+static void maogui_raid_guiwang_first_see_player(raid_struct *raid)
+{
+	if(raid == NULL || raid->data == NULL)
+		return;
+
+	monster_struct *monster = NULL;
+	for(std::set<monster_struct *>::iterator ite =  raid->m_monster.begin(); ite != raid->m_monster.end(); ite++)
+	{
+		monster_struct *p = *ite;
+		if(p->data->monster_id == raid->data->ai_data.maogui_data.gui_wang_id)
+		{
+			monster = p;
+			break; 
+		}
+
+	}
+	if(monster == NULL)
+		return;
+	if(monster->target != NULL && raid->data->ai_data.maogui_data.first_creat ==false)
+	{
+		raid->data->ai_data.maogui_data.first_creat = true;
+		raid->data->ai_data.maogui_data.creat_monster_time = time_helper::get_cached_time() + raid->data->ai_data.maogui_data.creat_time * 1000;
+	}
+}
+
 static void maogui_raid_ai_add_buff_to_guiwang(raid_struct *raid)
 {
 	if(raid == NULL || raid->data == NULL)
@@ -125,7 +205,7 @@ static void maogui_raid_ai_add_buff_to_guiwang(raid_struct *raid)
 	}
 	if(time_helper::get_cached_time() < raid->data->ai_data.maogui_data.buff_time || raid->data->ai_data.maogui_data.buff_time == 0)
 		return;
-	LOG_ERR("鬼王加buff 当前时间[%lu], buff持续时间[%lu]", time_helper::get_cached_time(), raid->data->ai_data.maogui_data.buff_time);
+	//LOG_ERR("鬼王加buff 当前时间[%lu], buff持续时间[%lu]", time_helper::get_cached_time(), raid->data->ai_data.maogui_data.buff_time);
 
 	raid->data->ai_data.maogui_data.buff_time = 0;
 	for(std::set<monster_struct *>::iterator itr =  raid->m_monster.begin(); itr != raid->m_monster.end(); itr++)
@@ -142,6 +222,7 @@ static void maogui_raid_ai_add_buff_to_guiwang(raid_struct *raid)
 }
 
 
+//////////////////////////////////////////////////////
 
 static void maogui_raid_ai_player_enter(raid_struct* raid, player_struct *player)
 {
@@ -249,21 +330,23 @@ static void maogui_raid_ai_player_ready(raid_struct* raid, player_struct *player
 
 static void maogui_raid_ai_finished(raid_struct* raid)
 {
-
+	 normal_raid_ai_finished(raid);
 
 }
 
 
-static void maogui_raid_ai_failed(raid_struct *raid)
+/*static void maogui_raid_ai_failed(raid_struct *raid)
 {
 
-}
+}*/
 
 static void maogui_raid_ai_tick(raid_struct *raid)
 {
 
 	script_ai_common_tick(raid, &raid->data->ai_data.maogui_data.script_data);
 	maogui_raid_ai_add_buff_to_guiwang(raid);
+	magui_raid_first_call_small_monster(raid);
+	maogui_raid_guiwang_first_see_player(raid);
 }
 
 static void maogui_raid_ai_init(raid_struct *raid, player_struct *player)
@@ -291,10 +374,13 @@ static void maogui_raid_ai_monster_live(raid_struct *raid, monster_struct *monst
 	{
 		raid->data->ai_data.maogui_data.gui_wang_id = monster->data->monster_id;
 		raid->data->ai_data.maogui_data.po_buff_time = itr->second->Time;
+		raid->data->ai_data.maogui_data.creat_time = itr->second->CallTime;
 		buff_manager::create_default_buff(sg_maogui_guiwang_wudi_buff, monster, monster, true);
-		magui_raid_creat_zhengning_maogui(raid, monster);
 	}
 
+}
+static void maogui_raid_ai_monster_beaten(raid_struct *raid, monster_struct *monster, unit_struct *unit, int32_t hp, int32_t dmage)
+{
 }
 struct raid_ai_interface raid_ai_maogui_interface =
 {
@@ -313,9 +399,9 @@ struct raid_ai_interface raid_ai_maogui_interface =
 	NULL,
 	NULL,
 	NULL,
-	maogui_raid_ai_failed, //失败
+	NULL,//maogui_raid_ai_failed, //失败
 	NULL,
 	NULL,
-	NULL, //怪物被击
+	maogui_raid_ai_monster_beaten, //怪物被击
 	maogui_raid_ai_monster_live, //怪物重生或者创建
 };

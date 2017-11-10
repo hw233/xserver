@@ -17,7 +17,6 @@ int guild_land_raid_struct::init_guild_ruqin_active_data()
 {
 	
 	ruqin_data.guild_ruqin = false;
-	ruqin_data.boss_creat = false;
 	ruqin_data.zhengying = 0;
 	ruqin_data.level = 0;
 	ruqin_data.open_time = 0;

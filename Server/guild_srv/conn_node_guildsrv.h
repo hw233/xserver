@@ -18,6 +18,7 @@ public:
 
 	virtual int recv_func(evutil_socket_t fd);
 
+	static void send_system_notice(uint64_t player_id, uint32_t id, std::vector<char*> *args, uint64_t target_id = 0);
 	static int broadcast_message(uint16_t msg_id, void *msg_data, pack_func packer, std::vector<uint64_t> &players);
 	
 	static conn_node_guildsrv connecter;
@@ -35,6 +36,7 @@ private:
 	int handle_guild_kick_request(EXTERN_DATA *extern_data);
 	int handle_guild_rename_request(EXTERN_DATA *extern_data);
 	int handle_guild_exit_request(EXTERN_DATA *extern_data);
+	int handle_guild_set_permission_request(EXTERN_DATA *extern_data);
 
 	int handle_open_guild_answer_request(EXTERN_DATA *extern_data);
 
@@ -48,6 +50,9 @@ private:
 	int handle_guild_building_info_request(EXTERN_DATA *extern_data);
 	int handle_guild_building_upgrade_request(EXTERN_DATA *extern_data);
 	int handle_sub_guild_building_time_request(EXTERN_DATA *extern_data);
+	int handle_guild_accept_task_request(EXTERN_DATA *extern_data);
+	int handle_game_accept_task_answer(EXTERN_DATA *extern_data);
+	int handle_game_task_finish_notify(EXTERN_DATA *extern_data);
 
 	int handle_guild_skill_info_request(EXTERN_DATA *extern_data);
 	int handle_guild_skill_develop_request(EXTERN_DATA *extern_data);

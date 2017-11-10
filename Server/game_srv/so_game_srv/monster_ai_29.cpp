@@ -18,16 +18,16 @@
 
 static int monster_type29_ai_hp_deal_with(monster_struct *monster, scene_struct *scene)
 {
-	if(monster == NULL || monster->ai_data.type29_ai.ai_config == NULL)
+	if(monster == NULL || monster->ai_data.circle_ai.ai_config == NULL)
 		return -1;
 
 	double cur_percent = monster->data->attrData[PLAYER_ATTR_HP]/monster->data->attrData[PLAYER_ATTR_MAXHP];
 	cur_percent *= 100;
 
-	if(cur_percent >  (double)monster->ai_data.type29_ai.ai_config->Separate)
+	if(cur_percent >  (double)monster->ai_data.circle_ai.ai_config->Separate)
 		return -2;
 
-	if(monster->ai_data.type29_ai.ai_config->n_SeparateMonster <= 0)
+	if(monster->ai_data.circle_ai.ai_config->n_SeparateMonster <= 0)
 		return -3;
 	
 	scene_struct * o_scene = (scene == NULL ? monster->scene : scene);
@@ -39,29 +39,45 @@ static int monster_type29_ai_hp_deal_with(monster_struct *monster, scene_struct 
 	raid_struct *raid = (raid_struct *)o_scene;
 
 	struct position *pos = monster->get_pos();
-	for(size_t i = 0; i <  monster->ai_data.type29_ai.ai_config->SeparateNum; i++)
+	for(size_t i = 0; i <  monster->ai_data.circle_ai.ai_config->SeparateNum; i++)
 	{
-		uint32_t xiabiao = rand() % monster->ai_data.type29_ai.ai_config->n_SeparateMonster;
-		int32_t pos_x =  pos->pos_x + monster->ai_data.type29_ai.ai_config->SeparateRange - rand()%2*monster->ai_data.type29_ai.ai_config->SeparateRange;
-		int32_t pos_z =  pos->pos_z + monster->ai_data.type29_ai.ai_config->SeparateRange - rand()%2*monster->ai_data.type29_ai.ai_config->SeparateRange;
-		if(monster->ai_data.type29_ai.ai_config->Effects != NULL && monster->ai_data.type29_ai.ai_config->n_EffectsParameter >= 2)
+		uint32_t xiabiao = rand() % monster->ai_data.circle_ai.ai_config->n_SeparateMonster;
+		int32_t pos_x = 0;
+		int32_t pos_z = 0;
+		int j = 0;
+		while(1)
+		{
+			if(j > 6)
+			{
+				pos_x = pos->pos_x;
+				pos_z = pos->pos_z;
+				break;
+			}
+			pos_x =  pos->pos_x + monster->ai_data.circle_ai.ai_config->SeparateRange - rand()%(2*monster->ai_data.circle_ai.ai_config->SeparateRange);
+			pos_z =  pos->pos_z + monster->ai_data.circle_ai.ai_config->SeparateRange - rand()%(2*monster->ai_data.circle_ai.ai_config->SeparateRange);
+			struct map_block *block_start = get_map_block(o_scene->map_config, pos_x, pos_z);
+			if (block_start != NULL && block_start->can_walk == true)
+				break;
+			j++;
+		}
+		if(monster->ai_data.circle_ai.ai_config->Effects != NULL && monster->ai_data.circle_ai.ai_config->n_EffectsParameter >= 2)
 		{
 			double parama[5];
 			parama[0] = pos_x;
 			parama[1] = 10000;
 			parama[2] = pos_z;
-			parama[3] = monster->ai_data.type29_ai.ai_config->EffectsParameter[0];
-			parama[4] = monster->ai_data.type29_ai.ai_config->EffectsParameter[1];
+			parama[3] = monster->ai_data.circle_ai.ai_config->EffectsParameter[0];
+			parama[4] = monster->ai_data.circle_ai.ai_config->EffectsParameter[1];
 			RaidEventNotify nty;
 			raid_event_notify__init(&nty);
 			nty.type = 45;
 			nty.param1 = parama;
 			nty.n_param1 = 5;
-			nty.param2 = &monster->ai_data.type29_ai.ai_config->Effects;
+			nty.param2 = &monster->ai_data.circle_ai.ai_config->Effects;
 			nty.n_param2 = 1;
 			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
 		}
-		monster_struct *t_monster = monster_manager::create_monster_at_pos(o_scene, monster->ai_data.type29_ai.ai_config->SeparateMonster[xiabiao], raid->data->monster_level, pos_x, pos_z, 0, NULL, 0);
+		monster_struct *t_monster = monster_manager::create_monster_at_pos(o_scene, monster->ai_data.circle_ai.ai_config->SeparateMonster[xiabiao], raid->data->monster_level, pos_x, pos_z, 0, NULL, 0);
 		if(t_monster)
 		{
 		//	t_monster->set_ai_interface(29);
@@ -166,8 +182,8 @@ static bool	type29_ai_player_leave_sight(monster_struct *monster, player_struct 
 static void ai_init_29(monster_struct *monster, unit_struct *)
 {
 	assert(monster);
-	monster->ai_data.type29_ai.ai_config = get_config_by_id(monster->data->monster_id, &maogui_monster_config);
-	assert(monster->ai_data.type29_ai.ai_config);
+	monster->ai_data.circle_ai.ai_config = get_config_by_id(monster->data->monster_id, &maogui_monster_config);
+	assert(monster->ai_data.circle_ai.ai_config);
 }
 
 static void type29_ai_dead(monster_struct *monster, scene_struct *scene)

@@ -42,6 +42,12 @@ public:
 	bool is_task_event_exist(uint64_t event_id);
 	int insert_task_event(uint64_t event_id);
 
+	void delete_monster(monster_struct *monster);
+	void delete_collect(Collect *collect);
+
+	void stop_monster_ai();
+	void start_monster_ai();
+
 //	struct position players_prev_pos[MAX_PLAYER_IN_SIGHT_SPACE];
 	player_struct *players[MAX_PLAYER_IN_SIGHT_SPACE];
 	monster_struct *monsters[MAX_MONSTER_IN_SIGHT_SPACE];

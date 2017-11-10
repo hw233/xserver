@@ -119,11 +119,14 @@ static bool guild_ruqin_player_near_bbq(player_struct *player, uint32_t x, uint3
 	return true;
 }
 
-static void bosss_creat_notice_guildsrv_send_msg(raid_struct *raid)
+static void bosss_creat_notice_guildsrv_send_msg(raid_struct *raid, monster_struct *monster)
 {
-	if(raid == NULL || raid->ruqin_data.boss_creat == false || raid->ruqin_data.guild_ruqin == false)
+	if(raid == NULL || monster == NULL || monster->data == NULL)
+		return; 
+	if(raid->ruqin_data.guild_ruqin == false)
 		return;
-	raid->ruqin_data.boss_creat = false;
+	if(sg_guild_ruqin_renzu_bossid != monster->data->monster_id && sg_guild_ruqin_yaozu_bossid != monster->data->monster_id)
+		return;
 
 	GuildRuqinBossCreatNotify notify;
 	guild_ruqin_boss_creat_notify__init(&notify);
@@ -298,7 +301,6 @@ static void guild_intrusion_raid_ai_tick(raid_struct *raid)
 			{
 				script_ai_common_tick(raid, &(raid->data->ai_data.guild_land_data.script_data));
 			}
-			bosss_creat_notice_guildsrv_send_msg(raid);
 			break;
 		case GUILD_RUQIN_ACTIVE_FINISH:
 			guild_intrusion_raid_ai_finished(raid);
@@ -396,6 +398,12 @@ static void guild_intrusion_raid_ai_monster_attacked(raid_struct *raid, monster_
 		}
 	}
 }
+
+static void guild_intrusion_raid_ai_monster_relive(raid_struct *raid, monster_struct *monster)
+{
+	bosss_creat_notice_guildsrv_send_msg(raid, monster);
+}
+
 struct raid_ai_interface raid_ai_guild_intrusion_interface =
 {
 	guild_intrusion_raid_ai_init, //初始化
@@ -417,4 +425,5 @@ struct raid_ai_interface raid_ai_guild_intrusion_interface =
 	NULL,
 	NULL,
 	guild_intrusion_raid_ai_monster_attacked, //怪物被击
+	guild_intrusion_raid_ai_monster_relive, //怪物创建或者复活
 };

@@ -187,6 +187,7 @@ message ZhenyingReadyState
 {
 	required uint32 fulongguo = 1; //准备人数 
 	required uint32 dianfenggu = 2; 
+	required bool start = 3; //trur start
 }
 message AnsJoinZhenying
 {

@@ -165,7 +165,7 @@ local TransferPointTable = {
 		['ID'] = 155000028,
 		['NameId'] = '返回帮派',
 		['limitLevel'] = 1,
-		['MapId'] = {10016}
+		['MapId'] = {40001}
 		},
 	[155000029] = {
 		['ID'] = 155000029,

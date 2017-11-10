@@ -860,11 +860,11 @@ int add_contact(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo &
 		LOG_ERR("[%s:%d] player[%lu] list full, target_id:%lu, cur_num:%u", __FUNCTION__, __LINE__, player->player_id, target_id, contact_limit_num);
 		if (player->contact_extend == 0)
 		{
-			return ERROR_ID_FRIEND_CONTACT_MAX_NOT_EXTEND;
+			return 190500207;
 		}
 		else
 		{
-			return ERROR_ID_FRIEND_CONTACT_MAX_EXTEND;
+			return 190500209;
 		}
 	}
 

@@ -17,6 +17,9 @@
 
 #define CALL_SKILL_RADIUS (10)
 
+static void try_attack_target(monster_struct *monster, struct SkillTable *config);
+static void try_attack(monster_struct *monster, struct SkillTable *config);
+
 uint32_t count_skill_delay_time(struct SkillTable *config)
 {
 	int ret = 0;
@@ -344,7 +347,63 @@ void monster_cast_skill_to_player(uint64_t skill_id, monster_struct *monster, un
 			notify.target_pos = &target_pos;
 		}
 	}
-	monster->broadcast_to_sight(MSG_ID_SKILL_CAST_NOTIFY, &notify, (pack_func)skill_cast_notify__pack, true);
+	monster->broadcast_to_sight(MSG_ID_SKILL_CAST_NOTIFY, &notify, (pack_func)skill_cast_notify__pack, false);
+}
+
+void monster_cast_skill_to_friend(monster_struct *monster, struct SkillTable *config)
+{
+	unit_struct *target = NULL;
+	monster_try_skill_talk(monster, config->ID);
+	for (uint32_t i = 0; !target && i < config->n_TargetType; ++i)
+	{
+		switch (config->TargetType[i])
+		{
+			case 101://自身
+			default:
+				target = monster;
+				break;
+		}
+	}
+	
+	if (!target)
+		return;
+	SkillCastNotify notify;
+	skill_cast_notify__init(&notify);
+	notify.skillid = config->ID;
+	notify.playerid = monster->data->player_id;
+	PosData cur_pos;
+	pos_data__init(&cur_pos);
+	struct position *pos = monster->get_pos();
+	cur_pos.pos_x = pos->pos_x;
+	cur_pos.pos_z = pos->pos_z;		
+	notify.cur_pos = &cur_pos;
+
+//	PosData target_pos;
+
+	// if (player)
+	// {
+	// 	struct position *player_pos = player->get_pos();
+	// 	notify.direct_x = player_pos->pos_x - pos->pos_x;
+	// 	notify.direct_z = player_pos->pos_z - pos->pos_z;
+
+	// 	if (use_target_pos)
+	// 	{
+	// 		pos_data__init(&target_pos);
+	// 		target_pos.pos_x = player_pos->pos_x;
+	// 		target_pos.pos_z = player_pos->pos_z;			
+	// 		notify.target_pos = &target_pos;
+	// 	}
+	// }
+	monster->broadcast_to_sight(MSG_ID_SKILL_CAST_NOTIFY, &notify, (pack_func)skill_cast_notify__pack, false);
+
+	if (config->MaxCount <= 1)
+	{
+		try_attack_target(monster, config);
+	}
+	else
+	{
+		try_attack(monster, config);
+	}
 }
 
 void monster_cast_immediate_skill_to_player(uint64_t skill_id, monster_struct *monster, player_struct *owner, unit_struct *player)
@@ -765,6 +824,16 @@ void do_normal_pursue(monster_struct *monster)
 	{
 		return;
 	}
+
+		//加血类技能
+	// if (config->TargetType[0] != 1)
+	// {
+	// 	monster_cast_skill_to_friend(monster, config);
+	// 	monster->data->skill_id = 0;
+	// 		//计算硬直时间
+	// 	monster->data->ontick_time += count_skill_delay_time(config);
+	// 	return;
+	// }
 
 //	LOG_DEBUG("%s: choose skill %u", __FUNCTION__, skill_id)
 

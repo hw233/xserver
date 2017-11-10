@@ -114,7 +114,7 @@ static void	send_wyk_reward()
 				{
 					std::map<uint32_t, uint32_t> attachs;
 					attachs[ite->second->RewardID] = ite->second->RewardNum;
-					send_mail(&conn_node_friendsrv::connecter, player_id, MAIL_ID_WANYAOKA, NULL, NULL, NULL, NULL, &attachs, MAGIC_TYPE_WANYAOKA_REWARD);
+					send_mail(&conn_node_friendsrv::connecter, player_id, 270200001, NULL, NULL, NULL, NULL, &attachs, MAGIC_TYPE_WANYAOKA_REWARD);
 					break;
 				}
 			}

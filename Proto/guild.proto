@@ -278,10 +278,25 @@ message GuildAppointOfficeRequest
 	required GuildOfficeType office = 2; //职位，撤离任命填"帮众"
 }
 
+//帮会任命应答
+message GuildAppointOfficeAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint64 playerId = 2; //被任命玩家ID
+	required GuildOfficeType playerOffice = 3; //被任命玩家职位
+}
+
 //帮会踢人请求
 message GuildKickReuqest
 {
 	required uint64 playerId = 1; //玩家ID
+}
+
+//帮会踢人应答
+message GuildKickAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint64 playerId = 2; //玩家ID
 }
 
 //帮会属性更新通知

@@ -119,3 +119,17 @@ message EquipGemComposeAnswer
 	required uint32 gemId = 2; //合成的宝石id
 }
 
+//宝石一键合成请求
+message EquipGemOnekeyComposeRequest
+{
+	required uint32 gemId = 1; //要合成的宝石id，始终用绑定的
+	required uint32 materialType = 2; //选中材料类型；1：绑定，2：非绑定
+}
+
+//宝石一键合成应答
+message EquipGemOnekeyComposeAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	repeated ItemData gems = 2; //合成的宝石
+}
+

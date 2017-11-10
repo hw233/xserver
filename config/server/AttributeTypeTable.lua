@@ -305,6 +305,12 @@ local AttributeTypeTable = {
 		['FightRatio'] = 0,
 		['ShowType'] = 0
 		},
+	[52] = {
+		['ID'] = 52,
+		['Effect'] = 'yinbi',
+		['FightRatio'] = 0,
+		['ShowType'] = 0
+		},
 	[53] = {
 		['ID'] = 53,
 		['Effect'] = 'Exp',
@@ -409,7 +415,7 @@ local AttributeTypeTable = {
 		},
 	[71] = {
 		['ID'] = 71,
-		['Effect'] = 'PLAYER_ATTR_COURAGE_GOLD',
+		['Effect'] = 'gongxun',
 		['FightRatio'] = 0,
 		['ShowType'] = 0
 		},
@@ -577,19 +583,19 @@ local AttributeTypeTable = {
 		},
 	[100] = {
 		['ID'] = 100,
-		['Effect'] = 'PLAYER_ATTR_CHENGJIE_COIN',
+		['Effect'] = 'shengwang',
 		['FightRatio'] = 0,
 		['ShowType'] = 0
 		},
 	[101] = {
 		['ID'] = 101,
-		['Effect'] = 'PLAYER_ATTR_GUOYU_COIN',
+		['Effect'] = 'xuejing',
 		['FightRatio'] = 0,
 		['ShowType'] = 0
 		},
 	[102] = {
 		['ID'] = 102,
-		['Effect'] = 'PLAYER_ATTR_SHANGJIN_COIN',
+		['Effect'] = 'lingshi',
 		['FightRatio'] = 0,
 		['ShowType'] = 0
 		},

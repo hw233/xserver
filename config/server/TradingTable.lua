@@ -3,7 +3,7 @@ local TradingTable = {
 		['ID'] = 550200001,	--索引
 		['ItemID'] = 201060001,	--道具ID
 		['TradingList'] = 550101001,	--交易类型
-		['GuidePrice'] = 50000	--基准价格
+		['GuidePrice'] = 150000	--基准价格
 		},
 	[550200002] = {
 		['ID'] = 550200002,

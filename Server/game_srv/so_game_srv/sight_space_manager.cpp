@@ -69,6 +69,7 @@ void sight_space_manager::on_tick()
 				player_struct *player = sight_space->players[i];
 				assert(player->sight_space == sight_space);
 				player->sight_space = NULL;
+				player->on_leave_sight_space(sight_space);
 				sight_space->players[i] = NULL;
 //				sight_space->data->player_id[i] = 0;
 				sight_space->broadcast_player_delete(player, true);
@@ -156,6 +157,7 @@ int sight_space_manager::del_player_from_sight_space(sight_space_struct *sight_s
 	
 	assert(player->sight_space == sight_space);
 	player->sight_space = NULL;
+	player->on_leave_sight_space(sight_space);
 	LOG_DEBUG("%s: player[%lu] leave sightspace %p", __FUNCTION__, player->get_uuid(), sight_space);	
 	bool empty = true;	
 

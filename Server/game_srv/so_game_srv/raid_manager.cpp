@@ -146,8 +146,9 @@ int raid_manager::check_player_enter_raid(player_struct *player, uint32_t raid_i
 	}
 
 		//当前在副本中
-	if (player->scene && player->scene->get_scene_type() == SCENE_TYPE_RAID 
-		&& r_config->DengeonRank != DUNGEON_TYPE_ZHENYING)
+	// if (player->scene && player->scene->get_scene_type() == SCENE_TYPE_RAID 
+	// 	&& r_config->DengeonRank != DUNGEON_TYPE_ZHENYING)
+	if (get_scene_looks_type(player->data->scene_id) == SCENE_TYPE_RAID)
 	{
 		raid_struct *t_raid = (raid_struct *)(player->scene);
 		LOG_ERR("%s %d: player[%lu] raid[%u] already in raid[%u][%lu]", __FUNCTION__, __LINE__,

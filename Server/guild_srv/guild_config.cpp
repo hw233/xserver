@@ -17,7 +17,7 @@ extern "C"
 #include "lua_load.h"
 
 uint32_t sg_guild_create_level = 0;
-uint32_t sg_guild_create_coin = 0;
+uint32_t sg_guild_create_gold = 0;
 uint32_t sg_guild_rename_item_id = 0;
 uint32_t sg_guild_rename_item_num = 0;
 uint32_t sg_guild_join_cd = 0;
@@ -41,6 +41,7 @@ std::map<uint64_t, struct EventCalendarTable*> activity_config; //活动配置
 std::map<uint64_t, struct ControlTable*> all_control_config; //副本进入条件收益次数配置
 std::map<uint64_t, struct ActorLevelTable *> actor_level_config; //角色等级配置
 std::map<uint64_t, struct FactionActivity *> guild_land_active_config; //帮会领地活动表
+std::map<uint64_t, struct GangsBuildTaskTable*> guild_build_task_config; //帮会建设任务表
 
 static void gen_question_arr()
 {
@@ -64,7 +65,7 @@ static void generate_parameters(void)
 	ParameterTable *guild_create_coin_param = get_config_by_id(161000117, &parameter_config);
 	if (guild_create_coin_param && guild_create_coin_param->n_parameter1 >= 1)
 	{
-		sg_guild_create_coin = guild_create_coin_param->parameter1[0];
+		sg_guild_create_gold = guild_create_coin_param->parameter1[0];
 	}
 	ParameterTable *guild_rename_item_param = get_config_by_id(161000118, &parameter_config);
 	if (guild_rename_item_param && guild_rename_item_param->n_parameter1 >= 2)
@@ -191,6 +192,11 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/FactionActivity.lua", (config_type)&guild_land_active_config);
 	assert(ret == 0);	
 
+	type = sproto_type(sp, "GangsBuildTaskTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/GangsBuildTaskTable.lua", (config_type)&guild_build_task_config);
+	assert(ret == 0);	
+
 	lua_close(L);	
 	free(buf);
 
@@ -219,5 +225,19 @@ GangsSkillTable *get_guild_skill_config(uint32_t type, uint32_t level)
 	}
 
 	return NULL;
+}
+
+int get_guild_build_task_id(uint32_t player_lv)
+{
+	for (std::map<uint64_t, GangsBuildTaskTable*>::iterator iter = guild_build_task_config.begin(); iter != guild_build_task_config.end(); ++iter)
+	{
+		GangsBuildTaskTable *config = iter->second;
+		if (config->n_Level >= 2 && player_lv >= config->Level[0] && player_lv <= config->Level[1])
+		{
+			return config->ID;
+		}
+	}
+
+	return 0;
 }
 

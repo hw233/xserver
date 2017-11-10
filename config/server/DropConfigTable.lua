@@ -559,6 +559,38 @@ local DropConfigTable = {
 		['NumMin'] = {1},
 		['NumMax'] = {1}
 		},
+	[220100263] = {
+		['ID'] = 220100263,
+		['ProType'] = 1,
+		['DropID'] = {201050072},
+		['Probability'] = {10000},
+		['NumMin'] = {1},
+		['NumMax'] = {1}
+		},
+	[220100264] = {
+		['ID'] = 220100264,
+		['ProType'] = 1,
+		['DropID'] = {201050073},
+		['Probability'] = {10000},
+		['NumMin'] = {1},
+		['NumMax'] = {1}
+		},
+	[220100265] = {
+		['ID'] = 220100265,
+		['ProType'] = 1,
+		['DropID'] = {201050074},
+		['Probability'] = {10000},
+		['NumMin'] = {1},
+		['NumMax'] = {1}
+		},
+	[220100266] = {
+		['ID'] = 220100266,
+		['ProType'] = 1,
+		['DropID'] = {201050075},
+		['Probability'] = {10000},
+		['NumMin'] = {1},
+		['NumMax'] = {1}
+		},
 	[220101001] = {
 		['ID'] = 220101001,
 		['ProType'] = 1,
