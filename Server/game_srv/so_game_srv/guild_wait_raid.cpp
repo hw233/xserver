@@ -15,10 +15,10 @@ int guild_wait_raid_struct::init_special_raid_data(player_struct *player)
 	return (0);
 }
 
-void guild_wait_raid_struct::add_player_to_guild_wait_raid(player_struct *player)
+void guild_wait_raid_struct::add_player_to_guild_wait_raid(player_struct *player, bool ignore_check)
 {
 		// 检查能否进入
-	if (raid_manager::check_player_enter_raid(player, GUILD_WAIT_RAID_ID) != 0)
+	if (!ignore_check && raid_manager::check_player_enter_raid(player, GUILD_WAIT_RAID_ID) != 0)
 	{
 		LOG_ERR("%s: player[%lu] enter raid[%u] failed", __FUNCTION__, player->get_uuid(), GUILD_WAIT_RAID_ID);
 		return;

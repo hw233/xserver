@@ -247,6 +247,14 @@ int chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 		// player->transfer_to_new_scene_by_config(id, &extern_data);
 		gm_goto(player, atoi(argv[1]));
 	}
+	else if (argc >= 1 && strcasecmp(argv[0], "le**e") == 0)
+	{
+		gm_leave(player);
+	}
+	else if (argc >= 1 && strcasecmp(argv[0], "leave") == 0)
+	{
+		gm_leave(player);		
+	}
 	else if (argc >= 2 && strcasecmp(argv[0], "go_task") == 0)
 	{
 		gm_go_task(player, atoi(argv[1]));
@@ -314,7 +322,7 @@ int chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	}	
 	else if (argc >= 1 && strcasecmp(argv[0], "guild_wait") == 0)
 	{
-		guild_wait_raid_manager::add_player_to_guild_wait_raid(player);
+		guild_wait_raid_manager::add_player_to_guild_wait_raid(player, false);
 	}
 	else if (argc >= 2 && strcasecmp(argv[0], "disband_guild") == 0)
 	{
@@ -854,6 +862,26 @@ void chat_mod::gm_blink(player_struct *player, float pos_x, float pos_z)
 //	player->set_pos(pos_x, pos_z);
 //	scene->add_player_to_scene(player);
 //	player->send_scene_transfer(0, pos_x, 0, pos_z, player->data->scene_id, 0);
+}
+
+void chat_mod::gm_leave(player_struct *player)
+{
+	raid_struct *raid = player->get_raid();
+	if (raid && raid->data)
+	{
+		if (get_scene_looks_type(raid->m_id) == SCENE_TYPE_RAID
+			&& raid->m_config->DengeonType != 2
+			&& raid->data->state == RAID_STATE_START
+			&& player->m_team)
+		{
+				//组队副本如果没结束，那么踢出队伍
+			player->m_team->RemoveMember(*player, false);		
+		}
+		else
+		{
+			raid->player_leave_raid(player);
+		}
+	}
 }
 
 void chat_mod::gm_goto(player_struct *player, uint32_t scene_id)

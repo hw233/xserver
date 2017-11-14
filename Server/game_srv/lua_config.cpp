@@ -383,3 +383,4 @@ uint64_t sg_guild_ruqin_yaozu_bossid;
 uint32_t sg_maogui_diaoxiang_stop_buff;
 uint32_t sg_maogui_guiwang_wudi_buff;
 
+char *sg_xunbao_boss_notice;

@@ -28,7 +28,7 @@ unit_struct *unit_struct::get_unit_by_uuid(uint64_t uuid)
 		T = monster_manager::get_monster_by_id(uuid);
 		if (!T)
 		{
-			T = cash_truck_manager::get_cash_truck_by_id(uuid);			
+			T = cash_truck_manager::get_cash_truck_by_id(uuid);
 		}
 	}
 	else if (entity_type == ENTITY_TYPE_PARTNER)
@@ -37,7 +37,7 @@ unit_struct *unit_struct::get_unit_by_uuid(uint64_t uuid)
 	}
 	else if (entity_type == ENTITY_TYPE_TRUCK)
 	{
-		T = cash_truck_manager::get_cash_truck_by_id(uuid);		
+		T = cash_truck_manager::get_cash_truck_by_id(uuid);
 	}
 	else
 	{
@@ -60,9 +60,9 @@ struct position *unit_struct::get_pos_by_uuid(uint64_t uuid)
 	unit_struct *T = get_unit_by_uuid(uuid);
 	if (!T)
 		return NULL;
-/*	
+/*
 	unit_struct *T;
-	int entity_type = get_entity_type(uuid);	
+	int entity_type = get_entity_type(uuid);
 	if (entity_type == ENTITY_TYPE_PLAYER)
 	{
 		T = player_manager::get_player_by_id(uuid);
@@ -77,7 +77,7 @@ struct position *unit_struct::get_pos_by_uuid(uint64_t uuid)
 	}
 	if (!T)
 		return NULL;
-*/		
+*/
 	return T->get_pos();
 }
 
@@ -116,26 +116,26 @@ void unit_struct::reset_pos()
 {
 	struct unit_path *path = get_unit_path();
 	path->pos[0].pos_x = path->pos[path->cur_pos].pos_x;
-	path->pos[0].pos_z = path->pos[path->cur_pos].pos_z;	
+	path->pos[0].pos_z = path->pos[path->cur_pos].pos_z;
 	path->cur_pos = 0;
-	path->max_pos = 0;	
-	
+	path->max_pos = 0;
+
 }
 
 void unit_struct::set_pos(float pos_x, float pos_z)
 {
-	struct unit_path *path = get_unit_path();	
+	struct unit_path *path = get_unit_path();
 	path->cur_pos = 0;
-	path->max_pos = 0;	
+	path->max_pos = 0;
 	path->pos[0].pos_x = pos_x;
 	path->pos[0].pos_z = pos_z;
 	path->speed_x = 0;
-	path->speed_z = 0;	
+	path->speed_z = 0;
 }
 
 bool unit_struct::is_unit_in_move()
 {
-	struct unit_path *path = get_unit_path();	
+	struct unit_path *path = get_unit_path();
 	if (path->speed_x != 0 || path->speed_z != 0)
 		return true;
 	if (path->cur_pos < path->max_pos)
@@ -145,7 +145,7 @@ bool unit_struct::is_unit_in_move()
 
 unit_struct *unit_struct::get_taunt_target()
 {
-	uint32_t effect_id = buff_struct::get_skill_effect_by_buff_state(BUFF_STATE_TAUNT);	
+	uint32_t effect_id = buff_struct::get_skill_effect_by_buff_state(BUFF_STATE_TAUNT);
 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
 	{
 		if (!m_buffs[i])
@@ -155,7 +155,7 @@ unit_struct *unit_struct::get_taunt_target()
 		if (m_buffs[i]->effect_config->Type != effect_id)
 			continue;
 		return unit_struct::get_unit_by_uuid(m_buffs[i]->data->attacker);
-	}	
+	}
 	return NULL;
 }
 
@@ -168,7 +168,7 @@ int unit_struct::clear_debuff()
 		if (!m_buffs[i]->config && m_buffs[i]->config->IsDeBuff)
 			continue;
 		m_buffs[i]->del_buff();
-	}	
+	}
 	return (0);
 }
 
@@ -181,7 +181,7 @@ int unit_struct::clear_control_buff()
 		if (!m_buffs[i]->config && m_buffs[i]->config->IsControl)
 			continue;
 		m_buffs[i]->del_buff();
-	}	
+	}
 	return (0);
 }
 
@@ -197,7 +197,7 @@ int unit_struct::stop_move()
 	PosData pos_data;
 	pos_data__init(&pos_data);
 	pos_data.pos_x = cur_pos->pos_x;
-	pos_data.pos_z = cur_pos->pos_z;	
+	pos_data.pos_z = cur_pos->pos_z;
 	notify.cur_pos = &pos_data;
 	broadcast_to_sight(MSG_ID_MOVE_STOP_NOTIFY, &notify, (pack_func)move_stop_notify__pack, true);
 	return (0);
@@ -214,7 +214,7 @@ int unit_struct::check_pos_distance(float pos_x, float pos_z)
 			__FUNCTION__, x, z, pos->pos_x, pos_x, pos->pos_z, pos_z);
 		return (-1);
 	}
-	
+
 	return (0);
 }
 
@@ -228,6 +228,13 @@ int unit_struct::set_pos_with_broadcast(float pos_x, float pos_z)
 		update_sight(old_area, new_area);
 	}
 	return (0);
+}
+
+bool unit_struct::is_fullhp()
+{
+	if (get_attr(PLAYER_ATTR_HP) >= get_attr(PLAYER_ATTR_MAXHP))
+		return true;
+	return false;
 }
 
 bool unit_struct::is_alive()
@@ -278,7 +285,7 @@ int unit_struct::add_monster_to_sight(uint64_t uuid)
 
 int unit_struct::del_monster_from_sight(uint64_t uuid)
 {
-	int ret = 0;	
+	int ret = 0;
 	if (on_monster_leave_sight(uuid))
 		ret = array_delete(&uuid, get_all_sight_monster(), get_cur_sight_monster(), sizeof(uint64_t), comp_uint64);
 	return ret;
@@ -294,7 +301,7 @@ bool unit_struct::is_truck_in_sight(uint64_t uuid)
 int unit_struct::add_truck_to_sight(uint64_t uuid)
 {
 	int ret = 0;
-	if (on_truck_enter_sight(uuid))	
+	if (on_truck_enter_sight(uuid))
 		ret = array_insert(&uuid, get_all_sight_truck(), get_cur_sight_truck(), sizeof(uint64_t), 1, comp_uint64);
 	return ret;
 }
@@ -302,7 +309,7 @@ int unit_struct::add_truck_to_sight(uint64_t uuid)
 int unit_struct::del_truck_from_sight(uint64_t uuid)
 {
 	int ret = 0;
-	if (on_truck_leave_sight(uuid))	
+	if (on_truck_leave_sight(uuid))
 		ret = array_delete(&uuid, get_all_sight_truck(), get_cur_sight_truck(), sizeof(uint64_t), comp_uint64);
 	return ret;
 }
@@ -343,7 +350,7 @@ int unit_struct::add_partner_to_sight(uint64_t uuid)
 
 int unit_struct::del_partner_from_sight(uint64_t uuid)
 {
-	int ret = 0;	
+	int ret = 0;
 	if (on_partner_leave_sight(uuid))
 		ret = array_delete(&uuid, get_all_sight_partner(), get_cur_sight_partner(), sizeof(uint64_t), comp_uint64);
 	return ret;
@@ -425,7 +432,7 @@ void unit_struct::broadcast_to_sight(uint16_t msg_id, void *msg_data, pack_func 
 			continue;
 		ppp[head->num_player_id++] = t_player_id[i];
 	}
-	
+
 //	head->num_player_id = player_num;
 	if (include_myself && get_entity_type(get_uuid()) == ENTITY_TYPE_PLAYER)
 	{
@@ -435,11 +442,11 @@ void unit_struct::broadcast_to_sight(uint16_t msg_id, void *msg_data, pack_func 
 
 	if (head->num_player_id == 0)
 		return;
-	
+
 	head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD_CONN_BROADCAST) + len + sizeof(uint64_t) * head->num_player_id);
-	
+
 	LOG_DEBUG("%s %d: broad [%u] to %d player", __FUNCTION__, __LINE__, ENDION_FUNC_2(head->proto_head.msg_id), head->num_player_id);
-	
+
 	if (conn_node_gamesrv::connecter.send_one_msg((PROTO_HEAD *)head, 1) != (int)(ENDION_FUNC_4(head->len))) {
 		LOG_ERR("%s %d: send to all failed err[%d]", __FUNCTION__, __LINE__, errno);
 	}
@@ -459,7 +466,7 @@ static void add_unit_sight_player(unit_struct *unit, std::set<uint64_t> *player_
 	}
 	if (unit->get_unit_type() != UNIT_TYPE_PLAYER)
 		return;
-	
+
 	if (player_ids->find(unit->get_uuid()) != player_ids->end())
 		return;
 	player_ids->insert(unit->get_uuid());
@@ -487,23 +494,23 @@ void unit_struct::broadcast_to_many_sight(uint16_t msg_id, void *msg_data, pack_
 		add_unit_sight_player(*iter, &player_ids);
 	}
 
-	head->num_player_id = 0;			
+	head->num_player_id = 0;
 	uint64_t *ppp = (uint64_t*)((char *)&head->player_id + len);
 	for (std::set<uint64_t>::iterator iter = player_ids.begin(); iter != player_ids.end(); ++iter)
 	{
 		if (get_entity_type(*iter) != ENTITY_TYPE_PLAYER)
 			continue;
 		ppp[head->num_player_id] = *iter;
-		++head->num_player_id;		
+		++head->num_player_id;
 	}
 
 	if (head->num_player_id == 0)
 		return;
-	
+
 	head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD_CONN_BROADCAST) + len + sizeof(uint64_t) * head->num_player_id);
-	
+
 	LOG_DEBUG("%s %d: broad [%u] to %d player", __FUNCTION__, __LINE__, ENDION_FUNC_2(head->proto_head.msg_id), head->num_player_id);
-	
+
 	if (conn_node_gamesrv::connecter.send_one_msg((PROTO_HEAD *)head, 1) != (int)(ENDION_FUNC_4(head->len))) {
 		LOG_ERR("%s %d: send to all failed err[%d]", __FUNCTION__, __LINE__, errno);
 	}
@@ -514,7 +521,7 @@ void unit_struct::broadcast_to_sight_with_other_unit(uint16_t msg_id, void *msg_
 	PROTO_HEAD_CONN_BROADCAST *head;
 	PROTO_HEAD *real_head;
 
-//	 ================广播数据============ 
+//	 ================广播数据============
 	head = (PROTO_HEAD_CONN_BROADCAST *)conn_node_base::global_send_buf;
 	head->msg_id = ENDION_FUNC_2(SERVER_PROTO_BROADCAST);
 	real_head = &head->proto_head;
@@ -539,7 +546,7 @@ void unit_struct::broadcast_to_sight_with_other_unit(uint16_t msg_id, void *msg_
 		ppp[player_num] = other_player[i];
 		++player_num;
 	}
-	
+
 	if (include_myself)
 	{
 		if (!other->is_player_in_sight(get_uuid()))
@@ -560,11 +567,11 @@ void unit_struct::broadcast_to_sight_with_other_unit(uint16_t msg_id, void *msg_
 
 	if (head->num_player_id == 0)
 		return;
-	
+
 	head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD_CONN_BROADCAST) + len + sizeof(uint64_t) * head->num_player_id);
-	
+
 	LOG_DEBUG("%s %d: broad [%u] to %d player", __FUNCTION__, __LINE__, ENDION_FUNC_2(head->proto_head.msg_id), head->num_player_id);
-	
+
 	if (conn_node_gamesrv::connecter.send_one_msg((PROTO_HEAD *)head, 1) != (int)(ENDION_FUNC_4(head->len))) {
 		LOG_ERR("%s %d: send to all failed err[%d]", __FUNCTION__, __LINE__, errno);
 	}
@@ -584,8 +591,8 @@ int unit_struct::update_unit_position()
 	if (!is_unit_in_move())
 		return 0;
 
-	uint64_t now_time = time_helper::get_cached_time(); 
-    uint64_t escape_time = now_time - path->start_time;
+	uint64_t now_time = time_helper::get_cached_time();
+	uint64_t escape_time = now_time - path->start_time;
 	if (escape_time == 0)
 		return 0;
 	if (path->speed_x != 0 || path->speed_z != 0)
@@ -607,7 +614,7 @@ static void update_unit_position_by_direct_impl(struct unit_path *path, float sp
 
 //	LOG_DEBUG("%s: escape[%lu] new_x[%f] new_z[%f]", __FUNCTION__, escape_time, new_x, new_z);
 		// TODO: 判断阻挡
-	
+
 	cur_pos->pos_x = new_x;
 	cur_pos->pos_z = new_z;
 }
@@ -615,46 +622,46 @@ static void update_unit_position_by_direct_impl(struct unit_path *path, float sp
 // 按路径点驱动单位走一定时间
 static void update_unit_position_impl(unit_struct *unit, struct unit_path *path, uint64_t escape_time, float speed)
 {
-    double distance = speed * escape_time / 1000.0;
+	double distance = speed * escape_time / 1000.0;
 
-    for(int i = path->cur_pos; i < path->max_pos; ++i)
-    {
+	for(int i = path->cur_pos; i < path->max_pos; ++i)
+	{
 		assert(i == path->cur_pos);
 		if (distance == 0)
 			break;
-        //获取当前路径距离
-        double cur_distance = getdistance(&path->pos[i], &path->pos[i + 1]);
+		//获取当前路径距离
+		double cur_distance = getdistance(&path->pos[i], &path->pos[i + 1]);
 
-        //移动过当前节点
-        if(distance >= cur_distance)
-        {
+		//移动过当前节点
+		if(distance >= cur_distance)
+		{
 			distance -= cur_distance;
 			++path->cur_pos;
 
 			if (path->cur_pos < path->max_pos && unit->get_unit_type() == UNIT_TYPE_PLAYER)
 			{
 				player_struct *player = (player_struct *)unit;
-				int i = path->cur_pos;		
+				int i = path->cur_pos;
 				player->data->m_angle = pos_to_angle(path->pos[i + 1].pos_x - path->pos[i].pos_x, path->pos[i + 1].pos_z - path->pos[i].pos_z);
 //				float t = player->data->m_angle / M_PI * 180 * -1 + 90;
 //				LOG_DEBUG("%s: m_angle = %.3f, %.3f, %.3f %.3f", __FUNCTION__, player->data->m_angle, player->data->m_angle / M_PI, player->data->m_angle / M_PI * 180, t);
 			}
-			
-            continue;
-        }
-        // 移入当前节点
-        else {   
 
-            // 计算坐标偏移, 并补偿浮点转整形时的数据丢失
-            double rate = distance / cur_distance;
+			continue;
+		}
+		// 移入当前节点
+		else {
+
+			// 计算坐标偏移, 并补偿浮点转整形时的数据丢失
+			double rate = distance / cur_distance;
 			float delta_x = rate * (path->pos[i + 1].pos_x - path->pos[i].pos_x);
 			float delta_z = rate * (path->pos[i + 1].pos_z - path->pos[i].pos_z);
 
 			path->pos[i].pos_x += delta_x;
 			path->pos[i].pos_z += delta_z;
 			break;
-        }
-    }
+		}
+	}
 
 	return;
 }
@@ -692,12 +699,12 @@ void unit_struct::init_buff_pool()
 	memset(&buff_pool_buff[0], 0, sizeof(buff_pool_buff));
 	for (int i = 0; i < MAX_SIGHT_BUFF_DATA_LEN; ++i)
 		buff_pool_buff_point[i] = &buff_pool_buff[i];
-	reset_buff_pool();	
+	reset_buff_pool();
 }
 
 BuffInfo **unit_struct::pack_unit_buff(size_t *n_data)
 {
-	BuffInfo **ret = &buff_pool_buff_point[buff_pool_len];	
+	BuffInfo **ret = &buff_pool_buff_point[buff_pool_len];
 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
 	{
 		if (m_buffs[i] == NULL)
@@ -727,7 +734,7 @@ void unit_struct::init_pos_pool()
 	memset(&pos_pool_pos[0], 0, sizeof(pos_pool_pos));
 	for (int i = 0; i < MAX_PATH_POSITION * MAX_SIGHT_POS_DATA_LEN; ++i)
 		pos_pool_pos_point[i] = &pos_pool_pos[i];
-	reset_pos_pool();	
+	reset_pos_pool();
 }
 
 PosData **unit_struct::pack_unit_move_path(size_t *n_data)
@@ -741,7 +748,7 @@ PosData **unit_struct::pack_unit_move_path(size_t *n_data)
 		pos_data__init(pos_pool_pos_point[pos_pool_len]);
 
 //path->pos[path->cur_pos]
-		
+
 		pos_pool_pos[pos_pool_len].pos_x = path->pos[path->cur_pos].pos_x;
 		pos_pool_pos[pos_pool_len].pos_z = path->pos[path->cur_pos].pos_z;
 		++pos_pool_len;
@@ -760,7 +767,7 @@ PosData **unit_struct::pack_unit_move_path(size_t *n_data)
 		}
 //		info->direct_x = data->move_path.speed_x;
 //		info->direct_y = 0;
-//		info->direct_z = data->move_path.speed_z;		
+//		info->direct_z = data->move_path.speed_z;
 		pos_pool_len += *n_data;
 	}
 	return ret;
@@ -843,11 +850,11 @@ void unit_struct::clear_all_buffs()
 			continue;
 //		m_buffs[i]->data->owner = 0;
 //		m_buffs[i]->m_owner = NULL;
-//		m_buffs[i]->data->attacker = 0;		
-//		m_buffs[i]->m_attacker = NULL;		
+//		m_buffs[i]->data->attacker = 0;
+//		m_buffs[i]->m_attacker = NULL;
 //		buff_manager::delete_buff(m_buffs[i]);
 		m_buffs[i]->del_buff();
-//		m_buffs[i] = NULL;		
+//		m_buffs[i] = NULL;
 	}
 }
 buff_struct *unit_struct::try_cover_duplicate_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack)
@@ -857,7 +864,7 @@ buff_struct *unit_struct::try_cover_duplicate_buff(struct BuffTable *buff_config
 	else if (buff_config->BuffType == 2)
 		return try_cover_duplicate_item_buff(buff_config);
 	else if (buff_config->BuffType == 3)
-		return try_cover_duplicate_type3_buff(buff_config);		
+		return try_cover_duplicate_type3_buff(buff_config);
 	return NULL;
 }
 
@@ -906,13 +913,13 @@ buff_struct *unit_struct::try_cover_duplicate_item_buff(struct BuffTable *buff_c
 			return m_buffs[i];
 		}
 	}
-	return NULL;	
+	return NULL;
 }
 void unit_struct::reset_unit_buff_state()
 {
 	uint32_t old_buff_state = buff_state;
 	buff_state = 0;
-	
+
 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
 	{
 		if (!m_buffs[i])
@@ -922,7 +929,7 @@ void unit_struct::reset_unit_buff_state()
 		if (m_buffs[i]->is_attr_buff())
 			continue;
 		buff_state |= m_buffs[i]->data->effect.buff_state.state;
-/*		
+/*
 		switch (m_buffs[i]->data->effect.buff_state.state)
 		{
 			case BUFF_STATE_LIFE_STEAL:
@@ -932,7 +939,7 @@ void unit_struct::reset_unit_buff_state()
 				damage_return += m_buffs[i]->data->effect.buff_state.value;
 				break;
 		}
-*/		
+*/
 	}
 
 	if (buff_state != old_buff_state)
@@ -953,11 +960,11 @@ void unit_struct::reset_unit_buff_state()
 			{
 				if (!(buff_state & BUFF_STATE_AVOID_BLUE_BUFF) && (old_buff_state & BUFF_STATE_AVOID_BLUE_BUFF))
 				{
-					player->on_region_changed(region_id, region_id);					
-				}				
+					player->on_region_changed(region_id, region_id);
+				}
 			}
 		}
-		
+
 		broadcast_buff_state_changed();
 	}
 }
@@ -965,7 +972,7 @@ void unit_struct::reset_unit_buff_state()
 void unit_struct::calculate_buff_fight_attr(bool isNty)
 {
 	double *attr = get_all_attr();
-	double *fight_attr = get_all_buff_fight_attr();				
+	double *fight_attr = get_all_buff_fight_attr();
 	assert(attr && fight_attr);
 	memcpy(fight_attr, attr, sizeof(double) * MAX_BUFF_FIGHT_ATTR);
 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
@@ -989,7 +996,7 @@ void unit_struct::calculate_buff_fight_attr(bool isNty)
 				broadcast_one_attr_changed(PLAYER_ATTR_MOVE_SPEED, attr[PLAYER_ATTR_MOVE_SPEED], true, true);
 			LOG_DEBUG("%s: player[%lu] add buff[%lu] attr[%lu] delta[%.1f] to[%.1f]",
 				__FUNCTION__, get_uuid(), m_buffs[i]->config->ID, m_buffs[i]->effect_config->Effect[0],
-				m_buffs[i]->data->effect.attr_effect.added_attr_value, attr[m_buffs[i]->effect_config->Effect[0]]);					
+				m_buffs[i]->data->effect.attr_effect.added_attr_value, attr[m_buffs[i]->effect_config->Effect[0]]);
 		}
 		else
 		{
@@ -1009,10 +1016,10 @@ uint32_t unit_struct::count_life_steal_effect(int32_t damage)
 	double *all_attr = get_all_attr();
 //	if (all_attr[PLAYER_ATTR_VAMPIRE] <= __DBL_EPSILON__)
 //		return (0);
-	
+
 //	uint32_t ret = damage * all_attr[PLAYER_ATTR_VAMPIRE] / 100;
 	uint32_t ret = 0;
-	
+
 	all_attr[PLAYER_ATTR_HP] += ret;
 	if (all_attr[PLAYER_ATTR_HP] > all_attr[PLAYER_ATTR_MAXHP])
 	{
@@ -1024,9 +1031,9 @@ uint32_t unit_struct::count_life_steal_effect(int32_t damage)
 	{
 		player_struct *player = (player_struct *)this;
 		if (player->m_team)
-			player->m_team->OnMemberHpChange(*player);		
+			player->m_team->OnMemberHpChange(*player);
 	}
-	
+
 	return ret;
 }
 
@@ -1038,7 +1045,7 @@ uint32_t unit_struct::count_damage_return(int32_t damage, unit_struct *unit)
 	double bounce = 0;
 	if (bounce <= __DBL_EPSILON__)
 		return (0);
-	
+
 	double *all_attr = get_all_attr();
 	uint32_t ret = damage * bounce / 100;
 	all_attr[PLAYER_ATTR_HP] -= ret;
@@ -1047,19 +1054,40 @@ uint32_t unit_struct::count_damage_return(int32_t damage, unit_struct *unit)
 	{
 		player_struct *player = (player_struct *)this;
 		if (player->m_team)
-			player->m_team->OnMemberHpChange(*player);		
+			player->m_team->OnMemberHpChange(*player);
 	}
-	
+
 	return ret;
 }
 
-int unit_struct::count_rect_unit_at_pos(double angle, struct position *start_pos, std::vector<unit_struct *> *ret, uint max, double length, double width)
+bool unit_struct::check_fight_type(unit_struct *player, bool bfriend)
+{
+	int fight_type = get_unit_fight_type(this, player);
+	if (bfriend)
+	{
+		if (fight_type != UNIT_FIGHT_TYPE_FRIEND && fight_type != UNIT_FIGHT_TYPE_MYSELF)
+		{
+			return false;
+		}
+	}
+	else
+	{
+		if (fight_type != UNIT_FIGHT_TYPE_ENEMY)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+int unit_struct::count_rect_unit_at_pos(double angle, struct position *start_pos,
+	std::vector<unit_struct *> *ret, uint max, double length, double width, bool bfriend)
 {
 	double cos = qFastCos(angle);
 	double sin = qFastSin(angle);
 	double x1, x2;
 	double z1, z2;
-	x1 = 0;	
+	x1 = 0;
 	x2 = x1 + length;
 	z2 = width / 2;
 	z1 = -z2;
@@ -1074,42 +1102,46 @@ int unit_struct::count_rect_unit_at_pos(double angle, struct position *start_pos
 			LOG_ERR("%s %d: unit[%lu] can't find player[%p][%lu] in sight", __FUNCTION__, __LINE__, get_uuid(), player, sight_player[i]);
 			continue;
 		}
+
+		if (!check_fight_type(player, bfriend))
+			continue;
+
 		if (player->is_too_high_to_beattack())
 			continue;
-		
+
 		struct position *pos = player->get_pos();
 
 		double pos_x = pos->pos_x - start_pos->pos_x;
 		double pos_z = pos->pos_z - start_pos->pos_z;
 		double target_x1 = cos*(pos_x)-sin*(pos_z);
-		double target_z1 = cos*(pos_z)+sin*(pos_x);		
-		
+		double target_z1 = cos*(pos_z)+sin*(pos_x);
+
 //		double target_x1 = cos*(pos->pos_x)-sin*(pos->pos_z);
 //		double target_z1 = cos*(pos->pos_z)+sin*(pos->pos_x);
 
 		if (target_x1 >= x1 && target_x1 <= x2 && target_z1 >= z1 && target_z1 <= z2)
 		{
-//			LOG_DEBUG("%s:  hit: angle[%.2f] x1[%.2f] x2[%.2f] x[%.2f] z1[%.2f] z2[%.2f] z[%.2f]", "jacktang", angle, x1, x2, target_x1, z1, z2, target_z1);					
+//			LOG_DEBUG("%s:  hit: angle[%.2f] x1[%.2f] x2[%.2f] x[%.2f] z1[%.2f] z2[%.2f] z[%.2f]", "jacktang", angle, x1, x2, target_x1, z1, z2, target_z1);
 			ret->push_back(player);
 			if (ret->size() >= max)
 				return (0);
 		}
 //		else
 //		{
-//			LOG_DEBUG("%s: miss: angle[%.2f] x1[%.2f] x2[%.2f] x[%.2f] z1[%.2f] z2[%.2f] z[%.2f]", "jacktang", angle, x1, x2, target_x1, z1, z2, target_z1);		
+//			LOG_DEBUG("%s: miss: angle[%.2f] x1[%.2f] x2[%.2f] x[%.2f] z1[%.2f] z2[%.2f] z[%.2f]", "jacktang", angle, x1, x2, target_x1, z1, z2, target_z1);
 //		}
-	}	
+	}
 	return (0);
 }
 
-int unit_struct::count_rect_unit(double angle, std::vector<unit_struct *> *ret, uint max, double length, double width)
+int unit_struct::count_rect_unit(double angle, std::vector<unit_struct *> *ret, uint max, double length, double width, bool bfriend)
 {
 	struct position *my_pos = get_pos();
-	return count_rect_unit_at_pos(angle, my_pos, ret, max, length, width);
+	return count_rect_unit_at_pos(angle, my_pos, ret, max, length, width, bfriend);
 }
-int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, struct position *pos, double radius)
+int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, struct position *pos, double radius, bool bfriend)
 {
-//	struct position *my_pos = get_pos();	
+//	struct position *my_pos = get_pos();
 	radius = radius * radius;
 	int cur_sight_player = *get_cur_sight_player();
 	uint64_t *sight_player = get_all_sight_player();
@@ -1118,28 +1150,26 @@ int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, st
 		player_struct *player = player_manager::get_player_by_id(sight_player[i]);
 		if (!player || !player->is_alive())
 		{
-			LOG_ERR("%s %d: unit[%lu] can't find player[%p][%lu] in sight", __FUNCTION__, __LINE__, get_uuid(), player, sight_player[i]);			
+			LOG_ERR("%s %d: unit[%lu] can't find player[%p][%lu] in sight", __FUNCTION__, __LINE__, get_uuid(), player, sight_player[i]);
 			continue;
 		}
 
-		if (get_unit_fight_type(this, player) != UNIT_FIGHT_TYPE_ENEMY)							
-		{
+		if (!check_fight_type(player, bfriend))
 			continue;
-		}
 
 		if (player->is_too_high_to_beattack())
 			continue;
-		
+
 		double x = pos->pos_x - player->get_pos()->pos_x;
 		double z = pos->pos_z - player->get_pos()->pos_z;
 		if (x * x + z * z > radius)
 			continue;
 		ret->push_back(player);
 		if (ret->size() >= max)
-			return (0);		
+			return (0);
 	}
 	int cur_sight_monster = *get_cur_sight_monster();
-	uint64_t *sight_monster = get_all_sight_monster();	
+	uint64_t *sight_monster = get_all_sight_monster();
 	for (int i = 0; i < cur_sight_monster; ++i)
 	{
 		monster_struct *monster = monster_manager::get_monster_by_id(sight_monster[i]);
@@ -1149,10 +1179,8 @@ int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, st
 			continue;
 		}
 
-		if (get_unit_fight_type(this, monster) != UNIT_FIGHT_TYPE_ENEMY)							
-		{
+		if (!check_fight_type(monster, bfriend))
 			continue;
-		}
 		
 		double x = pos->pos_x - monster->get_pos()->pos_x;
 		double z = pos->pos_z - monster->get_pos()->pos_z;
@@ -1160,13 +1188,13 @@ int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, st
 			continue;
 		ret->push_back(monster);
 		if (ret->size() >= max)
-			return (0);		
+			return (0);
 	}
-	return (0);	
+	return (0);
 }
-int unit_struct::count_fan_unit(std::vector<unit_struct *> *ret, uint max, double radius, double angle)
+int unit_struct::count_fan_unit(std::vector<unit_struct *> *ret, uint max, double radius, double angle, bool bfriend)
 {
-	struct position *my_pos = get_pos();	
+	struct position *my_pos = get_pos();
 	radius = radius * radius;
 	double my_angle = pos_to_angle(my_pos->pos_x, my_pos->pos_z);
 	double angle_min = my_angle - angle;
@@ -1182,9 +1210,13 @@ int unit_struct::count_fan_unit(std::vector<unit_struct *> *ret, uint max, doubl
 			LOG_ERR("%s %d: dead player[%lu][%p] in sight", __FUNCTION__, __LINE__, sight_player[i], player);
 			continue;
 		}
-		if (player->is_too_high_to_beattack())
+
+		if (!check_fight_type(player, bfriend))
 			continue;
 		
+		if (player->is_too_high_to_beattack())
+			continue;
+
 		double x = my_pos->pos_x - player->get_pos()->pos_x;
 		double z = my_pos->pos_z - player->get_pos()->pos_z;
 		if (x * x + z * z > radius)
@@ -1197,6 +1229,5 @@ int unit_struct::count_fan_unit(std::vector<unit_struct *> *ret, uint max, doubl
 				return (0);
 		}
 	}
-	return (0);	
+	return (0);
 }
-

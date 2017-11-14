@@ -16,7 +16,15 @@ function del_redis() {
 #	echo "not del redis"
 	return 0
     fi
-    echo "$1" | awk '{print "del " $0}' | redis-cli -h ${host} -p ${port}
+#    echo $@
+
+    for i in $@; do
+#	echo "$i" | awk '{print "del " $0}' ;
+	echo "$i" | awk '{print "del " $0}' | redis-cli -h ${host} -p ${port}
+    done
+
+#    echo "$1" | awk '{print "del " $0}' 
+#    
 }
 
 

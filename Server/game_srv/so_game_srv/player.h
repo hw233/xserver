@@ -716,6 +716,8 @@ struct player_data
 	//我要变强
 	StrongGoalInfo    strong_goals[MAX_STRONG_GOAL_NUM];
 	StrongChapterInfo strong_chapters[MAX_STRONG_CHAPTER_NUM];
+
+	bool playing_drama;
 };
 
 struct ai_player_data
@@ -750,7 +752,8 @@ public:
 	int move_to_scene(uint32_t scene_id, EXTERN_DATA *extern_data);  //进入野外/副本	
 	int move_to_transfer(uint32_t transfer_id, EXTERN_DATA *extern_data);  //进入野外/副本
 	int cur_scene_jump(double pos_x, double pos_z, double direct, EXTERN_DATA *extern_data);	//当前场景跳转
-	
+	int move_to_raid_impl(DungeonTable *config, bool ignore_check);
+
 	int check_scene_enter_cond(uint32_t scene_id);	//进入地图的条件是否满足(镖车和进入等级)
 	int check_raid_enter_cond(uint32_t raid_id);
 
@@ -1096,6 +1099,7 @@ public:
 	void hand_out_team_leader(player_struct *leader); //把组队队长数据移交给新队长
 	void clear_guild_task(void);
 	void on_leave_guild(void);
+	int get_guild_build_task(void);
 
 	int get_task_chapter_info(uint32_t &id, uint32_t &state);
 	void update_task_chapter_info(void);
@@ -1193,6 +1197,7 @@ public:
 	YuqidaoMaiInfo *get_yuqidao_mai(uint32_t mai_id);
 	int init_yuqidao_break(uint32_t break_id); //经脉升满激活冲脉
 	YuqidaoBreakInfo *get_yuqidao_break(uint32_t break_id);
+	bool yuqidao_mai_is_finish(uint32_t mai_id);
 
 	//八卦牌
 	BaguapaiDressInfo *get_baguapai_dress(uint32_t style_id);
@@ -1260,7 +1265,9 @@ public:
 	void take_partner_out_sight_space(sight_space_struct *sp);   //角色离开位面后，把伙伴拉出位面
 	void take_truck_into_sight_space(void);	 //角色进入位面后，把镖车加入位面	
 	void take_truck_out_sight_space(sight_space_struct *sp);  //角色离开位面后，把镖车拉出位面
-	
+
+	void stop_partner_ai();
+	void start_partner_ai();		
 	void adjust_battle_partner(void); //阵型变化，调整出战的伙伴
 	void add_battle_partner(int index); //在index上出战一个伙伴
 	void sub_battle_partner(int index); //把index的出战伙伴收回

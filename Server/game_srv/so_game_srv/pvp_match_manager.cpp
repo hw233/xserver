@@ -1095,7 +1095,7 @@ static void send_match_success_notify_3(struct matched_team_3 *team)
 	}
 }
 
-__attribute_used__ static void try_match_team_3()
+static void try_match_team_3()
 {
 	uint64_t match_player_1[PVP_MATCH_PLAYER_NUM_3];
 	uint64_t match_player_2[PVP_MATCH_PLAYER_NUM_3];
@@ -1140,7 +1140,7 @@ __attribute_used__ static void try_match_team_3()
 	}
 }
 
-__attribute_used__ static void try_match_3()//std::map<uint64_t, uint8_t> *waiting_player)
+static void try_match_3()//std::map<uint64_t, uint8_t> *waiting_player)
 {
 	sort_ite match_player_1[PVP_MATCH_PLAYER_NUM_3];
 	sort_ite match_player_2[PVP_MATCH_PLAYER_NUM_3];

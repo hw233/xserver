@@ -2246,6 +2246,27 @@ local ItemsConfigTable = {
 		['TaskId'] = 0,
 		['DropId'] = 0
 		},
+	[201050076] = {
+		['ID'] = 201050076,
+		['Name'] = '时空粉末',
+		['Camp'] = 0,
+		['ItemLevel'] = 1,
+		['ItemQuality'] = 1,
+		['ItemType'] = 5,
+		['CostTime'] = 0,
+		['ItemCD'] = 0,
+		['ItemEffect'] = 0,
+		['ParameterEffect'] = {},
+		['SkillId'] = 0,
+		['Price'] = -1,
+		['BindType'] = 1,
+		['ItemRelation'] = 0,
+		['UseDegree'] = 0,
+		['ItemLimit'] = 0,
+		['Stackable'] = 99,
+		['TaskId'] = 0,
+		['DropId'] = 0
+		},
 	[201060001] = {
 		['ID'] = 201060001,
 		['Name'] = '火胜石',

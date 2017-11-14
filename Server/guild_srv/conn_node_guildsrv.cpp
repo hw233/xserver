@@ -356,11 +356,11 @@ void resp_guild_info(conn_node_guildsrv *node, EXTERN_DATA *extern_data, uint32_
 			}
 			basic_data.usual_logs = usual_log_point;
 			basic_data.n_usual_logs = 0;
-			for (int i = 0; i < MAX_GUILD_LOG_NUM; ++i)
+			for (int i = MAX_GUILD_LOG_NUM - 1; i >= 0; --i)
 			{
 				if (guild->usual_logs[i].type == 0)
 				{
-					break;
+					continue;
 				}
 				usual_log_point[basic_data.n_usual_logs] = &usual_log_data[basic_data.n_usual_logs];
 				guild_log_data__init(&usual_log_data[basic_data.n_usual_logs]);
@@ -381,11 +381,11 @@ void resp_guild_info(conn_node_guildsrv *node, EXTERN_DATA *extern_data, uint32_
 			}
 			basic_data.important_logs = important_log_point;
 			basic_data.n_important_logs = 0;
-			for (int i = 0; i < MAX_GUILD_LOG_NUM; ++i)
+			for (int i = MAX_GUILD_LOG_NUM - 1; i >= 0; --i)
 			{
 				if (guild->important_logs[i].type == 0)
 				{
-					break;
+					continue;
 				}
 				important_log_point[basic_data.n_important_logs] = &important_log_data[basic_data.n_important_logs];
 				guild_log_data__init(&important_log_data[basic_data.n_important_logs]);
@@ -424,6 +424,9 @@ void resp_guild_info(conn_node_guildsrv *node, EXTERN_DATA *extern_data, uint32_
 		personal_data.curhistorydonation = player->cur_history_donation;
 		personal_data.jointime = player->join_time;
 		personal_data.exittime = player->exit_time;
+		personal_data.taskcount = player->cur_week_task;
+		personal_data.taskamount = get_guild_build_task_amount(player->cur_week_task_config_id);
+		personal_data.curtaskid = player->cur_task_id;
 	}
 
 	fast_send_msg(node, extern_data, msg_id, guild_info_answer__pack, resp);
@@ -927,11 +930,11 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 			}
 			basic_data.usual_logs = usual_log_point;
 			basic_data.n_usual_logs = 0;
-			for (int i = 0; i < MAX_GUILD_LOG_NUM; ++i)
+			for (int i = MAX_GUILD_LOG_NUM - 1; i >= 0; --i)
 			{
 				if (guild->usual_logs[i].type == 0)
 				{
-					break;
+					continue;
 				}
 				usual_log_point[basic_data.n_usual_logs] = &usual_log_data[basic_data.n_usual_logs];
 				guild_log_data__init(&usual_log_data[basic_data.n_usual_logs]);
@@ -952,11 +955,11 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 			}
 			basic_data.important_logs = important_log_point;
 			basic_data.n_important_logs = 0;
-			for (int i = 0; i < MAX_GUILD_LOG_NUM; ++i)
+			for (int i = MAX_GUILD_LOG_NUM - 1; i >= 0; --i)
 			{
 				if (guild->important_logs[i].type == 0)
 				{
-					break;
+					continue;
 				}
 				important_log_point[basic_data.n_important_logs] = &important_log_data[basic_data.n_important_logs];
 				guild_log_data__init(&important_log_data[basic_data.n_important_logs]);
@@ -995,6 +998,9 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 		personal_data.curhistorydonation = player->cur_history_donation;
 		personal_data.jointime = player->join_time;
 		personal_data.exittime = player->exit_time;
+		personal_data.taskcount = player->cur_week_task;
+		personal_data.taskamount = get_guild_build_task_amount(player->cur_week_task_config_id);
+		personal_data.curtaskid = player->cur_task_id;
 	}
 
 	if (ret == 0 && applyIds.size() > 0)
@@ -1024,12 +1030,12 @@ int conn_node_guildsrv::handle_guild_join_list_request(EXTERN_DATA *extern_data)
 			break;
 		}
 
-		if (!player_has_permission(player, GOPT_DEAL_JOIN))
-		{
-			ret = ERROR_ID_GUILD_PLAYER_NO_PERMISSION;
-			LOG_ERR("[%s:%d] player[%lu] no permission, office:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->office);
-			break;
-		}
+//		if (!player_has_permission(player, GOPT_DEAL_JOIN))
+//		{
+//			ret = ERROR_ID_GUILD_PLAYER_NO_PERMISSION;
+//			LOG_ERR("[%s:%d] player[%lu] no permission, office:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->office);
+//			break;
+//		}
 
 		ret = get_guild_join_apply(player->guild->guild_id, applyIds);
 	} while(0);
@@ -1106,7 +1112,7 @@ int conn_node_guildsrv::handle_guild_deal_join_request(EXTERN_DATA *extern_data)
 
 		if (!player_has_permission(player, GOPT_DEAL_JOIN))
 		{
-			ret = ERROR_ID_GUILD_PLAYER_NO_PERMISSION;
+			ret = 190500452;
 			LOG_ERR("[%s:%d] player[%lu] no permission, office:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->office);
 			break;
 		}
@@ -1825,14 +1831,22 @@ int conn_node_guildsrv::handle_open_guild_answer_request(EXTERN_DATA *extern_dat
 
 int conn_node_guildsrv::handle_player_online_notify(EXTERN_DATA *extern_data)
 {
+	PLAYER_ONLINE_NOTIFY *proto = (PLAYER_ONLINE_NOTIFY*)get_data();
 	GuildPlayer *player = get_guild_player(extern_data->player_id);
 	AutoReleaseBatchRedisPlayer t1;
 	if (player)
 	{
+		player->cur_task_id = proto->cur_guild_build_task;
 		sync_guild_info_to_gamesrv(player);
 		sync_guild_skill_to_gamesrv(player);
 		sync_player_donation_to_game_srv(player);
 		sync_guild_task_to_gamesrv(player);
+		{
+			uint32_t *pData = (uint32_t *)get_send_data();
+			uint32_t data_len = sizeof(uint32_t);
+			*pData = get_guild_land_active_reward_count(player, GUILD_INTRUSION_CONTROLTABLE_ID);
+			fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_GUILD_RUQIN_SYNC_COUNT, data_len, 0);
+		}
 		//聊天发送
 		do
 		{
@@ -2215,6 +2229,8 @@ int conn_node_guildsrv::handle_game_accept_task_answer(EXTERN_DATA *extern_data)
 			break;
 		}
 
+		player->cur_task_id = ans->task_id;
+		notify_guild_attr_update(player->player_id, GUILD_ATTR_TYPE__ATTR_CUR_TASK, player->cur_task_id);
 	} while(0);
 
 	CommAnswer resp;
@@ -2248,8 +2264,15 @@ int conn_node_guildsrv::handle_game_task_finish_notify(EXTERN_DATA *extern_data)
 		sub_building_upgrade_time(player->guild, config->LeveTime);
 
 		player->cur_week_task++;
+		player->cur_task_id = 0;
 		save_guild_player(player);
 		sync_guild_task_to_gamesrv(player);
+		{
+			AttrMap attrs;
+			attrs[GUILD_ATTR_TYPE__ATTR_TASK_COUNT] = player->cur_week_task;
+			attrs[GUILD_ATTR_TYPE__ATTR_CUR_TASK] = player->cur_task_id;
+			notify_guild_attrs_update(player->player_id, attrs);
+		}
 	} while(0);
 
 	return 0;
@@ -2364,6 +2387,13 @@ int conn_node_guildsrv::handle_guild_skill_develop_request(EXTERN_DATA *extern_d
 		}
 
 		uint32_t next_lv = pSkill->skill_lv;
+		if (get_guild_skill_config(skill_id, pSkill->skill_lv + 1) == NULL)
+		{
+			ret = ERROR_ID_GUILD_SKILL_LEVEL_MAX;
+			LOG_ERR("[%s:%d] player[%lu] get skill config failed, guild_id:%u, skill_id:%u, skill_lv:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, skill_id, pSkill->skill_lv + 1);
+			break;
+		}
+
 		GangsSkillTable *config = get_guild_skill_config(skill_id, next_lv);
 		if (!config)
 		{
@@ -3872,6 +3902,9 @@ int conn_node_guildsrv::guild_ruqin_reward_info_notify(EXTERN_DATA *extern_data)
 			if(reward_type == 2)
 			{
 				add_guild_land_active_reward_count(guild_player_data, GUILD_INTRUSION_CONTROLTABLE_ID);
+				EXTERN_DATA ext_data;
+				ext_data.player_id = req->all_palyer[i]->player_id;
+				fast_send_msg_base(&connecter, &ext_data, SERVER_PROTO_GUILD_RUQIN_ADD_COUNT, 0, 0);
 			}
 			attachs[coin_item_id] += coin_reward;
 			attachs[exp_item_id] += exp_reward;

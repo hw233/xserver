@@ -198,6 +198,9 @@ static void ai_player_hit_notify_to_many_player(uint64_t skill_id, player_struct
 
 	}
 
+	if (n_hit_effect == 0)
+		return;
+
 	target->push_back(monster);
 
 	SkillHitNotify notify;

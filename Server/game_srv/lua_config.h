@@ -391,5 +391,6 @@ extern uint64_t sg_guild_ruqin_yaozu_bossid;
 extern uint32_t sg_maogui_diaoxiang_stop_buff;
 extern uint32_t sg_maogui_guiwang_wudi_buff;
 
+extern char *sg_xunbao_boss_notice;
 
 #endif /* __LUA_CONFIG_H__ */

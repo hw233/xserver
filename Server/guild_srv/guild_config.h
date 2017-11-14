@@ -36,5 +36,6 @@ int read_all_excel_data();
 GangsTable *get_guild_building_config(uint32_t type, uint32_t level);
 GangsSkillTable *get_guild_skill_config(uint32_t type, uint32_t level);
 int get_guild_build_task_id(uint32_t player_lv);
+int get_guild_build_task_amount(uint32_t id);
 
 #endif /* __GUILD_CONFIG_H__ */

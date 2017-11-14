@@ -332,20 +332,10 @@ static int32_t count_friend_damage(struct SkillLvTable *lvconfig,
 	if (damage < 0)
 		damage = 0;
 
-	if (defence_unit->buff_state & BUFF_STATE_ONEBLOOD)
+	defence[PLAYER_ATTR_HP] += damage;
+	if (defence[PLAYER_ATTR_HP] > defence[PLAYER_ATTR_MAXHP])
 	{
-		if (defence[PLAYER_ATTR_HP] - damage < 1)
-		{
-			defence[PLAYER_ATTR_HP] = 1;
-		}
-		else
-		{
-			defence[PLAYER_ATTR_HP] -= damage;
-		}
-	}
-	else
-	{
-		defence[PLAYER_ATTR_HP] -= damage;
+		defence[PLAYER_ATTR_HP] = defence[PLAYER_ATTR_MAXHP];
 	}
 
 	return damage;
@@ -627,6 +617,7 @@ int32_t count_skill_total_damage(UNIT_FIGHT_TYPE type, struct SkillTable *skillc
 	}
 	else
 	{
+		*effect = SKILL_EFFECT_ADDHP;
 		ret = count_friend_damage(act_lvconfig, attack_unit, defence_unit);
 	}
 

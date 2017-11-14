@@ -135,6 +135,12 @@ void handle_daily_reset_timeout(void)
 				player->cur_week_task_config_id = get_guild_build_task_id(redis_player->lv);
 			}
 			sync_guild_task_to_gamesrv(player);
+			{
+				AttrMap attrs;
+				attrs[GUILD_ATTR_TYPE__ATTR_TASK_COUNT] = player->cur_week_task;
+				attrs[GUILD_ATTR_TYPE__ATTR_TASK_AMOUNT] = get_guild_build_task_amount(player->cur_week_task_config_id);
+				notify_guild_attrs_update(player->player_id, attrs);
+			}
 			save = true;
 		}
 
@@ -1553,6 +1559,10 @@ int join_guild(uint64_t player_id, GuildInfo *guild)
 				EXTERN_DATA ext_data;
 				ext_data.player_id = player_id;
 				resp_guild_info(&conn_node_guildsrv::connecter, &ext_data, MSG_ID_GUILD_INFO_ANSWER, 0, player);
+
+				std::vector<char *> args;
+				args.push_back(guild->name);
+				conn_node_guildsrv::send_system_notice(player_id, 190500249, &args);
 			}
 
 			//聊天发送
@@ -1770,6 +1780,7 @@ static int deal_exit_player_part(GuildPlayer *player, PlayerExitGuildReason reas
 	player->cur_history_donation = 0;
 	player->cur_week_donation = 0;
 	player->cur_week_treasure = 0;
+	player->cur_task_id = 0;
 	if (reason == PEGR_QUIT)
 	{
 		player->exit_time = time_helper::get_cached_time() / 1000;

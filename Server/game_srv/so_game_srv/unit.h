@@ -2,6 +2,7 @@
 #define UNIT_H
 
 #include <list>
+#include <stdbool.h>
 #include <stdint.h>
 #include "sortarray.h"
 #include "conn_node_gamesrv.h"
@@ -73,10 +74,10 @@ public:
 	virtual JobDefine get_job() = 0;
 	virtual void do_taunt_action() = 0;  //嘲讽
 
-	int count_rect_unit_at_pos(double angle, struct position *start_pos, std::vector<unit_struct *> *ret, uint max, double length, double width);	
-	int count_rect_unit(double angle, std::vector<unit_struct *> *ret, uint max, double length, double width);
-	int count_circle_unit(std::vector<unit_struct *> *ret, uint max, struct position *pos, double radius);
-	int count_fan_unit(std::vector<unit_struct *> *ret, uint max, double radius, double angle);
+	int count_rect_unit_at_pos(double angle, struct position *start_pos, std::vector<unit_struct *> *ret, uint max, double length, double width, bool bfriend);	
+	int count_rect_unit(double angle, std::vector<unit_struct *> *ret, uint max, double length, double width, bool bfriend);
+	int count_circle_unit(std::vector<unit_struct *> *ret, uint max, struct position *pos, double radius, bool bfriend);
+	int count_fan_unit(std::vector<unit_struct *> *ret, uint max, double radius, double angle, bool bfriend);
 
 	virtual bool is_too_high_to_beattack();   //是否飞的太高不能被攻击
 	virtual bool give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty = true, uint32_t mail_id = 0, std::vector<char *> *mail_args = NULL); //发放掉落奖励
@@ -90,6 +91,7 @@ public:
 	bool is_unit_in_move();
 	void set_pos(float pos_x, float pos_z);
 	bool is_alive();
+	bool is_fullhp();	
 	bool is_player_in_sight(uint64_t player_id);	
 	int add_player_to_sight(uint64_t player_id);
 	int del_player_from_sight(uint64_t player_id);
@@ -158,6 +160,7 @@ public:
 	buff_struct *m_buffs[MAX_BUFF_PER_UNIT];
 
 protected:
+	bool check_fight_type(unit_struct *player, bool bfriend);	
 	unit_struct *get_taunt_target();
 	void calculate_buff_fight_attr(bool isNty);	
 	buff_struct *try_cover_duplicate_item_buff(struct BuffTable *buff_config);

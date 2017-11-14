@@ -71,6 +71,8 @@ message GuildPersonalData
 	required uint32 cfCount = 6; //阵营次数
 	required uint32 joinTime = 7; //入帮时间
 	required uint32 exitTime = 8; //退帮时间
+	required uint32 taskAmount = 9; //建设任务总数
+	required uint32 curTaskId = 10; //当前建设任务
 }
 
 //帮会建筑信息
@@ -153,6 +155,9 @@ enum GuildAttrType
 	ATTR_MASTER_ID = 8; //帮主ID
 	ATTR_HISTORY_DONATION = 9; //历史帮贡（帮会商店用到）
 	ATTR_OFFICE = 10; //帮会职位
+	ATTR_TASK_COUNT = 11; //建设任务当前已做
+	ATTR_TASK_AMOUNT = 12; //建设任务总数
+	ATTR_CUR_TASK = 13; //当前建设任务
 }
 
 //帮会字符属性类型

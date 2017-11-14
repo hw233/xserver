@@ -113,8 +113,6 @@ static unit_struct *choose_target(partner_struct *partner)
 	return NULL;
 }
 
-
-
 int partner_ai_tick_1(partner_struct *partner)
 {
 	if (partner->data->skill_id != 0 && partner->ai_state == AI_ATTACK_STATE)
@@ -124,15 +122,20 @@ int partner_ai_tick_1(partner_struct *partner)
 		partner->ai_state = AI_PATROL_STATE;
 		return 1;
 	}
-	
-	unit_struct *target = choose_target(partner);
-	if (!target)
-		return 0;
 
 	int skill_index;
 	uint32_t skill_id = partner->choose_skill(&skill_index);
 	if (skill_id == 0)
 		return 1;
+
+	if (partner->try_friend_skill(skill_id, skill_index))
+	{
+		return (0);
+	}
+	
+	unit_struct *target = choose_target(partner);
+	if (!target)
+		return 0;
 
 	return partner->attack_target(skill_id, skill_index, target);
 

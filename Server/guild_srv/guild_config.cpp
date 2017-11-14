@@ -241,3 +241,13 @@ int get_guild_build_task_id(uint32_t player_lv)
 	return 0;
 }
 
+int get_guild_build_task_amount(uint32_t id)
+{
+	GangsBuildTaskTable *config = get_config_by_id(id, &guild_build_task_config);
+	if (config)
+	{
+		return config->Times;
+	}
+	return 0;
+}
+

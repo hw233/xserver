@@ -230,8 +230,12 @@ public:
 		//返回0表示没有继续执行跟随主人的AI，返回1表示不继续执行跟随主人
 	uint32_t attack_target(uint32_t skill_id, int skill_index, unit_struct *target);
 	uint32_t choose_skill(int *index);
+	bool try_friend_skill(uint32_t skill_id, int skill_index);
 	void do_normal_attack();
 
+	void cast_skill_to_friend(struct SkillTable *config);
+	void try_attack_friend(struct SkillTable *config);
+	
 	void mark_bind(void);
 
 	struct PartnerTable *config;
@@ -263,9 +267,10 @@ private:
 	void cast_skill_to_target(uint64_t skill_id, unit_struct *target);	
 	void cast_immediate_skill_to_target(uint64_t skill_id, int skill_index, unit_struct *target);
 	
-	int count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config);
+	int count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, bool bfriend);
 	void hit_notify_to_player(uint64_t skill_id, unit_struct *target);	
 	void hit_notify_to_many_player(uint64_t skill_id, std::vector<unit_struct *> *target);
+	void hit_notify_to_many_friend(uint64_t skill_id, std::vector<unit_struct *> *target);
 	void try_attack(struct SkillTable *config);
 	void try_attack_target(struct SkillTable *config);
 	int get_skill_level(uint32_t skill_id);

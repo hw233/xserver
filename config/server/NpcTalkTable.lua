@@ -474,6 +474,13 @@ local NpcTalkTable = {
 		['Type'] = 2,
 		['EventNum1'] = 1,
 		['EventNum2'] = {111500505}
+		},
+	[151000009] = {
+		['ID'] = 151000009,
+		['NpcId'] = 152030040,
+		['Type'] = 1,
+		['EventNum1'] = 0,
+		['EventNum2'] = {3,3}
 		}
 	}
 return NpcTalkTable

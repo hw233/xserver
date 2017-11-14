@@ -24,7 +24,7 @@ public:
 	static int init_guild_wait_raid_struct(int num, unsigned long key);
 	static guild_wait_raid_struct * get_guild_wait_raid_by_uuid(uint64_t id);
 
-	static guild_wait_raid_struct *add_player_to_guild_wait_raid(player_struct *player); //把玩家加入帮会等待副本
+	static guild_wait_raid_struct *add_player_to_guild_wait_raid(player_struct *player, bool ignore_check); //把玩家加入帮会等待副本
 	static guild_wait_raid_struct *get_avaliable_guild_wait_raid(uint32_t guild_id);
 	static guild_wait_raid_struct *get_guild_wait_raid(uint32_t guild_id);
 

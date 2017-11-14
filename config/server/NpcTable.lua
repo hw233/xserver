@@ -4011,7 +4011,7 @@ local NpcTable = {
 		['TaskClass'] = {},
 		['Personality'] = {30,60},
 		['PerAction'] = 'Random',
-		['StandTalk'] = {},
+		['StandTalk'] = {151000009},
 		['LifeTime'] = 0,
 		['NpcSize'] = 1.00
 		},

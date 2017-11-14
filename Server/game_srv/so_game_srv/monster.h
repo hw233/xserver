@@ -228,7 +228,8 @@ public:
 	uint64_t count_rand_patrol_time();  //计算一个巡逻的定时器时间
 
 		//计算技能命中的对象
-	int count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct *target);
+	int count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct *target, bool bfriend);
+//	int count_skill_friend_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct *target);
 
 	void cast_immediate_skill_to_player(uint64_t skill_id, unit_struct *player);
 

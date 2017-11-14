@@ -84,11 +84,13 @@ struct matched_team
 	player_struct *team_player[GUILD_BATTLE_PLAYER_NUM];	
 };
 
+static bool do_not_remove_team_member = false;
+
 int del_from_guild_battle_waiting(player_struct *player)
 {
 	guild_battle_manager_waiting_player.erase(player);
 
-	if (player->m_team)// && guild_battle_manager_waiting_team.find(player->m_team) != guild_battle_manager_waiting_team.end())
+	if (!do_not_remove_team_member && player->m_team)// && guild_battle_manager_waiting_team.find(player->m_team) != guild_battle_manager_waiting_team.end())
 	{
 		player->m_team->RemoveMember(*player);
 		// if (player->m_team->GetMemberSize() == 0)
@@ -525,6 +527,10 @@ static int create_guild_battle_team(raid_struct *raid, struct matched_team *team
 		return 0;
 
 	Team *t = create_team_from_matched_team(team);
+	if (t == NULL)
+	{
+		return -1;
+	}
 //	raid->data->delete_team1 = true;
 	raid->data->team_id = t->GetId();
 	raid->m_raid_team  = t;
@@ -632,7 +638,8 @@ void get_final_rand_born_pos4(float *pos_x, float *pos_z, float *direct)
 static int start_guild_battle(struct matched_team *team1, struct matched_team *team2)
 {
 	assert(team1);
-	assert(team2);
+	assert(team2);	
+	
 	raid_struct *raid = raid_manager::create_raid(GUILD_RAID_ID, NULL);
 	if (!raid)
 	{
@@ -640,8 +647,13 @@ static int start_guild_battle(struct matched_team *team1, struct matched_team *t
 		return (-10);
 	}
 
+	do_not_remove_team_member = true;	
+
 	raid->GUILD_DATA.guild_id[0] = team1->team_player[0]->data->guild_id;
 	raid->GUILD_DATA.guild_id[1] = team2->team_player[0]->data->guild_id;
+
+	create_guild_battle_team(raid, team1);
+	create_guild_battle_team2(raid, team2);	
 
 	player_struct *player;
 //	EXTERN_DATA extern_data;
@@ -654,13 +666,13 @@ static int start_guild_battle(struct matched_team *team1, struct matched_team *t
 		player = team1->team_player[i];
 		assert(player);
 
-		raid_struct *t_raid = player->get_raid();
-		if (t_raid)
-		{
-			player->set_out_raid_pos_and_clear_scene();
-			t_raid->delete_player_from_scene(player);
-			t_raid->on_player_leave_raid(player);
-		}
+		// raid_struct *t_raid = player->get_raid();
+		// if (t_raid)
+		// {
+		// 	player->set_out_raid_pos_and_clear_scene();
+		// 	t_raid->delete_player_from_scene(player);
+		// 	t_raid->on_player_leave_raid(player);
+		// }
 		
 // 		raid->m_player[i] = player;
 // //		memset(&raid->data->player_info[i], 0, sizeof(raid->data->player_info[i]));
@@ -690,13 +702,13 @@ static int start_guild_battle(struct matched_team *team1, struct matched_team *t
 
 		player = team2->team_player[i];
 		assert(player);
-		t_raid = player->get_raid();
-		if (t_raid)
-		{
-			player->set_out_raid_pos_and_clear_scene();
-			t_raid->delete_player_from_scene(player);
-			t_raid->on_player_leave_raid(player);
-		}
+		// t_raid = player->get_raid();
+		// if (t_raid)
+		// {
+		// 	player->set_out_raid_pos_and_clear_scene();
+		// 	t_raid->delete_player_from_scene(player);
+		// 	t_raid->on_player_leave_raid(player);
+		// }
 		
 // 		raid->m_player2[i] = player;
 // //		memset(&raid->data->player_info2[i], 0, sizeof(raid->data->player_info[i]));
@@ -719,8 +731,7 @@ static int start_guild_battle(struct matched_team *team1, struct matched_team *t
 		raid->player_enter_raid_impl(player, i + MAX_TEAM_MEM, pos_x, pos_z, direct);		
 	}
 
-	create_guild_battle_team(raid, team1);
-	create_guild_battle_team2(raid, team2);	
+	do_not_remove_team_member = false;	
 
 	return (0);
 }

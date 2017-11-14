@@ -88,6 +88,7 @@ extern uint32_t sg_gm_cmd_open;
 extern std::map<uint32_t, ProtoGuildInfo> guild_summary_map;
 extern uint32_t guild_battle_manager_final_list_state;
 extern uint32_t guild_battle_manager_final_list_tick;
+extern bool activity_is_unlock_by_config(player_struct *player, EventCalendarTable *config);
 
 //#define db_connecter(a,b) conn_node_dbsrv::connecter.send_one_msg(a,b)
 //#define connecter conn_node_gamesrv::connecter
@@ -206,6 +207,22 @@ int handle_move_y_start_request_impl(player_struct *player, EXTERN_DATA *extern_
 	return (0);
 }
 
+static void send_move_answer(int msgid, int result, struct position *pos, EXTERN_DATA *extern_data)
+{
+	MoveAnswer ans;
+	PosData pos_data;
+	move_answer__init(&ans);
+	ans.result = result;
+	if (result != 0 && pos)
+	{
+		pos_data__init(&pos_data);
+		pos_data.pos_x = pos->pos_x;
+		pos_data.pos_z = pos->pos_z;
+		ans.pos = &pos_data;
+	}
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, msgid, move_answer__pack, ans);	
+}
+
 int handle_move_start_request_impl(player_struct *player, EXTERN_DATA *extern_data, MoveStartRequest *req)
 {
 	if (!player->data || !player->scene)
@@ -231,6 +248,12 @@ int handle_move_start_request_impl(player_struct *player, EXTERN_DATA *extern_da
 		struct position *pos = player->get_pos();
 		LOG_ERR("%s %d: player[%lu] cur_pos[%.1f][%.1f] flash to [%.1f][%.1f]", __FUNCTION__, __LINE__, player->get_uuid(),
 			pos->pos_x, pos->pos_z, req->cur_pos->pos_x, req->cur_pos->pos_z);
+		send_move_answer(MSG_ID_MOVE_START_ANSWER, -1, pos, extern_data);
+		if (player->is_unit_in_move())
+		{
+			player->stop_move();
+		}
+		return (0);
 	}
 
 //	player->data->pos_y = req->cur_pos_y;
@@ -283,12 +306,13 @@ int handle_move_start_request_impl(player_struct *player, EXTERN_DATA *extern_da
 		player->data->move_path.pos[i].pos_z = req->data[i]->pos_z;
 	}
 */
-	CommAnswer resp;
-	comm_answer__init(&resp);
+//	CommAnswer resp;
+//	comm_answer__init(&resp);
 //	uint32_t ret;
 
 //	FAST_SEND_TO_CLIENT(MSG_ID_MOVE_ANSWER, comm_answer__pack);
-	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MOVE_START_ANSWER, comm_answer__pack, resp);
+//	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MOVE_START_ANSWER, comm_answer__pack, resp);
+	send_move_answer(MSG_ID_MOVE_START_ANSWER, 0, NULL, extern_data);	
 
 	MoveStartNotify notify;
 	move_start_notify__init(&notify);
@@ -356,6 +380,12 @@ int handle_move_stop_request_impl(player_struct *player, EXTERN_DATA *extern_dat
 		struct position *pos = player->get_pos();
 		LOG_ERR("%s %d: player[%lu] cur_pos[%.1f][%.1f] flash to [%.1f][%.1f]", __FUNCTION__, __LINE__, player->get_uuid(),
 			pos->pos_x, pos->pos_z, req->cur_pos->pos_x, req->cur_pos->pos_z);
+		send_move_answer(MSG_ID_MOVE_STOP_ANSWER, -1, pos, extern_data);
+		if (player->is_unit_in_move())
+		{
+			player->stop_move();
+		}
+		return (0);
 	}
 
 //	player->data->pos_y = req->cur_pos_y;
@@ -392,14 +422,15 @@ int handle_move_stop_request_impl(player_struct *player, EXTERN_DATA *extern_dat
 		player->data->move_path.pos[i].pos_z = req->data[i]->pos_z;
 	}
 */
-	CommAnswer resp;
+//	CommAnswer resp;
 
 
-	comm_answer__init(&resp);
+//	comm_answer__init(&resp);
 //	uint32_t ret;
 
 //	FAST_SEND_TO_CLIENT(MSG_ID_MOVE_ANSWER, comm_answer__pack);
-	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MOVE_STOP_ANSWER, comm_answer__pack, resp);
+//	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MOVE_STOP_ANSWER, comm_answer__pack, resp);
+	send_move_answer(MSG_ID_MOVE_STOP_ANSWER, 0, NULL, extern_data);	
 
 	MoveStopNotify notify;
 	move_stop_notify__init(&notify);
@@ -440,6 +471,12 @@ int handle_move_request_impl(player_struct *player, EXTERN_DATA *extern_data, Mo
 		struct position *pos = player->get_pos();
 		LOG_ERR("%s %d: player[%lu] cur_pos[%.1f][%.1f] flash to [%.1f][%.1f]", __FUNCTION__, __LINE__, player->get_uuid(),
 			pos->pos_x, pos->pos_z, req->data[0]->pos_x, req->data[0]->pos_z);
+		send_move_answer(MSG_ID_MOVE_ANSWER, -1, pos, extern_data);
+		if (player->is_unit_in_move())
+		{
+			player->stop_move();
+		}
+		return (0);
 	}
 		// TODO: 2: 检查路径的阻挡
 /*
@@ -480,12 +517,13 @@ int handle_move_request_impl(player_struct *player, EXTERN_DATA *extern_data, Mo
 //		LOG_DEBUG("%s: m_angle = %.3f, %.3f, %.3f %.3f", __FUNCTION__, player->data->m_angle, player->data->m_angle / M_PI, player->data->m_angle / M_PI * 180, t);
 	}
 	
-	CommAnswer resp;
-	comm_answer__init(&resp);
+//	CommAnswer resp;
+//	comm_answer__init(&resp);
 //	uint32_t ret;
 
 //	FAST_SEND_TO_CLIENT(MSG_ID_MOVE_ANSWER, comm_answer__pack);
-	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MOVE_ANSWER, comm_answer__pack, resp);
+//	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MOVE_ANSWER, comm_answer__pack, resp);
+	send_move_answer(MSG_ID_MOVE_ANSWER, 0, NULL, extern_data);
 
 	MoveNotify notify;
 	move_notify__init(&notify);
@@ -1902,6 +1940,9 @@ static int handle_skill_hit_request(player_struct *player, EXTERN_DATA *extern_d
 
 	skill_hit_request__free_unpacked(req, NULL);
 
+	if (n_hit_effect == 0)
+		return (0);
+
 	player->on_hp_changed(damage_return);	
 
 	if (!player->is_alive())
@@ -2470,6 +2511,7 @@ static int handle_skill_cast_request(player_struct *player, EXTERN_DATA *extern_
 
 	if (config->IsMonster)
 	{
+		player->data->cur_skill.skill_id = 0;
 		monster_manager::create_call_monster(player, config);
 	}
 
@@ -2698,9 +2740,13 @@ static void player_online_to_other_srvs(player_struct *player, EXTERN_DATA *exte
 	fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_GET_OFFLINE_CACHE_REQUEST, 0, 0);
 	
 	//用户上线通知的其他服务器
-	uint8_t *pData = get_send_data();
-	*pData++ = reconnect;
-	fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_PLAYER_ONLINE_NOTIFY, sizeof(uint8_t), 0);
+	{
+		PLAYER_ONLINE_NOTIFY *proto = (PLAYER_ONLINE_NOTIFY*)get_send_data();
+		uint32_t data_len = sizeof(PLAYER_ONLINE_NOTIFY);
+		proto->reconnect = reconnect;
+		proto->cur_guild_build_task = player->get_guild_build_task();
+		fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_PLAYER_ONLINE_NOTIFY, data_len, 0);
+	}
 }
 
 static int check_can_transfer_to_player(player_struct *player, player_struct *target_player)
@@ -3304,6 +3350,7 @@ static int handle_bag_unlock_grid_request(player_struct *player, EXTERN_DATA *ex
 		player->fit_bag_grid_num();
 
 		player->add_achievement_progress(ACType_BAG_UNLOCK, 0, 0, 1);
+		player->add_achievement_progress(ACType_BAG_GRID_NUM, player->data->bag_grid_num, 0, 1);
 
 	} while(0);
 
@@ -9730,6 +9777,7 @@ static int handle_yuqidao_fill_request(player_struct *player, EXTERN_DATA *exter
 			}
 			else
 			{
+				player->add_achievement_progress(ACType_YUQIDAO_MAI_FINISH, mai_id, 0, 1);
 				mai_info->acupoint_id = 0;
 				mai_info->fill_lv = 0;
 
@@ -14198,6 +14246,78 @@ static int handle_guild_sync_task(player_struct * player, EXTERN_DATA * extern_d
 			player->task_update_notify(task);
 			break;
 		}
+	}
+
+	return 0;
+}
+
+static int handle_guild_ruqin_add_count(player_struct * player, EXTERN_DATA * extern_data)
+{
+	LOG_INFO("[%s:%d]", __FUNCTION__, __LINE__);
+	if (!player || !player->is_online())
+	{
+//		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	player->check_activity_progress(AM_GUILD_INTRUSION, 0);
+
+	return 0;
+}
+
+static int handle_guild_ruqin_sync_count(player_struct * player, EXTERN_DATA * extern_data)
+{
+	LOG_INFO("[%s:%d]", __FUNCTION__, __LINE__);
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	uint32_t *req = (uint32_t *)get_data();
+	uint32_t count = *req;
+	if (count > 0)
+	{
+		for (std::map<uint64_t, EventCalendarTable*>::iterator iter = activity_config.begin(); iter != activity_config.end(); ++iter)
+		{
+			EventCalendarTable *config = iter->second;
+			if (!activity_is_unlock_by_config(player, config))
+			{
+				continue;
+			}
+
+			if (config->ActivityType != AM_GUILD_INTRUSION)
+			{
+				continue;
+			}
+
+			if (config->Active > 0)
+			{
+				if (config->Sum != 0)
+				{
+					DailyActivityInfo *pDaily = NULL;
+					for (int i = 0; i < MAX_DAILY_ACTIVITY_NUM; ++i)
+					{
+						if (player->data->daily_activity[i].act_id == (uint32_t)config->ID || player->data->daily_activity[i].act_id == 0)
+						{
+							pDaily = &player->data->daily_activity[i];
+							break;
+						}
+					}
+
+					if (pDaily && pDaily->count < count)
+					{
+						uint32_t prev_count = pDaily->count;
+						for (uint32_t i = prev_count; i <= count; ++i)
+						{
+							player->check_activity_progress(AM_GUILD_INTRUSION, 0);
+						}
+					}
+				}
+			}
+		}
+
+		return 0;
 	}
 
 	return 0;
@@ -19469,6 +19589,7 @@ static int handle_hero_challenge_sweep_request(player_struct *player, EXTERN_DAT
 			player->broadcast_one_attr_changed(PLAYER_ATTR_GOLD, player->data->attrData[PLAYER_ATTR_GOLD], false, true);
 		}
 		player->add_raid_reward_count(raid_id);
+		player->check_activity_progress(AM_HERO_CHLLENGE, 0);
 
 		//通过副本的奖励id获取一堆奖励物品
 		std::map<uint32_t, uint32_t> item_list;
@@ -20632,6 +20753,50 @@ static int handle_guild_ruqin_creat_monster_level_answer(player_struct * /*playe
 	return 0;
 }
 
+static int handle_play_drama_begin_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	player->data->playing_drama = true;
+	raid_struct *raid = player->get_raid();
+	if (raid)
+	{
+		raid->stop_monster_ai();
+	}
+	else if (player->sight_space)
+	{
+		player->sight_space->stop_monster_ai();
+	}
+
+	return 0;
+}
+
+static int handle_play_drama_end_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	player->data->playing_drama = false;
+	raid_struct *raid = player->get_raid();
+	if (raid)
+	{
+		raid->start_monster_ai();
+	}
+	else if (player->sight_space)
+	{
+		player->sight_space->start_monster_ai();
+	}
+
+	return 0;
+}
+
 void install_msg_handle()
 {
 	add_msg_handle(MSG_ID_MOVE_REQUEST, handle_move_request);
@@ -20883,6 +21048,8 @@ void install_msg_handle()
 	add_msg_handle(SERVER_PROTO_GUILD_SKILL_LEVEL_UP, handle_guild_skill_level_up);
 	add_msg_handle(SERVER_PROTO_GUILD_ACCEPT_TASK_REQUEST, handle_guild_accept_task_request);
 	add_msg_handle(SERVER_PROTO_GUILD_SYNC_TASK, handle_guild_sync_task);
+	add_msg_handle(SERVER_PROTO_GUILD_RUQIN_ADD_COUNT, handle_guild_ruqin_add_count);
+	add_msg_handle(SERVER_PROTO_GUILD_RUQIN_SYNC_COUNT, handle_guild_ruqin_sync_count);
 
 	add_msg_handle(MSG_ID_PERSONALITY_INFO_REQUEST, handle_personality_info_request);
 	add_msg_handle(MSG_ID_PERSONALITY_SET_GENERAL_REQUEST, handle_personality_set_general_request);
@@ -20962,6 +21129,9 @@ void install_msg_handle()
 	add_msg_handle(SERVER_PROTO_TRADE_BID_FAIL_RETURN, handle_trade_bid_fail_return);
 	
 	add_msg_handle(SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_ANSWER, handle_guild_ruqin_creat_monster_level_answer);
+
+	add_msg_handle(MSG_ID_PLAY_DRAMA_BEGIN_REQUEST, handle_play_drama_begin_request);
+	add_msg_handle(MSG_ID_PLAY_DRAMA_END_REQUEST, handle_play_drama_end_request);
 }
 
 void uninstall_msg_handle()

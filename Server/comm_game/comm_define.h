@@ -359,6 +359,8 @@ enum ActivityMatter
 	AM_TRUCK = 5, //押镖
 	AM_YAOSHI = 6, //妖师客栈
 	AM_MIJINGXIULIAN = 7, //秘境修炼
+	AM_GUILD_INTRUSION = 8, //帮会入侵
+	AM_HERO_CHLLENGE = 9, //英雄挑战
 };
 
 enum AchievementConditionType
@@ -438,6 +440,10 @@ enum AchievementConditionType
 	ACType_SHOP_BUY = 73, //商城购买
 	ACType_RANKING_RANK = 74, //排行榜名次
 	ACType_WORLD_BOSS = 75, //世界Boss
+	ACType_YUQIDAO_MAI_FINISH = 76, //御气道穴脉修炼达到满级
+	ACType_YUQIDAO_BREAK_COLOR_NUM = 77, //御气道冲脉属性品质达到紫色
+	ACType_BAG_GRID_NUM = 78, //背包格子数
+	ACType_FABAO_COLOR_NUM = 79, //
 };
 
 //成就用到的货币类型

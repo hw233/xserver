@@ -1447,7 +1447,31 @@ uint64_t monster_struct::count_rand_patrol_time()
 	return random() % (ai_config->StopMax - ai_config->StopMin) + ai_config->StopMin;
 }
 
-int monster_struct::count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct */*target*/)
+
+// int monster_struct::count_skill_friend_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct *target)
+// {
+// 	if (!config)
+// 		return (-1);
+// 	switch (config->RangeType)
+// 	{
+// 		case SKILL_RANGE_TYPE_RECT:
+// 			return count_rect_unit(data->angle, ret, config->MaxCount, config->Radius, config->Angle, true);
+// 		case SKILL_RANGE_TYPE_CIRCLE:
+// 			return count_circle_unit(ret, config->MaxCount, get_pos(), config->Radius, true);			
+// 		case SKILL_RANGE_TYPE_FAN:
+// 			return count_fan_unit(ret, config->MaxCount, config->Radius, config->Angle, true);
+// 		case SKILL_RANGE_TYPE_TARGET_RECT:
+// 		{
+// 			struct position *pos = &data->skill_target_pos;
+// 			return count_rect_unit_at_pos(data->angle, pos, ret, config->MaxCount, config->Radius, config->Angle, true);
+// 		}
+// 		default:
+// 			return -10;
+// 	}
+// 	return (0);
+// }
+
+int monster_struct::count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct */*target*/, bool bfriend)
 {
 //	struct SkillTable *config = get_config_by_id(data->skill_id, &skill_config);
 	if (!config)
@@ -1455,15 +1479,15 @@ int monster_struct::count_skill_hit_unit(std::vector<unit_struct *> *ret, struct
 	switch (config->RangeType)
 	{
 		case SKILL_RANGE_TYPE_RECT:
-			return count_rect_unit(data->angle, ret, config->MaxCount, config->Radius, config->Angle);
+			return count_rect_unit(data->angle, ret, config->MaxCount, config->Radius, config->Angle, bfriend);
 		case SKILL_RANGE_TYPE_CIRCLE:
-			return count_circle_unit(ret, config->MaxCount, get_pos(), config->Radius);			
+			return count_circle_unit(ret, config->MaxCount, get_pos(), config->Radius, bfriend);			
 		case SKILL_RANGE_TYPE_FAN:
-			return count_fan_unit(ret, config->MaxCount, config->Radius, config->Angle);
+			return count_fan_unit(ret, config->MaxCount, config->Radius, config->Angle, bfriend);
 		case SKILL_RANGE_TYPE_TARGET_RECT:
 		{
 			struct position *pos = &data->skill_target_pos;
-			return count_rect_unit_at_pos(data->angle, pos, ret, config->MaxCount, config->Radius, config->Angle);
+			return count_rect_unit_at_pos(data->angle, pos, ret, config->MaxCount, config->Radius, config->Angle, bfriend);
 		}
 		default:
 			return -10;

@@ -1,4 +1,5 @@
 #include "raid.h"
+#include "so_game_srv/scene_manager.h"
 #include "so_game_srv/sight_space_manager.h"
 #include "msgid.h"
 #include "monster_manager.h"
@@ -245,12 +246,26 @@ void raid_struct::stop_monster_ai()
 	{
 		(*ite)->data->stop_ai = true;
 	}
+	for (int i = 0; i < MAX_TEAM_MEM; ++i)
+	{
+		if (m_player[i] && m_player[i]->ai_data)
+		{
+			m_player[i]->stop_partner_ai();
+		}
+	}
 }
 void raid_struct::start_monster_ai()
 {
 	for (std::set<monster_struct *>::iterator ite = m_monster.begin(); ite != m_monster.end(); ++ite)
 	{
 		(*ite)->data->stop_ai = false;
+	}
+	for (int i = 0; i < MAX_TEAM_MEM; ++i)
+	{
+		if (m_player[i] && m_player[i]->ai_data)
+		{
+			m_player[i]->start_partner_ai();
+		}
 	}
 }
 
@@ -1028,9 +1043,37 @@ int raid_struct::get_id_monster_num(uint32_t id)
 int raid_struct::player_leave_raid(player_struct *player)
 {
 	player_leave_scene(player);
-	player->data->m_angle = unity_angle_to_c_angle(player->data->leaveraid.direct);
-	player->send_scene_transfer(player->data->leaveraid.direct, player->data->leaveraid.ExitPointX, player->data->leaveraid.ExitPointY,
-		player->data->leaveraid.ExitPointZ, player->data->leaveraid.scene_id, 0);
+	if (player->data->scene_id <= SCENCE_DEPART)
+	{
+		struct position *pos = player->get_pos();
+		uint32_t scene_id = player->data->scene_id;
+
+		scene_struct *new_scene = scene_manager::get_scene(scene_id);
+		if (!new_scene)
+		{
+			LOG_ERR("%s %d: player[%lu] transfer to the wrong scene[%lu]", __FUNCTION__, __LINE__, player->data->player_id, scene_id);
+			return (-30);
+		}
+		new_scene->player_enter_scene(player, pos->pos_x, player->data->pos_y, pos->pos_z, player->data->leaveraid.direct);		
+	}
+	else
+	{
+		DungeonTable *config = get_config_by_id(player->data->scene_id, &all_raid_config);
+		if (config)
+			player->move_to_raid_impl(config, true);
+	}
+	
+//	player->data->m_angle = unity_angle_to_c_angle(player->data->leaveraid.direct);
+//	player->send_scene_transfer(player->data->leaveraid.direct, player->data->leaveraid.ExitPointX, player->data->leaveraid.ExitPointY,
+//		player->data->leaveraid.ExitPointZ, player->data->leaveraid.scene_id, 0);
+
+	// EXTERN_DATA extern_data;
+	// extern_data.player_id = player->get_uuid();
+	// player->move_to_scene_pos(player->data->leaveraid.scene_id,
+	// 	player->data->leaveraid.ExitPointX,
+	// 	player->data->leaveraid.ExitPointZ,
+	// 	player->data->leaveraid.direct,
+	// 	&extern_data);
 	return (0);
 }
 

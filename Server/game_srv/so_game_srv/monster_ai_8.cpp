@@ -194,7 +194,7 @@ static void choose_target(monster_struct* monster, uint32_t skill_id, std::vecto
 	double width = config->Angle;
 
 	assert (config->RangeType == SKILL_RANGE_TYPE_RECT);
-	monster->count_rect_unit(monster->data->angle, target, config->MaxCount, length, width);
+	monster->count_rect_unit(monster->data->angle, target, config->MaxCount, length, width, false);
 	
 	// switch ( config->RangeType )
 	// {

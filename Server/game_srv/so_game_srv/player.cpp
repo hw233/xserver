@@ -304,22 +304,26 @@ void player_struct::try_return_guild_wait_raid()
 	{
 		if (!is_guild_battle_opening())
 		{
+			LOG_DEBUG("%s: %d", __FUNCTION__, __LINE__);
 			break;
 		}
 
 		if (player_can_participate_guild_battle(this) != 0)
 		{
+			LOG_DEBUG("%s: %d", __FUNCTION__, __LINE__);			
 			break;
 		}
 
 		if (!player_can_return_guild_battle(this))
 		{
+			LOG_DEBUG("%s: %d", __FUNCTION__, __LINE__);			
 			break;
 		}
 
 		guild_wait_raid_struct *raid = guild_wait_raid_manager::get_avaliable_guild_wait_raid(data->guild_id);
 		if (!raid)
 		{
+			LOG_DEBUG("%s: %d", __FUNCTION__, __LINE__);			
 			break;
 		}
 
@@ -4409,18 +4413,18 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 		{
 			//mon->data->owner = player.get_uuid();
 
-			ParameterTable * config = get_config_by_id(161000221, &parameter_config);
-			char str[512] = "bbbbbbbbbbbbbbbbbbbbbbbbb";
+//			ParameterTable * config = get_config_by_id(161000221, &parameter_config);
 			if (player.m_team == NULL)
 			{
 				player_struct *tmpArr[MAX_TEAM_MEM] = {&player};
 				Team::CreateTeam(tmpArr, 1);
 			}
-			if (config != NULL && player.m_team != NULL)
+			if (player.m_team != NULL)
 			{
-				sprintf(str, config->parameter2, player.scene->res_config->SceneName, player.m_team->m_data->m_id);
+				char str[512];
+				sprintf(str, sg_xunbao_boss_notice, player.scene->res_config->SceneName, player.m_team->m_data->m_id);
+				player.send_chat(CHANNEL__world, str);
 			}
-			player.send_chat(CHANNEL__world, str);
 
 			AutoCollect send;
 			auto_collect__init(&send);
@@ -9546,6 +9550,25 @@ void player_struct::on_leave_guild(void)
 	clear_guild_task();
 }
 
+int player_struct::get_guild_build_task(void)
+{
+	for (int i = 0; i < MAX_TASK_ACCEPTED_NUM; ++i)
+	{
+		TaskInfo *info = &data->task_list[i];
+		if (info->id == 0)
+		{
+			continue;
+		}
+
+		uint32_t task_type = get_task_type(info->id);
+		if (task_type == TT_GUILD_BUILD)
+		{
+			return info->id;
+		}
+	}
+	return 0;
+}
+
 int player_struct::get_task_chapter_info(uint32_t &id, uint32_t &state)
 {
 	uint32_t cur_trunk_task_id = 0;
@@ -10708,6 +10731,16 @@ YuqidaoBreakInfo *player_struct::get_yuqidao_break(uint32_t break_id)
 	return NULL;
 }
 
+bool player_struct::yuqidao_mai_is_finish(uint32_t mai_id)
+{
+	YuqidaoMaiInfo *info = get_yuqidao_mai(mai_id);
+	if (info != NULL)
+	{
+		return (info->acupoint_id == 0);
+	}
+	return false;
+}
+
 BaguapaiDressInfo *player_struct::get_baguapai_dress(uint32_t style_id)
 {
 	return (style_id == 0 || style_id > MAX_BAGUAPAI_STYLE_NUM ? NULL : &data->baguapai_dress[style_id - 1]);
@@ -10898,7 +10931,7 @@ uint32_t player_struct::get_activeness(void)
 	return (data ? data->attrData[PLAYER_ATTR_ACTIVENESS] : 0);
 }
 
-static bool activity_is_unlock_by_config(player_struct *player, EventCalendarTable *config)
+bool activity_is_unlock_by_config(player_struct *player, EventCalendarTable *config)
 {
 	switch (config->SubtabCondition)
 	{
@@ -12045,11 +12078,37 @@ int player_struct::add_all_formation_partner_to_scene()
 		partner->data->attrData[PLAYER_ATTR_ZHENYING] = partner->m_owner->get_attr(PLAYER_ATTR_ZHENYING);
 		scene->add_partner_to_scene(partner);
 
+		partner->data->stop_ai = false;		
 			//开启定时器
 		partner->set_timer(time_helper::get_cached_time() + 1000 + random() % 1500);
 		
 	}
 	return (0);
+}
+
+void player_struct::stop_partner_ai()
+{
+	for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
+	{
+		if (data->partner_battle[i] == 0)
+			continue;
+		partner_struct *partner = get_partner_by_uuid(data->partner_battle[i]);
+		if (!partner || !partner->data)
+			continue;
+		partner->data->stop_ai = true;
+	}	
+}
+void player_struct::start_partner_ai()
+{
+	for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
+	{
+		if (data->partner_battle[i] == 0)
+			continue;
+		partner_struct *partner = get_partner_by_uuid(data->partner_battle[i]);
+		if (!partner || !partner->data)
+			continue;
+		partner->data->stop_ai = false;
+	}	
 }
 
 int player_struct::add_partner_to_scene(uint64_t partner_uuid)
@@ -12087,6 +12146,7 @@ int player_struct::add_partner_to_scene(uint64_t partner_uuid)
 		scene->add_partner_to_scene(partner);
 	}
 
+	partner->data->stop_ai = false;
 		//开启定时器
 	partner->set_timer(time_helper::get_cached_time() + 1000 + random() % 1500);
 
@@ -12166,6 +12226,14 @@ void player_struct::take_partner_into_sight_space(void)
 			partner->partner_sight_space = sight_space;
 			sight_space->broadcast_partner_create(partner);
 
+			if (data->playing_drama)
+			{
+				partner->data->stop_ai = true;			
+			}
+			else
+			{
+				partner->data->stop_ai = false;			
+			}
 				//开启定时器
 			partner->set_timer(time_helper::get_cached_time() + 1000 + random() % 1500);
 		}
@@ -13861,7 +13929,7 @@ int player_struct::conserve_out_raid_pos_and_scene(raid_struct *raid)
 {
 	assert(raid);
 	assert(raid->m_config);
-	if (raid->m_config->DengeonRank != 13 && raid->m_config->ExitScene != 0)
+	if (/*raid->m_config->DengeonRank != 13 && */raid->m_config->ExitScene != 0)
 	{
 		data->leaveraid.scene_id = raid->m_config->ExitScene;
 		data->leaveraid.ExitPointX = raid->m_config->ExitPointX;
@@ -13877,6 +13945,10 @@ int player_struct::conserve_out_raid_pos_and_scene(raid_struct *raid)
 		data->leaveraid.ExitPointZ = get_pos()->pos_z;
 		data->leaveraid.direct = data->m_angle;
 	}
+
+	LOG_DEBUG("%s: player[%lu] scene[%p] raid[%u] set out pos[%u][%.2f][%.2f]", __FUNCTION__, data->player_id, scene,
+		raid->data->ID, data->leaveraid.scene_id, data->leaveraid.ExitPointX, data->leaveraid.ExitPointZ);
+	
 	return (0);
 }
 
@@ -15296,7 +15368,7 @@ uint32_t player_struct::get_partner_quality_num(uint32_t quality)
 	for (PartnerMap::iterator iter = m_partners.begin(); iter != m_partners.end(); ++iter)
 	{
 		partner_struct *partner = iter->second;
-		if (partner->config->Grade >= (uint64_t)quality)
+		if (partner->config->Grade == (uint64_t)quality)
 		{
 			num++;
 		}
@@ -15605,6 +15677,24 @@ void player_struct::init_achievement_progress_internal(uint32_t &progress, uint3
 				}
 			}
 			break;
+		case ACType_YUQIDAO_MAI_FINISH:
+			{
+				progress = 0;
+				if (yuqidao_mai_is_finish(config_target1))
+				{
+					progress++;
+				}
+			}
+			break;
+		case ACType_BAG_GRID_NUM:
+			{
+				progress = 0;
+				if (data->bag_grid_num >= config_target1)
+				{
+					progress++;
+				}
+			}
+			break;
 	}
 }
 
@@ -15646,6 +15736,7 @@ void player_struct::add_achievement_progress_internal(uint32_t &progress, uint32
 		case ACType_PLAYER_LEVEL:
 		case ACType_PLAYER_FC:
 		case ACType_ZHENYING_GRADE:
+		case ACType_BAG_GRID_NUM:
 			{
 				if (target1 >= config_target1)
 				{
@@ -16481,8 +16572,9 @@ int player_struct::move_to_wild_pos(uint32_t scene_id, double pos_x, double pos_
 	}
 
 	if (sight_space)
-		sight_space_manager::del_player_from_sight_space(sight_space, this, false);		
-	scene->player_leave_scene(this);
+		sight_space_manager::del_player_from_sight_space(sight_space, this, false);
+	if (scene)
+		scene->player_leave_scene(this);
 		
 	new_scene->player_enter_scene(this, pos_x, data->pos_y, pos_z, direct);		
 	return (0);
@@ -16512,27 +16604,9 @@ int player_struct::move_to_wild(uint32_t scene_id)
 	direct = new_scene->m_born_direct;
 	return move_to_wild_pos(scene_id, pos_x, pos_z, direct);
 }
-int player_struct::move_to_raid(uint32_t raid_id, EXTERN_DATA *extern_data)
-{
-	int ret;
-	ret = check_raid_enter_cond(raid_id);
-	if (ret != 0)
-	{
-		LOG_ERR("[%s:%d] player[%lu] check enter raid failed, raid_id:%u, ret = %d", __FUNCTION__, __LINE__, extern_data->player_id, raid_id, ret);		
-		return (ret);
-	}
-	
-	DungeonTable *config = get_config_by_id(raid_id, &all_raid_config);
-	if (!config)
-	{
-		LOG_ERR("[%s:%d] player[%lu] get config failed, raid_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, raid_id);
-		return -1;
-	}
-	
-	if (sight_space)
-		sight_space_manager::del_player_from_sight_space(sight_space, this, false);		
-	scene->player_leave_scene(this);
 
+int player_struct::move_to_raid_impl(DungeonTable *config, bool ignore_check)
+{
 	if (config->DengeonRank == DUNGEON_TYPE_GUILD_LAND)
 	{
 		int ret = 0;
@@ -16542,7 +16616,7 @@ int player_struct::move_to_raid(uint32_t raid_id, EXTERN_DATA *extern_data)
 			if (!raid)
 			{
 				ret = ERROR_ID_SERVER;
-				LOG_ERR("[%s:%d] player[%lu] get raid failed", __FUNCTION__, __LINE__, extern_data->player_id);
+				LOG_ERR("[%s:%d] player[%lu] get raid failed", __FUNCTION__, __LINE__, data->player_id);
 				break;
 			}
 
@@ -16558,7 +16632,7 @@ int player_struct::move_to_raid(uint32_t raid_id, EXTERN_DATA *extern_data)
 	}
 	else if (config->DengeonRank == DUNGEON_TYPE_GUILD_WAIT)
 	{
-		guild_wait_raid_manager::add_player_to_guild_wait_raid(this);
+		guild_wait_raid_manager::add_player_to_guild_wait_raid(this, ignore_check);
 		return 0;
 	}
 	else if (config->DengeonRank == DUNGEON_TYPE_ZHENYING)
@@ -16583,7 +16657,7 @@ int player_struct::move_to_raid(uint32_t raid_id, EXTERN_DATA *extern_data)
 	}
 	else if (config->DengeonRank == DUNGEON_TYPE_BATTLE)
 	{
-		ret = ZhenyingBattle::GetInstance()->IntoBattle(*this);
+		int ret = ZhenyingBattle::GetInstance()->IntoBattle(*this);
 		if (ret != 0)
 		{
 			LOG_ERR("%s: player[%lu] enter battle %u failed, ret = %d", __FUNCTION__, get_uuid(), ret);
@@ -16591,10 +16665,10 @@ int player_struct::move_to_raid(uint32_t raid_id, EXTERN_DATA *extern_data)
 		return ret;
 	}
 
-	raid_struct *raid = raid_manager::create_raid(raid_id, this);
+	raid_struct *raid = raid_manager::create_raid(config->DungeonID, this);
 	if (!raid)
 	{
-		LOG_ERR("%s: player[%lu] create raid[%u] failed", __FUNCTION__, extern_data->player_id, raid_id);
+		LOG_ERR("%s: player[%lu] create raid[%u] failed", __FUNCTION__, data->player_id, config->DungeonID);
 		return (-20);
 	}
 
@@ -16626,6 +16700,122 @@ int player_struct::move_to_raid(uint32_t raid_id, EXTERN_DATA *extern_data)
  	return (0);
 }
 
+int player_struct::move_to_raid(uint32_t raid_id, EXTERN_DATA *extern_data)
+{
+	int ret;
+	ret = check_raid_enter_cond(raid_id);
+	if (ret != 0)
+	{
+		LOG_ERR("[%s:%d] player[%lu] check enter raid failed, raid_id:%u, ret = %d", __FUNCTION__, __LINE__, extern_data->player_id, raid_id, ret);		
+		return (ret);
+	}
+	
+	DungeonTable *config = get_config_by_id(raid_id, &all_raid_config);
+	if (!config)
+	{
+		LOG_ERR("[%s:%d] player[%lu] get config failed, raid_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, raid_id);
+		return -1;
+	}
+	
+	if (sight_space)
+		sight_space_manager::del_player_from_sight_space(sight_space, this, false);
+	if (scene)
+		scene->player_leave_scene(this);
+
+	return move_to_raid_impl(config, false);
+// 	if (config->DengeonRank == DUNGEON_TYPE_GUILD_LAND)
+// 	{
+// 		int ret = 0;
+// 		do
+// 		{
+// 			guild_land_raid_struct *raid = guild_land_raid_manager::get_guild_land_raid(data->guild_id);
+// 			if (!raid)
+// 			{
+// 				ret = ERROR_ID_SERVER;
+// 				LOG_ERR("[%s:%d] player[%lu] get raid failed", __FUNCTION__, __LINE__, extern_data->player_id);
+// 				break;
+// 			}
+
+// 			raid->player_enter_raid(this, raid->res_config->BirthPointX, raid->res_config->BirthPointZ, 0);
+// //			raid->player_enter_raid(this, raid->res_config->BirthPointX, raid->res_config->BirthPointZ);
+// 		} while(0);
+
+// 		if (ret != 0)
+// 		{
+// 			raid_manager::send_enter_raid_fail(this, ret, 0, NULL, 0);
+// 		}
+// 		return 0;
+// 	}
+// 	else if (config->DengeonRank == DUNGEON_TYPE_GUILD_WAIT)
+// 	{
+// 		guild_wait_raid_manager::add_player_to_guild_wait_raid(this);
+// 		return 0;
+// 	}
+// 	else if (config->DengeonRank == DUNGEON_TYPE_ZHENYING)
+// 	{
+// 		FactionBattleTable *table = get_zhenying_battle_table(get_attr(PLAYER_ATTR_LEVEL));
+// 		if (table == NULL)
+// 		{
+// 			LOG_ERR("%s: player[%lu] enter zhenying batttle, get battle table failed", __FUNCTION__, get_uuid());
+// 			return -1;
+// 		}
+// 		zhenying_raid_struct *raid = zhenying_raid_manager::add_player_to_zhenying_raid(this);
+// 		if (raid == NULL)
+// 		{
+// 			LOG_ERR("[%s] :player[%lu] fail", __FUNCTION__, get_uuid());
+// 			return (-10);
+// 		}
+
+// //		send_comm_answer(MSG_ID_INTO_ZHENYING_BATTLE_ANSWER, 0, extern_data);
+// 		add_achievement_progress(ACType_ZHENYING_BATTLE, 0, 0, 1);
+		
+// 		return 0; 
+// 	}
+// 	else if (config->DengeonRank == DUNGEON_TYPE_BATTLE)
+// 	{
+// 		ret = ZhenyingBattle::GetInstance()->IntoBattle(*this);
+// 		if (ret != 0)
+// 		{
+// 			LOG_ERR("%s: player[%lu] enter battle %u failed, ret = %d", __FUNCTION__, get_uuid(), ret);
+// 		}
+// 		return ret;
+// 	}
+
+// 	raid_struct *raid = raid_manager::create_raid(raid_id, this);
+// 	if (!raid)
+// 	{
+// 		LOG_ERR("%s: player[%lu] create raid[%u] failed", __FUNCTION__, extern_data->player_id, raid_id);
+// 		return (-20);
+// 	}
+
+// 	assert(raid->res_config);
+
+// 	if (m_team)
+// 	{
+// 		raid->team_enter_raid(m_team);
+// 	}
+// 	else
+// 	{
+// 		int x = raid->res_config->BirthPointX, z = raid->res_config->BirthPointZ;
+// 		double direct = 0;
+// 		if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW)
+// 		{
+// 			BattlefieldTable *table = zhenying_fight_config.begin()->second;
+// 			if (table != NULL)
+// 			{
+// 				ZhenyingBattle::GetInstance()->GetRelivePos(table, get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
+// 			}
+// 		}
+// 		// if (raid->player_enter_raid(this, x, z, direct) != 0)
+// 		// {
+// 		// 	LOG_ERR("%s: player[%lu] enter raid failed", __FUNCTION__, get_uuid());
+// 		// 	return (-30);
+// 		// }
+// 		raid->player_enter_raid(this, x, z, direct);
+// 	}
+//  	return (0);
+}
+
 int player_struct::move_to_scene_pos(uint32_t scene_id, double pos_x, double pos_z, double direct, EXTERN_DATA *extern_data)
 {
 	if (scene_id == data->scene_id)
@@ -16634,7 +16824,7 @@ int player_struct::move_to_scene_pos(uint32_t scene_id, double pos_x, double pos
 	}
 	if (scene_id <= SCENCE_DEPART)
 	{
-		return move_to_wild(scene_id);		
+		return move_to_wild_pos(scene_id, pos_x, pos_z, direct);		
 	}
 	else
 	{
@@ -17225,6 +17415,40 @@ int player_struct::check_raid_enter_cond(uint32_t raid_id)
 
 int player_struct::cur_scene_jump(double pos_x, double pos_z, double direct, EXTERN_DATA */*extern_data*/)
 {
+	if (scene && scene->get_scene_type() == SCENE_TYPE_RAID)
+	{
+		raid_struct *raid = (raid_struct *)scene;
+		switch (raid->m_config->DengeonRank)
+		{
+			case DUNGEON_TYPE_ZHENYING:
+			{
+				FactionBattleTable *table = get_zhenying_battle_table(get_attr(PLAYER_ATTR_LEVEL));
+				if (table != NULL)
+				{
+					int x, z;
+					zhenying_raid_manager::GetRelivePos(table, get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
+					pos_x = x;
+					pos_z = z;
+				}
+			}
+			break;
+			case DUNGEON_TYPE_BATTLE:
+				break;
+			case DUNGEON_TYPE_BATTLE_NEW:
+			{
+				BattlefieldTable *table = zhenying_fight_config.begin()->second;
+				if (table != NULL)
+				{
+					int x, z;					
+					ZhenyingBattle::GetInstance()->GetRelivePos(table, get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
+					pos_x = x;
+					pos_z = z;
+				}
+			}
+			break;
+		}
+	}
+	
 	if (sight_space)
 	{
 	 	sight_space_manager::del_player_from_sight_space(sight_space, this, false);
@@ -17255,33 +17479,33 @@ int player_struct::move_to_scene(uint32_t scene_id, EXTERN_DATA *extern_data)
 		assert(scene);
 		int x = scene->m_born_x, z = scene->m_born_z;
 		double direct = scene->m_born_direct;
-		if (scene->get_scene_type() == SCENE_TYPE_RAID)
-		{
-			raid_struct *raid = (raid_struct *)scene;
-			switch (raid->m_config->DengeonRank)
-			{
-				case DUNGEON_TYPE_ZHENYING:
-					{
-						FactionBattleTable *table = get_zhenying_battle_table(get_attr(PLAYER_ATTR_LEVEL));
-						if (table != NULL)
-						{
-							zhenying_raid_manager::GetRelivePos(table, get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
-						}
-					}
-					break;
-				case DUNGEON_TYPE_BATTLE:
-					break;
-				case DUNGEON_TYPE_BATTLE_NEW:
-					{
-						BattlefieldTable *table = zhenying_fight_config.begin()->second;
-						if (table != NULL)
-						{
-							ZhenyingBattle::GetInstance()->GetRelivePos(table, get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
-						}
-					}
-					break;
-			}
-		}
+		// if (scene->get_scene_type() == SCENE_TYPE_RAID)
+		// {
+		// 	raid_struct *raid = (raid_struct *)scene;
+		// 	switch (raid->m_config->DengeonRank)
+		// 	{
+		// 		case DUNGEON_TYPE_ZHENYING:
+		// 			{
+		// 				FactionBattleTable *table = get_zhenying_battle_table(get_attr(PLAYER_ATTR_LEVEL));
+		// 				if (table != NULL)
+		// 				{
+		// 					zhenying_raid_manager::GetRelivePos(table, get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
+		// 				}
+		// 			}
+		// 			break;
+		// 		case DUNGEON_TYPE_BATTLE:
+		// 			break;
+		// 		case DUNGEON_TYPE_BATTLE_NEW:
+		// 			{
+		// 				BattlefieldTable *table = zhenying_fight_config.begin()->second;
+		// 				if (table != NULL)
+		// 				{
+		// 					ZhenyingBattle::GetInstance()->GetRelivePos(table, get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
+		// 				}
+		// 			}
+		// 			break;
+		// 	}
+		// }
 
 		return cur_scene_jump(x, z, direct, extern_data);
 	}

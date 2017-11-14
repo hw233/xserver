@@ -15,16 +15,16 @@
 
 //移动模块（场景）
 #define MSG_ID_MOVE_REQUEST 			10100 //移动请求
-#define MSG_ID_MOVE_ANSWER  			10101 //移动回复
+#define MSG_ID_MOVE_ANSWER  			10101 //移动回复 move_answer
 #define MSG_ID_MOVE_NOTIFY  			10102 //移动通知
 #define MSG_ID_SIGHT_CHANGED_NOTIFY 	10103 //视野变化
 #define MSG_ID_ENTER_SCENE_READY_REQUEST 	10104 //通知后台已经准备好加入场景
 
 #define MSG_ID_MOVE_START_REQUEST 			10105 //移动开始请求
-#define MSG_ID_MOVE_START_ANSWER  			10106 //移动开始回复
+#define MSG_ID_MOVE_START_ANSWER  			10106 //移动开始回复  move_answer
 #define MSG_ID_MOVE_START_NOTIFY  			10107 //移动开始通知
 #define MSG_ID_MOVE_STOP_REQUEST 			10108 //移动停止请求
-#define MSG_ID_MOVE_STOP_ANSWER  			10109 //移动停止回复
+#define MSG_ID_MOVE_STOP_ANSWER  			10109 //移动停止回复  move_answer
 #define MSG_ID_MOVE_STOP_NOTIFY  			10110 //移动停止通知
 #define MSG_ID_TRANSFER_REQUEST  			10111 //场景跳转的请求 scene_transfer_request
 #define MSG_ID_TRANSFER_ANSWER  			10112 //场景跳转的回复 scene_transfer_answer
@@ -45,6 +45,7 @@
 #define MSG_ID_BOATING_START_REQUEST                   10127   //开始划船，从视野删除 boating_start_request
 #define MSG_ID_BOATING_START_ANSWER                    10128   //comm_answer
 #define MSG_ID_BOATING_STOP_REQUEST                    10129   //划船结束  NULL
+
 
 //技能模块
 #define MSG_ID_SKILL_CAST_REQUEST 		10200   //施法请求  skill_cast_request
@@ -139,6 +140,8 @@
 #define MSG_ID_FISHING_REWARD_ANSWER         10430 //钓鱼收杆应答 FishingRewardAnswer
 #define MSG_ID_FISHING_SET_BAIT_REQUEST      10431 //钓鱼设置鱼饵请求 FishingSetBaitRequest
 #define MSG_ID_FISHING_SET_BAIT_ANSWER       10432 //钓鱼设置鱼饵应答 FishingSetBaitAnswer
+#define MSG_ID_PLAY_DRAMA_BEGIN_REQUEST      10433 //播放剧情开始请求 NULL
+#define MSG_ID_PLAY_DRAMA_END_REQUEST        10434 //播放剧情结束请求 NULL
 
 //复活
 #define MSG_ID_RELIVE_REQUEST               10500  //复活 relive_request

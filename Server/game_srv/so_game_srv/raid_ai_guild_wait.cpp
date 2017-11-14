@@ -37,7 +37,7 @@ static void guild_wait_raid_ai_player_leave(raid_struct *raid, player_struct *pl
 	LOG_INFO("%s: player[%lu] del from %lu", __FUNCTION__, player->get_uuid(), raid->data->uuid);
 		// 移除等待队列，如果有队伍，退出队伍
 	del_from_guild_battle_waiting(player);
-	assert(!player->m_team);
+//	assert(!player->m_team);
 }
 static void guild_wait_raid_ai_player_dead(raid_struct *raid, player_struct *player, unit_struct *killer)
 {

@@ -38,10 +38,22 @@ enum SERVER_PROTO
 	SERVER_PROTO_KICK_ROLE_ANSWER,				//重新选角踢人，game_srv --> conn_srv
 	SERVER_PROTO_RENAME_ANSWER,				    //改名应答，db_srv --> game_srv
 
-	SERVER_PROTO_GAME_TO_FRIEND,     //游戏服通过网关转好友服
+	//多服务器消息
+	SERVER_PROTO_GAMESRV_START = 1200,                 //游戏服启动通知
+	SERVER_PROTO_UNDO_COST, //通知game_srv操作失败，把扣取的资源还回去
+
+	//好友服消息
+	SERVER_PROTO_GAME_TO_FRIEND = 1400,     //游戏服通过网关转好友服
 	SERVER_PROTO_FRIEND_TO_GAME,     //好友服通过网关转游戏服
-	SERVER_PROTO_REFRESH_PLAYER_REDIS_INFO,     //更新redis缓存用户信息
 	SERVER_PROTO_CHENGJIE_MONEY_BACK,     //退回惩戒赏金
+	SERVER_PROTO_ADD_WANYAOKA,       //添加万妖卡信息	
+	SERVER_PROTO_SAVE_WANYAOKA,       //保存万妖卡信息
+	SERVER_PROTO_LIST_WANYAOKA,       //读取万妖卡信息	
+	SERVER_PROTO_CHOSE_ZHENYING_REQUEST, //加入阵营
+	SERVER_PROTO_CHANGE_ZHENYING_REQUEST, //改变阵营
+	SERVER_PROTO_ADD_ZHENYING_KILL_REQUEST, //
+	SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST, //
+
 	SERVER_PROTO_FRIEND_CHAT, //好友聊天
 	SERVER_PROTO_FRIEND_ADD_ENEMY, //好友服增加仇人
 	SERVER_PROTO_FRIEND_RECOMMEND, //好友推荐
@@ -57,17 +69,13 @@ enum SERVER_PROTO
 	SERVER_PROTO_FRIEND_ADD_GIFT, //好友送礼接收
 	SERVER_PROTO_FRIEND_SEND_GIFT_SUCCESS, //好友送礼成功
 
-	SERVER_PROTO_GAMESRV_START,                 //游戏服启动通知
-	SERVER_PROTO_MAIL_INSERT,                   //插入新邮件
+	//邮件服消息
+	SERVER_PROTO_MAIL_INSERT = 1600,                   //插入新邮件
 	SERVER_PROTO_MAIL_GIVE_ATTACH_REQUEST,      //邮件发放邮件附件请求 mail_srv --> game_srv
 	SERVER_PROTO_MAIL_GIVE_ATTACH_ANSWER,       //邮件发放邮件附件应答 game_srv --> mail_srv
 
-	SERVER_PROTO_ADD_WANYAOKA,       //添加万妖卡信息	
-	SERVER_PROTO_SAVE_WANYAOKA,       //保存万妖卡信息
-	SERVER_PROTO_LIST_WANYAOKA,       //读取万妖卡信息	
-
 	//帮会服消息
-	SERVER_PROTO_GUILDSRV_COST_REQUEST, //帮会服扣除消耗请求
+	SERVER_PROTO_GUILDSRV_COST_REQUEST = 1800, //帮会服扣除消耗请求
 	SERVER_PROTO_GUILDSRV_COST_ANSWER, //帮会服扣除消耗应答
 	SERVER_PROTO_GUILDSRV_REWARD_REQUEST, //帮会服发放奖励请求
 	SERVER_PROTO_GUILDSRV_REWARD_ANSWER,  //帮会服发放奖励应答
@@ -97,19 +105,22 @@ enum SERVER_PROTO
 	SERVER_PROTO_GUILD_ACCEPT_TASK_ANSWER,  //接取帮会建设任务应答
 	SERVER_PROTO_GUILD_TASK_FINISH,  //帮会建设任务完成
 	SERVER_PROTO_GUILD_SYNC_TASK, //同步帮会建设任务进度
-
-	SERVER_PROTO_CHOSE_ZHENYING_REQUEST, //加入阵营
-	SERVER_PROTO_CHANGE_ZHENYING_REQUEST, //改变阵营
-	SERVER_PROTO_ADD_ZHENYING_KILL_REQUEST, //
-	SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST, //
+	SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_REQUEST, //帮会入侵活动刷怪等级请求game_srv到guild_srv
+	SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_ANSWER, //帮会入侵活动刷怪等级回复guild_srv到game_srv
+	SERVER_PROTO_GUILD_RUQIN_REWARD_INFO_NOTIFY,		//帮会入侵活动奖励信息game_srv到guild_srv
+	SERVER_PROTO_GUILD_RUQIN_BOSS_CREAT_NOTIFY,    //帮会入侵boss创建通知game_srv到guild_srv
+	SERVER_PROTO_GUILD_RUQIN_ADD_COUNT,
+	SERVER_PROTO_GUILD_RUQIN_SYNC_COUNT,
 
 	//排行榜服消息
-	SERVER_PROTO_RANK_SYNC_RANK,     //同步排名
+	SERVER_PROTO_RANK_SYNC_RANK = 2000,     //同步排名
 	SERVER_PROTO_RANK_SYNC_CHANGE,   //同步排名变化
+	SERVER_PROTO_REFRESH_PLAYER_REDIS_INFO,     //更新redis缓存用户信息
+	SERVER_PROTO_WORLDBOSS_PLAYER_REDIS_INFO,  // 玩家世界boss数据存redis
+	SERVER_PROTO_WORLDBOSS_BIRTH_UPDATA_REDIS_INFO,  //世界boss出生时间点,更新数据(非服务器启动时的出生)  
 
-	SERVER_PROTO_UNDO_COST, //通知game_srv操作失败，把扣取的资源还回去
-
-	SERVER_PROTO_DOUFACHANG_CHALLENGE_REQUEST,  //挑战  doufachang -> game_srv
+	//斗法场服消息
+	SERVER_PROTO_DOUFACHANG_CHALLENGE_REQUEST = 2200,  //挑战  doufachang -> game_srv
 	SERVER_PROTO_DOUFACHANG_CHALLENGE_ANSWER,  //挑战	game_srv -> doufachang
 	SERVER_PROTO_DOUFACHANG_ADD_REWARD_REQUEST,  //发奖励  doufachang -> game_srv 
 	SERVER_PROTO_DOUFACHANG_ADD_REWARD_ANSWER,  //发奖励   game_srv -> doufachang 	
@@ -119,7 +130,7 @@ enum SERVER_PROTO
 	SERVER_PROTO_DOUFACHANG_BUY_CHALLENGE_ANSWER,   //扣元宝   game_srv -> doufachang
 
 	//交易服消息
-	SERVER_PROTO_TRADESRV_COST_REQUEST, //交易服扣除消耗请求
+	SERVER_PROTO_TRADESRV_COST_REQUEST = 2400, //交易服扣除消耗请求
 	SERVER_PROTO_TRADESRV_COST_ANSWER,  //交易服扣除消耗应答
 	SERVER_PROTO_TRADE_ON_SHELF_REQUEST, //交易上架请求
 	SERVER_PROTO_TRADE_ON_SHELF_DELETE_ITEM_REQUEST, //交易上架删除物品请求
@@ -148,12 +159,6 @@ enum SERVER_PROTO
 	SERVER_PROTO_OFFLINE_RECHARGE_LIST_REQUEST,	// 获取离线充值列表请求
 	SERVER_PROTO_OFFLINE_RECHARGE_LIST_ANSWER,	// 获取离线充值列表应答
 
-	SERVER_PROTO_WORLDBOSS_PLAYER_REDIS_INFO,  // 玩家世界boss数据存redis
-	SERVER_PROTO_WORLDBOSS_BIRTH_UPDATA_REDIS_INFO,  //世界boss出生时间点,更新数据(非服务器启动时的出生)  
-	SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_REQUEST, //帮会入侵活动刷怪等级请求game_srv到guild_srv
-	SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_ANSWER, //帮会入侵活动刷怪等级回复guild_srv到game_srv
-	SERVER_PROTO_GUILD_RUQIN_REWARD_INFO_NOTIFY,		//帮会入侵活动奖励信息game_srv到guild_srv
-	SERVER_PROTO_GUILD_RUQIN_BOSS_CREAT_NOTIFY,    //帮会入侵boss创建通知game_srv到guild_srv
 
 	SERVER_PROTO_TIREN_LIST_NOTIFY,				// 外挂踢人
 };
@@ -744,6 +749,12 @@ typedef struct guild_sync_task
 	uint32_t task_count;
 	uint32_t config_id;
 } GUILD_SYNC_TASK;
+
+typedef struct player_online_notify
+{
+	uint32_t reconnect;
+	uint32_t cur_guild_build_task;
+} PLAYER_ONLINE_NOTIFY;
 
 #pragma pack() 
 #endif

@@ -171,6 +171,10 @@ void normal_raid_ai_finished(raid_struct *raid)
 			raid->m_player[i]->add_item_list_otherwise_send_mail(item_list, MAGIC_TYPE_RAID, 270200002, NULL, true);
 			raid->m_player[i]->add_raid_reward_count(raid->data->ID);
 			raid->m_player[i]->check_activity_progress(AM_RAID, raid->data->ID);
+			if (raidid_to_hero_challenge_config.find(raid->data->ID) != raidid_to_hero_challenge_config.end())
+			{
+				raid->m_player[i]->check_activity_progress(AM_HERO_CHLLENGE, 0);
+			}
 		}
 		else
 		{

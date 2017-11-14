@@ -84,6 +84,8 @@ int conn_node_guild::transfer_to_client()
 		case SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_ANSWER:
 		case SERVER_PROTO_GUILD_ACCEPT_TASK_REQUEST:
 		case SERVER_PROTO_GUILD_SYNC_TASK:
+		case SERVER_PROTO_GUILD_RUQIN_ADD_COUNT:
+		case SERVER_PROTO_GUILD_RUQIN_SYNC_COUNT:
 			return transfer_to_gamesrv();
 		case SERVER_PROTO_MAIL_INSERT:
 			return transfer_to_mailsrv();

@@ -132,6 +132,7 @@ struct GuildPlayer
 	uint32_t cur_week_treasure; //本周资金
 	uint32_t cur_week_task; //本周内政，即建设任务次数
 	uint32_t cur_week_task_config_id; //本周建设任务配置id
+	uint32_t cur_task_id; //当前任务ID
 	uint32_t office; //职位
 	uint32_t week_reset_time; //每周重置时间
 	uint32_t join_time; //入帮时间

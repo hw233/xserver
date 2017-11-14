@@ -116,11 +116,11 @@ int count_skill_hit_unit(player_struct *player, struct position *target_pos, dou
 		switch (_config->RangeType)
 		{
 			case SKILL_RANGE_TYPE_RECT:
-				return player->count_rect_unit(angle, ret, _config->MaxCount, _config->Radius, _config->Angle);
+				return player->count_rect_unit(angle, ret, _config->MaxCount, _config->Radius, _config->Angle, false);
 			case SKILL_RANGE_TYPE_CIRCLE:
-				return player->count_circle_unit(ret, _config->MaxCount, target_pos, _config->Radius);			
+				return player->count_circle_unit(ret, _config->MaxCount, target_pos, _config->Radius, false);			
 			case SKILL_RANGE_TYPE_FAN:
-				return player->count_fan_unit(ret, _config->MaxCount, _config->Radius, _config->Angle);
+				return player->count_fan_unit(ret, _config->MaxCount, _config->Radius, _config->Angle, false);
 			default:
 				return -10;
 		}

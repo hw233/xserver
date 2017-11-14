@@ -639,6 +639,10 @@ monster_struct *monster_manager::create_sight_space_monster(sight_space_struct *
 			monster->ai->on_alive(monster);
 		sight_space->broadcast_monster_create(monster);
 		monster->scene = scene;
+		if (sight_space->players[0] && sight_space->players[0]->data->playing_drama)
+		{
+			monster->data->stop_ai = true;
+		}
 		return monster;
 	}
 	return NULL;

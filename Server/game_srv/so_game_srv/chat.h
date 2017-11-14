@@ -42,7 +42,8 @@ public:
 	static void gm_add_guild_build_board(player_struct *player, int val);	
 	static void gm_add_guild_donation(player_struct *player, int val);	
 	static void gm_blink(player_struct *player, float pos_x, float pos_z);
-	static void gm_goto(player_struct *player, uint32_t scene_id);	
+	static void gm_goto(player_struct *player, uint32_t scene_id);
+	static void gm_leave(player_struct *player);
 };
 
 #endif

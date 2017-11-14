@@ -1,4 +1,5 @@
 #include "camp_judge.h"
+#include "so_game_srv/player_manager.h"
 #include "so_game_srv/partner.h"
 #include "monster.h"
 #include "player.h"
@@ -80,6 +81,19 @@ UNIT_FIGHT_TYPE get_unit_fight_type(unit_struct *attack, unit_struct *defence)
 		if (t->m_owner)
 			attack = t->m_owner;
 	}
+
+		//召唤的怪物使用主人的战斗关系
+	if (attack->get_unit_type() == UNIT_TYPE_MONSTER)
+	{
+		monster_struct *t = (monster_struct *)attack;
+		if (t->data->owner)
+		{
+			player_struct *owner = player_manager::get_player_by_id(t->data->owner);
+			if (owner)
+				attack = owner;
+		}
+	}
+	
 	
 	if (attack == defence)
 		return UNIT_FIGHT_TYPE_MYSELF;

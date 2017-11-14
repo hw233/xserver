@@ -93,14 +93,14 @@ guild_wait_raid_struct *guild_wait_raid_manager::get_guild_wait_raid(uint32_t gu
 	return NULL;
 }
 
-guild_wait_raid_struct *guild_wait_raid_manager::add_player_to_guild_wait_raid(player_struct *player)
+guild_wait_raid_struct *guild_wait_raid_manager::add_player_to_guild_wait_raid(player_struct *player, bool ignore_check)
 {
 		// TODO: 检查是否在活动时间
 	assert(player->data->guild_id != 0);
 //	assert(!player->m_team);
 	guild_wait_raid_struct *ret = get_avaliable_guild_wait_raid(player->data->guild_id);
 	if (ret)
-		ret->add_player_to_guild_wait_raid(player);
+		ret->add_player_to_guild_wait_raid(player, ignore_check);
 	return ret;
 }
 

@@ -335,7 +335,13 @@ void sight_space_struct::stop_monster_ai()
 		if (monsters[i] == NULL)
 			continue;
 		monsters[i]->data->stop_ai = true;
-	}	
+	}
+	for (int i = 0; i < MAX_PLAYER_IN_SIGHT_SPACE; ++i)
+	{
+		if (players[i] == NULL)
+			continue;
+		players[i]->stop_partner_ai();
+	}
 }
 void sight_space_struct::start_monster_ai()
 {
@@ -344,7 +350,13 @@ void sight_space_struct::start_monster_ai()
 		if (monsters[i] == NULL)
 			continue;
 		monsters[i]->data->stop_ai = false;
-	}	
+	}
+	for (int i = 0; i < MAX_PLAYER_IN_SIGHT_SPACE; ++i)
+	{
+		if (players[i] == NULL)
+			continue;
+		players[i]->start_partner_ai();
+	}
 }
 
 void sight_space_struct::delete_monster(monster_struct *monster)

@@ -229,3 +229,8 @@ message boating_start_request
 	required uint32 type = 1;  //1: 去湖畔村(皆悦岛里面的一个小岛)，2：去皆悦岛
 }
 
+message move_answer
+{
+	required uint32 result = 1;
+	optional pos_data pos = 2;
+}

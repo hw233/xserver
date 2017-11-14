@@ -46,6 +46,9 @@ static void generate_parameters(void)
 	}
 	sg_fight_rand = get_config_by_id(161000312, &parameter_config)->parameter1[0];
 	assert(sg_fight_rand);
+
+	sg_xunbao_boss_notice = get_config_by_id(161000221, &parameter_config)->parameter2;
+	assert(sg_xunbao_boss_notice);
 		
 	sg_relive_free_times = get_config_by_id(161000008, &parameter_config)->parameter1[0];
 	sg_relive_first_cost = get_config_by_id(161000009, &parameter_config)->parameter1[0];
@@ -702,6 +705,22 @@ static void adjust_skill_entry(struct SkillTable *config)
 	}
 
 //	add_passive_skill(config);
+}
+
+static void adjust_skill_effect_table()
+{
+	std::map<uint64_t, struct SkillEffectTable *>::iterator ite;
+	for (ite = skill_effect_config.begin(); ite != skill_effect_config.end(); ++ite)
+	{
+		struct SkillEffectTable *config = ite->second;
+		if (config->n_Effect > config->n_EffectAdd
+			|| config->n_Effect > config->n_EffectNum)
+		{
+			LOG_ERR("skill effect config %lu wrong", config->ID);
+			assert(0);
+			exit(0);
+		}
+	}	
 }
 
 static void adjust_skill_table()
@@ -1508,6 +1527,7 @@ static void adjust_dungeon_table(lua_State *L, struct sproto_type *type)
 			{
 				LOG_ERR("%s: raid %lu", __FUNCTION__, config->DungeonID);
 				assert(0);
+				exit(0);
 			}
 			sg_vec_wanyaogu_raid_id.push_back(config->DungeonID);
 		}
@@ -2769,7 +2789,8 @@ int read_all_excel_data()
 	type = sproto_type(sp, "SkillEffectTable");
 	assert(type);		
 	ret = traverse_main_table(L, type, "../lua_data/SkillEffectTable.lua", (config_type)&skill_effect_config);
-	assert(ret == 0);	
+	assert(ret == 0);
+	adjust_skill_effect_table();
 
 	type = sproto_type(sp, "ActorLevelTable");
 	assert(type);		
