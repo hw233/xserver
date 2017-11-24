@@ -97,8 +97,14 @@ int buff_manager::init_buff_struct(int num, unsigned long key)
 	for (int i = 0; i < num; ++i) {
 		buff = new buff_struct();
 		buff_manager_buff_free_list.push_back(buff);
+#ifdef __RAID_SRV__
+		buff->data = (buff_data *)malloc(sizeof(buff_data));
+#endif		
 	}
-	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(buff_struct) * num, sizeof(buff_data) * num);		
+#ifdef __RAID_SRV__
+	return (0);
+#endif	
+	LOG_DEBUG("%s: init mem[%lu][%lu]", __FUNCTION__, sizeof(buff_struct) * num, sizeof(buff_data) * num);		
 	return init_mass_pool(0, sizeof(buff_data), num, key, &buff_manager_buff_data_pool);
 }
 
@@ -271,11 +277,17 @@ buff_struct *buff_manager::alloc_buff()
 		return NULL;
 	ret = buff_manager_buff_free_list.back();
 	buff_manager_buff_free_list.pop_back();
+#ifdef __RAID_SRV__
+	if (!ret)
+		goto fail;	
+	memset(ret->data, 0, sizeof(buff_data));	
+#else	
 	data = (buff_data *)mass_pool_alloc(&buff_manager_buff_data_pool);
 	if (!data)
 		goto fail;
 	memset(data, 0, sizeof(buff_data));
 	ret->data = data;
+#endif	
 	buff_manager_buff_used_list.insert(ret);
 	LOG_INFO("[%s:%d] buff:%p, data:%p", __FUNCTION__, __LINE__, ret, ret->data);	
 	return ret;
@@ -304,8 +316,11 @@ void buff_manager::delete_buff(buff_struct *p)
 	LOG_INFO("[%s:%d] buff:%p, data:%p [%u]", __FUNCTION__, __LINE__, p, p->data, p->data->buff_id);
 
 	if (p->data) {
+#ifdef __RAID_SRV__
+#else						
 		mass_pool_free(&buff_manager_buff_data_pool, p->data);		
 		p->data = NULL;
+#endif		
 	}
 }
 

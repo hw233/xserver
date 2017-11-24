@@ -45,7 +45,7 @@ local ServerResTable = {
 		},
 	[5] = {
 		['ID'] = 5,
-		['Name'] = 'test-帆叔',
+		['Name'] = '5服-帆叔',
 		['ResName1'] = 'pic_dl_1huise',
 		['State2Name'] = '',
 		['ResName2'] = '',
@@ -78,7 +78,7 @@ local ServerResTable = {
 		},
 	[8] = {
 		['ID'] = 8,
-		['Name'] = '8服-欢爷',
+		['Name'] = '8服-陈端私服',
 		['ResName1'] = 'pic_dl_1huise',
 		['State2Name'] = '',
 		['ResName2'] = '',

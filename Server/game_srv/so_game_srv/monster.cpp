@@ -739,7 +739,7 @@ void monster_struct::on_hp_changed(int damage)
 	
 	if (ai && ai->on_hp_changed)
 	{
-		ai->on_hp_changed(this);
+		ai->on_hp_changed(this, damage);
 	}
 }
 
@@ -1471,30 +1471,46 @@ uint64_t monster_struct::count_rand_patrol_time()
 // 	return (0);
 // }
 
-int monster_struct::count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct */*target*/, bool bfriend)
+double monster_struct::get_skill_angle()
 {
-//	struct SkillTable *config = get_config_by_id(data->skill_id, &skill_config);
-	if (!config)
-		return (-1);
-	switch (config->RangeType)
-	{
-		case SKILL_RANGE_TYPE_RECT:
-			return count_rect_unit(data->angle, ret, config->MaxCount, config->Radius, config->Angle, bfriend);
-		case SKILL_RANGE_TYPE_CIRCLE:
-			return count_circle_unit(ret, config->MaxCount, get_pos(), config->Radius, bfriend);			
-		case SKILL_RANGE_TYPE_FAN:
-			return count_fan_unit(ret, config->MaxCount, config->Radius, config->Angle, bfriend);
-		case SKILL_RANGE_TYPE_TARGET_RECT:
-		{
-			struct position *pos = &data->skill_target_pos;
-			return count_rect_unit_at_pos(data->angle, pos, ret, config->MaxCount, config->Radius, config->Angle, bfriend);
-		}
-		default:
-			return -10;
-	}
-	
-	return (0);
+	return data->angle;
 }
+struct position *monster_struct::get_skill_target_pos()
+{
+	return &data->skill_target_pos;
+}
+
+player_struct *monster_struct::get_owner()
+{
+	if (data->owner)
+		return player_manager::get_player_by_id(data->owner);
+	return NULL;
+}
+
+// int monster_struct::count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct */*target*/, bool bfriend)
+// {
+// //	struct SkillTable *config = get_config_by_id(data->skill_id, &skill_config);
+// 	if (!config)
+// 		return (-1);
+// 	switch (config->RangeType)
+// 	{
+// 		case SKILL_RANGE_TYPE_RECT:
+// 			return count_rect_unit(data->angle, ret, config->MaxCount, config->Radius, config->Angle, bfriend);
+// 		case SKILL_RANGE_TYPE_CIRCLE:
+// 			return count_circle_unit(ret, config->MaxCount, get_pos(), config->Radius, bfriend);			
+// 		case SKILL_RANGE_TYPE_FAN:
+// 			return count_fan_unit(ret, config->MaxCount, config->Radius, config->Angle, bfriend);
+// 		case SKILL_RANGE_TYPE_TARGET_RECT:
+// 		{
+// 			struct position *pos = &data->skill_target_pos;
+// 			return count_rect_unit_at_pos(data->angle, pos, ret, config->MaxCount, config->Radius, config->Angle, bfriend);
+// 		}
+// 		default:
+// 			return -10;
+// 	}
+	
+// 	return (0);
+// }
 
 void monster_struct::send_patrol_move()
 {
@@ -1547,10 +1563,8 @@ void monster_struct::clear_cur_skill()
 
 void monster_struct::cast_immediate_skill_to_player(uint64_t skill_id, unit_struct *player)
 {
-	player_struct *owner = NULL;
-	if (data->owner)
-		owner = player_manager::get_player_by_id(data->owner);		
-	return monster_cast_immediate_skill_to_player(skill_id, this, owner, player);
+	monster_try_skill_talk(this, skill_id);	
+	return cast_immediate_skill_to_target(skill_id, 1, this, player);
 
 	
 // //	if (!check_can_attack(this, player))
@@ -1889,6 +1903,7 @@ void monster_struct::monster_suffer_damage(unit_struct *murderer, double befor_h
 
 	   snprintf(buff, 510, table->NoticeTxt, scen_config->SceneName,p->second->Name,player->get_name());
 	   conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_HORSE_NOTIFY, &send, (pack_func)chat_horse__pack);
+	   player->add_achievement_progress(ACType_WORLD_BOSS, data->monster_id, 0, 1);
    }	   
 }
 

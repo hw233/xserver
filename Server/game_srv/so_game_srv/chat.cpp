@@ -114,7 +114,23 @@ int chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 	{
 		do_test2_cmd(player, strtoul(argv[1], 0, 0));
 	}	
-
+	else if (strcasecmp(argv[0], "check_shangjin") == 0)
+	{
+		std::map<uint64_t, MoneyQuestTable *>::iterator iter = shangjin_task_config.begin();
+		for (; iter != shangjin_task_config.end(); ++iter)
+		{
+			for (uint32_t i = 0; i < iter->second->n_QuestGroup; ++i)
+			{
+				TaskTable *main_config = get_config_by_id(iter->second->QuestGroup[i], &task_config);
+				if (main_config == NULL)
+				{
+					LOG_ERR("[%s:%d] can not get shangjin task table player[%lu], taskid = %lu, table = %lu", __FUNCTION__, __LINE__, player->get_uuid(), iter->second->QuestGroup[i], iter->first);
+				}
+			}
+			
+		}
+		
+	}
 	else if (strcasecmp(argv[0], "pass") == 0)
 	{
 		player->broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, 0, false, false);
@@ -127,7 +143,7 @@ int chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 		if (raid && raid->data->ID == 20035)
 		{
 			raid->clear_monster();
-			raid->m_player[0]->clear_one_buff(114400018);
+			raid->m_player[0]->delete_one_buff(114400018, true);
 			raid->player_leave_raid(raid->m_player[0]);		
 			
 		}
@@ -137,6 +153,19 @@ int chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 		raid_struct *raid = player->get_raid();
 		if (raid)
 			raid->on_raid_finished();
+	}
+	else if (strcasecmp(argv[0], "restart") == 0)
+	{
+		char buff[512] = "一分钟后重启服务器 。。。";
+		ChatHorse send;
+		chat_horse__init(&send);
+		send.id = 0;
+		send.prior = 1;
+		send.content = buff;
+		uint32_t c[MAX_CHANNEL] = { 1, 2, 3, 4, 5, 6,7,8,9 };
+		send.channel = c;
+		send.n_channel = 9;
+		conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_HORSE_NOTIFY, &send, (pack_func)chat_horse__pack);
 	}
 	else if (strcasecmp(argv[0], "mon5") == 0)
 	{
@@ -448,6 +477,14 @@ int chat_mod::do_gm_cmd(player_struct *player, int argc, char *argv[])
 		{
 			send_script_info(player, &raid->WANYAOGU_DATA.script_data);
 		}
+		else if (raid && raid->m_config->DengeonRank == DUNGEON_TYPE_GUILD_LAND && raid->GUILD_LAND_DATA.script_data.script_config)
+		{
+			send_script_info(player, &raid->data->ai_data.guild_land_data.script_data);
+		}
+		else if (raid && raid->m_config->DengeonRank == DUNGEON_TYPE_MAOGUI_LEYUAN)
+		{
+			send_script_info(player, &raid->data->ai_data.maogui_data.script_data);
+		}
 	}
 	else if (argc >=1 && strcasecmp(argv[0], "set_script_raid") == 0)
 	{
@@ -686,7 +723,7 @@ void chat_mod::gm_add_monster(player_struct *player, int val)
 		LOG_ERR("[%s:%d]gm召唤怪物失败，不能召唤有巡逻路径的怪物,monster_id:%d BaseAI:%lu", __FUNCTION__, __LINE__, val, baseai_table->BaseID);
 		return;
 	}
-	monster_struct *monster = monster_manager::add_monster(val, 1, player);
+	monster_struct *monster = monster_manager::add_monster(val, 1, NULL);
 	if (!monster)
 		return;
 	monster->born_pos.pos_x = player->get_pos()->pos_x;

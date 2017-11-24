@@ -12,9 +12,9 @@ local GangsTable = {
 		['LeveTime'] = 1800,	--升级时长
 		['MaintenanceCosts'] = 10000,	--维护费用
 		['PopularityCost'] = 500,	--人气值
-		['parameter1'] = 10,	--参数1
-		['parameter2'] = 3,	--参数2
-		['parameter3'] = 3,	--参数3
+		['parameter1'] = 5,	--参数1
+		['parameter2'] = 2,	--参数2
+		['parameter3'] = 2,	--参数3
 		['parameter4'] = {0}	--参数4
 		},
 	[340100002] = {
@@ -375,7 +375,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {0}
+		['parameter4'] = {282020001}
 		},
 	[340100022] = {
 		['ID'] = 340100022,
@@ -393,7 +393,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {0}
+		['parameter4'] = {282020001,282020002}
 		},
 	[340100023] = {
 		['ID'] = 340100023,
@@ -411,7 +411,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {0}
+		['parameter4'] = {282020001,282020002,282020003}
 		},
 	[340100024] = {
 		['ID'] = 340100024,
@@ -429,7 +429,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {0}
+		['parameter4'] = {282020001,282020002,282020003,282020004}
 		},
 	[340100025] = {
 		['ID'] = 340100025,

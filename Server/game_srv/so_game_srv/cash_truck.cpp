@@ -390,16 +390,16 @@ void cash_truck_struct::pack_sight_cash_truck_info(SightCashTruckInfo *info)
 		if (player->data->truck.on_truck)
 		{
 			info->data = player->pack_unit_move_path(&info->n_data);
-			info->direct_x = player->data->move_path.speed_x;
-			info->direct_z = player->data->move_path.speed_z; 
+			info->direct_x = player->data->move_path.direct_x;
+			info->direct_z = player->data->move_path.direct_z; 
 			self_path = false;
 		}
 	}
 	if (self_path)
 	{
 		info->data = pack_unit_move_path(&info->n_data);
-		info->direct_x = data->move_path.speed_x;
-		info->direct_z = data->move_path.speed_z;
+		info->direct_x = data->move_path.direct_x;
+		info->direct_z = data->move_path.direct_z;
 	}
 }
 

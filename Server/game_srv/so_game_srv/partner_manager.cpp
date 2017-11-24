@@ -63,8 +63,14 @@ int partner_manager::init_partner_struct(int num, unsigned long key)
 	for (int i = 0; i < num; ++i) {
 		partner = new partner_struct();
 		partner_manager_partner_free_list.push_back(partner);
+#ifdef __RAID_SRV__
+		partner->data = (partner_data *)malloc(sizeof(partner_data));
+#endif		
 	}
-	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(partner_struct) * num, sizeof(partner_data) * num);				
+#ifdef __RAID_SRV__
+	return (0);
+#endif	
+	LOG_DEBUG("%s: init mem[%lu][%lu]", __FUNCTION__, sizeof(partner_struct) * num, sizeof(partner_data) * num);				
 	return init_mass_pool(0, sizeof(partner_data), num, key, &partner_manager_partner_data_pool);
 }
 
@@ -110,8 +116,11 @@ void partner_manager::delete_partner(partner_struct *p)
 	
 	if (p->data) {
 		remove_partner(p);
+#ifdef __RAID_SRV__
+#else								
 		mass_pool_free(&partner_manager_partner_data_pool, p->data);
 		p->data = NULL;
+#endif		
 	}
 }
 
@@ -160,11 +169,17 @@ partner_struct *partner_manager::alloc_partner()
 		return NULL;
 	ret = partner_manager_partner_free_list.back();
 	partner_manager_partner_free_list.pop_back();
+#ifdef __RAID_SRV__
+	if (!ret)
+		goto fail;	
+	memset(ret->data, 0, sizeof(partner_data));	
+#else		
 	data = (partner_data *)mass_pool_alloc(&partner_manager_partner_data_pool);
 	if (!data)
 		goto fail;
 	memset(data, 0, sizeof(partner_data));
 	ret->data = data;
+#endif		
 	partner_manager_partner_used_list.insert(ret);
 
 	return ret;

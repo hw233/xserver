@@ -85,10 +85,11 @@ static void guoyu_raid_ai_monster_dead(raid_struct *raid, monster_struct *monste
 					fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_GUOYU_TASK_SUCC_NOTIFY, guoyu_succ__pack, notify);
 					raid->m_player[i]->data->guoyu.cur_task = 0;
 
-					if (raid->m_player[i]->data->guoyu.award)
+					if (raid->m_player[i]->data->guoyu.award) //有任务奖励
 					{
 						dropid = it->second->ActivityReward;
 						raid->m_player[i]->data->guoyu.award = false;
+						raid->m_player[i]->add_achievement_progress(ACType_YAOSHI_TASK, YAOSHI_GUOYU, 0, 1);
 					}
 				}
 

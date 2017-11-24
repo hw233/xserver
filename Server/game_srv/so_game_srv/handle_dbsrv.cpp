@@ -50,6 +50,7 @@ static int handle_find_player_answer(EXTERN_DATA *extern_data)
 
 	AnsFindTarget send;
 	ans_find_target__init(&send);
+	int resMsgId = 0;
 	if (proto->player_id == 0)
 	{
 		send.ret = 190500126;
@@ -60,11 +61,23 @@ static int handle_find_player_answer(EXTERN_DATA *extern_data)
 		send.name = proto->name;
 		send.lv = proto->lv;
 		send.ret = 0;
-		ChengJieTaskManage::AddRoleLevel(send.pid, send.lv, proto->cd);
+		send.job = proto->job;
+		if (proto->org_msg == MSG_ID_CHENGJIE_FIND_TARGET_REQUEST)
+		{
+			ChengJieTaskManage::AddRoleLevel(send.pid, send.lv, proto->cd);
+		}
 	}
 	if (extern_data->player_id != 0)
 	{
-		fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_CHENGJIE_FIND_TARGET_ANSWER, ans_find_target__pack, send);
+		if (proto->org_msg == MSG_ID_CHENGJIE_FIND_TARGET_REQUEST)
+		{
+			resMsgId = MSG_ID_CHENGJIE_FIND_TARGET_ANSWER;
+		}
+		else if (proto->org_msg == MSG_ID_PRIVATE_CHAT_FIND_TARGET_REQUEST)
+		{
+			resMsgId = MSG_ID_PRIVATE_CHAT_FIND_TARGET_ANSWER;
+		}
+		fast_send_msg(&conn_node_gamesrv::connecter, extern_data, resMsgId, ans_find_target__pack, send);
 	}
 	
 	return 0;

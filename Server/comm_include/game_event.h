@@ -16,7 +16,6 @@ extern "C" {
 #define LOG_INFO   printf
 #define LOG_DEBUG   printf
 #else
-
 #ifdef LOG_ERR
 #undef LOG_ERR
 #endif // LOG_ERR

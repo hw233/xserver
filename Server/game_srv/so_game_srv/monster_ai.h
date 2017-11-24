@@ -11,7 +11,7 @@ extern struct ai_interface monster_ai_0_interface;
 extern struct ai_interface monster_ai_3_interface;
 extern struct ai_interface monster_ai_4_interface;
 extern struct ai_interface monster_ai_5_interface;
-extern struct ai_interface monster_ai_7_interface;
+//extern struct ai_interface monster_ai_7_interface;
 extern struct ai_interface monster_ai_8_interface;
 extern struct ai_interface monster_ai_10_interface;
 extern struct ai_interface monster_ai_11_interface;
@@ -35,7 +35,9 @@ extern struct ai_interface monster_ai_28_interface;
 extern struct ai_interface monster_ai_29_interface;
 extern struct ai_interface monster_ai_30_interface;
 extern struct ai_interface monster_ai_31_interface;
+extern struct ai_interface monster_ai_32_interface;
 
+void monster_try_skill_talk(monster_struct *monster, uint64_t skill_id);
 int get_monster_hp_percent(monster_struct *monster);
 //计算技能硬直时间
 uint32_t count_skill_delay_time(struct SkillTable *config);
@@ -43,14 +45,24 @@ uint32_t count_skill_delay_time(struct SkillTable *config);
 uint32_t choose_first_skill(monster_struct *monster);
 uint32_t choose_skill_and_add_cd(monster_struct *monster);
 //void send_patrol_move(monster_struct *monster);
-void monster_hit_notify_to_many_player(uint64_t skill_id, monster_struct *monster, player_struct *owner, std::vector<unit_struct *> *target);
-void monster_hit_notify_to_player(uint64_t skill_id, monster_struct *monster, unit_struct *player);
-void monster_cast_skill_to_player(uint64_t skill_id, monster_struct *monster, unit_struct *player, bool use_target_pos);
+
+void try_attack_friend(unit_struct *attack, struct SkillTable *config);
+void try_attack_target(unit_struct *attack, unit_struct *target, struct SkillTable *config);
+void try_attack(unit_struct *attack, struct SkillTable *config);
+	
+void hit_notify_to_many_friend(uint64_t skill_id, unit_struct *monster, std::vector<unit_struct *> *target);
+void hit_notify_to_target(uint64_t skill_id, unit_struct *attack, unit_struct *target);
+void hit_notify_to_many_target(uint64_t skill_id, unit_struct *attack, std::vector<unit_struct *> *target);
+//void monster_hit_notify_to_many_player(uint64_t skill_id, monster_struct *monster, player_struct *owner, std::vector<unit_struct *> *target);
+//void monster_hit_notify_to_player(uint64_t skill_id, monster_struct *monster, unit_struct *player);
+void monster_cast_skill_to_target(uint64_t skill_id, monster_struct *monster, unit_struct *target, bool use_target_pos);
 void monster_cast_call_monster_skill(monster_struct *monster, uint64_t skill_id);
-void monster_cast_skill_to_direct(uint64_t skill_id, monster_struct *monster, float direct_x, float direct_z);
-void monster_cast_skill_to_pos(uint64_t skill_id, monster_struct *monster, float pos_x, float pos_z);
-void monster_cast_immediate_skill_to_player(uint64_t skill_id, monster_struct *monster, player_struct *owner, unit_struct *player);
-void monster_cast_skill_to_friend(monster_struct *monster, struct SkillTable *config);
+void monster_cast_skill_to_direct(uint64_t skill_id, monster_struct *monster, float direct_x, float direct_z, struct position *target);
+
+void cast_immediate_skill_to_target(uint64_t skill_id, uint32_t skill_lv, unit_struct *attack, unit_struct *target);
+//void monster_cast_skill_to_pos(uint64_t skill_id, monster_struct *monster, float pos_x, float pos_z);
+//void monster_cast_immediate_skill_to_player(uint64_t skill_id, monster_struct *monster, player_struct *owner, unit_struct *player);
+//void monster_cast_skill_to_friend(monster_struct *monster, struct SkillTable *config);
 //void monster_cast_delay_skill_to_player(uint64_t skill_id, monster_struct *monster, unit_struct *player);
 bool check_monster_relive(monster_struct *monster);
 void normal_ai_dead(monster_struct *monster, scene_struct *scene);

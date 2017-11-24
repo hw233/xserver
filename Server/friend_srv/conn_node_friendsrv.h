@@ -48,6 +48,7 @@ private:
 	void handle_zhenying_add_kill();
 	void handle_zhenying_fight_myside_score();
 	void handle_zhenying_fight_settle();
+	void handle_lately_chat();
 
 	void handle_friend_info_request();
 	void handle_friend_add_contact_request();
@@ -72,6 +73,7 @@ private:
 	void handle_friend_cost_answer(); //去game_srv扣除消耗结果
 	void handle_friend_turn_switch_request(); //翻转好友申请开关
 	void handle_friend_rename_request(); //玩家改名
+	void handle_friend_is_enemy_request(); //检查所杀玩家是否仇人
 };
 
 

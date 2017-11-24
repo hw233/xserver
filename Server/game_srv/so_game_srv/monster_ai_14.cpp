@@ -327,7 +327,7 @@ static void	do_pursue(monster_struct *monster)
 				// 释放技能攻击目标
 				if (monster->config->n_Skill > 0)
 				{
-					monster_cast_immediate_skill_to_player(monster->config->Skill[0], monster, NULL, monster->target);
+					cast_immediate_skill_to_target(monster->config->Skill[0], 1, monster, monster->target);
 				}
 
 			}
@@ -393,7 +393,7 @@ static void	do_pursue(monster_struct *monster)
 				// 释放技能攻击目标
 				if (monster->config->n_Skill > 0)
 				{
-					monster_cast_immediate_skill_to_player(monster->config->Skill[0], monster, NULL, monster->target);
+					cast_immediate_skill_to_target(monster->config->Skill[0], 1, monster, monster->target);
 				}
 
 			}

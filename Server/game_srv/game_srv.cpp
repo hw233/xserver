@@ -488,7 +488,11 @@ static void set_so_funcs()
 }
 static int install_so(int argc, char **argv)
 {
+#ifdef __RAID_SRV__
+    so_gamesrv = dlopen("./so_game_srv/libraidsrv.so", RTLD_NOW | RTLD_GLOBAL);	
+#else	
     so_gamesrv = dlopen("./so_game_srv/libgamesrv.so", RTLD_NOW | RTLD_GLOBAL);
+#endif	
 	if (!so_gamesrv)
 	{
 		LOG_ERR("dlerror = %s", dlerror());
@@ -506,7 +510,11 @@ static int install_so(int argc, char **argv)
 
 static int reload_so()
 {
+#ifdef __RAID_SRV__
+    so_gamesrv = dlopen("./so_game_srv/libraidsrv.so", RTLD_NOW | RTLD_GLOBAL);	
+#else
     so_gamesrv = dlopen("./so_game_srv/libgamesrv.so", RTLD_NOW | RTLD_GLOBAL);
+#endif	
 	if (!so_gamesrv)
 	{
 		LOG_ERR("dlerror = %s", dlerror());
@@ -569,7 +577,7 @@ int main(int argc, char **argv)
 		printf("log4c_category_get(\"six13log.log.app.application1\"); failed\n");
 		return (0);
 	}
-	
+
 	if (install_so(argc, argv) != 0)
 	{
 		LOG_ERR("install so failed");

@@ -9,14 +9,14 @@
 #include "app_data_statis.h"
 #include "time_helper.h"
 
-FuwenData fuwenData[MySkill::MAX_SKILL_NUM][MAX_FUWEN];
-FuwenData *fuwenDataPoint[MySkill::MAX_SKILL_NUM][MAX_FUWEN];
-FuwenData fuwenData1[MySkill::MAX_SKILL_NUM][MAX_FUWEN];
-FuwenData *fuwenDataPoint1[MySkill::MAX_SKILL_NUM][MAX_FUWEN];
-SkillData skillData[MySkill::MAX_SKILL_NUM];
-SkillData *skillDataPoint[MySkill::MAX_SKILL_NUM] = { NULL };
-SkillData skillData1[MySkill::MAX_SKILL_NUM];
-SkillData *skillDataPoint1[MySkill::MAX_SKILL_NUM] = { NULL };
+FuwenData fuwenData[MAX_MY_SKILL_NUM][MAX_FUWEN];
+FuwenData *fuwenDataPoint[MAX_MY_SKILL_NUM][MAX_FUWEN];
+FuwenData fuwenData1[MAX_MY_SKILL_NUM][MAX_FUWEN];
+FuwenData *fuwenDataPoint1[MAX_MY_SKILL_NUM][MAX_FUWEN];
+SkillData skillData[MAX_MY_SKILL_NUM];
+SkillData *skillDataPoint[MAX_MY_SKILL_NUM] = { NULL };
+SkillData skillData1[MAX_MY_SKILL_NUM];
+SkillData *skillDataPoint1[MAX_MY_SKILL_NUM] = { NULL };
 
 MySkill::MySkill(player_struct *player)
 {
@@ -628,9 +628,9 @@ void MySkill::adjust_ai_player_skill()
 void MySkill::PackAllSkill(_PlayerDBInfo &pb)
 {
 	int i = 0;
-	assert(m_skill.size() <= MAX_SKILL_NUM);
-	static SkillOneDbData one[MAX_SKILL_NUM];
-	static SkillOneDbData *onePoint[MAX_SKILL_NUM];
+	assert(m_skill.size() <= MAX_MY_SKILL_NUM);
+	static SkillOneDbData one[MAX_MY_SKILL_NUM];
+	static SkillOneDbData *onePoint[MAX_MY_SKILL_NUM];
 	static SkillDbData all;
 	skill_db_data__init(&all);
 	for (SKILL_CONTAIN::iterator it = m_skill.begin(); it != m_skill.end(); ++it)
@@ -686,6 +686,34 @@ void MySkill::UnPackAllSkill(_PlayerDBInfo &pb)
 		}
 	}
 	m_index = pb.skill->num;
+}
+
+void MySkill::pack(struct skill_data skill[MAX_MY_SKILL_NUM])
+{
+	int index = 0;
+	for (SKILL_CONTAIN::iterator ite = m_skill.begin(); ite != m_skill.end() && index < MAX_MY_SKILL_NUM; ++ite, ++index)
+	{
+		skill[index].skill_id = (*ite)->data->skill_id;
+		skill[index].lv = (*ite)->data->lv;
+		skill[index].fuwen_num = (*ite)->data->fuwen_num;
+		for (int i = 0; i < skill[index].fuwen_num; ++i)
+		{
+			skill[index].fuwen[i].id = (*ite)->data->fuwen[i].id;
+			skill[index].fuwen[i].lv = (*ite)->data->fuwen[i].lv;
+			skill[index].fuwen[i].isNew = (*ite)->data->fuwen[i].isNew;
+		}
+		for (int i = 0; i < MAX_CUR_FUWEN; ++i)
+		{
+			skill[index].cur_fuwen[i] = (*ite)->data->cur_fuwen[i];
+		}
+	}
+	if (index < MAX_MY_SKILL_NUM)
+		skill[index].skill_id = 0;
+}
+
+void MySkill::insert(skill_struct *skill)
+{
+	m_skill.push_back(skill);	
 }
 
 void MySkill::copy(MySkill *skill)

@@ -619,6 +619,8 @@ int32_t count_skill_total_damage(UNIT_FIGHT_TYPE type, struct SkillTable *skillc
 	{
 		*effect = SKILL_EFFECT_ADDHP;
 		ret = count_friend_damage(act_lvconfig, attack_unit, defence_unit);
+		if (ret == 0)
+			*effect = 0;
 	}
 
 	//世界boss数据处理

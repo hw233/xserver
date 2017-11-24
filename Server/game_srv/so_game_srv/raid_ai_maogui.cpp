@@ -280,12 +280,12 @@ static void maogui_raid_ai_monster_dead(raid_struct *raid, monster_struct *monst
 					if(raid->data->ai_data.maogui_data.gui_wang_id == m->data->monster_id)
 					{
 						raid->data->ai_data.maogui_data.buff_time = time_helper::get_cached_time() + raid->data->ai_data.maogui_data.po_buff_time;
-						m->delete_one_buff(sg_maogui_guiwang_wudi_buff);
-						AddBuffNotify notify;
-						add_buff_notify__init(&notify);
-						notify.buff_id = sg_maogui_guiwang_wudi_buff;
-						notify.playerid = m->get_uuid();
-						m->broadcast_to_sight(MSG_ID_DEL_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, false);
+						m->delete_one_buff(sg_maogui_guiwang_wudi_buff, true);
+						// AddBuffNotify notify;
+						// add_buff_notify__init(&notify);
+						// notify.buff_id = sg_maogui_guiwang_wudi_buff;
+						// notify.playerid = m->get_uuid();
+						// m->broadcast_to_sight(MSG_ID_DEL_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, false);
 					}
 				}
 				break;

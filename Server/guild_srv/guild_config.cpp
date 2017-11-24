@@ -23,6 +23,7 @@ uint32_t sg_guild_rename_item_num = 0;
 uint32_t sg_guild_join_cd = 0;
 uint32_t sg_guild_apply_join_cd = 0;
 uint32_t sg_guild_rename_cd = 0;
+uint32_t sg_guild_invite_cd = 0;
 char* sg_guild_recruit_notice = NULL;
 char* sg_guild_announcement = NULL;
 std::vector<uint32_t> sg_guild_question;
@@ -57,6 +58,7 @@ static void gen_question_arr()
 
 static void generate_parameters(void)
 {
+	ParameterTable *config = NULL;
 	ParameterTable *guild_create_level_param = get_config_by_id(161000116, &parameter_config);
 	if (guild_create_level_param && guild_create_level_param->n_parameter1 >= 1)
 	{
@@ -89,6 +91,11 @@ static void generate_parameters(void)
 	if (guild_announcement_param && guild_announcement_param->parameter2)
 	{
 		sg_guild_announcement = guild_announcement_param->parameter2;
+	}
+	config = get_config_by_id(161000389, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_invite_cd = config->parameter1[0];
 	}
 }
 

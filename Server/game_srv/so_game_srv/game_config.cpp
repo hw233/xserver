@@ -502,6 +502,13 @@ static void generate_parameters(void)
 
 	sg_maogui_diaoxiang_stop_buff = get_config_by_id(161000139, &parameter_config)->parameter1[0];
 	sg_maogui_guiwang_wudi_buff = get_config_by_id(161000138, &parameter_config)->parameter1[0];
+
+	config = get_config_by_id(161000390, &parameter_config);
+	if (config && config->n_parameter1 >= 2)
+	{
+		sg_travel_round_amount = config->parameter1[0];
+		sg_travel_task_amount = config->parameter1[1];
+	}
 }
 
 	// 读取刷怪配置
@@ -798,6 +805,62 @@ static void adjust_xunbao_table()
 	for (ite = xunbao_config.begin(); ite != xunbao_config.end(); ++ite)
 	{
 		sg_xunbao.insert(std::make_pair(uint64_t(ite->second->ItemId), ite->second));
+	}
+}
+
+static void adjust_battle_award_table()
+{
+	std::map<uint64_t, struct BattleFieldRank *>::iterator ite;
+	for (ite = zhenying_fight_rank_config.begin(); ite != zhenying_fight_rank_config.end(); ++ite)
+	{
+		std::map<uint32_t, std::vector<BattleFieldStepRank *> >::iterator it = sg_battle_award.find(ite->first % 10);
+		std::vector<BattleFieldStepRank *> tmpVt;
+		BattleFieldStepRank *tmp = new BattleFieldStepRank;
+		tmp->LowerLimitRank = ite->second->LowerLimitRank1;
+		tmp->UpperLimitRank = ite->second->UpperLimitRank1;
+		tmp->n_Num = ite->second->n_Num1;
+		tmp->n_Reward = ite->second->n_Reward1;
+		tmp->Num = ite->second->Num1;
+		tmp->Reward = ite->second->Reward1;
+		tmpVt.push_back(tmp);
+
+		tmp = new BattleFieldStepRank;
+		tmp->LowerLimitRank = ite->second->LowerLimitRank2;
+		tmp->UpperLimitRank = ite->second->UpperLimitRank2;
+		tmp->n_Num = ite->second->n_Num2;
+		tmp->n_Reward = ite->second->n_Reward2;
+		tmp->Num = ite->second->Num2;
+		tmp->Reward = ite->second->Reward2;
+		tmpVt.push_back(tmp);
+
+		tmp = new BattleFieldStepRank;
+		tmp->LowerLimitRank = ite->second->LowerLimitRank3;
+		tmp->UpperLimitRank = ite->second->UpperLimitRank3;
+		tmp->n_Num = ite->second->n_Num3;
+		tmp->n_Reward = ite->second->n_Reward3;
+		tmp->Num = ite->second->Num3;
+		tmp->Reward = ite->second->Reward3;
+		tmpVt.push_back(tmp);
+
+		tmp = new BattleFieldStepRank;
+		tmp->LowerLimitRank = ite->second->LowerLimitRank4;
+		tmp->UpperLimitRank = ite->second->UpperLimitRank4;
+		tmp->n_Num = ite->second->n_Num4;
+		tmp->n_Reward = ite->second->n_Reward4;
+		tmp->Num = ite->second->Num4;
+		tmp->Reward = ite->second->Reward4;
+		tmpVt.push_back(tmp);
+
+		tmp = new BattleFieldStepRank;
+		tmp->LowerLimitRank = ite->second->LowerLimitRank5;
+		tmp->UpperLimitRank = ite->second->UpperLimitRank5;
+		tmp->n_Num = ite->second->n_Num5;
+		tmp->n_Reward = ite->second->n_Reward5;
+		tmp->Num = ite->second->Num5;
+		tmp->Reward = ite->second->Reward5;
+		tmpVt.push_back(tmp);
+
+		sg_battle_award.insert(std::make_pair(ite->first % 10, tmpVt));
 	}
 }
 
@@ -1790,6 +1853,28 @@ static void	adjust_generatemonster_config()
 	}
 }
 
+static void	adjust_raidsrv_config()
+{
+	int raidsrv_id = 0;
+	for (std::vector<struct raidsrv_config*>::iterator ite = vec_raidsrv_config.begin();
+		 ite != vec_raidsrv_config.end(); ++ite)
+	{
+		struct raidsrv_config *config = *ite;
+		for (uint32_t i = 0; i < config->n_raid_id; ++i)
+		{
+			map_raidsrv_config[config->raid_id[i]] = raidsrv_id;
+		}
+		++raidsrv_id;
+	}
+}
+int raid_in_raidsrv(uint32_t raid_id)
+{
+	std::map<uint32_t, uint32_t>::iterator ite = map_raidsrv_config.find(raid_id);
+	if (ite == map_raidsrv_config.end())
+		return -1;
+	return ite->second;
+}
+
 static void adjust_escort_config(void)
 {
 	for (std::map<uint64_t, struct EscortTask*>::iterator iter = escort_config.begin(); iter != escort_config.end(); ++iter)
@@ -2103,6 +2188,24 @@ AchievementHierarchyTable *get_achievement_config(uint32_t achievement_id, uint3
 	return NULL;
 }
 
+EquipAttribute *get_equip_enchant_attr_config(uint32_t pool, uint32_t attr_id)
+{
+	return get_config_by_id(pool * 1e3 + attr_id, &sg_equip_enchant_attr_map);
+}
+
+TravelTable *get_travel_config(uint32_t level)
+{
+	for (std::map<uint64_t, TravelTable *>::iterator iter = travel_config.begin(); iter != travel_config.end(); ++iter)
+	{
+		TravelTable *config = iter->second;
+		if (config->n_LevelSection >= 2 && level >= config->LevelSection[0] && level <= config->LevelSection[1])
+		{
+			return config;
+		}
+	}
+	return NULL;
+}
+
 uint32_t get_item_relate_id(uint32_t id)
 {
 	std::map<uint64_t, ItemsConfigTable *>::iterator iter = item_config.find(id);
@@ -2181,6 +2284,17 @@ uint32_t get_item_stack_num(uint32_t id)
 		{
 			return 1;
 		}
+	}
+
+	return 0;
+}
+
+int get_item_quality(uint32_t item_id)
+{
+	std::map<uint64_t, ItemsConfigTable *>::iterator iter = item_config.find(item_id);
+	if (iter != item_config.end())
+	{
+		return iter->second->ItemQuality;
 	}
 
 	return 0;
@@ -2578,6 +2692,25 @@ bool strong_goal_is_open(uint32_t goal_id, uint32_t player_lv)
 	return false;
 }
 
+int get_equip_enchant_attr_color(uint32_t pool, uint32_t attr_id, double attr_val)
+{
+	EquipAttribute *attr_config = get_equip_enchant_attr_config(pool, attr_id);
+	if (attr_config)
+	{
+		for (uint32_t i = 0; i < attr_config->n_Rand; ++i)
+		{
+			double min = (i == 0 ? 0 : attr_config->Rand[i - 1]);
+			double max = attr_config->Rand[i];
+			if (attr_val > min && attr_val <= max)
+			{
+				return (i + 1);
+			}
+		}
+	}
+
+	return 0;
+}
+
 static void adjust_guild_skill_config(void)
 {
 	for (std::map<uint64_t, GangsSkillTable*>::iterator iter = guild_skill_config.begin(); iter != guild_skill_config.end(); ++iter)
@@ -2693,6 +2826,17 @@ static void	adjust_maogui_shouling_to_xiaoguai_config()
 	{
 		struct MGLYshoulingTable* t = ite->second;
 		maogui_shouling_to_xiaoguai_config[ite->second->BossID] = t;
+	}
+}
+
+static void adjust_equip_attr_table(void)
+{
+	sg_equip_enchant_attr_map.clear();
+	for (std::map<uint64_t, EquipAttribute *>::iterator iter = equip_attr_config.begin(); iter != equip_attr_config.end(); ++iter)
+	{
+		EquipAttribute *config = iter->second;
+		assert(config->n_Rand == config->n_QualityWeight);
+		sg_equip_enchant_attr_map.insert(std::make_pair(config->Database * 1e3 + config->Effect, config));
 	}
 }
 
@@ -3096,6 +3240,12 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/BattlefieldTable.lua", (config_type)&zhenying_fight_config);
 	assert(ret == 0);
 
+	type = sproto_type(sp, "BattleFieldRank");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/BattleFieldRank.lua", (config_type)&zhenying_fight_rank_config);
+	assert(ret == 0);
+	adjust_battle_award_table();
+
 	type = sproto_type(sp, "GradeTable");
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/GradeTable.lua", (config_type)&zhenying_level_config);
@@ -3351,6 +3501,19 @@ int read_all_excel_data()
 	type = sproto_type(sp, "MonsterIDTable");
 	assert(type);		
 	ret = traverse_main_table(L, type, "../lua_data/MonsterIDTable.lua", (config_type)&raid_jincheng_suiji_kill_monster);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "raidsrv_config");
+	assert(type);		
+	ret = traverse_vector_table(L, type, "../raidsrv_config.lua", (std::vector<void *> *)&vec_raidsrv_config);
+	if (ret == 0)
+	{
+		adjust_raidsrv_config();
+	}
+
+	type = sproto_type(sp, "TravelTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/TravelTable.lua", (config_type)&travel_config);
 	assert(ret == 0);	
 
 	adjust_escort_config();
@@ -3363,6 +3526,7 @@ int read_all_excel_data()
 	adjust_maogui_colour_config();
 	adjust_maogui_maogui_wang_config();
 	adjust_maogui_shouling_to_xiaoguai_config();
+	adjust_equip_attr_table();
 
 	lua_close(L);
 	sproto_release(sp);

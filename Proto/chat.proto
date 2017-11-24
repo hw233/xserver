@@ -63,3 +63,22 @@ message AnsChat
 	required uint32 cd = 2; 
 }
 
+message ReqLatelyChat
+{
+	repeated uint64 playerid = 1;
+}
+message LatelyChat
+{
+	required uint64 playerid = 1;
+	required bool online = 2; //true 在线
+	required string name = 3; //角色名
+	required uint32 lv = 4; //等级
+	required uint32 job = 5; //职业
+	required uint32 head = 6; //头像ID 
+	required uint32 zhenying = 7; //阵营ID   
+}
+message AnsLatelyChat
+{
+	repeated LatelyChat player = 1;
+}
+

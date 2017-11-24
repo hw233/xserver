@@ -149,6 +149,10 @@
 #define MSG_ID_RELIVE_NOTIFY                10502  //复活 relive_notify
 
 //聊天
+#define MSG_ID_LATELY_CHAT_REQUEST            10546 //最近聊天信息 ReqLatelyChat
+#define MSG_ID_LATELY_CHAT_ANSWER            10547 //最近聊天信息 AnsLatelyChat
+#define MSG_ID_PRIVATE_CHAT_FIND_TARGET_REQUEST            10548 //查找目标 ReqFindTarget
+#define MSG_ID_PRIVATE_CHAT_FIND_TARGET_ANSWER            10549 //查找目标 AnsFindTarget
 #define MSG_ID_CHAT_REQUEST               10550  //聊天 Chat
 #define MSG_ID_CHAT_NOTIFY                10551  //聊天 Chat
 #define MSG_ID_CHAT_ANSWER                10552  //聊天返回 comm_answer 0成功 1玩家不在线
@@ -189,6 +193,9 @@
 #define MSG_ID_TASK_UPDATE_CHAPTER_REWARD_NOTIFY   10619 //任务章节奖励更新通知 TaskUpdateChapterRewardNotify
 #define MSG_ID_TASK_ENTER_PLANES_REQUEST    10620 //任务进入位面请求 TaskCommRequest
 #define MSG_ID_TASK_ENTER_PLANES_ANSWER     10621 //任务进入位面应答 TaskEnterPlanesAnswer
+#define MSG_ID_TRAVEL_TASK_INFO_NOTIFY      10622 //游历任务信息通知 
+#define MSG_ID_TRAVEL_TASK_ACCEPT_REQUEST   10623 //游历任务接取请求 NULL
+#define MSG_ID_TRAVEL_TASK_ACCEPT_ANSWER    10624 //游历任务接取应答 comm_answer
 
 //组队
 #define MSG_ID_CREATE_TEAM_REQUEST         10630 //创建队伍请求 TeamTarget
@@ -575,6 +582,12 @@
 #define MSG_ID_GUILD_ADD_IMPORTANT_LOG_NOTIFY     12154 //帮会大事记增加通知 GuildLogData
 #define MSG_ID_GUILD_ACCEPT_TASK_REQUEST          12155 //帮会接取建设任务请求 NULL
 #define MSG_ID_GUILD_ACCEPT_TASK_ANSWER           12156 //帮会接取建设任务应答 comm_answer
+#define MSG_ID_GUILD_INVITE_REQUEST               12157 //帮会邀请请求 GuildInviteRequest
+#define MSG_ID_GUILD_INVITE_ANSWER                12158 //帮会邀请应答 GuildInviteAnswer
+#define MSG_ID_GUILD_INVITE_NOTIFY                12159 //帮会邀请通知 GuildInviteNotify
+#define MSG_ID_GUILD_DEAL_INVITE_REQUEST          12160 //帮会处理邀请请求 GuildDealInviteRequest
+#define MSG_ID_GUILD_DEAL_INVITE_ANSWER           12161 //帮会处理邀请应答 GuildDealInviteAnswer
+#define MSG_ID_GUILD_JOIN_NOTIFY                  12162 //帮会入帮申请通知 GuildJoinPlayerData
 
 
 //阵营
@@ -615,7 +628,7 @@
 #define MSG_ID_ZHENYING_FIGHT_MY_SCORE_NOTIFY          12433 //阵营战我的积分 MyScore
 #define MSG_ID_ZHENYING_FIGHT_MYSIDE_SCORE_NOTIFY          12434 //阵营战我方积分 SideScore
 #define MSG_ID_ZHENYING_FIGHT_MYSIDE_SCORE_REQUEST           12435 //阵营战我方积分请求 NULL
-//#define MSG_ID_ZHENYING_FIGHT_FLAG_NOTIFY          12436 //阵营战旗帜 ZhenYingFlag
+#define MSG_ID_ZHENYING_FIGHT_READY_STATE_REQUEST          12436 //副本阵营战准备状态请求 NULL
 #define MSG_ID_ZHENYING_FIGHT_READY_CD_NOTIFY          12437 //阵营战准备cd FbCD
 #define MSG_ID_ZHENYING_FIGHT_CD_NOTIFY          12438 //阵营战结束cd FbCD
 #define MSG_ID_ZHENYING_FIGHT_SETTLE_NOTIFY          12439 //阵营战结算ZhenYingResult
@@ -625,6 +638,10 @@
 #define MSG_ID_JOIN_ZHENYING_FIGHT_STATE_NOTIFY            12443 //报名副本阵营战cd FbCD
 #define MSG_ID_CANCEL_JOIN_ZHENYING_FIGHT_REQUEST           12444 //取消报名副本阵营战(阵营攻防)请求 NULL
 #define MSG_ID_CANCEL_JOIN_ZHENYING_FIGHT_ANSWER            12445 //取消报名副本阵营战应答 comm_answer
+#define MSG_ID_ZHENYING_FIGHT_FLAG_NPC_NOTIFY          12446 //副本阵营战占旗 FlagNpc
+//#define MSG_ID_ZHENYING_FIGHT_ADD_POINT_NOTIFY          12447 //副本阵营加积分 ZhenyingNum
+#define MSG_ID_ZHENYING_FIGHT_KILL_NOTIFY          12448 //副本阵营战连杀ZhenyingNum
+#define MSG_ID_ZHENYING_FIGHT_HELP_NOTIFY          12449 //副本阵营战连续助攻 ZhenyingNum
 
 //日常阵营(野外场景表现)
 //#define MSG_ID_INTO_ZHENYING_DAILY_REQUEST           12450 //进入阵营日常请求 

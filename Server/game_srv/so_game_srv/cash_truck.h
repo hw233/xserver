@@ -148,9 +148,6 @@ private:
 	void add_area_monster_to_sight(area_struct *area);
 	void add_area_partner_to_sight(area_struct *area);
 	
-	int count_rect_unit(std::vector<unit_struct *> *ret, uint max, double length, double width);
-	int count_circle_unit(std::vector<unit_struct *> *ret, uint max, double radius);
-	int count_fan_unit(std::vector<unit_struct *> *ret, uint max, double radius, double angle);
 };
 
 #endif /* CASH_TRUCK_H */

@@ -277,6 +277,7 @@ enum TaskType
 	TT_RAID = 9, //副本
 	TT_CASH_TRUCK = 10, //押镖
 	TT_GUILD_BUILD = 12, //帮会建设
+	TT_TRAVEL = 13, //游历
 };
 
 enum TaskEventClass
@@ -351,6 +352,29 @@ enum
 	QUESTION_GUILD = 3, //帮会答题
 };
 
+//妖师类型
+enum
+{
+	YAOSHI_SHANGJIN = 1, //赏金妖师
+	YAOSHI_CHENGJIE = 2, //惩戒妖师
+	YAOSHI_GUOYU    = 3, //国御妖师
+};
+
+//切磋结果
+enum
+{
+	QIECUO_VICTORY = 1, //胜利
+	QIECUO_DEFEAT  = 2, //失败
+	QIECUO_EVEN    = 3, //平手
+};
+
+//PVP类型
+enum
+{
+	PVP_3_RAID = 1,
+	PVP_5_RAID = 2,
+};
+
 enum ActivityMatter
 {
 	AM_RAID = 1, //通关副本
@@ -361,6 +385,7 @@ enum ActivityMatter
 	AM_MIJINGXIULIAN = 7, //秘境修炼
 	AM_GUILD_INTRUSION = 8, //帮会入侵
 	AM_HERO_CHLLENGE = 9, //英雄挑战
+	AM_TRAVEL = 10, //游历
 };
 
 enum AchievementConditionType
@@ -375,7 +400,7 @@ enum AchievementConditionType
 	ACType_SKILL_FUWEN_LEVEL_NUM = 8, //任意3个技能符文等级达到5级
 	ACType_LIVE_SKILL_LEVEL = 9, //炼药等级达到5级
 	ACType_LIVE_SKILL_ENERGY = 10, //炼药累计消耗精力200点
-	ACType_FABAO_COMPOSE = 11, //合成出1个法宝
+	ACType_FABAO_COMPOSE = 11, //打造法宝（法宝颜色）
 	ACType_EQUIP_NUM = 12, //人物获得1件装备
 	ACType_EQUIP_STAR_UP = 13, //装备升星5次
 	ACType_EQUIP_STAIR = 14, //人物装备星级都达到2阶
@@ -440,10 +465,20 @@ enum AchievementConditionType
 	ACType_SHOP_BUY = 73, //商城购买
 	ACType_RANKING_RANK = 74, //排行榜名次
 	ACType_WORLD_BOSS = 75, //世界Boss
-	ACType_YUQIDAO_MAI_FINISH = 76, //御气道穴脉修炼达到满级
-	ACType_YUQIDAO_BREAK_COLOR_NUM = 77, //御气道冲脉属性品质达到紫色
-	ACType_BAG_GRID_NUM = 78, //背包格子数
-	ACType_FABAO_COLOR_NUM = 79, //
+	ACType_YUQIDAO_MAI_FINISH = 76, //御气道穴脉修炼达到满级(穴脉)
+	ACType_YUQIDAO_BREAK_COLOR_NUM = 77, //御气道冲脉
+	ACType_BAG_GRID_NUM = 78, //背包格子数（格子数）
+	ACType_EQUIP_ENCHANT_COLOR_NUM = 79, //装备附魔（附魔属性颜色）
+	ACType_EQUIP_GEM_COMPOSE = 80, //合成宝石（宝石等级）
+	ACType_HORSE_STEP = 81, //坐骑升阶（坐骑阶数）
+	ACType_KILL_ENEMY = 82, //击杀仇人
+	ACType_YAOSHI_TASK = 83, //妖师任务（任务类型）
+	ACType_PVP_KILL = 84, //太极之巅击杀（PVP类型，击杀人数）
+	ACType_DOUFACHANG_RANK = 85, //斗法场排名(名次)
+	ACType_DOUFACHANG_BUY_CHALLENGE = 86, //斗法场购买挑战次数
+	ACType_DAILY_ANSWER_ALL_RIGHT = 87, //每日答题全对
+	ACType_ACTIVENESS = 88, //活跃度（活跃度）
+	ACType_RAID_PASS_TYPE = 89, //副本通关（副本类型）
 };
 
 //成就用到的货币类型

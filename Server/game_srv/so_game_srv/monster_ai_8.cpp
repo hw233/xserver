@@ -259,7 +259,7 @@ static void do_attack(monster_struct* monster)
 
 		if (act_config->ActionTime <= 0 && act_config->Interval <= 0)
 		{
-			if (act_config->n_SkillLength >= 3 && act_config->SkillLength[2] >= 0)
+			if (act_config->n_SkillLength >= 3 && (int)act_config->SkillLength[2] >= 0)
 			{
 				monster->data->ontick_time = now + 3000;
 				monster->ai_state = AI_PATROL_STATE;
@@ -271,7 +271,7 @@ static void do_attack(monster_struct* monster)
 	if (target.empty())
 		return;
 
-	monster_hit_notify_to_many_player(skill_id, monster, NULL, &target);
+	hit_notify_to_many_target(skill_id, monster, &target);
 	return;
 
 }
@@ -333,7 +333,7 @@ static void do_patrol(monster_struct* monster)
 		
 	}
 
-	monster_cast_skill_to_direct(skill_id, monster, direct_x, direct_z);	
+	monster_cast_skill_to_direct(skill_id, monster, direct_x, direct_z, NULL);	
 //	for (int i = 0; i < monster->data->cur_sight_player; ++i)
 //	{
 //		player_struct *player = player_manager::get_player_by_id(monster->data->sight_player[i]);

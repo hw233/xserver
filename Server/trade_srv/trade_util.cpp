@@ -137,7 +137,7 @@ void cb_second_timer(evutil_socket_t, short, void* /*arg*/)
 
 			if (bSold)
 			{
-				uint32_t sold_price = lot->price;
+				uint32_t sold_price = lot->price * (1.0 - sg_trade_tax_percent);
 				if (lot->bidder_id > 0)
 				{ //拍卖成功
 					std::map<uint32_t, uint32_t> attachs;
@@ -146,7 +146,6 @@ void cb_second_timer(evutil_socket_t, short, void* /*arg*/)
 				}
 				else
 				{ //系统回收
-					sold_price = sold_price * (1.0 - sg_trade_tax_percent);
 				}
 
 				uint32_t master_num = 0;

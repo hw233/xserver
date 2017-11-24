@@ -4,6 +4,7 @@ delete from chengjie;
 delete from client_data;
 delete from game_global;
 delete from guild;
+delete from guild_invite;
 delete from guild_join;
 delete from guild_player;
 delete from mail;

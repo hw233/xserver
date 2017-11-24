@@ -895,6 +895,7 @@ void player_struct::process_offline(bool again/* = false*/, EXTERN_DATA *ext_dat
 	ZhenyingBattle::GetInstance()->CancelJoin(*this);
 	if (is_in_qiecuo())
 	{
+		this->add_achievement_progress(ACType_QIECUO, QIECUO_DEFEAT, 0, 1);
 		player_struct *target = player_manager::get_player_by_id(data->qiecuo_target);
 		assert(target);
 		target->finish_qiecuo();
@@ -906,6 +907,7 @@ void player_struct::process_offline(bool again/* = false*/, EXTERN_DATA *ext_dat
 		nty.result = 0;
 		ext.player_id = target->get_uuid();
 		fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
+		target->add_achievement_progress(ACType_QIECUO, QIECUO_VICTORY, 0, 1);
 	}
 
 	data->status = OFFLINE_SAVING;
@@ -1262,10 +1264,10 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	DBEquip* equip_data_point[MAX_EQUIP_NUM];
 	DBEquipEnchant enchant_data[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
 	DBEquipEnchant* enchant_data_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
-	DBAttr cur_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
-	DBAttr* cur_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
-	DBAttr rand_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
-	DBAttr* rand_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
+	DBEquipEnchantAttr cur_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
+	DBEquipEnchantAttr* cur_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
+	DBEquipEnchantAttr rand_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
+	DBEquipEnchantAttr* rand_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
 
 	size_t equip_num = 0;
 	for (int k = 0; k < MAX_EQUIP_NUM; ++k)
@@ -1287,7 +1289,8 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 			dbequip_enchant__init(&enchant_data[equip_num][enchant_num]);
 
 			cur_attr_point[equip_num][enchant_num] = &cur_attr[equip_num][enchant_num];
-			dbattr__init(&cur_attr[equip_num][enchant_num]);
+			dbequip_enchant_attr__init(&cur_attr[equip_num][enchant_num]);
+			cur_attr[equip_num][enchant_num].pool = enchant_info.cur_attr.pool;
 			cur_attr[equip_num][enchant_num].id = enchant_info.cur_attr.id;
 			cur_attr[equip_num][enchant_num].val = enchant_info.cur_attr.val;
 			enchant_data[equip_num][enchant_num].cur_attr = cur_attr_point[equip_num][enchant_num];
@@ -1296,7 +1299,8 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 			for (int j = 0; j < MAX_EQUIP_ENCHANT_RAND_NUM; ++j)
 			{
 				rand_attr_point[equip_num][enchant_num][rand_num] = &rand_attr[equip_num][enchant_num][rand_num];
-				dbattr__init(&rand_attr[equip_num][enchant_num][rand_num]);
+				dbequip_enchant_attr__init(&rand_attr[equip_num][enchant_num][rand_num]);
+				rand_attr[equip_num][enchant_num][rand_num].pool = enchant_info.rand_attr[j].pool;
 				rand_attr[equip_num][enchant_num][rand_num].id = enchant_info.rand_attr[j].id;
 				rand_attr[equip_num][enchant_num][rand_num].val = enchant_info.rand_attr[j].val;
 				rand_num++;
@@ -1836,7 +1840,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	zhenying.death = data->zhenying.death;
 	zhenying.help = data->zhenying.help;
 	zhenying.score = data->zhenying.score;
-	zhenying.mine = data->zhenying.mine;
+	zhenying.award_num = data->zhenying.award_num;
 	zhenying.one_award = data->zhenying.one_award;
 
 	db_info.server_level_break_count = data->server_level_break_count;
@@ -1962,6 +1966,11 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		db_info.n_strong_chapters++;
 	}
 
+	//游历
+	db_info.travel_round_num = data->travel_round_num;
+	db_info.travel_round_count_out = data->travel_round_count_out;
+	db_info.travel_task_num = data->travel_task_num;
+
 	return player_dbinfo__pack(&db_info, out_data);
 }
 
@@ -2014,7 +2023,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		 data->zhenying.death = db_info->zhenying->death;
 		 data->zhenying.help = db_info->zhenying->help;
 		 data->zhenying.score = db_info->zhenying->score;
-		 data->zhenying.mine = db_info->zhenying->mine;
+		 data->zhenying.award_num = db_info->zhenying->award_num;
 		 data->zhenying.one_award = db_info->zhenying->one_award;
 	}
 
@@ -2101,10 +2110,12 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		data->equip_list[i].star_exp = db_info->equip_list[i]->star_exp;
 		for (size_t j = 0; j < db_info->equip_list[i]->n_enchant && j < MAX_EQUIP_ENCHANT_NUM; ++j)
 		{
+			data->equip_list[i].enchant[j].cur_attr.pool = db_info->equip_list[i]->enchant[j]->cur_attr->pool;
 			data->equip_list[i].enchant[j].cur_attr.id = db_info->equip_list[i]->enchant[j]->cur_attr->id;
 			data->equip_list[i].enchant[j].cur_attr.val = db_info->equip_list[i]->enchant[j]->cur_attr->val;
 			for (size_t k = 0; k < db_info->equip_list[i]->enchant[j]->n_rand_attr && k < MAX_EQUIP_ENCHANT_RAND_NUM; ++k)
 			{
+				data->equip_list[i].enchant[j].rand_attr[k].pool = db_info->equip_list[i]->enchant[j]->rand_attr[k]->pool;
 				data->equip_list[i].enchant[j].rand_attr[k].id = db_info->equip_list[i]->enchant[j]->rand_attr[k]->id;
 				data->equip_list[i].enchant[j].rand_attr[k].val = db_info->equip_list[i]->enchant[j]->rand_attr[k]->val;
 			}
@@ -2511,6 +2522,11 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		data->strong_chapters[i].progress = db_info->strong_chapters[i]->progress;
 		data->strong_chapters[i].state = db_info->strong_chapters[i]->state;
 	}
+
+	//游历
+	data->travel_round_num = db_info->travel_round_num;
+	data->travel_round_count_out = db_info->travel_round_count_out;
+	data->travel_task_num = db_info->travel_task_num;
 
 	player_dbinfo__free_unpacked(db_info, NULL);
 
@@ -3229,10 +3245,12 @@ void player_struct::check_qiecuo_range()
 	nty.result = 0;
 	ext.player_id = target->get_uuid();
 	fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
+	target->add_achievement_progress(ACType_QIECUO, QIECUO_VICTORY, 0, 1);
 
 	nty.result = 1;
 	ext.player_id = get_uuid();
 	fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
+	this->add_achievement_progress(ACType_QIECUO, QIECUO_DEFEAT, 0, 1);
 }
 
 void player_struct::update_player_pos_and_sight()
@@ -3326,10 +3344,12 @@ void player_struct::on_region_changed(uint16_t old_region_id, uint16_t new_regio
 				nty.result = 0;
 				ext.player_id = target->get_uuid();
 				fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
+				target->add_achievement_progress(ACType_QIECUO, QIECUO_VICTORY, 0, 1);
 
 				nty.result = 1;
 				ext.player_id = get_uuid();
 				fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
+				this->add_achievement_progress(ACType_QIECUO, QIECUO_DEFEAT, 0, 1);
 			}
 			set_attr(PLAYER_ATTR_PK_TYPE, PK_TYPE_NORMAL);
 			broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, PK_TYPE_NORMAL, false, true);
@@ -3455,9 +3475,9 @@ void player_struct::pack_sight_player_base_info(SightPlayerBaseInfo *info)
 		pos_pool_len += info->n_data;
 	}
 */
-	info->direct_x = data->move_path.speed_x;
+	info->direct_x = data->move_path.direct_x;
 	info->direct_y = 0;
-	info->direct_z = data->move_path.speed_z;
+	info->direct_z = data->move_path.direct_z;
 	info->data = pack_unit_move_path(&info->n_data);
 	info->buff_info = pack_unit_buff(&info->n_buff_info);
 }
@@ -4308,19 +4328,23 @@ int check_qiecuo_finished(player_struct *p1, player_struct *p2)
 				nty.result = 0;
 				ext.player_id = p1->get_uuid();
 				fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
+				p1->add_achievement_progress(ACType_QIECUO, QIECUO_VICTORY, 0, 1);
 
 				nty.result = 1;
 				ext.player_id = p2->get_uuid();
 				fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
+				p2->add_achievement_progress(ACType_QIECUO, QIECUO_DEFEAT, 0, 1);
 				break;
 			case 2:
 				nty.result = 1;
 				ext.player_id = p1->get_uuid();
 				fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
+				p1->add_achievement_progress(ACType_QIECUO, QIECUO_DEFEAT, 0, 1);
 
 				nty.result = 0;
 				ext.player_id = p2->get_uuid();
 				fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
+				p2->add_achievement_progress(ACType_QIECUO, QIECUO_VICTORY, 0, 1);
 				break;
 			case 3:
 				nty.result = 2;
@@ -4328,6 +4352,8 @@ int check_qiecuo_finished(player_struct *p1, player_struct *p2)
 				fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
 				ext.player_id = p2->get_uuid();
 				fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
+				p1->add_achievement_progress(ACType_QIECUO, QIECUO_EVEN, 0, 1);
+				p2->add_achievement_progress(ACType_QIECUO, QIECUO_EVEN, 0, 1);
 				break;
 		}
 	}
@@ -5613,6 +5639,9 @@ bool player_struct::check_can_add_item_list(std::map<uint32_t, uint32_t>& item_l
 
 int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool isNty)
 {
+#ifdef __RAID_SRV__
+	return (0);
+#endif	
 	int ret = 0;
 	switch (get_item_type(id))
 	{
@@ -7875,6 +7904,44 @@ void player_struct::task_update_notify(TaskInfo *info)
 			number_data.total = config->Times;
 		}
 	}
+	else if (task_type == TT_TRAVEL)
+	{
+		task_number_data__init(&number_data);
+		task_data.number = &number_data;
+		number_data.current = data->travel_task_num + 1;
+		number_data.total = sg_travel_task_amount;
+
+		TravelTable *config = get_travel_config(get_level());
+		if (config)
+		{
+			TaskRewardTable *reward_config = get_config_by_id(config->RewardGroup, &task_reward_config);
+			if (reward_config)
+			{
+				task_reward_data__init(&reward_data);
+				task_data.reward = &reward_data;
+
+				reward_data.exp = reward_config->RewardEXP;
+				reward_data.coin = reward_config->RewardMoney;
+
+				reward_data.items = item_data_point;
+				reward_data.n_items = 0;
+				size_t &n_item = reward_data.n_items;
+				for (uint32_t i = 0; i < reward_config->n_RewardType && i < MAX_SHANGJIN_AWARD_NUM; ++i)
+				{
+					if (reward_config->RewardType[i] != 1)
+					{
+						continue;
+					}
+
+					item_data_point[n_item] = &(item_data[n_item]);
+					item_data__init(item_data_point[n_item]);
+					item_data[n_item].id = reward_config->RewardTarget[i];
+					item_data[n_item].num = reward_config->RewardNum[i];
+					n_item++;
+				}
+			}
+		}
+	}
 
 	if (task_is_team(info->id) && m_team && m_team->GetLeadId() == data->player_id)
 	{
@@ -9707,6 +9774,115 @@ void player_struct::on_leave_sight_space(sight_space_struct *sight_space)
 	clear_task_planes_uints();
 }
 
+uint32_t player_struct::get_travel_task(void)
+{
+	for (int i = 0; i < MAX_TASK_ACCEPTED_NUM; ++i)
+	{
+		TaskInfo *info = &data->task_list[i];
+		if (info->id == 0)
+		{
+			continue;
+		}
+
+		uint32_t task_type = get_task_type(info->id);
+		if (task_type == TT_TRAVEL)
+		{
+			return info->id;
+		}
+	}
+	return 0;
+}
+
+void player_struct::notify_travel_task_info(void)
+{
+	TravelTaskInfoNotify nty;
+	travel_task_info_notify__init(&nty);
+
+	nty.roundnum = data->travel_round_num;
+	nty.tasknum = data->travel_task_num;
+
+	EXTERN_DATA ext_data;
+	ext_data.player_id = get_uuid();
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_TRAVEL_TASK_INFO_NOTIFY, travel_task_info_notify__pack, nty);
+}
+
+int player_struct::generate_next_travel_task(uint32_t pre_task)
+{
+	do
+	{
+		TravelTable *config = get_travel_config(get_level());
+		if (!config)
+		{
+			break;
+		}
+
+		std::vector<uint32_t> task_ids;
+		for (uint32_t i = 0; i < config->n_QuestGroup; ++i)
+		{
+			if (config->QuestGroup[i] != (uint64_t)pre_task)
+			{
+				task_ids.push_back(config->QuestGroup[i]);
+			}
+		}
+
+		if (task_ids.size() == 0)
+		{
+			break;
+		}
+
+		uint32_t rand_val = rand() % task_ids.size();
+		return task_ids[rand_val];
+	} while(0);
+
+	return 0;
+}
+
+void player_struct::on_travel_task_finish(uint32_t pre_task)
+{
+	data->travel_task_num++;
+	if (data->travel_task_num >= sg_travel_task_amount)
+	{ //已经做完一轮
+		data->travel_task_num = 0;
+		if (data->travel_round_count_out != 0)
+		{ //不算在今天轮数内
+			data->travel_round_count_out = 0;
+		}
+		else
+		{
+			data->travel_round_num++;
+			check_activity_progress(AM_TRAVEL, 0);
+		}
+
+		TravelTable *config = get_travel_config(get_level());
+		if (config)
+		{
+			give_task_reward_by_reward_id(config->TimeRewardGroup, MAGIC_TYPE_TRAVEL_ROUND_REWARD);
+		}
+		else
+		{
+			LOG_ERR("[%s:%d] player[%lu] get config fail, level:%u", __FUNCTION__, __LINE__, data->player_id, get_level());
+		}
+	}
+	else
+	{ //还没做完一轮，接下一个任务
+		uint32_t task_id = generate_next_travel_task(pre_task);
+		if (task_id == 0)
+		{
+			LOG_ERR("[%s:%d] player[%lu] get next task fail, pre_task:%u", __FUNCTION__, __LINE__, data->player_id, pre_task);
+		}
+		else
+		{
+			int ret = accept_task(task_id, false);
+			if (ret != 0)
+			{
+				LOG_ERR("[%s:%d] player[%lu] accept task fail, ret:%d", __FUNCTION__, __LINE__, data->player_id, ret);
+			}
+		}
+	}
+
+	notify_travel_task_info();
+}
+
 void player_struct::sing_notify(uint32_t msg_id, uint32_t type, uint32_t time, bool broadcast, bool include_myself)
 {
 	LOG_DEBUG("[%s:%d] player[%lu], type:%u, time:%u, broadcast:%u, include_myself:%u, msg_id:%u", __FUNCTION__, __LINE__, data->player_id, type, time, broadcast, include_myself, msg_id);
@@ -9926,7 +10102,7 @@ uint32_t player_struct::sub_murder_num(uint32_t num)
 
 	if (old_murder >= sg_muder_debuff[0] && murder < sg_muder_debuff[0])
 	{
-		clear_one_buff(sg_muder_debuff[1]);
+		delete_one_buff(sg_muder_debuff[1], true);
 	}
 
 	uint32_t id[1];
@@ -9944,74 +10120,23 @@ uint32_t player_struct::sub_murder_num(uint32_t num)
 	return (murder);
 }
 
+// void player_struct::clear_one_buff(uint32_t id)
+// {
+// 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
+// 	{
+// 		if (!m_buffs[i] || !m_buffs[i]->data)
+// 			continue;
+// 		if (m_buffs[i]->data->buff_id != id)
+// 			continue;
 
-void player_struct::clear_god_buff()
-{
-	if (!(buff_state & BUFF_STATE_GOD))
-		return;
-	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
-	{
-		if (!m_buffs[i])
-			continue;
-		if (m_buffs[i]->effect_config->Type != 170000006)
-			continue;
-
-		AddBuffNotify notify;
-		add_buff_notify__init(&notify);
-		notify.buff_id = m_buffs[i]->data->buff_id;
-		notify.playerid = data->player_id;
-		broadcast_to_sight(MSG_ID_DEL_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
-		m_buffs[i]->del_buff();
-	}
-}
-
-void player_struct::clear_one_buff(uint32_t id)
-{
-	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
-	{
-		if (!m_buffs[i] || !m_buffs[i]->data)
-			continue;
-		if (m_buffs[i]->data->buff_id != id)
-			continue;
-
-		AddBuffNotify notify;
-		add_buff_notify__init(&notify);
-		notify.buff_id = m_buffs[i]->data->buff_id;
-		notify.playerid = data->player_id;
-		broadcast_to_sight(MSG_ID_DEL_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
-		m_buffs[i]->del_buff();
-	}
-}
-
-bool player_struct::is_in_buff3()
-{
-	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
-	{
-		if (!m_buffs[i])
-			continue;
-		if (m_buffs[i]->config->BuffType == 3)
-			return true;
-	}
-	return false;
-}
-
-void player_struct::clear_type3_buff()
-{
-	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
-	{
-		if (!m_buffs[i])
-			continue;
-		if (m_buffs[i]->config->BuffType != 3)
-			continue;
-
-		AddBuffNotify notify;
-		add_buff_notify__init(&notify);
-		notify.buff_id = m_buffs[i]->data->buff_id;
-		notify.playerid = data->player_id;
-		broadcast_to_sight(MSG_ID_DEL_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
-		m_buffs[i]->del_buff();
-	}
-}
+// 		AddBuffNotify notify;
+// 		add_buff_notify__init(&notify);
+// 		notify.buff_id = m_buffs[i]->data->buff_id;
+// 		notify.playerid = data->player_id;
+// 		broadcast_to_sight(MSG_ID_DEL_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
+// 		m_buffs[i]->del_buff();
+// 	}
+//}
 
 int player_struct::add_equip(uint32_t type, uint32_t statis_id)
 {
@@ -10042,10 +10167,10 @@ int player_struct::add_equip(uint32_t type, uint32_t statis_id)
 	equip_data__init(&nty);
 	EquipEnchantData enchant_data[MAX_EQUIP_ENCHANT_NUM];
 	EquipEnchantData* enchant_data_point[MAX_EQUIP_ENCHANT_NUM];
-	AttrData cur_attr[MAX_EQUIP_ENCHANT_NUM];
-	AttrData* cur_attr_point[MAX_EQUIP_ENCHANT_NUM];
-	AttrData rand_attr[MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
-	AttrData* rand_attr_point[MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
+	EquipEnchantAttrData cur_attr[MAX_EQUIP_ENCHANT_NUM];
+	EquipEnchantAttrData* cur_attr_point[MAX_EQUIP_ENCHANT_NUM];
+	EquipEnchantAttrData rand_attr[MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
+	EquipEnchantAttrData* rand_attr_point[MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
 
 	nty.type = type;
 	nty.stair = info->stair;
@@ -10061,7 +10186,8 @@ int player_struct::add_equip(uint32_t type, uint32_t statis_id)
 		enchant_data[enchant_num].index = i;
 
 		cur_attr_point[enchant_num] = &cur_attr[enchant_num];
-		attr_data__init(&cur_attr[enchant_num]);
+		equip_enchant_attr_data__init(&cur_attr[enchant_num]);
+		cur_attr[enchant_num].pool = enchant_info.cur_attr.pool;
 		cur_attr[enchant_num].id = enchant_info.cur_attr.id;
 		cur_attr[enchant_num].val = enchant_info.cur_attr.val;
 		enchant_data[enchant_num].curattr = cur_attr_point[enchant_num];
@@ -10072,7 +10198,8 @@ int player_struct::add_equip(uint32_t type, uint32_t statis_id)
 			for (int j = 0; j < MAX_EQUIP_ENCHANT_RAND_NUM; ++j)
 			{
 				rand_attr_point[enchant_num][rand_num] = &rand_attr[enchant_num][rand_num];
-				attr_data__init(&rand_attr[enchant_num][rand_num]);
+				equip_enchant_attr_data__init(&rand_attr[enchant_num][rand_num]);
+				rand_attr[enchant_num][rand_num].pool = enchant_info.rand_attr[j].pool;
 				rand_attr[enchant_num][rand_num].id = enchant_info.rand_attr[j].id;
 				rand_attr[enchant_num][rand_num].val = enchant_info.rand_attr[j].val;
 				rand_num++;
@@ -10204,12 +10331,13 @@ uint32_t player_struct::get_equip_max_star_need_exp(uint32_t type)
 	return need_exp;
 }
 
-int player_struct::get_equip_inlay_quality_num(uint32_t quality)
+int player_struct::get_equip_inlay_quality_num(uint32_t quality, uint32_t quality_num)
 {
 	int num = 0;
 	for (int i = 0; i < MAX_EQUIP_NUM; ++i)
 	{
 		EquipInfo *pEquip = &data->equip_list[i];
+		uint32_t quality_count = 0;
 		for (int j = 0; j < MAX_EQUIP_INLAY_NUM; ++j)
 		{
 			if (pEquip->inlay[j] == 0)
@@ -10223,11 +10351,14 @@ int player_struct::get_equip_inlay_quality_num(uint32_t quality)
 				continue;
 			}
 			
-			if (gem_config->Level >= quality)
+			if (gem_config->Level == quality)
 			{
-				num++;
-				break;
+				quality_count++;
 			}
+		}
+		if (quality_count >= quality_num)
+		{
+			num++;
 		}
 	}
 	return num;
@@ -10245,6 +10376,34 @@ uint32_t player_struct::get_equip_num(void)
 		}
 	}
 
+	return num;
+}
+
+uint32_t player_struct::get_equip_enchant_color_num(uint32_t color)
+{
+	uint32_t num = 0;
+	for (int i = 0; i < MAX_EQUIP_NUM; ++i)
+	{
+		EquipInfo *pEquip = &data->equip_list[i];
+		bool all_color = true;
+		for (int i = 0; i < MAX_EQUIP_ENCHANT_NUM; ++i)
+		{
+			if (pEquip->enchant[i].cur_attr.id == 0)
+			{
+				all_color = false;
+				break;
+			}
+			if ((uint32_t)get_equip_enchant_attr_color(pEquip->enchant[i].cur_attr.pool, pEquip->enchant[i].cur_attr.id, pEquip->enchant[i].cur_attr.val) != color)
+			{
+				all_color = false;
+				break;
+			}
+		}
+		if (all_color)
+		{
+			num++;
+		}
+	}
 	return num;
 }
 
@@ -10492,12 +10651,13 @@ int player_struct::add_today_pvp_win_num(int type)
 	if (type == PVP_TYPE_DEFINE_3)
 	{
 		++data->pvp_raid_data.oneday_win_num_3;
+		add_achievement_progress(ACType_PVP_WIN, PVP_3_RAID, 0, 1);
 	}
 	else
 	{
 		++data->pvp_raid_data.oneday_win_num_5;
+		add_achievement_progress(ACType_PVP_WIN, PVP_5_RAID, 0, 1);
 	}
-	add_achievement_progress(ACType_PVP_WIN, type, 0, 1);
 	return (0);
 }
 
@@ -11183,17 +11343,6 @@ void player_struct::update_chivalry_activity_item(ChivalryActivityInfo *info)
 	ext_data.player_id = data->player_id;
 
 	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_ACTIVITY_UPDATE_CHIVALRY_NOTIFY, chivalry_activity_data__pack, act_data);
-}
-
-void player_struct::refresh_activity_daily(void)
-{
-	EXTERN_DATA ext_data;
-	ext_data.player_id = data->player_id;
-
-	memset(data->active_reward, 0, sizeof(data->active_reward));
-	memset(data->daily_activity, 0, sizeof(data->daily_activity));
-	memset(data->chivalry_activity, 0, sizeof(data->chivalry_activity));
-	notify_activity_info(&ext_data);
 }
 
 void player_struct::notify_activity_info(EXTERN_DATA *extern_data)
@@ -12954,6 +13103,14 @@ void player_struct::on_kill_player(player_struct *dead)
 		{
 			add_achievement_progress(ACType_ZHENYING_KILL, 0, 0, 1);
 		}
+
+		FRIEND_IS_ENEMY_REQUEST	*req = (FRIEND_IS_ENEMY_REQUEST *)conn_node_gamesrv::get_send_data();
+		uint32_t data_len = sizeof(FRIEND_IS_ENEMY_REQUEST);
+		memset(req, 0, data_len);
+		req->dead_id = dead->data->player_id;
+		EXTERN_DATA ext_data;
+		ext_data.player_id = this->data->player_id;
+		fast_send_msg_base(&conn_node_gamesrv::connecter, &ext_data, SERVER_PROTO_FRIEND_IS_ENEMY_REQUEST, data_len, 0);
 	}
 
 	if (data->chengjie.cur_task != 0 && data->chengjie.target == dead->get_uuid())
@@ -13018,10 +13175,12 @@ void player_struct::on_dead(unit_struct *killer)
 		nty.result = 0;
 		ext.player_id = target->get_uuid();
 		fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
+		target->add_achievement_progress(ACType_QIECUO, QIECUO_VICTORY, 0, 1);
 
 		nty.result = 1;
 		ext.player_id = get_uuid();
 		fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
+		this->add_achievement_progress(ACType_QIECUO, QIECUO_DEFEAT, 0, 1);
 	}
 
 	if (sight_space) //&& sight_space->data->type != 2)
@@ -13251,15 +13410,8 @@ void player_struct::refresh_oneday_job()
 	}
 
 	refresh_yaoshi_oneday();
-	refresh_activity_daily();
-	data->zhenying.exp_day = 0;
-	FactionBattleTable *table = get_zhenying_battle_table(get_attr(PLAYER_ATTR_LEVEL));
-	if (table != NULL)
-	{
-		data->zhenying.mine = table->BoxOpenNum;
-	}
+	refresh_zhenying_task_oneday();
 
-	add_zhenying_exp(0);
 	ParameterTable *tablePar = get_config_by_id(161000175, &parameter_config);
 	if (tablePar != NULL)
 	{
@@ -13277,12 +13429,23 @@ void player_struct::refresh_oneday_job()
 		data->mi_jing_xiu_lian.lun_num = 0;
 		data->mi_jing_xiu_lian.huan_num = 0;
 	}
+
+	if (get_travel_task() != 0)
+	{
+		data->travel_round_count_out = 1;
+	}
+	else
+	{
+		data->travel_task_num = 0;
+	}
+	data->travel_round_num = 0;
+	notify_travel_task_info();
 }
 
 void player_struct::refresh_shop_daily(void)
 {
 	uint32_t now = time_helper::get_cached_time() / 1000;
-	uint32_t hour = time_helper::get_cur_hour(data->next_time_refresh_oneday_job);
+	uint32_t hour = time_helper::get_cur_hour(data->next_time_refresh_oneday_job / 1000);
 	bool day_reset = false, week_reset = false, month_reset = false;
 	if (now >= data->shop_reset.next_day_time) //每天
 	{
@@ -13350,6 +13513,33 @@ void player_struct::refresh_shop_daily(void)
 	ext_data.player_id = data->player_id;
 
 	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_SHOP_GOODS_NOTIFY, shop_goods_notify__pack, nty);
+
+	for (int i = 0; i < MAX_DAILY_ACTIVITY_NUM; ++i)
+	{
+		DailyActivityInfo *info = &data->daily_activity[i];
+		if (info->act_id == 0)
+		{
+			continue;
+		}
+
+		EventCalendarTable *config = get_config_by_id(info->act_id, &activity_config);
+		if (!config)
+		{
+			continue;
+		}
+
+		if ((config->ResetCD == 1 && day_reset) || (config->ResetCD == 2 && week_reset))
+		{
+			info->count = 0;
+		}
+	}
+
+	if (day_reset)
+	{
+		memset(data->active_reward, 0, sizeof(data->active_reward));
+		memset(data->chivalry_activity, 0, sizeof(data->chivalry_activity));
+	}
+	notify_activity_info(&ext_data);
 }
 
 void player_struct::interrupt()
@@ -13395,7 +13585,7 @@ void player_struct::enter_fight_state()
 	if (data->on_fight_state)
 		return;
 	data->on_fight_state = true;
-	clear_one_buff(114400019);
+	delete_one_buff(114400019, true);
 
 	EXTERN_DATA extern_data;
 	extern_data.player_id = data->player_id;
@@ -13865,6 +14055,18 @@ int player_struct::set_enter_raid_pos_and_scene(raid_struct *raid, double pos_x,
 	return (0);
 }
 
+int player_struct::on_leave_raid()
+{
+	set_out_raid_pos_and_clear_scene();
+		//如果死亡，就给予复活
+	if (!is_alive())
+	{
+		relive();
+	}
+	data->player_raid_uuid = 0;	
+	return (0);
+}
+
 int player_struct::set_out_raid_pos()
 {
 	raid_struct *raid = get_raid();
@@ -13925,17 +14127,16 @@ int player_struct::set_out_raid_pos_and_clear_scene()
 	return (0);
 }
 //进入副本前保存离开副本后所到的场景id以及位置
-int player_struct::conserve_out_raid_pos_and_scene(raid_struct *raid)
+int player_struct::conserve_out_raid_pos_and_scene(struct DungeonTable* m_config)
 {
-	assert(raid);
-	assert(raid->m_config);
-	if (/*raid->m_config->DengeonRank != 13 && */raid->m_config->ExitScene != 0)
+	assert(m_config);
+	if (/*raid->m_config->DengeonRank != 13 && */m_config->ExitScene != 0)
 	{
-		data->leaveraid.scene_id = raid->m_config->ExitScene;
-		data->leaveraid.ExitPointX = raid->m_config->ExitPointX;
-		data->leaveraid.ExitPointY = raid->m_config->BirthPointY;
-		data->leaveraid.ExitPointZ = raid->m_config->BirthPointZ;
-		data->leaveraid.direct = raid->m_config->FaceY;
+		data->leaveraid.scene_id = m_config->ExitScene;
+		data->leaveraid.ExitPointX = m_config->ExitPointX;
+		data->leaveraid.ExitPointY = m_config->BirthPointY;
+		data->leaveraid.ExitPointZ = m_config->BirthPointZ;
+		data->leaveraid.direct = m_config->FaceY;
 	}
 	else
 	{
@@ -13946,8 +14147,8 @@ int player_struct::conserve_out_raid_pos_and_scene(raid_struct *raid)
 		data->leaveraid.direct = data->m_angle;
 	}
 
-	LOG_DEBUG("%s: player[%lu] scene[%p] raid[%u] set out pos[%u][%.2f][%.2f]", __FUNCTION__, data->player_id, scene,
-		raid->data->ID, data->leaveraid.scene_id, data->leaveraid.ExitPointX, data->leaveraid.ExitPointZ);
+	LOG_DEBUG("%s: player[%lu] scene[%p] raid[%lu] set out pos[%u][%.2f][%.2f]", __FUNCTION__, data->player_id, scene,
+		m_config->DungeonID, data->leaveraid.scene_id, data->leaveraid.ExitPointX, data->leaveraid.ExitPointZ);
 	
 	return (0);
 }
@@ -14464,6 +14665,9 @@ void player_struct::down_horse()
 			notify_attr(attrs, true, true);
 		}
 	}
+
+	struct position *pos = get_pos();
+	set_pos_with_broadcast(pos->pos_x, pos->pos_z);
 
 	data->attrData[PLAYER_ATTR_ON_HORSE_STATE] = 0;
 	OnHorse send;
@@ -15565,7 +15769,7 @@ void player_struct::init_achievement_progress_internal(uint32_t &progress, uint3
 			break;
 		case ACType_EQUIP_INLAY_QULITY_NUM:
 			{
-				progress = get_equip_inlay_quality_num(config_target1);
+				progress = get_equip_inlay_quality_num(config_target1, config_target2);
 			}
 			break;
 		case ACType_BAGUA_SUIT:
@@ -15695,6 +15899,38 @@ void player_struct::init_achievement_progress_internal(uint32_t &progress, uint3
 				}
 			}
 			break;
+		case ACType_EQUIP_ENCHANT_COLOR_NUM:
+			{
+				progress = get_equip_enchant_color_num(config_target1);
+			}
+			break;
+		case ACType_HORSE_STEP:
+			{
+				progress = 0;
+				if (data->horse_attr.step >= config_target1)
+				{
+					progress++;
+				}
+			}
+			break;
+		case ACType_DOUFACHANG_RANK:
+			{
+				progress = 0;
+				if (data->doufachang_rank <= config_target1)
+				{
+					progress++;
+				}
+			}
+			break;
+		case ACType_ACTIVENESS:
+			{
+				progress = 0;
+				if ((uint32_t)get_attr(PLAYER_ATTR_ACTIVENESS) >= config_target1)
+				{
+					progress++;
+				}
+			}
+			break;
 	}
 }
 
@@ -15737,6 +15973,7 @@ void player_struct::add_achievement_progress_internal(uint32_t &progress, uint32
 		case ACType_PLAYER_FC:
 		case ACType_ZHENYING_GRADE:
 		case ACType_BAG_GRID_NUM:
+		case ACType_ACTIVENESS:
 			{
 				if (target1 >= config_target1)
 				{
@@ -15764,7 +16001,12 @@ void player_struct::add_achievement_progress_internal(uint32_t &progress, uint32
 			break;
 		case ACType_EQUIP_INLAY_QULITY_NUM:
 			{
-				progress = get_equip_inlay_quality_num(config_target1);
+				progress = get_equip_inlay_quality_num(config_target1, config_target2);
+			}
+			break;
+		case ACType_EQUIP_ENCHANT_COLOR_NUM:
+			{
+				progress = get_equip_enchant_color_num(config_target1);
 			}
 			break;
 		case ACType_BAGUA_MIN_STAR:
@@ -15806,6 +16048,14 @@ void player_struct::add_achievement_progress_internal(uint32_t &progress, uint32
 		case ACType_RANKING_RANK:
 			{
 				if (!((config_target1 > 0 && config_target1 != target1) || (config_target2 > 0 && config_target2 < target2)))
+				{
+					progress += num;
+				}
+			}
+			break;
+		case ACType_DOUFACHANG_RANK:
+			{
+				if (target1 <= config_target1)
 				{
 					progress += num;
 				}
@@ -16560,14 +16810,14 @@ int player_struct::move_to_wild_pos(uint32_t scene_id, double pos_x, double pos_
 	int ret = check_scene_enter_cond(scene_id);
 	if (ret != 0)
 	{
-		LOG_ERR("%s %d: player[%lu] transfer scene[%lu] cond wrong, ret = %d", __FUNCTION__, __LINE__, data->player_id, scene_id, ret);		
+		LOG_ERR("%s %d: player[%lu] transfer scene[%u] cond wrong, ret = %d", __FUNCTION__, __LINE__, data->player_id, scene_id, ret);		
 		return (-1);
 	}
 	
 	scene_struct *new_scene = scene_manager::get_scene(scene_id);
 	if (!new_scene)
 	{
-		LOG_ERR("%s %d: player[%lu] transfer to the wrong scene[%lu]", __FUNCTION__, __LINE__, data->player_id, scene_id);
+		LOG_ERR("%s %d: player[%lu] transfer to the wrong scene[%u]", __FUNCTION__, __LINE__, data->player_id, scene_id);
 		return (-30);
 	}
 
@@ -16585,14 +16835,14 @@ int player_struct::move_to_wild(uint32_t scene_id)
 	int ret = check_scene_enter_cond(scene_id);
 	if (ret != 0)
 	{
-		LOG_ERR("%s %d: player[%lu] transfer scene[%lu] cond wrong, ret = %d", __FUNCTION__, __LINE__, data->player_id, scene_id, ret);		
+		LOG_ERR("%s %d: player[%lu] transfer scene[%u] cond wrong, ret = %d", __FUNCTION__, __LINE__, data->player_id, scene_id, ret);		
 		return (-1);
 	}
 	
 	scene_struct *new_scene = scene_manager::get_scene(scene_id);
 	if (!new_scene)
 	{
-		LOG_ERR("%s %d: player[%lu] transfer to the wrong scene[%lu]", __FUNCTION__, __LINE__, data->player_id, scene_id);
+		LOG_ERR("%s %d: player[%lu] transfer to the wrong scene[%u]", __FUNCTION__, __LINE__, data->player_id, scene_id);
 		return (-30);
 	}
 
@@ -16603,6 +16853,38 @@ int player_struct::move_to_wild(uint32_t scene_id)
 	pos_z = new_scene->m_born_z;
 	direct = new_scene->m_born_direct;
 	return move_to_wild_pos(scene_id, pos_x, pos_z, direct);
+}
+
+int player_struct::enter_raidsrv(int raidsrv_id, uint32_t raid_id)
+{
+	if (m_team)
+	{
+	}
+	else
+	{
+		if (sight_space)
+			sight_space_manager::del_player_from_sight_space(sight_space, this, false);
+		if (scene)
+			scene->player_leave_scene(this);
+		conserve_out_raid_pos_and_scene(get_config_by_id(raid_id, &all_raid_config));
+		data->scene_id = raid_id;
+
+		RAID_ENTER_REQUEST *proto = (RAID_ENTER_REQUEST *)conn_node_base::get_send_data();
+		uint32_t data_len = sizeof(RAID_ENTER_REQUEST);
+		proto->raid_id = raid_id;
+		assert(sizeof(proto->name) == sizeof(data->name));
+		memcpy(proto->name, get_name(), sizeof(proto->name));
+		for(int i = 0; i < PLAYER_ATTR_MAX; ++i)
+			proto->attrData[i] = data->attrData[i];
+
+		m_skill.pack(proto->skill);
+		proto->skillindex = m_skill.m_index;
+
+		EXTERN_DATA extern_data;
+		extern_data.player_id = data->player_id;
+		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, SERVER_PROTO_RAID_PLAYER_ENTER_REQUEST, data_len, 0);
+	}
+	return (0);
 }
 
 int player_struct::move_to_raid_impl(DungeonTable *config, bool ignore_check)
@@ -16660,15 +16942,22 @@ int player_struct::move_to_raid_impl(DungeonTable *config, bool ignore_check)
 		int ret = ZhenyingBattle::GetInstance()->IntoBattle(*this);
 		if (ret != 0)
 		{
-			LOG_ERR("%s: player[%lu] enter battle %u failed, ret = %d", __FUNCTION__, get_uuid(), ret);
+			LOG_ERR("%s: player[%lu] enter battle failed, ret = %d", __FUNCTION__, get_uuid(), ret);
 		}
 		return ret;
+	}
+
+	int raidsrv_id = raid_in_raidsrv(config->DungeonID);
+	if (raidsrv_id >= 0)
+	{
+		enter_raidsrv(raidsrv_id, config->DungeonID);
+		return (0);
 	}
 
 	raid_struct *raid = raid_manager::create_raid(config->DungeonID, this);
 	if (!raid)
 	{
-		LOG_ERR("%s: player[%lu] create raid[%u] failed", __FUNCTION__, data->player_id, config->DungeonID);
+		LOG_ERR("%s: player[%lu] create raid[%lu] failed", __FUNCTION__, data->player_id, config->DungeonID);
 		return (-20);
 	}
 
@@ -17014,7 +17303,7 @@ int player_struct::check_raid_enter_cond(uint32_t raid_id)
 	{
 		if (data->guild_id == 0)
 		{
-			LOG_ERR("[%s:%d] player[%lu] not join guild", __FUNCTION__, __LINE__, get_uuid())
+			LOG_ERR("[%s:%d] player[%lu] not join guild", __FUNCTION__, __LINE__, get_uuid());
 			return (-10);
 		}
 	}	

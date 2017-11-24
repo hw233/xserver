@@ -85,7 +85,7 @@ static void ai_tick_4(monster_struct *monster)
 	uint32_t skill_id = choose_first_skill(monster);
 	if (skill_id == 0)
 		return;
-	monster_hit_notify_to_many_player(skill_id, monster, owner, &target);
+	hit_notify_to_many_target(skill_id, monster, &target);
 
 	LOG_DEBUG("%s: %p", __FUNCTION__, monster);
 	ai_dead_4(monster, monster->scene);

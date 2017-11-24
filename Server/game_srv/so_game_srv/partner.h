@@ -112,6 +112,7 @@ struct partner_data
 
 	uint32_t skill_id;  //即将释放的技能
 	double angle;     //技能的角度
+	struct position skill_target_pos; //技能释放的位置，现在只有SKILL_RANGE_TYPE_TARGET_RECT类型的技能用	
 
 	struct cast_skill_data cur_skill;  //正在释放的技能	
 	struct partner_cur_fabao cur_fabao; //伙伴当前佩戴的法宝
@@ -170,6 +171,8 @@ public:
 	virtual JobDefine get_job();
 	virtual void do_taunt_action();  //嘲讽
 	virtual void on_tick();
+	virtual player_struct *get_owner();
+	
 	void reset_timer(uint64_t time);
 	void set_timer(uint64_t time);
 	void update_partner_pos_and_sight();
@@ -233,8 +236,8 @@ public:
 	bool try_friend_skill(uint32_t skill_id, int skill_index);
 	void do_normal_attack();
 
-	void cast_skill_to_friend(struct SkillTable *config);
-	void try_attack_friend(struct SkillTable *config);
+//	void cast_skill_to_friend(struct SkillTable *config);
+//	void try_attack_friend(struct SkillTable *config);
 	
 	void mark_bind(void);
 
@@ -265,14 +268,16 @@ private:
 	void clear_partner_sight();
 	void send_patrol_move();
 	void cast_skill_to_target(uint64_t skill_id, unit_struct *target);	
-	void cast_immediate_skill_to_target(uint64_t skill_id, int skill_index, unit_struct *target);
-	
-	int count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, bool bfriend);
-	void hit_notify_to_player(uint64_t skill_id, unit_struct *target);	
-	void hit_notify_to_many_player(uint64_t skill_id, std::vector<unit_struct *> *target);
-	void hit_notify_to_many_friend(uint64_t skill_id, std::vector<unit_struct *> *target);
-	void try_attack(struct SkillTable *config);
-	void try_attack_target(struct SkillTable *config);
+//	void cast_immediate_skill_to_target(uint64_t skill_id, int skill_index, unit_struct *target);
+
+	virtual double get_skill_angle();
+	virtual struct position *get_skill_target_pos();
+//	int count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, bool bfriend);
+//	void hit_notify_to_player(uint64_t skill_id, unit_struct *target);	
+//	void hit_notify_to_many_player(uint64_t skill_id, std::vector<unit_struct *> *target);
+//	void hit_notify_to_many_friend(uint64_t skill_id, std::vector<unit_struct *> *target);
+//	void try_attack(struct SkillTable *config);
+//	void try_attack_target(struct SkillTable *config);
 	int get_skill_level(uint32_t skill_id);
 	int get_skill_level_byindex(int skill_index);	
 };

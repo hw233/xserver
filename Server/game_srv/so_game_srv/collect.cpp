@@ -272,7 +272,7 @@ void Collect::RemoveFromSceneAndDestroyCollect(Collect *pCollect, bool send_msg)
 	}
 	else
 	{
-		LOG_ERR("[%s : %d]: collect = %lld no scene", __FUNCTION__, __LINE__, pCollect->m_uuid);
+		LOG_ERR("[%s : %d]: collect = %u no scene", __FUNCTION__, __LINE__, pCollect->m_uuid);
 	}
 	Collect::DestroyCollect(pCollect->m_uuid);
 }

@@ -95,7 +95,7 @@ static void ai_tick_0(monster_struct *monster)
 	struct SkillTable *config = get_config_by_id(skill_id, &skill_config);
 	if (!config)
 		return;
-	monster_cast_immediate_skill_to_player(skill_id, monster, owner, target);
+	cast_immediate_skill_to_target(skill_id, 1, monster, target);
 		//计算硬直时间
 	monster->data->ontick_time += count_skill_delay_time(config);	
 }

@@ -239,7 +239,7 @@ int handle_move_start_request_impl(player_struct *player, EXTERN_DATA *extern_da
 	}
 	player->last_change_area_time = now;
 
-	LOG_INFO("%s: player[%lu] cur_pos[%.1f][%.1f] req_pos[%.1f][%.1f] directx[%.2f] directz[%.2f]",
+	LOG_INFO("%s: player[%lu] cur_pos[%.1f][%.1f] req_pos[%.1f][%.1f] directx[%d] directz[%d]",
 		__FUNCTION__, player->get_uuid(), player->get_pos()->pos_x, player->get_pos()->pos_z,
 		req->cur_pos->pos_x, req->cur_pos->pos_z, req->direct_x, req->direct_z);
 
@@ -270,17 +270,27 @@ int handle_move_start_request_impl(player_struct *player, EXTERN_DATA *extern_da
 	pos->pos_z = req->cur_pos->pos_z;
 */
 
-	float c = req->direct_x * req->direct_x + req->direct_z * req->direct_z;
-	c = FastSqrtQ3(c);
-	if (c == 0)
-	{
-		LOG_ERR("%s %d: player %lu direct wrong", __FUNCTION__, __LINE__, extern_data->player_id);
-		return (-15);
-	}
+	// float c = req->direct_x * req->direct_x + req->direct_z * req->direct_z;
+	// c = FastSqrtQ3(c);
+	// if (c == 0)
+	// {
+	// 	LOG_ERR("%s %d: player %lu direct wrong", __FUNCTION__, __LINE__, extern_data->player_id);
+	// 	return (-15);
+	// }
 
-	double speed = player->get_speed();
-	player->data->move_path.speed_x = req->direct_x / c * speed;
-	player->data->move_path.speed_z = req->direct_z / c * speed;
+	// double speed = player->get_speed();
+	// player->data->move_path.direct_x = req->direct_x / c * speed;
+	// player->data->move_path.direct_z = req->direct_z / c * speed;
+
+	// 检查是否归一化
+	int32_t t = req->direct_x * req->direct_x + req->direct_z * req->direct_z - 1000000;
+	if (t > 200000 || t < -200000)
+	{
+		LOG_ERR("%s: player %lu not normalizing %d", __FUNCTION__, player->get_uuid(), t);
+	}
+	
+	player->data->move_path.direct_x = req->direct_x / 1000.0;
+	player->data->move_path.direct_z = req->direct_z / 1000.0;
 	player->data->move_path.start_time = time_helper::get_cached_time();
 	player->data->m_angle = pos_to_angle(req->direct_x, req->direct_z);
 //		float t = player->data->m_angle / M_PI * 180 * -1 + 90;
@@ -375,7 +385,7 @@ int handle_move_stop_request_impl(player_struct *player, EXTERN_DATA *extern_dat
 		__FUNCTION__, player->get_uuid(), player->get_pos()->pos_x, player->get_pos()->pos_z,
 		req->cur_pos->pos_x, req->cur_pos->pos_z);
 
-	if (player->check_pos_distance(req->cur_pos->pos_x, req->cur_pos->pos_z) != 0)
+	if (req->check_distance == 0 && player->check_pos_distance(req->cur_pos->pos_x, req->cur_pos->pos_z) != 0)
 	{
 		struct position *pos = player->get_pos();
 		LOG_ERR("%s %d: player[%lu] cur_pos[%.1f][%.1f] flash to [%.1f][%.1f]", __FUNCTION__, __LINE__, player->get_uuid(),
@@ -919,14 +929,14 @@ static int handle_set_skill_menu_request(player_struct *player, EXTERN_DATA *ext
 	return 0;
 }
 
-extern FuwenData fuwenData[MySkill::MAX_SKILL_NUM][MAX_FUWEN];
-extern FuwenData *fuwenDataPoint[MySkill::MAX_SKILL_NUM][MAX_FUWEN];
-extern FuwenData fuwenData1[MySkill::MAX_SKILL_NUM][MAX_FUWEN];
-extern FuwenData *fuwenDataPoint1[MySkill::MAX_SKILL_NUM][MAX_FUWEN];
-extern SkillData skillData[MySkill::MAX_SKILL_NUM];
-extern SkillData *skillDataPoint[MySkill::MAX_SKILL_NUM];
-extern SkillData skillData1[MySkill::MAX_SKILL_NUM];
-extern SkillData *skillDataPoint1[MySkill::MAX_SKILL_NUM];
+extern FuwenData fuwenData[MAX_MY_SKILL_NUM][MAX_FUWEN];
+extern FuwenData *fuwenDataPoint[MAX_MY_SKILL_NUM][MAX_FUWEN];
+extern FuwenData fuwenData1[MAX_MY_SKILL_NUM][MAX_FUWEN];
+extern FuwenData *fuwenDataPoint1[MAX_MY_SKILL_NUM][MAX_FUWEN];
+extern SkillData skillData[MAX_MY_SKILL_NUM];
+extern SkillData *skillDataPoint[MAX_MY_SKILL_NUM];
+extern SkillData skillData1[MAX_MY_SKILL_NUM];
+extern SkillData *skillDataPoint1[MAX_MY_SKILL_NUM];
 static int handle_open_skill_for_guide_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (comm_check_player_valid(player, extern_data->player_id) != 0)
@@ -1264,7 +1274,7 @@ static int handle_del_speed_buff_request(player_struct *player, EXTERN_DATA *ext
 		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
 		return (-1);
 	}
-	player->clear_one_buff(114400019);	
+	player->delete_one_buff(114400019, true);	
 	return (0);
 }
 
@@ -1818,14 +1828,15 @@ static int handle_skill_hit_request(player_struct *player, EXTERN_DATA *extern_d
 	}
 	
 
-	if (act_config && act_config->CanMove)
-	{
-			//旋风斩可以持续移动
-	}
-	else
-	{
-		player->set_pos_with_broadcast(req->attack_pos->pos_x, req->attack_pos->pos_z);
-	}
+		//技能可能带位移，而这个命中的位置发送的是释放技能时候的位置，所以不能用来做位置校正
+	// if (act_config && act_config->CanMove)
+	// {
+	// 		//旋风斩可以持续移动
+	// }
+	// else
+	// {
+	// 	player->set_pos_with_broadcast(req->attack_pos->pos_x, req->attack_pos->pos_z);
+	// }
 
 	uint32_t life_steal = 0;
 	uint32_t damage_return = 0;
@@ -2449,6 +2460,10 @@ static int handle_skill_cast_request(player_struct *player, EXTERN_DATA *extern_
 		skill_struct->add_cd(lv_config, active_config);
 		LOG_INFO("%s: %lu cast skill %u cd[%lu]", __FUNCTION__, extern_data->player_id, req->skillid, skill_struct->data->cd_time);
 	}
+	else
+	{
+		LOG_INFO("%s player[%lu] cast skill[%u] in buff 3 state", __FUNCTION__, player->get_uuid(), req->skillid);
+	}
 	// if (lv_config->CD != 0)
 	// 	skill_struct->data->cd_time = time_helper::get_cached_time() + lv_config->CD - 200;
 	// else
@@ -2467,10 +2482,10 @@ static int handle_skill_cast_request(player_struct *player, EXTERN_DATA *extern_
 	new_pos.pos_x = req->cur_pos->pos_x;
 	new_pos.pos_z = req->cur_pos->pos_z;	
 	// 	//攻击的时候, 计算位移
-	if (active_config->FlyId != 0 && active_config->CanMove == 2)
+	if (active_config && active_config->FlyId != 0 && active_config->CanMove == 2)
 	{
 		struct SkillMoveTable *move_config = get_config_by_id(active_config->FlyId, &move_skill_config);
-		if (move_config && move_config->MoveType == 1 && move_config->DmgType == 1 && move_config->MoveDistance > 0)
+		if (move_config && move_config->MoveType == 1/* && move_config->DmgType == 1 */&& move_config->MoveDistance > 0)
 		{
 			float x = req->direct_x - req->cur_pos->pos_x;
 			float z = req->direct_z - req->cur_pos->pos_z;
@@ -2503,11 +2518,12 @@ static int handle_skill_cast_request(player_struct *player, EXTERN_DATA *extern_
 	notify.cur_pos = &pos_data;
 	notify.direct_x = req->direct_x;
 	notify.direct_z = req->direct_z;
+	notify.target_pos = req->target_pos;
 
-	skill_cast_request__free_unpacked(req, NULL);
 	player->interrupt();
 
 	player->broadcast_to_sight(MSG_ID_SKILL_CAST_NOTIFY, &notify, (pack_func)skill_cast_notify__pack, true);
+	skill_cast_request__free_unpacked(req, NULL);
 
 	if (config->IsMonster)
 	{
@@ -2644,7 +2660,7 @@ int pack_player_online(player_struct *player, EXTERN_DATA *extern_data, bool loa
 			raid->set_player_info(player, &raid->data->player_info[0]);
 			raid->player_return_raid(player);
 				//设置一下新手副本离开的位置
-			player->conserve_out_raid_pos_and_scene(raid);
+			player->conserve_out_raid_pos_and_scene(raid->m_config);
 //			buff_manager::create_buff(114400018, player, player, true);
 			//player->data->pos_y = raid->res_config->BirthPointY;
 			
@@ -2726,6 +2742,7 @@ static int player_online_enter_scene_after(player_struct *player, EXTERN_DATA *e
 	player->mijing_shilian_info_notify(0);
 	on_login_send_fishing_info(player, extern_data);
 	notify_strong_info(player, extern_data);
+	player->notify_travel_task_info();
 
 	player->data->login_notify = true;
 
@@ -4046,6 +4063,44 @@ static int notify_task_list(player_struct *player, EXTERN_DATA *extern_data)
 				number_data[resp.n_ongoing_list].total = config->Times;
 			}
 		}
+		else if (task_type == TT_TRAVEL)
+		{
+			task_number_data__init(&number_data[resp.n_ongoing_list]);
+			task_data[resp.n_ongoing_list].number = &number_data[resp.n_ongoing_list];
+			number_data[resp.n_ongoing_list].current = player->data->travel_task_num + 1;
+			number_data[resp.n_ongoing_list].total = sg_travel_task_amount;
+
+			TravelTable *config = get_travel_config(player->get_level());
+			if (config)
+			{
+				TaskRewardTable *reward_config = get_config_by_id(config->RewardGroup, &task_reward_config);
+				if (reward_config)
+				{
+					task_reward_data__init(&reward_data[resp.n_ongoing_list]);
+					task_data[resp.n_ongoing_list].reward = &reward_data[resp.n_ongoing_list];
+
+					reward_data[resp.n_ongoing_list].exp = reward_config->RewardEXP;
+					reward_data[resp.n_ongoing_list].coin = reward_config->RewardMoney;
+
+					reward_data[resp.n_ongoing_list].items = item_data_point[resp.n_ongoing_list];
+					reward_data[resp.n_ongoing_list].n_items = 0;
+					size_t &n_item = reward_data[resp.n_ongoing_list].n_items;
+					for (uint32_t i = 0; i < reward_config->n_RewardType && i < MAX_SHANGJIN_AWARD_NUM; ++i)
+					{
+						if (reward_config->RewardType[i] != 1)
+						{
+							continue;
+						}
+
+						item_data_point[resp.n_ongoing_list][n_item] = &(item_data[resp.n_ongoing_list][n_item]);
+						item_data__init(item_data_point[resp.n_ongoing_list][n_item]);
+						item_data[resp.n_ongoing_list][n_item].id = reward_config->RewardTarget[i];
+						item_data[resp.n_ongoing_list][n_item].num = reward_config->RewardNum[i];
+						n_item++;
+					}
+				}
+			}
+		}
 		resp.n_ongoing_list++;
 	}
 
@@ -4213,6 +4268,18 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 				item_list[iter->first] += iter->second;
 			}
 		}
+		else if (config->TaskType == TT_TRAVEL)
+		{
+			TravelTable *travel_table = get_travel_config(player->get_level());
+			if (travel_table)
+			{
+				get_task_reward_item_from_config(travel_table->RewardGroup, item_list);
+				if (player->data->travel_task_num  + 1 >= sg_travel_task_amount)
+				{
+					get_task_reward_item_from_config(travel_table->TimeRewardGroup, item_list);
+				}
+			}
+		}
 		if (item_list.size() > 0 && !player->check_can_add_item_list(item_list))
 		{
 			ret = 190300007;
@@ -4264,7 +4331,7 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 		{
 			player->add_finish_task(task_id);
 		}
-		player->clear_one_buff(114400019);	
+		player->delete_one_buff(114400019, true);	
 
 		//章节、主线下一个任务
 		if (config->TaskType == TT_TRUNK)
@@ -4292,6 +4359,15 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 			fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_GUILD_TASK_FINISH, data_len, 0);
 
 			player->add_item_list(build_drop, MAGIC_TYPE_TASK_REWARD);
+		}
+		else if (config->TaskType == TT_TRAVEL)
+		{
+			TravelTable *travel_table = get_travel_config(player->get_level());
+			if (travel_table)
+			{
+				player->give_task_reward_by_reward_id(travel_table->RewardGroup, MAGIC_TYPE_TASK_REWARD);
+			}
+			player->on_travel_task_finish(task_id);
 		}
 	} while(0);
 
@@ -5036,6 +5112,120 @@ done:
 
 	return 0;
 }
+int handle_private_chat_find_target_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	ReqFindTarget *req = req_find_target__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-10);
+	}
+	if (req->name != NULL)
+	{
+		AnsFindTarget send;
+		ans_find_target__init(&send);
+		send.ret = 0;
+		if (strcmp(req->name, player->get_name()) == 0)
+		{
+			send.ret = 190500128;
+		}
+		uint64_t pid = strtoull(req->name, NULL, 10);
+		if (pid == player->get_uuid())
+		{
+			send.ret = 190500128;
+		}
+		if (send.ret != 0)
+		{
+			fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_PRIVATE_CHAT_FIND_TARGET_ANSWER, ans_find_target__pack, send);
+		}
+		else
+		{
+			player_struct *target = player_manager::get_player_by_id(pid);
+			if (target == NULL)
+			{
+				PROTO_FIND_PLAYER_REQ *todb = (PROTO_FIND_PLAYER_REQ *)&conn_node_base::global_send_buf[0];
+				strncpy(todb->name, req->name, 33);
+				todb->head.msg_id = ENDION_FUNC_2(SERVER_PROTO_FIND_PLAYER_REQUEST);
+				todb->head.len = ENDION_FUNC_4(sizeof(PROTO_FIND_PLAYER_REQ));
+				todb->org_msg = MSG_ID_PRIVATE_CHAT_FIND_TARGET_REQUEST;
+
+				conn_node_base::add_extern_data(&todb->head, extern_data);
+				if (conn_node_dbsrv::connecter.send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
+					LOG_ERR("%s %d: send to dbsrv err[%d]", __FUNCTION__, __LINE__, errno);
+				}
+			}
+			else
+			{
+				send.pid = target->get_uuid();
+				send.name = target->get_name();
+				send.lv = target->get_attr(PLAYER_ATTR_LEVEL);
+				fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_PRIVATE_CHAT_FIND_TARGET_ANSWER, ans_find_target__pack, send);
+				ChengJieTaskManage::AddRoleLevel(send.pid, send.lv, target->data->chengjie.rest);
+			}
+
+		}
+
+	}
+	req_find_target__free_unpacked(req, NULL);
+
+	return 0;
+}
+int handle_lately_chat_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	ReqLatelyChat *req = req_lately_chat__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-10);
+	}
+	AnsLatelyChat res;
+	ans_lately_chat__init(&res);
+	static const int MAX_LATELY_CHAT = 10;
+	LatelyChat arr[MAX_LATELY_CHAT];
+	LatelyChat *arrPoint[MAX_LATELY_CHAT];
+	uint32_t i = 0;
+	bool toFr = false;
+	for (; i < req->n_playerid && i < MAX_LATELY_CHAT; ++i)
+	{
+		lately_chat__init(&arr[i]);
+		arrPoint[i] = &arr[i];
+		arr[i].playerid = req->playerid[i];
+		player_struct *tmp = player_manager::get_player_by_id(req->playerid[i]);
+		if (tmp != NULL)
+		{
+			arr[i].online = true;
+			arr[i].lv = tmp->get_attr(PLAYER_ATTR_LEVEL);
+			arr[i].job = tmp->get_attr(PLAYER_ATTR_JOB);
+			arr[i].name = tmp->get_name();
+			arr[i].head = tmp->get_attr(PLAYER_ATTR_HEAD);
+			arr[i].zhenying = tmp->get_attr(PLAYER_ATTR_ZHENYING);
+		}
+		else
+		{
+			arr[i].name = (char *)g_tmp_name;
+			toFr = true;
+		}
+	}
+	res.n_player = i;
+	res.player = arrPoint;
+	if (toFr)
+	{
+		conn_node_gamesrv::send_to_friend(extern_data, MSG_ID_LATELY_CHAT_ANSWER, &res, (pack_func)ans_lately_chat__pack);;
+	} 
+	else
+	{
+		fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_LATELY_CHAT_ANSWER, ans_lately_chat__pack, res);
+	}
+	
+	req_lately_chat__free_unpacked(req, NULL);
+	return 0;
+}
 
 int handle_quit_team_request(player_struct *player, EXTERN_DATA *extern_data)
 {
@@ -5400,34 +5590,45 @@ int handle_team_invite_handle_request(player_struct *player, EXTERN_DATA *extern
 	//{
 	//	return 2;
 	//}
+
+	int ret = 0;
 	if (otherPlayer == NULL)
 	{
-		return 3;
+		ret = 190500084;
 	}
-	if (!scene_can_make_team(otherPlayer->data->scene_id))
+	else if (!scene_can_make_team(player->data->scene_id))
 	{
-		return 4;
+		ret = 190500002;
 	}
+	else if (player->m_team != NULL)
+	{
+		ret = 190500469;
+	}
+	if (ret != 0)
+	{
+		send_comm_answer(MSG_ID_CREATE_TEAM_ANSWER, ret, extern_data);
+		return -2;
+	}
+
 	EXTERN_DATA ext_data;
 	ext_data.player_id = otherPlayer->get_uuid();
 	if (accept == TEAM_CHOSE__YES)
 	{
 		if (otherPlayer->m_team == NULL)
 		{
-			player_struct *tmpArr[MAX_TEAM_MEM] = { player, otherPlayer };
-			int ret = 0;
-			if (Team::CreateTeam(tmpArr, 1) == NULL)
+			player_struct *tmpArr[MAX_TEAM_MEM] = {otherPlayer, player};
+			if (Team::CreateTeam(tmpArr, 2) == NULL)
 			{
-				ret = 190500002;
+				send_comm_answer(MSG_ID_CREATE_TEAM_ANSWER, 190500002, &ext_data);
+				send_comm_answer(MSG_ID_CREATE_TEAM_ANSWER, 190500002, extern_data);
 			}
-			send_comm_answer(MSG_ID_CREATE_TEAM_ANSWER, ret, &ext_data);
 		}
-		if (otherPlayer->m_team != NULL)
+		else //(otherPlayer->m_team != NULL)
 		{
 			otherPlayer->m_team->AddMember(*player);
 		}
 	}
-	else if (otherPlayer != NULL)
+	else //if (otherPlayer != NULL)
 	{
 		TeamMemInfo mem;
 		Team::PackMemberInfo(mem, *player);
@@ -6838,10 +7039,10 @@ static int notify_equip_list(player_struct *player, EXTERN_DATA *extern_data)
 	EquipData* equip_data_point[MAX_EQUIP_NUM];
 	EquipEnchantData enchant_data[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
 	EquipEnchantData* enchant_data_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
-	AttrData cur_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
-	AttrData* cur_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
-	AttrData rand_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
-	AttrData* rand_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
+	EquipEnchantAttrData cur_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
+	EquipEnchantAttrData* cur_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
+	EquipEnchantAttrData rand_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
+	EquipEnchantAttrData* rand_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
 
 	resp.result = 0;
 	size_t equip_num = 0;
@@ -6870,7 +7071,8 @@ static int notify_equip_list(player_struct *player, EXTERN_DATA *extern_data)
 			enchant_data[equip_num][enchant_num].index = i;
 
 			cur_attr_point[equip_num][enchant_num] = &cur_attr[equip_num][enchant_num];
-			attr_data__init(&cur_attr[equip_num][enchant_num]);
+			equip_enchant_attr_data__init(&cur_attr[equip_num][enchant_num]);
+			cur_attr[equip_num][enchant_num].pool = enchant_info.cur_attr.pool;
 			cur_attr[equip_num][enchant_num].id = enchant_info.cur_attr.id;
 			cur_attr[equip_num][enchant_num].val = enchant_info.cur_attr.val;
 			enchant_data[equip_num][enchant_num].curattr = cur_attr_point[equip_num][enchant_num];
@@ -6881,7 +7083,8 @@ static int notify_equip_list(player_struct *player, EXTERN_DATA *extern_data)
 				for (int j = 0; j < MAX_EQUIP_ENCHANT_RAND_NUM; ++j)
 				{
 					rand_attr_point[equip_num][enchant_num][rand_num] = &rand_attr[equip_num][enchant_num][rand_num];
-					attr_data__init(&rand_attr[equip_num][enchant_num][rand_num]);
+					equip_enchant_attr_data__init(&rand_attr[equip_num][enchant_num][rand_num]);
+					rand_attr[equip_num][enchant_num][rand_num].pool = enchant_info.rand_attr[j].pool;
 					rand_attr[equip_num][enchant_num][rand_num].id = enchant_info.rand_attr[j].id;
 					rand_attr[equip_num][enchant_num][rand_num].val = enchant_info.rand_attr[j].val;
 					rand_num++;
@@ -7228,10 +7431,11 @@ static int handle_equip_enchant_request(player_struct *player, EXTERN_DATA *exte
 			break;
 		}
 
-		uint32_t attr_quality = star_config->EnchantQuality - 1;
+		uint32_t attr_quality = 0;
 		int rand_idx = 0;
 		if (enchant_info->cur_attr.id > 0)
 		{
+			enchant_info->rand_attr[rand_idx].pool = enchant_info->cur_attr.pool;
 			enchant_info->rand_attr[rand_idx].id = enchant_info->cur_attr.id;
 			enchant_info->rand_attr[rand_idx].val = enchant_info->cur_attr.val;
 			rand_idx++;
@@ -7240,12 +7444,36 @@ static int handle_equip_enchant_request(player_struct *player, EXTERN_DATA *exte
 		{
 			uint32_t rand_val = rand() % n_type;
 			uint32_t attr_type = enchant_type[rand_val];
-			EquipAttribute *attr_config = get_config_by_id(attr_type, &equip_attr_config);
+			EquipAttribute *attr_config = get_equip_enchant_attr_config(star_config->DatabaseSelection, attr_type);
 			if (!attr_config)
 			{
 				ret = ERROR_ID_NO_CONFIG;
 				LOG_ERR("[%s:%d] player[%lu] get attr config failed, attr_type:%u", __FUNCTION__, __LINE__, extern_data->player_id, attr_type);
 				break;
+			}
+
+			uint32_t total_weight = 0;
+			for (uint32_t k = 0; k < attr_config->n_QualityWeight; ++k)
+			{
+				total_weight += attr_config->QualityWeight[k];
+			}
+
+			if (total_weight == 0)
+			{
+				ret = ERROR_ID_NO_CONFIG;
+				break;
+			}
+
+			uint32_t rand_weight = rand() % total_weight;
+			uint32_t tmp_weight = 0;
+			for (uint32_t k = 0; k < attr_config->n_QualityWeight; ++k)
+			{
+				if (tmp_weight <= rand_weight && rand_weight < tmp_weight + attr_config->QualityWeight[k])
+				{
+					attr_quality = k;
+					break;
+				}
+				tmp_weight += attr_config->QualityWeight[k];
 			}
 
 			if (attr_config->n_Rand <= attr_quality || attr_config->Rand[attr_quality] == 0)
@@ -7264,6 +7492,7 @@ static int handle_equip_enchant_request(player_struct *player, EXTERN_DATA *exte
 			{
 				attr_val = (1 + rand() % (uint32_t)(attr_config->Rand[attr_quality] * 10000)) / 10000.0;
 			}
+			enchant_info->rand_attr[rand_idx].pool = attr_config->Database;
 			enchant_info->rand_attr[rand_idx].id = attr_type;
 			enchant_info->rand_attr[rand_idx].val = attr_val;
 		}
@@ -7283,8 +7512,8 @@ static int handle_equip_enchant_request(player_struct *player, EXTERN_DATA *exte
 	EquipEnchantAnswer resp;
 	equip_enchant_answer__init(&resp);
 
-	AttrData rand_data[MAX_EQUIP_ENCHANT_RAND_NUM];
-	AttrData* rand_data_point[MAX_EQUIP_ENCHANT_RAND_NUM];
+	EquipEnchantAttrData rand_data[MAX_EQUIP_ENCHANT_RAND_NUM];
+	EquipEnchantAttrData* rand_data_point[MAX_EQUIP_ENCHANT_RAND_NUM];
 
 	resp.result = ret;
 	resp.type = type;
@@ -7294,7 +7523,8 @@ static int handle_equip_enchant_request(player_struct *player, EXTERN_DATA *exte
 		for (int i = 0; i < MAX_EQUIP_ENCHANT_RAND_NUM; ++i)
 		{
 			rand_data_point[i] = &rand_data[i];
-			attr_data__init(&rand_data[i]);
+			equip_enchant_attr_data__init(&rand_data[i]);
+			rand_data[i].pool = equip_info->enchant[index].rand_attr[i].pool;
 			rand_data[i].id = equip_info->enchant[index].rand_attr[i].id;
 			rand_data[i].val = equip_info->enchant[index].rand_attr[i].val;
 		}
@@ -7331,8 +7561,8 @@ static int handle_equip_enchant_retain_request(player_struct *player, EXTERN_DAT
 
 	int ret = 0;
 	EquipInfo *equip_info = NULL;
-	AttrData retain_attr;
-	attr_data__init(&retain_attr);
+	EquipEnchantAttrData retain_attr;
+	equip_enchant_attr_data__init(&retain_attr);
 	do
 	{
 		equip_info = player->get_equip(type);
@@ -7367,12 +7597,15 @@ static int handle_equip_enchant_retain_request(player_struct *player, EXTERN_DAT
 
 		if (!(retain_index == 0 && enchant_info->cur_attr.id > 0))
 		{
+			enchant_info->cur_attr.pool = enchant_info->rand_attr[retain_index].pool;
 			enchant_info->cur_attr.id = enchant_info->rand_attr[retain_index].id;
 			enchant_info->cur_attr.val = enchant_info->rand_attr[retain_index].val;
 			player->calculate_attribute(true);
+			player->add_achievement_progress(ACType_EQUIP_ENCHANT_COLOR_NUM, 0, 0, 0);
 		}
 
 		memset(enchant_info->rand_attr, 0, sizeof(AttrInfo) * MAX_EQUIP_ENCHANT_RAND_NUM);
+		retain_attr.pool = enchant_info->cur_attr.pool;
 		retain_attr.id = enchant_info->cur_attr.id;
 		retain_attr.val = enchant_info->cur_attr.val;
 	} while(0);
@@ -7897,6 +8130,7 @@ static int handle_equip_gem_compose_request(player_struct *player, EXTERN_DATA *
 
 		player->add_item(product_id, product_num, MAGIC_TYPE_GEM_COMPOSE);
 		player->add_task_progress(TCT_GEM_COMPOSE, 0, 1);
+		player->add_achievement_progress(ACType_EQUIP_GEM_COMPOSE, gem_config->Level, 0, 1);
 	} while(0);
 
 	EquipGemComposeAnswer resp;
@@ -9067,6 +9301,7 @@ static int handle_add_horse_step_request(player_struct *player, EXTERN_DATA *ext
 	{
 		player->data->horse_attr.attr_exp[i] = 0;
 	}
+	player->add_achievement_progress(ACType_HORSE_STEP, player->data->horse_attr.step, 0, 1);
 done:
 	send.step = player->data->horse_attr.step;
 	player->calc_horse_attr();
@@ -10382,9 +10617,6 @@ static int handle_qiecuo_start_request(player_struct *player, EXTERN_DATA *exter
 	nty.name = target->get_name();
 	nty.player_id = target->get_uuid();
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_QIECUO_START_NOTIFY, qiecuo_start_notify__pack, nty);
-
-	player->add_achievement_progress(ACType_QIECUO, 0, 0, 1);
-	target->add_achievement_progress(ACType_QIECUO, 0, 0, 1);
 
 	return (0);
 }
@@ -12657,6 +12889,7 @@ static int handle_chengjie_find_target_request(player_struct *player, EXTERN_DAT
 				strncpy(todb->name, req->name, 33);
 				todb->head.msg_id = ENDION_FUNC_2(SERVER_PROTO_FIND_PLAYER_REQUEST);
 				todb->head.len = ENDION_FUNC_4(sizeof(PROTO_FIND_PLAYER_REQ));
+				todb->org_msg = MSG_ID_CHENGJIE_FIND_TARGET_REQUEST;
 
 				conn_node_base::add_extern_data(&todb->head, extern_data);
 				if (conn_node_dbsrv::connecter.send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
@@ -14337,12 +14570,17 @@ static int on_login_send_zhenying(player_struct *player, EXTERN_DATA *extern_dat
 			player->data->zhenying.task = table->ID;
 			player->data->zhenying.task_type = table->Type;
 		}
-		FactionBattleTable *tableFa = get_zhenying_battle_table(player->get_attr(PLAYER_ATTR_LEVEL));
+		FactionBattleTable *tableFa = get_zhenying_battle_table(player->get_attr(PLAYER_ATTR_LEVEL)); //todo delete
 		if (tableFa != NULL)
 		{
 			player->data->zhenying.mine = tableFa->BoxOpenNum;
 		}
 		player->data->zhenying.last_week = time_helper::nextWeek(5 * 3600);
+		ParameterTable *tablePa = get_config_by_id(161000355, &parameter_config);
+		if (tablePa != NULL)
+		{
+			player->data->zhenying.award_num = tablePa->parameter1[3];
+		}
 	}
 
 	player->send_zhenying_info();
@@ -14461,6 +14699,18 @@ static int handle_zhenying_fight_set_ready_request(player_struct *player, EXTERN
 	zhenying_set_ready__free_unpacked(req, NULL);
 	return 0;
 }
+static int handle_zhenying_fight_ready_state_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (comm_check_player_valid(player, extern_data->player_id) != 0)
+	{
+		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
+		return (-1);
+	}
+	
+	ZhenyingBattle::GetInstance()->GetReadyState(*player);
+
+	return 0;
+}
 static int handle_zhenying_fight_myside_score_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (comm_check_player_valid(player, extern_data->player_id) != 0)
@@ -14477,6 +14727,7 @@ static int handle_zhenying_fight_myside_score_request(player_struct *player, EXT
 	//if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE)
 	{
 		ZhenyingBattle::GetInstance()->GetMySideScore(*player);
+		ZhenyingBattle::GetInstance()->SendMyScore(*player);
 	}
 	//else
 	//{
@@ -15154,6 +15405,10 @@ static int handle_answer_common_question_request(player_struct *player, EXTERN_D
 		player->check_activity_progress(AM_ANSWER, QUESTION_DAILY);
 		player->add_task_progress(TCT_QUESTION_JOIN, 0, 1);
 		player->add_achievement_progress(ACType_ANSWER, QUESTION_DAILY, 0, 1);
+		if (player->data->common_answer.right == player->data->common_answer.number)
+		{
+			player->add_achievement_progress(ACType_DAILY_ANSWER_ALL_RIGHT, 0, 0, 1);
+		}
 		player->data->common_answer.next_open = time_helper::get_cached_time() / 1000 + 3600 + cd;
 	}
 	else
@@ -15720,10 +15975,10 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 	EquipData* equip_data_point[MAX_EQUIP_NUM];
 	EquipEnchantData enchant_data[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
 	EquipEnchantData* enchant_data_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
-	AttrData cur_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
-	AttrData* cur_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
-	AttrData rand_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
-	AttrData* rand_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
+	EquipEnchantAttrData cur_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
+	EquipEnchantAttrData* cur_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
+	EquipEnchantAttrData rand_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
+	EquipEnchantAttrData* rand_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
 
 	BaguapaiDressData dress_data[MAX_BAGUAPAI_STYLE_NUM];
 	BaguapaiDressData* dress_data_point[MAX_BAGUAPAI_STYLE_NUM];
@@ -15806,7 +16061,8 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 			enchant_data[equip_num][enchant_num].index = i;
 
 			cur_attr_point[equip_num][enchant_num] = &cur_attr[equip_num][enchant_num];
-			attr_data__init(&cur_attr[equip_num][enchant_num]);
+			equip_enchant_attr_data__init(&cur_attr[equip_num][enchant_num]);
+			cur_attr[equip_num][enchant_num].pool = enchant_info.cur_attr.pool;
 			cur_attr[equip_num][enchant_num].id = enchant_info.cur_attr.id;
 			cur_attr[equip_num][enchant_num].val = enchant_info.cur_attr.val;
 			enchant_data[equip_num][enchant_num].curattr = cur_attr_point[equip_num][enchant_num];
@@ -15817,7 +16073,8 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 				for (int j = 0; j < MAX_EQUIP_ENCHANT_RAND_NUM; ++j)
 				{
 					rand_attr_point[equip_num][enchant_num][rand_num] = &rand_attr[equip_num][enchant_num][rand_num];
-					attr_data__init(&rand_attr[equip_num][enchant_num][rand_num]);
+					equip_enchant_attr_data__init(&rand_attr[equip_num][enchant_num][rand_num]);
+					rand_attr[equip_num][enchant_num][rand_num].pool = enchant_info.rand_attr[j].pool;
 					rand_attr[equip_num][enchant_num][rand_num].id = enchant_info.rand_attr[j].id;
 					rand_attr[equip_num][enchant_num][rand_num].val = enchant_info.rand_attr[j].val;
 					rand_num++;
@@ -16534,6 +16791,45 @@ static int handle_doufachang_buy_challenge(player_struct *player, EXTERN_DATA *e
 	return (0);
 }
 
+static int handle_doufachang_sync_rank(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	DOUFACHANG_SYNC_RANK *req = (DOUFACHANG_SYNC_RANK *)get_data();
+	player->data->doufachang_rank = req->my_rank;
+	player->add_achievement_progress(ACType_DOUFACHANG_RANK, player->data->doufachang_rank, 0, 1);
+	if (req->defencer_id > 0)
+	{
+		player_struct *defencer = player_manager::get_player_by_id(req->defencer_id);
+		if (defencer)
+		{
+			defencer->data->doufachang_rank = req->defencer_rank;
+			defencer->add_achievement_progress(ACType_DOUFACHANG_RANK, defencer->data->doufachang_rank, 0, 1);
+		}
+	}
+
+	return 0;
+}
+
+static int handle_doufachang_sync_buy_challenge(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	uint32_t *req = (uint32_t *)get_data();
+	uint32_t count = *req;
+	player->add_achievement_progress(ACType_DOUFACHANG_BUY_CHALLENGE, 0, 0, count);
+
+	return 0;
+}
+
 static int handle_doufachang_reward(player_struct *player, EXTERN_DATA *extern_data)
 {
 	DOUFACHANG_GET_REWARD_REQUEST *req = (DOUFACHANG_GET_REWARD_REQUEST *)get_data();
@@ -16591,6 +16887,24 @@ static int handle_friend_send_gift_success(player_struct *player, EXTERN_DATA *e
 	}
 
 	player->add_achievement_progress(ACType_FRIEND_SEND_GIFT, 0, 0, 1);
+	return 0;
+}
+
+static int handle_friend_is_enemy_answer(player_struct *player, EXTERN_DATA *extern_data)
+{
+	LOG_INFO("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	FRIEND_IS_ENEMY_ANSWER *resp = (FRIEND_IS_ENEMY_ANSWER *)get_data();
+	if (resp->is_enemy)
+	{
+		player->add_achievement_progress(ACType_KILL_ENEMY, 0, 0, 1);
+	}
 	return 0;
 }
 
@@ -17739,7 +18053,7 @@ static int handle_partner_recruit_request(player_struct *player, EXTERN_DATA *ex
 			player->add_item_list_otherwise_send_mail(award_item_map, MAGIC_TYPE_PARTNER_RECRUIT, 270300030, NULL);
 		}
 		player->add_task_progress(TCT_PARTNER_RECRUIT, 0, config->RecruitNum);
-		player->add_achievement_progress(ACType_PARTNER_RECRUIT, 0, 0, 1);
+		player->add_achievement_progress(ACType_PARTNER_RECRUIT, type, 0, 1);
 	} while(0);
 
 	PartnerRecruitAnswer resp;
@@ -18637,7 +18951,7 @@ static int handle_partner_fabao_stone_request(player_struct *player, EXTERN_DATA
 		player->broadcast_one_attr_changed(PLAYER_ATTR_ENERGY, player->data->attrData[PLAYER_ATTR_ENERGY], false, true);
 		
 		player->add_item(fabao_id, 1 , MAGIC_TYPE_PARTNER_FABAO_STONE);
-		player->add_achievement_progress(ACType_FABAO_COMPOSE, fabao_id, 0, 1);
+		player->add_achievement_progress(ACType_FABAO_COMPOSE, get_item_quality(fabao_id), 0, 1);
 	}while(0);
 
 
@@ -18963,7 +19277,7 @@ static int handle_skip_new_raid_request(player_struct *player, EXTERN_DATA *exte
 	
 
 	raid->clear_monster();
-	raid->m_player[0]->clear_one_buff(114400018);
+	raid->m_player[0]->delete_one_buff(114400018, true);
 	raid->player_leave_raid(raid->m_player[0]);		
 
 
@@ -20449,7 +20763,7 @@ static int handle_trade_on_shelf_request(player_struct *player, EXTERN_DATA *ext
 		uint32_t has_coin = player->get_coin();
 		if (has_coin < need_coin)
 		{
-			ret = ERROR_ID_COIN_NOT_ENOUGH;
+			ret = 190500454;
 			LOG_ERR("[%s:%d] player[%lu] coin, has:%u, need:%u", __FUNCTION__, __LINE__, extern_data->player_id, has_coin, need_coin);
 			break;
 		}
@@ -20753,6 +21067,81 @@ static int handle_guild_ruqin_creat_monster_level_answer(player_struct * /*playe
 	return 0;
 }
 
+static int handle_raid_player_enter_request(player_struct */*player*/, EXTERN_DATA *extern_data)
+{
+	uint64_t player_id = extern_data->player_id;
+	player_struct* player = player_manager::get_player_by_id(player_id);
+	if (player)
+	{
+		LOG_ERR("[%s:%d] player_id[%lu]", __FUNCTION__, __LINE__, player_id);
+		return (0);
+	}
+
+	RAID_ENTER_REQUEST *req = (RAID_ENTER_REQUEST*)conn_node_gamesrv::connecter.get_data();
+
+	LOG_INFO("[%s:%d] player[%lu] raid[%u]", __FUNCTION__, __LINE__, extern_data->player_id, req->raid_id);
+	
+	player = player_manager::create_player(req, extern_data->player_id);
+	if (!player)
+	{
+		LOG_ERR("%s %d: can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-10);
+	}
+	raid_struct *raid = raid_manager::create_raid(req->raid_id, player);
+	if (!raid)
+	{
+		LOG_ERR("%s: player[%lu] create raid[%u] failed", __FUNCTION__, extern_data->player_id, req->raid_id);
+		return (-20);
+	}
+	int x = raid->res_config->BirthPointX, z = raid->res_config->BirthPointZ;
+	double direct = 0;
+	if (raid->m_config->DengeonRank == DUNGEON_TYPE_BATTLE_NEW)
+	{
+		BattlefieldTable *table = zhenying_fight_config.begin()->second;
+		if (table != NULL)
+		{
+			ZhenyingBattle::GetInstance()->GetRelivePos(table, player->get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
+		}
+	}
+	raid->player_enter_raid(player, x, z, direct);
+	return (0);
+}
+static int handle_raid_team_enter_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	
+	return (0);
+}
+static int handle_raid_leave_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	player->set_out_raid_pos_and_clear_scene();
+	if (player->data->scene_id <= SCENCE_DEPART)
+	{
+		struct position *pos = player->get_pos();
+		uint32_t scene_id = player->data->scene_id;
+
+		scene_struct *new_scene = scene_manager::get_scene(scene_id);
+		if (!new_scene)
+		{
+			LOG_ERR("%s %d: player[%lu] transfer to the wrong scene[%u]", __FUNCTION__, __LINE__, player->data->player_id, scene_id);
+			return (-30);
+		}
+		new_scene->player_enter_scene(player, pos->pos_x, player->data->pos_y, pos->pos_z, player->data->leaveraid.direct);		
+	}
+	else
+	{
+		DungeonTable *config = get_config_by_id(player->data->scene_id, &all_raid_config);
+		if (config)
+			player->move_to_raid_impl(config, true);
+	}
+	return (0);
+}
+static int handle_attr_changed_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	ATTR_CHANGED_REQUEST *req = (ATTR_CHANGED_REQUEST*)conn_node_gamesrv::connecter.buf_head();		
+	player->set_attr(req->id, req->value);
+	return (0);
+}
+
 static int handle_play_drama_begin_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (!player || !player->is_online())
@@ -20788,11 +21177,60 @@ static int handle_play_drama_end_request(player_struct *player, EXTERN_DATA *ext
 	if (raid)
 	{
 		raid->start_monster_ai();
+		if (raid->ai && raid->ai->raid_on_play_drama_end)
+		{
+			raid->ai->raid_on_play_drama_end(raid);
+		}
 	}
 	else if (player->sight_space)
 	{
 		player->sight_space->start_monster_ai();
 	}
+
+	return 0;
+}
+
+static int handle_travel_task_accept_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	int ret = 0;
+	do
+	{
+		if (player->get_travel_task() != 0)
+		{
+			ret = 1;
+			LOG_ERR("[%s:%d] player[%lu] doing task.", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+		if (player->data->travel_round_num >= sg_travel_round_amount)
+		{
+			ret = 2;
+			LOG_ERR("[%s:%d] player[%lu] travel task all done today.", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+		uint32_t task_id = player->generate_next_travel_task();
+		if (task_id == 0)
+		{
+			ret = 3;
+			LOG_ERR("[%s:%d] player[%lu] generate travel task failed.", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+		ret = player->accept_task(task_id, false);
+	} while(0);
+
+	CommAnswer resp;
+	comm_answer__init(&resp);
+
+	resp.result = ret;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_TRAVEL_TASK_ACCEPT_ANSWER, comm_answer__pack, resp);
 
 	return 0;
 }
@@ -20853,6 +21291,7 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_CANCEL_JOIN_ZHENYING_FIGHT_REQUEST, handle_cancel_join_zhenying_battle_request);
 	add_msg_handle(MSG_ID_INTO_ZHENYING_FIGHT_REQUEST, handle_into_zhenying_fight_request);
 	add_msg_handle(MSG_ID_ZHENYING_FIGHT_SET_READY_STATE_REQUEST, handle_zhenying_fight_set_ready_request);
+	add_msg_handle(MSG_ID_ZHENYING_FIGHT_READY_STATE_REQUEST, handle_zhenying_fight_ready_state_request);
 	add_msg_handle(MSG_ID_ZHENYING_FIGHT_MYSIDE_SCORE_REQUEST, handle_zhenying_fight_myside_score_request);
 
 	//妖师国御
@@ -20942,6 +21381,8 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_RELIVE_REQUEST, handle_relive_request);
 	add_msg_handle(MSG_ID_CHAT_REQUEST, handle_chat_request);
 	add_msg_handle(MSG_ID_CHAT_BROADCAST_REQUEST, handle_chat_broadcast_request);
+	add_msg_handle(MSG_ID_PRIVATE_CHAT_FIND_TARGET_REQUEST, handle_private_chat_find_target_request);
+	add_msg_handle(MSG_ID_LATELY_CHAT_REQUEST, handle_lately_chat_request);
 
 	add_msg_handle(MSG_ID_PLAYER_RENAME_REQUEST, handle_rename_request);
 
@@ -21065,6 +21506,7 @@ void install_msg_handle()
 	add_msg_handle(SERVER_PROTO_FRIEND_ADD_GIFT, handle_friend_add_gift_request);
 	add_msg_handle(SERVER_PROTO_FRIEND_SYNC_FRIEND_NUM, handle_friend_sync_friend_num);
 	add_msg_handle(SERVER_PROTO_FRIEND_SEND_GIFT_SUCCESS, handle_friend_send_gift_success);
+	add_msg_handle(SERVER_PROTO_FRIEND_IS_ENEMY_ANSWER, handle_friend_is_enemy_answer);
 
 	add_msg_handle(MSG_ID_AUTO_ADD_HP_SET_REQUEST, handle_auto_add_hp_set_request);
 
@@ -21100,6 +21542,8 @@ void install_msg_handle()
 	add_msg_handle(SERVER_PROTO_DOUFACHANG_CHALLENGE_REQUEST, handle_doufachang_challenge);
 	add_msg_handle(SERVER_PROTO_DOUFACHANG_ADD_REWARD_REQUEST, handle_doufachang_reward);
 	add_msg_handle(SERVER_PROTO_DOUFACHANG_BUY_CHALLENGE_REQUEST, handle_doufachang_buy_challenge);			
+	add_msg_handle(SERVER_PROTO_DOUFACHANG_SYNC_RANK, handle_doufachang_sync_rank);
+	add_msg_handle(SERVER_PROTO_DOUFACHANG_SYNC_BUY_CHALLENGE, handle_doufachang_sync_buy_challenge);
 
 	add_msg_handle(SERVER_PROTO_RANK_SYNC_RANK, handle_rank_sync_rank);		
 	add_msg_handle(SERVER_PROTO_RANK_SYNC_CHANGE, handle_rank_sync_change);		
@@ -21132,6 +21576,13 @@ void install_msg_handle()
 
 	add_msg_handle(MSG_ID_PLAY_DRAMA_BEGIN_REQUEST, handle_play_drama_begin_request);
 	add_msg_handle(MSG_ID_PLAY_DRAMA_END_REQUEST, handle_play_drama_end_request);
+
+	add_msg_handle(SERVER_PROTO_RAID_PLAYER_ENTER_REQUEST, handle_raid_player_enter_request);
+	add_msg_handle(SERVER_PROTO_RAID_TEAM_ENTER_REQUEST, handle_raid_team_enter_request);	
+	add_msg_handle(SERVER_PROTO_RAID_LEAVE_REQUEST, handle_raid_leave_request);
+	add_msg_handle(SERVER_PROTO_ATTR_CHANGED_REQUEST, handle_attr_changed_request);		
+
+	add_msg_handle(MSG_ID_TRAVEL_TASK_ACCEPT_REQUEST, handle_travel_task_accept_request);
 }
 
 void uninstall_msg_handle()

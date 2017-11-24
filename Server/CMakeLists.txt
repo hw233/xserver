@@ -27,6 +27,10 @@ add_subdirectory(comm_lib)
 add_subdirectory(conn_srv)
 add_subdirectory(game_srv)
 add_subdirectory(game_srv/so_game_srv)
+
+#add_subdirectory(raid_srv)
+#add_subdirectory(raid_srv/so_game_srv)
+
 add_subdirectory(db_srv)
 add_subdirectory(login_srv)
 add_subdirectory(dump_srv)

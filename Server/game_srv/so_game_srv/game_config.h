@@ -17,6 +17,9 @@
 #define SKILL_RANGE_TYPE_CIRCLE 0
 //以目标为中心的矩形
 #define SKILL_RANGE_TYPE_TARGET_RECT 3
+//以目标为中心的圆形
+#define SKILL_RANGE_TYPE_TARGET_CIRCLE 4
+
 //直接命中
 //#define SKILL_RANGE_TYPE_DIRECT 3
 
@@ -32,6 +35,7 @@ bool is_guild_battle_raid(uint32_t id);
 bool scene_can_make_team(uint32_t scene_id); //场景是否能组队
 int get_scene_birth_pos(uint32_t scene_id, float *pos_x, float *pos_y, float *pos_z, float *face_y);
 int bagua_card_to_bind_item(uint32_t card_id);
+int raid_in_raidsrv(uint32_t raid_id);
 RandomMonsterTable *get_random_monster_config(uint32_t type, uint64_t level);
 RandomDungeonTable *get_random_guoyu_fb_config(uint32_t type);
 SpecialtySkillTable *get_yaoshi_skill_config(int type, uint64_t level);
@@ -66,11 +70,14 @@ RecruitTable *get_partner_recruit_config(uint32_t type);
 GangsSkillTable *get_guild_skill_config(uint32_t type, uint32_t level);
 AchievementHierarchyTable *get_achievement_config(uint32_t achievement_id, uint32_t star);
 SceneCreateMonsterTable *get_daily_zhenying_truck_config(uint32_t id);
+EquipAttribute *get_equip_enchant_attr_config(uint32_t pool, uint32_t attr_id);
+TravelTable *get_travel_config(uint32_t level);
 
 uint32_t get_item_relate_id(uint32_t id);
 int get_item_bind_and_unbind_id(uint32_t id, uint32_t *bind_id, uint32_t *unbind_id);
 uint32_t get_bag_total_num(uint32_t job, uint32_t level);
 uint32_t get_item_stack_num(uint32_t id);
+int get_item_quality(uint32_t item_id);
 int get_drop_item(uint32_t drop_id, std::map<uint32_t, uint32_t> &item_list, uint32_t stack = 0);
 int get_player_sex(uint32_t job); //获取角色性别
 int get_task_type(uint32_t task_id);
@@ -88,6 +95,7 @@ int get_dungeon_type(uint32_t raid_id);
 int item_id_to_trade_id(uint32_t item_id);
 int trade_id_to_item_id(uint32_t trade_id);
 bool strong_goal_is_open(uint32_t goal_id, uint32_t player_lv);
+int get_equip_enchant_attr_color(uint32_t pool, uint32_t attr_id, double attr_val);
 
 #define DEFAULT_SCENE_ID  (10012) 
 

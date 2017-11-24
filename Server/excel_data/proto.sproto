@@ -512,9 +512,9 @@
 	StarSchedule 3 : integer
 	ConsumeItem 4 : integer
 	ConsumeCoin 5 : integer
-	EnchantQuality 6 : integer
 	Quality 7 : integer
 	StarLv 8 : integer 
+	DatabaseSelection 9 : integer 
 }
 
 .EquipLock {
@@ -536,8 +536,11 @@
 }
 
 .EquipAttribute {
-	Effect 1 : integer
-	Rand 2 : *double
+	ID 1 : integer
+	Database 2 : integer
+	Effect 3 : integer
+	Rand 4 : *double
+	QualityWeight 5 : *integer
 }
 
 .GemAttribute {
@@ -847,6 +850,7 @@
 	AuxiliaryValue 9 : *integer
 	Sum 10 : integer
 	Active 11 : integer
+	ResetCD 12 : integer
 }
 
 .ActiveTable {
@@ -1445,6 +1449,36 @@
 	FirstReward 12 : *integer
 	Num 13 : *integer
 	Ratio 14 : double
+	Assists 15 : integer
+	BottomKillMark 16 : integer
+	BottomReward 17 : *integer
+	BottomRewardNum 18 : *integer
+	VictoryIntegral 19 : integer
+}
+
+.BattleFieldRank
+{
+	ID 1 : integer
+	LowerLimitRank1 2 : integer
+	UpperLimitRank1 3 : integer
+	Reward1 4 : *integer
+	Num1 5 : *integer
+	LowerLimitRank2 6 : integer
+	UpperLimitRank2 7 : integer
+	Reward2 8 : *integer
+	Num2 9 : *integer
+	LowerLimitRank3 10 : integer
+	UpperLimitRank3 11 : integer
+	Reward3 12 : *integer
+	Num3 13 : *integer
+	LowerLimitRank4 14 : integer
+	UpperLimitRank4 15 : integer
+	Reward4 16 : *integer
+	Num4 17 : *integer
+	LowerLimitRank5 18 : integer
+	UpperLimitRank5 19 : integer
+	Reward5 20 : *integer
+	Num5 21 : *integer
 }
 
 .ChallengeTable{
@@ -1580,3 +1614,16 @@
 	ID 1 : integer 
 	MonseterID 2 : *integer
 }
+.raidsrv_config
+{
+	ID 1 : integer
+	raid_id 2 : *integer
+}
+.TravelTable {
+	ID 1 : integer 
+	LevelSection 2 : *integer
+	QuestGroup 3 : *integer
+	RewardGroup 4 : integer
+	TimeRewardGroup 5 : integer
+}
+

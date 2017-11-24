@@ -159,10 +159,10 @@ static void	do_region_effect(raid_struct *raid, player_struct *player)
 		break;
 		default:
 		{
-			player->clear_one_buff(sg_pvp_raid_blue_region_buff_id[0]);
-			player->clear_one_buff(sg_pvp_raid_blue_region_buff_id[1]);
-			player->clear_one_buff(sg_pvp_raid_red_region_buff_id[0]);
-			player->clear_one_buff(sg_pvp_raid_red_region_buff_id[1]);
+			player->delete_one_buff(sg_pvp_raid_blue_region_buff_id[0], true);
+			player->delete_one_buff(sg_pvp_raid_blue_region_buff_id[1], true);
+			player->delete_one_buff(sg_pvp_raid_red_region_buff_id[0], true);
+			player->delete_one_buff(sg_pvp_raid_red_region_buff_id[1], true);
 		}
 	}
 }
@@ -816,6 +816,7 @@ static void pvp_raid_player_kill(raid_struct *raid, int target_index, player_str
 	assert(tmp);
 
 	raid->PVP_DATA.kill_record[t]++;
+	player->add_achievement_progress(ACType_PVP_KILL, PVP_3_RAID, raid->PVP_DATA.kill_record[t], 1);
 
 	PvpKillNotify nty;
 	pvp_kill_notify__init(&nty);

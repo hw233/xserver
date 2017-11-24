@@ -1087,6 +1087,29 @@ int get_guild_join_apply(uint32_t guild_id, std::vector<uint64_t> &applyIds)
 	return 0;
 }
 
+void broadcast_guild_join_apply(GuildInfo *guild, uint64_t player_id, PlayerRedisInfo *redis_player)
+{
+	GuildJoinPlayerData nty;
+	guild_join_player_data__init(&nty);
+
+	nty.playerid = player_id;
+	nty.name = redis_player->name;
+	nty.job = redis_player->job;
+	nty.level = redis_player->lv;
+	nty.fc = redis_player->fighting_capacity;
+
+	std::vector<uint64_t> player_ids;
+	for (uint32_t i = 0; i < guild->member_num; ++i)
+	{
+		if (player_has_permission(guild->members[i], GOPT_DEAL_JOIN))
+		{
+			player_ids.push_back(guild->members[i]->player_id);
+		}
+	}
+	
+	conn_node_guildsrv::broadcast_message(MSG_ID_GUILD_JOIN_NOTIFY, &nty, (pack_func)guild_join_player_data__pack, player_ids);
+}
+
 int save_guild_switch(GuildInfo *guild, uint32_t type)
 {
 	char save_sql[300];
@@ -1235,6 +1258,96 @@ bool player_has_permission(GuildPlayer *player, uint32_t type)
 	return false;
 }
 
+static void clear_timeout_player_invite(void)
+{
+	uint32_t now = time_helper::get_cached_time() / 1000;
+	char sql[256];
+	sprintf(sql, "delete from guild_invite where `invite_time` <= FROM_UNIXTIME(%u)", (now - sg_guild_invite_cd));
+	query(sql, 1, NULL);
+}
+
+int insert_one_invite(uint64_t inviter_id, uint64_t invitee_id, uint32_t guild_id) //插入一条邀请信息
+{
+	uint64_t effect = 0;
+	char sql[256];
+	sprintf(sql, "insert into guild_invite set `inviter_id` = %lu, `invitee_id` = %lu, `guild_id` = %u, invite_time = now()", inviter_id, invitee_id, guild_id);
+	query(sql, 1, &effect);
+	if (effect != 1)
+	{
+		LOG_ERR("[%s:%d] query failed, sql: %s, error:%s", __FUNCTION__, __LINE__, sql, mysql_error());
+		return ERROR_ID_MYSQL_QUERY;
+	}
+	return 0;
+}
+
+void mark_invite_deal(uint64_t inviter_id, uint64_t invitee_id, uint32_t guild_id, uint32_t deal_type)
+{
+	uint64_t effect = 0;
+	char sql[256];
+	sprintf(sql, "update guild_invite set `deal_type` = %u where `inviter_id` = %lu and `invitee_id` = %lu and `guild_id` = %u", deal_type, inviter_id, invitee_id, guild_id);
+	query(sql, 1, &effect);
+	if (effect != 1)
+	{
+		LOG_ERR("[%s:%d] query failed, sql: %s, error:%s", __FUNCTION__, __LINE__, sql, mysql_error());
+	}
+}
+
+uint32_t get_invite_cd_time(uint64_t inviter_id, uint64_t invitee_id, uint32_t guild_id)
+{
+	clear_timeout_player_invite();
+
+	char sql[1024];
+	MYSQL_RES *res = NULL;
+	MYSQL_ROW row = NULL;
+
+	sprintf(sql, "select `invite_time` from guild_invite where `inviter_id` = %lu and `invitee_id` = %lu and `guild_id` = %u", inviter_id, invitee_id, guild_id);
+
+	res = query(sql, 1, NULL);
+	if (!res)
+	{
+		return 0;
+	}
+
+	row = fetch_row(res);
+	if (row)
+	{
+		uint32_t time = strtoul(row[0], NULL, 10);
+		free_query(res);
+		return (time + sg_guild_invite_cd);
+	}
+	free_query(res);
+
+	return 0;
+}
+
+bool check_invite_is_deal(uint64_t inviter_id, uint64_t invitee_id, uint32_t guild_id)
+{
+	clear_timeout_player_invite();
+
+	char sql[1024];
+	MYSQL_RES *res = NULL;
+	MYSQL_ROW row = NULL;
+
+	sprintf(sql, "select `deal_type` from guild_invite where `inviter_id` = %lu and `invitee_id` = %lu and `guild_id` = %u", inviter_id, invitee_id, guild_id);
+
+	res = query(sql, 1, NULL);
+	if (!res)
+	{
+		return true;
+	}
+
+	row = fetch_row(res);
+	if (row)
+	{
+		uint32_t deal_type = strtoul(row[0], NULL, 10);
+		free_query(res);
+		return (deal_type != 0);
+	}
+	free_query(res);
+
+	return true;
+}
+
 void sync_guild_rename_to_gamesrv(GuildInfo *guild)
 {
 	PROTO_SYNC_GUILD_RENAME *pData = (PROTO_SYNC_GUILD_RENAME *)conn_node_base::get_send_data();
@@ -1309,8 +1422,12 @@ static int insert_new_guild_to_db(GuildInfo *guild)
 
 	size_t data_size = pack_guild_info(guild, save_data);
 	p = save_sql;
-	p += sprintf(save_sql, "insert into guild set `icon` = %u, `master_id` = %lu, `level` = %u, `popularity` = %u, `approve_state` = %u, `recruit_state` = %u, `zhenying` = %u, `recruit_notice` = \'\', `announcement` = \'\', `name` = \'", 
+	p += sprintf(save_sql, "insert into guild set `icon` = %u, `master_id` = %lu, `level` = %u, `popularity` = %u, `approve_state` = %u, `recruit_state` = %u, `zhenying` = %u, `recruit_notice` = \'", 
 			guild->icon, guild->master_id, get_guild_level(guild), guild->popularity, guild->approve_state, guild->recruit_state, guild->zhenying);
+	p += escape_string(p, (const char *)guild->recruit_notice, strlen(guild->recruit_notice));
+	p += sprintf(p, "\', `announcement` = \'");
+	p += escape_string(p, (const char *)guild->announcement, strlen(guild->announcement));
+	p += sprintf(p, "\', `name` = \'");
 	p += escape_string(p, (const char *)guild->name, strlen(guild->name));
 	p += sprintf(p, "\', `comm_data` = \'");
 	p += escape_string(p, (const char *)save_data, data_size);
@@ -1538,40 +1655,34 @@ int join_guild(uint64_t player_id, GuildInfo *guild)
 			sync_guild_task_to_gamesrv(player);
 		}
 
+		//通知加入玩家帮会信息，这个消息要最先发
+		if (redis_player->status == 0)
+		{
+			EXTERN_DATA ext_data;
+			ext_data.player_id = player_id;
+			resp_guild_info(&conn_node_guildsrv::connecter, &ext_data, MSG_ID_GUILD_INFO_ANSWER, 0, player);
+			
+			std::vector<char *> args;
+			args.push_back(guild->name);
+			conn_node_guildsrv::send_system_notice(player_id, 190500249, &args);
+		}
+
 		broadcast_guild_attr_update(guild, GUILD_ATTR_TYPE__ATTR_MEMBER_NUM, guild->member_num, player->player_id);
 
-
-		do
+		//添加帮会日志
 		{
+			GuildLog *log = get_usual_insert_log(guild);
+			log->type = GULT_JOIN;
+			log->time = player->join_time; 
+			snprintf(log->args[0], MAX_GUILD_LOG_ARG_LEN, "%s", redis_player->name);
+			broadcast_usual_log_add(guild, log);
+			save_guild_info(guild);
+		}
 
-			{
-				GuildLog *log = get_usual_insert_log(guild);
-				log->type = GULT_JOIN;
-				log->time = player->join_time; 
-				snprintf(log->args[0], MAX_GUILD_LOG_ARG_LEN, "%s", redis_player->name);
-				broadcast_usual_log_add(guild, log);
-				save_guild_info(guild);
-			}
-
-			//通知加入玩家帮会信息
-			if (redis_player->status == 0)
-			{
-				EXTERN_DATA ext_data;
-				ext_data.player_id = player_id;
-				resp_guild_info(&conn_node_guildsrv::connecter, &ext_data, MSG_ID_GUILD_INFO_ANSWER, 0, player);
-
-				std::vector<char *> args;
-				args.push_back(guild->name);
-				conn_node_guildsrv::send_system_notice(player_id, 190500249, &args);
-			}
-
-			//聊天发送
-			ParameterTable *param_config = get_config_by_id(161000148, &parameter_config);
-			if (!param_config)
-			{
-				break;
-			}
-
+		//聊天发送
+		ParameterTable *param_config = get_config_by_id(161000148, &parameter_config);
+		if (param_config)
+		{
 			char content[1024];
 			sprintf(content, param_config->parameter2, redis_player->name);
 
@@ -1581,7 +1692,7 @@ int join_guild(uint64_t player_id, GuildInfo *guild)
 			req.contain = content;
 
 			broadcast_guild_chat(guild, &req);
-		} while(0);
+		}
 	} while(0);
 
 	if (ret != 0)
@@ -1660,7 +1771,7 @@ int appoint_office(GuildPlayer *appointor, GuildPlayer *appointee, uint32_t offi
 
 	if (!player_has_permission(appointor, GOPT_APPOINT) || (office != GUILD_OFFICE_TYPE__OFFICE_MASTER && (office <= appointor->office || appointee->office <= appointor->office)))
 	{
-		return ERROR_ID_GUILD_PLAYER_NO_PERMISSION;
+		return 190500453;
 	}
 
 	uint32_t mail_id = 0;
@@ -1878,13 +1989,13 @@ int kick_member(GuildPlayer *player, uint64_t kick_id)
 	GuildPlayer *kick_player = guild->members[kick_idx];
 	if (kick_player->office == GUILD_OFFICE_TYPE__OFFICE_MASTER)
 	{
-		return ERROR_ID_GUILD_PLAYER_NO_PERMISSION;
+		return 190500453;
 	}
 
 	if (!player_has_permission(player, GOPT_KICK) || kick_player->office <= player->office)
 	{
 		LOG_ERR("[%s:%d] player[%lu] no permission, office:%u", __FUNCTION__, __LINE__, player->player_id, player->office);
-		return ERROR_ID_GUILD_PLAYER_NO_PERMISSION;
+		return 190500453;
 	}
 
 	AutoReleaseBatchRedisPlayer t1;

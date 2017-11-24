@@ -526,7 +526,7 @@ local ParameterTable = {
 		},
 	[161000104] = {
 		['ID'] = 161000104,
-		['parameter1'] = {201070039,2},
+		['parameter1'] = {201070039,1},
 		['parameter2'] = ''
 		},
 	[161000105] = {
@@ -536,7 +536,7 @@ local ParameterTable = {
 		},
 	[161000106] = {
 		['ID'] = 161000106,
-		['parameter1'] = {3},
+		['parameter1'] = {60},
 		['parameter2'] = ''
 		},
 	[161000107] = {
@@ -577,7 +577,7 @@ local ParameterTable = {
 	[161000114] = {
 		['ID'] = 161000114,
 		['parameter1'] = {},
-		['parameter2'] = '每天可领取10组任务，每组任务包含3个子任务，[fb9e40]赏金专精[-]可额外提高[fb9e40]%s赏金经验[-]'
+		['parameter2'] = '每周可完成60组任务，每组任务包含3个子任务，[fb9e40]赏金专精[-]可额外提高[fb9e40]%s赏金经验[-]'
 		},
 	[161000115] = {
 		['ID'] = 161000115,
@@ -586,7 +586,7 @@ local ParameterTable = {
 		},
 	[161000116] = {
 		['ID'] = 161000116,
-		['parameter1'] = {10},
+		['parameter1'] = {16},
 		['parameter2'] = ''
 		},
 	[161000117] = {
@@ -1581,12 +1581,12 @@ local ParameterTable = {
 		},
 	[161000320] = {
 		['ID'] = 161000320,
-		['parameter1'] = {201010010,100},
+		['parameter1'] = {201010022,100},
 		['parameter2'] = ''
 		},
 	[161000321] = {
 		['ID'] = 161000321,
-		['parameter1'] = {201010010,10},
+		['parameter1'] = {201010022,10},
 		['parameter2'] = ''
 		},
 	[161000322] = {
@@ -1756,7 +1756,7 @@ local ParameterTable = {
 		},
 	[161000355] = {
 		['ID'] = 161000355,
-		['parameter1'] = {10,30,15},
+		['parameter1'] = {10,30,15,5},
 		['parameter2'] = ''
 		},
 	[161000356] = {
@@ -1841,22 +1841,22 @@ local ParameterTable = {
 		},
 	[161000372] = {
 		['ID'] = 161000372,
-		['parameter1'] = {8,104},
+		['parameter1'] = {},
 		['parameter2'] = ''
 		},
 	[161000373] = {
 		['ID'] = 161000373,
-		['parameter1'] = {9,124},
+		['parameter1'] = {},
 		['parameter2'] = ''
 		},
 	[161000374] = {
 		['ID'] = 161000374,
-		['parameter1'] = {-10,125},
+		['parameter1'] = {},
 		['parameter2'] = ''
 		},
 	[161000375] = {
 		['ID'] = 161000375,
-		['parameter1'] = {-11,106},
+		['parameter1'] = {},
 		['parameter2'] = ''
 		},
 	[161000376] = {
@@ -1923,6 +1923,21 @@ local ParameterTable = {
 		['ID'] = 161000388,
 		['parameter1'] = {},
 		['parameter2'] = '[516D88FF]门宗名称被[f69e40]%s[-]成功修改为【%s】'
+		},
+	[161000389] = {
+		['ID'] = 161000389,
+		['parameter1'] = {120},
+		['parameter2'] = ''
+		},
+	[161000390] = {
+		['ID'] = 161000390,
+		['parameter1'] = {2,10},
+		['parameter2'] = ''
+		},
+	[161000391] = {
+		['ID'] = 161000391,
+		['parameter1'] = {135400003},
+		['parameter2'] = ''
 		}
 	}
 return ParameterTable

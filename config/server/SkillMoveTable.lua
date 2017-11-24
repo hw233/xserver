@@ -77,6 +77,19 @@ local SkillMoveTable = {
 		['BallisticEffect'] = 0,
 		['ExplodedEffect'] = 0
 		},
+	[112500011] = {
+		['ID'] = 112500011,
+		['MoveType'] = 2,
+		['DmgType'] = 0,
+		['MoveDistance'] = 0,
+		['MoveSpeed'] = 0,
+		['DelayTime'] = 0,
+		['MoveTime'] = 2000,
+		['EndType'] = 1,
+		['EndDistance'] = .00,
+		['BallisticEffect'] = 0,
+		['ExplodedEffect'] = 0
+		},
 	[112511001] = {
 		['ID'] = 112511001,
 		['MoveType'] = 1,

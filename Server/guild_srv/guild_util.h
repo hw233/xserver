@@ -46,6 +46,7 @@ bool check_player_applied_join(uint64_t player_id, uint32_t guild_id); //玩家�
 int insert_player_join_apply(uint64_t player_id, uint32_t guild_id); //插入玩家对帮会的申请
 int get_player_join_apply(uint64_t player_id, std::vector<uint32_t> &applyIds); //获取玩家的申请列表
 int get_guild_join_apply(uint32_t guild_id, std::vector<uint64_t> &applyIds); //获取帮会的申请列表
+void broadcast_guild_join_apply(GuildInfo *guild, uint64_t player_id, PlayerRedisInfo *redis_player);
 int save_guild_switch(GuildInfo *guild, uint32_t type);
 int save_announcement(GuildInfo *guild, uint32_t type);
 void replace_guild_master(uint32_t guild_id, uint64_t master_id); //转让帮主，更新数据库
@@ -53,6 +54,10 @@ int save_guild_name(GuildInfo *guild);
 int delete_guild(uint32_t guild_id);
 int save_guild_popularity(GuildInfo *guild);
 bool player_has_permission(GuildPlayer *player, uint32_t type); //查看职位是否有操作权限
+int insert_one_invite(uint64_t inviter_id, uint64_t invitee_id, uint32_t guild_id); //插入一条邀请信息
+void mark_invite_deal(uint64_t inviter_id, uint64_t invitee_id, uint32_t guild_id, uint32_t deal_type);
+uint32_t get_invite_cd_time(uint64_t inviter_id, uint64_t invitee_id, uint32_t guild_id);
+bool check_invite_is_deal(uint64_t inviter_id, uint64_t invitee_id, uint32_t guild_id);
 
 void sync_guild_rename_to_gamesrv(GuildInfo *guild);
 void sync_guild_info_to_gamesrv(GuildPlayer *player);

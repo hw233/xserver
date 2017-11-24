@@ -361,6 +361,12 @@ int partner_struct::broadcast_partner_move()
 	return (0);
 }
 
+player_struct *partner_struct::get_owner()
+{
+	return m_owner;
+}
+
+
 void partner_struct::on_tick()
 {
 	if (!m_owner->scene)
@@ -572,110 +578,110 @@ void partner_struct::cast_skill_to_target(uint64_t skill_id, unit_struct *target
 	broadcast_to_sight(MSG_ID_SKILL_CAST_NOTIFY, &notify, (pack_func)skill_cast_notify__pack, true);
 }
 
-void partner_struct::cast_immediate_skill_to_target(uint64_t skill_id, int skill_index, unit_struct *target)
-{
-	if (get_unit_fight_type(this, target) != UNIT_FIGHT_TYPE_ENEMY)			
-		return;
+// void partner_struct::cast_immediate_skill_to_target(uint64_t skill_id, int skill_index, unit_struct *target)
+// {
+// 	if (get_unit_fight_type(this, target) != UNIT_FIGHT_TYPE_ENEMY)			
+// 		return;
 
-//	if (player->buff_state & BUFF_STATE_GOD)
-//	{
-//		return;
-//	}
+// //	if (player->buff_state & BUFF_STATE_GOD)
+// //	{
+// //		return;
+// //	}
 	
-	int n_hit_effect = 0;
-	int n_buff = 0;
-	assert(target && target->is_avaliable());
-	cached_hit_effect_point[n_hit_effect] = &cached_hit_effect[n_hit_effect];
-	skill_hit_effect__init(&cached_hit_effect[n_hit_effect]);
-	uint32_t add_num = 0;
-	int32_t damage = 0;
+// 	int n_hit_effect = 0;
+// 	int n_buff = 0;
+// 	assert(target && target->is_avaliable());
+// 	cached_hit_effect_point[n_hit_effect] = &cached_hit_effect[n_hit_effect];
+// 	skill_hit_effect__init(&cached_hit_effect[n_hit_effect]);
+// 	uint32_t add_num = 0;
+// 	int32_t damage = 0;
 
-	struct SkillLvTable *lv_config1, *lv_config2;
-	struct PassiveSkillTable *pas_config;
-	struct SkillTable *ski_config;
+// 	struct SkillLvTable *lv_config1, *lv_config2;
+// 	struct PassiveSkillTable *pas_config;
+// 	struct SkillTable *ski_config;
 	
-	get_skill_configs(get_skill_level_byindex(skill_index), skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, NULL);
-	if (!lv_config1 && !lv_config2)
-	{
-		LOG_ERR("%s %d: skill[%lu] no config", __FUNCTION__, __LINE__, skill_id);
-		return;
-	}
+// 	get_skill_configs(get_skill_level_byindex(skill_index), skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, NULL);
+// 	if (!lv_config1 && !lv_config2)
+// 	{
+// 		LOG_ERR("%s %d: skill[%lu] no config", __FUNCTION__, __LINE__, skill_id);
+// 		return;
+// 	}
 	
-	int32_t other_rate = count_other_skill_damage_effect(this, target);					
-	damage += count_skill_total_damage(UNIT_FIGHT_TYPE_ENEMY, ski_config, lv_config1,
-		pas_config, lv_config2,
-		this, target,
-		&cached_hit_effect[n_hit_effect].effect,
-		&cached_buff_id[n_buff],
-		&cached_buff_end_time[n_buff],
-		&add_num, other_rate);
+// 	int32_t other_rate = count_other_skill_damage_effect(this, target);					
+// 	damage += count_skill_total_damage(UNIT_FIGHT_TYPE_ENEMY, ski_config, lv_config1,
+// 		pas_config, lv_config2,
+// 		this, target,
+// 		&cached_hit_effect[n_hit_effect].effect,
+// 		&cached_buff_id[n_buff],
+// 		&cached_buff_end_time[n_buff],
+// 		&add_num, other_rate);
 
-	target->on_hp_changed(damage);
+// 	target->on_hp_changed(damage);
 
-	// if (target->get_unit_type() == UNIT_TYPE_PLAYER)
-	// {
-	// 	player_struct *t = ((player_struct *)target);
-	// 	raid_struct *raid = t->get_raid();
-	// 	if (raid)
-	// 		raid->on_monster_attack(monster, t, damage);
-	// }
+// 	// if (target->get_unit_type() == UNIT_TYPE_PLAYER)
+// 	// {
+// 	// 	player_struct *t = ((player_struct *)target);
+// 	// 	raid_struct *raid = t->get_raid();
+// 	// 	if (raid)
+// 	// 		raid->on_monster_attack(monster, t, damage);
+// 	// }
 
-	LOG_DEBUG("%s: unit[%lu][%p] damage[%d] hp[%f]", __PRETTY_FUNCTION__, get_uuid(), this, damage, target->get_attr(PLAYER_ATTR_HP));
+// 	LOG_DEBUG("%s: unit[%lu][%p] damage[%d] hp[%f]", __PRETTY_FUNCTION__, get_uuid(), this, damage, target->get_attr(PLAYER_ATTR_HP));
 
-	uint32_t life_steal = count_life_steal_effect(damage);
-	uint32_t damage_return = count_damage_return(damage, target);
+// 	uint32_t life_steal = count_life_steal_effect(damage);
+// 	uint32_t damage_return = count_damage_return(damage, target);
 
-	on_hp_changed(damage_return);
+// 	on_hp_changed(damage_return);
 
-	PosData attack_pos;
-	pos_data__init(&attack_pos);
-	attack_pos.pos_x = get_pos()->pos_x;
-	attack_pos.pos_z = get_pos()->pos_z;
+// 	PosData attack_pos;
+// 	pos_data__init(&attack_pos);
+// 	attack_pos.pos_x = get_pos()->pos_x;
+// 	attack_pos.pos_z = get_pos()->pos_z;
 	
-	cached_hit_effect[n_hit_effect].playerid = target->get_uuid();
-	cached_hit_effect[n_hit_effect].n_add_buff = add_num;
-	cached_hit_effect[n_hit_effect].add_buff = &cached_buff_id[n_buff];
-//	cached_hit_effect[n_hit_effect].add_buff_end_time = &cached_buff_end_time[n_buff];
-	cached_hit_effect[n_hit_effect].hp_delta = damage;
-	cached_hit_effect[n_hit_effect].cur_hp = target->get_attr(PLAYER_ATTR_HP);
-//	cached_hit_effect.attack_pos = &attack_pos;
-	cached_hit_effect[n_hit_effect].target_pos = &cached_target_pos[n_hit_effect];	
-//	pos_data__init(&cached_attack_pos[n_hit_effect]);
-	pos_data__init(&cached_target_pos[n_hit_effect]);	
-//	cached_attack_pos[n_hit_effect].pos_x = monster->get_pos()->pos_x;
-//	cached_attack_pos[n_hit_effect].pos_z = monster->get_pos()->pos_z;
-	cached_target_pos[n_hit_effect].pos_x = target->get_pos()->pos_x;
-	cached_target_pos[n_hit_effect].pos_z = target->get_pos()->pos_z;			
+// 	cached_hit_effect[n_hit_effect].playerid = target->get_uuid();
+// 	cached_hit_effect[n_hit_effect].n_add_buff = add_num;
+// 	cached_hit_effect[n_hit_effect].add_buff = &cached_buff_id[n_buff];
+// //	cached_hit_effect[n_hit_effect].add_buff_end_time = &cached_buff_end_time[n_buff];
+// 	cached_hit_effect[n_hit_effect].hp_delta = damage;
+// 	cached_hit_effect[n_hit_effect].cur_hp = target->get_attr(PLAYER_ATTR_HP);
+// //	cached_hit_effect.attack_pos = &attack_pos;
+// 	cached_hit_effect[n_hit_effect].target_pos = &cached_target_pos[n_hit_effect];	
+// //	pos_data__init(&cached_attack_pos[n_hit_effect]);
+// 	pos_data__init(&cached_target_pos[n_hit_effect]);	
+// //	cached_attack_pos[n_hit_effect].pos_x = monster->get_pos()->pos_x;
+// //	cached_attack_pos[n_hit_effect].pos_z = monster->get_pos()->pos_z;
+// 	cached_target_pos[n_hit_effect].pos_x = target->get_pos()->pos_x;
+// 	cached_target_pos[n_hit_effect].pos_z = target->get_pos()->pos_z;			
 	
-	n_buff += add_num;
-	++n_hit_effect;
+// 	n_buff += add_num;
+// 	++n_hit_effect;
 
-	SkillHitImmediateNotify notify;
-	skill_hit_immediate_notify__init(&notify);
-	notify.playerid = data->uuid;
-	notify.owneriid = data->uuid;
+// 	SkillHitImmediateNotify notify;
+// 	skill_hit_immediate_notify__init(&notify);
+// 	notify.playerid = data->uuid;
+// 	notify.owneriid = data->uuid;
 	
-	notify.skillid = skill_id;
-	notify.target_player = cached_hit_effect_point[0];
-	notify.attack_pos = &attack_pos;
-	notify.attack_cur_hp = get_attr(PLAYER_ATTR_HP);
-	notify.life_steal = life_steal;
-	notify.damage_return = damage_return;
-	target->broadcast_to_sight(MSG_ID_SKILL_HIT_IMMEDIATE_NOTIFY, &notify, (pack_func)skill_hit_immediate_notify__pack, true);
+// 	notify.skillid = skill_id;
+// 	notify.target_player = cached_hit_effect_point[0];
+// 	notify.attack_pos = &attack_pos;
+// 	notify.attack_cur_hp = get_attr(PLAYER_ATTR_HP);
+// 	notify.life_steal = life_steal;
+// 	notify.damage_return = damage_return;
+// 	target->broadcast_to_sight(MSG_ID_SKILL_HIT_IMMEDIATE_NOTIFY, &notify, (pack_func)skill_hit_immediate_notify__pack, true);
 
-	if (!target->is_alive())
-	{
-		target->on_dead(this);
-	}
-	else
-	{
-		target->on_beattack(this, skill_id, damage);
-	}
-	if (!is_alive())
-	{
-		on_dead(target);
-	}	
-}
+// 	if (!target->is_alive())
+// 	{
+// 		target->on_dead(this);
+// 	}
+// 	else
+// 	{
+// 		target->on_beattack(this, skill_id, damage);
+// 	}
+// 	if (!is_alive())
+// 	{
+// 		on_dead(target);
+// 	}	
+// }
 
 	//返回0表示没有继续执行跟随主人的AI，返回1表示不继续执行跟随主人
 uint32_t partner_struct::attack_target(uint32_t skill_id, int skill_index, unit_struct *target)
@@ -731,8 +737,9 @@ uint32_t partner_struct::attack_target(uint32_t skill_id, int skill_index, unit_
 	}
 
 	reset_pos();
-	add_skill_cd(skill_index, now);	
-	cast_immediate_skill_to_target(skill_id, skill_index, target);
+	add_skill_cd(skill_index, now);
+	uint32_t skill_lv = get_skill_level_byindex(skill_index);
+	cast_immediate_skill_to_target(skill_id, skill_lv, this, target);
 
 		//被反弹死了
 	if (!data)
@@ -1623,257 +1630,267 @@ void partner_struct::on_beattack(unit_struct *unit, uint32_t skill_id, int32_t d
 	add_partner_hate_unit(unit->get_uuid(), &attack_partner[0]);	
 }
 
-int partner_struct::count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, bool bfriend)
+double partner_struct::get_skill_angle()
 {
-	if (!config)
-		return (-1);
-	switch (config->RangeType)
-	{
-		case SKILL_RANGE_TYPE_RECT:
-			return count_rect_unit(data->angle, ret, config->MaxCount, config->Radius, config->Angle, bfriend);
-		case SKILL_RANGE_TYPE_CIRCLE:
-			return count_circle_unit(ret, config->MaxCount, get_pos(), config->Radius, bfriend);			
-		case SKILL_RANGE_TYPE_FAN:
-			return count_fan_unit(ret, config->MaxCount, config->Radius, config->Angle, bfriend);
-		default:
-			return -10;
-	}
-	
-	return (0);
+	return data->angle;
+}
+struct position *partner_struct::get_skill_target_pos()
+{
+	return &data->skill_target_pos;
 }
 
-void partner_struct::hit_notify_to_player(uint64_t skill_id, unit_struct *target)
-{
-	std::vector<unit_struct *> targets;
-	targets.push_back(target);
-	hit_notify_to_many_player(skill_id, &targets);
-}
 
-void partner_struct::hit_notify_to_many_friend(uint64_t skill_id, std::vector<unit_struct *> *target)
-{
-	int n_hit_effect = 0;
-	int n_buff = 0;
-
-	if (target->empty())
-		return;
-
-	struct SkillLvTable *lv_config1, *lv_config2;
-	struct PassiveSkillTable *pas_config;
-	struct SkillTable *ski_config;
-	get_skill_configs(get_skill_level(skill_id), skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, NULL);
-	if (!lv_config1 && !lv_config2)
-	{
-		LOG_ERR("%s %d: skill[%lu] no config", __FUNCTION__, __LINE__, skill_id);
-		return;
-	}
-
-	for (std::vector<unit_struct *>::iterator ite = target->begin(); ite != target->end(); ++ite)
-	{
-		unit_struct *player = *ite;
-		assert(player->is_avaliable());
-
-//		if (get_unit_fight_type(this, player) != UNIT_FIGHT_TYPE_ENEMY)								
-//			continue;			
-		
-		if (!player->is_alive())
-			continue;
-
-		if (player->is_fullhp())
-			continue;
-
-		if (player->is_too_high_to_beattack())
-			continue;
-		
-		cached_hit_effect_point[n_hit_effect] = &cached_hit_effect[n_hit_effect];
-		skill_hit_effect__init(&cached_hit_effect[n_hit_effect]);
-		uint32_t add_num = 0;
-		int32_t damage = 0;
-		int32_t other_rate = count_other_skill_damage_effect(this, player);						
-		damage += count_skill_total_damage(UNIT_FIGHT_TYPE_FRIEND, ski_config, lv_config1,
-			pas_config, lv_config2,
-			this, player,
-			&cached_hit_effect[n_hit_effect].effect,
-			&cached_buff_id[n_buff],
-			&cached_buff_end_time[n_buff],
-			&add_num, other_rate);
-
-		LOG_DEBUG("%s: partner unit[%lu][%p] addhp[%d] hp[%f]", __FUNCTION__, player->get_uuid(), player, damage, player->get_attr(PLAYER_ATTR_HP));
-
-		cached_hit_effect[n_hit_effect].playerid = player->get_uuid();
-		cached_hit_effect[n_hit_effect].n_add_buff = add_num;
-		cached_hit_effect[n_hit_effect].add_buff = &cached_buff_id[n_buff];
-		cached_hit_effect[n_hit_effect].hp_delta = -damage;
-		cached_hit_effect[n_hit_effect].cur_hp = player->get_attr(PLAYER_ATTR_HP);
-		cached_hit_effect[n_hit_effect].target_pos = &cached_target_pos[n_hit_effect];	
-		pos_data__init(&cached_target_pos[n_hit_effect]);
-		
-		cached_target_pos[n_hit_effect].pos_x = player->get_pos()->pos_x;
-		cached_target_pos[n_hit_effect].pos_z = player->get_pos()->pos_z;
-		
-		n_buff += add_num;
-		++n_hit_effect;
-	}
-
-	if (n_hit_effect == 0)
-		return;
-
-	target->push_back(this);
-
-	SkillHitNotify notify;
-	skill_hit_notify__init(&notify);
-	notify.playerid = data->uuid;
-	notify.owneriid = notify.playerid;
+// int partner_struct::count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, bool bfriend)
+// {
+// 	if (!config)
+// 		return (-1);
+// 	switch (config->RangeType)
+// 	{
+// 		case SKILL_RANGE_TYPE_RECT:
+// 			return count_rect_unit(data->angle, ret, config->MaxCount, config->Radius, config->Angle, bfriend);
+// 		case SKILL_RANGE_TYPE_CIRCLE:
+// 			return count_circle_unit(ret, config->MaxCount, get_pos(), config->Radius, bfriend);			
+// 		case SKILL_RANGE_TYPE_FAN:
+// 			return count_fan_unit(ret, config->MaxCount, config->Radius, config->Angle, bfriend);
+// 		default:
+// 			return -10;
+// 	}
 	
-	notify.skillid = skill_id;
-	notify.n_target_player = n_hit_effect;
-	notify.target_player = cached_hit_effect_point;
+// 	return (0);
+// }
 
-	notify.attack_cur_hp = get_attr(PLAYER_ATTR_HP);
+// void partner_struct::hit_notify_to_player(uint64_t skill_id, unit_struct *target)
+// {
+// 	std::vector<unit_struct *> targets;
+// 	targets.push_back(target);
+// 	hit_notify_to_many_target(skill_id, this, &targets);
+// }
 
-	PosData attack_pos;
-	pos_data__init(&attack_pos);
-	attack_pos.pos_x = get_pos()->pos_x;
-	attack_pos.pos_z = get_pos()->pos_z;
-	notify.attack_pos = &attack_pos;
-	player_struct::broadcast_to_many_sight(MSG_ID_SKILL_HIT_NOTIFY, &notify, (pack_func)skill_hit_notify__pack, *target);
-}
+// void partner_struct::hit_notify_to_many_friend(uint64_t skill_id, std::vector<unit_struct *> *target)
+// {
+// 	int n_hit_effect = 0;
+// 	int n_buff = 0;
 
-void partner_struct::hit_notify_to_many_player(uint64_t skill_id, std::vector<unit_struct *> *target)
-{
-	int n_hit_effect = 0;
-	int n_buff = 0;
-//	double *target_attr;
+// 	if (target->empty())
+// 		return;
 
-	if (target->empty())
-		return;
-/*
-	struct SkillLvTable *lv_config1, *lv_config2;
-	get_skill_lv_config(skill_id, &lv_config1, &lv_config2);
-	if (!lv_config1 && !lv_config2)
-	{
-		LOG_ERR("%s %d: skill[%u] no config", __FUNCTION__, __LINE__, skill_id);
-		return;
-	}
-*/
-	struct SkillLvTable *lv_config1, *lv_config2;
-	struct PassiveSkillTable *pas_config;
-	struct SkillTable *ski_config;
-	get_skill_configs(get_skill_level(skill_id), skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, NULL);
-	if (!lv_config1 && !lv_config2)
-	{
-		LOG_ERR("%s %d: skill[%lu] no config", __FUNCTION__, __LINE__, skill_id);
-		return;
-	}
+// 	struct SkillLvTable *lv_config1, *lv_config2;
+// 	struct PassiveSkillTable *pas_config;
+// 	struct SkillTable *ski_config;
+// 	get_skill_configs(get_skill_level(skill_id), skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, NULL);
+// 	if (!lv_config1 && !lv_config2)
+// 	{
+// 		LOG_ERR("%s %d: skill[%lu] no config", __FUNCTION__, __LINE__, skill_id);
+// 		return;
+// 	}
 
-	uint32_t life_steal = 0;
-	uint32_t damage_return = 0;
+// 	for (std::vector<unit_struct *>::iterator ite = target->begin(); ite != target->end(); ++ite)
+// 	{
+// 		unit_struct *player = *ite;
+// 		assert(player->is_avaliable());
 
-	for (std::vector<unit_struct *>::iterator ite = target->begin(); ite != target->end(); ++ite)
-	{
-		unit_struct *player = *ite;
-		assert(player->is_avaliable());
-
-		if (get_unit_fight_type(this, player) != UNIT_FIGHT_TYPE_ENEMY)								
-			continue;			
+// //		if (get_unit_fight_type(this, player) != UNIT_FIGHT_TYPE_ENEMY)								
+// //			continue;			
 		
-		if (!player->is_alive())
-		{
-			continue;
-		}
+// 		if (!player->is_alive())
+// 			continue;
 
-		if (player->is_too_high_to_beattack())
-			continue;
+// 		if (player->is_fullhp())
+// 			continue;
+
+// 		if (player->is_too_high_to_beattack())
+// 			continue;
 		
-		cached_hit_effect_point[n_hit_effect] = &cached_hit_effect[n_hit_effect];
-		skill_hit_effect__init(&cached_hit_effect[n_hit_effect]);
-		uint32_t add_num = 0;
-		int32_t damage = 0;
-		int32_t other_rate = count_other_skill_damage_effect(this, player);						
-		damage += count_skill_total_damage(UNIT_FIGHT_TYPE_ENEMY, ski_config, lv_config1,
-			pas_config, lv_config2,
-			this, player,
-			&cached_hit_effect[n_hit_effect].effect,
-			&cached_buff_id[n_buff],
-			&cached_buff_end_time[n_buff],
-			&add_num, other_rate);
+// 		cached_hit_effect_point[n_hit_effect] = &cached_hit_effect[n_hit_effect];
+// 		skill_hit_effect__init(&cached_hit_effect[n_hit_effect]);
+// 		uint32_t add_num = 0;
+// 		int32_t damage = 0;
+// 		int32_t other_rate = count_other_skill_damage_effect(this, player);						
+// 		damage += count_skill_total_damage(UNIT_FIGHT_TYPE_FRIEND, ski_config, lv_config1,
+// 			pas_config, lv_config2,
+// 			this, player,
+// 			&cached_hit_effect[n_hit_effect].effect,
+// 			&cached_buff_id[n_buff],
+// 			&cached_buff_end_time[n_buff],
+// 			&add_num, other_rate);
 
-		life_steal += count_life_steal_effect(damage);
-		damage_return += count_damage_return(damage, player);
+// 		LOG_DEBUG("%s: partner unit[%lu][%p] addhp[%d] hp[%f]", __FUNCTION__, player->get_uuid(), player, damage, player->get_attr(PLAYER_ATTR_HP));
 
-		// if (player->get_unit_type() == UNIT_TYPE_PLAYER)
-		// {
-		// 	player_struct *t = ((player_struct *)player);
-		// 	raid_struct *raid = t->get_raid();
-		// 	if (raid)
-		// 		raid->on_monster_attack(monster, t, damage);
-
-		// 	if (owner)
-		// 	{
-		// 		check_qiecuo_finished(owner, t);
-		// 	}
-		// }
-
-		LOG_DEBUG("%s: unit[%lu][%p] damage[%d] hp[%f]", __FUNCTION__, player->get_uuid(), player, damage, player->get_attr(PLAYER_ATTR_HP));
-
-		cached_hit_effect[n_hit_effect].playerid = player->get_uuid();
-		cached_hit_effect[n_hit_effect].n_add_buff = add_num;
-		cached_hit_effect[n_hit_effect].add_buff = &cached_buff_id[n_buff];
-		cached_hit_effect[n_hit_effect].hp_delta = damage;
-		cached_hit_effect[n_hit_effect].cur_hp = player->get_attr(PLAYER_ATTR_HP);
-//		cached_hit_effect[n_hit_effect].attack_pos = &cached_attack_pos[n_hit_effect];
-		cached_hit_effect[n_hit_effect].target_pos = &cached_target_pos[n_hit_effect];	
-//		pos_data__init(&cached_attack_pos[n_hit_effect]);
-		pos_data__init(&cached_target_pos[n_hit_effect]);
+// 		cached_hit_effect[n_hit_effect].playerid = player->get_uuid();
+// 		cached_hit_effect[n_hit_effect].n_add_buff = add_num;
+// 		cached_hit_effect[n_hit_effect].add_buff = &cached_buff_id[n_buff];
+// 		cached_hit_effect[n_hit_effect].hp_delta = -damage;
+// 		cached_hit_effect[n_hit_effect].cur_hp = player->get_attr(PLAYER_ATTR_HP);
+// 		cached_hit_effect[n_hit_effect].target_pos = &cached_target_pos[n_hit_effect];	
+// 		pos_data__init(&cached_target_pos[n_hit_effect]);
 		
-//		cached_attack_pos[n_hit_effect].pos_x = monster->get_pos()->pos_x;
-//		cached_attack_pos[n_hit_effect].pos_z = monster->get_pos()->pos_z;		
-		cached_target_pos[n_hit_effect].pos_x = player->get_pos()->pos_x;
-		cached_target_pos[n_hit_effect].pos_z = player->get_pos()->pos_z;
+// 		cached_target_pos[n_hit_effect].pos_x = player->get_pos()->pos_x;
+// 		cached_target_pos[n_hit_effect].pos_z = player->get_pos()->pos_z;
 		
-		n_buff += add_num;
-		++n_hit_effect;
+// 		n_buff += add_num;
+// 		++n_hit_effect;
+// 	}
 
-		if (player->is_alive())
-		{
-			player->on_beattack(this, skill_id, damage);						
-		}
-		else
-		{
-			player->on_dead(this);
-		}
+// 	if (n_hit_effect == 0)
+// 		return;
 
-	}
+// 	target->push_back(this);
 
-	if (n_hit_effect == 0)
-		return;
-
-	target->push_back(this);
-
-	SkillHitNotify notify;
-	skill_hit_notify__init(&notify);
-	notify.playerid = data->uuid;
-	notify.owneriid = notify.playerid;
+// 	SkillHitNotify notify;
+// 	skill_hit_notify__init(&notify);
+// 	notify.playerid = data->uuid;
+// 	notify.owneriid = notify.playerid;
 	
-	notify.skillid = skill_id;
-	notify.n_target_player = n_hit_effect;
-	notify.target_player = cached_hit_effect_point;
+// 	notify.skillid = skill_id;
+// 	notify.n_target_player = n_hit_effect;
+// 	notify.target_player = cached_hit_effect_point;
 
-	notify.attack_cur_hp = get_attr(PLAYER_ATTR_HP);
-	notify.life_steal = life_steal;
-	notify.damage_return = damage_return;
+// 	notify.attack_cur_hp = get_attr(PLAYER_ATTR_HP);
 
-	PosData attack_pos;
-	pos_data__init(&attack_pos);
-	attack_pos.pos_x = get_pos()->pos_x;
-	attack_pos.pos_z = get_pos()->pos_z;
-	notify.attack_pos = &attack_pos;
-	player_struct::broadcast_to_many_sight(MSG_ID_SKILL_HIT_NOTIFY, &notify, (pack_func)skill_hit_notify__pack, *target);
+// 	PosData attack_pos;
+// 	pos_data__init(&attack_pos);
+// 	attack_pos.pos_x = get_pos()->pos_x;
+// 	attack_pos.pos_z = get_pos()->pos_z;
+// 	notify.attack_pos = &attack_pos;
+// 	player_struct::broadcast_to_many_sight(MSG_ID_SKILL_HIT_NOTIFY, &notify, (pack_func)skill_hit_notify__pack, *target);
+// }
+
+// void partner_struct::hit_notify_to_many_player(uint64_t skill_id, std::vector<unit_struct *> *target)
+// {
+// 	int n_hit_effect = 0;
+// 	int n_buff = 0;
+// //	double *target_attr;
+
+// 	if (target->empty())
+// 		return;
+// /*
+// 	struct SkillLvTable *lv_config1, *lv_config2;
+// 	get_skill_lv_config(skill_id, &lv_config1, &lv_config2);
+// 	if (!lv_config1 && !lv_config2)
+// 	{
+// 		LOG_ERR("%s %d: skill[%u] no config", __FUNCTION__, __LINE__, skill_id);
+// 		return;
+// 	}
+// */
+// 	struct SkillLvTable *lv_config1, *lv_config2;
+// 	struct PassiveSkillTable *pas_config;
+// 	struct SkillTable *ski_config;
+// 	get_skill_configs(get_skill_level(skill_id), skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, NULL);
+// 	if (!lv_config1 && !lv_config2)
+// 	{
+// 		LOG_ERR("%s %d: skill[%lu] no config", __FUNCTION__, __LINE__, skill_id);
+// 		return;
+// 	}
+
+// 	uint32_t life_steal = 0;
+// 	uint32_t damage_return = 0;
+
+// 	for (std::vector<unit_struct *>::iterator ite = target->begin(); ite != target->end(); ++ite)
+// 	{
+// 		unit_struct *player = *ite;
+// 		assert(player->is_avaliable());
+
+// 		if (get_unit_fight_type(this, player) != UNIT_FIGHT_TYPE_ENEMY)								
+// 			continue;			
+		
+// 		if (!player->is_alive())
+// 		{
+// 			continue;
+// 		}
+
+// 		if (player->is_too_high_to_beattack())
+// 			continue;
+		
+// 		cached_hit_effect_point[n_hit_effect] = &cached_hit_effect[n_hit_effect];
+// 		skill_hit_effect__init(&cached_hit_effect[n_hit_effect]);
+// 		uint32_t add_num = 0;
+// 		int32_t damage = 0;
+// 		int32_t other_rate = count_other_skill_damage_effect(this, player);						
+// 		damage += count_skill_total_damage(UNIT_FIGHT_TYPE_ENEMY, ski_config, lv_config1,
+// 			pas_config, lv_config2,
+// 			this, player,
+// 			&cached_hit_effect[n_hit_effect].effect,
+// 			&cached_buff_id[n_buff],
+// 			&cached_buff_end_time[n_buff],
+// 			&add_num, other_rate);
+
+// 		life_steal += count_life_steal_effect(damage);
+// 		damage_return += count_damage_return(damage, player);
+
+// 		// if (player->get_unit_type() == UNIT_TYPE_PLAYER)
+// 		// {
+// 		// 	player_struct *t = ((player_struct *)player);
+// 		// 	raid_struct *raid = t->get_raid();
+// 		// 	if (raid)
+// 		// 		raid->on_monster_attack(monster, t, damage);
+
+// 		// 	if (owner)
+// 		// 	{
+// 		// 		check_qiecuo_finished(owner, t);
+// 		// 	}
+// 		// }
+
+// 		LOG_DEBUG("%s: unit[%lu][%p] damage[%d] hp[%f]", __FUNCTION__, player->get_uuid(), player, damage, player->get_attr(PLAYER_ATTR_HP));
+
+// 		cached_hit_effect[n_hit_effect].playerid = player->get_uuid();
+// 		cached_hit_effect[n_hit_effect].n_add_buff = add_num;
+// 		cached_hit_effect[n_hit_effect].add_buff = &cached_buff_id[n_buff];
+// 		cached_hit_effect[n_hit_effect].hp_delta = damage;
+// 		cached_hit_effect[n_hit_effect].cur_hp = player->get_attr(PLAYER_ATTR_HP);
+// //		cached_hit_effect[n_hit_effect].attack_pos = &cached_attack_pos[n_hit_effect];
+// 		cached_hit_effect[n_hit_effect].target_pos = &cached_target_pos[n_hit_effect];	
+// //		pos_data__init(&cached_attack_pos[n_hit_effect]);
+// 		pos_data__init(&cached_target_pos[n_hit_effect]);
+		
+// //		cached_attack_pos[n_hit_effect].pos_x = monster->get_pos()->pos_x;
+// //		cached_attack_pos[n_hit_effect].pos_z = monster->get_pos()->pos_z;		
+// 		cached_target_pos[n_hit_effect].pos_x = player->get_pos()->pos_x;
+// 		cached_target_pos[n_hit_effect].pos_z = player->get_pos()->pos_z;
+		
+// 		n_buff += add_num;
+// 		++n_hit_effect;
+
+// 		if (player->is_alive())
+// 		{
+// 			player->on_beattack(this, skill_id, damage);						
+// 		}
+// 		else
+// 		{
+// 			player->on_dead(this);
+// 		}
+
+// 	}
+
+// 	if (n_hit_effect == 0)
+// 		return;
+
+// 	target->push_back(this);
+
+// 	SkillHitNotify notify;
+// 	skill_hit_notify__init(&notify);
+// 	notify.playerid = data->uuid;
+// 	notify.owneriid = notify.playerid;
 	
-	if (!is_alive())
-	{
-		on_dead(this);
-	}
-}
+// 	notify.skillid = skill_id;
+// 	notify.n_target_player = n_hit_effect;
+// 	notify.target_player = cached_hit_effect_point;
+
+// 	notify.attack_cur_hp = get_attr(PLAYER_ATTR_HP);
+// 	notify.life_steal = life_steal;
+// 	notify.damage_return = damage_return;
+
+// 	PosData attack_pos;
+// 	pos_data__init(&attack_pos);
+// 	attack_pos.pos_x = get_pos()->pos_x;
+// 	attack_pos.pos_z = get_pos()->pos_z;
+// 	notify.attack_pos = &attack_pos;
+// 	player_struct::broadcast_to_many_sight(MSG_ID_SKILL_HIT_NOTIFY, &notify, (pack_func)skill_hit_notify__pack, *target);
+	
+// 	if (!is_alive())
+// 	{
+// 		on_dead(this);
+// 	}
+// }
 
 void partner_struct::relesh_attr()
 {
@@ -1944,7 +1961,15 @@ void partner_struct::do_normal_attack()
 		//加血类技能
 	if (config->TargetType[0] != 1)	
 	{
-		cast_skill_to_friend(config);
+			// if (config->MaxCount <= 1)
+			// {
+			// 	try_attack_target(monster, config);
+			// }
+			// else
+		{
+			try_attack_friend(this, config);
+		}
+		
 		data->skill_id = 0;
 		ai_state = AI_PURSUE_STATE;		
 		 	//计算硬直时间
@@ -1964,11 +1989,11 @@ void partner_struct::do_normal_attack()
 
 	if (config->MaxCount <= 1)
 	{
-		try_attack_target(config);
+		try_attack_target(this, m_target, config);
 	}
 	else
 	{
-		try_attack(config);
+		try_attack(this, config);
 	}
 }
 
@@ -1991,57 +2016,57 @@ int partner_struct::get_skill_level(uint32_t skill_id)
 	return 1;
 }
 
-void partner_struct::try_attack_target(struct SkillTable *config)
-{
-	if (!m_target || !m_target->is_avaliable() || !m_target->is_alive())
-	{
-		m_target = NULL;
-		return;
-	}
-	struct position *my_pos = get_pos();
-	struct position *his_pos = m_target->get_pos();
+// void partner_struct::try_attack_target(struct SkillTable *config)
+// {
+// 	if (!m_target || !m_target->is_avaliable() || !m_target->is_alive())
+// 	{
+// 		m_target = NULL;
+// 		return;
+// 	}
+// 	struct position *my_pos = get_pos();
+// 	struct position *his_pos = m_target->get_pos();
 
-	assert(config && config->SkillType == 2);
-//	LOG_DEBUG("%s monster hit skill %u", __FUNCTION__, config->ID);
-	if (check_distance_in_range(my_pos, his_pos, config->SkillRange/*monster->ai_config->ActiveAttackRange*/))
-	{
-		hit_notify_to_player(config->ID, m_target);
-	}
-	m_target = NULL;	
-}
+// 	assert(config && config->SkillType == 2);
+// //	LOG_DEBUG("%s monster hit skill %u", __FUNCTION__, config->ID);
+// 	if (check_distance_in_range(my_pos, his_pos, config->SkillRange/*monster->ai_config->ActiveAttackRange*/))
+// 	{
+// 		hit_notify_to_target(config->ID, this, m_target);
+// 	}
+// 	m_target = NULL;	
+// }
 
-void partner_struct::try_attack_friend(struct SkillTable *config)
-{
-	assert(config && config->SkillType == 2);
+// void partner_struct::try_attack_friend(struct SkillTable *config)
+// {
+// 	assert(config && config->SkillType == 2);
 	
-	std::vector<unit_struct *> target;
-	target.push_back(this);
-	if (count_skill_hit_unit(&target, config, true) != 0)
-		return;
-	hit_notify_to_many_friend(config->ID, &target);	
-}
+// 	std::vector<unit_struct *> target;
+// 	target.push_back(this);
+// 	if (count_skill_hit_unit(&target, config, true) != 0)
+// 		return;
+// 	hit_notify_to_many_friend(config->ID, this, &target);	
+// }
 
-void partner_struct::cast_skill_to_friend(struct SkillTable *config)
-{
-	// if (config->MaxCount <= 1)
-	// {
-	// 	try_attack_target(monster, config);
-	// }
-	// else
-	{
-		try_attack_friend(config);
-	}
-}
+// void partner_struct::cast_skill_to_friend(struct SkillTable *config)
+// {
+// 	// if (config->MaxCount <= 1)
+// 	// {
+// 	// 	try_attack_target(monster, config);
+// 	// }
+// 	// else
+// 	{
+// 		try_attack_friend(config);
+// 	}
+// }
 
-void partner_struct::try_attack(struct SkillTable *config)
-{
-	assert(config && config->SkillType == 2);
+// void partner_struct::try_attack(struct SkillTable *config)
+// {
+// 	assert(config && config->SkillType == 2);
 	
-	std::vector<unit_struct *> target;
-	if (count_skill_hit_unit(&target, config, false) != 0)
-		return;
-	hit_notify_to_many_player(config->ID, &target);
-}
+// 	std::vector<unit_struct *> target;
+// 	if (count_skill_hit_unit(&target, config, false) != 0)
+// 		return;
+// 	hit_notify_to_many_target(config->ID, this, &target);
+// }
 
 void partner_struct::add_sight_space_player_to_sight(sight_space_struct *sight_space, uint16_t *add_player_id_index, uint64_t *add_player)
 {

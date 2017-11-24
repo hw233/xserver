@@ -314,6 +314,7 @@ typedef void(*raid_ai_escort_end_piont)(raid_struct *, monster_struct *);
 typedef struct DungeonTable* (*raid_ai_get_config)(raid_struct *);
 typedef void(*raid_ai_monster_attack)(raid_struct *, monster_struct *, unit_struct *, int32_t, int32_t);
 typedef void(*raid_ai_monster_relive)(raid_struct *, monster_struct *);
+typedef void(*raid_ai_play_drama_end)(raid_struct *);
 
 struct raid_ai_interface
 {
@@ -337,6 +338,7 @@ struct raid_ai_interface
 	raid_ai_escort_end_piont raid_on_escort_end_piont; //矿车到达终点
 	raid_ai_monster_attack raid_on_monster_attacked; //怪物被击
 	raid_ai_monster_relive raid_on_monster_relive;  //怪物复活或者创建
+	raid_ai_play_drama_end raid_on_play_drama_end;  //剧情播放结束
 };
 
 class raid_struct : public scene_struct

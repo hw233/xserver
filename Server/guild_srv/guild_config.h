@@ -14,6 +14,7 @@ extern uint32_t sg_guild_rename_item_num;
 extern uint32_t sg_guild_join_cd;
 extern uint32_t sg_guild_apply_join_cd;
 extern uint32_t sg_guild_rename_cd;
+extern uint32_t sg_guild_invite_cd;
 extern char* sg_guild_recruit_notice;
 extern char* sg_guild_announcement;
 extern std::vector<uint32_t> sg_guild_question;

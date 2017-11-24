@@ -18,6 +18,7 @@
 #include "time_helper.h"
 #include "listen_node_client.h"
 #include "listen_node_gamesrv.h"
+#include "listen_node_raidsrv.h"
 #include "listen_node_login.h"
 #include "listen_node_friend.h"
 #include "listen_node_dump.h"
@@ -116,6 +117,7 @@ void cb_connsrv_timer(evutil_socket_t, short, void* /*arg*/)
 
 static listen_node_client client_listener;   //客户端连接
 static listen_node_gamesrv gamesrv_listener;   //game_srv连接
+static listen_node_raidsrv raidsrv_listener;   //raid_srv连接
 static listen_node_login login_listener; //login_srv连接
 static listen_node_friend friend_listener; //friend_srv连接
 static listen_node_dump dump_listener; //dump_srv连接
@@ -204,6 +206,15 @@ int main(int argc, char **argv)
 	ret = game_add_listen_event(port, &gamesrv_listener, "gamesrv");
 	if (ret != 0)
 		goto done;
+
+	line = get_first_key(file, (char *)"conn_srv_raid_port");
+	if (line)
+	{
+		port = atoi(get_value(line));
+		if (port > 0) {
+			game_add_listen_event(port, &raidsrv_listener, "raidsrv");		
+		}
+	}
 
 	//listen login_srv_port
 	line = get_first_key(file, (char *)"conn_srv_login_port");

@@ -773,29 +773,6 @@ int raid_struct::set_m_player_and_player_info(player_struct *player, int index)
 
 int raid_struct::player_enter_raid_impl(player_struct *player, int index, double pos_x, double pos_z, double direct)
 {
-	// player_struct **t;
-	// switch (index / MAX_TEAM_MEM)
-	// {
-	// 	case 0:
-	// 		t = m_player;
-	// 		set_player_info(player, &data->player_info[index]);
-	// 		break;
-	// 	case 1:
-	// 		t = m_player2;
-	// 		set_player_info(player, &data->player_info2[index]);
-	// 		break;
-	// 	case 2:
-	// 		t = m_player3;
-	// 		set_player_info(player, &data->player_info3[index]);			
-	// 		break;
-	// 	case 3:
-	// 		t = m_player4;
-	// 		set_player_info(player, &data->player_info4[index]);						
-	// 		break;
-	// 	default:
-	// 		assert(0);
-	// }
-	// t[index % MAX_TEAM_MEM] = player;
 	set_m_player_and_player_info(player, index);
 	
 	if (player->sight_space)
@@ -803,7 +780,7 @@ int raid_struct::player_enter_raid_impl(player_struct *player, int index, double
 	if (player->scene)
 		player->scene->player_leave_scene(player);
 	
-	player->conserve_out_raid_pos_and_scene(this);
+	player->conserve_out_raid_pos_and_scene(m_config);
 	player->set_enter_raid_pos_and_scene(this, pos_x, pos_z);
 
 	if (get_entity_type(player->get_uuid()) == ENTITY_TYPE_PLAYER)
@@ -1043,6 +1020,12 @@ int raid_struct::get_id_monster_num(uint32_t id)
 int raid_struct::player_leave_raid(player_struct *player)
 {
 	player_leave_scene(player);
+#ifdef __RAID_SRV__
+	EXTERN_DATA extern_data;
+	extern_data.player_id = player->get_uuid();
+	fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, SERVER_PROTO_RAID_LEAVE_REQUEST, 0, 0);
+	player_manager::delete_player(player);
+#else	
 	if (player->data->scene_id <= SCENCE_DEPART)
 	{
 		struct position *pos = player->get_pos();
@@ -1051,7 +1034,7 @@ int raid_struct::player_leave_raid(player_struct *player)
 		scene_struct *new_scene = scene_manager::get_scene(scene_id);
 		if (!new_scene)
 		{
-			LOG_ERR("%s %d: player[%lu] transfer to the wrong scene[%lu]", __FUNCTION__, __LINE__, player->data->player_id, scene_id);
+			LOG_ERR("%s %d: player[%lu] transfer to the wrong scene[%u]", __FUNCTION__, __LINE__, player->data->player_id, scene_id);
 			return (-30);
 		}
 		new_scene->player_enter_scene(player, pos->pos_x, player->data->pos_y, pos->pos_z, player->data->leaveraid.direct);		
@@ -1062,18 +1045,7 @@ int raid_struct::player_leave_raid(player_struct *player)
 		if (config)
 			player->move_to_raid_impl(config, true);
 	}
-	
-//	player->data->m_angle = unity_angle_to_c_angle(player->data->leaveraid.direct);
-//	player->send_scene_transfer(player->data->leaveraid.direct, player->data->leaveraid.ExitPointX, player->data->leaveraid.ExitPointY,
-//		player->data->leaveraid.ExitPointZ, player->data->leaveraid.scene_id, 0);
-
-	// EXTERN_DATA extern_data;
-	// extern_data.player_id = player->get_uuid();
-	// player->move_to_scene_pos(player->data->leaveraid.scene_id,
-	// 	player->data->leaveraid.ExitPointX,
-	// 	player->data->leaveraid.ExitPointZ,
-	// 	player->data->leaveraid.direct,
-	// 	&extern_data);
+#endif
 	return (0);
 }
 
@@ -1363,37 +1335,12 @@ int raid_struct::on_raid_failed(uint32_t score_param)
 void raid_struct::on_player_leave_raid(player_struct *player)
 {
 		//如果死亡，就给予复活
-	if (!player->is_alive())
-	{
-		player->relive();
-		// uint32_t maxhp = player->get_attr(PLAYER_ATTR_MAXHP);
-		// player->set_attr(PLAYER_ATTR_HP, maxhp);
-
-		// ReliveNotify nty;
-		// relive_notify__init(&nty);
-		// nty.playerid = player->data->player_id;
-		// EXTERN_DATA extern_data;
-		// extern_data.player_id = player->data->player_id;
-		// fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RELIVE_NOTIFY, relive_notify__pack, nty);			
-		
-		// if (player->m_team)
-		// {
-		// 	PlayerAttrNotify nty;
-		// 	player_attr_notify__init(&nty);
-		// 	AttrData attr_data[1];
-		// 	AttrData *attr_data_point[1];
-		// 	nty.player_id = player->data->player_id;
-		// 	nty.n_attrs = 1;
-		// 	nty.attrs = attr_data_point;
-		// 	attr_data_point[0] = &attr_data[0];
-		// 	attr_data__init(&attr_data[0]);
-		// 	attr_data[0].id = PLAYER_ATTR_HP;
-		// 	attr_data[0].val = maxhp;
-		// 	player->m_team->BroadcastToTeam(MSG_ID_PLAYER_ATTR_NOTIFY, &nty, (pack_func)player_attr_notify__pack);
-		// }
-	}
+	// if (!player->is_alive())
+	// {
+	// 	player->relive();
+	// }
 	
-	player->data->player_raid_uuid = 0;
+//	player->data->player_raid_uuid = 0;
 	assert(get_entity_type(player->get_uuid()) == ENTITY_TYPE_PLAYER);
 	--player_num;
 	if (is_guild_battle_raid())
@@ -2069,7 +2016,8 @@ int raid_struct::player_leave_scene(player_struct *player)
 		return (-1);
 	}
 
-	player->set_out_raid_pos_and_clear_scene();
+//	player->set_out_raid_pos_and_clear_scene();
+	player->on_leave_raid();
 	delete_player_from_scene(player);
 	on_player_leave_raid(player);
 

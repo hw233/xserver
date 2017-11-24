@@ -25,7 +25,7 @@
 #include "player_manager.h"
 #include "scene_manager.h"
 #include "raid_manager.h"
-#include "zhenying_battle.h"
+//#include "zhenying_battle.h"
 #include "zhenying_raid_manager.h"
 #include "sight_space_manager.h"
 #include "monster_manager.h"
@@ -309,12 +309,14 @@ int install(int argc, char **argv)
 	char *line;
 	int i;
 	int dump = 0;	/// dump shared memroy
-	int web_port = 0;	
+	int web_port = 0;
  	std::string szServerIP;
 	int port;
 	struct sockaddr_in sin;
 	int player_num;
 	unsigned long player_key;
+
+	UNUSED(web_port);
 
 	//std::string szRedisIp="";
 	//int nRedisPort=0;
@@ -355,7 +357,11 @@ int install(int argc, char **argv)
 	}
 
 	uint64_t pid = write_pid_file();
+#ifdef __RAID_SRV__
+    LOG_INFO("raid_srv run %lu", pid);	
+#else	
     LOG_INFO("game_srv run %lu", pid);
+#endif	
 
 	ret = game_event_init();
 	if (ret != 0)
@@ -459,6 +465,8 @@ int install(int argc, char **argv)
 		}
 	}
 
+#ifdef __RAID_SRV__
+#else	
 	{
 		line = get_first_key(file, (char *)"game_srv_guild_wait_raid_num");
 		player_num = atoi(get_value(line));
@@ -502,7 +510,8 @@ int install(int argc, char **argv)
 			goto done;
 		}
 	}
-
+#endif
+	
 	line = get_first_key(file, (char *)"game_srv_skill_num");
 	player_num = atoi(get_value(line));
 	if (player_num <= 0) {
@@ -563,6 +572,8 @@ int install(int argc, char **argv)
 		goto done;
 	}
 
+#ifdef __RAID_SRV__
+#else	
 	line = get_first_key(file, (char *)"game_srv_sight_space_num");
 	player_num = atoi(get_value(line));
 	if (player_num <= 0) {
@@ -582,7 +593,8 @@ int install(int argc, char **argv)
 		ret = -1;
 		goto done;
 	}
-
+#endif
+	
 	line = get_first_key(file, (char *)"game_srv_monster_num");
 	player_num = atoi(get_value(line));
 	if (player_num <= 0) {
@@ -645,6 +657,10 @@ int install(int argc, char **argv)
 		}
 	}
 
+	install_all_msg();
+	
+#ifdef __RAID_SRV__
+#else	
 	{
 		line = get_first_key(file, (char *)"game_srv_truck_num");
 		player_num = atoi(get_value(line));
@@ -666,19 +682,21 @@ int install(int argc, char **argv)
 			goto done;
 		}
 	}
-
-	install_all_msg();
-	
 	if (add_all_scene() != 0)
 	{
 		LOG_ERR("add all scene fail");
 		goto done;
 	}
 	zhenying_raid_manager::create_all_line();
+#endif
 
 	if (!dump)
 	{
+#ifdef __RAID_SRV__
+		line = get_first_key(file, (char *)"conn_srv_raid_port");		
+#else		
 		line = get_first_key(file, (char *)"conn_srv_game_port");
+#endif		
 		port = atoi(get_value(line));
 		if (port <= 0) {
 			LOG_ERR("config file wrong, no conn_srv_game_port");
@@ -697,6 +715,8 @@ int install(int argc, char **argv)
 		if (ret <= 0)
 			goto done;
 
+#ifdef __RAID_SRV__
+#else		
 		//connect db_srv
 		line = get_first_key(file, (char *)"db_srv_port");
 		port = atoi(get_value(line));
@@ -717,6 +737,8 @@ int install(int argc, char **argv)
 		ret = game_add_connect_event((struct sockaddr *)&sin, sizeof(sin), &conn_node_dbsrv::connecter);
 		if (ret <= 0)
 			goto done;
+#endif
+		
 		/*
 		//connect item_srv
 		line = get_first_key(file, (char *)"item_srv_game_port");
@@ -802,8 +824,11 @@ int install(int argc, char **argv)
 
 	add_signal(SIGUSR2, NULL, cb_signal2);
 
-
+#ifdef __RAID_SRV__
+	line = get_first_key(file, (char *)"raid_srv_web_port");	
+#else	
 	line = get_first_key(file, (char *)"game_srv_web_port");
+#endif	
 	if (line) {
 		web_port = atoi(get_value(line));
 		if (web_port <= 0) {
@@ -912,7 +937,7 @@ void cb_gamesrv_timer()
 		monster_manager::on_tick_30();
 		sight_space_manager::on_tick();
 		buff_manager::on_tick_30();
-		ZhenyingBattle::GetInstance()->Tick();
+		//ZhenyingBattle::GetInstance()->Tick();
 	}
 
 	run_with_period(50)

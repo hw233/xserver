@@ -31,7 +31,7 @@ static void battle_raid_ai_init(raid_struct *raid, player_struct *player)
 		int ret = ZhenyingBattle::GetInstance()->CreatePrivateBattle(*player, raid);
 		if (ret != 0)
 		{
-			LOG_INFO("%s: player[%lu] ret = %lu", __FUNCTION__, player->get_uuid(), ret);
+			LOG_INFO("%s: player[%lu] ret = %d", __FUNCTION__, player->get_uuid(), ret);
 		}
 	}
 }
@@ -45,9 +45,7 @@ static void battle_raid_ai_failed(raid_struct *raid)
 {
 	raid->clear_monster();
 	
-	ZhenyingBattle::GetInstance()->Settle(raid, raid->data->ai_data.battle_data.room);
-		ZhenyingBattle::GetInstance()->ClearRob(raid->data->ai_data.battle_data.room);
-	
+	ZhenyingBattle::GetInstance()->Settle(raid->data->ai_data.battle_data.room);
 }
 
 static void battle_raid_ai_player_enter(raid_struct *raid, player_struct *player)
@@ -84,7 +82,7 @@ static void battle_raid_ai_player_enter(raid_struct *raid, player_struct *player
 static void battle_raid_ai_player_leave(raid_struct *raid, player_struct *player)
 {
 	LOG_INFO("%s: player[%lu] del from %lu", __FUNCTION__, player->get_uuid(), raid->data->uuid);	
-
+	ZhenyingBattle::GetInstance()->LeaveRegion(raid->data->ai_data.battle_data.room, player, player->get_attr(PLAYER_ATTR_REGION_ID));
 }
 
 static void battle_raid_ai_player_dead(raid_struct *raid, player_struct *player, unit_struct *killer)
@@ -93,6 +91,7 @@ static void battle_raid_ai_player_dead(raid_struct *raid, player_struct *player,
 	{
 		return;
 	}
+	
 	ZhenyingBattle::GetInstance()->KillEnemy(killer, *player);
 }
 static void battle_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
@@ -184,7 +183,25 @@ static void battle_raid_ai_player_relive(raid_struct *raid, player_struct *playe
 
 static void battle_raid_ai_attack(raid_struct *raid, player_struct *player, unit_struct *target, int damage)
 {
-	
+	if (target->get_unit_type() == UNIT_TYPE_PLAYER)
+	{
+		player_struct *other = (player_struct *)target;
+		std::deque<uint64_t>::iterator it = std::find(other->m_hitMe.begin(), other->m_hitMe.end(), player->get_uuid());
+		if (it != other->m_hitMe.end())
+		{
+			other->m_hitMe.erase(it);
+		}
+		other->m_hitMe.push_back(player->get_uuid());
+		if (other->m_hitMe.size() > 5)
+		{
+			player_struct *hit = player_manager::get_player_by_id(other->m_hitMe.front());
+			if (hit != NULL)
+			{
+				hit->m_meHit.erase(other->m_hitMe.front());
+			}
+			other->m_hitMe.pop_front();
+		}
+	}
 }
 
 static void battle_raid_ai_player_region_changed(raid_struct *raid, player_struct *player, uint32_t old_region, uint32_t new_region)

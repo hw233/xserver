@@ -185,7 +185,7 @@ static void guild_intrusion_raid_ai_monster_dead(raid_struct *raid, monster_stru
 		monster->set_pos(raid->ruqin_data.pos_x, raid->ruqin_data.pos_z);
 		if (raid->add_monster_to_scene(monster, 0) != 0)
 		{
-			LOG_ERR("[%s:%d] add monster to raid faild monster_id[%u]", raid->ruqin_data.monster_id);
+			LOG_ERR("[%s:%d] add monster to raid faild monster_id[%u]", __FUNCTION__, __LINE__, raid->ruqin_data.monster_id);
 		}
 		/*WanyaoguBbqNotify notify;
 		wanyaogu_bbq_notify__init(&notify);
@@ -280,7 +280,7 @@ static void guild_intrusion_raid_ai_failed(raid_struct *raid)
 		monster->set_pos(raid->ruqin_data.pos_x, raid->ruqin_data.pos_z);
 		if (raid->add_monster_to_scene(monster, 0) != 0)
 		{
-			LOG_ERR("[%s:%d] add monster to raid faild monster_id[%u]", raid->ruqin_data.monster_id);
+			LOG_ERR("[%s:%d] add monster to raid faild monster_id[%u]", __FUNCTION__, __LINE__, raid->ruqin_data.monster_id);
 		}
 	}
 

@@ -13,10 +13,11 @@ struct fuwen_data;
 class MySkill
 {
 public:
-	static const int MAX_SKILL_NUM = 20;
 	typedef std::vector<skill_struct *> SKILL_CONTAIN;
 
 	void copy(MySkill *skill);  //复制一份，机器人用
+	void insert(skill_struct *skill);
+	void pack(struct skill_data skill[MAX_MY_SKILL_NUM]);
 
 	MySkill(player_struct *player);
 	void clear();

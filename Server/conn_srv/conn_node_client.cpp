@@ -1,5 +1,6 @@
 #include "conn_node_client.h"
 #include "conn_node_gamesrv.h"
+#include "conn_node_raidsrv.h"
 #include "conn_node_login.h"
 #include "conn_node_dump.h"
 #include "conn_node_mail.h"
@@ -19,10 +20,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#define UNUSED(x) (void)(x)
+
 conn_node_client::conn_node_client()
 {
 	open_id = 0;
 	player_id = 0;
+	raidsrv_id = -1;
 
 	send_buffer_begin_pos = 0;
 	send_buffer_end_pos = 0;
@@ -168,7 +172,7 @@ int conn_node_client::recv_func(evutil_socket_t fd)
 
 				transfer_to_dumpserver(head);
 #ifdef FLOW_MONITOR
-	add_one_client_request(head);
+				add_one_client_request(head);
 #endif
 				if (player_id == 0) {
 					if (transfer_to_loginserver() != 0) {
@@ -336,6 +340,8 @@ int conn_node_client::dispatch_message()
 		case MSG_ID_GUILD_BATTLE_CALL_REQUEST:
 		case MSG_ID_GUILD_SET_PERMISSION_REQUEST:
 		case MSG_ID_GUILD_ACCEPT_TASK_REQUEST:
+		case MSG_ID_GUILD_INVITE_REQUEST:
+		case MSG_ID_GUILD_DEAL_INVITE_REQUEST:
 			return transfer_to_guildsrv();
 		case MSG_ID_RANK_INFO_REQUEST:
 		case MSG_ID_WORLDBOSS_REAL_RANK_INFO_REQUEST:
@@ -366,8 +372,60 @@ int conn_node_client::dispatch_message()
 	return (0);
 }
 
+int conn_node_client::transfer_to_raidserver()
+{
+	PROTO_HEAD *head;
+	head = (PROTO_HEAD *)buf_head();
+	uint32_t cmd = ENDION_FUNC_2(head->msg_id);
+	UNUSED(cmd);
+	switch (cmd)
+	{
+		case MSG_ID_MOVE_REQUEST:
+		case MSG_ID_ENTER_SCENE_READY_REQUEST:
+		case MSG_ID_MOVE_START_REQUEST:
+		case MSG_ID_MOVE_STOP_REQUEST:
+		case MSG_ID_MOVE_Y_START_REQUEST:
+		case MSG_ID_MOVE_Y_STOP_REQUEST:
+		case MSG_ID_SKILL_CAST_REQUEST:
+		case MSG_ID_SKILL_HIT_REQUEST:
+		case MSG_ID_PARTNER_SKILL_CAST_REQUEST:
+		case MSG_ID_TRANSFER_OUT_STUCK_REQUEST:
+		case MSG_ID_RELIVE_REQUEST:
+		case MSG_ID_COLLECT_BEGIN_REQUEST:
+		case MSG_ID_COLLECT_INTERRUPT_REQUEST:
+		case MSG_ID_COLLECT_COMMPLETE_REQUEST:
+		case MSG_ID_SING_INTERRUPT_REQUEST:
+		case MSG_ID_SING_END_REQUEST:
+		case MSG_ID_SING_BEGIN_REQUEST:
+		case MSG_ID_TRANSFER_TO_LEADER_REQUEST:
+		case MSG_ID_LEAVE_RAID_REQUEST:
+		case MSG_ID_TEAM_RAID_READY_REQUEST:
+		case MSG_ID_TEAM_RAID_CANCEL_REQUEST:
+		case MSG_ID_NPC_TALK_REQUEST:
+		case MSG_ID_RAID_AI_CONTINUE_REQUEST:
+			break;
+		default:
+			return (-1);
+	}
+	
+	if (!conn_node_raidsrv::server_node[0]) {
+		return (-1);
+	}
+
+	if (conn_node_raidsrv::server_node[0]->send_one_msg(head, 1) != (int)(ENDION_FUNC_4(head->len))) {
+		LOG_ERR("%s: send to raidserver failed err[%d]", __PRETTY_FUNCTION__, errno);
+		return (-10);
+	}
+	return (0);
+}
+
 int conn_node_client::transfer_to_gameserver()
 {
+	if (raidsrv_id >= 0 && transfer_to_raidserver() == 0)
+	{
+		return (0);
+	}
+	
 	int ret = 0;
 	PROTO_HEAD *head;
 	head = (PROTO_HEAD *)buf_head();

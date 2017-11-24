@@ -37,6 +37,8 @@ private:
 	int handle_guild_rename_request(EXTERN_DATA *extern_data);
 	int handle_guild_exit_request(EXTERN_DATA *extern_data);
 	int handle_guild_set_permission_request(EXTERN_DATA *extern_data);
+	int handle_guild_invite_request(EXTERN_DATA *extern_data);
+	int handle_guild_deal_invite_request(EXTERN_DATA *extern_data);
 
 	int handle_open_guild_answer_request(EXTERN_DATA *extern_data);
 

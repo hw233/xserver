@@ -106,7 +106,7 @@ static void use_meihuo_skill(monster_struct *monster, uint64_t now)
 	player_struct *player = player_manager::get_player_by_id(monster->data->sight_player[rand]);
 	if (!player)
 		return;
-	monster_cast_immediate_skill_to_player(LEIXINYE_MEIHUO_SKILL_ID, monster, NULL, player);
+	cast_immediate_skill_to_target(LEIXINYE_MEIHUO_SKILL_ID, 1, monster, player);
 	monster->ai_data.leixinye_ai.meihuo_time = now + LEIXINYE_MEIHUO_TIME * 1000;
 }
 
@@ -115,7 +115,7 @@ static void use_leiminggu_skill(monster_struct *monster)
 	monster->ai_data.leixinye_ai.leminggu_time = 0;
 	flash_to_leiminggu(monster);
 		// 释放技能
-	monster_cast_skill_to_pos(LEIMINGGU_SKILL_ID, monster, 0, 0);
+	monster_cast_skill_to_direct(LEIMINGGU_SKILL_ID, monster, 0, 0, NULL);
 		// 删除采集物
 
 	Collect *c = Collect::GetById(monster->ai_data.leixinye_ai.leiminggu_collect_id);

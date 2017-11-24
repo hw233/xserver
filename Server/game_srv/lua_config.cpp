@@ -94,6 +94,7 @@ std::map<uint64_t, struct GangsSkillTable*> guild_skill_config; //帮会技能�
 std::map<uint64_t, struct GangsBuildTaskTable*> guild_build_task_config; //帮会建设任务表
 std::map<uint64_t, struct CampTable*> zhenying_base_config; //阵营基础信息表
 std::map<uint64_t, struct BattlefieldTable*> zhenying_fight_config; //阵营战表
+std::map<uint64_t, struct BattleFieldRank*> zhenying_fight_rank_config; //阵营战表
 std::map<uint64_t, struct GradeTable*> zhenying_level_config; //阵营等级表
 std::map<uint64_t, struct WeekTable*> zhenying_week_config; //阵营周目标表
 std::map<uint64_t, struct QuestionTable*> questions_config; //考题表
@@ -156,6 +157,9 @@ std::map<uint64_t, struct MGLYyanseTable*> maogui_xiaoguai_colour_config;  //猫
 std::map<uint64_t, struct MGLYmaoguiwangTable*> maogui_maogui_wang_config; //猫鬼乐园猫鬼王配置表
 std::map<uint64_t, struct MGLYshoulingTable*> maogui_shouling_to_xiaoguai_config; //猫鬼乐园猫首领死亡删除对应小怪
 std::map<uint64_t, struct MonsterIDTable*> raid_jincheng_suiji_kill_monster; //副本进程击杀id对应此表的随机一只怪物，进程加一
+std::vector<struct raidsrv_config*> vec_raidsrv_config;
+std::map<uint32_t, uint32_t> map_raidsrv_config;
+std::map<uint64_t, struct TravelTable*> travel_config; //游历任务表
 
 /////////////////////
 uint32_t sg_bag_unlock_base_price;
@@ -287,6 +291,7 @@ std::map<uint64_t, struct SearchTable*> sg_xunbao; //寻宝表
 std::map<uint64_t, std::vector<uint64_t> > sg_xunbao_map; //寻宝地图
 std::map<uint64_t, uint64_t> sg_show_collect; //任务ID 采集点ID
 std::map<uint64_t, struct FunctionUnlockTable*> sg_jijiangopen; //即将开启表
+std::map<uint32_t, std::vector<BattleFieldStepRank *> > sg_battle_award;
 
 uint32_t sg_transfer_out_stuck_cd_time;
 uint32_t sg_guild_scene_id; //帮会领地场景ID
@@ -384,3 +389,9 @@ uint32_t sg_maogui_diaoxiang_stop_buff;
 uint32_t sg_maogui_guiwang_wudi_buff;
 
 char *sg_xunbao_boss_notice;
+
+std::map<uint64_t, EquipAttribute*> sg_equip_enchant_attr_map;
+
+uint32_t sg_travel_round_amount;
+uint32_t sg_travel_task_amount;
+

@@ -96,19 +96,18 @@ static void do_pursue(monster_struct *monster)
 		{
 			uint64_t now = time_helper::get_cached_time();		
 			monster->data->ontick_time = now + act_config->ActionTime;// + 1500;
-			monster->data->skill_id = skill_id;
-			monster->data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
-//			LOG_DEBUG("jacktang: mypos[%.2f][%.2f] hispos[%.2f][%.2f]", my_pos->pos_x, my_pos->pos_z, his_pos->pos_x, his_pos->pos_z);
+//			monster->data->skill_id = skill_id;
+//			monster->data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
 			monster->ai_state = AI_ATTACK_STATE;
 
 			monster->reset_pos();
-			monster_cast_skill_to_player(skill_id, monster, monster->target, false);		
+			monster_cast_skill_to_target(skill_id, monster, monster->target, false);		
 			return;
 		}
 	}
 
 	monster->reset_pos();
-	monster_cast_immediate_skill_to_player(skill_id, monster, NULL, monster->target);
+	cast_immediate_skill_to_target(skill_id, 1, monster, monster->target);
 
 		//被反弹死了
 	if (!monster->data)

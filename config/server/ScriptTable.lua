@@ -187,7 +187,27 @@ local ScriptTable = {
 	[171000413] = {
 		['ID'] = 171000413,
 		['Path'] = 'Skill/Effect/ThrowEffect',
-		['paramList'] = {0.85,4,6,135214103}
+		['paramList'] = {0.4,2.66,6,135214103}
+		},
+	[171000421] = {
+		['ID'] = 171000421,
+		['Path'] = 'Skill/Effect/BulletSkillEffect',
+		['paramList'] = {30,135214201}
+		},
+	[171000431] = {
+		['ID'] = 171000431,
+		['Path'] = 'Skill/Effect/BulletSkillEffect',
+		['paramList'] = {20,135214303}
+		},
+	[171000432] = {
+		['ID'] = 171000432,
+		['Path'] = 'Skill/Effect/SelectBulletSkillEffect',
+		['paramList'] = {15,135214303,0,1}
+		},
+	[171000433] = {
+		['ID'] = 171000433,
+		['Path'] = 'Skill/Effect/ThrowEffect',
+		['paramList'] = {0.4,1.05,6,135214306}
 		},
 	[171000441] = {
 		['ID'] = 171000441,
@@ -196,8 +216,28 @@ local ScriptTable = {
 		},
 	[171000442] = {
 		['ID'] = 171000442,
-		['Path'] = 'Skill/Effect/CallBulletEffectNum',
-		['paramList'] = {3,80,0,0.4,25,135214402}
+		['Path'] = 'Skill/Effect/BulletForwardEffect',
+		['paramList'] = {0,0.4,25,135214402}
+		},
+	[171000461] = {
+		['ID'] = 171000461,
+		['Path'] = 'Skill/Effect/BulletSkillEffect',
+		['paramList'] = {25,135214601}
+		},
+	[171000471] = {
+		['ID'] = 171000471,
+		['Path'] = 'Skill/Effect/BulletSkillEffect',
+		['paramList'] = {15,135214702}
+		},
+	[171000472] = {
+		['ID'] = 171000472,
+		['Path'] = 'Skill/Effect/ThrowEffect',
+		['paramList'] = {0.5,0.83,6,135214705}
+		},
+	[171000662] = {
+		['ID'] = 171000662,
+		['Path'] = 'Skill/Effect/SelectBulletSkillEffect',
+		['paramList'] = {10,135216604,0,1}
 		},
 	[172000002] = {
 		['ID'] = 172000002,
@@ -243,21 +283,6 @@ local ScriptTable = {
 		['ID'] = 172000036,
 		['Path'] = 'Skill/Effect/BulletSkillEffect',
 		['paramList'] = {20,135173001}
-		},
-	[172000042] = {
-		['ID'] = 172000042,
-		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {30,135200013}
-		},
-	[172000043] = {
-		['ID'] = 172000043,
-		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {40,135200004}
-		},
-	[172000047] = {
-		['ID'] = 172000047,
-		['Path'] = 'Skill/Effect/BulletSkillEffect',
-		['paramList'] = {15,135200011}
 		},
 	[172000052] = {
 		['ID'] = 172000052,

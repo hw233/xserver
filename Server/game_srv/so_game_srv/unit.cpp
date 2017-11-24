@@ -129,14 +129,14 @@ void unit_struct::set_pos(float pos_x, float pos_z)
 	path->max_pos = 0;
 	path->pos[0].pos_x = pos_x;
 	path->pos[0].pos_z = pos_z;
-	path->speed_x = 0;
-	path->speed_z = 0;
+	path->direct_x = 0;
+	path->direct_z = 0;
 }
 
 bool unit_struct::is_unit_in_move()
 {
 	struct unit_path *path = get_unit_path();
-	if (path->speed_x != 0 || path->speed_z != 0)
+	if (path->direct_x != 0 || path->direct_z != 0)
 		return true;
 	if (path->cur_pos < path->max_pos)
 		return true;
@@ -205,7 +205,16 @@ int unit_struct::stop_move()
 
 int unit_struct::check_pos_distance(float pos_x, float pos_z)
 {
+	if (!scene || !scene->map_config)
+		return (0);
 	struct position *pos = get_pos();
+	struct map_block *block = get_map_block(scene->map_config, pos->pos_x, pos->pos_z);
+	if (!block || !block->can_walk)
+	{
+		LOG_ERR("%s: unit %lu in block[%p]", __FUNCTION__, get_uuid(), block);
+		return (0);
+	}
+	
 	float x = pos->pos_x - pos_x;
 	float z = pos->pos_z - pos_z;
 	if (x * x + z * z > 25)
@@ -595,8 +604,8 @@ int unit_struct::update_unit_position()
 	uint64_t escape_time = now_time - path->start_time;
 	if (escape_time == 0)
 		return 0;
-	if (path->speed_x != 0 || path->speed_z != 0)
-		update_unit_position_by_direct_impl(path, path->speed_x, path->speed_z, escape_time, speed);
+	if (path->direct_x != 0 || path->direct_z != 0)
+		update_unit_position_by_direct_impl(path, path->direct_x, path->direct_z, escape_time, speed);
 	else
 		update_unit_position_impl(this, path, escape_time, speed);
 	path->start_time = now_time;
@@ -606,11 +615,11 @@ int unit_struct::update_unit_position()
 
 
 // 按方向驱动单位走一定时间
-static void update_unit_position_by_direct_impl(struct unit_path *path, float speed_x, float speed_z, uint64_t escape_time, float speed)
+static void update_unit_position_by_direct_impl(struct unit_path *path, float direct_x, float direct_z, uint64_t escape_time, float speed)
 {
 	struct position *cur_pos = &path->pos[path->cur_pos];
-	float new_x = cur_pos->pos_x + speed_x * escape_time / 1000.0;
-	float new_z = cur_pos->pos_z + speed_z * escape_time / 1000.0;
+	float new_x = cur_pos->pos_x + direct_x * speed * escape_time / 1000.0;
+	float new_z = cur_pos->pos_z + direct_z * speed * escape_time / 1000.0;
 
 //	LOG_DEBUG("%s: escape[%lu] new_x[%f] new_z[%f]", __FUNCTION__, escape_time, new_x, new_z);
 		// TODO: 判断阻挡
@@ -829,7 +838,7 @@ void unit_struct::delete_one_buff(buff_struct *buff)
 	}
 }
 
-void unit_struct::delete_one_buff(uint32_t id)
+void unit_struct::delete_one_buff(uint32_t id, bool broadcast_msg)
 {
 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
 	{
@@ -837,8 +846,35 @@ void unit_struct::delete_one_buff(uint32_t id)
 			continue;
 		if (m_buffs[i]->config->ID != id)
 			continue;
-		m_buffs[i]->del_buff();
+		
+		AddBuffNotify notify;
+		add_buff_notify__init(&notify);
+		notify.buff_id = m_buffs[i]->data->buff_id;
+		notify.playerid = get_uuid();
+		broadcast_to_sight(MSG_ID_DEL_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
+
+		m_buffs[i]->del_buff();		
 		return;
+	}
+}
+
+void unit_struct::clear_god_buff()
+{
+	if (!(buff_state & BUFF_STATE_GOD))
+		return;
+	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
+	{
+		if (!m_buffs[i])
+			continue;
+		if (m_buffs[i]->effect_config->Type != 170000006)
+			continue;
+
+		AddBuffNotify notify;
+		add_buff_notify__init(&notify);
+		notify.buff_id = m_buffs[i]->data->buff_id;
+		notify.playerid = get_uuid();
+		broadcast_to_sight(MSG_ID_DEL_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
+		m_buffs[i]->del_buff();
 	}
 }
 
@@ -857,6 +893,38 @@ void unit_struct::clear_all_buffs()
 //		m_buffs[i] = NULL;
 	}
 }
+
+bool unit_struct::is_in_buff3()
+{
+	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
+	{
+		if (!m_buffs[i])
+			continue;
+		if (m_buffs[i]->config->BuffType == 3)
+			return true;
+	}
+	return false;
+}
+
+void unit_struct::clear_type3_buff()
+{
+	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
+	{
+		if (!m_buffs[i])
+			continue;
+		if (m_buffs[i]->config->BuffType != 3)
+			continue;
+
+		AddBuffNotify notify;
+		add_buff_notify__init(&notify);
+		notify.buff_id = m_buffs[i]->data->buff_id;
+		notify.playerid = get_uuid();
+		broadcast_to_sight(MSG_ID_DEL_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
+		m_buffs[i]->del_buff();
+	}
+}
+
+
 buff_struct *unit_struct::try_cover_duplicate_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack)
 {
 	if (buff_config->BuffType == 1)
@@ -1083,6 +1151,9 @@ bool unit_struct::check_fight_type(unit_struct *player, bool bfriend)
 int unit_struct::count_rect_unit_at_pos(double angle, struct position *start_pos,
 	std::vector<unit_struct *> *ret, uint max, double length, double width, bool bfriend)
 {
+	if (!start_pos)
+		return (0);
+	
 	double cos = qFastCos(angle);
 	double sin = qFastSin(angle);
 	double x1, x2;
@@ -1141,7 +1212,9 @@ int unit_struct::count_rect_unit(double angle, std::vector<unit_struct *> *ret, 
 }
 int unit_struct::count_circle_unit(std::vector<unit_struct *> *ret, uint max, struct position *pos, double radius, bool bfriend)
 {
-//	struct position *my_pos = get_pos();
+	if (!pos)
+		return (0);
+
 	radius = radius * radius;
 	int cur_sight_player = *get_cur_sight_player();
 	uint64_t *sight_player = get_all_sight_player();
@@ -1229,5 +1302,42 @@ int unit_struct::count_fan_unit(std::vector<unit_struct *> *ret, uint max, doubl
 				return (0);
 		}
 	}
+	return (0);
+}
+
+double unit_struct::get_skill_angle()
+{
+	return 0;
+}
+struct position *unit_struct::get_skill_target_pos()
+{
+	return NULL;
+}
+
+player_struct *unit_struct::get_owner()
+{
+	return NULL;
+}
+
+int unit_struct::count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, bool bfriend)
+{
+	if (!config)
+		return (-1);
+	switch (config->RangeType)
+	{
+		case SKILL_RANGE_TYPE_RECT:
+			return count_rect_unit(get_skill_angle(), ret, config->MaxCount, config->Radius, config->Angle, bfriend);
+		case SKILL_RANGE_TYPE_CIRCLE:
+			return count_circle_unit(ret, config->MaxCount, get_pos(), config->Radius, bfriend);						
+		case SKILL_RANGE_TYPE_TARGET_CIRCLE:			
+			return count_circle_unit(ret, config->MaxCount, get_skill_target_pos(), config->Radius, bfriend);			
+		case SKILL_RANGE_TYPE_FAN:
+			return count_fan_unit(ret, config->MaxCount, config->Radius, config->Angle, bfriend);
+		case SKILL_RANGE_TYPE_TARGET_RECT:
+			return count_rect_unit_at_pos(get_skill_angle(), get_skill_target_pos(), ret, config->MaxCount, config->Radius, config->Angle, bfriend);
+		default:
+			return -10;
+	}
+	
 	return (0);
 }

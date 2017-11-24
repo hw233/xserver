@@ -535,7 +535,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 			player_struct *player = get_script_raid_event_player(raid);
 			if (player)
 			{
-				player->clear_one_buff(config->Parameter1[0]);								
+				player->delete_one_buff(config->Parameter1[0], true);								
 			}
 			return true; 
 		}		
@@ -611,6 +611,26 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 
 		return true;
 		}
+		case SCRIPT_EVENT_DEL_BUFF_FROM_MONSTER:
+		{
+			assert(config->n_Parameter1 >=1 && config->n_Parameter1%2 == 0);
+			for(size_t i = 0; i < config->n_Parameter1; i = i+2)	
+			{
+				uint32_t monster_id = config->Parameter1[i];
+				uint32_t buff_id = config->Parameter1[i+1];
+				for(std::set<monster_struct*>::iterator itr = raid->m_monster.begin(); itr != raid->m_monster.end(); itr++)
+				{
+					monster_struct* monster = *itr;
+					if(monster_id != monster->data->monster_id)
+					{
+						continue;
+					}
+
+					monster->delete_one_buff(buff_id, true);
+				}
+			}
+		}
+			return true;
 		case SCRIPT_EVENT_DELETE_MONSTER:
 		{
 			assert(config->n_Parameter1 >=1);
@@ -912,7 +932,7 @@ void script_ai_common_tick(raid_struct *raid, struct raid_script_data *script_da
 
 void script_ai_common_player_ready(raid_struct *raid, player_struct *player, struct raid_script_data *script_data)
 {
-	for (int i = 0; i < script_data->cur_index; ++i)
+	for (int i = 0; raid->m_config->DengeonType != 2 && i <= script_data->cur_index; ++i)
 	{
 		struct RaidScriptTable *config = (*script_data->script_config)[i];
 		if (!config)
@@ -950,6 +970,7 @@ void script_ai_common_player_ready(raid_struct *raid, player_struct *player, str
 			case SCRIPT_EVENT_AUTOMATIC_NPC_TALK:
 			case SCRIPT_EVENT_PLAY_EFFECT:
 			case SCRIPT_EVENT_PLAYER_DUMIAO_CARTOON:
+			case SCRIPT_EVENT_WAIT_NPC_TALK:
 				//case SCRIPT_EVENT_START_GONGCHENGCHUI:
 			{
 				RaidEventNotify nty;

@@ -212,3 +212,17 @@ bool update_doufachang_player_info(uint64_t player_id, PlayerDoufachangInfo *inf
 	}
 	return ret;
 }
+
+void sync_doufachang_rank_to_gamesrv(uint64_t player_id, uint32_t player_rank, uint64_t defencer_id, uint32_t defencer_rank)
+{
+	DOUFACHANG_SYNC_RANK *req = (DOUFACHANG_SYNC_RANK *)conn_node_doufachangsrv::get_send_data();
+	uint32_t data_len = sizeof(DOUFACHANG_SYNC_RANK);
+	memset(req, 0, data_len);
+	req->my_rank = player_rank;
+	req->defencer_id = defencer_id;
+	req->defencer_rank = defencer_rank;
+	EXTERN_DATA ext_data;
+	ext_data.player_id = player_id;
+	fast_send_msg_base(conn_node_doufachangsrv::instance(), &ext_data, SERVER_PROTO_DOUFACHANG_SYNC_RANK, data_len, 0);
+}
+

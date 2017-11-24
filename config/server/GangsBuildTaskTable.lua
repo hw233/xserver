@@ -5,7 +5,7 @@ local GangsBuildTaskTable = {
 		['Tasklibrary'] = {240191006,240191007,240191008},	--任务库
 		['DropID'] = 220100013,	--掉落ID
 		['LeveTime'] = 180,	--建设度
-		['Times'] = 40	--
+		['Times'] = 5	--
 		},
 	[340500001] = {
 		['ID'] = 340500001,
@@ -13,7 +13,7 @@ local GangsBuildTaskTable = {
 		['Tasklibrary'] = {240191006,240191007,240191008},
 		['DropID'] = 220100014,
 		['LeveTime'] = 360,
-		['Times'] = 40
+		['Times'] = 5
 		},
 	[340500002] = {
 		['ID'] = 340500002,
@@ -21,7 +21,7 @@ local GangsBuildTaskTable = {
 		['Tasklibrary'] = {240191006,240191007,240191008},
 		['DropID'] = 220100015,
 		['LeveTime'] = 720,
-		['Times'] = 40
+		['Times'] = 5
 		},
 	[340500003] = {
 		['ID'] = 340500003,
@@ -29,7 +29,7 @@ local GangsBuildTaskTable = {
 		['Tasklibrary'] = {240191006,240191007,240191008},
 		['DropID'] = 220100016,
 		['LeveTime'] = 1440,
-		['Times'] = 40
+		['Times'] = 5
 		}
 	}
 return GangsBuildTaskTable

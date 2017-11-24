@@ -37,6 +37,7 @@ public:
 	uint16_t seq;       //客户端发包的seq号，每次加1
 	uint32_t open_id;
 	uint64_t player_id;
+	int raidsrv_id;      //在raid_srv的ID,负数表示在gamesrv
 	struct event ev_write;
 
 private:	
@@ -48,6 +49,7 @@ private:
 	int decode_and_check_crc(PROTO_HEAD *head);
 	int dispatch_message();
 	int transfer_to_gameserver();
+	int transfer_to_raidserver();	
 	int transfer_to_loginserver();
 	int transfer_to_dumpserver(PROTO_HEAD* head);
 	int transfer_to_mailsrv();

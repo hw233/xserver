@@ -346,6 +346,44 @@ message GuildUpdatePermissionNotify
 	required uint32 state = 3; //权限状态
 }
 
+//帮会邀请请求
+message GuildInviteRequest
+{
+	required uint64 inviteeId = 1; //被邀请者ID
+}
+
+//帮会邀请应答
+message GuildInviteAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 errorArg = 2; //部分失败需要的参数
+	required uint64 inviteeId = 3; //被邀请者ID
+}
+
+//帮会邀请通知
+message GuildInviteNotify
+{
+	required uint64 inviterId = 1; //邀请者ID
+	required string inviterName = 2; //邀请者名字
+	required uint32 guildId = 3; //帮会ID
+	required string guildName = 4; //帮会名字
+}
+
+//帮会处理邀请请求
+message GuildDealInviteRequest
+{
+	required uint64 inviterId = 1; //邀请者ID
+	required uint32 guildId = 2; //帮会ID
+	required uint32 deal = 3; //处理操作，1:同意，2:拒绝
+}
+
+//帮会处理邀请应答
+message GuildDealInviteAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 guildId = 2; //帮会ID
+}
+
 
 
 //帮会建筑信息应答

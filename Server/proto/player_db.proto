@@ -40,10 +40,17 @@ message ItemBuff
 	required uint64 buff_state = 3;
 }
 
+message DBEquipEnchantAttr
+{
+	required uint32 pool = 1;
+	required uint32 id = 2;
+	required double val = 3;
+}
+
 message DBEquipEnchant
 {
-	required DBAttr cur_attr = 1; //当前属性
-	repeated DBAttr rand_attr = 2; //随机出来的属性
+	required DBEquipEnchantAttr cur_attr = 1; //当前属性
+	repeated DBEquipEnchantAttr rand_attr = 2; //随机出来的属性
 }
 
 message DBEquip
@@ -319,7 +326,7 @@ message DBTruck
 
 message DBZhenying
 {
-	required uint32 mine = 1; //挖宝次数
+	required uint32 award_num = 1; //阵营对战收益次数
 	required uint32 level = 2; //
 	required uint32 exp = 3; //
 	required uint32 task = 4; //当前任务ID
@@ -466,6 +473,9 @@ message PlayerDBInfo
 	required uint32 fishing_bait_id = 91;  //钓鱼鱼饵ID
 	repeated DBStrongGoal strong_goals = 92; //变强目标
 	repeated DBStrongChapter strong_chapters = 93; //变强章节
+	required uint32 travel_round_num = 94;  //游历当前轮数
+	required uint32 travel_round_count_out = 95;  //游历当前轮数是否算在今天轮数里
+	required uint32 travel_task_num = 96;  //游历当前环数
 }
 
 message DBAutoAddHp

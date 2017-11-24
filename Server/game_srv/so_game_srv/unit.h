@@ -74,6 +74,10 @@ public:
 	virtual JobDefine get_job() = 0;
 	virtual void do_taunt_action() = 0;  //嘲讽
 
+	virtual double get_skill_angle();
+	virtual struct position *get_skill_target_pos();
+	virtual player_struct *get_owner();
+	int count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, bool bfriend);	
 	int count_rect_unit_at_pos(double angle, struct position *start_pos, std::vector<unit_struct *> *ret, uint max, double length, double width, bool bfriend);	
 	int count_rect_unit(double angle, std::vector<unit_struct *> *ret, uint max, double length, double width, bool bfriend);
 	int count_circle_unit(std::vector<unit_struct *> *ret, uint max, struct position *pos, double radius, bool bfriend);
@@ -105,13 +109,18 @@ public:
 	int add_partner_to_sight(uint64_t player_id);
 	int del_partner_from_sight(uint64_t player_id);
 	bool is_unit_in_sight(uint64_t player_id);
+
+		//清除类型3(变身)buff
+	bool is_in_buff3();
+	void clear_type3_buff();
+	void clear_god_buff();
 	
 	void delete_state_buff(int state);
 	int get_free_buff_pos();
 	bool check_free_buff_pos(int index);
 	void set_one_buff(buff_struct *buff, int pos);	
 	void delete_one_buff(buff_struct *buff);
-	void delete_one_buff(uint32_t buff_id);
+	void delete_one_buff(uint32_t buff_id, bool broadcast_msg);
 	void clear_all_buffs();
 	buff_struct *try_cover_duplicate_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack);
 	void reset_unit_buff_state();

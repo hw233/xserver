@@ -89,6 +89,8 @@ int conn_node_doufachang::transfer_to_client()
 		case SERVER_PROTO_DOUFACHANG_ADD_REWARD_REQUEST:
 		case SERVER_PROTO_DOUFACHANG_BUY_CHALLENGE_REQUEST:
 		case SERVER_PROTO_UNDO_COST:
+		case SERVER_PROTO_DOUFACHANG_SYNC_RANK:
+		case SERVER_PROTO_DOUFACHANG_SYNC_BUY_CHALLENGE:
 			return transfer_to_gameserver();
 	}
 

@@ -1,4 +1,5 @@
 #include "conn_node_gamesrv.h"
+#include "conn_node_raidsrv.h"
 #include "conn_node_client.h"
 #include "conn_node_login.h"
 #include "conn_node_friend.h"
@@ -77,6 +78,7 @@ int conn_node_gamesrv::dispatch_message()
 		case SERVER_PROTO_FRIEND_GIFT_COST_ANSWER:
 		case SERVER_PROTO_FRIEND_TURN_SWITCH:
 		case SERVER_PROTO_FRIEND_SYNC_RENAME:
+		case SERVER_PROTO_FRIEND_IS_ENEMY_REQUEST:
 			return transfer_to_friendsrv(); 
 		case SERVER_PROTO_GAMESRV_START:
 			transfer_to_guildsrv();
@@ -113,6 +115,7 @@ int conn_node_gamesrv::dispatch_message()
 		case SERVER_PROTO_PLAYER_ONLINE_NOTIFY:
 			transfer_to_ranksrv();
 			transfer_to_friendsrv(); 
+			transfer_to_doufachang();
 			transfer_to_tradesrv();
 			return transfer_to_guildsrv();
 		case SERVER_PROTO_DOUFACHANG_ADD_REWARD_ANSWER:
@@ -129,6 +132,20 @@ int conn_node_gamesrv::dispatch_message()
 		case SERVER_PROTO_TRADE_LOT_INSERT:
 			transfer_to_guildsrv();
 			return transfer_to_tradesrv();
+		case SERVER_PROTO_RAID_PLAYER_ENTER_REQUEST:
+		{
+			EXTERN_DATA *extern_data = get_extern_data(head);
+			conn_node_client *client = conn_node_client::get_nodes_by_player_id(extern_data->player_id);
+			if (!client)
+			{
+				return (0);
+			}
+			client->raidsrv_id = 0;
+		}
+		case SERVER_PROTO_RAID_TEAM_ENTER_REQUEST:
+		{
+		}
+		return transfer_to_raidsrv();
 		default:
 			return transfer_to_client();
 	}
@@ -208,7 +225,29 @@ int conn_node_gamesrv::transfer_to_mailsrv()
 done:	
 	return (ret);
 }
+int conn_node_gamesrv::transfer_to_raidsrv()
+{
+	int ret = 0;
+	PROTO_HEAD *head;
+	head = (PROTO_HEAD *)buf_head();
 
+	if (!conn_node_raidsrv::server_node[0]) {
+		LOG_ERR("[%s:%d] do not have raidsrv connected", __FUNCTION__, __LINE__);
+		ret = -1;
+		goto done;
+	}
+
+	if (conn_node_raidsrv::server_node[0]->send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len)) {
+		LOG_ERR("[%s:%d] send to raid failed err[%d]", __FUNCTION__, __LINE__, errno);
+		ret = -2;
+		goto done;
+	}
+#ifdef FLOW_MONITOR
+	add_on_other_server_answer_msg(head);
+#endif
+done:	
+	return (ret);
+}
 int conn_node_gamesrv::transfer_to_doufachang()
 {
 	int ret = 0;
@@ -531,7 +570,7 @@ fail:
 }
 
 
-//////////////////////////// 涓嬮潰鏄痵tatic 鍑芥暟
+//////////////////////////// 下面是static 函数
 conn_node_gamesrv *conn_node_gamesrv::server_node;
 char conn_node_gamesrv::cached_buf[1024 * 1024 * 1024];
 int conn_node_gamesrv::cached_len;

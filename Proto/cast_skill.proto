@@ -8,6 +8,7 @@ message skill_cast_request
 	required pos_data cur_pos = 2;    //释放技能的位置	
 	required float direct_x = 3;      //方向向量x
 	required float direct_z = 4;	  //方向向量z
+	optional pos_data target_pos = 5;    //技能的目标位置(剑雨等技能使用)	
 }
 
 //释放技能的通知

@@ -8,7 +8,7 @@
 #include "guild_answer.h"
 
 #define MAX_GUILD_BUILDING_NUM 5 //每个帮会最大建筑数
-#define MAX_GUILD_ANNOUNCEMENT_LEN     200 //帮会公告最大长度
+#define MAX_GUILD_ANNOUNCEMENT_LEN     600 //帮会公告最大长度
 #define MAX_GUILD_GOODS_NUM     30 //帮会商品最大数
 #define MAX_GUILD_OFFICE 4
 #define MAX_GUILD_LOG_ARG_NUM 5

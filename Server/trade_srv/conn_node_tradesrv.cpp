@@ -510,6 +510,10 @@ int conn_node_tradesrv::handle_trade_on_shelf_delete_item_answer(EXTERN_DATA *ex
 		else
 		{ //上架失败
 			remove_trade_item(item);
+			if (ans->result == ERROR_ID_COIN_NOT_ENOUGH)
+			{
+				ans->result = 190500454;
+			}
 		}
 	} while(0);
 
@@ -550,7 +554,7 @@ int conn_node_tradesrv::handle_trade_off_shelf_request(EXTERN_DATA *extern_data)
 		if (shelf_index >= MAX_TRADE_SHELF_NUM || shelf_index >= player->shelf_num)
 		{
 			ret = ERROR_ID_TRADE_SHELF_INDEX;
-			LOG_ERR("[%s:%d] player[%lu] shelf index[%lu]", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index);
+			LOG_ERR("[%s:%d] player[%lu] shelf index[%u]", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index);
 			break;
 		}
 
@@ -558,14 +562,14 @@ int conn_node_tradesrv::handle_trade_off_shelf_request(EXTERN_DATA *extern_data)
 		if (!item)
 		{
 			ret = ERROR_ID_TRADE_ITEM_OFF_SHELF;
-			LOG_ERR("[%s:%d] player[%lu] item not on shelf, index[%lu]", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index);
+			LOG_ERR("[%s:%d] player[%lu] item not on shelf, index[%u]", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index);
 			break;
 		}
 
 		if (get_trade_operate(item->state) != 0)
 		{
 			ret = ERROR_ID_TRADE_ITEM_ADJUSTING;
-			LOG_ERR("[%s:%d] player[%lu] item adjusting, index[%lu]", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index);
+			LOG_ERR("[%s:%d] player[%lu] item adjusting, index[%u]", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index);
 			break;
 		}
 
@@ -686,7 +690,7 @@ int conn_node_tradesrv::handle_trade_reshelf_request(EXTERN_DATA *extern_data)
 		if (shelf_index >= MAX_TRADE_SHELF_NUM || shelf_index >= player->shelf_num)
 		{
 			ret = ERROR_ID_TRADE_SHELF_INDEX;
-			LOG_ERR("[%s:%d] player[%lu] shelf index[%lu]", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index);
+			LOG_ERR("[%s:%d] player[%lu] shelf index[%u]", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index);
 			break;
 		}
 
@@ -694,14 +698,14 @@ int conn_node_tradesrv::handle_trade_reshelf_request(EXTERN_DATA *extern_data)
 		if (!item)
 		{
 			ret = ERROR_ID_TRADE_ITEM_OFF_SHELF;
-			LOG_ERR("[%s:%d] player[%lu] item not on shelf, index[%lu]", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index);
+			LOG_ERR("[%s:%d] player[%lu] item not on shelf, index[%u]", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index);
 			break;
 		}
 
 		if (get_trade_operate(item->state) != 0)
 		{
 			ret = ERROR_ID_TRADE_ITEM_ADJUSTING;
-			LOG_ERR("[%s:%d] player[%lu] item adjusting, index[%lu]", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index);
+			LOG_ERR("[%s:%d] player[%lu] item adjusting, index[%u]", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index);
 			break;
 		}
 
@@ -709,7 +713,7 @@ int conn_node_tradesrv::handle_trade_reshelf_request(EXTERN_DATA *extern_data)
 		if (check_trade_item_price_rational(item->item_id, price))
 		{
 			ret = ERROR_ID_TRADE_PRICE;
-			LOG_ERR("[%s:%d] player[%lu] price, index[%lu], item_id:%u, price:%u", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index, item->item_id, item->price);
+			LOG_ERR("[%s:%d] player[%lu] price, index[%u], item_id:%u, price:%u", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index, item->item_id, item->price);
 			break;
 		}
 
@@ -717,7 +721,7 @@ int conn_node_tradesrv::handle_trade_reshelf_request(EXTERN_DATA *extern_data)
 		if (item->num < num)
 		{
 			ret = ERROR_ID_TRADE_ITEM_NUM;
-			LOG_ERR("[%s:%d] player[%lu] num, index[%lu], num:%u, new_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index, item->num, num);
+			LOG_ERR("[%s:%d] player[%lu] num, index[%u], num:%u, new_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, shelf_index, item->num, num);
 			break;
 		}
 
@@ -791,7 +795,7 @@ int conn_node_tradesrv::handle_trade_reshelf_change_answer(EXTERN_DATA *extern_d
 		if (item->num < ans->num)
 		{
 			ret = ERROR_ID_TRADE_ITEM_NUM;
-			LOG_ERR("[%s:%d] player[%lu] num, index[%lu], num:%u, new_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, ans->shelf_index, item->num, ans->num);
+			LOG_ERR("[%s:%d] player[%lu] num, index[%u], num:%u, new_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, ans->shelf_index, item->num, ans->num);
 			break;
 		}
 
@@ -972,7 +976,7 @@ int conn_node_tradesrv::handle_trade_buy_request(EXTERN_DATA *extern_data)
 		if (shelf_index >= MAX_TRADE_SHELF_NUM || shelf_index >= seller->shelf_num)
 		{
 			ret = ERROR_ID_TRADE_SHELF_INDEX;
-			LOG_ERR("[%s:%d] player[%lu] buy index error, seller[%lu], shelf index[%lu]", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index);
+			LOG_ERR("[%s:%d] player[%lu] buy index error, seller[%lu], shelf index[%u]", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index);
 			break;
 		}
 
@@ -980,28 +984,28 @@ int conn_node_tradesrv::handle_trade_buy_request(EXTERN_DATA *extern_data)
 		if (!item)
 		{
 			ret = ERROR_ID_TRADE_ITEM_OFF_SHELF;
-			LOG_ERR("[%s:%d] player[%lu] buy item off shelf, seller[%lu], index[%lu]", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index);
+			LOG_ERR("[%s:%d] player[%lu] buy item off shelf, seller[%lu], index[%u]", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index);
 			break;
 		}
 
 		if (get_trade_operate(item->state) != 0)
 		{
 			ret = ERROR_ID_TRADE_ITEM_ADJUSTING;
-			LOG_ERR("[%s:%d] player[%lu] buy item is adjusting, seller[%lu], index[%lu], operate:%u", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index, get_trade_operate(item->state));
+			LOG_ERR("[%s:%d] player[%lu] buy item is adjusting, seller[%lu], index[%u], operate:%u", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index, get_trade_operate(item->state));
 			break;
 		}
 
 		if (get_trade_state(item->state) != Trade_State_Sell)
 		{
 			ret = ERROR_ID_TRADE_ITEM_OFF_SHELF;
-			LOG_ERR("[%s:%d] player[%lu] buy item not selling, seller[%lu], index[%lu], state:%u", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index, get_trade_state(item->state));
+			LOG_ERR("[%s:%d] player[%lu] buy item not selling, seller[%lu], index[%u], state:%u", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index, get_trade_state(item->state));
 			break;
 		}
 
 		if (item->num < buy_num)
 		{
 			ret = ERROR_ID_TRADE_ITEM_LEFT_NUM;
-			LOG_ERR("[%s:%d] player[%lu] buy item left num, seller[%lu], index[%lu], buy_num:%u, left_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index, buy_num, item->num);
+			LOG_ERR("[%s:%d] player[%lu] buy item left num, seller[%lu], index[%u], buy_num:%u, left_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index, buy_num, item->num);
 			break;
 		}
 
@@ -1074,7 +1078,7 @@ int conn_node_tradesrv::handle_trade_buy_execute_answer(EXTERN_DATA *extern_data
 		if (shelf_index >= MAX_TRADE_SHELF_NUM || shelf_index >= seller->shelf_num)
 		{
 			ret = ERROR_ID_TRADE_SHELF_INDEX;
-			LOG_ERR("[%s:%d] player[%lu] buy index error, seller[%lu], shelf index[%lu]", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index);
+			LOG_ERR("[%s:%d] player[%lu] buy index error, seller[%lu], shelf index[%u]", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index);
 			break;
 		}
 
@@ -1082,14 +1086,14 @@ int conn_node_tradesrv::handle_trade_buy_execute_answer(EXTERN_DATA *extern_data
 		if (!item)
 		{
 			ret = ERROR_ID_TRADE_ITEM_OFF_SHELF;
-			LOG_ERR("[%s:%d] player[%lu] buy item off shelf, seller[%lu], index[%lu]", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index);
+			LOG_ERR("[%s:%d] player[%lu] buy item off shelf, seller[%lu], index[%u]", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index);
 			break;
 		}
 
 		if (get_trade_operate(item->state) != Trade_Operate_Buy)
 		{
 			ret = ERROR_ID_SERVER;
-			LOG_ERR("[%s:%d] player[%lu] buy item operate error, seller[%lu], index[%lu], operate:%u", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index, get_trade_operate(item->state));
+			LOG_ERR("[%s:%d] player[%lu] buy item operate error, seller[%lu], index[%u], operate:%u", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index, get_trade_operate(item->state));
 			break;
 		}
 
@@ -1104,7 +1108,7 @@ int conn_node_tradesrv::handle_trade_buy_execute_answer(EXTERN_DATA *extern_data
 		if (item->num < buy_num)
 		{
 			ret = ERROR_ID_TRADE_ITEM_LEFT_NUM;
-			LOG_ERR("[%s:%d] player[%lu] buy item left num, seller[%lu], index[%lu], buy_num:%u, left_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index, buy_num, item->num);
+			LOG_ERR("[%s:%d] player[%lu] buy item left num, seller[%lu], index[%u], buy_num:%u, left_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, seller_id, shelf_index, buy_num, item->num);
 			break;
 		}
 
@@ -1341,6 +1345,13 @@ int conn_node_tradesrv::handle_auction_bid_request(EXTERN_DATA *extern_data)
 
 		if (lot->bidder_id > 0)
 		{
+			if (lot->bidder_id == player->player_id)
+			{
+				ret = 190500461;
+				LOG_ERR("[%s:%d] player[%lu] is current bidder, uuid:%lu, bidder_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, uuid, lot->bidder_id);
+				break;
+			}
+
 			TradePlayer *bidder = get_trade_player(lot->bidder_id);
 			if (!bidder)
 			{
@@ -1423,6 +1434,10 @@ static int handle_auction_bid_cost_answer(int data_len, uint8_t *data, int resul
 			{
 				lot->operator_id = 0;
 			}
+			if (ret == ERROR_ID_GOLD_NOT_ENOUGH)
+			{
+				ret = 190500455;
+			}
 
 			break;
 		}
@@ -1440,25 +1455,32 @@ static int handle_auction_bid_cost_answer(int data_len, uint8_t *data, int resul
 		if (!lot)
 		{
 			ret = ERROR_ID_AUCTION_SOLD;
-			LOG_ERR("[%s:%d] player[%lu] get lot failed, uuid:%lu", __FUNCTION__, __LINE__, extern_data->player_id, uuid);
+			LOG_ERR("[%s:%d] player[%lu] get lot failed, uuid:%u", __FUNCTION__, __LINE__, extern_data->player_id, uuid);
 			break;
 		}
 
 		if (lot->operator_id != extern_data->player_id)
 		{
 			ret = ERROR_ID_SERVER;
-			LOG_ERR("[%s:%d] player[%lu] not operator, uuid:%lu, operator_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, uuid, lot->operator_id);
+			LOG_ERR("[%s:%d] player[%lu] not operator, uuid:%u, operator_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, uuid, lot->operator_id);
 			break;
 		}
 
 		TradePlayer *bidder = NULL;
 		if (lot->bidder_id > 0)
 		{
+			if (lot->bidder_id == player->player_id)
+			{
+				ret = 190500461;
+				LOG_ERR("[%s:%d] player[%lu] is current bidder, uuid:%u, bidder_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, uuid, lot->bidder_id);
+				break;
+			}
+
 			bidder = get_trade_player(lot->bidder_id);
 			if (!bidder)
 			{
 				ret = ERROR_ID_SERVER;
-				LOG_ERR("[%s:%d] player[%lu] get bidder fail, uuid:%lu, bidder_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, uuid, lot->bidder_id);
+				LOG_ERR("[%s:%d] player[%lu] get bidder fail, uuid:%u, bidder_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, uuid, lot->bidder_id);
 				break;
 			}
 		}
@@ -1639,14 +1661,14 @@ static int handle_auction_buy_now_cost_answer(int data_len, uint8_t *data, int r
 		if (!lot)
 		{
 			ret = ERROR_ID_AUCTION_SOLD;
-			LOG_ERR("[%s:%d] player[%lu] get lot failed, uuid:%lu", __FUNCTION__, __LINE__, extern_data->player_id, uuid);
+			LOG_ERR("[%s:%d] player[%lu] get lot failed, uuid:%u", __FUNCTION__, __LINE__, extern_data->player_id, uuid);
 			break;
 		}
 
 		if (lot->operator_id != extern_data->player_id)
 		{
 			ret = ERROR_ID_SERVER;
-			LOG_ERR("[%s:%d] player[%lu] not operator, uuid:%lu, operator_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, uuid, lot->operator_id);
+			LOG_ERR("[%s:%d] player[%lu] not operator, uuid:%u, operator_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, uuid, lot->operator_id);
 			break;
 		}
 
@@ -1657,7 +1679,7 @@ static int handle_auction_buy_now_cost_answer(int data_len, uint8_t *data, int r
 			if (!bidder)
 			{
 				ret = ERROR_ID_SERVER;
-				LOG_ERR("[%s:%d] player[%lu] get bidder fail, uuid:%lu, bidder_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, uuid, lot->bidder_id);
+				LOG_ERR("[%s:%d] player[%lu] get bidder fail, uuid:%u, bidder_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, uuid, lot->bidder_id);
 				break;
 			}
 		}
@@ -1701,7 +1723,7 @@ static int handle_auction_buy_now_cost_answer(int data_len, uint8_t *data, int r
 		}
 		if (master_num > 0)
 		{
-			uint32_t give_money = std::max(pCarry->bid_price / master_num, (uint32_t)1);
+			uint32_t give_money = std::max((uint32_t)(pCarry->bid_price * (1.0 - sg_trade_tax_percent)) / master_num, (uint32_t)1);
 			std::map<uint32_t, uint32_t> attachs;
 			attachs.insert(std::make_pair(201010003, give_money));
 			std::vector<char *> args;

@@ -279,7 +279,7 @@ void normal_ai_tick(monster_struct *monster)
 }
 
 //巡逻中被攻击则进入追击
-static void normal_ai_beattack(monster_struct *monster, unit_struct *player)
+void normal_ai_beattack(monster_struct *monster, unit_struct *player)
 {
 	if (monster->ai_state != AI_PATROL_STATE)
 		return;
@@ -297,7 +297,7 @@ static void normal_ai_beattack(monster_struct *monster, unit_struct *player)
 }
 
 //被击飞击退击倒
-static void normal_ai_befly(monster_struct *monster, unit_struct *player)
+void normal_ai_befly(monster_struct *monster, unit_struct *player)
 {
 		//打断技能
 	if (monster->ai_state == AI_ATTACK_STATE)
@@ -309,7 +309,7 @@ static void normal_ai_befly(monster_struct *monster, unit_struct *player)
 	}
 }
 
-static bool	normal_ai_player_leave_sight(monster_struct *monster, player_struct *player)
+bool normal_ai_player_leave_sight(monster_struct *monster, player_struct *player)
 {
 	if (monster->target && monster->target->get_uuid() == player->data->player_id)
 		monster->target = NULL;

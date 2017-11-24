@@ -45,6 +45,10 @@ enum SERVER_PROTO
 	//好友服消息
 	SERVER_PROTO_GAME_TO_FRIEND = 1400,     //游戏服通过网关转好友服
 	SERVER_PROTO_FRIEND_TO_GAME,     //好友服通过网关转游戏服
+	SERVER_PROTO_GET_OFFLINE_CACHE_REQUEST, //获取玩家离线缓存请求 game_srv --> friend_srv
+	SERVER_PROTO_GET_OFFLINE_CACHE_ANSWER,  //获取玩家离线缓存应答 friend_srv --> game_srv
+	SERVER_PROTO_CLEAR_OFFLINE_CACHE,       //清除玩家离线缓存 game_srv --> friend_srv
+	SERVER_PROTO_INSERT_OFFLINE_CACHE,      //插入玩家离线缓存 game_srv --> friend_srv
 	SERVER_PROTO_CHENGJIE_MONEY_BACK,     //退回惩戒赏金
 	SERVER_PROTO_ADD_WANYAOKA,       //添加万妖卡信息	
 	SERVER_PROTO_SAVE_WANYAOKA,       //保存万妖卡信息
@@ -68,6 +72,8 @@ enum SERVER_PROTO
 	SERVER_PROTO_FRIEND_SYNC_FRIEND_NUM, //同步好友数
 	SERVER_PROTO_FRIEND_ADD_GIFT, //好友送礼接收
 	SERVER_PROTO_FRIEND_SEND_GIFT_SUCCESS, //好友送礼成功
+	SERVER_PROTO_FRIEND_IS_ENEMY_REQUEST, //玩家是否仇人 game_srv --> friend_srv
+	SERVER_PROTO_FRIEND_IS_ENEMY_ANSWER,  //玩家是否仇人 friend_srv --> game_srv
 
 	//邮件服消息
 	SERVER_PROTO_MAIL_INSERT = 1600,                   //插入新邮件
@@ -128,6 +134,8 @@ enum SERVER_PROTO
 	SERVER_PROTO_DOUFACHANG_LOAD_PLAYER_ANSWER,  //加载玩家数据   db_srv -> game_srv
 	SERVER_PROTO_DOUFACHANG_BUY_CHALLENGE_REQUEST,   //扣元宝  doufachang -> game_srv
 	SERVER_PROTO_DOUFACHANG_BUY_CHALLENGE_ANSWER,   //扣元宝   game_srv -> doufachang
+	SERVER_PROTO_DOUFACHANG_SYNC_RANK,   //同步排名   doufachang -> game_srv
+	SERVER_PROTO_DOUFACHANG_SYNC_BUY_CHALLENGE,   //同步购买挑战次数   doufachang -> game_srv
 
 	//交易服消息
 	SERVER_PROTO_TRADESRV_COST_REQUEST = 2400, //交易服扣除消耗请求
@@ -145,10 +153,11 @@ enum SERVER_PROTO
 	SERVER_PROTO_TRADE_LOT_INSERT, //交易新增拍卖品
 	SERVER_PROTO_TRADE_BID_FAIL_RETURN, //拍卖失败返还
 
-	SERVER_PROTO_GET_OFFLINE_CACHE_REQUEST = 8000, //获取玩家离线缓存请求 game_srv --> friend_srv
-	SERVER_PROTO_GET_OFFLINE_CACHE_ANSWER = 8001,  //获取玩家离线缓存应答 friend_srv --> game_srv
-	SERVER_PROTO_CLEAR_OFFLINE_CACHE = 8002,       //清除玩家离线缓存 game_srv --> friend_srv
-	SERVER_PROTO_INSERT_OFFLINE_CACHE = 8003,      //插入玩家离线缓存 game_srv --> friend_srv
+		//raid server消息
+	SERVER_PROTO_RAID_PLAYER_ENTER_REQUEST,   //进入raid服 game_srv -> raid_srv
+	SERVER_PROTO_RAID_TEAM_ENTER_REQUEST,   //进入raid服 game_srv -> raid_srv	
+	SERVER_PROTO_RAID_LEAVE_REQUEST,   //离开raid服 raid_srv -> game_srv
+	SERVER_PROTO_ATTR_CHANGED_REQUEST,   //属性变更  raid_srv -> game_srv
 
 	SERVER_PROTO_GET_USER_INFO = 9033,          // 后台管理端获取用户信息
 	SERVER_PROTO_ADD_ITEM_REQUESRT = 9034,		// 后台管理端增加物品
@@ -308,14 +317,17 @@ typedef struct proto_player_cache_insert
 typedef struct proto_find_player_req
 {
 	PROTO_HEAD head;
+	uint16_t org_msg;	//消息ID
 	char     name[50];
 } PROTO_FIND_PLAYER_REQ;
 typedef struct proto_find_player_ans
 {
 	PROTO_HEAD head;
+	uint16_t org_msg;	//消息ID
 	uint64_t player_id;
 	uint64_t lv;
 	uint64_t cd;
+	uint64_t job;
 	char     name[50];
 } PROTO_FIND_PLAYER_ANS;
 typedef struct proto_add_chengjie
@@ -501,6 +513,17 @@ typedef struct proto_friend_sync_rename
 	char new_name[MAX_PLAYER_NAME_LEN + 1];
 } PROTO_FRIEND_SYNC_RENAME;
 
+typedef struct friend_is_enemy_request
+{
+	uint64_t dead_id;
+} FRIEND_IS_ENEMY_REQUEST;
+
+typedef struct friend_is_enemy_answer
+{
+	uint64_t dead_id;
+	bool     is_enemy;
+} FRIEND_IS_ENEMY_ANSWER;
+
 typedef struct proto_guild_disband
 {
 	PROTO_HEAD head;
@@ -636,6 +659,13 @@ typedef struct doufachang_get_reward_answer
 	uint32_t result;
 } DOUFACHANG_GET_REWARD_ANSWER;
 
+typedef struct doufachang_sync_rank
+{
+	uint32_t my_rank;
+	uint64_t defencer_id;
+	uint64_t defencer_rank;
+} DOUFACHANG_SYNC_RANK;
+
 typedef struct trade_on_shelf_request
 {
 	uint32_t bag_index;
@@ -756,6 +786,45 @@ typedef struct player_online_notify
 	uint32_t cur_guild_build_task;
 } PLAYER_ONLINE_NOTIFY;
 
+#define MAX_MY_SKILL_NUM  20  //玩家最大技能数
+static const int MAX_FUWEN = 3;
+static const int MAX_CUR_FUWEN = 2;
+struct fuwen_data
+{
+	uint32_t id;
+	uint32_t lv;
+	bool isNew;
+};
+struct skill_data
+{
+	uint32_t skill_id;
+//	SpellStatEvent state;
+//	uint64_t skill_cast_time;    //施法开始时间，即吟唱结束时间
+//	uint64_t skill_hit_time;    //飞行结束时间，即命中时间
+//	uint64_t owner; 		/* 施法者 resume用*/
+//	uint64_t target;  		/* 施法目标 */
+//	struct position pos;  		/* 目的地址 */
+	uint32_t lv;
+	fuwen_data fuwen[MAX_FUWEN];
+	int fuwen_num;
+	uint32_t cur_fuwen[MAX_CUR_FUWEN];
+	uint64_t cd_time;
+};
+
+typedef struct raid_enter_request
+{
+	uint32_t raid_id;
+	double attrData[PLAYER_ATTR_MAX];
+	char name[MAX_PLAYER_NAME_LEN + 1];
+	struct skill_data skill[MAX_MY_SKILL_NUM];
+	uint32_t skillindex; //套餐下标
+} RAID_ENTER_REQUEST;
+
+typedef struct attr_changed_request
+{
+	uint32_t id;
+	double value;
+} ATTR_CHANGED_REQUEST;
 #pragma pack() 
 #endif
 

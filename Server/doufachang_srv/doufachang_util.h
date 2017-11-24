@@ -44,5 +44,6 @@ int save_player_doufachang_info(PlayerDoufachangInfo *info, uint64_t player_id, 
 //void init_doufachang_player_info(uint64_t player_id, PlayerDoufachangInfo *info, uint32_t now);
 bool update_doufachang_player_info(uint64_t player_id, PlayerDoufachangInfo *info, uint32_t now);
 void copy_doufachang_rank(char *from, char *to, CRedisClient &rc);
+void sync_doufachang_rank_to_gamesrv(uint64_t player_id, uint32_t player_rank, uint64_t defencer_id = 0, uint32_t defencer_rank = 0);
 
 #endif /* DOUFACHANG_UTIL_H */

@@ -36,16 +36,16 @@ static void start_use_shiguan_skill(monster_struct *monster)
 			continue;
 		monster->target = player;
 		monster->reset_pos();
-		monster->data->skill_id = SHIGUAN_SKILL_ID;
-		struct position *my_pos = monster->get_pos();
-		struct position *his_pos = monster->target->get_pos();
+//		monster->data->skill_id = SHIGUAN_SKILL_ID;
+//		struct position *my_pos = monster->get_pos();
+//		struct position *his_pos = monster->target->get_pos();
 		
-		monster->data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
-		monster->data->skill_target_pos.pos_x = his_pos->pos_x;
-		monster->data->skill_target_pos.pos_z = his_pos->pos_z;		
+//		monster->data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
+//		monster->data->skill_target_pos.pos_x = his_pos->pos_x;
+//		monster->data->skill_target_pos.pos_z = his_pos->pos_z;		
 		
 		monster->ai_state = AI_ATTACK_STATE;
-		monster_cast_skill_to_player(SHIGUAN_SKILL_ID, monster, monster->target, true);
+		monster_cast_skill_to_target(SHIGUAN_SKILL_ID, monster, monster->target, true);
 
 		SkillTable *config = get_config_by_id(SHIGUAN_SKILL_ID, &skill_config);
 		struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);

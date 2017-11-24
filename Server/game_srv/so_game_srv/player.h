@@ -115,10 +115,17 @@ struct SingInfo
 //	uint32_t pos_z;
 //};
 
+struct EquipEnchantAttrInfo
+{
+	uint32_t pool;
+	uint32_t id;
+	double val;
+};
+
 struct EquipEnchantInfo
 {
-	AttrInfo cur_attr;
-	AttrInfo rand_attr[MAX_EQUIP_ENCHANT_RAND_NUM];
+	EquipEnchantAttrInfo cur_attr;
+	EquipEnchantAttrInfo rand_attr[MAX_EQUIP_ENCHANT_RAND_NUM];
 };
 
 struct EquipInfo
@@ -328,6 +335,7 @@ struct ZhenYing
 	uint32_t score_week; //战场周积分
 	uint64_t score_time; //护送矿车给积分的时间
 	uint32_t protect_num; //护矿次数
+	uint32_t award_num; //阵营对战收益次数
 	int one_award;
 };
 
@@ -563,7 +571,7 @@ struct player_data
 
 	struct cast_skill_data cur_skill;  //正在释放的技能
 
-	bag_grid_data bag[MAX_BAG_GRID_NUM]; //背包
+	bag_grid_data bag[MAX_BAG_GRID_NUM]; //背包  size 9600
 	uint32_t bag_grid_num; //背包开启格子数
 	uint32_t bag_unlock_num; //背包解锁格子数
 
@@ -702,11 +710,11 @@ struct player_data
 	uint8_t  server_level_break_count; //服务器等级突破计数
 	uint32_t server_level_break_notify; //服务器等级突破通知，记录level_id
 
-	AchievementInfo achievement_list[MAX_ACHIEVEMENT_NUM]; //成就列表
+	AchievementInfo achievement_list[MAX_ACHIEVEMENT_NUM]; //成就列表  size 8000
 	TitleInfo title_list[MAX_TITLE_NUM]; //称号列表
 
 	//英雄挑战数据
-	HeroChallengeInfo my_hero_info[MAX_HERO_CHALLENGE_MONSTER_NUM];
+	HeroChallengeInfo my_hero_info[MAX_HERO_CHALLENGE_MONSTER_NUM];  // size 17200
 	//秘境修炼任务信息
 	MiJingXiuLianTaskInfo mi_jing_xiu_lian;
 
@@ -718,6 +726,12 @@ struct player_data
 	StrongChapterInfo strong_chapters[MAX_STRONG_CHAPTER_NUM];
 
 	bool playing_drama;
+
+	uint32_t doufachang_rank; //斗法场排名
+
+	uint32_t travel_round_num; //游历当前轮数
+	uint32_t travel_round_count_out; //游历当前轮数是否算在今天轮数里，0：算在内，非0：不算
+	uint32_t travel_task_num; //游历当前环数
 };
 
 struct ai_player_data
@@ -1113,6 +1127,11 @@ public:
 	void clear_task_planes_uints(void);
 	void on_leave_sight_space(sight_space_struct *sight_space);
 
+	uint32_t get_travel_task(void);
+	void notify_travel_task_info(void);
+	int generate_next_travel_task(uint32_t pre_task = 0);
+	void on_travel_task_finish(uint32_t pre_task);
+
 	void do_taunt_action();
 	void update_region_id();
 
@@ -1128,11 +1147,11 @@ public:
 	void send_system_notice(uint32_t id, std::vector<char*> *args);
 	static void send_rock_notice(player_struct &player, uint32_t notify_id);
 
-	int conserve_out_raid_pos_and_scene(raid_struct *raid); //进入副本前保存离开副本后所到的场景id以及位置
+	int conserve_out_raid_pos_and_scene(struct DungeonTable* m_config); //进入副本前保存离开副本后所到的场景id以及位置
 	int set_enter_raid_pos_and_scene(raid_struct *raid, double pos_x, double pos_z);	
 	int set_out_raid_pos_and_clear_scene();
 	int set_out_raid_pos();
-	
+	int on_leave_raid();
 
 	//时装
 	int add_fashion(uint32_t id , uint32_t color, time_t expire);
@@ -1168,8 +1187,9 @@ public:
 	bool equip_is_max_star(uint32_t type);
 	uint32_t get_equip_max_star_need_exp(uint32_t type); //升到当前最大星需要的经验
 	void update_weapon_skin(bool isNty); //更新武器外形
-	int get_equip_inlay_quality_num(uint32_t quality); //获取镶嵌指定品质宝石的装备数量
+	int get_equip_inlay_quality_num(uint32_t quality, uint32_t quality_num); //获取镶嵌N颗指定品质宝石的装备数量
 	uint32_t get_equip_num(void);
+	uint32_t get_equip_enchant_color_num(uint32_t color); //获取附魔属性全为color色的装备数量
 
 		//pvp副本
 	int change_pvp_raid_score(int type, int value);
@@ -1178,10 +1198,10 @@ public:
 	uint32_t pvp_raid_cancel_time;  //pvp副本匹配CD
 
 		//清除类型3(变身)buff
-	bool is_in_buff3();
-	void clear_type3_buff();
-	void clear_god_buff();
-	void clear_one_buff(uint32_t id);	
+//	bool is_in_buff3();
+//	void clear_type3_buff();
+//	void clear_god_buff();
+//	void clear_one_buff(uint32_t id);	
 	uint32_t add_murder_num(uint32_t num); //添加杀戮值, 返回修改后的杀戮值
 	uint32_t sub_murder_num(uint32_t num);	//减少杀戮值, 返回修改后的杀戮值
 
@@ -1218,7 +1238,6 @@ public:
 //	uint32_t get_chivalry(void);
 	void update_daily_activity_item(DailyActivityInfo *info);
 	void update_chivalry_activity_item(ChivalryActivityInfo *info);
-	void refresh_activity_daily(void);
 	void notify_activity_info(EXTERN_DATA *extern_data);
 
 	void add_wanyaoka(uint32_t *id, uint32_t n_id);
@@ -1351,6 +1370,8 @@ private:
 	int move_to_wild(uint32_t scene_id);  //进入野外
 	int move_to_wild_pos(uint32_t scene_id, double pos_x, double pos_z, double direct); //进入野外
 	int move_to_raid(uint32_t raid_id, EXTERN_DATA *extern_data);  //进入副本
+
+	int enter_raidsrv(int raidsrv_id, uint32_t raid_id);	
 	
 	void calculate_lv2_attribute();
 	void calculate_lv3_attribute();

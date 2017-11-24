@@ -22,8 +22,13 @@
 
 Team::Team()
 {
+#ifdef __RAID_SRV__
+	m_data = (Team_data *)malloc(sizeof(Team_data));
+	memset(m_data, 0, sizeof(Team_data));	
+#else		
 	m_data = (Team_data *)comm_pool_alloc(&team_manager_teamDataPool);
 	memset(m_data, 0, sizeof(Team_data));
+#endif	
 	for (size_t i = 0; i < ARRAY_SIZE(m_team_player); ++i)
 		m_team_player[i] = NULL;
 	m_data->m_lvMax = 1000;
@@ -43,8 +48,11 @@ Team::~Team()
 	{
 		raid->team_destoryed(this);
 	}
-
+#ifdef __RAID_SRV__
+	free(m_data);
+#else	
 	comm_pool_free(&team_manager_teamDataPool, m_data);
+#endif	
 }
 
 void Team::set_raid_id_wait_ready(uint32_t raid_id)
@@ -1418,8 +1426,12 @@ int Team::FindMember(uint64_t id)
 
 int Team::InitTeamData(int num, unsigned long key)
 {
-	LOG_DEBUG("%s: init mem[%d]", __FUNCTION__, sizeof(Team_data) * num);		
+	LOG_DEBUG("%s: init mem[%lu]", __FUNCTION__, sizeof(Team_data) * num);
+#ifdef __RAID_SRV__
+	return (0);
+#else	
 	return init_comm_pool(0, sizeof(Team_data), num, key, &team_manager_teamDataPool);
+#endif	
 }
 
 //////////////////////TeamMatch

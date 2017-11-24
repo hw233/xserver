@@ -35,6 +35,7 @@ public:
 	static player_struct *create_ai_player(player_struct *player, scene_struct *scene, int name_index, int type);	  //根据玩家战斗力生成随机ai玩家
 	static player_struct *create_tmp_player(uint64_t player_id);   //临时测试用	
 	static player_struct *create_player(PROTO_ENTER_GAME_RESP *proto, uint64_t player_id);  //玩家登陆的时候调用，创建玩家并加入主城
+	static player_struct *create_player(RAID_ENTER_REQUEST *req, uint64_t player_id);  //raidsrv玩家进入副本，创建玩家并加入副本
 	static void delete_player(player_struct *p);                                       //玩家下线，并且数据被保存下来以后调用
 	static void delete_player_by_id(uint64_t player_id);
 	static player_struct * get_player_by_id(uint64_t id);

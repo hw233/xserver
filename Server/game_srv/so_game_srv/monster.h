@@ -101,7 +101,7 @@ typedef void (*ai_tick)(monster_struct *);
 typedef void (*ai_beattack)(monster_struct *, unit_struct *);
 typedef void (*ai_raid_attack_player)(monster_struct *, player_struct *, int);
 typedef void (*ai_dead)(monster_struct *, scene_struct *scene);
-typedef void (*ai_hp_changed)(monster_struct *);
+typedef void (*ai_hp_changed)(monster_struct *, int damage);
 typedef void (*ai_alive)(monster_struct *);
 typedef bool (*ai_on_player_leave_sight)(monster_struct *, player_struct *);
 typedef void (*ai_owner_attack)(monster_struct *, player_struct *, unit_struct *);
@@ -209,6 +209,9 @@ public:
 	virtual void on_go_back();
 	virtual void on_pursue();
 	virtual void clear_monster_timer();
+	virtual double get_skill_angle();
+	virtual struct position *get_skill_target_pos();
+	virtual player_struct *get_owner();
 	
 	void on_repel(unit_struct *player);
 	void pack_sight_monster_info(SightMonsterInfo *info);
@@ -228,7 +231,7 @@ public:
 	uint64_t count_rand_patrol_time();  //计算一个巡逻的定时器时间
 
 		//计算技能命中的对象
-	int count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct *target, bool bfriend);
+//	int count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct *target, bool bfriend);
 //	int count_skill_friend_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct *target);
 
 	void cast_immediate_skill_to_player(uint64_t skill_id, unit_struct *player);
@@ -360,6 +363,10 @@ public:
 		{
 			struct MGLYdiaoxiangTable *ai_27_config; 
 		} type27_ai;
+		struct
+		{
+			uint8_t state;   //1: 血量低于60%, 发呆  //2: 发呆结束
+		} type32_ai;
 	} ai_data;
 	struct position born_pos; //出生点
 

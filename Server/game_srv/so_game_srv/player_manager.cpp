@@ -92,9 +92,16 @@ int player_manager::init_player_struct(int num, unsigned long key)
 	for (int i = 0; i < num; ++i) {
 		player = new player_struct();
 		player_manager_player_free_list.push_back(player);
+#ifdef __RAID_SRV__
+		player->data = (player_data *)malloc(sizeof(player_data));
+#endif		
 	}
-	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(player_struct) * num, sizeof(player_data) * num);
+#ifdef __RAID_SRV__
+	return (0);
+#else	
+	LOG_DEBUG("%s: init mem[%lu][%lu]", __FUNCTION__, sizeof(player_struct) * num, sizeof(player_data) * num);
 	return init_comm_pool(0, sizeof(player_data), num, key, &player_manager_player_data_pool);
+#endif			
 }
 /*
 int player_manager::resume_player_struct(int num, unsigned long key)
@@ -198,11 +205,18 @@ player_struct *player_manager::alloc_player()
 		return NULL;
 	ret = player_manager_player_free_list.back();
 	player_manager_player_free_list.pop_back();
+
+#ifdef __RAID_SRV__
+	if (!ret)
+		goto fail;	
+	memset(ret->data, 0, sizeof(player_data));	
+#else	
 	data = (player_data *)comm_pool_alloc(&player_manager_player_data_pool);
 	if (!data)
 		goto fail;
 	memset(data, 0, sizeof(player_data));
 	ret->data = data;
+#endif	
 	player_manager_player_used_list.insert(ret);
 	ret->init_player();
 
@@ -243,8 +257,11 @@ void player_manager::delete_player(player_struct *p)
 
 	if (p->data) {
 		remove_player(p);
+#ifdef __RAID_SRV__
+#else		
 		comm_pool_free(&player_manager_player_data_pool, p->data);		
 		p->data = NULL;
+#endif		
 	}
 }
 
@@ -586,6 +603,41 @@ player_struct * player_manager::create_tmp_player(uint64_t player_id)
 	
 		//登陆成功
 	ret->data->status = ONLINE;
+	return ret;
+}
+
+player_struct *player_manager::create_player(RAID_ENTER_REQUEST *req, uint64_t player_id)
+{
+	player_struct *ret = add_player(player_id);;	
+	LOG_DEBUG("%s %d: player_id[%lu]", __FUNCTION__, __LINE__, player_id);
+	if (!ret) {
+		LOG_ERR("%s %d: add player[%lu] fail", __FUNCTION__, __LINE__, player_id);		
+		return NULL;
+	}
+	LOG_DEBUG("[%s:%d] player_id:%lu, player:%p, data:%p", __FUNCTION__, __LINE__, ret->data->player_id, ret, ret->data);
+	strncpy(ret->data->name, req->name, MAX_PLAYER_NAME_LEN);
+	ret->data->name[MAX_PLAYER_NAME_LEN] = '\0';
+	for (int i = 0; i < PLAYER_ATTR_MAX; ++i)
+	{
+		ret->data->attrData[i] = req->attrData[i];		
+	}
+
+	for (int i = 0; i < MAX_BUFF_FIGHT_ATTR; ++i)
+	{
+		ret->data->buff_fight_attr[i] = req->attrData[i];
+	}
+
+	for (int i = 0; i < MAX_MY_SKILL_NUM; ++i)
+	{
+		skill_struct *skill = skill_manager::copy_skill(&req->skill[i]);
+		if (!skill)
+			break;
+		ret->m_skill.insert(skill);
+	}
+	ret->m_skill.m_index = req->skillindex;
+	
+	ret->data->status = ONLINE;
+	ret->data->login_notify = true;
 	return ret;
 }
 

@@ -58,11 +58,11 @@ void send_friend_to_game(EXTERN_DATA *extern_data, uint16_t msg_id, void *data, 
 
 	real_head = (PROTO_HEAD *)proto_head->data;
 	size_t size = func(data, (uint8_t *)real_head->data);
-	real_head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD) + size);
+	real_head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD)+size);
 	real_head->msg_id = ENDION_FUNC_2(msg_id);
 	conn_node_friendsrv::connecter.add_extern_data(real_head, extern_data);
 
-	proto_head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD) + real_head->len);
+	proto_head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD)+real_head->len);
 
 	if (conn_node_friendsrv::connecter.send_one_msg(proto_head, 1) != (int)(ENDION_FUNC_4(proto_head->len))) {
 		LOG_ERR("%s %d: send to all failed err[%d]", __FUNCTION__, __LINE__, errno);
@@ -80,7 +80,7 @@ char sg_str_server_id[64];
 uint32_t sg_server_id = 0;
 CRedisClient sg_redis_client;
 struct event sg_event_timer;
-struct timeval sg_timeout = {300, 0};	
+struct timeval sg_timeout = { 300, 0 };
 
 
 conn_node_friendsrv::conn_node_friendsrv()
@@ -97,7 +97,7 @@ conn_node_friendsrv::~conn_node_friendsrv()
 int calc_zhenying_power_rate(uint64_t manLeft, uint64_t powerLeft, uint64_t manRight, uint64_t powerRight)
 {
 	ParameterTable * config = get_config_by_id(161000171, &parameter_config);
-	if (config == NULL )
+	if (config == NULL)
 	{
 		return 50;
 	}
@@ -142,7 +142,7 @@ void conn_node_friendsrv::handle_chose_zhenying()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128] = "zhenying";
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	AddZhenyingPlayer *req = add_zhenying_player__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req)
@@ -177,15 +177,15 @@ void conn_node_friendsrv::handle_chose_zhenying()
 		}
 	}
 
-	uint32_t rate = 0;
-	if (req->zhenying == ZHENYING__TYPE__FULONGGUO)
+	uint32_t rate = calc_zhenying_power_rate(rzhenying->man_fulongguo, rzhenying->power_fulongguo, rzhenying->man_wanyaogu, rzhenying->power_wanyaogu);
+	if (req->zhenying != ZHENYING__TYPE__FULONGGUO)
 	{
-		rate = calc_zhenying_power_rate(rzhenying->man_fulongguo, rzhenying->power_fulongguo, rzhenying->man_wanyaogu, rzhenying->power_wanyaogu);
+		rate = 100 - rate;//calc_zhenying_power_rate(rzhenying->man_fulongguo, rzhenying->power_fulongguo, rzhenying->man_wanyaogu, rzhenying->power_wanyaogu);
 	}
-	else
-	{
-		rate = calc_zhenying_power_rate(rzhenying->man_wanyaogu, rzhenying->power_wanyaogu, rzhenying->man_fulongguo, rzhenying->power_fulongguo);
-	}
+	//else
+	//{
+	//	rate = calc_zhenying_power_rate(rzhenying->man_wanyaogu, rzhenying->power_wanyaogu, rzhenying->man_fulongguo, rzhenying->power_fulongguo);
+	//}
 	result = check_can_join_zhenying(rate, req->gold, req->free);
 	if (result == 0)
 	{
@@ -211,7 +211,7 @@ void conn_node_friendsrv::handle_chose_zhenying()
 	{
 		zhenying_redis__free_unpacked(rzhenying, NULL);
 	}
-	
+
 	head->msg_id = SERVER_PROTO_CHOSE_ZHENYING_REQUEST;
 	req->ret = result;
 	send_friend_to_game(extern_data, head->msg_id, req, (pack_func)add_zhenying_player__pack);
@@ -225,7 +225,7 @@ void conn_node_friendsrv::handle_zhenying_power()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128] = "zhenying";
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	AddZhenyingPlayer *req = add_zhenying_player__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req)
@@ -235,7 +235,7 @@ void conn_node_friendsrv::handle_zhenying_power()
 	}
 
 	data_len = MAX_GLOBAL_SEND_BUF;
-	int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len); 
+	int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
 	ZhenyingPower send;
 	zhenying_power__init(&send);
 	if (ret >= 0)
@@ -246,9 +246,8 @@ void conn_node_friendsrv::handle_zhenying_power()
 			send.power_fulongguo = rzhenying->power_fulongguo;
 			send.power_wanyaogu = rzhenying->power_wanyaogu;
 
-			uint32_t rate = calc_zhenying_power_rate(rzhenying->man_wanyaogu, rzhenying->power_wanyaogu, rzhenying->man_fulongguo, rzhenying->power_fulongguo);
-			send.man_wanyaogu = rate;
-			send.man_fulongguo = 100 - rate;
+			send.man_fulongguo = calc_zhenying_power_rate(rzhenying->man_fulongguo, rzhenying->power_fulongguo, rzhenying->man_wanyaogu, rzhenying->power_wanyaogu);
+			send.man_wanyaogu = 100 - send.man_fulongguo;
 
 			if (req->zhenying == ZHENYING__TYPE__FULONGGUO)
 			{
@@ -285,7 +284,7 @@ void conn_node_friendsrv::handle_zhenying_change_power()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128] = "zhenying";
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	PROTO_ZHENYIN_CHANGE_POWER *req = (PROTO_ZHENYIN_CHANGE_POWER *)get_data();
 	if (!req)
@@ -333,7 +332,7 @@ void conn_node_friendsrv::handle_zhenying_add_kill()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128] = "zhenying";
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	AddZhenyingPlayer *req = add_zhenying_player__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req)
@@ -341,7 +340,7 @@ void conn_node_friendsrv::handle_zhenying_add_kill()
 		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
 		return;
 	}
-	
+
 	data_len = MAX_GLOBAL_SEND_BUF;
 	int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
 	if (ret >= 0)
@@ -352,7 +351,7 @@ void conn_node_friendsrv::handle_zhenying_add_kill()
 		{
 			ZhenyingRedis send;
 			zhenying_redis__init(&send);
-//			bool save = false;
+			//			bool save = false;
 			char *save = NULL;
 			if (req->zhenying == ZHENYING__TYPE__FULONGGUO)
 			{
@@ -379,13 +378,13 @@ void conn_node_friendsrv::handle_zhenying_add_kill()
 				{
 					rzhenying->power_name_fulongguo = save;
 				}
-				else 
+				else
 				{
 					assert(req->zhenying == ZHENYING__TYPE__WANYAOGU);
 					rzhenying->power_name_wanyaogu = save;
 				}
 
-				
+
 				if (ret < 0)
 				{
 					LOG_ERR("%s: oper failed, ret = %d", __FUNCTION__, ret);
@@ -405,7 +404,7 @@ void conn_node_friendsrv::handle_change_zhenying()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128] = "zhenying";
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	AddZhenyingPlayer *req = add_zhenying_player__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req)
@@ -421,15 +420,15 @@ void conn_node_friendsrv::handle_change_zhenying()
 		ZhenyingRedis *rzhenying = zhenying_redis__unpack(NULL, data_len, conn_node_base::global_send_buf);
 		if (rzhenying != NULL)
 		{
-			uint32_t rate = 0;
-			if (req->zhenying == ZHENYING__TYPE__FULONGGUO)
+			uint32_t rate = calc_zhenying_power_rate(rzhenying->man_fulongguo, rzhenying->power_fulongguo, rzhenying->man_wanyaogu, rzhenying->power_wanyaogu);
+			if (req->zhenying != ZHENYING__TYPE__FULONGGUO)
 			{
-				rate = calc_zhenying_power_rate(rzhenying->man_fulongguo, rzhenying->power_fulongguo, rzhenying->man_wanyaogu, rzhenying->power_wanyaogu);
+				rate = 100 - rate;// calc_zhenying_power_rate(rzhenying->man_fulongguo, rzhenying->power_fulongguo, rzhenying->man_wanyaogu, rzhenying->power_wanyaogu);
 			}
-			else
-			{
-				rate = calc_zhenying_power_rate(rzhenying->man_wanyaogu, rzhenying->power_wanyaogu, rzhenying->man_fulongguo, rzhenying->power_fulongguo);
-			}
+			//else
+			//{
+			//	rate = calc_zhenying_power_rate(rzhenying->man_wanyaogu, rzhenying->power_wanyaogu, rzhenying->man_fulongguo, rzhenying->power_fulongguo);
+			//}
 			int result = check_can_join_zhenying(rate, req->gold, req->free);
 			if (result == 0)
 			{
@@ -469,7 +468,7 @@ void conn_node_friendsrv::handle_change_zhenying()
 				{
 					LOG_ERR("%s: oper failed, ret = %d", __FUNCTION__, ret);
 				}
-	
+
 			}
 			head->msg_id = SERVER_PROTO_CHANGE_ZHENYING_REQUEST;
 			req->ret = result;
@@ -509,13 +508,13 @@ void conn_node_friendsrv::handle_team_info()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128];
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	TeamInfo *req = team_info__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
-		return ;
+		return;
 	}
 	for (size_t i = 0; i < req->n_mem; ++i)
 	{
@@ -542,7 +541,7 @@ void conn_node_friendsrv::handle_team_info()
 	fast_send_msg(&conn_node_friendsrv::connecter, extern_data, head->msg_id, team_info__pack, *req);
 	team_info__free_unpacked(req, NULL);
 
-	
+
 	LOG_DEBUG("%s: team info %lu len[%d] ret", __FUNCTION__, extern_data->player_id, data_len);
 }
 
@@ -551,7 +550,7 @@ void conn_node_friendsrv::handle_team_apply_list()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128];
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	TeamApplyerList *req = team_applyer_list__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req)
@@ -593,7 +592,7 @@ void conn_node_friendsrv::handle_team_list()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128];
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	TeamList *req = team_list__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req)
@@ -639,7 +638,7 @@ void conn_node_friendsrv::handle_zhenying_fight_myside_score()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128];
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	SideScore *req = side_score__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req)
@@ -679,7 +678,7 @@ void conn_node_friendsrv::handle_zhenying_fight_settle()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128];
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	ZhenYingResult *req = zhen_ying_result__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req)
@@ -718,11 +717,56 @@ void conn_node_friendsrv::handle_zhenying_fight_settle()
 			}
 		}
 	}
-	
+
 	fast_send_msg(&conn_node_friendsrv::connecter, extern_data, head->msg_id, zhen_ying_result__pack, *req);
 	zhen_ying_result__free_unpacked(req, NULL);
 
 	LOG_DEBUG("%s: team info %lu len[%d] ret", __FUNCTION__, extern_data->player_id, data_len);
+}
+
+void conn_node_friendsrv::handle_lately_chat()
+{
+	PROTO_HEAD *head = get_head();
+	EXTERN_DATA *extern_data = get_extern_data(head);
+	char key[128];
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
+
+	AnsLatelyChat *req = ans_lately_chat__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return;
+	}
+
+	for (uint32_t i = 0; i < req->n_player; ++i)
+	{
+		if (!req->player[i]->online)
+		{
+			sprintf(key, "%lu", req->player[i]->playerid);
+			data_len = MAX_GLOBAL_SEND_BUF;
+			int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+			if (ret < 0)
+			{
+				continue;
+			}
+			PlayerRedisInfo *rplayer = player_redis_info__unpack(NULL, data_len, conn_node_base::global_send_buf);
+			if (rplayer == NULL)
+			{
+				continue;
+			}
+			strcpy(req->player[i]->name, rplayer->name);
+			req->player[i]->job = rplayer->job;
+			req->player[i]->lv = rplayer->lv;
+			req->player[i]->head = rplayer->head_icon;
+			req->player[i]->zhenying = rplayer->zhenying;
+
+			player_redis_info__free_unpacked(rplayer, NULL);
+		}
+	}
+
+	fast_send_msg(&conn_node_friendsrv::connecter, extern_data, head->msg_id, ans_lately_chat__pack, *req);
+	ans_lately_chat__free_unpacked(req, NULL);
+
 }
 
 void conn_node_friendsrv::handle_chengjie_list()
@@ -730,7 +774,7 @@ void conn_node_friendsrv::handle_chengjie_list()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128];
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	ChengjieList *req = chengjie_list__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req)
@@ -811,7 +855,7 @@ void conn_node_friendsrv::handle_chengjie_task()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128];
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	ChengjieTask *pTask = chengjie_task__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!pTask)
@@ -870,7 +914,7 @@ void conn_node_friendsrv::handle_chengjie_task_complete()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128];
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	ChengjieTaskComplete *pTask = chengjie_task_complete__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!pTask)
@@ -878,7 +922,7 @@ void conn_node_friendsrv::handle_chengjie_task_complete()
 		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
 		return;
 	}
-	
+
 	PlayerRedisInfo *pInvestor = NULL;
 	PlayerRedisInfo *pTarget = NULL;
 	PlayerRedisInfo *pAcceptor = NULL;
@@ -913,8 +957,8 @@ void conn_node_friendsrv::handle_chengjie_task_complete()
 	{
 		if (pInvestor != NULL)
 		{
-			strncpy(name, pInvestor->name, MAX_PLAYER_NAME_LEN); 
-			
+			strncpy(name, pInvestor->name, MAX_PLAYER_NAME_LEN);
+
 			notify.sendplayerid = pTask->investor;
 			notify.sendplayerlv = pInvestor->lv;
 			notify.sendplayerjob = pInvestor->job;
@@ -929,7 +973,7 @@ void conn_node_friendsrv::handle_chengjie_task_complete()
 	{
 		sprintf(str, configSpeek->parameter2, name, pTarget->name, pTask->declaration);
 	}
-	
+
 	notify.contain = str;
 	notify.channel = CHANNEL__system;
 	if (pTask->step < 3)
@@ -956,7 +1000,7 @@ void conn_node_friendsrv::handle_chengjie_task_complete()
 			pTask->scene, pTarget->name);
 		::send_mail(&conn_node_friendsrv::connecter, pTask->investor, 0, title, NULL, strContain, NULL, NULL, MAGIC_TYPE_YAOSHI);
 	}
-	
+
 	if (pInvestor != NULL)
 	{
 		player_redis_info__free_unpacked(pInvestor, NULL);
@@ -980,7 +1024,7 @@ void conn_node_friendsrv::handle_add_wanyaoka()
 	ListWanyaokaAnswer *answer = NULL;
 	ListWanyaokaAnswer new_answer;
 	uint32_t wanyaoka[MAX_WANYAOKA_PER_PLAYER];
-//	PROTO_ADD_WANYAOKA *req = (PROTO_ADD_WANYAOKA *)buf_head();
+	//	PROTO_ADD_WANYAOKA *req = (PROTO_ADD_WANYAOKA *)buf_head();
 	PROTO_ADD_WANYAOKA *req = (PROTO_ADD_WANYAOKA *)((PROTO_HEAD *)buf_head())->data;
 	char key[128];
 	sprintf(key, "%lu", req->player_id);
@@ -988,7 +1032,7 @@ void conn_node_friendsrv::handle_add_wanyaoka()
 	int ret = sg_redis_client.hget_bin(server_wyk_key, key, (char *)conn_node_base::global_send_buf, &data_len);
 	if (ret == 0)
 	{
-//		answer = list_wanyaoka_answer__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+		//		answer = list_wanyaoka_answer__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 		answer = list_wanyaoka_answer__unpack(NULL, data_len, conn_node_base::global_send_buf);
 	}
 	list_wanyaoka_answer__init(&new_answer);
@@ -1019,7 +1063,7 @@ void conn_node_friendsrv::handle_add_wanyaoka()
 			list_wanyaoka_answer__free_unpacked(answer, NULL);
 			return;
 		}
-		
+
 		for (size_t i = 0; i < answer->n_wanyaoka_id; ++i)
 		{
 			wanyaoka[i] = answer->wanyaoka_id[i];
@@ -1027,7 +1071,7 @@ void conn_node_friendsrv::handle_add_wanyaoka()
 		new_answer.n_wanyaoka_id = answer->n_wanyaoka_id;
 		list_wanyaoka_answer__free_unpacked(answer, NULL);
 	}
-	
+
 	for (int i = 0; i < MAX_WANYAOKA_EACH_TIME; ++i)
 	{
 		if (req->wanyaoka[i] == 0)
@@ -1038,9 +1082,9 @@ void conn_node_friendsrv::handle_add_wanyaoka()
 	ret = sg_redis_client.hset_bin(server_wyk_key, key, (const char *)conn_node_base::global_send_buf, size);
 	if (ret != 1 && ret != 0)
 	{
-		LOG_ERR("%s: player[%lu] oper failed, ret = %d", __FUNCTION__, req->player_id, ret);		
+		LOG_ERR("%s: player[%lu] oper failed, ret = %d", __FUNCTION__, req->player_id, ret);
 	}
-	LOG_DEBUG("%s: save %lu len[%lu] ret = %d", __FUNCTION__, req->player_id, size, ret);		
+	LOG_DEBUG("%s: save %lu len[%lu] ret = %d", __FUNCTION__, req->player_id, size, ret);
 }
 
 void conn_node_friendsrv::handle_chengjie_money_back()
@@ -1048,7 +1092,7 @@ void conn_node_friendsrv::handle_chengjie_money_back()
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
 	char key[128];
-	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	ChengjieMoney *req = chengjie_money__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req)
@@ -1091,13 +1135,13 @@ void conn_node_friendsrv::handle_save_wanyaoka()
 	EXTERN_DATA *extern_data = get_extern_data(req);
 	char key[128];
 	sprintf(key, "%lu", extern_data->player_id);
-	int data_len = ENDION_FUNC_4(req->len) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA);
+	int data_len = ENDION_FUNC_4(req->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 	int ret = sg_redis_client.hset_bin(server_wyk_key, key, (const char *)&req->data[0], data_len);
 	if (ret < 0)
 	{
 		LOG_ERR("%s: %lu oper failed, ret = %d", __FUNCTION__, extern_data->player_id, ret);
 	}
-	LOG_DEBUG("%s: save %lu len[%d] ret = %d", __FUNCTION__, extern_data->player_id, data_len, ret);	
+	LOG_DEBUG("%s: save %lu len[%d] ret = %d", __FUNCTION__, extern_data->player_id, data_len, ret);
 }
 void conn_node_friendsrv::handle_list_wanyaoka()
 {
@@ -1120,162 +1164,169 @@ void conn_node_friendsrv::handle_list_wanyaoka()
 
 int conn_node_friendsrv::recv_func(evutil_socket_t fd)
 {
-//	__attribute__((unused)) EXTERN_DATA *extern_data;
-//	__attribute__((unused)) PROTO_HEAD *head;	
+	//	__attribute__((unused)) EXTERN_DATA *extern_data;
+	//	__attribute__((unused)) PROTO_HEAD *head;	
 	for (;;) {
 		int ret = get_one_buf();
 		if (ret == 0) {
 
-//			head = (PROTO_HEAD *)buf_head();
-//			extern_data = get_extern_data(head);
+			//			head = (PROTO_HEAD *)buf_head();
+			//			extern_data = get_extern_data(head);
 
 			uint64_t times = time_helper::get_micro_time();
 			time_helper::set_cached_time(times / 1000);
 
 			int cmd = get_cmd();
-			switch(cmd)
+			switch (cmd)
 			{
-				case MSG_ID_LIST_WANYAOKA_REQUEST:
-					handle_list_wanyaoka();
-					break;
-				case MSG_ID_TEAM_INFO_NOTIFY:
-					handle_team_info();
-					break;
-				case MSG_ID_ZHENYING_FIGHT_MYSIDE_SCORE_NOTIFY:
-					handle_zhenying_fight_myside_score();
-					break;
-				case MSG_ID_ZHENYING_FIGHT_SETTLE_NOTIFY:
-					handle_zhenying_fight_settle();
-					break;
-				case MSG_ID_APPLYERLIST_TEAM_NOTIFY:
-					handle_team_apply_list();
-					break;
-				case MSG_ID_TEAM_LIST_ANSWER:
-					handle_team_list();
-					break;
-				case SERVER_PROTO_ADD_WANYAOKA:
-					handle_add_wanyaoka();
-					break;
-				case SERVER_PROTO_SAVE_WANYAOKA:
-					handle_save_wanyaoka();
-					break;
-				case SERVER_PROTO_LIST_WANYAOKA:
-					handle_list_wanyaoka();
-					break;
-				case SERVER_PROTO_GET_OFFLINE_CACHE_REQUEST:
-					handle_cache_get();
-					break;
-				case SERVER_PROTO_CLEAR_OFFLINE_CACHE:
-					handle_cache_clear();
-					break;
-				case SERVER_PROTO_INSERT_OFFLINE_CACHE:
-					handle_cache_insert();
-					break;
-				case MSG_ID_REFRESH_CHENGJIE_LIST_ANSWER:
-					handle_chengjie_list();
-					break;
-				case SERVER_PROTO_CHENGJIE_MONEY_BACK:
-					handle_chengjie_money_back();
-					break;
-				case MSG_ID_CUR_CHENGJIE_TASK_NOTIFY:
-					handle_chengjie_task();
-					break;
-				case SERVER_PROTO_CHENGJIE_TASK_COMPLETE_REQUEST:
-					handle_chengjie_task_complete();
-					break;
-				case MSG_ID_CHOSE_ZHENYING_REQUEST:
-					handle_chose_zhenying();
-					break;
-				case MSG_ID_CHANGE_ZHENYING_REQUEST:
-					handle_change_zhenying();
-					break;
-				case MSG_ID_ZHENYING_POWER_REQUEST:
-					handle_zhenying_power();
-					break;
-				case SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST:
-					handle_zhenying_change_power();
-					break;
-				case SERVER_PROTO_ADD_ZHENYING_KILL_REQUEST:
-					//handle_zhenying_add_kill();
-					break;
-				case MSG_ID_FRIEND_INFO_REQUEST:
-					handle_friend_info_request();
-					break;
-				case MSG_ID_FRIEND_ADD_CONTACT_REQUEST:
-					handle_friend_add_contact_request();
-					break;
-				case MSG_ID_FRIEND_DEL_CONTACT_REQUEST:
-					handle_friend_del_contact_request();
-					break;
-				case MSG_ID_FRIEND_ADD_BLOCK_REQUEST:
-					handle_friend_add_block_request();
-					break;
-				case MSG_ID_FRIEND_DEL_BLOCK_REQUEST:
-					handle_friend_del_block_request();
-					break;
-				case MSG_ID_FRIEND_DEL_ENEMY_REQUEST:
-					handle_friend_del_enemy_request();
-					break;
-				case MSG_ID_FRIEND_CREATE_GROUP_REQUEST:
-					handle_friend_create_group_request();
-					break;
-				case MSG_ID_FRIEND_EDIT_GROUP_REQUEST:
-					handle_friend_edit_group_request();
-					break;
-				case MSG_ID_FRIEND_REMOVE_GROUP_REQUEST:
-					handle_friend_remove_group_request();
-					break;
-				case MSG_ID_FRIEND_MOVE_PLAYER_GROUP_REQUEST:
-					handle_friend_move_player_group_request();
-					break;
-				case MSG_ID_FRIEND_DEAL_APPLY_REQUEST:
-					handle_friend_deal_apply_request();
-					break;
-				case SERVER_PROTO_FRIEND_RECOMMEND:
-					handle_friend_recommend_request();
-					break;
-				case SERVER_PROTO_FRIEND_CHAT:
-					handle_friend_chat_request();
-					break;
-				case SERVER_PROTO_PLAYER_ONLINE_NOTIFY:
-					handle_player_online_notify();
-					break;
-				case SERVER_PROTO_KICK_ROLE_NOTIFY:
-					handle_player_offline_notify();
-					break;
-				case SERVER_PROTO_FRIEND_ADD_ENEMY:
-					handle_friend_add_enemy_request();
-					break;
-				case MSG_ID_FRIEND_SEND_GIFT_REQUEST:
-					handle_friend_send_gift_request();
-					break;
-				case SERVER_PROTO_FRIEND_GIFT_COST_ANSWER:
-					handle_friend_gift_cost_answer();
-					break;
-				case SERVER_PROTO_FRIENDSRV_COST_ANSWER:
-					handle_friend_cost_answer();
-					break;
-				case SERVER_PROTO_FRIEND_TURN_SWITCH:
-					handle_friend_turn_switch_request();
-					break;
-				case SERVER_PROTO_FRIEND_EXTEND_CONTACT_REQUEST:
-					handle_friend_extend_contact_request();
-					break;
-				case SERVER_PROTO_FRIEND_SYNC_RENAME:
-					handle_friend_rename_request();
+			case MSG_ID_LIST_WANYAOKA_REQUEST:
+				handle_list_wanyaoka();
+				break;
+			case MSG_ID_TEAM_INFO_NOTIFY:
+				handle_team_info();
+				break;
+			case MSG_ID_ZHENYING_FIGHT_MYSIDE_SCORE_NOTIFY:
+				handle_zhenying_fight_myside_score();
+				break;
+			case MSG_ID_ZHENYING_FIGHT_SETTLE_NOTIFY:
+				handle_zhenying_fight_settle();
+				break;
+			case MSG_ID_LATELY_CHAT_ANSWER:
+				handle_lately_chat();
+				break;
+			case MSG_ID_APPLYERLIST_TEAM_NOTIFY:
+				handle_team_apply_list();
+				break;
+			case MSG_ID_TEAM_LIST_ANSWER:
+				handle_team_list();
+				break;
+			case SERVER_PROTO_ADD_WANYAOKA:
+				handle_add_wanyaoka();
+				break;
+			case SERVER_PROTO_SAVE_WANYAOKA:
+				handle_save_wanyaoka();
+				break;
+			case SERVER_PROTO_LIST_WANYAOKA:
+				handle_list_wanyaoka();
+				break;
+			case SERVER_PROTO_GET_OFFLINE_CACHE_REQUEST:
+				handle_cache_get();
+				break;
+			case SERVER_PROTO_CLEAR_OFFLINE_CACHE:
+				handle_cache_clear();
+				break;
+			case SERVER_PROTO_INSERT_OFFLINE_CACHE:
+				handle_cache_insert();
+				break;
+			case MSG_ID_REFRESH_CHENGJIE_LIST_ANSWER:
+				handle_chengjie_list();
+				break;
+			case SERVER_PROTO_CHENGJIE_MONEY_BACK:
+				handle_chengjie_money_back();
+				break;
+			case MSG_ID_CUR_CHENGJIE_TASK_NOTIFY:
+				handle_chengjie_task();
+				break;
+			case SERVER_PROTO_CHENGJIE_TASK_COMPLETE_REQUEST:
+				handle_chengjie_task_complete();
+				break;
+			case MSG_ID_CHOSE_ZHENYING_REQUEST:
+				handle_chose_zhenying();
+				break;
+			case MSG_ID_CHANGE_ZHENYING_REQUEST:
+				handle_change_zhenying();
+				break;
+			case MSG_ID_ZHENYING_POWER_REQUEST:
+				handle_zhenying_power();
+				break;
+			case SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST:
+				handle_zhenying_change_power();
+				break;
+			case SERVER_PROTO_ADD_ZHENYING_KILL_REQUEST:
+				//handle_zhenying_add_kill();
+				break;
+			case MSG_ID_FRIEND_INFO_REQUEST:
+				handle_friend_info_request();
+				break;
+			case MSG_ID_FRIEND_ADD_CONTACT_REQUEST:
+				handle_friend_add_contact_request();
+				break;
+			case MSG_ID_FRIEND_DEL_CONTACT_REQUEST:
+				handle_friend_del_contact_request();
+				break;
+			case MSG_ID_FRIEND_ADD_BLOCK_REQUEST:
+				handle_friend_add_block_request();
+				break;
+			case MSG_ID_FRIEND_DEL_BLOCK_REQUEST:
+				handle_friend_del_block_request();
+				break;
+			case MSG_ID_FRIEND_DEL_ENEMY_REQUEST:
+				handle_friend_del_enemy_request();
+				break;
+			case MSG_ID_FRIEND_CREATE_GROUP_REQUEST:
+				handle_friend_create_group_request();
+				break;
+			case MSG_ID_FRIEND_EDIT_GROUP_REQUEST:
+				handle_friend_edit_group_request();
+				break;
+			case MSG_ID_FRIEND_REMOVE_GROUP_REQUEST:
+				handle_friend_remove_group_request();
+				break;
+			case MSG_ID_FRIEND_MOVE_PLAYER_GROUP_REQUEST:
+				handle_friend_move_player_group_request();
+				break;
+			case MSG_ID_FRIEND_DEAL_APPLY_REQUEST:
+				handle_friend_deal_apply_request();
+				break;
+			case SERVER_PROTO_FRIEND_RECOMMEND:
+				handle_friend_recommend_request();
+				break;
+			case SERVER_PROTO_FRIEND_CHAT:
+				handle_friend_chat_request();
+				break;
+			case SERVER_PROTO_PLAYER_ONLINE_NOTIFY:
+				handle_player_online_notify();
+				break;
+			case SERVER_PROTO_KICK_ROLE_NOTIFY:
+				handle_player_offline_notify();
+				break;
+			case SERVER_PROTO_FRIEND_ADD_ENEMY:
+				handle_friend_add_enemy_request();
+				break;
+			case MSG_ID_FRIEND_SEND_GIFT_REQUEST:
+				handle_friend_send_gift_request();
+				break;
+			case SERVER_PROTO_FRIEND_GIFT_COST_ANSWER:
+				handle_friend_gift_cost_answer();
+				break;
+			case SERVER_PROTO_FRIENDSRV_COST_ANSWER:
+				handle_friend_cost_answer();
+				break;
+			case SERVER_PROTO_FRIEND_TURN_SWITCH:
+				handle_friend_turn_switch_request();
+				break;
+			case SERVER_PROTO_FRIEND_EXTEND_CONTACT_REQUEST:
+				handle_friend_extend_contact_request();
+				break;
+			case SERVER_PROTO_FRIEND_SYNC_RENAME:
+				handle_friend_rename_request();
+				break;
+				case SERVER_PROTO_FRIEND_IS_ENEMY_REQUEST:
+					handle_friend_is_enemy_request();
 					break;
 			}
 
 		}
-		
+
 		if (ret < 0) {
 			LOG_INFO("%s: connect closed from fd %u, err = %d", __FUNCTION__, fd, errno);
 			exit(0);
-			return (-1);		
-		} else if (ret > 0) {
+			return (-1);
+		}
+		else if (ret > 0) {
 			break;
 		}
-		
+
 		ret = remove_one_buf();
 	}
 	return (0);
@@ -1319,13 +1370,13 @@ int conn_node_friendsrv::broadcast_message(uint16_t msg_id, void *msg_data, pack
 
 	real_head->msg_id = ENDION_FUNC_2(msg_id);
 	real_head->seq = 0;
-//	memcpy(real_head->data, msg_data, len);
+	//	memcpy(real_head->data, msg_data, len);
 	size_t len = 0;
 	if (msg_data && packer)
 	{
 		len = packer(msg_data, (uint8_t *)real_head->data);
 	}
-	real_head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD) + len);
+	real_head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD)+len);
 
 	uint64_t *ppp = (uint64_t*)((char *)&head->player_id + len);
 	head->num_player_id = 0;
@@ -1333,7 +1384,7 @@ int conn_node_friendsrv::broadcast_message(uint16_t msg_id, void *msg_data, pack
 	{
 		ppp[head->num_player_id++] = *iter;
 	}
-	head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD_CONN_BROADCAST) + len + sizeof(uint64_t) * head->num_player_id);
+	head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD_CONN_BROADCAST)+len + sizeof(uint64_t)* head->num_player_id);
 	if (conn_node_friendsrv::connecter.send_one_msg((PROTO_HEAD *)head, 1) != (int)(ENDION_FUNC_4(head->len)))
 	{
 		LOG_ERR("[%s:%d] send to conn_srv failed err[%d]", __FUNCTION__, __LINE__, errno);
@@ -1360,7 +1411,7 @@ void conn_node_friendsrv::handle_cache_get()
 		return;
 	}
 	fast_send_msg_base(&conn_node_friendsrv::connecter, extern_data, SERVER_PROTO_GET_OFFLINE_CACHE_ANSWER, data_len, req->seq);
-}	
+}
 
 void conn_node_friendsrv::handle_cache_clear()
 {
@@ -1378,7 +1429,7 @@ void conn_node_friendsrv::handle_cache_clear()
 			LOG_ERR("[%s,%d]: oper failed, ret = %d", __FUNCTION__, __LINE__, ret);
 		}
 	}
-	LOG_DEBUG("%s: clear %lu", __FUNCTION__, extern_data->player_id);	
+	LOG_DEBUG("%s: clear %lu", __FUNCTION__, extern_data->player_id);
 }
 
 static void save_player_cache(uint64_t player_id, char *buffer, int buffer_len)
@@ -1391,10 +1442,10 @@ static void save_player_cache(uint64_t player_id, char *buffer, int buffer_len)
 	{
 		LOG_ERR("[%s,%d]: oper failed, ret = %d", __FUNCTION__, __LINE__, ret);
 	}
-	LOG_DEBUG("%s: save %lu ret = %d", __FUNCTION__, player_id, ret);	
+	LOG_DEBUG("%s: save %lu ret = %d", __FUNCTION__, player_id, ret);
 }
 
-void conn_node_friendsrv::handle_cache_insert()	
+void conn_node_friendsrv::handle_cache_insert()
 {
 	PROTO_PLAYER_CACHE_INSERT *proto = (PROTO_PLAYER_CACHE_INSERT*)buf_head();
 
@@ -1422,72 +1473,72 @@ void conn_node_friendsrv::handle_cache_insert()
 
 	switch (proto->type)
 	{
-		case CACHE_SUB_EXP:
-		{
-			int msg_len = get_len() - sizeof(PROTO_PLAYER_CACHE_INSERT);
-			CacheSubExp *sub_exp = cache_sub_exp__unpack(NULL, msg_len, proto->data);
-			if (!sub_exp)
-			{
-				LOG_ERR("[%s:%d] player [%lu] unpack req failed", __FUNCTION__, __LINE__, proto->player_id);
-				player_offline_cache__free_unpacked(cache_info, NULL);
-				return;
-			}
+	case CACHE_SUB_EXP:
+	{
+						  int msg_len = get_len() - sizeof(PROTO_PLAYER_CACHE_INSERT);
+						  CacheSubExp *sub_exp = cache_sub_exp__unpack(NULL, msg_len, proto->data);
+						  if (!sub_exp)
+						  {
+							  LOG_ERR("[%s:%d] player [%lu] unpack req failed", __FUNCTION__, __LINE__, proto->player_id);
+							  player_offline_cache__free_unpacked(cache_info, NULL);
+							  return;
+						  }
 
-			cache_info->n_sub_exps++;
-			cache_info->sub_exps = (CacheSubExp**)realloc(cache_info->sub_exps, cache_info->n_sub_exps * sizeof(CacheSubExp));
+						  cache_info->n_sub_exps++;
+						  cache_info->sub_exps = (CacheSubExp**)realloc(cache_info->sub_exps, cache_info->n_sub_exps * sizeof(CacheSubExp));
 
-			cache_info->sub_exps[cache_info->n_sub_exps - 1] = sub_exp;
+						  cache_info->sub_exps[cache_info->n_sub_exps - 1] = sub_exp;
 
-			data_len = player_offline_cache__pack(cache_info, (uint8_t*)cache_data);
-			save_player_cache(proto->player_id, cache_data, data_len);
+						  data_len = player_offline_cache__pack(cache_info, (uint8_t*)cache_data);
+						  save_player_cache(proto->player_id, cache_data, data_len);
 
-			cache_info->n_sub_exps--;
-			cache_sub_exp__free_unpacked(sub_exp, NULL);
-		}
+						  cache_info->n_sub_exps--;
+						  cache_sub_exp__free_unpacked(sub_exp, NULL);
+	}
 		break;
-		case CACHE_PVP_RAID_LOSE:
-		{
-			int msg_len = get_len() - sizeof(PROTO_PLAYER_CACHE_INSERT);
-			CachePvpRaidLose *pvp_data = cache_pvp_raid_lose__unpack(NULL, msg_len, proto->data);
-			if (!pvp_data)
-			{
-				LOG_ERR("[%s:%d] player [%lu] unpack req failed", __FUNCTION__, __LINE__, proto->player_id);
-				player_offline_cache__free_unpacked(cache_info, NULL);				
-				return;				
-			}
-			cache_info->n_pvp_lose++;
-			cache_info->pvp_lose = (CachePvpRaidLose **)realloc(cache_info->pvp_lose, cache_info->n_pvp_lose * sizeof(CachePvpRaidLose));
+	case CACHE_PVP_RAID_LOSE:
+	{
+								int msg_len = get_len() - sizeof(PROTO_PLAYER_CACHE_INSERT);
+								CachePvpRaidLose *pvp_data = cache_pvp_raid_lose__unpack(NULL, msg_len, proto->data);
+								if (!pvp_data)
+								{
+									LOG_ERR("[%s:%d] player [%lu] unpack req failed", __FUNCTION__, __LINE__, proto->player_id);
+									player_offline_cache__free_unpacked(cache_info, NULL);
+									return;
+								}
+								cache_info->n_pvp_lose++;
+								cache_info->pvp_lose = (CachePvpRaidLose **)realloc(cache_info->pvp_lose, cache_info->n_pvp_lose * sizeof(CachePvpRaidLose));
 
-			cache_info->pvp_lose[cache_info->n_pvp_lose - 1] = pvp_data;
+								cache_info->pvp_lose[cache_info->n_pvp_lose - 1] = pvp_data;
 
-			data_len = player_offline_cache__pack(cache_info, (uint8_t*)cache_data);
-			save_player_cache(proto->player_id, cache_data, data_len);
+								data_len = player_offline_cache__pack(cache_info, (uint8_t*)cache_data);
+								save_player_cache(proto->player_id, cache_data, data_len);
 
-			cache_info->n_pvp_lose--;
-			cache_pvp_raid_lose__free_unpacked(pvp_data, NULL);
-		}
+								cache_info->n_pvp_lose--;
+								cache_pvp_raid_lose__free_unpacked(pvp_data, NULL);
+	}
 		break;
-		case CACHE_PVP_RAID_WIN:
-		{
-			int msg_len = get_len() - sizeof(PROTO_PLAYER_CACHE_INSERT);
-			CachePvpRaidWin *pvp_data = cache_pvp_raid_win__unpack(NULL, msg_len, proto->data);
-			if (!pvp_data)
-			{
-				LOG_ERR("[%s:%d] player [%lu] unpack req failed", __FUNCTION__, __LINE__, proto->player_id);
-				player_offline_cache__free_unpacked(cache_info, NULL);				
-				return;				
-			}
-			cache_info->n_pvp_win++;
-			cache_info->pvp_win = (CachePvpRaidWin **)realloc(cache_info->pvp_win, cache_info->n_pvp_win * sizeof(CachePvpRaidWin));
+	case CACHE_PVP_RAID_WIN:
+	{
+							   int msg_len = get_len() - sizeof(PROTO_PLAYER_CACHE_INSERT);
+							   CachePvpRaidWin *pvp_data = cache_pvp_raid_win__unpack(NULL, msg_len, proto->data);
+							   if (!pvp_data)
+							   {
+								   LOG_ERR("[%s:%d] player [%lu] unpack req failed", __FUNCTION__, __LINE__, proto->player_id);
+								   player_offline_cache__free_unpacked(cache_info, NULL);
+								   return;
+							   }
+							   cache_info->n_pvp_win++;
+							   cache_info->pvp_win = (CachePvpRaidWin **)realloc(cache_info->pvp_win, cache_info->n_pvp_win * sizeof(CachePvpRaidWin));
 
-			cache_info->pvp_win[cache_info->n_pvp_win - 1] = pvp_data;
+							   cache_info->pvp_win[cache_info->n_pvp_win - 1] = pvp_data;
 
-			data_len = player_offline_cache__pack(cache_info, (uint8_t*)cache_data);
-			save_player_cache(proto->player_id, cache_data, data_len);
+							   data_len = player_offline_cache__pack(cache_info, (uint8_t*)cache_data);
+							   save_player_cache(proto->player_id, cache_data, data_len);
 
-			cache_info->n_pvp_win--;
-			cache_pvp_raid_win__free_unpacked(pvp_data, NULL);
-		}
+							   cache_info->n_pvp_win--;
+							   cache_pvp_raid_win__free_unpacked(pvp_data, NULL);
+	}
 		break;
 	}
 
@@ -1505,7 +1556,7 @@ void conn_node_friendsrv::handle_friend_info_request()
 	FriendPlayer *player = NULL;
 	std::map<uint64_t, PlayerRedisInfo*> redis_players;
 	AutoReleaseBatchFriendPlayer arb_friend;
-	AutoReleaseBatchRedisPlayer t1;	
+	AutoReleaseBatchRedisPlayer t1;
 	do
 	{
 		player = get_friend_player(extern_data->player_id);
@@ -1755,7 +1806,7 @@ void conn_node_friendsrv::handle_friend_add_contact_request()
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
-		return ;
+		return;
 	}
 
 	uint64_t target_id = req->playerid;
@@ -1781,7 +1832,7 @@ void conn_node_friendsrv::handle_friend_add_contact_request()
 			notify_friend_list_change(player, change_info);
 			save_friend_player(player);
 		}
-	} while(0);
+	} while (0);
 
 	FriendOperateAnswer resp;
 	friend_operate_answer__init(&resp);
@@ -1801,7 +1852,7 @@ void conn_node_friendsrv::handle_friend_del_contact_request()
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
-		return ;
+		return;
 	}
 
 	uint64_t target_id = req->playerid;
@@ -1829,7 +1880,7 @@ void conn_node_friendsrv::handle_friend_del_contact_request()
 
 		notify_friend_list_change(player, change_info);
 		save_friend_player(player);
-	} while(0);
+	} while (0);
 
 	FriendOperateAnswer resp;
 	friend_operate_answer__init(&resp);
@@ -1849,7 +1900,7 @@ void conn_node_friendsrv::handle_friend_add_block_request()
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
-		return ;
+		return;
 	}
 
 	uint64_t target_id = req->playerid;
@@ -1869,7 +1920,7 @@ void conn_node_friendsrv::handle_friend_add_block_request()
 		arb_friend.push_back(player);
 
 		ret = add_block(player, target_id);
-	} while(0);
+	} while (0);
 
 	FriendOperateAnswer resp;
 	friend_operate_answer__init(&resp);
@@ -1889,7 +1940,7 @@ void conn_node_friendsrv::handle_friend_del_block_request()
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
-		return ;
+		return;
 	}
 
 	uint64_t target_id = req->playerid;
@@ -1917,7 +1968,7 @@ void conn_node_friendsrv::handle_friend_del_block_request()
 
 		notify_friend_list_change(player, change_info);
 		save_friend_player(player);
-	} while(0);
+	} while (0);
 
 	FriendOperateAnswer resp;
 	friend_operate_answer__init(&resp);
@@ -1937,7 +1988,7 @@ void conn_node_friendsrv::handle_friend_del_enemy_request()
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
-		return ;
+		return;
 	}
 
 	uint64_t target_id = req->playerid;
@@ -1965,7 +2016,7 @@ void conn_node_friendsrv::handle_friend_del_enemy_request()
 
 		notify_friend_list_change(player, change_info);
 		save_friend_player(player);
-	} while(0);
+	} while (0);
 
 	FriendOperateAnswer resp;
 	friend_operate_answer__init(&resp);
@@ -1985,7 +2036,7 @@ void conn_node_friendsrv::handle_friend_create_group_request()
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
-		return ;
+		return;
 	}
 
 	std::vector<uint64_t> members;
@@ -2001,7 +2052,7 @@ void conn_node_friendsrv::handle_friend_create_group_request()
 	FriendPlayer *player = NULL;
 	FriendGroup *pGroup = NULL;
 	std::vector<int> member_idxs;
-	AutoReleaseBatchRedisPlayer t1;	
+	AutoReleaseBatchRedisPlayer t1;
 	std::map<uint64_t, PlayerRedisInfo*> redis_players;
 	do
 	{
@@ -2104,11 +2155,11 @@ void conn_node_friendsrv::handle_friend_create_group_request()
 			notify_friend_list_change(player, change_info);
 		}
 		save_friend_player(player);
-	} while(0);
+	} while (0);
 
 	FriendCreateGroupAnswer resp;
 	friend_create_group_answer__init(&resp);
-	
+
 	FriendGroupData group_data;
 	friend_group_data__init(&group_data);
 
@@ -2158,7 +2209,7 @@ void conn_node_friendsrv::handle_friend_edit_group_request()
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
-		return ;
+		return;
 	}
 
 	std::vector<uint64_t> members;
@@ -2203,7 +2254,7 @@ void conn_node_friendsrv::handle_friend_edit_group_request()
 				LOG_ERR("[%s:%d] player[%lu] friend %lu", __FUNCTION__, __LINE__, extern_data->player_id, *iter);
 				break;
 			}
-			
+
 			if (player->contacts[idx].group_id != 0)
 			{
 				ret = ERROR_ID_FRIEND_NOT_IN_LIST;
@@ -2284,11 +2335,11 @@ void conn_node_friendsrv::handle_friend_edit_group_request()
 
 		notify_friend_list_change(player, change_info);
 		save_friend_player(player);
-	} while(0);
+	} while (0);
 
 	FriendEditGroupAnswer resp;
 	friend_edit_group_answer__init(&resp);
-	
+
 	resp.result = ret;
 	resp.groupid = group_id;
 	resp.name = const_cast<char*>(group_name.c_str());
@@ -2305,7 +2356,7 @@ void conn_node_friendsrv::handle_friend_remove_group_request()
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
-		return ;
+		return;
 	}
 
 	uint32_t group_id = req->groupid;
@@ -2367,7 +2418,7 @@ void conn_node_friendsrv::handle_friend_remove_group_request()
 				member_idxs.push_back(i);
 			}
 		}
-		
+
 		//移除成员
 		for (std::vector<int>::iterator iter = member_idxs.begin(); iter != member_idxs.end(); ++iter)
 		{
@@ -2393,11 +2444,11 @@ void conn_node_friendsrv::handle_friend_remove_group_request()
 
 		notify_friend_list_change(player, change_info);
 		save_friend_player(player);
-	} while(0);
+	} while (0);
 
 	CommAnswer resp;
 	comm_answer__init(&resp);
-	
+
 	resp.result = ret;
 	fast_send_msg(&connecter, extern_data, MSG_ID_FRIEND_REMOVE_GROUP_ANSWER, comm_answer__pack, resp);
 }
@@ -2411,7 +2462,7 @@ void conn_node_friendsrv::handle_friend_move_player_group_request()
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
-		return ;
+		return;
 	}
 
 	uint64_t target_id = req->playerid;
@@ -2464,7 +2515,7 @@ void conn_node_friendsrv::handle_friend_move_player_group_request()
 			LOG_ERR("[%s:%d] player[%lu] friend, target_id:%lu, group_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, target_id, group_id);
 			break;
 		}
-		
+
 		FriendUnit *unit = &player->contacts[member_idx];
 		if (unit->group_id == group_id)
 		{
@@ -2491,11 +2542,11 @@ void conn_node_friendsrv::handle_friend_move_player_group_request()
 
 		notify_friend_list_change(player, change_info);
 		save_friend_player(player);
-	} while(0);
+	} while (0);
 
 	CommAnswer resp;
 	comm_answer__init(&resp);
-	
+
 	resp.result = ret;
 	fast_send_msg(&connecter, extern_data, MSG_ID_FRIEND_MOVE_PLAYER_GROUP_ANSWER, comm_answer__pack, resp);
 }
@@ -2509,7 +2560,7 @@ void conn_node_friendsrv::handle_friend_deal_apply_request()
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
-		return ;
+		return;
 	}
 
 	uint64_t target_id = req->playerid;
@@ -2626,11 +2677,11 @@ void conn_node_friendsrv::handle_friend_deal_apply_request()
 
 		notify_friend_list_change(player, change_info);
 		save_friend_player(player);
-	} while(0);
+	} while (0);
 
 	FriendDealApplyAnswer resp;
 	friend_deal_apply_answer__init(&resp);
-	
+
 	resp.result = ret;
 	resp.playerid = target_id;
 	resp.deal = apply_deal;
@@ -2650,7 +2701,7 @@ void conn_node_friendsrv::handle_friend_recommend_request()
 	std::set<uint64_t> recommendIds;
 	std::map<uint64_t, PlayerRedisInfo*> redis_players;
 	AutoReleaseBatchRedisPlayer t1;
-	
+
 	PROTO_FRIEND_RECOMMEND *proto = (PROTO_FRIEND_RECOMMEND*)head;
 	int ret = 0;
 	AutoReleaseBatchFriendPlayer arb_friend;
@@ -2682,14 +2733,14 @@ void conn_node_friendsrv::handle_friend_recommend_request()
 			recommendIds.insert(playerIds[rand_val]);
 			playerIds.erase(playerIds.begin() + rand_val);
 		}
-	} while(0);
+	} while (0);
 
 	FriendRecommendAnswer resp;
 	friend_recommend_answer__init(&resp);
 
 	FriendPlayerBriefData recommend_data[MAX_FRIEND_RECOMMEND_NUM];
 	FriendPlayerBriefData* recommend_point[MAX_FRIEND_RECOMMEND_NUM];
-	
+
 	resp.result = ret;
 
 	get_more_redis_player(recommendIds, redis_players, conn_node_friendsrv::server_key, sg_redis_client, t1);
@@ -2727,7 +2778,7 @@ void conn_node_friendsrv::handle_friend_send_gift_request()
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
-		return ;
+		return;
 	}
 
 	uint64_t target_id = req->playerid;
@@ -2817,7 +2868,7 @@ void conn_node_friendsrv::handle_friend_send_gift_request()
 		{ //成功，去game_srv检查道具数量是否足够
 			PROTO_COST_FRIEND_GIFT_REQ *cost_req = (PROTO_COST_FRIEND_GIFT_REQ *)get_send_buf(SERVER_PROTO_FRIEND_GIFT_COST_REQUEST, get_seq());
 			cost_req->head.len = ENDION_FUNC_4(sizeof(PROTO_COST_FRIEND_GIFT_REQ));
-			memset(cost_req->head.data, 0, sizeof(PROTO_COST_FRIEND_GIFT_REQ) - sizeof(PROTO_HEAD));
+			memset(cost_req->head.data, 0, sizeof(PROTO_COST_FRIEND_GIFT_REQ)-sizeof(PROTO_HEAD));
 			cost_req->target_id = target_id;
 			cost_req->gift_id = gift_id;
 			cost_req->gift_num = gift_num;
@@ -2831,7 +2882,7 @@ void conn_node_friendsrv::handle_friend_send_gift_request()
 				ret = ERROR_ID_SERVER;
 			}
 		}
-	} while(0);
+	} while (0);
 
 	if (ret != 0)
 	{ //失败，返回错误给client
@@ -2862,7 +2913,7 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 	int ret = res->result;
 	AutoReleaseBatchFriendPlayer arb_friend;
 	AutoReleaseBatchRedisPlayer arb_redis;
-	
+
 	FriendPlayer *player = NULL;
 	bool internal = false;
 	do
@@ -2917,7 +2968,7 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 		//记录次数
 		player->contacts[target_idx].gift_num += gift_num;
 		target->gift_accept += gift_num;
-		
+
 		if (res->add_closeness > 0)
 		{
 			//增加好感度
@@ -3021,10 +3072,10 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 				}
 			}
 
-		} while(0);
+		} while (0);
 
 		fast_send_msg_base(&conn_node_friendsrv::connecter, extern_data, SERVER_PROTO_FRIEND_SEND_GIFT_SUCCESS, 0, 0);
-	} while(0);
+	} while (0);
 
 	FriendSendGiftAnswer resp;
 	friend_send_gift_answer__init(&resp);
@@ -3055,7 +3106,7 @@ void conn_node_friendsrv::handle_friend_chat_request()
 	if (!req)
 	{
 		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
-		return ;
+		return;
 	}
 
 	int ret = 0;
@@ -3121,11 +3172,11 @@ void conn_node_friendsrv::handle_friend_chat_request()
 				add_friend_offline_chat(req->recvplayerid, req);
 			}
 		}
-	} while(0);
+	} while (0);
 
 	CommAnswer resp;
 	comm_answer__init(&resp);
-	
+
 	resp.result = ret;
 	fast_send_msg(&connecter, extern_data, MSG_ID_CHAT_ANSWER, comm_answer__pack, resp);
 
@@ -3160,7 +3211,7 @@ void conn_node_friendsrv::handle_player_online_notify()
 
 	AutoReleaseBatchFriendPlayer arb_friend;
 	std::map<uint64_t, PlayerRedisInfo*> redis_players;
-	AutoReleaseBatchRedisPlayer t1;	
+	AutoReleaseBatchRedisPlayer t1;
 	//玩家上线通知
 	do
 	{
@@ -3230,14 +3281,14 @@ void conn_node_friendsrv::handle_player_online_notify()
 		}
 
 		sync_friend_num_to_game_srv(player);
-	} while(0);
+	} while (0);
 
 	// for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
 	// {
 	// 	player_redis_info__free_unpacked(iter->second, NULL);
 	// }
 
-		//发送万妖卡
+	//发送万妖卡
 	handle_list_wanyaoka();
 }
 
@@ -3247,7 +3298,7 @@ void conn_node_friendsrv::handle_player_offline_notify() //玩家下线
 	EXTERN_DATA *extern_data = get_extern_data(head);
 
 	AutoReleaseBatchFriendPlayer arb_friend;
-	AutoReleaseBatchRedisPlayer t1;		
+	AutoReleaseBatchRedisPlayer t1;
 	std::map<uint64_t, PlayerRedisInfo*> redis_players;
 	//玩家下线通知
 	do
@@ -3285,7 +3336,7 @@ void conn_node_friendsrv::handle_player_offline_notify() //玩家下线
 				broadcast_message(MSG_ID_FRIEND_UPDATE_STATUS_NOTIFY, &nty, (pack_func)friend_update_status_notify__pack, broadcast_ids);
 			}
 		}
-	} while(0);
+	} while (0);
 
 	// for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
 	// {
@@ -3318,7 +3369,7 @@ void conn_node_friendsrv::handle_friend_add_enemy_request()
 		{
 			LOG_ERR("[%s:%d] player[%lu] add enemy failed, target_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
 		}
-	} while(0);
+	} while (0);
 
 }
 
@@ -3351,7 +3402,7 @@ void conn_node_friendsrv::handle_friend_extend_contact_request()
 		save_friend_player(player);
 
 		fast_send_msg_base(&connecter, extern_data, MSG_ID_FRIEND_CONTACT_EXTEND_NOTIFY, 0, 0);
-	} while(0);
+	} while (0);
 
 	if (ret == 0)
 	{ //成功，返回game_srv扣除道具
@@ -3370,13 +3421,13 @@ void conn_node_friendsrv::handle_friend_extend_contact_request()
 
 void conn_node_friendsrv::handle_friend_cost_answer()
 {
-//	PROTO_HEAD *head = get_head();
-//	EXTERN_DATA *extern_data = get_extern_data(head);
+	//	PROTO_HEAD *head = get_head();
+	//	EXTERN_DATA *extern_data = get_extern_data(head);
 
-//	PROTO_GUILDSRV_CHECK_AND_COST_RES *res = (PROTO_GUILDSRV_CHECK_AND_COST_RES*)buf_head();
-//	switch(res->statis_id)
-//	{
-//	}
+	//	PROTO_GUILDSRV_CHECK_AND_COST_RES *res = (PROTO_GUILDSRV_CHECK_AND_COST_RES*)buf_head();
+	//	switch(res->statis_id)
+	//	{
+	//	}
 }
 
 void conn_node_friendsrv::handle_friend_turn_switch_request()
@@ -3426,7 +3477,7 @@ void conn_node_friendsrv::handle_friend_turn_switch_request()
 		}
 
 		save_friend_player(player);
-	} while(0);
+	} while (0);
 
 	SettingTurnSwitchAnswer resp;
 	setting_turn_switch_answer__init(&resp);
@@ -3451,7 +3502,7 @@ void conn_node_friendsrv::handle_friend_rename_request() //玩家改名
 	EXTERN_DATA *extern_data = get_extern_data(head);
 
 	PROTO_FRIEND_SYNC_RENAME *req = (PROTO_FRIEND_SYNC_RENAME*)buf_head();
-	AutoReleaseBatchRedisPlayer t1;	
+	AutoReleaseBatchRedisPlayer t1;
 	std::map<uint64_t, PlayerRedisInfo*> redis_players;
 	do
 	{
@@ -3506,12 +3557,51 @@ void conn_node_friendsrv::handle_friend_rename_request() //玩家改名
 			nty.name = req->new_name;
 			broadcast_message(MSG_ID_FRIEND_UPDATE_UNIT_NOTIFY, &nty, (pack_func)friend_update_unit_notify__pack, broadcast_ids);
 		}
-	} while(0);
+	} while (0);
 
 	// for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
 	// {
 	// 	player_redis_info__free_unpacked(iter->second, NULL);
 	// }
+}
+
+void conn_node_friendsrv::handle_friend_is_enemy_request()
+{
+	PROTO_HEAD *head = get_head();
+	EXTERN_DATA *extern_data = get_extern_data(head);
+
+	FRIEND_IS_ENEMY_REQUEST *req = (FRIEND_IS_ENEMY_REQUEST *)get_data();
+
+	AutoReleaseBatchFriendPlayer arb_friend;
+	FriendPlayer *player = NULL;
+	do
+	{
+		player = get_friend_player(extern_data->player_id);
+		if (!player)
+		{
+			LOG_ERR("[%s:%d] player[%lu] get friend failed", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+		arb_friend.push_back(player);
+	} while(0);
+
+	FRIEND_IS_ENEMY_ANSWER *resp = (FRIEND_IS_ENEMY_ANSWER *)get_send_data();
+	uint32_t data_len = sizeof(FRIEND_IS_ENEMY_ANSWER);
+	memset(resp, 0, data_len);
+	resp->dead_id = req->dead_id;
+	resp->is_enemy = false;
+	if (player)
+	{
+		for (int i = 0; i < get_enemy_limit_num(); ++i)
+		{
+			if (player->enemies[i] != 0 && player->enemies[i] == req->dead_id)
+			{
+				resp->is_enemy = true;
+				break;
+			}
+		}
+	}
+	fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_FRIEND_IS_ENEMY_ANSWER, data_len, 0);
 }
 
 void conn_node_friendsrv::send_to_all_player(uint16_t msg_id, void *data, pack_func func)
@@ -3524,8 +3614,8 @@ void conn_node_friendsrv::send_to_all_player(uint16_t msg_id, void *data, pack_f
 	proto_head->msg_id = ENDION_FUNC_2(msg_id);
 	proto_head->seq = 0;
 	size_t size = func(data, (uint8_t *)proto_head->data);
-	proto_head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD) + size);
-	broadcast_head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD_CONN_BROADCAST) + size);
+	proto_head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD)+size);
+	broadcast_head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD_CONN_BROADCAST)+size);
 
 	if (connecter.send_one_msg((PROTO_HEAD *)broadcast_head, 1) != (int)(ENDION_FUNC_4(broadcast_head->len))) {
 		LOG_ERR("%s %d: send to all failed err[%d]", __FUNCTION__, __LINE__, errno);

@@ -17,8 +17,8 @@ struct unit_path
 	uint8_t cur_pos;
 	uint8_t max_pos;
 	struct position pos[MAX_PATH_POSITION];
-	float speed_x;  //按方向移动
-	float speed_z;
+	float direct_x;  //按方向移动
+	float direct_z;
 };
 int get_unit_distance_square(unit_struct *a, unit_struct *b);
 float getdistance(struct position *start, struct position *end);

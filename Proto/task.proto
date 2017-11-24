@@ -88,3 +88,11 @@ message MiJingXiuLianTaskShuaXingAnswer
 	required uint32 result = 1; //结果
 	required uint32 reward_beilv = 2; //当前奖励倍率下标
 }
+
+//游历任务信息通知
+message TravelTaskInfoNotify
+{
+	required uint32 roundNum = 1; //当前轮数
+	required uint32 taskNum = 2; //当前环数
+}
+

@@ -59,6 +59,7 @@ void ChengJieTaskManage::AddTask(STChengJie &task, uint64_t accepter)
 			sprintf(todb->name, "%lu", task.pid);
 			todb->head.msg_id = ENDION_FUNC_2(SERVER_PROTO_FIND_PLAYER_REQUEST);
 			todb->head.len = ENDION_FUNC_4(sizeof(PROTO_FIND_PLAYER_REQ));
+			todb->org_msg = MSG_ID_CHENGJIE_FIND_TARGET_REQUEST;
 			EXTERN_DATA extern_data;
 			extern_data.player_id = 0;
 			conn_node_base::add_extern_data(&todb->head, &extern_data);
@@ -253,6 +254,7 @@ void ChengJieTaskManage::CommpleteTask(player_struct *player, player_struct *tar
 
 	//SetRoleTarget(player->data->chengjie.target, 0);
 	player->data->chengjie.target = 0;
+	player->add_achievement_progress(ACType_YAOSHI_TASK, YAOSHI_CHENGJIE, 0, 1);
 
 	ParameterTable * config = get_config_by_id(161000089, &parameter_config);
 	if (config != NULL)
@@ -1348,6 +1350,7 @@ void ShangjinManage::CompleteTask(player_struct *player, uint32_t taskid)
 		player->data->shangjin.accept = false;
 		player->data->shangjin.cur_task = 0;
 		RefreshTaskAndSend(player, false);
+		player->add_achievement_progress(ACType_YAOSHI_TASK, YAOSHI_SHANGJIN, 0, 1);
 	}
 	else
 	{

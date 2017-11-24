@@ -146,6 +146,7 @@ uint32_t conn_node_doufachangsrv::add_challenge_rank(DOUFACHANG_CHALLENGE_ANSWER
 		sg_redis_client.hdel(conn_node_doufachangsrv::doufachang_rank2_key, ans->defence);
 		sg_redis_client.mset_uint64(conn_node_doufachangsrv::doufachang_rank2_key, 1, &ans->attack, &rank[1]);
 		sg_redis_client.mset_uint64(conn_node_doufachangsrv::doufachang_rank_key, 1, &rank[1], &ans->attack);
+		sync_doufachang_rank_to_gamesrv(ans->attack, rank[1], ans->defence, UINT32_MAX);
 		return (DOUFACHANG_MAX_RANK - rank[1]);
 	}
 
@@ -163,6 +164,7 @@ uint32_t conn_node_doufachangsrv::add_challenge_rank(DOUFACHANG_CHALLENGE_ANSWER
 
 	sg_redis_client.mset_uint64(conn_node_doufachangsrv::doufachang_rank2_key, 2, playerid, rank);
 	sg_redis_client.mset_uint64(conn_node_doufachangsrv::doufachang_rank_key, 2, rank, playerid);
+	sync_doufachang_rank_to_gamesrv(ans->attack, rank[0], ans->defence, rank[1]);
 	return (rank[1] - rank[0]);
 }
 
@@ -710,6 +712,13 @@ int conn_node_doufachangsrv::handle_server_buy_challenge_answer(EXTERN_DATA *ext
 		info->buy_count += server_ans->count;
 		info->challenge_count += server_ans->count;
 		save_player_doufachang_info(info, extern_data->player_id, doufachang_key, sg_redis_client);
+		{
+			uint32_t *proto = (uint32_t*)get_send_data();
+			uint32_t data_len = sizeof(uint32_t);
+			memset(proto, 0, data_len);
+			*proto = server_ans->count;
+			fast_send_msg_base(connecter, extern_data, SERVER_PROTO_DOUFACHANG_SYNC_BUY_CHALLENGE, data_len, 0);
+		}
 	}
 	ans.challenge_count = info->challenge_count;
 	ans.buy_count = info->buy_count;
@@ -754,6 +763,18 @@ int conn_node_doufachangsrv::handle_record_request(EXTERN_DATA *extern_data)
 		doufachang_record_answer__init(info);
 	}
 	fast_send_msg(connecter, extern_data, MSG_ID_DOUFACHANG_RECORD_ANSWER, doufachang_record_answer__pack, *info);
+	return (0);
+}
+
+int conn_node_doufachangsrv::handle_player_online_notify(EXTERN_DATA *extern_data)
+{
+	uint64_t rank = UINT32_MAX;
+	sg_redis_client.mget_uint64(conn_node_doufachangsrv::doufachang_rank2_key, 1, &extern_data->player_id, &rank);
+	if (rank == 0)
+	{
+		rank = UINT32_MAX;
+	}
+	sync_doufachang_rank_to_gamesrv(extern_data->player_id, rank);
 	return (0);
 }
 
@@ -808,6 +829,11 @@ int conn_node_doufachangsrv::recv_func(evutil_socket_t fd)
 				case SERVER_PROTO_DOUFACHANG_ADD_REWARD_ANSWER:
 				{
 					handle_server_add_reward_answer(extern_data);
+				}
+				break;
+				case SERVER_PROTO_PLAYER_ONLINE_NOTIFY:
+				{
+					handle_player_online_notify(extern_data);
 				}
 				break;
 			}

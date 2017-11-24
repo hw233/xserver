@@ -113,14 +113,13 @@ void skill_struct::copy(skill_struct *skill)
 	config = skill->config;
 	assert(data);
 	data->skill_id = skill->data->skill_id;
-//	data->owner =
 	data->lv = skill->data->lv;
 	data->fuwen_num = skill->data->fuwen_num;
 	for (int i = 0; i < data->fuwen_num; ++i)
 	{
-		data->fuwen[data->fuwen_num].id = data->fuwen[data->fuwen_num].id;
-		data->fuwen[data->fuwen_num].lv = data->fuwen[data->fuwen_num].lv;
-		data->fuwen[data->fuwen_num].isNew = data->fuwen[data->fuwen_num].isNew;
+		data->fuwen[i].id = skill->data->fuwen[i].id;
+		data->fuwen[i].lv = skill->data->fuwen[i].lv;
+		data->fuwen[i].isNew = skill->data->fuwen[i].isNew;
 	}
 	for (int i = 0; i < MAX_CUR_FUWEN; ++i)
 	{

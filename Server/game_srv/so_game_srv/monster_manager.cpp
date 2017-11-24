@@ -189,9 +189,16 @@ int monster_manager::init_monster_struct(int num, unsigned long key)
 	for (int i = 0; i < num; ++i) {
 		monster = new monster_struct();
 		monster_manager_monster_free_list.push_back(monster);
+#ifdef __RAID_SRV__
+		monster->data = (monster_data *)malloc(sizeof(monster_data));
+#endif		
 	}
-	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(monster_struct) * num, sizeof(monster_data) * num);			
+#ifdef __RAID_SRV__
+	return (0);
+#else
+	LOG_DEBUG("%s: init mem[%lu][%lu]", __FUNCTION__, sizeof(monster_struct) * num, sizeof(monster_data) * num);			
 	return init_comm_pool(0, sizeof(monster_data), num, key, &monster_manager_monster_data_pool);
+#endif
 }
 /*
 int monster_manager::resume_monster_struct(int num, unsigned long key)
@@ -295,11 +302,17 @@ monster_struct *monster_manager::alloc_monster()
 		return NULL;
 	ret = monster_manager_monster_free_list.back();
 	monster_manager_monster_free_list.pop_back();
+#ifdef __RAID_SRV__
+	if (!ret)
+		goto fail;
+	memset(ret->data, 0, sizeof(monster_data));	
+#else		
 	data = (monster_data *)comm_pool_alloc(&monster_manager_monster_data_pool);
 	if (!data)
 		goto fail;
 	memset(data, 0, sizeof(monster_data));
 	ret->data = data;
+#endif	
 	monster_manager_monster_used_list.insert(ret);
 	ret->init_monster();
 	return ret;
@@ -370,8 +383,11 @@ void monster_manager::delete_monster_impl(monster_struct *p)
 	if (p->data) {
 		LOG_INFO("[%s:%d] monster_id[%u], uuid[%lu]", __FUNCTION__, __LINE__, p->data->monster_id, p->data->player_id);
 		remove_monster(p);
+#ifdef __RAID_SRV__
+#else						
 		comm_pool_free(&monster_manager_monster_data_pool, p->data);
 		p->data = NULL;
+#endif		
 	} else {
 		LOG_ERR("[%s:%d] monster[%p]", __FUNCTION__, __LINE__, p);
 	}

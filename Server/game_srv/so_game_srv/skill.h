@@ -2,34 +2,10 @@
 #define SKILL_H
 
 #include <stdint.h>
+#include "server_proto.h"
 #include "game_config.h"
 #include "skill_const.h"
 #include "unit_path.h"
-
-static const int MAX_FUWEN = 3;
-static const int MAX_CUR_FUWEN = 2;
-struct fuwen_data
-{
-	uint32_t id;
-	uint32_t lv;
-	bool isNew;
-};
-struct skill_data
-{
-	uint32_t skill_id;
-//	SpellStatEvent state;
-//	uint64_t skill_cast_time;    //施法开始时间，即吟唱结束时间
-//	uint64_t skill_hit_time;    //飞行结束时间，即命中时间
-//	uint64_t owner; 		/* 施法者 resume用*/
-//	uint64_t target;  		/* 施法目标 */
-//	struct position pos;  		/* 目的地址 */
-	uint32_t lv;
-	fuwen_data fuwen[MAX_FUWEN];
-	int fuwen_num;
-	uint32_t cur_fuwen[MAX_CUR_FUWEN];
-	uint64_t cd_time;
-};
-
 class skill_struct
 {
 public:

@@ -5,8 +5,8 @@ message move_start_request
 {
 	required pos_data cur_pos = 1;  //起始位置
 	required float cur_pos_y = 2;   //起始Y坐标	
-	required float direct_x = 3;
-	required float direct_z = 4;	
+	required int32 direct_x = 3;
+	required int32 direct_z = 4;	
 }
 
 message move_start_notify
@@ -14,14 +14,15 @@ message move_start_notify
 	required uint64 playerid = 1;	
 	required pos_data cur_pos = 2;  //起始位置
 	required float cur_pos_y = 3;   //起始Y坐标		
-	required float direct_x = 4;
-	required float direct_z = 5;	
+	required int32 direct_x = 4;
+	required int32 direct_z = 5;	
 }
 
 message move_stop_request
 {
 	required pos_data cur_pos = 1;  //起始位置
-	required float cur_pos_y = 2;   //起始Y坐标		
+	required float cur_pos_y = 2;   //起始Y坐标
+	required uint32 check_distance = 3;  //是否检查位置，0检查，1不检查
 }
 message move_stop_notify
 {

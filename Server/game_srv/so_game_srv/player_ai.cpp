@@ -455,7 +455,7 @@ bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, pla
 		if (act_config->FlyId != 0 && act_config->CanMove == 2)
 		{
 			struct SkillMoveTable *move_config = get_config_by_id(act_config->FlyId, &move_skill_config);
-			if (move_config && move_config->MoveType == 1 && move_config->DmgType == 1 && move_config->MoveDistance > 0)
+			if (move_config && move_config->MoveType == 1/* && move_config->DmgType == 1 */&& move_config->MoveDistance > 0)
 			{
 				double cur_distance = getdistance(my_pos, his_pos);
 				if (cur_distance != 0)

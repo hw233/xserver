@@ -64,6 +64,7 @@ enum
 	SCRIPT_EVENT_SUIJI_CREATE_MONSTER        = 59, //随机刷新怪物表里面配置的怪物中的一只
 	SCRIPT_EVENT_POPUP_TALK		         = 60, //发送弹框对话
 	SCRIPT_EVENT_PLAYER_DUMIAO_CARTOON     = 61, //通知前端播放倒计时动画
+	SCRIPT_EVENT_DEL_BUFF_FROM_MONSTER	  = 62, //给指定怪物ID删除buff
 };
 
 void do_script_raid_init_cond(raid_struct *raid, struct raid_script_data *script_data);

@@ -38,7 +38,7 @@ void conn_node_dbsrv::handle_find_player(EXTERN_DATA *extern_data)
 	query(const_cast<char*>("set names utf8"), 1, NULL);
 
 	uint64_t player_id = strtoull(req->name, NULL, 10);;
-	sprintf(sql, "SELECT player_id, player_name, lv, chengjie_rest from player where player_id = %lu or player_name = \'%s\'", player_id,req->name);
+	sprintf(sql, "SELECT player_id, player_name, lv, chengjie_rest,job from player where player_id = %lu or player_name = \'%s\'", player_id,req->name);
 
 	MYSQL_RES *res = query(sql, 1, NULL);
 	MYSQL_ROW row;
@@ -58,7 +58,9 @@ void conn_node_dbsrv::handle_find_player(EXTERN_DATA *extern_data)
 		resp->lv = atoi(row[2]);
 		resp->player_id = atoll(row[0]);
 		resp->cd = atol(row[3]);
+		resp->job = atol(row[4]);
 	}
+	resp->org_msg = req->org_msg;
 
 	add_extern_data(&resp->head, extern_data);
 	if (!server_node || server_node->send_one_msg(&resp->head, 1) != (int)ENDION_FUNC_4(resp->head.len)) {

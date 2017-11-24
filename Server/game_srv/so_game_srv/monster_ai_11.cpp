@@ -27,7 +27,7 @@ static void ai_dead_11(monster_struct *monster, scene_struct *scene)
 //	buff_manager::create_default_buff(DEAD_BUFF_ID2, monster, monster, true);	
 }
 
-static void ai_hp_changed_11(monster_struct *monster)
+static void ai_hp_changed_11(monster_struct *monster, int damage)
 {
 	if (monster->is_alive())
 		return;

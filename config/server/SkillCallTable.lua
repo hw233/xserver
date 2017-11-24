@@ -119,6 +119,30 @@ local SkillCallTable = {
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
+	[112710421] = {
+		['ID'] = 112710421,
+		['CallScriptPath'] = 171000421,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112710431] = {
+		['ID'] = 112710431,
+		['CallScriptPath'] = 171000431,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112710432] = {
+		['ID'] = 112710432,
+		['CallScriptPath'] = 171000432,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112710433] = {
+		['ID'] = 112710433,
+		['CallScriptPath'] = 171000433,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
 	[112710441] = {
 		['ID'] = 112710441,
 		['CallScriptPath'] = 171000441,
@@ -128,6 +152,30 @@ local SkillCallTable = {
 	[112710442] = {
 		['ID'] = 112710442,
 		['CallScriptPath'] = 171000442,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112710461] = {
+		['ID'] = 112710461,
+		['CallScriptPath'] = 171000461,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112710471] = {
+		['ID'] = 112710471,
+		['CallScriptPath'] = 171000471,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112710472] = {
+		['ID'] = 112710472,
+		['CallScriptPath'] = 171000472,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112710662] = {
+		['ID'] = 112710662,
+		['CallScriptPath'] = 171000662,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
@@ -182,24 +230,6 @@ local SkillCallTable = {
 	[112720036] = {
 		['ID'] = 112720036,
 		['CallScriptPath'] = 172000036,
-		['ConditionScriptId'] = {0},
-		['OperationScriptId'] = {0}
-		},
-	[112720042] = {
-		['ID'] = 112720042,
-		['CallScriptPath'] = 172000042,
-		['ConditionScriptId'] = {0},
-		['OperationScriptId'] = {0}
-		},
-	[112720043] = {
-		['ID'] = 112720043,
-		['CallScriptPath'] = 172000043,
-		['ConditionScriptId'] = {0},
-		['OperationScriptId'] = {0}
-		},
-	[112720047] = {
-		['ID'] = 112720047,
-		['CallScriptPath'] = 172000047,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},

@@ -95,6 +95,7 @@ int conn_node_login::handle_client_enter(EXTERN_DATA *extern_data)
 	//记录player_id，绑定到map，此后client来的消息由transfer_to_gameserver处理
 	uint64_t player_id = extern_data->player_id;
 	client->player_id = player_id;
+	client->raidsrv_id = -1;
 	conn_node_client::add_map_player_id_nodes(client);
 
 	LOG_DEBUG("[%s:%d] openid[%u] playerid[%lu] fd[%u]", __FUNCTION__, __LINE__, client->open_id, client->player_id, client->fd);

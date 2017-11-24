@@ -29,11 +29,17 @@ zhenying_raid_struct *zhenying_raid_manager::alloc_zhenying_raid()
 		return NULL;
 	ret = zhenying_raid_manager_raid_free_list.back();
 	zhenying_raid_manager_raid_free_list.pop_back();
+#ifdef __RAID_SRV__
+	if (!ret)
+		goto fail;	
+	memset(ret->data, 0, sizeof(raid_data));	
+#else	
 	data = (raid_data *)comm_pool_alloc(&zhenying_raid_manager_raid_data_pool);
 	if (!data)
 		goto fail;
 	memset(data, 0, sizeof(raid_data));
 	ret->data = data;
+#endif	
 	zhenying_raid_manager_raid_used_list.insert(ret);
 
 	return ret;
@@ -68,8 +74,11 @@ void zhenying_raid_manager::delete_zhenying_raid(zhenying_raid_struct *p)
 
 	if (p->data) {
 		remove_zhenying_raid(p);
+#ifdef __RAID_SRV__
+#else				
 		comm_pool_free(&zhenying_raid_manager_raid_data_pool, p->data);
 		p->data = NULL;
+#endif		
 	}
 }
 
@@ -243,9 +252,16 @@ int zhenying_raid_manager::init_zhenying_raid_struct(int num, unsigned long key)
 	for (int i = 0; i < num; ++i) {
 		raid = new zhenying_raid_struct();
 		zhenying_raid_manager_raid_free_list.push_back(raid);
+#ifdef __RAID_SRV__
+		raid->data = (raid_data *)malloc(sizeof(raid_data));
+#endif		
 	}
-	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(zhenying_raid_struct) * num, sizeof(raid_data) * num);	
+#ifdef __RAID_SRV__
+	return (0);
+#else	
+	LOG_DEBUG("%s: init mem[%lu][%lu]", __FUNCTION__, sizeof(zhenying_raid_struct) * num, sizeof(raid_data) * num);	
 	return init_comm_pool(0, sizeof(raid_data), num, key, &zhenying_raid_manager_raid_data_pool);
+#endif	
 }
 
 void zhenying_raid_manager::on_tick_10()

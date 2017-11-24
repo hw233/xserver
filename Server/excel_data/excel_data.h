@@ -20,6 +20,7 @@ struct BaguaSuitTable;
 struct BaguaTable;
 struct BaguaViceAttributeTable;
 struct BaseAITable;
+struct BattleFieldRank;
 struct BattlefieldTable;
 struct BiaocheRewardTable;
 struct BiaocheTable;
@@ -124,6 +125,7 @@ struct TaskTable;
 struct TitleFunctionTable;
 struct TradingTable;
 struct TransferPointTable;
+struct TravelTable;
 struct TreasureTable;
 struct TypeLevelTable;
 struct UndergroundTask;
@@ -131,6 +133,7 @@ struct WeaponsEffectTable;
 struct WeekTable;
 struct WorldBossRewardTable;
 struct WorldBossTable;
+struct raidsrv_config;
 struct sproto_config_pos;
 struct AchievementFunctionTable
 {
@@ -473,6 +476,41 @@ struct BaseAITable
 	uint64_t  Response; //11
 }__attribute__ ((packed));
 
+struct BattleFieldRank
+{
+	uint64_t  ID; //1
+	uint64_t  LowerLimitRank1; //2
+	uint64_t  UpperLimitRank1; //3
+	uint32_t n_Reward1; //4
+	uint64_t *Reward1; //4
+	uint32_t n_Num1; //5
+	uint64_t *Num1; //5
+	uint64_t  LowerLimitRank2; //6
+	uint64_t  UpperLimitRank2; //7
+	uint32_t n_Reward2; //8
+	uint64_t *Reward2; //8
+	uint32_t n_Num2; //9
+	uint64_t *Num2; //9
+	uint64_t  LowerLimitRank3; //10
+	uint64_t  UpperLimitRank3; //11
+	uint32_t n_Reward3; //12
+	uint64_t *Reward3; //12
+	uint32_t n_Num3; //13
+	uint64_t *Num3; //13
+	uint64_t  LowerLimitRank4; //14
+	uint64_t  UpperLimitRank4; //15
+	uint32_t n_Reward4; //16
+	uint64_t *Reward4; //16
+	uint32_t n_Num4; //17
+	uint64_t *Num4; //17
+	uint64_t  LowerLimitRank5; //18
+	uint64_t  UpperLimitRank5; //19
+	uint32_t n_Reward5; //20
+	uint64_t *Reward5; //20
+	uint32_t n_Num5; //21
+	uint64_t *Num5; //21
+}__attribute__ ((packed));
+
 struct BattlefieldTable
 {
 	uint64_t  ID; //1
@@ -496,6 +534,13 @@ struct BattlefieldTable
 	uint32_t n_Num; //13
 	uint64_t *Num; //13
 	double  Ratio; //14
+	uint64_t  Assists; //15
+	uint64_t  BottomKillMark; //16
+	uint32_t n_BottomReward; //17
+	uint64_t *BottomReward; //17
+	uint32_t n_BottomRewardNum; //18
+	uint64_t *BottomRewardNum; //18
+	uint64_t  VictoryIntegral; //19
 }__attribute__ ((packed));
 
 struct BiaocheRewardTable
@@ -816,9 +861,13 @@ struct DungeonTable
 
 struct EquipAttribute
 {
-	uint64_t  Effect; //1
-	uint32_t n_Rand; //2
-	double *Rand; //2
+	uint64_t  ID; //1
+	uint64_t  Database; //2
+	uint64_t  Effect; //3
+	uint32_t n_Rand; //4
+	double *Rand; //4
+	uint32_t n_QualityWeight; //5
+	uint64_t *QualityWeight; //5
 }__attribute__ ((packed));
 
 struct EquipLock
@@ -861,9 +910,9 @@ struct EquipStarLv
 	uint64_t  StarSchedule; //3
 	uint64_t  ConsumeItem; //4
 	uint64_t  ConsumeCoin; //5
-	uint64_t  EnchantQuality; //6
 	uint64_t  Quality; //7
 	uint64_t  StarLv; //8
+	uint64_t  DatabaseSelection; //9
 }__attribute__ ((packed));
 
 struct EquipmentTable
@@ -924,6 +973,7 @@ struct EventCalendarTable
 	uint64_t *AuxiliaryValue; //9
 	uint64_t  Sum; //10
 	uint64_t  Active; //11
+	uint64_t  ResetCD; //12
 }__attribute__ ((packed));
 
 struct FactionActivity
@@ -2051,6 +2101,17 @@ struct TransferPointTable
 	uint64_t *MapId; //2
 }__attribute__ ((packed));
 
+struct TravelTable
+{
+	uint64_t  ID; //1
+	uint32_t n_LevelSection; //2
+	uint64_t *LevelSection; //2
+	uint32_t n_QuestGroup; //3
+	uint64_t *QuestGroup; //3
+	uint64_t  RewardGroup; //4
+	uint64_t  TimeRewardGroup; //5
+}__attribute__ ((packed));
+
 struct TreasureTable
 {
 	uint64_t  ID; //1
@@ -2139,6 +2200,13 @@ struct WorldBossTable
 	uint64_t *Time; //7
 	double  Coefficient; //8
 	uint64_t  RewardLevel; //9
+}__attribute__ ((packed));
+
+struct raidsrv_config
+{
+	uint64_t  ID; //1
+	uint32_t n_raid_id; //2
+	uint64_t *raid_id; //2
 }__attribute__ ((packed));
 
 struct sproto_config_pos

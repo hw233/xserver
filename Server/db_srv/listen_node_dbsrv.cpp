@@ -14,7 +14,7 @@ int listen_node_dbsrv::listen_pre_func()
 {
 	if (conn_node_dbsrv::server_node == NULL)
 		return (0);
-	LOG_ERR("%s %d: only one server can connect", __FUNCTION__, __LINE__);
+	LOG_ERR("%s %d: only one server can connect", __PRETTY_FUNCTION__, __LINE__);
 	return (-1);
 }
 

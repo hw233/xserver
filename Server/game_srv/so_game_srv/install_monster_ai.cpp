@@ -4,7 +4,7 @@
 #include "monster_ai.h"
 #include "monster.h"
 
-// 0=不属于任何类型
+// 0=6
 // 1=随机巡逻
 // 2=固定点巡逻
 // 3=木桩类型
@@ -36,6 +36,7 @@
 // 29=猫鬼乐园-恐惧猫鬼
 // 30=阵营战镖车
 // 31=猫鬼乐园召唤怪首领
+// 32=60%血的时候休息一下，说句话
 
 void install_monster_ai()
 {
@@ -45,7 +46,7 @@ void install_monster_ai()
 	monster_struct::add_ai_interface(6, &monster_ai_0_interface);
 	monster_struct::add_ai_interface(4, &monster_ai_4_interface);
 	monster_struct::add_ai_interface(5, &monster_ai_5_interface);
-	monster_struct::add_ai_interface(7, &monster_ai_7_interface);
+//	monster_struct::add_ai_interface(7, &monster_ai_7_interface);
 	monster_struct::add_ai_interface(8, &monster_ai_8_interface);
 	monster_struct::add_ai_interface(10, &monster_ai_10_interface);
 	monster_struct::add_ai_interface(11, &monster_ai_11_interface);
@@ -69,6 +70,7 @@ void install_monster_ai()
 	monster_struct::add_ai_interface(29, &monster_ai_29_interface);		
 	monster_struct::add_ai_interface(30, &monster_ai_30_interface);
 	monster_struct::add_ai_interface(31, &monster_ai_31_interface);
+	monster_struct::add_ai_interface(32, &monster_ai_32_interface);	
 }
 void uninstall_monster_ai()
 {

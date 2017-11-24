@@ -1,3 +1,4 @@
+#if 0
 #include <math.h>
 #include <stdlib.h>
 #include "game_event.h"
@@ -153,7 +154,7 @@ static void ai_tick_7(monster_struct *monster)
 //		move_to_owner(monster, owner);
 		return;
 	}
-	monster_cast_immediate_skill_to_player(skill_id, monster, owner, target);
+	cast_immediate_skill_to_target(skill_id, monster, target);
 		//计算硬直时间
 	monster->data->ontick_time += count_skill_delay_time(config);	
 }
@@ -194,7 +195,7 @@ struct ai_interface monster_ai_7_interface =
 	ai_owner_attack_7,
 	ai_owner_beattack_7,	
 };
-
+#endif
 
 
 

@@ -92,6 +92,7 @@ extern std::map<uint64_t, struct CampTable*> zhenying_base_config; //阵营基�
 extern std::map<uint64_t, struct GradeTable*> zhenying_level_config; //阵营等级表
 extern std::map<uint64_t, struct WeekTable*> zhenying_week_config; //阵营周目标表
 extern std::map<uint64_t, struct BattlefieldTable*> zhenying_fight_config; //阵营战表
+extern std::map<uint64_t, struct BattleFieldRank*> zhenying_fight_rank_config; //阵营战表
 extern std::map<char *, std::vector<struct RaidScriptTable*> *> all_raid_script_config; //副本AI配置表
 extern std::map<uint64_t, struct QuestionTable*> questions_config; //考题表
 extern std::vector<struct RobotPatrolTable*> robot_patrol_config; //机器人巡逻
@@ -149,6 +150,9 @@ extern std::map<uint64_t, struct MGLYyanseTable*> maogui_xiaoguai_colour_config;
 extern std::map<uint64_t, struct MGLYmaoguiwangTable*> maogui_maogui_wang_config; //猫鬼乐园猫鬼王配置表
 extern std::map<uint64_t, struct MGLYshoulingTable*> maogui_shouling_to_xiaoguai_config; //猫鬼乐园猫首领死亡删除对应小怪
 extern std::map<uint64_t, struct MonsterIDTable*> raid_jincheng_suiji_kill_monster; //副本进程击杀id对应此表的随机一只怪物，进程加一
+extern std::vector<struct raidsrv_config*> vec_raidsrv_config;
+extern std::map<uint32_t, uint32_t> map_raidsrv_config;
+extern std::map<uint64_t, struct TravelTable*> travel_config; //游历任务表
 
 
 //////////////////
@@ -298,6 +302,17 @@ extern std::map<uint64_t, std::vector<uint64_t> > sg_xunbao_map; //寻宝地图
 extern std::map<uint64_t, uint64_t> sg_show_collect; //任务ID 采集点ID
 extern std::map<uint64_t, struct FunctionUnlockTable*> sg_jijiangopen; //即将开启表
 
+struct BattleFieldStepRank
+{
+	uint64_t LowerLimitRank;
+	uint64_t UpperLimitRank;
+	uint64_t *Reward;
+	uint64_t *Num;
+	uint32_t n_Reward;
+	uint32_t n_Num;
+};
+extern std::map<uint32_t, std::vector<BattleFieldStepRank *> > sg_battle_award;
+
 extern uint32_t sg_transfer_out_stuck_cd_time;
 extern uint32_t sg_guild_scene_id;
 extern uint32_t sg_guild_wait_raid_id; //帮战准备区场景ID
@@ -392,5 +407,10 @@ extern uint32_t sg_maogui_diaoxiang_stop_buff;
 extern uint32_t sg_maogui_guiwang_wudi_buff;
 
 extern char *sg_xunbao_boss_notice;
+
+extern std::map<uint64_t, EquipAttribute*> sg_equip_enchant_attr_map;
+
+extern uint32_t sg_travel_round_amount;
+extern uint32_t sg_travel_task_amount;
 
 #endif /* __LUA_CONFIG_H__ */

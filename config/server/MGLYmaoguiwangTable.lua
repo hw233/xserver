@@ -8,7 +8,7 @@ local MGLYmaoguiwangTable = {
 		['Time'] = 10000,	--时间
 		['Effects'] = 'Prefabs/Effect/ef_gw_chusheng',	--特效路径
 		['EffectsParameter'] = {180,3},	--特效参数
-		['CallTime'] = 3	--开始召怪时间
+		['CallTime'] = 6	--开始召怪时间
 		}
 	}
 return MGLYmaoguiwangTable

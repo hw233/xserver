@@ -34,11 +34,17 @@ raid_struct *raid_manager::alloc_raid()
 		return NULL;
 	ret = raid_manager_raid_free_list.back();
 	raid_manager_raid_free_list.pop_back();
+#ifdef __RAID_SRV__
+	if (!ret)
+		goto fail;	
+	memset(ret->data, 0, sizeof(raid_data));	
+#else			
 	data = (raid_data *)comm_pool_alloc(&raid_manager_raid_data_pool);
 	if (!data)
 		goto fail;
 	memset(data, 0, sizeof(raid_data));
 	ret->data = data;
+#endif	
 	raid_manager_raid_used_list.insert(ret);
 
 	return ret;
@@ -67,8 +73,11 @@ void raid_manager::delete_raid(raid_struct *p)
 
 	if (p->data) {
 		remove_raid(p);
+#ifdef __RAID_SRV__
+#else				
 		comm_pool_free(&raid_manager_raid_data_pool, p->data);
 		p->data = NULL;
+#endif		
 	}
 }
 
@@ -98,7 +107,7 @@ int raid_manager::check_player_enter_raid(player_struct *player, uint32_t raid_i
 	{
 		if (player->data->guild_id == 0)
 		{
-			LOG_ERR("[%s:%d] player[%lu] not join guild", __FUNCTION__, __LINE__, player->get_uuid())
+			LOG_ERR("[%s:%d] player[%lu] not join guild", __FUNCTION__, __LINE__, player->get_uuid());
 			return (-1);
 		}
 	}	
@@ -602,9 +611,16 @@ int raid_manager::init_raid_struct(int num, unsigned long key)
 	for (int i = 0; i < num; ++i) {
 		raid = new raid_struct();
 		raid_manager_raid_free_list.push_back(raid);
+#ifdef __RAID_SRV__
+		raid->data = (raid_data *)malloc(sizeof(raid_data));
+#endif
 	}
-	LOG_DEBUG("%s: init mem[%d][%d]", __FUNCTION__, sizeof(raid_struct) * num, sizeof(raid_data) * num);
+#ifdef __RAID_SRV__
+	return (0);
+#else	
+	LOG_DEBUG("%s: init mem[%lu][%lu]", __FUNCTION__, sizeof(raid_struct) * num, sizeof(raid_data) * num);
 	return init_comm_pool(0, sizeof(raid_data), num, key, &raid_manager_raid_data_pool);
+#endif	
 }
 
 int raid_manager::reset_all_raid_ai()

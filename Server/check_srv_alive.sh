@@ -12,6 +12,7 @@ guild_srv
 rank_srv
 doufachang_srv
 trade_srv
+#raid_srv
 )
 cwd=`pwd -P`
 for srv_name in ${srv_list[*]}
