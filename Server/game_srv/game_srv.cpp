@@ -18,9 +18,8 @@
 #include <map>
 #include <dlfcn.h>
 #include <python2.7/Python.h>
+#include "game_srv.h"
 #include "game_event.h"
-#include "conn_node_gamesrv.h"
-#include "conn_node_dbsrv.h"
 #include "oper_config.h"
 #include "mem_pool.h"
 // #include "scene.h"
@@ -55,6 +54,7 @@
 //}
 
 uint64_t  sg_server_id;
+uint32_t sg_ai_srv_port;
 uint32_t sg_gm_cmd_open;
 uint32_t sg_server_open_time;
 
@@ -63,13 +63,12 @@ typedef int (*reload_func)();
 typedef int (*uninstall_func)();
 typedef void (*http_request_func)(struct evhttp_request *req, void *arg);
 typedef void (*cb_timer_func)();
-typedef int (*game_recv_func)(evutil_socket_t fd, conn_node_gamesrv *node);
-typedef int (*db_recv_func)(evutil_socket_t fd, conn_node_dbsrv *node);
 
 static http_request_func g_http_request_func;
 static cb_timer_func g_cb_timer_func;
 game_recv_func g_game_recv_func;
 db_recv_func g_db_recv_func;
+ai_recv_func g_ai_recv_func;
 
 // typedef struct _so_entry
 // {
@@ -476,6 +475,7 @@ static void set_so_funcs()
 	g_cb_timer_func = (cb_timer_func)dlsym(so_gamesrv, "cb_gamesrv_timer");
 	g_game_recv_func = (game_recv_func)dlsym(so_gamesrv, "game_recv_func");
 	g_db_recv_func = (db_recv_func)dlsym(so_gamesrv, "db_recv_func");
+	g_ai_recv_func = (ai_recv_func)dlsym(so_gamesrv, "ai_recv_func");	
 
 	if (!g_http_request_func)
 		LOG_ERR("%s: %d", __FUNCTION__, __LINE__);
@@ -484,6 +484,8 @@ static void set_so_funcs()
 	if (!g_game_recv_func)
 		LOG_ERR("%s: %d", __FUNCTION__, __LINE__);	
 	if (!g_db_recv_func)
+		LOG_ERR("%s: %d", __FUNCTION__, __LINE__);
+	if (!g_ai_recv_func)
 		LOG_ERR("%s: %d", __FUNCTION__, __LINE__);			
 }
 static int install_so(int argc, char **argv)
@@ -547,6 +549,7 @@ static void uninstall_so()
 	g_cb_timer_func = NULL;
 	g_game_recv_func = NULL;
 	g_db_recv_func = NULL;
+	g_ai_recv_func = NULL;	
 
 	dlclose(so_gamesrv);
 }

@@ -115,7 +115,7 @@ static void ai_tick_7(monster_struct *monster)
 		return;
 	}
 
-	int distance = get_unit_distance_square(monster, owner);
+	int distance = get_distance_square(monster->get_pos(), owner->get_pos());
 	if (distance > FLASH_TO_OWNER_DISTANCE)
 	{
 		flash_to_owner(monster, owner);

@@ -494,6 +494,9 @@
 	FailType 30 : *integer
 	FailValue 31 : *integer
 	FailValue1 32 : *integer
+	ItemRewardSection 33 : *integer
+	ExpReward 34 : integer
+	MoneyReward 35 : integer
 }
 
 .EquipmentTable {
@@ -514,7 +517,7 @@
 	ConsumeCoin 5 : integer
 	Quality 7 : integer
 	StarLv 8 : integer 
-	DatabaseSelection 9 : integer 
+	DatabaseSelection 9 : *integer 
 }
 
 .EquipLock {
@@ -525,9 +528,9 @@
 	LockItem 5 : *integer
 	LockItemNum 6 : *integer
 	MosaicType 7 : *integer
-	Enchant1Type 8 : *integer
-	Enchant2Type 9 : *integer
-	Enchant3Type 10 : *integer
+#	Enchant1Type 8 : *integer
+#	Enchant2Type 9 : *integer
+#	Enchant3Type 10 : *integer
 	EnchantQualityLock 11 : *integer
 	EnchantStarLock 12 : *integer
 	EnchantItem 13 : *integer
@@ -541,6 +544,7 @@
 	Effect 3 : integer
 	Rand 4 : *double
 	QualityWeight 5 : *integer
+	FluctuationValue1 6 : double
 }
 
 .GemAttribute {
@@ -557,6 +561,7 @@
 .AttributeTypeTable {
 	ID 1 : integer
 	FightRatio 2 : double
+	Total 3 : integer
 }
 
 .ColourTable
@@ -679,19 +684,25 @@
 	StarLv 6 : integer
 	Suit 7 : integer
 	PrimaryAttributeType 8 : integer
-	PrimaryAttributeLimit 9 : double
-	PrimaryAttributeCeiling 10 : double
-	ViceAttributeType 11 : *integer
+	PrimaryAttribute 9 : double
+	ViceAttributeDatabaseSelection1 10 : *integer
+	ViceAttributeDatabaseSelection2 11 : *integer
 	ViceAttributeEntry 12 : *integer
 	coefficient 13 : double
+	AdditionalAttributeDatabaseSelection 31 : *integer
+	AdditionalAttributeEntry 32 : *integer
+	Additioncoefficient 33 : double
 	DecomposeItem 14 : *integer
 	DecomposeNum 15 : *integer
 	RecastItem 16 : *integer
 	RecastNum 17 : *integer
 	RecastCoin 18 : integer
-	ClearItem 19 : *integer
-	ClearNum 20 : *integer
-	ClearCoin 21 : integer
+	ClearItem1 19 : *integer
+	ClearNum1 20 : *integer
+	ClearCoin1 21 : integer
+	ClearItem2 22 : *integer
+	ClearNum2 23 : *integer
+	ClearCoin2 24 : integer
 }
 
 #八卦牌炼星表
@@ -829,13 +840,15 @@
 	ID 1 : integer
 	LevelSection 2 : *integer
 	QuestGroup 3 : *integer
-	RewardGroup 4 : *integer
+	RewardGroup 4 : integer
 	QualityGroup 5 : *integer
-	RewardGroup1 6 : *integer
-	RewardGroup2 7 : *integer
-	RewardGroup3 8 : *integer
-	RewardGroup4 9 : *integer
-	RewardGroup5 10 : *integer
+	RewardGroup1 6 : integer
+	RewardGroup2 7 : integer
+	RewardGroup3 8 : integer
+	RewardGroup4 9 : integer
+	RewardGroup5 10 : integer
+	ExpReward 11 : *integer
+	MoneyReward 12 : *integer
 }
 
 .EventCalendarTable {
@@ -1378,6 +1391,7 @@
 	ConditionType 3 : integer
 	ConditionTarget1 4 : integer
 	ConditionTarget2 5 : integer
+	ConditionTarget3 55 : integer
 	ConditionNum 6 : integer
 	Reward 7 : integer
 	RewardValue 8 : integer
@@ -1530,6 +1544,7 @@
 	ConditionType 3 : integer
 	ConditionTarget1 4 : integer
 	ConditionTarget2 5 : integer
+	ConditionTarget3 55 : integer
 	ConditionNum 6 : integer
 	RewardType 7 : *integer
 	RewardValue 8 : *integer
@@ -1627,3 +1642,44 @@
 	TimeRewardGroup 5 : integer
 }
 
+.LevelReward
+{
+	ID 1 : integer 
+	Level 2 : integer 
+	ItemID 3 : *integer 
+	ItemValue 4 : *integer
+}
+
+.TimeReward 
+{
+	ID 1 : integer 
+	Type 2 : integer 
+	ItemID 3 : integer 
+	ItemValue 4 : integer
+	Probability 5 : integer
+}
+
+.OnlineTimes
+{
+	ID 1 : integer 
+	Times 2 : integer
+}
+
+.SignDay
+{
+	ID 1 : integer 
+	Month 2 : integer 
+	Days 3 : integer 
+	ItemID 4 : integer 
+	ItemValue 5 : integer 
+	VipDouble 6 : integer
+}
+
+.SignMonth
+{
+	ID 1 : integer 
+	Month 2 : integer 
+	Days 3 : integer 
+	ItemID 4 : integer 
+	ItemValue 5 : integer
+}

@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <stdint.h>
-#include "unit.h"
 #include "player.h"
 #include "excel_data.h"
 #include "game_config.h"

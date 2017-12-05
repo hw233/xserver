@@ -65,6 +65,7 @@ enum
 	SCRIPT_EVENT_POPUP_TALK		         = 60, //发送弹框对话
 	SCRIPT_EVENT_PLAYER_DUMIAO_CARTOON     = 61, //通知前端播放倒计时动画
 	SCRIPT_EVENT_DEL_BUFF_FROM_MONSTER	  = 62, //给指定怪物ID删除buff
+	SCRIPT_EVENT_MONSTER_DEAD_DELETE_NPC  = 64, //等待指定怪物死亡，删除对应的npc
 };
 
 void do_script_raid_init_cond(raid_struct *raid, struct raid_script_data *script_data);

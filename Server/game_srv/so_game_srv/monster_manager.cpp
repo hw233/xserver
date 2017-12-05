@@ -523,7 +523,7 @@ monster_struct *monster_manager::add_monster(uint64_t monster_id, uint64_t lv, u
 		}
 	}
 
-	LOG_DEBUG("%s: monster[%lu] ai[%lu]",  __FUNCTION__, monster_id, ite->second->BaseID);
+	LOG_DEBUG("%s: monster[%lu] ai[%lu] lv[%lu]",  __FUNCTION__, monster_id, ite->second->BaseID, lv);
 	
 	monster_struct *ret;
 	ret = alloc_monster();

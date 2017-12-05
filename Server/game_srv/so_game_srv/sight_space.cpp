@@ -1,5 +1,5 @@
 #include "sight_space.h"
-#include "so_game_srv/collect.h"
+#include "collect.h"
 #include "monster_manager.h"
 #include "cash_truck_manager.h"
 #include "time_helper.h"

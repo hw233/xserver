@@ -26,6 +26,14 @@ message AttrData
 	required double val = 2; //属性值
 }
 
+//随机属性信息
+message CommonRandAttrData
+{
+	required uint32 pool = 1; //随机库
+	required uint32 id = 2; //属性id
+	required double val = 3; //属性值
+}
+
 //角色基本信息
 message PlayerBaseInfo
 {
@@ -39,8 +47,8 @@ message PlayerBaseInfo
 message ItemBaguaData
 {
 	required uint32 star = 1;
-	required double main_attr_val = 2;
-	repeated AttrData minor_attrs = 3;
+	repeated CommonRandAttrData minor_attrs = 3; //副属性
+	repeated CommonRandAttrData additional_attrs = 4; //追加属性
 }
 
 //背包格子
@@ -121,20 +129,12 @@ message PlayerOnlineState
 	required bool state = 2; //true:在线 , false不在线
 }
 
-//装备附魔属性信息
-message EquipEnchantAttrData
-{
-	required uint32 pool = 1; //随机库
-	required uint32 id = 2; //属性id
-	required double val = 3; //属性值
-}
-
 //装备附魔信息
 message EquipEnchantData
 {
 	required uint32 index = 1; //索引
-	required EquipEnchantAttrData curAttr = 2; //当前属性
-	repeated EquipEnchantAttrData randAttr = 3; //随机出来的属性
+	required CommonRandAttrData curAttr = 2; //当前属性
+	repeated CommonRandAttrData randAttr = 3; //随机出来的属性
 }
 
 //装备信息

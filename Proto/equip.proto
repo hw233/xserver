@@ -38,7 +38,7 @@ message EquipEnchantAnswer
 	required uint32 result = 1; //结果，0：成功，否则失败
 	required uint32 type = 2; //部位
 	required uint32 index = 3; //索引
-	repeated EquipEnchantAttrData randAttr = 4; //随机出来的属性
+	repeated CommonRandAttrData randAttr = 4; //随机出来的属性
 }
 
 //装备附魔保留请求
@@ -55,7 +55,7 @@ message EquipEnchantRetainAnswer
 	required uint32 result = 1; //结果，0：成功，否则失败
 	required uint32 type = 2; //部位
 	required uint32 attrIndex = 3; //属性索引
-	required EquipEnchantAttrData retainAttr = 4; //保留属性
+	required CommonRandAttrData retainAttr = 4; //保留属性
 }
 
 //装备解锁孔位请求

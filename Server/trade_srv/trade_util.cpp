@@ -141,7 +141,9 @@ void cb_second_timer(evutil_socket_t, short, void* /*arg*/)
 				if (lot->bidder_id > 0)
 				{ //拍卖成功
 					std::map<uint32_t, uint32_t> attachs;
-					attachs.insert(std::make_pair(config->ItemID, config->Num));
+					uint32_t _id = config->ItemID;
+					uint32_t _num = config->Num;
+					attachs.insert(std::make_pair(_id, _num));
 					send_mail(&conn_node_tradesrv::connecter, lot->bidder_id, buyer_mail_id, NULL, NULL, NULL, &buyer_mail_args, &attachs, MAGIC_TYPE_AUCTION_SOLD);
 				}
 				else
@@ -253,11 +255,17 @@ static int unpack_dbdata_to_trade_item(DBTradeItem *db_item, TradeItem *item)
 	if (db_item->bagua)
 	{
 		item->especial.baguapai.star = db_item->bagua->star;
-		item->especial.baguapai.main_attr_val = db_item->bagua->main_attr_val;
 		for (size_t i = 0; i < db_item->bagua->n_minor_attrs && i < MAX_BAGUAPAI_MINOR_ATTR_NUM; ++i)
 		{
+			item->especial.baguapai.minor_attrs[i].pool = db_item->bagua->minor_attrs[i]->pool;
 			item->especial.baguapai.minor_attrs[i].id = db_item->bagua->minor_attrs[i]->id;
 			item->especial.baguapai.minor_attrs[i].val = db_item->bagua->minor_attrs[i]->val;
+		}
+		for (size_t i = 0; i < db_item->bagua->n_additional_attrs && i < MAX_BAGUAPAI_ADDITIONAL_ATTR_NUM; ++i)
+		{
+			item->especial.baguapai.additional_attrs[i].pool = db_item->bagua->additional_attrs[i]->pool;
+			item->especial.baguapai.additional_attrs[i].id = db_item->bagua->additional_attrs[i]->id;
+			item->especial.baguapai.additional_attrs[i].val = db_item->bagua->additional_attrs[i]->val;
 		}
 	}
 	else if (db_item->fabao)
@@ -578,8 +586,10 @@ int pack_trade_item(TradeItem *item, uint8_t *out_data)
 
 	DBItemBagua item_bagua_data;
 	DBItemPartnerFabao item_fabao_data;
-	DBAttr item_bagua_attr[MAX_BAGUAPAI_MINOR_ATTR_NUM];
-	DBAttr* item_bagua_attr_point[MAX_BAGUAPAI_MINOR_ATTR_NUM];
+	DBCommonRandAttr item_bagua_attr[MAX_BAGUAPAI_MINOR_ATTR_NUM];
+	DBCommonRandAttr* item_bagua_attr_point[MAX_BAGUAPAI_MINOR_ATTR_NUM];
+	DBCommonRandAttr  item_bagua_additional_attr[MAX_BAGUAPAI_ADDITIONAL_ATTR_NUM];
+	DBCommonRandAttr* item_bagua_additional_attr_point[MAX_BAGUAPAI_ADDITIONAL_ATTR_NUM];
 	DBAttr item_fabao_attr[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
 	DBAttr* item_fabao_attr_point[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
 	DBAttr fabao_attr;
@@ -592,18 +602,30 @@ int pack_trade_item(TradeItem *item, uint8_t *out_data)
 				db_info.bagua = &item_bagua_data;
 				dbitem_bagua__init(&item_bagua_data);
 				item_bagua_data.star = item->especial.baguapai.star;
-				item_bagua_data.main_attr_val = item->especial.baguapai.main_attr_val;
 				uint32_t attr_num = 0;
 				for (int j = 0; j < MAX_BAGUAPAI_MINOR_ATTR_NUM; ++j)
 				{
 					item_bagua_attr_point[attr_num] = &item_bagua_attr[attr_num];
-					dbattr__init(&item_bagua_attr[attr_num]);
+					dbcommon_rand_attr__init(&item_bagua_attr[attr_num]);
+					item_bagua_attr[attr_num].pool = item->especial.baguapai.minor_attrs[j].pool;
 					item_bagua_attr[attr_num].id = item->especial.baguapai.minor_attrs[j].id;
 					item_bagua_attr[attr_num].val = item->especial.baguapai.minor_attrs[j].val;
 					attr_num++;
 				}
 				item_bagua_data.minor_attrs = item_bagua_attr_point;
 				item_bagua_data.n_minor_attrs = attr_num;
+				attr_num = 0;
+				for (int j = 0; j < MAX_BAGUAPAI_ADDITIONAL_ATTR_NUM; ++j)
+				{
+					item_bagua_additional_attr_point[attr_num] = &item_bagua_additional_attr[attr_num];
+					dbcommon_rand_attr__init(&item_bagua_additional_attr[attr_num]);
+					item_bagua_additional_attr[attr_num].pool = item->especial.baguapai.additional_attrs[j].pool;
+					item_bagua_additional_attr[attr_num].id = item->especial.baguapai.additional_attrs[j].id;
+					item_bagua_additional_attr[attr_num].val = item->especial.baguapai.additional_attrs[j].val;
+					attr_num++;
+				}
+				item_bagua_data.additional_attrs = item_bagua_additional_attr_point;
+				item_bagua_data.n_additional_attrs = attr_num;
 			}
 			break;
 		case 14: //法宝

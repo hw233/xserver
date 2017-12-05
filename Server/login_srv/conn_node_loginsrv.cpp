@@ -320,17 +320,68 @@ int conn_node_loginsrv::select_player_base_info(uint32_t open_id, size_t *n_play
 		playerinfo[*n_playerinfo] = &playerinfo_buf[*n_playerinfo];
 		player_base_info__init(playerinfo[*n_playerinfo]);
 
+		uint32_t job = atoi(row[1]);
 		PlayerDBInfo *db_info = player_dbinfo__unpack(NULL, lengths[4], (uint8_t*)row[4]);
 
-		if (!db_info) {
+		if (!db_info)
+		{
 			LOG_ERR("%s %d: unpack dbinfo fail", __FUNCTION__, __LINE__);
-			continue;
+
+			uint32_t carrerid = 101000000 + job;
+			ActorTable *actor_table = get_config_by_id(carrerid, &actor_config);
+			if (actor_table)
+			{
+				if (actor_table->n_ResId > 0)
+				{
+					attrs_id[*n_playerinfo].push_back(PLAYER_ATTR_CLOTHES);
+					attrs_val[*n_playerinfo].push_back(actor_table->ResId[0]);
+					ActorFashionTable *fashion_table = get_config_by_id(actor_table->ResId[0], &fashion_config);
+					if (fashion_table)
+					{
+						if (fashion_table->n_ColourID1 > 0)
+						{
+							attrs_id[*n_playerinfo].push_back(PLAYER_ATTR_CLOTHES_COLOR_UP);
+							attrs_val[*n_playerinfo].push_back(fashion_table->ColourID1[0]);
+						}
+						if (fashion_table->n_ColourID2 > 0)
+						{
+							attrs_id[*n_playerinfo].push_back(PLAYER_ATTR_CLOTHES_COLOR_DOWN);
+							attrs_val[*n_playerinfo].push_back(fashion_table->ColourID2[0]);
+						}
+					}
+				}
+				if (actor_table->n_HairResId > 0)
+				{
+					attrs_id[*n_playerinfo].push_back(PLAYER_ATTR_HAT);
+					attrs_val[*n_playerinfo].push_back(actor_table->HairResId[0]);
+					ActorFashionTable *fashion_table = get_config_by_id(actor_table->HairResId[0], &fashion_config);
+					if (fashion_table)
+					{
+						if (fashion_table->n_ColourID1 > 0)
+						{
+							attrs_id[*n_playerinfo].push_back(PLAYER_ATTR_HAT_COLOR);
+							attrs_val[*n_playerinfo].push_back(fashion_table->ColourID1[0]);
+						}
+					}
+				}
+				attrs_id[*n_playerinfo].push_back(PLAYER_ATTR_WEAPON);
+				attrs_val[*n_playerinfo].push_back(actor_table->WeaponId);
+				attrs_id[*n_playerinfo].push_back(PLAYER_ATTR_HEAD);
+				attrs_val[*n_playerinfo].push_back(actor_table->InitialHead);
+			}
+		}
+		else
+		{
+			for (size_t i = 0; i < db_info->n_attr_id; ++i)
+			{
+				attrs_id[*n_playerinfo].push_back(db_info->attr_id[i]);
+				attrs_val[*n_playerinfo].push_back(db_info->attr[i]);
+			}
 		}
 		
 		playerinfo[*n_playerinfo]->name = &playerinfo_name[*n_playerinfo][0];
 		playerinfo[*n_playerinfo]->playerid = strtoull(row[0], NULL, 10);
 
-		uint32_t job = atoi(row[1]);
 
 		attrs_id[*n_playerinfo].push_back(PLAYER_ATTR_JOB);
 		attrs_val[*n_playerinfo].push_back(job);
@@ -342,11 +393,6 @@ int conn_node_loginsrv::select_player_base_info(uint32_t open_id, size_t *n_play
 		attrs_id[*n_playerinfo].push_back(PLAYER_ATTR_LEVEL);
 		attrs_val[*n_playerinfo].push_back(atoi(row[3]));
 
-		for (size_t i = 0; i < db_info->n_attr_id; ++i)
-		{
-			attrs_id[*n_playerinfo].push_back(db_info->attr_id[i]);
-			attrs_val[*n_playerinfo].push_back(db_info->attr[i]);
-		}
 
 		playerinfo[*n_playerinfo]->n_attrid = playerinfo[*n_playerinfo]->n_attrval  = attrs_id[*n_playerinfo].size();
 		if (attrs_id[*n_playerinfo].size() > 0) {
@@ -357,7 +403,10 @@ int conn_node_loginsrv::select_player_base_info(uint32_t open_id, size_t *n_play
 		*n_playerinfo += 1;
 
 
-		player_dbinfo__free_unpacked(db_info, NULL);
+		if (db_info)
+		{
+			player_dbinfo__free_unpacked(db_info, NULL);
+		}
 		/*
 		LOG_INFO("[%s : %d]: PlayerInfo; open id: %u, player id: %lu, level: %d, name: %s, job: %d"
 			, __FUNCTION__, __LINE__, open_id, playerinfo[*n_playerinfo]->playerid
@@ -1009,6 +1058,10 @@ int conn_node_loginsrv::handle_create_player(EXTERN_DATA *extern_data)
 			//YaoshiDb yaoshi;
 			//yaoshi_db__init(&yaoshi);
 			//info.yaoshi = &yaoshi;
+			
+			DBPlayerOnlineRewardInfo online_reward;
+			dbplayer_online_reward_info__init(&online_reward);
+			info.player_online_reward_info = &online_reward;
 
 			init_player_db_info_size = player_dbinfo__get_packed_size(&info);
 			player_dbinfo__pack(&info, conn_node_base::global_send_buf);

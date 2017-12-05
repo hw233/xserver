@@ -334,14 +334,17 @@ unsigned time_helper::get_next_timestamp_by_month_old(int mday, int hour, int mi
 
 	int year = now_tm.tm_year;
 	int month = now_tm.tm_mon;
-	if (month >= 11)
+	if (!(now_tm.tm_mday <= mday && now_tm.tm_hour < hour))
 	{
-		year++;
-		month = 0;
-	}
-	else
-	{
-		month++;
+		if (month >= 11)
+		{
+			year++;
+			month = 0;
+		}
+		else
+		{
+			month++;
+		}
 	}
 
 	struct tm tm;

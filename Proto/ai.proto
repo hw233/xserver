@@ -1,0 +1,47 @@
+syntax = "proto2";
+//import "comm_message.proto";
+
+//消息定义
+enum ai_server_msg_id
+{
+	PLAYER_ENTER = 1; //玩家进入场景
+	PLAYER_LEAVE = 2; //玩家下线
+	MOVE = 4; //移动
+	MOVE_START = 5; //开始移动
+	MOVE_STOP = 6; //停止移动
+	CAST_SKILL = 7; //放技能
+	HIT_SKILL = 8; //命中
+	RELIVE = 9; //复活
+	ATTR_CHANGED = 10;  //属性变更
+	SIGHT_CHANGED = 11; //视野变更
+	ADD_BUFF = 12;    //添加buff
+}
+
+message ai_player_enter
+{
+	required string name = 1;
+	repeated double attrval = 2;
+	required uint32 scene_id = 3;
+	required float pos_x = 4;
+	required float pos_z = 5;
+	repeated uint32 skill_id = 6;
+	repeated uint32 skill_lv = 7;
+	required uint32 ai_type = 8;
+}
+
+message ai_msg_stop
+{
+	required float pos_x = 4;
+	required float pos_z = 5;	
+}
+
+message ai_sight_changed_notify
+{
+	repeated uint64 add_player = 1;  //视野新增加的玩家
+	repeated uint64 delete_player = 2;   //从视野移除的玩家
+}
+
+message ai_msg_add_buff_notify
+{
+	required uint32 buff_id = 2;
+}

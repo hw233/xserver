@@ -4,7 +4,7 @@
 #include "scene.h"
 #include "mem_pool.h"
 #include "monster.h"
-#include "boss.h"
+//#include "boss.h"
 #include "sight_space.h"
 #include "server_proto.h"
 #include <map>

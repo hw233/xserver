@@ -31,8 +31,8 @@ void xunbao_raid_ai_finished(raid_struct *raid)
 			continue;
 		extern_data.player_id = raid->m_player[i]->get_uuid();
 		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_FB_PASS_NOTIFY, 0, 0);
-		raid->m_player[i]->add_achievement_progress(ACType_RAID_PASS_STAR, raid->data->ID, 0, 1);
-		raid->m_player[i]->add_achievement_progress(ACType_RAID_PASS_TYPE, raid->m_config->DengeonRank, 0, 1);
+		raid->m_player[i]->add_achievement_progress(ACType_RAID_PASS_STAR, raid->data->ID, 0, 0, 1);
+		raid->m_player[i]->add_achievement_progress(ACType_RAID_PASS_TYPE, raid->m_config->DengeonRank, 0, 0, 1);
 	}
 }
 

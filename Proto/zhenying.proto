@@ -213,3 +213,11 @@ message ZhenyingNum
 {
 	required uint32 num = 1;
 }
+
+message ZhenyingKillTips
+{
+	required uint32 ret = 1; ////返回码
+	required string kill = 2; //杀人者
+	required string bekill = 3; //被杀人
+	required uint32 num = 4;
+}

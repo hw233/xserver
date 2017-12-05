@@ -138,7 +138,7 @@ static int monster_ai_hp_deal_with(monster_struct *monster, scene_struct *scene)
 			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
 		}
 		uint32_t xiabiao = rand() % monster->ai_data.circle_ai.ai_config->n_SeparateMonster;
-		monster_struct *t_monster = monster_manager::create_monster_at_pos(o_scene, monster->ai_data.circle_ai.ai_config->SeparateMonster[xiabiao], raid->data->monster_level, pos_x, pos_z, 0, NULL, 0);
+		monster_struct *t_monster = monster_manager::create_monster_at_pos(o_scene, monster->ai_data.circle_ai.ai_config->SeparateMonster[xiabiao], raid->lv, pos_x, pos_z, 0, NULL, 0);
 		if(t_monster)
 		{
 			t_monster->set_ai_interface(29);

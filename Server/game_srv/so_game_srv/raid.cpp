@@ -40,7 +40,7 @@ int raid_struct::init_script_data()
 	int ret = init_common_script_data(m_config->DungeonPass, &SCRIPT_DATA.script_data);
 	assert(ret == 0);
 	raid_set_ai_interface(8);	
-	init_scene_struct(m_id, false);
+	init_scene_struct(m_id, false, lv);
 	LOG_INFO("%s: raid[%u][%lu]", __FUNCTION__, data->ID, data->uuid);
 	return (0);
 }
@@ -78,7 +78,7 @@ int	raid_struct::init_wanyaogu_data()
 //	assert(WANYAOGU_DATA.m_control_config);
 	
 	raid_set_ai_interface(3);
-	init_scene_struct(m_id, false);	
+	init_scene_struct(m_id, false, lv);	
 	stop_monster_ai();
 	return (0);
 }
@@ -90,20 +90,20 @@ int raid_struct::init_guoyu_raid_data(player_struct *player)
 		return -1;
 	}
 	raid_set_ai_interface(7);
-	init_scene_struct(m_id, true);
+	init_scene_struct(m_id, true, lv);
 	return 0;
 }
 
 int raid_struct::init_guild_raid_data()
 {
 	raid_set_ai_interface(11);
-	init_scene_struct(m_id, true);
+	init_scene_struct(m_id, true, lv);
 	return 0;
 }
 int raid_struct::init_guild_final_raid_data()
 {
 	raid_set_ai_interface(12);
-	init_scene_struct(m_id, true);
+	init_scene_struct(m_id, true, lv);
 	return 0;
 }
 
@@ -112,7 +112,7 @@ int	raid_struct::init_pvp_raid_data_3()
 {
 	m_id = sg_3v3_pvp_raid_param1[0];
 	raid_set_ai_interface(5);	
-	init_scene_struct(m_id, true);
+	init_scene_struct(m_id, true, lv);
 	PVP_DATA.pvp_raid_state = PVP_RAID_STATE_INIT;
 //	data->start_time += (15 + 10) * 1000; //等待最多15秒后开始10秒倒计时
 	return (0);
@@ -121,7 +121,7 @@ int	raid_struct::init_pvp_raid_data_5()
 {
 	m_id = sg_5v5_pvp_raid_param1[0];
 	raid_set_ai_interface(6);	
-	init_scene_struct(m_id, true);
+	init_scene_struct(m_id, true, lv);
 	PVP_DATA.pvp_raid_state = PVP_RAID_STATE_INIT;
 //	data->start_time += (15 + 10) * 1000;  //等待最多15秒后开始10秒倒计时
 	return (0);	
@@ -157,33 +157,66 @@ int raid_struct::init_special_raid_data(player_struct *player)
 		case 13:
 		{
 			raid_set_ai_interface(13);
-			init_scene_struct(m_id, true);
+			init_scene_struct(m_id, true, lv);
 		}
 			break;
 		case 14:
 		{
 			raid_set_ai_interface(14);
-			init_scene_struct(m_id, true);
+			init_scene_struct(m_id, true, lv);
 		}
 			break;
 		case DUNGEON_TYPE_BATTLE:
 		case DUNGEON_TYPE_BATTLE_NEW:
 		{
 			raid_set_ai_interface(15);
-			init_scene_struct(m_id, true);
+			init_scene_struct(m_id, true, lv);
 		}
 			break;
 		case DUNGEON_TYPE_MAOGUI_LEYUAN:
 		{
 			raid_set_ai_interface(18);
-			init_scene_struct(m_id, false);
+			init_scene_struct(m_id, false, lv);
 		}
 			break;
 		default:
-			init_scene_struct(m_id, true);			
+			init_scene_struct(m_id, true, lv);			
 			break;
 	}
 	return (0);
+}
+
+void raid_struct::set_raid_lv(player_struct *player)
+{
+	if (!player || !player->data)
+	{
+		lv = 0;
+		return;
+	}
+	if (!player->m_team)
+	{
+		lv = player->get_level();
+		return;
+	}
+	uint32_t all_level = 0;
+	uint32_t num = 0;
+	for (int pos = 0; pos < player->m_team->m_data->m_memSize; ++pos)
+	{
+		player_struct *t_player = player_manager::get_player_by_id(player->m_team->m_data->m_mem[pos].id);
+		if(t_player)
+		{
+			all_level += t_player->get_level();
+			num++;
+		}
+	}
+	if(num != 0)
+	{
+		lv = all_level / num;
+	}
+	else
+	{
+		lv = 0;
+	}
 }
 
 int raid_struct::init_raid(player_struct *player)
@@ -203,6 +236,7 @@ int raid_struct::init_raid(player_struct *player)
 	m_raid_team4 = NULL;		
 	data->ID = m_id;
 	player_num = 0;
+	set_raid_lv(player);
 	data->state = RAID_STATE_START;
 	m_monster.clear();
 	m_config = get_config_by_id(m_id, &all_raid_config);
@@ -211,7 +245,7 @@ int raid_struct::init_raid(player_struct *player)
 	assert(m_control_config);
 	
 	data->start_time = time_helper::get_cached_time();
-	LOG_DEBUG("%s: raid[%p][%u][%lu] data[%p] curtime = %lu", __FUNCTION__, this, data->ID, data->uuid, data, time_helper::get_cached_time());
+	LOG_DEBUG("%s: raid[%p][%u][%lu] data[%p] lv[%u] curtime = %lu", __FUNCTION__, this, data->ID, data->uuid, data, lv, time_helper::get_cached_time());
 	ruqin_data.guild_ruqin = false;
 	ruqin_data.zhengying = 0;
 	ruqin_data.level = 0;
@@ -226,7 +260,7 @@ int raid_struct::init_raid(player_struct *player)
 	ruqin_data.huodui_time = 0;
 	ruqin_data.exp = 0;
 	ruqin_data.status = GUILD_RUQIN_ACTIVE_INIT;
-	ruqin_data.palyer_data.clear();
+	ruqin_data.player_data.clear();
 
 	init_special_raid_data(player);
 
@@ -1247,6 +1281,35 @@ int raid_struct::check_cond_finished(int index, uint64_t cond_type, uint64_t con
 			return (1);
 		}
 		break;
+		case 5: //击杀特殊颜色狰狞猫鬼让其他猫鬼瞬间死亡
+		{
+			if (data->star_param[index] >= cond_value)
+			{
+				*ret_param = cond_value;
+				return (0);
+			}
+			else
+			{
+				*ret_param = data->star_param[index];
+				return (1);
+			}
+		}
+		break;
+		case 6: //猫鬼王召唤第N次小怪前将它击杀
+		{
+			assert(data->ai_type == 18);
+			if (data->ai_data.maogui_data.zhaohuan_num >= cond_value)
+			{
+				*ret_param = cond_value;
+				return (0);
+			}
+			else
+			{
+				*ret_param = data->ai_data.maogui_data.zhaohuan_num;
+				return (1);
+			}
+		}
+		break;
 		// case 2://死亡次数
 		// {
 		// 	*star_param = data->dead_count;
@@ -1668,15 +1731,15 @@ void raid_struct::broadcast_player_hit_statis_changed(struct raid_player_info *i
 
 void raid_struct::on_player_attack(player_struct *player, unit_struct *target, int damage)
 {
-	struct raid_player_info *info = get_raid_player_info(player->get_uuid(), NULL);
-	if (!info)
-		return;
-
 	if (ai && ai->raid_on_player_attack)
 		ai->raid_on_player_attack(this, player, target, damage);
-	
-	info->damage += damage;
-	broadcast_player_hit_statis_changed(info, player);
+
+	struct raid_player_info *info = get_raid_player_info(player->get_uuid(), NULL);
+	if (info)
+	{
+		info->damage += damage;
+		broadcast_player_hit_statis_changed(info, player);
+	}		
 }
 void raid_struct::on_monster_attack(monster_struct *monster, player_struct *player, int damage)
 {

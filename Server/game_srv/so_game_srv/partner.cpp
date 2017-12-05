@@ -4,9 +4,9 @@
 #include "path_algorithm.h"
 #include "buff.h"
 #include "attr_calc.h"
-#include "cached_hit_effect.h"
-#include "count_skill_damage.h"
-#include "skill_manager.h"
+//#include "cached_hit_effect.h"
+//#include "count_skill_damage.h"
+//#include "skill_manager.h"
 #include "player_manager.h"
 #include "partner_manager.h"
 #include "cash_truck_manager.h"
@@ -980,7 +980,7 @@ void partner_struct::calculate_attribute(bool isNty)
 	calculate_attribute(data->attrData, data->attr_cur);
 
 	uint32_t prev_fp = get_attr(PLAYER_ATTR_FIGHTING_CAPACITY);
-	uint32_t cur_fp = calculate_fighting_capacity(data->attrData);
+	uint32_t cur_fp = calculate_fighting_capacity(data->attrData, true);
 	bool NtyFp = false;
 	if (cur_fp != prev_fp)
 	{

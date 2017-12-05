@@ -91,11 +91,33 @@ void add_fight_attr(double *dest_attr, double *src_attr)
 	}
 }
 
-uint32_t calculate_fighting_capacity(double *attr)
+uint32_t calculate_fighting_capacity(double *attr, bool total)
 {
 	double t = 0;
+	double tmp = 0.0;
 	for (int i = 1; i < PLAYER_ATTR_FIGHT_MAX; ++i)
 	{
+		if (total && sg_fighting_capacity_count_in[i] == 0)
+		{
+			continue;
+		}
+		tmp = attr[i];
+		if (i == PLAYER_ATTR_CRT_DMG)
+		{
+			tmp -= sg_fighting_capacity_crt_dmg_init_val;
+			if (tmp < 0.0)
+			{
+				tmp = 0.0;
+			}
+		}
+		t += tmp * sg_fighting_capacity_coefficient[i];
+	}
+	for (int i = PLAYER_ATTR_TI; i <= PLAYER_ATTR_ALLEFFDF; ++i)
+	{
+		if (total && sg_fighting_capacity_count_in[i] == 0)
+		{
+			continue;
+		}
 		t += attr[i] * sg_fighting_capacity_coefficient[i];
 	}
 

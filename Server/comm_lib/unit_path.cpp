@@ -1,5 +1,4 @@
 #include "unit_path.h"
-#include "unit.h"
 #include "time_helper.h"
 #include "game_event.h"
 #include <assert.h>
@@ -25,12 +24,10 @@ inline float FastSqrtQ3(float x)
 */
 }
 
-int get_unit_distance_square(unit_struct *a, unit_struct *b)
+int get_distance_square(struct position *start, struct position *end)
 {
-	struct position *monster_pos = a->get_pos();
-	struct position *owner_pos = b->get_pos();
-	float x = monster_pos->pos_x - owner_pos->pos_x;
-	float z = monster_pos->pos_z - owner_pos->pos_z;
+	float x = start->pos_x - end->pos_x;
+	float z = start->pos_z - end->pos_z;
 	return x * x + z * z;
 }
 

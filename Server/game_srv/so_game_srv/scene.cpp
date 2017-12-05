@@ -1,5 +1,5 @@
 #include "scene.h"
-#include "team.h"
+//#include "team.h"
 #include "game_event.h"
 #include "game_config.h"
 #include "monster_manager.h"
@@ -62,7 +62,7 @@ uint32_t scene_struct::get_area_width()
 	return 15;
 }
 
-int scene_struct::init_scene_struct(uint64_t sceneid, bool create_monster)
+int scene_struct::init_scene_struct(uint64_t sceneid, bool create_monster, int lv)
 {
 		// 从配置读取地图资源路径
 	std::map<uint64_t, struct SceneResTable *>::iterator iter = scene_res_config.find(sceneid);
@@ -108,17 +108,18 @@ int scene_struct::init_scene_struct(uint64_t sceneid, bool create_monster)
 		m_area[i].init_area_struct(m_area, i, m_area_x_size, m_area_z_size);
 	}
 
-	if (m_area_size > g_minheap.max_size)
+	unsigned max_size = map_config->size_x * map_config->size_z;
+	if (max_size > g_minheap.max_size)
 	{
 		free(g_minheap.nodes);
-		init_heap(&g_minheap, m_area_size, g_minheap.cmp, g_minheap.get, g_minheap.set);
-		closed_map_block = (struct map_block **)malloc(sizeof(void *) * m_area_size);
+		init_heap(&g_minheap, max_size, g_minheap.cmp, g_minheap.get, g_minheap.set);
+		closed_map_block = (struct map_block **)malloc(sizeof(void *) * max_size);
 	}
 
 	create_monster_config = all_scene_create_monster_config[sceneid];
 
 	if (create_monster)
-		create_all_monster();
+		create_all_monster(lv);
 
 	return (0);
 }
@@ -191,7 +192,7 @@ int scene_struct::broadcast_player_delete(player_struct *player)
 	return (0);
 }
 
-int scene_struct::create_all_monster()
+int scene_struct::create_all_monster(int lv)
 {
 //	return (0);
 	if (!create_monster_config)
@@ -201,7 +202,7 @@ int scene_struct::create_all_monster()
 	int len = create_monster_config->size();
 	for (int i = 0; i < len; ++i)
 	{
-		if (monster_manager::create_monster_by_config(this, i, 0) == NULL)
+		if (monster_manager::create_monster_by_config(this, i, lv) == NULL)
 			Collect::CreateCollectByConfig(this, i) ;
 	}
 //	std::vector<struct SceneCreateMonsterTable *>::iterator ite;
@@ -594,13 +595,14 @@ int scene_struct::player_enter_scene(player_struct *player, double pos_x, double
 
 	player->interrupt();
 
-	if (player->m_team !=  NULL)
-	{
-		if (player->m_team->GetLeadId() == player->get_uuid())
-		{
-			player->m_team->FollowLeadTrans(m_id, pos_x, pos_y, pos_z, direct);
-		}
-		player->m_team->broadcast_leader_pos(player->get_pos(), player->data->scene_id, player->get_uuid());
-	}
+	player->on_player_enter_scene(direct);
+	// if (player->m_team !=  NULL)
+	// {
+	// 	if (player->m_team->GetLeadId() == player->get_uuid())
+	// 	{
+	// 		player->m_team->FollowLeadTrans(m_id, pos_x, pos_y, pos_z, direct);
+	// 	}
+	// 	player->m_team->broadcast_leader_pos(player->get_pos(), player->data->scene_id, player->get_uuid());
+	// }
 	return (0);
 }

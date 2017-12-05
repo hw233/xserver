@@ -1,4 +1,5 @@
 syntax = "proto2";
+import "comm_message.proto";
 
 enum MAJOR_TYPE
 {
@@ -191,16 +192,16 @@ message ChengjieKiller
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-message ShangjinTaskAward
-{
-	required uint32 id = 1;
-	required uint32 num = 2; //
-}
+// message ShangjinTaskAward
+// {
+// 	required uint32 id = 1;
+// 	required uint32 num = 2; //
+// }
 message ShangjinTaskType
 {
 	required uint32 id = 1;
 	required uint32 quality = 2; //
-	repeated ShangjinTaskAward award = 3; //
+	repeated ItemData award = 3; //
 	required uint32 reduce = 4; //技能减免
 	required uint32 coin = 5; //
 	required uint32 exp = 6; //

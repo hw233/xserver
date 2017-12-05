@@ -111,6 +111,8 @@ public:
 	void ClearRob(uint32_t room);
 	void StartRob();	
 	void DestroyRoom(uint32_t room);
+	ROOM_INFO *GetRoom(uint32_t room);
+	void AddFbCd(player_struct &player);
 
 	bool PackOneScore(_OneScore *side, uint32_t rank, uint64_t playerid);
 	void GetRelivePos(BattlefieldTable *table, int zhenying, int *x, int *z, double *direct);
@@ -120,6 +122,7 @@ public:
 	void GmStartBattle();
 
 	void LeaveRegion(uint32_t room, player_struct *player, uint32_t old_region);
+	void IntoRegion(uint32_t room, player_struct *player, uint32_t new_region);
 
 protected:
 	ZhenyingBattle();
@@ -131,9 +134,9 @@ protected:
 private:
 	JOIN_T m_allJoin;   //所有报名的人
 	ROOM_T m_room;
-	uint32_t m_state;
+	//uint32_t m_state;
 	uint32_t m_tmpRoom[MAX_STEP];
-	uint64_t m_nextTick;
+	//uint64_t m_nextTick;
 };
 
 

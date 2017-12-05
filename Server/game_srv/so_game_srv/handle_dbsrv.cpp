@@ -190,7 +190,7 @@ static int handle_player_enter_game_answer(EXTERN_DATA *extern_data)
 	if (!player)
 	{
 		LOG_ERR("%s %d: can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
-		return (-1);
+	//	return (-1);
 	}
 
 	return pack_player_online(player, extern_data, true, proto->reconnect != 0);
@@ -278,7 +278,7 @@ static int handle_player_rename_answer(EXTERN_DATA *extern_data)
 //			player->m_team->BroadcastToTeamNotinSight(*player, MSG_ID_PLAYER_NAME_NOTIFY, &nty, (pack_func)player_name_notify__pack);
 //		}
 
-		player->add_achievement_progress(ACType_PLAYER_RENAME, 0, 0, 1);
+		player->add_achievement_progress(ACType_PLAYER_RENAME, 0, 0, 0, 1);
 	}
 
 	CommAnswer resp;

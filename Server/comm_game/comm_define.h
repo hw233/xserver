@@ -40,6 +40,7 @@
 #define MAX_BAGUAPAI_STYLE_NUM  2 //八卦牌风格最大数
 #define MAX_BAGUAPAI_DRESS_NUM  8 //八卦牌穿戴件数
 #define MAX_BAGUAPAI_MINOR_ATTR_NUM  3 //八卦牌副属性最大数
+#define MAX_BAGUAPAI_ADDITIONAL_ATTR_NUM  3 //八卦牌追加属性最大数
 
 //活动
 #define MAX_ACTIVE_REWARD_NUM   15 //活跃度奖励最大数
@@ -95,7 +96,14 @@
 #define MAX_AUCTION_MASTER_NUM  (MAX_GUILD_MEMBER_NUM) //拍卖品数
 #define MAX_GUILD_LAND_ACTIVE_NUM            1000 
 
-
+//最大等级奖励档次
+#define MAX_PLAYER_LEVEL_REWARD_NUM 50
+//最大在线奖励物品
+#define MAX_PLAYER_ONLINE_REWARD_NUM 20
+//最大累计签到奖励次数
+#define MAX_PLAYER_SINGN_EVERYDAY_REWARD_NUM 20
+//最大月份
+#define MAX_ONE_YEARS_THE_MONTH 12
 //玩家状态
 enum PlayerStatus
 {

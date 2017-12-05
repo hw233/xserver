@@ -2,7 +2,7 @@
 
 port=`cat server_info.ini | grep game_srv_web_port | sed 's/game_srv_web_port=//g'`
 if [ $# -gt 0 ];then
-    port=`cat server_info.ini | grep raid_srv_web_port | sed 's/raid_srv_web_port=//g'`    
+    port=`cat server_info.ini | grep ai_srv_web_port | sed 's/ai_srv_web_port=//g'`    
 fi
 
 #echo $port

@@ -22,6 +22,8 @@ add_custom_target(svnup
 option(MEMERR
     "check mem overflow" ON)
 
+#add_definitions(-DUSE_AISRV)
+
 add_subdirectory(proto)
 add_subdirectory(comm_lib)
 add_subdirectory(conn_srv)
@@ -30,6 +32,9 @@ add_subdirectory(game_srv/so_game_srv)
 
 #add_subdirectory(raid_srv)
 #add_subdirectory(raid_srv/so_game_srv)
+
+#add_subdirectory(ai_srv)
+#add_subdirectory(ai_srv/so_ai_srv)
 
 add_subdirectory(db_srv)
 add_subdirectory(login_srv)

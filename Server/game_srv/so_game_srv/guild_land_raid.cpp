@@ -10,7 +10,7 @@ guild_land_raid_struct::~guild_land_raid_struct()
 int guild_land_raid_struct::init_special_raid_data(player_struct *player)
 {
 	raid_set_ai_interface(DUNGEON_TYPE_GUILD_LAND);
-	init_scene_struct(m_id, true);
+	init_scene_struct(m_id, true, 0);
 	return (0);
 }
 int guild_land_raid_struct::init_guild_ruqin_active_data()
@@ -30,7 +30,7 @@ int guild_land_raid_struct::init_guild_ruqin_active_data()
 	ruqin_data.huodui_time = 0;
 	ruqin_data.exp = sg_guild_ruqin_huodui_exp;
 	ruqin_data.status = GUILD_RUQIN_ACTIVE_INIT;
-	ruqin_data.palyer_data.clear();
+	ruqin_data.player_data.clear();
 
 	clear_monster();
 	return 0;

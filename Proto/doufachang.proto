@@ -1,3 +1,5 @@
+syntax = "proto2";
+
 message challenge_player
 {
 	required uint64 player_id = 1;  //ID

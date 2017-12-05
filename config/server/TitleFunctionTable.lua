@@ -6,7 +6,7 @@ local TitleFunctionTable = {
 		['ConditionTarget1'] = 0,	--条件目标
 		['ConditionTarget2'] = 0,	--条件目标
 		['ConditionNum'] = 0,	--条件值
-		['Attribute'] = {1},	--加成属性
+		['Attribute'] = {2},	--加成属性
 		['Value1'] = {100},	--属性值
 		['NoticeID'] = 0	--广播ID
 		},
@@ -17,7 +17,7 @@ local TitleFunctionTable = {
 		['ConditionTarget1'] = 0,
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 0,
-		['Attribute'] = {1},
+		['Attribute'] = {2},
 		['Value1'] = {500},
 		['NoticeID'] = 0
 		},
@@ -28,7 +28,7 @@ local TitleFunctionTable = {
 		['ConditionTarget1'] = 0,
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 0,
-		['Attribute'] = {1},
+		['Attribute'] = {2},
 		['Value1'] = {1000},
 		['NoticeID'] = 0
 		},
@@ -348,7 +348,7 @@ local TitleFunctionTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 0,
 		['Attribute'] = {2},
-		['Value1'] = {5000},
+		['Value1'] = {2000},
 		['NoticeID'] = 0
 		},
 	[500200033] = {
@@ -358,7 +358,7 @@ local TitleFunctionTable = {
 		['ConditionTarget1'] = 0,
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 0,
-		['Attribute'] = {1},
+		['Attribute'] = {2},
 		['Value1'] = {1000},
 		['NoticeID'] = 0
 		},
@@ -369,8 +369,8 @@ local TitleFunctionTable = {
 		['ConditionTarget1'] = 0,
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 0,
-		['Attribute'] = {1},
-		['Value1'] = {3000},
+		['Attribute'] = {2},
+		['Value1'] = {1200},
 		['NoticeID'] = 0
 		},
 	[500200035] = {
@@ -380,8 +380,8 @@ local TitleFunctionTable = {
 		['ConditionTarget1'] = 0,
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 0,
-		['Attribute'] = {1},
-		['Value1'] = {5000},
+		['Attribute'] = {2},
+		['Value1'] = {1400},
 		['NoticeID'] = 0
 		},
 	[500200036] = {
@@ -391,8 +391,8 @@ local TitleFunctionTable = {
 		['ConditionTarget1'] = 0,
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 0,
-		['Attribute'] = {1},
-		['Value1'] = {7000},
+		['Attribute'] = {2},
+		['Value1'] = {1600},
 		['NoticeID'] = 0
 		},
 	[500200037] = {
@@ -402,8 +402,8 @@ local TitleFunctionTable = {
 		['ConditionTarget1'] = 0,
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 0,
-		['Attribute'] = {1},
-		['Value1'] = {9000},
+		['Attribute'] = {2},
+		['Value1'] = {1800},
 		['NoticeID'] = 0
 		},
 	[500200038] = {
@@ -413,8 +413,8 @@ local TitleFunctionTable = {
 		['ConditionTarget1'] = 0,
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 0,
-		['Attribute'] = {1},
-		['Value1'] = {11000},
+		['Attribute'] = {2},
+		['Value1'] = {2000},
 		['NoticeID'] = 0
 		},
 	[500200039] = {
@@ -424,8 +424,8 @@ local TitleFunctionTable = {
 		['ConditionTarget1'] = 0,
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 0,
-		['Attribute'] = {1},
-		['Value1'] = {13000},
+		['Attribute'] = {2},
+		['Value1'] = {2200},
 		['NoticeID'] = 0
 		},
 	[500200040] = {
@@ -435,8 +435,8 @@ local TitleFunctionTable = {
 		['ConditionTarget1'] = 0,
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 0,
-		['Attribute'] = {1},
-		['Value1'] = {15000},
+		['Attribute'] = {2},
+		['Value1'] = {2400},
 		['NoticeID'] = 0
 		},
 	[500200041] = {

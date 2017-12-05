@@ -375,10 +375,10 @@ static uint32_t get_player_rank(uint32_t rank_type, uint64_t player_id)
 
 static void sync_rank_change_to_game_srv(uint32_t rank_type, uint32_t prev_rank, uint32_t post_rank)
 {
-	if (prev_rank == post_rank)
-	{
-		return ;
-	}
+//	if (prev_rank == post_rank)
+//	{
+//		return ;
+//	}
 
 	uint32_t min = 0, max = 0;
 	if (post_rank > prev_rank)
@@ -409,6 +409,7 @@ static void sync_rank_change_to_game_srv(uint32_t rank_type, uint32_t prev_rank,
 	{
 		pPlayer[proto->num].player = out_vec[i].first;
 		pPlayer[proto->num].lv = min + proto->num;
+		pPlayer[proto->num].score = out_vec[i].second;
 		proto->num++;
 	}
 
@@ -816,19 +817,23 @@ int conn_node_ranksrv::handle_player_online_notify(EXTERN_DATA *extern_data)
 	do
 	{
 		uint32_t out_rank = 0xffffffff;
+		uint32_t out_score = 0;
 		PROTO_SYNC_RANK *proto = (PROTO_SYNC_RANK*)get_send_data();
 		memset(proto->ranks, 0, sizeof(proto->ranks));
 		int i = 0;
 		for (std::map<uint32_t, std::string>::iterator iter = scm_rank_keys.begin(); iter != scm_rank_keys.end() && i < MAX_RANK_TYPE; ++iter)
 		{
 			out_rank = 0xffffffff;
+			out_score = 0;
 			ret = sg_redis_client.zget_rank(iter->second.c_str(), extern_data->player_id, out_rank);
 			if (ret == 0)
 			{
 				out_rank++;
 			}
+			sg_redis_client.zget_score(iter->second.c_str(), extern_data->player_id, out_score);
 			proto->ranks[i].type = iter->first;
 			proto->ranks[i].rank = out_rank;
+			proto->ranks[i].score = out_score;
 			i++;
 		}
 

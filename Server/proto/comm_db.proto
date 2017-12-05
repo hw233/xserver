@@ -7,11 +7,18 @@ message DBAttr
 	required double val = 2;
 }
 
+message DBCommonRandAttr
+{
+	required uint32 pool = 1;
+	required uint32 id = 2;
+	required double val = 3;
+}
+
 message DBItemBagua
 {
 	required uint32 star = 1;
-	required double main_attr_val = 2;
-	repeated DBAttr minor_attrs = 3;
+	repeated DBCommonRandAttr minor_attrs = 3;
+	repeated DBCommonRandAttr additional_attrs = 4;
 }
 
 message DBItemPartnerFabao

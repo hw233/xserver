@@ -3,10 +3,11 @@
 #include "monster_manager.h"
 #include "uuid.h"
 #include "unit.h"
-#include "team.h"
+//#include "team.h"
 #include "buff_manager.h"
 #include "partner_manager.h"
 #include "cash_truck_manager.h"
+#include "conn_node_gamesrv.h"
 #include "msgid.h"
 #include "camp_judge.h"
 #include "role.pb-c.h"
@@ -229,6 +230,8 @@ int unit_struct::check_pos_distance(float pos_x, float pos_z)
 
 int unit_struct::set_pos_with_broadcast(float pos_x, float pos_z)
 {
+	if (!scene)
+		return (0);
 	area_struct *old_area = area;
 	set_pos(pos_x, pos_z);
 	area_struct *new_area = scene->get_area_by_pos(pos_x, pos_z);
@@ -415,6 +418,7 @@ void unit_struct::broadcast_one_attr_changed(uint32_t id, double value, bool sen
 
 void unit_struct::broadcast_to_sight(uint16_t msg_id, void *msg_data, pack_func func, bool include_myself)
 {
+#ifndef __AI_SRV__
 	PROTO_HEAD_CONN_BROADCAST *head;
 	PROTO_HEAD *real_head;
 
@@ -459,9 +463,10 @@ void unit_struct::broadcast_to_sight(uint16_t msg_id, void *msg_data, pack_func 
 	if (conn_node_gamesrv::connecter.send_one_msg((PROTO_HEAD *)head, 1) != (int)(ENDION_FUNC_4(head->len))) {
 		LOG_ERR("%s %d: send to all failed err[%d]", __FUNCTION__, __LINE__, errno);
 	}
+#endif	
 }
 
-static void add_unit_sight_player(unit_struct *unit, std::set<uint64_t> *player_ids)
+__attribute__((used)) static void add_unit_sight_player(unit_struct *unit, std::set<uint64_t> *player_ids)
 {
 	if (!unit->is_avaliable())
 		return;
@@ -483,6 +488,7 @@ static void add_unit_sight_player(unit_struct *unit, std::set<uint64_t> *player_
 
 void unit_struct::broadcast_to_many_sight(uint16_t msg_id, void *msg_data, pack_func func, const std::vector<unit_struct *>& other)
 {
+#ifndef __AI_SRV__
 	PROTO_HEAD_CONN_BROADCAST *head;
 	PROTO_HEAD *real_head;
 	std::set<uint64_t> player_ids;
@@ -523,6 +529,7 @@ void unit_struct::broadcast_to_many_sight(uint16_t msg_id, void *msg_data, pack_
 	if (conn_node_gamesrv::connecter.send_one_msg((PROTO_HEAD *)head, 1) != (int)(ENDION_FUNC_4(head->len))) {
 		LOG_ERR("%s %d: send to all failed err[%d]", __FUNCTION__, __LINE__, errno);
 	}
+#endif	
 }
 /*
 void unit_struct::broadcast_to_sight_with_other_unit(uint16_t msg_id, void *msg_data, pack_func func, bool include_myself, unit_struct *other, bool include_other)
@@ -1095,12 +1102,12 @@ uint32_t unit_struct::count_life_steal_effect(int32_t damage)
 		all_attr[PLAYER_ATTR_HP] = all_attr[PLAYER_ATTR_MAXHP];
 	}
 
-	if (get_unit_type() == UNIT_TYPE_PLAYER)
-	{
-		player_struct *player = (player_struct *)this;
-		if (player->m_team)
-			player->m_team->OnMemberHpChange(*player);
-	}
+	// if (get_unit_type() == UNIT_TYPE_PLAYER)
+	// {
+	// 	player_struct *player = (player_struct *)this;
+	// 	if (player->m_team)
+	// 		player->m_team->OnMemberHpChange(*player);
+	// }
 
 	return ret;
 }
@@ -1118,12 +1125,12 @@ uint32_t unit_struct::count_damage_return(int32_t damage, unit_struct *unit)
 	uint32_t ret = damage * bounce / 100;
 	all_attr[PLAYER_ATTR_HP] -= ret;
 
-	if (get_unit_type() == UNIT_TYPE_PLAYER)
-	{
-		player_struct *player = (player_struct *)this;
-		if (player->m_team)
-			player->m_team->OnMemberHpChange(*player);
-	}
+	// if (get_unit_type() == UNIT_TYPE_PLAYER)
+	// {
+	// 	player_struct *player = (player_struct *)this;
+	// 	if (player->m_team)
+	// 		player->m_team->OnMemberHpChange(*player);
+	// }
 
 	return ret;
 }

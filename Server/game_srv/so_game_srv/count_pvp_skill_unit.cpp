@@ -1,7 +1,7 @@
 #include "count_pvp_skill_unit.h"
 #include "game_event.h"
 #include "unit_path.h"
-#include "team.h"
+//#include "team.h"
 
 static int count_rect_unit(struct position *my_pos, double angle, std::vector<unit_struct *> *ret, uint max, double length, double width, player_struct **team_player, int team_num)
 {

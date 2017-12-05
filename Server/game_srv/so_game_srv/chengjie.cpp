@@ -254,7 +254,7 @@ void ChengJieTaskManage::CommpleteTask(player_struct *player, player_struct *tar
 
 	//SetRoleTarget(player->data->chengjie.target, 0);
 	player->data->chengjie.target = 0;
-	player->add_achievement_progress(ACType_YAOSHI_TASK, YAOSHI_CHENGJIE, 0, 1);
+	player->add_achievement_progress(ACType_YAOSHI_TASK, YAOSHI_CHENGJIE, 0, 0, 1);
 
 	ParameterTable * config = get_config_by_id(161000089, &parameter_config);
 	if (config != NULL)
@@ -591,25 +591,26 @@ void ChengJieTaskManage::pack_yaoshi_to_dbinfo(player_struct *player, _PlayerDBI
 	static ShangjinTaskTypeDb *arrTaskPoint[MAX_SHANGJIN_NUM] = { arrTask, arrTask + 1, arrTask + 2 };
 	shangJin.task = arrTaskPoint;
 	shangJin.n_task = MAX_SHANGJIN_NUM;
-	static ShangjinTaskAwardDb arrAward[MAX_SHANGJIN_NUM][MAX_SHANGJIN_AWARD_NUM];
-	static ShangjinTaskAwardDb *arrAwardPoint[MAX_SHANGJIN_NUM][MAX_SHANGJIN_AWARD_NUM];
+//	static ShangjinTaskAwardDb arrAward[MAX_SHANGJIN_NUM][MAX_SHANGJIN_AWARD_NUM];
+//	static ShangjinTaskAwardDb *arrAwardPoint[MAX_SHANGJIN_NUM][MAX_SHANGJIN_AWARD_NUM];
 	for (int i = 0; i < MAX_SHANGJIN_NUM; ++i)
 	{
 		shangjin_task_type_db__init(arrTask + i);
 		arrTask[i].id = player->data->shangjin.task[i].id;
 		arrTask[i].quality = player->data->shangjin.task[i].quality;
 		arrTask[i].reduce = player->data->shangjin.task[i].reduce;
-		arrTask[i].n_award = player->data->shangjin.task[i].n_award;
+//		arrTask[i].n_award = player->data->shangjin.task[i].n_award;
+		arrTask[i].drop_id = player->data->shangjin.task[i].drop_id;
 		arrTask[i].exp = player->data->shangjin.task[i].exp; 
 		arrTask[i].coin = player->data->shangjin.task[i].coin;
-		for (uint32_t j = 0; j < player->data->shangjin.task[i].n_award; ++j)
-		{
-			shangjin_task_award_db__init(&arrAward[i][j]);// + i * MAX_SHANGJIN_AWARD_NUM + j);
-			arrAward[i][j].id = player->data->shangjin.task[i].award[j].id;
-			arrAward[i][j].num = player->data->shangjin.task[i].award[j].val;
-			arrAwardPoint[i][j] = &arrAward[i][j];// arrAward + i * j;
-		}
-		arrTask[i].award = arrAwardPoint[i];
+		// for (uint32_t j = 0; j < player->data->shangjin.task[i].n_award; ++j)
+		// {
+		// 	shangjin_task_award_db__init(&arrAward[i][j]);// + i * MAX_SHANGJIN_AWARD_NUM + j);
+		// 	arrAward[i][j].id = player->data->shangjin.task[i].award[j].id;
+		// 	arrAward[i][j].num = player->data->shangjin.task[i].award[j].val;
+		// 	arrAwardPoint[i][j] = &arrAward[i][j];// arrAward + i * j;
+		// }
+		// arrTask[i].award = arrAwardPoint[i];
 	}
 
 	db_info.yaoshi = &send;
@@ -656,12 +657,13 @@ void ChengJieTaskManage::unpack_yaoshi(player_struct *player, _PlayerDBInfo *db_
 		player->data->shangjin.task[i].reduce = db_info->yaoshi->shangjin->task[i]->reduce;
 		player->data->shangjin.task[i].coin = db_info->yaoshi->shangjin->task[i]->coin;
 		player->data->shangjin.task[i].exp = db_info->yaoshi->shangjin->task[i]->exp;
-		for (uint32_t j = 0; j < db_info->yaoshi->shangjin->task[i]->n_award; ++j)
-		{
-			player->data->shangjin.task[i].award[j].id = db_info->yaoshi->shangjin->task[i]->award[j]->id;
-			player->data->shangjin.task[i].award[j].val = db_info->yaoshi->shangjin->task[i]->award[j]->num;
-		}
-		player->data->shangjin.task[i].n_award = db_info->yaoshi->shangjin->task[i]->n_award;
+		player->data->shangjin.task[i].drop_id = db_info->yaoshi->shangjin->task[i]->drop_id;		
+		// for (uint32_t j = 0; j < db_info->yaoshi->shangjin->task[i]->n_award; ++j)
+		// {
+		// 	player->data->shangjin.task[i].award[j].id = db_info->yaoshi->shangjin->task[i]->award[j]->id;
+		// 	player->data->shangjin.task[i].award[j].val = db_info->yaoshi->shangjin->task[i]->award[j]->num;
+		// }
+		// player->data->shangjin.task[i].n_award = db_info->yaoshi->shangjin->task[i]->n_award;
 	}
 }
 
@@ -1183,7 +1185,7 @@ void ShangjinManage::RefreshTask(player_struct *player)
 		LOG_ERR("[%s:%d] can not get shangjin task table player[%lu] ", __FUNCTION__, __LINE__, player->get_uuid());
 		return;
 	}
-	if (table->n_QuestGroup == 0 || table->n_RewardGroup == 0)
+	if (table->n_QuestGroup == 0)
 	{
 		LOG_ERR("[%s:%d] can not get shangjin task table player[%lu] ", __FUNCTION__, __LINE__, player->get_uuid());
 		return;
@@ -1206,45 +1208,51 @@ void ShangjinManage::RefreshTask(player_struct *player)
 			}
 		}
 
-		uint32_t awardId = 0;
+//		uint32_t awardId = 0;
 		switch (player->data->shangjin.task[i].quality)
 		{
 		case 1:
-			awardId = table->RewardGroup[rand() % table->n_RewardGroup];
+			player->data->shangjin.task[i].drop_id = table->RewardGroup;
 			break;
 		case 2:
-			awardId = table->RewardGroup1[rand() % table->n_RewardGroup1];
+			player->data->shangjin.task[i].drop_id = table->RewardGroup1;
 			break;
 		case 3:
-			awardId = table->RewardGroup2[rand() % table->n_RewardGroup2];
+			player->data->shangjin.task[i].drop_id = table->RewardGroup2;
 			break;
 		case 4:
-			awardId = table->RewardGroup3[rand() % table->n_RewardGroup3];
+			player->data->shangjin.task[i].drop_id = table->RewardGroup3;
 			break;
 		case 5:
-			awardId = table->RewardGroup4[rand() % table->n_RewardGroup4];
+			player->data->shangjin.task[i].drop_id = table->RewardGroup4;
 			break;
 		case 6:
-			awardId = table->RewardGroup5[rand() % table->n_RewardGroup5];
+			player->data->shangjin.task[i].drop_id = table->RewardGroup5;
 			break;
+		default:
+			LOG_ERR("%s: player[%lu] task[%d] id[%u] quality[%u]", __FUNCTION__, player->get_uuid(), i,
+				player->data->shangjin.task[i].id, player->data->shangjin.task[i].quality);
+			continue;
 		}
-		player->data->shangjin.task[i].n_award = 0;
-		TaskRewardTable *reward_config = get_config_by_id(awardId, &task_reward_config);
-		if (reward_config != NULL)
-		{
-			for (uint32_t j = 0; j < reward_config->n_RewardTarget && j < MAX_SHANGJIN_AWARD_NUM; ++j)
-			{
-				if (reward_config->RewardTarget[j] == 0)
-				{
-					continue;
-				}
-				player->data->shangjin.task[i].award[j].id = reward_config->RewardTarget[j];
-				player->data->shangjin.task[i].award[j].val = reward_config->RewardNum[j];
-				++player->data->shangjin.task[i].n_award;
-			}
-			player->data->shangjin.task[i].coin = reward_config->RewardMoney;
-			player->data->shangjin.task[i].exp = reward_config->RewardEXP;
-		}
+		player->data->shangjin.task[i].coin = table->MoneyReward[player->data->shangjin.task[i].quality - 1];
+		player->data->shangjin.task[i].exp = table->ExpReward[player->data->shangjin.task[i].quality - 1];		
+		
+		// TaskRewardTable *reward_config = get_config_by_id(awardId, &task_reward_config);
+		// if (reward_config != NULL)
+		// {
+		// 	for (uint32_t j = 0; j < reward_config->n_RewardTarget && j < MAX_SHANGJIN_AWARD_NUM; ++j)
+		// 	{
+		// 		if (reward_config->RewardTarget[j] == 0)
+		// 		{
+		// 			continue;
+		// 		}
+		// 		player->data->shangjin.task[i].award[j].id = reward_config->RewardTarget[j];
+		// 		player->data->shangjin.task[i].award[j].val = reward_config->RewardNum[j];
+		// 		++player->data->shangjin.task[i].n_award;
+		// 	}
+		// 	player->data->shangjin.task[i].coin = reward_config->RewardMoney;
+		// 	player->data->shangjin.task[i].exp = reward_config->RewardEXP;
+		// }
 
 		player->data->shangjin.task[i].reduce = 0;
 		SpecialtySkillTable *tableReduce = get_yaoshi_skill_config(SHANGJIN_TWO, player->data->shangjin.level);
@@ -1278,25 +1286,28 @@ void ShangjinManage::RefreshTaskAndSend(player_struct *player, bool sys)
 	ShangjinTaskType *arrTaskPoint[MAX_SHANGJIN_NUM] = { arrTask, arrTask + 1, arrTask + 2 };
 	shangJin.task_list = arrTaskPoint;
 	shangJin.n_task_list = MAX_SHANGJIN_NUM;
-	ShangjinTaskAward arrAward[MAX_SHANGJIN_NUM][MAX_SHANGJIN_AWARD_NUM];
-	ShangjinTaskAward *arrAwardPoint[MAX_SHANGJIN_NUM][MAX_SHANGJIN_AWARD_NUM];
+//	ShangjinTaskAward arrAward[MAX_SHANGJIN_NUM][MAX_SHANGJIN_AWARD_NUM];
+//	ShangjinTaskAward *arrAwardPoint[MAX_SHANGJIN_NUM][MAX_SHANGJIN_AWARD_NUM];
+	int index = 0;
 	for (int i = 0; i < MAX_SHANGJIN_NUM; ++i)
 	{
 		shangjin_task_type__init(arrTask + i);
 		arrTask[i].id = player->data->shangjin.task[i].id;
 		arrTask[i].quality = player->data->shangjin.task[i].quality;
 		arrTask[i].reduce = player->data->shangjin.task[i].reduce;
-		arrTask[i].n_award = player->data->shangjin.task[i].n_award;
+//		arrTask[i].n_award = player->data->shangjin.task[i].n_award;
 		arrTask[i].coin = player->data->shangjin.task[i].coin;
 		arrTask[i].exp = player->data->shangjin.task[i].exp;
-		for (uint32_t j = 0; j < player->data->shangjin.task[i].n_award; ++j)
-		{
-			shangjin_task_award__init(&arrAward[i][j]);// + i * MAX_SHANGJIN_AWARD_NUM + j);
-			arrAward[i][j].id = player->data->shangjin.task[i].award[j].id;
-			arrAward[i][j].num = player->data->shangjin.task[i].award[j].val;
-			arrAwardPoint[i][j] = &arrAward[i][j];// arrAward + i * j;
-		}
-		arrTask[i].award = arrAwardPoint[i];
+
+		arrTask[i].n_award = pack_drop_config_item(player->data->shangjin.task[i].drop_id, MAX_SHANGJIN_AWARD_NUM, &index, &arrTask[i].award);		
+		// for (uint32_t j = 0; j < player->data->shangjin.task[i].n_award; ++j)
+		// {
+		// 	shangjin_task_award__init(&arrAward[i][j]);// + i * MAX_SHANGJIN_AWARD_NUM + j);
+		// 	arrAward[i][j].id = player->data->shangjin.task[i].award[j].id;
+		// 	arrAward[i][j].num = player->data->shangjin.task[i].award[j].val;
+		// 	arrAwardPoint[i][j] = &arrAward[i][j];// arrAward + i * j;
+		// }
+		// arrTask[i].award = arrAwardPoint[i];
 	}
 
 	EXTERN_DATA ext_data;
@@ -1324,33 +1335,55 @@ void ShangjinManage::CompleteTask(player_struct *player, uint32_t taskid)
 	{
 		add = tableSkill->EffectValue[0];
 	}
-	for (uint32_t i = 0; i < player->data->shangjin.task[player->data->shangjin.cur_task].n_award; ++i)
+
+		//妖师客栈奖励
+	// for (uint32_t i = 0; i < player->data->shangjin.task[player->data->shangjin.cur_task].n_award; ++i)
+	// {
+	// 	uint32_t addTwo = add;
+	// 	if (get_item_type(player->data->shangjin.task[player->data->shangjin.cur_task].award[i].id) == ITEM_TYPE_SHANGJIN_EXP)
+	// 	{
+	// 		if (player->data->cur_yaoshi == MAJOR__TYPE__SHUANGJIN)  //专精加成
+	// 		{
+	// 			SpecialTitleTable *title = get_yaoshi_title_table(player->data->cur_yaoshi, player->data->shangjin.level);
+	// 			if (title != NULL)
+	// 			{
+	// 				addTwo += title->TitleEffect2;
+	// 			}
+	// 		}
+	// 	}
+	// 	item_list.insert(std::make_pair(player->data->shangjin.task[player->data->shangjin.cur_task].award[i].id,
+	// 		player->data->shangjin.task[player->data->shangjin.cur_task].award[i].val * (addTwo + 10000) / 10000));
+	// }
+
+	if (get_drop_item(player->data->shangjin.task[player->data->shangjin.cur_task].drop_id, item_list) == 0)
 	{
-		uint32_t addTwo = add;
-		if (get_item_type(player->data->shangjin.task[player->data->shangjin.cur_task].award[i].id) == ITEM_TYPE_SHANGJIN_EXP)
+		for (std::map<uint32_t, uint32_t>::iterator iter = item_list.begin(); iter != item_list.end(); ++iter)
 		{
-			if (player->data->cur_yaoshi == MAJOR__TYPE__SHUANGJIN)  //专精加成
+			uint32_t addTwo = add;
+			if (get_item_type(iter->first) == ITEM_TYPE_SHANGJIN_EXP)
 			{
-				SpecialTitleTable *title = get_yaoshi_title_table(player->data->cur_yaoshi, player->data->shangjin.level);
-				if (title != NULL)
+				if (player->data->cur_yaoshi == MAJOR__TYPE__SHUANGJIN)  //专精加成
 				{
-					addTwo += title->TitleEffect2;
+					SpecialTitleTable *title = get_yaoshi_title_table(player->data->cur_yaoshi, player->data->shangjin.level);
+					if (title != NULL)
+					{
+						addTwo += title->TitleEffect2;
+						iter->second = iter->second * (addTwo + 10000) / 10000;
+					}
 				}
 			}
 		}
-		item_list.insert(std::make_pair(player->data->shangjin.task[player->data->shangjin.cur_task].award[i].id,
-			player->data->shangjin.task[player->data->shangjin.cur_task].award[i].val * (addTwo + 10000) / 10000));
+		player->add_item_list_otherwise_send_mail(item_list, MAGIC_TYPE_YAOSHI, 0, NULL, true);			
 	}
 	player->add_exp(player->data->shangjin.task[player->data->shangjin.cur_task].exp * (add + 10000) / 10000, MAGIC_TYPE_YAOSHI);
 	player->add_coin(player->data->shangjin.task[player->data->shangjin.cur_task].coin * (add + 10000) / 10000,MAGIC_TYPE_YAOSHI);
-	player->add_item_list_otherwise_send_mail(item_list, MAGIC_TYPE_YAOSHI, 0, NULL, true);
 
 	if (player->data->shangjin.cur_task + 1 == MAX_SHANGJIN_NUM)
 	{
 		player->data->shangjin.accept = false;
 		player->data->shangjin.cur_task = 0;
 		RefreshTaskAndSend(player, false);
-		player->add_achievement_progress(ACType_YAOSHI_TASK, YAOSHI_SHANGJIN, 0, 1);
+		player->add_achievement_progress(ACType_YAOSHI_TASK, YAOSHI_SHANGJIN, 0, 0, 1);
 	}
 	else
 	{

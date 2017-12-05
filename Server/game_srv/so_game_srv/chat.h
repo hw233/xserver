@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 class player_struct;
+#define MAX_GM_ARGV  100
 
 class chat_mod
 {
@@ -13,6 +14,7 @@ public:
 
 	static void parse_cmd(char *line, int *argc, char *argv[]); 
 	static int do_gm_cmd(player_struct *player, int argc, char *argv[]);
+	static int do_one_gm_cmd( player_struct *player, int argc, char *argv[] );
 
 	static void add_coin(player_struct *player, int val);
 	static void add_bind_gold(player_struct *player, int val);

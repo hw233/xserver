@@ -8,6 +8,7 @@
 #include "excel_data.h"
 #include "lua_template.h"
 #include "attr_id.h"
+#include "comm_define.h"
 
 //一个关卡的万妖卡最多条件参数 
 #define MAX_WANYAOKA_COND_PARAM 8  
@@ -153,6 +154,15 @@ extern std::map<uint64_t, struct MonsterIDTable*> raid_jincheng_suiji_kill_monst
 extern std::vector<struct raidsrv_config*> vec_raidsrv_config;
 extern std::map<uint32_t, uint32_t> map_raidsrv_config;
 extern std::map<uint64_t, struct TravelTable*> travel_config; //游历任务表
+extern std::map<uint64_t, struct LevelReward*> level_reward_config; //等级奖励表
+extern std::map<uint64_t, struct TimeReward*> online_reward_config; //在线奖励表
+extern std::map<uint64_t, struct OnlineTimes*> online_time_config; //在线奖励时间表
+extern std::map<uint64_t, struct SignDay*> sign_day_config; //每日签到奖励表
+extern std::map<uint64_t, struct SignMonth*> sign_month_config; //每日签到累计奖励表
+extern std::map<uint64_t, std::map<uint64_t, struct SignDay*> >sign_day_zhuan_config; //每日签到奖励表转表
+extern std::map<uint64_t, struct SignDay*> sign_day_to_zhuan_config[MAX_ONE_YEARS_THE_MONTH]; //12个月
+extern std::map<uint64_t, std::map<uint64_t, struct SignMonth*> >sign_month_zhuan_config; //每日签到累计奖励表转表
+extern std::map<uint64_t, struct SignMonth*> sign_month_to_zhuan_config[MAX_ONE_YEARS_THE_MONTH]; //12个月
 
 
 //////////////////
@@ -193,7 +203,9 @@ extern std::vector<uint32_t> sg_vec_wanyaogu_raid_id;
 
 extern int sg_yuqidao_break_item_id;
 extern int sg_yuqidao_break_item_num;
-extern double sg_fighting_capacity_coefficient[PLAYER_ATTR_FIGHT_MAX]; //战斗力系数
+extern double sg_fighting_capacity_coefficient[PLAYER_ATTR_MAX]; //战斗力系数
+extern uint32_t sg_fighting_capacity_count_in[PLAYER_ATTR_MAX]; //战斗力计算
+extern double sg_fighting_capacity_crt_dmg_init_val;
 
 extern struct ControlTable *sg_pvp_control_config_3;
 extern struct ControlTable *sg_pvp_control_config_5;
@@ -370,6 +382,10 @@ extern double sg_fight_param_161000290;                //buff持续时间保底�
 extern double sg_fight_param_161000291;                //PVP等级系数
 extern double sg_fight_param_161000292;                //PVP基础值
 extern double sg_fight_param_161000293;                //PVP保底比例
+extern double sg_fight_param_161000393;                //伤害公式加入战斗力计算
+extern double sg_fight_param_161000394;                //伤害公式加入战斗力计算
+extern double sg_fight_param_161000395;                //伤害公式加入战斗力计算
+extern double sg_fight_param_161000396;                //伤害公式加入战斗力计算
 
 extern uint32_t sg_server_level_reward_item_id;
 extern uint32_t sg_server_level_reward_item_num;
@@ -408,9 +424,11 @@ extern uint32_t sg_maogui_guiwang_wudi_buff;
 
 extern char *sg_xunbao_boss_notice;
 
-extern std::map<uint64_t, EquipAttribute*> sg_equip_enchant_attr_map;
+extern std::map<uint64_t, EquipAttribute*> sg_attr_seek_map;
+extern std::map<uint64_t, std::vector<EquipAttribute*> > sg_attr_pool_map;
 
 extern uint32_t sg_travel_round_amount;
 extern uint32_t sg_travel_task_amount;
 
+extern uint32_t sg_ai_srv_port;
 #endif /* __LUA_CONFIG_H__ */

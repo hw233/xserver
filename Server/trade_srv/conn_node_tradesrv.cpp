@@ -1749,7 +1749,9 @@ static int handle_auction_buy_now_cost_answer(int data_len, uint8_t *data, int r
 		}
 		{
 			std::map<uint32_t, uint32_t> attachs;
-			attachs.insert(std::make_pair(config->ItemID, config->Num));
+			uint32_t _id = config->ItemID;
+			uint32_t _num = config->Num;
+			attachs.insert(std::make_pair(_id, _num));
 			std::vector<char *> buyer_mail_args;
 			std::string sz_num;
 			std::stringstream ss;

@@ -8,6 +8,7 @@
 #include "excel_data.h"
 #include "lua_config.h"
 #include "attr_id.h"
+#include "comm_message.pb-c.h"
 
 //矩形
 #define SKILL_RANGE_TYPE_RECT 1
@@ -47,6 +48,9 @@ bool escort_is_team(uint32_t escort_id);
 uint64_t get_task_chapter_id(uint32_t task_id);
 TaskChapterTable *get_task_chapter_config(uint32_t chapter_id);
 void get_task_reward_item_from_config(uint32_t reward_id, std::map<uint32_t, uint32_t> &item_list);
+void get_skill_configs(uint32_t skill_lv, uint32_t skill_id, struct SkillTable **ski_config,
+	struct SkillLvTable **lv_config1, struct PassiveSkillTable **pas_config,
+	struct SkillLvTable **lv_config2, struct ActiveSkillTable **act_config);
 
 ActorTable *get_actor_config(uint32_t job);
 ActorLevelTable *get_actor_level_config(uint32_t job, uint32_t level);
@@ -70,7 +74,7 @@ RecruitTable *get_partner_recruit_config(uint32_t type);
 GangsSkillTable *get_guild_skill_config(uint32_t type, uint32_t level);
 AchievementHierarchyTable *get_achievement_config(uint32_t achievement_id, uint32_t star);
 SceneCreateMonsterTable *get_daily_zhenying_truck_config(uint32_t id);
-EquipAttribute *get_equip_enchant_attr_config(uint32_t pool, uint32_t attr_id);
+EquipAttribute *get_rand_attr_config(uint32_t pool, uint32_t attr_id);
 TravelTable *get_travel_config(uint32_t level);
 
 uint32_t get_item_relate_id(uint32_t id);
@@ -79,6 +83,9 @@ uint32_t get_bag_total_num(uint32_t job, uint32_t level);
 uint32_t get_item_stack_num(uint32_t id);
 int get_item_quality(uint32_t item_id);
 int get_drop_item(uint32_t drop_id, std::map<uint32_t, uint32_t> &item_list, uint32_t stack = 0);
+uint32_t get_drop_by_lv(uint32_t lv, uint32_t star, uint32_t n_Rewards, uint64_t *Rewards, uint32_t n_ItemRewardSection, uint64_t *ItemRewardSectio);
+#define MAX_DROP_ITEM_DATA_NUM 30
+int pack_drop_config_item(uint32_t drop_id, int max, int *begin, ItemData ***point);
 int get_player_sex(uint32_t job); //获取角色性别
 int get_task_type(uint32_t task_id);
 int task_is_trunk(uint32_t task_id);
@@ -96,6 +103,7 @@ int item_id_to_trade_id(uint32_t item_id);
 int trade_id_to_item_id(uint32_t trade_id);
 bool strong_goal_is_open(uint32_t goal_id, uint32_t player_lv);
 int get_equip_enchant_attr_color(uint32_t pool, uint32_t attr_id, double attr_val);
+int get_one_rand_attr(uint32_t pool, uint32_t &attr_id, double &attr_val, std::vector<uint32_t> *except_attrs = NULL);
 
 #define DEFAULT_SCENE_ID  (10012) 
 
@@ -106,5 +114,39 @@ enum SCENE_TYPE_DEFINE
 };
 //场景表现上的类型，比如帮会领地，实际上是副本，但是表现上是野外，相关的一些进出规则要和野外一样
 SCENE_TYPE_DEFINE get_scene_looks_type(uint32_t scene_id);
+
+/* "0=普通副本 */
+/* 3=随机主副本 */
+/* 4=随机小关卡 */
+/* 5=3V3 PVP副本 */
+/* 6=5V5 PVP副本 */
+/* 7=妖师客栈 */
+/* 8=走AI流程副本 */
+/* 9=战场副本 */
+/* 10=公会准备区副本 */
+/* 11=预赛 */
+/* 12=决赛" */
+/* 15=普通阵营战 */
+/* 16=新手阵营战 */
+/* 17=帮会领地副本活动 */
+/* 18=猫鬼乐园副本*/
+enum DUNGEON_TYPE_DEFINE
+{
+	DUNGEON_TYPE_NORMAL = 0,
+	DUNGEON_TYPE_RAND_MASTER = 3,
+	DUNGEON_TYPE_RAND_SLAVE = 4,
+	DUNGEON_TYPE_PVP_3 = 5,
+	DUNGEON_TYPE_PVP_5 = 6,
+	DUNGEON_TYPE_YAOSHI = 7,
+	DUNGEON_TYPE_SCRIPT = 8,
+	DUNGEON_TYPE_ZHENYING = 9,
+	DUNGEON_TYPE_GUILD_WAIT = 10,
+	DUNGEON_TYPE_GUILD_RAID = 11,
+	DUNGEON_TYPE_GUILD_FINAL_RAID = 12,	
+	DUNGEON_TYPE_BATTLE = 15,
+	DUNGEON_TYPE_BATTLE_NEW = 16,
+	DUNGEON_TYPE_GUILD_LAND = 17,
+	DUNGEON_TYPE_MAOGUI_LEYUAN = 18,
+};
 
 #endif /* GAME_CONFIG_H */

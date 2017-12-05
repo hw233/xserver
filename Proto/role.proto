@@ -97,4 +97,11 @@ message FishingSetBaitAnswer
 	required uint32 baitId = 2; //鱼饵ID
 }
 
+//护送开始通知
+message EscortBeginNotify
+{
+	required uint32 escortId = 1; //护送ID
+	required uint64 monsterUuid = 2; //护送怪唯一ID
+}
+
 

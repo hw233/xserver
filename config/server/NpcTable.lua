@@ -758,7 +758,7 @@ local NpcTable = {
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
 		['Function'] = {3},
-		['FunctionPort'] = {20002},
+		['FunctionPort'] = {40001},
 		['FunctionTask'] = {0},
 		['TaskClass'] = {},
 		['Personality'] = {},
@@ -7180,7 +7180,7 @@ local NpcTable = {
 		['Personality'] = {},
 		['PerAction'] = '',
 		['StandTalk'] = {},
-		['LifeTime'] = ,
+		['LifeTime'] = 0,
 		['NpcSize'] = 1.00
 		},
 	[152140002] = {
@@ -7196,7 +7196,7 @@ local NpcTable = {
 		['Personality'] = {},
 		['PerAction'] = '',
 		['StandTalk'] = {},
-		['LifeTime'] = ,
+		['LifeTime'] = 0,
 		['NpcSize'] = 1.00
 		},
 	[152140003] = {
@@ -7212,7 +7212,7 @@ local NpcTable = {
 		['Personality'] = {},
 		['PerAction'] = '',
 		['StandTalk'] = {},
-		['LifeTime'] = ,
+		['LifeTime'] = 0,
 		['NpcSize'] = 1.00
 		},
 	[152140004] = {
@@ -7409,7 +7409,7 @@ local NpcTable = {
 		},
 	[152140130] = {
 		['ID'] = 152140130,
-		['NameId'] = '神龟灵魂',
+		['NameId'] = '',
 		['Level'] = 1,
 		['ClickType'] = 0,
 		['TalkNotice'] = 0,
@@ -7491,7 +7491,7 @@ local NpcTable = {
 		['ID'] = 152140129,
 		['NameId'] = '神龟',
 		['Level'] = 1,
-		['ClickType'] = 1,
+		['ClickType'] = 0,
 		['TalkNotice'] = 0,
 		['Function'] = {},
 		['FunctionPort'] = {},
@@ -7501,7 +7501,39 @@ local NpcTable = {
 		['PerAction'] = 'Random',
 		['StandTalk'] = {},
 		['LifeTime'] = 0,
-		['NpcSize'] = 2.00
+		['NpcSize'] = 5.00
+		},
+	[152140131] = {
+		['ID'] = 152140131,
+		['NameId'] = '',
+		['Level'] = 1,
+		['ClickType'] = 0,
+		['TalkNotice'] = 0,
+		['Function'] = {},
+		['FunctionPort'] = {},
+		['FunctionTask'] = {},
+		['TaskClass'] = {},
+		['Personality'] = {30,60},
+		['PerAction'] = 'Random',
+		['StandTalk'] = {},
+		['LifeTime'] = 0,
+		['NpcSize'] = 1.00
+		},
+	[152140132] = {
+		['ID'] = 152140132,
+		['NameId'] = '',
+		['Level'] = 1,
+		['ClickType'] = 0,
+		['TalkNotice'] = 0,
+		['Function'] = {},
+		['FunctionPort'] = {},
+		['FunctionTask'] = {},
+		['TaskClass'] = {},
+		['Personality'] = {30,60},
+		['PerAction'] = 'Random',
+		['StandTalk'] = {},
+		['LifeTime'] = 0,
+		['NpcSize'] = 1.00
 		}
 	}
 return NpcTable

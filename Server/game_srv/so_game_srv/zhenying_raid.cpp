@@ -24,7 +24,7 @@ zhenying_raid_struct::~zhenying_raid_struct()
 int zhenying_raid_struct::init_special_raid_data(player_struct *player)
 {
 	raid_set_ai_interface(9);
-	init_scene_struct(m_id, true);
+	init_scene_struct(m_id, true, 0);
 	m_collect_pos.clear();
 	m_hit_flag.clear();
 	return (0);

@@ -97,9 +97,9 @@ int MySkill::Learn(uint32_t id, uint32_t num)
 	}
 	IteratorLevelUp(id, num);
 	m_owner->add_task_progress(TCT_SKILL_LEVEL_UP, get_actor_skill_index(m_owner->get_job(), id), num);
-	m_owner->add_achievement_progress(ACType_SKILL_LEVEL_UP, 0, 0, num);
-	m_owner->add_achievement_progress(ACType_SKILL_ALL_LEVEL, 0, 0, num);
-	m_owner->add_achievement_progress(ACType_SKILL_FUWEN_UNLOCK, 0, 0, GetFuwenUnlockNum());
+	m_owner->add_achievement_progress(ACType_SKILL_LEVEL_UP, 0, 0, 0, num);
+	m_owner->add_achievement_progress(ACType_SKILL_ALL_LEVEL, 0, 0, 0, num);
+	m_owner->add_achievement_progress(ACType_SKILL_FUWEN_UNLOCK, 0, 0, 0, GetFuwenUnlockNum());
 	return 0;
 }
 void MySkill::IteratorLevelUp(uint32_t id, uint32_t num)

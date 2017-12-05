@@ -16,8 +16,8 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,	--重置活动次数CD
 		['JoinType'] = 2,	--参与类型
 		['TypeEffect'] = {155000033,152000051},	--类型效果
-		['Reward'] = {201020004,201020005,201070023},	--活动奖励
-		['RewardNum'] = {1,1,1}	--奖励数量
+		['Reward'] = {201010004,201010001,201100301,201060011,201060012,201060013},	--活动奖励
+		['RewardNum'] = {0}	--奖励数量
 		},
 	[330100002] = {
 		['ID'] = 330100002,
@@ -36,7 +36,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 2,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000005,152000050},
-		['Reward'] = {0},
+		['Reward'] = {201010004,201010001,201010010,201070074},
 		['RewardNum'] = {0}
 		},
 	[330100003] = {
@@ -56,7 +56,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000005,152000049},
-		['Reward'] = {0},
+		['Reward'] = {201010004,201010001,201060021,201060022,201060023},
 		['RewardNum'] = {0}
 		},
 	[330100004] = {
@@ -76,7 +76,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000005,152000050},
-		['Reward'] = {0},
+		['Reward'] = {201010023},
 		['RewardNum'] = {0}
 		},
 	[330100005] = {
@@ -97,7 +97,7 @@ local EventCalendarTable = {
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000005,152000052},
 		['Reward'] = {201010004,201010001},
-		['RewardNum'] = {1,1,1,1,1}
+		['RewardNum'] = {0}
 		},
 	[330100006] = {
 		['ID'] = 330100006,
@@ -116,7 +116,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000005,152000050},
-		['Reward'] = {0},
+		['Reward'] = {201010004,201010001,201010010,201060193,201060025,201060230,201070074},
 		['RewardNum'] = {0}
 		},
 	[330100007] = {
@@ -136,8 +136,8 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 3,
 		['TypeEffect'] = {231000018},
-		['Reward'] = {201020004,201020005,201070023,201070017,201070020},
-		['RewardNum'] = {1,1,1,1,1}
+		['Reward'] = {201010004,201100301,201060011,201060012,201060013,201060021,201060022,201060023},
+		['RewardNum'] = {0}
 		},
 	[330100008] = {
 		['ID'] = 330100008,
@@ -156,7 +156,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000005,152007038},
-		['Reward'] = {0},
+		['Reward'] = {201010004,201010001},
 		['RewardNum'] = {0}
 		},
 	[330100009] = {
@@ -177,7 +177,7 @@ local EventCalendarTable = {
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000005,152000052},
 		['Reward'] = {201010004,201010001,201010021},
-		['RewardNum'] = {1,1,1,1,1}
+		['RewardNum'] = {0}
 		},
 	[330100010] = {
 		['ID'] = 330100010,
@@ -196,7 +196,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000005,152060030},
-		['Reward'] = {0},
+		['Reward'] = {201010004,201010001,201060193,201060025},
 		['RewardNum'] = {0}
 		},
 	[330100020] = {
@@ -216,7 +216,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 3,
 		['TypeEffect'] = {231000019},
-		['Reward'] = {0},
+		['Reward'] = {201010004,201010001},
 		['RewardNum'] = {0}
 		},
 	[330100024] = {
@@ -236,7 +236,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 2,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000028,152020001},
-		['Reward'] = {0},
+		['Reward'] = {201010011},
 		['RewardNum'] = {0}
 		},
 	[330100025] = {
@@ -256,7 +256,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 2,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000028,152020001},
-		['Reward'] = {0},
+		['Reward'] = {201010011},
 		['RewardNum'] = {0}
 		},
 	[330100026] = {
@@ -276,7 +276,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000005,152000055},
-		['Reward'] = {0},
+		['Reward'] = {201010004,201010001},
 		['RewardNum'] = {0}
 		},
 	[330000027] = {
@@ -296,8 +296,8 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 4,
 		['TypeEffect'] = {14},
-		['Reward'] = {201010004,201010013,201010001,201060020,201060001,220106006},
-		['RewardNum'] = {1,1,1,1,1}
+		['Reward'] = {201010004,201010001,201060001,201060020,201080101,201060242},
+		['RewardNum'] = {0}
 		},
 	[330000028] = {
 		['ID'] = 330000028,
@@ -316,7 +316,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 3,
 		['TypeEffect'] = {231000036},
-		['Reward'] = {0},
+		['Reward'] = {201010004,201010001,201010022},
 		['RewardNum'] = {0}
 		},
 	[330000029] = {
@@ -336,7 +336,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 3,
 		['TypeEffect'] = {231000037},
-		['Reward'] = {0},
+		['Reward'] = {201010001,201060001,201060020,201070024,201080101},
 		['RewardNum'] = {0}
 		},
 	[330000030] = {
@@ -356,7 +356,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000005,152007012},
-		['Reward'] = {0},
+		['Reward'] = {201010004,201010001},
 		['RewardNum'] = {0}
 		},
 	[330000031] = {
@@ -376,7 +376,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 3,
 		['TypeEffect'] = {231000039},
-		['Reward'] = {0},
+		['Reward'] = {201010021},
 		['RewardNum'] = {0}
 		},
 	[330000032] = {
@@ -396,7 +396,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 1,
 		['TypeEffect'] = {0},
-		['Reward'] = {0},
+		['Reward'] = {201010021},
 		['RewardNum'] = {0}
 		},
 	[330000033] = {
@@ -416,7 +416,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 1,
 		['TypeEffect'] = {0},
-		['Reward'] = {0},
+		['Reward'] = {201010021},
 		['RewardNum'] = {0}
 		},
 	[330000034] = {
@@ -436,7 +436,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 1,
 		['TypeEffect'] = {0},
-		['Reward'] = {0},
+		['Reward'] = {201010021},
 		['RewardNum'] = {0}
 		},
 	[330000035] = {
@@ -456,7 +456,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 1,
 		['TypeEffect'] = {0},
-		['Reward'] = {0},
+		['Reward'] = {201010021},
 		['RewardNum'] = {0}
 		},
 	[330000036] = {
@@ -476,7 +476,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000005,152060031},
-		['Reward'] = {0},
+		['Reward'] = {201010004,201010001},
 		['RewardNum'] = {0}
 		},
 	[330000037] = {
@@ -496,7 +496,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000013,152060032},
-		['Reward'] = {0},
+		['Reward'] = {201061243},
 		['RewardNum'] = {0}
 		},
 	[330000038] = {
@@ -516,7 +516,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 1,
 		['JoinType'] = 3,
 		['TypeEffect'] = {231000024},
-		['Reward'] = {0},
+		['Reward'] = {201010004,201010001,201010011},
 		['RewardNum'] = {0}
 		},
 	[330000039] = {
@@ -536,7 +536,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 2,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000028,152060034},
-		['Reward'] = {0},
+		['Reward'] = {201010004,201010001,201010011},
 		['RewardNum'] = {0}
 		},
 	[330000040] = {
@@ -556,7 +556,7 @@ local EventCalendarTable = {
 		['ResetCD'] = 2,
 		['JoinType'] = 2,
 		['TypeEffect'] = {155000005,152000067},
-		['Reward'] = {0},
+		['Reward'] = {201010004,201010001},
 		['RewardNum'] = {0}
 		}
 	}

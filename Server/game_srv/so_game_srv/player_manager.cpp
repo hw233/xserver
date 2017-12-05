@@ -275,6 +275,7 @@ void player_manager::on_tick_10()
 
 void player_manager::on_tick_5()
 {
+#ifndef USE_AISRV	
 	for (std::map<uint64_t, player_struct *>::iterator iter = player_manager_all_ai_players_id.begin(); iter != player_manager_all_ai_players_id.end(); ++iter)
 	{
 		player_struct *player = iter->second;
@@ -287,6 +288,7 @@ void player_manager::on_tick_5()
 			&& m_ai_player_handle[player->ai_data->player_ai_index])
 			m_ai_player_handle[player->ai_data->player_ai_index](player);
 	}
+#endif	
 }
 
 void player_manager::on_tick_1()
@@ -368,6 +370,7 @@ player_struct * player_manager::create_doufachang_ai_player(DOUFACHANG_LOAD_PLAY
 	ret->data->status = ONLINE;
 	ret->down_horse();
 
+	ret->send_player_enter_to_aisrv();	
 
 	player_manager_all_ai_players_id[player_id] = ret;
 	return ret;
@@ -431,7 +434,9 @@ player_struct *player_manager::create_doufachang_ai_player(player_struct *player
 	
 		//登陆成功
 	ret->data->status = ONLINE;
-	ret->down_horse();	
+	ret->down_horse();
+
+	ret->send_player_enter_to_aisrv();
 
 	player_manager_all_ai_players_id[player_id] = ret;
 	return ret;

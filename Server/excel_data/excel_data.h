@@ -64,6 +64,7 @@ struct GodYaoAttributeTable;
 struct GradeTable;
 struct GrowupTable;
 struct ItemsConfigTable;
+struct LevelReward;
 struct LifeItemTable;
 struct LifeMagicTable;
 struct LifeProbabilitytable;
@@ -82,6 +83,7 @@ struct MonsterTable;
 struct MountsTable;
 struct NoticeTable;
 struct NpcTalkTable;
+struct OnlineTimes;
 struct ParameterTable;
 struct PartnerLevelTable;
 struct PartnerTable;
@@ -104,6 +106,8 @@ struct ServerLevelTable;
 struct ServerResTable;
 struct ShopListTable;
 struct ShopTable;
+struct SignDay;
+struct SignMonth;
 struct SkillEffectTable;
 struct SkillLvTable;
 struct SkillMoveTable;
@@ -122,6 +126,7 @@ struct TaskEventTable;
 struct TaskMonsterTable;
 struct TaskRewardTable;
 struct TaskTable;
+struct TimeReward;
 struct TitleFunctionTable;
 struct TradingTable;
 struct TransferPointTable;
@@ -156,6 +161,7 @@ struct AchievementHierarchyTable
 	uint64_t  RewardValue; //8
 	uint64_t  Title; //9
 	uint64_t  NoticeID; //10
+	uint64_t  ConditionTarget3; //55
 }__attribute__ ((packed));
 
 struct ActiveSkillTable
@@ -367,6 +373,7 @@ struct AttributeTypeTable
 {
 	uint64_t  ID; //1
 	double  FightRatio; //2
+	uint64_t  Total; //3
 }__attribute__ ((packed));
 
 struct AuctionTable
@@ -432,10 +439,11 @@ struct BaguaTable
 	uint64_t  StarLv; //6
 	uint64_t  Suit; //7
 	uint64_t  PrimaryAttributeType; //8
-	double  PrimaryAttributeLimit; //9
-	double  PrimaryAttributeCeiling; //10
-	uint32_t n_ViceAttributeType; //11
-	uint64_t *ViceAttributeType; //11
+	double  PrimaryAttribute; //9
+	uint32_t n_ViceAttributeDatabaseSelection1; //10
+	uint64_t *ViceAttributeDatabaseSelection1; //10
+	uint32_t n_ViceAttributeDatabaseSelection2; //11
+	uint64_t *ViceAttributeDatabaseSelection2; //11
 	uint32_t n_ViceAttributeEntry; //12
 	uint64_t *ViceAttributeEntry; //12
 	double  coefficient; //13
@@ -448,11 +456,21 @@ struct BaguaTable
 	uint32_t n_RecastNum; //17
 	uint64_t *RecastNum; //17
 	uint64_t  RecastCoin; //18
-	uint32_t n_ClearItem; //19
-	uint64_t *ClearItem; //19
-	uint32_t n_ClearNum; //20
-	uint64_t *ClearNum; //20
-	uint64_t  ClearCoin; //21
+	uint32_t n_ClearItem1; //19
+	uint64_t *ClearItem1; //19
+	uint32_t n_ClearNum1; //20
+	uint64_t *ClearNum1; //20
+	uint64_t  ClearCoin1; //21
+	uint32_t n_ClearItem2; //22
+	uint64_t *ClearItem2; //22
+	uint32_t n_ClearNum2; //23
+	uint64_t *ClearNum2; //23
+	uint64_t  ClearCoin2; //24
+	uint32_t n_AdditionalAttributeDatabaseSelection; //31
+	uint64_t *AdditionalAttributeDatabaseSelection; //31
+	uint32_t n_AdditionalAttributeEntry; //32
+	uint64_t *AdditionalAttributeEntry; //32
+	double  Additioncoefficient; //33
 }__attribute__ ((packed));
 
 struct BaguaViceAttributeTable
@@ -857,6 +875,10 @@ struct DungeonTable
 	uint64_t *FailValue; //31
 	uint32_t n_FailValue1; //32
 	uint64_t *FailValue1; //32
+	uint32_t n_ItemRewardSection; //33
+	uint64_t *ItemRewardSection; //33
+	uint64_t  ExpReward; //34
+	uint64_t  MoneyReward; //35
 }__attribute__ ((packed));
 
 struct EquipAttribute
@@ -868,6 +890,7 @@ struct EquipAttribute
 	double *Rand; //4
 	uint32_t n_QualityWeight; //5
 	uint64_t *QualityWeight; //5
+	double  FluctuationValue1; //6
 }__attribute__ ((packed));
 
 struct EquipLock
@@ -885,12 +908,6 @@ struct EquipLock
 	uint64_t *LockItemNum; //6
 	uint32_t n_MosaicType; //7
 	uint64_t *MosaicType; //7
-	uint32_t n_Enchant1Type; //8
-	uint64_t *Enchant1Type; //8
-	uint32_t n_Enchant2Type; //9
-	uint64_t *Enchant2Type; //9
-	uint32_t n_Enchant3Type; //10
-	uint64_t *Enchant3Type; //10
 	uint32_t n_EnchantQualityLock; //11
 	uint64_t *EnchantQualityLock; //11
 	uint32_t n_EnchantStarLock; //12
@@ -912,7 +929,8 @@ struct EquipStarLv
 	uint64_t  ConsumeCoin; //5
 	uint64_t  Quality; //7
 	uint64_t  StarLv; //8
-	uint64_t  DatabaseSelection; //9
+	uint32_t n_DatabaseSelection; //9
+	uint64_t *DatabaseSelection; //9
 }__attribute__ ((packed));
 
 struct EquipmentTable
@@ -1196,6 +1214,7 @@ struct GrowupTable
 	uint64_t  Reward; //9
 	uint32_t n_LevelRange; //10
 	uint64_t *LevelRange; //10
+	uint64_t  ConditionTarget3; //55
 }__attribute__ ((packed));
 
 struct ItemsConfigTable
@@ -1220,6 +1239,16 @@ struct ItemsConfigTable
 	uint64_t *ParameterEffect; //17
 	uint64_t  CostTime; //18
 	uint64_t  ItemCD; //19
+}__attribute__ ((packed));
+
+struct LevelReward
+{
+	uint64_t  ID; //1
+	uint64_t  Level; //2
+	uint32_t n_ItemID; //3
+	uint64_t *ItemID; //3
+	uint32_t n_ItemValue; //4
+	uint64_t *ItemValue; //4
 }__attribute__ ((packed));
 
 struct LifeItemTable
@@ -1388,20 +1417,18 @@ struct MoneyQuestTable
 	uint64_t *LevelSection; //2
 	uint32_t n_QuestGroup; //3
 	uint64_t *QuestGroup; //3
-	uint32_t n_RewardGroup; //4
-	uint64_t *RewardGroup; //4
+	uint64_t  RewardGroup; //4
 	uint32_t n_QualityGroup; //5
 	uint64_t *QualityGroup; //5
-	uint32_t n_RewardGroup1; //6
-	uint64_t *RewardGroup1; //6
-	uint32_t n_RewardGroup2; //7
-	uint64_t *RewardGroup2; //7
-	uint32_t n_RewardGroup3; //8
-	uint64_t *RewardGroup3; //8
-	uint32_t n_RewardGroup4; //9
-	uint64_t *RewardGroup4; //9
-	uint32_t n_RewardGroup5; //10
-	uint64_t *RewardGroup5; //10
+	uint64_t  RewardGroup1; //6
+	uint64_t  RewardGroup2; //7
+	uint64_t  RewardGroup3; //8
+	uint64_t  RewardGroup4; //9
+	uint64_t  RewardGroup5; //10
+	uint32_t n_ExpReward; //11
+	uint64_t *ExpReward; //11
+	uint32_t n_MoneyReward; //12
+	uint64_t *MoneyReward; //12
 }__attribute__ ((packed));
 
 struct MonsterIDTable
@@ -1505,6 +1532,12 @@ struct NpcTalkTable
 	uint32_t n_EventNum2; //5
 	uint64_t *EventNum2; //5
 	struct NpcTalkTable  *next; //6
+}__attribute__ ((packed));
+
+struct OnlineTimes
+{
+	uint64_t  ID; //1
+	uint64_t  Times; //2
 }__attribute__ ((packed));
 
 struct ParameterTable
@@ -1837,6 +1870,25 @@ struct ShopTable
 	uint64_t  RestrictionTime; //12
 }__attribute__ ((packed));
 
+struct SignDay
+{
+	uint64_t  ID; //1
+	uint64_t  Month; //2
+	uint64_t  Days; //3
+	uint64_t  ItemID; //4
+	uint64_t  ItemValue; //5
+	uint64_t  VipDouble; //6
+}__attribute__ ((packed));
+
+struct SignMonth
+{
+	uint64_t  ID; //1
+	uint64_t  Month; //2
+	uint64_t  Days; //3
+	uint64_t  ItemID; //4
+	uint64_t  ItemValue; //5
+}__attribute__ ((packed));
+
 struct SkillEffectTable
 {
 	uint64_t  ID; //1
@@ -2068,6 +2120,15 @@ struct TaskTable
 	uint32_t n_PostTask; //14
 	uint64_t *PostTask; //14
 	uint64_t  StartNPC; //15
+}__attribute__ ((packed));
+
+struct TimeReward
+{
+	uint64_t  ID; //1
+	uint64_t  Type; //2
+	uint64_t  ItemID; //3
+	uint64_t  ItemValue; //4
+	uint64_t  Probability; //5
 }__attribute__ ((packed));
 
 struct TitleFunctionTable

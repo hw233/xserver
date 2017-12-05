@@ -106,7 +106,7 @@ static void magui_raid_creat_zhengning_maogui(raid_struct *raid, monster_struct 
 		nty.n_param2 = 1;
 		raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
 	}
-	monster_manager::create_monster_at_pos(raid, shouling_id, raid->data->monster_level, pos_x, pos_z, 0, NULL, 0);
+	monster_manager::create_monster_at_pos(raid, shouling_id, raid->lv, pos_x, pos_z, 0, NULL, 0);
 
 	for(size_t j = 0; j < itr->second->n_Monster1 - 1; j++)
 	{
@@ -145,8 +145,10 @@ static void magui_raid_creat_zhengning_maogui(raid_struct *raid, monster_struct 
 			nty.n_param2 = 1;
 			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
 		}
-		monster_manager::create_monster_at_pos(raid, xiaoguai_id, raid->data->monster_level, pos_x, pos_z, 0, NULL, 0);
+		monster_manager::create_monster_at_pos(raid, xiaoguai_id, raid->lv, pos_x, pos_z, 0, NULL, 0);
 	}
+	//猫鬼王召唤小怪计数
+	raid->data->ai_data.maogui_data.zhaohuan_num++;
 
 }
 
@@ -251,6 +253,7 @@ static void maogui_raid_ai_monster_dead(raid_struct *raid, monster_struct *monst
 			case 1:
 				if((uint32_t)itr->second->Colour == raid->data->ai_data.maogui_data.diaoxiang_colour && raid->data->ai_data.maogui_data.diaoxiang_id != 0)
 				{
+					int delete_num = 0;
 					for(std::set<monster_struct *>::iterator ite =  raid->m_monster.begin(); ite != raid->m_monster.end();)
 					{
 						
@@ -267,8 +270,31 @@ static void maogui_raid_ai_monster_dead(raid_struct *raid, monster_struct *monst
 							m->broadcast_one_attr_changed(PLAYER_ATTR_HP, -1, false, true);
 							raid->delete_monster_from_scene(m, true);
 							monster_manager::delete_monster(m);
+							++delete_num;
 						}
 						ite = next_itr;
+					}
+						//击杀特殊颜色狰狞猫鬼让其他猫鬼瞬间死亡数量计算星级
+					struct DungeonTable *t_config = raid->get_raid_config();
+					if (t_config)
+					{
+						for (uint32_t i = 0; i < t_config->n_Score; ++i)
+						{
+							if (t_config->Score[i] != 5)
+								continue;
+							if (delete_num <= raid->data->star_param[i])
+								break;
+							raid->data->star_param[i] = delete_num;
+
+							if (raid->need_show_star())
+							{
+								uint32_t star_param[3];
+								uint32_t score_param[3];
+								raid->calc_raid_star(star_param, score_param);
+								raid->send_star_changed_notify(star_param, score_param);		
+							}
+							break;
+						}
 					}
 				}
 				break;
@@ -303,28 +329,28 @@ static void maogui_raid_ai_monster_dead(raid_struct *raid, monster_struct *monst
 static void maogui_raid_ai_player_ready(raid_struct* raid, player_struct *player)
 {
 	script_ai_common_player_ready(raid, player, &(raid->data->ai_data.maogui_data.script_data));
-	if(!player->m_team)
-	{
-		raid->data->monster_level = player->get_attr(PLAYER_ATTR_LEVEL);
-	}
-	else 
-	{
-		uint32_t all_level = 0;
-		uint32_t num = 0;
-		for (int pos = 0; pos < player->m_team->m_data->m_memSize; ++pos)
-		{
-			player_struct *t_player = player_manager::get_player_by_id(player->m_team->m_data->m_mem[pos].id);
-			if(t_player)
-			{
-				all_level += t_player->get_attr(PLAYER_ATTR_LEVEL);
-				num++;
-			}
-		}
-		if(num != 0)
-		{
-			raid->data->monster_level = all_level/num;
-		}
-	}
+	// if(!player->m_team)
+	// {
+	// 	raid->data->monster_level = player->get_attr(PLAYER_ATTR_LEVEL);
+	// }
+	// else 
+	// {
+	// 	uint32_t all_level = 0;
+	// 	uint32_t num = 0;
+	// 	for (int pos = 0; pos < player->m_team->m_data->m_memSize; ++pos)
+	// 	{
+	// 		player_struct *t_player = player_manager::get_player_by_id(player->m_team->m_data->m_mem[pos].id);
+	// 		if(t_player)
+	// 		{
+	// 			all_level += t_player->get_attr(PLAYER_ATTR_LEVEL);
+	// 			num++;
+	// 		}
+	// 	}
+	// 	if(num != 0)
+	// 	{
+	// 		raid->data->monster_level = all_level/num;
+	// 	}
+	// }
 
 }
 

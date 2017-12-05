@@ -52,7 +52,7 @@ static void ai_tick_27(monster_struct *monster)
 		raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
 	}
 
-	monster_struct *t_monster = monster_manager::create_monster_at_pos(monster->scene, monster->ai_data.type27_ai.ai_27_config->MonsterID, raid->data->monster_level, pos->pos_x, pos->pos_z, 0, NULL, 0);
+	monster_struct *t_monster = monster_manager::create_monster_at_pos(monster->scene, monster->ai_data.type27_ai.ai_27_config->MonsterID, raid->lv, pos->pos_x, pos->pos_z, 0, NULL, 0);
 	assert(monster->ai_data.type27_ai.ai_27_config->n_MovePointX > 0 && monster->ai_data.type27_ai.ai_27_config->n_MovePointZ > 0 && monster->ai_data.type27_ai.ai_27_config->n_MovePointX == monster->ai_data.type27_ai.ai_27_config->n_MovePointZ);
 	
 	if(t_monster)

@@ -816,7 +816,7 @@ static void pvp_raid_player_kill(raid_struct *raid, int target_index, player_str
 	assert(tmp);
 
 	raid->PVP_DATA.kill_record[t]++;
-	player->add_achievement_progress(ACType_PVP_KILL, PVP_3_RAID, raid->PVP_DATA.kill_record[t], 1);
+	player->add_achievement_progress(ACType_PVP_KILL, PVP_3_RAID, raid->PVP_DATA.kill_record[t], 0, 1);
 
 	PvpKillNotify nty;
 	pvp_kill_notify__init(&nty);

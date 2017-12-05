@@ -19,40 +19,6 @@ struct raid_player_info
 	uint32_t dead_count;
 };
 
-/* "0=普通副本 */
-/* 3=随机主副本 */
-/* 4=随机小关卡 */
-/* 5=3V3 PVP副本 */
-/* 6=5V5 PVP副本 */
-/* 7=妖师客栈 */
-/* 8=走AI流程副本 */
-/* 9=战场副本 */
-/* 10=公会准备区副本 */
-/* 11=预赛 */
-/* 12=决赛" */
-/* 15=普通阵营战 */
-/* 16=新手阵营战 */
-/* 17=帮会领地副本活动 */
-/* 18=猫鬼乐园副本*/
-enum DUNGEON_TYPE_DEFINE
-{
-	DUNGEON_TYPE_NORMAL = 0,
-	DUNGEON_TYPE_RAND_MASTER = 3,
-	DUNGEON_TYPE_RAND_SLAVE = 4,
-	DUNGEON_TYPE_PVP_3 = 5,
-	DUNGEON_TYPE_PVP_5 = 6,
-	DUNGEON_TYPE_YAOSHI = 7,
-	DUNGEON_TYPE_SCRIPT = 8,
-	DUNGEON_TYPE_ZHENYING = 9,
-	DUNGEON_TYPE_GUILD_WAIT = 10,
-	DUNGEON_TYPE_GUILD_RAID = 11,
-	DUNGEON_TYPE_GUILD_FINAL_RAID = 12,	
-	DUNGEON_TYPE_BATTLE = 15,
-	DUNGEON_TYPE_BATTLE_NEW = 16,
-	DUNGEON_TYPE_GUILD_LAND = 17,
-	DUNGEON_TYPE_MAOGUI_LEYUAN = 18,
-};
-
 enum RAID_STATE_DEFINE
 {
 	RAID_STATE_START,  //副本开始
@@ -229,6 +195,7 @@ union raid_ai_data
 		uint32_t creat_time; //鬼王被攻击多少秒后召唤小怪
 		uint64_t creat_monster_time; //鬼王召唤小怪时间点
 		bool first_creat; //鬼王是否是第一次召唤小怪
+		uint32_t zhaohuan_num; //鬼王召唤小怪次数
 	}maogui_data;
 };
 
@@ -256,7 +223,7 @@ struct guild_ruqin_data{
 	uint64_t huodui_time; //火堆持续的时间点
 	uint32_t exp;     //一次加多少经验
 	GUILD_RUQIN_ACTIVE status; //帮会入侵活动状态
-	std::map<uint64_t, guild_ruqin_player_data> palyer_data;
+	std::map<uint64_t, guild_ruqin_player_data> player_data;
 };
 
 struct raid_data
@@ -290,7 +257,7 @@ struct raid_data
 	int ai_type;
 	uint64_t raid_ai_event; //有些副本ai事件需要客户端执行完毕后通知后台继续副本ai，次参数用来记录客户端发回的副本事件id
 	union raid_ai_data ai_data;
-	uint32_t monster_level; //刷怪等级
+//	uint32_t monster_level; //刷怪等级
 };
 
 class raid_struct;
@@ -431,10 +398,12 @@ public:
 	std::set<monster_struct *> m_monster;
 	int mark_finished;   //副本是否结束了, 0表示没结束，1表示失败了，其他表示通过结束了
 	guild_ruqin_data ruqin_data;	//帮会入侵活动数据
+	uint32_t lv;  //副本等级
 	
 protected:
 	uint16_t player_num;  //记录玩家数目，没有玩家了才可以删除
 	void delete_raid_collect_safe(uint32_t uuid);
+	void set_raid_lv(player_struct *player);	
 	int init_script_data();
 	int	init_wanyaogu_data();
 	int	init_pvp_raid_data_3();

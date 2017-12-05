@@ -10,7 +10,7 @@ int scene_manager::add_scene(uint64_t id)
 		LOG_ERR("%s %d: failed\n", __FUNCTION__, __LINE__);
 		return (-1);
 	}
-	p->init_scene_struct(id, true);
+	p->init_scene_struct(id, true, 0);
 	
 //	p->id = id;
 //	p->map_config = g_config_data.mapSetData.getDataById(id);

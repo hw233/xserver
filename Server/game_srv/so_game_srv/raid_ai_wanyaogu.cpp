@@ -169,26 +169,35 @@ static void send_raid_reward(raid_struct *raid, int star)
 
 	reward_wanyaoka(raid);
 
-	if (get_drop_item(raid->m_config->Rewards[star - 1], item_list) == 0)
+	uint32_t drop_id = get_drop_by_lv(raid->lv, star, raid->m_config->n_Rewards, raid->m_config->Rewards,
+		raid->m_config->n_ItemRewardSection, raid->m_config->ItemRewardSection);
+
+	if (get_drop_item(drop_id, item_list) == 0)
 	{
 		for (std::map<uint32_t, uint32_t>::iterator ite = item_list.begin(); ite != item_list.end() && n_item < MAX_ITEM_REWARD_PER_RAID; ++ite)
 		{
-			int type = get_item_type(ite->first);
-			switch (type)
-			{
-				case ITEM_TYPE_COIN:
-					gold += ite->second;
-					break;
-				case ITEM_TYPE_EXP:
-					exp += ite->second;
-					break;
-				default:
-					item_id[n_item] = ite->first;
-					item_num[n_item] = ite->second;
-					++n_item;
-			}
+			// int type = get_item_type(ite->first);
+			// switch (type)
+			// {
+			// 	case ITEM_TYPE_COIN:
+			// 		gold += ite->second;
+			// 		break;
+			// 	case ITEM_TYPE_EXP:
+			// 		exp += ite->second;
+			// 		break;
+			// 	default:
+			// 		item_id[n_item] = ite->first;
+			// 		item_num[n_item] = ite->second;
+			// 		++n_item;
+			// }
+			item_id[n_item] = ite->first;
+			item_num[n_item] = ite->second;
+			++n_item;
 		}
 	}
+	gold = raid->m_config->MoneyReward;
+	exp = raid->m_config->ExpReward;
+	
 	notify.item_id = &item_id[0];
 	notify.item_num = &item_num[0];
 
@@ -208,6 +217,9 @@ static void send_raid_reward(raid_struct *raid, int star)
 			notify.gold = gold;
 			notify.exp = exp;
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RAID_FINISHED_NOTIFY, raid_finish_notify__pack, notify);
+
+			raid->m_player[i]->add_exp(exp, MAGIC_TYPE_RAID);
+			raid->m_player[i]->add_coin(gold, MAGIC_TYPE_RAID);
 			raid->m_player[i]->add_item_list_otherwise_send_mail(item_list, MAGIC_TYPE_RAID, 270200002, NULL, true);
 			raid->m_player[i]->add_raid_reward_count(raid->data->ID);
 			raid->m_player[i]->check_activity_progress(AM_RAID, raid->data->ID);
@@ -223,7 +235,7 @@ static void send_raid_reward(raid_struct *raid, int star)
 
 		raid->m_player[i]->add_task_progress(TCT_WANYAOGU, raid->data->ID, 1);
 		server_level_listen_raid_finish(raid->data->ID, raid->m_player[i]);
-		raid->m_player[i]->add_achievement_progress(ACType_RAID_PASS_STAR, raid->data->ID, star, 1);
+		raid->m_player[i]->add_achievement_progress(ACType_RAID_PASS_STAR, raid->data->ID, star, 0, 1);
 	}
 }
 
@@ -346,7 +358,7 @@ static void wanyaogu_raid_ai_tick(raid_struct *raid)
 						raid->init_common_script_data(raid->WANYAOGU_DATA.m_config->DungeonPass, &raid->WANYAOGU_DATA.script_data);
 //						raid->WANYAOGU_DATA.m_control_config = get_config_by_id(raid->WANYAOGU_DATA.m_config->ActivityControl, &all_control_config);
 //						assert(raid->WANYAOGU_DATA.m_control_config);
-						raid->init_scene_struct(raid->m_id, false);	
+						raid->init_scene_struct(raid->m_id, false, raid->lv);	
 						raid->stop_monster_ai();
 
 						for (int j = 0; j < MAX_TEAM_MEM; ++j)

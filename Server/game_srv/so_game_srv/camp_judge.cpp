@@ -1,6 +1,6 @@
 #include "camp_judge.h"
-#include "so_game_srv/player_manager.h"
-#include "so_game_srv/partner.h"
+#include "player_manager.h"
+#include "partner.h"
 #include "monster.h"
 #include "player.h"
 

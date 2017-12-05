@@ -1,3 +1,4 @@
+#include "game_srv.h"
 #include "conn_node_gamesrv.h"
 #include "conn_node_dbsrv.h"
 //#include "player_manager.h"
@@ -153,8 +154,6 @@ void conn_node_gamesrv::broadcast_msg_to_players(uint32_t msg_id, uint8_t *data,
 }
 #endif
 
-typedef int (*game_recv_func)(evutil_socket_t fd, conn_node_gamesrv *node);
-extern game_recv_func g_game_recv_func;
 int conn_node_gamesrv::recv_func(evutil_socket_t fd)
 {
 	if (g_game_recv_func)

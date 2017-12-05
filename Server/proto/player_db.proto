@@ -40,17 +40,10 @@ message ItemBuff
 	required uint64 buff_state = 3;
 }
 
-message DBEquipEnchantAttr
-{
-	required uint32 pool = 1;
-	required uint32 id = 2;
-	required double val = 3;
-}
-
 message DBEquipEnchant
 {
-	required DBEquipEnchantAttr cur_attr = 1; //当前属性
-	repeated DBEquipEnchantAttr rand_attr = 2; //随机出来的属性
+	required DBCommonRandAttr cur_attr = 1; //当前属性
+	repeated DBCommonRandAttr rand_attr = 2; //随机出来的属性
 }
 
 message DBEquip
@@ -142,10 +135,9 @@ message DBBaguapaiCard
 {
 	required uint32 id = 1;
 	required uint32 star = 2;
-	required double main_attr_val = 3;
-	required double main_attr_val_new = 4;
-	repeated DBAttr minor_attrs = 5;
-	repeated DBAttr minor_attrs_new = 6;
+	repeated DBCommonRandAttr minor_attrs = 5;
+	repeated DBCommonRandAttr minor_attrs_new = 6;
+	repeated DBCommonRandAttr additional_attrs = 7;
 }
 
 message DBBaguapaiDress
@@ -176,16 +168,17 @@ message ChengjieTypeDb
 	required uint32 task = 5;
 	required bool first_hit = 6;
 }
-message ShangjinTaskAwardDb
-{
-	required uint32 id = 1;
-	required uint32 num = 2; //
-}
+// message ShangjinTaskAwardDb
+// {
+// 	required uint32 id = 1;
+// 	required uint32 num = 2; //
+// }
 message ShangjinTaskTypeDb
 {
 	required uint32 id = 1;
 	required uint32 quality = 2; //
-	repeated ShangjinTaskAwardDb award = 3; //
+//	repeated ShangjinTaskAwardDb award = 3; //
+	required uint32 drop_id = 3;
 	required uint32 reduce = 4; //
 	required uint32 coin = 5; //
 	required uint32 exp = 6; //
@@ -344,6 +337,7 @@ message DBZhenying
 	required uint32 help = 16;
 	required uint32 score = 17;
 	required bool one_award = 18; //首胜
+	required uint64 fb_cd = 19;
 }
 
 message DBAchievement
@@ -476,6 +470,10 @@ message PlayerDBInfo
 	required uint32 travel_round_num = 94;  //游历当前轮数
 	required uint32 travel_round_count_out = 95;  //游历当前轮数是否算在今天轮数里
 	required uint32 travel_task_num = 96;  //游历当前环数
+	repeated DBPlayerLevelRewardInfo player_level_reward_all_info = 97; //玩家等级奖励所有信息
+	required DBPlayerOnlineRewardInfo player_online_reward_info = 98; //玩家在线奖励信息
+	optional DBPlayerSignInEveryDayInfo player_sign_in_info = 99;    //玩家签到信息
+	
 }
 
 message DBAutoAddHp
@@ -531,3 +529,33 @@ message DBHreoChallengeItemInfo
 	required uint32 item_num = 2;	//物品数量
 }
 
+message DBPlayerLevelRewardInfo
+{
+	required uint32 id = 1;    //等级奖励表id
+	required bool receive = 2; //奖励是否领取
+}
+
+message DBPlayerOnlineRewardInfo
+{
+	required uint32 befor_online_time = 1;   //今日在线总时长
+	required uint32 use_reward_num = 2;      //今日已领奖次数
+	required uint32 reward_num = 3;          //今日达到领奖要求的剩余未领奖次数
+	repeated uint32 reward_table_id = 4;     //已经领取的奖励表id
+}
+
+message DBPlayerSignInEveryDayInfo
+{
+	required bool today_sign = 1;       //记录今日是否已经签到
+	required uint32 cur_month = 2;      //当前月份
+	required uint32 month_sum = 3;      //本月累计签到次数
+	required uint32 yilou_num = 4;      //本月遗漏次数
+	required uint32 buqian_sum = 5;     //本月累计可补签次数
+	required uint32 activity_sum = 6;   //本月通过活跃度获取的次数
+	repeated DBPlayerSignInLeiJiReward leiji_reward = 7;  //本月累计奖励信息
+}
+
+message DBPlayerSignInLeiJiReward
+{
+	required uint32 id = 1;              //奖励表id
+	required uint32 status = 2;			 //奖励状态
+}

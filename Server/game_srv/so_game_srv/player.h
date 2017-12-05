@@ -115,17 +115,10 @@ struct SingInfo
 //	uint32_t pos_z;
 //};
 
-struct EquipEnchantAttrInfo
-{
-	uint32_t pool;
-	uint32_t id;
-	double val;
-};
-
 struct EquipEnchantInfo
 {
-	EquipEnchantAttrInfo cur_attr;
-	EquipEnchantAttrInfo rand_attr[MAX_EQUIP_ENCHANT_RAND_NUM];
+	CommonRandAttrInfo cur_attr;
+	CommonRandAttrInfo rand_attr[MAX_EQUIP_ENCHANT_RAND_NUM];
 };
 
 struct EquipInfo
@@ -251,10 +244,9 @@ struct BaguapaiCardInfo
 {
 	uint32_t id; //八卦牌ID
 	uint32_t star;
-	double main_attr_val;
-	double main_attr_val_new;
-	AttrInfo minor_attrs[MAX_BAGUAPAI_MINOR_ATTR_NUM];
-	AttrInfo minor_attrs_new[MAX_BAGUAPAI_MINOR_ATTR_NUM];
+	CommonRandAttrInfo minor_attrs[MAX_BAGUAPAI_MINOR_ATTR_NUM]; //副属性
+	CommonRandAttrInfo minor_attrs_new[MAX_BAGUAPAI_MINOR_ATTR_NUM]; //新的副属性
+	CommonRandAttrInfo additional_attrs[MAX_BAGUAPAI_ADDITIONAL_ATTR_NUM]; //追加属性
 };
 
 struct BaguapaiDressInfo
@@ -292,8 +284,9 @@ struct ShangJinTask
 {
 	uint32_t id;
 	uint32_t quality;
-	AttrInfo award[MAX_SHANGJIN_AWARD_NUM];
-	uint32_t n_award;
+//	AttrInfo award[MAX_SHANGJIN_AWARD_NUM];
+//	uint32_t n_award;
+	uint32_t drop_id;
 	uint32_t reduce;
 	uint32_t coin;
 	uint32_t exp;
@@ -336,6 +329,7 @@ struct ZhenYing
 	uint64_t score_time; //护送矿车给积分的时间
 	uint32_t protect_num; //护矿次数
 	uint32_t award_num; //阵营对战收益次数
+	uint64_t fb_cd;
 	int one_award;
 };
 
@@ -524,6 +518,44 @@ struct StrongChapterInfo
 	uint32_t id; //章节ID
 	uint32_t progress;
 	uint32_t state;
+};
+
+//等级礼包
+struct PlayerLevelReward
+{
+	uint32_t id;   //等级奖励表索引id
+	bool receive;  //是否领取奖励
+};
+
+//在线奖励信息
+struct PlayerOnlineReward
+{
+	uint64_t sign_time; //登录时间
+	uint32_t befor_online_time; //当天本次登录前的总在线时间(不计算本次登录到目前的时间)
+	uint32_t use_reward_num; //今日已经领奖次数
+	//uint32_t reward_num; //当天本次登录前的达到要求未领取的剩余领奖次数
+	uint32_t reward_table_id[MAX_PLAYER_ONLINE_REWARD_NUM]; //已经领取的奖励表id
+	uint32_t reward_id;    //奖励表id(奖励在转完盘后给，所以先记录)
+};
+
+//每日签到累计额奖励
+struct SignInEveryDayCumulative
+{
+	uint32_t id;  //累计奖励表id
+	uint32_t state; //领取状态 0:不可领 1:可领 2:已领
+};
+//每日签到数据
+struct SignInEveryDayData
+{
+	bool today_sign; //今日是否签到
+	uint32_t cur_month; //当前的月份
+	uint32_t month_sum; //本月累计已经签到次数
+	uint32_t yilou_sum; //本月遗漏次数
+	uint32_t buqian_sum; //本月累计可补签次数;
+	uint32_t activity_sum;  //本月通过活跃度所累积的补签次数
+
+	//累计奖励
+	SignInEveryDayCumulative grand_reward[MAX_PLAYER_SINGN_EVERYDAY_REWARD_NUM]; //累计奖励领取状态
 };
 
 enum
@@ -732,6 +764,15 @@ struct player_data
 	uint32_t travel_round_num; //游历当前轮数
 	uint32_t travel_round_count_out; //游历当前轮数是否算在今天轮数里，0：算在内，非0：不算
 	uint32_t travel_task_num; //游历当前环数
+
+	//等级礼包
+	PlayerLevelReward my_level_reward[MAX_PLAYER_LEVEL_REWARD_NUM];
+
+	//在线奖励
+	PlayerOnlineReward online_reward;
+	
+	//每日签到奖励
+	SignInEveryDayData sigin_in_data;
 };
 
 struct ai_player_data
@@ -795,6 +836,8 @@ public:
 	bool is_on_horse(void);
 	bool is_on_truck(void);
 
+	void on_player_enter_scene(double direct);
+
 	void refresh_player_redis_info(bool offline = false);
 	void send_raid_earning_time_notify();
 	void send_buff_info();
@@ -836,6 +879,9 @@ public:
 
 	JobDefine get_job();
 	uint32_t get_level();
+
+	virtual uint32_t count_life_steal_effect(int32_t damage);
+	virtual uint32_t count_damage_return(int32_t damage, unit_struct *unit);
 
 	int transfer_to_new_scene_by_config(uint32_t transfer_id, EXTERN_DATA *extern_data);	
 //	int transfer_to_new_scene(uint32_t scene_id, EXTERN_DATA *extern_data);
@@ -1055,6 +1101,14 @@ public:
 	void noitfy_item_flow_to_bag(std::map<uint32_t, uint32_t> &item_list);
 	void notify_one_item_flow_to_bag(uint32_t id, uint32_t num);
 
+		//ai服务器消息发送
+	void send_player_enter_to_aisrv();
+	void send_player_leave_to_aisrv();
+	void send_player_attr_to_aisrv();
+	void send_player_move_to_aisrv();
+	void send_player_move_start_to_aisrv();
+	void send_player_move_stop_to_aisrv();				
+
 	//掉落
 	bool give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty = true, uint32_t mail_id = 0, std::vector<char *> *mail_args = NULL); //发放掉落奖励
 
@@ -1179,6 +1233,7 @@ public:
 	bool go_down_cash_truck();
 	void down_horse();
 	uint32_t get_horse_num();
+	void init_horse();
 
 	//装备
 	EquipInfo *get_equip(uint32_t type);
@@ -1222,8 +1277,8 @@ public:
 	//八卦牌
 	BaguapaiDressInfo *get_baguapai_dress(uint32_t style_id);
 	BaguapaiCardInfo *get_baguapai_card(uint32_t style_id, uint32_t part_id);
-	int generate_baguapai_main_attr(uint32_t card_id, double &attr_val);
-	int generate_baguapai_minor_attr(uint32_t card_id, AttrInfo *attrs);
+	int generate_baguapai_minor_attr(uint32_t card_id, CommonRandAttrInfo *attrs, uint32_t type);
+	int generate_baguapai_additional_attr(uint32_t card_id, CommonRandAttrInfo *attrs);
 	int get_bagua_suit_id(BaguapaiDressInfo *info);
 	int get_bagua_min_star(BaguapaiDressInfo *info);
 
@@ -1313,14 +1368,14 @@ public:
 	uint32_t get_friend_num(void);
 	uint32_t get_friend_close_num(uint32_t close_lv);
 
-	uint32_t get_rank_ranking(uint32_t rank_type);
+	bool get_rank_ranking(uint32_t rank_type, uint32_t rank_lv, uint32_t rank_score);
 
 	//成就
 	void load_achievement_end(void);
-	void init_achievement_progress_internal(uint32_t &progress, uint32_t type, uint32_t config_target1, uint32_t config_target2);
+	void init_achievement_progress_internal(uint32_t &progress, uint32_t type, uint32_t config_target1, uint32_t config_target2, uint32_t config_target3);
 	void init_achievement_progress(AchievementInfo *info);
-	void add_achievement_progress_internal(uint32_t &progress, uint32_t type, uint32_t config_target1, uint32_t config_target2, uint32_t target1, uint32_t target2, uint32_t num);
-	void add_achievement_progress(uint32_t type, uint32_t target1, uint32_t target2, uint32_t num);
+	void add_achievement_progress_internal(uint32_t &progress, uint32_t type, uint32_t config_target1, uint32_t config_target2, uint32_t config_target3, uint32_t target1, uint32_t target2, uint32_t target3, uint32_t num);
+	void add_achievement_progress(uint32_t type, uint32_t target1, uint32_t target2, uint32_t target3, uint32_t num);
 	AchievementInfo *get_achievement_info(uint32_t id);
 	void achievement_update_notify(AchievementInfo *info);
 
@@ -1341,13 +1396,32 @@ public:
 	//我要变强
 	void load_strong_end(void);
 	void init_strong_goal_progress(StrongGoalInfo *info);
-	void add_strong_goal_progress(uint32_t type, uint32_t target1, uint32_t target2, uint32_t num);
+	void add_strong_goal_progress(uint32_t type, uint32_t target1, uint32_t target2, uint32_t target3, uint32_t num);
 	void strong_goal_update_notify(StrongGoalInfo *info);
 	StrongGoalInfo *get_strong_goal_info(uint32_t goal_id);
 	void add_strong_chapter_progress(uint32_t chapter_id);
 	void strong_chapter_update_notify(StrongChapterInfo *info);
 	StrongChapterInfo *get_strong_chapter_info(uint32_t chapter_id);
 	void check_strong_chapter_open(uint32_t old_lv, uint32_t new_lv);
+
+	//等级奖励
+	int init_player_level_reward_data();
+	int player_level_reward_info_notify();
+
+	//在线奖励
+	int init_online_reward_data();
+	int player_online_reward_info_notify();
+	int refresh_player_online_reward_info();
+
+	//每日签到奖励
+	int player_signin_reward_info_notify();
+	int init_player_signin_leiji_reward_data();
+	//每日更新签到奖励信息
+	int refresh_player_signin_info_every_day();
+	//每月更新签到奖励信息
+	int refresh_player_signin_info_every_month();
+	//活跃度达到要求加补签次数
+	int player_huo_yue_du_add_sign_in_num(uint32_t befor_huoyue, uint32_t now_huoyue);
 
 	uint64_t last_change_area_time;
 	sight_space_struct *sight_space;

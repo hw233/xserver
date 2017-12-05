@@ -80,7 +80,7 @@ local SkillEffectTable = {
 		['ID'] = 115000012,
 		['Type'] = 170000000,
 		['Effect'] = {3},
-		['EffectAdd'] = {3000},
+		['EffectAdd'] = {3500},
 		['EffectNum'] = {0}
 		},
 	[115000013] = {
@@ -753,7 +753,7 @@ local SkillEffectTable = {
 		['Type'] = 170000001,
 		['Effect'] = {3},
 		['EffectAdd'] = {-10},
-		['EffectNum'] = {-100}
+		['EffectNum'] = {-50}
 		},
 	[115000432] = {
 		['ID'] = 115000432,

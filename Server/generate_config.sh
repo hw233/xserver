@@ -78,9 +78,6 @@ port=`expr ${port} + 1`
 echo "//游戏服务器web端口"
 echo "game_srv_web_port=${port}"
 port=`expr ${port} + 1`
-echo "//raid服务器web端口"
-echo "raid_srv_web_port=${port}"
-port=`expr ${port} + 1`
 echo "//调试服务器连接端口"
 echo "conn_srv_dump_port=${port}"
 port=`expr ${port} + 1`
@@ -90,11 +87,22 @@ port=`expr ${port} + 1`
 echo "//交易服务器连接端口"
 echo "conn_srv_trade_port=${port}"
 port=`expr ${port} + 1`
-echo "//副本服务器连接端口"
-echo "conn_srv_raid_port=${port}"
+#echo "//raid服务器web端口"
+#echo "raid_srv_web_port=${port}"
+#port=`expr ${port} + 1`
+#echo "//副本服务器连接端口"
+#echo "conn_srv_raid_port=${port}"
+#port=`expr ${port} + 1`
+echo "//ai服务器web端口"
+echo "ai_srv_web_port=${port}"
+port=`expr ${port} + 1`
+echo "//ai服务器监听端口"
+echo "ai_srv_port=${port}"
 port=`expr ${port} + 1`
 
+
 echo "game_srv_tick_time = 50"
+echo "ai_srv_tick_time = 50"
 
 echo "/// 共享内存"
 echo -n "game_srv_player_key=0x"

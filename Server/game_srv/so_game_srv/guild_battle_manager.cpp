@@ -1944,7 +1944,7 @@ void insert_guild_battle_fight_reward_map(std::map<uint32_t, GuildBattleFightGui
 	if (guild_battle_manager_participate_players.find(player_reward.player_id) == guild_battle_manager_participate_players.end())
 	{
 		guild_battle_manager_participate_players.insert(player_reward.player_id);
-		player->add_achievement_progress(ACType_GUILD_BATTLE, 0, 0, 1);
+		player->add_achievement_progress(ACType_GUILD_BATTLE, 0, 0, 0, 1);
 	}
 }
 

@@ -2,6 +2,7 @@
 #define UNIT_H
 
 #include <list>
+#include <vector>
 #include <stdbool.h>
 #include <stdint.h>
 #include "sortarray.h"
@@ -27,6 +28,9 @@ class buff_struct;
 class Team;
 class unit_struct;
 class raid_struct;
+class player_struct;
+class partner_struct;
+class cash_truck_struct;
 
 class unit_struct
 {
@@ -145,8 +149,8 @@ public:
 	int update_unit_position();
 	PosData **pack_unit_move_path(size_t *n_data);
 
-	uint32_t count_life_steal_effect(int32_t damage);
-	uint32_t count_damage_return(int32_t damage, unit_struct *unit);
+	virtual uint32_t count_life_steal_effect(int32_t damage);
+	virtual uint32_t count_damage_return(int32_t damage, unit_struct *unit);
 	
 	static void init_pos_pool();
 	static void reset_pos_pool();

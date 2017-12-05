@@ -1903,7 +1903,7 @@ void monster_struct::monster_suffer_damage(unit_struct *murderer, double befor_h
 
 	   snprintf(buff, 510, table->NoticeTxt, scen_config->SceneName,p->second->Name,player->get_name());
 	   conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_HORSE_NOTIFY, &send, (pack_func)chat_horse__pack);
-	   player->add_achievement_progress(ACType_WORLD_BOSS, data->monster_id, 0, 1);
+	   player->add_achievement_progress(ACType_WORLD_BOSS, data->monster_id, 0, 0, 1);
    }	   
 }
 

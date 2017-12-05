@@ -648,6 +648,21 @@ local AchievementFunctionTable = {
 		['ID'] = 490200130,
 		['FunctionID'] = 5,
 		['HierarchyID'] = 130
+		},
+	[490200131] = {
+		['ID'] = 490200131,
+		['FunctionID'] = 6,
+		['HierarchyID'] = 131
+		},
+	[490200132] = {
+		['ID'] = 490200132,
+		['FunctionID'] = 2,
+		['HierarchyID'] = 132
+		},
+	[490200133] = {
+		['ID'] = 490200133,
+		['FunctionID'] = 2,
+		['HierarchyID'] = 133
 		}
 	}
 return AchievementFunctionTable

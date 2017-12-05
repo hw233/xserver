@@ -91454,6 +91454,27 @@ local SkillLvTable = {
 		['EffectAdd'] = {0},
 		['EffectNum'] = {0}
 		},
+	[113240026] = {
+		['ID'] = 113240026,
+		['CD'] = 0,
+		['EffectIdEnemy'] = {115000012},
+		['EffectIdFriend'] = {0},
+		['BuffIdEnemy'] = {0},
+		['BuffIdFriend'] = {0},
+		['CallId'] = 112720026,
+		['MonsterID'] = 0,
+		['MonsterLv'] = 0,
+		['MonsterEff'] = 0,
+		['CostCoin'] = 0,
+		['CostItem'] = 0,
+		['CostNum'] = 0,
+		['IsRune'] = 0,
+		['NeedLv'] = 0,
+		['NeedFight'] = 0,
+		['Effect'] = {0},
+		['EffectAdd'] = {0},
+		['EffectNum'] = {0}
+		},
 	[113240034] = {
 		['ID'] = 113240034,
 		['CD'] = 0,

@@ -10,12 +10,19 @@ struct AttrInfo
 	double val;
 };
 
+struct CommonRandAttrInfo
+{
+	uint32_t pool;
+	uint32_t id;
+	double val;
+};
+
 union EspecialItemInfo
 {
 	struct{
 		uint32_t star;
-		double main_attr_val;
-		AttrInfo minor_attrs[MAX_BAGUAPAI_MINOR_ATTR_NUM];
+		CommonRandAttrInfo minor_attrs[MAX_BAGUAPAI_MINOR_ATTR_NUM]; //副属性
+		CommonRandAttrInfo additional_attrs[MAX_BAGUAPAI_ADDITIONAL_ATTR_NUM]; //追加属性
 	}baguapai;
 
 	struct{

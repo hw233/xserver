@@ -1,0 +1,70 @@
+syntax = "proto2";
+
+//等级奖励具体信息
+message PlayerLevelRewardInfo
+{
+	required uint32 id = 1; //等级奖励表索引id
+	required bool receive = 2; //奖励是否已领取 false:奖励未领取 true:奖励已经领取
+}
+//玩家等级奖励信息通知
+message PlayerLevelRewardNotify 
+{
+	repeated  PlayerLevelRewardInfo info = 1; //奖励信息
+}
+
+//玩家请求领取等级奖励
+message PlayerReceiveLevelRewardRequest
+{
+	required uint32 id = 1; //等级表索引id
+}
+
+//玩家在线奖励信息通知
+message PlayerOnlineRewardInfoNotify
+{
+	required uint32 can_use_num = 1; //当前已经达到时间条件的剩余可领奖次数
+	required uint32 shengyu_time = 2; // >0:表示离下次领奖剩余时间 0:表示今日在线时长已超过可领奖的总在线时长
+	repeated uint32 reward_table_id = 3; //已经被领取的奖励表id
+	required uint64 sigin_time = 4;    //本次登陆时间
+}
+
+//玩家在线奖励转盘回复
+message PlayerOnlineRewardZhuanAnswer
+{
+	required uint32 result = 1; //结果 0:表示成功，下面的reward_id可用   非0:表示失败(190300007:包裹空位不足)
+	required uint32 reward_id = 2; //TimeReward表id
+}
+
+
+//玩家请求每日签到信息回复
+message PlayerSignInEveryDayInfo
+{
+	required bool today = 1; //今日是否签到 true:今日已签  false:今日未签
+	required uint32 month_sum = 2; //本月累计签到次数
+	required uint32 yilou_num = 3;  //本月遗漏次数
+	required uint32 buqian_num = 4; //本月累计可用补签次数
+	repeated PlayerLeiJiSignInRewardInfo leiji_reward = 5; //签到累计奖励信息
+}
+
+//玩家签到累计奖励信息
+message PlayerLeiJiSignInRewardInfo
+{
+	required uint32 id = 1; //累计奖励信息表id
+	required uint32 state = 2; //奖励领取状态 0:奖励不可领 1:奖励可领 2:奖励已领
+}
+
+message PlayerReceiveSignInRewardAnswer
+{
+	required uint32 result = 1; //领取结果 0:成功 否则失败
+	required PlayerSignInEveryDayInfo info = 2; //领取奖励后更新信息
+}
+
+message PlayerSignInReceiveLeijiRewardRequest
+{
+	required uint32 id = 1; //累计奖励表id
+}
+
+message PlayerSignInReceiveLeijiRewardAnswer
+{
+	required uint32 result = 1; //领取结果 0:成功 否则失败
+	repeated PlayerLeiJiSignInRewardInfo leiji_reward = 2; //签到累计奖励信息
+}

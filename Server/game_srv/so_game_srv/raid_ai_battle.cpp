@@ -83,6 +83,11 @@ static void battle_raid_ai_player_leave(raid_struct *raid, player_struct *player
 {
 	LOG_INFO("%s: player[%lu] del from %lu", __FUNCTION__, player->get_uuid(), raid->data->uuid);	
 	ZhenyingBattle::GetInstance()->LeaveRegion(raid->data->ai_data.battle_data.room, player, player->get_attr(PLAYER_ATTR_REGION_ID));
+	ROOM_INFO *pRoom = ZhenyingBattle::GetInstance()->GetRoom(raid->data->ai_data.battle_data.room);
+	if (pRoom != NULL && pRoom->m_state != REST_STATE && raid->m_config->DengeonRank != DUNGEON_TYPE_BATTLE)
+	{
+		ZhenyingBattle::GetInstance()->AddFbCd(*player);
+	}
 }
 
 static void battle_raid_ai_player_dead(raid_struct *raid, player_struct *player, unit_struct *killer)
@@ -146,6 +151,7 @@ static void battle_raid_ai_player_relive(raid_struct *raid, player_struct *playe
 		++player->data->attrData[PLAYER_ATTR_RELIVE_TYPE2];
 		player->broadcast_to_sight(MSG_ID_RELIVE_NOTIFY, &nty, (pack_func)relive_notify__pack, true);
 		//player->add_achievement_progress(ACType_RELIVE, 0, 0, 1);
+		ZhenyingBattle::GetInstance()->IntoRegion(raid->data->ai_data.battle_data.room, player, player->get_attr(PLAYER_ATTR_REGION_ID));
 	}
 	else
 	{

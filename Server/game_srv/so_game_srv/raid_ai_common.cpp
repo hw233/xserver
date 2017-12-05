@@ -318,6 +318,31 @@ static bool script_raid_check_finished(raid_struct *raid, struct raid_script_dat
 				return true;
 		}
 		return false;
+		case SCRIPT_EVENT_MONSTER_DEAD_DELETE_NPC:
+		{
+			bool flag = true;			
+			for (size_t i = 0; i + 1 < config->n_Parameter1; i = i+2)
+			{
+				assert(i + 1 < config->n_Parameter1);
+				assert(i / 2 < MAX_SCRIPT_COND_NUM);
+				int m = 0;
+				for(size_t j = 0; j < MAX_SCRIPT_COND_NUM; j++)
+				{
+					if(script_data->cur_finished_num[j] == config->Parameter1[i+1])
+					{
+						m = 1;
+					}
+				
+				}
+				if(m == 0)
+				{
+					flag = false;	
+					break;
+				}
+			}
+			return flag;
+		
+		}
 		default:
 			return false;
 	}
@@ -346,11 +371,11 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 	{
 		case SCRIPT_EVENT_CREATE_MONSTER_NUM: //刷新配置表内指定怪物
 			for (size_t i = 0; i + 1 < config->n_Parameter1; i = i+2)
-				monster_manager::create_monster_by_id(raid, config->Parameter1[i], config->Parameter1[i + 1], raid->data->monster_level);
+				monster_manager::create_monster_by_id(raid, config->Parameter1[i], config->Parameter1[i + 1], raid->lv);
 			return true;
 		case SCRIPT_EVENT_CREATE_MONSTER_ALL: //刷新配置表内所有指定怪物
 			for (size_t i = 0; i < config->n_Parameter1; ++i)
-				monster_manager::create_monster_by_id(raid, config->Parameter1[i], 9999, raid->data->monster_level);
+				monster_manager::create_monster_by_id(raid, config->Parameter1[i], 9999, raid->lv);
 			return true;
 		case SCRIPT_EVENT_CREATE_COLLECT_NUM: //刷新配置表内指定采集物
 			for (size_t i = 0; i + 1 < config->n_Parameter1; i = i+2)
@@ -577,6 +602,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 		case SCRIPT_EVENT_MONSTER_DEAD_NUM: //指定怪物死亡
 		case SCRIPT_EVENT_WAIT_MONST_HP:
 		case SCRIPT_EVENT_CREATE_WAIT_MONSTER_LEVEL:
+		case SCRIPT_EVENT_MONSTER_DEAD_DELETE_NPC:
 			return script_raid_check_finished(raid, script_data);
 		case SCRIPT_EVENT_TIME_OUT: //副本计时
 			assert(config->n_Parameter1 >= 1);
@@ -744,6 +770,11 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 				monster_level =  raid->ruqin_data.level;
 				raid->ruqin_data.monster_boshu += 1;
 			}
+			else 
+			{
+				monster_level = raid->lv;
+			}
+
 			for (size_t i = 0; i + 1 < config->n_Parameter1; i = i+2)
 			{
 				monster_manager::create_monster_by_id(raid, config->Parameter1[i], config->Parameter1[i + 1], monster_level);
@@ -758,6 +789,11 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 				monster_level =  raid->ruqin_data.level;
 				raid->ruqin_data.monster_boshu += 1;
 			}
+			else 
+			{
+				monster_level = raid->lv;
+			}
+
 			for (size_t i = 0; i < config->n_Parameter1; ++i)
 			{
 				monster_manager::create_monster_by_id(raid, config->Parameter1[i], 9999, monster_level);
@@ -788,7 +824,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 			uint32_t pos_x = atoi(config->Parameter2[0]);
 			uint32_t pos_z = atoi(config->Parameter2[1]);
 			float direct = atoi(config->Parameter2[2]);
-			monster_manager::create_monster_at_pos(raid, monster_id, raid->data->monster_level, pos_x, pos_z, 0, NULL, direct);
+			monster_manager::create_monster_at_pos(raid, monster_id, raid->lv, pos_x, pos_z, 0, NULL, direct);
 		}
 			return true;
 		default:
@@ -856,6 +892,30 @@ void script_ai_common_monster_dead(raid_struct *raid, monster_struct *monster, u
 		return;
 	}
 	
+	if(config->TypeID == SCRIPT_EVENT_MONSTER_DEAD_DELETE_NPC)
+	{	
+		for(size_t i = 0; i + 1 < config->n_Parameter1; i = i+2)
+		{
+			assert(i + 1 < config->n_Parameter1);
+			assert(i / 2 < MAX_SCRIPT_COND_NUM);
+			if(monster->data->monster_id == config->Parameter1[i] && script_data->cur_finished_num[i / 2] == 0)
+			{
+				double npc_id[1] = {0};
+				npc_id[0] = config->Parameter1[i+1];
+				RaidEventNotify nty;
+				raid_event_notify__init(&nty);
+				nty.type = config->TypeID;
+				nty.param1 = npc_id;
+				nty.n_param1 = 1;
+				nty.param2 = config->Parameter2;
+				nty.n_param2 = config->n_Parameter2;
+				raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
+				script_data->cur_finished_num[i / 2] = config->Parameter1[i+1];
+				break;		
+			}
+		}
+		return;
+	}
 	if (config->TypeID != SCRIPT_EVENT_MONSTER_DEAD_NUM)
 		return;
 	for (size_t i = 0; i + 1 < config->n_Parameter1; i = i+2)

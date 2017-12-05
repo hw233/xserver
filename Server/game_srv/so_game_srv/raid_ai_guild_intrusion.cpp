@@ -68,7 +68,7 @@ static void guild_ruqin_reward_info_to_guildsrv(raid_struct *raid, bool succe)
 		//先排序
 	std::vector<guild_ruqin_player_data> player_info;
 	player_info.clear();
-	for( std::map<uint64_t, guild_ruqin_player_data>::iterator itr = raid->ruqin_data.palyer_data.begin(); itr != raid->ruqin_data.palyer_data.end(); itr++)
+	for( std::map<uint64_t, guild_ruqin_player_data>::iterator itr = raid->ruqin_data.player_data.begin(); itr != raid->ruqin_data.player_data.end(); itr++)
 	{
 		player_info.push_back(itr->second);
 	}
@@ -384,9 +384,9 @@ static void guild_intrusion_raid_ai_monster_attacked(raid_struct *raid, monster_
 		int32_t real_damage = before_hp > damage ? damage:before_hp;
 		if(real_damage <= 0)
 			return;
-		if(raid->ruqin_data.palyer_data.find(player->data->player_id) != (raid->ruqin_data.palyer_data).end())
+		if(raid->ruqin_data.player_data.find(player->data->player_id) != (raid->ruqin_data.player_data).end())
 		{
-			raid->ruqin_data.palyer_data[player->data->player_id].damage_to_monster += real_damage;
+			raid->ruqin_data.player_data[player->data->player_id].damage_to_monster += real_damage;
 		}
 		else 
 		{
@@ -394,7 +394,7 @@ static void guild_intrusion_raid_ai_monster_attacked(raid_struct *raid, monster_
 			memset(&data, 0, sizeof(guild_ruqin_player_data));
 			data.player_id = player->data->player_id;
 			data.damage_to_monster = real_damage;
-			raid->ruqin_data.palyer_data.insert(std::make_pair(player->data->player_id, data));
+			raid->ruqin_data.player_data.insert(std::make_pair(player->data->player_id, data));
 		}
 	}
 }

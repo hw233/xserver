@@ -27,9 +27,9 @@ public:
 	scene_struct();
 	virtual ~scene_struct();
 	virtual void clear();
-	int create_all_monster();
+	int create_all_monster(int lv);
 	void clear_all_collet();
-	int init_scene_struct(uint64_t sceneid, bool create_monster);
+	int init_scene_struct(uint64_t sceneid, bool create_monster, int lv);
 	area_struct *get_area_by_pos(float pos_x, float pos_z);
 	virtual uint32_t get_area_width();
 	virtual int add_monster_to_scene(monster_struct *monster, uint32_t effectid);

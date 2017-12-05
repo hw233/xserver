@@ -44,6 +44,7 @@ enum PlayerAttrId
 	PLAYER_ATTR_PVPAT = 33, // 穿刺
 	PLAYER_ATTR_PVPDF = 34, //霸体
 	PLAYER_ATTR_REGION_ID = 35, //区域ID
+	PLAYER_ATTR_FIGHTING_CAPACITY = 36, //战斗力
 	
 // 	PLAYER_ATTR_DIZZYTIME = 33, //	眩晕时间
 // 	PLAYER_ATTR_SLOWTIME = 34, // 	迟缓时间
@@ -85,8 +86,6 @@ enum PlayerAttrId
 	PLAYER_ATTR_ZHENYING = 47, //阵营
 	PLAYER_ATTR_PK_TYPE = 48, //pk模式 0和平,1阵营,2杀戮
 	PLAYER_ATTR_FIGHT_MAX,        //战斗相关的最大属性ID
-
-	PLAYER_ATTR_FIGHTING_CAPACITY = 50, //战斗力
 
 	PLAYER_ATTR_JOB = 51, //职业
 	PLAYER_ATTR_SILVER = 52, //银两

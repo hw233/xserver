@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <comm_message.pb-c.h>
 #include <assert.h>
 #include <stdint.h>
 #include <math.h>
@@ -13,6 +14,7 @@
 #include <math.h>
 #include <fcntl.h>
 #include "time_helper.h"
+#include "game_config.h"
 extern "C"
 {
 #include "lua.h"
@@ -23,10 +25,12 @@ extern "C"
 #include "sprotoc_common.h"
 #include "game_config.h"
 #include "game_event.h"
-#include "scene_manager.h"
 #include "lua_load.h"
-#include "raid.h"
 #include "lua_config.h"
+#include "map_config.h"
+#include "global_param.h"
+
+//#include "raid.h"
 
 //将参数表里的参数读到内部变量里
 static void generate_parameters(void)
@@ -465,6 +469,10 @@ static void generate_parameters(void)
 	sg_fight_param_161000291 = get_config_by_id(161000291, &parameter_config)->parameter1[0];
 	sg_fight_param_161000292 = get_config_by_id(161000292, &parameter_config)->parameter1[0];
 	sg_fight_param_161000293 = get_config_by_id(161000293, &parameter_config)->parameter1[0];
+	sg_fight_param_161000393 = get_config_by_id(161000393, &parameter_config)->parameter1[0];
+	sg_fight_param_161000394 = get_config_by_id(161000394, &parameter_config)->parameter1[0];
+	sg_fight_param_161000395 = get_config_by_id(161000395, &parameter_config)->parameter1[0];
+	sg_fight_param_161000396 = get_config_by_id(161000396, &parameter_config)->parameter1[0];	
 
 	sg_doufachang_ai[0] = get_config_by_id(161000315, &parameter_config)->parameter1[0];
 	sg_doufachang_ai[1] = get_config_by_id(161000315, &parameter_config)->parameter1[1];
@@ -508,6 +516,11 @@ static void generate_parameters(void)
 	{
 		sg_travel_round_amount = config->parameter1[0];
 		sg_travel_task_amount = config->parameter1[1];
+	}
+	config = get_config_by_id(161000392, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_fighting_capacity_crt_dmg_init_val = config->parameter1[0];
 	}
 }
 
@@ -647,7 +660,8 @@ int get_scene_birth_pos(uint32_t scene_id, float *pos_x, float *pos_y, float *po
 	return 0;
 }
 
-
+#ifndef __AI_SRV__
+#include "scene_manager.h"
 int add_all_scene()
 {
 	std::map<uint64_t, struct SceneResTable *>::iterator iter;
@@ -658,6 +672,7 @@ int add_all_scene()
 	}
 	return (0);
 }
+#endif
 /*
 static void add_passive_skill(struct SkillTable *config)
 {
@@ -813,7 +828,7 @@ static void adjust_battle_award_table()
 	std::map<uint64_t, struct BattleFieldRank *>::iterator ite;
 	for (ite = zhenying_fight_rank_config.begin(); ite != zhenying_fight_rank_config.end(); ++ite)
 	{
-		std::map<uint32_t, std::vector<BattleFieldStepRank *> >::iterator it = sg_battle_award.find(ite->first % 10);
+		//std::map<uint32_t, std::vector<BattleFieldStepRank *> >::iterator it = sg_battle_award.find(ite->first % 10);
 		std::vector<BattleFieldStepRank *> tmpVt;
 		BattleFieldStepRank *tmp = new BattleFieldStepRank;
 		tmp->LowerLimitRank = ite->second->LowerLimitRank1;
@@ -860,7 +875,7 @@ static void adjust_battle_award_table()
 		tmp->Reward = ite->second->Reward5;
 		tmpVt.push_back(tmp);
 
-		sg_battle_award.insert(std::make_pair(ite->first % 10, tmpVt));
+		sg_battle_award.insert(std::make_pair(ite->first % 10 - 1, tmpVt));
 	}
 }
 
@@ -1002,6 +1017,19 @@ RandomDungeonTable * get_random_guoyu_fb_config(uint32_t type)
 	}
 	return NULL;
 }
+
+static void adjust_moneyquesttable()
+{
+	std::map<uint64_t, MoneyQuestTable *>::iterator iter = shangjin_task_config.begin();
+	for (; iter != shangjin_task_config.end(); ++iter)
+	{
+		MoneyQuestTable *config = iter->second;
+		assert(config->n_ExpReward >= 6);
+		assert(config->n_MoneyReward >= 6);
+		assert(config->n_QualityGroup >= 6);				
+	}
+}
+
 void gen_yaoshi_skill_config()
 {
 	std::map<uint64_t, struct SpecialtySkillTable*>::iterator it = yaoshi_skill_config.begin();
@@ -1148,6 +1176,35 @@ bool escort_is_team(uint32_t escort_id)
 	}
 
 	return false;
+}
+
+void get_skill_configs(uint32_t skill_lv, uint32_t skill_id, struct SkillTable **ski_config, struct SkillLvTable **lv_config1, struct PassiveSkillTable **pas_config, struct SkillLvTable **lv_config2, struct ActiveSkillTable **act_config)
+{
+	*lv_config1 = NULL;
+	*lv_config2 = NULL;
+	*pas_config = NULL;
+	*ski_config = get_config_by_id(skill_id, &skill_config);
+	if (!ski_config)
+		return;
+
+	if (act_config)
+	{
+		*act_config = get_config_by_id((*ski_config)->SkillAffectId, &active_skill_config);
+	}
+
+	std::map<uint64_t, struct SkillLvTable *>::iterator iter = skill_lv_config.find((*ski_config)->SkillLv + skill_lv - 1);
+	if (iter != skill_lv_config.end())
+		*lv_config1 = iter->second;
+
+	if ((*ski_config)->PassiveID)
+	{
+		*pas_config = get_config_by_id((uint32_t)((*ski_config)->PassiveID), &passive_skill_config);
+		if (!pas_config)
+			return;
+		iter = skill_lv_config.find((*ski_config)->PassiveLv + skill_lv - 1);
+		if (iter != skill_lv_config.end())
+			*lv_config2 = iter->second;
+	}
 }
 
 uint64_t get_task_chapter_id(uint32_t task_id)
@@ -1583,7 +1640,17 @@ static void adjust_dungeon_table(lua_State *L, struct sproto_type *type)
 	{
 		struct DungeonTable *config = iter->second;
 		assert(config->n_Score == config->n_ScoreValue);
-		assert(config->n_Score == config->n_ScoreValue1);		
+		assert(config->n_Score == config->n_ScoreValue1);
+		if (config->DengeonRank == 0
+			|| config->DengeonRank == 3
+			|| config->DengeonRank == 8
+			|| config->DengeonRank == 18)
+		{
+			int n_level = config->n_ItemRewardSection + 1;
+			int n_star = config->n_Rewards;
+			assert(n_level * 3 == n_star);
+		}
+		
 		if (config->DengeonRank == DUNGEON_TYPE_RAND_MASTER)
 		{
 			if (config->n_RandomID < config->RandomNum || config->RandomNum == 0)
@@ -1690,6 +1757,8 @@ static void adjust_equip_lock_table(void)
 
 static void adjust_fighting_capacity_coefficient(void)
 {
+	memset(sg_fighting_capacity_coefficient, 0, sizeof(sg_fighting_capacity_coefficient));
+	memset(sg_fighting_capacity_count_in, 0, sizeof(sg_fighting_capacity_count_in));
 	for (int i = 1; i < PLAYER_ATTR_FIGHT_MAX; ++i)
 	{
 		AttributeTypeTable *config = get_config_by_id(i, &attribute_type_config);
@@ -1699,6 +1768,7 @@ static void adjust_fighting_capacity_coefficient(void)
 		}
 
 		sg_fighting_capacity_coefficient[i] = config->FightRatio;
+		sg_fighting_capacity_count_in[i] = config->Total;
 	}
 }
 
@@ -1799,7 +1869,8 @@ static void adjust_baguapai_tables(void)
 		BaguaTable *config = iter->second;
 		assert(config->n_DecomposeItem == config->n_DecomposeNum);
 		assert(config->n_RecastItem == config->n_RecastNum);
-		assert(config->n_ClearItem == config->n_ClearNum);
+		assert(config->n_ClearItem1 == config->n_ClearNum1);
+		assert(config->n_ClearItem2 == config->n_ClearNum2);
 	}
 
 	for (std::map<uint64_t, struct BaguaStarTable*>::iterator iter = bagua_star_config.begin(); iter != bagua_star_config.end(); ++iter)
@@ -2188,9 +2259,9 @@ AchievementHierarchyTable *get_achievement_config(uint32_t achievement_id, uint3
 	return NULL;
 }
 
-EquipAttribute *get_equip_enchant_attr_config(uint32_t pool, uint32_t attr_id)
+EquipAttribute *get_rand_attr_config(uint32_t pool, uint32_t attr_id)
 {
-	return get_config_by_id(pool * 1e3 + attr_id, &sg_equip_enchant_attr_map);
+	return get_config_by_id(pool * 1e3 + attr_id, &sg_attr_seek_map);
 }
 
 TravelTable *get_travel_config(uint32_t level)
@@ -2314,6 +2385,51 @@ void add_drop_item(uint32_t item_id, uint32_t num_max, uint32_t num_min, std::ma
 	{
 		get_drop_item(item_id, item_list, stack + 1);
 	}
+}
+
+static ItemData item_data[MAX_DROP_ITEM_DATA_NUM];
+static ItemData *item_data_point[MAX_DROP_ITEM_DATA_NUM];
+int pack_drop_config_item(uint32_t drop_id, int max, int *begin, ItemData ***point)
+{
+	int ret;
+	int index = 0;
+	if (begin)
+		index = *begin;
+	*point = &item_data_point[index];
+	assert(max < MAX_DROP_ITEM_DATA_NUM);
+	DropConfigTable *config = get_config_by_id(drop_id, &drop_config);
+	if (!config)
+	{
+		LOG_ERR("[%s:%d] get drop config failed, drop_id:%u", __FUNCTION__, __LINE__, drop_id);		
+		return 0;
+	}
+	for (ret = 0; ret < (int)config->n_DropID && ret < (int)config->n_NumMin && ret < max; ++ret)
+	{
+		item_data_point[index] = &(item_data[index]);
+		item_data__init(item_data_point[index]);
+		item_data[index].id = config->DropID[ret];
+		item_data[index].num = config->NumMin[ret];
+		++index;
+	}
+	if (begin)
+		*begin = index;
+	return (ret);
+}
+
+uint32_t get_drop_by_lv(uint32_t lv, uint32_t star, uint32_t n_Rewards, uint64_t *Rewards, uint32_t n_ItemRewardSection, uint64_t *ItemRewardSection)
+{
+	assert(star <= 3);
+	assert(star > 0);
+	--star;
+	if (n_Rewards == 0)
+		return (0);
+	for (size_t i = 0; i < n_ItemRewardSection; ++i)
+	{
+		if (lv < ItemRewardSection[i])
+			return Rewards[i * 3 + star];
+		Rewards += 3;
+	}
+	return Rewards[star];
 }
 
 int get_drop_item(uint32_t drop_id, std::map<uint32_t, uint32_t> &item_list, uint32_t stack)
@@ -2694,7 +2810,7 @@ bool strong_goal_is_open(uint32_t goal_id, uint32_t player_lv)
 
 int get_equip_enchant_attr_color(uint32_t pool, uint32_t attr_id, double attr_val)
 {
-	EquipAttribute *attr_config = get_equip_enchant_attr_config(pool, attr_id);
+	EquipAttribute *attr_config = get_rand_attr_config(pool, attr_id);
 	if (attr_config)
 	{
 		for (uint32_t i = 0; i < attr_config->n_Rand; ++i)
@@ -2706,6 +2822,157 @@ int get_equip_enchant_attr_color(uint32_t pool, uint32_t attr_id, double attr_va
 				return (i + 1);
 			}
 		}
+	}
+
+	return 0;
+}
+
+int get_one_rand_attr(uint32_t pool, uint32_t &attr_id, double &attr_val, std::vector<uint32_t> *except_attrs)
+{
+	attr_id = 0;
+	attr_val = 0;
+
+	std::map<uint64_t, std::vector<EquipAttribute *> >::iterator iter_map = sg_attr_pool_map.find(pool);
+	if (iter_map == sg_attr_pool_map.end())
+	{
+		LOG_ERR("[%s:%d] get attr pool failed, pool:%u", __FUNCTION__, __LINE__, pool);
+		return -1;
+	}
+
+	std::vector<EquipAttribute *> pool_attrs(iter_map->second);
+	if (pool_attrs.size() == 0)
+	{
+		LOG_ERR("[%s:%d] get attr pool empty, pool:%u", __FUNCTION__, __LINE__, pool);
+		return -2;
+	}
+
+	if (except_attrs)
+	{
+		for (std::vector<uint32_t>::iterator iter_except = except_attrs->begin(); iter_except != except_attrs->end(); ++iter_except)
+		{
+			uint32_t tmp_attr_id = *iter_except;
+			for (std::vector<EquipAttribute *>::iterator iter_pool = pool_attrs.begin(); iter_pool != pool_attrs.end(); ++iter_pool)
+			{
+				EquipAttribute *tmp_config = *iter_pool;
+				if (tmp_config->Effect == tmp_attr_id)
+				{
+					pool_attrs.erase(iter_pool);
+					break;
+				}
+			}
+		}
+
+		if (pool_attrs.size() == 0)
+		{
+			LOG_ERR("[%s:%d] get attr pool size small, pool:%u", __FUNCTION__, __LINE__, pool);
+			return -2;
+		}
+	}
+	
+	uint32_t rand_val = rand() % pool_attrs.size();
+	EquipAttribute *attr_config = pool_attrs[rand_val];
+	if (!attr_config)
+	{
+		LOG_ERR("[%s:%d] rand attr config is NULL, pool:%u, id:%lu", __FUNCTION__, __LINE__, pool, attr_config->ID);
+		return -3;
+	}
+
+	uint32_t total_weight = 0;
+	for (uint32_t k = 0; k < attr_config->n_QualityWeight; ++k)
+	{
+		total_weight += attr_config->QualityWeight[k];
+	}
+
+	if (total_weight == 0)
+	{
+		LOG_ERR("[%s:%d] total weight is 0, pool:%u, id:%lu", __FUNCTION__, __LINE__, pool, attr_config->ID);
+		return -4;
+	}
+
+	uint32_t rand_weight = rand() % total_weight;
+	uint32_t tmp_weight = 0;
+	uint32_t attr_quality = UINT32_MAX;
+	for (uint32_t k = 0; k < attr_config->n_QualityWeight; ++k)
+	{
+		if (tmp_weight <= rand_weight && rand_weight < tmp_weight + attr_config->QualityWeight[k])
+		{
+			attr_quality = k;
+			break;
+		}
+		tmp_weight += attr_config->QualityWeight[k];
+	}
+
+	if (attr_config->n_Rand <= attr_quality || attr_config->Rand[attr_quality] == 0)
+	{
+		LOG_ERR("[%s:%d] config n_Rand < n_Quality, pool:%u, id:%lu, attr_quality:%u", __FUNCTION__, __LINE__, pool, attr_config->ID, attr_quality);
+		return -5;
+	}
+
+	if (attr_config->Rand[attr_quality] > 1.00)
+	{
+		double lower_val = 1.0;
+		if (attr_quality != 0)
+		{
+			lower_val = attr_config->Rand[attr_quality - 1];
+		}
+		else if (attr_quality == 0 && attr_config->FluctuationValue1 != 0)
+		{
+			lower_val = attr_config->FluctuationValue1;
+		}
+		double upper_val = attr_config->Rand[attr_quality];
+		if (upper_val < lower_val)
+		{
+			LOG_ERR("[%s:%d] config upper_val < lower_val, pool:%u, id:%lu, attr_quality:%u, lower_val:%f, upper_val:%f", __FUNCTION__, __LINE__, pool, attr_config->ID, attr_quality, lower_val, upper_val);
+			return -6;
+		}
+
+		double range_val = upper_val - lower_val;
+		if (attr_config->FluctuationValue1 != 0)
+		{
+			uint32_t flow_val = attr_config->FluctuationValue1;
+			uint32_t flow_size = (uint32_t)range_val / flow_val;
+			rand_val = rand() % (flow_size + 1);
+			rand_val = std::min(flow_val * rand_val, (uint32_t)range_val);
+		}
+		else
+		{
+			rand_val = rand() % (uint32_t)(range_val + 1);
+		}
+		attr_id = attr_config->Effect;
+		attr_val = lower_val + rand_val;
+	}
+	else //随机0-1的小数
+	{
+		double lower_val = 0.0001;
+		if (attr_quality != 0)
+		{
+			lower_val = attr_config->Rand[attr_quality - 1];
+		}
+		else if (attr_quality == 0 && attr_config->FluctuationValue1 != 0)
+		{
+			lower_val = attr_config->FluctuationValue1;
+		}
+		double upper_val = attr_config->Rand[attr_quality];
+		if (upper_val < lower_val)
+		{
+			LOG_ERR("[%s:%d] config upper_val < lower_val, pool:%u, id:%lu, attr_quality:%u, lower_val:%f, upper_val:%f", __FUNCTION__, __LINE__, pool, attr_config->ID, attr_quality, lower_val, upper_val);
+			return -7;
+		}
+
+		double range_val = upper_val - lower_val;
+		if (attr_config->FluctuationValue1 != 0)
+		{
+			uint32_t flow_val = attr_config->FluctuationValue1 * 10000;
+			uint32_t flow_size = (uint32_t)range_val * 10000 / flow_val;
+			rand_val = rand() % (flow_size + 1);
+			rand_val = std::min(flow_val * rand_val, (uint32_t)range_val);
+		}
+		else
+		{
+			rand_val = rand() % (uint32_t)(range_val * 10000 + 1);
+		}
+		attr_id = attr_config->Effect;
+		attr_val = lower_val + (double)rand_val / 10000.0;
 	}
 
 	return 0;
@@ -2729,7 +2996,7 @@ static void adjust_strong_config(void)
 		GrowupTable *config = iter->second;
 		if (sg_strong_chapter_map.find(config->Type) == sg_strong_chapter_map.end())
 		{
-			sg_strong_chapter_map.insert(std::make_pair(config->Type, 1));
+			sg_strong_chapter_map.insert(std::make_pair((uint32_t)config->Type, 1));
 		}
 		else
 		{
@@ -2738,7 +3005,7 @@ static void adjust_strong_config(void)
 
 		if (sg_strong_chapter_reward.find(config->Type) == sg_strong_chapter_reward.end())
 		{
-			sg_strong_chapter_reward.insert(std::make_pair(config->Type, config));
+			sg_strong_chapter_reward.insert(std::make_pair((uint32_t)config->Type, config));
 		}
 	}
 }
@@ -2751,7 +3018,7 @@ static void adjust_trade_config(void)
 		TradingTable *config = iter->second;
 		if (!item_is_bind(config->ItemID))
 		{
-			sg_item_trade_map.insert(std::make_pair(config->ItemID, config->ID));
+			sg_item_trade_map.insert(std::make_pair((uint32_t)config->ItemID, (uint32_t)config->ID));
 		}
 	}
 }
@@ -2831,15 +3098,74 @@ static void	adjust_maogui_shouling_to_xiaoguai_config()
 
 static void adjust_equip_attr_table(void)
 {
-	sg_equip_enchant_attr_map.clear();
+	sg_attr_seek_map.clear();
+	for (std::map<uint64_t, std::vector<EquipAttribute*> >::iterator iter = sg_attr_pool_map.begin(); iter != sg_attr_pool_map.end(); ++iter)
+	{
+		iter->second.clear();
+	}
+	sg_attr_pool_map.clear();
 	for (std::map<uint64_t, EquipAttribute *>::iterator iter = equip_attr_config.begin(); iter != equip_attr_config.end(); ++iter)
 	{
 		EquipAttribute *config = iter->second;
 		assert(config->n_Rand == config->n_QualityWeight);
-		sg_equip_enchant_attr_map.insert(std::make_pair(config->Database * 1e3 + config->Effect, config));
+		sg_attr_seek_map.insert(std::make_pair(config->Database * 1e3 + config->Effect, config));
+		sg_attr_pool_map[config->Database].push_back(config);
 	}
 }
 
+static void adjust_sign_in_every_day_config()
+{
+	sign_day_zhuan_config.clear();
+	for(size_t i = 0; i < MAX_ONE_YEARS_THE_MONTH; i++)
+	{
+		sign_day_to_zhuan_config[i].clear();
+	}
+	for(std::map<uint64_t, struct SignDay*>::iterator itr = sign_day_config.begin(); itr != sign_day_config.end(); itr++)
+	{
+		if(itr->second->Month >= 1 && itr->second->Month - 1 < MAX_ONE_YEARS_THE_MONTH)
+		{
+			uint64_t _day = itr->second->Days;
+			sign_day_to_zhuan_config[itr->second->Month - 1].insert(std::make_pair(_day, itr->second));
+		}
+
+	}
+
+	for(size_t i = 0; i < MAX_ONE_YEARS_THE_MONTH; i++)
+	{
+		if(sign_day_to_zhuan_config[i].size() > 0)
+		{
+			sign_day_zhuan_config.insert(std::make_pair(i+1, sign_day_to_zhuan_config[i]));
+		}
+	}
+	
+}
+
+static void adjust_sign_in_leiji_config()
+{
+	sign_month_zhuan_config.clear();
+	for(size_t i = 0; i < MAX_ONE_YEARS_THE_MONTH; i++)
+	{
+		sign_day_to_zhuan_config[i].clear();
+	}
+	for(std::map<uint64_t, struct SignMonth*>::iterator itr = sign_month_config.begin(); itr != sign_month_config.end(); itr++)
+	{
+		if(itr->second->Month >= 1 && itr->second->Month - 1 < MAX_ONE_YEARS_THE_MONTH)
+		{
+			uint64_t _day = itr->second->ID;
+			sign_month_to_zhuan_config[itr->second->Month -1].insert(std::make_pair(_day, itr->second));
+		}
+
+	}
+
+	for(size_t i = 0; i < MAX_ONE_YEARS_THE_MONTH; i++)
+	{
+		if(sign_month_to_zhuan_config[i].size() > 0)
+		{
+			sign_month_zhuan_config.insert(std::make_pair(i+1, sign_month_to_zhuan_config[i]));
+		}
+	}
+
+}
 typedef std::map<uint64_t, void *> *config_type;
 #define READ_SPB_MAX_LEN (1024 * 1024)
 int read_all_excel_data()
@@ -3201,6 +3527,7 @@ int read_all_excel_data()
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/MoneyQuestTable.lua", (config_type)&shangjin_task_config);
 	assert(ret == 0);
+	adjust_moneyquesttable();
 
 	type = sproto_type(sp, "SpecialtySkillTable");
 	assert(type);
@@ -3516,6 +3843,31 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/TravelTable.lua", (config_type)&travel_config);
 	assert(ret == 0);	
 
+	type = sproto_type(sp, "LevelReward");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/LevelReward.lua", (config_type)&level_reward_config);
+	assert(ret == 0);	
+
+	type = sproto_type(sp, "TimeReward");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/TimeReward.lua", (config_type)&online_reward_config);
+	assert(ret == 0);	
+
+	type = sproto_type(sp, "OnlineTimes");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/OnlineTimes.lua", (config_type)&online_time_config);
+	assert(ret == 0);	
+
+	type = sproto_type(sp, "SignDay");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/SignDay.lua", (config_type)&sign_day_config);
+	assert(ret == 0);	
+
+	type = sproto_type(sp, "SignMonth");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/SignMonth.lua", (config_type)&sign_month_config);
+	assert(ret == 0);	
+
 	adjust_escort_config();
 	adjust_achievement_config();
 	adjust_guild_skill_config();
@@ -3527,6 +3879,8 @@ int read_all_excel_data()
 	adjust_maogui_maogui_wang_config();
 	adjust_maogui_shouling_to_xiaoguai_config();
 	adjust_equip_attr_table();
+	adjust_sign_in_every_day_config();
+	adjust_sign_in_leiji_config();
 
 	lua_close(L);
 	sproto_release(sp);

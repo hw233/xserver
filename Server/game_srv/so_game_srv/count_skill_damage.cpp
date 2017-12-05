@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "count_skill_damage.h"
 #include "attr_id.h"
+#include "game_config.h"
 #include "time_helper.h"
 #include "excel_data.h"
 #include "buff_manager.h"
@@ -17,6 +18,7 @@ static int32_t count_skill_effect_entry(const double *attack, const double *defe
 	uint64_t effect, uint64_t effect_add, uint64_t effect_num)
 {
 	double at, de;//, jianmian;
+	double t1;
 	int32_t ret = 0;
 	switch (effect)
 	{
@@ -35,35 +37,86 @@ static int32_t count_skill_effect_entry(const double *attack, const double *defe
 //			jianmian = de / (4 * at + de * 1.1) + 0.1;
 //			ret = at * (1 - jianmian);
 			break;
+//守方五行抗性减免=（守方五行抗性-攻方忽略全抗）/（守方五行抗性-攻方忽略全抗+攻方等级*五行抗性等级系数+五行抗性基础值）
 		case PLAYER_ATTR_ATK_METAL: //金
+			t1 = buff_fight_defence[PLAYER_ATTR_DEF_METAL] - buff_fight_attack[PLAYER_ATTR_DFWUDEL];
+			if (t1 < 0)
+			{
+				de = 1;
+			}
+			else
+			{
+				de = 1 - t1 / (t1 + attack[PLAYER_ATTR_LEVEL] * sg_fight_param_161000287 + sg_fight_param_161000288);
+			}
 			at = buff_fight_attack[PLAYER_ATTR_ATK_METAL] * effect_add / 10000
-				+ effect_num;
-			de = buff_fight_defence[PLAYER_ATTR_DEF_METAL];
-			ret = at - de;
+					+ effect_num;
+			ret = at * de;
+//			de = buff_fight_defence[PLAYER_ATTR_DEF_METAL];
+//			ret = at - de;
 			break;
 		case PLAYER_ATTR_ATK_WOOD:
 			at = buff_fight_attack[PLAYER_ATTR_ATK_WOOD] * effect_add / 10000
 				+ effect_num;
-			de = buff_fight_defence[PLAYER_ATTR_DEF_WOOD];
-			ret = at - de;
+//			de = buff_fight_defence[PLAYER_ATTR_DEF_WOOD];
+//			ret = at - de;
+			t1 = buff_fight_defence[PLAYER_ATTR_DEF_WOOD] - buff_fight_attack[PLAYER_ATTR_DFWUDEL];
+			if (t1 < 0)
+			{
+				de = 1;
+			}
+			else
+			{			
+				de = 1 - t1 / (t1 + attack[PLAYER_ATTR_LEVEL] * sg_fight_param_161000287 + sg_fight_param_161000288);
+			}
+			ret = at * de;
 			break;
 		case PLAYER_ATTR_ATK_WATER:
 			at = buff_fight_attack[PLAYER_ATTR_ATK_WATER] * effect_add / 10000
 				+ effect_num;
-			de = buff_fight_defence[PLAYER_ATTR_DEF_WATER];
-			ret = at - de;
+//			de = buff_fight_defence[PLAYER_ATTR_DEF_WATER];
+//			ret = at - de;
+			t1 = buff_fight_defence[PLAYER_ATTR_DEF_WATER] - buff_fight_attack[PLAYER_ATTR_DFWUDEL];
+			if (t1 < 0)
+			{
+				de = 1;
+			}
+			else
+			{			
+				de = 1 - t1 / (t1 + attack[PLAYER_ATTR_LEVEL] * sg_fight_param_161000287 + sg_fight_param_161000288);
+			}
+			ret=  at * de;
 			break;
 		case PLAYER_ATTR_ATK_FIRE: //火
 			at = buff_fight_attack[PLAYER_ATTR_ATK_FIRE] * effect_add / 10000
 				+ effect_num;
-			de = buff_fight_defence[PLAYER_ATTR_DEF_FIRE];
-			ret = at - de;
+//			de = buff_fight_defence[PLAYER_ATTR_DEF_FIRE];
+//			ret = at - de;
+			t1 = buff_fight_defence[PLAYER_ATTR_DEF_FIRE] - buff_fight_attack[PLAYER_ATTR_DFWUDEL];
+			if (t1 < 0)
+			{
+				de = 1;
+			}
+			else
+			{			
+				de = 1 - t1 / (t1 + attack[PLAYER_ATTR_LEVEL] * sg_fight_param_161000287 + sg_fight_param_161000288);
+			}
+			ret=  at * de;
 			break;
 		case PLAYER_ATTR_ATK_EARTH:
 			at = buff_fight_attack[PLAYER_ATTR_ATK_EARTH] * effect_add / 10000
 				+ effect_num;
-			de = buff_fight_defence[PLAYER_ATTR_DEF_EARTH];
-			ret = at - de;
+			t1 = buff_fight_defence[PLAYER_ATTR_DEF_EARTH] - buff_fight_attack[PLAYER_ATTR_DFWUDEL];
+			if (t1 < 0)
+			{
+				de = 1;
+			}
+			else
+			{			
+				de = 1 - t1 / (t1 + attack[PLAYER_ATTR_LEVEL] * sg_fight_param_161000287 + sg_fight_param_161000288);
+			}
+			ret = at * de;
+//			de = buff_fight_defence[PLAYER_ATTR_DEF_EARTH];
+//			ret = at - de;
 			break;
 	}
 	if (ret < 0)
@@ -267,35 +320,6 @@ static void count_enemy_buff(struct SkillLvTable *lvconfig,
 	(*n_buff_add) += n;
 }
 
-void get_skill_configs(uint32_t skill_lv, uint32_t skill_id, struct SkillTable **ski_config, struct SkillLvTable **lv_config1, struct PassiveSkillTable **pas_config, struct SkillLvTable **lv_config2, struct ActiveSkillTable **act_config)
-{
-	*lv_config1 = NULL;
-	*lv_config2 = NULL;
-	*pas_config = NULL;
-	*ski_config = get_config_by_id(skill_id, &skill_config);
-	if (!ski_config)
-		return;
-
-	if (act_config)
-	{
-		*act_config = get_config_by_id((*ski_config)->SkillAffectId, &active_skill_config);
-	}
-
-	std::map<uint64_t, struct SkillLvTable *>::iterator iter = skill_lv_config.find((*ski_config)->SkillLv + skill_lv - 1);
-	if (iter != skill_lv_config.end())
-		*lv_config1 = iter->second;
-
-	if ((*ski_config)->PassiveID)
-	{
-		*pas_config = get_config_by_id((uint32_t)((*ski_config)->PassiveID), &passive_skill_config);
-		if (!pas_config)
-			return;
-		iter = skill_lv_config.find((*ski_config)->PassiveLv + skill_lv - 1);
-		if (iter != skill_lv_config.end())
-			*lv_config2 = iter->second;
-	}
-}
-
 // // TODO: 阵营神马的
 // bool is_friend(unit_struct *attack, unit_struct *defence)
 // {
@@ -436,17 +460,17 @@ static uint32_t get_skill_effect(unit_struct *attack_unit, unit_struct *defence_
 	double lv_attack = attack_unit->get_attr(PLAYER_ATTR_LEVEL);
 	double lv_defence = defence_unit->get_attr(PLAYER_ATTR_LEVEL);
 
-		//攻方命中几率=攻方命中/(攻方命中+攻方等级*命中等级系数+命中基础值)
-	double attack_rate = attack[PLAYER_ATTR_HIT] / (attack[PLAYER_ATTR_HIT] + lv_attack * sg_fight_param_161000280 + sg_fight_param_161000281);
+		//攻方命中几率=攻方命中/(攻方命中+守方等级*命中等级系数+命中基础值)
+	double attack_rate = attack[PLAYER_ATTR_HIT] / (attack[PLAYER_ATTR_HIT] + lv_defence * sg_fight_param_161000280 + sg_fight_param_161000281);
 		// if（守方闪避<攻方忽略闪避)
 		//  守方闪避几率=0
 		// else
-		//  守方闪避几率=（守方闪避-攻方忽略闪避）/（守方闪避-攻方忽略闪避+守方等级*闪避等级系数+闪避基础值）
+		//  守方闪避几率=（守方闪避-攻方忽略闪避）/（守方闪避-攻方忽略闪避+攻方等级*闪避等级系数+闪避基础值）
 	double defence_rate = 0;
 	if (defence[PLAYER_ATTR_DODGE] >= attack[PLAYER_ATTR_DODGEDF])
 	{
 		defence_rate = (defence[PLAYER_ATTR_DODGE] - attack[PLAYER_ATTR_DODGEDF]) / (defence[PLAYER_ATTR_DODGE] - attack[PLAYER_ATTR_DODGEDF]
-			+ lv_defence * sg_fight_param_161000282 + sg_fight_param_161000283);
+			+ lv_attack * sg_fight_param_161000282 + sg_fight_param_161000283);
 	}
 
 	// if（攻方命中几率-守方闪避几率<实际命中率下限）
@@ -470,13 +494,13 @@ static uint32_t get_skill_effect(unit_struct *attack_unit, unit_struct *defence_
 	// if（攻方会心几率<守方抗会心几率)
 	//      攻方实际会心几率=0
 	// else
-	//      攻方实际会心几率=（攻方会心几率-守方抗会心几率）/（攻方会心几率-守方抗会心几率+攻方等级*会心等级系数+会心基础值）
+	//      攻方实际会心几率=（攻方会心几率-守方抗会心几率）/（攻方会心几率-守方抗会心几率+守方等级*会心等级系数+会心基础值）
 	if (attack[PLAYER_ATTR_CRIT] <= defence[PLAYER_ATTR_CRIT_DEF])
 	{
 		return (0);
 	}
 	double crit_rate = (attack[PLAYER_ATTR_CRIT] - defence[PLAYER_ATTR_CRIT_DEF]) / (attack[PLAYER_ATTR_CRIT] - defence[PLAYER_ATTR_CRIT_DEF]
-		+ lv_attack * sg_fight_param_161000285 + sg_fight_param_161000286);
+		+ lv_defence * sg_fight_param_161000285 + sg_fight_param_161000286);
 	randnum = random() % 100;
 	if (randnum < (crit_rate) * 100)
 	{
@@ -546,21 +570,49 @@ int32_t count_other_skill_damage_effect(unit_struct *attack, unit_struct *defenc
 			p2 = (player_struct *)defence;
 			
 				//玩家打玩家, 算PVP部分数值
-          // PVP伤害加成=1+（攻方穿刺-守方霸体）/（攻方穿刺-守方霸体+攻方等级*PVP等级系数+PVP基础值）				
+          // PVP伤害加成=1+（攻方穿刺-守方霸体）/（攻方穿刺-守方霸体+守方等级*PVP等级系数+PVP基础值）				
 				
           // if（PVP伤害加成<PVP保底比例）				
           //         PVP伤害加成=PVP保底比例				
           // else				
           //         PVP伤害加成=PVP伤害加成
 			double t = attack->get_attr(PLAYER_ATTR_PVPAT) - defence->get_attr(PLAYER_ATTR_PVPDF);
-			t = 1 + t / (t + attack->get_attr(PLAYER_ATTR_LEVEL) * sg_fight_param_161000291 + sg_fight_param_161000292);
-			if (t < sg_fight_param_161000293)
-				t = sg_fight_param_161000293;
+			if (t < 0)
+				t = 1.0;
+			else
+				t = 1 + t / (t + defence->get_attr(PLAYER_ATTR_LEVEL) * sg_fight_param_161000291 + sg_fight_param_161000292);
+			if (t > 1 + sg_fight_param_161000293)
+				t = 1 + sg_fight_param_161000293;
 			rate *= t; 
 			
 				//玩家打玩家，算悬赏
 			rate += ChengJieTaskManage::ChengjieAddHurt(*p1, *p2);
 			rate -= ChengJieTaskManage::ChengjieRedeuceHurt(*p1, *p2);
+
+				//战斗力伤害加成
+			// 技能效果之攻击=（攻方属性值*技能百分比/10000+技能值）*攻方实际会心伤害*PVP伤害加成*战斗力伤害加成
+			// 技能效果之五行伤害=（攻方五行伤害*技能百分比/10000+技能值）*（1- 守方五行抗性减免）*攻方实际会心伤害*PVP伤害加成*战斗力伤害加成
+
+
+			// 战斗力伤害加成公式：
+			// 战斗力伤害加成 = 1 + MAX（MIN（INT(（攻方战斗力 - 守方战斗力）/ 守方战斗力*100)，A1），A2）* IF（攻方战斗力 > 守方战斗力，B1，B2）
+			// A1 = 50       → 参数数据表（ParameterTable），ID：161000393
+			// A2 = -50      →  161000394
+			// B1 = 0.002   →  161000395
+			// B2 = 0.003   →  161000396
+			double attack_fight = attack->get_attr(PLAYER_ATTR_FIGHTING_CAPACITY);
+			double defence_fight = defence->get_attr(PLAYER_ATTR_FIGHTING_CAPACITY);
+			int t1 = (attack_fight - defence_fight ) / defence_fight * 100;
+			if (t1 > sg_fight_param_161000393)
+				t1 = sg_fight_param_161000393;
+			else if (t1 < sg_fight_param_161000394)
+				t1 = sg_fight_param_161000394;
+			double t2;
+			if (attack_fight > defence_fight)
+				t2 = 1 + t1 * sg_fight_param_161000395;
+			else
+				t2 = 1 + t1 * sg_fight_param_161000396;
+			rate *= t2;
 		}
 		else
 		{

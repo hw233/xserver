@@ -1,4 +1,4 @@
-#include "player_manager.h"
+//#include "player_manager.h"
 #include "game_event.h"
 #include <signal.h>
 
@@ -51,14 +51,13 @@ void srv_signal_handler(int signo) {
 	case SIGUSR1:
 	case SIGUSR2:
 		{
-			std::map<uint64_t, player_struct *>::iterator it = player_manager_all_players_id.begin();
-			for (; it!=player_manager_all_players_id.end(); ++it) {
-				player_struct* player = it->second;
-				if (!player)
-					continue;
-
+			// std::map<uint64_t, player_struct *>::iterator it = player_manager_all_players_id.begin();
+			// for (; it!=player_manager_all_players_id.end(); ++it) {
+			// 	player_struct* player = it->second;
+			// 	if (!player)
+			// 		continue;
 //				player->process_kick_player();
-			}
+//			}
 		}break;
 	case SIGHUP:
 	case SIGWINCH:

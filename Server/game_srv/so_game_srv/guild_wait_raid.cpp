@@ -11,7 +11,7 @@
 int guild_wait_raid_struct::init_special_raid_data(player_struct *player)
 {
 	raid_set_ai_interface(10);
-	init_scene_struct(m_id, true);	
+	init_scene_struct(m_id, true, 0);	
 	return (0);
 }
 

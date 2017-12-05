@@ -41,6 +41,8 @@ struct fight_attr
 #define MAX_MONSTER_SKILL (10)
 #define MAX_HATE_UNIT 20
 
+class sight_space_struct;
+
 struct hate_unit_struct
 {
 	uint64_t uuid;

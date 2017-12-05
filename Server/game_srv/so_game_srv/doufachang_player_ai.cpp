@@ -4,17 +4,18 @@
 #include "time_helper.h"
 #include "msgid.h"
 #include "player_ai.h"
+#include "monster.h"
 #include "camp_judge.h"
 #include "buff_manager.h"
-#include "pvp_match_manager.h"
+//#include "pvp_match_manager.h"
 #include "raid.h"
 #include "check_range.h"
-#include "count_skill_damage.h"
+//#include "count_skill_damage.h"
 #include "camp_judge.h"
-#include "cached_hit_effect.h"
+//#include "cached_hit_effect.h"
 #include "buff.h"
-#include "skill.h"
-#include "count_pvp_skill_unit.h"
+//#include "skill.h"
+//#include "count_pvp_skill_unit.h"
 
 static void doufachang_player_ai_tick(player_struct *player)
 {

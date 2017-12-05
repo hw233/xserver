@@ -16,8 +16,8 @@ local ServerResTable = {
 		['ResName1'] = 'pic_dl_1lvse',
 		['State2Name'] = '新',
 		['ResName2'] = 'label_01lvse',
-		['Ip'] = '192.168.2.114',
-		['Port'] = 10686,
+		['Ip'] = '192.168.2.199',
+		['Port'] = 6686,
 		['ServerId'] = 2,
 		['OpenTime'] = 1506700800
 		},

@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include "comm_message.pb-c.h"
-class unit_struct;
+//class unit_struct;
 
 struct position
 {
@@ -20,7 +20,7 @@ struct unit_path
 	float direct_x;  //按方向移动
 	float direct_z;
 };
-int get_unit_distance_square(unit_struct *a, unit_struct *b);
+int get_distance_square(struct position *start, struct position *end);
 float getdistance(struct position *start, struct position *end);
 float FastSqrtQ3(float x);
 
