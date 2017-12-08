@@ -1,0 +1,1 @@
+../game_srv/lua_config.h

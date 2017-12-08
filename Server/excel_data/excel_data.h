@@ -344,6 +344,8 @@ struct ActorTable
 	uint64_t  Li; //16
 	uint64_t  Min; //17
 	uint64_t  Ling; //18
+	uint32_t n_SkillLevelID; //19
+	uint64_t *SkillLevelID; //19
 }__attribute__ ((packed));
 
 struct AcupunctureTable
@@ -879,6 +881,7 @@ struct DungeonTable
 	uint64_t *ItemRewardSection; //33
 	uint64_t  ExpReward; //34
 	uint64_t  MoneyReward; //35
+	uint64_t  DynamicLevel; //36
 }__attribute__ ((packed));
 
 struct EquipAttribute
@@ -1694,6 +1697,8 @@ struct RandomMonsterTable
 	uint64_t  ActivityReward; //6
 	uint64_t  BasicsReward; //7
 	uint64_t  MaxLevel; //8
+	uint64_t  ExpReward; //9
+	uint64_t  MoneyReward; //10
 }__attribute__ ((packed));
 
 struct RecruitTable

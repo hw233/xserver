@@ -348,7 +348,8 @@ int handle_move_start_request_impl(player_struct *player, EXTERN_DATA *extern_da
 	notify.direct_z = req->direct_z;
 
 	player->broadcast_to_sight(MSG_ID_MOVE_START_NOTIFY, &notify, (pack_func)move_start_notify__pack, false);
-
+	player->send_player_move_start_to_aisrv(&notify);
+	
 	player->interrupt();
 	return (0);
 }
@@ -459,6 +460,7 @@ int handle_move_stop_request_impl(player_struct *player, EXTERN_DATA *extern_dat
 	notify.cur_pos_y = player->data->pos_y;
 
 	player->broadcast_to_sight(MSG_ID_MOVE_STOP_NOTIFY, &notify, (pack_func)move_stop_notify__pack, false);
+	player->send_player_move_stop_to_aisrv(&notify);	
 	return (0);
 }
 
@@ -555,6 +557,7 @@ int handle_move_request_impl(player_struct *player, EXTERN_DATA *extern_data, Mo
 	notify.data = req->data;
 
 	player->broadcast_to_sight(MSG_ID_MOVE_NOTIFY, &notify, (pack_func)move_notify__pack, false);
+	player->send_player_move_to_aisrv(&notify);
 
 	player->interrupt();
 	return (0);
@@ -1725,29 +1728,6 @@ static void ttt(player_struct *player, uint64_t player_id, float target_pos_x, f
 }
 */
 
-static bool skill_can_attack(struct SkillTable *ski_config, UNIT_FIGHT_TYPE fight_type, player_struct *player, unit_struct *target)
-{
-	for (uint32_t i = 0; i < ski_config->n_TargetType; ++i)
-	{
-		switch (ski_config->TargetType[i])
-		{
-			case 1://敌方
-				if (fight_type == UNIT_FIGHT_TYPE_ENEMY)
-					return true;
-				break;
-			case 101://自身
-				if (fight_type == UNIT_FIGHT_TYPE_MYSELF)
-					return true;
-				break;
-			case 102://友方
-				if (fight_type == UNIT_FIGHT_TYPE_FRIEND)
-					return true;
-				break;
-		}
-	}
-	return false;
-}
-
 static int handle_skill_hit_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (comm_check_player_valid(player, extern_data->player_id) != 0)
@@ -1782,222 +1762,8 @@ static int handle_skill_hit_request(player_struct *player, EXTERN_DATA *extern_d
 			pos->pos_x, pos->pos_z, req->attack_pos->pos_x, req->attack_pos->pos_z);
 	}
 
-	int n_hit_effect = 0;
-	int n_buff = 0;
-	std::vector<unit_struct *> sight_all;
-	std::vector<unit_struct *> dead_all;
-	sight_all.push_back(player);
-
-	struct SkillLvTable *lv_config1, *lv_config2;
-	struct PassiveSkillTable *pas_config;
-	struct SkillTable *ski_config;
-	struct ActiveSkillTable *act_config;
-
-//	uint32_t skill_lv = player->m_skill.GetSkillLevel(player->get_skill_id());
-//	if (skill_lv < 1)
-	if (player->is_in_buff3())
-	{
-		get_skill_configs(1, player->get_skill_id(), &ski_config, &lv_config1, &pas_config, &lv_config2, &act_config);		
-	}
-	else
-	{
-		skill_struct *skill_struct = player->m_skill.GetSkillStructFromFuwen(player->get_skill_id());
-		if (!skill_struct)
-		{
-			LOG_ERR("%s %d: player[%lu] skill[%u] no config", __FUNCTION__, __LINE__, extern_data->player_id, player->get_skill_id());
-			return (-25);
-		}
-		int skill_lv;
-		int skill_id;
-		skill_struct->get_skill_id_and_lv(player->m_skill.m_index, &skill_id, &skill_lv);
-		get_skill_configs(skill_lv, skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, &act_config);
-	}
-
-		// 校验目标人数
-	if (req->n_target_playerid > ski_config->MaxCount)
-	{
-		LOG_ERR("%s %d: player[%lu] skill[%u] target[%zu] too much, ski_config->MaxCount = [%lu]", __FUNCTION__, __LINE__,
-			extern_data->player_id, player->get_skill_id(), req->n_target_playerid, ski_config->MaxCount);
-		return (-27);
-	}
-	
-
-	if (!lv_config1 && !lv_config2)
-	{
-		LOG_ERR("%s %d: player[%lu] skill[%u] no config", __FUNCTION__, __LINE__, extern_data->player_id, player->get_skill_id());
-		return (-30);
-	}
-	
-
-		//技能可能带位移，而这个命中的位置发送的是释放技能时候的位置，所以不能用来做位置校正
-	// if (act_config && act_config->CanMove)
-	// {
-	// 		//旋风斩可以持续移动
-	// }
-	// else
-	// {
-	// 	player->set_pos_with_broadcast(req->attack_pos->pos_x, req->attack_pos->pos_z);
-	// }
-
-	uint32_t life_steal = 0;
-	uint32_t damage_return = 0;
-
-	for (size_t i = 0; i < req->n_target_playerid; ++i)
-	{
-		unit_struct *target = unit_struct::get_unit_by_uuid(req->target_playerid[i]);
-		if (!target)
-			continue;
-//		if (target->buff_state & BUFF_STATE_GOD)
-//			continue;
-//		if (!check_can_attack(player, target))
-
-		if (!target->is_alive())
-		{
-			LOG_ERR("%s %d: %lu kill already dead unit %lu", __FUNCTION__, __LINE__, extern_data->player_id, target->get_uuid());
-			continue;
-		}
-
-		UNIT_FIGHT_TYPE fight_type = get_unit_fight_type(player, target);
-		if (!skill_can_attack(ski_config, fight_type, player, target))
-		{
-			LOG_ERR("%s: camp[%d] camp[%d] type[%d] type[%d] pktype[%d][%d] buff_state[%d] fight_type[%d] skill[%lu]",
-				__FUNCTION__, player->get_camp_id(), target->get_camp_id(),
-				get_entity_type(player->get_uuid()), get_entity_type(target->get_uuid()),
-				(int)(player->get_attr(PLAYER_ATTR_PK_TYPE)), (int)(target->get_attr(PLAYER_ATTR_PK_TYPE)),
-				target->buff_state, fight_type, ski_config->ID);
-//			get_unit_fight_type(player, target);
-			LOG_ERR("%s %d: %lu can not attack unit %lu", __FUNCTION__, __LINE__, extern_data->player_id, target->get_uuid());
-			continue;
-		}
-
-			//检查距离，场景
-		if (player->scene != target->scene)
-		{
-			continue;
-		}
-
-//		LOG_DEBUG("%s %d: player[%lu] attack target %lu", __FUNCTION__, __LINE__, extern_data->player_id, target->get_uuid());
-
-		if (target->check_pos_distance(req->target_pos[i]->pos_x, req->target_pos[i]->pos_z) != 0)
-		{
-			struct position *pos = player->get_pos();
-			LOG_ERR("%s %d: player[%lu] target[%lu] cur_pos[%.1f][%.1f] flash to [%.1f][%.1f]", __FUNCTION__, __LINE__,
-				player->get_uuid(), target->get_uuid(),
-				pos->pos_x, pos->pos_z, req->target_pos[i]->pos_x, req->target_pos[i]->pos_z);
-		}
-
-		target->set_pos(req->target_pos[i]->pos_x, req->target_pos[i]->pos_z);
-		sight_all.push_back(target);
-
-		cached_hit_effect_point[n_hit_effect] = &cached_hit_effect[n_hit_effect];
-		skill_hit_effect__init(&cached_hit_effect[n_hit_effect]);
-		uint32_t add_num = 0;
-		int32_t damage;
-		int32_t other_rate = count_other_skill_damage_effect(player, target);
-		damage = count_skill_total_damage(fight_type, ski_config,
-			lv_config1, pas_config, lv_config2,
-			player, target,
-			&cached_hit_effect[n_hit_effect].effect,
-			&cached_buff_id[n_buff],
-			&cached_buff_end_time[n_buff],
-			&add_num, other_rate);
-
-		life_steal += player->count_life_steal_effect(damage);
-		damage_return += player->count_damage_return(damage, target);
-
-		target->on_hp_changed(damage);
-
-		raid_struct *raid = player->get_raid();
-		if (raid)
-		{
-			raid->on_player_attack(player, target, damage);
-		}
-
-		player->on_attack(target);
-
-		LOG_DEBUG("%s: unit[%lu][%p] damage[%d] hp[%f]", __FUNCTION__, target->get_uuid(), target, damage, target->get_attr(PLAYER_ATTR_HP));
-
-		if (target->get_unit_type() == UNIT_TYPE_PLAYER)
-		{
-			check_qiecuo_finished(player, (player_struct *)target);
-		}
-
-
-		if (target->is_alive())
-		{
-			target->on_beattack(player, player->get_skill_id(), damage);
-		}
-		else
-		{
-			dead_all.push_back(target);
-		}
-
-		cached_hit_effect[n_hit_effect].playerid = req->target_playerid[i];
-		cached_hit_effect[n_hit_effect].n_add_buff = add_num;
-		cached_hit_effect[n_hit_effect].add_buff = &cached_buff_id[n_buff];
-//		cached_hit_effect[n_hit_effect].add_buff_end_time = &cached_buff_end_time[n_buff];
-		cached_hit_effect[n_hit_effect].hp_delta = damage;
-		cached_hit_effect[n_hit_effect].cur_hp = target->get_attr(PLAYER_ATTR_HP);
-//		cached_hit_effect[n_hit_effect].attack_pos = &cached_attack_pos[n_hit_effect];
-		cached_hit_effect[n_hit_effect].target_pos = &cached_target_pos[n_hit_effect];
-//		pos_data__init(&cached_attack_pos[n_hit_effect]);
-		pos_data__init(&cached_target_pos[n_hit_effect]);
-//		cached_attack_pos[n_hit_effect].pos_x = player->get_pos()->pos_x;
-//		cached_attack_pos[n_hit_effect].pos_z = player->get_pos()->pos_z;
-		cached_target_pos[n_hit_effect].pos_x = target->get_pos()->pos_x;
-		cached_target_pos[n_hit_effect].pos_z = target->get_pos()->pos_z;
-		n_buff += add_num;
-		++n_hit_effect;
-	}
-
+	player->deal_skill_hit_request(req);
 	skill_hit_request__free_unpacked(req, NULL);
-
-	if (n_hit_effect == 0)
-		return (0);
-
-	player->on_hp_changed(damage_return);	
-
-	if (!player->is_alive())
-	{
-		player->on_dead(player);
-	}
-
-//	CommAnswer resp;
-//	comm_answer__init(&resp);
-//	uint32_t ret;
-
-//	FAST_SEND_TO_CLIENT(MSG_ID_CAST_SKILL_ANSWER, comm_answer__pack);
-//	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_SKILL_HIT_ANSWER, comm_answer__pack, resp);
-
-	for (std::vector<unit_struct *>::const_iterator iter = dead_all.begin(); iter != dead_all.end(); ++iter)
-	{
-		unit_struct *target = (*iter);
-			//怪物死亡的话清空视野
-		target->on_dead(player);
-	}
-
-	SkillHitNotify notify;
-	skill_hit_notify__init(&notify);
-	notify.playerid = extern_data->player_id;
-	notify.owneriid = notify.playerid;
-	notify.skillid = player->get_skill_id();
-	notify.n_target_player = n_hit_effect;
-	notify.target_player = cached_hit_effect_point;
-
-	notify.attack_cur_hp = player->get_attr(PLAYER_ATTR_HP);
-	notify.life_steal = life_steal;
-	notify.damage_return = damage_return;
-
-	PosData attack_pos;
-	pos_data__init(&attack_pos);
-	attack_pos.pos_x = player->get_pos()->pos_x;
-	attack_pos.pos_z = player->get_pos()->pos_z;
-	notify.attack_pos = &attack_pos;
-
-	player->broadcast_to_many_sight(MSG_ID_SKILL_HIT_NOTIFY, &notify, (pack_func)skill_hit_notify__pack, sight_all);
-
-
-
 	return (0);
 }
 
@@ -2388,10 +2154,11 @@ static int handle_skill_cast_request(player_struct *player, EXTERN_DATA *extern_
 	if (comm_check_player_valid(player, extern_data->player_id) != 0)
 	{
 		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
-		CommAnswer resp;
-		comm_answer__init(&resp);
-		resp.result = -1;
-		fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_SKILL_CAST_ANSWER, comm_answer__pack, resp);
+		// CommAnswer resp;
+		// comm_answer__init(&resp);
+		// resp.result = -1;
+		// fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_SKILL_CAST_ANSWER, comm_answer__pack, resp);
+		send_comm_answer(MSG_ID_SKILL_CAST_ANSWER, -1, extern_data);		
 		return (-1);
 	}
 
@@ -2478,60 +2245,8 @@ static int handle_skill_cast_request(player_struct *player, EXTERN_DATA *extern_
 			pos->pos_x, pos->pos_z, req->cur_pos->pos_x, req->cur_pos->pos_z);
 	}
 
-	struct position new_pos;
-	new_pos.pos_x = req->cur_pos->pos_x;
-	new_pos.pos_z = req->cur_pos->pos_z;	
-	// 	//攻击的时候, 计算位移
-	if (active_config && active_config->FlyId != 0 && active_config->CanMove == 2)
-	{
-		struct SkillMoveTable *move_config = get_config_by_id(active_config->FlyId, &move_skill_config);
-		if (move_config && move_config->MoveType == 1/* && move_config->DmgType == 1 */&& move_config->MoveDistance > 0)
-		{
-			float x = req->direct_x - req->cur_pos->pos_x;
-			float z = req->direct_z - req->cur_pos->pos_z;
-			if (x * x + z * z > move_config->MoveDistance * move_config->MoveDistance)
-			{
-				LOG_ERR("%s %d: player[%lu] skill[%u] fly too much cur_pos[%.1f][%.1f] flash to [%.1f][%.1f], config distance = %lu",
-					__FUNCTION__, __LINE__, player->get_uuid(), req->skillid,
-					req->cur_pos->pos_x, req->cur_pos->pos_z, req->direct_x, req->direct_z, move_config->MoveDistance);
-			}
-			new_pos.pos_x = req->direct_x;
-			new_pos.pos_z = req->direct_z;			
-		}
-	}
-
-	player->set_pos_with_broadcast(new_pos.pos_x, new_pos.pos_z);
-	player->data->cur_skill.skill_id = req->skillid;
-//	player->data->cur_skill.direct_x = req->direct_x;
-//	player->data->cur_skill.direct_z = req->direct_z;
-	player->data->cur_skill.start_time = time_helper::get_cached_time();
-
-	SkillCastNotify notify;
-	PosData pos_data;
-//	struct position *pos = player->get_pos();
-	pos_data__init(&pos_data);
-	pos_data.pos_x = req->cur_pos->pos_x;
-	pos_data.pos_z = req->cur_pos->pos_z;
-	skill_cast_notify__init(&notify);
-	notify.playerid = extern_data->player_id;
-	notify.skillid = req->skillid;
-	notify.cur_pos = &pos_data;
-	notify.direct_x = req->direct_x;
-	notify.direct_z = req->direct_z;
-	notify.target_pos = req->target_pos;
-
-	player->interrupt();
-
-	player->broadcast_to_sight(MSG_ID_SKILL_CAST_NOTIFY, &notify, (pack_func)skill_cast_notify__pack, true);
+	player->deal_skill_cast_request(req, config, active_config);
 	skill_cast_request__free_unpacked(req, NULL);
-
-	if (config->IsMonster)
-	{
-		player->data->cur_skill.skill_id = 0;
-		monster_manager::create_call_monster(player, config);
-	}
-
-	player->clear_god_buff();
 
 	return (0);
 }
@@ -3707,6 +3422,102 @@ static int handle_bag_tidy_request(player_struct *player, EXTERN_DATA *extern_da
 	return 0;
 }
 
+struct BatchSellBase
+{
+	uint32_t pos;
+	uint32_t num;
+	uint32_t price;
+};
+
+//背包批量出售物品请求
+static int handle_bag_batch_sell_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	LOG_INFO("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	BagBatchSellRequest *req = bag_batch_sell_request__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-10);
+	}
+
+	std::vector<uint32_t> poses;
+	for (size_t i = 0; i < req->n_indexs; ++i)
+	{
+		poses.push_back(req->indexs[i]);
+	}
+
+	bag_batch_sell_request__free_unpacked(req, NULL);
+
+	int ret = 0;
+	do
+	{
+		std::vector<BatchSellBase> sell_infos;
+		for (std::vector<uint32_t>::iterator iter = poses.begin(); iter != poses.end(); ++iter)
+		{
+			uint32_t pos = *iter;
+			if (!(pos < player->data->bag_grid_num))
+			{
+				ret = ERROR_ID_BAG_POS;
+				LOG_ERR("[%s:%d] player[%lu] bag pos error, pos:%u, grid_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, pos, player->data->bag_grid_num);
+				break;
+			}
+
+			bag_grid_data& grid = player->data->bag[pos];
+			ItemsConfigTable *prop_config = get_config_by_id(grid.id, &item_config);
+			if (!prop_config)
+			{
+				ret = ERROR_ID_NO_CONFIG;
+				LOG_ERR("[%s:%d] player[%lu] get itemconfig failed, id:%u", __FUNCTION__, __LINE__, extern_data->player_id, grid.id);
+				break;
+			}
+
+			if (prop_config->Price == (uint64_t)-1)
+			{
+				ret = ERROR_ID_PROP_CAN_NOT_SELL;
+				LOG_ERR("[%s:%d] player[%lu] prop can not be sold", __FUNCTION__, __LINE__, extern_data->player_id);
+				break;
+			}
+
+			BatchSellBase info;
+			info.pos = pos;
+			info.num = grid.num;
+			info.price = prop_config->Price;
+			sell_infos.push_back(info);
+		}
+
+		if (ret != 0)
+		{
+			break;
+		}
+
+		uint32_t sell_coin = 0;
+		for (std::vector<BatchSellBase>::iterator iter = sell_infos.begin(); iter != sell_infos.end(); ++iter)
+		{
+			BatchSellBase &info = *iter;
+			player->del_item_by_pos(info.pos, info.num, MAGIC_TYPE_BAG_SELL);
+			sell_coin += info.price * info.num;
+		}
+		if (sell_coin > 0)
+		{
+			player->add_coin(sell_coin, MAGIC_TYPE_BAG_SELL);
+		}
+	} while(0);
+
+	CommAnswer resp;
+	comm_answer__init(&resp);
+
+	resp.result = ret;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_BAG_BATCH_SELL_ANSWER, comm_answer__pack, resp);
+
+	return 0;
+}
+
 static int handle_relive_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (!player->is_avaliable())
@@ -4377,6 +4188,13 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 					player->update_task_chapter_info();
 					player->add_achievement_progress(ACType_TASK_CHAPTER, config->ChapterId, 0, 0, 1);
 				}
+			}
+		}
+		else if (config->TaskType == TT_BRANCH)
+		{
+			if (config->FollowTask > 0)
+			{
+				player->accept_task(config->FollowTask, true);
 			}
 		}
 		else if (config->TaskType == TT_SHANGJIN)
@@ -12264,7 +12082,7 @@ static int handle_baguapai_move_additional_attr_request(player_struct *player, E
 			{
 				dest_same_attr_pos = i;
 			}
-			else if (card_info->additional_attrs[i].id == 0)
+			else if (card_info->additional_attrs[i].id == 0 && dest_empty_attr_pos < 0)
 			{
 				dest_empty_attr_pos = i;
 			}
@@ -17037,6 +16855,10 @@ static int handle_doufachang_challenge(player_struct *player, EXTERN_DATA *exter
 	player_struct *ai_player = player_manager::create_doufachang_ai_player(target);
 	assert(ai_player);
 	raid->player_enter_raid_impl(ai_player, MAX_TEAM_MEM, sg_3v3_pvp_raid_param2[1], sg_3v3_pvp_raid_param2[3]);
+
+	player->send_player_enter_to_aisrv();
+	ai_player->send_player_enter_to_aisrv();
+	ai_player->send_player_sight_add_to_aisrv(player);
 	return 0;
 }
 
@@ -21582,7 +21404,7 @@ static int handle_recieve_level_reward_request(player_struct* player, EXTERN_DAT
 
 		if (item_map.size() > 0 && !player->check_can_add_item_list(item_map))
 		{
-			ret = 190300007; //包裹空位不足
+			ret = 190500315; //包裹空位不足
 			LOG_ERR("[%s:%d] receive level reward faild, config error, player_id[%lu], reward_id[%u]", __FUNCTION__, __LINE__, extern_data->player_id, reward_id);
 			break;
 		}
@@ -21625,8 +21447,8 @@ static int handle_recieve_online_zhuanpan_request(player_struct* player, EXTERN_
 	
 	uint32_t online_time = player->data->online_reward.befor_online_time + (time_helper::get_cached_time() / 1000 - player->data->online_reward.sign_time); //当日在线总时长
 	uint32_t config_time = 0;
-	uint32_t sun_num;            //今日到目前为止可领奖次数(包过已经领取了的)
-	uint32_t surplus_num;        //今日剩余可领奖次数
+	uint32_t sun_num = 0;            //今日到目前为止可领奖次数(包过已经领取了的)
+	uint32_t surplus_num = 0;        //今日剩余可领奖次数
 	for(std::map<uint64_t, OnlineTimes*>::iterator itr = online_time_config.begin(); itr != online_time_config.end(); itr++)
 	{
 		config_time += itr->second->Times;
@@ -21635,7 +21457,7 @@ static int handle_recieve_online_zhuanpan_request(player_struct* player, EXTERN_
 		sun_num++;
 	}
 
-	if(sun_num < player->data->online_reward.use_reward_num || config_time == 0)
+	if(sun_num <= player->data->online_reward.use_reward_num || config_time == 0)
 	{
 		LOG_ERR("[%s:%d] online reward receive error, sun num > use num, sun num[%u], use_num[%u]", __FUNCTION__, __LINE__, sun_num, player->data->online_reward.use_reward_num, config_time);
 		return -2;
@@ -21666,6 +21488,7 @@ static int handle_recieve_online_zhuanpan_request(player_struct* player, EXTERN_
 					{
 						flag = true;
 						use_gailv += ite->second->Probability;
+						break;
 					}
 				}
 				if(flag == false)
@@ -21746,7 +21569,7 @@ static int handle_recieve_online_zhuanpan_request(player_struct* player, EXTERN_
 		{
 			if (!player->check_can_add_item(reward_config->ItemID, reward_config->ItemValue, NULL))
 			{
-				ret = 190300007; //包裹数量不足
+				ret = 190500315; //包裹数量不足
 			}
 		}
 
@@ -21770,8 +21593,8 @@ int handle_recieve_online_reward_request(player_struct* player, EXTERN_DATA* ext
 	
 	uint32_t online_time = player->data->online_reward.befor_online_time + (time_helper::get_cached_time() / 1000 - player->data->online_reward.sign_time); //当日在线总时长
 	uint32_t config_time = 0;
-	uint32_t sun_num;            //今日到目前为止可领奖次数(包过已经领取了的)
-	uint32_t surplus_num;        //今日剩余可领奖次数
+	uint32_t sun_num = 0;            //今日到目前为止可领奖次数(包过已经领取了的)
+	uint32_t surplus_num = 0;        //今日剩余可领奖次数
 	for(std::map<uint64_t, OnlineTimes*>::iterator itr = online_time_config.begin(); itr != online_time_config.end(); itr++)
 	{
 		config_time += itr->second->Times;
@@ -21844,7 +21667,7 @@ int handle_recieve_online_reward_request(player_struct* player, EXTERN_DATA* ext
 		}
 		if (!player->check_can_add_item(item_id, item_num, NULL))
 		{
-			ret = 190300007; //包裹数量不足
+			ret = 190500315; //包裹数量不足
 			break;
 		}
 
@@ -21855,17 +21678,47 @@ int handle_recieve_online_reward_request(player_struct* player, EXTERN_DATA* ext
 			if(player->data->online_reward.reward_table_id[i] == 0)
 			{
 				player->data->online_reward.reward_table_id[i] = player->data->online_reward.reward_id;
+				break;
 			}
 		}
 		player->data->online_reward.reward_id = 0;
 		player->add_item(item_id, item_num, MAGIC_TYPE_RECIEVE_ONLINE_REWARD);
 
 	}while(0);
-	CommAnswer resp;
-	comm_answer__init(&resp);
 
-	resp.result = ret;
-	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_ONLINE_REWARD_RECEIVE_ANSWER, comm_answer__pack, resp);
+	PlayerOnlineReceiveRewardAnswer answer;
+	player_online_receive_reward_answer__init(&answer);
+	PlayerOnlineRewardInfoNotify notify;
+	player_online_reward_info_notify__init(&notify);
+
+
+	notify.can_use_num = sun_num - player->data->online_reward.use_reward_num;
+
+	//在线时长超过领奖的总在线时长就置0
+	if(online_time < config_time)
+	{
+		notify.shengyu_time = time_helper::get_cached_time() / 1000 + (config_time - online_time);
+	}
+	else 
+	{
+		notify.shengyu_time = 0;
+	}
+
+	uint32_t reward_table_id[MAX_PLAYER_ONLINE_REWARD_NUM];
+	notify.reward_table_id = reward_table_id;
+	notify.n_reward_table_id = 0;
+	notify.sigin_time = player->data->online_reward.sign_time;
+	for(size_t i = 0; i < MAX_PLAYER_ONLINE_REWARD_NUM; i++)
+	{
+		if(player->data->online_reward.reward_table_id[i] == 0)
+			break;
+		reward_table_id[notify.n_reward_table_id] = player->data->online_reward.reward_table_id[notify.n_reward_table_id];
+		notify.n_reward_table_id++;
+	}
+
+	answer.result = ret;
+	answer.info = &notify;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_ONLINE_REWARD_RECEIVE_ANSWER, player_online_receive_reward_answer__pack, answer);
 	
 	return 0;
 }
@@ -21923,7 +21776,7 @@ int handle_player_sign_in_ervery_day_request(player_struct* player, EXTERN_DATA*
 		{
 			if (!player->check_can_add_item(item_id, item_num, NULL))
 			{
-				ret = 190300007; //包裹数量不足
+				ret = 190500315; //包裹数量不足
 				break;
 			}
 
@@ -21947,7 +21800,7 @@ int handle_player_sign_in_ervery_day_request(player_struct* player, EXTERN_DATA*
 			
 			if (!player->check_can_add_item(item_id, item_num, NULL))
 			{
-				ret = 190300007; //包裹数量不足
+				ret = 190500315; //包裹数量不足
 				break;
 			}
 
@@ -21972,7 +21825,6 @@ int handle_player_sign_in_ervery_day_request(player_struct* player, EXTERN_DATA*
 		}
 		player->data->sigin_in_data.month_sum += 1;
 		player->data->sigin_in_data.yilou_sum -= 1;
-		player->data->sigin_in_data.buqian_sum -= 1;
 		player->add_item(item_id, item_num, MAGIC_TYPE_GIVE_QIANDAO_REWARD);
 	
 	}while(0);
@@ -22101,7 +21953,7 @@ int handle_sign_in_receive_leiji_reward_request(player_struct* player, EXTERN_DA
 		}
 		if (!player->check_can_add_item(leiji_config->ItemID, leiji_config->ItemValue, NULL))
 		{
-			ret = 190300007; //包裹数量不足
+			ret = 190500315; //包裹数量不足
 			break;
 		}
 
@@ -22274,6 +22126,7 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_BAG_USE_REQUEST, handle_bag_use_request);
 	add_msg_handle(MSG_ID_BAG_STACK_REQUEST, handle_bag_stack_request);
 	add_msg_handle(MSG_ID_BAG_TIDY_REQUEST, handle_bag_tidy_request);
+	add_msg_handle(MSG_ID_BAG_BATCH_SELL_REQUEST, handle_bag_batch_sell_request);
 
 	add_msg_handle(MSG_ID_RELIVE_REQUEST, handle_relive_request);
 	add_msg_handle(MSG_ID_CHAT_REQUEST, handle_chat_request);

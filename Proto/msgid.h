@@ -108,6 +108,8 @@
 #define MSG_ID_BAG_SHOW_REQUEST 10313         //展示物品请求 ShowItemRequest
 #define MSG_ID_BAG_SHOW_ANSWER 10314          //展示物品 ShowItemAnswer
 #define MSG_ID_ITEM_FLOW_TO_BAG_NOTIFY 10315  //道具飞向背包通知 ItemFlowToBagNotify
+#define MSG_ID_BAG_BATCH_SELL_REQUEST 10316   //背包批量出售物品请求 BagBatchSellRequest
+#define MSG_ID_BAG_BATCH_SELL_ANSWER 10317    //背包批量出售物品应答 comm_answer
 
 //角色信息
 #define MSG_ID_PLAYER_ATTR_NOTIFY 10400         //属性变更通知 playerattrnotify
@@ -940,12 +942,12 @@
 #define MSG_ID_RECEIVE_LEVEL_REWARD_ANSWER   14303    //玩家领取等级奖励回复 comm_answer
 
 //在线奖励
-#define MSG_ID_ONLINE_REWARD_INFO_REQUEST    14400    //玩家请求在线奖励信息
+#define MSG_ID_ONLINE_REWARD_INFO_REQUEST    14400    //玩家请求在线奖励信息 NULL 
 #define MSG_ID_ONLINE_REWARD_INFO_NOTIFY     14401    //玩家奖励信息通知 PlayerOnlineRewardInfoNotify
-#define MSG_ID_ONLINE_REWARD_ZHUAN_REQUEST   14402    //点击领奖开始转盘请求
+#define MSG_ID_ONLINE_REWARD_ZHUAN_REQUEST   14402    //点击领奖开始转盘请求 NULL 
 #define MSG_ID_ONLINE_REWARD_ZHUAN_ANSWER    14403    //点击领奖开始转盘回复 PlayerOnlineRewardZhuanAnswer
-#define MSG_ID_ONLINE_REWARD_RECEIVE_REQUEST 14404    //玩家请求领取在线奖励
-#define MSG_ID_ONLINE_REWARD_RECEIVE_ANSWER  14405    //玩家请求领取在线奖励回复 comm_answer
+#define MSG_ID_ONLINE_REWARD_RECEIVE_REQUEST 14404    //玩家请求领取在线奖励 NULL
+#define MSG_ID_ONLINE_REWARD_RECEIVE_ANSWER  14405    //玩家请求领取在线奖励回复 PlayerOnlineReceiveRewardAnswer
 
 //每日签到
 #define MSG_ID_SIGNIN_EVERYDAY_INFO_REQUEST				 14500    //每日签到信息请求

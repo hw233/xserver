@@ -636,6 +636,16 @@ int chat_mod::do_one_gm_cmd( player_struct *player, int argc, char *argv[] )
 			fast_send_msg_base( &conn_node_gamesrv::connecter, &extern_data, SERVER_PROTO_TRADE_LOT_INSERT, data_len, 0 );
 		}
 	}
+	else if ( argc >= 1 && strcasecmp( argv[ 0 ], "show_server_time" ) == 0 )
+	{
+		time_t now_time_r = time_helper::get_cached_time() / 1000;
+		tm mow_time_tm;
+		localtime_r(&now_time_r, &mow_time_tm);
+		char buff[ 501 ];
+		snprintf( buff, sizeof(buff), "后台时间:%d-%d-%d-%d-%d-%d", mow_time_tm.tm_year + 1900, mow_time_tm.tm_mon + 1, mow_time_tm.tm_mday, mow_time_tm.tm_hour, mow_time_tm.tm_min, mow_time_tm.tm_sec);
+		send_chat_content( player,buff );
+		
+	}
 	else
 	{
 		return ( -1 );
@@ -757,7 +767,20 @@ void chat_mod::gm_add_monster( player_struct *player, int val )
 
 void chat_mod::gm_accept_task( player_struct *player, int task_id ) { player->accept_task( task_id, false ); }
 
-void chat_mod::gm_add_equip( player_struct *player, int type ) { player->add_equip( type, MAGIC_TYPE_GM ); }
+void chat_mod::gm_add_equip( player_struct *player, int type )
+{
+	if (type == 0)
+	{
+		for (int i = ET_WEAPON; i <= ET_NECKLACE; ++i)
+		{
+			player->add_equip( i, MAGIC_TYPE_GM );
+		}
+	}
+	else
+	{
+		player->add_equip( type, MAGIC_TYPE_GM );
+	}
+}
 
 void chat_mod::gm_add_pet_monster( player_struct *player )
 {

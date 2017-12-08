@@ -56,6 +56,7 @@ public:
 	static unsigned get_cur_month_by_year(time_t now);
 	static int      get_date_by_time(int32_t* year, int32_t* month, int32_t* day, time_t now=0);  /// 根据时间戳返回年/月/日
 	static bool		is_same_hour(time_t t1, time_t t2);
+	static uint32_t             get_month_day_by_month(uint32_t month);  //根据月份获取本月的天数
 };
 
 #endif

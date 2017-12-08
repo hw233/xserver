@@ -1,4 +1,5 @@
 #include "raid.h"
+#include "ai.pb-c.h"
 #include "so_game_srv/scene_manager.h"
 #include "so_game_srv/sight_space_manager.h"
 #include "msgid.h"
@@ -40,7 +41,6 @@ int raid_struct::init_script_data()
 	int ret = init_common_script_data(m_config->DungeonPass, &SCRIPT_DATA.script_data);
 	assert(ret == 0);
 	raid_set_ai_interface(8);	
-	init_scene_struct(m_id, false, lv);
 	LOG_INFO("%s: raid[%u][%lu]", __FUNCTION__, data->ID, data->uuid);
 	return (0);
 }
@@ -78,7 +78,15 @@ int	raid_struct::init_wanyaogu_data()
 //	assert(WANYAOGU_DATA.m_control_config);
 	
 	raid_set_ai_interface(3);
-	init_scene_struct(m_id, false, lv);	
+
+	if (m_config->DynamicLevel == 0)
+	{
+		init_scene_struct(m_id, false, 0);		
+	}
+	else
+	{
+		init_scene_struct(m_id, false, lv);
+	}
 	stop_monster_ai();
 	return (0);
 }
@@ -90,20 +98,17 @@ int raid_struct::init_guoyu_raid_data(player_struct *player)
 		return -1;
 	}
 	raid_set_ai_interface(7);
-	init_scene_struct(m_id, true, lv);
 	return 0;
 }
 
 int raid_struct::init_guild_raid_data()
 {
 	raid_set_ai_interface(11);
-	init_scene_struct(m_id, true, lv);
 	return 0;
 }
 int raid_struct::init_guild_final_raid_data()
 {
 	raid_set_ai_interface(12);
-	init_scene_struct(m_id, true, lv);
 	return 0;
 }
 
@@ -130,11 +135,15 @@ int	raid_struct::init_pvp_raid_data_5()
 int raid_struct::init_special_raid_data(player_struct *player)
 {
 	raid_set_ai_interface(0);
+	uint32_t _lv = lv;
+	if (m_config->DynamicLevel == 0)
+		_lv = 0;
 
 	switch (m_config->DengeonRank)
 	{
 		case DUNGEON_TYPE_YAOSHI:
 			init_guoyu_raid_data(player);
+			init_scene_struct(m_id, true, _lv);
 			break;
 		case DUNGEON_TYPE_RAND_MASTER://万妖谷副本
 			init_wanyaogu_data();
@@ -147,40 +156,43 @@ int raid_struct::init_special_raid_data(player_struct *player)
 			break;
 		case DUNGEON_TYPE_SCRIPT:
 			init_script_data();
+			init_scene_struct(m_id, false, _lv);
 			break;
 		case DUNGEON_TYPE_GUILD_RAID:
 			init_guild_raid_data();
+			init_scene_struct(m_id, true, _lv);
 			break;
 		case DUNGEON_TYPE_GUILD_FINAL_RAID:
 			init_guild_final_raid_data();
+			init_scene_struct(m_id, true, _lv);
 			break;
 		case 13:
 		{
 			raid_set_ai_interface(13);
-			init_scene_struct(m_id, true, lv);
+			init_scene_struct(m_id, true, _lv);
 		}
 			break;
 		case 14:
 		{
 			raid_set_ai_interface(14);
-			init_scene_struct(m_id, true, lv);
+			init_scene_struct(m_id, true, _lv);
 		}
 			break;
 		case DUNGEON_TYPE_BATTLE:
 		case DUNGEON_TYPE_BATTLE_NEW:
 		{
 			raid_set_ai_interface(15);
-			init_scene_struct(m_id, true, lv);
+			init_scene_struct(m_id, true, _lv);
 		}
 			break;
 		case DUNGEON_TYPE_MAOGUI_LEYUAN:
 		{
 			raid_set_ai_interface(18);
-			init_scene_struct(m_id, false, lv);
+			init_scene_struct(m_id, false, _lv);
 		}
 			break;
 		default:
-			init_scene_struct(m_id, true, lv);			
+			init_scene_struct(m_id, true, _lv);			
 			break;
 	}
 	return (0);
@@ -309,11 +321,15 @@ void raid_struct::stop_player_ai()
 	{
 		if (m_player[i] && m_player[i]->ai_data)
 		{
+			assert(get_entity_type(m_player[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER);
 			m_player[i]->ai_data->stop_ai = true;
+			m_player[i]->send_msgid_to_aisrv(AI_SERVER_MSG_ID__STOP_AI);			
 		}
 		if (m_player2[i] && m_player2[i]->ai_data)
 		{
+			assert(get_entity_type(m_player2[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER);			
 			m_player2[i]->ai_data->stop_ai = true;
+			m_player2[i]->send_msgid_to_aisrv(AI_SERVER_MSG_ID__STOP_AI);
 		}
 	}
 }
@@ -324,11 +340,15 @@ void raid_struct::start_player_ai()
 	{
 		if (m_player[i] && m_player[i]->ai_data)
 		{
+			assert(get_entity_type(m_player[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER);						
 			m_player[i]->ai_data->stop_ai = false;
+			m_player[i]->send_msgid_to_aisrv(AI_SERVER_MSG_ID__START_AI);
 		}
 		if (m_player2[i] && m_player2[i]->ai_data)
 		{
+			assert(get_entity_type(m_player2[i]->get_uuid()) == ENTITY_TYPE_AI_PLAYER);						
 			m_player2[i]->ai_data->stop_ai = false;
+			m_player2[i]->send_msgid_to_aisrv(AI_SERVER_MSG_ID__START_AI);			
 		}
 	}
 }

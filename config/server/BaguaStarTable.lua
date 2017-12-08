@@ -11,7 +11,7 @@ local BaguaStarTable = {
 		},
 	[310201001] = {
 		['ID'] = 310201001,
-		['AttributeValue'] = 0.1,
+		['AttributeValue'] = 0.36,
 		['StarItem'] = {201060012},
 		['StarNum'] = {10},
 		['StarCoin'] = 2000,
@@ -21,7 +21,7 @@ local BaguaStarTable = {
 		},
 	[310202001] = {
 		['ID'] = 310202001,
-		['AttributeValue'] = 0.12,
+		['AttributeValue'] = 0.41,
 		['StarItem'] = {201060012},
 		['StarNum'] = {15},
 		['StarCoin'] = 3000,
@@ -31,7 +31,7 @@ local BaguaStarTable = {
 		},
 	[310203001] = {
 		['ID'] = 310203001,
-		['AttributeValue'] = 0.15,
+		['AttributeValue'] = 0.46,
 		['StarItem'] = {201060012},
 		['StarNum'] = {20},
 		['StarCoin'] = 4000,
@@ -41,7 +41,7 @@ local BaguaStarTable = {
 		},
 	[310204001] = {
 		['ID'] = 310204001,
-		['AttributeValue'] = 0.18,
+		['AttributeValue'] = 0.52,
 		['StarItem'] = {201060012,201060011},
 		['StarNum'] = {30,2},
 		['StarCoin'] = 5000,
@@ -51,7 +51,7 @@ local BaguaStarTable = {
 		},
 	[310205001] = {
 		['ID'] = 310205001,
-		['AttributeValue'] = 0.21,
+		['AttributeValue'] = 0.59,
 		['StarItem'] = {201060012,201060011},
 		['StarNum'] = {30,5},
 		['StarCoin'] = 6000,
@@ -61,7 +61,7 @@ local BaguaStarTable = {
 		},
 	[310206001] = {
 		['ID'] = 310206001,
-		['AttributeValue'] = 0.24,
+		['AttributeValue'] = 0.66,
 		['StarItem'] = {201060012,201060011},
 		['StarNum'] = {30,10},
 		['StarCoin'] = 7000,

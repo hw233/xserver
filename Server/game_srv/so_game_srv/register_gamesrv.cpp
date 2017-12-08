@@ -263,6 +263,7 @@ int reload()
     unit_struct::init_buff_pool();
     init_sight_unit_info_point();
     init_heap(&g_minheap, 250000, minheap_cmp_map_block, minheap_get_map_block_index, minheap_set_map_block_index);
+	closed_map_block = (struct map_block **)malloc(sizeof(void *) * 250000);	
     monster_manager::reinit_monster_min_heap();
     monster_manager::reinit_boss_min_heap();
     buff_manager::reinit_min_heap();
@@ -318,6 +319,7 @@ int install(int argc, char **argv)
     unit_struct::init_buff_pool();
     init_sight_unit_info_point();
     init_heap(&g_minheap, 250000, minheap_cmp_map_block, minheap_get_map_block_index, minheap_set_map_block_index);
+	closed_map_block = (struct map_block **)malloc(sizeof(void *) * 250000);	
 
     //	g_config_data.loadData();
     // 500 * 500

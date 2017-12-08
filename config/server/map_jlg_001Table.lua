@@ -198,7 +198,7 @@
         ['PointPosX'] = 205.8121,
         ['PointPosY'] = 47.45,
         ['PointPosZ'] = 426.6452,
-        ['Yaw'] = 194.6104,
+        ['Yaw'] = 194.6105,
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }
@@ -210,7 +210,7 @@
         ['PointPosX'] = 249.6,
         ['PointPosY'] = 47.31,
         ['PointPosZ'] = 437.79,
-        ['Yaw'] = 194.9039,
+        ['Yaw'] = 194.904,
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }
@@ -750,7 +750,7 @@
         ['PointPosX'] = 389.79,
         ['PointPosY'] = 18.86102,
         ['PointPosZ'] = 195.43,
-        ['Yaw'] = 180.2341,
+        ['Yaw'] = 180.2342,
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }
@@ -1779,18 +1779,18 @@
         ['uid'] = 1000152,
         ['ID'] = 154000034,
         ['ResType'] = "Collection",
-        ['PointPosX'] = 108.1088,
+        ['PointPosX'] = 104.51,
         ['PointPosY'] = 17.19104,
-        ['PointPosZ'] = 210.2226,
+        ['PointPosZ'] = 236.06,
         ['Yaw'] = 0,
     },
     [1000153] = {
         ['uid'] = 1000153,
         ['ID'] = 154000034,
         ['ResType'] = "Collection",
-        ['PointPosX'] = 106.1135,
+        ['PointPosX'] = 101.13,
         ['PointPosY'] = 16.87492,
-        ['PointPosZ'] = 211.9462,
+        ['PointPosZ'] = 229.13,
         ['Yaw'] = 0,
     },
     [1000154] = {
@@ -1890,7 +1890,7 @@
         ['PointPosX'] = 262.0993,
         ['PointPosY'] = 23.31075,
         ['PointPosZ'] = 93.11273,
-        ['Yaw'] = 181.8039,
+        ['Yaw'] = 181.804,
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }
@@ -3211,6 +3211,18 @@
         ['PointPosY'] = 19.05686,
         ['PointPosZ'] = 181.3936,
         ['Yaw'] = 0,
+    },
+    [1000286] = {
+        ['uid'] = 1000286,
+        ['ID'] = 152040164,
+        ['ResType'] = "Npc",
+        ['PointPosX'] = 239.2352,
+        ['PointPosY'] = 18.8976,
+        ['PointPosZ'] = 289.8983,
+        ['Yaw'] = 243.3123,
+        ['Level'] = 1,
+        ['TargetInfoList'] = {
+        }
     },
 }
 return map_jlg_001

@@ -1234,8 +1234,8 @@ void ShangjinManage::RefreshTask(player_struct *player)
 				player->data->shangjin.task[i].id, player->data->shangjin.task[i].quality);
 			continue;
 		}
-		player->data->shangjin.task[i].coin = table->MoneyReward[player->data->shangjin.task[i].quality - 1];
-		player->data->shangjin.task[i].exp = table->ExpReward[player->data->shangjin.task[i].quality - 1];		
+		player->data->shangjin.task[i].coin = table->MoneyReward[player->data->shangjin.task[i].quality - 1] * player->get_coin_rate();
+		player->data->shangjin.task[i].exp = table->ExpReward[player->data->shangjin.task[i].quality - 1] * player->get_exp_rate();		
 		
 		// TaskRewardTable *reward_config = get_config_by_id(awardId, &task_reward_config);
 		// if (reward_config != NULL)

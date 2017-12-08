@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include "time_helper.h"
 #include "game_config.h"
+#include "scene_manager.h"
 extern "C"
 {
 #include "lua.h"
@@ -661,13 +662,23 @@ int get_scene_birth_pos(uint32_t scene_id, float *pos_x, float *pos_y, float *po
 }
 
 #ifndef __AI_SRV__
-#include "scene_manager.h"
 int add_all_scene()
 {
 	std::map<uint64_t, struct SceneResTable *>::iterator iter;
 	for (iter = scene_res_config.begin(); iter != scene_res_config.end(); ++iter)
 	{
 		if (!is_raid_scene_id(iter->first) && !is_guild_scene_id(iter->first))
+			scene_manager::add_scene(iter->first);
+	}
+	return (0);
+}
+#else
+int add_all_scene()
+{
+	std::map<uint64_t, struct SceneResTable *>::iterator iter;
+	for (iter = scene_res_config.begin(); iter != scene_res_config.end(); ++iter)
+	{
+		if (is_raid_scene_id(iter->first) && !is_guild_scene_id(iter->first))		
 			scene_manager::add_scene(iter->first);
 	}
 	return (0);

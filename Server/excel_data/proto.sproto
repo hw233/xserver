@@ -109,6 +109,7 @@
 	Li 16 : integer
 	Min 17 : integer
 	Ling 18 : integer
+	SkillLevelID 19 : *integer
 }
 
 .ActorAttributeTable {
@@ -497,6 +498,7 @@
 	ItemRewardSection 33 : *integer
 	ExpReward 34 : integer
 	MoneyReward 35 : integer
+	DynamicLevel 36 : integer
 }
 
 .EquipmentTable {
@@ -770,6 +772,8 @@
 	ActivityReward 6 : integer
 	BasicsReward 7 : integer
 	MaxLevel 8 : integer
+	ExpReward 9 : integer
+	MoneyReward 10 : integer
 }
 
 .SpecialtyLevelTable {

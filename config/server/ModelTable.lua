@@ -190,8 +190,8 @@ local ModelTable = {
 		['BindPos'] = '',
 		['BindEffect'] = {''},
 		['Scale'] = .70,
-		['PointX'] = .00,
-		['PointY'] = .00,
+		['PointX'] = -52.00,
+		['PointY'] = 194.00,
 		['TalkScale'] = 1.10,
 		['TalkPointY'] = .00
 		},
@@ -727,6 +727,20 @@ local ModelTable = {
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00
 		},
+	[130200040] = {
+		['ModelId'] = 130200040,
+		['ModelPath'] = 'Prefabs/Actor/npc_043',
+		['TopH'] = 7.00,
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00,
+		['PointX'] = .00,
+		['PointY'] = .00,
+		['TalkScale'] = 1.00,
+		['TalkPointY'] = .00
+		},
 	[130400003] = {
 		['ModelId'] = 130400003,
 		['ModelPath'] = 'Prefabs/Actor/mw_d_001',
@@ -1030,8 +1044,8 @@ local ModelTable = {
 		['BindPos'] = '',
 		['BindEffect'] = {''},
 		['Scale'] = 1.00,
-		['PointX'] = .00,
-		['PointY'] = .00,
+		['PointX'] = 38.00,
+		['PointY'] = 316.00,
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00
 		},
@@ -2308,6 +2322,48 @@ local ModelTable = {
 		['PointY'] = .00,
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00
+		},
+	[130600018] = {
+		['ModelId'] = 130600018,
+		['ModelPath'] = 'Prefabs/Effect/ef_sc_fireworks',
+		['TopH'] = 1.00,
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00,
+		['PointX'] = .00,
+		['PointY'] = .00,
+		['TalkScale'] = 1.00,
+		['TalkPointY'] = .00
+		},
+	[130600019] = {
+		['ModelId'] = 130600019,
+		['ModelPath'] = 'Prefabs/Effect/ef_fog-1',
+		['TopH'] = 1.00,
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00,
+		['PointX'] = .00,
+		['PointY'] = .00,
+		['TalkScale'] = 1.00,
+		['TalkPointY'] = .00
+		},
+	[130600020] = {
+		['ModelId'] = 130600020,
+		['ModelPath'] = 'Prefabs/Actor/gw_065',
+		['TopH'] = 1.60,
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = .30,
+		['PointX'] = -47.00,
+		['PointY'] = 317.00,
+		['TalkScale'] = .25,
+		['TalkPointY'] = 1.54
 		}
 	}
 return ModelTable

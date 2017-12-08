@@ -173,13 +173,21 @@ void normal_raid_ai_finished(raid_struct *raid)
 		uint32_t num = raid->m_player[i]->get_raid_reward_count(raid->data->ID);
 		if (raid->m_control_config->RewardTime > num)
 		{
+			int _gold = gold;
+			int _exp = exp;
+			if (raid->m_config->DynamicLevel)
+			{
+				_gold *= raid->m_player[i]->get_coin_rate();
+				_exp *= raid->m_player[i]->get_exp_rate();				
+			}
+			
 			notify.n_item_id = notify.n_item_num = n_item;
-			notify.gold = gold;
-			notify.exp = exp;
+			notify.gold = _gold;
+			notify.exp = _exp;
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RAID_FINISHED_NOTIFY, raid_finish_notify__pack, notify);
 
-			raid->m_player[i]->add_exp(exp, MAGIC_TYPE_RAID);
-			raid->m_player[i]->add_coin(gold, MAGIC_TYPE_RAID);
+			raid->m_player[i]->add_exp(_exp, MAGIC_TYPE_RAID);
+			raid->m_player[i]->add_coin(_gold, MAGIC_TYPE_RAID);
 			raid->m_player[i]->add_item_list_otherwise_send_mail(item_list, MAGIC_TYPE_RAID, 270200002, NULL, true);
 			raid->m_player[i]->add_raid_reward_count(raid->data->ID);
 			raid->m_player[i]->check_activity_progress(AM_RAID, raid->data->ID);

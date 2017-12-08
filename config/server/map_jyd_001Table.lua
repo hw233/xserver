@@ -114,7 +114,7 @@
         ['PointPosX'] = 342.05,
         ['PointPosY'] = 20.05,
         ['PointPosZ'] = 453.42,
-        ['Yaw'] = 193.1812,
+        ['Yaw'] = 193.1813,
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }
@@ -2026,6 +2026,63 @@
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }
+    },
+    [1000181] = {
+        ['uid'] = 1000181,
+        ['ID'] = 152140133,
+        ['ResType'] = "Npc",
+        ['PointPosX'] = 61.11652,
+        ['PointPosY'] = 20.0012,
+        ['PointPosZ'] = 221.9926,
+        ['Yaw'] = 92.45,
+        ['Level'] = 1,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000182] = {
+        ['uid'] = 1000182,
+        ['ID'] = 154100303,
+        ['ResType'] = "Collection",
+        ['PointPosX'] = 87.43777,
+        ['PointPosY'] = 19.37326,
+        ['PointPosZ'] = 221.9401,
+        ['Yaw'] = 0,
+    },
+    [1000183] = {
+        ['uid'] = 1000183,
+        ['ID'] = 154100303,
+        ['ResType'] = "Collection",
+        ['PointPosX'] = 88.14398,
+        ['PointPosY'] = 19.36681,
+        ['PointPosZ'] = 219.8853,
+        ['Yaw'] = 0,
+    },
+    [1000184] = {
+        ['uid'] = 1000184,
+        ['ID'] = 154100303,
+        ['ResType'] = "Collection",
+        ['PointPosX'] = 90.2235,
+        ['PointPosY'] = 19.26003,
+        ['PointPosZ'] = 218.075,
+        ['Yaw'] = 0,
+    },
+    [1000185] = {
+        ['uid'] = 1000185,
+        ['ID'] = 154100303,
+        ['ResType'] = "Collection",
+        ['PointPosX'] = 88.12875,
+        ['PointPosY'] = 19.32646,
+        ['PointPosZ'] = 218.3849,
+        ['Yaw'] = 0,
+    },
+    [1000186] = {
+        ['uid'] = 1000186,
+        ['ID'] = 154100303,
+        ['ResType'] = "Collection",
+        ['PointPosX'] = 86.94467,
+        ['PointPosY'] = 19.43376,
+        ['PointPosZ'] = 220.5424,
+        ['Yaw'] = 0,
     },
 }
 return map_jyd_001

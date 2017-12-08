@@ -177,6 +177,9 @@ static int handle_doufachang_load_player_answer(EXTERN_DATA *extern_data)
 
 	raid->player_enter_raid_impl(player1, 0, sg_3v3_pvp_raid_param1[1], sg_3v3_pvp_raid_param1[3]);
 	raid->player_enter_raid_impl(player, MAX_TEAM_MEM, sg_3v3_pvp_raid_param2[1], sg_3v3_pvp_raid_param2[3]);
+	player1->send_player_enter_to_aisrv();
+	player->send_player_enter_to_aisrv();
+	player->send_player_sight_add_to_aisrv(player1);
 	return 0;
 }
 

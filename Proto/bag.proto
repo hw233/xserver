@@ -79,3 +79,10 @@ message ItemFlowToBagNotify
 	repeated ItemData itemList = 1; //道具列表
 }
 
+//背包批量出售物品请求
+message BagBatchSellRequest
+{
+	repeated uint32 indexs = 1; //格子服务器索引列表
+}
+
+

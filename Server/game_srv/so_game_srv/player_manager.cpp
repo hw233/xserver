@@ -370,8 +370,6 @@ player_struct * player_manager::create_doufachang_ai_player(DOUFACHANG_LOAD_PLAY
 	ret->data->status = ONLINE;
 	ret->down_horse();
 
-	ret->send_player_enter_to_aisrv();	
-
 	player_manager_all_ai_players_id[player_id] = ret;
 	return ret;
 }
@@ -435,8 +433,6 @@ player_struct *player_manager::create_doufachang_ai_player(player_struct *player
 		//登陆成功
 	ret->data->status = ONLINE;
 	ret->down_horse();
-
-	ret->send_player_enter_to_aisrv();
 
 	player_manager_all_ai_players_id[player_id] = ret;
 	return ret;

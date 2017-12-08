@@ -15,6 +15,8 @@ enum ai_server_msg_id
 	ATTR_CHANGED = 10;  //属性变更
 	SIGHT_CHANGED = 11; //视野变更
 	ADD_BUFF = 12;    //添加buff
+	START_AI = 13;    //开启AI
+	STOP_AI = 14;    //停止AI	
 }
 
 message ai_player_enter

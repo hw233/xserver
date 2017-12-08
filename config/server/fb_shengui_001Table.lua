@@ -356,5 +356,17 @@
         ['TargetInfoList'] = {
         }
     },
+    [1000031] = {
+        ['uid'] = 1000031,
+        ['ID'] = 152030049,
+        ['ResType'] = "Npc",
+        ['PointPosX'] = -49.53,
+        ['PointPosY'] = 0.1229927,
+        ['PointPosZ'] = -15.47,
+        ['Yaw'] = 0,
+        ['Level'] = 1,
+        ['TargetInfoList'] = {
+        }
+    },
 }
 return fb_shengui_001

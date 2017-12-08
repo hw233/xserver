@@ -1,6 +1,8 @@
 #ifndef _PLAYER_H__
 #define _PLAYER_H__
 #include <stdint.h>
+#include "cast_skill.pb-c.h"
+#include "move_direct.pb-c.h"
 #include <stdio.h>
 #include <set>
 #include <list>
@@ -1103,11 +1105,16 @@ public:
 
 		//ai服务器消息发送
 	void send_player_enter_to_aisrv();
-	void send_player_leave_to_aisrv();
+	void send_msgid_to_aisrv(uint16_t msgid);
 	void send_player_attr_to_aisrv();
-	void send_player_move_to_aisrv();
-	void send_player_move_start_to_aisrv();
-	void send_player_move_stop_to_aisrv();				
+	void send_player_move_to_aisrv(MoveNotify *nty);
+	void send_player_move_start_to_aisrv(MoveStartNotify *nty);
+	void send_player_move_stop_to_aisrv(MoveStopNotify *nty);
+	void send_player_sight_add_to_aisrv(player_struct *add_player);
+
+		//
+	void deal_skill_cast_request(SkillCastRequest *req, SkillTable *config, struct ActiveSkillTable *active_config);
+	void deal_skill_hit_request(SkillHitRequest *req);	
 
 	//掉落
 	bool give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty = true, uint32_t mail_id = 0, std::vector<char *> *mail_args = NULL); //发放掉落奖励
@@ -1117,6 +1124,9 @@ public:
 	int deal_level_up(uint32_t level_old, uint32_t level_new);
 	int get_total_exp(void);
 	int sub_exp(uint32_t val, uint32_t statis_id, bool isNty = true); //减少经验
+
+	double get_exp_rate(void);
+	double get_coin_rate(void);		
 
 	//头像
 	int add_head_icon(uint32_t icon_id);
@@ -1417,9 +1427,9 @@ public:
 	int player_signin_reward_info_notify();
 	int init_player_signin_leiji_reward_data();
 	//每日更新签到奖励信息
-	int refresh_player_signin_info_every_day();
+	void refresh_player_signin_info_every_day(uint64_t befor_day_time);
 	//每月更新签到奖励信息
-	int refresh_player_signin_info_every_month();
+	int refresh_player_signin_info_every_month(uint64_t befor_day_time);
 	//活跃度达到要求加补签次数
 	int player_huo_yue_du_add_sign_in_num(uint32_t befor_huoyue, uint32_t now_huoyue);
 

@@ -3,7 +3,7 @@
 
 #include "conn_node.h"
 #include "lua_config.h"
-//处理和db服务器连接的对象
+//处理和ai服务器连接的对象
 class conn_node_aisrv: public conn_node_base
 {
 public:

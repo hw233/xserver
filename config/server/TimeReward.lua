@@ -50,9 +50,9 @@ local TimeReward = {
 		},
 	[580200008] = {
 		['ID'] = 580200008,
-		['Type'] = 2,
-		['ItemID'] = 201010001,
-		['ItemValue'] = 50000,
+		['Type'] = 1,
+		['ItemID'] = 201070017,
+		['ItemValue'] = 2,
 		['Probability'] = 3000
 		}
 	}

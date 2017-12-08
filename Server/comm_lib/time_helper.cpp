@@ -463,3 +463,26 @@ uint32_t time_helper::get_time(int year, int month, int day)
 	
 // 	return now;
 // }
+
+//根据月份获取本月的天数
+uint32_t time_helper::get_month_day_by_month(uint32_t month)
+{
+	if(month <= 0 || month > 12)
+	{
+		month = get_cur_month_by_year(0);
+	}
+
+	if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+	{
+		return 31;
+	}
+	else if(month == 2)
+	{
+		return 28;
+	}
+	else 
+	{
+		return 30;
+	}
+
+}

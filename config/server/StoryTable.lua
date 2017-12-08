@@ -294,6 +294,22 @@ local StoryTable = {
 		['PlayerInvincible'] = 1,
 		['StoryTime'] = 15.00,
 		['FileID'] = 'FB_BBJ_START'
+		},
+	[450000039] = {
+		['ID'] = 450000039,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 19.50,
+		['FileID'] = 'MAP_JLG_MF'
+		},
+	[450000040] = {
+		['ID'] = 450000040,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 13.00,
+		['FileID'] = 'JLG_SHANZEI'
 		}
 	}
 return StoryTable

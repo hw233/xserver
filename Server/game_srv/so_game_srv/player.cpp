@@ -1,5 +1,7 @@
 //
 #include <unistd.h>
+#include "so_game_srv/count_skill_damage.h"
+#include "so_game_srv/cached_hit_effect.h"
 #include "so_game_srv/skill.h"
 #include "conn_node_aisrv.h"
 #include "ai.pb-c.h"
@@ -7462,6 +7464,29 @@ int player_struct::deal_level_up(uint32_t level_old, uint32_t level_new)
 	return 0;
 }
 
+double player_struct::get_exp_rate(void)
+{
+	uint32_t player_job = data->attrData[PLAYER_ATTR_JOB];
+	uint32_t player_level = (uint32_t)data->attrData[PLAYER_ATTR_LEVEL];
+	ActorLevelTable *config = get_actor_level_config(player_job, player_level);
+	if (!config)
+	{
+		return 1.0;
+	}
+	return config->QueLvExp / 100.0;
+}
+double player_struct::get_coin_rate(void)
+{
+	uint32_t player_job = data->attrData[PLAYER_ATTR_JOB];
+	uint32_t player_level = (uint32_t)data->attrData[PLAYER_ATTR_LEVEL];
+	ActorLevelTable *config = get_actor_level_config(player_job, player_level);
+	if (!config)
+	{
+		return 1.0;
+	}
+	return config->QueLvCoin / 100.0;
+}
+
 int player_struct::get_total_exp(void)
 {
 	uint32_t total_exp = 0;
@@ -7469,7 +7494,7 @@ int player_struct::get_total_exp(void)
 	uint32_t player_level = (uint32_t)data->attrData[PLAYER_ATTR_LEVEL];
 	for (uint32_t level = 1; level < player_level; ++level)
 	{
-		ActorLevelTable *config = get_actor_level_config(player_job, player_level);
+		ActorLevelTable *config = get_actor_level_config(player_job, level);
 		if (!config)
 		{
 			break;
@@ -8226,7 +8251,8 @@ int player_struct::execute_task_event(uint32_t event_id, uint32_t event_class, b
 				bool success = false;
 				for (uint64_t i = 0; i < config->EventNum; ++i)
 				{
-					monster_struct *monster = monster_manager::create_sight_space_monster(sight_space, scene, monster_config->MonsterID, monster_config->MonsterLevel, monster_config->PointX, monster_config->PointZ);
+					monster_struct *monster = monster_manager::create_sight_space_monster(sight_space, scene,
+						monster_config->MonsterID, get_attr(PLAYER_ATTR_LEVEL), monster_config->PointX, monster_config->PointZ);
 					if (!monster)
 					{
 						LOG_ERR("[%s:%d] player[%lu] create monster failed, create_id:%lu", __FUNCTION__, __LINE__, data->player_id, config->EventTarget);
@@ -13600,7 +13626,6 @@ void player_struct::refresh_oneday_job()
 	}
 	data->travel_round_num = 0;
 	refresh_player_online_reward_info();
-	player_online_reward_info_notify();
 	notify_travel_task_info();
 }
 
@@ -13609,6 +13634,7 @@ void player_struct::refresh_shop_daily(void)
 	uint32_t now = time_helper::get_cached_time() / 1000;
 	uint32_t hour = time_helper::get_cur_hour(data->next_time_refresh_oneday_job / 1000);
 	bool day_reset = false, week_reset = false, month_reset = false;
+	uint64_t befor_day_time = data->shop_reset.next_day_time;
 	if (now >= data->shop_reset.next_day_time) //每天
 	{
 		data->shop_reset.next_day_time = time_helper::nextOffsetTime(hour * 3600, now);
@@ -13701,14 +13727,14 @@ void player_struct::refresh_shop_daily(void)
 		memset(data->active_reward, 0, sizeof(data->active_reward));
 		memset(data->chivalry_activity, 0, sizeof(data->chivalry_activity));
 
-		//更新签到数据
-		refresh_player_signin_info_every_day();
+		//更新签到每日数据,要在更新月数据之前调用
+		refresh_player_signin_info_every_day(befor_day_time);
 	}
 	notify_activity_info(&ext_data);
 	if(month_reset)
 	{
-		
-		refresh_player_signin_info_every_month();
+		//更新签到月数据
+		refresh_player_signin_info_every_month(befor_day_time);
 	}
 }
 
@@ -16609,8 +16635,10 @@ void player_struct::check_title_condition(uint32_t type, uint32_t target1, uint3
 
 int player_struct::init_hero_challenge_data()
 {
-	for(size_t j = 0; j < MAX_HERO_CHALLENGE_MONSTER_NUM && data->my_hero_info[j].id != 0; j++)
+	for(size_t j = 0; j < MAX_HERO_CHALLENGE_MONSTER_NUM;)
 	{
+		if(data->my_hero_info[j].id == 0)
+			break;
 		if(hero_challenge_config.find(data->my_hero_info[j].id) == hero_challenge_config.end())
 		{
 			if(j + 1 < MAX_HERO_CHALLENGE_MONSTER_NUM)
@@ -16618,6 +16646,10 @@ int player_struct::init_hero_challenge_data()
 				memmove(&data->my_hero_info[j], &data->my_hero_info[j+1], sizeof(HeroChallengeInfo)*(MAX_HERO_CHALLENGE_MONSTER_NUM - j - 1));
 			}
 			memset(&data->my_hero_info[MAX_HERO_CHALLENGE_MONSTER_NUM - 1], 0, sizeof(HeroChallengeInfo));
+		}
+		else 
+		{
+			j++;
 		}
 	}
 
@@ -18038,6 +18070,303 @@ uint32_t player_struct::count_life_steal_effect(int32_t damage)
 	return ret;
 }
 
+void player_struct::deal_skill_cast_request(SkillCastRequest *req, SkillTable *config, struct ActiveSkillTable *active_config)
+{
+	struct position new_pos;
+	new_pos.pos_x = req->cur_pos->pos_x;
+	new_pos.pos_z = req->cur_pos->pos_z;	
+	// 	//攻击的时候, 计算位移
+	if (active_config && active_config->FlyId != 0 && active_config->CanMove == 2)
+	{
+		struct SkillMoveTable *move_config = get_config_by_id(active_config->FlyId, &move_skill_config);
+		if (move_config && move_config->MoveType == 1/* && move_config->DmgType == 1 */&& move_config->MoveDistance > 0)
+		{
+			float x = req->direct_x - req->cur_pos->pos_x;
+			float z = req->direct_z - req->cur_pos->pos_z;
+			if (x * x + z * z > move_config->MoveDistance * move_config->MoveDistance)
+			{
+				LOG_ERR("%s %d: player[%lu] skill[%u] fly too much cur_pos[%.1f][%.1f] flash to [%.1f][%.1f], config distance = %lu",
+					__FUNCTION__, __LINE__, get_uuid(), req->skillid,
+					req->cur_pos->pos_x, req->cur_pos->pos_z, req->direct_x, req->direct_z, move_config->MoveDistance);
+			}
+			new_pos.pos_x = req->direct_x;
+			new_pos.pos_z = req->direct_z;			
+		}
+	}
+
+	set_pos_with_broadcast(new_pos.pos_x, new_pos.pos_z);
+	data->cur_skill.skill_id = req->skillid;
+//	data->cur_skill.direct_x = req->direct_x;
+//	data->cur_skill.direct_z = req->direct_z;
+	data->cur_skill.start_time = time_helper::get_cached_time();
+
+	SkillCastNotify notify;
+	PosData pos_data;
+//	struct position *pos = get_pos();
+	pos_data__init(&pos_data);
+	pos_data.pos_x = req->cur_pos->pos_x;
+	pos_data.pos_z = req->cur_pos->pos_z;
+	skill_cast_notify__init(&notify);
+	notify.playerid = data->player_id;
+	notify.skillid = req->skillid;
+	notify.cur_pos = &pos_data;
+	notify.direct_x = req->direct_x;
+	notify.direct_z = req->direct_z;
+	notify.target_pos = req->target_pos;
+
+	interrupt();
+
+	broadcast_to_sight(MSG_ID_SKILL_CAST_NOTIFY, &notify, (pack_func)skill_cast_notify__pack, true);
+
+	if (config->IsMonster)
+	{
+		data->cur_skill.skill_id = 0;
+		monster_manager::create_call_monster(this, config);
+	}
+
+	clear_god_buff();
+}
+
+static bool skill_can_attack(struct SkillTable *ski_config, UNIT_FIGHT_TYPE fight_type, player_struct *player, unit_struct *target)
+{
+	for (uint32_t i = 0; i < ski_config->n_TargetType; ++i)
+	{
+		switch (ski_config->TargetType[i])
+		{
+			case 1://敌方
+				if (fight_type == UNIT_FIGHT_TYPE_ENEMY)
+					return true;
+				break;
+			case 101://自身
+				if (fight_type == UNIT_FIGHT_TYPE_MYSELF)
+					return true;
+				break;
+			case 102://友方
+				if (fight_type == UNIT_FIGHT_TYPE_FRIEND)
+					return true;
+				break;
+		}
+	}
+	return false;
+}
+
+void player_struct::deal_skill_hit_request(SkillHitRequest *req)
+{
+	int n_hit_effect = 0;
+	int n_buff = 0;
+	std::vector<unit_struct *> sight_all;
+	std::vector<unit_struct *> dead_all;
+	sight_all.push_back(this);
+
+	struct SkillLvTable *lv_config1, *lv_config2;
+	struct PassiveSkillTable *pas_config;
+	struct SkillTable *ski_config;
+	struct ActiveSkillTable *act_config;
+
+//	uint32_t skill_lv = m_skill.GetSkillLevel(get_skill_id());
+//	if (skill_lv < 1)
+	if (is_in_buff3())
+	{
+		get_skill_configs(1, get_skill_id(), &ski_config, &lv_config1, &pas_config, &lv_config2, &act_config);		
+	}
+	else
+	{
+		skill_struct *skill_struct = m_skill.GetSkillStructFromFuwen(get_skill_id());
+		if (!skill_struct)
+		{
+			LOG_ERR("%s %d: player[%lu] skill[%u] no config", __FUNCTION__, __LINE__, data->player_id, get_skill_id());
+			return;
+		}
+		int skill_lv;
+		int skill_id;
+		skill_struct->get_skill_id_and_lv(m_skill.m_index, &skill_id, &skill_lv);
+		get_skill_configs(skill_lv, skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, &act_config);
+	}
+
+		// 校验目标人数
+	if (req->n_target_playerid > ski_config->MaxCount)
+	{
+		LOG_ERR("%s %d: player[%lu] skill[%u] target[%zu] too much, ski_config->MaxCount = [%lu]", __FUNCTION__, __LINE__,
+			data->player_id, get_skill_id(), req->n_target_playerid, ski_config->MaxCount);
+		return;
+	}
+	
+
+	if (!lv_config1 && !lv_config2)
+	{
+		LOG_ERR("%s %d: player[%lu] skill[%u] no config", __FUNCTION__, __LINE__, data->player_id, get_skill_id());
+		return;
+	}
+	
+
+		//技能可能带位移，而这个命中的位置发送的是释放技能时候的位置，所以不能用来做位置校正
+	// if (act_config && act_config->CanMove)
+	// {
+	// 		//旋风斩可以持续移动
+	// }
+	// else
+	// {
+	// 	set_pos_with_broadcast(req->attack_pos->pos_x, req->attack_pos->pos_z);
+	// }
+
+	uint32_t life_steal = 0;
+	uint32_t damage_return = 0;
+
+	for (size_t i = 0; i < req->n_target_playerid; ++i)
+	{
+		unit_struct *target = unit_struct::get_unit_by_uuid(req->target_playerid[i]);
+		if (!target)
+			continue;
+//		if (target->buff_state & BUFF_STATE_GOD)
+//			continue;
+//		if (!check_can_attack(player, target))
+
+		if (!target->is_alive())
+		{
+			LOG_ERR("%s %d: %lu kill already dead unit %lu", __FUNCTION__, __LINE__, data->player_id, target->get_uuid());
+			continue;
+		}
+
+		UNIT_FIGHT_TYPE fight_type = get_unit_fight_type(this, target);
+		if (!skill_can_attack(ski_config, fight_type, this, target))
+		{
+			LOG_ERR("%s: camp[%d] camp[%d] type[%d] type[%d] pktype[%d][%d] buff_state[%d] fight_type[%d] skill[%lu]",
+				__FUNCTION__, get_camp_id(), target->get_camp_id(),
+				get_entity_type(get_uuid()), get_entity_type(target->get_uuid()),
+				(int)(get_attr(PLAYER_ATTR_PK_TYPE)), (int)(target->get_attr(PLAYER_ATTR_PK_TYPE)),
+				target->buff_state, fight_type, ski_config->ID);
+//			get_unit_fight_type(player, target);
+			LOG_ERR("%s %d: %lu can not attack unit %lu", __FUNCTION__, __LINE__, data->player_id, target->get_uuid());
+			continue;
+		}
+
+			//检查距离，场景
+		if (scene != target->scene)
+		{
+			continue;
+		}
+
+//		LOG_DEBUG("%s %d: player[%lu] attack target %lu", __FUNCTION__, __LINE__, extern_data->player_id, target->get_uuid());
+
+		if (target->check_pos_distance(req->target_pos[i]->pos_x, req->target_pos[i]->pos_z) != 0)
+		{
+			struct position *pos = get_pos();
+			LOG_ERR("%s %d: player[%lu] target[%lu] cur_pos[%.1f][%.1f] flash to [%.1f][%.1f]", __FUNCTION__, __LINE__,
+				get_uuid(), target->get_uuid(),
+				pos->pos_x, pos->pos_z, req->target_pos[i]->pos_x, req->target_pos[i]->pos_z);
+		}
+
+		target->set_pos(req->target_pos[i]->pos_x, req->target_pos[i]->pos_z);
+		sight_all.push_back(target);
+
+		cached_hit_effect_point[n_hit_effect] = &cached_hit_effect[n_hit_effect];
+		skill_hit_effect__init(&cached_hit_effect[n_hit_effect]);
+		uint32_t add_num = 0;
+		int32_t damage;
+		int32_t other_rate = count_other_skill_damage_effect(this, target);
+		damage = count_skill_total_damage(fight_type, ski_config,
+			lv_config1, pas_config, lv_config2,
+			this, target,
+			&cached_hit_effect[n_hit_effect].effect,
+			&cached_buff_id[n_buff],
+			&cached_buff_end_time[n_buff],
+			&add_num, other_rate);
+
+		life_steal += count_life_steal_effect(damage);
+		damage_return += count_damage_return(damage, target);
+
+		target->on_hp_changed(damage);
+
+		raid_struct *raid = get_raid();
+		if (raid)
+		{
+			raid->on_player_attack(this, target, damage);
+		}
+
+		on_attack(target);
+
+		LOG_DEBUG("%s: unit[%lu][%p] damage[%d] hp[%f]", __FUNCTION__, target->get_uuid(), target, damage, target->get_attr(PLAYER_ATTR_HP));
+
+		if (target->get_unit_type() == UNIT_TYPE_PLAYER)
+		{
+			check_qiecuo_finished(this, (player_struct *)target);
+		}
+
+
+		if (target->is_alive())
+		{
+			target->on_beattack(this, get_skill_id(), damage);
+		}
+		else
+		{
+			dead_all.push_back(target);
+		}
+
+		cached_hit_effect[n_hit_effect].playerid = req->target_playerid[i];
+		cached_hit_effect[n_hit_effect].n_add_buff = add_num;
+		cached_hit_effect[n_hit_effect].add_buff = &cached_buff_id[n_buff];
+//		cached_hit_effect[n_hit_effect].add_buff_end_time = &cached_buff_end_time[n_buff];
+		cached_hit_effect[n_hit_effect].hp_delta = damage;
+		cached_hit_effect[n_hit_effect].cur_hp = target->get_attr(PLAYER_ATTR_HP);
+//		cached_hit_effect[n_hit_effect].attack_pos = &cached_attack_pos[n_hit_effect];
+		cached_hit_effect[n_hit_effect].target_pos = &cached_target_pos[n_hit_effect];
+//		pos_data__init(&cached_attack_pos[n_hit_effect]);
+		pos_data__init(&cached_target_pos[n_hit_effect]);
+//		cached_attack_pos[n_hit_effect].pos_x = get_pos()->pos_x;
+//		cached_attack_pos[n_hit_effect].pos_z = get_pos()->pos_z;
+		cached_target_pos[n_hit_effect].pos_x = target->get_pos()->pos_x;
+		cached_target_pos[n_hit_effect].pos_z = target->get_pos()->pos_z;
+		n_buff += add_num;
+		++n_hit_effect;
+	}
+
+	if (n_hit_effect == 0)
+	{
+		return;
+	}
+
+	on_hp_changed(damage_return);	
+
+	if (!is_alive())
+	{
+		on_dead(this);
+	}
+
+//	CommAnswer resp;
+//	comm_answer__init(&resp);
+//	uint32_t ret;
+
+//	FAST_SEND_TO_CLIENT(MSG_ID_CAST_SKILL_ANSWER, comm_answer__pack);
+//	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_SKILL_HIT_ANSWER, comm_answer__pack, resp);
+
+	for (std::vector<unit_struct *>::const_iterator iter = dead_all.begin(); iter != dead_all.end(); ++iter)
+	{
+		unit_struct *target = (*iter);
+			//怪物死亡的话清空视野
+		target->on_dead(this);
+	}
+
+	SkillHitNotify notify;
+	skill_hit_notify__init(&notify);
+	notify.playerid = data->player_id;
+	notify.owneriid = notify.playerid;
+	notify.skillid = get_skill_id();
+	notify.n_target_player = n_hit_effect;
+	notify.target_player = cached_hit_effect_point;
+
+	notify.attack_cur_hp = get_attr(PLAYER_ATTR_HP);
+	notify.life_steal = life_steal;
+	notify.damage_return = damage_return;
+
+	PosData attack_pos;
+	pos_data__init(&attack_pos);
+	attack_pos.pos_x = get_pos()->pos_x;
+	attack_pos.pos_z = get_pos()->pos_z;
+	notify.attack_pos = &attack_pos;
+
+	broadcast_to_many_sight(MSG_ID_SKILL_HIT_NOTIFY, &notify, (pack_func)skill_hit_notify__pack, sight_all);
+}
+
 uint32_t player_struct::count_damage_return(int32_t damage, unit_struct *unit)
 {
 	uint32_t ret = unit_struct::count_damage_return(damage, unit);
@@ -18049,8 +18378,10 @@ uint32_t player_struct::count_damage_return(int32_t damage, unit_struct *unit)
 //玩家登陆的时候初始化玩家等级奖励数据
 int player_struct::init_player_level_reward_data()
 {
-	for(size_t j = 0; j < MAX_PLAYER_LEVEL_REWARD_NUM && data->my_level_reward[j].id != 0; j++)
+	for(size_t j = 0; j < MAX_PLAYER_LEVEL_REWARD_NUM;)
 	{
+		if(data->my_level_reward[j].id == 0)
+			break;
 		if(level_reward_config.find(data->my_level_reward[j].id) == level_reward_config.end())
 		{
 			if(j + 1 < MAX_PLAYER_LEVEL_REWARD_NUM)
@@ -18058,6 +18389,10 @@ int player_struct::init_player_level_reward_data()
 				memmove(&data->my_level_reward[j], &data->my_level_reward[j+1], sizeof(PlayerLevelReward)*(MAX_PLAYER_LEVEL_REWARD_NUM - j - 1));
 			}
 			memset(&data->my_level_reward[MAX_PLAYER_LEVEL_REWARD_NUM - 1], 0, sizeof(PlayerLevelReward));
+		}
+		else 
+		{
+			j++;
 		}
 	}
 
@@ -18126,7 +18461,8 @@ void player_struct::send_player_enter_to_aisrv()
 	nty.scene_id = data->scene_id;
 	nty.pos_x = get_pos()->pos_x;
 	nty.pos_z = get_pos()->pos_z;
-	nty.ai_type = ai_data->player_ai_index;
+	if (ai_data)
+		nty.ai_type = ai_data->player_ai_index;
 
 	uint32_t id[MAX_MY_SKILL_NUM];
 	uint32_t lv[MAX_MY_SKILL_NUM];
@@ -18149,39 +18485,57 @@ void player_struct::send_player_enter_to_aisrv()
 	nty.n_skill_id = nty.n_skill_lv = n;	
 	send_to_aisrv(get_uuid(), AI_SERVER_MSG_ID__PLAYER_ENTER, ai_player_enter__pack, nty);
 }
-void player_struct::send_player_leave_to_aisrv()
+
+void player_struct::send_player_sight_add_to_aisrv(player_struct *add_player)
 {
-	send_to_aisrv(get_uuid(), AI_SERVER_MSG_ID__PLAYER_LEAVE);	
+	uint64_t player_id[1];
+	player_id[0] = add_player->get_uuid();
+	AiSightChangedNotify nty;
+	ai_sight_changed_notify__init(&nty);
+	nty.n_add_player = 1;
+	nty.add_player = player_id;
+	send_to_aisrv(get_uuid(), AI_SERVER_MSG_ID__SIGHT_CHANGED, ai_sight_changed_notify__pack, nty);	
+}
+
+void player_struct::send_msgid_to_aisrv(uint16_t msgid)
+{
+	send_to_aisrv(get_uuid(), msgid);
 }
 void player_struct::send_player_attr_to_aisrv()
 {
 }
-void player_struct::send_player_move_to_aisrv()
+void player_struct::send_player_move_to_aisrv(MoveNotify *nty)
 {
+	send_to_aisrv(get_uuid(), AI_SERVER_MSG_ID__MOVE, move_notify__pack, *nty);
 }
-void player_struct::send_player_move_start_to_aisrv()
+void player_struct::send_player_move_start_to_aisrv(MoveStartNotify *nty)
 {
+	send_to_aisrv(get_uuid(), AI_SERVER_MSG_ID__MOVE_START, move_start_notify__pack, *nty);	
 }
-void player_struct::send_player_move_stop_to_aisrv()
+void player_struct::send_player_move_stop_to_aisrv(MoveStopNotify *nty)
 {
+	send_to_aisrv(get_uuid(), AI_SERVER_MSG_ID__MOVE_STOP, move_stop_notify__pack, *nty);	
 }
 #else
+void player_struct::send_player_sight_add_to_aisrv(player_struct *add_player)
+{
+}
 void player_struct::send_player_enter_to_aisrv()
 {
 }
-void player_struct::send_player_leave_to_aisrv()
+void player_struct::send_msgid_to_aisrv(uint16_t msgid)
 {
 }
 void player_struct::send_player_attr_to_aisrv()
 {
 }
-void player_struct::send_player_move_to_aisrv()
+void player_struct::send_player_move_to_aisrv(MoveNotify *nty)
 {
 }
-void player_struct::send_player_move_start_to_aisrv()
+void player_struct::send_player_move_start_to_aisrv(MoveStartNotify *nty)
 {
 }
-void player_struct::send_player_move_stop_to_aisrv()
+void player_struct::send_player_move_stop_to_aisrv(MoveStopNotify *nty)
 {
 }
 #endif	
@@ -18200,7 +18554,7 @@ int player_struct::player_online_reward_info_notify()
 
 	uint32_t online_time = data->online_reward.befor_online_time + (time_helper::get_cached_time() / 1000 - data->online_reward.sign_time); //当日在线总时长
 	uint32_t config_time = 0;
-	uint32_t sun_num;            //今日到目前为止可领奖次数(包过已经领取了的)
+	uint32_t sun_num = 0;            //今日到目前为止可领奖次数(包过已经领取了的)
 	for(std::map<uint64_t, OnlineTimes*>::iterator itr = online_time_config.begin(); itr != online_time_config.end(); itr++)
 	{
 		config_time += itr->second->Times;
@@ -18220,7 +18574,7 @@ int player_struct::player_online_reward_info_notify()
 	//在线时长超过领奖的总在线时长就置0
 	if(online_time < config_time)
 	{
-		notify.shengyu_time = config_time - online_time;
+		notify.shengyu_time = time_helper::get_cached_time() / 1000 + (config_time - online_time);
 	}
 	else 
 	{
@@ -18340,7 +18694,7 @@ int player_struct::init_player_signin_leiji_reward_data()
 		return -2;
 	}
 
-	for(size_t j = 0; j < MAX_PLAYER_SINGN_EVERYDAY_REWARD_NUM; j++)
+	for(size_t j = 0; j < MAX_PLAYER_SINGN_EVERYDAY_REWARD_NUM;)
 	{
 		if(data->sigin_in_data.grand_reward[j].id == 0)
 			break;
@@ -18351,6 +18705,10 @@ int player_struct::init_player_signin_leiji_reward_data()
 				memmove(&data->sigin_in_data.grand_reward[j], &data->sigin_in_data.grand_reward[j+1], sizeof(SignInEveryDayCumulative)*(MAX_PLAYER_SINGN_EVERYDAY_REWARD_NUM - j - 1));
 			}
 			memset(&data->sigin_in_data.grand_reward[MAX_PLAYER_SINGN_EVERYDAY_REWARD_NUM - 1], 0, sizeof(SignInEveryDayCumulative));
+		}
+		else 
+		{
+			j++;
 		}
 	}
 	for(std::map<uint64_t, struct SignMonth*>::iterator ite = leiji_reward_config.begin(); ite != leiji_reward_config.end(); ite++)
@@ -18380,21 +18738,53 @@ int player_struct::init_player_signin_leiji_reward_data()
 }
 
 //每日更新签到奖励信息
-int player_struct::refresh_player_signin_info_every_day()
+void player_struct::refresh_player_signin_info_every_day(uint64_t befor_day_time)
 {
-	if(data->sigin_in_data.today_sign == false)
+	if(befor_day_time == 0)
+		return;
+
+	uint64_t now_time = time_helper::get_cached_time() / 1000;
+	if(befor_day_time > now_time)
 	{
-		data->sigin_in_data.yilou_sum +=1;
+		LOG_ERR("[%s:%d] 更新签到漏签次数失败", __FUNCTION__, __LINE__);
+		return;
 	}
-	else 
+
+	//计算总共的漏签次数
+	uint32_t day_num = (now_time - befor_day_time) / (24*3600);
+	if(day_num == 0)
 	{
-		data->sigin_in_data.today_sign = true;
+		if(data->sigin_in_data.today_sign == false)
+		{
+			data->sigin_in_data.yilou_sum +=1;
+		}
+		else 
+		{
+			data->sigin_in_data.today_sign = false;
+		}
+		
 	}
-	return 0;
+	else{
+		if(data->sigin_in_data.today_sign == false)
+		{
+			data->sigin_in_data.yilou_sum += (1 + day_num);
+
+		}
+		else 
+		{
+			data->sigin_in_data.yilou_sum += day_num;
+			data->sigin_in_data.today_sign = false;
+		}
+	
+	}
+
+
+	player_signin_reward_info_notify();
+	return ;
 }
 
 //每月更新签到奖励信息
-int player_struct::refresh_player_signin_info_every_month()
+int player_struct::refresh_player_signin_info_every_month(uint64_t befor_day_time)
 {
 	//跨月了
 	time_t now_time = time_helper::get_cached_time() / 1000;
@@ -18408,6 +18798,13 @@ int player_struct::refresh_player_signin_info_every_month()
 		LOG_ERR("[%s:%d] 初始化每日签到月份失败,错误的月份数据month[%u]", __FUNCTION__, __LINE__, month);
 		return -1;
 	}
+
+	data->sigin_in_data.today_sign = false;
+	data->sigin_in_data.month_sum = 0;
+	data->sigin_in_data.yilou_sum = 0;
+	data->sigin_in_data.buqian_sum = 0;
+	data->sigin_in_data.activity_sum = 0;
+
 	tm now_tm;
 	localtime_r(&now_time, &now_tm);
 	if(now_tm.tm_mday == 1 && now_tm.tm_hour < 5)
@@ -18428,12 +18825,36 @@ int player_struct::refresh_player_signin_info_every_month()
 		data->sigin_in_data.cur_month = month;
 	}
 
-	data->sigin_in_data.today_sign = false;
-	data->sigin_in_data.month_sum = 0;
-	data->sigin_in_data.yilou_sum = 0;
-	data->sigin_in_data.buqian_sum = 0;
-	data->sigin_in_data.activity_sum = 0;
+
+	//不是创角时的更新计算当月补签遗漏次数
+	uint32_t month_day = time_helper::get_month_day_by_month(data->sigin_in_data.cur_month);
+	if(befor_day_time !=0)
+	{
+		//一号
+		if(now_tm.tm_mday == 1)
+		{
+			if(now_tm.tm_hour < 5)
+			{
+				data->sigin_in_data.yilou_sum = month_day - 1; 
+			}
+		}
+		else 
+		{
+			if(now_tm.tm_hour < 5)
+			{
+				data->sigin_in_data.yilou_sum = now_tm.tm_mday - 2;
+			}
+			else 
+			{
+				data->sigin_in_data.yilou_sum = now_tm.tm_mday - 1;
+			}
+		
+		}
+	
+	}
+
 	init_player_signin_leiji_reward_data();
+	player_signin_reward_info_notify();
 	return 0;
 }
 
@@ -18456,11 +18877,13 @@ int player_struct::player_huo_yue_du_add_sign_in_num(uint32_t befor_huoyue, uint
 	{
 		if(data->sigin_in_data.activity_sum + buqian_num > sum_huoyue_num)
 		{
+			data->sigin_in_data.buqian_sum += (sum_huoyue_num - data->sigin_in_data.activity_sum); 
 			data->sigin_in_data.activity_sum = sum_huoyue_num;
 		}
 		else 
 		{
 			data->sigin_in_data.activity_sum += buqian_num;
+			data->sigin_in_data.buqian_sum += buqian_num; 
 		}
 	}
 

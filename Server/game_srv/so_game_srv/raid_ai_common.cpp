@@ -371,11 +371,29 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 	{
 		case SCRIPT_EVENT_CREATE_MONSTER_NUM: //刷新配置表内指定怪物
 			for (size_t i = 0; i + 1 < config->n_Parameter1; i = i+2)
-				monster_manager::create_monster_by_id(raid, config->Parameter1[i], config->Parameter1[i + 1], raid->lv);
+			{
+				if (raid->m_config->DynamicLevel == 0)
+				{
+					monster_manager::create_monster_by_id(raid, config->Parameter1[i], config->Parameter1[i + 1], 0);					
+				}
+				else
+				{
+					monster_manager::create_monster_by_id(raid, config->Parameter1[i], config->Parameter1[i + 1], raid->lv);
+				}
+			}
 			return true;
 		case SCRIPT_EVENT_CREATE_MONSTER_ALL: //刷新配置表内所有指定怪物
 			for (size_t i = 0; i < config->n_Parameter1; ++i)
-				monster_manager::create_monster_by_id(raid, config->Parameter1[i], 9999, raid->lv);
+			{
+				if (raid->m_config->DynamicLevel == 0)
+				{
+					monster_manager::create_monster_by_id(raid, config->Parameter1[i], 9999, 0);					
+				}
+				else
+				{
+					monster_manager::create_monster_by_id(raid, config->Parameter1[i], 9999, raid->lv);
+				}
+			}
 			return true;
 		case SCRIPT_EVENT_CREATE_COLLECT_NUM: //刷新配置表内指定采集物
 			for (size_t i = 0; i + 1 < config->n_Parameter1; i = i+2)
@@ -770,7 +788,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 				monster_level =  raid->ruqin_data.level;
 				raid->ruqin_data.monster_boshu += 1;
 			}
-			else 
+			else if (raid->m_config->DynamicLevel != 0)
 			{
 				monster_level = raid->lv;
 			}
@@ -789,7 +807,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 				monster_level =  raid->ruqin_data.level;
 				raid->ruqin_data.monster_boshu += 1;
 			}
-			else 
+			else if (raid->m_config->DynamicLevel != 0)
 			{
 				monster_level = raid->lv;
 			}
@@ -824,7 +842,15 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 			uint32_t pos_x = atoi(config->Parameter2[0]);
 			uint32_t pos_z = atoi(config->Parameter2[1]);
 			float direct = atoi(config->Parameter2[2]);
-			monster_manager::create_monster_at_pos(raid, monster_id, raid->lv, pos_x, pos_z, 0, NULL, direct);
+
+				if (raid->m_config->DynamicLevel == 0)
+				{
+					monster_manager::create_monster_at_pos(raid, monster_id, 0, pos_x, pos_z, 0, NULL, direct);
+				}
+				else
+				{			
+					monster_manager::create_monster_at_pos(raid, monster_id, raid->lv, pos_x, pos_z, 0, NULL, direct);
+				}
 		}
 			return true;
 		default:

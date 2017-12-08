@@ -113,6 +113,7 @@ int scene_struct::init_scene_struct(uint64_t sceneid, bool create_monster, int l
 	{
 		free(g_minheap.nodes);
 		init_heap(&g_minheap, max_size, g_minheap.cmp, g_minheap.get, g_minheap.set);
+		free(closed_map_block);
 		closed_map_block = (struct map_block **)malloc(sizeof(void *) * max_size);
 	}
 
