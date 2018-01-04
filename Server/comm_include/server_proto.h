@@ -56,6 +56,7 @@ enum SERVER_PROTO {
     SERVER_PROTO_CHANGE_ZHENYING_REQUEST,        //改变阵营
     SERVER_PROTO_ADD_ZHENYING_KILL_REQUEST,      //
     SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST,  //
+	SERVER_PROTO_UPDATE_TOWER_REQUEST,  //
 
     SERVER_PROTO_FRIEND_CHAT,                    //好友聊天
     SERVER_PROTO_FRIEND_ADD_ENEMY,               //好友服增加仇人
@@ -116,6 +117,7 @@ enum SERVER_PROTO {
     SERVER_PROTO_GUILD_RUQIN_BOSS_CREAT_NOTIFY,            //帮会入侵boss创建通知game_srv到guild_srv
     SERVER_PROTO_GUILD_RUQIN_ADD_COUNT,
     SERVER_PROTO_GUILD_RUQIN_SYNC_COUNT,
+    SERVER_PROTO_GUILD_SYNC_DONATE,                        //同步帮会募捐
 
     //排行榜服消息
     SERVER_PROTO_RANK_SYNC_RANK = 2000,              //同步排名
@@ -123,6 +125,7 @@ enum SERVER_PROTO {
     SERVER_PROTO_REFRESH_PLAYER_REDIS_INFO,          //更新redis缓存用户信息
     SERVER_PROTO_WORLDBOSS_PLAYER_REDIS_INFO,        // 玩家世界boss数据存redis
     SERVER_PROTO_WORLDBOSS_BIRTH_UPDATA_REDIS_INFO,  //世界boss出生时间点,更新数据(非服务器启动时的出生)
+    SERVER_PROTO_REFRESH_GUILD_REDIS_INFO,           //更新redis缓存帮会信息
 
     //斗法场服消息
     SERVER_PROTO_DOUFACHANG_CHALLENGE_REQUEST = 2200,  //挑战  doufachang -> game_srv
@@ -157,6 +160,12 @@ enum SERVER_PROTO {
     SERVER_PROTO_RAID_TEAM_ENTER_REQUEST,    //进入raid服 game_srv -> raid_srv
     SERVER_PROTO_RAID_LEAVE_REQUEST,         //离开raid服 raid_srv -> game_srv
     SERVER_PROTO_ATTR_CHANGED_REQUEST,       //属性变更  raid_srv -> game_srv
+	
+    //活动服消息
+    SERVER_PROTO_ACTIVITYSRV_REWARD_REQUEST = 2600,        //活动服发奖请求
+    SERVER_PROTO_ACTIVITYSRV_REWARD_ANSWER,                //活动服发奖应答
+    SERVER_PROTO_ACTIVITY_SHIDAMENZONG_GIVE_REWARD_REQUEST,        //十大门宗发奖请求
+    SERVER_PROTO_ACTIVITY_SHIDAMENZONG_GIVE_REWARD_ANSWER,         //十大门宗发奖应答
 
     SERVER_PROTO_GET_USER_INFO     = 9033,       // 后台管理端获取用户信息
     SERVER_PROTO_ADD_ITEM_REQUESRT = 9034,       // 后台管理端增加物品
@@ -351,9 +360,10 @@ typedef struct proto_chengjie_id
 typedef struct srv_cost_info
 {
     uint32_t statis_id;
-    uint32_t gold;         //绑定元宝
+    uint32_t gold;         //金票（绑定元宝）
     uint32_t unbind_gold;  //非绑定元宝
-    uint32_t coin;
+    uint32_t coin;         //银票
+    uint32_t silver;       //银币
     uint32_t item_id[10];  //最多携带5个道具
     uint32_t item_num[10];
 } SRV_COST_INFO;
@@ -372,6 +382,25 @@ typedef struct proto_srv_check_and_cost_res
     uint32_t      data_size;
     uint8_t       data[0];
 } PROTO_SRV_CHECK_AND_COST_RES;
+
+typedef struct proto_srv_reward_req
+{
+	uint32_t statis_id;
+	uint32_t gold;
+	uint32_t coin;
+	uint32_t item_id[10];
+	uint32_t item_num[10];
+	uint32_t data_size;
+	uint8_t  data[0];
+} PROTO_SRV_REWARD_REQ;
+
+typedef struct proto_srv_reward_res
+{
+    uint32_t result;
+	uint32_t statis_id;
+    uint32_t data_size;
+    uint8_t  data[0];
+} PROTO_SRV_REWARD_RES;
 
 typedef struct proto_guildsrv_reward_req
 {
@@ -547,6 +576,7 @@ typedef struct proto_guild_battle_reward
     uint32_t   guild_id;
     uint32_t   player_num;                          //奖励人数
     uint64_t   player_id[MAX_GUILD_MEMBER_NUM];     //奖励玩家ID
+    uint64_t   team_id[MAX_GUILD_MEMBER_NUM];       //玩家队伍ID
     uint32_t   result[MAX_GUILD_MEMBER_NUM];        //战斗结果
     uint32_t   score[MAX_GUILD_MEMBER_NUM];         //奖励积分
     uint32_t   treasure[MAX_GUILD_MEMBER_NUM];      //奖励资金

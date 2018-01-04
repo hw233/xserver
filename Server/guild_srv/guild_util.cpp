@@ -210,6 +210,9 @@ void handle_daily_reset_timeout(void)
 					break;
 				player->guild_land_active_reward_num[i] = 0;
 			}
+
+			player->donate_count = 0;
+			notify_guild_attr_update(player->player_id, GUILD_ATTR_TYPE__ATTR_DONATE_COUNT, player->donate_count);
 		}
 
 		if (save)
@@ -1399,6 +1402,28 @@ void sync_guild_task_to_gamesrv(GuildPlayer *player)
 	fast_send_msg_base(&conn_node_guildsrv::connecter, &ext_data, SERVER_PROTO_GUILD_SYNC_TASK, data_len, 0);
 }
 
+void refresh_guild_redis_info(GuildInfo *guild)
+{
+	RedisGuildInfo req;
+	redis_guild_info__init(&req);
+
+	std::vector<uint64_t> member_ids;
+	req.guild_id = guild->guild_id;
+	req.name = guild->name;
+	req.level = get_building_level(guild, Building_Hall);
+	req.zhenying = guild->zhenying;
+	req.master_id = guild->master_id;
+	for (uint32_t i = 0; i < guild->member_num; ++i)
+	{
+		member_ids.push_back(guild->members[i]->player_id);
+	}
+	req.member_ids = &member_ids[0];
+	req.n_member_ids = member_ids.size();
+
+	EXTERN_DATA ext_data;
+	fast_send_msg(&conn_node_guildsrv::connecter, &ext_data, SERVER_PROTO_REFRESH_GUILD_REDIS_INFO, redis_guild_info__pack, req);
+}
+
 void sync_guild_create_to_gamesrv(GuildInfo *guild)
 {
 	ProtoGuildInfo *pData = (ProtoGuildInfo *)conn_node_base::get_send_data();
@@ -1510,6 +1535,7 @@ int create_guild(uint64_t player_id, uint32_t icon, std::string &name, GuildPlay
 		guild->approve_state = 0;
 		guild->recruit_state = 1;
 		guild->maintain_time = now;
+		guild->popularity = sg_guild_init_popularity;
 		if (sg_guild_recruit_notice && strlen(sg_guild_recruit_notice) <= MAX_GUILD_ANNOUNCEMENT_LEN)
 		{
 			strcpy(guild->recruit_notice, sg_guild_recruit_notice);
@@ -1565,6 +1591,7 @@ int create_guild(uint64_t player_id, uint32_t icon, std::string &name, GuildPlay
 		guild_map[guild->guild_id] = guild;
 		delete_player_join_apply(player->player_id);
 		sync_guild_create_to_gamesrv(guild);
+		refresh_guild_redis_info(guild);
 		sync_guild_info_to_gamesrv(player);
 		update_redis_player_guild(player);
 		if (sync_task)
@@ -1854,6 +1881,7 @@ int appoint_office(GuildPlayer *appointor, GuildPlayer *appointee, uint32_t offi
 		guild->master_id = appointee->player_id;
 		replace_guild_master(guild->guild_id, guild->master_id);
 		broadcast_guild_attr_update(guild, GUILD_ATTR_TYPE__ATTR_MASTER_ID, guild->master_id);
+		refresh_guild_redis_info(guild);
 		if (redis_appointee)
 		{
 			broadcast_guild_str_attr_update(guild, GUILD_STR_ATTR_TYPE__ATTR_MASTER_NAME, redis_appointee->name);
@@ -1939,6 +1967,9 @@ static int deal_exit_guild_part(GuildInfo *&guild, int exit_idx)
 {
 	if (exit_idx < 0)
 	{
+		guild->master_id = 0;
+		guild->member_num = 0;
+		refresh_guild_redis_info(guild);
 		delete_guild(guild->guild_id);
 		guild_map.erase(guild->guild_id);
 		free(guild);
@@ -1955,6 +1986,7 @@ static int deal_exit_guild_part(GuildInfo *&guild, int exit_idx)
 		guild->member_num--;
 		save_guild_info(guild);
 		broadcast_guild_attr_update(guild, GUILD_ATTR_TYPE__ATTR_MEMBER_NUM, guild->member_num);
+		refresh_guild_redis_info(guild);
 	}
 
 	return 0;
@@ -2313,6 +2345,15 @@ int add_player_donation(GuildPlayer *player, uint32_t num)
 	save_guild_player(player);
 	sync_player_donation_to_game_srv(player, 1, num);
 
+//	//系统提示
+//	std::vector<char *> args;
+//	std::string sz_num;
+//	std::stringstream  ss;
+//	ss << num;
+//	ss >> sz_num;
+//	args.push_back(const_cast<char*>(sz_num.c_str()));
+//	conn_node_guildsrv::send_system_notice(player->player_id, 190500425, &args);
+
 	return 0;
 }
 
@@ -2326,6 +2367,15 @@ int add_player_contribute_treasure(GuildPlayer *player, uint32_t num)
 	player->cur_week_treasure += num;
 
 	save_guild_player(player);
+
+//	//系统提示
+//	std::vector<char *> args;
+//	std::string sz_num;
+//	std::stringstream  ss;
+//	ss << num;
+//	ss >> sz_num;
+//	args.push_back(const_cast<char*>(sz_num.c_str()));
+//	conn_node_guildsrv::send_system_notice(player->player_id, 190500499, &args);
 
 	return 0;
 }
@@ -2711,6 +2761,7 @@ int upgrade_building_level(GuildInfo *guild)
 		broadcast_important_log_add(guild, log);
 	}
 
+	refresh_guild_redis_info(guild);
 	save_guild_info(guild);
 
 	return 0;
@@ -2949,16 +3000,16 @@ void broadcast_guild_message(GuildInfo *guild, uint16_t msg_id, void *msg_data, 
 
 void open_all_guild_answer()
 {
-	uint32_t question[GuildAnswer::MAX_SEND_GUILD_QUESTION];
-	for (int i = 0; i < GuildAnswer::MAX_SEND_GUILD_QUESTION; ++i)
-	{
-		question[i] = sg_guild_question[rand() % sg_guild_question.size()];
-	}
+	//uint32_t question[GuildAnswer::MAX_SEND_GUILD_QUESTION];
+	//for (int i = 0; i < GuildAnswer::MAX_SEND_GUILD_QUESTION; ++i)
+	//{
+	//	question[i] = sg_guild_question[rand() % sg_guild_question.size()];
+	//}
 	
 	for (std::map<uint32_t, GuildInfo*>::iterator iter = guild_map.begin(); iter != guild_map.end(); ++iter)
 	{
 		GuildInfo *guild = iter->second;
-		guild->answer.Start(guild, question, GuildAnswer::MAX_SEND_GUILD_QUESTION);
+		guild->answer.Start(guild);//, question, GuildAnswer::MAX_SEND_GUILD_QUESTION);
 	}
 }
 
@@ -3187,3 +3238,16 @@ void  add_guild_land_active_reward_count(GuildPlayer *player, uint32_t guild_act
 		}
 	}
 }
+
+
+int get_player_donate_remain_count(GuildPlayer *player)
+{
+	ControlTable *config = get_config_by_id(330400058, &all_control_config);
+	if (config)
+	{
+		return ((int)config->RewardTime - (int)player->donate_count);
+	}
+
+	return 0;
+}
+

@@ -29,10 +29,10 @@ void test3(char *a)
 	LOG_ERR("%s: %s", __FUNCTION__, a);
 }
 
-void log(char *a)
-{
-	LOG_ERR("%s: %s", __FUNCTION__, a);
-}
+// void log(char *a)
+// {
+// 	LOG_ERR("%s: %s", __FUNCTION__, a);
+// }
 
 	int register_timer10_func(timer_func func)
 	{

@@ -21,9 +21,11 @@
 #define ERROR_ID_LEVEL_NOT_ENOUGH        1052 //等级不足
 #define ERROR_ID_ZHENQI_NOT_ENOUGH       1053 //真气不足
 #define ERROR_ID_CHIVALRY_NOT_ENOUGH     1054 //侠义值不足
-#define ERROR_ID_SHANGJIN_COIN_NOT_ENOUGH     1055 //赏金货币不足
-#define ERROR_ID_CHENGJIE_COIN_NOT_ENOUGH     1056 //惩戒货币不足
-#define ERROR_ID_GUOYU_COIN_NOT_ENOUGH     1057 //国御货币不足
+#define ERROR_ID_GONGXUN_NOT_ENOUGH      1055 //功勋不足
+#define ERROR_ID_LINGSHI_NOT_ENOUGH      1056 //灵石不足
+#define ERROR_ID_SHENGWANG_NOT_ENOUGH    1057 //声望不足
+#define ERROR_ID_XUEJING_NOT_ENOUGH      1058 //血晶不足
+#define ERROR_ID_SILVER_NOT_ENOUGH       1059 //银币不足
 
 #define ERROR_ID_BAG_UNLOCK_ALL          1100 //已解锁所有背包格子
 #define ERROR_ID_BAG_GRID_NOT_ENOUGH     1101 //背包格子不足
@@ -190,6 +192,8 @@
 #define ERROR_ID_TRADE_NO_EARNING           2810 //当前没有收益
 #define ERROR_ID_AUCTION_SOLD               2811 //拍卖品已出售
 #define ERROR_ID_AUCTION_PRICE              2812 //拍卖品竞价失败
+
+#define ERROR_ID_FUNCTION_NOT_OPEN       3000 //功能未开启
 
 
 #endif

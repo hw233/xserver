@@ -72,5 +72,6 @@ message DBGuildPlayer
 	required uint32 cur_week_treasure = 16;
 	required uint32 cur_week_task = 17;
 	required uint32 cur_week_task_config_id = 18;
+	required uint32 donate_count = 19;
 }
 

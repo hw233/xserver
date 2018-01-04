@@ -27,6 +27,7 @@ enum
 struct GuildBattleFightPlayerRewardInfo
 {
 	uint64_t player_id;
+	uint64_t team_id;
 	uint32_t result;
 	uint32_t score;
 	uint32_t treasure;

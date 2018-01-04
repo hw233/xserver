@@ -338,6 +338,12 @@ message DBZhenying
 	required uint32 score = 17;
 	required bool one_award = 18; //首胜
 	required uint64 fb_cd = 19;
+	required uint64 exploit = 20;
+	required uint64 history_exploit = 21;
+	required bool daily_award = 22;  //军阶每日奖励
+	required bool daily_step = 23;  //军阶每日奖励
+	required uint32 task_award_state = 24;
+	required uint32 step_lv = 25;
 }
 
 message DBAchievement
@@ -370,6 +376,15 @@ message DBStrongChapter
 	required uint32 id = 1; //章节ID
 	required uint32 progress = 2; //当前进度
 	required uint32 state = 3; //领奖状态
+}
+
+message DBTowerInfo
+{
+	required uint32 reset_num = 1; //重置次数
+	required uint32 cur_lv = 2; //当前层
+	required uint32 cur_num = 3; //当前层次数
+	required uint32 award_lv = 4;//
+	required uint32 top_lv = 5; //最高层
 }
 
 message PlayerDBInfo
@@ -473,6 +488,13 @@ message PlayerDBInfo
 	repeated DBPlayerLevelRewardInfo player_level_reward_all_info = 97; //玩家等级奖励所有信息
 	required DBPlayerOnlineRewardInfo player_online_reward_info = 98; //玩家在线奖励信息
 	optional DBPlayerSignInEveryDayInfo player_sign_in_info = 99;    //玩家签到信息
+	repeated DBPlayerActiveRewardBackInfo player_reward_back_info = 100;    //玩家活动奖励找回信息
+	optional DBPlayerYaoQianShuInfo  player_yao_qian_shu_info = 101;    //玩家摇钱树
+	optional DBPlayerLoginRewardInfo  player_login_reward_info = 102;    //登录奖励信息
+	repeated uint32 function_open = 103; //功能开启信息
+	optional DBTowerInfo tower = 104; //冲塔
+	repeated DBPlayerCifuRewardInfo ci_fu_reward_info = 105; //赐福奖励信息
+	required uint32 fishing_reward_num = 106;  //钓鱼收益次数
 	
 }
 
@@ -541,6 +563,7 @@ message DBPlayerOnlineRewardInfo
 	required uint32 use_reward_num = 2;      //今日已领奖次数
 	required uint32 reward_num = 3;          //今日达到领奖要求的剩余未领奖次数
 	repeated uint32 reward_table_id = 4;     //已经领取的奖励表id
+	repeated uint32 reward_id_today = 5;     //今日可领奖励表id
 }
 
 message DBPlayerSignInEveryDayInfo
@@ -558,4 +581,53 @@ message DBPlayerSignInLeiJiReward
 {
 	required uint32 id = 1;              //奖励表id
 	required uint32 status = 2;			 //奖励状态
+}
+
+//奖励找回信息
+message DBPlayerActiveRewardBackInfo
+{
+	required uint32 id = 1;   //找回表id
+	required uint32 num = 2;  //可找回奖励数量
+	required uint32 normo_exp = 3; //普通找回经验
+	required uint32 perfect_exp = 4; //完美找回经验
+	required uint32 normo_coin = 5; //普通找回银两
+	required uint32 perfect_coin = 6; //完美找回银两
+	required uint32 normo_use = 7;   //普通找回消耗的银票
+	required uint32 perfect_use = 8; //完美找回消耗的金票
+}
+
+//摇钱树信息
+message DBPlayerYaoQianShuInfo
+{
+	required uint32 sum_num = 1;   //今日可摇总次数
+	required uint32 use_num = 2;   //今日已经摇了多少次
+	required uint32 free_num = 3;  //今日剩余免费次数
+	required uint32 next_need_money = 4; //下一次摇需要消耗的元宝
+	required uint32 cur_jizhi_num = 5; //当前机制数(其实就是获得两倍以上暴击后又摇了多少次) 
+	required uint32 cur_suiji_zhong = 6;  //当前的随机种子
+	required uint32 beilv_num = 7;      //当 cur_jizhi_num == cur_suiji_zhong时能获得的暴击倍率
+}
+
+//登录奖励信息
+message DBPlayerLoginRewardInfo
+{
+	required bool open = 1; //功能是否开启
+	required bool receive_time = 2; //是否在领取时间内
+	required uint32 open_time = 3; //功能开启的时间点
+	required uint32 login_day = 4; //当前是此功能开启后登录的第几天
+	repeated DBPlayerLoginReceiveInfo info = 5; //奖励领取情况
+}
+
+//奖励领取信息
+message DBPlayerLoginReceiveInfo
+{
+	required uint32 id = 1; //奖励表id
+	required uint32 statu = 2; //领取状态
+}
+
+//赐福奖励信息
+message DBPlayerCifuRewardInfo
+{
+	required uint32 id = 1;  //赐福表id
+	required uint64 time = 2; //上次领取时间
 }

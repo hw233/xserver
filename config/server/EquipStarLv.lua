@@ -78,7 +78,7 @@ local EquipStarLv = {
 		},
 	[261010008] = {
 		['ID'] = 261010008,
-		['Level'] = 30,
+		['Level'] = 50,
 		['EquipType'] = 1,
 		['Quality'] = 2,
 		['StarLv'] = 0,
@@ -155,7 +155,7 @@ local EquipStarLv = {
 		},
 	[261010015] = {
 		['ID'] = 261010015,
-		['Level'] = 45,
+		['Level'] = 60,
 		['EquipType'] = 1,
 		['Quality'] = 3,
 		['StarLv'] = 0,
@@ -232,7 +232,7 @@ local EquipStarLv = {
 		},
 	[261010022] = {
 		['ID'] = 261010022,
-		['Level'] = 60,
+		['Level'] = 70,
 		['EquipType'] = 1,
 		['Quality'] = 4,
 		['StarLv'] = 0,
@@ -309,7 +309,7 @@ local EquipStarLv = {
 		},
 	[261010029] = {
 		['ID'] = 261010029,
-		['Level'] = 75,
+		['Level'] = 80,
 		['EquipType'] = 1,
 		['Quality'] = 5,
 		['StarLv'] = 0,
@@ -540,7 +540,7 @@ local EquipStarLv = {
 		},
 	[261020008] = {
 		['ID'] = 261020008,
-		['Level'] = 30,
+		['Level'] = 50,
 		['EquipType'] = 2,
 		['Quality'] = 2,
 		['StarLv'] = 0,
@@ -617,7 +617,7 @@ local EquipStarLv = {
 		},
 	[261020015] = {
 		['ID'] = 261020015,
-		['Level'] = 45,
+		['Level'] = 60,
 		['EquipType'] = 2,
 		['Quality'] = 3,
 		['StarLv'] = 0,
@@ -694,7 +694,7 @@ local EquipStarLv = {
 		},
 	[261020022] = {
 		['ID'] = 261020022,
-		['Level'] = 60,
+		['Level'] = 70,
 		['EquipType'] = 2,
 		['Quality'] = 4,
 		['StarLv'] = 0,
@@ -771,7 +771,7 @@ local EquipStarLv = {
 		},
 	[261020029] = {
 		['ID'] = 261020029,
-		['Level'] = 75,
+		['Level'] = 80,
 		['EquipType'] = 2,
 		['Quality'] = 5,
 		['StarLv'] = 0,
@@ -1002,7 +1002,7 @@ local EquipStarLv = {
 		},
 	[261030008] = {
 		['ID'] = 261030008,
-		['Level'] = 30,
+		['Level'] = 50,
 		['EquipType'] = 3,
 		['Quality'] = 2,
 		['StarLv'] = 0,
@@ -1079,7 +1079,7 @@ local EquipStarLv = {
 		},
 	[261030015] = {
 		['ID'] = 261030015,
-		['Level'] = 45,
+		['Level'] = 60,
 		['EquipType'] = 3,
 		['Quality'] = 3,
 		['StarLv'] = 0,
@@ -1156,7 +1156,7 @@ local EquipStarLv = {
 		},
 	[261030022] = {
 		['ID'] = 261030022,
-		['Level'] = 60,
+		['Level'] = 70,
 		['EquipType'] = 3,
 		['Quality'] = 4,
 		['StarLv'] = 0,
@@ -1233,7 +1233,7 @@ local EquipStarLv = {
 		},
 	[261030029] = {
 		['ID'] = 261030029,
-		['Level'] = 75,
+		['Level'] = 80,
 		['EquipType'] = 3,
 		['Quality'] = 5,
 		['StarLv'] = 0,
@@ -1464,7 +1464,7 @@ local EquipStarLv = {
 		},
 	[261040008] = {
 		['ID'] = 261040008,
-		['Level'] = 30,
+		['Level'] = 50,
 		['EquipType'] = 4,
 		['Quality'] = 2,
 		['StarLv'] = 0,
@@ -1541,7 +1541,7 @@ local EquipStarLv = {
 		},
 	[261040015] = {
 		['ID'] = 261040015,
-		['Level'] = 45,
+		['Level'] = 60,
 		['EquipType'] = 4,
 		['Quality'] = 3,
 		['StarLv'] = 0,
@@ -1618,7 +1618,7 @@ local EquipStarLv = {
 		},
 	[261040022] = {
 		['ID'] = 261040022,
-		['Level'] = 60,
+		['Level'] = 70,
 		['EquipType'] = 4,
 		['Quality'] = 4,
 		['StarLv'] = 0,
@@ -1695,7 +1695,7 @@ local EquipStarLv = {
 		},
 	[261040029] = {
 		['ID'] = 261040029,
-		['Level'] = 75,
+		['Level'] = 80,
 		['EquipType'] = 4,
 		['Quality'] = 5,
 		['StarLv'] = 0,
@@ -1926,7 +1926,7 @@ local EquipStarLv = {
 		},
 	[261050008] = {
 		['ID'] = 261050008,
-		['Level'] = 30,
+		['Level'] = 50,
 		['EquipType'] = 5,
 		['Quality'] = 2,
 		['StarLv'] = 0,
@@ -2003,7 +2003,7 @@ local EquipStarLv = {
 		},
 	[261050015] = {
 		['ID'] = 261050015,
-		['Level'] = 45,
+		['Level'] = 60,
 		['EquipType'] = 5,
 		['Quality'] = 3,
 		['StarLv'] = 0,
@@ -2080,7 +2080,7 @@ local EquipStarLv = {
 		},
 	[261050022] = {
 		['ID'] = 261050022,
-		['Level'] = 60,
+		['Level'] = 70,
 		['EquipType'] = 5,
 		['Quality'] = 4,
 		['StarLv'] = 0,
@@ -2157,7 +2157,7 @@ local EquipStarLv = {
 		},
 	[261050029] = {
 		['ID'] = 261050029,
-		['Level'] = 75,
+		['Level'] = 80,
 		['EquipType'] = 5,
 		['Quality'] = 5,
 		['StarLv'] = 0,
@@ -2388,7 +2388,7 @@ local EquipStarLv = {
 		},
 	[261060008] = {
 		['ID'] = 261060008,
-		['Level'] = 30,
+		['Level'] = 50,
 		['EquipType'] = 6,
 		['Quality'] = 2,
 		['StarLv'] = 0,
@@ -2465,7 +2465,7 @@ local EquipStarLv = {
 		},
 	[261060015] = {
 		['ID'] = 261060015,
-		['Level'] = 45,
+		['Level'] = 60,
 		['EquipType'] = 6,
 		['Quality'] = 3,
 		['StarLv'] = 0,
@@ -2542,7 +2542,7 @@ local EquipStarLv = {
 		},
 	[261060022] = {
 		['ID'] = 261060022,
-		['Level'] = 60,
+		['Level'] = 70,
 		['EquipType'] = 6,
 		['Quality'] = 4,
 		['StarLv'] = 0,
@@ -2619,7 +2619,7 @@ local EquipStarLv = {
 		},
 	[261060029] = {
 		['ID'] = 261060029,
-		['Level'] = 75,
+		['Level'] = 80,
 		['EquipType'] = 6,
 		['Quality'] = 5,
 		['StarLv'] = 0,
@@ -2850,7 +2850,7 @@ local EquipStarLv = {
 		},
 	[261070008] = {
 		['ID'] = 261070008,
-		['Level'] = 30,
+		['Level'] = 50,
 		['EquipType'] = 7,
 		['Quality'] = 2,
 		['StarLv'] = 0,
@@ -2927,7 +2927,7 @@ local EquipStarLv = {
 		},
 	[261070015] = {
 		['ID'] = 261070015,
-		['Level'] = 45,
+		['Level'] = 60,
 		['EquipType'] = 7,
 		['Quality'] = 3,
 		['StarLv'] = 0,
@@ -3004,7 +3004,7 @@ local EquipStarLv = {
 		},
 	[261070022] = {
 		['ID'] = 261070022,
-		['Level'] = 60,
+		['Level'] = 70,
 		['EquipType'] = 7,
 		['Quality'] = 4,
 		['StarLv'] = 0,
@@ -3081,7 +3081,7 @@ local EquipStarLv = {
 		},
 	[261070029] = {
 		['ID'] = 261070029,
-		['Level'] = 75,
+		['Level'] = 80,
 		['EquipType'] = 7,
 		['Quality'] = 5,
 		['StarLv'] = 0,
@@ -3312,7 +3312,7 @@ local EquipStarLv = {
 		},
 	[261080008] = {
 		['ID'] = 261080008,
-		['Level'] = 30,
+		['Level'] = 50,
 		['EquipType'] = 8,
 		['Quality'] = 2,
 		['StarLv'] = 0,
@@ -3389,7 +3389,7 @@ local EquipStarLv = {
 		},
 	[261080015] = {
 		['ID'] = 261080015,
-		['Level'] = 45,
+		['Level'] = 60,
 		['EquipType'] = 8,
 		['Quality'] = 3,
 		['StarLv'] = 0,
@@ -3466,7 +3466,7 @@ local EquipStarLv = {
 		},
 	[261080022] = {
 		['ID'] = 261080022,
-		['Level'] = 60,
+		['Level'] = 70,
 		['EquipType'] = 8,
 		['Quality'] = 4,
 		['StarLv'] = 0,
@@ -3543,7 +3543,7 @@ local EquipStarLv = {
 		},
 	[261080029] = {
 		['ID'] = 261080029,
-		['Level'] = 75,
+		['Level'] = 80,
 		['EquipType'] = 8,
 		['Quality'] = 5,
 		['StarLv'] = 0,
@@ -3774,7 +3774,7 @@ local EquipStarLv = {
 		},
 	[261090008] = {
 		['ID'] = 261090008,
-		['Level'] = 30,
+		['Level'] = 50,
 		['EquipType'] = 9,
 		['Quality'] = 2,
 		['StarLv'] = 0,
@@ -3851,7 +3851,7 @@ local EquipStarLv = {
 		},
 	[261090015] = {
 		['ID'] = 261090015,
-		['Level'] = 45,
+		['Level'] = 60,
 		['EquipType'] = 9,
 		['Quality'] = 3,
 		['StarLv'] = 0,
@@ -3928,7 +3928,7 @@ local EquipStarLv = {
 		},
 	[261090022] = {
 		['ID'] = 261090022,
-		['Level'] = 60,
+		['Level'] = 70,
 		['EquipType'] = 9,
 		['Quality'] = 4,
 		['StarLv'] = 0,
@@ -4005,7 +4005,7 @@ local EquipStarLv = {
 		},
 	[261090029] = {
 		['ID'] = 261090029,
-		['Level'] = 75,
+		['Level'] = 80,
 		['EquipType'] = 9,
 		['Quality'] = 5,
 		['StarLv'] = 0,
@@ -4236,7 +4236,7 @@ local EquipStarLv = {
 		},
 	[261100008] = {
 		['ID'] = 261100008,
-		['Level'] = 30,
+		['Level'] = 50,
 		['EquipType'] = 10,
 		['Quality'] = 2,
 		['StarLv'] = 0,
@@ -4313,7 +4313,7 @@ local EquipStarLv = {
 		},
 	[261100015] = {
 		['ID'] = 261100015,
-		['Level'] = 45,
+		['Level'] = 60,
 		['EquipType'] = 10,
 		['Quality'] = 3,
 		['StarLv'] = 0,
@@ -4390,7 +4390,7 @@ local EquipStarLv = {
 		},
 	[261100022] = {
 		['ID'] = 261100022,
-		['Level'] = 60,
+		['Level'] = 70,
 		['EquipType'] = 10,
 		['Quality'] = 4,
 		['StarLv'] = 0,
@@ -4467,7 +4467,7 @@ local EquipStarLv = {
 		},
 	[261100029] = {
 		['ID'] = 261100029,
-		['Level'] = 75,
+		['Level'] = 80,
 		['EquipType'] = 10,
 		['Quality'] = 5,
 		['StarLv'] = 0,

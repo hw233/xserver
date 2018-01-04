@@ -355,7 +355,8 @@ void buff_struct::set_next_timer()
 		return;
 	if (config->Interval == 0)
 	{
-		data->ontick_time = time_helper::get_cached_time() + config->Time;		
+//		data->ontick_time = time_helper::get_cached_time() + config->Time;
+		data->ontick_time = data->end_time;
 	}
 	else
 	{
@@ -479,9 +480,23 @@ void buff_struct::del_buff()
 	buff_manager::delete_buff(this);
 }
 
+void buff_struct::on_beattack()
+{
+	if (config->DeleteType[BUFF_DEL_TYPE_BEATTACK] == 0)
+		return del_buff();
+	if (config->DeleteType[BUFF_DEL_TYPE_BEHIT] == 0)
+		return del_buff();
+}
+
+void buff_struct::on_scene_changed()
+{
+	if (config->DeleteType[BUFF_DEL_TYPE_CHANGED_SCENE] == 0)
+		return del_buff();
+}
+
 void buff_struct::on_dead()
 {
-	if (config->DeleteType == 0)
+	if (config->DeleteType[BUFF_DEL_TYPE_DEAD] == 0)
 		return del_buff();
 }
 

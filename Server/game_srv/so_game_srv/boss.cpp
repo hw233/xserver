@@ -199,6 +199,7 @@ bool boss_struct::on_player_leave_sight(uint64_t player_id)
 
 void boss_struct::on_beattack(unit_struct *player, uint32_t skill_id, int32_t damage)
 {
+	unit_struct::on_beattack(player, skill_id, damage);
 	if (!data || !scene)
 		return;
 	

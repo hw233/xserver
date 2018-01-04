@@ -103,7 +103,7 @@ int get_more_redis_player(std::set<uint64_t> &player_ids, std::map<uint64_t, Pla
 		{
 			ret = -1;
 			LOG_ERR("[%s:%d] unpack redis failed, player_id:%lu", __FUNCTION__, __LINE__, iter->first);
-			break;
+			continue;
 		}
 
 		redis_players[iter->first] = redis_player;

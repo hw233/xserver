@@ -8,6 +8,7 @@
 #include "conn_node_rank.h"
 #include "conn_node_doufachang.h"
 #include "conn_node_trade.h"
+#include "conn_node_activity.h"
 #include "game_event.h"
 #include "flow_record.h"
 #include <assert.h>
@@ -57,6 +58,9 @@ int conn_node_gamesrv::dispatch_message()
 {
 	PROTO_HEAD *head = (PROTO_HEAD *)buf_head();
 	uint32_t cmd = ENDION_FUNC_2(head->msg_id);
+#ifdef FLOW_MONITOR
+	add_one_other_server_request_msg(head);
+#endif
 	switch (cmd)
 	{
 		case SERVER_PROTO_BROADCAST:
@@ -117,6 +121,7 @@ int conn_node_gamesrv::dispatch_message()
 			transfer_to_friendsrv(); 
 			transfer_to_doufachang();
 			transfer_to_tradesrv();
+			transfer_to_activitysrv();
 			return transfer_to_guildsrv();
 		case SERVER_PROTO_DOUFACHANG_ADD_REWARD_ANSWER:
 		case SERVER_PROTO_DOUFACHANG_CHALLENGE_ANSWER:
@@ -146,6 +151,8 @@ int conn_node_gamesrv::dispatch_message()
 		{
 		}
 		return transfer_to_raidsrv();
+		case SERVER_PROTO_ACTIVITYSRV_REWARD_ANSWER:
+			return transfer_to_activitysrv();
 		default:
 			return transfer_to_client();
 	}
@@ -344,6 +351,30 @@ done:
 	return (ret);
 }
 
+int conn_node_gamesrv::transfer_to_activitysrv()
+{
+	int ret = 0;
+	PROTO_HEAD *head;
+	head = (PROTO_HEAD *)buf_head();
+
+	if (!conn_node_activity::server_node) {
+		LOG_ERR("[%s:%d] do not have activity server connected", __FUNCTION__, __LINE__);
+		ret = -1;
+		goto done;
+	}
+
+	if (conn_node_activity::server_node->send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len)) {
+		LOG_ERR("[%s:%d] send to activity failed err[%d]", __FUNCTION__, __LINE__, errno);
+		ret = -2;
+		goto done;
+	}
+#ifdef FLOW_MONITOR
+	add_on_other_server_answer_msg(head);
+#endif
+done:	
+	return (ret);
+}
+
 int conn_node_gamesrv::transfer_to_client()
 {
 	uint32_t old_len;
@@ -355,9 +386,6 @@ int conn_node_gamesrv::transfer_to_client()
 
 	int cmd = ENDION_FUNC_2(head->msg_id);
 
-#ifdef FLOW_MONITOR
-	add_one_other_server_request_msg(head);
-#endif
 	
 	extern_data = get_extern_data(head);
 	LOG_DEBUG("[%s:%d]: Send Cmd To client, [%lu], cmd: %d", __FUNCTION__, __LINE__, extern_data->player_id, cmd);

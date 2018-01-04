@@ -89,7 +89,6 @@
 #include "server_level.h"
 
 extern uint32_t guild_battle_manager_activity_start_ts;
-
 ItemUseEffectInfo::~ItemUseEffectInfo()
 {
 //	LOG_ERR("[%s:%d]", __FUNCTION__, __LINE__);
@@ -101,7 +100,7 @@ ItemUseEffectInfo::~ItemUseEffectInfo()
 
 uint32_t FightingCapacity::get_total(void)
 {
-	return (level + equip + horse + yuqidao + bagua + guild_skill + partner + fashion + title);
+	return (level + equip + horse + yuqidao + bagua + guild_skill + partner + fashion + title + zhenying);
 }
 
 player_struct::player_struct() : m_skill(this)
@@ -250,6 +249,7 @@ void player_struct::send_raid_hit_statis(raid_struct *raid)
 		notify.cure = raid->data->player_info[i].cure;
 		notify.damage = raid->data->player_info[i].damage;
 		notify.injured = raid->data->player_info[i].injured;
+		notify.guild = raid->data->player_info[i].guild;
 		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data,
 			MSG_ID_RAID_HIT_STATIS_CHANGED_NOTIFY, raid_hit_statis_changed_notify__pack, notify);
 	}
@@ -1261,14 +1261,18 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	{
 		if (!m_buffs[i])
 			continue;
-		if (m_buffs[i]->config->DeleteType != 1)
+		if (m_buffs[i]->config->DeleteType[BUFF_DEL_TYPE_LOGOUT] == 0)
 			continue;
 
 //		if (m_buffs[i]->config->BuffType != 2)
 //			continue;
 
 //		assert(m_buffs[i]->is_recoverable_buff());
-		assert(m_buffs[i]->effect_config->Type == 170000008 || m_buffs[i]->effect_config->Type == 170000018 || m_buffs[i]->effect_config->Type == 170000029);
+		// assert(m_buffs[i]->effect_config->Type == 170000008
+		// 	|| m_buffs[i]->effect_config->Type == 170000018
+		// 	|| m_buffs[i]->effect_config->Type == 170000029
+		// 	|| m_buffs[i]->effect_config->Type == 170000006
+		// 	   );
 
 		item_buffs_point[db_info.n_item_buffs] = &item_buffs[db_info.n_item_buffs];
 		item_buff__init(&item_buffs[db_info.n_item_buffs]);
@@ -1649,6 +1653,15 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	liveSkill.n_broken = MAX_LIVE_SKILL_NUM;
 	db_info.live_skill = &liveSkill;
 
+	DBTowerInfo tower;
+	dbtower_info__init(&tower);
+	tower.cur_lv = data->tower.cur_lv;
+	tower.top_lv = data->tower.top_lv;
+	tower.cur_num = data->tower.cur_num;
+	tower.reset_num = data->tower.reset_num;
+	tower.award_lv = data->tower.award_lv;
+	db_info.tower = &tower;
+
 	//保存离开副本后要到的场景的位置
 	db_info.leaveraid_sceneid = data->leaveraid.scene_id;
 	db_info.exitpointx = data->leaveraid.ExitPointX;
@@ -1876,6 +1889,12 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	zhenying.award_num = data->zhenying.award_num;
 	zhenying.one_award = data->zhenying.one_award;
 	zhenying.fb_cd = data->zhenying.fb_cd;
+	zhenying.exploit = data->zhenying.exploit;
+	zhenying.history_exploit = data->zhenying.history_exploit;
+	zhenying.daily_award = data->zhenying.daily_award;  //军阶每日奖励
+	zhenying.daily_step = data->zhenying.daily_step;  //军阶每日奖励
+	zhenying.task_award_state = data->zhenying.task_award_state;
+	zhenying.step_lv = data->zhenying.step_lv;
 
 	db_info.server_level_break_count = data->server_level_break_count;
 	db_info.server_level_break_notify = data->server_level_break_notify;
@@ -1961,6 +1980,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	db_info.mijing_lun_num = data->mi_jing_xiu_lian.lun_num;
 	
 	db_info.fishing_bait_id = data->fishing_bait_id;
+	db_info.fishing_reward_num = data->fishing_reward_num;
 
 	//变强
 	DBStrongGoal  strong_goal_data[MAX_STRONG_GOAL_NUM];
@@ -2026,6 +2046,8 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	online_rewrad_info.use_reward_num = data->online_reward.use_reward_num;
 	online_rewrad_info.reward_table_id = data->online_reward.reward_table_id;
 	online_rewrad_info.n_reward_table_id = MAX_PLAYER_ONLINE_REWARD_NUM;
+	online_rewrad_info.reward_id_today = data->online_reward.reward_id_today;
+	online_rewrad_info.n_reward_id_today = MAX_PLAYER_ONLINE_REWARD_NUM;
 
 	db_info.player_online_reward_info = &online_rewrad_info;
 
@@ -2052,6 +2074,92 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		sign_in_info.n_leiji_reward++;
 	}
 	db_info.player_sign_in_info = &sign_in_info;
+
+	//奖励找回
+	DBPlayerActiveRewardBackInfo every_active_back_info[MAX_ACTIVE_CAN_ZHAOHUI_REWARD];
+	DBPlayerActiveRewardBackInfo* every_active_back_info_point[MAX_ACTIVE_CAN_ZHAOHUI_REWARD];
+	db_info.n_player_reward_back_info = 0;
+	db_info.player_reward_back_info = every_active_back_info_point;
+	for(size_t i = 0; i < MAX_ACTIVE_CAN_ZHAOHUI_REWARD; i++)
+	{
+		if(data->zhaohui_data[i].id == 0)
+			break;
+		every_active_back_info_point[db_info.n_player_reward_back_info] = &every_active_back_info[db_info.n_player_reward_back_info];
+		dbplayer_active_reward_back_info__init(&every_active_back_info[db_info.n_player_reward_back_info]);
+		every_active_back_info[db_info.n_player_reward_back_info].id = data->zhaohui_data[i].id;
+		every_active_back_info[db_info.n_player_reward_back_info].num = data->zhaohui_data[i].num;
+		every_active_back_info[db_info.n_player_reward_back_info].normo_exp = data->zhaohui_data[i].normo_exp;
+		every_active_back_info[db_info.n_player_reward_back_info].perfect_exp = data->zhaohui_data[i].perfect_exp;
+		every_active_back_info[db_info.n_player_reward_back_info].normo_coin = data->zhaohui_data[i].normo_coin;
+		every_active_back_info[db_info.n_player_reward_back_info].perfect_coin = data->zhaohui_data[i].perfect_coin;
+		every_active_back_info[db_info.n_player_reward_back_info].normo_use = data->zhaohui_data[i].normo_use;
+		every_active_back_info[db_info.n_player_reward_back_info].perfect_use = data->zhaohui_data[i].perfect_use;
+		db_info.n_player_reward_back_info++;
+	}
+
+	//摇钱树
+	DBPlayerYaoQianShuInfo db_yao_qian_shu_info;
+	dbplayer_yao_qian_shu_info__init(&db_yao_qian_shu_info);
+	db_yao_qian_shu_info.sum_num = data->yaoqian_data.sum_num;
+	db_yao_qian_shu_info.use_num = data->yaoqian_data.use_num;
+	db_yao_qian_shu_info.free_num = data->yaoqian_data.free_num;
+	db_yao_qian_shu_info.next_need_money = data->yaoqian_data.next_need_money;
+	db_yao_qian_shu_info.cur_jizhi_num = data->yaoqian_data.cur_jizhi_num;
+	db_yao_qian_shu_info.cur_suiji_zhong = data->yaoqian_data.cur_suiji_zhong;
+	db_yao_qian_shu_info.beilv_num = data->yaoqian_data.beilv_num;
+
+	db_info.player_yao_qian_shu_info = &db_yao_qian_shu_info;
+
+	//登录奖励
+	DBPlayerLoginRewardInfo db_login_reward_info;
+	DBPlayerLoginReceiveInfo db_login_receive_info[MAX_LOGIN_REWARD_RECEIVE_NUM];
+	DBPlayerLoginReceiveInfo* db_login_receive_info_point[MAX_LOGIN_REWARD_RECEIVE_NUM];
+	dbplayer_login_reward_info__init(&db_login_reward_info);
+	db_login_reward_info.open = data->login_reward_info.open;
+	db_login_reward_info.receive_time = data->login_reward_info.receive_time;
+	db_login_reward_info.open_time = data->login_reward_info.open_time;
+	db_login_reward_info.login_day = data->login_reward_info.login_day;
+	db_login_reward_info.info = db_login_receive_info_point;
+	db_login_reward_info.n_info = 0;
+	for(size_t i = 0; i < MAX_LOGIN_REWARD_RECEIVE_NUM; i++)
+	{
+		if(data->login_reward_info.info[i].id == 0)
+			break;
+		db_login_receive_info_point[db_login_reward_info.n_info] = &db_login_receive_info[db_login_reward_info.n_info];
+		dbplayer_login_receive_info__init(&db_login_receive_info[db_login_reward_info.n_info]);
+		db_login_receive_info[db_login_reward_info.n_info].id = data->login_reward_info.info[db_login_reward_info.n_info].id;
+		db_login_receive_info[db_login_reward_info.n_info].statu = data->login_reward_info.info[db_login_reward_info.n_info].statu;
+		db_login_reward_info.n_info++;
+	}
+	db_info.player_login_reward_info = &db_login_reward_info;
+
+	//功能开启
+	db_info.function_open = data->function_open;
+	db_info.n_function_open = 0;
+	for (int i = 0; i < MAX_GAME_FUNCTION_NUM; ++i)
+	{
+		if (data->function_open[i] == 0)
+		{
+			break;
+		}
+		db_info.n_function_open++;
+	}
+
+	//赐福
+	DBPlayerCifuRewardInfo ci_fu_info[MAX_CIFU_REWARD_NUM];
+	DBPlayerCifuRewardInfo* ci_fu_info_point[MAX_CIFU_REWARD_NUM];
+	db_info.n_ci_fu_reward_info = 0;
+	db_info.ci_fu_reward_info = ci_fu_info_point;
+	for(size_t i = 0; i < MAX_LOGIN_REWARD_RECEIVE_NUM; i++)
+	{
+		if(data->ci_fu_reward[i].id == 0)
+			break;
+		ci_fu_info_point[db_info.n_ci_fu_reward_info] = &ci_fu_info[db_info.n_ci_fu_reward_info];
+		dbplayer_cifu_reward_info__init(&ci_fu_info[db_info.n_ci_fu_reward_info]);
+		ci_fu_info[db_info.n_ci_fu_reward_info].id = data->ci_fu_reward[i].id;
+		ci_fu_info[db_info.n_ci_fu_reward_info].time = data->ci_fu_reward[i].time;
+		db_info.n_ci_fu_reward_info++;
+	}
 
 
 	return player_dbinfo__pack(&db_info, out_data);
@@ -2109,6 +2217,12 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		 data->zhenying.award_num = db_info->zhenying->award_num;
 		 data->zhenying.one_award = db_info->zhenying->one_award;
 		 data->zhenying.fb_cd = db_info->zhenying->fb_cd;
+		 data->zhenying.exploit = db_info->zhenying->exploit;
+		 data->zhenying.history_exploit = db_info->zhenying->history_exploit;
+		 data->zhenying.daily_award = db_info->zhenying->daily_award;  //军阶每日奖励
+		 data->zhenying.daily_step = db_info->zhenying->daily_step;  //军阶每日奖励
+		 data->zhenying.task_award_state = db_info->zhenying->task_award_state;
+		 data->zhenying.step_lv = db_info->zhenying->step_lv;
 	}
 
 	//背包
@@ -2433,6 +2547,16 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 			data->live_skill.broken[i + 1] = db_info->live_skill->broken[i];
 		}
 	}
+	if (db_info->tower)
+	{
+
+		data->tower.cur_lv = db_info->tower->cur_lv;
+		data->tower.top_lv = db_info->tower->top_lv;
+		data->tower.cur_num = db_info->tower->cur_num;
+		data->tower.reset_num = db_info->tower->reset_num;
+		data->tower.award_lv = db_info->tower->award_lv;
+
+	}
 	//离开副本后要到的场景的位置
 	data->leaveraid.scene_id = db_info->leaveraid_sceneid;
 	data->leaveraid.ExitPointX = db_info->exitpointx;
@@ -2604,6 +2728,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	data->mi_jing_xiu_lian.lun_num = db_info->mijing_lun_num;
 
 	data->fishing_bait_id = db_info->fishing_bait_id;
+	data->fishing_reward_num = db_info->fishing_reward_num;
 
 	//我要变强
 	for (size_t i = 0; i < db_info->n_strong_goals && i < MAX_STRONG_GOAL_NUM; ++i)
@@ -2636,6 +2761,10 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	{
 		data->online_reward.befor_online_time = db_info->player_online_reward_info->befor_online_time;
 		data->online_reward.use_reward_num = db_info->player_online_reward_info->use_reward_num;
+		for(size_t i = 0; i < db_info->player_online_reward_info->n_reward_id_today && i < MAX_PLAYER_ONLINE_REWARD_NUM; i++)
+		{
+			data->online_reward.reward_id_today[i] = db_info->player_online_reward_info->reward_id_today[i];
+		}
 		for(size_t i = 0; i < db_info->player_online_reward_info->n_reward_table_id && i < MAX_PLAYER_ONLINE_REWARD_NUM; i++)
 		{
 			data->online_reward.reward_table_id[i] = db_info->player_online_reward_info->reward_table_id[i];
@@ -2657,6 +2786,52 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		}
 	}
 
+	for(size_t i = 0; i < db_info->n_player_reward_back_info && i < MAX_ACTIVE_CAN_ZHAOHUI_REWARD; i++)
+	{
+		data->zhaohui_data[i].id = db_info->player_reward_back_info[i]->id;
+		data->zhaohui_data[i].num = db_info->player_reward_back_info[i]->num;
+		data->zhaohui_data[i].normo_exp = db_info->player_reward_back_info[i]->normo_exp;
+		data->zhaohui_data[i].perfect_exp = db_info->player_reward_back_info[i]->perfect_exp;
+		data->zhaohui_data[i].normo_coin = db_info->player_reward_back_info[i]->normo_coin;
+		data->zhaohui_data[i].perfect_coin = db_info->player_reward_back_info[i]->perfect_coin;
+		data->zhaohui_data[i].normo_use = db_info->player_reward_back_info[i]->normo_use;
+		data->zhaohui_data[i].perfect_use = db_info->player_reward_back_info[i]->perfect_use;
+	}
+
+	if(db_info->player_yao_qian_shu_info != NULL)
+	{
+		data->yaoqian_data.sum_num = db_info->player_yao_qian_shu_info->sum_num;
+		data->yaoqian_data.use_num = db_info->player_yao_qian_shu_info->use_num;
+		data->yaoqian_data.free_num = db_info->player_yao_qian_shu_info->free_num;
+		data->yaoqian_data.next_need_money = db_info->player_yao_qian_shu_info->next_need_money;
+		data->yaoqian_data.cur_jizhi_num = db_info->player_yao_qian_shu_info->cur_jizhi_num;
+		data->yaoqian_data.cur_suiji_zhong = db_info->player_yao_qian_shu_info->cur_suiji_zhong;
+		data->yaoqian_data.beilv_num = db_info->player_yao_qian_shu_info->beilv_num;
+	}
+
+	if(db_info->player_login_reward_info != NULL)
+	{
+		data->login_reward_info.open = db_info->player_login_reward_info->open;
+		data->login_reward_info.receive_time = db_info->player_login_reward_info->receive_time;
+		data->login_reward_info.open_time = db_info->player_login_reward_info->open_time;
+		data->login_reward_info.login_day = db_info->player_login_reward_info->login_day;
+		for(size_t i = 0; i < db_info->player_login_reward_info->n_info && i < MAX_LOGIN_REWARD_RECEIVE_NUM; i++)
+		{
+			data->login_reward_info.info[i].id = db_info->player_login_reward_info->info[i]->id;
+			data->login_reward_info.info[i].statu = db_info->player_login_reward_info->info[i]->statu;
+		}
+	}
+
+	for (size_t i = 0; i < db_info->n_function_open && i < MAX_GAME_FUNCTION_NUM; ++i)
+	{
+		data->function_open[i] = db_info->function_open[i];
+	}
+
+	for (size_t i = 0; i < db_info->n_ci_fu_reward_info && i < MAX_CIFU_REWARD_NUM; ++i)
+	{
+		data->ci_fu_reward[i].id = db_info->ci_fu_reward_info[i]->id;
+		data->ci_fu_reward[i].time = db_info->ci_fu_reward_info[i]->time;
+	}
 
 	player_dbinfo__free_unpacked(db_info, NULL);
 
@@ -2847,11 +3022,14 @@ void player_struct::send_scene_transfer(float direct, float pos_x, float pos_y, 
 	if (get_entity_type(data->player_id) == ENTITY_TYPE_AI_PLAYER)
 		return;
 
-	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
+	if (data->scene_id != scene_id)
 	{
-		if (!m_buffs[i])
-			continue;
-		m_buffs[i]->on_dead();
+		for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
+		{
+			if (!m_buffs[i])
+				continue;
+			m_buffs[i]->on_scene_changed();
+		}
 	}
 	clear_watched_list();
 
@@ -3516,6 +3694,12 @@ void player_struct::on_region_changed(uint16_t old_region_id, uint16_t new_regio
 			broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, PK_TYPE_MURDER, false, true);
 		}
 	}
+	if (new_region_id == 20)
+	{
+	}
+	else if (old_region_id == 20)
+	{
+	}
 
 	raid_struct *raid = get_raid();
 	if (raid && raid->ai && raid->ai->raid_on_player_region_changed)
@@ -3744,6 +3928,12 @@ void player_struct::calculate_attribute(bool isNty)
 	if (data->charm_level > 1)
 	{
 		calcu_fashion_attr(module_attr);
+		add_fight_attr(data->attrData, module_attr);
+		data->fc_data.fashion = calculate_fighting_capacity(module_attr);
+	}
+	if (get_attr(PLAYER_ATTR_ZHENYING) != 0)
+	{
+		calc_zhenying_attr(module_attr);
 		add_fight_attr(data->attrData, module_attr);
 		data->fc_data.fashion = calculate_fighting_capacity(module_attr);
 	}
@@ -6662,6 +6852,8 @@ int player_struct::check_use_prop(uint32_t item_id, uint32_t use_count, ItemUseE
 
 	switch (config->ItemEffect)
 	{
+		case 0:
+			break;
 		case IUE_TRANSFER_SCENE:
 			{
 				if (!scene || !scene->can_transfer(2))
@@ -6749,6 +6941,12 @@ int player_struct::check_use_prop(uint32_t item_id, uint32_t use_count, ItemUseE
 				{
 					return 190500393;
 				}
+			}
+			break;
+		default:
+			if (config->n_ParameterEffect < 1)
+			{
+				return ERROR_ID_NO_CONFIG;
 			}
 			break;
 	}
@@ -6894,6 +7092,29 @@ int player_struct::use_prop_effect(uint32_t id, uint32_t use_count, ItemUseEffec
 		case IUE_ADD_TITLE:
 			{
 				add_title(config->ParameterEffect[0], config->ParameterEffect[1]);
+			}
+			break;
+		case IUE_OPEN_FUNCTION:
+			{
+				std::vector<uint32_t> func_ids;
+				uint32_t need_lv = 0;
+				for (uint32_t i = 0; i < config->n_ParameterEffect; ++i)
+				{
+					uint32_t func_id = config->ParameterEffect[i];
+					FunctionUnlockTable *func_config = get_config_by_id(func_id, &function_unlock_config);
+					if (!func_config)
+					{
+						continue;
+					}
+					func_ids.push_back(func_id);
+					need_lv = std::max(need_lv, (uint32_t)func_config->Level);
+				}
+				uint32_t need_exp = get_up_to_level_exp(need_lv);
+				if (need_exp > 0)
+				{
+					add_exp(need_exp, MAGIC_TYPE_BAG_USE);
+				}
+				open_function(func_ids);
 			}
 			break;
 	}
@@ -7460,6 +7681,8 @@ int player_struct::deal_level_up(uint32_t level_old, uint32_t level_new)
 		}
 
 	}
+	//登录奖励等级触发
+	refresh_player_login_reward_info(0, true);
 
 	return 0;
 }
@@ -7504,6 +7727,31 @@ int player_struct::get_total_exp(void)
 	}
 
 	total_exp += (uint32_t)data->attrData[PLAYER_ATTR_EXP];
+
+	return total_exp;
+}
+
+uint32_t player_struct::get_up_to_level_exp(uint32_t target_level) //角色从当前等级经验升级到指定等级所需经验值
+{
+	uint32_t total_exp = 0;
+	uint32_t player_job = data->attrData[PLAYER_ATTR_JOB];
+	uint32_t player_level = (uint32_t)data->attrData[PLAYER_ATTR_LEVEL];
+	if (player_level >= target_level)
+	{
+		return 0;
+	}
+	for (uint32_t level = player_level; level < target_level; ++level)
+	{
+		ActorLevelTable *config = get_actor_level_config(player_job, level);
+		if (!config)
+		{
+			break;
+		}
+
+		total_exp += (uint32_t)config->NeedExp;
+	}
+
+	total_exp -= (uint32_t)data->attrData[PLAYER_ATTR_EXP];
 
 	return total_exp;
 }
@@ -7933,6 +8181,9 @@ int player_struct::add_task(uint32_t task_id, uint32_t status, bool isNty)
 	{
 		this->task_update_notify(info);
 	}
+
+	if (is_in_buff3())
+		down_horse();
 
 	return 0;
 }
@@ -13115,6 +13366,7 @@ void player_struct::on_tick_10()
 		data->zhenying.score_week = 0;
 		data->zhenying.week = 0;
 		data->zhenying.task_type = 1;
+		data->zhenying.task_award_state = 0;
 		WeekTable *table = get_rand_week_config();
 		if (table != NULL)
 		{
@@ -13309,6 +13561,12 @@ void player_struct::on_kill_player(player_struct *dead)
 	if (dead->data->chengjie.cur_task != 0 && dead->data->chengjie.target == this->get_uuid() && data->scene_id < SCENCE_DEPART)
 	{
 		ChengJieTaskManage::TaskFail(dead, this);
+	}
+	if (dead->get_attr(PLAYER_ATTR_ZHENYING) != 0 && this->get_attr(PLAYER_ATTR_ZHENYING) != 0 &&
+		dead->get_attr(PLAYER_ATTR_ZHENYING) != this->get_attr(PLAYER_ATTR_ZHENYING))
+	{
+		++data->zhenying.kill;
+		refresh_player_redis_info();
 	}
 }
 
@@ -13567,7 +13825,8 @@ void player_struct::refresh_oneday_job()
 {
 	if (get_entity_type(data->player_id) != ENTITY_TYPE_PLAYER)
 		return;
-
+	//奖励找回在最前更新
+	refresh_player_reward_back_info(data->next_time_refresh_oneday_job / 1000);
 	data->next_time_refresh_oneday_job = time_helper::nextOffsetTime(5 * 3600, time_helper::get_cached_time() / 1000);
 	data->next_time_refresh_oneday_job *= 1000;
 //	data->next_time_refresh_oneday_job = (time_helper::get_cached_time() + 24 * 3600 * 1000) / (24 * 3600 * 1000) * (24 * 3600 * 1000) + timezone * 1000;
@@ -13627,6 +13886,8 @@ void player_struct::refresh_oneday_job()
 	data->travel_round_num = 0;
 	refresh_player_online_reward_info();
 	notify_travel_task_info();
+	player_active_zhaohui_reward_info_notify();
+	data->fishing_reward_num = 0;
 }
 
 void player_struct::refresh_shop_daily(void)
@@ -13729,6 +13990,10 @@ void player_struct::refresh_shop_daily(void)
 
 		//更新签到每日数据,要在更新月数据之前调用
 		refresh_player_signin_info_every_day(befor_day_time);
+		//更新摇钱树数据
+		refresh_yao_qian_shu_data(befor_day_time);
+		//更新登录奖励数据
+		refresh_player_login_reward_info(befor_day_time, false);
 	}
 	notify_activity_info(&ext_data);
 	if(month_reset)
@@ -13802,6 +14067,7 @@ void player_struct::leave_fight_state()
 
 void player_struct::on_beattack(unit_struct *player, uint32_t skill_id, int32_t damage)
 {
+	unit_struct::on_beattack(player, skill_id, damage);	
 	if (!scene || !data)
 		return;
 	interrupt();
@@ -14113,7 +14379,7 @@ void player_struct::send_buff_info()
 		if (m_buffs[i] && m_buffs[i]->data)
 		{
 			notify.start_time = m_buffs[i]->data->start_time / 1000;
-//			notify.end_time = m_buffs[i]->data->end_time / 1000;
+			notify.end_time = m_buffs[i]->data->end_time / 1000;
 			notify.buff_id = m_buffs[i]->data->buff_id;
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ADD_BUFF_NOTIFY, add_buff_notify__pack, notify);
 //			owner->broadcast_to_sight(MSG_ID_ADD_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
@@ -14189,6 +14455,9 @@ void player_struct::refresh_player_redis_info(bool offline)
 	info.fighting_capacity = data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY];
 	info.status = (offline ? time_helper::get_cached_time() / 1000 : 0); //保存下线时间，0表示在线
 	info.zhenying = data->attrData[PLAYER_ATTR_ZHENYING];
+	info.zhenying_level = data->zhenying.level;
+	info.zhenying_kill = data->zhenying.kill;
+	info.exploit = data->zhenying.history_exploit;
 //	info.guild_id = guild_id;
 //	info.guild_name = guild_name;
 	info.n_tags = 0;
@@ -14384,6 +14653,7 @@ int get_partner_exp_notice_id(uint32_t statis_id)
 	switch(statis_id)
 	{
 		case MAGIC_TYPE_MONSTER_DEAD:
+		case MAGIC_TYPE_REWARD_BACK_FIVE_ITEM:
 			return 190500445;
 	}
 
@@ -15660,6 +15930,40 @@ int player_struct::get_partner_fabao_main_attr(uint32_t card_id, AttrInfo &attr_
 
 	return 0;
 }
+
+void player_struct::calc_partner_pos(struct position *pos)
+{
+	static float delta[] = {0.75, 0.7, 0.65, 0.6, 0.55, 0.5};
+
+	struct position *cur_pos = get_pos();
+	
+	if (!scene)
+	{
+		pos->pos_x = cur_pos->pos_x;
+		pos->pos_z = cur_pos->pos_z;
+		return;
+	}
+		
+	for (size_t i = 0; i < ARRAY_SIZE(delta); ++i)
+	{
+		double angle = data->m_angle - (M_PI * delta[i]);
+		double cos = qFastCos(angle);
+		double sin = qFastSin(angle);
+		float z = 2 * sin + cur_pos->pos_z;
+		float x = 2 * cos + cur_pos->pos_x;		
+
+		struct map_block *block_start = get_map_block(scene->map_config, x, z);
+		if (!block_start || !block_start->can_walk)
+			continue;
+		pos->pos_x = x;
+		pos->pos_z = z;
+		return;
+	}
+	pos->pos_x = cur_pos->pos_x;
+	pos->pos_z = cur_pos->pos_z;
+	return;
+}
+
 bool player_struct::is_too_high_to_beattack()
 {
 	if (get_attr(PLAYER_ATTR_ON_HORSE_STATE) == 0)
@@ -16925,7 +17229,7 @@ void player_struct::add_strong_goal_progress(uint32_t type, uint32_t target1, ui
 
 void player_struct::strong_goal_update_notify(StrongGoalInfo *info)
 {
-	if (!data->login_notify)
+	if (!data->login_notify || !strong_function_open())
 	{
 		return;
 	}
@@ -16985,7 +17289,7 @@ void player_struct::add_strong_chapter_progress(uint32_t chapter_id)
 
 void player_struct::strong_chapter_update_notify(StrongChapterInfo *info)
 {
-	if (!data->login_notify)
+	if (!data->login_notify || !strong_function_open())
 	{
 		return;
 	}
@@ -17041,6 +17345,36 @@ void player_struct::check_strong_chapter_open(uint32_t old_lv, uint32_t new_lv)
 		{
 			strong_goal_update_notify(info);
 		}
+	}
+}
+
+bool player_struct::strong_function_open(void)
+{
+	uint32_t now = time_helper::get_cached_time() / 1000;
+	return (now <= (data->create_time + sg_strong_function_time));
+}
+
+static const uint32_t fishing_buffs[2] = {114500014, 114500015};
+void player_struct::add_fishing_buff(void)
+{
+	for (uint32_t i = 0; i < ARRAY_SIZE(fishing_buffs); ++i)
+	{
+		uint32_t buff_id = fishing_buffs[i];
+		buff_struct *buff = buff_manager::create_default_buff(buff_id, this, this, true);
+		if (!buff)
+		{
+			LOG_ERR("[%s:%d] player[%lu] create buff failed, buff_id:%u", __FUNCTION__, __LINE__, data->player_id, buff_id);
+			continue;
+		}
+	}
+}
+
+void player_struct::del_fishing_buff(void)
+{
+	for (uint32_t i = 0; i < ARRAY_SIZE(fishing_buffs); ++i)
+	{
+		uint32_t buff_id = fishing_buffs[i];
+		delete_one_buff(buff_id, true);
 	}
 }
 
@@ -18095,7 +18429,7 @@ void player_struct::deal_skill_cast_request(SkillCastRequest *req, SkillTable *c
 	}
 
 	set_pos_with_broadcast(new_pos.pos_x, new_pos.pos_z);
-	data->cur_skill.skill_id = req->skillid;
+	data->cur_skill.skill_id = config->ID;
 //	data->cur_skill.direct_x = req->direct_x;
 //	data->cur_skill.direct_z = req->direct_z;
 	data->cur_skill.start_time = time_helper::get_cached_time();
@@ -18582,8 +18916,13 @@ int player_struct::player_online_reward_info_notify()
 	}
 
 	uint32_t reward_table_id[MAX_PLAYER_ONLINE_REWARD_NUM];
+	uint32_t reward_id_today[MAX_PLAYER_ONLINE_REWARD_NUM];
+	memset(reward_table_id, 0, sizeof(uint32_t) * MAX_PLAYER_ONLINE_REWARD_NUM);
+	memset(reward_id_today, 0, sizeof(uint32_t) * MAX_PLAYER_ONLINE_REWARD_NUM);
 	notify.reward_table_id = reward_table_id;
+	notify.reward_id_today = reward_id_today;
 	notify.n_reward_table_id = 0;
+	notify.n_reward_id_today = 0;
 	notify.sigin_time = data->online_reward.sign_time;
 	for(size_t i = 0; i < MAX_PLAYER_ONLINE_REWARD_NUM; i++)
 	{
@@ -18591,6 +18930,13 @@ int player_struct::player_online_reward_info_notify()
 			break;
 		reward_table_id[notify.n_reward_table_id] = data->online_reward.reward_table_id[notify.n_reward_table_id];
 		notify.n_reward_table_id++;
+	}
+	for(size_t i = 0; i < MAX_PLAYER_ONLINE_REWARD_NUM; i++)
+	{
+		if(data->online_reward.reward_id_today[i] == 0)
+			break;
+		reward_id_today[notify.n_reward_id_today] = data->online_reward.reward_id_today[notify.n_reward_id_today];
+		notify.n_reward_id_today++;
 	}
 
 	EXTERN_DATA extern_data;
@@ -18605,7 +18951,48 @@ int player_struct::refresh_player_online_reward_info()
 	data->online_reward.befor_online_time = 0;
 	data->online_reward.use_reward_num = 0;
 	data->online_reward.reward_id = 0;
+	memset(data->online_reward.reward_id_today, 0, sizeof(uint32_t)*MAX_PLAYER_ONLINE_REWARD_NUM);
 	memset(data->online_reward.reward_table_id, 0, sizeof(uint32_t)*MAX_PLAYER_ONLINE_REWARD_NUM);
+	//随机今日奖励id
+	std::map<uint32_t, uint32_t> reward_id_v[MAX_PLAYER_ONLINE_REWARD_NUM];
+	for(size_t i = 0; i < MAX_PLAYER_ONLINE_REWARD_NUM; i++)
+	{
+		reward_id_v[i].clear();
+	}
+	for(std::map<uint64_t, struct TimeReward*>::iterator itr = online_reward_config.begin(); itr != online_reward_config.end(); itr++)
+	{
+		if(itr->second->Position < 1 && itr->second->Position > MAX_PLAYER_ONLINE_REWARD_NUM)
+			continue;
+		reward_id_v[itr->second->Position -1].insert(std::make_pair(itr->second->ID, itr->second->Probability));
+
+	}
+	uint32_t j = 0;
+	for(size_t i = 0; i < MAX_PLAYER_ONLINE_REWARD_NUM && j < MAX_PLAYER_ONLINE_REWARD_NUM; i++)
+	{
+		uint32_t vector_size = reward_id_v[i].size();
+		if(vector_size <= 0)
+			continue;
+		uint32_t sum_gailv  = 0;
+		for(std::map<uint32_t, uint32_t>::iterator itr = reward_id_v[i].begin(); itr != reward_id_v[i].end(); itr++)
+		{
+			sum_gailv += itr->second;
+		}
+		
+		sum_gailv = rand() % sum_gailv + 1;
+		uint32_t gailv_begin = 0;
+		uint32_t gailv_end = 0;
+		for(std::map<uint32_t, uint32_t>::iterator itr = reward_id_v[i].begin(); itr != reward_id_v[i].end(); itr++)
+		{
+			gailv_end = gailv_begin + itr->second;
+			if(sum_gailv > gailv_begin && sum_gailv <= gailv_end)
+			{
+				data->online_reward.reward_id_today[j] = itr->first;
+				j++;
+				break;	
+			}
+			gailv_begin = gailv_end;
+		}
+	}
 	player_online_reward_info_notify();
 	return 0;
 }
@@ -18639,7 +19026,6 @@ int player_struct::player_signin_reward_info_notify()
 	EXTERN_DATA extern_data;
 	extern_data.player_id = get_uuid();
 	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_SIGNIN_EVERYDAY_INFO_ANSWER, player_sign_in_every_day_info__pack, notify);
-	return 0;
 
 	return 0;
 }
@@ -18886,6 +19272,625 @@ int player_struct::player_huo_yue_du_add_sign_in_num(uint32_t befor_huoyue, uint
 			data->sigin_in_data.buqian_sum += buqian_num; 
 		}
 	}
+	return 0;
+}
 
+int player_struct::player_active_zhaohui_reward_info_notify()
+{
+	PlayerRewardZhaoHuiInfoNotify notify;
+	player_reward_zhao_hui_info_notify__init(&notify);
+	
+	PlayerRewardZhaoHuiInfoInfo info[MAX_ACTIVE_CAN_ZHAOHUI_REWARD];
+	PlayerRewardZhaoHuiInfoInfo* info_point[MAX_ACTIVE_CAN_ZHAOHUI_REWARD];
+
+	notify.n_info = 0; 
+	notify.info = info_point;
+
+	for(size_t i = 0; i < MAX_ACTIVE_CAN_ZHAOHUI_REWARD; i++)
+	{
+		if(data->zhaohui_data[i].id == 0)
+			break;
+		info_point[notify.n_info] = &info[notify.n_info];
+		player_reward_zhao_hui_info_info__init(&info[notify.n_info]);
+		info[notify.n_info].id = data->zhaohui_data[i].id;
+		info[notify.n_info].num = data->zhaohui_data[i].num;
+		info[notify.n_info].exp = data->zhaohui_data[i].perfect_exp;
+		info[notify.n_info].cion = data->zhaohui_data[i].perfect_coin;
+		info[notify.n_info].use_cion = data->zhaohui_data[i].normo_use;
+		info[notify.n_info].use_gold = data->zhaohui_data[i].perfect_use;
+
+		notify.n_info++;
+	}
+	
+
+	EXTERN_DATA extern_data;
+	extern_data.player_id = get_uuid();
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_PLAYER_ACTIVE_REWARD_ZHAOHUI_INFO_NOTIFY, player_reward_zhao_hui_info_notify__pack, notify);
+	return 0;
+}
+
+int player_struct::refresh_player_reward_back_info(uint64_t befor_time)
+{
+	//创角不更新
+	if(0 == befor_time)
+		return -1;
+	uint64_t now_time = time_helper::get_cached_time() / 1000;
+	if(befor_time > now_time)
+		return -2;
+
+	double kua_num =((double)now_time - (double)befor_time) / (24*3600);
+
+	memset(data->zhaohui_data, 0, sizeof(ActiveRewardZhaohuiInfo) * MAX_ACTIVE_CAN_ZHAOHUI_REWARD);
+
+	for(std::map<uint64_t, struct RewardBack*>::iterator itr = reward_back_config.begin(); itr != reward_back_config.end(); itr++)
+	{
+		uint32_t level = get_level();
+		uint32_t calendar_id = itr->second->Level;
+		//先判断等级条件有没有达到
+		if(calendar_id != 0)
+		{
+			EventCalendarTable *calendar_table = get_config_by_id(calendar_id, &activity_config);
+			if(calendar_table == NULL)
+			{
+				LOG_ERR("[%s:%d] 活动奖励找回获取活动表出错, RewardBack表id[%lu]", __FUNCTION__, __LINE__, itr->second->ID);
+				continue;
+			}
+			if(calendar_table->SubtabCondition !=1)
+			{
+				LOG_ERR("[%s:%d] 获取的不是等级，配置出错, RewardBack表id[%lu]", itr->second->ID);
+				continue;
+			}
+			if(calendar_table->SubtabValue > level)
+				continue;
+		}
+
+		uint64_t actor_id = 1041*100000 + level;
+		ActorLevelTable *level_config = get_config_by_id(actor_id, &actor_level_config);
+		if(level_config == NULL)
+		{
+			LOG_INFO("[%s:%d]奖励找回更新数据失败，获取ActorLevelTable等级配置失败id[%lu]", __FUNCTION__, __LINE__, actor_id);
+			return -2;
+		}
+
+
+		uint32_t flag = 0;
+		for(; flag < MAX_ACTIVE_CAN_ZHAOHUI_REWARD; flag++)
+		{
+			if(data->zhaohui_data[flag].id == 0)
+				break;
+		}
+		if(flag >= MAX_ACTIVE_CAN_ZHAOHUI_REWARD)
+		{
+			LOG_ERR("[%s:%d] 奖励找回,宏长度不够", __FUNCTION__, __LINE__)
+				return -3;
+		}
+		ControlTable *reward_control_config = NULL;
+		if(itr->second->n_Value <= 0)
+		{
+			LOG_ERR("[%s:%d] 奖励找回表出错?", __FUNCTION__, __LINE__);
+		}
+		uint32_t max_num = 0; //每日可用最大收益次数
+		uint32_t use_num = 0; //已经被使用了的收益次数
+		uint32_t normo_exp = itr->second->ExpReward * (level_config->QueLvExp / 100) * 0.7; //普通找回的固定经验(宝箱掉落之外的)
+		uint32_t perfect_exp = itr->second->ExpReward * (level_config->QueLvExp / 100); //完美找回的固定经验(宝箱掉落之外的)
+		uint32_t normo_coin = itr->second->MoneyReward * (level_config->QueLvCoin / 100) * 0.7; //普通找回的固定银两(宝箱掉落之外的)
+		uint32_t perfect_coin = itr->second->MoneyReward * (level_config->QueLvCoin / 100); //完美找回的固定银两(宝箱掉落之外的)
+		uint32_t normo_use = itr->second->NormalExpend * (level_config->QueLvCoin / 100); //普通找回消耗银票
+		uint32_t perfect_use = itr->second->PerfectExpend;      //完美找回暂定消耗金票数量
+
+		switch(itr->second->Type)
+		{
+			//普通副本类型活动
+			case REWARD_BACK_NORMO_RAID_TYPE_ACTIVE:
+			{	
+				DungeonTable* raid_config_ = get_config_by_id(itr->second->Value[0], &all_raid_config);
+				if(raid_config_ == NULL)
+				{
+					LOG_ERR("[%s:%d] 奖励找回获取副本配置表失败, 副本Id[%lu]", __FUNCTION__, __LINE__, itr->second->Value[0]);
+					continue;
+				}
+				reward_control_config = get_config_by_id(raid_config_->ActivityControl, &all_control_config);				
+				if(reward_control_config == NULL)
+				{
+					LOG_ERR("[%s:%d] 奖励找回获取活动控制表配置表失败, 控制表Id[%lu]", __FUNCTION__, __LINE__, raid_config_->ActivityControl);
+					continue;
+				}
+
+				max_num = reward_control_config->RewardTime;
+				for(size_t i = 0; i < itr->second->n_Value; i++)
+				{
+					use_num = get_raid_reward_count(itr->second->Value[i]);
+				}
+				if(use_num >= max_num)
+					continue;
+					
+				if(kua_num > 1)
+				{
+					
+					data->zhaohui_data[flag].num = max_num;
+				}
+				else 
+				{
+					data->zhaohui_data[flag].num = max_num - use_num;
+				}
+
+			}
+				break;
+			case REWARD_BACK_GUANFU_XUANSHANG_ACTIVE:
+			{
+				if(data->guoyu.guoyu_num <= 0)
+					continue;
+				TypeLevelTable *table = get_guoyu_level_table(GUOYU__TASK__TYPE__CRITICAL);
+				if (table == NULL)
+				{
+					LOG_ERR("[%s:%d] 官府悬赏奖励找回数据跟新失败，获取参数表失败", __FUNCTION__, __LINE__)
+					continue;
+				}
+				if(kua_num > 1)
+				{
+					data->zhaohui_data[flag].num = table->RewardTime;
+				}
+				else 
+				{
+					data->zhaohui_data[flag].num = data->guoyu.guoyu_num;
+				}
+				
+			}
+				break;
+			case REWARD_BACK_LIANGCAO_YAOBIAO_ACTIVE:
+			{
+				if(data->truck.num_coin <= 0)
+					continue;
+				reward_control_config = get_config_by_id(itr->second->Value[0], &all_control_config);				
+				if(reward_control_config == NULL)
+				{
+					LOG_ERR("[%s:%d] 奖励找回获取活动控制表配置表失败, 控制表Id[%lu]", __FUNCTION__, __LINE__, itr->second->Value[0]);
+					continue;
+				}
+				if(kua_num > 1)
+				{
+					data->zhaohui_data[flag].num = reward_control_config->RewardTime;
+				}
+				else
+				{
+					data->zhaohui_data[flag].num = data->truck.num_coin;
+				}	
+			
+			}
+				break;
+			case REWARD_BACK_MIJING_XIULIAN_ACTIVE:
+			{
+				ParameterTable *mijing_parame = get_config_by_id(161000336, &parameter_config);
+				if(mijing_parame == NULL || mijing_parame->n_parameter1 != 2)
+				{
+					LOG_ERR("[%s:%d] 秘境修炼奖励找回数据跟新失败，获取参数表失败", __FUNCTION__, __LINE__);
+					break;
+				}
+				max_num = mijing_parame->parameter1[0] * mijing_parame->parameter1[1];
+				use_num = data->mi_jing_xiu_lian.huan_num * mijing_parame->parameter1[1] + data->mi_jing_xiu_lian.lun_num;
+				if(use_num >= max_num)
+					continue;
+				if(data->mi_jing_xiu_lian.task_id != 0 && max_num - use_num - 1 <= 0)
+				{
+					continue;
+				}
+				
+				if(kua_num > 1)
+				{
+					data->zhaohui_data[flag].num = max_num;
+				}
+				else 
+				{
+					if(data->mi_jing_xiu_lian.task_id != 0)
+					{
+						data->zhaohui_data[flag].num = max_num - use_num -1;
+					}
+					else 
+					{
+						data->zhaohui_data[flag].num = max_num - use_num;
+					}
+				}
+			}
+				break;
+			//帮会入侵活动数据需要等帮会服推送
+			case REWARD_BACK_JIANGHU_YOULI_ACTIVE:
+			{
+				if(kua_num > 1)
+				{
+					data->zhaohui_data[flag].num = sg_travel_round_amount;
+				}
+				else 
+				{
+					if(get_travel_task() != 0)
+					{
+						if(sg_travel_round_amount - data->travel_round_num - 1 <= 0)
+							continue;
+
+						data->zhaohui_data[flag].num = sg_travel_round_amount - data->travel_round_num - 1;
+
+					}
+					else 
+					{
+						if(sg_travel_round_amount - data->travel_round_num <= 0)
+							continue;
+				
+							data->zhaohui_data[flag].num = sg_travel_round_amount - data->travel_round_num;
+					}
+				}
+			}
+				break;
+			default:
+				continue;
+		}
+		data->zhaohui_data[flag].id = itr->second->ID;
+		data->zhaohui_data[flag].normo_exp = normo_exp;
+		data->zhaohui_data[flag].perfect_exp = perfect_exp;
+		data->zhaohui_data[flag].normo_coin = normo_coin;
+		data->zhaohui_data[flag].perfect_coin = perfect_coin;
+		data->zhaohui_data[flag].normo_use = normo_use;
+		data->zhaohui_data[flag].perfect_use = perfect_use;
+	}
+	return 0;
+
+}
+
+void player_struct::refresh_yao_qian_shu_data(uint64_t befor_time)
+{
+	//创角初始化随机种子和累加种子
+	if(befor_time == 0)
+	{
+		data->yaoqian_data.cur_jizhi_num = 0;
+		ParameterTable *config = get_config_by_id(161000423, &parameter_config);
+		assert(config != NULL && config->n_parameter1 >=2 && config->parameter1[0] < config->parameter1[config->n_parameter1-1]);
+		data->yaoqian_data.cur_suiji_zhong = rand() % ((int)config->parameter1[config->n_parameter1-1] - (int)config->parameter1[0]) + (int)config->parameter1[0];
+		uint32_t beilv = YAO_QIAN_SHU_CHU_SHI_BEILV;
+		bool flag = false;
+		for(uint32_t i = 0; i < config->n_parameter1 && i + 1 < config->n_parameter1; i++)
+		{
+
+			if(data->yaoqian_data.cur_suiji_zhong >= config->parameter1[i] && data->yaoqian_data.cur_suiji_zhong < config->parameter1[i+1])
+			{
+				data->yaoqian_data.beilv_num = beilv;
+				flag = true;
+				break;
+			}
+			beilv++;
+		}
+		if(flag == false)
+		{
+			LOG_ERR("[%s:%d] 创角时摇钱树倍率初始化失败", __FUNCTION__, __LINE__);
+			return;
+		}
+	}
+	data->yaoqian_data.sum_num = sg_yaoqian_shu_sum_num;
+	data->yaoqian_data.use_num = 0;
+	data->yaoqian_data.free_num = sg_yaoqian_shu_free_num;
+	data->yaoqian_data.next_need_money = sg_yaoqian_shu_use_gold;
+	if(data->yaoqian_data.free_num > 0)
+	{
+		data->yaoqian_data.next_need_money = 0;
+	}
+	player_yaoqian_shu_info_notify();
+}
+
+void player_struct::player_yaoqian_shu_info_notify()
+{
+	PlayerYaoQianInfoNotify notify;
+	player_yao_qian_info_notify__init(&notify);
+	notify.sum_num = data->yaoqian_data.sum_num;
+	notify.use_num = data->yaoqian_data.use_num;
+	notify.free_num = data->yaoqian_data.free_num;
+	if(data->yaoqian_data.free_num > 0)
+	{
+		notify.one_times = 0;
+		if(data->yaoqian_data.free_num >= 10)
+		{
+			notify.ten_times = 0;
+		}
+		else 
+		{
+			uint32_t use_money_num = 10 - data->yaoqian_data.free_num;	
+			uint32_t need_money = 0;
+			uint32_t next_money = sg_yaoqian_shu_use_gold;
+			for(size_t i = 0; i < use_money_num; i++)
+			{
+				if(next_money >= sg_yaoqian_shu_max_gold)
+				{
+					next_money = sg_yaoqian_shu_max_gold;
+				}
+				need_money += next_money;
+				next_money += sg_yaoqian_shu_add_gold;
+			}
+			notify.ten_times = need_money;
+		}
+	}
+	else 
+	{
+		notify.one_times = data->yaoqian_data.next_need_money;
+		uint32_t need_money = 0;
+		uint32_t next_money = data->yaoqian_data.next_need_money;
+		for(size_t i = 0; i < 10; i++)
+		{
+			if(next_money >= sg_yaoqian_shu_max_gold)
+			{
+				next_money = sg_yaoqian_shu_max_gold;
+			}
+			need_money += next_money;
+			next_money += sg_yaoqian_shu_add_gold;
+		}
+		notify.ten_times = need_money;
+	}
+	EXTERN_DATA extern_data;
+	extern_data.player_id = get_uuid();
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_YAOQIAN_SHU_INFO_NOTIFY, player_yao_qian_info_notify__pack, notify);
+}
+
+//玩家登陆的时候初始化玩家登录奖励领取信息
+int player_struct::init_player_login_reward_receive_data()
+{
+	for(size_t j = 0; j < MAX_LOGIN_REWARD_RECEIVE_NUM;)
+	{
+		if(data->login_reward_info.info[j].id == 0)
+			break;
+		if(login_gifts_config.find(data->login_reward_info.info[j].id) == login_gifts_config.end())
+		{
+			if(j + 1 < MAX_LOGIN_REWARD_RECEIVE_NUM)
+			{
+				memmove(&data->login_reward_info.info[j], &data->login_reward_info.info[j+1], sizeof(LoginReceiveInfo)*(MAX_LOGIN_REWARD_RECEIVE_NUM - j - 1));
+			}
+			memset(&data->login_reward_info.info[MAX_LOGIN_REWARD_RECEIVE_NUM - 1], 0, sizeof(LoginReceiveInfo));
+		}
+		else 
+		{
+			j++;
+		}
+	}
+
+	for(std::map<uint64_t, LoginGifts*>::iterator ite = login_gifts_config.begin(); ite != login_gifts_config.end(); ite++)
+	{
+		int dex = -1;
+		for(uint32_t i =0; i < MAX_LOGIN_REWARD_RECEIVE_NUM; i++)
+		{
+			if(data->login_reward_info.info[i].id == 0)
+			{
+				dex = i;
+				break;
+			}
+			else if(data->login_reward_info.info[i].id == ite->second->ID)
+			{
+				break;
+			}
+		}
+		if(dex == -1)
+			continue;
+		
+		data->login_reward_info.info[dex].id = ite->second->ID;
+		data->login_reward_info.info[dex].statu = 0;
+	}
+
+	
+	return 0;
+}
+
+//玩家登录奖励信息通知前端
+int player_struct::player_login_reward_info_notify()
+{
+	PlayerLoginRewardInfoNotify notify;
+
+	player_login_reward_info_notify__init(&notify);
+	PlayerLoginRewardReceiveInfo reward_info[MAX_LOGIN_REWARD_RECEIVE_NUM];
+	PlayerLoginRewardReceiveInfo* reward_info_point[MAX_LOGIN_REWARD_RECEIVE_NUM];
+	notify.info = reward_info_point;
+	notify.n_info = 0;
+	notify.time = data->login_reward_info.open_time;
+	uint32_t now_time = time_helper::get_cached_time() / 1000;
+
+	if(data->login_reward_info.open == true && data->login_reward_info.receive_time == true && (now_time - data->login_reward_info.open_time) <= sg_login_reward_chixu_day * 24 * 3600)
+	{
+		notify.open = true;
+	}
+	else 
+	{
+		notify.open = false;
+	}
+
+	for(size_t i = 0; i < MAX_LOGIN_REWARD_RECEIVE_NUM; i++)
+	{
+		if(data->login_reward_info.info[i].id == 0)
+			break;
+		reward_info_point[notify.n_info] = &reward_info[notify.n_info];
+		player_login_reward_receive_info__init(&reward_info[notify.n_info]);
+		reward_info[notify.n_info].id = data->login_reward_info.info[i].id;
+		reward_info[notify.n_info].statu = data->login_reward_info.info[i].statu;
+		notify.n_info++;
+	}
+
+	EXTERN_DATA extern_data;
+	extern_data.player_id = get_uuid();
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LOGIN_REWARD_INFO_NOTIFY, player_login_reward_info_notify__pack, notify);
+
+
+	return 0;
+}
+
+int player_struct::refresh_player_login_reward_info(uint64_t befor_time, bool up_level)
+{
+	if(up_level == true && data->login_reward_info.open == true)
+		return -1;
+
+	FunctionUnlockTable *function_table = get_config_by_id(sg_login_reward_function_id, &function_unlock_config);
+	if(function_table == NULL)
+	{
+		LOG_ERR("[%s:%d] 登录奖励更新失败,配置错误", __FUNCTION__, __LINE__);
+		return -2;
+	}
+	if(befor_time == 0)
+	{
+		uint32_t level = get_level();	
+		if(level >= function_table->Level && data->login_reward_info.open == false)
+		{
+			data->login_reward_info.open = true;
+			data->login_reward_info.open_time = time_helper::get_cached_time() / 1000;
+		}
+	}
+
+	if(data->login_reward_info.open == true)
+	{
+		uint32_t now_time = time_helper::get_cached_time() / 1000;
+		if((now_time - data->login_reward_info.open_time) > sg_login_reward_chixu_day * 24 * 3600)
+		{
+			data->login_reward_info.receive_time = false;
+		}
+		else 
+		{
+			data->login_reward_info.receive_time = true;
+		}
+	}
+
+	if(data->login_reward_info.open == true && data->login_reward_info.receive_time == true)
+	{
+		data->login_reward_info.login_day++;
+		LoginGifts* login_rewrad_config =  NULL;
+		for(std::map<uint64_t, struct LoginGifts*>::iterator itr = login_gifts_config.begin(); itr != login_gifts_config.end(); itr++)
+		{
+			if(itr->second->LoginDays == (uint64_t)data->login_reward_info.login_day)
+				login_rewrad_config = itr->second;
+		}
+		if(login_rewrad_config != NULL)
+		{
+			for(size_t i = 0; i < MAX_LOGIN_REWARD_RECEIVE_NUM; i++)
+			{
+				if(data->login_reward_info.info[i].id == login_rewrad_config->ID)
+				{
+					data->login_reward_info.info[i].statu = 1;
+				}
+			}
+		}
+	}
+	if(up_level == true && data->login_reward_info.open == false)
+		return -3;
+	player_login_reward_info_notify();
+	return 0;
+}
+
+int player_struct::open_function(std::vector<uint32_t> &func_ids)
+{
+	std::vector<uint32_t> func_new;
+	bool no_memory = false;
+	for (std::vector<uint32_t>::iterator iter = func_ids.begin(); iter != func_ids.end(); ++iter)
+	{
+		uint32_t func_id = *iter;
+		for (int i = 0; i < MAX_GAME_FUNCTION_NUM; ++i)
+		{
+			if (data->function_open[i] == 0)
+			{
+				data->function_open[i] = func_id;
+				func_new.push_back(func_id);
+				break;
+			}
+			else if (data->function_open[i] == func_id)
+			{
+				break;
+			}
+			else if (i == MAX_GAME_FUNCTION_NUM - 1)
+			{
+				no_memory = true;
+			}
+		}
+
+		if (no_memory)
+		{
+			LOG_ERR("[%s:%d] player[%lu] memory not enough", __FUNCTION__, __LINE__, data->player_id);
+			break;
+		}
+	}
+
+	if (func_new.size() > 0)
+	{
+		FunctionOpenNotify nty;
+		function_open_notify__init(&nty);
+
+		nty.functionids = &func_new[0];
+		nty.n_functionids = func_new.size();
+
+		EXTERN_DATA ext_data;
+		ext_data.player_id = data->player_id;
+
+		fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_FUNCTION_OPEN_NOTIFY, function_open_notify__pack, nty);
+	}
+
+	return 0;
+}
+
+int player_struct::player_ci_fu_info_notify()
+{
+	PlayerCifuInfoNotify notify; 
+	PlayerCifuMainInfo main_info[MAX_CIFU_REWARD_NUM];
+	PlayerCifuMainInfo* main_info_point[MAX_CIFU_REWARD_NUM];
+	player_cifu_info_notify__init(&notify);
+	notify.n_info = 0;
+	notify.info = main_info_point;
+
+	for(size_t i = 0; i < MAX_CIFU_REWARD_NUM; i++)
+	{
+		if(data->ci_fu_reward[i].id == 0)
+			break;
+		main_info_point[notify.n_info] = &main_info[notify.n_info];
+		player_cifu_main_info__init(&main_info[notify.n_info]);
+		main_info[notify.n_info].id = data->ci_fu_reward[i].id;
+		main_info[notify.n_info].time = data->ci_fu_reward[i].time;
+		notify.n_info++;
+	}
+	EXTERN_DATA ext_data;
+	ext_data.player_id = data->player_id;
+
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_CIFU_INFO_NOTIFY, player_cifu_info_notify__pack, notify);
+	return 0;
+}
+
+//玩家登陆的时候初始化玩家登录奖励领取信息
+int player_struct::init_player_ci_fu_reward_receive_data()
+{
+	for(size_t j = 0; j < MAX_CIFU_REWARD_NUM;)
+	{
+		if(data->ci_fu_reward[j].id == 0)
+			break;
+		if(ci_fu_config.find(data->ci_fu_reward[j].id) == ci_fu_config.end())
+		{
+			if(j + 1 < MAX_CIFU_REWARD_NUM)
+			{
+				memmove(&data->ci_fu_reward[j], &data->ci_fu_reward[j+1], sizeof(CiFuRewardData)*(MAX_CIFU_REWARD_NUM - j - 1));
+			}
+			memset(&data->ci_fu_reward[MAX_CIFU_REWARD_NUM - 1], 0, sizeof(CiFuRewardData));
+		}
+		else 
+		{
+			j++;
+		}
+	}
+
+	for(std::map<uint64_t, CiFuTable*>::iterator ite = ci_fu_config.begin(); ite != ci_fu_config.end(); ite++)
+	{
+		int dex = -1;
+		for(uint32_t i =0; i < MAX_CIFU_REWARD_NUM; i++)
+		{
+			if(data->ci_fu_reward[i].id == 0)
+			{
+				dex = i;
+				break;
+			}
+			else if(data->ci_fu_reward[i].id == ite->second->ID)
+			{
+				break;
+			}
+		}
+		if(dex == -1)
+			continue;
+		
+		data->ci_fu_reward[dex].id = ite->second->ID;
+		data->ci_fu_reward[dex].time = 0;
+	}
+
+	
 	return 0;
 }

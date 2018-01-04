@@ -3,10 +3,10 @@
         ['uid'] = 1000001,
         ['ID'] = 152020001,
         ['ResType'] = "Npc",
-        ['PointPosX'] = 59.57,
-        ['PointPosY'] = 27.03173,
-        ['PointPosZ'] = 63.96,
-        ['Yaw'] = 85.49001,
+        ['PointPosX'] = 96.03,
+        ['PointPosY'] = 12.642,
+        ['PointPosZ'] = 153.51,
+        ['Yaw'] = 54.90001,
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }
@@ -15,10 +15,10 @@
         ['uid'] = 1000002,
         ['ID'] = 152060034,
         ['ResType'] = "Npc",
-        ['PointPosX'] = 67.16665,
-        ['PointPosY'] = 27.03173,
-        ['PointPosZ'] = 64.33925,
-        ['Yaw'] = 256,
+        ['PointPosX'] = 103.91,
+        ['PointPosY'] = 12.685,
+        ['PointPosZ'] = 153.6,
+        ['Yaw'] = 335.64,
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }

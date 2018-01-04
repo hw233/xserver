@@ -6,6 +6,12 @@
 #include "unit.h"
 #include "scene.h"
 
+#define BUFF_DEL_TYPE_DEAD 0
+#define BUFF_DEL_TYPE_CHANGED_SCENE 1
+#define BUFF_DEL_TYPE_LOGOUT 2
+#define BUFF_DEL_TYPE_BEATTACK 3
+#define BUFF_DEL_TYPE_BEHIT 4
+
 //眩晕，不能移动不能攻击
 #define BUFF_STATE_STUN 0x01
 //无敌，不受任何伤害
@@ -73,6 +79,8 @@ public:
 	bool is_hp_buff();          //血量变化的buff，不需要恢复
 	void on_tick();
 	void on_dead();
+	void on_beattack();
+	void on_scene_changed();	
 	void set_next_timer();
 	buff_data *data;
 	struct BuffTable *config;

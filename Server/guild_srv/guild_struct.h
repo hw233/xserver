@@ -50,9 +50,9 @@ enum GuildUsualLogType
 	GULT_JOIN = 1, //加入
 	GULT_QUIT = 2, //退出
 	GULT_KICK = 3, //被踢
-	GULT_PRAY1 = 4, //祈福1
-	GULT_PRAY2 = 5, //祈福2
-	GULT_PRAY3 = 6, //祈福3
+	GULT_DONATE1 = 4, //捐献1
+	GULT_DONATE2 = 5, //捐献2
+	GULT_DONATE3 = 6, //捐献3
 	GULT_ADD_TREASURE = 7, //贡献资金
 };
 
@@ -144,6 +144,7 @@ struct GuildPlayer
 	uint32_t act_battle_score; //本场帮战积分
 	uint32_t guild_land_active_reward_id[MAX_GUILD_LAND_ACTIVE_NUM]; //帮会活动FactionActivity表id
 	uint32_t guild_land_active_reward_num[MAX_GUILD_LAND_ACTIVE_NUM]; //帮会活动收益次数
+	uint32_t donate_count; //捐献次数
 };
 
 struct GuildPermission

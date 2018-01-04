@@ -126,6 +126,7 @@ message add_buff_notify
 	required uint64 playerid = 1;     //玩家的ID	
 	required uint32 buff_id = 2;    //buff id
 	required uint32 start_time = 3; //buff开始时间
+	required uint32 end_time = 4; //buff结束时间	
 }
 
 
@@ -175,8 +176,8 @@ message learn_skill_req
 
 message learn_skill_ans
 {
-	required uint32 id = 1;
-	required uint32 lv = 2; //
+	repeated uint32 id = 1;
+	repeated uint32 lv = 2; //
 	required int32 ret = 3; //0成功 
 }
 

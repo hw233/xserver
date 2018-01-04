@@ -23,6 +23,7 @@ message TeamMemInfo
 	required uint32 weapon_color = 20;
 	required uint32 head_icon = 21;
 	required uint32 zhenying = 22;
+	required uint32 guild = 23; //帮会
 }
 message TeamApplyAnswer
 {

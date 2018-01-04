@@ -146,6 +146,10 @@
 #define MSG_ID_PLAY_DRAMA_END_REQUEST 10434          //播放剧情结束请求 NULL
 #define MSG_ID_ESCORT_BEGIN_NOTIFY 10435             //护送开始通知 EscortBeginNotify
 #define MSG_ID_ESCORT_END_NOTIFY 10436               //护送结束通知 EscortBeginNotify
+#define MSG_ID_FUNCTION_INFO_NOTIFY 10437            //功能信息通知 FunctionOpenNotify
+#define MSG_ID_FUNCTION_OPEN_NOTIFY 10438            //功能开启通知 FunctionOpenNotify
+#define MSG_ID_FISHING_BEGIN_REQUEST 10439           //钓鱼开始请求 NULL
+#define MSG_ID_FISHING_END_REQUEST 10440             //钓鱼结束请求 NULL
 
 //复活
 #define MSG_ID_RELIVE_REQUEST 10500  //复活 relive_request
@@ -594,9 +598,15 @@
 #define MSG_ID_GUILD_DEAL_INVITE_REQUEST 12160             //帮会处理邀请请求 GuildDealInviteRequest
 #define MSG_ID_GUILD_DEAL_INVITE_ANSWER 12161              //帮会处理邀请应答 GuildDealInviteAnswer
 #define MSG_ID_GUILD_JOIN_NOTIFY 12162                     //帮会入帮申请通知 GuildJoinPlayerData
+#define MSG_ID_GUILD_DONATE_REQUEST 12163                  //帮会捐献请求 GuildDonateRequest
+#define MSG_ID_GUILD_DONATE_ANSWER 12164                   //帮会捐献应答 GuildDonateAnswer
 
 
 //阵营
+#define MSG_ID_RAND_CHOSE_ZHENYING_REQUEST 12237   //阵营听天由命请求 NULL
+//#define MSG_ID_RAND_CHOSE_ZHENYING_ANSWER 12237    //阵营听天由命应答 AnsChoseZhenying
+#define MSG_ID_GET_ZHENYING_DAYLY_AWARD_REQUEST 12238   //领取阵营每日奖励请求 ZhenyingDailyAward
+#define MSG_ID_GET_ZHENYING_DAYLY_AWARD_ANSWER 12239    //领取阵营每日奖励 AnsZhenyingDailyAward
 #define MSG_ID_CHOSE_ZHENYING_REQUEST 12400   //选择阵营请求 ChoseZhenying
 #define MSG_ID_CHOSE_ZHENYING_ANSWER 12401    //选择阵营应答 AnsChoseZhenying
 #define MSG_ID_CHANGE_ZHENYING_REQUEST 12402  //改变阵营请求 ChoseZhenying
@@ -956,5 +966,48 @@
 #define MSG_ID_SIGNIN_EVERYDAY_REWARD_RECEIVE_ANSWER     14503    //每日签到 签到回复 PlayerReceiveSignInRewardAnswer
 #define MSG_ID_SIGNIN_LEIJI_REWARD_RECEIVE_REQUEST		 14504    //每日签到累计奖励领奖请求 PlayerSignInReceiveLeijiRewardRequest 
 #define MSG_ID_SIGNIN_LEIJI_REWARD_RECEIVE_ANSWER		 14505    //每日签到累计奖励领奖回复 PlayerSignInReceiveLeijiRewardAnswer
+
+//活动奖励找回
+#define MSG_ID_PLAYER_ACTIVE_REWARD_ZHAOHUI_INFO_REQUEST 14600    //玩家请求奖励找回数据
+#define MSG_ID_PLAYER_ACTIVE_REWARD_ZHAOHUI_INFO_NOTIFY 14601     //玩家奖励找回数据通知 PlayerRewardZhaoHuiInfoNotify 
+#define MSG_ID_PLAYER_ACTIVE_REWARD_ZHAOHUI_REQUEST     14602     //玩家请求找回奖励  PlayerRewardZhaoHuiRequest 
+#define MSG_ID_PLAYER_ACTIVE_REWARD_ZHAOHUI_ANSWER      14603     //玩家找回回复 PlayerRewardZhaoHuiAnswer
+
+//冲塔
+#define MSG_ID_TOWER_INFO_NOTIFY 14701     //冲塔信息 TowerInfo 
+#define MSG_ID_RESET_TOWER_CUR_LEVEL_REQUEST     14702     //重置关卡请求  NULL
+#define MSG_ID_RESET_TOWER_CUR_LEVEL_ANSWER     14703     //重置关卡返回  AnsResetTower
+#define MSG_ID_CLEAN_TOWER_REQUEST     14704     //扫荡请求  ReqCleanTower
+#define MSG_ID_CLEAN_TOWER_ANSWER     14705     //扫荡返回  AnsCleanTower
+#define MSG_ID_START_CLIMB_TOWER_NOTIFY 14706     //开始冲塔 StartTower 
+#define MSG_ID_CLIMB_TOWER_RESULT_NOTIFY 14707     //冲塔结算 TowerResult
+#define MSG_ID_TOWER_MAX_REQUEST     14708     //历史最佳请求  ReqTowerMax
+#define MSG_ID_TOWER_MAX_ANSWER     14709     //历史最佳应答  AnsTowerMax
+#define MSG_ID_NEXT_TOWER_LEVEL_REQUEST     14710     //开始下一层请求  NULL
+
+//摇钱树
+#define MSG_ID_YAOQIAN_SHU_INFO_REQUEST              14800  //摇钱树信息请求
+#define MSG_ID_YAOQIAN_SHU_INFO_NOTIFY               14801  //摇钱树信息通知 PlayerYaoQianInfoNotify
+#define MSG_ID_YAOQIAN_SHU_START_REQUEST             14802  //摇钱树开始摇请求 PlayerYaoQianStartRequest
+#define MSG_ID_YAOQIAN_SHU_START_ANSWER              14803  //摇钱树开始摇回复 PlayerYaoQianStartAnswer
+
+//登录奖励相关
+#define MSG_ID_LOGIN_REWARD_INFO_NOTIFY             14900  //登录奖励信息通知 PlayerLoginRewardInfoNotify
+#define MSG_ID_LOGIN_RECEIVE_REWARD_REQUEST         14901  //请求领取登录奖励 PlayerLoginReceiveRewardRequest
+#define MSG_ID_LOGIN_RECEIVE_REWARD_ANSWER          14902  //comm_answer 
+
+//限时活动
+#define MSG_ID_TIME_LIMIT_ACTIVITY_INFO_NOTIFY         15000 //限时活动信息通知 TimeLimitActivityInfoNotify
+#define MSG_ID_ZHANLIDAREN_GIFT_NUM_NOTIFY             15001 //战力达人礼包数量更新通知 ZhanlidarenGiftNumNotify
+#define MSG_ID_ZHANLIDAREN_GET_REWARD_REQUEST          15002 //战力达人领取礼包请求 ZhanlidarenGetRewardRequest
+#define MSG_ID_ZHANLIDAREN_GET_REWARD_ANSWER           15003 //战力达人领取礼包应答 ZhanlidarenGetRewardAnswer
+#define MSG_ID_TIME_LIMIT_ACTIVITY_BEGIN_NOTIFY        15004 //限时活动开启通知 TimeLimitActivityData
+#define MSG_ID_TIME_LIMIT_ACTIVITY_END_NOTIFY          15005 //限时活动结束通知 TimeLimitActivityEndNotify
+
+//赐福
+#define MSG_ID_CIFU_INFO_NOTIFY				   15100 //赐福信息通知 PlayerCifuInfoNotify
+#define MSG_ID_CIFU_RECEIVE_REWARD_REQUEST     15101 //赐福领奖请求 PlayerReceiveCifuRequest
+#define MSG_ID_CIFU_RECEIVE_REWARD_ANSWER      15102 //赐福领奖应答 PlayerReceiveCifuAnswer
+
 
 #endif

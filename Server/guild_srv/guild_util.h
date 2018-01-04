@@ -62,6 +62,7 @@ bool check_invite_is_deal(uint64_t inviter_id, uint64_t invitee_id, uint32_t gui
 void sync_guild_rename_to_gamesrv(GuildInfo *guild);
 void sync_guild_info_to_gamesrv(GuildPlayer *player);
 void sync_guild_task_to_gamesrv(GuildPlayer *player);
+void refresh_guild_redis_info(GuildInfo *guild);
 int create_guild(uint64_t player_id, uint32_t icon, std::string &name, GuildPlayer *&player); //创建帮会
 int join_guild(uint64_t player_id, GuildInfo *guild); //加入帮会
 int appoint_office(GuildPlayer *appointor, GuildPlayer *appointee, uint32_t office);
@@ -133,6 +134,8 @@ bool is_guild_battle_opening();
 bool is_in_guild_battle_activity_time();
 uint32_t get_guild_land_active_reward_count(GuildPlayer *player, uint32_t guild_active_id);
 void  add_guild_land_active_reward_count(GuildPlayer *player, uint32_t guild_active_id);
+
+int get_player_donate_remain_count(GuildPlayer *player);
 
 
 #endif

@@ -52,6 +52,7 @@ message raid_hit_statis_changed_notify
 	required uint32 damage = 2;    //伤害
 	required uint32 injured = 3;   //受击
 	required uint32 cure = 4;      //治疗
+	required uint32 guild = 5;      //门宗
 //	required uint32 lv = 5;    //等级
 //	required uint32 job = 6;  //职业
 //	required string name = 7; //名字

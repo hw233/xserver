@@ -23,9 +23,9 @@ local ShopTable = {
 		['Condition'] = 0,
 		['Price'] = 0,
 		['Discount'] = 300,
-		['BuyNum'] = -1,
-		['Reset'] = 0,
-		['RestrictionTime'] = 0
+		['BuyNum'] = 50,
+		['Reset'] = 1,
+		['RestrictionTime'] = 1
 		},
 	[281020003] = {
 		['ID'] = 281020003,

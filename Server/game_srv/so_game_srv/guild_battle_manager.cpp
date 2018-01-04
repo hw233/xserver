@@ -1895,6 +1895,7 @@ void send_guild_battle_fight_reward_to_guildsrv(std::map<uint32_t, GuildBattleFi
 		for (std::vector<GuildBattleFightPlayerRewardInfo>::iterator player_iter = guild_reward.players.begin(); player_iter != guild_reward.players.end() && req->player_num < MAX_GUILD_MEMBER_NUM; ++player_iter)
 		{
 			req->player_id[req->player_num] = player_iter->player_id;
+			req->team_id[req->player_num] = player_iter->team_id;
 			req->result[req->player_num] = player_iter->result;
 			req->score[req->player_num] = player_iter->score;
 			req->treasure[req->player_num] = player_iter->treasure;
@@ -1933,6 +1934,7 @@ void insert_guild_battle_fight_reward_map(std::map<uint32_t, GuildBattleFightGui
 
 	GuildBattleFightPlayerRewardInfo player_reward;
 	player_reward.player_id = player->get_uuid();
+	player_reward.team_id = (player->m_team && player->m_team->m_data ? player->m_team->GetId() : 0);
 	player_reward.result = result;
 	get_guild_battle_fight_reward(player, result, player_reward.score, player_reward.treasure, player_reward.donation, kill_num, dead_num, monster_num, boss_damage, boss_num);
 	if (!guild_battle_is_final() || result == 0)

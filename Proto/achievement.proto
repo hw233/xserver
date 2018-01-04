@@ -87,6 +87,7 @@ message StrongInfoNotify
 {
 	repeated StrongGoalData goals = 1; //成长信息列表 
 	repeated StrongChapterData chapters = 2; //章节信息列表 
+	required uint32 endTime = 3; //结束时间
 }
 
 //变强目标奖励请求

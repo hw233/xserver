@@ -18,6 +18,7 @@
 #include "comm_message.pb-c.h"
 #include "team.pb-c.h"
 #include "wanyaogu.pb-c.h"
+#include "tower.pb-c.h"
 #include "hotel.pb-c.h"
 #include "zhenying.pb-c.h"
 #include "player_redis_info.pb-c.h"
@@ -249,29 +250,29 @@ void conn_node_friendsrv::handle_zhenying_power()
 			send.man_fulongguo = calc_zhenying_power_rate(rzhenying->man_fulongguo, rzhenying->power_fulongguo, rzhenying->man_wanyaogu, rzhenying->power_wanyaogu);
 			send.man_wanyaogu = 100 - send.man_fulongguo;
 
-			if (req->zhenying == ZHENYING__TYPE__FULONGGUO)
-			{
-				send.power_man = rzhenying->power_man_fulongguo;
-			}
-			else if (req->zhenying == ZHENYING__TYPE__WANYAOGU)
-			{
-				send.power_man = rzhenying->power_man_wanyaogu;
-			}
-			else
-			{
-				send.power_man = 0;
-			}
+			//if (req->zhenying == ZHENYING__TYPE__FULONGGUO)
+			//{
+			//	send.power_man = rzhenying->power_man_fulongguo;
+			//}
+			//else if (req->zhenying == ZHENYING__TYPE__WANYAOGU)
+			//{
+			//	send.power_man = rzhenying->power_man_wanyaogu;
+			//}
+			//else
+			//{
+			//	send.power_man = 0;
+			//}
 
 			zhenying_redis__free_unpacked(rzhenying, NULL);
 		}
 	}
 	else
 	{
-		send.power_fulongguo = 0;
-		send.power_wanyaogu = 0;
+		//send.power_fulongguo = 0;
+		//send.power_wanyaogu = 0;
 		send.man_wanyaogu = 50;
 		send.man_fulongguo = 50;
-		send.power_man = 0;
+		//send.power_man = 0;
 	}
 	fast_send_msg(&conn_node_friendsrv::connecter, extern_data, MSG_ID_ZHENYING_POWER_ANSWER, zhenying_power__pack, send);
 	add_zhenying_player__free_unpacked(req, NULL);
@@ -295,8 +296,6 @@ void conn_node_friendsrv::handle_zhenying_change_power()
 
 	data_len = MAX_GLOBAL_SEND_BUF;
 	int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
-	ZhenyingPower send;
-	zhenying_power__init(&send);
 	if (ret >= 0)
 	{
 		ZhenyingRedis *rzhenying = zhenying_redis__unpack(NULL, data_len, conn_node_base::global_send_buf);
@@ -500,6 +499,7 @@ void pack_team_mem_info(TeamMemInfo *mem, PlayerRedisInfo *rplayer)
 	mem->fight = rplayer->fighting_capacity;
 	mem->zhenying = rplayer->zhenying;
 	mem->head_icon = rplayer->head_icon;
+	mem->guild = rplayer->guild_id;
 }
 
 //char allname[5 * 20 * 2][MAX_PLAYER_NAME_LEN];
@@ -1162,6 +1162,236 @@ void conn_node_friendsrv::handle_list_wanyaoka()
 	fast_send_msg_base(&conn_node_friendsrv::connecter, extern_data, MSG_ID_LIST_WANYAOKA_ANSWER, data_len, req->seq);
 }
 
+void conn_node_friendsrv::handle_tower_max()
+{
+	PROTO_HEAD *head = get_head();
+	EXTERN_DATA *extern_data = get_extern_data(head);
+	char key[128];
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
+
+	ReqTowerMax *req = req_tower_max__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return;
+	}
+	
+	TowerMax send;
+	tower_max__init(&send);
+	send.cur_lv = req->lv;
+
+	sprintf(key, "tower_max");
+	data_len = MAX_GLOBAL_SEND_BUF;
+	TowerRecord *tMax = NULL;
+	int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	if (ret >= 0)
+	{
+		tMax = tower_record__unpack(NULL, data_len, conn_node_base::global_send_buf); 
+		if (tMax != NULL)
+		{
+			send.maxcd = tMax->maxcd[req->lv]->cd;
+			send.cd_name = tMax->maxcd[req->lv]->name;
+			send.maxlv = tMax->maxlv;
+			send.lv_name = tMax->lv_name;
+		}
+	}
+	
+	sprintf(key, "tower%lu", extern_data->player_id);
+	data_len = MAX_GLOBAL_SEND_BUF;
+	TowerCd *tCd = NULL;
+	ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	if (ret >= 0)
+	{
+		tCd = tower_cd__unpack(NULL, data_len, conn_node_base::global_send_buf);
+		if (tCd != NULL && tCd->cd != NULL)
+		{
+			send.self_cd = tCd->cd[req->lv];
+		}
+	}
+	
+	fast_send_msg(&connecter, extern_data, MSG_ID_TOWER_MAX_ANSWER, tower_max__pack, send);
+	req_tower_max__free_unpacked(req, NULL);
+	if (tMax != NULL)
+	{
+		tower_record__free_unpacked(tMax, NULL);
+	}
+	if (tCd != NULL)
+	{
+		tower_cd__free_unpacked(tCd, NULL);
+	}
+
+	LOG_DEBUG("%s: team info %lu len[%d] ret", __FUNCTION__, extern_data->player_id, data_len);
+}
+
+void conn_node_friendsrv::handle_update_tower()
+{
+	PROTO_HEAD *head = get_head();
+	EXTERN_DATA *extern_data = get_extern_data(head);
+	char key[128];
+	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
+
+	sprintf(key, "%lu", extern_data->player_id);
+	data_len = MAX_GLOBAL_SEND_BUF;
+	int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	if (ret < 0)
+	{
+		return;
+	}
+	PlayerRedisInfo *rplayer = player_redis_info__unpack(NULL, data_len, conn_node_base::global_send_buf);
+	if (rplayer == NULL)
+	{
+		return;
+	}
+
+	UpdateTower *req = update_tower__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		player_redis_info__free_unpacked(rplayer, NULL);
+		return;
+	}
+
+	sprintf(key, "tower_max");
+	data_len = MAX_GLOBAL_SEND_BUF;
+	bool beNew = false;
+	bool save = false;
+	TowerRecord saveMax;
+	tower_record__init(&saveMax);
+	TowerRecord *tMax = NULL;
+	TowerMaxCd arr[MAX_TOWER_LEVEL + 1];
+	TowerMaxCd *arrP[MAX_TOWER_LEVEL + 1];
+	ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	if (ret < 0)
+	{
+		beNew = true;
+	}
+	else
+	{
+		tMax = tower_record__unpack(NULL, data_len, conn_node_base::global_send_buf);
+		if (tMax == NULL)
+		{
+			beNew = true;
+		}
+		else
+		{
+			saveMax.maxcd = tMax->maxcd;
+			saveMax.n_maxcd = tMax->n_maxcd;
+			saveMax.maxlv = tMax->maxlv;
+			saveMax.lv_name = tMax->lv_name;
+			if (tMax->maxlv <= req->lv)
+			{
+				saveMax.maxlv = req->lv;
+				saveMax.lv_name = rplayer->name;
+				save = true;
+			}
+			if (tMax->maxcd[req->lv]->cd == 0 || tMax->maxcd[req->lv]->cd > req->cd)
+			{
+				for (int i = 0; i <= MAX_TOWER_LEVEL; ++i)
+				{
+					tower_max_cd__init(&arr[i]);
+					arrP[i] = &arr[i];
+					arrP[i]->name = tMax->maxcd[i]->name;
+					arrP[i]->cd = tMax->maxcd[i]->cd;
+				}
+				saveMax.maxcd = arrP;
+				saveMax.n_maxcd = MAX_TOWER_LEVEL + 1;
+				saveMax.maxcd[req->lv]->cd = req->cd;
+				saveMax.maxcd[req->lv]->name = rplayer->name;
+				save = true;
+			}
+		}
+	}
+	if (beNew)
+	{
+		for (int i = 0; i <= MAX_TOWER_LEVEL; ++i)
+		{
+			tower_max_cd__init(&arr[i]);
+			arrP[i] = &arr[i];
+		}
+		save = true;
+		saveMax.maxcd = arrP;
+		saveMax.n_maxcd = MAX_TOWER_LEVEL + 1;
+		saveMax.maxlv = req->lv;
+		saveMax.lv_name = rplayer->name;
+		saveMax.maxcd[req->lv]->cd = req->cd;
+		saveMax.maxcd[req->lv]->name = rplayer->name;
+	}
+	if (save)
+	{
+		data_len = tower_record__pack(&saveMax, (uint8_t *)conn_node_base::global_send_buf);
+		ret = sg_redis_client.hset_bin(server_key, key, (char *)conn_node_base::global_send_buf, data_len);
+		if (ret < 0)
+		{
+			LOG_ERR("%s: save tower max fail, ret = %d", __FUNCTION__, ret);
+		}
+	}
+	if (tMax != NULL)
+	{
+		tower_record__free_unpacked(tMax, NULL);
+	}
+
+	sprintf(key, "tower%lu", extern_data->player_id);
+	data_len = MAX_GLOBAL_SEND_BUF;
+	uint32_t arrCd[MAX_TOWER_LEVEL + 1];
+	beNew = false;
+	save = false;
+	TowerCd saveCd;
+	tower_cd__init(&saveCd);
+	TowerCd *tCd = NULL;
+	ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	if (ret < 0)
+	{
+		
+		beNew = true;
+	}
+	else
+	{
+		tCd = tower_cd__unpack(NULL, data_len, conn_node_base::global_send_buf);
+		if (tCd == NULL || tCd->cd == NULL)
+		{
+			beNew = true;
+		}
+		else
+		{
+			if (tCd->cd[req->lv] == 0 || tCd->cd[req->lv] > req->cd)
+			{
+				tCd->cd[req->lv] = req->cd;
+				saveCd.cd = tCd->cd;
+				saveCd.n_cd = tCd->n_cd;
+				save = true;
+			}
+		}
+		
+	}
+	if (beNew)
+	{
+		saveCd.cd = arrCd;
+		saveCd.n_cd = MAX_TOWER_LEVEL + 1;
+		memset(arrCd, 0, sizeof(arrCd));
+		arrCd[req->lv] = req->cd;
+		save = true;
+	}
+	if (save)
+	{
+		data_len = tower_cd__pack(&saveCd, (uint8_t *)conn_node_base::global_send_buf);
+		ret = sg_redis_client.hset_bin(server_key, key, (char *)conn_node_base::global_send_buf, data_len);
+		if (ret < 0)
+		{
+			LOG_ERR("%s: save tower max fail, ret = %d", __FUNCTION__, ret);
+		}
+	}
+	if (tCd != NULL)
+	{
+		tower_cd__free_unpacked(tCd, NULL);
+	}
+
+	update_tower__free_unpacked(req, NULL);
+	player_redis_info__free_unpacked(rplayer, NULL);
+
+
+	LOG_DEBUG("%s: team info %lu len[%d] ret", __FUNCTION__, extern_data->player_id, data_len);
+}
+
 int conn_node_friendsrv::recv_func(evutil_socket_t fd)
 {
 	//	__attribute__((unused)) EXTERN_DATA *extern_data;
@@ -1205,6 +1435,12 @@ int conn_node_friendsrv::recv_func(evutil_socket_t fd)
 				break;
 			case SERVER_PROTO_SAVE_WANYAOKA:
 				handle_save_wanyaoka();
+				break;
+			case SERVER_PROTO_UPDATE_TOWER_REQUEST:
+				handle_update_tower();
+				break;
+			case MSG_ID_TOWER_MAX_REQUEST:
+				handle_tower_max();
 				break;
 			case SERVER_PROTO_LIST_WANYAOKA:
 				handle_list_wanyaoka();

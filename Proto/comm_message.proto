@@ -41,6 +41,7 @@ message PlayerBaseInfo
 	required string name = 2; //角色名
 	repeated uint32 attrId = 3; //属性id列表
 	repeated uint32 attrVal = 4; //属性值列表
+	required uint32 pass_new_raid = 5; //当前角色是否通过了新手副本 1:表示通过 否则没通过
 }
 
 //八卦道具额外信息
@@ -49,6 +50,12 @@ message ItemBaguaData
 	required uint32 star = 1;
 	repeated CommonRandAttrData minor_attrs = 3; //副属性
 	repeated CommonRandAttrData additional_attrs = 4; //追加属性
+}
+
+//随机宝箱额外信息
+message ItemRandomBoxData
+{
+	required uint32 randItem = 1; //随机出来的道具ID
 }
 
 //背包格子
@@ -61,7 +68,7 @@ message BagGrid
 	required uint32 expireTime = 5; //过期时间
 	optional ItemBaguaData bagua = 6; //八卦道具额外信息
 	optional ItemPartnerFabaoData fabao = 7; //伙伴法宝额外信息
-
+	optional ItemRandomBoxData box = 8; //随机宝箱额外信息
 }
 
 //道具信息

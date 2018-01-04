@@ -29,8 +29,8 @@ int conn_node_rank::recv_func(evutil_socket_t fd)
 	for (;;) {
 		int ret = get_one_buf();
 		if (ret == 0) {
-			if (transfer_to_client() != 0) {
-				LOG_INFO("%s %d: transfer to client failed", __FUNCTION__, __LINE__);
+			if (dispatch_message() != 0) {
+				LOG_INFO("%s %d: dispatch message failed", __FUNCTION__, __LINE__);
 //				ret = remove_one_buf();
 //				return (0);
 			}
@@ -46,6 +46,30 @@ int conn_node_rank::recv_func(evutil_socket_t fd)
 	return (0);
 }
 
+int conn_node_rank::dispatch_message()
+{
+	PROTO_HEAD *head = (PROTO_HEAD *)buf_head();
+	uint32_t cmd = ENDION_FUNC_2(head->msg_id);
+#ifdef FLOW_MONITOR
+	add_one_other_server_request_msg(head);
+#endif
+	switch (cmd)
+	{
+		case SERVER_PROTO_BROADCAST:
+			return broadcast_to_client();
+		case SERVER_PROTO_MAIL_INSERT:
+			return transfer_to_mailsrv();
+		case SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST:
+			return transfer_to_friendsrv();
+		case SERVER_PROTO_RANK_SYNC_RANK:
+		case SERVER_PROTO_RANK_SYNC_CHANGE:
+			return transfer_to_gamesrv();
+		default:
+			return transfer_to_client();
+	}
+	return 0;
+}
+
 int conn_node_rank::transfer_to_client()
 {
 	uint32_t old_len;
@@ -57,24 +81,6 @@ int conn_node_rank::transfer_to_client()
 
 	int cmd = ENDION_FUNC_2(head->msg_id);
 
-#ifdef FLOW_MONITOR
-	add_one_other_server_request_msg(head);
-#endif
-
-	//转发到其他服务器的消息
-	switch (cmd)
-	{
-		case SERVER_PROTO_BROADCAST:
-			return broadcast_to_client();
-			return transfer_to_gamesrv();
-		case SERVER_PROTO_MAIL_INSERT:
-			return transfer_to_mailsrv();
-		case SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST:
-			return transfer_to_friendsrv();
-		case SERVER_PROTO_RANK_SYNC_RANK:
-		case SERVER_PROTO_RANK_SYNC_CHANGE:
-			return transfer_to_gamesrv();
-	}
 	
 	extern_data = get_extern_data(head);
 	LOG_DEBUG("[%s:%d]: Send Cmd To client, [%lu], cmd: %d", __FUNCTION__, __LINE__, extern_data->player_id, cmd);

@@ -1029,7 +1029,7 @@ int monster_manager::add_world_boss_monster()
 				RankWorldBossRefreshNotify refresh_noty;
 				rank_world_boss_refresh_notify__init(&refresh_noty);
 				refresh_noty.bossid = ite->second->ID;;
-				conn_node_gamesrv::send_to_all_player(MSG_ID_CHAT_HORSE_NOTIFY, &refresh_noty, (pack_func)rank_world_boss_refresh_notify__pack);
+				conn_node_gamesrv::send_to_all_player(MSG_ID_WORLDBOSS_REFRESH_NOTIFY, &refresh_noty, (pack_func)rank_world_boss_refresh_notify__pack);
 			}
 		}
 	}

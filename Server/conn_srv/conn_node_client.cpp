@@ -9,6 +9,7 @@
 #include "conn_node_guild.h"
 #include "conn_node_rank.h"
 #include "conn_node_trade.h"
+#include "conn_node_activity.h"
 #include "time_helper.h"
 #include "game_event.h"
 #include "tea.h"
@@ -342,6 +343,7 @@ int conn_node_client::dispatch_message()
 		case MSG_ID_GUILD_ACCEPT_TASK_REQUEST:
 		case MSG_ID_GUILD_INVITE_REQUEST:
 		case MSG_ID_GUILD_DEAL_INVITE_REQUEST:
+		case MSG_ID_GUILD_DONATE_REQUEST:
 			return transfer_to_guildsrv();
 		case MSG_ID_RANK_INFO_REQUEST:
 		case MSG_ID_WORLDBOSS_REAL_RANK_INFO_REQUEST:
@@ -365,6 +367,8 @@ int conn_node_client::dispatch_message()
 		case MSG_ID_AUCTION_BUY_NOW_REQUEST:
 		case MSG_ID_AUCTION_INFO_REQUEST:
 			return transfer_to_tradesrv();
+		case MSG_ID_ZHANLIDAREN_GET_REWARD_REQUEST:
+			return transfer_to_activitysrv();
 		default:
 			return transfer_to_gameserver();
 	}
@@ -634,6 +638,27 @@ int conn_node_client::transfer_to_tradesrv()
 
 	if (conn_node_trade::server_node->send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len)) {
 		LOG_ERR("[%s:%d] send to trade failed err[%d]", __FUNCTION__, __LINE__, errno);
+		ret = -2;
+		goto done;
+	}
+done:	
+	return (ret);
+}
+
+int conn_node_client::transfer_to_activitysrv()
+{
+	int ret = 0;
+	PROTO_HEAD *head;
+	head = (PROTO_HEAD *)buf_head();
+
+	if (!conn_node_activity::server_node) {
+		LOG_ERR("[%s:%d] do not have activity server connected", __FUNCTION__, __LINE__);
+		ret = -1;
+		goto done;
+	}
+
+	if (conn_node_activity::server_node->send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len)) {
+		LOG_ERR("[%s:%d] send to activity failed err[%d]", __FUNCTION__, __LINE__, errno);
 		ret = -2;
 		goto done;
 	}

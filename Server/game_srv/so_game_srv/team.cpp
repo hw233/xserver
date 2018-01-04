@@ -633,6 +633,7 @@ void Team::PackMemberInfo(TeamMemInfo &notice, player_struct &player)
 	notice.weapon_color = player.get_attr(PLAYER_ATTR_WEAPON_COLOR);
 	notice.zhenying = player.get_attr(PLAYER_ATTR_ZHENYING);
 	notice.head_icon = player.get_attr(PLAYER_ATTR_HEAD);
+	notice.guild = player.data->guild_id;
 	if (player.scene != NULL)
 	{
 		notice.scene_id = player.scene->m_id;

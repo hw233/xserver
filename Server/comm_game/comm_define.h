@@ -8,7 +8,7 @@
 #define MAX_HEAD_ICON_NUM       30 //最大头像数
 #define MAX_TASK_TARGET_NUM     6 //最大任务目标数
 #define MAX_TASK_NUM            300 //最大任务数
-#define MAX_TASK_ACCEPTED_NUM   11 //最大可接任务数
+#define MAX_TASK_ACCEPTED_NUM   13 //最大可接任务数
 #define MAX_EQUIP_ENCHANT_RAND_NUM   3 //最大装备附魔随机属性数
 #define MAX_EQUIP_ENCHANT_NUM   3 //最大装备附魔属性条数
 #define MAX_EQUIP_INLAY_NUM     6 //最大装备镶嵌宝石数
@@ -19,6 +19,7 @@
 #define MAX_HORSE_NUM           100 //最大坐骑数
 //#define DEFAULT_HORSE           180000001 //
 #define MAX_BATTLE_LINE_NUM     (8) //阵营战分线
+#define MAX_TOWER_LEVEL  (15) 
 //最大副本数目
 #define MAX_RAID_NUM            1000 
 #define SCENCE_DEPART           (20000)
@@ -104,6 +105,22 @@
 #define MAX_PLAYER_SINGN_EVERYDAY_REWARD_NUM 20
 //最大月份
 #define MAX_ONE_YEARS_THE_MONTH 12
+//最大可找回奖励的活动
+#define MAX_ACTIVE_CAN_ZHAOHUI_REWARD 100
+//最大奖励找回物品数量
+#define MAX_ACTIVE_CAN_ZHAOHUI_ITEM_NUM 50
+//摇钱树倍率机制的初始倍率
+#define YAO_QIAN_SHU_CHU_SHI_BEILV 3
+//摇钱树玩家单次请求要摇的最大次数
+#define YAO_QIAN_SHU_DAN_CI_MAX_NUM 20
+//最大可领登录奖励次数
+#define MAX_LOGIN_REWARD_RECEIVE_NUM 10
+
+#define MAX_GAME_FUNCTION_NUM 100
+
+//最大赐福奖励个数
+#define MAX_CIFU_REWARD_NUM 5
+
 //玩家状态
 enum PlayerStatus
 {
@@ -204,6 +221,7 @@ enum ItemUseEffect
 	IUE_XUNBAO = 14, //寻宝
 	IUE_ADD_HORSE = 18, //获得坐骑
 	IUE_ADD_TITLE = 22, //获得称号
+	IUE_OPEN_FUNCTION = 23, //开启功能
 };
 
 enum TaskConditionType
@@ -261,6 +279,10 @@ enum TaskConditionType
 	TCT_FISHING = 58, //钓鱼
 	TCT_PUZZLE = 59, //拼图
 	TCT_MIJING_XIULIANG = 60, //秘境修炼
+	TCT_CHAT = 62, //聊天发言
+	TCT_HORSE_ADD_SOUL = 63, //坐骑铸灵
+	TCT_PARTNER_USE_EXP_ITEM = 64, //伙伴吃经验丹
+	TCT_LIVE_SKILL_PRODUCE = 65, //生活技能生产
 };
 
 enum TaskBasicCondition
@@ -394,6 +416,9 @@ enum ActivityMatter
 	AM_GUILD_INTRUSION = 8, //帮会入侵
 	AM_HERO_CHLLENGE = 9, //英雄挑战
 	AM_TRAVEL = 10, //游历
+	AM_GUILD_DONATE = 11, //门宗募捐
+	AM_FISHING = 12, //钓鱼
+	AM_GUILD_BUILD = 13, //门宗建设
 };
 
 enum AchievementConditionType
@@ -509,6 +534,16 @@ enum
 	TCType_MURDER_NUM = 2, //杀戮值在N点以上
 	TCType_FASHION_ID = 3, //拥有指定时装
 	TCType_HORSE_ID = 4, //拥有指定坐骑
+};
+
+//奖励找回类型
+enum 
+{
+	REWARD_BACK_NORMO_RAID_TYPE_ACTIVE = 1, //普通副本类型活动
+	REWARD_BACK_GUANFU_XUANSHANG_ACTIVE	= 2, //官府悬赏
+	REWARD_BACK_LIANGCAO_YAOBIAO_ACTIVE = 3,  // 粮草押镖
+	REWARD_BACK_MIJING_XIULIAN_ACTIVE = 4,    //秘境修炼
+	REWARD_BACK_JIANGHU_YOULI_ACTIVE = 5,    //游历任务
 };
 
 

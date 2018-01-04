@@ -95,7 +95,6 @@ public:
 	uint32_t CreateNewRoom(player_struct &player, int s, bool isNew);
 	int SetReady(player_struct &player, bool ready);
 	int GetReadyState(player_struct &player);
-	//void Tick();
 	void Tick(uint32_t room, raid_struct *raid);
 	int IntoBattle(player_struct &player);   //进入阵营战
 	uint32_t GetStep(player_struct &player);
@@ -107,7 +106,6 @@ public:
 	void Settle(uint32_t room);
 	void BroadMessageRoom(uint32_t room, uint16_t msg_id, void *msg_data, pack_func func, uint64_t except = 0);
 	void OnRegionChanged(raid_struct *raid, player_struct *player, uint32_t old_region, uint32_t new_region);
-	//void ClearRob();
 	void ClearRob(uint32_t room);
 	void StartRob();	
 	void DestroyRoom(uint32_t room);
@@ -127,16 +125,15 @@ public:
 protected:
 	ZhenyingBattle();
 
-	void FlagOnTick(ROOM_T::iterator &itRoom, BattlefieldTable *table, uint64_t now);
-	void AddFlagScore(ROOM_T::iterator &itRoom, BattlefieldTable *table, uint32_t i, uint64_t now);
+	void FlagOnTick(ROOM_T::iterator &itRoom, BattlefieldTable *table, uint64_t now, bool isNew);
+	void AddFlagScore(ROOM_T::iterator &itRoom, BattlefieldTable *table, uint32_t i, uint64_t now, bool isNew);
 	uint32_t CalcFlagTime(int state, uint64_t &end); //计算夺旗时间
 	void DoRealSettle(ROOM_T::iterator &itRoom, BattlefieldTable *table, _ZhenYingResult *send, bool toF);
+	void AddJoiner(player_struct &player, BATTLE_JOINER &tmp, uint32_t room);
 private:
 	JOIN_T m_allJoin;   //所有报名的人
 	ROOM_T m_room;
-	//uint32_t m_state;
 	uint32_t m_tmpRoom[MAX_STEP];
-	//uint64_t m_nextTick;
 };
 
 

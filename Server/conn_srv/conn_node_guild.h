@@ -16,6 +16,7 @@ private:
 	int transfer_to_gamesrv();
 	int transfer_to_mailsrv();
 	int transfer_to_ranksrv();	
+	int transfer_to_activitysrv();	
 	int broadcast_to_client();
 };
 

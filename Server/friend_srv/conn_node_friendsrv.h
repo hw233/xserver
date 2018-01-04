@@ -33,6 +33,8 @@ private:
 	void handle_team_list();
 	void handle_add_wanyaoka();	
 	void handle_save_wanyaoka();
+	void handle_update_tower();
+	void handle_tower_max();
 	void handle_list_wanyaoka();	
 	void handle_cache_get();	
 	void handle_cache_clear();	

@@ -27,6 +27,7 @@
 #include "listen_node_rank.h"
 #include "listen_node_doufachang.h"
 #include "listen_node_trade.h"
+#include "listen_node_activity.h"
 #include "../proto/login.pb-c.h"
 #include "oper_config.h"
 #include "deamon.h"
@@ -126,6 +127,7 @@ static listen_node_guild guild_listener; //guild_srv连接
 static listen_node_rank rank_listener; //rank_srv连接
 static listen_node_doufachang doufachang_listener; //doufachang_srv连接
 static listen_node_trade trade_listener; //trade_srv连接
+static listen_node_activity activity_listener; //activity_srv连接
 
 uint32_t sg_server_id;
 
@@ -315,6 +317,19 @@ int main(int argc, char **argv)
 	}
 
 	ret = game_add_listen_event(port, &trade_listener, "tradesrv");
+	if (ret != 0)
+		goto done;
+
+	//listen activity_srv_port
+	line = get_first_key(file, (char *)"conn_srv_activity_port");
+	port = atoi(get_value(line));
+	if (port <= 0) {
+		LOG_ERR("config file wrong, no conn_srv_activity_port");
+		ret = -1;
+		goto done;
+	}
+
+	ret = game_add_listen_event(port, &activity_listener, "activitysrv");
 	if (ret != 0)
 		goto done;
 

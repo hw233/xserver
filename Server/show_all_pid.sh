@@ -14,6 +14,7 @@ rank_srv
 doufachang_srv
 trade_srv
 #raid_srv
+activity_srv
 )
 
 for srv_name in ${srv_list[*]}

@@ -169,6 +169,10 @@ std::map<uint64_t, std::map<uint64_t, struct SignDay*> >sign_day_zhuan_config; /
 std::map<uint64_t, struct SignDay*> sign_day_to_zhuan_config[MAX_ONE_YEARS_THE_MONTH]; //12个月
 std::map<uint64_t, std::map<uint64_t, struct SignMonth*> >sign_month_zhuan_config; //每日签到累计奖励表转表
 std::map<uint64_t, struct SignMonth*> sign_month_to_zhuan_config[MAX_ONE_YEARS_THE_MONTH]; //12个月
+std::map<uint64_t, struct RewardBack*> reward_back_config; //活动奖励找回表
+std::map<uint64_t, struct P20076Table*> tower_level_config; //冲塔表
+std::map<uint64_t, struct LoginGifts*> login_gifts_config; //登录奖励表
+std::map<uint64_t, struct CiFuTable*> ci_fu_config; //赐福奖励表
 
 /////////////////////
 uint32_t sg_bag_unlock_base_price;
@@ -410,4 +414,19 @@ std::map<uint64_t, std::vector<EquipAttribute*> > sg_attr_pool_map;
 
 uint32_t sg_travel_round_amount;
 uint32_t sg_travel_task_amount;
+
+uint32_t sg_yaoqian_shu_sum_num;   //摇钱树可使用基础次数
+uint32_t sg_yaoqian_shu_free_num;  //摇钱树的免费次数
+uint32_t sg_yaoqian_shu_use_gold;  //摇钱树消耗元宝基础数量
+uint32_t sg_yaoqian_shu_add_gold;  //摇钱树每次增加消耗元宝的数量
+uint32_t sg_yaoqian_shu_max_gold;  //摇钱树消耗元宝的上限
+uint32_t sg_yaoqian_shu_add_coin;  //摇钱树获取的银票基础值
+
+int AWARD_QUESTION_ACTIVE_ID;
+int COMMON_QUESTION_ACTIVE_ID;
+const uint32_t sg_login_reward_function_id = 292010606;  //登录奖励FunctionUnlockTable表id
+uint32_t sg_login_reward_chixu_day;  //登录奖励持续天数
+uint32_t sg_new_battle_point;  //新手阵营战占旗加积分
+
+uint32_t sg_strong_function_time;
 

@@ -1,0 +1,103 @@
+syntax = "proto2";
+
+message TowerInfo
+{
+	required uint32 reset_num = 1; //重置次数
+	required uint32 cur_lv = 2; //当前层
+	required uint32 cur_num = 3; //当前层次数
+	required uint32 cur_cd = 4;//当前层最佳
+	required uint32 top_lv = 5; //最高层
+}
+
+message AnsResetTower
+{
+	required uint32 ret = 1; //
+	required uint32 cur_lv = 2; //当前层
+	required uint32 cur_num = 3; //当前层次数
+	required uint32 reset_num = 4; //重置次数
+}
+
+message ReqCleanTower
+{
+	required uint32 type = 1; // 1道具 2货币
+}
+message AnsCleanTower
+{
+	required uint32 ret = 1; // 0返回成功 客户端把剩余次数置0当前层置为最高层
+//	required uint32 cur_lv = 2; //当前层
+}
+
+message StartTower
+{
+	required uint32 cd = 1; //倒计时
+	required uint32 lv = 2; //当前层
+	required uint32 cur_num = 3; //当前层次数
+}
+
+message TowerResult
+{
+	required uint32 ret = 1;  // 0通关 非0失败
+	required uint32 cur_num = 2; //剩余次数
+	required uint32 top_lv = 3; //最高层
+	required uint32 next = 4; //非0有下一层 0到顶
+	required uint32 cd = 5; //通关时间
+	repeated uint32 item_id = 6;
+	repeated uint32 item_num = 7;
+	required uint32 exp = 8; 
+	required uint32 money = 9; //
+	repeated uint32 item_add = 10;
+	repeated uint32 item_num_add = 11;
+}
+
+message ReqTowerMax
+{
+	required uint32 lv = 1;//当前层
+}
+message TowerMax
+{
+	required uint32 maxcd = 1;//全服最短时间
+	required string cd_name = 2; 
+	required uint32 maxlv = 3;//全服最高层 
+	required string lv_name = 4;
+	required uint32 cur_lv = 5; //当前层 
+	required uint32 self_cd = 6; //当前层CD 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+message UpdateTower
+{
+	required uint32 lv = 1;
+	required uint32 cd = 2;
+}
+

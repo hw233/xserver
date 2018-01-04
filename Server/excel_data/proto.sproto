@@ -284,7 +284,7 @@
 	DfPro 8 : integer
 	TimeDelay 9 : integer
 	CoverType 10 : integer
-	DeleteType 11 : integer
+	DeleteType 11 : *integer
 	IsDeBuff 12 : integer
 	IsControl 13 : integer
 }
@@ -972,6 +972,13 @@
 	ID 1 : integer
 	LevelExp 2 : integer
 	Level 3 : integer
+	AttributeType 4 : *integer
+	AttributeTypeValue 5 : *integer
+	DayReward 6 : *integer
+	DayRewardNum 7 : *integer
+	BreachReward 8 : *integer
+	BreachRewardNum 9 : *integer
+	SmallLevel 10 : integer
 }
 
 .WeekTable {
@@ -1540,6 +1547,7 @@
 	TimeMax 4 : integer
 	Response 5 : integer
 	Drop 6 : integer
+	Drop1 7 : integer
 }
 
 .GrowupTable {
@@ -1657,7 +1665,7 @@
 .TimeReward 
 {
 	ID 1 : integer 
-	Type 2 : integer 
+	Position 2 : integer 
 	ItemID 3 : integer 
 	ItemValue 4 : integer
 	Probability 5 : integer
@@ -1687,3 +1695,102 @@
 	ItemID 4 : integer 
 	ItemValue 5 : integer
 }
+
+.RewardBack
+{
+	ID 1 : integer 
+	Type 2 : integer 
+	Value 3 : *integer 
+	Level 4 : integer 
+	ExpReward 5 : integer 
+	MoneyReward 6 : integer 
+	Normal 7 : integer 
+	NormalExpend 8 : integer 
+	Perfect 9 : integer 
+	PerfectExpend 10 : integer
+}
+
+.P20076Table
+{
+	ID 1 : integer 
+	MonsterID 2 : *integer
+	MonsterNum 3 : *integer
+	BirthPointX 4 : integer
+	BirthPointZ  5 : integer
+	BirthRange 6 : integer
+	Reward1 7 : *integer
+	RewardNum1 8 : *integer
+	Reward2 9 : *integer
+	RewardNum2 10 : *integer
+	ExpReward 11 : integer 
+	MoneyReward 12 : integer
+	MonsterLevel 13 : *integer 
+}
+
+.DonationTable {
+	ID 1 : integer 
+	Type 2 : integer
+	ConsumeType 3 : integer
+	ConsumeValue 4 : integer
+	RewardType 5 : *integer
+	RewardValue 6 : *integer
+	RewardEffect 7 : integer
+}
+
+.LoginGifts
+{
+	ID 1 : integer 
+	LoginDays 2 : integer 
+	RewardsType 3 : integer 
+	lRewards 4 : *integer 
+	Quantity 5 : *integer
+	Time 6 : integer
+}
+
+.CiFuTable
+{
+	ID 1 : integer 
+	ControlTable 2 : integer 
+	Type 3 : integer 
+	Vaule 4 : integer
+}
+
+.LimitActivityControlTable {
+	ID 1 : integer 
+	Activity 2 : integer 
+	OpenType 3 : integer 
+	ContinuedOpenTime 4 : integer 
+	ContinuedTime 5 : integer 
+	Batch 6 : integer 
+}
+
+.Top10GangsTable {
+	ID 1 : integer 
+	RewardStartID 2 : integer 
+	RewardEndID 3 : integer 
+	Reward1 4 : *integer 
+	RewardNum1 5 : *integer 
+	Reward2 6 : *integer 
+	RewardNum2 7 : *integer 
+	Batch 8 : integer 
+}
+
+.PowerMasterTable {
+	ID 1 : integer 
+	PowerCondition 2 : integer 
+	RewardLimit 3 : integer 
+	Reward 4 : *integer 
+	RewardNum 5 : *integer 
+	Batch 6 : integer 
+}
+
+.RankingRewardTable {
+	ID 1 : integer 
+	RankStart 2 : integer 
+	RankEnd 3 : integer 
+	Reward 4 : *integer 
+	RewardNum 5 : *integer 
+	RankingTableId 6 : *integer 
+	RankingTableIdName 7 : *string 
+}
+

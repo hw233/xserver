@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# coding: UTF-8
+# coding: utf-8
 
 import sys
 from socket import *
@@ -14,9 +14,9 @@ import get_one_msg
 
 WATCH_PLAYER = {8589935316}
 
-
 HOST='127.0.0.1'
-PORT=10697
+PORT=13697
+PORT=get_one_msg.get_dumpsrv_port()
 ADDR=(HOST, PORT)
 client=socket(AF_INET, SOCK_STREAM)
 client.connect(ADDR)
@@ -40,7 +40,7 @@ while True:
 #    if not player_id in WATCH_PLAYER:
 #        continue;
 
-#视野变化    
+#副本结算
     if msg_id == 10812:
         req = raid_pb2.raid_finish_notify()
         req.ParseFromString(pb_data)

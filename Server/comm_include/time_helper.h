@@ -47,7 +47,7 @@ public:
 
 //		int						timeZone(void);
 	static int                     timezone_offset(void);
-	static bool					is_same_day(unsigned int t1, unsigned int t2=0);
+	static bool					is_same_day(unsigned int t1, unsigned int t2, unsigned int offset);
 		//microsecond 
 	static void					sleep(int micro_secs);
 

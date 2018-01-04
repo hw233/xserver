@@ -25,6 +25,7 @@ message PlayerOnlineRewardInfoNotify
 	required uint32 shengyu_time = 2; // >0:表示下次领奖刷新的时间戳  0:表示今日在线时长已超过可领奖的总在线时长
 	repeated uint32 reward_table_id = 3; //已经被领取的奖励表id
 	required uint32 sigin_time = 4;    //本次登陆时间
+	repeated uint32 reward_id_today = 5; //今日可领取的奖励表id
 }
 
 //玩家在线奖励转盘回复
@@ -73,4 +74,113 @@ message PlayerSignInReceiveLeijiRewardAnswer
 {
 	required uint32 result = 1; //领取结果 0:成功 否则失败
 	repeated PlayerLeiJiSignInRewardInfo leiji_reward = 2; //签到累计奖励信息
+}
+
+//玩家活动奖励找回信息通知
+message PlayerRewardZhaoHuiInfoInfo
+{
+	required uint32 id = 1; //奖励找回表id
+	required uint32 num = 2; //今日可找回次数
+	required uint32 exp = 3; // 奖励经验
+	required uint32 cion = 4; //奖励银两
+	required uint32 use_cion = 5; //普通找回消耗银票数量
+	required uint32 use_gold = 6; //完美找回消耗金票数量
+}
+
+//活动奖励找回回复
+message PlayerRewardZhaoHuiInfoNotify 
+{
+	repeated PlayerRewardZhaoHuiInfoInfo info = 1; //详细信息
+}
+
+//请求找回奖励
+message PlayerRewardZhaoHuiRequest
+{
+	required uint32 id = 1; //需要找回的奖励id
+	required uint32 statu = 2; //找回标志 0:表示普通找回 >0 表示完美找回
+}
+
+//奖励找回回复
+message PlayerRewardZhaoHuiAnswer
+{
+	required uint32 result = 1; // 0:表示找回成功 非0失败
+	required uint32 id = 2;     // 找回的id
+	repeated PlayerRewardZhaoHuiItem item_info = 3; //找回的奖励物品信息
+}
+
+//物品
+message PlayerRewardZhaoHuiItem
+{
+	required uint32 item_id = 1; //物品id
+	required uint32 item_num = 2; //物品数量
+} 
+
+//摇钱树信息通知
+message PlayerYaoQianInfoNotify
+{
+	required uint32 sum_num = 1; //今日总次数
+	required uint32 use_num = 2; //今日已使用次数
+	required uint32 free_num = 3; //今日剩余免费次数
+	required uint32 one_times = 4; //当前摇一次需要使用多少钱
+	required uint32 ten_times = 5; //当前摇十次需要使用到少钱
+}
+
+//摇钱树开始摇请求
+message PlayerYaoQianStartRequest
+{
+	required uint32 num = 1; //0:摇一次 非0摇十次
+}
+
+//摇钱树结果回复
+message PlayerYaoQianStartAnswer
+{
+	required uint32 result = 1; //0:成功 非0失败
+	required PlayerYaoQianInfoNotify into = 2; //摇完后信息更新
+	repeated uint32 beilv = 3; //每次获得的暴击赔率 0表示没有获得暴击
+}
+
+//登录奖励信息通知
+message PlayerLoginRewardInfoNotify
+{
+	required bool open = 1; //功能是否开启 fale:为开启 true:开启状态
+	required uint32 time = 2; //开启的时间戳 开启状态，此时间戳才有用,否则没用
+	repeated PlayerLoginRewardReceiveInfo info = 3; //奖励领取情况
+}
+
+//奖励领取情况
+message PlayerLoginRewardReceiveInfo
+{
+	required uint32 id = 1; //奖励id
+	required uint32 statu = 2; //领取状态 0:不可领 1:可领 2:不可领
+}
+
+//登录奖励领取请求
+message PlayerLoginReceiveRewardRequest
+{
+	required uint32 id = 1;  //奖励表id
+}
+
+//赐福信息通知
+message PlayerCifuInfoNotify
+{
+	repeated PlayerCifuMainInfo info = 1;
+}
+
+//赐福信息
+message PlayerCifuMainInfo
+{
+	required uint32 id = 1; //赐福表id
+	required uint32 time = 2; //上次领取赐福时间
+}
+
+//领取赐福奖励请求
+message PlayerReceiveCifuRequest
+{
+	required uint32 id = 1; //赐福表id
+}
+//领取赐福奖励应答
+message PlayerReceiveCifuAnswer
+{
+	required uint32 result = 1; //结果 0:成功 其余失败
+	repeated PlayerCifuMainInfo info = 2;//更新信息
 }

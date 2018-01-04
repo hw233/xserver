@@ -681,6 +681,7 @@ player_struct * player_manager::create_player(PROTO_ENTER_GAME_RESP *proto, uint
 	ret->data->attrData[PLAYER_ATTR_REGION_ID] = -1;
 	ret->data->chengjie.rest = proto->chengjie_cd;
 	ret->data->guild_id = proto->guild_id;
+	ret->data->create_time = proto->create_time;
 	if (ret->data->truck.truck_id != 0)
 	{
 		assert(ret->data->truck.scene_id > 0);

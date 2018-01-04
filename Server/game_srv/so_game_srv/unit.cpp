@@ -106,6 +106,12 @@ bool unit_struct::is_too_high_to_beattack()
 
 void unit_struct::on_beattack(unit_struct *player, uint32_t skill_id, int32_t damage)
 {
+	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
+	{
+		if (!m_buffs[i])
+			continue;
+		m_buffs[i]->on_beattack();
+	}
 }
 
 bool unit_struct::give_drop_item(uint32_t drop_id, uint32_t statis_id, AddItemDealWay deal_way, bool isNty, uint32_t mail_id, std::vector<char *> *mail_args)
@@ -932,18 +938,18 @@ void unit_struct::clear_type3_buff()
 }
 
 
-buff_struct *unit_struct::try_cover_duplicate_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack)
+buff_struct *unit_struct::try_cover_duplicate_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack, uint32_t *old_id)
 {
 	if (buff_config->BuffType == 1)
-		return try_cover_duplicate_skill_buff(buff_config, end_time, attack);
+		return try_cover_duplicate_skill_buff(buff_config, end_time, attack, old_id);
 	else if (buff_config->BuffType == 2)
-		return try_cover_duplicate_item_buff(buff_config);
+		return try_cover_duplicate_item_buff(buff_config, old_id);
 	else if (buff_config->BuffType == 3)
-		return try_cover_duplicate_type3_buff(buff_config);
+		return try_cover_duplicate_type3_buff(buff_config, old_id);
 	return NULL;
 }
 
-buff_struct *unit_struct::try_cover_duplicate_type3_buff(struct BuffTable *buff_config)
+buff_struct *unit_struct::try_cover_duplicate_type3_buff(struct BuffTable *buff_config, uint32_t *old_id)
 {
 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
 	{
@@ -951,6 +957,7 @@ buff_struct *unit_struct::try_cover_duplicate_type3_buff(struct BuffTable *buff_
 			continue;
 		if (m_buffs[i]->config->BuffType == 3)
 		{
+			*old_id = m_buffs[i]->data->buff_id;
 			m_buffs[i]->reinit_type3_buff(buff_config);
 			return m_buffs[i];
 		}
@@ -958,7 +965,7 @@ buff_struct *unit_struct::try_cover_duplicate_type3_buff(struct BuffTable *buff_
 	return NULL;
 }
 
-buff_struct *unit_struct::try_cover_duplicate_skill_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack)
+buff_struct *unit_struct::try_cover_duplicate_skill_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack, uint32_t *old_id)
 {
 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
 	{
@@ -968,13 +975,14 @@ buff_struct *unit_struct::try_cover_duplicate_skill_buff(struct BuffTable *buff_
 			continue;
 		if (m_buffs[i]->config->CoverType == buff_config->CoverType)
 		{
+			*old_id = m_buffs[i]->data->buff_id;			
 			m_buffs[i]->reinit_buff(buff_config, end_time, attack);
 			return m_buffs[i];
 		}
 	}
 	return NULL;
 }
-buff_struct *unit_struct::try_cover_duplicate_item_buff(struct BuffTable *buff_config)
+buff_struct *unit_struct::try_cover_duplicate_item_buff(struct BuffTable *buff_config, uint32_t *old_id)
 {
 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
 	{
@@ -984,6 +992,7 @@ buff_struct *unit_struct::try_cover_duplicate_item_buff(struct BuffTable *buff_c
 			continue;
 		if (m_buffs[i]->config->ID == buff_config->ID)
 		{
+			*old_id = m_buffs[i]->data->buff_id;			
 			m_buffs[i]->data->end_time += buff_config->Time;
 			return m_buffs[i];
 		}

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "excel_data.h"
 #include <comm_message.pb-c.h>
 #include <assert.h>
 #include <stdint.h>
@@ -523,6 +524,26 @@ static void generate_parameters(void)
 	{
 		sg_fighting_capacity_crt_dmg_init_val = config->parameter1[0];
 	}
+
+	sg_yaoqian_shu_sum_num = get_config_by_id(161000417, &parameter_config)->parameter1[0];
+	sg_yaoqian_shu_free_num = get_config_by_id(161000418, &parameter_config)->parameter1[0];  
+	sg_yaoqian_shu_use_gold = get_config_by_id(161000419, &parameter_config)->parameter1[0];
+	config = get_config_by_id(161000420, &parameter_config);
+	assert(config != NULL && config->n_parameter1 >= 2);
+	sg_yaoqian_shu_add_gold = config->parameter1[0];
+	sg_yaoqian_shu_max_gold = config->parameter1[1];
+	sg_yaoqian_shu_add_coin = get_config_by_id(161000421, &parameter_config)->parameter1[0];
+
+	AWARD_QUESTION_ACTIVE_ID = get_config_by_id(161000340, &parameter_config)->parameter1[1];
+	COMMON_QUESTION_ACTIVE_ID = get_config_by_id(161000340, &parameter_config)->parameter1[0];
+
+	sg_login_reward_chixu_day = get_config_by_id(161001008, &parameter_config)->parameter1[0];
+	sg_new_battle_point = get_config_by_id(161001009, &parameter_config)->parameter1[0];
+	config = get_config_by_id(161001015, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_strong_function_time = config->parameter1[0];
+	}
 }
 
 	// 读取刷怪配置
@@ -774,6 +795,14 @@ static void adjust_skill_table()
 				LOG_ERR("%s: duplicate fuwen id %lu", __FUNCTION__, fuwen_id);
 			}
 			fuwen_config[fuwen_id] = config;
+		}
+		if (config->IsRune == 0)
+		{
+			if (fuwen_config.find(config->ID) != fuwen_config.end())
+			{
+				LOG_ERR("%s: duplicate fuwen id %lu", __FUNCTION__, config->ID);
+			}
+			fuwen_config[config->ID] = config;
 		}
 	}
 }
@@ -2288,6 +2317,11 @@ TravelTable *get_travel_config(uint32_t level)
 	return NULL;
 }
 
+GradeTable *get_zhenying_grade_table(uint32_t zhenying, uint32_t level)
+{
+	return get_config_by_id((36020 + zhenying) * 10000 + level, &zhenying_level_config);
+}
+
 uint32_t get_item_relate_id(uint32_t id)
 {
 	std::map<uint64_t, ItemsConfigTable *>::iterator iter = item_config.find(id);
@@ -2751,6 +2785,27 @@ bool activity_is_open(uint32_t activity_id)
 	return in_time;
 }
 
+uint32_t get_activity_reward_time(uint32_t activity_id)
+{
+	do
+	{
+		EventCalendarTable *act_config = get_config_by_id(activity_id, &activity_config);
+		if (!act_config)
+		{
+			break;
+		}
+
+		ControlTable *ctrl_config = get_config_by_id(act_config->RelationID, &all_control_config);
+		if (!ctrl_config)
+		{
+			break;
+		}
+
+		return ctrl_config->RewardTime;
+	} while(0);
+	return 0;
+}
+
 bool is_raid_scene_id(uint32_t id)
 {
 	if (id > SCENCE_DEPART)
@@ -3189,7 +3244,7 @@ int read_all_excel_data()
 		printf("open 1.spb failed, err = %d\n", errno);
 		return (-1);
 	}
-	size_t size =  read(fd, buf, READ_SPB_MAX_LEN);
+	size_t size = read(fd, buf, READ_SPB_MAX_LEN);
 	struct sproto *sp = sproto_create(&buf[0], size);
 	close(fd);
     lua_State *L = luaL_newstate();
@@ -3879,6 +3934,26 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/SignMonth.lua", (config_type)&sign_month_config);
 	assert(ret == 0);	
 
+	type = sproto_type(sp, "RewardBack");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/RewardBack.lua", (config_type)&reward_back_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "P20076Table");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/P20076Table.lua", (config_type)&tower_level_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "LoginGifts");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/LoginGifts.lua", (config_type)&login_gifts_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "CiFuTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/CiFuTable.lua", (config_type)&ci_fu_config);
+	assert(ret == 0);
+
 	adjust_escort_config();
 	adjust_achievement_config();
 	adjust_guild_skill_config();
@@ -3896,6 +3971,858 @@ int read_all_excel_data()
 	lua_close(L);
 	sproto_release(sp);
 	free(buf);
+	return (0);
+}
+
+int free_all_excel_data()
+{
+	for (std::map<uint64_t, struct ActiveSkillTable *>::iterator ite = active_skill_config.begin();
+		 ite != active_skill_config.end(); ++ite)
+	{
+		free_ActiveSkillTable(ite->second);
+	}
+	active_skill_config.clear();
+
+	for (std::map<uint64_t, struct SkillMoveTable *>::iterator ite = move_skill_config.begin(); ite != move_skill_config.end(); ++ite)
+	{
+		free_SkillMoveTable(ite->second);
+	}
+	move_skill_config.clear();
+	
+	for (std::map<uint64_t, struct MonsterPkTypeTable *>::iterator ite = pk_type_config.begin(); ite != pk_type_config.end(); ++ite)
+	{
+		free_MonsterPkTypeTable(ite->second);
+	}
+	pk_type_config.clear();
+
+	for (std::map<uint64_t, struct NpcTalkTable *>::iterator ite = monster_talk_config.begin(); ite != monster_talk_config.end(); ++ite)
+	{
+		ite->second->next = NULL;
+		free_NpcTalkTable(ite->second);
+	}
+	monster_talk_config.clear();
+
+	for (std::map<uint64_t, struct MonsterTable *>::iterator ite = monster_config.begin(); ite != monster_config.end(); ++ite)
+	{
+		ite->second->talk_config = NULL;
+		free_MonsterTable(ite->second);
+	}
+	monster_config.clear();
+
+	for (std::map<uint64_t, struct ActorTable *>::iterator ite = actor_config.begin(); ite != actor_config.end(); ++ite)
+	{
+		free_ActorTable(ite->second);
+	}
+	actor_config.clear();
+
+	for (std::map<uint64_t, struct ActorTable *>::iterator ite = actor_config.begin(); ite != actor_config.end(); ++ite)
+	{
+		free_ActorTable(ite->second);
+	}
+	actor_config.clear();
+
+	for (std::map<uint64_t, struct ActorAttributeTable *>::iterator ite = actor_attribute_config.begin(); ite != actor_attribute_config.end(); ++ite)
+	{
+		free_ActorAttributeTable(ite->second);
+	}
+	actor_attribute_config.clear();
+
+	for (std::map<uint64_t, struct SceneResTable *>::iterator ite = scene_res_config.begin(); ite != scene_res_config.end(); ++ite)
+	{
+		free_SceneResTable(ite->second);
+	}
+	scene_res_config.clear();
+
+	for (std::map<uint64_t, struct PassiveSkillTable *>::iterator ite = passive_skill_config.begin(); ite != passive_skill_config.end(); ++ite)
+	{
+		free_PassiveSkillTable(ite->second);
+	}
+	passive_skill_config.clear();
+
+	for (std::map<uint64_t, struct SkillTable *>::iterator ite = skill_config.begin(); ite != skill_config.end(); ++ite)
+	{
+		free_SkillTable(ite->second);
+	}
+	skill_config.clear();
+
+	for (std::map<uint64_t, struct SkillLvTable *>::iterator ite = skill_lv_config.begin(); ite != skill_lv_config.end(); ++ite)
+	{
+		free_SkillLvTable(ite->second);
+	}
+	skill_lv_config.clear();
+
+	for (std::map<uint64_t, struct FlySkillTable *>::iterator ite = fly_skill_config.begin(); ite != fly_skill_config.end(); ++ite)
+	{
+		free_FlySkillTable(ite->second);
+	}
+	fly_skill_config.clear();
+
+	for (std::map<uint64_t, struct BuffTable *>::iterator ite = buff_config.begin(); ite != buff_config.end(); ++ite)
+	{
+		free_BuffTable(ite->second);
+	}
+	buff_config.clear();
+
+	for (std::map<uint64_t, struct SkillEffectTable *>::iterator ite = skill_effect_config.begin(); ite != skill_effect_config.end(); ++ite)
+	{
+		free_SkillEffectTable(ite->second);
+	}
+	skill_effect_config.clear();
+
+	for (std::map<uint64_t, struct ActorLevelTable *>::iterator ite = actor_level_config.begin(); ite != actor_level_config.end(); ++ite)
+	{
+		free_ActorLevelTable(ite->second);
+	}
+	actor_level_config.clear();
+
+	for (std::map<uint64_t, struct ItemsConfigTable *>::iterator ite = item_config.begin(); ite != item_config.end(); ++ite)
+	{
+		free_ItemsConfigTable(ite->second);
+	}
+	item_config.clear();
+
+	for (std::map<uint64_t, struct ParameterTable *>::iterator ite = parameter_config.begin(); ite != parameter_config.end(); ++ite)
+	{
+		free_ParameterTable(ite->second);
+	}
+	parameter_config.clear();
+
+	for (std::map<uint64_t, struct DropConfigTable *>::iterator ite = drop_config.begin(); ite != drop_config.end(); ++ite)
+	{
+		free_DropConfigTable(ite->second);
+	}
+	drop_config.clear();
+
+	for (std::map<uint64_t, struct BaseAITable *>::iterator ite = base_ai_config.begin(); ite != base_ai_config.end(); ++ite)
+	{
+		free_BaseAITable(ite->second);
+	}
+	base_ai_config.clear();
+
+	for (std::map<uint64_t, struct ActorHeadTable *>::iterator ite = actor_head_config.begin(); ite != actor_head_config.end(); ++ite)
+	{
+		free_ActorHeadTable(ite->second);
+	}
+	actor_head_config.clear();
+
+	for (std::map<uint64_t, struct CollectTable *>::iterator ite = collect_config.begin(); ite != collect_config.end(); ++ite)
+	{
+		free_CollectTable(ite->second);
+	}
+	collect_config.clear();
+
+	for (std::map<uint64_t, struct TaskTable *>::iterator ite = task_config.begin(); ite != task_config.end(); ++ite)
+	{
+		free_TaskTable(ite->second);
+	}
+	task_config.clear();
+
+	for (std::map<uint64_t, struct TaskConditionTable *>::iterator ite = task_condition_config.begin(); ite != task_condition_config.end(); ++ite)
+	{
+		free_TaskConditionTable(ite->second);
+	}
+	task_condition_config.clear();
+
+	for (std::map<uint64_t, struct TaskEventTable *>::iterator ite = task_event_config.begin(); ite != task_event_config.end(); ++ite)
+	{
+		free_TaskEventTable(ite->second);
+	}
+	task_event_config.clear();
+
+	for (std::map<uint64_t, struct TaskDropTable *>::iterator ite = task_drop_config.begin(); ite != task_drop_config.end(); ++ite)
+	{
+		free_TaskDropTable(ite->second);
+	}
+	task_drop_config.clear();
+
+	for (std::map<uint64_t, struct TaskRewardTable *>::iterator ite = task_reward_config.begin(); ite != task_reward_config.end(); ++ite)
+	{
+		free_TaskRewardTable(ite->second);
+	}
+	task_reward_config.clear();
+
+	for (std::map<uint64_t, struct TaskMonsterTable *>::iterator ite = task_monster_config.begin(); ite != task_monster_config.end(); ++ite)
+	{
+		free_TaskMonsterTable(ite->second);
+	}
+	task_monster_config.clear();
+
+	for (std::map<uint64_t, struct TaskChapterTable *>::iterator ite = task_chapter_config.begin(); ite != task_chapter_config.end(); ++ite)
+	{
+		free_TaskChapterTable(ite->second);
+	}
+	task_chapter_config.clear();
+
+	for (std::map<uint64_t, struct RandomCardTable *>::iterator ite = wanyaoka_config.begin(); ite != wanyaoka_config.end(); ++ite)
+	{
+		free_RandomCardTable(ite->second);
+	}
+	wanyaoka_config.clear();
+
+	for (std::map<uint64_t, struct DungeonTable *>::iterator ite = all_raid_config.begin(); ite != all_raid_config.end(); ++ite)
+	{
+		free_DungeonTable(ite->second);
+	}
+	all_raid_config.clear();
+
+	// type = sproto_type(sp, "RaidScriptTable");
+	// assert(type);
+	// adjust_dungeon_table(L, type);
+
+	for (std::map<uint64_t, struct ControlTable *>::iterator ite = all_control_config.begin(); ite != all_control_config.end(); ++ite)
+	{
+		free_ControlTable(ite->second);
+	}
+	all_control_config.clear();
+
+	for (std::map<uint64_t, struct EquipmentTable *>::iterator ite = equipment_config.begin(); ite != equipment_config.end(); ++ite)
+	{
+		free_EquipmentTable(ite->second);
+	}
+	equipment_config.clear();
+
+	for (std::map<uint64_t, struct EquipStarLv *>::iterator ite = equip_star_config.begin(); ite != equip_star_config.end(); ++ite)
+	{
+		free_EquipStarLv(ite->second);
+	}
+	equip_star_config.clear();
+
+	for (std::map<uint64_t, struct EquipLock *>::iterator ite = equip_lock_config.begin(); ite != equip_lock_config.end(); ++ite)
+	{
+		free_EquipLock(ite->second);
+	}
+	equip_lock_config.clear();
+
+	for (std::map<uint64_t, struct EquipAttribute *>::iterator ite = equip_attr_config.begin(); ite != equip_attr_config.end(); ++ite)
+	{
+		free_EquipAttribute(ite->second);
+	}
+	equip_attr_config.clear();
+
+	for (std::map<uint64_t, struct GemAttribute *>::iterator ite = equip_gem_config.begin(); ite != equip_gem_config.end(); ++ite)
+	{
+		free_GemAttribute(ite->second);
+	}
+	equip_gem_config.clear();
+
+	for (std::map<uint64_t, struct ActorFashionTable *>::iterator ite = fashion_config.begin(); ite != fashion_config.end(); ++ite)
+	{
+		free_ActorFashionTable(ite->second);
+	}
+	fashion_config.clear();
+
+	for (std::map<uint64_t, struct CharmTable *>::iterator ite = charm_config.begin(); ite != charm_config.end(); ++ite)
+	{
+		free_CharmTable(ite->second);
+	}
+	charm_config.clear();
+
+	for (std::map<uint64_t, struct WeaponsEffectTable *>::iterator ite = weapon_color_config.begin(); ite != weapon_color_config.end(); ++ite)
+	{
+		free_WeaponsEffectTable(ite->second);
+	}
+	weapon_color_config.clear();
+
+	for (std::map<uint64_t, struct AttributeTypeTable *>::iterator ite = attribute_type_config.begin(); ite != attribute_type_config.end(); ++ite)
+	{
+		free_AttributeTypeTable(ite->second);
+	}
+	attribute_type_config.clear();
+
+	for (std::map<uint64_t, struct ColourTable *>::iterator ite = color_table_config.begin(); ite != color_table_config.end(); ++ite)
+	{
+		free_ColourTable(ite->second);
+	}
+	color_table_config.clear();
+
+	for (std::map<uint64_t, struct ShopListTable *>::iterator ite = shop_list_config.begin(); ite != shop_list_config.end(); ++ite)
+	{
+		free_ShopListTable(ite->second);
+	}
+	shop_list_config.clear();
+
+	for (std::map<uint64_t, struct ShopTable *>::iterator ite = shop_config.begin(); ite != shop_config.end(); ++ite)
+	{
+		free_ShopTable(ite->second);
+	}
+	shop_config.clear();
+
+	for (std::map<uint64_t, struct TransferPointTable *>::iterator ite = transfer_config.begin(); ite != transfer_config.end(); ++ite)
+	{
+		free_TransferPointTable(ite->second);
+	}
+	transfer_config.clear();
+
+	for (std::map<uint64_t, struct SpiritTable *>::iterator ite = spirit_config.begin(); ite != spirit_config.end(); ++ite)
+	{
+		free_SpiritTable(ite->second);
+	}
+	spirit_config.clear();
+
+	for (std::map<uint64_t, struct MountsTable *>::iterator ite = horse_config.begin(); ite != horse_config.end(); ++ite)
+	{
+		free_MountsTable(ite->second);
+	}
+	horse_config.clear();
+
+	for (std::map<uint64_t, struct CastSpiritTable *>::iterator ite = horse_soul_config.begin(); ite != horse_soul_config.end(); ++ite)
+	{
+		free_CastSpiritTable(ite->second);
+	}
+	horse_soul_config.clear();
+
+	for (std::map<uint64_t, struct PulseTable *>::iterator ite = yuqidao_jingmai_config.begin(); ite != yuqidao_jingmai_config.end(); ++ite)
+	{
+		free_PulseTable(ite->second);
+	}
+	yuqidao_jingmai_config.clear();
+
+	for (std::map<uint64_t, struct AcupunctureTable *>::iterator ite = yuqidao_acupoint_config.begin(); ite != yuqidao_acupoint_config.end(); ++ite)
+	{
+		free_AcupunctureTable(ite->second);
+	}
+	yuqidao_acupoint_config.clear();
+
+	for (std::map<uint64_t, struct BreakTable *>::iterator ite = yuqidao_break_config.begin(); ite != yuqidao_break_config.end(); ++ite)
+	{
+		free_BreakTable(ite->second);
+	}
+	yuqidao_break_config.clear();
+
+	for (std::map<uint64_t, struct StageTable *>::iterator ite = pvp_raid_config.begin(); ite != pvp_raid_config.end(); ++ite)
+	{
+		free_StageTable(ite->second);
+	}
+	pvp_raid_config.clear();
+
+	for (std::map<uint64_t, struct BaguaTable *>::iterator ite = bagua_config.begin(); ite != bagua_config.end(); ++ite)
+	{
+		free_BaguaTable(ite->second);
+	}
+	bagua_config.clear();
+
+	for (std::map<uint64_t, struct BaguaStarTable *>::iterator ite = bagua_star_config.begin(); ite != bagua_star_config.end(); ++ite)
+	{
+		free_BaguaStarTable(ite->second);
+	}
+	bagua_star_config.clear();
+
+	for (std::map<uint64_t, struct BaguaViceAttributeTable *>::iterator ite = bagua_vice_attr_config.begin(); ite != bagua_vice_attr_config.end(); ++ite)
+	{
+		free_BaguaViceAttributeTable(ite->second);
+	}
+	bagua_vice_attr_config.clear();
+
+	for (std::map<uint64_t, struct BaguaSuitTable *>::iterator ite = bagua_suit_config.begin(); ite != bagua_suit_config.end(); ++ite)
+	{
+		free_BaguaSuitTable(ite->second);
+	}
+	bagua_suit_config.clear();
+
+	for (std::map<uint64_t, struct SpecialtyLevelTable *>::iterator ite = specialty_level_config.begin(); ite != specialty_level_config.end(); ++ite)
+	{
+		free_SpecialtyLevelTable(ite->second);
+	}
+	specialty_level_config.clear();
+
+	for (std::map<uint64_t, struct TypeLevelTable *>::iterator ite = guoyu_level_config.begin(); ite != guoyu_level_config.end(); ++ite)
+	{
+		free_TypeLevelTable(ite->second);
+	}
+	guoyu_level_config.clear();
+
+	for (std::map<uint64_t, struct ChangeSpecialty *>::iterator ite = change_special_config.begin(); ite != change_special_config.end(); ++ite)
+	{
+		free_ChangeSpecialty(ite->second);
+	}
+	change_special_config.clear();
+
+	for (std::vector<struct BootNameTable *>::iterator ite = rand_name_config.begin(); ite != rand_name_config.end(); ++ite)
+	{
+		free_BootNameTable(*ite);
+	}
+	rand_name_config.clear();
+
+	for (std::map<uint64_t, struct RandomMonsterTable *>::iterator ite = random_monster.begin(); ite != random_monster.end(); ++ite)
+	{
+		free_RandomMonsterTable(ite->second);
+	}
+	random_monster.clear();
+
+	for (std::map<uint64_t, struct RandomDungeonTable *>::iterator ite = random_guoyu_dungenon_config.begin(); ite != random_guoyu_dungenon_config.end(); ++ite)
+	{
+		free_RandomDungeonTable(ite->second);
+	}
+	random_guoyu_dungenon_config.clear();
+
+	for (std::map<uint64_t, struct RewardTable *>::iterator ite = chengjie_reward_config.begin(); ite != chengjie_reward_config.end(); ++ite)
+	{
+		free_RewardTable(ite->second);
+	}
+	chengjie_reward_config.clear();
+
+	for (std::map<uint64_t, struct SpecialTitleTable *>::iterator ite = yaoshi_title_config.begin(); ite != yaoshi_title_config.end(); ++ite)
+	{
+		free_SpecialTitleTable(ite->second);
+	}
+	yaoshi_title_config.clear();
+
+	for (std::map<uint64_t, struct MoneyQuestTable *>::iterator ite = shangjin_task_config.begin(); ite != shangjin_task_config.end(); ++ite)
+	{
+		free_MoneyQuestTable(ite->second);
+	}
+	shangjin_task_config.clear();
+
+	for (std::map<uint64_t, struct SpecialtySkillTable *>::iterator ite = yaoshi_skill_config.begin(); ite != yaoshi_skill_config.end(); ++ite)
+	{
+		free_SpecialtySkillTable(ite->second);
+	}
+	yaoshi_skill_config.clear();
+
+	for (int i = 0; i < ROBOT_CONFIG_TYPE_SIZE; ++i)
+	{
+		for (std::vector<struct ActorRobotTable *>::iterator ite = robot_config[i].begin(); ite != robot_config[i].end(); ++ite)
+		{
+			free_ActorRobotTable(*ite);
+		}
+		robot_config[i].clear();
+	}
+
+	for (std::map<uint64_t, struct EventCalendarTable *>::iterator ite = activity_config.begin(); ite != activity_config.end(); ++ite)
+	{
+		free_EventCalendarTable(ite->second);
+	}
+	activity_config.clear();
+
+	for (std::map<uint64_t, struct ActiveTable *>::iterator ite = activity_activeness_config.begin(); ite != activity_activeness_config.end(); ++ite)
+	{
+		free_ActiveTable(ite->second);
+	}
+	activity_activeness_config.clear();
+
+	for (std::map<uint64_t, struct ChivalrousTable *>::iterator ite = activity_chivalry_config.begin(); ite != activity_chivalry_config.end(); ++ite)
+	{
+		free_ChivalrousTable(ite->second);
+	}
+	activity_chivalry_config.clear();
+
+	for (std::map<uint64_t, struct CampTable *>::iterator ite = zhenying_base_config.begin(); ite != zhenying_base_config.end(); ++ite)
+	{
+		free_CampTable(ite->second);
+	}
+	zhenying_base_config.clear();
+
+	for (std::map<uint64_t, struct BattlefieldTable *>::iterator ite = zhenying_fight_config.begin(); ite != zhenying_fight_config.end(); ++ite)
+	{
+		free_BattlefieldTable(ite->second);
+	}
+	zhenying_fight_config.clear();
+
+	for (std::map<uint64_t, struct BattleFieldRank *>::iterator ite = zhenying_fight_rank_config.begin(); ite != zhenying_fight_rank_config.end(); ++ite)
+	{
+		free_BattleFieldRank(ite->second);
+	}
+	zhenying_fight_rank_config.clear();
+
+	for (std::map<uint64_t, struct GradeTable *>::iterator ite = zhenying_level_config.begin(); ite != zhenying_level_config.end(); ++ite)
+	{
+		free_GradeTable(ite->second);
+	}
+	zhenying_level_config.clear();
+
+	for (std::map<uint64_t, struct WeekTable *>::iterator ite = zhenying_week_config.begin(); ite != zhenying_week_config.end(); ++ite)
+	{
+		free_WeekTable(ite->second);
+	}
+	zhenying_week_config.clear();
+
+	for (std::map<uint64_t, struct LifeSkillTable *>::iterator ite = medicine_config.begin(); ite != medicine_config.end(); ++ite)
+	{
+		free_LifeSkillTable(ite->second);
+	}
+	medicine_config.clear();
+
+	for (std::map<uint64_t, struct NoticeTable *>::iterator ite = notify_config.begin(); ite != notify_config.end(); ++ite)
+	{
+		free_NoticeTable(ite->second);
+	}
+	notify_config.clear();
+
+	for (std::map<uint64_t, struct SearchTable *>::iterator ite = xunbao_config.begin(); ite != xunbao_config.end(); ++ite)
+	{
+		free_SearchTable(ite->second);
+	}
+	xunbao_config.clear();
+
+	for (std::map<uint64_t, struct TreasureTable *>::iterator ite = xunbao_map_config.begin(); ite != xunbao_map_config.end(); ++ite)
+	{
+		free_TreasureTable(ite->second);
+	}
+	xunbao_map_config.clear();
+
+	for (std::map<uint64_t, struct QuestionTable *>::iterator ite = questions_config.begin(); ite != questions_config.end(); ++ite)
+	{
+		free_QuestionTable(ite->second);
+	}
+	questions_config.clear();
+
+	for (std::map<uint64_t, struct EscortTask *>::iterator ite = escort_config.begin(); ite != escort_config.end(); ++ite)
+	{
+		free_EscortTask(ite->second);
+	}
+	escort_config.clear();
+
+	for (std::map<uint64_t, struct PartnerTable *>::iterator ite = partner_config.begin(); ite != partner_config.end(); ++ite)
+	{
+		free_PartnerTable(ite->second);
+	}
+	partner_config.clear();
+
+	for (std::map<uint64_t, struct GodYaoAttributeTable *>::iterator ite = partner_god_attr_config.begin(); ite != partner_god_attr_config.end(); ++ite)
+	{
+		free_GodYaoAttributeTable(ite->second);
+	}
+	partner_god_attr_config.clear();
+
+	for (std::map<uint64_t, struct RecruitTable *>::iterator ite = partner_recruit_config.begin(); ite != partner_recruit_config.end(); ++ite)
+	{
+		free_RecruitTable(ite->second);
+	}
+	partner_recruit_config.clear();
+
+	for (std::map<uint64_t, struct PartnerLevelTable *>::iterator ite = partner_level_config.begin(); ite != partner_level_config.end(); ++ite)
+	{
+		free_PartnerLevelTable(ite->second);
+	}
+	partner_level_config.clear();
+
+	for (std::map<uint64_t, struct FetterTable *>::iterator ite = partner_bond_config.begin(); ite != partner_bond_config.end(); ++ite)
+	{
+		free_FetterTable(ite->second);
+	}
+	partner_bond_config.clear();
+
+	for (std::map<uint64_t, struct BiaocheTable *>::iterator ite = cash_truck_config.begin(); ite != cash_truck_config.end(); ++ite)
+	{
+		free_BiaocheTable(ite->second);
+	}
+	cash_truck_config.clear();
+
+	for (std::map<uint64_t, struct BiaocheRewardTable *>::iterator ite = cash_truck_reward_config.begin(); ite != cash_truck_reward_config.end(); ++ite)
+	{
+		free_BiaocheRewardTable(ite->second);
+	}
+	cash_truck_reward_config.clear();
+
+	for (std::vector<struct RobotPatrolTable *>::iterator ite = robot_patrol_config.begin(); ite != robot_patrol_config.end(); ++ite)
+	{
+		(*ite)->n_patrol = 1;
+		free_RobotPatrolTable(*ite);
+	}
+	robot_patrol_config.clear();
+
+	for (std::vector<struct RobotPatrolTable *>::iterator ite = robot_zhenyingzhan_config.begin(); ite != robot_zhenyingzhan_config.end(); ++ite)
+	{
+		(*ite)->n_patrol = 1;		
+		free_RobotPatrolTable(*ite);
+	}
+	robot_zhenyingzhan_config.clear();
+
+	for (std::vector<struct FactionBattleTable *>::iterator ite = zhenying_battle_config.begin(); ite != zhenying_battle_config.end(); ++ite)
+	{
+		free_FactionBattleTable(*ite);
+	}
+	zhenying_battle_config.clear();
+
+	for (std::map<uint64_t, struct FunctionUnlockTable *>::iterator ite = function_unlock_config.begin(); ite != function_unlock_config.end(); ++ite)
+	{
+		free_FunctionUnlockTable(ite->second);
+	}
+	function_unlock_config.clear();
+
+	for (std::map<uint64_t, struct LifeMagicTable *>::iterator ite = lifemagic_config.begin(); ite != lifemagic_config.end(); ++ite)
+	{
+		free_LifeMagicTable(ite->second);
+	}
+	lifemagic_config.clear();
+
+	for (std::map<uint64_t, struct MagicTable *>::iterator ite = MagicTable_config.begin(); ite != MagicTable_config.end(); ++ite)
+	{
+		free_MagicTable(ite->second);
+	}
+	MagicTable_config.clear();
+
+	for (std::map<uint64_t, struct MagicAttributeTable *>::iterator ite = MagicAttrbute_config.begin(); ite != MagicAttrbute_config.end(); ++ite)
+	{
+		free_MagicAttributeTable(ite->second);
+	}
+	MagicAttrbute_config.clear();
+
+	for (std::map<uint64_t, struct ArenaRewardTable *>::iterator ite = doufachang_reward_config.begin(); ite != doufachang_reward_config.end(); ++ite)
+	{
+		free_ArenaRewardTable(ite->second);
+	}
+	doufachang_reward_config.clear();
+
+	for (std::map<uint64_t, std::vector<struct SceneCreateMonsterTable *> *>::iterator ite = all_scene_create_monster_config.begin();
+		 ite != all_scene_create_monster_config.end(); ++ite)
+	{
+		std::vector<struct SceneCreateMonsterTable *> *t_config = ite->second;
+		for (std::vector<struct SceneCreateMonsterTable *>::iterator ite2 = t_config->begin(); ite2 != t_config->end(); ++ite2)
+		{
+			free_SceneCreateMonsterTable(*ite2);
+		}
+		t_config->clear();
+		delete t_config;
+	}
+	all_scene_create_monster_config.clear();
+
+	for (std::map<uint64_t, struct GenerateMonster *>::iterator ite = GenerateMonster_config.begin(); ite != GenerateMonster_config.end(); ++ite)
+	{
+		free_GenerateMonster(ite->second);
+	}
+	GenerateMonster_config.clear();
+
+	for (std::map<uint64_t, struct ServerResTable *>::iterator ite = server_res_config.begin(); ite != server_res_config.end(); ++ite)
+	{
+		free_ServerResTable(ite->second);
+	}
+	server_res_config.clear();
+
+	for (std::map<uint64_t, struct ServerLevelTable *>::iterator ite = server_level_config.begin(); ite != server_level_config.end(); ++ite)
+	{
+		free_ServerLevelTable(ite->second);
+	}
+	server_level_config.clear();
+
+	for (std::map<uint64_t, struct AchievementFunctionTable *>::iterator ite = achievement_function_config.begin(); ite != achievement_function_config.end(); ++ite)
+	{
+		free_AchievementFunctionTable(ite->second);
+	}
+	achievement_function_config.clear();
+
+	for (std::map<uint64_t, struct AchievementHierarchyTable *>::iterator ite = achievement_hierarchy_config.begin(); ite != achievement_hierarchy_config.end(); ++ite)
+	{
+		free_AchievementHierarchyTable(ite->second);
+	}
+	achievement_hierarchy_config.clear();
+
+	for (std::map<uint64_t, struct GangsSkillTable *>::iterator ite = guild_skill_config.begin(); ite != guild_skill_config.end(); ++ite)
+	{
+		free_GangsSkillTable(ite->second);
+	}
+	guild_skill_config.clear();
+
+	for (std::map<uint64_t, struct DegreeTable *>::iterator ite = friend_close_config.begin(); ite != friend_close_config.end(); ++ite)
+	{
+		free_DegreeTable(ite->second);
+	}
+	friend_close_config.clear();
+
+	for (std::map<uint64_t, struct TitleFunctionTable *>::iterator ite = title_function_config.begin(); ite != title_function_config.end(); ++ite)
+	{
+		free_TitleFunctionTable(ite->second);
+	}
+	title_function_config.clear();
+
+	for (std::map<uint64_t, struct WorldBossTable *>::iterator ite = world_boss_config.begin(); ite != world_boss_config.end(); ++ite)
+	{
+		free_WorldBossTable(ite->second);
+	}
+	world_boss_config.clear();
+
+	for (std::map<uint64_t, struct ChallengeTable *>::iterator ite = hero_challenge_config.begin(); ite != hero_challenge_config.end(); ++ite)
+	{
+		free_ChallengeTable(ite->second);
+	}
+	hero_challenge_config.clear();
+
+	for (std::map<uint64_t, struct UndergroundTask *>::iterator ite = mijing_xiulian_config.begin(); ite != mijing_xiulian_config.end(); ++ite)
+	{
+		free_UndergroundTask(ite->second);
+	}
+	mijing_xiulian_config.clear();
+
+	int i = 0;
+	for (std::map<uint64_t, struct CampDefenseTable *>::iterator ite = zhenying_daily_config.begin(); ite != zhenying_daily_config.end(); ++ite)
+	{
+		for (size_t p = 0; p < ite->second->n_TruckRouteX; ++p)
+		{
+			delete sg_zhenying_truck[i].TargetInfoList[p]->TargetPos;
+		}
+		delete [](sg_zhenying_truck[i].TargetInfoList[0]);		
+		delete [](sg_zhenying_truck[i].TargetInfoList);
+		free_CampDefenseTable(ite->second);
+		++i;
+	}
+	zhenying_daily_config.clear();
+
+	for (std::map<uint64_t, struct FishingTable *>::iterator ite = fishing_config.begin(); ite != fishing_config.end(); ++ite)
+	{
+		free_FishingTable(ite->second);
+	}
+	fishing_config.clear();
+
+	for (std::map<uint64_t, struct GrowupTable *>::iterator ite = strong_config.begin(); ite != strong_config.end(); ++ite)
+	{
+		free_GrowupTable(ite->second);
+	}
+	strong_config.clear();
+
+	for (std::map<uint64_t, struct FactionActivity *>::iterator ite = guild_activ_config.begin(); ite != guild_activ_config.end(); ++ite)
+	{
+		free_FactionActivity(ite->second);
+	}
+	guild_activ_config.clear();
+
+	for (std::map<char *, std::vector<struct SceneCreateMonsterTable*> *>::iterator ite = all_raid_ai_monster_config.begin();
+		 ite != all_raid_ai_monster_config.end(); ++ite)
+	{
+		std::vector<struct SceneCreateMonsterTable*> *t_config = ite->second;
+		for (std::vector<struct SceneCreateMonsterTable *>::iterator ite2 = t_config->begin(); ite2 != t_config->end(); ++ite2)
+		{
+			free_SceneCreateMonsterTable(*ite2);
+		}
+		t_config->clear();
+		delete t_config;
+	}
+	all_raid_ai_monster_config.clear();
+
+	for (std::map<uint64_t, struct TradingTable *>::iterator ite = trade_item_config.begin(); ite != trade_item_config.end(); ++ite)
+	{
+		free_TradingTable(ite->second);
+	}
+	trade_item_config.clear();
+
+	for (std::map<uint64_t, struct AuctionTable *>::iterator ite = auction_config.begin(); ite != auction_config.end(); ++ite)
+	{
+		free_AuctionTable(ite->second);
+	}
+	auction_config.clear();
+
+	for (std::map<uint64_t, struct MGLYdiaoxiangTable *>::iterator ite = maogui_diaoxiang_config.begin(); ite != maogui_diaoxiang_config.end(); ++ite)
+	{
+		free_MGLYdiaoxiangTable(ite->second);
+	}
+	maogui_diaoxiang_config.clear();
+
+	for (std::map<uint64_t, struct MGLYmaoguiTable *>::iterator ite = maogui_monster_config.begin(); ite != maogui_monster_config.end(); ++ite)
+	{
+		free_MGLYmaoguiTable(ite->second);
+	}
+	maogui_monster_config.clear();
+
+	for (std::map<uint64_t, struct MGLYyanseTable *>::iterator ite = maogui_colour_config.begin(); ite != maogui_colour_config.end(); ++ite)
+	{
+		free_MGLYyanseTable(ite->second);
+	}
+	maogui_colour_config.clear();
+
+	for (std::map<uint64_t, struct MGLYmaoguiwangTable *>::iterator ite = maogui_maogui_wang_config.begin(); ite != maogui_maogui_wang_config.end(); ++ite)
+	{
+		free_MGLYmaoguiwangTable(ite->second);
+	}
+	maogui_maogui_wang_config.clear();
+
+	for (std::map<uint64_t, struct MGLYshoulingTable *>::iterator ite = maogui_shouling_to_xiaoguai_config.begin(); ite != maogui_shouling_to_xiaoguai_config.end(); ++ite)
+	{
+		free_MGLYshoulingTable(ite->second);
+	}
+	maogui_shouling_to_xiaoguai_config.clear();
+
+	for (std::map<uint64_t, struct GangsBuildTaskTable *>::iterator ite = guild_build_task_config.begin(); ite != guild_build_task_config.end(); ++ite)
+	{
+		free_GangsBuildTaskTable(ite->second);
+	}
+	guild_build_task_config.clear();
+
+	for (std::map<uint64_t, struct MonsterIDTable *>::iterator ite = raid_jincheng_suiji_kill_monster.begin(); ite != raid_jincheng_suiji_kill_monster.end(); ++ite)
+	{
+		free_MonsterIDTable(ite->second);
+	}
+	raid_jincheng_suiji_kill_monster.clear();
+
+	for (std::vector<struct raidsrv_config *>::iterator ite = vec_raidsrv_config.begin(); ite != vec_raidsrv_config.end(); ++ite)
+	{
+		free_raidsrv_config(*ite);
+	}
+	vec_raidsrv_config.clear();
+
+	for (std::map<uint64_t, struct TravelTable *>::iterator ite = travel_config.begin(); ite != travel_config.end(); ++ite)
+	{
+		free_TravelTable(ite->second);
+	}
+	travel_config.clear();
+
+	for (std::map<uint64_t, struct LevelReward *>::iterator ite = level_reward_config.begin(); ite != level_reward_config.end(); ++ite)
+	{
+		free_LevelReward(ite->second);
+	}
+	level_reward_config.clear();
+
+	for (std::map<uint64_t, struct TimeReward *>::iterator ite = online_reward_config.begin(); ite != online_reward_config.end(); ++ite)
+	{
+		free_TimeReward(ite->second);
+	}
+	online_reward_config.clear();
+
+	for (std::map<uint64_t, struct OnlineTimes *>::iterator ite = online_time_config.begin(); ite != online_time_config.end(); ++ite)
+	{
+		free_OnlineTimes(ite->second);
+	}
+	online_time_config.clear();
+
+	for (std::map<uint64_t, struct SignDay *>::iterator ite = sign_day_config.begin(); ite != sign_day_config.end(); ++ite)
+	{
+		free_SignDay(ite->second);
+	}
+	sign_day_config.clear();
+
+	for (std::map<uint64_t, struct SignMonth *>::iterator ite = sign_month_config.begin(); ite != sign_month_config.end(); ++ite)
+	{
+		free_SignMonth(ite->second);
+	}
+	sign_month_config.clear();
+
+	for (std::map<uint64_t, struct RewardBack *>::iterator ite = reward_back_config.begin(); ite != reward_back_config.end(); ++ite)
+	{
+		free_RewardBack(ite->second);
+	}
+	reward_back_config.clear();
+	
+	for (std::map<char *, std::vector<struct RaidScriptTable*> *>::iterator ite = all_raid_script_config.begin();
+		 ite != all_raid_script_config.end(); ++ite)
+	{
+		std::vector<struct RaidScriptTable*> *_config = ite->second;
+		for (std::vector<struct RaidScriptTable*>::iterator ite2 = _config->begin(); ite2 != _config->end(); ++ite2)
+		{
+			free_RaidScriptTable(*ite2);
+		}
+		_config->clear();
+		delete _config;
+	}
+	all_raid_script_config.clear();
+
+	for (std::map<uint32_t, std::vector<BattleFieldStepRank *> >::iterator ite = sg_battle_award.begin();
+		 ite != sg_battle_award.end(); ++ite)
+	{
+		std::vector<BattleFieldStepRank *> *_config = &ite->second;
+		for (std::vector<BattleFieldStepRank *>::iterator ite2 = _config->begin(); ite2 != _config->end(); ++ite2)
+		{
+			delete (*ite2);
+		}
+		_config->clear();
+	}
+	sg_battle_award.clear();
+
+	for (std::map<uint64_t, struct P20076Table*>::iterator  ite = tower_level_config.begin();
+		ite != tower_level_config.end(); ++ite)
+	{
+		free_P20076Table(ite->second);
+	}
+	tower_level_config.clear();
+	
+	
 	return (0);
 }
 
@@ -3918,6 +4845,11 @@ int reload_config()
 	struct sproto_type *type;
 
 		// TODO: 需要reload，并且可以reload的配置再往这里加
+	for (std::map<uint64_t, struct ParameterTable *>::iterator ite = parameter_config.begin(); ite != parameter_config.end(); ++ite)
+	{
+		free_ParameterTable(ite->second);
+	}
+	parameter_config.clear();
 
 	type = sproto_type(sp, "ParameterTable");
 	assert(type);		

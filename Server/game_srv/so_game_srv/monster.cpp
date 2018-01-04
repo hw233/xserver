@@ -653,6 +653,7 @@ int monster_struct::del_player_from_sight(uint64_t player_id)
 
 void monster_struct::on_beattack(unit_struct *player, uint32_t skill_id, int32_t damage)
 {
+	unit_struct::on_beattack(player, skill_id, damage);	
 	if (!data || !scene)
 		return;
 
@@ -1291,8 +1292,8 @@ bool monster_struct::on_partner_enter_sight(uint64_t uuid)
 
 void monster_struct::go_back()
 {
-		//既然不再使用goback状态，为了避免反复在移动，追击，返回之间切换，设定2秒以上的定时
-	uint64_t t = time_helper::get_cached_time() + 2000;
+		//既然不再使用goback状态，为了避免反复在移动，追击，返回之间切换，设定4秒以上的定时
+	uint64_t t = time_helper::get_cached_time() + 4000;
 	if (data->ontick_time < t)
 		data->ontick_time = t;
 	ai_state = AI_PATROL_STATE;

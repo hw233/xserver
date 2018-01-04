@@ -86,6 +86,10 @@ int MySkill::Learn(uint32_t id, uint32_t num)
 	std::map<uint64_t, struct SkillLvTable *>::iterator iter = skill_lv_config.find(it->config->SkillLv + it->data->lv + num - 1);
 	if (iter == skill_lv_config.end())
 		return 1;
+	if (it->config->levelMax < it->data->lv + num)
+	{
+		return 2;
+	}
 	if (iter->second->NeedLv > m_owner->get_attr(PLAYER_ATTR_LEVEL))
 	{
 		return 190500068;
@@ -95,12 +99,16 @@ int MySkill::Learn(uint32_t id, uint32_t num)
 	{
 		return 190500063;
 	}
+	DoLevelUp(id, num);
+	return 0;
+}
+void MySkill::DoLevelUp(uint32_t id, uint32_t num)
+{
 	IteratorLevelUp(id, num);
 	m_owner->add_task_progress(TCT_SKILL_LEVEL_UP, get_actor_skill_index(m_owner->get_job(), id), num);
 	m_owner->add_achievement_progress(ACType_SKILL_LEVEL_UP, 0, 0, 0, num);
 	m_owner->add_achievement_progress(ACType_SKILL_ALL_LEVEL, 0, 0, 0, num);
 	m_owner->add_achievement_progress(ACType_SKILL_FUWEN_UNLOCK, 0, 0, 0, GetFuwenUnlockNum());
-	return 0;
 }
 void MySkill::IteratorLevelUp(uint32_t id, uint32_t num)
 {
@@ -503,7 +511,7 @@ void MySkill::SendAllSkill()
 	send.n_data_1 = i;
 	send.data = skillDataPoint;
 	send.data_1 = skillDataPoint1;
-	send.num = 1;
+	send.num = m_index;
 
 	EXTERN_DATA ext_data;
 	ext_data.player_id = m_owner->get_uuid();
@@ -551,6 +559,139 @@ uint32_t MySkill::GetLevelUpTo(uint32_t id, uint32_t initLv, uint32_t maxLv)
 			++num;
 	}
 	return num;
+}
+
+int MySkill::AutoUpgrade()
+{
+	ActorTable *table = get_actor_config(this->m_owner->get_attr(PLAYER_ATTR_JOB));
+	if (table == NULL)
+	{
+		return 0;
+	}
+	uint32_t cost = 0;
+	int ret = 0;
+	static const int MAX_SKILL_NUM = 5;
+	if (table->n_SkillLevelID > MAX_SKILL_NUM)
+	{
+		return 0;
+	}
+	bool arrLv[MAX_SKILL_NUM];
+	int n_arrLv = 0;
+	bool arrLm[MAX_SKILL_NUM];
+	int n_arrLm = 0;
+	memset(arrLm, 0, sizeof(arrLm));
+	memset(arrLv, 0, sizeof(arrLv));
+	EXTERN_DATA extern_data;
+	extern_data.player_id = m_owner->get_uuid();
+	LearnSkillAns notify;
+	learn_skill_ans__init(&notify);
+	while (true)
+	{
+		bool stop = false;
+		for (uint32_t i = 0; i < table->n_SkillLevelID; ++i)
+		{
+			SkillTable *skillConfig = get_config_by_id(table->SkillLevelID[i], &skill_config);
+			if (skillConfig == NULL)
+			{
+				stop = true;
+				break;
+			}
+			if (skillConfig->OpenLv > m_owner->get_attr(PLAYER_ATTR_LEVEL))
+			{
+				if (n_arrLv == 0)
+				{
+					ret = 190500068;
+				}
+				if (!arrLm[i])
+				{
+					arrLm[i] = true;
+					++n_arrLm;
+				}
+				continue;
+			}
+			skill_struct *it = GetSkill(table->SkillLevelID[i]);
+			if (it == NULL)
+			{
+				stop = true;
+				break;
+			}
+			std::map<uint64_t, struct SkillLvTable *>::iterator iter = skill_lv_config.find(it->config->SkillLv + it->data->lv);
+			if (iter == skill_lv_config.end())
+			{
+				stop = true;
+				break;
+			}
+			if (iter->second->NeedLv > m_owner->get_attr(PLAYER_ATTR_LEVEL))
+			{
+				if (!arrLm[i])
+				{
+					arrLm[i] = true;
+					++n_arrLm;
+				}
+				continue;
+			}
+			if (it->config->levelMax < it->data->lv + 1)
+			{
+				if (!arrLm[i])
+				{
+					arrLm[i] = true;
+					++n_arrLm;
+				}
+				continue;
+			}
+			if (cost + iter->second->CostCoin > m_owner->get_coin())
+			{
+				if (n_arrLv == 0)
+				{
+					ret = 190500063;
+				}
+				if (!arrLm[i])
+				{
+					arrLm[i] = true;
+					++n_arrLm;
+				}
+				continue;
+			}
+			if (!arrLv[i])
+			{
+				arrLv[i] = true;
+				++n_arrLv;
+			}
+			cost += iter->second->CostCoin;
+			DoLevelUp(table->SkillLevelID[i], 1);
+			
+			//notify.id = table->SkillLevelID[i];
+			//notify.lv = it->data->lv;
+			//fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEARN_SKILL_ANSWER, learn_skill_ans__pack, notify);
+		}
+		if (stop || n_arrLm == MAX_SKILL_NUM)
+		{
+			break;
+		}
+	}
+	if (cost > 0)
+	{
+		m_owner->sub_coin(cost, MAGIC_TYPE_SKILL);
+	}
+	uint32_t sendId[MAX_SKILL_NUM];
+	uint32_t sendLv[MAX_SKILL_NUM]; 
+	int n = 0;
+	for (; n < n_arrLv; ++n)
+	{
+		skill_struct *pSkill = GetSkill(table->SkillLevelID[n]);
+		if (pSkill == NULL)
+		{
+			break;
+		}
+		sendId[n] = pSkill->data->skill_id;
+		sendLv[n] = pSkill->data->lv;
+	}
+	notify.id = sendId;
+	notify.lv = sendLv;
+	notify.n_id = notify.n_lv = n;
+	notify.ret = ret;
+	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_LEARN_SKILL_ANSWER, learn_skill_ans__pack, notify);
+	return 0;
 }
 
 uint32_t MySkill::CalcCost(uint32_t id, uint32_t oldLv, uint32_t num)

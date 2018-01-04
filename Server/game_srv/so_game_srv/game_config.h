@@ -25,6 +25,7 @@
 //#define SKILL_RANGE_TYPE_DIRECT 3
 
 int read_all_excel_data();
+int free_all_excel_data();
 int reload_config();
 
 int add_all_scene();
@@ -76,6 +77,7 @@ AchievementHierarchyTable *get_achievement_config(uint32_t achievement_id, uint3
 SceneCreateMonsterTable *get_daily_zhenying_truck_config(uint32_t id);
 EquipAttribute *get_rand_attr_config(uint32_t pool, uint32_t attr_id);
 TravelTable *get_travel_config(uint32_t level);
+GradeTable *get_zhenying_grade_table(uint32_t zhenying, uint32_t level);
 
 uint32_t get_item_relate_id(uint32_t id);
 int get_item_bind_and_unbind_id(uint32_t id, uint32_t *bind_id, uint32_t *unbind_id);
@@ -98,6 +100,7 @@ int get_actor_skill_index(uint32_t job, uint32_t skill_id);
 bool item_is_partner_fabao(uint32_t item_id);
 uint32_t get_friend_close_level(uint32_t closeness);
 bool activity_is_open(uint32_t activity_id);
+uint32_t get_activity_reward_time(uint32_t activity_id);
 int get_dungeon_type(uint32_t raid_id);
 int item_id_to_trade_id(uint32_t item_id);
 int trade_id_to_item_id(uint32_t trade_id);
@@ -147,6 +150,7 @@ enum DUNGEON_TYPE_DEFINE
 	DUNGEON_TYPE_BATTLE_NEW = 16,
 	DUNGEON_TYPE_GUILD_LAND = 17,
 	DUNGEON_TYPE_MAOGUI_LEYUAN = 18,
+	DUNGEON_TYPE_TOWER = 19,
 };
 
 #endif /* GAME_CONFIG_H */

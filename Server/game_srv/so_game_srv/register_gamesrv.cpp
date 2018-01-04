@@ -348,6 +348,12 @@ int install(int argc, char **argv)
         {  /// test for mem check
             open_err_log_file();
         }
+		else if (strcmp(argv[i], "-c") == 0)
+		{  /// test for mem check
+			free_all_excel_data();
+			return (-1);
+		}
+		
     }
 
     uint64_t pid = write_pid_file();
@@ -965,13 +971,13 @@ void cb_gamesrv_timer()
         check_server_level();
         monster_manager::add_world_boss_monster();
         guild_land_active_manager::on_tick_10();
+        buff_manager::on_tick_30();
     }
 
     run_with_period(30)
     {
         monster_manager::on_tick_30();
         sight_space_manager::on_tick();
-        buff_manager::on_tick_30();
         // ZhenyingBattle::GetInstance()->Tick();
     }
 

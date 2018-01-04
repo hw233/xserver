@@ -187,3 +187,20 @@ echo '	KEY (`player_id`),'
 echo '	KEY (`operate_id`)'
 echo ") ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
 
+echo 'DROP TABLE IF EXISTS `'"activity"'`;'
+echo 'CREATE TABLE `'activity'`('
+echo '	`activity_id` int NOT NULL COMMENT '"'"活动ID"'"','
+echo '	`begin_time`  datetime  NOT NULL COMMENT '"'"开始时间"'"','
+echo '	`end_time`  datetime  NOT NULL COMMENT '"'"结束时间"'"','
+echo '	`state`  int NOT NULL COMMENT '"'"活动状态"'"','
+echo '	`comm_data` blob NOT NULL COMMENT  '"'"打包数据"'"','
+echo '	PRIMARY KEY (`activity_id`)'
+echo ") ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
+
+echo 'DROP TABLE IF EXISTS `'"activity_player"'`;'
+echo 'CREATE TABLE `'activity_player'`('
+echo '	`player_id` bigint NOT NULL COMMENT '"'"玩家ID"'"','
+echo '	`comm_data` blob NOT NULL COMMENT  '"'"打包数据"'"','
+echo '	PRIMARY KEY (`player_id`)'
+echo ") ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
+

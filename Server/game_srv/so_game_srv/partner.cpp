@@ -878,36 +878,38 @@ void partner_struct::add_ai_interface(int ai_type, struct partner_ai_interface *
 
 void partner_struct::calc_target_pos(struct position *pos)
 {
-	static float delta[] = {0.75, 0.7, 0.65, 0.6, 0.55, 0.5};
+	assert(m_owner);	
+	return m_owner->calc_partner_pos(pos);
+	// static float delta[] = {0.75, 0.7, 0.65, 0.6, 0.55, 0.5};
 
-	assert(m_owner);
-	struct position *cur_pos = m_owner->get_pos();
+	// assert(m_owner);
+	// struct position *cur_pos = m_owner->get_pos();
 	
-	if (!m_owner->scene)
-	{
-		pos->pos_x = cur_pos->pos_x;
-		pos->pos_z = cur_pos->pos_z;
-		return;
-	}
+	// if (!m_owner->scene)
+	// {
+	// 	pos->pos_x = cur_pos->pos_x;
+	// 	pos->pos_z = cur_pos->pos_z;
+	// 	return;
+	// }
 		
-	for (size_t i = 0; i < ARRAY_SIZE(delta); ++i)
-	{
-		double angle = m_owner->data->m_angle - (M_PI * delta[i]);
-		double cos = qFastCos(angle);
-		double sin = qFastSin(angle);
-		float z = 2 * sin + cur_pos->pos_z;
-		float x = 2 * cos + cur_pos->pos_x;		
+	// for (size_t i = 0; i < ARRAY_SIZE(delta); ++i)
+	// {
+	// 	double angle = m_owner->data->m_angle - (M_PI * delta[i]);
+	// 	double cos = qFastCos(angle);
+	// 	double sin = qFastSin(angle);
+	// 	float z = 2 * sin + cur_pos->pos_z;
+	// 	float x = 2 * cos + cur_pos->pos_x;		
 
-		struct map_block *block_start = get_map_block(m_owner->scene->map_config, x, z);
-		if (!block_start || !block_start->can_walk)
-			continue;
-		pos->pos_x = x;
-		pos->pos_z = z;
-		return;
-	}
-	pos->pos_x = cur_pos->pos_x;
-	pos->pos_z = cur_pos->pos_z;
-	return;
+	// 	struct map_block *block_start = get_map_block(m_owner->scene->map_config, x, z);
+	// 	if (!block_start || !block_start->can_walk)
+	// 		continue;
+	// 	pos->pos_x = x;
+	// 	pos->pos_z = z;
+	// 	return;
+	// }
+	// pos->pos_x = cur_pos->pos_x;
+	// pos->pos_z = cur_pos->pos_z;
+	// return;
 }
 
 void partner_struct::calculate_attribute(double *attrData, partner_attr_data &attr_cur)
@@ -1627,6 +1629,7 @@ void partner_struct::on_owner_beattack(uint64_t uuid)
 }
 void partner_struct::on_beattack(unit_struct *unit, uint32_t skill_id, int32_t damage)
 {
+	unit_struct::on_beattack(unit, skill_id, damage);	
 	add_partner_hate_unit(unit->get_uuid(), &attack_partner[0]);	
 }
 

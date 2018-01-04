@@ -36,6 +36,7 @@ extern struct ai_interface monster_ai_29_interface;
 extern struct ai_interface monster_ai_30_interface;
 extern struct ai_interface monster_ai_31_interface;
 extern struct ai_interface monster_ai_32_interface;
+extern struct ai_interface monster_ai_33_interface;
 
 void monster_try_skill_talk(monster_struct *monster, uint64_t skill_id);
 int get_monster_hp_percent(monster_struct *monster);

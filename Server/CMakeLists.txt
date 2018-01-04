@@ -47,4 +47,5 @@ add_subdirectory(guild_srv)
 add_subdirectory(rank_srv)
 add_subdirectory(doufachang_srv)
 add_subdirectory(trade_srv)
+add_subdirectory(activity_srv)
 

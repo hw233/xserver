@@ -24,6 +24,7 @@ private:
 	int transfer_to_doufachang();
 	int transfer_to_ranksrv();	
 	int transfer_to_tradesrv();	
+	int transfer_to_activitysrv();	
 	int broadcast_to_all_client();	
 	int broadcast_to_client();
 	int kick_role(EXTERN_DATA *extern_data);	

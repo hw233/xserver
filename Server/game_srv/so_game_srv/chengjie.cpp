@@ -903,9 +903,14 @@ void CheckGuoyuCriticalTask()
 
 void CheckAwardQuestionTask()
 {
+	EventCalendarTable *table = get_config_by_id(AWARD_QUESTION_ACTIVE_ID, &activity_config);
+	if (table == NULL)
+	{
+		return;
+	}
 	static bool bDone = false;
 	uint32_t cd = 0;
-	if (!check_active_open(AWARD_QUESTION_ACTIVE_ID, cd))
+	if (!check_active_open(table->RelationID, cd))
 	{
 		if (!bDone)
 		{

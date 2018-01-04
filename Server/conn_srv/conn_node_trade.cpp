@@ -50,6 +50,9 @@ int conn_node_trade::dispatch_message()
 {
 	PROTO_HEAD *head = (PROTO_HEAD *)buf_head();
 	uint32_t cmd = ENDION_FUNC_2(head->msg_id);
+#ifdef FLOW_MONITOR
+	add_one_other_server_request_msg(head);
+#endif
 	switch (cmd)
 	{
 		case SERVER_PROTO_BROADCAST:
@@ -86,9 +89,6 @@ int conn_node_trade::transfer_to_client()
 
 	int cmd = ENDION_FUNC_2(head->msg_id);
 
-#ifdef FLOW_MONITOR
-	add_one_other_server_request_msg(head);
-#endif
 	
 	extern_data = get_extern_data(head);
 	LOG_DEBUG("[%s:%d]: Send Cmd To client, [%lu], cmd: %d", __FUNCTION__, __LINE__, extern_data->player_id, cmd);

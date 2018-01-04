@@ -58,6 +58,7 @@ private:
 	int transfer_to_doufachang();	
 	int transfer_to_ranksrv();		
 	int transfer_to_tradesrv();	
+	int transfer_to_activitysrv();	
 	int send_player_exit(bool again = false);
 	int send_hello_resp();	
 };

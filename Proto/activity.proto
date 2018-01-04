@@ -82,3 +82,63 @@ message HeroChallengeReciveSweepRewardRequest
 	required uint32 hero_id = 1; //英雄id
 }
 
+//战力达人礼包信息
+message ZhanlidarenGiftData
+{
+	required uint32 id = 1; //配置表ID
+	required uint32 getNum = 2; //已领取数量
+	required bool   isGet = 3; //是否已领取
+}
+
+//战力达人活动信息
+message ZhanlidarenActivityData
+{
+	repeated ZhanlidarenGiftData gifts = 1;
+}
+
+//单个限时活动信息
+message TimeLimitActivityData
+{
+	required uint32 activityId = 1; //活动ID
+	required uint32 beginTime = 2; //开始时间
+	required uint32 endTime = 3; //结束时间
+	optional ZhanlidarenActivityData zhanlidaren = 4; //战力达人类型信息
+}
+
+//限时活动信息通知
+message TimeLimitActivityInfoNotify
+{
+	repeated TimeLimitActivityData activitys = 1;
+}
+
+//限时活动结束通知
+message TimeLimitActivityEndNotify
+{
+	required uint32 activityId = 1;
+}
+
+//战力达人礼包数量更新通知
+message ZhanlidarenGiftNumNotify
+{
+	required uint32 activityId = 1;
+	required uint32 id = 2; //配置表ID
+	required uint32 getNum = 3; //已领取数量
+}
+
+//战力达人领取礼包请求
+message ZhanlidarenGetRewardRequest
+{
+	required uint32 activityId = 1; //活动ID
+	required uint32 id = 2;
+}
+
+//战力达人领取礼包应答
+message ZhanlidarenGetRewardAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 activityId = 2; //活动ID
+	required uint32 id = 3;
+}
+
+
+

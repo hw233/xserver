@@ -181,7 +181,7 @@ int raid_struct::init_special_raid_data(player_struct *player)
 		case DUNGEON_TYPE_BATTLE:
 		case DUNGEON_TYPE_BATTLE_NEW:
 		{
-			raid_set_ai_interface(15);
+			raid_set_ai_interface(DUNGEON_TYPE_BATTLE);
 			init_scene_struct(m_id, true, _lv);
 		}
 			break;
@@ -189,6 +189,12 @@ int raid_struct::init_special_raid_data(player_struct *player)
 		{
 			raid_set_ai_interface(18);
 			init_scene_struct(m_id, false, _lv);
+		}
+			break;
+		case DUNGEON_TYPE_TOWER:
+		{
+			raid_set_ai_interface(DUNGEON_TYPE_TOWER);
+			init_scene_struct(m_id, true, _lv);
 		}
 			break;
 		default:
@@ -787,6 +793,7 @@ int raid_struct::set_player_info(player_struct *player, struct raid_player_info 
 	info->player_id = player->get_uuid();
 	memcpy(info->name, player->get_name(), sizeof(info->name));
 	info->headicon = player->get_attr(PLAYER_ATTR_HEAD);
+	info->guild = player->data->guild_id;
 	info->lv = player->get_attr(PLAYER_ATTR_LEVEL);
 	info->job = player->get_attr(PLAYER_ATTR_JOB);
 	return (0);
@@ -1565,6 +1572,15 @@ int raid_struct::on_raid_finished()
 	return (0);
 }
 
+player_struct *raid_struct::get_team_leader_player()
+{
+	if (!m_raid_team)
+	{
+		return m_player[0];
+	}
+	return m_raid_team->GetLead();
+}
+
 struct DungeonTable *raid_struct::get_raid_config()
 {
 	if (ai && ai->raid_get_config)
@@ -1743,6 +1759,7 @@ void raid_struct::broadcast_player_hit_statis_changed(struct raid_player_info *i
 	notify.cure = info->cure;
 	notify.damage = info->damage;
 	notify.injured = info->injured;
+	notify.guild = info->guild;
 //	notify.job = player->get_attr(PLAYER_ATTR_JOB);
 //	notify.lv = player->get_attr(PLAYER_ATTR_LEVEL);
 //	notify.name = player->data->name;

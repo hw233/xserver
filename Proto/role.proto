@@ -104,4 +104,10 @@ message EscortBeginNotify
 	required uint64 monsterUuid = 2; //护送怪唯一ID
 }
 
+//功能开启通知
+message FunctionOpenNotify
+{
+	repeated uint32 functionIds = 1; //开启的功能ID
+}
+
 

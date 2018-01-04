@@ -19,6 +19,12 @@ extern char* sg_guild_recruit_notice;
 extern char* sg_guild_announcement;
 extern std::vector<uint32_t> sg_guild_question;
 
+extern uint32_t sg_guild_init_popularity;
+extern uint32_t sg_guild_donate_popularity[3];
+extern uint32_t sg_guild_task_popularity;
+extern uint32_t sg_guild_battle_preliminary_popularity[4];
+extern uint32_t sg_guild_battle_final_popularity[5];
+
 extern std::map<uint64_t, struct QuestionTable*> questions_config; //考题表
 extern std::map<uint64_t, struct ParameterTable *> parameter_config;
 extern std::map<uint64_t, struct GangsTable*> guild_building_config; //帮会建筑表
@@ -31,12 +37,15 @@ extern std::map<uint64_t, struct ControlTable*> all_control_config; //副本进�
 extern std::map<uint64_t, struct ActorLevelTable *> actor_level_config; //角色等级配置
 extern std::map<uint64_t, struct FactionActivity *> guild_land_active_config; //帮会领地活动表
 extern std::map<uint64_t, struct GangsBuildTaskTable*> guild_build_task_config; //帮会建设任务表
+extern std::map<uint64_t, struct DonationTable*> guild_donate_config; //帮会捐献表
 
 int read_all_excel_data();
 
 GangsTable *get_guild_building_config(uint32_t type, uint32_t level);
 GangsSkillTable *get_guild_skill_config(uint32_t type, uint32_t level);
+DonationTable *get_guild_donate_config(uint32_t type);
 int get_guild_build_task_id(uint32_t player_lv);
 int get_guild_build_task_amount(uint32_t id);
+bool check_active_open(uint32_t id, uint32_t &cd);
 
 #endif /* __GUILD_CONFIG_H__ */

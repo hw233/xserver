@@ -39,6 +39,7 @@ extern struct timeval sg_clear_timer_val;
 extern void cb_clear_timeout(evutil_socket_t, short, void* /*arg*/);
 extern void init_redis_keys(uint32_t server_id);
 extern void dayinshiju();
+extern void init_reward_timer(void);
 
 int main(int argc, char **argv)
 {
@@ -211,6 +212,7 @@ int main(int argc, char **argv)
 	sg_clear_timer_val.tv_sec = 3600;
 	sg_clear_timer_event.ev_callback = cb_clear_timeout;
 	add_timer(sg_clear_timer_val, &sg_clear_timer_event, NULL);
+	init_reward_timer();
 	
 	ret = event_base_loop(base, 0);
 	LOG_INFO("event_base_loop stoped[%d]", ret);	

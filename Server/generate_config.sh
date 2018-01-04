@@ -87,6 +87,9 @@ port=`expr ${port} + 1`
 echo "//交易服务器连接端口"
 echo "conn_srv_trade_port=${port}"
 port=`expr ${port} + 1`
+echo "//活动服务器连接端口"
+echo "conn_srv_activity_port=${port}"
+port=`expr ${port} + 1`
 #echo "//raid服务器web端口"
 #echo "raid_srv_web_port=${port}"
 #port=`expr ${port} + 1`

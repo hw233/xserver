@@ -11,6 +11,7 @@ extern "C"
 #include "lualib.h"
 #include "lauxlib.h"
 };
+#include "time_helper.h"
 #include "sproto.h"
 #include "sprotoc_common.h"
 #include "game_event.h"
@@ -28,8 +29,15 @@ char* sg_guild_recruit_notice = NULL;
 char* sg_guild_announcement = NULL;
 std::vector<uint32_t> sg_guild_question;
 
+uint32_t sg_guild_init_popularity = 0;
+uint32_t sg_guild_donate_popularity[3];
+uint32_t sg_guild_task_popularity = 0;
+uint32_t sg_guild_battle_preliminary_popularity[4];
+uint32_t sg_guild_battle_final_popularity[5];
+
 std::map<uint32_t, GangsTable*> building_config_map;
 std::map<uint32_t, GangsSkillTable*> skill_config_map;
+std::map<uint64_t, DonationTable*> donate_config_map;
 
 std::map<uint64_t, struct QuestionTable*> questions_config; //考题表
 std::map<uint64_t, struct ParameterTable *> parameter_config;
@@ -43,6 +51,7 @@ std::map<uint64_t, struct ControlTable*> all_control_config; //副本进入条�
 std::map<uint64_t, struct ActorLevelTable *> actor_level_config; //角色等级配置
 std::map<uint64_t, struct FactionActivity *> guild_land_active_config; //帮会领地活动表
 std::map<uint64_t, struct GangsBuildTaskTable*> guild_build_task_config; //帮会建设任务表
+std::map<uint64_t, struct DonationTable*> guild_donate_config; //帮会捐献表
 
 static void gen_question_arr()
 {
@@ -97,6 +106,40 @@ static void generate_parameters(void)
 	{
 		sg_guild_invite_cd = config->parameter1[0];
 	}
+	config = get_config_by_id(161000424, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_init_popularity = config->parameter1[0];
+	}
+	config = get_config_by_id(161000426, &parameter_config);
+	if (config && config->n_parameter1 >= 3)
+	{
+		for (int i = 0; i < 3; ++i)
+		{
+			sg_guild_donate_popularity[i] = config->parameter1[i];
+		}
+	}
+	config = get_config_by_id(161000428, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_task_popularity = config->parameter1[0];
+	}
+	config = get_config_by_id(161000431, &parameter_config);
+	if (config && config->n_parameter1 >= 4)
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			sg_guild_battle_preliminary_popularity[i] = config->parameter1[i];
+		}
+	}
+	config = get_config_by_id(161000432, &parameter_config);
+	if (config && config->n_parameter1 >= 5)
+	{
+		for (int i = 0; i < 5; ++i)
+		{
+			sg_guild_battle_final_popularity[i] = config->parameter1[i];
+		}
+	}
 }
 
 static void adjust_guild_buiding_config(void)
@@ -118,6 +161,69 @@ static void adjust_guild_skill_config(void)
 		skill_config_map[key_new] = config;
 	}
 }
+
+static void adjust_guild_donate_config(void)
+{
+	donate_config_map.clear();
+	for (std::map<uint64_t, DonationTable*>::iterator iter = guild_donate_config.begin(); iter != guild_donate_config.end(); ++iter)
+	{
+		DonationTable *config = iter->second;
+		donate_config_map[config->Type] = config;
+	}
+}
+bool check_active_open(uint32_t id, uint32_t &cd)
+{
+	uint64_t times = time_helper::get_micro_time();
+	time_helper::set_cached_time(times / 1000);
+
+	cd = 0;
+	ControlTable *table = get_config_by_id(id, &all_control_config);
+	if (table == NULL)
+	{
+		return false;
+	}
+	bool open = false;
+	for (uint32_t i = 0; i < table->n_OpenDay; ++i)
+	{
+		if (time_helper::getWeek() == table->OpenDay[i])
+		{
+			open = true;
+			break;
+		}
+	}
+	if (!open)
+	{
+		return false;
+	}
+	open = false;
+	struct tm tm;
+	time_t tmp = times /1000 / 1000;
+	localtime_r(&tmp, &tm);
+	for (uint32_t i = 0; i < table->n_OpenTime; ++i)
+	{
+		tm.tm_hour = table->OpenTime[i] / 100;
+		tm.tm_min = table->OpenTime[i] % 100;
+		tm.tm_sec = 0;
+		uint64_t st = mktime(&tm);
+		tm.tm_hour = table->CloseTime[i] / 100;
+		tm.tm_min = table->CloseTime[i] % 100;
+		tm.tm_sec = 59;
+		uint64_t end = mktime(&tm);
+		if (time_helper::get_cached_time() / 1000 >= st && time_helper::get_cached_time() / 1000 <= end)
+		{
+			open = true;
+			cd = end - time_helper::get_cached_time() / 1000;
+			break;
+		}
+	}
+	if (!open)
+	{
+		cd = 0;
+		return false;
+	}
+	return true;
+}
+
 
 
 typedef std::map<uint64_t, void *> *config_type;
@@ -204,6 +310,13 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/GangsBuildTaskTable.lua", (config_type)&guild_build_task_config);
 	assert(ret == 0);	
 
+	type = sproto_type(sp, "DonationTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/DonationTable.lua", (config_type)&guild_donate_config);
+	assert(ret == 0);	
+
+	adjust_guild_donate_config();
+
 	lua_close(L);	
 	free(buf);
 
@@ -232,6 +345,11 @@ GangsSkillTable *get_guild_skill_config(uint32_t type, uint32_t level)
 	}
 
 	return NULL;
+}
+
+DonationTable *get_guild_donate_config(uint32_t type)
+{
+	return get_config_by_id(type, &donate_config_map);
 }
 
 int get_guild_build_task_id(uint32_t player_lv)

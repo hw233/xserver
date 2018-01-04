@@ -22,10 +22,17 @@ CRedisClient sg_redis_client;
 uint32_t sg_server_id;
 struct event sg_clear_timer_event;
 struct timeval sg_clear_timer_val = {3600, 0};	
+struct event sg_reward_timer_event;
+struct timeval sg_reward_timer_val;	
 
 char sg_player_key[64]; //玩家数据
+char sg_guild_key[64]; //门宗数据
+char sg_reward_key[64]; //发奖时间
 static std::map<uint32_t, std::string> scm_rank_keys;
 static std::map<uint32_t, char *> rank_key_map;
+
+static int on_guild_player_fc_change(uint32_t guild_id);
+void cb_reward_timeout(evutil_socket_t, short, void* /*arg*/);
 
 
 #define MAX_RANK_GET_NUM  100 //前端显示数目
@@ -75,6 +82,22 @@ enum
 	RANK_PVP3_DIVISION7 = 615,
 	RANK_PVP3_DIVISION8 = 616,
 	RANK_PVP3_DIVISION9 = 617,
+	//阵营军阶
+	RANK_ZHENYING_LEVEL_TOTAL = 701,
+	RANK_ZHENYING_LEVEL_ZHENYING1 = 718,
+	RANK_ZHENYING_LEVEL_ZHENYING2 = 719,
+	//阵营功勋
+	RANK_ZHENYING_EXPLOIT_TOATAL = 801,
+	RANK_ZHENYING_EXPLOIT_ZHENYING1 = 818,
+	RANK_ZHENYING_EXPLOIT_ZHENYING2 = 819,
+	//阵营斩杀
+	RANK_ZHENYING_KILL_TOTAL = 901,
+	RANK_ZHENYING_KILL_ZHENYING1 = 918,
+	RANK_ZHENYING_KILL_ZHENYING2 = 919,
+	//门宗战力
+	RANK_GUILD_FC_TOTAL = 1001,
+	RANK_GUILD_FC_ZHENYING1 = 1018,
+	RANK_GUILD_FC_ZHENYING2 = 1019,
 };
 
 static void init_rank_key_map()
@@ -114,11 +137,25 @@ static void init_rank_key_map()
 	scm_rank_keys[RANK_PVP3_DIVISION7]                         = "s%u_rank_pvp3_division7";
 	scm_rank_keys[RANK_PVP3_DIVISION8]                         = "s%u_rank_pvp3_division8";
 	scm_rank_keys[RANK_PVP3_DIVISION9]                         = "s%u_rank_pvp3_division9";
+	scm_rank_keys[RANK_ZHENYING_LEVEL_TOTAL]                   = "s%u_rank_zhenying_level_total";
+	scm_rank_keys[RANK_ZHENYING_LEVEL_ZHENYING1]               = "s%u_rank_zhenying_level_zhenying1";
+	scm_rank_keys[RANK_ZHENYING_LEVEL_ZHENYING2]               = "s%u_rank_zhenying_level_zhenying2";
+	scm_rank_keys[RANK_ZHENYING_EXPLOIT_TOATAL]                = "s%u_rank_zhenying_exploit_total";
+	scm_rank_keys[RANK_ZHENYING_EXPLOIT_ZHENYING1]             = "s%u_rank_zhenying_exploit_zhenying1";
+	scm_rank_keys[RANK_ZHENYING_EXPLOIT_ZHENYING2]             = "s%u_rank_zhenying_exploit_zhenying2";
+	scm_rank_keys[RANK_ZHENYING_KILL_TOTAL]                    = "s%u_rank_zhenying_kill_total";
+	scm_rank_keys[RANK_ZHENYING_KILL_ZHENYING1]                = "s%u_rank_zhenying_kill_zhenying1";
+	scm_rank_keys[RANK_ZHENYING_KILL_ZHENYING2]                = "s%u_rank_zhenying_kill_zhenying2";
+	scm_rank_keys[RANK_GUILD_FC_TOTAL]                         = "s%u_rank_guild_fc_total";
+	scm_rank_keys[RANK_GUILD_FC_ZHENYING1]                     = "s%u_rank_guild_fc_zhenying1";
+	scm_rank_keys[RANK_GUILD_FC_ZHENYING2]                     = "s%u_rank_guild_fc_zhenying2";
 }
 
 void init_redis_keys(uint32_t server_id)
 {
 	sprintf(sg_player_key, "server_%u", server_id);
+	sprintf(sg_guild_key, "s%u_guild", server_id);
+	sprintf(sg_reward_key, "s%u_rank_reward_time", server_id);
 	sprintf(cur_world_boss_key, "cur_world_boss_server_%u", server_id);
 	sprintf(befor_world_boss_key, "befor_world_boss_server_%u", server_id);
 	sprintf(tou_mu_world_boss_reward_num, "world_boss_tou_mu_reward_server_%u", server_id);
@@ -169,6 +206,88 @@ static char *get_rank_key(uint32_t rank_type)
 // 	std::vector<PlayerRedisInfo *> pointer_vec;
 // };
 
+class AutoReleaseBatchRedisGuild
+{
+public:
+	AutoReleaseBatchRedisGuild() {}
+	~AutoReleaseBatchRedisGuild()
+	{
+		for (std::vector<RedisGuildInfo*>::iterator iter = pointer_vec.begin(); iter != pointer_vec.end(); ++iter)
+		{
+			redis_guild_info__free_unpacked(*iter, NULL);
+		}
+	}
+
+	void push_back(RedisGuildInfo *guild)
+	{
+		pointer_vec.push_back(guild);
+	}
+private:
+	std::vector<RedisGuildInfo *> pointer_vec;
+};
+
+RedisGuildInfo *get_redis_guild(uint32_t guild_id, char *guild_key, CRedisClient &rc, AutoReleaseBatchRedisGuild &_pool)
+{
+	static uint8_t data_buffer[32 * 1024];
+	int data_len = sizeof(data_buffer);
+	char field[64];
+	sprintf(field, "%u", guild_id);
+	int ret = rc.hget_bin(guild_key, field, (char *)data_buffer, &data_len);
+	if (ret == 0)
+	{
+		RedisGuildInfo *ret = redis_guild_info__unpack(NULL, data_len, data_buffer);
+		if (ret)
+			_pool.push_back(ret);
+		return ret;
+	}
+
+	return NULL;
+}
+
+int get_more_redis_guild(std::set<uint32_t> &guild_ids, std::map<uint32_t, RedisGuildInfo*> &redis_guilds,
+	char *guild_key, CRedisClient &rc, AutoReleaseBatchRedisGuild &_pool)
+{
+	if (guild_ids.size() == 0)
+	{
+		return 0;
+	}
+
+	std::vector<std::relation_three<uint64_t, char*, int> > guild_infos;
+	for (std::set<uint32_t>::iterator iter = guild_ids.begin(); iter != guild_ids.end(); ++iter)
+	{
+		std::relation_three<uint64_t, char*, int> tmp(*iter, NULL, 0);
+		guild_infos.push_back(tmp);
+	}
+
+	int ret = rc.get(guild_key, guild_infos);
+	if (ret != 0)
+	{
+		LOG_ERR("[%s:%d] hmget failed, ret:%d", __FUNCTION__, __LINE__, ret);
+		return -1;
+	}
+
+	for (std::vector<std::relation_three<uint64_t, char*, int> >::iterator iter = guild_infos.begin(); iter != guild_infos.end(); ++iter)
+	{
+		RedisGuildInfo *redis_guild = redis_guild_info__unpack(NULL, iter->three, (uint8_t*)iter->second);
+		if (!redis_guild)
+		{
+			ret = -1;
+			LOG_ERR("[%s:%d] unpack redis failed, guild_id:%lu", __FUNCTION__, __LINE__, iter->first);
+			continue;
+		}
+
+		redis_guilds[iter->first] = redis_guild;
+		_pool.push_back(redis_guild);
+	}
+
+	for (std::vector<std::relation_three<uint64_t, char*, int> >::iterator iter = guild_infos.begin(); iter != guild_infos.end(); ++iter)
+	{
+		free(iter->second);
+	}
+
+	return ret;
+}
+
 conn_node_ranksrv::conn_node_ranksrv()
 {
 	max_buf_len = 1024 * 1024;
@@ -178,6 +297,8 @@ conn_node_ranksrv::conn_node_ranksrv()
 	add_msg_handle(SERVER_PROTO_REFRESH_PLAYER_REDIS_INFO, &conn_node_ranksrv::handle_refresh_player_info);
 	add_msg_handle(MSG_ID_RANK_INFO_REQUEST, &conn_node_ranksrv::handle_rank_info_request);
 	add_msg_handle(SERVER_PROTO_PLAYER_ONLINE_NOTIFY, &conn_node_ranksrv::handle_player_online_notify);
+	add_msg_handle(SERVER_PROTO_REFRESH_GUILD_REDIS_INFO, &conn_node_ranksrv::handle_refresh_guild_info);
+
 	add_msg_handle(SERVER_PROTO_WORLDBOSS_PLAYER_REDIS_INFO, &conn_node_ranksrv::handle_refresh_player_world_boss_info);
 	add_msg_handle(MSG_ID_WORLDBOSS_REAL_RANK_INFO_REQUEST, &conn_node_ranksrv::handle_world_boss_real_rank_info_request);
 	add_msg_handle(MSG_ID_WORLDBOSS_ZHUJIEMIAN_INFO_REQUEST, &conn_node_ranksrv::handle_world_boss_zhu_jiemian_info_request);
@@ -304,6 +425,15 @@ PlayerRedisInfo *find_redis_from_map(std::map<uint64_t, PlayerRedisInfo*> &redis
 	}
 	return NULL;
 }
+RedisGuildInfo *find_guild_from_map(std::map<uint32_t, RedisGuildInfo*> &redis_guilds, uint32_t guild_id)
+{
+	std::map<uint32_t, RedisGuildInfo*>::iterator iter = redis_guilds.find(guild_id);
+	if (iter != redis_guilds.end())
+	{
+		return iter->second;
+	}
+	return NULL;
+}
 
 static void copy_redis_guild_info(PlayerRedisInfo *dest, PlayerRedisInfo *src)
 {
@@ -357,6 +487,165 @@ void cb_clear_timeout(evutil_socket_t, short, void* /*arg*/)
 
 	add_timer(sg_clear_timer_val, &sg_clear_timer_event, NULL);
 }
+
+uint32_t get_reward_time_from_redis(void)
+{
+	std::string sTime = sg_redis_client.get(sg_reward_key);
+	if (sTime.length() > 0)
+	{
+		return strtoul(sTime.c_str(), NULL, 10);
+	}
+	return 0;
+}
+
+void set_reward_time_to_redis(uint32_t ts)
+{
+	char val[22];
+	sprintf(val, "%u", ts);
+	sg_redis_client.set(sg_reward_key, val);
+}
+
+time_t calcu_reward_timer(void)
+{
+	uint32_t now = time_helper::get_cached_time() / 1000;
+	time_t t = get_reward_time_from_redis();
+	uint32_t hour = sg_rank_reward_time / 100, min = sg_rank_reward_time % 100;
+	uint32_t interval = sg_rank_reward_interval * 24 * 3600;
+	if (t == 0)
+	{
+		t = time_helper::get_day_timestamp(hour, min, 0, now) + (sg_rank_reward_first_interval - 1) * 24 * 3600;
+	}
+	else if (now >= t)
+	{
+		if (now - t > interval)
+		{
+			t = time_helper::get_day_timestamp(hour, min, 0, now) + interval;
+		}
+		else
+		{
+			t += interval;
+		}
+	}
+
+	return t;
+}
+
+void set_reward_timer()
+{
+	uint32_t now = time_helper::get_cached_time() / 1000;
+	time_t next_ts = calcu_reward_timer();
+	set_reward_time_to_redis(next_ts);
+
+	sg_reward_timer_val.tv_sec = next_ts - now;
+	sg_reward_timer_event.ev_callback = cb_reward_timeout;
+	add_timer(sg_reward_timer_val, &sg_reward_timer_event, NULL);
+}
+
+void do_reward_job()
+{
+	LOG_INFO("[%s:%d] send rank reward mail", __FUNCTION__, __LINE__);
+	//发放奖励
+	uint32_t reward_rank = 0;
+	uint32_t rank_type = 0;
+	char*    rank_name = NULL;
+	char*    rank_key = NULL;
+	std::vector<std::pair<uint64_t, uint32_t> > rank_info;
+	std::map<uint32_t, uint32_t> attachs;
+	std::vector<char *> mail_args;
+	std::stringstream ss;
+	char sz_rank[12];
+	for (std::map<uint64_t, std::vector<struct RankingRewardTable *> >::iterator iter = rank_reward_map.begin(); iter != rank_reward_map.end(); ++iter)
+	{
+		reward_rank = 0;
+		rank_info.clear();
+		rank_type = iter->first;
+		rank_name = NULL;
+		rank_key  = NULL;
+		for (std::vector<RankingRewardTable*>::iterator iter_vec = iter->second.begin(); iter_vec != iter->second.end(); ++iter_vec)
+		{
+			RankingRewardTable *config = *iter_vec;
+			reward_rank = std::max(reward_rank, (uint32_t)config->RankEnd);
+			if (rank_name == NULL)
+			{
+				for (uint32_t i = 0; i < config->n_RankingTableId; ++i)
+				{
+					if (config->RankingTableId[i] == (uint64_t)rank_type)
+					{
+						rank_name = config->RankingTableIdName[i];
+						break;
+					}
+				}
+			}
+		}
+
+		rank_key = get_rank_key(rank_type);
+		if (!rank_key)
+		{
+			continue;
+		}
+
+		int ret2 = sg_redis_client.zget(rank_key, 0, reward_rank - 1, rank_info);
+		if (ret2 != 0)
+		{
+			continue;
+		}
+
+		mail_args.clear();
+		mail_args.push_back(rank_name);
+		mail_args.push_back(sz_rank);
+		for (std::vector<RankingRewardTable*>::iterator iter_vec = iter->second.begin(); iter_vec != iter->second.end(); ++iter_vec)
+		{
+			RankingRewardTable *config = *iter_vec;
+			attachs.clear();
+			for (uint32_t i = 0; i < config->n_Reward; ++i)
+			{
+				attachs[config->Reward[i]] += config->RewardNum[i];
+			}
+
+			for (uint64_t rank = config->RankStart; rank <= config->RankEnd; ++rank)
+			{
+				if (rank > rank_info.size())
+				{
+					break;
+				}
+
+				ss.str("");
+				ss.clear();
+				ss << rank;
+				ss >> sz_rank;
+				
+				send_mail(&conn_node_ranksrv::connecter, rank_info[rank - 1].first, 270100010, NULL, NULL, NULL, &mail_args, &attachs, MAGIC_TYPE_RANKING_REWARD);
+			}
+		}
+	}
+	
+	set_reward_timer();
+}
+
+void init_reward_timer(void)
+{
+	uint64_t now = time_helper::get_micro_time();
+	time_helper::set_cached_time(now / 1000);
+
+	uint32_t reward_ts = get_reward_time_from_redis();
+	if (reward_ts != 0 && reward_ts <= now / 1000000)
+	{
+		do_reward_job();
+	}
+	else
+	{
+		set_reward_timer();
+	}
+}
+
+void cb_reward_timeout(evutil_socket_t, short, void* /*arg*/)
+{
+	uint64_t now = time_helper::get_micro_time();
+	time_helper::set_cached_time(now / 1000);
+
+	do_reward_job();
+}
+
 
 static uint32_t get_player_rank(uint32_t rank_type, uint64_t player_id)
 {
@@ -422,6 +711,7 @@ static void sync_rank_change_to_game_srv(uint32_t rank_type, uint32_t prev_rank,
 	}
 }
 
+//更新玩家在排行榜中的分数
 static void update_player_rank_score(uint32_t rank_type, uint64_t player_id, uint32_t score_old, uint32_t score_new)
 {
 	char *rank_key = NULL;
@@ -438,6 +728,29 @@ static void update_player_rank_score(uint32_t rank_type, uint64_t player_id, uin
 	else
 	{
 		post_rank = get_player_rank(rank_type, player_id);
+		sync_rank_change_to_game_srv(rank_type, prev_rank, post_rank);
+	}
+}
+
+//将玩家从排行榜中删除
+static void del_player_rank(uint32_t rank_type, uint64_t player_id)
+{
+	char *rank_key = NULL;
+	uint32_t post_rank = 0xffffffff;
+	uint32_t prev_rank = 0xffffffff;
+	CRedisClient &rc = sg_redis_client;
+	rank_key = get_rank_key(rank_type);
+	prev_rank = get_player_rank(rank_type, player_id);
+	std::vector<uint64_t> dels;
+	dels.push_back(player_id);
+	int ret = rc.zdel(rank_key, dels);
+	if (ret != 0)
+	{
+		LOG_ERR("[%s:%d] del %s %lu failed", __FUNCTION__, __LINE__, rank_key, player_id);
+	}
+	else
+	{
+//		post_rank = get_player_rank(rank_type, player_id);
 		sync_rank_change_to_game_srv(rank_type, prev_rank, post_rank);
 	}
 }
@@ -462,11 +775,11 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 	char field[128];
 	sprintf(field, "%lu", extern_data->player_id);
 	uint32_t rank_type = 0;
-	char *rank_key = NULL;
-	int ret = 0;
+//	char *rank_key = NULL;
+//	int ret = 0;
 	uint64_t player_id = extern_data->player_id;
-	uint32_t post_rank = 0xffffffff;
-	uint32_t prev_rank = 0xffffffff;
+//	uint32_t post_rank = 0xffffffff;
+//	uint32_t prev_rank = 0xffffffff;
 
 	PlayerRedisInfo *redis_player = get_redis_player(extern_data->player_id, sg_player_key, sg_redis_client, arb_redis);
 	if (redis_player)
@@ -487,6 +800,10 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		uint32_t gold_bind = req->bind_gold;
 		uint32_t pvp3_division = req->pvp_division_3;
 		uint32_t pvp3_score = req->pvp_score_3;
+		uint32_t zhenying = req->zhenying;
+		uint32_t zhenying_level = req->zhenying_level;
+		uint32_t zhenying_kill = req->zhenying_kill;
+		uint32_t exploit = req->exploit;
 		
 		uint32_t old_level = 0;
 		uint32_t old_fc_total = 0;
@@ -497,6 +814,10 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		uint32_t old_gold_bind = 0;
 		uint32_t old_pvp3_division = 0;
 		uint32_t old_pvp3_score = 0;
+		uint32_t old_zhenying = 0;
+		uint32_t old_zhenying_level = 0;
+		uint32_t old_zhenying_kill = 0;
+		uint32_t old_exploit = 0;
 
 		if (redis_player)
 		{
@@ -512,6 +833,10 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 			old_gold_bind = redis_player->bind_gold;
 			old_pvp3_division = redis_player->pvp_division_3;
 			old_pvp3_score = redis_player->pvp_score_3;
+			old_zhenying = redis_player->zhenying;
+			old_zhenying_level = redis_player->zhenying_level;
+			old_zhenying_kill = redis_player->zhenying_kill;
+			old_exploit = redis_player->exploit;
 		}
 		else
 		{
@@ -541,6 +866,10 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 				toFriend->power = fc_total - old_fc_total;
 				toFriend->zhen_ying = req->zhenying;
 				fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_ZHENYING_CHANGE_POWER_REQUEST, sizeof(toFriend), 0);
+			}
+			if (req->guild_id > 0)
+			{
+				on_guild_player_fc_change(req->guild_id);
 			}
 		}
 
@@ -588,23 +917,64 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 				update_player_rank_score(rank_type, player_id, old_pvp3_score, pvp3_score);
 			}
 
-			if (pvp3_division != old_pvp3_division)
+			if (pvp3_division != old_pvp3_division && old_pvp3_division > 1)
 			{
 				rank_type = RANK_PVP3_DIVISION2 + old_pvp3_division - 2;
-				rank_key = get_rank_key(rank_type);
-				prev_rank = get_player_rank(rank_type, player_id);
-				std::vector<uint64_t> dels;
-				dels.push_back(player_id);
-				ret = rc.zdel(rank_key, dels);
-				if (ret != 0)
-				{
-					LOG_ERR("[%s:%d] del %s %lu failed, score:%u, old_score:%u", __FUNCTION__, __LINE__, rank_key, player_id, pvp3_score, old_pvp3_score);
-				}
-				else
-				{
-					post_rank = get_player_rank(rank_type, player_id);
-					sync_rank_change_to_game_srv(rank_type, prev_rank, post_rank);
-				}
+				del_player_rank(rank_type, player_id);
+			}
+		}
+
+		if (zhenying_level != old_zhenying_level || zhenying != old_zhenying)
+		{
+			if (zhenying > 0)
+			{
+				rank_type = RANK_ZHENYING_LEVEL_TOTAL;
+				update_player_rank_score(rank_type, player_id, old_zhenying_level, zhenying_level);
+
+				rank_type = RANK_ZHENYING_LEVEL_ZHENYING1 + zhenying - 1;
+				update_player_rank_score(rank_type, player_id, old_zhenying_level, zhenying_level);
+			}
+
+			if (zhenying != old_zhenying && old_zhenying > 0)
+			{
+				rank_type = RANK_ZHENYING_LEVEL_ZHENYING1 + old_zhenying - 1;
+				del_player_rank(rank_type, player_id);
+			}
+		}
+
+		if (exploit != old_exploit || zhenying != old_zhenying)
+		{
+			if (zhenying > 0)
+			{
+				rank_type = RANK_ZHENYING_EXPLOIT_TOATAL;
+				update_player_rank_score(rank_type, player_id, old_exploit, exploit);
+
+				rank_type = RANK_ZHENYING_EXPLOIT_ZHENYING1 + zhenying - 1;
+				update_player_rank_score(rank_type, player_id, old_exploit, exploit);
+			}
+
+			if (zhenying != old_zhenying && old_zhenying > 0)
+			{
+				rank_type = RANK_ZHENYING_EXPLOIT_ZHENYING1 + old_zhenying - 1;
+				del_player_rank(rank_type, player_id);
+			}
+		}
+
+		if (zhenying_kill != old_zhenying_kill || zhenying != old_zhenying)
+		{
+			if (zhenying > 0)
+			{
+				rank_type = RANK_ZHENYING_KILL_TOTAL;
+				update_player_rank_score(rank_type, player_id, old_zhenying_kill, zhenying_kill);
+
+				rank_type = RANK_ZHENYING_KILL_ZHENYING1 + zhenying - 1;
+				update_player_rank_score(rank_type, player_id, old_zhenying_kill, zhenying_kill);
+			}
+
+			if (zhenying != old_zhenying && old_zhenying > 0)
+			{
+				rank_type = RANK_ZHENYING_KILL_ZHENYING1 + old_zhenying - 1;
+				del_player_rank(rank_type, player_id);
 			}
 		}
 	}
@@ -680,6 +1050,9 @@ static void fill_rank_player(PlayerRedisInfo *redis, RankPlayerData *rank)
 	rank->baseinfo->attrs[rank->baseinfo->n_attrs]->id = PLAYER_ATTR_WEAPON;
 	rank->baseinfo->attrs[rank->baseinfo->n_attrs]->val = redis->weapon;
 	rank->baseinfo->n_attrs++;
+	rank->baseinfo->attrs[rank->baseinfo->n_attrs]->id = PLAYER_ATTR_ZHENYING;
+	rank->baseinfo->attrs[rank->baseinfo->n_attrs]->val = redis->zhenying;
+	rank->baseinfo->n_attrs++;
 
 	rank->baseinfo->tags = redis->tags;
 	rank->baseinfo->n_tags = redis->n_tags;
@@ -687,6 +1060,102 @@ static void fill_rank_player(PlayerRedisInfo *redis, RankPlayerData *rank)
 
 	rank->guildid = redis->guild_id;
 	rank->guildname = redis->guild_name;
+}
+
+static int handle_guild_rank_info(EXTERN_DATA *extern_data, uint32_t rank_type)
+{
+	int ret = 0;
+	std::vector<std::pair<uint64_t, uint32_t> > rank_info;
+	AutoReleaseBatchRedisPlayer t1;		
+	std::map<uint64_t, PlayerRedisInfo *> redis_players;
+	AutoReleaseBatchRedisGuild t2;		
+	std::map<uint32_t, RedisGuildInfo *> redis_guilds;
+	uint32_t my_rank = 0;
+	do
+	{
+		char *rank_key = get_rank_key(rank_type);
+		if (rank_key == NULL)
+		{
+			ret = ERROR_ID_RANK_TYPE;
+			LOG_ERR("[%s:%d] player[%lu] rank type, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
+			break;
+		}
+
+		int ret2 = sg_redis_client.zget(rank_key, 0, 99, rank_info);
+		if (ret2 != 0)
+		{
+			ret = ERROR_ID_RANK_REDIS;
+			LOG_ERR("[%s:%d] player[%lu] get rank failed, rank_type:%lu, rank_key:%s", __FUNCTION__, __LINE__, extern_data->player_id, rank_type, rank_key);
+			break;
+		}
+
+		std::set<uint32_t> guildIds;
+		for (size_t i = 0; i < rank_info.size(); ++i)
+		{
+			guildIds.insert(rank_info[i].first);
+		}
+
+		if (get_more_redis_guild(guildIds, redis_guilds, sg_guild_key, sg_redis_client, t2) != 0)
+		{
+			ret = ERROR_ID_RANK_REDIS;
+			LOG_ERR("[%s:%d] player[%lu] get guild failed, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
+			break;
+		}
+
+		std::set<uint64_t> playerIds;
+		for (std::map<uint32_t, RedisGuildInfo *>::iterator iter = redis_guilds.begin(); iter != redis_guilds.end(); ++iter)
+		{
+			playerIds.insert(iter->second->master_id);
+		}
+
+		if (get_more_redis_player(playerIds, redis_players, sg_player_key, sg_redis_client, t1) != 0)
+		{
+			ret = ERROR_ID_RANK_REDIS;
+			LOG_ERR("[%s:%d] player[%lu] get player failed, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
+			break;
+		}
+	} while(0);
+
+	RankInfoAnswer resp;
+	rank_info_answer__init(&resp);
+
+	RankGuildData  rank_data[MAX_RANK_GET_NUM];
+	RankGuildData* rank_point[MAX_RANK_GET_NUM];
+
+	resp.result = ret;
+	resp.type = rank_type;
+	resp.myrank = my_rank;
+	resp.guildranks = rank_point;
+	resp.n_guildranks = 0;
+	for (size_t i = 0; i < rank_info.size(); ++i)
+	{
+		uint32_t guild_id = rank_info[i].first;
+		uint32_t score = rank_info[i].second;
+
+		rank_point[resp.n_guildranks] = &rank_data[resp.n_guildranks];
+		rank_guild_data__init(&rank_data[resp.n_guildranks]);
+		rank_data[resp.n_guildranks].guildid = guild_id;
+
+		RedisGuildInfo *redis_guild = find_guild_from_map(redis_guilds, guild_id);
+		if (redis_guild)
+		{
+			rank_data[resp.n_guildranks].guildname = redis_guild->name;
+			rank_data[resp.n_guildranks].zhenying = redis_guild->zhenying;
+			rank_data[resp.n_guildranks].masterid = redis_guild->master_id;
+			PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, redis_guild->master_id);
+			if (redis_player)
+			{
+				rank_data[resp.n_guildranks].mastername = redis_player->name;
+			}
+		}
+
+		rank_data[resp.n_guildranks].ranknum = i + 1;
+		rank_data[resp.n_guildranks].score = score;
+		resp.n_guildranks++;
+	}
+
+	fast_send_msg(&conn_node_ranksrv::connecter, extern_data, MSG_ID_RANK_INFO_ANSWER, rank_info_answer__pack, resp);
+	return 0;
 }
 
 int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
@@ -701,11 +1170,16 @@ int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
 	uint64_t rank_type = req->type;
 	rank_info_request__free_unpacked(req, NULL);
 
+	if (rank_type / 100 == 10)
+	{
+		return handle_guild_rank_info(extern_data, rank_type);
+	}
+
 	int ret = 0;
 	std::vector<std::pair<uint64_t, uint32_t> > rank_info;
 	AutoReleaseBatchRedisPlayer t1;		
 	std::map<uint64_t, PlayerRedisInfo *> redis_players;
-	uint32_t my_rank = 0;
+	uint32_t my_rank = 0, my_score = 0;
 	do
 	{
 		char *rank_key = get_rank_key(rank_type);
@@ -756,6 +1230,8 @@ int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
 				}
 			}
 		}
+
+		sg_redis_client.zget_score(rank_key, extern_data->player_id, my_score);
 	} while(0);
 
 	RankInfoAnswer resp;
@@ -768,7 +1244,9 @@ int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
 	AttrData* attr_point[MAX_RANK_GET_NUM][MAX_RANK_ATTR_NUM];
 
 	resp.result = ret;
+	resp.type = rank_type;
 	resp.myrank = my_rank;
+	resp.myscore = my_score;
 	resp.infos = rank_point;
 	resp.n_infos = 0;
 	for (size_t i = 0; i < rank_info.size(); ++i)
@@ -840,6 +1318,200 @@ int conn_node_ranksrv::handle_player_online_notify(EXTERN_DATA *extern_data)
 		fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_RANK_SYNC_RANK, sizeof(PROTO_SYNC_RANK), 0);
 	} while(0);
 	
+	return 0;
+}
+
+//更新门宗在排行榜中的分数
+static void update_guild_rank_score(uint32_t rank_type, uint32_t guild_id, uint32_t score_old, uint32_t score_new)
+{
+	char *rank_key = NULL;
+	CRedisClient &rc = sg_redis_client;
+	rank_key = get_rank_key(rank_type);
+	int ret = rc.zset(rank_key, guild_id, score_new);
+	if (ret != 0)
+	{
+		LOG_ERR("[%s:%d] update %s %u failed, score_new:%u, score_old:%u", __FUNCTION__, __LINE__, rank_key, guild_id, score_new, score_old);
+	}
+}
+
+//将门宗从排行榜中删除
+static void del_guild_rank(uint32_t rank_type, uint32_t guild_id)
+{
+	char *rank_key = NULL;
+	CRedisClient &rc = sg_redis_client;
+	rank_key = get_rank_key(rank_type);
+	std::vector<uint64_t> dels;
+	dels.push_back(guild_id);
+	int ret = rc.zdel(rank_key, dels);
+	if (ret != 0)
+	{
+		LOG_ERR("[%s:%d] del %s %u failed", __FUNCTION__, __LINE__, rank_key, guild_id);
+	}
+}
+
+int conn_node_ranksrv::handle_refresh_guild_info(EXTERN_DATA *extern_data)
+{
+	AutoReleaseBatchRedisGuild t1;
+	RedisGuildInfo *req = redis_guild_info__unpack(NULL, get_data_len(), get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] unpack req failed", __FUNCTION__, __LINE__);
+		return -1;
+	}
+	t1.push_back(req);
+
+	LOG_INFO("[%s:%d] guild[%u]", __FUNCTION__, __LINE__, req->guild_id);
+
+	CRedisClient &rc = sg_redis_client;
+	char field[128];
+	sprintf(field, "%u", req->guild_id);
+	uint32_t rank_type = 0;
+	uint32_t guild_id = req->guild_id;
+	bool bDisband = !(req->master_id > 0 && req->n_member_ids > 0);
+
+	RedisGuildInfo *old_guild = get_redis_guild(guild_id, sg_guild_key, sg_redis_client, t1);
+
+	std::set<uint64_t> player_ids;
+	for (size_t i = 0; i < req->n_member_ids; ++i)
+	{
+		player_ids.insert(req->member_ids[i]);
+	}
+	std::map<uint64_t, PlayerRedisInfo *> redis_players;
+	AutoReleaseBatchRedisPlayer t2;
+	get_more_redis_player(player_ids, redis_players, sg_player_key, sg_redis_client, t2);
+
+	req->fc = 0;
+	for (std::map<uint64_t, PlayerRedisInfo *>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
+	{
+		req->fc += iter->second->fighting_capacity;
+	}
+
+	uint32_t zhenying = req->zhenying;
+	uint32_t fc = req->fc;
+
+	uint32_t old_fc = 0;
+
+	if (old_guild)
+	{
+		old_fc = old_guild->fc;
+	}
+
+	if (bDisband)
+	{ //门宗解散，从所有排行榜中删除
+		sprintf(field, "%u", guild_id);
+		int ret = rc.hdel(sg_guild_key, field);
+		if (ret != 0)
+		{
+			LOG_ERR("[%s:%d] del %s %s failed", __FUNCTION__, __LINE__, sg_guild_key, field);
+		}
+
+		rank_type = RANK_GUILD_FC_TOTAL;
+		del_guild_rank(rank_type, guild_id);
+		rank_type = RANK_GUILD_FC_ZHENYING1 + zhenying - 1;
+		del_guild_rank(rank_type, guild_id);
+	}
+	else
+	{
+		if (fc != old_fc)
+		{
+			rank_type = RANK_GUILD_FC_TOTAL;
+			update_guild_rank_score(rank_type, guild_id, old_fc, fc);
+
+			rank_type = RANK_GUILD_FC_ZHENYING1 + zhenying - 1;
+			update_guild_rank_score(rank_type, guild_id, old_fc, fc);
+		}
+
+		{
+			static uint8_t data_buffer[128 * 1024];
+			do
+			{
+				size_t data_len = redis_guild_info__pack(req, data_buffer);
+				if (data_len == (size_t)-1)
+				{
+					LOG_ERR("[%s:%d] pack redis guild failed, guild[%u]", __FUNCTION__, __LINE__, guild_id);
+					break;
+				}
+
+				sprintf(field, "%u", guild_id);
+				int ret = rc.hset_bin(sg_guild_key, field, (const char *)data_buffer, (int)data_len);
+				if (ret < 0)
+				{
+					LOG_ERR("[%s:%d] set redis guild failed, guild[%u] ret = %d", __FUNCTION__, __LINE__, guild_id, ret);
+					break;
+				}
+				LOG_DEBUG("[%s:%d] save guild[%u] len[%d] ret = %d", __FUNCTION__, __LINE__, guild_id, (int)data_len, ret);
+			} while(0);
+		}
+	}
+
+	return 0;
+}
+
+static int on_guild_player_fc_change(uint32_t guild_id)
+{
+	LOG_INFO("[%s:%d] guild[%u]", __FUNCTION__, __LINE__, guild_id);
+
+	CRedisClient &rc = sg_redis_client;
+	char field[128];
+	sprintf(field, "%u", guild_id);
+	uint32_t rank_type = 0;
+
+	AutoReleaseBatchRedisGuild t2;
+	RedisGuildInfo *old_guild = get_redis_guild(guild_id, sg_guild_key, sg_redis_client, t2);
+	if (!old_guild)
+	{
+		return 0;
+	}
+
+	uint32_t old_fc = old_guild->fc;
+	std::set<uint64_t> player_ids;
+	for (size_t i = 0; i < old_guild->n_member_ids; ++i)
+	{
+		player_ids.insert(old_guild->member_ids[i]);
+	}
+	std::map<uint64_t, PlayerRedisInfo *> redis_players;
+	AutoReleaseBatchRedisPlayer t1;
+	get_more_redis_player(player_ids, redis_players, sg_player_key, sg_redis_client, t1);
+
+	for (std::map<uint64_t, PlayerRedisInfo *>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
+	{
+		old_guild->fc += iter->second->fighting_capacity;
+	}
+
+	uint32_t fc = old_guild->fc;
+	uint32_t zhenying = old_guild->zhenying;
+
+	if (fc != old_fc)
+	{
+		rank_type = RANK_GUILD_FC_TOTAL;
+		update_guild_rank_score(rank_type, guild_id, old_fc, fc);
+
+		rank_type = RANK_GUILD_FC_ZHENYING1 + zhenying - 1;
+		update_guild_rank_score(rank_type, guild_id, old_fc, fc);
+	}
+
+	{
+		static uint8_t data_buffer[128 * 1024];
+		do
+		{
+			size_t data_len = redis_guild_info__pack(old_guild, data_buffer);
+			if (data_len == (size_t)-1)
+			{
+				LOG_ERR("[%s:%d] pack redis guild failed, guild[%u]", __FUNCTION__, __LINE__, guild_id);
+				break;
+			}
+
+			sprintf(field, "%u", guild_id);
+			int ret = rc.hset_bin(sg_guild_key, field, (const char *)data_buffer, (int)data_len);
+			if (ret < 0)
+			{
+				LOG_ERR("[%s:%d] set redis guild failed, guild[%u] ret = %d", __FUNCTION__, __LINE__, guild_id, ret);
+				break;
+			}
+			LOG_DEBUG("[%s:%d] save guild[%u] len[%d] ret = %d", __FUNCTION__, __LINE__, guild_id, (int)data_len, ret);
+		} while(0);
+	}
+
 	return 0;
 }
 

@@ -1,0 +1,52 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+message ShidamenzongRewardData
+{
+	required uint32 start_rank = 1; //起始名次
+	required uint32 stop_rank = 2; //结束名次
+	repeated uint32 master_reward_id = 3;
+	repeated uint32 master_reward_num = 4;
+	repeated uint32 mass_reward_id = 5;
+	repeated uint32 mass_reward_num = 6;
+}
+
+message GiveShidamenzongReward
+{
+	required uint32 activity_id = 1; //活动ID
+	repeated uint32 guild_ids = 2; //获得奖励的帮会ID
+	repeated ShidamenzongRewardData rewards = 3; //奖励内容
+}
+
+message DBActivityZhanlidarenReward
+{
+	required uint32 id = 1;
+	required uint32 num = 2;
+}
+
+message DBActivityZhanlidaren
+{
+	repeated DBActivityZhanlidarenReward gifts = 1;
+}
+
+message DBActivityShidamenzong
+{
+	required uint32 reward_time = 1; //发奖时间
+}
+
+message DBPlayerZhanlidaren
+{
+	repeated uint32 reward = 1; //已经领取过奖励的
+}
+
+message DBActivityDetail
+{
+	required uint32 activity_id = 1;
+	optional DBPlayerZhanlidaren zhanlidaren = 2;
+}
+
+message DBActivityPlayer
+{
+	repeated DBActivityDetail details = 1;
+}
+

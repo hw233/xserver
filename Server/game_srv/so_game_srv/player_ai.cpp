@@ -468,6 +468,11 @@ bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, pla
 					new_pos.pos_x = my_pos->pos_x;
 					new_pos.pos_z = my_pos->pos_z;		
 				}
+				else
+				{
+					new_pos.pos_x = his_pos->pos_x;
+					new_pos.pos_z = his_pos->pos_z;		
+				}
 			}
 		}
 		

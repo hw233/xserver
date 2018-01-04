@@ -45,7 +45,7 @@ private:
 	int handle_player_online_notify(EXTERN_DATA *extern_data);
 	int handle_check_and_cost_answer(EXTERN_DATA *extern_data);
 	int handle_gamesrv_reward_answer(EXTERN_DATA *extern_data);
-	int handle_add_guild_resrouce_request(EXTERN_DATA *extern_data);
+	int handle_add_guild_resource_request(EXTERN_DATA *extern_data);
 	int handle_disband_request(EXTERN_DATA *extern_data);
 	int handle_gamesrv_start(EXTERN_DATA *extern_data);
 
@@ -81,6 +81,10 @@ private:
 	int handle_guild_ruqin_creat_monster_level_request(EXTERN_DATA *extern_data);
 	int guild_ruqin_reward_info_notify(EXTERN_DATA *extern_data);
 	int guild_ruqin_boss_creat_notify(EXTERN_DATA *extern_data);
+
+	int handle_guild_donate_request(EXTERN_DATA *extern_data);
+
+	int handle_activity_shidamenzong_give_reward_request(EXTERN_DATA *extern_data);
 
 private:
 	HandleMap   m_handleMap;

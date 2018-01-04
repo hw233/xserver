@@ -3,6 +3,7 @@
 #include "conn_node_gamesrv.h"
 #include "conn_node_mail.h"
 #include "conn_node_rank.h"
+#include "conn_node_activity.h"
 #include "game_event.h"
 #include "flow_record.h"
 #include <assert.h>
@@ -86,11 +87,15 @@ int conn_node_guild::transfer_to_client()
 		case SERVER_PROTO_GUILD_SYNC_TASK:
 		case SERVER_PROTO_GUILD_RUQIN_ADD_COUNT:
 		case SERVER_PROTO_GUILD_RUQIN_SYNC_COUNT:
+		case SERVER_PROTO_GUILD_SYNC_DONATE:
 			return transfer_to_gamesrv();
 		case SERVER_PROTO_MAIL_INSERT:
 			return transfer_to_mailsrv();
 		case SERVER_PROTO_REFRESH_PLAYER_REDIS_INFO:
+		case SERVER_PROTO_REFRESH_GUILD_REDIS_INFO:
 			return transfer_to_ranksrv();
+		case SERVER_PROTO_ACTIVITY_SHIDAMENZONG_GIVE_REWARD_ANSWER:
+			return transfer_to_activitysrv();
 	}
 	
 	extern_data = get_extern_data(head);
@@ -186,6 +191,27 @@ int conn_node_guild::transfer_to_ranksrv()
 #ifdef FLOW_MONITOR
 	add_on_other_server_answer_msg(head);
 #endif
+done:	
+	return (ret);
+}
+
+int conn_node_guild::transfer_to_activitysrv()
+{
+	int ret = 0;
+	PROTO_HEAD *head;
+	head = (PROTO_HEAD *)buf_head();
+
+	if (!conn_node_activity::server_node) {
+		LOG_ERR("[%s:%d] do not have activity server connected", __FUNCTION__, __LINE__);
+		ret = -1;
+		goto done;
+	}
+
+	if (conn_node_activity::server_node->send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len)) {
+		LOG_ERR("[%s:%d] send to activity failed err[%d]", __FUNCTION__, __LINE__, errno);
+		ret = -2;
+		goto done;
+	}
 done:	
 	return (ret);
 }

@@ -47,8 +47,6 @@ enum
 #define MAX_COLLECT_IN_PLAYER_SIGHT 50
 #define MAX_PARTNER_IN_PLAYER_SIGHT 50
 
-static const int AWARD_QUESTION_ACTIVE_ID = 330100008;
-static const int COMMON_QUESTION_ACTIVE_ID = 330100020;
 
 struct ItemUseEffectInfo
 {
@@ -306,12 +304,17 @@ struct ShangJin
 
 struct ZhenYing 
 {
-	uint32_t level;
+	uint32_t level; //军阶
 	uint32_t exp;
 	uint32_t step;
 	uint32_t exp_day;//每天能获得的经验 
 	uint32_t free;//免费换阵营次数
 	uint32_t change_cd; //转换阵营CD 
+	uint64_t exploit;
+	uint64_t history_exploit;
+	bool daily_award;  //军阶每日奖励
+	bool daily_step;  //军阶每日奖励
+	uint32_t step_lv; //军阶
 
 	//周任务
 	uint32_t last_week;//上次更新时间
@@ -319,6 +322,7 @@ struct ZhenYing
 	uint32_t task;
 	uint32_t task_type;
 	uint32_t task_num;
+	uint32_t task_award_state;
 	
 	//战绩
 	uint32_t kill;
@@ -403,6 +407,7 @@ struct FightingCapacity
 	uint32_t partner;
 	uint32_t fashion;
 	uint32_t title;
+	uint32_t zhenying;
 	uint32_t get_total(void);
 };
 
@@ -535,7 +540,7 @@ struct PlayerOnlineReward
 	uint64_t sign_time; //登录时间
 	uint32_t befor_online_time; //当天本次登录前的总在线时间(不计算本次登录到目前的时间)
 	uint32_t use_reward_num; //今日已经领奖次数
-	//uint32_t reward_num; //当天本次登录前的达到要求未领取的剩余领奖次数
+	uint32_t reward_id_today[MAX_PLAYER_ONLINE_REWARD_NUM]; //今日的奖励表id
 	uint32_t reward_table_id[MAX_PLAYER_ONLINE_REWARD_NUM]; //已经领取的奖励表id
 	uint32_t reward_id;    //奖励表id(奖励在转完盘后给，所以先记录)
 };
@@ -558,6 +563,64 @@ struct SignInEveryDayData
 
 	//累计奖励
 	SignInEveryDayCumulative grand_reward[MAX_PLAYER_SINGN_EVERYDAY_REWARD_NUM]; //累计奖励领取状态
+};
+
+//活动奖励找回单个活动信息
+struct ActiveRewardZhaohuiInfo
+{
+	uint32_t id;  //奖励表id
+	uint32_t num; //可找回奖励次数
+	uint32_t normo_exp; //普通找回经验
+	uint32_t perfect_exp; //完美找回经验
+	uint32_t normo_coin; //普通找回银两
+	uint32_t perfect_coin; //完美找回银两
+	uint32_t normo_use;    //普通找回消耗银票数量
+	uint32_t perfect_use; //完美找回消耗金票数量
+};
+
+// TowerInfo
+struct TowerData
+{
+	uint32_t reset_num; //重置次数
+	uint32_t cur_lv; //当前层
+	uint32_t cur_num; //当前层次数
+	uint32_t top_lv; //最高层
+	uint32_t award_lv;
+};
+
+//摇钱树相关信息
+struct YaoQianShuAllData
+{
+	uint32_t sum_num;   //今日可摇总次数
+	uint32_t use_num;   //今日已经摇了多少次
+	uint32_t free_num;  //今日剩余免费次数
+	uint32_t next_need_money; //下一次摇需要消耗的元宝
+	uint32_t cur_jizhi_num; //当前机制数(其实就是获得两倍以上暴击后又摇了多少次)
+	uint32_t cur_suiji_zhong;  //当前的随机种子
+	uint32_t beilv_num;      //当 cur_jizhi_num == cur_suiji_zhong时能获得的暴击倍率
+};
+
+//登录奖励领取情况
+struct LoginReceiveInfo
+{
+	uint32_t id;    //奖励表id
+	uint32_t statu; //领取标记 0:不可领, 1:可领 2:已领
+};
+//登录奖励
+struct LoginRewardData
+{
+	bool open; //功能是否开启
+	bool receive_time; //是否在领取时间内
+	uint32_t open_time; //功能开启的时间点
+	uint32_t login_day; //当前是第几天
+	LoginReceiveInfo info[MAX_LOGIN_REWARD_RECEIVE_NUM]; //奖励领取情况
+};
+
+//赐福奖励信息
+struct CiFuRewardData
+{
+	uint32_t id; //赐福表id
+	uint64_t time; //上次领取时间
 };
 
 enum
@@ -754,6 +817,8 @@ struct player_data
 
 	//钓鱼
 	uint32_t fishing_bait_id; //钓鱼鱼饵ID
+	uint32_t fishing_reward_num; //钓鱼收益次数
+	bool     fishing_during; //钓鱼中，不存库
 
 	//我要变强
 	StrongGoalInfo    strong_goals[MAX_STRONG_GOAL_NUM];
@@ -775,6 +840,23 @@ struct player_data
 	
 	//每日签到奖励
 	SignInEveryDayData sigin_in_data;
+
+	//活动奖励找回
+	ActiveRewardZhaohuiInfo zhaohui_data[MAX_ACTIVE_CAN_ZHAOHUI_REWARD];
+
+	TowerData tower;
+
+	//摇钱树
+	YaoQianShuAllData yaoqian_data;
+
+	//登录奖励
+	LoginRewardData login_reward_info;
+
+	//功能开启
+	uint32_t function_open[MAX_GAME_FUNCTION_NUM];
+
+	//上次赐福奖励领取信息
+	CiFuRewardData ci_fu_reward[MAX_CIFU_REWARD_NUM];
 };
 
 struct ai_player_data
@@ -1123,6 +1205,7 @@ public:
 	int add_exp(uint32_t val, uint32_t statis_id, bool isNty = true);
 	int deal_level_up(uint32_t level_old, uint32_t level_new);
 	int get_total_exp(void);
+	uint32_t get_up_to_level_exp(uint32_t level); //角色从当前等级经验升级到指定等级所需经验值
 	int sub_exp(uint32_t val, uint32_t statis_id, bool isNty = true); //减少经验
 
 	double get_exp_rate(void);
@@ -1373,6 +1456,7 @@ public:
 	uint32_t get_partner_battle_num(void);
 
 	bool is_too_high_to_beattack();   //是否飞的太高不能被攻击
+	void calc_partner_pos(struct position *pos);
 
 	//好友
 	uint32_t get_friend_num(void);
@@ -1413,6 +1497,11 @@ public:
 	void strong_chapter_update_notify(StrongChapterInfo *info);
 	StrongChapterInfo *get_strong_chapter_info(uint32_t chapter_id);
 	void check_strong_chapter_open(uint32_t old_lv, uint32_t new_lv);
+	bool strong_function_open(void);
+
+	//钓鱼换装
+	void add_fishing_buff(void);
+	void del_fishing_buff(void);
 
 	//等级奖励
 	int init_player_level_reward_data();
@@ -1432,6 +1521,26 @@ public:
 	int refresh_player_signin_info_every_month(uint64_t befor_day_time);
 	//活跃度达到要求加补签次数
 	int player_huo_yue_du_add_sign_in_num(uint32_t befor_huoyue, uint32_t now_huoyue);
+
+	//活动奖励找回信息通知
+	int player_active_zhaohui_reward_info_notify();
+	int refresh_player_reward_back_info(uint64_t befor_time);
+
+	//摇钱树信息更新
+	void refresh_yao_qian_shu_data(uint64_t befor_time);
+	void player_yaoqian_shu_info_notify();
+
+	//玩家登录奖励信息
+	int init_player_login_reward_receive_data();
+	//登录奖励信息通知前端
+	int player_login_reward_info_notify();
+	int refresh_player_login_reward_info(uint64_t befor_time, bool up_level);
+
+	int open_function(std::vector<uint32_t> &func_ids);
+
+	//赐福奖励
+	int init_player_ci_fu_reward_receive_data();
+	int player_ci_fu_info_notify();
 
 	uint64_t last_change_area_time;
 	sight_space_struct *sight_space;
@@ -1459,7 +1568,8 @@ private:
 	
 	void calculate_lv2_attribute();
 	void calculate_lv3_attribute();
-	void calculate_lv4_attribute();			
+	void calculate_lv4_attribute();	
+	void calc_zhenying_attr(double *attr);
 	void use_hp_pool_add_hp();
 	void enter_fight_state();
 	void leave_fight_state();

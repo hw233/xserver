@@ -1,3 +1,5 @@
+delete from activity;
+delete from activity_player;
 delete from auction_bid;
 delete from auction_lot;
 delete from chengjie;

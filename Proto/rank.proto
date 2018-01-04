@@ -11,6 +11,18 @@ message RankPlayerData
 	required uint32 score = 7; //分数（根据排行榜类型不同，意义不同）
 }
 
+//排行榜帮会信息
+message RankGuildData
+{
+	required uint32 guildId = 1; //帮会ID
+	required string guildName = 2; //帮会名
+	required uint64 masterId = 3; //帮主ID
+	required string masterName = 4; //帮主名
+	required uint32 zhenying = 5; //帮会阵营
+	required uint32 rankNum = 6; //排名
+	required uint32 score = 7; //分数（根据排行榜类型不同，意义不同）
+}
+
 //排行榜信息请求
 message RankInfoRequest
 {
@@ -23,6 +35,9 @@ message RankInfoAnswer
 	required uint32 result = 1; //结果，0：成功，否则失败
 	repeated RankPlayerData infos = 2; //排行榜信息列表
 	required uint32 myRank = 3; //我的排名（0表示未上榜）
+	repeated RankGuildData guildRanks = 4; //帮会排行榜信息列表（帮会排行榜专用）
+	required uint32 myScore = 5; //我的分数
+	required uint32 type = 6; //排行榜类型
 }
 
 //世界boss玩家自己的排名信息(我的数据)

@@ -377,6 +377,7 @@ int conn_node_loginsrv::select_player_base_info(uint32_t open_id, size_t *n_play
 				attrs_id[*n_playerinfo].push_back(db_info->attr_id[i]);
 				attrs_val[*n_playerinfo].push_back(db_info->attr[i]);
 			}
+			playerinfo[*n_playerinfo]->pass_new_raid = db_info->noviceraid;
 		}
 		
 		playerinfo[*n_playerinfo]->name = &playerinfo_name[*n_playerinfo][0];

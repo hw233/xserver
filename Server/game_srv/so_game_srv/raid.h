@@ -11,6 +11,7 @@ struct raid_player_info
 	uint64_t player_id;
 	char name[MAX_PLAYER_NAME_LEN + 1];    //名字
 	uint32_t headicon;    //头像ID
+	uint32_t guild;
 	uint16_t lv;
 	uint8_t job;
 	uint32_t damage;
@@ -167,6 +168,11 @@ union raid_ai_data
 		uint32_t step;   //
 		uint32_t room;   //
 	} battle_data;
+	struct
+	{
+		uint32_t state;   //
+		uint64_t end;   //
+	} tower_data;
 
 	struct
 	{
@@ -368,7 +374,8 @@ public:
 	int calc_raid_star(uint32_t star_param[3], uint32_t score_param[3]);
 	virtual int broadcast_to_raid(uint32_t msg_id, void *msg_data, pack_func func);
 	int init_common_script_data(const char *script_name, struct raid_script_data *script_data);	
-	struct DungeonTable *get_raid_config();	
+	struct DungeonTable *get_raid_config();
+	player_struct *get_team_leader_player();
 	void stop_monster_ai();
 	void start_monster_ai();
 	void stop_player_ai();

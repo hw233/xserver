@@ -332,7 +332,7 @@ static void zhenying_raid_ai_monster_dead(raid_struct *raid, monster_struct *mon
 		{
 			pKill->add_task_progress(TCT_ZHENYING_SCORE, 0, tableDaily->MineralIntegral);
 
-			if (raid->data->ai_data.zhenying_data.progress == DAILY__MINE_STATE_REST)// && pKill->get_attr(PLAYER_ATTR_ZHENYING) == raid->data->ai_data.zhenying_data.camp % 10)
+			if (raid->data->ai_data.zhenying_data.progress == DAILY__MINE_STATE_REST && pKill->get_attr(PLAYER_ATTR_ZHENYING) == raid->data->ai_data.zhenying_data.camp % 10)
 			{
 				uint32_t old = raid->data->ai_data.zhenying_data.cur;
 			raid->data->ai_data.zhenying_data.cur += tableDaily->MineralIntegral;

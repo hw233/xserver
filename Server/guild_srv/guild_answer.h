@@ -19,10 +19,11 @@ struct GuildInfo;
 class GuildAnswer
 {
 public:
-	static const int MAX_GUILD_QUESTION_NUM = 20;
+	//static const int MAX_GUILD_QUESTION_NUM = 20;
 	static const int MAX_SEND_GUILD_QUESTION = 5;
-	void Start(GuildInfo *guild, uint32_t *arrQuestion, uint32_t num);
+	void Start(GuildInfo *guild);//, uint32_t *arrQuestion, uint32_t num);
 	void Answer(EXTERN_DATA *extern_data, char *answer, char *name);
+	void Award();
 
 	GuildAnswer();
 
@@ -42,8 +43,8 @@ public:
 protected:
 private:
 	int m_state;
-	uint32_t m_questionId[MAX_GUILD_QUESTION_NUM];
-	uint32_t m_questionNum;
+	uint32_t m_questionId;
+	//uint32_t m_questionNum;
 	uint32_t m_questionIndex;
 	GuildInfo *m_guild;
 	uint32_t m_freeOpen; //免费开启次数

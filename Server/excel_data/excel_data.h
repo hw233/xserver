@@ -1,6 +1,9 @@
 #ifndef _1_spb_H__
 #define _1_spb_H__
 
+#include <stdlib.h>
+#include <stdint.h>
+
 struct AchievementFunctionTable;
 struct AchievementHierarchyTable;
 struct ActiveSkillTable;
@@ -34,10 +37,12 @@ struct ChallengeTable;
 struct ChangeSpecialty;
 struct CharmTable;
 struct ChivalrousTable;
+struct CiFuTable;
 struct CollectTable;
 struct ColourTable;
 struct ControlTable;
 struct DegreeTable;
+struct DonationTable;
 struct DropConfigTable;
 struct DungeonTable;
 struct EquipAttribute;
@@ -69,6 +74,8 @@ struct LifeItemTable;
 struct LifeMagicTable;
 struct LifeProbabilitytable;
 struct LifeSkillTable;
+struct LimitActivityControlTable;
+struct LoginGifts;
 struct MGLYdiaoxiangTable;
 struct MGLYmaoguiTable;
 struct MGLYmaoguiwangTable;
@@ -84,10 +91,12 @@ struct MountsTable;
 struct NoticeTable;
 struct NpcTalkTable;
 struct OnlineTimes;
+struct P20076Table;
 struct ParameterTable;
 struct PartnerLevelTable;
 struct PartnerTable;
 struct PassiveSkillTable;
+struct PowerMasterTable;
 struct PulseTable;
 struct QuestionTable;
 struct RaidScriptTable;
@@ -95,7 +104,9 @@ struct RandomCardRewardTable;
 struct RandomCardTable;
 struct RandomDungeonTable;
 struct RandomMonsterTable;
+struct RankingRewardTable;
 struct RecruitTable;
+struct RewardBack;
 struct RewardTable;
 struct RobotPatrolTable;
 struct SceneCreateMonsterTable;
@@ -128,6 +139,7 @@ struct TaskRewardTable;
 struct TaskTable;
 struct TimeReward;
 struct TitleFunctionTable;
+struct Top10GangsTable;
 struct TradingTable;
 struct TransferPointTable;
 struct TravelTable;
@@ -140,6 +152,154 @@ struct WorldBossRewardTable;
 struct WorldBossTable;
 struct raidsrv_config;
 struct sproto_config_pos;
+void free_AchievementFunctionTable(struct AchievementFunctionTable *p);
+void free_AchievementHierarchyTable(struct AchievementHierarchyTable *p);
+void free_ActiveSkillTable(struct ActiveSkillTable *p);
+void free_ActiveTable(struct ActiveTable *p);
+void free_ActorAttributeTable(struct ActorAttributeTable *p);
+void free_ActorFashionTable(struct ActorFashionTable *p);
+void free_ActorHeadTable(struct ActorHeadTable *p);
+void free_ActorLevelTable(struct ActorLevelTable *p);
+void free_ActorRobotTable(struct ActorRobotTable *p);
+void free_ActorTable(struct ActorTable *p);
+void free_AcupunctureTable(struct AcupunctureTable *p);
+void free_ArenaRewardTable(struct ArenaRewardTable *p);
+void free_AttributeTypeTable(struct AttributeTypeTable *p);
+void free_AuctionTable(struct AuctionTable *p);
+void free_BaguaStarTable(struct BaguaStarTable *p);
+void free_BaguaSuitTable(struct BaguaSuitTable *p);
+void free_BaguaTable(struct BaguaTable *p);
+void free_BaguaViceAttributeTable(struct BaguaViceAttributeTable *p);
+void free_BaseAITable(struct BaseAITable *p);
+void free_BattleFieldRank(struct BattleFieldRank *p);
+void free_BattlefieldTable(struct BattlefieldTable *p);
+void free_BiaocheRewardTable(struct BiaocheRewardTable *p);
+void free_BiaocheTable(struct BiaocheTable *p);
+void free_BootNameTable(struct BootNameTable *p);
+void free_BreakTable(struct BreakTable *p);
+void free_BuffTable(struct BuffTable *p);
+void free_CampDefenseTable(struct CampDefenseTable *p);
+void free_CampTable(struct CampTable *p);
+void free_CastSpiritTable(struct CastSpiritTable *p);
+void free_ChallengeTable(struct ChallengeTable *p);
+void free_ChangeSpecialty(struct ChangeSpecialty *p);
+void free_CharmTable(struct CharmTable *p);
+void free_ChivalrousTable(struct ChivalrousTable *p);
+void free_CiFuTable(struct CiFuTable *p);
+void free_CollectTable(struct CollectTable *p);
+void free_ColourTable(struct ColourTable *p);
+void free_ControlTable(struct ControlTable *p);
+void free_DegreeTable(struct DegreeTable *p);
+void free_DonationTable(struct DonationTable *p);
+void free_DropConfigTable(struct DropConfigTable *p);
+void free_DungeonTable(struct DungeonTable *p);
+void free_EquipAttribute(struct EquipAttribute *p);
+void free_EquipLock(struct EquipLock *p);
+void free_EquipStarLv(struct EquipStarLv *p);
+void free_EquipmentTable(struct EquipmentTable *p);
+void free_EscortTask(struct EscortTask *p);
+void free_EventCalendarTable(struct EventCalendarTable *p);
+void free_FactionActivity(struct FactionActivity *p);
+void free_FactionBattleTable(struct FactionBattleTable *p);
+void free_FetterTable(struct FetterTable *p);
+void free_FishingTable(struct FishingTable *p);
+void free_FlySkillTable(struct FlySkillTable *p);
+void free_FunctionUnlockTable(struct FunctionUnlockTable *p);
+void free_GangsBuildTaskTable(struct GangsBuildTaskTable *p);
+void free_GangsDungeonTable(struct GangsDungeonTable *p);
+void free_GangsJurisdictionTable(struct GangsJurisdictionTable *p);
+void free_GangsSkillTable(struct GangsSkillTable *p);
+void free_GangsTable(struct GangsTable *p);
+void free_GemAttribute(struct GemAttribute *p);
+void free_GenerateMonster(struct GenerateMonster *p);
+void free_GiftTable(struct GiftTable *p);
+void free_GodYaoAttributeTable(struct GodYaoAttributeTable *p);
+void free_GradeTable(struct GradeTable *p);
+void free_GrowupTable(struct GrowupTable *p);
+void free_ItemsConfigTable(struct ItemsConfigTable *p);
+void free_LevelReward(struct LevelReward *p);
+void free_LifeItemTable(struct LifeItemTable *p);
+void free_LifeMagicTable(struct LifeMagicTable *p);
+void free_LifeProbabilitytable(struct LifeProbabilitytable *p);
+void free_LifeSkillTable(struct LifeSkillTable *p);
+void free_LimitActivityControlTable(struct LimitActivityControlTable *p);
+void free_LoginGifts(struct LoginGifts *p);
+void free_MGLYdiaoxiangTable(struct MGLYdiaoxiangTable *p);
+void free_MGLYmaoguiTable(struct MGLYmaoguiTable *p);
+void free_MGLYmaoguiwangTable(struct MGLYmaoguiwangTable *p);
+void free_MGLYshoulingTable(struct MGLYshoulingTable *p);
+void free_MGLYyanseTable(struct MGLYyanseTable *p);
+void free_MagicAttributeTable(struct MagicAttributeTable *p);
+void free_MagicTable(struct MagicTable *p);
+void free_MoneyQuestTable(struct MoneyQuestTable *p);
+void free_MonsterIDTable(struct MonsterIDTable *p);
+void free_MonsterPkTypeTable(struct MonsterPkTypeTable *p);
+void free_MonsterTable(struct MonsterTable *p);
+void free_MountsTable(struct MountsTable *p);
+void free_NoticeTable(struct NoticeTable *p);
+void free_NpcTalkTable(struct NpcTalkTable *p);
+void free_OnlineTimes(struct OnlineTimes *p);
+void free_P20076Table(struct P20076Table *p);
+void free_ParameterTable(struct ParameterTable *p);
+void free_PartnerLevelTable(struct PartnerLevelTable *p);
+void free_PartnerTable(struct PartnerTable *p);
+void free_PassiveSkillTable(struct PassiveSkillTable *p);
+void free_PowerMasterTable(struct PowerMasterTable *p);
+void free_PulseTable(struct PulseTable *p);
+void free_QuestionTable(struct QuestionTable *p);
+void free_RaidScriptTable(struct RaidScriptTable *p);
+void free_RandomCardRewardTable(struct RandomCardRewardTable *p);
+void free_RandomCardTable(struct RandomCardTable *p);
+void free_RandomDungeonTable(struct RandomDungeonTable *p);
+void free_RandomMonsterTable(struct RandomMonsterTable *p);
+void free_RankingRewardTable(struct RankingRewardTable *p);
+void free_RecruitTable(struct RecruitTable *p);
+void free_RewardBack(struct RewardBack *p);
+void free_RewardTable(struct RewardTable *p);
+void free_RobotPatrolTable(struct RobotPatrolTable *p);
+void free_SceneCreateMonsterTable(struct SceneCreateMonsterTable *p);
+void free_SceneResTable(struct SceneResTable *p);
+void free_ScriptTable(struct ScriptTable *p);
+void free_SearchTable(struct SearchTable *p);
+void free_ServerLevelTable(struct ServerLevelTable *p);
+void free_ServerResTable(struct ServerResTable *p);
+void free_ShopListTable(struct ShopListTable *p);
+void free_ShopTable(struct ShopTable *p);
+void free_SignDay(struct SignDay *p);
+void free_SignMonth(struct SignMonth *p);
+void free_SkillEffectTable(struct SkillEffectTable *p);
+void free_SkillLvTable(struct SkillLvTable *p);
+void free_SkillMoveTable(struct SkillMoveTable *p);
+void free_SkillTable(struct SkillTable *p);
+void free_SpecialTitleTable(struct SpecialTitleTable *p);
+void free_SpecialtyLevelTable(struct SpecialtyLevelTable *p);
+void free_SpecialtySkillTable(struct SpecialtySkillTable *p);
+void free_SpiritTable(struct SpiritTable *p);
+void free_StageTable(struct StageTable *p);
+void free_TargetInfoEntry(struct TargetInfoEntry *p);
+void free_TargetPos(struct TargetPos *p);
+void free_TaskChapterTable(struct TaskChapterTable *p);
+void free_TaskConditionTable(struct TaskConditionTable *p);
+void free_TaskDropTable(struct TaskDropTable *p);
+void free_TaskEventTable(struct TaskEventTable *p);
+void free_TaskMonsterTable(struct TaskMonsterTable *p);
+void free_TaskRewardTable(struct TaskRewardTable *p);
+void free_TaskTable(struct TaskTable *p);
+void free_TimeReward(struct TimeReward *p);
+void free_TitleFunctionTable(struct TitleFunctionTable *p);
+void free_Top10GangsTable(struct Top10GangsTable *p);
+void free_TradingTable(struct TradingTable *p);
+void free_TransferPointTable(struct TransferPointTable *p);
+void free_TravelTable(struct TravelTable *p);
+void free_TreasureTable(struct TreasureTable *p);
+void free_TypeLevelTable(struct TypeLevelTable *p);
+void free_UndergroundTask(struct UndergroundTask *p);
+void free_WeaponsEffectTable(struct WeaponsEffectTable *p);
+void free_WeekTable(struct WeekTable *p);
+void free_WorldBossRewardTable(struct WorldBossRewardTable *p);
+void free_WorldBossTable(struct WorldBossTable *p);
+void free_raidsrv_config(struct raidsrv_config *p);
+void free_sproto_config_pos(struct sproto_config_pos *p);
 struct AchievementFunctionTable
 {
 	uint64_t  ID; //1
@@ -662,7 +822,8 @@ struct BuffTable
 	uint64_t  DfPro; //8
 	uint64_t  TimeDelay; //9
 	uint64_t  CoverType; //10
-	uint64_t  DeleteType; //11
+	uint32_t n_DeleteType; //11
+	uint64_t *DeleteType; //11
 	uint64_t  IsDeBuff; //12
 	uint64_t  IsControl; //13
 }__attribute__ ((packed));
@@ -758,6 +919,14 @@ struct ChivalrousTable
 	uint64_t  MaxNum; //4
 }__attribute__ ((packed));
 
+struct CiFuTable
+{
+	uint64_t  ID; //1
+	uint64_t  ControlTable; //2
+	uint64_t  Type; //3
+	uint64_t  Vaule; //4
+}__attribute__ ((packed));
+
 struct CollectTable
 {
 	uint64_t  ID; //1
@@ -813,6 +982,19 @@ struct DegreeTable
 	uint64_t  Value; //3
 	uint32_t n_Function; //4
 	uint64_t *Function; //4
+}__attribute__ ((packed));
+
+struct DonationTable
+{
+	uint64_t  ID; //1
+	uint64_t  Type; //2
+	uint64_t  ConsumeType; //3
+	uint64_t  ConsumeValue; //4
+	uint32_t n_RewardType; //5
+	uint64_t *RewardType; //5
+	uint32_t n_RewardValue; //6
+	uint64_t *RewardValue; //6
+	uint64_t  RewardEffect; //7
 }__attribute__ ((packed));
 
 struct DropConfigTable
@@ -1059,6 +1241,7 @@ struct FishingTable
 	uint64_t  TimeMax; //4
 	uint64_t  Response; //5
 	uint64_t  Drop; //6
+	uint64_t  Drop1; //7
 }__attribute__ ((packed));
 
 struct FlySkillTable
@@ -1200,6 +1383,19 @@ struct GradeTable
 	uint64_t  ID; //1
 	uint64_t  LevelExp; //2
 	uint64_t  Level; //3
+	uint32_t n_AttributeType; //4
+	uint64_t *AttributeType; //4
+	uint32_t n_AttributeTypeValue; //5
+	uint64_t *AttributeTypeValue; //5
+	uint32_t n_DayReward; //6
+	uint64_t *DayReward; //6
+	uint32_t n_DayRewardNum; //7
+	uint64_t *DayRewardNum; //7
+	uint32_t n_BreachReward; //8
+	uint64_t *BreachReward; //8
+	uint32_t n_BreachRewardNum; //9
+	uint64_t *BreachRewardNum; //9
+	uint64_t  SmallLevel; //10
 }__attribute__ ((packed));
 
 struct GrowupTable
@@ -1326,6 +1522,28 @@ struct LifeSkillTable
 	uint64_t *ItemID; //14
 	uint64_t  NeedDonation; //15
 	uint64_t  NeedJingli; //16
+}__attribute__ ((packed));
+
+struct LimitActivityControlTable
+{
+	uint64_t  ID; //1
+	uint64_t  Activity; //2
+	uint64_t  OpenType; //3
+	uint64_t  ContinuedOpenTime; //4
+	uint64_t  ContinuedTime; //5
+	uint64_t  Batch; //6
+}__attribute__ ((packed));
+
+struct LoginGifts
+{
+	uint64_t  ID; //1
+	uint64_t  LoginDays; //2
+	uint64_t  RewardsType; //3
+	uint32_t n_lRewards; //4
+	uint64_t *lRewards; //4
+	uint32_t n_Quantity; //5
+	uint64_t *Quantity; //5
+	uint64_t  Time; //6
 }__attribute__ ((packed));
 
 struct MGLYdiaoxiangTable
@@ -1543,6 +1761,30 @@ struct OnlineTimes
 	uint64_t  Times; //2
 }__attribute__ ((packed));
 
+struct P20076Table
+{
+	uint64_t  ID; //1
+	uint32_t n_MonsterID; //2
+	uint64_t *MonsterID; //2
+	uint32_t n_MonsterNum; //3
+	uint64_t *MonsterNum; //3
+	uint64_t  BirthPointX; //4
+	uint64_t  BirthPointZ; //5
+	uint64_t  BirthRange; //6
+	uint32_t n_Reward1; //7
+	uint64_t *Reward1; //7
+	uint32_t n_RewardNum1; //8
+	uint64_t *RewardNum1; //8
+	uint32_t n_Reward2; //9
+	uint64_t *Reward2; //9
+	uint32_t n_RewardNum2; //10
+	uint64_t *RewardNum2; //10
+	uint64_t  ExpReward; //11
+	uint64_t  MoneyReward; //12
+	uint32_t n_MonsterLevel; //13
+	uint64_t *MonsterLevel; //13
+}__attribute__ ((packed));
+
 struct ParameterTable
 {
 	uint64_t  ID; //1
@@ -1623,6 +1865,18 @@ struct PassiveSkillTable
 	uint64_t  NeedNum; //3
 }__attribute__ ((packed));
 
+struct PowerMasterTable
+{
+	uint64_t  ID; //1
+	uint64_t  PowerCondition; //2
+	uint64_t  RewardLimit; //3
+	uint32_t n_Reward; //4
+	uint64_t *Reward; //4
+	uint32_t n_RewardNum; //5
+	uint64_t *RewardNum; //5
+	uint64_t  Batch; //6
+}__attribute__ ((packed));
+
 struct PulseTable
 {
 	uint64_t  ID; //1
@@ -1701,6 +1955,21 @@ struct RandomMonsterTable
 	uint64_t  MoneyReward; //10
 }__attribute__ ((packed));
 
+struct RankingRewardTable
+{
+	uint64_t  ID; //1
+	uint64_t  RankStart; //2
+	uint64_t  RankEnd; //3
+	uint32_t n_Reward; //4
+	uint64_t *Reward; //4
+	uint32_t n_RewardNum; //5
+	uint64_t *RewardNum; //5
+	uint32_t n_RankingTableId; //6
+	uint64_t *RankingTableId; //6
+	uint32_t n_RankingTableIdName; //7
+	char **RankingTableIdName; //7
+}__attribute__ ((packed));
+
 struct RecruitTable
 {
 	uint64_t  ID; //1
@@ -1728,6 +1997,21 @@ struct RecruitTable
 	uint32_t n_ItemNum; //15
 	uint64_t *ItemNum; //15
 	uint64_t  First; //16
+}__attribute__ ((packed));
+
+struct RewardBack
+{
+	uint64_t  ID; //1
+	uint64_t  Type; //2
+	uint32_t n_Value; //3
+	uint64_t *Value; //3
+	uint64_t  Level; //4
+	uint64_t  ExpReward; //5
+	uint64_t  MoneyReward; //6
+	uint64_t  Normal; //7
+	uint64_t  NormalExpend; //8
+	uint64_t  Perfect; //9
+	uint64_t  PerfectExpend; //10
 }__attribute__ ((packed));
 
 struct RewardTable
@@ -2130,7 +2414,7 @@ struct TaskTable
 struct TimeReward
 {
 	uint64_t  ID; //1
-	uint64_t  Type; //2
+	uint64_t  Position; //2
 	uint64_t  ItemID; //3
 	uint64_t  ItemValue; //4
 	uint64_t  Probability; //5
@@ -2151,6 +2435,22 @@ struct TitleFunctionTable
 	uint64_t  Continued; //9
 	uint64_t  Value2; //10
 	uint64_t  NoticeID; //11
+}__attribute__ ((packed));
+
+struct Top10GangsTable
+{
+	uint64_t  ID; //1
+	uint64_t  RewardStartID; //2
+	uint64_t  RewardEndID; //3
+	uint32_t n_Reward1; //4
+	uint64_t *Reward1; //4
+	uint32_t n_RewardNum1; //5
+	uint64_t *RewardNum1; //5
+	uint32_t n_Reward2; //6
+	uint64_t *Reward2; //6
+	uint32_t n_RewardNum2; //7
+	uint64_t *RewardNum2; //7
+	uint64_t  Batch; //8
 }__attribute__ ((packed));
 
 struct TradingTable

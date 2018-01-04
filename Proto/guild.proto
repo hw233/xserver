@@ -73,6 +73,7 @@ message GuildPersonalData
 	required uint32 exitTime = 8; //退帮时间
 	required uint32 taskAmount = 9; //建设任务总数
 	required uint32 curTaskId = 10; //当前建设任务
+	required uint32 donateCount = 11; //捐献次数（已使用）
 }
 
 //帮会建筑信息
@@ -158,6 +159,7 @@ enum GuildAttrType
 	ATTR_TASK_COUNT = 11; //建设任务当前已做
 	ATTR_TASK_AMOUNT = 12; //建设任务总数
 	ATTR_CUR_TASK = 13; //当前建设任务
+	ATTR_DONATE_COUNT = 14; //捐献次数
 }
 
 //帮会字符属性类型
@@ -517,3 +519,17 @@ message GuildRuqinBossCreatNotify
 {
 	required uint32 guild_id = 1; //帮会id
 }
+
+//帮会捐献请求
+message GuildDonateRequest
+{
+	required uint32 type = 1; //捐献类型，1：慷慨解囊 2：仗义输出 3：倾囊相授
+}
+
+//帮会捐献应答
+message GuildDonateAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 type = 2; //捐献类型，1：慷慨解囊 2：仗义输出 3：倾囊相授
+}
+

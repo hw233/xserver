@@ -348,6 +348,7 @@ void cash_truck_struct::on_dead(unit_struct *killer)
 
 void cash_truck_struct::on_beattack(unit_struct *player, uint32_t skill_id, int32_t damage)
 {
+	unit_struct::on_beattack(player, skill_id, damage);	
 	player_struct *pOwner = player_manager::get_player_by_id(data->owner);
 	if (pOwner == NULL)
 	{

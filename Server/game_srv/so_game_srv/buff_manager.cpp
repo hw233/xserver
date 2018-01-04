@@ -191,9 +191,30 @@ buff_struct *buff_manager::create_buff(uint64_t id, uint64_t end_time, unit_stru
 	LOG_DEBUG("%s: unit[%lu] add buff[%lu]", __FUNCTION__, owner->get_uuid(), id);
 
 	buff_struct *ret;
-	ret = owner->try_cover_duplicate_buff(config, end_time, attack);
+	uint32_t old_id;
+	ret = owner->try_cover_duplicate_buff(config, end_time, attack, &old_id);
 	if (ret)
+	{
+		if (notify)
+		{
+			if (old_id != id)
+			{
+				AddBuffNotify notify;
+				add_buff_notify__init(&notify);
+				notify.buff_id = id;
+				notify.playerid = owner->get_uuid();
+				owner->broadcast_to_sight(MSG_ID_DEL_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
+			}
+			AddBuffNotify notify;
+			add_buff_notify__init(&notify);
+			notify.buff_id = id;
+			notify.start_time = ret->data->start_time / 1000;
+			notify.end_time = ret->data->end_time / 1000;		
+			notify.playerid = owner->get_uuid();
+			owner->broadcast_to_sight(MSG_ID_ADD_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
+		}
 		return ret;
+	}
 
 	int buff_pos = owner->get_free_buff_pos();
 	if (buff_pos < 0)
@@ -228,7 +249,7 @@ buff_struct *buff_manager::create_buff(uint64_t id, uint64_t end_time, unit_stru
 		add_buff_notify__init(&notify);
 		notify.buff_id = id;
 		notify.start_time = ret->data->start_time / 1000;
-//		notify.end_time = ret->data->end_time / 1000;		
+		notify.end_time = ret->data->end_time / 1000;		
 		notify.playerid = owner->get_uuid();
 		owner->broadcast_to_sight(MSG_ID_ADD_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
 	}
@@ -348,72 +369,83 @@ int buff_manager::load_item_buff(player_struct *player, ItemBuff *db_item_buff)
 			LOG_ERR("%s: player[%lu] alloc buff[%u] failed", __FUNCTION__, player->get_uuid(), db_item_buff->id);
 			return (-1);
 		}
+
 		struct BuffTable *config = get_config_by_id(db_item_buff->id, &buff_config);
 		if (!config)
 		{
 			LOG_ERR("%s: player[%lu] get config  buff[%u] failed", __FUNCTION__, player->get_uuid(), db_item_buff->id);
 			return (-10);			
 		}
-		player->m_buffs[i]->config = config;
-		struct SkillEffectTable *effect_config;
-		if (config->n_EffectID > 0)
+		
+		if (player->m_buffs[i]->init_buff(config, db_item_buff->end_time, player, player) != 0)
 		{
-			effect_config = get_config_by_id(config->EffectID[0], &skill_effect_config);
-			assert(effect_config);
-			player->m_buffs[i]->effect_config = effect_config;
+			delete_buff(player->m_buffs[i]);
+			LOG_ERR("%s: player[%lu] init buff[%u] failed", __FUNCTION__, player->get_uuid(), db_item_buff->id);		
+			return -11;
 		}
-		else
-		{
-			LOG_ERR("%s: buff[%lu] config err", __FUNCTION__, config->ID);
-			return (-20);
-		}
+		player->m_buffs[i]->data->start_time = db_item_buff->end_time - config->Time;
+		LOG_DEBUG("%s: player[%lu] load buff %u starttime[%lu] endtime[%lu]", __FUNCTION__, player->get_uuid(),
+			db_item_buff->id, player->m_buffs[i]->data->start_time, db_item_buff->end_time);
+// 		player->m_buffs[i]->config = config;
+// 		struct SkillEffectTable *effect_config;
+// 		if (config->n_EffectID > 0)
+// 		{
+// 			effect_config = get_config_by_id(config->EffectID[0], &skill_effect_config);
+// 			assert(effect_config);
+// 			player->m_buffs[i]->effect_config = effect_config;
+// 		}
+// 		else
+// 		{
+// 			LOG_ERR("%s: buff[%lu] config err", __FUNCTION__, config->ID);
+// 			return (-20);
+// 		}
 
 		
-		player->m_buffs[i]->data->buff_id = config->ID;
-		player->m_buffs[i]->data->owner = player->get_uuid();
-		player->m_buffs[i]->m_owner = player;
-		player->m_buffs[i]->data->attacker = player->m_buffs[i]->data->owner;
-//		player->m_buffs[i]->m_attacker = player;
+// 		player->m_buffs[i]->data->buff_id = config->ID;
+// 		player->m_buffs[i]->data->owner = player->get_uuid();
+// 		player->m_buffs[i]->m_owner = player;
+// 		player->m_buffs[i]->data->attacker = player->m_buffs[i]->data->owner;
+// //		player->m_buffs[i]->m_attacker = player;
 		
-		player->m_buffs[i]->data->start_time = time_helper::get_cached_time();
-		player->m_buffs[i]->data->end_time = db_item_buff->end_time;
-		assert(player->m_buffs[i]->is_recoverable_buff());
-//		assert(effect_config->Type == 170000008 || effect_config->Type == 170000018 || effect_config->Type == 170000029);
+// 		player->m_buffs[i]->data->start_time = time_helper::get_cached_time();
+// 		player->m_buffs[i]->data->end_time = db_item_buff->end_time;
+// 		assert(player->m_buffs[i]->is_recoverable_buff());
+// //		assert(effect_config->Type == 170000008 || effect_config->Type == 170000018 || effect_config->Type == 170000029);
 		
-		switch (effect_config->Type)
-		{
-			case 170000029:
-				player->m_buffs[i]->data->effect.buff_state.state = db_item_buff->buff_state;
-				player->buff_state |= player->m_buffs[i]->data->effect.buff_state.state;
-				break;
-			case 170000018:
-				break;
-			case 170000008:
-			{
-				double *attr = player->get_all_attr();
-				double *fight_attr = player->get_all_buff_fight_attr();
-				assert(attr && fight_attr);
-				player->m_buffs[i]->data->effect.attr_effect.attr_id = effect_config->Effect[0];
-				double base_attr = attr[effect_config->Effect[0]];
-				player->m_buffs[i]->data->effect.attr_effect.added_attr_value = 
-					base_attr * ((int64_t)(effect_config->EffectAdd[0]) / 10000.0) +
-						(int64_t)(effect_config->EffectNum[0]);
+// 		switch (effect_config->Type)
+// 		{
+// 			case 170000029:
+// 				player->m_buffs[i]->data->effect.buff_state.state = db_item_buff->buff_state;
+// 				player->buff_state |= player->m_buffs[i]->data->effect.buff_state.state;
+// 				break;
+// 			case 170000018:
+// 				break;
+// 			case 170000008:
+// 			{
+// 				double *attr = player->get_all_attr();
+// 				double *fight_attr = player->get_all_buff_fight_attr();
+// 				assert(attr && fight_attr);
+// 				player->m_buffs[i]->data->effect.attr_effect.attr_id = effect_config->Effect[0];
+// 				double base_attr = attr[effect_config->Effect[0]];
+// 				player->m_buffs[i]->data->effect.attr_effect.added_attr_value = 
+// 					base_attr * ((int64_t)(effect_config->EffectAdd[0]) / 10000.0) +
+// 						(int64_t)(effect_config->EffectNum[0]);
 
-				assert(MAX_BUFF_FIGHT_ATTR > effect_config->Effect[0]);
+// 				assert(MAX_BUFF_FIGHT_ATTR > effect_config->Effect[0]);
 
-				fight_attr[effect_config->Effect[0]] += player->m_buffs[i]->data->effect.attr_effect.added_attr_value;
+// 				fight_attr[effect_config->Effect[0]] += player->m_buffs[i]->data->effect.attr_effect.added_attr_value;
 
-				LOG_DEBUG("%s: player[%lu] add buff[%lu] attr[%lu] delta[%.1f] to[%.1f]",
-					__FUNCTION__, player->get_uuid(), config->ID, effect_config->Effect[0],
-					player->m_buffs[i]->data->effect.attr_effect.added_attr_value, fight_attr[effect_config->Effect[0]]);
-			}
-			break;
-			default:
-				assert(0);
-				exit(0);				
-		}
-		break;
-	}
+// 				LOG_DEBUG("%s: player[%lu] add buff[%lu] attr[%lu] delta[%.1f] to[%.1f]",
+// 					__FUNCTION__, player->get_uuid(), config->ID, effect_config->Effect[0],
+// 					player->m_buffs[i]->data->effect.attr_effect.added_attr_value, fight_attr[effect_config->Effect[0]]);
+// 			}
+// 			break;
+// 			default:
+// 				assert(0);
+// 				exit(0);				
+// 		}
+ 		break;
+ 	}
 	return (0);
 }
 

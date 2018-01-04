@@ -5,7 +5,8 @@ local FishingTable = {
 		['TimeMin'] = 2,	--最短时间
 		['TimeMax'] = 8,	--最长时间
 		['Response'] = 3,	--有效时间
-		['Drop'] = 220100241	--钓鱼掉落
+		['Drop'] = 220100241,	--奖励掉落
+		['Drop1'] = 220100241	--基础掉落
 		},
 	[440400002] = {
 		['ID'] = 440400002,
@@ -13,7 +14,8 @@ local FishingTable = {
 		['TimeMin'] = 2,
 		['TimeMax'] = 8,
 		['Response'] = 3,
-		['Drop'] = 220100242
+		['Drop'] = 220100242,
+		['Drop1'] = 220100241
 		},
 	[440400003] = {
 		['ID'] = 440400003,
@@ -21,7 +23,8 @@ local FishingTable = {
 		['TimeMin'] = 2,
 		['TimeMax'] = 8,
 		['Response'] = 2,
-		['Drop'] = 220100243
+		['Drop'] = 220100243,
+		['Drop1'] = 220100241
 		},
 	[440400004] = {
 		['ID'] = 440400004,
@@ -29,7 +32,8 @@ local FishingTable = {
 		['TimeMin'] = 2,
 		['TimeMax'] = 8,
 		['Response'] = 2,
-		['Drop'] = 220100244
+		['Drop'] = 220100244,
+		['Drop1'] = 220100241
 		},
 	[440400005] = {
 		['ID'] = 440400005,
@@ -37,7 +41,8 @@ local FishingTable = {
 		['TimeMin'] = 2,
 		['TimeMax'] = 8,
 		['Response'] = 1,
-		['Drop'] = 220100245
+		['Drop'] = 220100245,
+		['Drop1'] = 220100241
 		},
 	[440400006] = {
 		['ID'] = 440400006,
@@ -45,7 +50,8 @@ local FishingTable = {
 		['TimeMin'] = 2,
 		['TimeMax'] = 8,
 		['Response'] = 1,
-		['Drop'] = 220100245
+		['Drop'] = 220100245,
+		['Drop1'] = 220100241
 		}
 	}
 return FishingTable

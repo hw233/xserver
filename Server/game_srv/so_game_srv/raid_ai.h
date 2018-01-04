@@ -20,4 +20,5 @@ extern struct raid_ai_interface raid_ai_doufachang_interface;
 extern struct raid_ai_interface raid_ai_battle_interface;
 extern struct raid_ai_interface raid_ai_guild_intrusion_interface;
 extern struct raid_ai_interface raid_ai_maogui_interface;
+extern struct raid_ai_interface raid_ai_tower_interface;
 #endif 

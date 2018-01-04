@@ -66,6 +66,9 @@ cd ../trade_srv
 #cd ../raid_srv
 #./raid_srv -d
 
+cd ../activity_srv
+./activity_srv -d
+
 cd ..
 ./show_all_pid.sh 
 ./check_srv_alive.sh

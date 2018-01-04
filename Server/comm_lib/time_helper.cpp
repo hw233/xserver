@@ -36,6 +36,8 @@ unsigned time_helper::get_day_timestamp(unsigned hour, unsigned minute, unsigned
 		now = tv.tv_sec;
 	}
 
+	now -= timezone;
+
 	return (now / (3600 * 24) * 3600 * 24) + (hour*3600+minute*60+second) + timezone;	
 }
 
@@ -283,6 +285,8 @@ unsigned time_helper::get_timestamp_by_day(int hour, int minute, time_t now )
 		now = tv.tv_sec;
 	}
 
+	now -= timezone;
+
 	return (now / (3600 * 24) * 3600 * 24) + (hour*3600+minute*60) + timezone;
 //	tm now_tm;
 //	localtime_r(&now, &now_tm);
@@ -393,7 +397,7 @@ int time_helper::timezone_offset(void)
 	return (timezone);
 }
 
-bool time_helper::is_same_day(unsigned int t1, unsigned int t2/*=0*/)
+bool time_helper::is_same_day(unsigned int t1, unsigned int t2, unsigned int offset)
 {
 	if (t2 == 0)
 	{
@@ -403,6 +407,8 @@ bool time_helper::is_same_day(unsigned int t1, unsigned int t2/*=0*/)
 	}
 	t1 -= timezone;
 	t2 -= timezone;
+	t1 -= offset;
+	t2 -= offset;	
 	return (t1 / 3600 / 24) == (t2 / 3600 / 24);
 }
 

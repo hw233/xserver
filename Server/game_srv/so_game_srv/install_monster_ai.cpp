@@ -37,7 +37,7 @@
 // 30=阵营战镖车
 // 31=猫鬼乐园召唤怪首领
 // 32=60%血的时候休息一下，说句话
-
+// 33=跟随玩家
 void install_monster_ai()
 {
 	monster_struct::add_ai_interface(AI_TYPE_NORMAL, &monster_ai_normal_interface);
@@ -70,7 +70,8 @@ void install_monster_ai()
 	monster_struct::add_ai_interface(29, &monster_ai_29_interface);		
 	monster_struct::add_ai_interface(30, &monster_ai_30_interface);
 	monster_struct::add_ai_interface(31, &monster_ai_31_interface);
-	monster_struct::add_ai_interface(32, &monster_ai_32_interface);	
+	monster_struct::add_ai_interface(32, &monster_ai_32_interface);
+	monster_struct::add_ai_interface(33, &monster_ai_33_interface);		
 }
 void uninstall_monster_ai()
 {

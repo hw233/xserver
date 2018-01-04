@@ -6,7 +6,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,	--装备所属部位
 		['EquipmentQuality'] = 1,	--装备品质
 		['AttriEquipType'] = 3,	--属性类型
-		['AttriEquipValue'] = 30,	--属性值
+		['AttriEquipValue'] = 26,	--属性值
 		['StarLvID'] = 261010001	--星级表ID
 		},
 	[262101011] = {
@@ -16,7 +16,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 55,
+		['AttriEquipValue'] = 48,
 		['StarLvID'] = 261010002
 		},
 	[262101012] = {
@@ -26,7 +26,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 80,
+		['AttriEquipValue'] = 70,
 		['StarLvID'] = 261010003
 		},
 	[262101013] = {
@@ -36,7 +36,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 105,
+		['AttriEquipValue'] = 93,
 		['StarLvID'] = 261010004
 		},
 	[262101014] = {
@@ -46,7 +46,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 130,
+		['AttriEquipValue'] = 115,
 		['StarLvID'] = 261010005
 		},
 	[262101015] = {
@@ -56,7 +56,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 155,
+		['AttriEquipValue'] = 137,
 		['StarLvID'] = 261010006
 		},
 	[262101016] = {
@@ -66,7 +66,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 180,
+		['AttriEquipValue'] = 160,
 		['StarLvID'] = 261010007
 		},
 	[262101020] = {
@@ -76,7 +76,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 214,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261010008
 		},
 	[262101021] = {
@@ -86,7 +86,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 248,
+		['AttriEquipValue'] = 195,
 		['StarLvID'] = 261010009
 		},
 	[262101022] = {
@@ -96,7 +96,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 282,
+		['AttriEquipValue'] = 220,
 		['StarLvID'] = 261010010
 		},
 	[262101023] = {
@@ -106,7 +106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 317,
+		['AttriEquipValue'] = 245,
 		['StarLvID'] = 261010011
 		},
 	[262101024] = {
@@ -116,7 +116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 351,
+		['AttriEquipValue'] = 270,
 		['StarLvID'] = 261010012
 		},
 	[262101025] = {
@@ -126,7 +126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 385,
+		['AttriEquipValue'] = 295,
 		['StarLvID'] = 261010013
 		},
 	[262101026] = {
@@ -136,7 +136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 420,
+		['AttriEquipValue'] = 320,
 		['StarLvID'] = 261010014
 		},
 	[262101030] = {
@@ -146,7 +146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 462,
+		['AttriEquipValue'] = 330,
 		['StarLvID'] = 261010015
 		},
 	[262101031] = {
@@ -156,7 +156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 505,
+		['AttriEquipValue'] = 368,
 		['StarLvID'] = 261010016
 		},
 	[262101032] = {
@@ -166,7 +166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 548,
+		['AttriEquipValue'] = 406,
 		['StarLvID'] = 261010017
 		},
 	[262101033] = {
@@ -176,7 +176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 591,
+		['AttriEquipValue'] = 445,
 		['StarLvID'] = 261010018
 		},
 	[262101034] = {
@@ -186,7 +186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 634,
+		['AttriEquipValue'] = 483,
 		['StarLvID'] = 261010019
 		},
 	[262101035] = {
@@ -196,7 +196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 677,
+		['AttriEquipValue'] = 521,
 		['StarLvID'] = 261010020
 		},
 	[262101036] = {
@@ -206,7 +206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 720,
+		['AttriEquipValue'] = 560,
 		['StarLvID'] = 261010021
 		},
 	[262101040] = {
@@ -216,7 +216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 772,
+		['AttriEquipValue'] = 580,
 		['StarLvID'] = 261010022
 		},
 	[262101041] = {
@@ -226,7 +226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 825,
+		['AttriEquipValue'] = 636,
 		['StarLvID'] = 261010023
 		},
 	[262101042] = {
@@ -236,7 +236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 878,
+		['AttriEquipValue'] = 693,
 		['StarLvID'] = 261010024
 		},
 	[262101043] = {
@@ -246,7 +246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 931,
+		['AttriEquipValue'] = 750,
 		['StarLvID'] = 261010025
 		},
 	[262101044] = {
@@ -256,7 +256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 984,
+		['AttriEquipValue'] = 806,
 		['StarLvID'] = 261010026
 		},
 	[262101045] = {
@@ -266,7 +266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1037,
+		['AttriEquipValue'] = 863,
 		['StarLvID'] = 261010027
 		},
 	[262101046] = {
@@ -276,7 +276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1090,
+		['AttriEquipValue'] = 920,
 		['StarLvID'] = 261010028
 		},
 	[262101050] = {
@@ -286,7 +286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1150,
+		['AttriEquipValue'] = 950,
 		['StarLvID'] = 261010029
 		},
 	[262101051] = {
@@ -296,7 +296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1210,
+		['AttriEquipValue'] = 1025,
 		['StarLvID'] = 261010030
 		},
 	[262101052] = {
@@ -306,7 +306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1270,
+		['AttriEquipValue'] = 1100,
 		['StarLvID'] = 261010031
 		},
 	[262101053] = {
@@ -316,7 +316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1330,
+		['AttriEquipValue'] = 1175,
 		['StarLvID'] = 261010032
 		},
 	[262101054] = {
@@ -326,7 +326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1390,
+		['AttriEquipValue'] = 1250,
 		['StarLvID'] = 261010033
 		},
 	[262101055] = {
@@ -336,7 +336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1450,
+		['AttriEquipValue'] = 1325,
 		['StarLvID'] = 261010034
 		},
 	[262101056] = {
@@ -346,7 +346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1510,
+		['AttriEquipValue'] = 1400,
 		['StarLvID'] = 261010035
 		},
 	[262101060] = {
@@ -356,7 +356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1580,
+		['AttriEquipValue'] = 1440,
 		['StarLvID'] = 261010036
 		},
 	[262101061] = {
@@ -366,7 +366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1650,
+		['AttriEquipValue'] = 1533,
 		['StarLvID'] = 261010037
 		},
 	[262101062] = {
@@ -376,7 +376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1720,
+		['AttriEquipValue'] = 1626,
 		['StarLvID'] = 261010038
 		},
 	[262101063] = {
@@ -386,7 +386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1790,
+		['AttriEquipValue'] = 1720,
 		['StarLvID'] = 261010039
 		},
 	[262101064] = {
@@ -396,7 +396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1860,
+		['AttriEquipValue'] = 1813,
 		['StarLvID'] = 261010040
 		},
 	[262101065] = {
@@ -406,7 +406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1930,
+		['AttriEquipValue'] = 1906,
 		['StarLvID'] = 261010041
 		},
 	[262101066] = {
@@ -426,7 +426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 10,
+		['AttriEquipValue'] = 8,
 		['StarLvID'] = 261020001
 		},
 	[262102011] = {
@@ -436,7 +436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 18,
+		['AttriEquipValue'] = 15,
 		['StarLvID'] = 261020002
 		},
 	[262102012] = {
@@ -446,7 +446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 26,
+		['AttriEquipValue'] = 22,
 		['StarLvID'] = 261020003
 		},
 	[262102013] = {
@@ -456,7 +456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 35,
+		['AttriEquipValue'] = 29,
 		['StarLvID'] = 261020004
 		},
 	[262102014] = {
@@ -466,7 +466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 43,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261020005
 		},
 	[262102015] = {
@@ -476,7 +476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 51,
+		['AttriEquipValue'] = 43,
 		['StarLvID'] = 261020006
 		},
 	[262102016] = {
@@ -486,7 +486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261020007
 		},
 	[262102020] = {
@@ -496,7 +496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 71,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261020008
 		},
 	[262102021] = {
@@ -506,7 +506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 82,
+		['AttriEquipValue'] = 60,
 		['StarLvID'] = 261020009
 		},
 	[262102022] = {
@@ -516,7 +516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 94,
+		['AttriEquipValue'] = 70,
 		['StarLvID'] = 261020010
 		},
 	[262102023] = {
@@ -526,7 +526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 105,
+		['AttriEquipValue'] = 80,
 		['StarLvID'] = 261020011
 		},
 	[262102024] = {
@@ -536,7 +536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 117,
+		['AttriEquipValue'] = 90,
 		['StarLvID'] = 261020012
 		},
 	[262102025] = {
@@ -546,7 +546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 128,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261020013
 		},
 	[262102026] = {
@@ -556,7 +556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 140,
+		['AttriEquipValue'] = 110,
 		['StarLvID'] = 261020014
 		},
 	[262102030] = {
@@ -566,7 +566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 155,
+		['AttriEquipValue'] = 110,
 		['StarLvID'] = 261020015
 		},
 	[262102031] = {
@@ -576,7 +576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 171,
+		['AttriEquipValue'] = 123,
 		['StarLvID'] = 261020016
 		},
 	[262102032] = {
@@ -586,7 +586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 187,
+		['AttriEquipValue'] = 136,
 		['StarLvID'] = 261020017
 		},
 	[262102033] = {
@@ -596,7 +596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 202,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261020018
 		},
 	[262102034] = {
@@ -606,7 +606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 218,
+		['AttriEquipValue'] = 163,
 		['StarLvID'] = 261020019
 		},
 	[262102035] = {
@@ -616,7 +616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 234,
+		['AttriEquipValue'] = 176,
 		['StarLvID'] = 261020020
 		},
 	[262102036] = {
@@ -626,7 +626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 250,
+		['AttriEquipValue'] = 190,
 		['StarLvID'] = 261020021
 		},
 	[262102040] = {
@@ -636,7 +636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 268,
+		['AttriEquipValue'] = 190,
 		['StarLvID'] = 261020022
 		},
 	[262102041] = {
@@ -646,7 +646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 287,
+		['AttriEquipValue'] = 211,
 		['StarLvID'] = 261020023
 		},
 	[262102042] = {
@@ -656,7 +656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 305,
+		['AttriEquipValue'] = 233,
 		['StarLvID'] = 261020024
 		},
 	[262102043] = {
@@ -666,7 +666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 324,
+		['AttriEquipValue'] = 255,
 		['StarLvID'] = 261020025
 		},
 	[262102044] = {
@@ -676,7 +676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 342,
+		['AttriEquipValue'] = 276,
 		['StarLvID'] = 261020026
 		},
 	[262102045] = {
@@ -686,7 +686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 361,
+		['AttriEquipValue'] = 298,
 		['StarLvID'] = 261020027
 		},
 	[262102046] = {
@@ -696,7 +696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 380,
+		['AttriEquipValue'] = 320,
 		['StarLvID'] = 261020028
 		},
 	[262102050] = {
@@ -706,7 +706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 401,
+		['AttriEquipValue'] = 330,
 		['StarLvID'] = 261020029
 		},
 	[262102051] = {
@@ -716,7 +716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 422,
+		['AttriEquipValue'] = 356,
 		['StarLvID'] = 261020030
 		},
 	[262102052] = {
@@ -726,7 +726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 444,
+		['AttriEquipValue'] = 383,
 		['StarLvID'] = 261020031
 		},
 	[262102053] = {
@@ -736,7 +736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 465,
+		['AttriEquipValue'] = 410,
 		['StarLvID'] = 261020032
 		},
 	[262102054] = {
@@ -746,7 +746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 487,
+		['AttriEquipValue'] = 436,
 		['StarLvID'] = 261020033
 		},
 	[262102055] = {
@@ -756,7 +756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 508,
+		['AttriEquipValue'] = 463,
 		['StarLvID'] = 261020034
 		},
 	[262102056] = {
@@ -766,7 +766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 530,
+		['AttriEquipValue'] = 490,
 		['StarLvID'] = 261020035
 		},
 	[262102060] = {
@@ -776,7 +776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 554,
+		['AttriEquipValue'] = 500,
 		['StarLvID'] = 261020036
 		},
 	[262102061] = {
@@ -786,7 +786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 578,
+		['AttriEquipValue'] = 533,
 		['StarLvID'] = 261020037
 		},
 	[262102062] = {
@@ -796,7 +796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 602,
+		['AttriEquipValue'] = 566,
 		['StarLvID'] = 261020038
 		},
 	[262102063] = {
@@ -806,7 +806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 627,
+		['AttriEquipValue'] = 600,
 		['StarLvID'] = 261020039
 		},
 	[262102064] = {
@@ -816,7 +816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 651,
+		['AttriEquipValue'] = 633,
 		['StarLvID'] = 261020040
 		},
 	[262102065] = {
@@ -826,7 +826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 675,
+		['AttriEquipValue'] = 666,
 		['StarLvID'] = 261020041
 		},
 	[262102066] = {
@@ -846,7 +846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 450,
+		['AttriEquipValue'] = 400,
 		['StarLvID'] = 261030001
 		},
 	[262103011] = {
@@ -856,7 +856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 820,
+		['AttriEquipValue'] = 730,
 		['StarLvID'] = 261030002
 		},
 	[262103012] = {
@@ -866,7 +866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1200,
+		['AttriEquipValue'] = 1060,
 		['StarLvID'] = 261030003
 		},
 	[262103013] = {
@@ -876,7 +876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1570,
+		['AttriEquipValue'] = 1400,
 		['StarLvID'] = 261030004
 		},
 	[262103014] = {
@@ -886,7 +886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1950,
+		['AttriEquipValue'] = 1730,
 		['StarLvID'] = 261030005
 		},
 	[262103015] = {
@@ -896,7 +896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2320,
+		['AttriEquipValue'] = 2060,
 		['StarLvID'] = 261030006
 		},
 	[262103016] = {
@@ -906,7 +906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2700,
+		['AttriEquipValue'] = 2400,
 		['StarLvID'] = 261030007
 		},
 	[262103020] = {
@@ -916,7 +916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3210,
+		['AttriEquipValue'] = 2600,
 		['StarLvID'] = 261030008
 		},
 	[262103021] = {
@@ -926,7 +926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3720,
+		['AttriEquipValue'] = 2960,
 		['StarLvID'] = 261030009
 		},
 	[262103022] = {
@@ -936,7 +936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4240,
+		['AttriEquipValue'] = 3330,
 		['StarLvID'] = 261030010
 		},
 	[262103023] = {
@@ -946,7 +946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4750,
+		['AttriEquipValue'] = 3700,
 		['StarLvID'] = 261030011
 		},
 	[262103024] = {
@@ -956,7 +956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5270,
+		['AttriEquipValue'] = 4060,
 		['StarLvID'] = 261030012
 		},
 	[262103025] = {
@@ -966,7 +966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5780,
+		['AttriEquipValue'] = 4430,
 		['StarLvID'] = 261030013
 		},
 	[262103026] = {
@@ -976,7 +976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6300,
+		['AttriEquipValue'] = 4800,
 		['StarLvID'] = 261030014
 		},
 	[262103030] = {
@@ -986,7 +986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6950,
+		['AttriEquipValue'] = 5000,
 		['StarLvID'] = 261030015
 		},
 	[262103031] = {
@@ -996,7 +996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7610,
+		['AttriEquipValue'] = 5560,
 		['StarLvID'] = 261030016
 		},
 	[262103032] = {
@@ -1006,7 +1006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8270,
+		['AttriEquipValue'] = 6130,
 		['StarLvID'] = 261030017
 		},
 	[262103033] = {
@@ -1016,7 +1016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8920,
+		['AttriEquipValue'] = 6700,
 		['StarLvID'] = 261030018
 		},
 	[262103034] = {
@@ -1026,7 +1026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9580,
+		['AttriEquipValue'] = 7260,
 		['StarLvID'] = 261030019
 		},
 	[262103035] = {
@@ -1036,7 +1036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10240,
+		['AttriEquipValue'] = 7830,
 		['StarLvID'] = 261030020
 		},
 	[262103036] = {
@@ -1046,7 +1046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10900,
+		['AttriEquipValue'] = 8400,
 		['StarLvID'] = 261030021
 		},
 	[262103040] = {
@@ -1056,7 +1056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11620,
+		['AttriEquipValue'] = 8700,
 		['StarLvID'] = 261030022
 		},
 	[262103041] = {
@@ -1066,7 +1066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12350,
+		['AttriEquipValue'] = 9400,
 		['StarLvID'] = 261030023
 		},
 	[262103042] = {
@@ -1076,7 +1076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 13080,
+		['AttriEquipValue'] = 10100,
 		['StarLvID'] = 261030024
 		},
 	[262103043] = {
@@ -1086,7 +1086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 13810,
+		['AttriEquipValue'] = 10800,
 		['StarLvID'] = 261030025
 		},
 	[262103044] = {
@@ -1096,7 +1096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14540,
+		['AttriEquipValue'] = 11500,
 		['StarLvID'] = 261030026
 		},
 	[262103045] = {
@@ -1106,7 +1106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15270,
+		['AttriEquipValue'] = 12200,
 		['StarLvID'] = 261030027
 		},
 	[262103046] = {
@@ -1116,7 +1116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 16000,
+		['AttriEquipValue'] = 13000,
 		['StarLvID'] = 261030028
 		},
 	[262103050] = {
@@ -1126,7 +1126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 16850,
+		['AttriEquipValue'] = 13400,
 		['StarLvID'] = 261030029
 		},
 	[262103051] = {
@@ -1136,7 +1136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17710,
+		['AttriEquipValue'] = 14600,
 		['StarLvID'] = 261030030
 		},
 	[262103052] = {
@@ -1146,7 +1146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18570,
+		['AttriEquipValue'] = 15900,
 		['StarLvID'] = 261030031
 		},
 	[262103053] = {
@@ -1156,7 +1156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 19420,
+		['AttriEquipValue'] = 17200,
 		['StarLvID'] = 261030032
 		},
 	[262103054] = {
@@ -1166,7 +1166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 20280,
+		['AttriEquipValue'] = 18400,
 		['StarLvID'] = 261030033
 		},
 	[262103055] = {
@@ -1176,7 +1176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 21140,
+		['AttriEquipValue'] = 19700,
 		['StarLvID'] = 261030034
 		},
 	[262103056] = {
@@ -1186,7 +1186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 22000,
+		['AttriEquipValue'] = 21000,
 		['StarLvID'] = 261030035
 		},
 	[262103060] = {
@@ -1196,7 +1196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 23140,
+		['AttriEquipValue'] = 21800,
 		['StarLvID'] = 261030036
 		},
 	[262103061] = {
@@ -1206,7 +1206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 24280,
+		['AttriEquipValue'] = 23100,
 		['StarLvID'] = 261030037
 		},
 	[262103062] = {
@@ -1216,7 +1216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 25420,
+		['AttriEquipValue'] = 24500,
 		['StarLvID'] = 261030038
 		},
 	[262103063] = {
@@ -1226,7 +1226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 26570,
+		['AttriEquipValue'] = 25900,
 		['StarLvID'] = 261030039
 		},
 	[262103064] = {
@@ -1236,7 +1236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 27710,
+		['AttriEquipValue'] = 27200,
 		['StarLvID'] = 261030040
 		},
 	[262103065] = {
@@ -1246,7 +1246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 28850,
+		['AttriEquipValue'] = 28600,
 		['StarLvID'] = 261030041
 		},
 	[262103066] = {
@@ -1266,7 +1266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 330,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261040001
 		},
 	[262104011] = {
@@ -1276,7 +1276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 600,
+		['AttriEquipValue'] = 510,
 		['StarLvID'] = 261040002
 		},
 	[262104012] = {
@@ -1286,7 +1286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 880,
+		['AttriEquipValue'] = 750,
 		['StarLvID'] = 261040003
 		},
 	[262104013] = {
@@ -1296,7 +1296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1160,
+		['AttriEquipValue'] = 990,
 		['StarLvID'] = 261040004
 		},
 	[262104014] = {
@@ -1306,7 +1306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1440,
+		['AttriEquipValue'] = 1220,
 		['StarLvID'] = 261040005
 		},
 	[262104015] = {
@@ -1316,7 +1316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1720,
+		['AttriEquipValue'] = 1460,
 		['StarLvID'] = 261040006
 		},
 	[262104016] = {
@@ -1326,7 +1326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2000,
+		['AttriEquipValue'] = 1700,
 		['StarLvID'] = 261040007
 		},
 	[262104020] = {
@@ -1336,7 +1336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2370,
+		['AttriEquipValue'] = 1800,
 		['StarLvID'] = 261040008
 		},
 	[262104021] = {
@@ -1346,7 +1346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2740,
+		['AttriEquipValue'] = 2080,
 		['StarLvID'] = 261040009
 		},
 	[262104022] = {
@@ -1356,7 +1356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3110,
+		['AttriEquipValue'] = 2360,
 		['StarLvID'] = 261040010
 		},
 	[262104023] = {
@@ -1366,7 +1366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3480,
+		['AttriEquipValue'] = 2650,
 		['StarLvID'] = 261040011
 		},
 	[262104024] = {
@@ -1376,7 +1376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3850,
+		['AttriEquipValue'] = 2930,
 		['StarLvID'] = 261040012
 		},
 	[262104025] = {
@@ -1386,7 +1386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4220,
+		['AttriEquipValue'] = 3210,
 		['StarLvID'] = 261040013
 		},
 	[262104026] = {
@@ -1396,7 +1396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4600,
+		['AttriEquipValue'] = 3500,
 		['StarLvID'] = 261040014
 		},
 	[262104030] = {
@@ -1406,7 +1406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5080,
+		['AttriEquipValue'] = 3600,
 		['StarLvID'] = 261040015
 		},
 	[262104031] = {
@@ -1416,7 +1416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5570,
+		['AttriEquipValue'] = 4010,
 		['StarLvID'] = 261040016
 		},
 	[262104032] = {
@@ -1426,7 +1426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6050,
+		['AttriEquipValue'] = 4430,
 		['StarLvID'] = 261040017
 		},
 	[262104033] = {
@@ -1436,7 +1436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6540,
+		['AttriEquipValue'] = 4850,
 		['StarLvID'] = 261040018
 		},
 	[262104034] = {
@@ -1446,7 +1446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7020,
+		['AttriEquipValue'] = 5260,
 		['StarLvID'] = 261040019
 		},
 	[262104035] = {
@@ -1456,7 +1456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7510,
+		['AttriEquipValue'] = 5680,
 		['StarLvID'] = 261040020
 		},
 	[262104036] = {
@@ -1466,7 +1466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8000,
+		['AttriEquipValue'] = 6100,
 		['StarLvID'] = 261040021
 		},
 	[262104040] = {
@@ -1476,7 +1476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8570,
+		['AttriEquipValue'] = 6300,
 		['StarLvID'] = 261040022
 		},
 	[262104041] = {
@@ -1486,7 +1486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9140,
+		['AttriEquipValue'] = 6900,
 		['StarLvID'] = 261040023
 		},
 	[262104042] = {
@@ -1496,7 +1496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9710,
+		['AttriEquipValue'] = 7500,
 		['StarLvID'] = 261040024
 		},
 	[262104043] = {
@@ -1506,7 +1506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10280,
+		['AttriEquipValue'] = 8100,
 		['StarLvID'] = 261040025
 		},
 	[262104044] = {
@@ -1516,7 +1516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10850,
+		['AttriEquipValue'] = 8700,
 		['StarLvID'] = 261040026
 		},
 	[262104045] = {
@@ -1526,7 +1526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11420,
+		['AttriEquipValue'] = 9300,
 		['StarLvID'] = 261040027
 		},
 	[262104046] = {
@@ -1536,7 +1536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12000,
+		['AttriEquipValue'] = 10000,
 		['StarLvID'] = 261040028
 		},
 	[262104050] = {
@@ -1546,7 +1546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12570,
+		['AttriEquipValue'] = 10300,
 		['StarLvID'] = 261040029
 		},
 	[262104051] = {
@@ -1556,7 +1556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 13140,
+		['AttriEquipValue'] = 11000,
 		['StarLvID'] = 261040030
 		},
 	[262104052] = {
@@ -1566,7 +1566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 13710,
+		['AttriEquipValue'] = 11800,
 		['StarLvID'] = 261040031
 		},
 	[262104053] = {
@@ -1576,7 +1576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14280,
+		['AttriEquipValue'] = 12600,
 		['StarLvID'] = 261040032
 		},
 	[262104054] = {
@@ -1586,7 +1586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14850,
+		['AttriEquipValue'] = 13400,
 		['StarLvID'] = 261040033
 		},
 	[262104055] = {
@@ -1596,7 +1596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15420,
+		['AttriEquipValue'] = 14200,
 		['StarLvID'] = 261040034
 		},
 	[262104056] = {
@@ -1606,7 +1606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 16000,
+		['AttriEquipValue'] = 15000,
 		['StarLvID'] = 261040035
 		},
 	[262104060] = {
@@ -1616,7 +1616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 16850,
+		['AttriEquipValue'] = 15500,
 		['StarLvID'] = 261040036
 		},
 	[262104061] = {
@@ -1626,7 +1626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17710,
+		['AttriEquipValue'] = 16500,
 		['StarLvID'] = 261040037
 		},
 	[262104062] = {
@@ -1636,7 +1636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18570,
+		['AttriEquipValue'] = 17600,
 		['StarLvID'] = 261040038
 		},
 	[262104063] = {
@@ -1646,7 +1646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 19420,
+		['AttriEquipValue'] = 18700,
 		['StarLvID'] = 261040039
 		},
 	[262104064] = {
@@ -1656,7 +1656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 20280,
+		['AttriEquipValue'] = 19800,
 		['StarLvID'] = 261040040
 		},
 	[262104065] = {
@@ -1666,7 +1666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 21140,
+		['AttriEquipValue'] = 20900,
 		['StarLvID'] = 261040041
 		},
 	[262104066] = {
@@ -1686,7 +1686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 16,
+		['AttriEquipValue'] = 15,
 		['StarLvID'] = 261050001
 		},
 	[262105011] = {
@@ -1696,7 +1696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 30,
+		['AttriEquipValue'] = 27,
 		['StarLvID'] = 261050002
 		},
 	[262105012] = {
@@ -1706,7 +1706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 44,
+		['AttriEquipValue'] = 40,
 		['StarLvID'] = 261050003
 		},
 	[262105013] = {
@@ -1716,7 +1716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 58,
+		['AttriEquipValue'] = 52,
 		['StarLvID'] = 261050004
 		},
 	[262105014] = {
@@ -1726,7 +1726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 72,
+		['AttriEquipValue'] = 65,
 		['StarLvID'] = 261050005
 		},
 	[262105015] = {
@@ -1736,7 +1736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 86,
+		['AttriEquipValue'] = 77,
 		['StarLvID'] = 261050006
 		},
 	[262105016] = {
@@ -1746,7 +1746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 100,
+		['AttriEquipValue'] = 90,
 		['StarLvID'] = 261050007
 		},
 	[262105020] = {
@@ -1756,7 +1756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 121,
+		['AttriEquipValue'] = 90,
 		['StarLvID'] = 261050008
 		},
 	[262105021] = {
@@ -1766,7 +1766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 142,
+		['AttriEquipValue'] = 106,
 		['StarLvID'] = 261050009
 		},
 	[262105022] = {
@@ -1776,7 +1776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 164,
+		['AttriEquipValue'] = 123,
 		['StarLvID'] = 261050010
 		},
 	[262105023] = {
@@ -1786,7 +1786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 185,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261050011
 		},
 	[262105024] = {
@@ -1796,7 +1796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 207,
+		['AttriEquipValue'] = 156,
 		['StarLvID'] = 261050012
 		},
 	[262105025] = {
@@ -1806,7 +1806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 228,
+		['AttriEquipValue'] = 173,
 		['StarLvID'] = 261050013
 		},
 	[262105026] = {
@@ -1816,7 +1816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 250,
+		['AttriEquipValue'] = 190,
 		['StarLvID'] = 261050014
 		},
 	[262105030] = {
@@ -1826,7 +1826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 275,
+		['AttriEquipValue'] = 200,
 		['StarLvID'] = 261050015
 		},
 	[262105031] = {
@@ -1836,7 +1836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 301,
+		['AttriEquipValue'] = 221,
 		['StarLvID'] = 261050016
 		},
 	[262105032] = {
@@ -1846,7 +1846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 327,
+		['AttriEquipValue'] = 243,
 		['StarLvID'] = 261050017
 		},
 	[262105033] = {
@@ -1856,7 +1856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 352,
+		['AttriEquipValue'] = 265,
 		['StarLvID'] = 261050018
 		},
 	[262105034] = {
@@ -1866,7 +1866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 378,
+		['AttriEquipValue'] = 286,
 		['StarLvID'] = 261050019
 		},
 	[262105035] = {
@@ -1876,7 +1876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 404,
+		['AttriEquipValue'] = 308,
 		['StarLvID'] = 261050020
 		},
 	[262105036] = {
@@ -1886,7 +1886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 430,
+		['AttriEquipValue'] = 330,
 		['StarLvID'] = 261050021
 		},
 	[262105040] = {
@@ -1896,7 +1896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 461,
+		['AttriEquipValue'] = 340,
 		['StarLvID'] = 261050022
 		},
 	[262105041] = {
@@ -1906,7 +1906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 492,
+		['AttriEquipValue'] = 375,
 		['StarLvID'] = 261050023
 		},
 	[262105042] = {
@@ -1916,7 +1916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 524,
+		['AttriEquipValue'] = 410,
 		['StarLvID'] = 261050024
 		},
 	[262105043] = {
@@ -1926,7 +1926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 555,
+		['AttriEquipValue'] = 445,
 		['StarLvID'] = 261050025
 		},
 	[262105044] = {
@@ -1936,7 +1936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 587,
+		['AttriEquipValue'] = 480,
 		['StarLvID'] = 261050026
 		},
 	[262105045] = {
@@ -1946,7 +1946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 618,
+		['AttriEquipValue'] = 515,
 		['StarLvID'] = 261050027
 		},
 	[262105046] = {
@@ -1956,7 +1956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 650,
+		['AttriEquipValue'] = 550,
 		['StarLvID'] = 261050028
 		},
 	[262105050] = {
@@ -1966,7 +1966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 685,
+		['AttriEquipValue'] = 570,
 		['StarLvID'] = 261050029
 		},
 	[262105051] = {
@@ -1976,7 +1976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 721,
+		['AttriEquipValue'] = 615,
 		['StarLvID'] = 261050030
 		},
 	[262105052] = {
@@ -1986,7 +1986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 757,
+		['AttriEquipValue'] = 660,
 		['StarLvID'] = 261050031
 		},
 	[262105053] = {
@@ -1996,7 +1996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 792,
+		['AttriEquipValue'] = 705,
 		['StarLvID'] = 261050032
 		},
 	[262105054] = {
@@ -2006,7 +2006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 828,
+		['AttriEquipValue'] = 750,
 		['StarLvID'] = 261050033
 		},
 	[262105055] = {
@@ -2016,7 +2016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 864,
+		['AttriEquipValue'] = 795,
 		['StarLvID'] = 261050034
 		},
 	[262105056] = {
@@ -2026,7 +2026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 900,
+		['AttriEquipValue'] = 840,
 		['StarLvID'] = 261050035
 		},
 	[262105060] = {
@@ -2036,7 +2036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 942,
+		['AttriEquipValue'] = 860,
 		['StarLvID'] = 261050036
 		},
 	[262105061] = {
@@ -2046,7 +2046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 985,
+		['AttriEquipValue'] = 916,
 		['StarLvID'] = 261050037
 		},
 	[262105062] = {
@@ -2056,7 +2056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1028,
+		['AttriEquipValue'] = 973,
 		['StarLvID'] = 261050038
 		},
 	[262105063] = {
@@ -2066,7 +2066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1071,
+		['AttriEquipValue'] = 1030,
 		['StarLvID'] = 261050039
 		},
 	[262105064] = {
@@ -2076,7 +2076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1114,
+		['AttriEquipValue'] = 1086,
 		['StarLvID'] = 261050040
 		},
 	[262105065] = {
@@ -2086,7 +2086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1157,
+		['AttriEquipValue'] = 1143,
 		['StarLvID'] = 261050041
 		},
 	[262105066] = {
@@ -2106,7 +2106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 21,
+		['AttriEquipValue'] = 20,
 		['StarLvID'] = 261060001
 		},
 	[262106011] = {
@@ -2116,7 +2116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 39,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261060002
 		},
 	[262106012] = {
@@ -2126,7 +2126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 57,
+		['AttriEquipValue'] = 53,
 		['StarLvID'] = 261060003
 		},
 	[262106013] = {
@@ -2136,7 +2136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 75,
+		['AttriEquipValue'] = 70,
 		['StarLvID'] = 261060004
 		},
 	[262106014] = {
@@ -2146,7 +2146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 93,
+		['AttriEquipValue'] = 86,
 		['StarLvID'] = 261060005
 		},
 	[262106015] = {
@@ -2156,7 +2156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 111,
+		['AttriEquipValue'] = 103,
 		['StarLvID'] = 261060006
 		},
 	[262106016] = {
@@ -2166,7 +2166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 130,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261060007
 		},
 	[262106020] = {
@@ -2176,7 +2176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 155,
+		['AttriEquipValue'] = 130,
 		['StarLvID'] = 261060008
 		},
 	[262106021] = {
@@ -2186,7 +2186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 181,
+		['AttriEquipValue'] = 148,
 		['StarLvID'] = 261060009
 		},
 	[262106022] = {
@@ -2196,7 +2196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 207,
+		['AttriEquipValue'] = 166,
 		['StarLvID'] = 261060010
 		},
 	[262106023] = {
@@ -2206,7 +2206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 232,
+		['AttriEquipValue'] = 185,
 		['StarLvID'] = 261060011
 		},
 	[262106024] = {
@@ -2216,7 +2216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 258,
+		['AttriEquipValue'] = 203,
 		['StarLvID'] = 261060012
 		},
 	[262106025] = {
@@ -2226,7 +2226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 284,
+		['AttriEquipValue'] = 221,
 		['StarLvID'] = 261060013
 		},
 	[262106026] = {
@@ -2236,7 +2236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 310,
+		['AttriEquipValue'] = 240,
 		['StarLvID'] = 261060014
 		},
 	[262106030] = {
@@ -2246,7 +2246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 342,
+		['AttriEquipValue'] = 250,
 		['StarLvID'] = 261060015
 		},
 	[262106031] = {
@@ -2256,7 +2256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 375,
+		['AttriEquipValue'] = 278,
 		['StarLvID'] = 261060016
 		},
 	[262106032] = {
@@ -2266,7 +2266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 408,
+		['AttriEquipValue'] = 306,
 		['StarLvID'] = 261060017
 		},
 	[262106033] = {
@@ -2276,7 +2276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 441,
+		['AttriEquipValue'] = 335,
 		['StarLvID'] = 261060018
 		},
 	[262106034] = {
@@ -2286,7 +2286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 474,
+		['AttriEquipValue'] = 363,
 		['StarLvID'] = 261060019
 		},
 	[262106035] = {
@@ -2296,7 +2296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 507,
+		['AttriEquipValue'] = 391,
 		['StarLvID'] = 261060020
 		},
 	[262106036] = {
@@ -2306,7 +2306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 540,
+		['AttriEquipValue'] = 420,
 		['StarLvID'] = 261060021
 		},
 	[262106040] = {
@@ -2316,7 +2316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 578,
+		['AttriEquipValue'] = 430,
 		['StarLvID'] = 261060022
 		},
 	[262106041] = {
@@ -2326,7 +2326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 617,
+		['AttriEquipValue'] = 473,
 		['StarLvID'] = 261060023
 		},
 	[262106042] = {
@@ -2336,7 +2336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 655,
+		['AttriEquipValue'] = 516,
 		['StarLvID'] = 261060024
 		},
 	[262106043] = {
@@ -2346,7 +2346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 694,
+		['AttriEquipValue'] = 560,
 		['StarLvID'] = 261060025
 		},
 	[262106044] = {
@@ -2356,7 +2356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 732,
+		['AttriEquipValue'] = 603,
 		['StarLvID'] = 261060026
 		},
 	[262106045] = {
@@ -2366,7 +2366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 771,
+		['AttriEquipValue'] = 646,
 		['StarLvID'] = 261060027
 		},
 	[262106046] = {
@@ -2376,7 +2376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 810,
+		['AttriEquipValue'] = 690,
 		['StarLvID'] = 261060028
 		},
 	[262106050] = {
@@ -2386,7 +2386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 855,
+		['AttriEquipValue'] = 710,
 		['StarLvID'] = 261060029
 		},
 	[262106051] = {
@@ -2396,7 +2396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 901,
+		['AttriEquipValue'] = 766,
 		['StarLvID'] = 261060030
 		},
 	[262106052] = {
@@ -2406,7 +2406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 947,
+		['AttriEquipValue'] = 823,
 		['StarLvID'] = 261060031
 		},
 	[262106053] = {
@@ -2416,7 +2416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 992,
+		['AttriEquipValue'] = 880,
 		['StarLvID'] = 261060032
 		},
 	[262106054] = {
@@ -2426,7 +2426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1038,
+		['AttriEquipValue'] = 936,
 		['StarLvID'] = 261060033
 		},
 	[262106055] = {
@@ -2436,7 +2436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1084,
+		['AttriEquipValue'] = 993,
 		['StarLvID'] = 261060034
 		},
 	[262106056] = {
@@ -2446,7 +2446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1130,
+		['AttriEquipValue'] = 1050,
 		['StarLvID'] = 261060035
 		},
 	[262106060] = {
@@ -2456,7 +2456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1182,
+		['AttriEquipValue'] = 1080,
 		['StarLvID'] = 261060036
 		},
 	[262106061] = {
@@ -2466,7 +2466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1235,
+		['AttriEquipValue'] = 1150,
 		['StarLvID'] = 261060037
 		},
 	[262106062] = {
@@ -2476,7 +2476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1288,
+		['AttriEquipValue'] = 1220,
 		['StarLvID'] = 261060038
 		},
 	[262106063] = {
@@ -2486,7 +2486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1341,
+		['AttriEquipValue'] = 1290,
 		['StarLvID'] = 261060039
 		},
 	[262106064] = {
@@ -2496,7 +2496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1394,
+		['AttriEquipValue'] = 1360,
 		['StarLvID'] = 261060040
 		},
 	[262106065] = {
@@ -2506,7 +2506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1447,
+		['AttriEquipValue'] = 1430,
 		['StarLvID'] = 261060041
 		},
 	[262106066] = {
@@ -2526,7 +2526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 360,
+		['AttriEquipValue'] = 330,
 		['StarLvID'] = 261070001
 		},
 	[262107011] = {
@@ -2536,7 +2536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 660,
+		['AttriEquipValue'] = 600,
 		['StarLvID'] = 261070002
 		},
 	[262107012] = {
@@ -2546,7 +2546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 970,
+		['AttriEquipValue'] = 880,
 		['StarLvID'] = 261070003
 		},
 	[262107013] = {
@@ -2556,7 +2556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1280,
+		['AttriEquipValue'] = 1160,
 		['StarLvID'] = 261070004
 		},
 	[262107014] = {
@@ -2566,7 +2566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1580,
+		['AttriEquipValue'] = 1440,
 		['StarLvID'] = 261070005
 		},
 	[262107015] = {
@@ -2576,7 +2576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1890,
+		['AttriEquipValue'] = 1720,
 		['StarLvID'] = 261070006
 		},
 	[262107016] = {
@@ -2586,7 +2586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2200,
+		['AttriEquipValue'] = 2000,
 		['StarLvID'] = 261070007
 		},
 	[262107020] = {
@@ -2596,7 +2596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2640,
+		['AttriEquipValue'] = 2200,
 		['StarLvID'] = 261070008
 		},
 	[262107021] = {
@@ -2606,7 +2606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3080,
+		['AttriEquipValue'] = 2500,
 		['StarLvID'] = 261070009
 		},
 	[262107022] = {
@@ -2616,7 +2616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3520,
+		['AttriEquipValue'] = 2800,
 		['StarLvID'] = 261070010
 		},
 	[262107023] = {
@@ -2626,7 +2626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3970,
+		['AttriEquipValue'] = 3100,
 		['StarLvID'] = 261070011
 		},
 	[262107024] = {
@@ -2636,7 +2636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4410,
+		['AttriEquipValue'] = 3400,
 		['StarLvID'] = 261070012
 		},
 	[262107025] = {
@@ -2646,7 +2646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4850,
+		['AttriEquipValue'] = 3700,
 		['StarLvID'] = 261070013
 		},
 	[262107026] = {
@@ -2656,7 +2656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5300,
+		['AttriEquipValue'] = 4000,
 		['StarLvID'] = 261070014
 		},
 	[262107030] = {
@@ -2666,7 +2666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5820,
+		['AttriEquipValue'] = 4200,
 		['StarLvID'] = 261070015
 		},
 	[262107031] = {
@@ -2676,7 +2676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6350,
+		['AttriEquipValue'] = 4660,
 		['StarLvID'] = 261070016
 		},
 	[262107032] = {
@@ -2686,7 +2686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6880,
+		['AttriEquipValue'] = 5130,
 		['StarLvID'] = 261070017
 		},
 	[262107033] = {
@@ -2696,7 +2696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7410,
+		['AttriEquipValue'] = 5600,
 		['StarLvID'] = 261070018
 		},
 	[262107034] = {
@@ -2706,7 +2706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7940,
+		['AttriEquipValue'] = 6060,
 		['StarLvID'] = 261070019
 		},
 	[262107035] = {
@@ -2716,7 +2716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8470,
+		['AttriEquipValue'] = 6530,
 		['StarLvID'] = 261070020
 		},
 	[262107036] = {
@@ -2726,7 +2726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9000,
+		['AttriEquipValue'] = 7000,
 		['StarLvID'] = 261070021
 		},
 	[262107040] = {
@@ -2736,7 +2736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9570,
+		['AttriEquipValue'] = 7300,
 		['StarLvID'] = 261070022
 		},
 	[262107041] = {
@@ -2746,7 +2746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10140,
+		['AttriEquipValue'] = 7900,
 		['StarLvID'] = 261070023
 		},
 	[262107042] = {
@@ -2756,7 +2756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10710,
+		['AttriEquipValue'] = 8500,
 		['StarLvID'] = 261070024
 		},
 	[262107043] = {
@@ -2766,7 +2766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11280,
+		['AttriEquipValue'] = 9100,
 		['StarLvID'] = 261070025
 		},
 	[262107044] = {
@@ -2776,7 +2776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11850,
+		['AttriEquipValue'] = 9700,
 		['StarLvID'] = 261070026
 		},
 	[262107045] = {
@@ -2786,7 +2786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12420,
+		['AttriEquipValue'] = 10300,
 		['StarLvID'] = 261070027
 		},
 	[262107046] = {
@@ -2796,7 +2796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 13000,
+		['AttriEquipValue'] = 11000,
 		['StarLvID'] = 261070028
 		},
 	[262107050] = {
@@ -2806,7 +2806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 13710,
+		['AttriEquipValue'] = 11400,
 		['StarLvID'] = 261070029
 		},
 	[262107051] = {
@@ -2816,7 +2816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14420,
+		['AttriEquipValue'] = 12300,
 		['StarLvID'] = 261070030
 		},
 	[262107052] = {
@@ -2826,7 +2826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15140,
+		['AttriEquipValue'] = 13200,
 		['StarLvID'] = 261070031
 		},
 	[262107053] = {
@@ -2836,7 +2836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15850,
+		['AttriEquipValue'] = 14200,
 		['StarLvID'] = 261070032
 		},
 	[262107054] = {
@@ -2846,7 +2846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 16570,
+		['AttriEquipValue'] = 15100,
 		['StarLvID'] = 261070033
 		},
 	[262107055] = {
@@ -2856,7 +2856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17280,
+		['AttriEquipValue'] = 16000,
 		['StarLvID'] = 261070034
 		},
 	[262107056] = {
@@ -2866,7 +2866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18000,
+		['AttriEquipValue'] = 17000,
 		['StarLvID'] = 261070035
 		},
 	[262107060] = {
@@ -2876,7 +2876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 19000,
+		['AttriEquipValue'] = 17600,
 		['StarLvID'] = 261070036
 		},
 	[262107061] = {
@@ -2886,7 +2886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 20000,
+		['AttriEquipValue'] = 18800,
 		['StarLvID'] = 261070037
 		},
 	[262107062] = {
@@ -2896,7 +2896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 21000,
+		['AttriEquipValue'] = 20000,
 		['StarLvID'] = 261070038
 		},
 	[262107063] = {
@@ -2906,7 +2906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 22000,
+		['AttriEquipValue'] = 21300,
 		['StarLvID'] = 261070039
 		},
 	[262107064] = {
@@ -2916,7 +2916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 23000,
+		['AttriEquipValue'] = 22500,
 		['StarLvID'] = 261070040
 		},
 	[262107065] = {
@@ -2926,7 +2926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 24000,
+		['AttriEquipValue'] = 23700,
 		['StarLvID'] = 261070041
 		},
 	[262107066] = {
@@ -2946,7 +2946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 8,
+		['AttriEquipValue'] = 6,
 		['StarLvID'] = 261080001
 		},
 	[262108011] = {
@@ -2956,7 +2956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 15,
+		['AttriEquipValue'] = 11,
 		['StarLvID'] = 261080002
 		},
 	[262108012] = {
@@ -2966,7 +2966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 22,
+		['AttriEquipValue'] = 17,
 		['StarLvID'] = 261080003
 		},
 	[262108013] = {
@@ -2976,7 +2976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 29,
+		['AttriEquipValue'] = 23,
 		['StarLvID'] = 261080004
 		},
 	[262108014] = {
@@ -2986,7 +2986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 36,
+		['AttriEquipValue'] = 28,
 		['StarLvID'] = 261080005
 		},
 	[262108015] = {
@@ -2996,7 +2996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 43,
+		['AttriEquipValue'] = 34,
 		['StarLvID'] = 261080006
 		},
 	[262108016] = {
@@ -3006,7 +3006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 50,
+		['AttriEquipValue'] = 40,
 		['StarLvID'] = 261080007
 		},
 	[262108020] = {
@@ -3016,7 +3016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 40,
 		['StarLvID'] = 261080008
 		},
 	[262108021] = {
@@ -3026,7 +3026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 70,
+		['AttriEquipValue'] = 48,
 		['StarLvID'] = 261080009
 		},
 	[262108022] = {
@@ -3036,7 +3036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 80,
+		['AttriEquipValue'] = 56,
 		['StarLvID'] = 261080010
 		},
 	[262108023] = {
@@ -3046,7 +3046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 90,
+		['AttriEquipValue'] = 65,
 		['StarLvID'] = 261080011
 		},
 	[262108024] = {
@@ -3056,7 +3056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 100,
+		['AttriEquipValue'] = 73,
 		['StarLvID'] = 261080012
 		},
 	[262108025] = {
@@ -3066,7 +3066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 110,
+		['AttriEquipValue'] = 81,
 		['StarLvID'] = 261080013
 		},
 	[262108026] = {
@@ -3076,7 +3076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 120,
+		['AttriEquipValue'] = 90,
 		['StarLvID'] = 261080014
 		},
 	[262108030] = {
@@ -3086,7 +3086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 132,
+		['AttriEquipValue'] = 90,
 		['StarLvID'] = 261080015
 		},
 	[262108031] = {
@@ -3096,7 +3096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 145,
+		['AttriEquipValue'] = 101,
 		['StarLvID'] = 261080016
 		},
 	[262108032] = {
@@ -3106,7 +3106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 158,
+		['AttriEquipValue'] = 113,
 		['StarLvID'] = 261080017
 		},
 	[262108033] = {
@@ -3116,7 +3116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 171,
+		['AttriEquipValue'] = 125,
 		['StarLvID'] = 261080018
 		},
 	[262108034] = {
@@ -3126,7 +3126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 184,
+		['AttriEquipValue'] = 136,
 		['StarLvID'] = 261080019
 		},
 	[262108035] = {
@@ -3136,7 +3136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 197,
+		['AttriEquipValue'] = 148,
 		['StarLvID'] = 261080020
 		},
 	[262108036] = {
@@ -3146,7 +3146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 210,
+		['AttriEquipValue'] = 160,
 		['StarLvID'] = 261080021
 		},
 	[262108040] = {
@@ -3156,7 +3156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 225,
+		['AttriEquipValue'] = 160,
 		['StarLvID'] = 261080022
 		},
 	[262108041] = {
@@ -3166,7 +3166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 241,
+		['AttriEquipValue'] = 178,
 		['StarLvID'] = 261080023
 		},
 	[262108042] = {
@@ -3176,7 +3176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 257,
+		['AttriEquipValue'] = 196,
 		['StarLvID'] = 261080024
 		},
 	[262108043] = {
@@ -3186,7 +3186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 272,
+		['AttriEquipValue'] = 215,
 		['StarLvID'] = 261080025
 		},
 	[262108044] = {
@@ -3196,7 +3196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 288,
+		['AttriEquipValue'] = 233,
 		['StarLvID'] = 261080026
 		},
 	[262108045] = {
@@ -3206,7 +3206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 304,
+		['AttriEquipValue'] = 251,
 		['StarLvID'] = 261080027
 		},
 	[262108046] = {
@@ -3216,7 +3216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 320,
+		['AttriEquipValue'] = 270,
 		['StarLvID'] = 261080028
 		},
 	[262108050] = {
@@ -3226,7 +3226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 338,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261080029
 		},
 	[262108051] = {
@@ -3236,7 +3236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 357,
+		['AttriEquipValue'] = 303,
 		['StarLvID'] = 261080030
 		},
 	[262108052] = {
@@ -3246,7 +3246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 375,
+		['AttriEquipValue'] = 326,
 		['StarLvID'] = 261080031
 		},
 	[262108053] = {
@@ -3256,7 +3256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 394,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261080032
 		},
 	[262108054] = {
@@ -3266,7 +3266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 412,
+		['AttriEquipValue'] = 373,
 		['StarLvID'] = 261080033
 		},
 	[262108055] = {
@@ -3276,7 +3276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 431,
+		['AttriEquipValue'] = 396,
 		['StarLvID'] = 261080034
 		},
 	[262108056] = {
@@ -3286,7 +3286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 450,
+		['AttriEquipValue'] = 420,
 		['StarLvID'] = 261080035
 		},
 	[262108060] = {
@@ -3296,7 +3296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 471,
+		['AttriEquipValue'] = 430,
 		['StarLvID'] = 261080036
 		},
 	[262108061] = {
@@ -3306,7 +3306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 492,
+		['AttriEquipValue'] = 458,
 		['StarLvID'] = 261080037
 		},
 	[262108062] = {
@@ -3316,7 +3316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 514,
+		['AttriEquipValue'] = 486,
 		['StarLvID'] = 261080038
 		},
 	[262108063] = {
@@ -3326,7 +3326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 535,
+		['AttriEquipValue'] = 515,
 		['StarLvID'] = 261080039
 		},
 	[262108064] = {
@@ -3336,7 +3336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 557,
+		['AttriEquipValue'] = 543,
 		['StarLvID'] = 261080040
 		},
 	[262108065] = {
@@ -3346,7 +3346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 578,
+		['AttriEquipValue'] = 571,
 		['StarLvID'] = 261080041
 		},
 	[262108066] = {
@@ -3366,7 +3366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 23,
+		['AttriEquipValue'] = 20,
 		['StarLvID'] = 261090001
 		},
 	[262109011] = {
@@ -3376,7 +3376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 42,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261090002
 		},
 	[262109012] = {
@@ -3386,7 +3386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 62,
+		['AttriEquipValue'] = 53,
 		['StarLvID'] = 261090003
 		},
 	[262109013] = {
@@ -3396,7 +3396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 81,
+		['AttriEquipValue'] = 70,
 		['StarLvID'] = 261090004
 		},
 	[262109014] = {
@@ -3406,7 +3406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 101,
+		['AttriEquipValue'] = 86,
 		['StarLvID'] = 261090005
 		},
 	[262109015] = {
@@ -3416,7 +3416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 120,
+		['AttriEquipValue'] = 103,
 		['StarLvID'] = 261090006
 		},
 	[262109016] = {
@@ -3426,7 +3426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 140,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261090007
 		},
 	[262109020] = {
@@ -3436,7 +3436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 167,
+		['AttriEquipValue'] = 130,
 		['StarLvID'] = 261090008
 		},
 	[262109021] = {
@@ -3446,7 +3446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 194,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261090009
 		},
 	[262109022] = {
@@ -3456,7 +3456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 221,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261090010
 		},
 	[262109023] = {
@@ -3466,7 +3466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 248,
+		['AttriEquipValue'] = 190,
 		['StarLvID'] = 261090011
 		},
 	[262109024] = {
@@ -3476,7 +3476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 275,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261090012
 		},
 	[262109025] = {
@@ -3486,7 +3486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 302,
+		['AttriEquipValue'] = 230,
 		['StarLvID'] = 261090013
 		},
 	[262109026] = {
@@ -3496,7 +3496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 330,
+		['AttriEquipValue'] = 250,
 		['StarLvID'] = 261090014
 		},
 	[262109030] = {
@@ -3506,7 +3506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 365,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261090015
 		},
 	[262109031] = {
@@ -3516,7 +3516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 401,
+		['AttriEquipValue'] = 290,
 		['StarLvID'] = 261090016
 		},
 	[262109032] = {
@@ -3526,7 +3526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 437,
+		['AttriEquipValue'] = 320,
 		['StarLvID'] = 261090017
 		},
 	[262109033] = {
@@ -3536,7 +3536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 472,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261090018
 		},
 	[262109034] = {
@@ -3546,7 +3546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 508,
+		['AttriEquipValue'] = 380,
 		['StarLvID'] = 261090019
 		},
 	[262109035] = {
@@ -3556,7 +3556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 544,
+		['AttriEquipValue'] = 410,
 		['StarLvID'] = 261090020
 		},
 	[262109036] = {
@@ -3566,7 +3566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 580,
+		['AttriEquipValue'] = 440,
 		['StarLvID'] = 261090021
 		},
 	[262109040] = {
@@ -3576,7 +3576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 621,
+		['AttriEquipValue'] = 450,
 		['StarLvID'] = 261090022
 		},
 	[262109041] = {
@@ -3586,7 +3586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 662,
+		['AttriEquipValue'] = 496,
 		['StarLvID'] = 261090023
 		},
 	[262109042] = {
@@ -3596,7 +3596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 704,
+		['AttriEquipValue'] = 543,
 		['StarLvID'] = 261090024
 		},
 	[262109043] = {
@@ -3606,7 +3606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 745,
+		['AttriEquipValue'] = 590,
 		['StarLvID'] = 261090025
 		},
 	[262109044] = {
@@ -3616,7 +3616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 787,
+		['AttriEquipValue'] = 636,
 		['StarLvID'] = 261090026
 		},
 	[262109045] = {
@@ -3626,7 +3626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 828,
+		['AttriEquipValue'] = 683,
 		['StarLvID'] = 261090027
 		},
 	[262109046] = {
@@ -3636,7 +3636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 870,
+		['AttriEquipValue'] = 730,
 		['StarLvID'] = 261090028
 		},
 	[262109050] = {
@@ -3646,7 +3646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 918,
+		['AttriEquipValue'] = 750,
 		['StarLvID'] = 261090029
 		},
 	[262109051] = {
@@ -3656,7 +3656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 967,
+		['AttriEquipValue'] = 811,
 		['StarLvID'] = 261090030
 		},
 	[262109052] = {
@@ -3666,7 +3666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 1015,
+		['AttriEquipValue'] = 873,
 		['StarLvID'] = 261090031
 		},
 	[262109053] = {
@@ -3676,7 +3676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 1064,
+		['AttriEquipValue'] = 935,
 		['StarLvID'] = 261090032
 		},
 	[262109054] = {
@@ -3686,7 +3686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 1112,
+		['AttriEquipValue'] = 996,
 		['StarLvID'] = 261090033
 		},
 	[262109055] = {
@@ -3696,7 +3696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 1161,
+		['AttriEquipValue'] = 1058,
 		['StarLvID'] = 261090034
 		},
 	[262109056] = {
@@ -3706,7 +3706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 1210,
+		['AttriEquipValue'] = 1120,
 		['StarLvID'] = 261090035
 		},
 	[262109060] = {
@@ -3716,7 +3716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 1265,
+		['AttriEquipValue'] = 1150,
 		['StarLvID'] = 261090036
 		},
 	[262109061] = {
@@ -3726,7 +3726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 1321,
+		['AttriEquipValue'] = 1225,
 		['StarLvID'] = 261090037
 		},
 	[262109062] = {
@@ -3736,7 +3736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 1377,
+		['AttriEquipValue'] = 1300,
 		['StarLvID'] = 261090038
 		},
 	[262109063] = {
@@ -3746,7 +3746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 1432,
+		['AttriEquipValue'] = 1375,
 		['StarLvID'] = 261090039
 		},
 	[262109064] = {
@@ -3756,7 +3756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 1488,
+		['AttriEquipValue'] = 1450,
 		['StarLvID'] = 261090040
 		},
 	[262109065] = {
@@ -3766,7 +3766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 9,
-		['AttriEquipValue'] = 1544,
+		['AttriEquipValue'] = 1525,
 		['StarLvID'] = 261090041
 		},
 	[262109066] = {
@@ -3856,7 +3856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 74,
+		['AttriEquipValue'] = 60,
 		['StarLvID'] = 261100008
 		},
 	[262110021] = {
@@ -3866,7 +3866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 88,
+		['AttriEquipValue'] = 70,
 		['StarLvID'] = 261100009
 		},
 	[262110022] = {
@@ -3876,7 +3876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 102,
+		['AttriEquipValue'] = 80,
 		['StarLvID'] = 261100010
 		},
 	[262110023] = {
@@ -3886,7 +3886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 117,
+		['AttriEquipValue'] = 90,
 		['StarLvID'] = 261100011
 		},
 	[262110024] = {
@@ -3896,7 +3896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 131,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261100012
 		},
 	[262110025] = {
@@ -3906,7 +3906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 145,
+		['AttriEquipValue'] = 110,
 		['StarLvID'] = 261100013
 		},
 	[262110026] = {
@@ -3916,7 +3916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 160,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261100014
 		},
 	[262110030] = {
@@ -3926,7 +3926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 175,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261100015
 		},
 	[262110031] = {
@@ -3936,7 +3936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 191,
+		['AttriEquipValue'] = 135,
 		['StarLvID'] = 261100016
 		},
 	[262110032] = {
@@ -3946,7 +3946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 207,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261100017
 		},
 	[262110033] = {
@@ -3956,7 +3956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 222,
+		['AttriEquipValue'] = 165,
 		['StarLvID'] = 261100018
 		},
 	[262110034] = {
@@ -3966,7 +3966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 238,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261100019
 		},
 	[262110035] = {
@@ -3976,7 +3976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 254,
+		['AttriEquipValue'] = 195,
 		['StarLvID'] = 261100020
 		},
 	[262110036] = {
@@ -3986,7 +3986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 270,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261100021
 		},
 	[262110040] = {
@@ -3996,7 +3996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 290,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261100022
 		},
 	[262110041] = {
@@ -4006,7 +4006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 310,
+		['AttriEquipValue'] = 231,
 		['StarLvID'] = 261100023
 		},
 	[262110042] = {
@@ -4016,7 +4016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 330,
+		['AttriEquipValue'] = 253,
 		['StarLvID'] = 261100024
 		},
 	[262110043] = {
@@ -4026,7 +4026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 350,
+		['AttriEquipValue'] = 275,
 		['StarLvID'] = 261100025
 		},
 	[262110044] = {
@@ -4036,7 +4036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 370,
+		['AttriEquipValue'] = 296,
 		['StarLvID'] = 261100026
 		},
 	[262110045] = {
@@ -4046,7 +4046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 390,
+		['AttriEquipValue'] = 318,
 		['StarLvID'] = 261100027
 		},
 	[262110046] = {
@@ -4056,7 +4056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 410,
+		['AttriEquipValue'] = 340,
 		['StarLvID'] = 261100028
 		},
 	[262110050] = {
@@ -4066,7 +4066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 432,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261100029
 		},
 	[262110051] = {
@@ -4076,7 +4076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 455,
+		['AttriEquipValue'] = 380,
 		['StarLvID'] = 261100030
 		},
 	[262110052] = {
@@ -4086,7 +4086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 478,
+		['AttriEquipValue'] = 410,
 		['StarLvID'] = 261100031
 		},
 	[262110053] = {
@@ -4096,7 +4096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 501,
+		['AttriEquipValue'] = 440,
 		['StarLvID'] = 261100032
 		},
 	[262110054] = {
@@ -4106,7 +4106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 524,
+		['AttriEquipValue'] = 470,
 		['StarLvID'] = 261100033
 		},
 	[262110055] = {
@@ -4116,7 +4116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 547,
+		['AttriEquipValue'] = 500,
 		['StarLvID'] = 261100034
 		},
 	[262110056] = {
@@ -4126,7 +4126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 570,
+		['AttriEquipValue'] = 530,
 		['StarLvID'] = 261100035
 		},
 	[262110060] = {
@@ -4136,7 +4136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 597,
+		['AttriEquipValue'] = 540,
 		['StarLvID'] = 261100036
 		},
 	[262110061] = {
@@ -4146,7 +4146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 624,
+		['AttriEquipValue'] = 576,
 		['StarLvID'] = 261100037
 		},
 	[262110062] = {
@@ -4156,7 +4156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 651,
+		['AttriEquipValue'] = 613,
 		['StarLvID'] = 261100038
 		},
 	[262110063] = {
@@ -4166,7 +4166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 678,
+		['AttriEquipValue'] = 650,
 		['StarLvID'] = 261100039
 		},
 	[262110064] = {
@@ -4176,7 +4176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 705,
+		['AttriEquipValue'] = 686,
 		['StarLvID'] = 261100040
 		},
 	[262110065] = {
@@ -4186,7 +4186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 732,
+		['AttriEquipValue'] = 723,
 		['StarLvID'] = 261100041
 		},
 	[262110066] = {
@@ -4206,7 +4206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 33,
+		['AttriEquipValue'] = 28,
 		['StarLvID'] = 261010001
 		},
 	[262201011] = {
@@ -4216,7 +4216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 51,
 		['StarLvID'] = 261010002
 		},
 	[262201012] = {
@@ -4226,7 +4226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 88,
+		['AttriEquipValue'] = 75,
 		['StarLvID'] = 261010003
 		},
 	[262201013] = {
@@ -4236,7 +4236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 116,
+		['AttriEquipValue'] = 99,
 		['StarLvID'] = 261010004
 		},
 	[262201014] = {
@@ -4246,7 +4246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 144,
+		['AttriEquipValue'] = 122,
 		['StarLvID'] = 261010005
 		},
 	[262201015] = {
@@ -4256,7 +4256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 172,
+		['AttriEquipValue'] = 146,
 		['StarLvID'] = 261010006
 		},
 	[262201016] = {
@@ -4266,7 +4266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 200,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261010007
 		},
 	[262201020] = {
@@ -4276,7 +4276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 237,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261010008
 		},
 	[262201021] = {
@@ -4286,7 +4286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 274,
+		['AttriEquipValue'] = 208,
 		['StarLvID'] = 261010009
 		},
 	[262201022] = {
@@ -4296,7 +4296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 311,
+		['AttriEquipValue'] = 236,
 		['StarLvID'] = 261010010
 		},
 	[262201023] = {
@@ -4306,7 +4306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 348,
+		['AttriEquipValue'] = 265,
 		['StarLvID'] = 261010011
 		},
 	[262201024] = {
@@ -4316,7 +4316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 385,
+		['AttriEquipValue'] = 293,
 		['StarLvID'] = 261010012
 		},
 	[262201025] = {
@@ -4326,7 +4326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 422,
+		['AttriEquipValue'] = 321,
 		['StarLvID'] = 261010013
 		},
 	[262201026] = {
@@ -4336,7 +4336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 460,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261010014
 		},
 	[262201030] = {
@@ -4346,7 +4346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 508,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261010015
 		},
 	[262201031] = {
@@ -4356,7 +4356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 557,
+		['AttriEquipValue'] = 401,
 		['StarLvID'] = 261010016
 		},
 	[262201032] = {
@@ -4366,7 +4366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 605,
+		['AttriEquipValue'] = 443,
 		['StarLvID'] = 261010017
 		},
 	[262201033] = {
@@ -4376,7 +4376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 654,
+		['AttriEquipValue'] = 485,
 		['StarLvID'] = 261010018
 		},
 	[262201034] = {
@@ -4386,7 +4386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 702,
+		['AttriEquipValue'] = 526,
 		['StarLvID'] = 261010019
 		},
 	[262201035] = {
@@ -4396,7 +4396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 751,
+		['AttriEquipValue'] = 568,
 		['StarLvID'] = 261010020
 		},
 	[262201036] = {
@@ -4406,7 +4406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 610,
 		['StarLvID'] = 261010021
 		},
 	[262201040] = {
@@ -4416,7 +4416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 857,
+		['AttriEquipValue'] = 630,
 		['StarLvID'] = 261010022
 		},
 	[262201041] = {
@@ -4426,7 +4426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 914,
+		['AttriEquipValue'] = 693,
 		['StarLvID'] = 261010023
 		},
 	[262201042] = {
@@ -4436,7 +4436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 971,
+		['AttriEquipValue'] = 756,
 		['StarLvID'] = 261010024
 		},
 	[262201043] = {
@@ -4446,7 +4446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1028,
+		['AttriEquipValue'] = 820,
 		['StarLvID'] = 261010025
 		},
 	[262201044] = {
@@ -4456,7 +4456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1085,
+		['AttriEquipValue'] = 883,
 		['StarLvID'] = 261010026
 		},
 	[262201045] = {
@@ -4466,7 +4466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1142,
+		['AttriEquipValue'] = 946,
 		['StarLvID'] = 261010027
 		},
 	[262201046] = {
@@ -4476,7 +4476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1200,
+		['AttriEquipValue'] = 1010,
 		['StarLvID'] = 261010028
 		},
 	[262201050] = {
@@ -4486,7 +4486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1265,
+		['AttriEquipValue'] = 1050,
 		['StarLvID'] = 261010029
 		},
 	[262201051] = {
@@ -4496,7 +4496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1331,
+		['AttriEquipValue'] = 1131,
 		['StarLvID'] = 261010030
 		},
 	[262201052] = {
@@ -4506,7 +4506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1397,
+		['AttriEquipValue'] = 1213,
 		['StarLvID'] = 261010031
 		},
 	[262201053] = {
@@ -4516,7 +4516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1462,
+		['AttriEquipValue'] = 1295,
 		['StarLvID'] = 261010032
 		},
 	[262201054] = {
@@ -4526,7 +4526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1528,
+		['AttriEquipValue'] = 1376,
 		['StarLvID'] = 261010033
 		},
 	[262201055] = {
@@ -4536,7 +4536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1594,
+		['AttriEquipValue'] = 1458,
 		['StarLvID'] = 261010034
 		},
 	[262201056] = {
@@ -4546,7 +4546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1660,
+		['AttriEquipValue'] = 1540,
 		['StarLvID'] = 261010035
 		},
 	[262201060] = {
@@ -4556,7 +4556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1737,
+		['AttriEquipValue'] = 1590,
 		['StarLvID'] = 261010036
 		},
 	[262201061] = {
@@ -4566,7 +4566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1814,
+		['AttriEquipValue'] = 1691,
 		['StarLvID'] = 261010037
 		},
 	[262201062] = {
@@ -4576,7 +4576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1891,
+		['AttriEquipValue'] = 1793,
 		['StarLvID'] = 261010038
 		},
 	[262201063] = {
@@ -4586,7 +4586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1968,
+		['AttriEquipValue'] = 1895,
 		['StarLvID'] = 261010039
 		},
 	[262201064] = {
@@ -4596,7 +4596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 2045,
+		['AttriEquipValue'] = 1996,
 		['StarLvID'] = 261010040
 		},
 	[262201065] = {
@@ -4606,7 +4606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 2122,
+		['AttriEquipValue'] = 2098,
 		['StarLvID'] = 261010041
 		},
 	[262201066] = {
@@ -4696,7 +4696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 61,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261020008
 		},
 	[262202021] = {
@@ -4706,7 +4706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 72,
+		['AttriEquipValue'] = 58,
 		['StarLvID'] = 261020009
 		},
 	[262202022] = {
@@ -4716,7 +4716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 84,
+		['AttriEquipValue'] = 66,
 		['StarLvID'] = 261020010
 		},
 	[262202023] = {
@@ -4726,7 +4726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 95,
+		['AttriEquipValue'] = 75,
 		['StarLvID'] = 261020011
 		},
 	[262202024] = {
@@ -4736,7 +4736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 107,
+		['AttriEquipValue'] = 83,
 		['StarLvID'] = 261020012
 		},
 	[262202025] = {
@@ -4746,7 +4746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 118,
+		['AttriEquipValue'] = 91,
 		['StarLvID'] = 261020013
 		},
 	[262202026] = {
@@ -4756,7 +4756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 130,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261020014
 		},
 	[262202030] = {
@@ -4766,7 +4766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 144,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261020015
 		},
 	[262202031] = {
@@ -4776,7 +4776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 158,
+		['AttriEquipValue'] = 113,
 		['StarLvID'] = 261020016
 		},
 	[262202032] = {
@@ -4786,7 +4786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 172,
+		['AttriEquipValue'] = 126,
 		['StarLvID'] = 261020017
 		},
 	[262202033] = {
@@ -4796,7 +4796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 187,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261020018
 		},
 	[262202034] = {
@@ -4806,7 +4806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 201,
+		['AttriEquipValue'] = 153,
 		['StarLvID'] = 261020019
 		},
 	[262202035] = {
@@ -4816,7 +4816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 215,
+		['AttriEquipValue'] = 166,
 		['StarLvID'] = 261020020
 		},
 	[262202036] = {
@@ -4826,7 +4826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 230,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261020021
 		},
 	[262202040] = {
@@ -4836,7 +4836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 247,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261020022
 		},
 	[262202041] = {
@@ -4846,7 +4846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 264,
+		['AttriEquipValue'] = 198,
 		['StarLvID'] = 261020023
 		},
 	[262202042] = {
@@ -4856,7 +4856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 281,
+		['AttriEquipValue'] = 216,
 		['StarLvID'] = 261020024
 		},
 	[262202043] = {
@@ -4866,7 +4866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 298,
+		['AttriEquipValue'] = 235,
 		['StarLvID'] = 261020025
 		},
 	[262202044] = {
@@ -4876,7 +4876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 315,
+		['AttriEquipValue'] = 253,
 		['StarLvID'] = 261020026
 		},
 	[262202045] = {
@@ -4886,7 +4886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 332,
+		['AttriEquipValue'] = 271,
 		['StarLvID'] = 261020027
 		},
 	[262202046] = {
@@ -4896,7 +4896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 350,
+		['AttriEquipValue'] = 290,
 		['StarLvID'] = 261020028
 		},
 	[262202050] = {
@@ -4906,7 +4906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 370,
+		['AttriEquipValue'] = 300,
 		['StarLvID'] = 261020029
 		},
 	[262202051] = {
@@ -4916,7 +4916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 390,
+		['AttriEquipValue'] = 325,
 		['StarLvID'] = 261020030
 		},
 	[262202052] = {
@@ -4926,7 +4926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 410,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261020031
 		},
 	[262202053] = {
@@ -4936,7 +4936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 430,
+		['AttriEquipValue'] = 375,
 		['StarLvID'] = 261020032
 		},
 	[262202054] = {
@@ -4946,7 +4946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 450,
+		['AttriEquipValue'] = 400,
 		['StarLvID'] = 261020033
 		},
 	[262202055] = {
@@ -4956,7 +4956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 470,
+		['AttriEquipValue'] = 425,
 		['StarLvID'] = 261020034
 		},
 	[262202056] = {
@@ -4966,7 +4966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 490,
+		['AttriEquipValue'] = 450,
 		['StarLvID'] = 261020035
 		},
 	[262202060] = {
@@ -4976,7 +4976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 512,
+		['AttriEquipValue'] = 460,
 		['StarLvID'] = 261020036
 		},
 	[262202061] = {
@@ -4986,7 +4986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 535,
+		['AttriEquipValue'] = 491,
 		['StarLvID'] = 261020037
 		},
 	[262202062] = {
@@ -4996,7 +4996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 558,
+		['AttriEquipValue'] = 523,
 		['StarLvID'] = 261020038
 		},
 	[262202063] = {
@@ -5006,7 +5006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 581,
+		['AttriEquipValue'] = 555,
 		['StarLvID'] = 261020039
 		},
 	[262202064] = {
@@ -5016,7 +5016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 604,
+		['AttriEquipValue'] = 586,
 		['StarLvID'] = 261020040
 		},
 	[262202065] = {
@@ -5026,7 +5026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 627,
+		['AttriEquipValue'] = 618,
 		['StarLvID'] = 261020041
 		},
 	[262202066] = {
@@ -5046,7 +5046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 400,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261030001
 		},
 	[262203011] = {
@@ -5056,7 +5056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 730,
+		['AttriEquipValue'] = 640,
 		['StarLvID'] = 261030002
 		},
 	[262203012] = {
@@ -5066,7 +5066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1060,
+		['AttriEquipValue'] = 930,
 		['StarLvID'] = 261030003
 		},
 	[262203013] = {
@@ -5076,7 +5076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1400,
+		['AttriEquipValue'] = 1220,
 		['StarLvID'] = 261030004
 		},
 	[262203014] = {
@@ -5086,7 +5086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1730,
+		['AttriEquipValue'] = 1510,
 		['StarLvID'] = 261030005
 		},
 	[262203015] = {
@@ -5096,7 +5096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2060,
+		['AttriEquipValue'] = 1800,
 		['StarLvID'] = 261030006
 		},
 	[262203016] = {
@@ -5106,7 +5106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2400,
+		['AttriEquipValue'] = 2100,
 		['StarLvID'] = 261030007
 		},
 	[262203020] = {
@@ -5116,7 +5116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2870,
+		['AttriEquipValue'] = 2300,
 		['StarLvID'] = 261030008
 		},
 	[262203021] = {
@@ -5126,7 +5126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3340,
+		['AttriEquipValue'] = 2630,
 		['StarLvID'] = 261030009
 		},
 	[262203022] = {
@@ -5136,7 +5136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3810,
+		['AttriEquipValue'] = 2960,
 		['StarLvID'] = 261030010
 		},
 	[262203023] = {
@@ -5146,7 +5146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4280,
+		['AttriEquipValue'] = 3300,
 		['StarLvID'] = 261030011
 		},
 	[262203024] = {
@@ -5156,7 +5156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4750,
+		['AttriEquipValue'] = 3630,
 		['StarLvID'] = 261030012
 		},
 	[262203025] = {
@@ -5166,7 +5166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5220,
+		['AttriEquipValue'] = 3960,
 		['StarLvID'] = 261030013
 		},
 	[262203026] = {
@@ -5176,7 +5176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5700,
+		['AttriEquipValue'] = 4300,
 		['StarLvID'] = 261030014
 		},
 	[262203030] = {
@@ -5186,7 +5186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6280,
+		['AttriEquipValue'] = 4500,
 		['StarLvID'] = 261030015
 		},
 	[262203031] = {
@@ -5196,7 +5196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6870,
+		['AttriEquipValue'] = 5000,
 		['StarLvID'] = 261030016
 		},
 	[262203032] = {
@@ -5206,7 +5206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7450,
+		['AttriEquipValue'] = 5500,
 		['StarLvID'] = 261030017
 		},
 	[262203033] = {
@@ -5216,7 +5216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8040,
+		['AttriEquipValue'] = 6000,
 		['StarLvID'] = 261030018
 		},
 	[262203034] = {
@@ -5226,7 +5226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8620,
+		['AttriEquipValue'] = 6500,
 		['StarLvID'] = 261030019
 		},
 	[262203035] = {
@@ -5236,7 +5236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9210,
+		['AttriEquipValue'] = 7000,
 		['StarLvID'] = 261030020
 		},
 	[262203036] = {
@@ -5246,7 +5246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9800,
+		['AttriEquipValue'] = 7500,
 		['StarLvID'] = 261030021
 		},
 	[262203040] = {
@@ -5256,7 +5256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10400,
+		['AttriEquipValue'] = 7800,
 		['StarLvID'] = 261030022
 		},
 	[262203041] = {
@@ -5266,7 +5266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11000,
+		['AttriEquipValue'] = 8500,
 		['StarLvID'] = 261030023
 		},
 	[262203042] = {
@@ -5276,7 +5276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11600,
+		['AttriEquipValue'] = 9200,
 		['StarLvID'] = 261030024
 		},
 	[262203043] = {
@@ -5286,7 +5286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12200,
+		['AttriEquipValue'] = 9900,
 		['StarLvID'] = 261030025
 		},
 	[262203044] = {
@@ -5296,7 +5296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12800,
+		['AttriEquipValue'] = 10600,
 		['StarLvID'] = 261030026
 		},
 	[262203045] = {
@@ -5306,7 +5306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 13400,
+		['AttriEquipValue'] = 11300,
 		['StarLvID'] = 261030027
 		},
 	[262203046] = {
@@ -5316,7 +5316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14000,
+		['AttriEquipValue'] = 12000,
 		['StarLvID'] = 261030028
 		},
 	[262203050] = {
@@ -5326,7 +5326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14850,
+		['AttriEquipValue'] = 12400,
 		['StarLvID'] = 261030029
 		},
 	[262203051] = {
@@ -5336,7 +5336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15710,
+		['AttriEquipValue'] = 13300,
 		['StarLvID'] = 261030030
 		},
 	[262203052] = {
@@ -5346,7 +5346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 16570,
+		['AttriEquipValue'] = 14200,
 		['StarLvID'] = 261030031
 		},
 	[262203053] = {
@@ -5356,7 +5356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17420,
+		['AttriEquipValue'] = 15200,
 		['StarLvID'] = 261030032
 		},
 	[262203054] = {
@@ -5366,7 +5366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18280,
+		['AttriEquipValue'] = 16100,
 		['StarLvID'] = 261030033
 		},
 	[262203055] = {
@@ -5376,7 +5376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 19140,
+		['AttriEquipValue'] = 17000,
 		['StarLvID'] = 261030034
 		},
 	[262203056] = {
@@ -5386,7 +5386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 20000,
+		['AttriEquipValue'] = 18000,
 		['StarLvID'] = 261030035
 		},
 	[262203060] = {
@@ -5396,7 +5396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 21000,
+		['AttriEquipValue'] = 18600,
 		['StarLvID'] = 261030036
 		},
 	[262203061] = {
@@ -5406,7 +5406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 22000,
+		['AttriEquipValue'] = 20000,
 		['StarLvID'] = 261030037
 		},
 	[262203062] = {
@@ -5416,7 +5416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 23000,
+		['AttriEquipValue'] = 21400,
 		['StarLvID'] = 261030038
 		},
 	[262203063] = {
@@ -5426,7 +5426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 24000,
+		['AttriEquipValue'] = 22800,
 		['StarLvID'] = 261030039
 		},
 	[262203064] = {
@@ -5436,7 +5436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 25000,
+		['AttriEquipValue'] = 24200,
 		['StarLvID'] = 261030040
 		},
 	[262203065] = {
@@ -5446,7 +5446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 26000,
+		['AttriEquipValue'] = 25600,
 		['StarLvID'] = 261030041
 		},
 	[262203066] = {
@@ -5466,7 +5466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 300,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261040001
 		},
 	[262204011] = {
@@ -5476,7 +5476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 550,
+		['AttriEquipValue'] = 480,
 		['StarLvID'] = 261040002
 		},
 	[262204012] = {
@@ -5486,7 +5486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 700,
 		['StarLvID'] = 261040003
 		},
 	[262204013] = {
@@ -5496,7 +5496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1050,
+		['AttriEquipValue'] = 930,
 		['StarLvID'] = 261040004
 		},
 	[262204014] = {
@@ -5506,7 +5506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1300,
+		['AttriEquipValue'] = 1150,
 		['StarLvID'] = 261040005
 		},
 	[262204015] = {
@@ -5516,7 +5516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1550,
+		['AttriEquipValue'] = 1370,
 		['StarLvID'] = 261040006
 		},
 	[262204016] = {
@@ -5526,7 +5526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1800,
+		['AttriEquipValue'] = 1600,
 		['StarLvID'] = 261040007
 		},
 	[262204020] = {
@@ -5536,7 +5536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2140,
+		['AttriEquipValue'] = 1700,
 		['StarLvID'] = 261040008
 		},
 	[262204021] = {
@@ -5546,7 +5546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2480,
+		['AttriEquipValue'] = 1950,
 		['StarLvID'] = 261040009
 		},
 	[262204022] = {
@@ -5556,7 +5556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2820,
+		['AttriEquipValue'] = 2200,
 		['StarLvID'] = 261040010
 		},
 	[262204023] = {
@@ -5566,7 +5566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3170,
+		['AttriEquipValue'] = 2450,
 		['StarLvID'] = 261040011
 		},
 	[262204024] = {
@@ -5576,7 +5576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3510,
+		['AttriEquipValue'] = 2700,
 		['StarLvID'] = 261040012
 		},
 	[262204025] = {
@@ -5586,7 +5586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3850,
+		['AttriEquipValue'] = 2950,
 		['StarLvID'] = 261040013
 		},
 	[262204026] = {
@@ -5596,7 +5596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4200,
+		['AttriEquipValue'] = 3200,
 		['StarLvID'] = 261040014
 		},
 	[262204030] = {
@@ -5606,7 +5606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4620,
+		['AttriEquipValue'] = 3300,
 		['StarLvID'] = 261040015
 		},
 	[262204031] = {
@@ -5616,7 +5616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5050,
+		['AttriEquipValue'] = 3680,
 		['StarLvID'] = 261040016
 		},
 	[262204032] = {
@@ -5626,7 +5626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5480,
+		['AttriEquipValue'] = 4060,
 		['StarLvID'] = 261040017
 		},
 	[262204033] = {
@@ -5636,7 +5636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5910,
+		['AttriEquipValue'] = 4450,
 		['StarLvID'] = 261040018
 		},
 	[262204034] = {
@@ -5646,7 +5646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6340,
+		['AttriEquipValue'] = 4830,
 		['StarLvID'] = 261040019
 		},
 	[262204035] = {
@@ -5656,7 +5656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6770,
+		['AttriEquipValue'] = 5210,
 		['StarLvID'] = 261040020
 		},
 	[262204036] = {
@@ -5666,7 +5666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7200,
+		['AttriEquipValue'] = 5600,
 		['StarLvID'] = 261040021
 		},
 	[262204040] = {
@@ -5676,7 +5676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7600,
+		['AttriEquipValue'] = 5800,
 		['StarLvID'] = 261040022
 		},
 	[262204041] = {
@@ -5686,7 +5686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8000,
+		['AttriEquipValue'] = 6300,
 		['StarLvID'] = 261040023
 		},
 	[262204042] = {
@@ -5696,7 +5696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8400,
+		['AttriEquipValue'] = 6800,
 		['StarLvID'] = 261040024
 		},
 	[262204043] = {
@@ -5706,7 +5706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8800,
+		['AttriEquipValue'] = 7400,
 		['StarLvID'] = 261040025
 		},
 	[262204044] = {
@@ -5716,7 +5716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9200,
+		['AttriEquipValue'] = 7900,
 		['StarLvID'] = 261040026
 		},
 	[262204045] = {
@@ -5726,7 +5726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9600,
+		['AttriEquipValue'] = 8400,
 		['StarLvID'] = 261040027
 		},
 	[262204046] = {
@@ -5736,7 +5736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 9000,
 		['StarLvID'] = 261040028
 		},
 	[262204050] = {
@@ -5746,7 +5746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10710,
+		['AttriEquipValue'] = 9300,
 		['StarLvID'] = 261040029
 		},
 	[262204051] = {
@@ -5756,7 +5756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11420,
+		['AttriEquipValue'] = 10000,
 		['StarLvID'] = 261040030
 		},
 	[262204052] = {
@@ -5766,7 +5766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12140,
+		['AttriEquipValue'] = 10800,
 		['StarLvID'] = 261040031
 		},
 	[262204053] = {
@@ -5776,7 +5776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12850,
+		['AttriEquipValue'] = 11600,
 		['StarLvID'] = 261040032
 		},
 	[262204054] = {
@@ -5786,7 +5786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 13570,
+		['AttriEquipValue'] = 12400,
 		['StarLvID'] = 261040033
 		},
 	[262204055] = {
@@ -5796,7 +5796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14280,
+		['AttriEquipValue'] = 13200,
 		['StarLvID'] = 261040034
 		},
 	[262204056] = {
@@ -5806,7 +5806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15000,
+		['AttriEquipValue'] = 14000,
 		['StarLvID'] = 261040035
 		},
 	[262204060] = {
@@ -5816,7 +5816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15710,
+		['AttriEquipValue'] = 14500,
 		['StarLvID'] = 261040036
 		},
 	[262204061] = {
@@ -5826,7 +5826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 16420,
+		['AttriEquipValue'] = 15400,
 		['StarLvID'] = 261040037
 		},
 	[262204062] = {
@@ -5836,7 +5836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17140,
+		['AttriEquipValue'] = 16300,
 		['StarLvID'] = 261040038
 		},
 	[262204063] = {
@@ -5846,7 +5846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17850,
+		['AttriEquipValue'] = 17200,
 		['StarLvID'] = 261040039
 		},
 	[262204064] = {
@@ -5856,7 +5856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18570,
+		['AttriEquipValue'] = 18100,
 		['StarLvID'] = 261040040
 		},
 	[262204065] = {
@@ -5866,7 +5866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 19280,
+		['AttriEquipValue'] = 19000,
 		['StarLvID'] = 261040041
 		},
 	[262204066] = {
@@ -5886,7 +5886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 18,
+		['AttriEquipValue'] = 16,
 		['StarLvID'] = 261050001
 		},
 	[262205011] = {
@@ -5896,7 +5896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 33,
+		['AttriEquipValue'] = 30,
 		['StarLvID'] = 261050002
 		},
 	[262205012] = {
@@ -5906,7 +5906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 48,
+		['AttriEquipValue'] = 44,
 		['StarLvID'] = 261050003
 		},
 	[262205013] = {
@@ -5916,7 +5916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 64,
+		['AttriEquipValue'] = 58,
 		['StarLvID'] = 261050004
 		},
 	[262205014] = {
@@ -5926,7 +5926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 79,
+		['AttriEquipValue'] = 72,
 		['StarLvID'] = 261050005
 		},
 	[262205015] = {
@@ -5936,7 +5936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 94,
+		['AttriEquipValue'] = 86,
 		['StarLvID'] = 261050006
 		},
 	[262205016] = {
@@ -5946,7 +5946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 110,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261050007
 		},
 	[262205020] = {
@@ -5956,7 +5956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 132,
+		['AttriEquipValue'] = 110,
 		['StarLvID'] = 261050008
 		},
 	[262205021] = {
@@ -5966,7 +5966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 155,
+		['AttriEquipValue'] = 125,
 		['StarLvID'] = 261050009
 		},
 	[262205022] = {
@@ -5976,7 +5976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 178,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261050010
 		},
 	[262205023] = {
@@ -5986,7 +5986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 201,
+		['AttriEquipValue'] = 155,
 		['StarLvID'] = 261050011
 		},
 	[262205024] = {
@@ -5996,7 +5996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 224,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261050012
 		},
 	[262205025] = {
@@ -6006,7 +6006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 247,
+		['AttriEquipValue'] = 185,
 		['StarLvID'] = 261050013
 		},
 	[262205026] = {
@@ -6016,7 +6016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 270,
+		['AttriEquipValue'] = 200,
 		['StarLvID'] = 261050014
 		},
 	[262205030] = {
@@ -6026,7 +6026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 298,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261050015
 		},
 	[262205031] = {
@@ -6036,7 +6036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 327,
+		['AttriEquipValue'] = 235,
 		['StarLvID'] = 261050016
 		},
 	[262205032] = {
@@ -6046,7 +6046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 355,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261050017
 		},
 	[262205033] = {
@@ -6056,7 +6056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 384,
+		['AttriEquipValue'] = 285,
 		['StarLvID'] = 261050018
 		},
 	[262205034] = {
@@ -6066,7 +6066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 412,
+		['AttriEquipValue'] = 310,
 		['StarLvID'] = 261050019
 		},
 	[262205035] = {
@@ -6076,7 +6076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 441,
+		['AttriEquipValue'] = 335,
 		['StarLvID'] = 261050020
 		},
 	[262205036] = {
@@ -6086,7 +6086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 470,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261050021
 		},
 	[262205040] = {
@@ -6096,7 +6096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 502,
+		['AttriEquipValue'] = 370,
 		['StarLvID'] = 261050022
 		},
 	[262205041] = {
@@ -6106,7 +6106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 535,
+		['AttriEquipValue'] = 406,
 		['StarLvID'] = 261050023
 		},
 	[262205042] = {
@@ -6116,7 +6116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 568,
+		['AttriEquipValue'] = 443,
 		['StarLvID'] = 261050024
 		},
 	[262205043] = {
@@ -6126,7 +6126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 601,
+		['AttriEquipValue'] = 480,
 		['StarLvID'] = 261050025
 		},
 	[262205044] = {
@@ -6136,7 +6136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 634,
+		['AttriEquipValue'] = 516,
 		['StarLvID'] = 261050026
 		},
 	[262205045] = {
@@ -6146,7 +6146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 667,
+		['AttriEquipValue'] = 553,
 		['StarLvID'] = 261050027
 		},
 	[262205046] = {
@@ -6156,7 +6156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 700,
+		['AttriEquipValue'] = 590,
 		['StarLvID'] = 261050028
 		},
 	[262205050] = {
@@ -6166,7 +6166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 740,
+		['AttriEquipValue'] = 610,
 		['StarLvID'] = 261050029
 		},
 	[262205051] = {
@@ -6176,7 +6176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 780,
+		['AttriEquipValue'] = 660,
 		['StarLvID'] = 261050030
 		},
 	[262205052] = {
@@ -6186,7 +6186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 820,
+		['AttriEquipValue'] = 710,
 		['StarLvID'] = 261050031
 		},
 	[262205053] = {
@@ -6196,7 +6196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 860,
+		['AttriEquipValue'] = 760,
 		['StarLvID'] = 261050032
 		},
 	[262205054] = {
@@ -6206,7 +6206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 900,
+		['AttriEquipValue'] = 810,
 		['StarLvID'] = 261050033
 		},
 	[262205055] = {
@@ -6216,7 +6216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 940,
+		['AttriEquipValue'] = 860,
 		['StarLvID'] = 261050034
 		},
 	[262205056] = {
@@ -6226,7 +6226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 980,
+		['AttriEquipValue'] = 910,
 		['StarLvID'] = 261050035
 		},
 	[262205060] = {
@@ -6236,7 +6236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1025,
+		['AttriEquipValue'] = 940,
 		['StarLvID'] = 261050036
 		},
 	[262205061] = {
@@ -6246,7 +6246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1071,
+		['AttriEquipValue'] = 1000,
 		['StarLvID'] = 261050037
 		},
 	[262205062] = {
@@ -6256,7 +6256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1117,
+		['AttriEquipValue'] = 1060,
 		['StarLvID'] = 261050038
 		},
 	[262205063] = {
@@ -6266,7 +6266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1162,
+		['AttriEquipValue'] = 1120,
 		['StarLvID'] = 261050039
 		},
 	[262205064] = {
@@ -6276,7 +6276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1208,
+		['AttriEquipValue'] = 1180,
 		['StarLvID'] = 261050040
 		},
 	[262205065] = {
@@ -6286,7 +6286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1254,
+		['AttriEquipValue'] = 1240,
 		['StarLvID'] = 261050041
 		},
 	[262205066] = {
@@ -6306,7 +6306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 23,
+		['AttriEquipValue'] = 20,
 		['StarLvID'] = 261060001
 		},
 	[262206011] = {
@@ -6316,7 +6316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 42,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261060002
 		},
 	[262206012] = {
@@ -6326,7 +6326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 62,
+		['AttriEquipValue'] = 53,
 		['StarLvID'] = 261060003
 		},
 	[262206013] = {
@@ -6336,7 +6336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 81,
+		['AttriEquipValue'] = 70,
 		['StarLvID'] = 261060004
 		},
 	[262206014] = {
@@ -6346,7 +6346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 101,
+		['AttriEquipValue'] = 86,
 		['StarLvID'] = 261060005
 		},
 	[262206015] = {
@@ -6356,7 +6356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 120,
+		['AttriEquipValue'] = 103,
 		['StarLvID'] = 261060006
 		},
 	[262206016] = {
@@ -6366,7 +6366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 140,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261060007
 		},
 	[262206020] = {
@@ -6376,7 +6376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 167,
+		['AttriEquipValue'] = 130,
 		['StarLvID'] = 261060008
 		},
 	[262206021] = {
@@ -6386,7 +6386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 194,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261060009
 		},
 	[262206022] = {
@@ -6396,7 +6396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 221,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261060010
 		},
 	[262206023] = {
@@ -6406,7 +6406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 248,
+		['AttriEquipValue'] = 190,
 		['StarLvID'] = 261060011
 		},
 	[262206024] = {
@@ -6416,7 +6416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 275,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261060012
 		},
 	[262206025] = {
@@ -6426,7 +6426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 302,
+		['AttriEquipValue'] = 230,
 		['StarLvID'] = 261060013
 		},
 	[262206026] = {
@@ -6436,7 +6436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 330,
+		['AttriEquipValue'] = 250,
 		['StarLvID'] = 261060014
 		},
 	[262206030] = {
@@ -6446,7 +6446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 365,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261060015
 		},
 	[262206031] = {
@@ -6456,7 +6456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 401,
+		['AttriEquipValue'] = 290,
 		['StarLvID'] = 261060016
 		},
 	[262206032] = {
@@ -6466,7 +6466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 437,
+		['AttriEquipValue'] = 320,
 		['StarLvID'] = 261060017
 		},
 	[262206033] = {
@@ -6476,7 +6476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 472,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261060018
 		},
 	[262206034] = {
@@ -6486,7 +6486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 508,
+		['AttriEquipValue'] = 380,
 		['StarLvID'] = 261060019
 		},
 	[262206035] = {
@@ -6496,7 +6496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 544,
+		['AttriEquipValue'] = 410,
 		['StarLvID'] = 261060020
 		},
 	[262206036] = {
@@ -6506,7 +6506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 580,
+		['AttriEquipValue'] = 440,
 		['StarLvID'] = 261060021
 		},
 	[262206040] = {
@@ -6516,7 +6516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 621,
+		['AttriEquipValue'] = 450,
 		['StarLvID'] = 261060022
 		},
 	[262206041] = {
@@ -6526,7 +6526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 662,
+		['AttriEquipValue'] = 496,
 		['StarLvID'] = 261060023
 		},
 	[262206042] = {
@@ -6536,7 +6536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 704,
+		['AttriEquipValue'] = 543,
 		['StarLvID'] = 261060024
 		},
 	[262206043] = {
@@ -6546,7 +6546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 745,
+		['AttriEquipValue'] = 590,
 		['StarLvID'] = 261060025
 		},
 	[262206044] = {
@@ -6556,7 +6556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 787,
+		['AttriEquipValue'] = 636,
 		['StarLvID'] = 261060026
 		},
 	[262206045] = {
@@ -6566,7 +6566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 828,
+		['AttriEquipValue'] = 683,
 		['StarLvID'] = 261060027
 		},
 	[262206046] = {
@@ -6576,7 +6576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 870,
+		['AttriEquipValue'] = 730,
 		['StarLvID'] = 261060028
 		},
 	[262206050] = {
@@ -6586,7 +6586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 918,
+		['AttriEquipValue'] = 750,
 		['StarLvID'] = 261060029
 		},
 	[262206051] = {
@@ -6596,7 +6596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 967,
+		['AttriEquipValue'] = 811,
 		['StarLvID'] = 261060030
 		},
 	[262206052] = {
@@ -6606,7 +6606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1015,
+		['AttriEquipValue'] = 873,
 		['StarLvID'] = 261060031
 		},
 	[262206053] = {
@@ -6616,7 +6616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1064,
+		['AttriEquipValue'] = 935,
 		['StarLvID'] = 261060032
 		},
 	[262206054] = {
@@ -6626,7 +6626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1112,
+		['AttriEquipValue'] = 996,
 		['StarLvID'] = 261060033
 		},
 	[262206055] = {
@@ -6636,7 +6636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1161,
+		['AttriEquipValue'] = 1058,
 		['StarLvID'] = 261060034
 		},
 	[262206056] = {
@@ -6646,7 +6646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1210,
+		['AttriEquipValue'] = 1120,
 		['StarLvID'] = 261060035
 		},
 	[262206060] = {
@@ -6656,7 +6656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1265,
+		['AttriEquipValue'] = 1150,
 		['StarLvID'] = 261060036
 		},
 	[262206061] = {
@@ -6666,7 +6666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1321,
+		['AttriEquipValue'] = 1225,
 		['StarLvID'] = 261060037
 		},
 	[262206062] = {
@@ -6676,7 +6676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1377,
+		['AttriEquipValue'] = 1300,
 		['StarLvID'] = 261060038
 		},
 	[262206063] = {
@@ -6686,7 +6686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1432,
+		['AttriEquipValue'] = 1375,
 		['StarLvID'] = 261060039
 		},
 	[262206064] = {
@@ -6696,7 +6696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1488,
+		['AttriEquipValue'] = 1450,
 		['StarLvID'] = 261060040
 		},
 	[262206065] = {
@@ -6706,7 +6706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1544,
+		['AttriEquipValue'] = 1525,
 		['StarLvID'] = 261060041
 		},
 	[262206066] = {
@@ -6726,7 +6726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 330,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261070001
 		},
 	[262207011] = {
@@ -6736,7 +6736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 600,
+		['AttriEquipValue'] = 510,
 		['StarLvID'] = 261070002
 		},
 	[262207012] = {
@@ -6746,7 +6746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 880,
+		['AttriEquipValue'] = 750,
 		['StarLvID'] = 261070003
 		},
 	[262207013] = {
@@ -6756,7 +6756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1160,
+		['AttriEquipValue'] = 990,
 		['StarLvID'] = 261070004
 		},
 	[262207014] = {
@@ -6766,7 +6766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1440,
+		['AttriEquipValue'] = 1220,
 		['StarLvID'] = 261070005
 		},
 	[262207015] = {
@@ -6776,7 +6776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1720,
+		['AttriEquipValue'] = 1460,
 		['StarLvID'] = 261070006
 		},
 	[262207016] = {
@@ -6786,7 +6786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2000,
+		['AttriEquipValue'] = 1700,
 		['StarLvID'] = 261070007
 		},
 	[262207020] = {
@@ -6796,7 +6796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2370,
+		['AttriEquipValue'] = 1800,
 		['StarLvID'] = 261070008
 		},
 	[262207021] = {
@@ -6806,7 +6806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2740,
+		['AttriEquipValue'] = 2080,
 		['StarLvID'] = 261070009
 		},
 	[262207022] = {
@@ -6816,7 +6816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3110,
+		['AttriEquipValue'] = 2360,
 		['StarLvID'] = 261070010
 		},
 	[262207023] = {
@@ -6826,7 +6826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3480,
+		['AttriEquipValue'] = 2650,
 		['StarLvID'] = 261070011
 		},
 	[262207024] = {
@@ -6836,7 +6836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3850,
+		['AttriEquipValue'] = 2930,
 		['StarLvID'] = 261070012
 		},
 	[262207025] = {
@@ -6846,7 +6846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4220,
+		['AttriEquipValue'] = 3210,
 		['StarLvID'] = 261070013
 		},
 	[262207026] = {
@@ -6856,7 +6856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4600,
+		['AttriEquipValue'] = 3500,
 		['StarLvID'] = 261070014
 		},
 	[262207030] = {
@@ -6866,7 +6866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5080,
+		['AttriEquipValue'] = 3600,
 		['StarLvID'] = 261070015
 		},
 	[262207031] = {
@@ -6876,7 +6876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5570,
+		['AttriEquipValue'] = 4010,
 		['StarLvID'] = 261070016
 		},
 	[262207032] = {
@@ -6886,7 +6886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6050,
+		['AttriEquipValue'] = 4430,
 		['StarLvID'] = 261070017
 		},
 	[262207033] = {
@@ -6896,7 +6896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6540,
+		['AttriEquipValue'] = 4850,
 		['StarLvID'] = 261070018
 		},
 	[262207034] = {
@@ -6906,7 +6906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7020,
+		['AttriEquipValue'] = 5260,
 		['StarLvID'] = 261070019
 		},
 	[262207035] = {
@@ -6916,7 +6916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7510,
+		['AttriEquipValue'] = 5680,
 		['StarLvID'] = 261070020
 		},
 	[262207036] = {
@@ -6926,7 +6926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8000,
+		['AttriEquipValue'] = 6100,
 		['StarLvID'] = 261070021
 		},
 	[262207040] = {
@@ -6936,7 +6936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8570,
+		['AttriEquipValue'] = 6300,
 		['StarLvID'] = 261070022
 		},
 	[262207041] = {
@@ -6946,7 +6946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9140,
+		['AttriEquipValue'] = 6900,
 		['StarLvID'] = 261070023
 		},
 	[262207042] = {
@@ -6956,7 +6956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9710,
+		['AttriEquipValue'] = 7500,
 		['StarLvID'] = 261070024
 		},
 	[262207043] = {
@@ -6966,7 +6966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10280,
+		['AttriEquipValue'] = 8100,
 		['StarLvID'] = 261070025
 		},
 	[262207044] = {
@@ -6976,7 +6976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10850,
+		['AttriEquipValue'] = 8700,
 		['StarLvID'] = 261070026
 		},
 	[262207045] = {
@@ -6986,7 +6986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11420,
+		['AttriEquipValue'] = 9300,
 		['StarLvID'] = 261070027
 		},
 	[262207046] = {
@@ -6996,7 +6996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12000,
+		['AttriEquipValue'] = 10000,
 		['StarLvID'] = 261070028
 		},
 	[262207050] = {
@@ -7006,7 +7006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12570,
+		['AttriEquipValue'] = 10300,
 		['StarLvID'] = 261070029
 		},
 	[262207051] = {
@@ -7016,7 +7016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 13140,
+		['AttriEquipValue'] = 11000,
 		['StarLvID'] = 261070030
 		},
 	[262207052] = {
@@ -7026,7 +7026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 13710,
+		['AttriEquipValue'] = 11800,
 		['StarLvID'] = 261070031
 		},
 	[262207053] = {
@@ -7036,7 +7036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14280,
+		['AttriEquipValue'] = 12600,
 		['StarLvID'] = 261070032
 		},
 	[262207054] = {
@@ -7046,7 +7046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14850,
+		['AttriEquipValue'] = 13400,
 		['StarLvID'] = 261070033
 		},
 	[262207055] = {
@@ -7056,7 +7056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15420,
+		['AttriEquipValue'] = 14200,
 		['StarLvID'] = 261070034
 		},
 	[262207056] = {
@@ -7066,7 +7066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 16000,
+		['AttriEquipValue'] = 15000,
 		['StarLvID'] = 261070035
 		},
 	[262207060] = {
@@ -7076,7 +7076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 16850,
+		['AttriEquipValue'] = 15500,
 		['StarLvID'] = 261070036
 		},
 	[262207061] = {
@@ -7086,7 +7086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17710,
+		['AttriEquipValue'] = 16500,
 		['StarLvID'] = 261070037
 		},
 	[262207062] = {
@@ -7096,7 +7096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18570,
+		['AttriEquipValue'] = 17600,
 		['StarLvID'] = 261070038
 		},
 	[262207063] = {
@@ -7106,7 +7106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 19420,
+		['AttriEquipValue'] = 18700,
 		['StarLvID'] = 261070039
 		},
 	[262207064] = {
@@ -7116,7 +7116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 20280,
+		['AttriEquipValue'] = 19800,
 		['StarLvID'] = 261070040
 		},
 	[262207065] = {
@@ -7126,7 +7126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 21140,
+		['AttriEquipValue'] = 20900,
 		['StarLvID'] = 261070041
 		},
 	[262207066] = {
@@ -7146,7 +7146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 10,
+		['AttriEquipValue'] = 8,
 		['StarLvID'] = 261080001
 		},
 	[262208011] = {
@@ -7156,7 +7156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 18,
+		['AttriEquipValue'] = 15,
 		['StarLvID'] = 261080002
 		},
 	[262208012] = {
@@ -7166,7 +7166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 26,
+		['AttriEquipValue'] = 22,
 		['StarLvID'] = 261080003
 		},
 	[262208013] = {
@@ -7176,7 +7176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 35,
+		['AttriEquipValue'] = 29,
 		['StarLvID'] = 261080004
 		},
 	[262208014] = {
@@ -7186,7 +7186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 43,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261080005
 		},
 	[262208015] = {
@@ -7196,7 +7196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 51,
+		['AttriEquipValue'] = 43,
 		['StarLvID'] = 261080006
 		},
 	[262208016] = {
@@ -7206,7 +7206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261080007
 		},
 	[262208020] = {
@@ -7216,7 +7216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 71,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261080008
 		},
 	[262208021] = {
@@ -7226,7 +7226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 82,
+		['AttriEquipValue'] = 58,
 		['StarLvID'] = 261080009
 		},
 	[262208022] = {
@@ -7236,7 +7236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 94,
+		['AttriEquipValue'] = 66,
 		['StarLvID'] = 261080010
 		},
 	[262208023] = {
@@ -7246,7 +7246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 105,
+		['AttriEquipValue'] = 75,
 		['StarLvID'] = 261080011
 		},
 	[262208024] = {
@@ -7256,7 +7256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 117,
+		['AttriEquipValue'] = 83,
 		['StarLvID'] = 261080012
 		},
 	[262208025] = {
@@ -7266,7 +7266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 128,
+		['AttriEquipValue'] = 91,
 		['StarLvID'] = 261080013
 		},
 	[262208026] = {
@@ -7276,7 +7276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 140,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261080014
 		},
 	[262208030] = {
@@ -7286,7 +7286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 154,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261080015
 		},
 	[262208031] = {
@@ -7296,7 +7296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 168,
+		['AttriEquipValue'] = 113,
 		['StarLvID'] = 261080016
 		},
 	[262208032] = {
@@ -7306,7 +7306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 182,
+		['AttriEquipValue'] = 126,
 		['StarLvID'] = 261080017
 		},
 	[262208033] = {
@@ -7316,7 +7316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 197,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261080018
 		},
 	[262208034] = {
@@ -7326,7 +7326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 211,
+		['AttriEquipValue'] = 153,
 		['StarLvID'] = 261080019
 		},
 	[262208035] = {
@@ -7336,7 +7336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 225,
+		['AttriEquipValue'] = 166,
 		['StarLvID'] = 261080020
 		},
 	[262208036] = {
@@ -7346,7 +7346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 240,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261080021
 		},
 	[262208040] = {
@@ -7356,7 +7356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 257,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261080022
 		},
 	[262208041] = {
@@ -7366,7 +7366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 274,
+		['AttriEquipValue'] = 200,
 		['StarLvID'] = 261080023
 		},
 	[262208042] = {
@@ -7376,7 +7376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 291,
+		['AttriEquipValue'] = 220,
 		['StarLvID'] = 261080024
 		},
 	[262208043] = {
@@ -7386,7 +7386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 308,
+		['AttriEquipValue'] = 240,
 		['StarLvID'] = 261080025
 		},
 	[262208044] = {
@@ -7396,7 +7396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 325,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261080026
 		},
 	[262208045] = {
@@ -7406,7 +7406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 342,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261080027
 		},
 	[262208046] = {
@@ -7416,7 +7416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 360,
+		['AttriEquipValue'] = 300,
 		['StarLvID'] = 261080028
 		},
 	[262208050] = {
@@ -7426,7 +7426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 380,
+		['AttriEquipValue'] = 310,
 		['StarLvID'] = 261080029
 		},
 	[262208051] = {
@@ -7436,7 +7436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 400,
+		['AttriEquipValue'] = 335,
 		['StarLvID'] = 261080030
 		},
 	[262208052] = {
@@ -7446,7 +7446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 420,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261080031
 		},
 	[262208053] = {
@@ -7456,7 +7456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 440,
+		['AttriEquipValue'] = 385,
 		['StarLvID'] = 261080032
 		},
 	[262208054] = {
@@ -7466,7 +7466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 460,
+		['AttriEquipValue'] = 410,
 		['StarLvID'] = 261080033
 		},
 	[262208055] = {
@@ -7476,7 +7476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 480,
+		['AttriEquipValue'] = 435,
 		['StarLvID'] = 261080034
 		},
 	[262208056] = {
@@ -7486,7 +7486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 500,
+		['AttriEquipValue'] = 460,
 		['StarLvID'] = 261080035
 		},
 	[262208060] = {
@@ -7496,7 +7496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 522,
+		['AttriEquipValue'] = 470,
 		['StarLvID'] = 261080036
 		},
 	[262208061] = {
@@ -7506,7 +7506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 545,
+		['AttriEquipValue'] = 501,
 		['StarLvID'] = 261080037
 		},
 	[262208062] = {
@@ -7516,7 +7516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 568,
+		['AttriEquipValue'] = 533,
 		['StarLvID'] = 261080038
 		},
 	[262208063] = {
@@ -7526,7 +7526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 591,
+		['AttriEquipValue'] = 565,
 		['StarLvID'] = 261080039
 		},
 	[262208064] = {
@@ -7536,7 +7536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 614,
+		['AttriEquipValue'] = 596,
 		['StarLvID'] = 261080040
 		},
 	[262208065] = {
@@ -7546,7 +7546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 637,
+		['AttriEquipValue'] = 628,
 		['StarLvID'] = 261080041
 		},
 	[262208066] = {
@@ -7566,7 +7566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 26,
+		['AttriEquipValue'] = 23,
 		['StarLvID'] = 261090001
 		},
 	[262209011] = {
@@ -7576,7 +7576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 48,
+		['AttriEquipValue'] = 42,
 		['StarLvID'] = 261090002
 		},
 	[262209012] = {
@@ -7586,7 +7586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 70,
+		['AttriEquipValue'] = 62,
 		['StarLvID'] = 261090003
 		},
 	[262209013] = {
@@ -7596,7 +7596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 93,
+		['AttriEquipValue'] = 81,
 		['StarLvID'] = 261090004
 		},
 	[262209014] = {
@@ -7606,7 +7606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 115,
+		['AttriEquipValue'] = 101,
 		['StarLvID'] = 261090005
 		},
 	[262209015] = {
@@ -7616,7 +7616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 137,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261090006
 		},
 	[262209016] = {
@@ -7626,7 +7626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 160,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261090007
 		},
 	[262209020] = {
@@ -7636,7 +7636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 191,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261090008
 		},
 	[262209021] = {
@@ -7646,7 +7646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 222,
+		['AttriEquipValue'] = 171,
 		['StarLvID'] = 261090009
 		},
 	[262209022] = {
@@ -7656,7 +7656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 254,
+		['AttriEquipValue'] = 193,
 		['StarLvID'] = 261090010
 		},
 	[262209023] = {
@@ -7666,7 +7666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 285,
+		['AttriEquipValue'] = 215,
 		['StarLvID'] = 261090011
 		},
 	[262209024] = {
@@ -7676,7 +7676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 317,
+		['AttriEquipValue'] = 236,
 		['StarLvID'] = 261090012
 		},
 	[262209025] = {
@@ -7686,7 +7686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 348,
+		['AttriEquipValue'] = 258,
 		['StarLvID'] = 261090013
 		},
 	[262209026] = {
@@ -7696,7 +7696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 380,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261090014
 		},
 	[262209030] = {
@@ -7706,7 +7706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 418,
+		['AttriEquipValue'] = 290,
 		['StarLvID'] = 261090015
 		},
 	[262209031] = {
@@ -7716,7 +7716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 457,
+		['AttriEquipValue'] = 325,
 		['StarLvID'] = 261090016
 		},
 	[262209032] = {
@@ -7726,7 +7726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 495,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261090017
 		},
 	[262209033] = {
@@ -7736,7 +7736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 534,
+		['AttriEquipValue'] = 395,
 		['StarLvID'] = 261090018
 		},
 	[262209034] = {
@@ -7746,7 +7746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 572,
+		['AttriEquipValue'] = 430,
 		['StarLvID'] = 261090019
 		},
 	[262209035] = {
@@ -7756,7 +7756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 611,
+		['AttriEquipValue'] = 465,
 		['StarLvID'] = 261090020
 		},
 	[262209036] = {
@@ -7766,7 +7766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 650,
+		['AttriEquipValue'] = 500,
 		['StarLvID'] = 261090021
 		},
 	[262209040] = {
@@ -7776,7 +7776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 697,
+		['AttriEquipValue'] = 520,
 		['StarLvID'] = 261090022
 		},
 	[262209041] = {
@@ -7786,7 +7786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 744,
+		['AttriEquipValue'] = 570,
 		['StarLvID'] = 261090023
 		},
 	[262209042] = {
@@ -7796,7 +7796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 791,
+		['AttriEquipValue'] = 620,
 		['StarLvID'] = 261090024
 		},
 	[262209043] = {
@@ -7806,7 +7806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 838,
+		['AttriEquipValue'] = 670,
 		['StarLvID'] = 261090025
 		},
 	[262209044] = {
@@ -7816,7 +7816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 885,
+		['AttriEquipValue'] = 720,
 		['StarLvID'] = 261090026
 		},
 	[262209045] = {
@@ -7826,7 +7826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 932,
+		['AttriEquipValue'] = 770,
 		['StarLvID'] = 261090027
 		},
 	[262209046] = {
@@ -7836,7 +7836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 980,
+		['AttriEquipValue'] = 820,
 		['StarLvID'] = 261090028
 		},
 	[262209050] = {
@@ -7846,7 +7846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 1034,
+		['AttriEquipValue'] = 850,
 		['StarLvID'] = 261090029
 		},
 	[262209051] = {
@@ -7856,7 +7856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 1088,
+		['AttriEquipValue'] = 918,
 		['StarLvID'] = 261090030
 		},
 	[262209052] = {
@@ -7866,7 +7866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 1142,
+		['AttriEquipValue'] = 986,
 		['StarLvID'] = 261090031
 		},
 	[262209053] = {
@@ -7876,7 +7876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 1197,
+		['AttriEquipValue'] = 1055,
 		['StarLvID'] = 261090032
 		},
 	[262209054] = {
@@ -7886,7 +7886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 1251,
+		['AttriEquipValue'] = 1123,
 		['StarLvID'] = 261090033
 		},
 	[262209055] = {
@@ -7896,7 +7896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 1305,
+		['AttriEquipValue'] = 1191,
 		['StarLvID'] = 261090034
 		},
 	[262209056] = {
@@ -7906,7 +7906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 1360,
+		['AttriEquipValue'] = 1260,
 		['StarLvID'] = 261090035
 		},
 	[262209060] = {
@@ -7916,7 +7916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 1422,
+		['AttriEquipValue'] = 1300,
 		['StarLvID'] = 261090036
 		},
 	[262209061] = {
@@ -7926,7 +7926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 1485,
+		['AttriEquipValue'] = 1383,
 		['StarLvID'] = 261090037
 		},
 	[262209062] = {
@@ -7936,7 +7936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 1548,
+		['AttriEquipValue'] = 1466,
 		['StarLvID'] = 261090038
 		},
 	[262209063] = {
@@ -7946,7 +7946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 1611,
+		['AttriEquipValue'] = 1550,
 		['StarLvID'] = 261090039
 		},
 	[262209064] = {
@@ -7956,7 +7956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 1674,
+		['AttriEquipValue'] = 1633,
 		['StarLvID'] = 261090040
 		},
 	[262209065] = {
@@ -7966,7 +7966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 8,
-		['AttriEquipValue'] = 1737,
+		['AttriEquipValue'] = 1716,
 		['StarLvID'] = 261090041
 		},
 	[262209066] = {
@@ -8056,7 +8056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 72,
+		['AttriEquipValue'] = 60,
 		['StarLvID'] = 261100008
 		},
 	[262210021] = {
@@ -8066,7 +8066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 85,
+		['AttriEquipValue'] = 70,
 		['StarLvID'] = 261100009
 		},
 	[262210022] = {
@@ -8076,7 +8076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 98,
+		['AttriEquipValue'] = 80,
 		['StarLvID'] = 261100010
 		},
 	[262210023] = {
@@ -8086,7 +8086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 111,
+		['AttriEquipValue'] = 90,
 		['StarLvID'] = 261100011
 		},
 	[262210024] = {
@@ -8096,7 +8096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 124,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261100012
 		},
 	[262210025] = {
@@ -8106,7 +8106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 137,
+		['AttriEquipValue'] = 110,
 		['StarLvID'] = 261100013
 		},
 	[262210026] = {
@@ -8116,7 +8116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 150,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261100014
 		},
 	[262210030] = {
@@ -8126,7 +8126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 167,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261100015
 		},
 	[262210031] = {
@@ -8136,7 +8136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 184,
+		['AttriEquipValue'] = 135,
 		['StarLvID'] = 261100016
 		},
 	[262210032] = {
@@ -8146,7 +8146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 201,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261100017
 		},
 	[262210033] = {
@@ -8156,7 +8156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 218,
+		['AttriEquipValue'] = 165,
 		['StarLvID'] = 261100018
 		},
 	[262210034] = {
@@ -8166,7 +8166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 235,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261100019
 		},
 	[262210035] = {
@@ -8176,7 +8176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 252,
+		['AttriEquipValue'] = 195,
 		['StarLvID'] = 261100020
 		},
 	[262210036] = {
@@ -8186,7 +8186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 270,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261100021
 		},
 	[262210040] = {
@@ -8196,7 +8196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 288,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261100022
 		},
 	[262210041] = {
@@ -8206,7 +8206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 307,
+		['AttriEquipValue'] = 231,
 		['StarLvID'] = 261100023
 		},
 	[262210042] = {
@@ -8216,7 +8216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 325,
+		['AttriEquipValue'] = 253,
 		['StarLvID'] = 261100024
 		},
 	[262210043] = {
@@ -8226,7 +8226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 344,
+		['AttriEquipValue'] = 275,
 		['StarLvID'] = 261100025
 		},
 	[262210044] = {
@@ -8236,7 +8236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 362,
+		['AttriEquipValue'] = 296,
 		['StarLvID'] = 261100026
 		},
 	[262210045] = {
@@ -8246,7 +8246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 381,
+		['AttriEquipValue'] = 318,
 		['StarLvID'] = 261100027
 		},
 	[262210046] = {
@@ -8256,7 +8256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 400,
+		['AttriEquipValue'] = 340,
 		['StarLvID'] = 261100028
 		},
 	[262210050] = {
@@ -8266,7 +8266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 422,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261100029
 		},
 	[262210051] = {
@@ -8276,7 +8276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 445,
+		['AttriEquipValue'] = 378,
 		['StarLvID'] = 261100030
 		},
 	[262210052] = {
@@ -8286,7 +8286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 468,
+		['AttriEquipValue'] = 406,
 		['StarLvID'] = 261100031
 		},
 	[262210053] = {
@@ -8296,7 +8296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 491,
+		['AttriEquipValue'] = 435,
 		['StarLvID'] = 261100032
 		},
 	[262210054] = {
@@ -8306,7 +8306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 514,
+		['AttriEquipValue'] = 463,
 		['StarLvID'] = 261100033
 		},
 	[262210055] = {
@@ -8316,7 +8316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 537,
+		['AttriEquipValue'] = 491,
 		['StarLvID'] = 261100034
 		},
 	[262210056] = {
@@ -8326,7 +8326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 560,
+		['AttriEquipValue'] = 520,
 		['StarLvID'] = 261100035
 		},
 	[262210060] = {
@@ -8336,7 +8336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 587,
+		['AttriEquipValue'] = 530,
 		['StarLvID'] = 261100036
 		},
 	[262210061] = {
@@ -8346,7 +8346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 614,
+		['AttriEquipValue'] = 566,
 		['StarLvID'] = 261100037
 		},
 	[262210062] = {
@@ -8356,7 +8356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 641,
+		['AttriEquipValue'] = 603,
 		['StarLvID'] = 261100038
 		},
 	[262210063] = {
@@ -8366,7 +8366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 668,
+		['AttriEquipValue'] = 640,
 		['StarLvID'] = 261100039
 		},
 	[262210064] = {
@@ -8376,7 +8376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 695,
+		['AttriEquipValue'] = 676,
 		['StarLvID'] = 261100040
 		},
 	[262210065] = {
@@ -8386,7 +8386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 722,
+		['AttriEquipValue'] = 713,
 		['StarLvID'] = 261100041
 		},
 	[262210066] = {
@@ -8406,7 +8406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 30,
+		['AttriEquipValue'] = 28,
 		['StarLvID'] = 261010001
 		},
 	[262301011] = {
@@ -8416,7 +8416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 55,
+		['AttriEquipValue'] = 51,
 		['StarLvID'] = 261010002
 		},
 	[262301012] = {
@@ -8426,7 +8426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 80,
+		['AttriEquipValue'] = 75,
 		['StarLvID'] = 261010003
 		},
 	[262301013] = {
@@ -8436,7 +8436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 105,
+		['AttriEquipValue'] = 99,
 		['StarLvID'] = 261010004
 		},
 	[262301014] = {
@@ -8446,7 +8446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 130,
+		['AttriEquipValue'] = 122,
 		['StarLvID'] = 261010005
 		},
 	[262301015] = {
@@ -8456,7 +8456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 155,
+		['AttriEquipValue'] = 146,
 		['StarLvID'] = 261010006
 		},
 	[262301016] = {
@@ -8466,7 +8466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 180,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261010007
 		},
 	[262301020] = {
@@ -8476,7 +8476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 211,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261010008
 		},
 	[262301021] = {
@@ -8486,7 +8486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 242,
+		['AttriEquipValue'] = 208,
 		['StarLvID'] = 261010009
 		},
 	[262301022] = {
@@ -8496,7 +8496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 274,
+		['AttriEquipValue'] = 236,
 		['StarLvID'] = 261010010
 		},
 	[262301023] = {
@@ -8506,7 +8506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 305,
+		['AttriEquipValue'] = 265,
 		['StarLvID'] = 261010011
 		},
 	[262301024] = {
@@ -8516,7 +8516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 337,
+		['AttriEquipValue'] = 293,
 		['StarLvID'] = 261010012
 		},
 	[262301025] = {
@@ -8526,7 +8526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 368,
+		['AttriEquipValue'] = 321,
 		['StarLvID'] = 261010013
 		},
 	[262301026] = {
@@ -8536,7 +8536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 400,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261010014
 		},
 	[262301030] = {
@@ -8546,7 +8546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 442,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261010015
 		},
 	[262301031] = {
@@ -8556,7 +8556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 485,
+		['AttriEquipValue'] = 401,
 		['StarLvID'] = 261010016
 		},
 	[262301032] = {
@@ -8566,7 +8566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 528,
+		['AttriEquipValue'] = 443,
 		['StarLvID'] = 261010017
 		},
 	[262301033] = {
@@ -8576,7 +8576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 571,
+		['AttriEquipValue'] = 485,
 		['StarLvID'] = 261010018
 		},
 	[262301034] = {
@@ -8586,7 +8586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 614,
+		['AttriEquipValue'] = 526,
 		['StarLvID'] = 261010019
 		},
 	[262301035] = {
@@ -8596,7 +8596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 657,
+		['AttriEquipValue'] = 568,
 		['StarLvID'] = 261010020
 		},
 	[262301036] = {
@@ -8606,7 +8606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 700,
+		['AttriEquipValue'] = 610,
 		['StarLvID'] = 261010021
 		},
 	[262301040] = {
@@ -8616,7 +8616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 742,
+		['AttriEquipValue'] = 630,
 		['StarLvID'] = 261010022
 		},
 	[262301041] = {
@@ -8626,7 +8626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 785,
+		['AttriEquipValue'] = 693,
 		['StarLvID'] = 261010023
 		},
 	[262301042] = {
@@ -8636,7 +8636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 828,
+		['AttriEquipValue'] = 756,
 		['StarLvID'] = 261010024
 		},
 	[262301043] = {
@@ -8646,7 +8646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 871,
+		['AttriEquipValue'] = 820,
 		['StarLvID'] = 261010025
 		},
 	[262301044] = {
@@ -8656,7 +8656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 914,
+		['AttriEquipValue'] = 883,
 		['StarLvID'] = 261010026
 		},
 	[262301045] = {
@@ -8666,7 +8666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 957,
+		['AttriEquipValue'] = 946,
 		['StarLvID'] = 261010027
 		},
 	[262301046] = {
@@ -8676,7 +8676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1000,
+		['AttriEquipValue'] = 1010,
 		['StarLvID'] = 261010028
 		},
 	[262301050] = {
@@ -8686,7 +8686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1071,
+		['AttriEquipValue'] = 1050,
 		['StarLvID'] = 261010029
 		},
 	[262301051] = {
@@ -8696,7 +8696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1142,
+		['AttriEquipValue'] = 1131,
 		['StarLvID'] = 261010030
 		},
 	[262301052] = {
@@ -8706,7 +8706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1214,
+		['AttriEquipValue'] = 1213,
 		['StarLvID'] = 261010031
 		},
 	[262301053] = {
@@ -8716,7 +8716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1285,
+		['AttriEquipValue'] = 1295,
 		['StarLvID'] = 261010032
 		},
 	[262301054] = {
@@ -8726,7 +8726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1357,
+		['AttriEquipValue'] = 1376,
 		['StarLvID'] = 261010033
 		},
 	[262301055] = {
@@ -8736,7 +8736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1428,
+		['AttriEquipValue'] = 1458,
 		['StarLvID'] = 261010034
 		},
 	[262301056] = {
@@ -8746,7 +8746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1500,
+		['AttriEquipValue'] = 1540,
 		['StarLvID'] = 261010035
 		},
 	[262301060] = {
@@ -8756,7 +8756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1571,
+		['AttriEquipValue'] = 1590,
 		['StarLvID'] = 261010036
 		},
 	[262301061] = {
@@ -8766,7 +8766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1642,
+		['AttriEquipValue'] = 1691,
 		['StarLvID'] = 261010037
 		},
 	[262301062] = {
@@ -8776,7 +8776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1714,
+		['AttriEquipValue'] = 1793,
 		['StarLvID'] = 261010038
 		},
 	[262301063] = {
@@ -8786,7 +8786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1785,
+		['AttriEquipValue'] = 1895,
 		['StarLvID'] = 261010039
 		},
 	[262301064] = {
@@ -8796,7 +8796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1857,
+		['AttriEquipValue'] = 1996,
 		['StarLvID'] = 261010040
 		},
 	[262301065] = {
@@ -8806,7 +8806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1928,
+		['AttriEquipValue'] = 2098,
 		['StarLvID'] = 261010041
 		},
 	[262301066] = {
@@ -8816,7 +8816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 2000,
+		['AttriEquipValue'] = 2200,
 		['StarLvID'] = 261010042
 		},
 	[262302010] = {
@@ -8826,7 +8826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 10,
+		['AttriEquipValue'] = 8,
 		['StarLvID'] = 261020001
 		},
 	[262302011] = {
@@ -8836,7 +8836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 20,
+		['AttriEquipValue'] = 15,
 		['StarLvID'] = 261020002
 		},
 	[262302012] = {
@@ -8846,7 +8846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 30,
+		['AttriEquipValue'] = 22,
 		['StarLvID'] = 261020003
 		},
 	[262302013] = {
@@ -8856,7 +8856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 40,
+		['AttriEquipValue'] = 29,
 		['StarLvID'] = 261020004
 		},
 	[262302014] = {
@@ -8866,7 +8866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 50,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261020005
 		},
 	[262302015] = {
@@ -8876,7 +8876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 43,
 		['StarLvID'] = 261020006
 		},
 	[262302016] = {
@@ -8886,7 +8886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 70,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261020007
 		},
 	[262302020] = {
@@ -8896,7 +8896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 84,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261020008
 		},
 	[262302021] = {
@@ -8906,7 +8906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 98,
+		['AttriEquipValue'] = 58,
 		['StarLvID'] = 261020009
 		},
 	[262302022] = {
@@ -8916,7 +8916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 112,
+		['AttriEquipValue'] = 66,
 		['StarLvID'] = 261020010
 		},
 	[262302023] = {
@@ -8926,7 +8926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 127,
+		['AttriEquipValue'] = 75,
 		['StarLvID'] = 261020011
 		},
 	[262302024] = {
@@ -8936,7 +8936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 141,
+		['AttriEquipValue'] = 83,
 		['StarLvID'] = 261020012
 		},
 	[262302025] = {
@@ -8946,7 +8946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 155,
+		['AttriEquipValue'] = 91,
 		['StarLvID'] = 261020013
 		},
 	[262302026] = {
@@ -8956,7 +8956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 170,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261020014
 		},
 	[262302030] = {
@@ -8966,7 +8966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 188,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261020015
 		},
 	[262302031] = {
@@ -8976,7 +8976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 207,
+		['AttriEquipValue'] = 113,
 		['StarLvID'] = 261020016
 		},
 	[262302032] = {
@@ -8986,7 +8986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 225,
+		['AttriEquipValue'] = 126,
 		['StarLvID'] = 261020017
 		},
 	[262302033] = {
@@ -8996,7 +8996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 244,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261020018
 		},
 	[262302034] = {
@@ -9006,7 +9006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 262,
+		['AttriEquipValue'] = 153,
 		['StarLvID'] = 261020019
 		},
 	[262302035] = {
@@ -9016,7 +9016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 281,
+		['AttriEquipValue'] = 166,
 		['StarLvID'] = 261020020
 		},
 	[262302036] = {
@@ -9026,7 +9026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 300,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261020021
 		},
 	[262302040] = {
@@ -9036,7 +9036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 318,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261020022
 		},
 	[262302041] = {
@@ -9046,7 +9046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 337,
+		['AttriEquipValue'] = 198,
 		['StarLvID'] = 261020023
 		},
 	[262302042] = {
@@ -9056,7 +9056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 355,
+		['AttriEquipValue'] = 216,
 		['StarLvID'] = 261020024
 		},
 	[262302043] = {
@@ -9066,7 +9066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 374,
+		['AttriEquipValue'] = 235,
 		['StarLvID'] = 261020025
 		},
 	[262302044] = {
@@ -9076,7 +9076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 392,
+		['AttriEquipValue'] = 253,
 		['StarLvID'] = 261020026
 		},
 	[262302045] = {
@@ -9086,7 +9086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 411,
+		['AttriEquipValue'] = 271,
 		['StarLvID'] = 261020027
 		},
 	[262302046] = {
@@ -9096,7 +9096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 430,
+		['AttriEquipValue'] = 290,
 		['StarLvID'] = 261020028
 		},
 	[262302050] = {
@@ -9106,7 +9106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 454,
+		['AttriEquipValue'] = 300,
 		['StarLvID'] = 261020029
 		},
 	[262302051] = {
@@ -9116,7 +9116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 478,
+		['AttriEquipValue'] = 325,
 		['StarLvID'] = 261020030
 		},
 	[262302052] = {
@@ -9126,7 +9126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 502,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261020031
 		},
 	[262302053] = {
@@ -9136,7 +9136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 527,
+		['AttriEquipValue'] = 375,
 		['StarLvID'] = 261020032
 		},
 	[262302054] = {
@@ -9146,7 +9146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 551,
+		['AttriEquipValue'] = 400,
 		['StarLvID'] = 261020033
 		},
 	[262302055] = {
@@ -9156,7 +9156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 575,
+		['AttriEquipValue'] = 425,
 		['StarLvID'] = 261020034
 		},
 	[262302056] = {
@@ -9166,7 +9166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 600,
+		['AttriEquipValue'] = 450,
 		['StarLvID'] = 261020035
 		},
 	[262302060] = {
@@ -9176,7 +9176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 628,
+		['AttriEquipValue'] = 460,
 		['StarLvID'] = 261020036
 		},
 	[262302061] = {
@@ -9186,7 +9186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 657,
+		['AttriEquipValue'] = 491,
 		['StarLvID'] = 261020037
 		},
 	[262302062] = {
@@ -9196,7 +9196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 685,
+		['AttriEquipValue'] = 523,
 		['StarLvID'] = 261020038
 		},
 	[262302063] = {
@@ -9206,7 +9206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 714,
+		['AttriEquipValue'] = 555,
 		['StarLvID'] = 261020039
 		},
 	[262302064] = {
@@ -9216,7 +9216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 742,
+		['AttriEquipValue'] = 586,
 		['StarLvID'] = 261020040
 		},
 	[262302065] = {
@@ -9226,7 +9226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 771,
+		['AttriEquipValue'] = 618,
 		['StarLvID'] = 261020041
 		},
 	[262302066] = {
@@ -9236,7 +9236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 650,
 		['StarLvID'] = 261020042
 		},
 	[262303010] = {
@@ -9246,7 +9246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 400,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261030001
 		},
 	[262303011] = {
@@ -9256,7 +9256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 750,
+		['AttriEquipValue'] = 640,
 		['StarLvID'] = 261030002
 		},
 	[262303012] = {
@@ -9266,7 +9266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1100,
+		['AttriEquipValue'] = 930,
 		['StarLvID'] = 261030003
 		},
 	[262303013] = {
@@ -9276,7 +9276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1450,
+		['AttriEquipValue'] = 1220,
 		['StarLvID'] = 261030004
 		},
 	[262303014] = {
@@ -9286,7 +9286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1800,
+		['AttriEquipValue'] = 1510,
 		['StarLvID'] = 261030005
 		},
 	[262303015] = {
@@ -9296,7 +9296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2150,
+		['AttriEquipValue'] = 1800,
 		['StarLvID'] = 261030006
 		},
 	[262303016] = {
@@ -9306,7 +9306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2500,
+		['AttriEquipValue'] = 2100,
 		['StarLvID'] = 261030007
 		},
 	[262303020] = {
@@ -9316,7 +9316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3000,
+		['AttriEquipValue'] = 2300,
 		['StarLvID'] = 261030008
 		},
 	[262303021] = {
@@ -9326,7 +9326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3500,
+		['AttriEquipValue'] = 2630,
 		['StarLvID'] = 261030009
 		},
 	[262303022] = {
@@ -9336,7 +9336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4000,
+		['AttriEquipValue'] = 2960,
 		['StarLvID'] = 261030010
 		},
 	[262303023] = {
@@ -9346,7 +9346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4500,
+		['AttriEquipValue'] = 3300,
 		['StarLvID'] = 261030011
 		},
 	[262303024] = {
@@ -9356,7 +9356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5000,
+		['AttriEquipValue'] = 3630,
 		['StarLvID'] = 261030012
 		},
 	[262303025] = {
@@ -9366,7 +9366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5500,
+		['AttriEquipValue'] = 3960,
 		['StarLvID'] = 261030013
 		},
 	[262303026] = {
@@ -9376,7 +9376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6000,
+		['AttriEquipValue'] = 4300,
 		['StarLvID'] = 261030014
 		},
 	[262303030] = {
@@ -9386,7 +9386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6570,
+		['AttriEquipValue'] = 4500,
 		['StarLvID'] = 261030015
 		},
 	[262303031] = {
@@ -9396,7 +9396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7140,
+		['AttriEquipValue'] = 5000,
 		['StarLvID'] = 261030016
 		},
 	[262303032] = {
@@ -9406,7 +9406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7710,
+		['AttriEquipValue'] = 5500,
 		['StarLvID'] = 261030017
 		},
 	[262303033] = {
@@ -9416,7 +9416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8280,
+		['AttriEquipValue'] = 6000,
 		['StarLvID'] = 261030018
 		},
 	[262303034] = {
@@ -9426,7 +9426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8850,
+		['AttriEquipValue'] = 6500,
 		['StarLvID'] = 261030019
 		},
 	[262303035] = {
@@ -9436,7 +9436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9420,
+		['AttriEquipValue'] = 7000,
 		['StarLvID'] = 261030020
 		},
 	[262303036] = {
@@ -9446,7 +9446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 7500,
 		['StarLvID'] = 261030021
 		},
 	[262303040] = {
@@ -9456,7 +9456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10710,
+		['AttriEquipValue'] = 7800,
 		['StarLvID'] = 261030022
 		},
 	[262303041] = {
@@ -9466,7 +9466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11420,
+		['AttriEquipValue'] = 8500,
 		['StarLvID'] = 261030023
 		},
 	[262303042] = {
@@ -9476,7 +9476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12140,
+		['AttriEquipValue'] = 9200,
 		['StarLvID'] = 261030024
 		},
 	[262303043] = {
@@ -9486,7 +9486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12850,
+		['AttriEquipValue'] = 9900,
 		['StarLvID'] = 261030025
 		},
 	[262303044] = {
@@ -9496,7 +9496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 13570,
+		['AttriEquipValue'] = 10600,
 		['StarLvID'] = 261030026
 		},
 	[262303045] = {
@@ -9506,7 +9506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14280,
+		['AttriEquipValue'] = 11300,
 		['StarLvID'] = 261030027
 		},
 	[262303046] = {
@@ -9516,7 +9516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15000,
+		['AttriEquipValue'] = 12000,
 		['StarLvID'] = 261030028
 		},
 	[262303050] = {
@@ -9526,7 +9526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15850,
+		['AttriEquipValue'] = 12400,
 		['StarLvID'] = 261030029
 		},
 	[262303051] = {
@@ -9536,7 +9536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 16710,
+		['AttriEquipValue'] = 13300,
 		['StarLvID'] = 261030030
 		},
 	[262303052] = {
@@ -9546,7 +9546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17570,
+		['AttriEquipValue'] = 14200,
 		['StarLvID'] = 261030031
 		},
 	[262303053] = {
@@ -9556,7 +9556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18420,
+		['AttriEquipValue'] = 15200,
 		['StarLvID'] = 261030032
 		},
 	[262303054] = {
@@ -9566,7 +9566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 19280,
+		['AttriEquipValue'] = 16100,
 		['StarLvID'] = 261030033
 		},
 	[262303055] = {
@@ -9576,7 +9576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 20140,
+		['AttriEquipValue'] = 17000,
 		['StarLvID'] = 261030034
 		},
 	[262303056] = {
@@ -9586,7 +9586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 21000,
+		['AttriEquipValue'] = 18000,
 		['StarLvID'] = 261030035
 		},
 	[262303060] = {
@@ -9596,7 +9596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 22000,
+		['AttriEquipValue'] = 18600,
 		['StarLvID'] = 261030036
 		},
 	[262303061] = {
@@ -9606,7 +9606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 23000,
+		['AttriEquipValue'] = 20000,
 		['StarLvID'] = 261030037
 		},
 	[262303062] = {
@@ -9616,7 +9616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 24000,
+		['AttriEquipValue'] = 21400,
 		['StarLvID'] = 261030038
 		},
 	[262303063] = {
@@ -9626,7 +9626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 25000,
+		['AttriEquipValue'] = 22800,
 		['StarLvID'] = 261030039
 		},
 	[262303064] = {
@@ -9636,7 +9636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 26000,
+		['AttriEquipValue'] = 24200,
 		['StarLvID'] = 261030040
 		},
 	[262303065] = {
@@ -9646,7 +9646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 27000,
+		['AttriEquipValue'] = 25600,
 		['StarLvID'] = 261030041
 		},
 	[262303066] = {
@@ -9656,7 +9656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 28000,
+		['AttriEquipValue'] = 27000,
 		['StarLvID'] = 261030042
 		},
 	[262304010] = {
@@ -9666,7 +9666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 300,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261040001
 		},
 	[262304011] = {
@@ -9676,7 +9676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 550,
+		['AttriEquipValue'] = 480,
 		['StarLvID'] = 261040002
 		},
 	[262304012] = {
@@ -9686,7 +9686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 700,
 		['StarLvID'] = 261040003
 		},
 	[262304013] = {
@@ -9696,7 +9696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1050,
+		['AttriEquipValue'] = 930,
 		['StarLvID'] = 261040004
 		},
 	[262304014] = {
@@ -9706,7 +9706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1300,
+		['AttriEquipValue'] = 1150,
 		['StarLvID'] = 261040005
 		},
 	[262304015] = {
@@ -9716,7 +9716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1550,
+		['AttriEquipValue'] = 1370,
 		['StarLvID'] = 261040006
 		},
 	[262304016] = {
@@ -9726,7 +9726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1800,
+		['AttriEquipValue'] = 1600,
 		['StarLvID'] = 261040007
 		},
 	[262304020] = {
@@ -9736,7 +9736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2140,
+		['AttriEquipValue'] = 1700,
 		['StarLvID'] = 261040008
 		},
 	[262304021] = {
@@ -9746,7 +9746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2480,
+		['AttriEquipValue'] = 1950,
 		['StarLvID'] = 261040009
 		},
 	[262304022] = {
@@ -9756,7 +9756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2820,
+		['AttriEquipValue'] = 2200,
 		['StarLvID'] = 261040010
 		},
 	[262304023] = {
@@ -9766,7 +9766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3170,
+		['AttriEquipValue'] = 2450,
 		['StarLvID'] = 261040011
 		},
 	[262304024] = {
@@ -9776,7 +9776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3510,
+		['AttriEquipValue'] = 2700,
 		['StarLvID'] = 261040012
 		},
 	[262304025] = {
@@ -9786,7 +9786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3850,
+		['AttriEquipValue'] = 2950,
 		['StarLvID'] = 261040013
 		},
 	[262304026] = {
@@ -9796,7 +9796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4200,
+		['AttriEquipValue'] = 3200,
 		['StarLvID'] = 261040014
 		},
 	[262304030] = {
@@ -9806,7 +9806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4620,
+		['AttriEquipValue'] = 3300,
 		['StarLvID'] = 261040015
 		},
 	[262304031] = {
@@ -9816,7 +9816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5050,
+		['AttriEquipValue'] = 3680,
 		['StarLvID'] = 261040016
 		},
 	[262304032] = {
@@ -9826,7 +9826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5480,
+		['AttriEquipValue'] = 4060,
 		['StarLvID'] = 261040017
 		},
 	[262304033] = {
@@ -9836,7 +9836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5910,
+		['AttriEquipValue'] = 4450,
 		['StarLvID'] = 261040018
 		},
 	[262304034] = {
@@ -9846,7 +9846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6340,
+		['AttriEquipValue'] = 4830,
 		['StarLvID'] = 261040019
 		},
 	[262304035] = {
@@ -9856,7 +9856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6770,
+		['AttriEquipValue'] = 5210,
 		['StarLvID'] = 261040020
 		},
 	[262304036] = {
@@ -9866,7 +9866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7200,
+		['AttriEquipValue'] = 5600,
 		['StarLvID'] = 261040021
 		},
 	[262304040] = {
@@ -9876,7 +9876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7600,
+		['AttriEquipValue'] = 5800,
 		['StarLvID'] = 261040022
 		},
 	[262304041] = {
@@ -9886,7 +9886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8000,
+		['AttriEquipValue'] = 6300,
 		['StarLvID'] = 261040023
 		},
 	[262304042] = {
@@ -9896,7 +9896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8400,
+		['AttriEquipValue'] = 6800,
 		['StarLvID'] = 261040024
 		},
 	[262304043] = {
@@ -9906,7 +9906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8800,
+		['AttriEquipValue'] = 7400,
 		['StarLvID'] = 261040025
 		},
 	[262304044] = {
@@ -9916,7 +9916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9200,
+		['AttriEquipValue'] = 7900,
 		['StarLvID'] = 261040026
 		},
 	[262304045] = {
@@ -9926,7 +9926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9600,
+		['AttriEquipValue'] = 8400,
 		['StarLvID'] = 261040027
 		},
 	[262304046] = {
@@ -9936,7 +9936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 9000,
 		['StarLvID'] = 261040028
 		},
 	[262304050] = {
@@ -9946,7 +9946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 9300,
 		['StarLvID'] = 261040029
 		},
 	[262304051] = {
@@ -9966,7 +9966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 10800,
 		['StarLvID'] = 261040031
 		},
 	[262304053] = {
@@ -9976,7 +9976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 11600,
 		['StarLvID'] = 261040032
 		},
 	[262304054] = {
@@ -9986,7 +9986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 12400,
 		['StarLvID'] = 261040033
 		},
 	[262304055] = {
@@ -9996,7 +9996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 13200,
 		['StarLvID'] = 261040034
 		},
 	[262304056] = {
@@ -10006,7 +10006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 14000,
 		['StarLvID'] = 261040035
 		},
 	[262304060] = {
@@ -10016,7 +10016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11420,
+		['AttriEquipValue'] = 14500,
 		['StarLvID'] = 261040036
 		},
 	[262304061] = {
@@ -10026,7 +10026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12850,
+		['AttriEquipValue'] = 15400,
 		['StarLvID'] = 261040037
 		},
 	[262304062] = {
@@ -10036,7 +10036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14280,
+		['AttriEquipValue'] = 16300,
 		['StarLvID'] = 261040038
 		},
 	[262304063] = {
@@ -10046,7 +10046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15710,
+		['AttriEquipValue'] = 17200,
 		['StarLvID'] = 261040039
 		},
 	[262304064] = {
@@ -10056,7 +10056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17140,
+		['AttriEquipValue'] = 18100,
 		['StarLvID'] = 261040040
 		},
 	[262304065] = {
@@ -10066,7 +10066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18570,
+		['AttriEquipValue'] = 19000,
 		['StarLvID'] = 261040041
 		},
 	[262304066] = {
@@ -10086,7 +10086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 40,
+		['AttriEquipValue'] = 16,
 		['StarLvID'] = 261050001
 		},
 	[262305011] = {
@@ -10096,7 +10096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 50,
+		['AttriEquipValue'] = 30,
 		['StarLvID'] = 261050002
 		},
 	[262305012] = {
@@ -10106,7 +10106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 44,
 		['StarLvID'] = 261050003
 		},
 	[262305013] = {
@@ -10116,7 +10116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 70,
+		['AttriEquipValue'] = 58,
 		['StarLvID'] = 261050004
 		},
 	[262305014] = {
@@ -10126,7 +10126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 80,
+		['AttriEquipValue'] = 72,
 		['StarLvID'] = 261050005
 		},
 	[262305015] = {
@@ -10136,7 +10136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 90,
+		['AttriEquipValue'] = 86,
 		['StarLvID'] = 261050006
 		},
 	[262305016] = {
@@ -10156,7 +10156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 120,
+		['AttriEquipValue'] = 110,
 		['StarLvID'] = 261050008
 		},
 	[262305021] = {
@@ -10166,7 +10166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 140,
+		['AttriEquipValue'] = 125,
 		['StarLvID'] = 261050009
 		},
 	[262305022] = {
@@ -10176,7 +10176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 160,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261050010
 		},
 	[262305023] = {
@@ -10186,7 +10186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 180,
+		['AttriEquipValue'] = 155,
 		['StarLvID'] = 261050011
 		},
 	[262305024] = {
@@ -10196,7 +10196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 200,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261050012
 		},
 	[262305025] = {
@@ -10206,7 +10206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 220,
+		['AttriEquipValue'] = 185,
 		['StarLvID'] = 261050013
 		},
 	[262305026] = {
@@ -10216,7 +10216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 240,
+		['AttriEquipValue'] = 200,
 		['StarLvID'] = 261050014
 		},
 	[262305030] = {
@@ -10226,7 +10226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 267,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261050015
 		},
 	[262305031] = {
@@ -10236,7 +10236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 294,
+		['AttriEquipValue'] = 235,
 		['StarLvID'] = 261050016
 		},
 	[262305032] = {
@@ -10246,7 +10246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 321,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261050017
 		},
 	[262305033] = {
@@ -10256,7 +10256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 348,
+		['AttriEquipValue'] = 285,
 		['StarLvID'] = 261050018
 		},
 	[262305034] = {
@@ -10266,7 +10266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 375,
+		['AttriEquipValue'] = 310,
 		['StarLvID'] = 261050019
 		},
 	[262305035] = {
@@ -10276,7 +10276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 402,
+		['AttriEquipValue'] = 335,
 		['StarLvID'] = 261050020
 		},
 	[262305036] = {
@@ -10286,7 +10286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 430,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261050021
 		},
 	[262305040] = {
@@ -10296,7 +10296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 461,
+		['AttriEquipValue'] = 370,
 		['StarLvID'] = 261050022
 		},
 	[262305041] = {
@@ -10306,7 +10306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 492,
+		['AttriEquipValue'] = 406,
 		['StarLvID'] = 261050023
 		},
 	[262305042] = {
@@ -10316,7 +10316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 524,
+		['AttriEquipValue'] = 443,
 		['StarLvID'] = 261050024
 		},
 	[262305043] = {
@@ -10326,7 +10326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 555,
+		['AttriEquipValue'] = 480,
 		['StarLvID'] = 261050025
 		},
 	[262305044] = {
@@ -10336,7 +10336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 587,
+		['AttriEquipValue'] = 516,
 		['StarLvID'] = 261050026
 		},
 	[262305045] = {
@@ -10346,7 +10346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 618,
+		['AttriEquipValue'] = 553,
 		['StarLvID'] = 261050027
 		},
 	[262305046] = {
@@ -10356,7 +10356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 650,
+		['AttriEquipValue'] = 590,
 		['StarLvID'] = 261050028
 		},
 	[262305050] = {
@@ -10366,7 +10366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 685,
+		['AttriEquipValue'] = 610,
 		['StarLvID'] = 261050029
 		},
 	[262305051] = {
@@ -10376,7 +10376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 721,
+		['AttriEquipValue'] = 660,
 		['StarLvID'] = 261050030
 		},
 	[262305052] = {
@@ -10386,7 +10386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 757,
+		['AttriEquipValue'] = 710,
 		['StarLvID'] = 261050031
 		},
 	[262305053] = {
@@ -10396,7 +10396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 792,
+		['AttriEquipValue'] = 760,
 		['StarLvID'] = 261050032
 		},
 	[262305054] = {
@@ -10406,7 +10406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 828,
+		['AttriEquipValue'] = 810,
 		['StarLvID'] = 261050033
 		},
 	[262305055] = {
@@ -10416,7 +10416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 864,
+		['AttriEquipValue'] = 860,
 		['StarLvID'] = 261050034
 		},
 	[262305056] = {
@@ -10426,7 +10426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 900,
+		['AttriEquipValue'] = 910,
 		['StarLvID'] = 261050035
 		},
 	[262305060] = {
@@ -10436,7 +10436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 942,
+		['AttriEquipValue'] = 940,
 		['StarLvID'] = 261050036
 		},
 	[262305061] = {
@@ -10446,7 +10446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 985,
+		['AttriEquipValue'] = 1000,
 		['StarLvID'] = 261050037
 		},
 	[262305062] = {
@@ -10456,7 +10456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1028,
+		['AttriEquipValue'] = 1060,
 		['StarLvID'] = 261050038
 		},
 	[262305063] = {
@@ -10466,7 +10466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1071,
+		['AttriEquipValue'] = 1120,
 		['StarLvID'] = 261050039
 		},
 	[262305064] = {
@@ -10476,7 +10476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1114,
+		['AttriEquipValue'] = 1180,
 		['StarLvID'] = 261050040
 		},
 	[262305065] = {
@@ -10486,7 +10486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1157,
+		['AttriEquipValue'] = 1240,
 		['StarLvID'] = 261050041
 		},
 	[262305066] = {
@@ -10496,7 +10496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1200,
+		['AttriEquipValue'] = 1300,
 		['StarLvID'] = 261050042
 		},
 	[262306010] = {
@@ -10506,7 +10506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 10,
+		['AttriEquipValue'] = 20,
 		['StarLvID'] = 261060001
 		},
 	[262306011] = {
@@ -10516,7 +10516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 30,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261060002
 		},
 	[262306012] = {
@@ -10526,7 +10526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 50,
+		['AttriEquipValue'] = 53,
 		['StarLvID'] = 261060003
 		},
 	[262306013] = {
@@ -10546,7 +10546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 90,
+		['AttriEquipValue'] = 86,
 		['StarLvID'] = 261060005
 		},
 	[262306015] = {
@@ -10556,7 +10556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 110,
+		['AttriEquipValue'] = 103,
 		['StarLvID'] = 261060006
 		},
 	[262306016] = {
@@ -10566,7 +10566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 130,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261060007
 		},
 	[262306020] = {
@@ -10576,7 +10576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 155,
+		['AttriEquipValue'] = 130,
 		['StarLvID'] = 261060008
 		},
 	[262306021] = {
@@ -10586,7 +10586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 181,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261060009
 		},
 	[262306022] = {
@@ -10596,7 +10596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 207,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261060010
 		},
 	[262306023] = {
@@ -10606,7 +10606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 232,
+		['AttriEquipValue'] = 190,
 		['StarLvID'] = 261060011
 		},
 	[262306024] = {
@@ -10616,7 +10616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 258,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261060012
 		},
 	[262306025] = {
@@ -10626,7 +10626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 284,
+		['AttriEquipValue'] = 230,
 		['StarLvID'] = 261060013
 		},
 	[262306026] = {
@@ -10636,7 +10636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 310,
+		['AttriEquipValue'] = 250,
 		['StarLvID'] = 261060014
 		},
 	[262306030] = {
@@ -10646,7 +10646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 342,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261060015
 		},
 	[262306031] = {
@@ -10656,7 +10656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 375,
+		['AttriEquipValue'] = 290,
 		['StarLvID'] = 261060016
 		},
 	[262306032] = {
@@ -10666,7 +10666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 408,
+		['AttriEquipValue'] = 320,
 		['StarLvID'] = 261060017
 		},
 	[262306033] = {
@@ -10676,7 +10676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 441,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261060018
 		},
 	[262306034] = {
@@ -10686,7 +10686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 474,
+		['AttriEquipValue'] = 380,
 		['StarLvID'] = 261060019
 		},
 	[262306035] = {
@@ -10696,7 +10696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 507,
+		['AttriEquipValue'] = 410,
 		['StarLvID'] = 261060020
 		},
 	[262306036] = {
@@ -10706,7 +10706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 540,
+		['AttriEquipValue'] = 440,
 		['StarLvID'] = 261060021
 		},
 	[262306040] = {
@@ -10716,7 +10716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 577,
+		['AttriEquipValue'] = 450,
 		['StarLvID'] = 261060022
 		},
 	[262306041] = {
@@ -10726,7 +10726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 614,
+		['AttriEquipValue'] = 496,
 		['StarLvID'] = 261060023
 		},
 	[262306042] = {
@@ -10736,7 +10736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 651,
+		['AttriEquipValue'] = 543,
 		['StarLvID'] = 261060024
 		},
 	[262306043] = {
@@ -10746,7 +10746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 688,
+		['AttriEquipValue'] = 590,
 		['StarLvID'] = 261060025
 		},
 	[262306044] = {
@@ -10756,7 +10756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 725,
+		['AttriEquipValue'] = 636,
 		['StarLvID'] = 261060026
 		},
 	[262306045] = {
@@ -10766,7 +10766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 762,
+		['AttriEquipValue'] = 683,
 		['StarLvID'] = 261060027
 		},
 	[262306046] = {
@@ -10776,7 +10776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 730,
 		['StarLvID'] = 261060028
 		},
 	[262306050] = {
@@ -10786,7 +10786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 847,
+		['AttriEquipValue'] = 750,
 		['StarLvID'] = 261060029
 		},
 	[262306051] = {
@@ -10796,7 +10796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 894,
+		['AttriEquipValue'] = 811,
 		['StarLvID'] = 261060030
 		},
 	[262306052] = {
@@ -10806,7 +10806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 941,
+		['AttriEquipValue'] = 873,
 		['StarLvID'] = 261060031
 		},
 	[262306053] = {
@@ -10816,7 +10816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 988,
+		['AttriEquipValue'] = 935,
 		['StarLvID'] = 261060032
 		},
 	[262306054] = {
@@ -10826,7 +10826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1035,
+		['AttriEquipValue'] = 996,
 		['StarLvID'] = 261060033
 		},
 	[262306055] = {
@@ -10836,7 +10836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1082,
+		['AttriEquipValue'] = 1058,
 		['StarLvID'] = 261060034
 		},
 	[262306056] = {
@@ -10846,7 +10846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1130,
+		['AttriEquipValue'] = 1120,
 		['StarLvID'] = 261060035
 		},
 	[262306060] = {
@@ -10856,7 +10856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1182,
+		['AttriEquipValue'] = 1150,
 		['StarLvID'] = 261060036
 		},
 	[262306061] = {
@@ -10866,7 +10866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1235,
+		['AttriEquipValue'] = 1225,
 		['StarLvID'] = 261060037
 		},
 	[262306062] = {
@@ -10876,7 +10876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1288,
+		['AttriEquipValue'] = 1300,
 		['StarLvID'] = 261060038
 		},
 	[262306063] = {
@@ -10886,7 +10886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1341,
+		['AttriEquipValue'] = 1375,
 		['StarLvID'] = 261060039
 		},
 	[262306064] = {
@@ -10896,7 +10896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1394,
+		['AttriEquipValue'] = 1450,
 		['StarLvID'] = 261060040
 		},
 	[262306065] = {
@@ -10906,7 +10906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1447,
+		['AttriEquipValue'] = 1525,
 		['StarLvID'] = 261060041
 		},
 	[262306066] = {
@@ -10916,7 +10916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1500,
+		['AttriEquipValue'] = 1600,
 		['StarLvID'] = 261060042
 		},
 	[262307010] = {
@@ -10926,7 +10926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 300,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261070001
 		},
 	[262307011] = {
@@ -10936,7 +10936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 550,
+		['AttriEquipValue'] = 510,
 		['StarLvID'] = 261070002
 		},
 	[262307012] = {
@@ -10946,7 +10946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 750,
 		['StarLvID'] = 261070003
 		},
 	[262307013] = {
@@ -10956,7 +10956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1050,
+		['AttriEquipValue'] = 990,
 		['StarLvID'] = 261070004
 		},
 	[262307014] = {
@@ -10966,7 +10966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1300,
+		['AttriEquipValue'] = 1220,
 		['StarLvID'] = 261070005
 		},
 	[262307015] = {
@@ -10976,7 +10976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1550,
+		['AttriEquipValue'] = 1460,
 		['StarLvID'] = 261070006
 		},
 	[262307016] = {
@@ -10986,7 +10986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1800,
+		['AttriEquipValue'] = 1700,
 		['StarLvID'] = 261070007
 		},
 	[262307020] = {
@@ -10996,7 +10996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2140,
+		['AttriEquipValue'] = 1800,
 		['StarLvID'] = 261070008
 		},
 	[262307021] = {
@@ -11006,7 +11006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2480,
+		['AttriEquipValue'] = 2080,
 		['StarLvID'] = 261070009
 		},
 	[262307022] = {
@@ -11016,7 +11016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2820,
+		['AttriEquipValue'] = 2360,
 		['StarLvID'] = 261070010
 		},
 	[262307023] = {
@@ -11026,7 +11026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3170,
+		['AttriEquipValue'] = 2650,
 		['StarLvID'] = 261070011
 		},
 	[262307024] = {
@@ -11036,7 +11036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3510,
+		['AttriEquipValue'] = 2930,
 		['StarLvID'] = 261070012
 		},
 	[262307025] = {
@@ -11046,7 +11046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3850,
+		['AttriEquipValue'] = 3210,
 		['StarLvID'] = 261070013
 		},
 	[262307026] = {
@@ -11056,7 +11056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4200,
+		['AttriEquipValue'] = 3500,
 		['StarLvID'] = 261070014
 		},
 	[262307030] = {
@@ -11066,7 +11066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4620,
+		['AttriEquipValue'] = 3600,
 		['StarLvID'] = 261070015
 		},
 	[262307031] = {
@@ -11076,7 +11076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5050,
+		['AttriEquipValue'] = 4010,
 		['StarLvID'] = 261070016
 		},
 	[262307032] = {
@@ -11086,7 +11086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5480,
+		['AttriEquipValue'] = 4430,
 		['StarLvID'] = 261070017
 		},
 	[262307033] = {
@@ -11096,7 +11096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5910,
+		['AttriEquipValue'] = 4850,
 		['StarLvID'] = 261070018
 		},
 	[262307034] = {
@@ -11106,7 +11106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6340,
+		['AttriEquipValue'] = 5260,
 		['StarLvID'] = 261070019
 		},
 	[262307035] = {
@@ -11116,7 +11116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6770,
+		['AttriEquipValue'] = 5680,
 		['StarLvID'] = 261070020
 		},
 	[262307036] = {
@@ -11126,7 +11126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7200,
+		['AttriEquipValue'] = 6100,
 		['StarLvID'] = 261070021
 		},
 	[262307040] = {
@@ -11136,7 +11136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7600,
+		['AttriEquipValue'] = 6300,
 		['StarLvID'] = 261070022
 		},
 	[262307041] = {
@@ -11146,7 +11146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8000,
+		['AttriEquipValue'] = 6900,
 		['StarLvID'] = 261070023
 		},
 	[262307042] = {
@@ -11156,7 +11156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8400,
+		['AttriEquipValue'] = 7500,
 		['StarLvID'] = 261070024
 		},
 	[262307043] = {
@@ -11166,7 +11166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8800,
+		['AttriEquipValue'] = 8100,
 		['StarLvID'] = 261070025
 		},
 	[262307044] = {
@@ -11176,7 +11176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9200,
+		['AttriEquipValue'] = 8700,
 		['StarLvID'] = 261070026
 		},
 	[262307045] = {
@@ -11186,7 +11186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9600,
+		['AttriEquipValue'] = 9300,
 		['StarLvID'] = 261070027
 		},
 	[262307046] = {
@@ -11206,7 +11206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 10300,
 		['StarLvID'] = 261070029
 		},
 	[262307051] = {
@@ -11216,7 +11216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 11000,
 		['StarLvID'] = 261070030
 		},
 	[262307052] = {
@@ -11226,7 +11226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 11800,
 		['StarLvID'] = 261070031
 		},
 	[262307053] = {
@@ -11236,7 +11236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 12600,
 		['StarLvID'] = 261070032
 		},
 	[262307054] = {
@@ -11246,7 +11246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 13400,
 		['StarLvID'] = 261070033
 		},
 	[262307055] = {
@@ -11256,7 +11256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 14200,
 		['StarLvID'] = 261070034
 		},
 	[262307056] = {
@@ -11266,7 +11266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 15000,
 		['StarLvID'] = 261070035
 		},
 	[262307060] = {
@@ -11276,7 +11276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11420,
+		['AttriEquipValue'] = 15500,
 		['StarLvID'] = 261070036
 		},
 	[262307061] = {
@@ -11286,7 +11286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12850,
+		['AttriEquipValue'] = 16500,
 		['StarLvID'] = 261070037
 		},
 	[262307062] = {
@@ -11296,7 +11296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14280,
+		['AttriEquipValue'] = 17600,
 		['StarLvID'] = 261070038
 		},
 	[262307063] = {
@@ -11306,7 +11306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15710,
+		['AttriEquipValue'] = 18700,
 		['StarLvID'] = 261070039
 		},
 	[262307064] = {
@@ -11316,7 +11316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17140,
+		['AttriEquipValue'] = 19800,
 		['StarLvID'] = 261070040
 		},
 	[262307065] = {
@@ -11326,7 +11326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18570,
+		['AttriEquipValue'] = 20900,
 		['StarLvID'] = 261070041
 		},
 	[262307066] = {
@@ -11336,7 +11336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 20000,
+		['AttriEquipValue'] = 22000,
 		['StarLvID'] = 261070042
 		},
 	[262308010] = {
@@ -11346,7 +11346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 20,
+		['AttriEquipValue'] = 8,
 		['StarLvID'] = 261080001
 		},
 	[262308011] = {
@@ -11356,7 +11356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 25,
+		['AttriEquipValue'] = 15,
 		['StarLvID'] = 261080002
 		},
 	[262308012] = {
@@ -11366,7 +11366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 30,
+		['AttriEquipValue'] = 22,
 		['StarLvID'] = 261080003
 		},
 	[262308013] = {
@@ -11376,7 +11376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 35,
+		['AttriEquipValue'] = 29,
 		['StarLvID'] = 261080004
 		},
 	[262308014] = {
@@ -11386,7 +11386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 40,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261080005
 		},
 	[262308015] = {
@@ -11396,7 +11396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 45,
+		['AttriEquipValue'] = 43,
 		['StarLvID'] = 261080006
 		},
 	[262308016] = {
@@ -11416,7 +11416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261080008
 		},
 	[262308021] = {
@@ -11426,7 +11426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 70,
+		['AttriEquipValue'] = 58,
 		['StarLvID'] = 261080009
 		},
 	[262308022] = {
@@ -11436,7 +11436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 80,
+		['AttriEquipValue'] = 66,
 		['StarLvID'] = 261080010
 		},
 	[262308023] = {
@@ -11446,7 +11446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 90,
+		['AttriEquipValue'] = 75,
 		['StarLvID'] = 261080011
 		},
 	[262308024] = {
@@ -11456,7 +11456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 100,
+		['AttriEquipValue'] = 83,
 		['StarLvID'] = 261080012
 		},
 	[262308025] = {
@@ -11466,7 +11466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 110,
+		['AttriEquipValue'] = 91,
 		['StarLvID'] = 261080013
 		},
 	[262308026] = {
@@ -11476,7 +11476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 120,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261080014
 		},
 	[262308030] = {
@@ -11486,7 +11486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 131,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261080015
 		},
 	[262308031] = {
@@ -11496,7 +11496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 142,
+		['AttriEquipValue'] = 113,
 		['StarLvID'] = 261080016
 		},
 	[262308032] = {
@@ -11506,7 +11506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 154,
+		['AttriEquipValue'] = 126,
 		['StarLvID'] = 261080017
 		},
 	[262308033] = {
@@ -11516,7 +11516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 165,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261080018
 		},
 	[262308034] = {
@@ -11526,7 +11526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 177,
+		['AttriEquipValue'] = 153,
 		['StarLvID'] = 261080019
 		},
 	[262308035] = {
@@ -11536,7 +11536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 188,
+		['AttriEquipValue'] = 166,
 		['StarLvID'] = 261080020
 		},
 	[262308036] = {
@@ -11546,7 +11546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 200,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261080021
 		},
 	[262308040] = {
@@ -11556,7 +11556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 217,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261080022
 		},
 	[262308041] = {
@@ -11566,7 +11566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 234,
+		['AttriEquipValue'] = 200,
 		['StarLvID'] = 261080023
 		},
 	[262308042] = {
@@ -11576,7 +11576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 251,
+		['AttriEquipValue'] = 220,
 		['StarLvID'] = 261080024
 		},
 	[262308043] = {
@@ -11586,7 +11586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 268,
+		['AttriEquipValue'] = 240,
 		['StarLvID'] = 261080025
 		},
 	[262308044] = {
@@ -11596,7 +11596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 285,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261080026
 		},
 	[262308045] = {
@@ -11606,7 +11606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 302,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261080027
 		},
 	[262308046] = {
@@ -11616,7 +11616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 320,
+		['AttriEquipValue'] = 300,
 		['StarLvID'] = 261080028
 		},
 	[262308050] = {
@@ -11626,7 +11626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 338,
+		['AttriEquipValue'] = 310,
 		['StarLvID'] = 261080029
 		},
 	[262308051] = {
@@ -11636,7 +11636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 357,
+		['AttriEquipValue'] = 335,
 		['StarLvID'] = 261080030
 		},
 	[262308052] = {
@@ -11646,7 +11646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 375,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261080031
 		},
 	[262308053] = {
@@ -11656,7 +11656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 394,
+		['AttriEquipValue'] = 385,
 		['StarLvID'] = 261080032
 		},
 	[262308054] = {
@@ -11666,7 +11666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 412,
+		['AttriEquipValue'] = 410,
 		['StarLvID'] = 261080033
 		},
 	[262308055] = {
@@ -11676,7 +11676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 431,
+		['AttriEquipValue'] = 435,
 		['StarLvID'] = 261080034
 		},
 	[262308056] = {
@@ -11686,7 +11686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 450,
+		['AttriEquipValue'] = 460,
 		['StarLvID'] = 261080035
 		},
 	[262308060] = {
@@ -11696,7 +11696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 471,
+		['AttriEquipValue'] = 470,
 		['StarLvID'] = 261080036
 		},
 	[262308061] = {
@@ -11706,7 +11706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 492,
+		['AttriEquipValue'] = 501,
 		['StarLvID'] = 261080037
 		},
 	[262308062] = {
@@ -11716,7 +11716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 514,
+		['AttriEquipValue'] = 533,
 		['StarLvID'] = 261080038
 		},
 	[262308063] = {
@@ -11726,7 +11726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 535,
+		['AttriEquipValue'] = 565,
 		['StarLvID'] = 261080039
 		},
 	[262308064] = {
@@ -11736,7 +11736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 557,
+		['AttriEquipValue'] = 596,
 		['StarLvID'] = 261080040
 		},
 	[262308065] = {
@@ -11746,7 +11746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 578,
+		['AttriEquipValue'] = 628,
 		['StarLvID'] = 261080041
 		},
 	[262308066] = {
@@ -11756,7 +11756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 600,
+		['AttriEquipValue'] = 660,
 		['StarLvID'] = 261080042
 		},
 	[262309010] = {
@@ -11766,7 +11766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 10,
+		['AttriEquipValue'] = 23,
 		['StarLvID'] = 261090001
 		},
 	[262309011] = {
@@ -11776,7 +11776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 35,
+		['AttriEquipValue'] = 42,
 		['StarLvID'] = 261090002
 		},
 	[262309012] = {
@@ -11786,7 +11786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 62,
 		['StarLvID'] = 261090003
 		},
 	[262309013] = {
@@ -11796,7 +11796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 85,
+		['AttriEquipValue'] = 81,
 		['StarLvID'] = 261090004
 		},
 	[262309014] = {
@@ -11806,7 +11806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 110,
+		['AttriEquipValue'] = 101,
 		['StarLvID'] = 261090005
 		},
 	[262309015] = {
@@ -11816,7 +11816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 135,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261090006
 		},
 	[262309016] = {
@@ -11826,7 +11826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 160,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261090007
 		},
 	[262309020] = {
@@ -11836,7 +11836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 191,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261090008
 		},
 	[262309021] = {
@@ -11846,7 +11846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 222,
+		['AttriEquipValue'] = 171,
 		['StarLvID'] = 261090009
 		},
 	[262309022] = {
@@ -11856,7 +11856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 254,
+		['AttriEquipValue'] = 193,
 		['StarLvID'] = 261090010
 		},
 	[262309023] = {
@@ -11866,7 +11866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 285,
+		['AttriEquipValue'] = 215,
 		['StarLvID'] = 261090011
 		},
 	[262309024] = {
@@ -11876,7 +11876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 317,
+		['AttriEquipValue'] = 236,
 		['StarLvID'] = 261090012
 		},
 	[262309025] = {
@@ -11886,7 +11886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 348,
+		['AttriEquipValue'] = 258,
 		['StarLvID'] = 261090013
 		},
 	[262309026] = {
@@ -11896,7 +11896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 380,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261090014
 		},
 	[262309030] = {
@@ -11906,7 +11906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 418,
+		['AttriEquipValue'] = 290,
 		['StarLvID'] = 261090015
 		},
 	[262309031] = {
@@ -11916,7 +11916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 457,
+		['AttriEquipValue'] = 325,
 		['StarLvID'] = 261090016
 		},
 	[262309032] = {
@@ -11926,7 +11926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 495,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261090017
 		},
 	[262309033] = {
@@ -11936,7 +11936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 534,
+		['AttriEquipValue'] = 395,
 		['StarLvID'] = 261090018
 		},
 	[262309034] = {
@@ -11946,7 +11946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 572,
+		['AttriEquipValue'] = 430,
 		['StarLvID'] = 261090019
 		},
 	[262309035] = {
@@ -11956,7 +11956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 611,
+		['AttriEquipValue'] = 465,
 		['StarLvID'] = 261090020
 		},
 	[262309036] = {
@@ -11966,7 +11966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 650,
+		['AttriEquipValue'] = 500,
 		['StarLvID'] = 261090021
 		},
 	[262309040] = {
@@ -11976,7 +11976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 697,
+		['AttriEquipValue'] = 520,
 		['StarLvID'] = 261090022
 		},
 	[262309041] = {
@@ -11986,7 +11986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 744,
+		['AttriEquipValue'] = 570,
 		['StarLvID'] = 261090023
 		},
 	[262309042] = {
@@ -11996,7 +11996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 791,
+		['AttriEquipValue'] = 620,
 		['StarLvID'] = 261090024
 		},
 	[262309043] = {
@@ -12006,7 +12006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 838,
+		['AttriEquipValue'] = 670,
 		['StarLvID'] = 261090025
 		},
 	[262309044] = {
@@ -12016,7 +12016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 885,
+		['AttriEquipValue'] = 720,
 		['StarLvID'] = 261090026
 		},
 	[262309045] = {
@@ -12026,7 +12026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 932,
+		['AttriEquipValue'] = 770,
 		['StarLvID'] = 261090027
 		},
 	[262309046] = {
@@ -12036,7 +12036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 980,
+		['AttriEquipValue'] = 820,
 		['StarLvID'] = 261090028
 		},
 	[262309050] = {
@@ -12046,7 +12046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 1034,
+		['AttriEquipValue'] = 850,
 		['StarLvID'] = 261090029
 		},
 	[262309051] = {
@@ -12056,7 +12056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 1088,
+		['AttriEquipValue'] = 918,
 		['StarLvID'] = 261090030
 		},
 	[262309052] = {
@@ -12066,7 +12066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 1142,
+		['AttriEquipValue'] = 986,
 		['StarLvID'] = 261090031
 		},
 	[262309053] = {
@@ -12076,7 +12076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 1197,
+		['AttriEquipValue'] = 1055,
 		['StarLvID'] = 261090032
 		},
 	[262309054] = {
@@ -12086,7 +12086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 1251,
+		['AttriEquipValue'] = 1123,
 		['StarLvID'] = 261090033
 		},
 	[262309055] = {
@@ -12096,7 +12096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 1305,
+		['AttriEquipValue'] = 1191,
 		['StarLvID'] = 261090034
 		},
 	[262309056] = {
@@ -12106,7 +12106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 1360,
+		['AttriEquipValue'] = 1260,
 		['StarLvID'] = 261090035
 		},
 	[262309060] = {
@@ -12116,7 +12116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 1422,
+		['AttriEquipValue'] = 1300,
 		['StarLvID'] = 261090036
 		},
 	[262309061] = {
@@ -12126,7 +12126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 1485,
+		['AttriEquipValue'] = 1383,
 		['StarLvID'] = 261090037
 		},
 	[262309062] = {
@@ -12136,7 +12136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 1548,
+		['AttriEquipValue'] = 1466,
 		['StarLvID'] = 261090038
 		},
 	[262309063] = {
@@ -12146,7 +12146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 1611,
+		['AttriEquipValue'] = 1550,
 		['StarLvID'] = 261090039
 		},
 	[262309064] = {
@@ -12156,7 +12156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 1674,
+		['AttriEquipValue'] = 1633,
 		['StarLvID'] = 261090040
 		},
 	[262309065] = {
@@ -12166,7 +12166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 5,
-		['AttriEquipValue'] = 1737,
+		['AttriEquipValue'] = 1716,
 		['StarLvID'] = 261090041
 		},
 	[262309066] = {
@@ -12256,7 +12256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 72,
+		['AttriEquipValue'] = 60,
 		['StarLvID'] = 261100008
 		},
 	[262310021] = {
@@ -12266,7 +12266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 85,
+		['AttriEquipValue'] = 70,
 		['StarLvID'] = 261100009
 		},
 	[262310022] = {
@@ -12276,7 +12276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 98,
+		['AttriEquipValue'] = 80,
 		['StarLvID'] = 261100010
 		},
 	[262310023] = {
@@ -12286,7 +12286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 111,
+		['AttriEquipValue'] = 90,
 		['StarLvID'] = 261100011
 		},
 	[262310024] = {
@@ -12296,7 +12296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 124,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261100012
 		},
 	[262310025] = {
@@ -12306,7 +12306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 137,
+		['AttriEquipValue'] = 110,
 		['StarLvID'] = 261100013
 		},
 	[262310026] = {
@@ -12316,7 +12316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 150,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261100014
 		},
 	[262310030] = {
@@ -12326,7 +12326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 167,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261100015
 		},
 	[262310031] = {
@@ -12336,7 +12336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 184,
+		['AttriEquipValue'] = 135,
 		['StarLvID'] = 261100016
 		},
 	[262310032] = {
@@ -12346,7 +12346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 201,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261100017
 		},
 	[262310033] = {
@@ -12356,7 +12356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 218,
+		['AttriEquipValue'] = 165,
 		['StarLvID'] = 261100018
 		},
 	[262310034] = {
@@ -12366,7 +12366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 235,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261100019
 		},
 	[262310035] = {
@@ -12376,7 +12376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 252,
+		['AttriEquipValue'] = 195,
 		['StarLvID'] = 261100020
 		},
 	[262310036] = {
@@ -12386,7 +12386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 270,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261100021
 		},
 	[262310040] = {
@@ -12396,7 +12396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 288,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261100022
 		},
 	[262310041] = {
@@ -12406,7 +12406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 307,
+		['AttriEquipValue'] = 231,
 		['StarLvID'] = 261100023
 		},
 	[262310042] = {
@@ -12416,7 +12416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 325,
+		['AttriEquipValue'] = 253,
 		['StarLvID'] = 261100024
 		},
 	[262310043] = {
@@ -12426,7 +12426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 344,
+		['AttriEquipValue'] = 275,
 		['StarLvID'] = 261100025
 		},
 	[262310044] = {
@@ -12436,7 +12436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 362,
+		['AttriEquipValue'] = 296,
 		['StarLvID'] = 261100026
 		},
 	[262310045] = {
@@ -12446,7 +12446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 381,
+		['AttriEquipValue'] = 318,
 		['StarLvID'] = 261100027
 		},
 	[262310046] = {
@@ -12456,7 +12456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 400,
+		['AttriEquipValue'] = 340,
 		['StarLvID'] = 261100028
 		},
 	[262310050] = {
@@ -12466,7 +12466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 422,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261100029
 		},
 	[262310051] = {
@@ -12476,7 +12476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 445,
+		['AttriEquipValue'] = 378,
 		['StarLvID'] = 261100030
 		},
 	[262310052] = {
@@ -12486,7 +12486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 468,
+		['AttriEquipValue'] = 406,
 		['StarLvID'] = 261100031
 		},
 	[262310053] = {
@@ -12496,7 +12496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 491,
+		['AttriEquipValue'] = 435,
 		['StarLvID'] = 261100032
 		},
 	[262310054] = {
@@ -12506,7 +12506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 514,
+		['AttriEquipValue'] = 463,
 		['StarLvID'] = 261100033
 		},
 	[262310055] = {
@@ -12516,7 +12516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 537,
+		['AttriEquipValue'] = 491,
 		['StarLvID'] = 261100034
 		},
 	[262310056] = {
@@ -12526,7 +12526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 560,
+		['AttriEquipValue'] = 520,
 		['StarLvID'] = 261100035
 		},
 	[262310060] = {
@@ -12536,7 +12536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 587,
+		['AttriEquipValue'] = 530,
 		['StarLvID'] = 261100036
 		},
 	[262310061] = {
@@ -12546,7 +12546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 614,
+		['AttriEquipValue'] = 566,
 		['StarLvID'] = 261100037
 		},
 	[262310062] = {
@@ -12556,7 +12556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 641,
+		['AttriEquipValue'] = 603,
 		['StarLvID'] = 261100038
 		},
 	[262310063] = {
@@ -12566,7 +12566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 668,
+		['AttriEquipValue'] = 640,
 		['StarLvID'] = 261100039
 		},
 	[262310064] = {
@@ -12576,7 +12576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 695,
+		['AttriEquipValue'] = 676,
 		['StarLvID'] = 261100040
 		},
 	[262310065] = {
@@ -12586,7 +12586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 722,
+		['AttriEquipValue'] = 713,
 		['StarLvID'] = 261100041
 		},
 	[262310066] = {
@@ -12606,7 +12606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 30,
+		['AttriEquipValue'] = 28,
 		['StarLvID'] = 261010001
 		},
 	[262401011] = {
@@ -12616,7 +12616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 55,
+		['AttriEquipValue'] = 51,
 		['StarLvID'] = 261010002
 		},
 	[262401012] = {
@@ -12626,7 +12626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 80,
+		['AttriEquipValue'] = 75,
 		['StarLvID'] = 261010003
 		},
 	[262401013] = {
@@ -12636,7 +12636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 105,
+		['AttriEquipValue'] = 99,
 		['StarLvID'] = 261010004
 		},
 	[262401014] = {
@@ -12646,7 +12646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 130,
+		['AttriEquipValue'] = 122,
 		['StarLvID'] = 261010005
 		},
 	[262401015] = {
@@ -12656,7 +12656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 155,
+		['AttriEquipValue'] = 146,
 		['StarLvID'] = 261010006
 		},
 	[262401016] = {
@@ -12666,7 +12666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 180,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261010007
 		},
 	[262401020] = {
@@ -12676,7 +12676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 211,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261010008
 		},
 	[262401021] = {
@@ -12686,7 +12686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 242,
+		['AttriEquipValue'] = 208,
 		['StarLvID'] = 261010009
 		},
 	[262401022] = {
@@ -12696,7 +12696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 274,
+		['AttriEquipValue'] = 236,
 		['StarLvID'] = 261010010
 		},
 	[262401023] = {
@@ -12706,7 +12706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 305,
+		['AttriEquipValue'] = 265,
 		['StarLvID'] = 261010011
 		},
 	[262401024] = {
@@ -12716,7 +12716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 337,
+		['AttriEquipValue'] = 293,
 		['StarLvID'] = 261010012
 		},
 	[262401025] = {
@@ -12726,7 +12726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 368,
+		['AttriEquipValue'] = 321,
 		['StarLvID'] = 261010013
 		},
 	[262401026] = {
@@ -12736,7 +12736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 400,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261010014
 		},
 	[262401030] = {
@@ -12746,7 +12746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 442,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261010015
 		},
 	[262401031] = {
@@ -12756,7 +12756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 485,
+		['AttriEquipValue'] = 401,
 		['StarLvID'] = 261010016
 		},
 	[262401032] = {
@@ -12766,7 +12766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 528,
+		['AttriEquipValue'] = 443,
 		['StarLvID'] = 261010017
 		},
 	[262401033] = {
@@ -12776,7 +12776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 571,
+		['AttriEquipValue'] = 485,
 		['StarLvID'] = 261010018
 		},
 	[262401034] = {
@@ -12786,7 +12786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 614,
+		['AttriEquipValue'] = 526,
 		['StarLvID'] = 261010019
 		},
 	[262401035] = {
@@ -12796,7 +12796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 657,
+		['AttriEquipValue'] = 568,
 		['StarLvID'] = 261010020
 		},
 	[262401036] = {
@@ -12806,7 +12806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 700,
+		['AttriEquipValue'] = 610,
 		['StarLvID'] = 261010021
 		},
 	[262401040] = {
@@ -12816,7 +12816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 742,
+		['AttriEquipValue'] = 630,
 		['StarLvID'] = 261010022
 		},
 	[262401041] = {
@@ -12826,7 +12826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 785,
+		['AttriEquipValue'] = 693,
 		['StarLvID'] = 261010023
 		},
 	[262401042] = {
@@ -12836,7 +12836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 828,
+		['AttriEquipValue'] = 756,
 		['StarLvID'] = 261010024
 		},
 	[262401043] = {
@@ -12846,7 +12846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 871,
+		['AttriEquipValue'] = 820,
 		['StarLvID'] = 261010025
 		},
 	[262401044] = {
@@ -12856,7 +12856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 914,
+		['AttriEquipValue'] = 883,
 		['StarLvID'] = 261010026
 		},
 	[262401045] = {
@@ -12866,7 +12866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 957,
+		['AttriEquipValue'] = 946,
 		['StarLvID'] = 261010027
 		},
 	[262401046] = {
@@ -12876,7 +12876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1000,
+		['AttriEquipValue'] = 1010,
 		['StarLvID'] = 261010028
 		},
 	[262401050] = {
@@ -12886,7 +12886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1071,
+		['AttriEquipValue'] = 1050,
 		['StarLvID'] = 261010029
 		},
 	[262401051] = {
@@ -12896,7 +12896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1142,
+		['AttriEquipValue'] = 1131,
 		['StarLvID'] = 261010030
 		},
 	[262401052] = {
@@ -12906,7 +12906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1214,
+		['AttriEquipValue'] = 1213,
 		['StarLvID'] = 261010031
 		},
 	[262401053] = {
@@ -12916,7 +12916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1285,
+		['AttriEquipValue'] = 1295,
 		['StarLvID'] = 261010032
 		},
 	[262401054] = {
@@ -12926,7 +12926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1357,
+		['AttriEquipValue'] = 1376,
 		['StarLvID'] = 261010033
 		},
 	[262401055] = {
@@ -12936,7 +12936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1428,
+		['AttriEquipValue'] = 1458,
 		['StarLvID'] = 261010034
 		},
 	[262401056] = {
@@ -12946,7 +12946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1500,
+		['AttriEquipValue'] = 1540,
 		['StarLvID'] = 261010035
 		},
 	[262401060] = {
@@ -12956,7 +12956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1571,
+		['AttriEquipValue'] = 1590,
 		['StarLvID'] = 261010036
 		},
 	[262401061] = {
@@ -12966,7 +12966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1642,
+		['AttriEquipValue'] = 1691,
 		['StarLvID'] = 261010037
 		},
 	[262401062] = {
@@ -12976,7 +12976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1714,
+		['AttriEquipValue'] = 1793,
 		['StarLvID'] = 261010038
 		},
 	[262401063] = {
@@ -12986,7 +12986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1785,
+		['AttriEquipValue'] = 1895,
 		['StarLvID'] = 261010039
 		},
 	[262401064] = {
@@ -12996,7 +12996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1857,
+		['AttriEquipValue'] = 1996,
 		['StarLvID'] = 261010040
 		},
 	[262401065] = {
@@ -13006,7 +13006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1928,
+		['AttriEquipValue'] = 2098,
 		['StarLvID'] = 261010041
 		},
 	[262401066] = {
@@ -13016,7 +13016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 2000,
+		['AttriEquipValue'] = 2200,
 		['StarLvID'] = 261010042
 		},
 	[262402010] = {
@@ -13026,7 +13026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 10,
+		['AttriEquipValue'] = 8,
 		['StarLvID'] = 261020001
 		},
 	[262402011] = {
@@ -13036,7 +13036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 20,
+		['AttriEquipValue'] = 15,
 		['StarLvID'] = 261020002
 		},
 	[262402012] = {
@@ -13046,7 +13046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 30,
+		['AttriEquipValue'] = 22,
 		['StarLvID'] = 261020003
 		},
 	[262402013] = {
@@ -13056,7 +13056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 40,
+		['AttriEquipValue'] = 29,
 		['StarLvID'] = 261020004
 		},
 	[262402014] = {
@@ -13066,7 +13066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 50,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261020005
 		},
 	[262402015] = {
@@ -13076,7 +13076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 43,
 		['StarLvID'] = 261020006
 		},
 	[262402016] = {
@@ -13086,7 +13086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 70,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261020007
 		},
 	[262402020] = {
@@ -13096,7 +13096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 84,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261020008
 		},
 	[262402021] = {
@@ -13106,7 +13106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 98,
+		['AttriEquipValue'] = 58,
 		['StarLvID'] = 261020009
 		},
 	[262402022] = {
@@ -13116,7 +13116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 112,
+		['AttriEquipValue'] = 66,
 		['StarLvID'] = 261020010
 		},
 	[262402023] = {
@@ -13126,7 +13126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 127,
+		['AttriEquipValue'] = 75,
 		['StarLvID'] = 261020011
 		},
 	[262402024] = {
@@ -13136,7 +13136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 141,
+		['AttriEquipValue'] = 83,
 		['StarLvID'] = 261020012
 		},
 	[262402025] = {
@@ -13146,7 +13146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 155,
+		['AttriEquipValue'] = 91,
 		['StarLvID'] = 261020013
 		},
 	[262402026] = {
@@ -13156,7 +13156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 170,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261020014
 		},
 	[262402030] = {
@@ -13166,7 +13166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 188,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261020015
 		},
 	[262402031] = {
@@ -13176,7 +13176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 207,
+		['AttriEquipValue'] = 113,
 		['StarLvID'] = 261020016
 		},
 	[262402032] = {
@@ -13186,7 +13186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 225,
+		['AttriEquipValue'] = 126,
 		['StarLvID'] = 261020017
 		},
 	[262402033] = {
@@ -13196,7 +13196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 244,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261020018
 		},
 	[262402034] = {
@@ -13206,7 +13206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 262,
+		['AttriEquipValue'] = 153,
 		['StarLvID'] = 261020019
 		},
 	[262402035] = {
@@ -13216,7 +13216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 281,
+		['AttriEquipValue'] = 166,
 		['StarLvID'] = 261020020
 		},
 	[262402036] = {
@@ -13226,7 +13226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 300,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261020021
 		},
 	[262402040] = {
@@ -13236,7 +13236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 318,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261020022
 		},
 	[262402041] = {
@@ -13246,7 +13246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 337,
+		['AttriEquipValue'] = 198,
 		['StarLvID'] = 261020023
 		},
 	[262402042] = {
@@ -13256,7 +13256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 355,
+		['AttriEquipValue'] = 216,
 		['StarLvID'] = 261020024
 		},
 	[262402043] = {
@@ -13266,7 +13266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 374,
+		['AttriEquipValue'] = 235,
 		['StarLvID'] = 261020025
 		},
 	[262402044] = {
@@ -13276,7 +13276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 392,
+		['AttriEquipValue'] = 253,
 		['StarLvID'] = 261020026
 		},
 	[262402045] = {
@@ -13286,7 +13286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 411,
+		['AttriEquipValue'] = 271,
 		['StarLvID'] = 261020027
 		},
 	[262402046] = {
@@ -13296,7 +13296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 430,
+		['AttriEquipValue'] = 290,
 		['StarLvID'] = 261020028
 		},
 	[262402050] = {
@@ -13306,7 +13306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 454,
+		['AttriEquipValue'] = 300,
 		['StarLvID'] = 261020029
 		},
 	[262402051] = {
@@ -13316,7 +13316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 478,
+		['AttriEquipValue'] = 325,
 		['StarLvID'] = 261020030
 		},
 	[262402052] = {
@@ -13326,7 +13326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 502,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261020031
 		},
 	[262402053] = {
@@ -13336,7 +13336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 527,
+		['AttriEquipValue'] = 375,
 		['StarLvID'] = 261020032
 		},
 	[262402054] = {
@@ -13346,7 +13346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 551,
+		['AttriEquipValue'] = 400,
 		['StarLvID'] = 261020033
 		},
 	[262402055] = {
@@ -13356,7 +13356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 575,
+		['AttriEquipValue'] = 425,
 		['StarLvID'] = 261020034
 		},
 	[262402056] = {
@@ -13366,7 +13366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 600,
+		['AttriEquipValue'] = 450,
 		['StarLvID'] = 261020035
 		},
 	[262402060] = {
@@ -13376,7 +13376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 628,
+		['AttriEquipValue'] = 460,
 		['StarLvID'] = 261020036
 		},
 	[262402061] = {
@@ -13386,7 +13386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 657,
+		['AttriEquipValue'] = 491,
 		['StarLvID'] = 261020037
 		},
 	[262402062] = {
@@ -13396,7 +13396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 685,
+		['AttriEquipValue'] = 523,
 		['StarLvID'] = 261020038
 		},
 	[262402063] = {
@@ -13406,7 +13406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 714,
+		['AttriEquipValue'] = 555,
 		['StarLvID'] = 261020039
 		},
 	[262402064] = {
@@ -13416,7 +13416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 742,
+		['AttriEquipValue'] = 586,
 		['StarLvID'] = 261020040
 		},
 	[262402065] = {
@@ -13426,7 +13426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 771,
+		['AttriEquipValue'] = 618,
 		['StarLvID'] = 261020041
 		},
 	[262402066] = {
@@ -13436,7 +13436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 650,
 		['StarLvID'] = 261020042
 		},
 	[262403010] = {
@@ -13446,7 +13446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 400,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261030001
 		},
 	[262403011] = {
@@ -13456,7 +13456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 750,
+		['AttriEquipValue'] = 640,
 		['StarLvID'] = 261030002
 		},
 	[262403012] = {
@@ -13466,7 +13466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1100,
+		['AttriEquipValue'] = 930,
 		['StarLvID'] = 261030003
 		},
 	[262403013] = {
@@ -13476,7 +13476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1450,
+		['AttriEquipValue'] = 1220,
 		['StarLvID'] = 261030004
 		},
 	[262403014] = {
@@ -13486,7 +13486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1800,
+		['AttriEquipValue'] = 1510,
 		['StarLvID'] = 261030005
 		},
 	[262403015] = {
@@ -13496,7 +13496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2150,
+		['AttriEquipValue'] = 1800,
 		['StarLvID'] = 261030006
 		},
 	[262403016] = {
@@ -13506,7 +13506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2500,
+		['AttriEquipValue'] = 2100,
 		['StarLvID'] = 261030007
 		},
 	[262403020] = {
@@ -13516,7 +13516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3000,
+		['AttriEquipValue'] = 2300,
 		['StarLvID'] = 261030008
 		},
 	[262403021] = {
@@ -13526,7 +13526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3500,
+		['AttriEquipValue'] = 2630,
 		['StarLvID'] = 261030009
 		},
 	[262403022] = {
@@ -13536,7 +13536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4000,
+		['AttriEquipValue'] = 2960,
 		['StarLvID'] = 261030010
 		},
 	[262403023] = {
@@ -13546,7 +13546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4500,
+		['AttriEquipValue'] = 3300,
 		['StarLvID'] = 261030011
 		},
 	[262403024] = {
@@ -13556,7 +13556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5000,
+		['AttriEquipValue'] = 3630,
 		['StarLvID'] = 261030012
 		},
 	[262403025] = {
@@ -13566,7 +13566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5500,
+		['AttriEquipValue'] = 3960,
 		['StarLvID'] = 261030013
 		},
 	[262403026] = {
@@ -13576,7 +13576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6000,
+		['AttriEquipValue'] = 4300,
 		['StarLvID'] = 261030014
 		},
 	[262403030] = {
@@ -13586,7 +13586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6570,
+		['AttriEquipValue'] = 4500,
 		['StarLvID'] = 261030015
 		},
 	[262403031] = {
@@ -13596,7 +13596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7140,
+		['AttriEquipValue'] = 5000,
 		['StarLvID'] = 261030016
 		},
 	[262403032] = {
@@ -13606,7 +13606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7710,
+		['AttriEquipValue'] = 5500,
 		['StarLvID'] = 261030017
 		},
 	[262403033] = {
@@ -13616,7 +13616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8280,
+		['AttriEquipValue'] = 6000,
 		['StarLvID'] = 261030018
 		},
 	[262403034] = {
@@ -13626,7 +13626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8850,
+		['AttriEquipValue'] = 6500,
 		['StarLvID'] = 261030019
 		},
 	[262403035] = {
@@ -13636,7 +13636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9420,
+		['AttriEquipValue'] = 7000,
 		['StarLvID'] = 261030020
 		},
 	[262403036] = {
@@ -13646,7 +13646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 7500,
 		['StarLvID'] = 261030021
 		},
 	[262403040] = {
@@ -13656,7 +13656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10710,
+		['AttriEquipValue'] = 7800,
 		['StarLvID'] = 261030022
 		},
 	[262403041] = {
@@ -13666,7 +13666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11420,
+		['AttriEquipValue'] = 8500,
 		['StarLvID'] = 261030023
 		},
 	[262403042] = {
@@ -13676,7 +13676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12140,
+		['AttriEquipValue'] = 9200,
 		['StarLvID'] = 261030024
 		},
 	[262403043] = {
@@ -13686,7 +13686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12850,
+		['AttriEquipValue'] = 9900,
 		['StarLvID'] = 261030025
 		},
 	[262403044] = {
@@ -13696,7 +13696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 13570,
+		['AttriEquipValue'] = 10600,
 		['StarLvID'] = 261030026
 		},
 	[262403045] = {
@@ -13706,7 +13706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14280,
+		['AttriEquipValue'] = 11300,
 		['StarLvID'] = 261030027
 		},
 	[262403046] = {
@@ -13716,7 +13716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15000,
+		['AttriEquipValue'] = 12000,
 		['StarLvID'] = 261030028
 		},
 	[262403050] = {
@@ -13726,7 +13726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15850,
+		['AttriEquipValue'] = 12400,
 		['StarLvID'] = 261030029
 		},
 	[262403051] = {
@@ -13736,7 +13736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 16710,
+		['AttriEquipValue'] = 13300,
 		['StarLvID'] = 261030030
 		},
 	[262403052] = {
@@ -13746,7 +13746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17570,
+		['AttriEquipValue'] = 14200,
 		['StarLvID'] = 261030031
 		},
 	[262403053] = {
@@ -13756,7 +13756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18420,
+		['AttriEquipValue'] = 15200,
 		['StarLvID'] = 261030032
 		},
 	[262403054] = {
@@ -13766,7 +13766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 19280,
+		['AttriEquipValue'] = 16100,
 		['StarLvID'] = 261030033
 		},
 	[262403055] = {
@@ -13776,7 +13776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 20140,
+		['AttriEquipValue'] = 17000,
 		['StarLvID'] = 261030034
 		},
 	[262403056] = {
@@ -13786,7 +13786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 21000,
+		['AttriEquipValue'] = 18000,
 		['StarLvID'] = 261030035
 		},
 	[262403060] = {
@@ -13796,7 +13796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 22000,
+		['AttriEquipValue'] = 18600,
 		['StarLvID'] = 261030036
 		},
 	[262403061] = {
@@ -13806,7 +13806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 23000,
+		['AttriEquipValue'] = 20000,
 		['StarLvID'] = 261030037
 		},
 	[262403062] = {
@@ -13816,7 +13816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 24000,
+		['AttriEquipValue'] = 21400,
 		['StarLvID'] = 261030038
 		},
 	[262403063] = {
@@ -13826,7 +13826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 25000,
+		['AttriEquipValue'] = 22800,
 		['StarLvID'] = 261030039
 		},
 	[262403064] = {
@@ -13836,7 +13836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 26000,
+		['AttriEquipValue'] = 24200,
 		['StarLvID'] = 261030040
 		},
 	[262403065] = {
@@ -13846,7 +13846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 27000,
+		['AttriEquipValue'] = 25600,
 		['StarLvID'] = 261030041
 		},
 	[262403066] = {
@@ -13856,7 +13856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 28000,
+		['AttriEquipValue'] = 27000,
 		['StarLvID'] = 261030042
 		},
 	[262404010] = {
@@ -13866,7 +13866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 300,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261040001
 		},
 	[262404011] = {
@@ -13876,7 +13876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 550,
+		['AttriEquipValue'] = 480,
 		['StarLvID'] = 261040002
 		},
 	[262404012] = {
@@ -13886,7 +13886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 700,
 		['StarLvID'] = 261040003
 		},
 	[262404013] = {
@@ -13896,7 +13896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1050,
+		['AttriEquipValue'] = 930,
 		['StarLvID'] = 261040004
 		},
 	[262404014] = {
@@ -13906,7 +13906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1300,
+		['AttriEquipValue'] = 1150,
 		['StarLvID'] = 261040005
 		},
 	[262404015] = {
@@ -13916,7 +13916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1550,
+		['AttriEquipValue'] = 1370,
 		['StarLvID'] = 261040006
 		},
 	[262404016] = {
@@ -13926,7 +13926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1800,
+		['AttriEquipValue'] = 1600,
 		['StarLvID'] = 261040007
 		},
 	[262404020] = {
@@ -13936,7 +13936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2140,
+		['AttriEquipValue'] = 1700,
 		['StarLvID'] = 261040008
 		},
 	[262404021] = {
@@ -13946,7 +13946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2480,
+		['AttriEquipValue'] = 1950,
 		['StarLvID'] = 261040009
 		},
 	[262404022] = {
@@ -13956,7 +13956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2820,
+		['AttriEquipValue'] = 2200,
 		['StarLvID'] = 261040010
 		},
 	[262404023] = {
@@ -13966,7 +13966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3170,
+		['AttriEquipValue'] = 2450,
 		['StarLvID'] = 261040011
 		},
 	[262404024] = {
@@ -13976,7 +13976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3510,
+		['AttriEquipValue'] = 2700,
 		['StarLvID'] = 261040012
 		},
 	[262404025] = {
@@ -13986,7 +13986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3850,
+		['AttriEquipValue'] = 2950,
 		['StarLvID'] = 261040013
 		},
 	[262404026] = {
@@ -13996,7 +13996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4200,
+		['AttriEquipValue'] = 3200,
 		['StarLvID'] = 261040014
 		},
 	[262404030] = {
@@ -14006,7 +14006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4620,
+		['AttriEquipValue'] = 3300,
 		['StarLvID'] = 261040015
 		},
 	[262404031] = {
@@ -14016,7 +14016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5050,
+		['AttriEquipValue'] = 3680,
 		['StarLvID'] = 261040016
 		},
 	[262404032] = {
@@ -14026,7 +14026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5480,
+		['AttriEquipValue'] = 4060,
 		['StarLvID'] = 261040017
 		},
 	[262404033] = {
@@ -14036,7 +14036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5910,
+		['AttriEquipValue'] = 4450,
 		['StarLvID'] = 261040018
 		},
 	[262404034] = {
@@ -14046,7 +14046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6340,
+		['AttriEquipValue'] = 4830,
 		['StarLvID'] = 261040019
 		},
 	[262404035] = {
@@ -14056,7 +14056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6770,
+		['AttriEquipValue'] = 5210,
 		['StarLvID'] = 261040020
 		},
 	[262404036] = {
@@ -14066,7 +14066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7200,
+		['AttriEquipValue'] = 5600,
 		['StarLvID'] = 261040021
 		},
 	[262404040] = {
@@ -14076,7 +14076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7600,
+		['AttriEquipValue'] = 5800,
 		['StarLvID'] = 261040022
 		},
 	[262404041] = {
@@ -14086,7 +14086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8000,
+		['AttriEquipValue'] = 6300,
 		['StarLvID'] = 261040023
 		},
 	[262404042] = {
@@ -14096,7 +14096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8400,
+		['AttriEquipValue'] = 6800,
 		['StarLvID'] = 261040024
 		},
 	[262404043] = {
@@ -14106,7 +14106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8800,
+		['AttriEquipValue'] = 7400,
 		['StarLvID'] = 261040025
 		},
 	[262404044] = {
@@ -14116,7 +14116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9200,
+		['AttriEquipValue'] = 7900,
 		['StarLvID'] = 261040026
 		},
 	[262404045] = {
@@ -14126,7 +14126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9600,
+		['AttriEquipValue'] = 8400,
 		['StarLvID'] = 261040027
 		},
 	[262404046] = {
@@ -14136,7 +14136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 9000,
 		['StarLvID'] = 261040028
 		},
 	[262404050] = {
@@ -14146,7 +14146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 9300,
 		['StarLvID'] = 261040029
 		},
 	[262404051] = {
@@ -14166,7 +14166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 10800,
 		['StarLvID'] = 261040031
 		},
 	[262404053] = {
@@ -14176,7 +14176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 11600,
 		['StarLvID'] = 261040032
 		},
 	[262404054] = {
@@ -14186,7 +14186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 12400,
 		['StarLvID'] = 261040033
 		},
 	[262404055] = {
@@ -14196,7 +14196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 13200,
 		['StarLvID'] = 261040034
 		},
 	[262404056] = {
@@ -14206,7 +14206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 14000,
 		['StarLvID'] = 261040035
 		},
 	[262404060] = {
@@ -14216,7 +14216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11420,
+		['AttriEquipValue'] = 14500,
 		['StarLvID'] = 261040036
 		},
 	[262404061] = {
@@ -14226,7 +14226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12850,
+		['AttriEquipValue'] = 15400,
 		['StarLvID'] = 261040037
 		},
 	[262404062] = {
@@ -14236,7 +14236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14280,
+		['AttriEquipValue'] = 16300,
 		['StarLvID'] = 261040038
 		},
 	[262404063] = {
@@ -14246,7 +14246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15710,
+		['AttriEquipValue'] = 17200,
 		['StarLvID'] = 261040039
 		},
 	[262404064] = {
@@ -14256,7 +14256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17140,
+		['AttriEquipValue'] = 18100,
 		['StarLvID'] = 261040040
 		},
 	[262404065] = {
@@ -14266,7 +14266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18570,
+		['AttriEquipValue'] = 19000,
 		['StarLvID'] = 261040041
 		},
 	[262404066] = {
@@ -14286,7 +14286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 40,
+		['AttriEquipValue'] = 16,
 		['StarLvID'] = 261050001
 		},
 	[262405011] = {
@@ -14296,7 +14296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 50,
+		['AttriEquipValue'] = 30,
 		['StarLvID'] = 261050002
 		},
 	[262405012] = {
@@ -14306,7 +14306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 44,
 		['StarLvID'] = 261050003
 		},
 	[262405013] = {
@@ -14316,7 +14316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 70,
+		['AttriEquipValue'] = 58,
 		['StarLvID'] = 261050004
 		},
 	[262405014] = {
@@ -14326,7 +14326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 80,
+		['AttriEquipValue'] = 72,
 		['StarLvID'] = 261050005
 		},
 	[262405015] = {
@@ -14336,7 +14336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 90,
+		['AttriEquipValue'] = 86,
 		['StarLvID'] = 261050006
 		},
 	[262405016] = {
@@ -14356,7 +14356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 120,
+		['AttriEquipValue'] = 110,
 		['StarLvID'] = 261050008
 		},
 	[262405021] = {
@@ -14366,7 +14366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 140,
+		['AttriEquipValue'] = 125,
 		['StarLvID'] = 261050009
 		},
 	[262405022] = {
@@ -14376,7 +14376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 160,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261050010
 		},
 	[262405023] = {
@@ -14386,7 +14386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 180,
+		['AttriEquipValue'] = 155,
 		['StarLvID'] = 261050011
 		},
 	[262405024] = {
@@ -14396,7 +14396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 200,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261050012
 		},
 	[262405025] = {
@@ -14406,7 +14406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 220,
+		['AttriEquipValue'] = 185,
 		['StarLvID'] = 261050013
 		},
 	[262405026] = {
@@ -14416,7 +14416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 240,
+		['AttriEquipValue'] = 200,
 		['StarLvID'] = 261050014
 		},
 	[262405030] = {
@@ -14426,7 +14426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 267,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261050015
 		},
 	[262405031] = {
@@ -14436,7 +14436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 294,
+		['AttriEquipValue'] = 235,
 		['StarLvID'] = 261050016
 		},
 	[262405032] = {
@@ -14446,7 +14446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 321,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261050017
 		},
 	[262405033] = {
@@ -14456,7 +14456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 348,
+		['AttriEquipValue'] = 285,
 		['StarLvID'] = 261050018
 		},
 	[262405034] = {
@@ -14466,7 +14466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 375,
+		['AttriEquipValue'] = 310,
 		['StarLvID'] = 261050019
 		},
 	[262405035] = {
@@ -14476,7 +14476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 402,
+		['AttriEquipValue'] = 335,
 		['StarLvID'] = 261050020
 		},
 	[262405036] = {
@@ -14486,7 +14486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 430,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261050021
 		},
 	[262405040] = {
@@ -14496,7 +14496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 461,
+		['AttriEquipValue'] = 370,
 		['StarLvID'] = 261050022
 		},
 	[262405041] = {
@@ -14506,7 +14506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 492,
+		['AttriEquipValue'] = 406,
 		['StarLvID'] = 261050023
 		},
 	[262405042] = {
@@ -14516,7 +14516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 524,
+		['AttriEquipValue'] = 443,
 		['StarLvID'] = 261050024
 		},
 	[262405043] = {
@@ -14526,7 +14526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 555,
+		['AttriEquipValue'] = 480,
 		['StarLvID'] = 261050025
 		},
 	[262405044] = {
@@ -14536,7 +14536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 587,
+		['AttriEquipValue'] = 516,
 		['StarLvID'] = 261050026
 		},
 	[262405045] = {
@@ -14546,7 +14546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 618,
+		['AttriEquipValue'] = 553,
 		['StarLvID'] = 261050027
 		},
 	[262405046] = {
@@ -14556,7 +14556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 650,
+		['AttriEquipValue'] = 590,
 		['StarLvID'] = 261050028
 		},
 	[262405050] = {
@@ -14566,7 +14566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 685,
+		['AttriEquipValue'] = 610,
 		['StarLvID'] = 261050029
 		},
 	[262405051] = {
@@ -14576,7 +14576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 721,
+		['AttriEquipValue'] = 660,
 		['StarLvID'] = 261050030
 		},
 	[262405052] = {
@@ -14586,7 +14586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 757,
+		['AttriEquipValue'] = 710,
 		['StarLvID'] = 261050031
 		},
 	[262405053] = {
@@ -14596,7 +14596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 792,
+		['AttriEquipValue'] = 760,
 		['StarLvID'] = 261050032
 		},
 	[262405054] = {
@@ -14606,7 +14606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 828,
+		['AttriEquipValue'] = 810,
 		['StarLvID'] = 261050033
 		},
 	[262405055] = {
@@ -14616,7 +14616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 864,
+		['AttriEquipValue'] = 860,
 		['StarLvID'] = 261050034
 		},
 	[262405056] = {
@@ -14626,7 +14626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 900,
+		['AttriEquipValue'] = 910,
 		['StarLvID'] = 261050035
 		},
 	[262405060] = {
@@ -14636,7 +14636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 942,
+		['AttriEquipValue'] = 940,
 		['StarLvID'] = 261050036
 		},
 	[262405061] = {
@@ -14646,7 +14646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 985,
+		['AttriEquipValue'] = 1000,
 		['StarLvID'] = 261050037
 		},
 	[262405062] = {
@@ -14656,7 +14656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1028,
+		['AttriEquipValue'] = 1060,
 		['StarLvID'] = 261050038
 		},
 	[262405063] = {
@@ -14666,7 +14666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1071,
+		['AttriEquipValue'] = 1120,
 		['StarLvID'] = 261050039
 		},
 	[262405064] = {
@@ -14676,7 +14676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1114,
+		['AttriEquipValue'] = 1180,
 		['StarLvID'] = 261050040
 		},
 	[262405065] = {
@@ -14686,7 +14686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1157,
+		['AttriEquipValue'] = 1240,
 		['StarLvID'] = 261050041
 		},
 	[262405066] = {
@@ -14696,7 +14696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1200,
+		['AttriEquipValue'] = 1300,
 		['StarLvID'] = 261050042
 		},
 	[262406010] = {
@@ -14706,7 +14706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 10,
+		['AttriEquipValue'] = 20,
 		['StarLvID'] = 261060001
 		},
 	[262406011] = {
@@ -14716,7 +14716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 30,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261060002
 		},
 	[262406012] = {
@@ -14726,7 +14726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 50,
+		['AttriEquipValue'] = 53,
 		['StarLvID'] = 261060003
 		},
 	[262406013] = {
@@ -14746,7 +14746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 90,
+		['AttriEquipValue'] = 86,
 		['StarLvID'] = 261060005
 		},
 	[262406015] = {
@@ -14756,7 +14756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 110,
+		['AttriEquipValue'] = 103,
 		['StarLvID'] = 261060006
 		},
 	[262406016] = {
@@ -14766,7 +14766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 130,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261060007
 		},
 	[262406020] = {
@@ -14776,7 +14776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 155,
+		['AttriEquipValue'] = 130,
 		['StarLvID'] = 261060008
 		},
 	[262406021] = {
@@ -14786,7 +14786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 181,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261060009
 		},
 	[262406022] = {
@@ -14796,7 +14796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 207,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261060010
 		},
 	[262406023] = {
@@ -14806,7 +14806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 232,
+		['AttriEquipValue'] = 190,
 		['StarLvID'] = 261060011
 		},
 	[262406024] = {
@@ -14816,7 +14816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 258,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261060012
 		},
 	[262406025] = {
@@ -14826,7 +14826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 284,
+		['AttriEquipValue'] = 230,
 		['StarLvID'] = 261060013
 		},
 	[262406026] = {
@@ -14836,7 +14836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 310,
+		['AttriEquipValue'] = 250,
 		['StarLvID'] = 261060014
 		},
 	[262406030] = {
@@ -14846,7 +14846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 342,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261060015
 		},
 	[262406031] = {
@@ -14856,7 +14856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 375,
+		['AttriEquipValue'] = 290,
 		['StarLvID'] = 261060016
 		},
 	[262406032] = {
@@ -14866,7 +14866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 408,
+		['AttriEquipValue'] = 320,
 		['StarLvID'] = 261060017
 		},
 	[262406033] = {
@@ -14876,7 +14876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 441,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261060018
 		},
 	[262406034] = {
@@ -14886,7 +14886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 474,
+		['AttriEquipValue'] = 380,
 		['StarLvID'] = 261060019
 		},
 	[262406035] = {
@@ -14896,7 +14896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 507,
+		['AttriEquipValue'] = 410,
 		['StarLvID'] = 261060020
 		},
 	[262406036] = {
@@ -14906,7 +14906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 540,
+		['AttriEquipValue'] = 440,
 		['StarLvID'] = 261060021
 		},
 	[262406040] = {
@@ -14916,7 +14916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 577,
+		['AttriEquipValue'] = 450,
 		['StarLvID'] = 261060022
 		},
 	[262406041] = {
@@ -14926,7 +14926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 614,
+		['AttriEquipValue'] = 496,
 		['StarLvID'] = 261060023
 		},
 	[262406042] = {
@@ -14936,7 +14936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 651,
+		['AttriEquipValue'] = 543,
 		['StarLvID'] = 261060024
 		},
 	[262406043] = {
@@ -14946,7 +14946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 688,
+		['AttriEquipValue'] = 590,
 		['StarLvID'] = 261060025
 		},
 	[262406044] = {
@@ -14956,7 +14956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 725,
+		['AttriEquipValue'] = 636,
 		['StarLvID'] = 261060026
 		},
 	[262406045] = {
@@ -14966,7 +14966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 762,
+		['AttriEquipValue'] = 683,
 		['StarLvID'] = 261060027
 		},
 	[262406046] = {
@@ -14976,7 +14976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 730,
 		['StarLvID'] = 261060028
 		},
 	[262406050] = {
@@ -14986,7 +14986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 847,
+		['AttriEquipValue'] = 750,
 		['StarLvID'] = 261060029
 		},
 	[262406051] = {
@@ -14996,7 +14996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 894,
+		['AttriEquipValue'] = 811,
 		['StarLvID'] = 261060030
 		},
 	[262406052] = {
@@ -15006,7 +15006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 941,
+		['AttriEquipValue'] = 873,
 		['StarLvID'] = 261060031
 		},
 	[262406053] = {
@@ -15016,7 +15016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 988,
+		['AttriEquipValue'] = 935,
 		['StarLvID'] = 261060032
 		},
 	[262406054] = {
@@ -15026,7 +15026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1035,
+		['AttriEquipValue'] = 996,
 		['StarLvID'] = 261060033
 		},
 	[262406055] = {
@@ -15036,7 +15036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1082,
+		['AttriEquipValue'] = 1058,
 		['StarLvID'] = 261060034
 		},
 	[262406056] = {
@@ -15046,7 +15046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1130,
+		['AttriEquipValue'] = 1120,
 		['StarLvID'] = 261060035
 		},
 	[262406060] = {
@@ -15056,7 +15056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1182,
+		['AttriEquipValue'] = 1150,
 		['StarLvID'] = 261060036
 		},
 	[262406061] = {
@@ -15066,7 +15066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1235,
+		['AttriEquipValue'] = 1225,
 		['StarLvID'] = 261060037
 		},
 	[262406062] = {
@@ -15076,7 +15076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1288,
+		['AttriEquipValue'] = 1300,
 		['StarLvID'] = 261060038
 		},
 	[262406063] = {
@@ -15086,7 +15086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1341,
+		['AttriEquipValue'] = 1375,
 		['StarLvID'] = 261060039
 		},
 	[262406064] = {
@@ -15096,7 +15096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1394,
+		['AttriEquipValue'] = 1450,
 		['StarLvID'] = 261060040
 		},
 	[262406065] = {
@@ -15106,7 +15106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1447,
+		['AttriEquipValue'] = 1525,
 		['StarLvID'] = 261060041
 		},
 	[262406066] = {
@@ -15116,7 +15116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1500,
+		['AttriEquipValue'] = 1600,
 		['StarLvID'] = 261060042
 		},
 	[262407010] = {
@@ -15126,7 +15126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 300,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261070001
 		},
 	[262407011] = {
@@ -15136,7 +15136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 550,
+		['AttriEquipValue'] = 510,
 		['StarLvID'] = 261070002
 		},
 	[262407012] = {
@@ -15146,7 +15146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 750,
 		['StarLvID'] = 261070003
 		},
 	[262407013] = {
@@ -15156,7 +15156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1050,
+		['AttriEquipValue'] = 990,
 		['StarLvID'] = 261070004
 		},
 	[262407014] = {
@@ -15166,7 +15166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1300,
+		['AttriEquipValue'] = 1220,
 		['StarLvID'] = 261070005
 		},
 	[262407015] = {
@@ -15176,7 +15176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1550,
+		['AttriEquipValue'] = 1460,
 		['StarLvID'] = 261070006
 		},
 	[262407016] = {
@@ -15186,7 +15186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1800,
+		['AttriEquipValue'] = 1700,
 		['StarLvID'] = 261070007
 		},
 	[262407020] = {
@@ -15196,7 +15196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2140,
+		['AttriEquipValue'] = 1800,
 		['StarLvID'] = 261070008
 		},
 	[262407021] = {
@@ -15206,7 +15206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2480,
+		['AttriEquipValue'] = 2080,
 		['StarLvID'] = 261070009
 		},
 	[262407022] = {
@@ -15216,7 +15216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2820,
+		['AttriEquipValue'] = 2360,
 		['StarLvID'] = 261070010
 		},
 	[262407023] = {
@@ -15226,7 +15226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3170,
+		['AttriEquipValue'] = 2650,
 		['StarLvID'] = 261070011
 		},
 	[262407024] = {
@@ -15236,7 +15236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3510,
+		['AttriEquipValue'] = 2930,
 		['StarLvID'] = 261070012
 		},
 	[262407025] = {
@@ -15246,7 +15246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3850,
+		['AttriEquipValue'] = 3210,
 		['StarLvID'] = 261070013
 		},
 	[262407026] = {
@@ -15256,7 +15256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4200,
+		['AttriEquipValue'] = 3500,
 		['StarLvID'] = 261070014
 		},
 	[262407030] = {
@@ -15266,7 +15266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4620,
+		['AttriEquipValue'] = 3600,
 		['StarLvID'] = 261070015
 		},
 	[262407031] = {
@@ -15276,7 +15276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5050,
+		['AttriEquipValue'] = 4010,
 		['StarLvID'] = 261070016
 		},
 	[262407032] = {
@@ -15286,7 +15286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5480,
+		['AttriEquipValue'] = 4430,
 		['StarLvID'] = 261070017
 		},
 	[262407033] = {
@@ -15296,7 +15296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5910,
+		['AttriEquipValue'] = 4850,
 		['StarLvID'] = 261070018
 		},
 	[262407034] = {
@@ -15306,7 +15306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6340,
+		['AttriEquipValue'] = 5260,
 		['StarLvID'] = 261070019
 		},
 	[262407035] = {
@@ -15316,7 +15316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6770,
+		['AttriEquipValue'] = 5680,
 		['StarLvID'] = 261070020
 		},
 	[262407036] = {
@@ -15326,7 +15326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7200,
+		['AttriEquipValue'] = 6100,
 		['StarLvID'] = 261070021
 		},
 	[262407040] = {
@@ -15336,7 +15336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7600,
+		['AttriEquipValue'] = 6300,
 		['StarLvID'] = 261070022
 		},
 	[262407041] = {
@@ -15346,7 +15346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8000,
+		['AttriEquipValue'] = 6900,
 		['StarLvID'] = 261070023
 		},
 	[262407042] = {
@@ -15356,7 +15356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8400,
+		['AttriEquipValue'] = 7500,
 		['StarLvID'] = 261070024
 		},
 	[262407043] = {
@@ -15366,7 +15366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8800,
+		['AttriEquipValue'] = 8100,
 		['StarLvID'] = 261070025
 		},
 	[262407044] = {
@@ -15376,7 +15376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9200,
+		['AttriEquipValue'] = 8700,
 		['StarLvID'] = 261070026
 		},
 	[262407045] = {
@@ -15386,7 +15386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9600,
+		['AttriEquipValue'] = 9300,
 		['StarLvID'] = 261070027
 		},
 	[262407046] = {
@@ -15406,7 +15406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 10300,
 		['StarLvID'] = 261070029
 		},
 	[262407051] = {
@@ -15416,7 +15416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 11000,
 		['StarLvID'] = 261070030
 		},
 	[262407052] = {
@@ -15426,7 +15426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 11800,
 		['StarLvID'] = 261070031
 		},
 	[262407053] = {
@@ -15436,7 +15436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 12600,
 		['StarLvID'] = 261070032
 		},
 	[262407054] = {
@@ -15446,7 +15446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 13400,
 		['StarLvID'] = 261070033
 		},
 	[262407055] = {
@@ -15456,7 +15456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 14200,
 		['StarLvID'] = 261070034
 		},
 	[262407056] = {
@@ -15466,7 +15466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 15000,
 		['StarLvID'] = 261070035
 		},
 	[262407060] = {
@@ -15476,7 +15476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11420,
+		['AttriEquipValue'] = 15500,
 		['StarLvID'] = 261070036
 		},
 	[262407061] = {
@@ -15486,7 +15486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12850,
+		['AttriEquipValue'] = 16500,
 		['StarLvID'] = 261070037
 		},
 	[262407062] = {
@@ -15496,7 +15496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14280,
+		['AttriEquipValue'] = 17600,
 		['StarLvID'] = 261070038
 		},
 	[262407063] = {
@@ -15506,7 +15506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15710,
+		['AttriEquipValue'] = 18700,
 		['StarLvID'] = 261070039
 		},
 	[262407064] = {
@@ -15516,7 +15516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17140,
+		['AttriEquipValue'] = 19800,
 		['StarLvID'] = 261070040
 		},
 	[262407065] = {
@@ -15526,7 +15526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18570,
+		['AttriEquipValue'] = 20900,
 		['StarLvID'] = 261070041
 		},
 	[262407066] = {
@@ -15536,7 +15536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 20000,
+		['AttriEquipValue'] = 22000,
 		['StarLvID'] = 261070042
 		},
 	[262408010] = {
@@ -15546,7 +15546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 20,
+		['AttriEquipValue'] = 8,
 		['StarLvID'] = 261080001
 		},
 	[262408011] = {
@@ -15556,7 +15556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 25,
+		['AttriEquipValue'] = 15,
 		['StarLvID'] = 261080002
 		},
 	[262408012] = {
@@ -15566,7 +15566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 30,
+		['AttriEquipValue'] = 22,
 		['StarLvID'] = 261080003
 		},
 	[262408013] = {
@@ -15576,7 +15576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 35,
+		['AttriEquipValue'] = 29,
 		['StarLvID'] = 261080004
 		},
 	[262408014] = {
@@ -15586,7 +15586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 40,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261080005
 		},
 	[262408015] = {
@@ -15596,7 +15596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 45,
+		['AttriEquipValue'] = 43,
 		['StarLvID'] = 261080006
 		},
 	[262408016] = {
@@ -15616,7 +15616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261080008
 		},
 	[262408021] = {
@@ -15626,7 +15626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 70,
+		['AttriEquipValue'] = 58,
 		['StarLvID'] = 261080009
 		},
 	[262408022] = {
@@ -15636,7 +15636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 80,
+		['AttriEquipValue'] = 66,
 		['StarLvID'] = 261080010
 		},
 	[262408023] = {
@@ -15646,7 +15646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 90,
+		['AttriEquipValue'] = 75,
 		['StarLvID'] = 261080011
 		},
 	[262408024] = {
@@ -15656,7 +15656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 100,
+		['AttriEquipValue'] = 83,
 		['StarLvID'] = 261080012
 		},
 	[262408025] = {
@@ -15666,7 +15666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 110,
+		['AttriEquipValue'] = 91,
 		['StarLvID'] = 261080013
 		},
 	[262408026] = {
@@ -15676,7 +15676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 120,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261080014
 		},
 	[262408030] = {
@@ -15686,7 +15686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 131,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261080015
 		},
 	[262408031] = {
@@ -15696,7 +15696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 142,
+		['AttriEquipValue'] = 113,
 		['StarLvID'] = 261080016
 		},
 	[262408032] = {
@@ -15706,7 +15706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 154,
+		['AttriEquipValue'] = 126,
 		['StarLvID'] = 261080017
 		},
 	[262408033] = {
@@ -15716,7 +15716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 165,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261080018
 		},
 	[262408034] = {
@@ -15726,7 +15726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 177,
+		['AttriEquipValue'] = 153,
 		['StarLvID'] = 261080019
 		},
 	[262408035] = {
@@ -15736,7 +15736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 188,
+		['AttriEquipValue'] = 166,
 		['StarLvID'] = 261080020
 		},
 	[262408036] = {
@@ -15746,7 +15746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 200,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261080021
 		},
 	[262408040] = {
@@ -15756,7 +15756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 217,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261080022
 		},
 	[262408041] = {
@@ -15766,7 +15766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 234,
+		['AttriEquipValue'] = 200,
 		['StarLvID'] = 261080023
 		},
 	[262408042] = {
@@ -15776,7 +15776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 251,
+		['AttriEquipValue'] = 220,
 		['StarLvID'] = 261080024
 		},
 	[262408043] = {
@@ -15786,7 +15786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 268,
+		['AttriEquipValue'] = 240,
 		['StarLvID'] = 261080025
 		},
 	[262408044] = {
@@ -15796,7 +15796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 285,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261080026
 		},
 	[262408045] = {
@@ -15806,7 +15806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 302,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261080027
 		},
 	[262408046] = {
@@ -15816,7 +15816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 320,
+		['AttriEquipValue'] = 300,
 		['StarLvID'] = 261080028
 		},
 	[262408050] = {
@@ -15826,7 +15826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 338,
+		['AttriEquipValue'] = 310,
 		['StarLvID'] = 261080029
 		},
 	[262408051] = {
@@ -15836,7 +15836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 357,
+		['AttriEquipValue'] = 335,
 		['StarLvID'] = 261080030
 		},
 	[262408052] = {
@@ -15846,7 +15846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 375,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261080031
 		},
 	[262408053] = {
@@ -15856,7 +15856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 394,
+		['AttriEquipValue'] = 385,
 		['StarLvID'] = 261080032
 		},
 	[262408054] = {
@@ -15866,7 +15866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 412,
+		['AttriEquipValue'] = 410,
 		['StarLvID'] = 261080033
 		},
 	[262408055] = {
@@ -15876,7 +15876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 431,
+		['AttriEquipValue'] = 435,
 		['StarLvID'] = 261080034
 		},
 	[262408056] = {
@@ -15886,7 +15886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 450,
+		['AttriEquipValue'] = 460,
 		['StarLvID'] = 261080035
 		},
 	[262408060] = {
@@ -15896,7 +15896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 471,
+		['AttriEquipValue'] = 470,
 		['StarLvID'] = 261080036
 		},
 	[262408061] = {
@@ -15906,7 +15906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 492,
+		['AttriEquipValue'] = 501,
 		['StarLvID'] = 261080037
 		},
 	[262408062] = {
@@ -15916,7 +15916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 514,
+		['AttriEquipValue'] = 533,
 		['StarLvID'] = 261080038
 		},
 	[262408063] = {
@@ -15926,7 +15926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 535,
+		['AttriEquipValue'] = 565,
 		['StarLvID'] = 261080039
 		},
 	[262408064] = {
@@ -15936,7 +15936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 557,
+		['AttriEquipValue'] = 596,
 		['StarLvID'] = 261080040
 		},
 	[262408065] = {
@@ -15946,7 +15946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 578,
+		['AttriEquipValue'] = 628,
 		['StarLvID'] = 261080041
 		},
 	[262408066] = {
@@ -15956,7 +15956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 600,
+		['AttriEquipValue'] = 660,
 		['StarLvID'] = 261080042
 		},
 	[262409010] = {
@@ -15966,7 +15966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 10,
+		['AttriEquipValue'] = 23,
 		['StarLvID'] = 261090001
 		},
 	[262409011] = {
@@ -15976,7 +15976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 35,
+		['AttriEquipValue'] = 42,
 		['StarLvID'] = 261090002
 		},
 	[262409012] = {
@@ -15986,7 +15986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 62,
 		['StarLvID'] = 261090003
 		},
 	[262409013] = {
@@ -15996,7 +15996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 85,
+		['AttriEquipValue'] = 81,
 		['StarLvID'] = 261090004
 		},
 	[262409014] = {
@@ -16006,7 +16006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 110,
+		['AttriEquipValue'] = 101,
 		['StarLvID'] = 261090005
 		},
 	[262409015] = {
@@ -16016,7 +16016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 135,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261090006
 		},
 	[262409016] = {
@@ -16026,7 +16026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 160,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261090007
 		},
 	[262409020] = {
@@ -16036,7 +16036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 191,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261090008
 		},
 	[262409021] = {
@@ -16046,7 +16046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 222,
+		['AttriEquipValue'] = 171,
 		['StarLvID'] = 261090009
 		},
 	[262409022] = {
@@ -16056,7 +16056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 254,
+		['AttriEquipValue'] = 193,
 		['StarLvID'] = 261090010
 		},
 	[262409023] = {
@@ -16066,7 +16066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 285,
+		['AttriEquipValue'] = 215,
 		['StarLvID'] = 261090011
 		},
 	[262409024] = {
@@ -16076,7 +16076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 317,
+		['AttriEquipValue'] = 236,
 		['StarLvID'] = 261090012
 		},
 	[262409025] = {
@@ -16086,7 +16086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 348,
+		['AttriEquipValue'] = 258,
 		['StarLvID'] = 261090013
 		},
 	[262409026] = {
@@ -16096,7 +16096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 380,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261090014
 		},
 	[262409030] = {
@@ -16106,7 +16106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 418,
+		['AttriEquipValue'] = 290,
 		['StarLvID'] = 261090015
 		},
 	[262409031] = {
@@ -16116,7 +16116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 457,
+		['AttriEquipValue'] = 325,
 		['StarLvID'] = 261090016
 		},
 	[262409032] = {
@@ -16126,7 +16126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 495,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261090017
 		},
 	[262409033] = {
@@ -16136,7 +16136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 534,
+		['AttriEquipValue'] = 395,
 		['StarLvID'] = 261090018
 		},
 	[262409034] = {
@@ -16146,7 +16146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 572,
+		['AttriEquipValue'] = 430,
 		['StarLvID'] = 261090019
 		},
 	[262409035] = {
@@ -16156,7 +16156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 611,
+		['AttriEquipValue'] = 465,
 		['StarLvID'] = 261090020
 		},
 	[262409036] = {
@@ -16166,7 +16166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 650,
+		['AttriEquipValue'] = 500,
 		['StarLvID'] = 261090021
 		},
 	[262409040] = {
@@ -16176,7 +16176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 697,
+		['AttriEquipValue'] = 520,
 		['StarLvID'] = 261090022
 		},
 	[262409041] = {
@@ -16186,7 +16186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 744,
+		['AttriEquipValue'] = 570,
 		['StarLvID'] = 261090023
 		},
 	[262409042] = {
@@ -16196,7 +16196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 791,
+		['AttriEquipValue'] = 620,
 		['StarLvID'] = 261090024
 		},
 	[262409043] = {
@@ -16206,7 +16206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 838,
+		['AttriEquipValue'] = 670,
 		['StarLvID'] = 261090025
 		},
 	[262409044] = {
@@ -16216,7 +16216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 885,
+		['AttriEquipValue'] = 720,
 		['StarLvID'] = 261090026
 		},
 	[262409045] = {
@@ -16226,7 +16226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 932,
+		['AttriEquipValue'] = 770,
 		['StarLvID'] = 261090027
 		},
 	[262409046] = {
@@ -16236,7 +16236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 980,
+		['AttriEquipValue'] = 820,
 		['StarLvID'] = 261090028
 		},
 	[262409050] = {
@@ -16246,7 +16246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 1034,
+		['AttriEquipValue'] = 850,
 		['StarLvID'] = 261090029
 		},
 	[262409051] = {
@@ -16256,7 +16256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 1088,
+		['AttriEquipValue'] = 918,
 		['StarLvID'] = 261090030
 		},
 	[262409052] = {
@@ -16266,7 +16266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 1142,
+		['AttriEquipValue'] = 986,
 		['StarLvID'] = 261090031
 		},
 	[262409053] = {
@@ -16276,7 +16276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 1197,
+		['AttriEquipValue'] = 1055,
 		['StarLvID'] = 261090032
 		},
 	[262409054] = {
@@ -16286,7 +16286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 1251,
+		['AttriEquipValue'] = 1123,
 		['StarLvID'] = 261090033
 		},
 	[262409055] = {
@@ -16296,7 +16296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 1305,
+		['AttriEquipValue'] = 1191,
 		['StarLvID'] = 261090034
 		},
 	[262409056] = {
@@ -16306,7 +16306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 1360,
+		['AttriEquipValue'] = 1260,
 		['StarLvID'] = 261090035
 		},
 	[262409060] = {
@@ -16316,7 +16316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 1422,
+		['AttriEquipValue'] = 1300,
 		['StarLvID'] = 261090036
 		},
 	[262409061] = {
@@ -16326,7 +16326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 1485,
+		['AttriEquipValue'] = 1383,
 		['StarLvID'] = 261090037
 		},
 	[262409062] = {
@@ -16336,7 +16336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 1548,
+		['AttriEquipValue'] = 1466,
 		['StarLvID'] = 261090038
 		},
 	[262409063] = {
@@ -16346,7 +16346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 1611,
+		['AttriEquipValue'] = 1550,
 		['StarLvID'] = 261090039
 		},
 	[262409064] = {
@@ -16356,7 +16356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 1674,
+		['AttriEquipValue'] = 1633,
 		['StarLvID'] = 261090040
 		},
 	[262409065] = {
@@ -16366,7 +16366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 6,
-		['AttriEquipValue'] = 1737,
+		['AttriEquipValue'] = 1716,
 		['StarLvID'] = 261090041
 		},
 	[262409066] = {
@@ -16456,7 +16456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 72,
+		['AttriEquipValue'] = 60,
 		['StarLvID'] = 261100008
 		},
 	[262410021] = {
@@ -16466,7 +16466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 85,
+		['AttriEquipValue'] = 70,
 		['StarLvID'] = 261100009
 		},
 	[262410022] = {
@@ -16476,7 +16476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 98,
+		['AttriEquipValue'] = 80,
 		['StarLvID'] = 261100010
 		},
 	[262410023] = {
@@ -16486,7 +16486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 111,
+		['AttriEquipValue'] = 90,
 		['StarLvID'] = 261100011
 		},
 	[262410024] = {
@@ -16496,7 +16496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 124,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261100012
 		},
 	[262410025] = {
@@ -16506,7 +16506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 137,
+		['AttriEquipValue'] = 110,
 		['StarLvID'] = 261100013
 		},
 	[262410026] = {
@@ -16516,7 +16516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 150,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261100014
 		},
 	[262410030] = {
@@ -16526,7 +16526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 167,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261100015
 		},
 	[262410031] = {
@@ -16536,7 +16536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 184,
+		['AttriEquipValue'] = 135,
 		['StarLvID'] = 261100016
 		},
 	[262410032] = {
@@ -16546,7 +16546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 201,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261100017
 		},
 	[262410033] = {
@@ -16556,7 +16556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 218,
+		['AttriEquipValue'] = 165,
 		['StarLvID'] = 261100018
 		},
 	[262410034] = {
@@ -16566,7 +16566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 235,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261100019
 		},
 	[262410035] = {
@@ -16576,7 +16576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 252,
+		['AttriEquipValue'] = 195,
 		['StarLvID'] = 261100020
 		},
 	[262410036] = {
@@ -16586,7 +16586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 270,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261100021
 		},
 	[262410040] = {
@@ -16596,7 +16596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 288,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261100022
 		},
 	[262410041] = {
@@ -16606,7 +16606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 307,
+		['AttriEquipValue'] = 231,
 		['StarLvID'] = 261100023
 		},
 	[262410042] = {
@@ -16616,7 +16616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 325,
+		['AttriEquipValue'] = 253,
 		['StarLvID'] = 261100024
 		},
 	[262410043] = {
@@ -16626,7 +16626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 344,
+		['AttriEquipValue'] = 275,
 		['StarLvID'] = 261100025
 		},
 	[262410044] = {
@@ -16636,7 +16636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 362,
+		['AttriEquipValue'] = 296,
 		['StarLvID'] = 261100026
 		},
 	[262410045] = {
@@ -16646,7 +16646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 381,
+		['AttriEquipValue'] = 318,
 		['StarLvID'] = 261100027
 		},
 	[262410046] = {
@@ -16656,7 +16656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 400,
+		['AttriEquipValue'] = 340,
 		['StarLvID'] = 261100028
 		},
 	[262410050] = {
@@ -16666,7 +16666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 422,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261100029
 		},
 	[262410051] = {
@@ -16676,7 +16676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 445,
+		['AttriEquipValue'] = 378,
 		['StarLvID'] = 261100030
 		},
 	[262410052] = {
@@ -16686,7 +16686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 468,
+		['AttriEquipValue'] = 406,
 		['StarLvID'] = 261100031
 		},
 	[262410053] = {
@@ -16696,7 +16696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 491,
+		['AttriEquipValue'] = 435,
 		['StarLvID'] = 261100032
 		},
 	[262410054] = {
@@ -16706,7 +16706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 514,
+		['AttriEquipValue'] = 463,
 		['StarLvID'] = 261100033
 		},
 	[262410055] = {
@@ -16716,7 +16716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 537,
+		['AttriEquipValue'] = 491,
 		['StarLvID'] = 261100034
 		},
 	[262410056] = {
@@ -16726,7 +16726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 560,
+		['AttriEquipValue'] = 520,
 		['StarLvID'] = 261100035
 		},
 	[262410060] = {
@@ -16736,7 +16736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 587,
+		['AttriEquipValue'] = 530,
 		['StarLvID'] = 261100036
 		},
 	[262410061] = {
@@ -16746,7 +16746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 614,
+		['AttriEquipValue'] = 566,
 		['StarLvID'] = 261100037
 		},
 	[262410062] = {
@@ -16756,7 +16756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 641,
+		['AttriEquipValue'] = 603,
 		['StarLvID'] = 261100038
 		},
 	[262410063] = {
@@ -16766,7 +16766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 668,
+		['AttriEquipValue'] = 640,
 		['StarLvID'] = 261100039
 		},
 	[262410064] = {
@@ -16776,7 +16776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 695,
+		['AttriEquipValue'] = 676,
 		['StarLvID'] = 261100040
 		},
 	[262410065] = {
@@ -16786,7 +16786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 722,
+		['AttriEquipValue'] = 713,
 		['StarLvID'] = 261100041
 		},
 	[262410066] = {
@@ -16806,7 +16806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 30,
+		['AttriEquipValue'] = 28,
 		['StarLvID'] = 261010001
 		},
 	[262501011] = {
@@ -16816,7 +16816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 55,
+		['AttriEquipValue'] = 51,
 		['StarLvID'] = 261010002
 		},
 	[262501012] = {
@@ -16826,7 +16826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 80,
+		['AttriEquipValue'] = 75,
 		['StarLvID'] = 261010003
 		},
 	[262501013] = {
@@ -16836,7 +16836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 105,
+		['AttriEquipValue'] = 99,
 		['StarLvID'] = 261010004
 		},
 	[262501014] = {
@@ -16846,7 +16846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 130,
+		['AttriEquipValue'] = 122,
 		['StarLvID'] = 261010005
 		},
 	[262501015] = {
@@ -16856,7 +16856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 155,
+		['AttriEquipValue'] = 146,
 		['StarLvID'] = 261010006
 		},
 	[262501016] = {
@@ -16866,7 +16866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 180,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261010007
 		},
 	[262501020] = {
@@ -16876,7 +16876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 211,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261010008
 		},
 	[262501021] = {
@@ -16886,7 +16886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 242,
+		['AttriEquipValue'] = 208,
 		['StarLvID'] = 261010009
 		},
 	[262501022] = {
@@ -16896,7 +16896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 274,
+		['AttriEquipValue'] = 236,
 		['StarLvID'] = 261010010
 		},
 	[262501023] = {
@@ -16906,7 +16906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 305,
+		['AttriEquipValue'] = 265,
 		['StarLvID'] = 261010011
 		},
 	[262501024] = {
@@ -16916,7 +16916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 337,
+		['AttriEquipValue'] = 293,
 		['StarLvID'] = 261010012
 		},
 	[262501025] = {
@@ -16926,7 +16926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 368,
+		['AttriEquipValue'] = 321,
 		['StarLvID'] = 261010013
 		},
 	[262501026] = {
@@ -16936,7 +16936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 400,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261010014
 		},
 	[262501030] = {
@@ -16946,7 +16946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 442,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261010015
 		},
 	[262501031] = {
@@ -16956,7 +16956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 485,
+		['AttriEquipValue'] = 401,
 		['StarLvID'] = 261010016
 		},
 	[262501032] = {
@@ -16966,7 +16966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 528,
+		['AttriEquipValue'] = 443,
 		['StarLvID'] = 261010017
 		},
 	[262501033] = {
@@ -16976,7 +16976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 571,
+		['AttriEquipValue'] = 485,
 		['StarLvID'] = 261010018
 		},
 	[262501034] = {
@@ -16986,7 +16986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 614,
+		['AttriEquipValue'] = 526,
 		['StarLvID'] = 261010019
 		},
 	[262501035] = {
@@ -16996,7 +16996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 657,
+		['AttriEquipValue'] = 568,
 		['StarLvID'] = 261010020
 		},
 	[262501036] = {
@@ -17006,7 +17006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 700,
+		['AttriEquipValue'] = 610,
 		['StarLvID'] = 261010021
 		},
 	[262501040] = {
@@ -17016,7 +17016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 742,
+		['AttriEquipValue'] = 630,
 		['StarLvID'] = 261010022
 		},
 	[262501041] = {
@@ -17026,7 +17026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 785,
+		['AttriEquipValue'] = 693,
 		['StarLvID'] = 261010023
 		},
 	[262501042] = {
@@ -17036,7 +17036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 828,
+		['AttriEquipValue'] = 756,
 		['StarLvID'] = 261010024
 		},
 	[262501043] = {
@@ -17046,7 +17046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 871,
+		['AttriEquipValue'] = 820,
 		['StarLvID'] = 261010025
 		},
 	[262501044] = {
@@ -17056,7 +17056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 914,
+		['AttriEquipValue'] = 883,
 		['StarLvID'] = 261010026
 		},
 	[262501045] = {
@@ -17066,7 +17066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 957,
+		['AttriEquipValue'] = 946,
 		['StarLvID'] = 261010027
 		},
 	[262501046] = {
@@ -17076,7 +17076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1000,
+		['AttriEquipValue'] = 1010,
 		['StarLvID'] = 261010028
 		},
 	[262501050] = {
@@ -17086,7 +17086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1071,
+		['AttriEquipValue'] = 1050,
 		['StarLvID'] = 261010029
 		},
 	[262501051] = {
@@ -17096,7 +17096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1142,
+		['AttriEquipValue'] = 1131,
 		['StarLvID'] = 261010030
 		},
 	[262501052] = {
@@ -17106,7 +17106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1214,
+		['AttriEquipValue'] = 1213,
 		['StarLvID'] = 261010031
 		},
 	[262501053] = {
@@ -17116,7 +17116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1285,
+		['AttriEquipValue'] = 1295,
 		['StarLvID'] = 261010032
 		},
 	[262501054] = {
@@ -17126,7 +17126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1357,
+		['AttriEquipValue'] = 1376,
 		['StarLvID'] = 261010033
 		},
 	[262501055] = {
@@ -17136,7 +17136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1428,
+		['AttriEquipValue'] = 1458,
 		['StarLvID'] = 261010034
 		},
 	[262501056] = {
@@ -17146,7 +17146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1500,
+		['AttriEquipValue'] = 1540,
 		['StarLvID'] = 261010035
 		},
 	[262501060] = {
@@ -17156,7 +17156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1571,
+		['AttriEquipValue'] = 1590,
 		['StarLvID'] = 261010036
 		},
 	[262501061] = {
@@ -17166,7 +17166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1642,
+		['AttriEquipValue'] = 1691,
 		['StarLvID'] = 261010037
 		},
 	[262501062] = {
@@ -17176,7 +17176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1714,
+		['AttriEquipValue'] = 1793,
 		['StarLvID'] = 261010038
 		},
 	[262501063] = {
@@ -17186,7 +17186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1785,
+		['AttriEquipValue'] = 1895,
 		['StarLvID'] = 261010039
 		},
 	[262501064] = {
@@ -17196,7 +17196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1857,
+		['AttriEquipValue'] = 1996,
 		['StarLvID'] = 261010040
 		},
 	[262501065] = {
@@ -17206,7 +17206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1928,
+		['AttriEquipValue'] = 2098,
 		['StarLvID'] = 261010041
 		},
 	[262501066] = {
@@ -17216,7 +17216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 1,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 2000,
+		['AttriEquipValue'] = 2200,
 		['StarLvID'] = 261010042
 		},
 	[262502010] = {
@@ -17226,7 +17226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 10,
+		['AttriEquipValue'] = 8,
 		['StarLvID'] = 261020001
 		},
 	[262502011] = {
@@ -17236,7 +17236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 20,
+		['AttriEquipValue'] = 15,
 		['StarLvID'] = 261020002
 		},
 	[262502012] = {
@@ -17246,7 +17246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 30,
+		['AttriEquipValue'] = 22,
 		['StarLvID'] = 261020003
 		},
 	[262502013] = {
@@ -17256,7 +17256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 40,
+		['AttriEquipValue'] = 29,
 		['StarLvID'] = 261020004
 		},
 	[262502014] = {
@@ -17266,7 +17266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 50,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261020005
 		},
 	[262502015] = {
@@ -17276,7 +17276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 43,
 		['StarLvID'] = 261020006
 		},
 	[262502016] = {
@@ -17286,7 +17286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 70,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261020007
 		},
 	[262502020] = {
@@ -17296,7 +17296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 84,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261020008
 		},
 	[262502021] = {
@@ -17306,7 +17306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 98,
+		['AttriEquipValue'] = 58,
 		['StarLvID'] = 261020009
 		},
 	[262502022] = {
@@ -17316,7 +17316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 112,
+		['AttriEquipValue'] = 66,
 		['StarLvID'] = 261020010
 		},
 	[262502023] = {
@@ -17326,7 +17326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 127,
+		['AttriEquipValue'] = 75,
 		['StarLvID'] = 261020011
 		},
 	[262502024] = {
@@ -17336,7 +17336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 141,
+		['AttriEquipValue'] = 83,
 		['StarLvID'] = 261020012
 		},
 	[262502025] = {
@@ -17346,7 +17346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 155,
+		['AttriEquipValue'] = 91,
 		['StarLvID'] = 261020013
 		},
 	[262502026] = {
@@ -17356,7 +17356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 170,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261020014
 		},
 	[262502030] = {
@@ -17366,7 +17366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 188,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261020015
 		},
 	[262502031] = {
@@ -17376,7 +17376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 207,
+		['AttriEquipValue'] = 113,
 		['StarLvID'] = 261020016
 		},
 	[262502032] = {
@@ -17386,7 +17386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 225,
+		['AttriEquipValue'] = 126,
 		['StarLvID'] = 261020017
 		},
 	[262502033] = {
@@ -17396,7 +17396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 244,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261020018
 		},
 	[262502034] = {
@@ -17406,7 +17406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 262,
+		['AttriEquipValue'] = 153,
 		['StarLvID'] = 261020019
 		},
 	[262502035] = {
@@ -17416,7 +17416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 281,
+		['AttriEquipValue'] = 166,
 		['StarLvID'] = 261020020
 		},
 	[262502036] = {
@@ -17426,7 +17426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 300,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261020021
 		},
 	[262502040] = {
@@ -17436,7 +17436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 318,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261020022
 		},
 	[262502041] = {
@@ -17446,7 +17446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 337,
+		['AttriEquipValue'] = 198,
 		['StarLvID'] = 261020023
 		},
 	[262502042] = {
@@ -17456,7 +17456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 355,
+		['AttriEquipValue'] = 216,
 		['StarLvID'] = 261020024
 		},
 	[262502043] = {
@@ -17466,7 +17466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 374,
+		['AttriEquipValue'] = 235,
 		['StarLvID'] = 261020025
 		},
 	[262502044] = {
@@ -17476,7 +17476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 392,
+		['AttriEquipValue'] = 253,
 		['StarLvID'] = 261020026
 		},
 	[262502045] = {
@@ -17486,7 +17486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 411,
+		['AttriEquipValue'] = 271,
 		['StarLvID'] = 261020027
 		},
 	[262502046] = {
@@ -17496,7 +17496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 430,
+		['AttriEquipValue'] = 290,
 		['StarLvID'] = 261020028
 		},
 	[262502050] = {
@@ -17506,7 +17506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 454,
+		['AttriEquipValue'] = 300,
 		['StarLvID'] = 261020029
 		},
 	[262502051] = {
@@ -17516,7 +17516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 478,
+		['AttriEquipValue'] = 325,
 		['StarLvID'] = 261020030
 		},
 	[262502052] = {
@@ -17526,7 +17526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 502,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261020031
 		},
 	[262502053] = {
@@ -17536,7 +17536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 527,
+		['AttriEquipValue'] = 375,
 		['StarLvID'] = 261020032
 		},
 	[262502054] = {
@@ -17546,7 +17546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 551,
+		['AttriEquipValue'] = 400,
 		['StarLvID'] = 261020033
 		},
 	[262502055] = {
@@ -17556,7 +17556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 575,
+		['AttriEquipValue'] = 425,
 		['StarLvID'] = 261020034
 		},
 	[262502056] = {
@@ -17566,7 +17566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 600,
+		['AttriEquipValue'] = 450,
 		['StarLvID'] = 261020035
 		},
 	[262502060] = {
@@ -17576,7 +17576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 628,
+		['AttriEquipValue'] = 460,
 		['StarLvID'] = 261020036
 		},
 	[262502061] = {
@@ -17586,7 +17586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 657,
+		['AttriEquipValue'] = 491,
 		['StarLvID'] = 261020037
 		},
 	[262502062] = {
@@ -17596,7 +17596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 685,
+		['AttriEquipValue'] = 523,
 		['StarLvID'] = 261020038
 		},
 	[262502063] = {
@@ -17606,7 +17606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 714,
+		['AttriEquipValue'] = 555,
 		['StarLvID'] = 261020039
 		},
 	[262502064] = {
@@ -17616,7 +17616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 742,
+		['AttriEquipValue'] = 586,
 		['StarLvID'] = 261020040
 		},
 	[262502065] = {
@@ -17626,7 +17626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 771,
+		['AttriEquipValue'] = 618,
 		['StarLvID'] = 261020041
 		},
 	[262502066] = {
@@ -17636,7 +17636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 2,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 95,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 650,
 		['StarLvID'] = 261020042
 		},
 	[262503010] = {
@@ -17646,7 +17646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 400,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261030001
 		},
 	[262503011] = {
@@ -17656,7 +17656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 750,
+		['AttriEquipValue'] = 640,
 		['StarLvID'] = 261030002
 		},
 	[262503012] = {
@@ -17666,7 +17666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1100,
+		['AttriEquipValue'] = 930,
 		['StarLvID'] = 261030003
 		},
 	[262503013] = {
@@ -17676,7 +17676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1450,
+		['AttriEquipValue'] = 1220,
 		['StarLvID'] = 261030004
 		},
 	[262503014] = {
@@ -17686,7 +17686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1800,
+		['AttriEquipValue'] = 1510,
 		['StarLvID'] = 261030005
 		},
 	[262503015] = {
@@ -17696,7 +17696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2150,
+		['AttriEquipValue'] = 1800,
 		['StarLvID'] = 261030006
 		},
 	[262503016] = {
@@ -17706,7 +17706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2500,
+		['AttriEquipValue'] = 2100,
 		['StarLvID'] = 261030007
 		},
 	[262503020] = {
@@ -17716,7 +17716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3000,
+		['AttriEquipValue'] = 2300,
 		['StarLvID'] = 261030008
 		},
 	[262503021] = {
@@ -17726,7 +17726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3500,
+		['AttriEquipValue'] = 2630,
 		['StarLvID'] = 261030009
 		},
 	[262503022] = {
@@ -17736,7 +17736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4000,
+		['AttriEquipValue'] = 2960,
 		['StarLvID'] = 261030010
 		},
 	[262503023] = {
@@ -17746,7 +17746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4500,
+		['AttriEquipValue'] = 3300,
 		['StarLvID'] = 261030011
 		},
 	[262503024] = {
@@ -17756,7 +17756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5000,
+		['AttriEquipValue'] = 3630,
 		['StarLvID'] = 261030012
 		},
 	[262503025] = {
@@ -17766,7 +17766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5500,
+		['AttriEquipValue'] = 3960,
 		['StarLvID'] = 261030013
 		},
 	[262503026] = {
@@ -17776,7 +17776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6000,
+		['AttriEquipValue'] = 4300,
 		['StarLvID'] = 261030014
 		},
 	[262503030] = {
@@ -17786,7 +17786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6570,
+		['AttriEquipValue'] = 4500,
 		['StarLvID'] = 261030015
 		},
 	[262503031] = {
@@ -17796,7 +17796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7140,
+		['AttriEquipValue'] = 5000,
 		['StarLvID'] = 261030016
 		},
 	[262503032] = {
@@ -17806,7 +17806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7710,
+		['AttriEquipValue'] = 5500,
 		['StarLvID'] = 261030017
 		},
 	[262503033] = {
@@ -17816,7 +17816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8280,
+		['AttriEquipValue'] = 6000,
 		['StarLvID'] = 261030018
 		},
 	[262503034] = {
@@ -17826,7 +17826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8850,
+		['AttriEquipValue'] = 6500,
 		['StarLvID'] = 261030019
 		},
 	[262503035] = {
@@ -17836,7 +17836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9420,
+		['AttriEquipValue'] = 7000,
 		['StarLvID'] = 261030020
 		},
 	[262503036] = {
@@ -17846,7 +17846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 7500,
 		['StarLvID'] = 261030021
 		},
 	[262503040] = {
@@ -17856,7 +17856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10710,
+		['AttriEquipValue'] = 7800,
 		['StarLvID'] = 261030022
 		},
 	[262503041] = {
@@ -17866,7 +17866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11420,
+		['AttriEquipValue'] = 8500,
 		['StarLvID'] = 261030023
 		},
 	[262503042] = {
@@ -17876,7 +17876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12140,
+		['AttriEquipValue'] = 9200,
 		['StarLvID'] = 261030024
 		},
 	[262503043] = {
@@ -17886,7 +17886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12850,
+		['AttriEquipValue'] = 9900,
 		['StarLvID'] = 261030025
 		},
 	[262503044] = {
@@ -17896,7 +17896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 13570,
+		['AttriEquipValue'] = 10600,
 		['StarLvID'] = 261030026
 		},
 	[262503045] = {
@@ -17906,7 +17906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14280,
+		['AttriEquipValue'] = 11300,
 		['StarLvID'] = 261030027
 		},
 	[262503046] = {
@@ -17916,7 +17916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15000,
+		['AttriEquipValue'] = 12000,
 		['StarLvID'] = 261030028
 		},
 	[262503050] = {
@@ -17926,7 +17926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15850,
+		['AttriEquipValue'] = 12400,
 		['StarLvID'] = 261030029
 		},
 	[262503051] = {
@@ -17936,7 +17936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 16710,
+		['AttriEquipValue'] = 13300,
 		['StarLvID'] = 261030030
 		},
 	[262503052] = {
@@ -17946,7 +17946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17570,
+		['AttriEquipValue'] = 14200,
 		['StarLvID'] = 261030031
 		},
 	[262503053] = {
@@ -17956,7 +17956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18420,
+		['AttriEquipValue'] = 15200,
 		['StarLvID'] = 261030032
 		},
 	[262503054] = {
@@ -17966,7 +17966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 19280,
+		['AttriEquipValue'] = 16100,
 		['StarLvID'] = 261030033
 		},
 	[262503055] = {
@@ -17976,7 +17976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 20140,
+		['AttriEquipValue'] = 17000,
 		['StarLvID'] = 261030034
 		},
 	[262503056] = {
@@ -17986,7 +17986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 21000,
+		['AttriEquipValue'] = 18000,
 		['StarLvID'] = 261030035
 		},
 	[262503060] = {
@@ -17996,7 +17996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 22000,
+		['AttriEquipValue'] = 18600,
 		['StarLvID'] = 261030036
 		},
 	[262503061] = {
@@ -18006,7 +18006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 23000,
+		['AttriEquipValue'] = 20000,
 		['StarLvID'] = 261030037
 		},
 	[262503062] = {
@@ -18016,7 +18016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 24000,
+		['AttriEquipValue'] = 21400,
 		['StarLvID'] = 261030038
 		},
 	[262503063] = {
@@ -18026,7 +18026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 25000,
+		['AttriEquipValue'] = 22800,
 		['StarLvID'] = 261030039
 		},
 	[262503064] = {
@@ -18036,7 +18036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 26000,
+		['AttriEquipValue'] = 24200,
 		['StarLvID'] = 261030040
 		},
 	[262503065] = {
@@ -18046,7 +18046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 27000,
+		['AttriEquipValue'] = 25600,
 		['StarLvID'] = 261030041
 		},
 	[262503066] = {
@@ -18056,7 +18056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 3,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 28000,
+		['AttriEquipValue'] = 27000,
 		['StarLvID'] = 261030042
 		},
 	[262504010] = {
@@ -18066,7 +18066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 300,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261040001
 		},
 	[262504011] = {
@@ -18076,7 +18076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 550,
+		['AttriEquipValue'] = 480,
 		['StarLvID'] = 261040002
 		},
 	[262504012] = {
@@ -18086,7 +18086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 700,
 		['StarLvID'] = 261040003
 		},
 	[262504013] = {
@@ -18096,7 +18096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1050,
+		['AttriEquipValue'] = 930,
 		['StarLvID'] = 261040004
 		},
 	[262504014] = {
@@ -18106,7 +18106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1300,
+		['AttriEquipValue'] = 1150,
 		['StarLvID'] = 261040005
 		},
 	[262504015] = {
@@ -18116,7 +18116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1550,
+		['AttriEquipValue'] = 1370,
 		['StarLvID'] = 261040006
 		},
 	[262504016] = {
@@ -18126,7 +18126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1800,
+		['AttriEquipValue'] = 1600,
 		['StarLvID'] = 261040007
 		},
 	[262504020] = {
@@ -18136,7 +18136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2140,
+		['AttriEquipValue'] = 1700,
 		['StarLvID'] = 261040008
 		},
 	[262504021] = {
@@ -18146,7 +18146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2480,
+		['AttriEquipValue'] = 1950,
 		['StarLvID'] = 261040009
 		},
 	[262504022] = {
@@ -18156,7 +18156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2820,
+		['AttriEquipValue'] = 2200,
 		['StarLvID'] = 261040010
 		},
 	[262504023] = {
@@ -18166,7 +18166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3170,
+		['AttriEquipValue'] = 2450,
 		['StarLvID'] = 261040011
 		},
 	[262504024] = {
@@ -18176,7 +18176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3510,
+		['AttriEquipValue'] = 2700,
 		['StarLvID'] = 261040012
 		},
 	[262504025] = {
@@ -18186,7 +18186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3850,
+		['AttriEquipValue'] = 2950,
 		['StarLvID'] = 261040013
 		},
 	[262504026] = {
@@ -18196,7 +18196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4200,
+		['AttriEquipValue'] = 3200,
 		['StarLvID'] = 261040014
 		},
 	[262504030] = {
@@ -18206,7 +18206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4620,
+		['AttriEquipValue'] = 3300,
 		['StarLvID'] = 261040015
 		},
 	[262504031] = {
@@ -18216,7 +18216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5050,
+		['AttriEquipValue'] = 3680,
 		['StarLvID'] = 261040016
 		},
 	[262504032] = {
@@ -18226,7 +18226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5480,
+		['AttriEquipValue'] = 4060,
 		['StarLvID'] = 261040017
 		},
 	[262504033] = {
@@ -18236,7 +18236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5910,
+		['AttriEquipValue'] = 4450,
 		['StarLvID'] = 261040018
 		},
 	[262504034] = {
@@ -18246,7 +18246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6340,
+		['AttriEquipValue'] = 4830,
 		['StarLvID'] = 261040019
 		},
 	[262504035] = {
@@ -18256,7 +18256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6770,
+		['AttriEquipValue'] = 5210,
 		['StarLvID'] = 261040020
 		},
 	[262504036] = {
@@ -18266,7 +18266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7200,
+		['AttriEquipValue'] = 5600,
 		['StarLvID'] = 261040021
 		},
 	[262504040] = {
@@ -18276,7 +18276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7600,
+		['AttriEquipValue'] = 5800,
 		['StarLvID'] = 261040022
 		},
 	[262504041] = {
@@ -18286,7 +18286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8000,
+		['AttriEquipValue'] = 6300,
 		['StarLvID'] = 261040023
 		},
 	[262504042] = {
@@ -18296,7 +18296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8400,
+		['AttriEquipValue'] = 6800,
 		['StarLvID'] = 261040024
 		},
 	[262504043] = {
@@ -18306,7 +18306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8800,
+		['AttriEquipValue'] = 7400,
 		['StarLvID'] = 261040025
 		},
 	[262504044] = {
@@ -18316,7 +18316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9200,
+		['AttriEquipValue'] = 7900,
 		['StarLvID'] = 261040026
 		},
 	[262504045] = {
@@ -18326,7 +18326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9600,
+		['AttriEquipValue'] = 8400,
 		['StarLvID'] = 261040027
 		},
 	[262504046] = {
@@ -18336,7 +18336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 9000,
 		['StarLvID'] = 261040028
 		},
 	[262504050] = {
@@ -18346,7 +18346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 9300,
 		['StarLvID'] = 261040029
 		},
 	[262504051] = {
@@ -18366,7 +18366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 10800,
 		['StarLvID'] = 261040031
 		},
 	[262504053] = {
@@ -18376,7 +18376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 11600,
 		['StarLvID'] = 261040032
 		},
 	[262504054] = {
@@ -18386,7 +18386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 12400,
 		['StarLvID'] = 261040033
 		},
 	[262504055] = {
@@ -18396,7 +18396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 13200,
 		['StarLvID'] = 261040034
 		},
 	[262504056] = {
@@ -18406,7 +18406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 14000,
 		['StarLvID'] = 261040035
 		},
 	[262504060] = {
@@ -18416,7 +18416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11420,
+		['AttriEquipValue'] = 14500,
 		['StarLvID'] = 261040036
 		},
 	[262504061] = {
@@ -18426,7 +18426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12850,
+		['AttriEquipValue'] = 15400,
 		['StarLvID'] = 261040037
 		},
 	[262504062] = {
@@ -18436,7 +18436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14280,
+		['AttriEquipValue'] = 16300,
 		['StarLvID'] = 261040038
 		},
 	[262504063] = {
@@ -18446,7 +18446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15710,
+		['AttriEquipValue'] = 17200,
 		['StarLvID'] = 261040039
 		},
 	[262504064] = {
@@ -18456,7 +18456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17140,
+		['AttriEquipValue'] = 18100,
 		['StarLvID'] = 261040040
 		},
 	[262504065] = {
@@ -18466,7 +18466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 4,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18570,
+		['AttriEquipValue'] = 19000,
 		['StarLvID'] = 261040041
 		},
 	[262504066] = {
@@ -18486,7 +18486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 40,
+		['AttriEquipValue'] = 16,
 		['StarLvID'] = 261050001
 		},
 	[262505011] = {
@@ -18496,7 +18496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 50,
+		['AttriEquipValue'] = 30,
 		['StarLvID'] = 261050002
 		},
 	[262505012] = {
@@ -18506,7 +18506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 44,
 		['StarLvID'] = 261050003
 		},
 	[262505013] = {
@@ -18516,7 +18516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 70,
+		['AttriEquipValue'] = 58,
 		['StarLvID'] = 261050004
 		},
 	[262505014] = {
@@ -18526,7 +18526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 80,
+		['AttriEquipValue'] = 72,
 		['StarLvID'] = 261050005
 		},
 	[262505015] = {
@@ -18536,7 +18536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 90,
+		['AttriEquipValue'] = 86,
 		['StarLvID'] = 261050006
 		},
 	[262505016] = {
@@ -18556,7 +18556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 120,
+		['AttriEquipValue'] = 110,
 		['StarLvID'] = 261050008
 		},
 	[262505021] = {
@@ -18566,7 +18566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 140,
+		['AttriEquipValue'] = 125,
 		['StarLvID'] = 261050009
 		},
 	[262505022] = {
@@ -18576,7 +18576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 160,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261050010
 		},
 	[262505023] = {
@@ -18586,7 +18586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 180,
+		['AttriEquipValue'] = 155,
 		['StarLvID'] = 261050011
 		},
 	[262505024] = {
@@ -18596,7 +18596,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 200,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261050012
 		},
 	[262505025] = {
@@ -18606,7 +18606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 220,
+		['AttriEquipValue'] = 185,
 		['StarLvID'] = 261050013
 		},
 	[262505026] = {
@@ -18616,7 +18616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 240,
+		['AttriEquipValue'] = 200,
 		['StarLvID'] = 261050014
 		},
 	[262505030] = {
@@ -18626,7 +18626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 267,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261050015
 		},
 	[262505031] = {
@@ -18636,7 +18636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 294,
+		['AttriEquipValue'] = 235,
 		['StarLvID'] = 261050016
 		},
 	[262505032] = {
@@ -18646,7 +18646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 321,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261050017
 		},
 	[262505033] = {
@@ -18656,7 +18656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 348,
+		['AttriEquipValue'] = 285,
 		['StarLvID'] = 261050018
 		},
 	[262505034] = {
@@ -18666,7 +18666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 375,
+		['AttriEquipValue'] = 310,
 		['StarLvID'] = 261050019
 		},
 	[262505035] = {
@@ -18676,7 +18676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 402,
+		['AttriEquipValue'] = 335,
 		['StarLvID'] = 261050020
 		},
 	[262505036] = {
@@ -18686,7 +18686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 430,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261050021
 		},
 	[262505040] = {
@@ -18696,7 +18696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 461,
+		['AttriEquipValue'] = 370,
 		['StarLvID'] = 261050022
 		},
 	[262505041] = {
@@ -18706,7 +18706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 492,
+		['AttriEquipValue'] = 406,
 		['StarLvID'] = 261050023
 		},
 	[262505042] = {
@@ -18716,7 +18716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 524,
+		['AttriEquipValue'] = 443,
 		['StarLvID'] = 261050024
 		},
 	[262505043] = {
@@ -18726,7 +18726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 555,
+		['AttriEquipValue'] = 480,
 		['StarLvID'] = 261050025
 		},
 	[262505044] = {
@@ -18736,7 +18736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 587,
+		['AttriEquipValue'] = 516,
 		['StarLvID'] = 261050026
 		},
 	[262505045] = {
@@ -18746,7 +18746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 618,
+		['AttriEquipValue'] = 553,
 		['StarLvID'] = 261050027
 		},
 	[262505046] = {
@@ -18756,7 +18756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 650,
+		['AttriEquipValue'] = 590,
 		['StarLvID'] = 261050028
 		},
 	[262505050] = {
@@ -18766,7 +18766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 685,
+		['AttriEquipValue'] = 610,
 		['StarLvID'] = 261050029
 		},
 	[262505051] = {
@@ -18776,7 +18776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 721,
+		['AttriEquipValue'] = 660,
 		['StarLvID'] = 261050030
 		},
 	[262505052] = {
@@ -18786,7 +18786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 757,
+		['AttriEquipValue'] = 710,
 		['StarLvID'] = 261050031
 		},
 	[262505053] = {
@@ -18796,7 +18796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 792,
+		['AttriEquipValue'] = 760,
 		['StarLvID'] = 261050032
 		},
 	[262505054] = {
@@ -18806,7 +18806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 828,
+		['AttriEquipValue'] = 810,
 		['StarLvID'] = 261050033
 		},
 	[262505055] = {
@@ -18816,7 +18816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 864,
+		['AttriEquipValue'] = 860,
 		['StarLvID'] = 261050034
 		},
 	[262505056] = {
@@ -18826,7 +18826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 900,
+		['AttriEquipValue'] = 910,
 		['StarLvID'] = 261050035
 		},
 	[262505060] = {
@@ -18836,7 +18836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 942,
+		['AttriEquipValue'] = 940,
 		['StarLvID'] = 261050036
 		},
 	[262505061] = {
@@ -18846,7 +18846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 985,
+		['AttriEquipValue'] = 1000,
 		['StarLvID'] = 261050037
 		},
 	[262505062] = {
@@ -18856,7 +18856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1028,
+		['AttriEquipValue'] = 1060,
 		['StarLvID'] = 261050038
 		},
 	[262505063] = {
@@ -18866,7 +18866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1071,
+		['AttriEquipValue'] = 1120,
 		['StarLvID'] = 261050039
 		},
 	[262505064] = {
@@ -18876,7 +18876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1114,
+		['AttriEquipValue'] = 1180,
 		['StarLvID'] = 261050040
 		},
 	[262505065] = {
@@ -18886,7 +18886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1157,
+		['AttriEquipValue'] = 1240,
 		['StarLvID'] = 261050041
 		},
 	[262505066] = {
@@ -18896,7 +18896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 5,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 16,
-		['AttriEquipValue'] = 1200,
+		['AttriEquipValue'] = 1300,
 		['StarLvID'] = 261050042
 		},
 	[262506010] = {
@@ -18906,7 +18906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 10,
+		['AttriEquipValue'] = 20,
 		['StarLvID'] = 261060001
 		},
 	[262506011] = {
@@ -18916,7 +18916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 30,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261060002
 		},
 	[262506012] = {
@@ -18926,7 +18926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 50,
+		['AttriEquipValue'] = 53,
 		['StarLvID'] = 261060003
 		},
 	[262506013] = {
@@ -18946,7 +18946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 90,
+		['AttriEquipValue'] = 86,
 		['StarLvID'] = 261060005
 		},
 	[262506015] = {
@@ -18956,7 +18956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 110,
+		['AttriEquipValue'] = 103,
 		['StarLvID'] = 261060006
 		},
 	[262506016] = {
@@ -18966,7 +18966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 130,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261060007
 		},
 	[262506020] = {
@@ -18976,7 +18976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 155,
+		['AttriEquipValue'] = 130,
 		['StarLvID'] = 261060008
 		},
 	[262506021] = {
@@ -18986,7 +18986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 181,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261060009
 		},
 	[262506022] = {
@@ -18996,7 +18996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 207,
+		['AttriEquipValue'] = 170,
 		['StarLvID'] = 261060010
 		},
 	[262506023] = {
@@ -19006,7 +19006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 232,
+		['AttriEquipValue'] = 190,
 		['StarLvID'] = 261060011
 		},
 	[262506024] = {
@@ -19016,7 +19016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 258,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261060012
 		},
 	[262506025] = {
@@ -19026,7 +19026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 284,
+		['AttriEquipValue'] = 230,
 		['StarLvID'] = 261060013
 		},
 	[262506026] = {
@@ -19036,7 +19036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 310,
+		['AttriEquipValue'] = 250,
 		['StarLvID'] = 261060014
 		},
 	[262506030] = {
@@ -19046,7 +19046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 342,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261060015
 		},
 	[262506031] = {
@@ -19056,7 +19056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 375,
+		['AttriEquipValue'] = 290,
 		['StarLvID'] = 261060016
 		},
 	[262506032] = {
@@ -19066,7 +19066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 408,
+		['AttriEquipValue'] = 320,
 		['StarLvID'] = 261060017
 		},
 	[262506033] = {
@@ -19076,7 +19076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 441,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261060018
 		},
 	[262506034] = {
@@ -19086,7 +19086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 474,
+		['AttriEquipValue'] = 380,
 		['StarLvID'] = 261060019
 		},
 	[262506035] = {
@@ -19096,7 +19096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 507,
+		['AttriEquipValue'] = 410,
 		['StarLvID'] = 261060020
 		},
 	[262506036] = {
@@ -19106,7 +19106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 540,
+		['AttriEquipValue'] = 440,
 		['StarLvID'] = 261060021
 		},
 	[262506040] = {
@@ -19116,7 +19116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 577,
+		['AttriEquipValue'] = 450,
 		['StarLvID'] = 261060022
 		},
 	[262506041] = {
@@ -19126,7 +19126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 614,
+		['AttriEquipValue'] = 496,
 		['StarLvID'] = 261060023
 		},
 	[262506042] = {
@@ -19136,7 +19136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 651,
+		['AttriEquipValue'] = 543,
 		['StarLvID'] = 261060024
 		},
 	[262506043] = {
@@ -19146,7 +19146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 688,
+		['AttriEquipValue'] = 590,
 		['StarLvID'] = 261060025
 		},
 	[262506044] = {
@@ -19156,7 +19156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 725,
+		['AttriEquipValue'] = 636,
 		['StarLvID'] = 261060026
 		},
 	[262506045] = {
@@ -19166,7 +19166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 762,
+		['AttriEquipValue'] = 683,
 		['StarLvID'] = 261060027
 		},
 	[262506046] = {
@@ -19176,7 +19176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 730,
 		['StarLvID'] = 261060028
 		},
 	[262506050] = {
@@ -19186,7 +19186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 847,
+		['AttriEquipValue'] = 750,
 		['StarLvID'] = 261060029
 		},
 	[262506051] = {
@@ -19196,7 +19196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 894,
+		['AttriEquipValue'] = 811,
 		['StarLvID'] = 261060030
 		},
 	[262506052] = {
@@ -19206,7 +19206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 941,
+		['AttriEquipValue'] = 873,
 		['StarLvID'] = 261060031
 		},
 	[262506053] = {
@@ -19216,7 +19216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 988,
+		['AttriEquipValue'] = 935,
 		['StarLvID'] = 261060032
 		},
 	[262506054] = {
@@ -19226,7 +19226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1035,
+		['AttriEquipValue'] = 996,
 		['StarLvID'] = 261060033
 		},
 	[262506055] = {
@@ -19236,7 +19236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1082,
+		['AttriEquipValue'] = 1058,
 		['StarLvID'] = 261060034
 		},
 	[262506056] = {
@@ -19246,7 +19246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1130,
+		['AttriEquipValue'] = 1120,
 		['StarLvID'] = 261060035
 		},
 	[262506060] = {
@@ -19256,7 +19256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1182,
+		['AttriEquipValue'] = 1150,
 		['StarLvID'] = 261060036
 		},
 	[262506061] = {
@@ -19266,7 +19266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1235,
+		['AttriEquipValue'] = 1225,
 		['StarLvID'] = 261060037
 		},
 	[262506062] = {
@@ -19276,7 +19276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1288,
+		['AttriEquipValue'] = 1300,
 		['StarLvID'] = 261060038
 		},
 	[262506063] = {
@@ -19286,7 +19286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1341,
+		['AttriEquipValue'] = 1375,
 		['StarLvID'] = 261060039
 		},
 	[262506064] = {
@@ -19296,7 +19296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1394,
+		['AttriEquipValue'] = 1450,
 		['StarLvID'] = 261060040
 		},
 	[262506065] = {
@@ -19306,7 +19306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1447,
+		['AttriEquipValue'] = 1525,
 		['StarLvID'] = 261060041
 		},
 	[262506066] = {
@@ -19316,7 +19316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 6,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 3,
-		['AttriEquipValue'] = 1500,
+		['AttriEquipValue'] = 1600,
 		['StarLvID'] = 261060042
 		},
 	[262507010] = {
@@ -19326,7 +19326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 300,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261070001
 		},
 	[262507011] = {
@@ -19336,7 +19336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 550,
+		['AttriEquipValue'] = 510,
 		['StarLvID'] = 261070002
 		},
 	[262507012] = {
@@ -19346,7 +19346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 800,
+		['AttriEquipValue'] = 750,
 		['StarLvID'] = 261070003
 		},
 	[262507013] = {
@@ -19356,7 +19356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1050,
+		['AttriEquipValue'] = 990,
 		['StarLvID'] = 261070004
 		},
 	[262507014] = {
@@ -19366,7 +19366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1300,
+		['AttriEquipValue'] = 1220,
 		['StarLvID'] = 261070005
 		},
 	[262507015] = {
@@ -19376,7 +19376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1550,
+		['AttriEquipValue'] = 1460,
 		['StarLvID'] = 261070006
 		},
 	[262507016] = {
@@ -19386,7 +19386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 1800,
+		['AttriEquipValue'] = 1700,
 		['StarLvID'] = 261070007
 		},
 	[262507020] = {
@@ -19396,7 +19396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2140,
+		['AttriEquipValue'] = 1800,
 		['StarLvID'] = 261070008
 		},
 	[262507021] = {
@@ -19406,7 +19406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2480,
+		['AttriEquipValue'] = 2080,
 		['StarLvID'] = 261070009
 		},
 	[262507022] = {
@@ -19416,7 +19416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 2820,
+		['AttriEquipValue'] = 2360,
 		['StarLvID'] = 261070010
 		},
 	[262507023] = {
@@ -19426,7 +19426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3170,
+		['AttriEquipValue'] = 2650,
 		['StarLvID'] = 261070011
 		},
 	[262507024] = {
@@ -19436,7 +19436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3510,
+		['AttriEquipValue'] = 2930,
 		['StarLvID'] = 261070012
 		},
 	[262507025] = {
@@ -19446,7 +19446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 3850,
+		['AttriEquipValue'] = 3210,
 		['StarLvID'] = 261070013
 		},
 	[262507026] = {
@@ -19456,7 +19456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4200,
+		['AttriEquipValue'] = 3500,
 		['StarLvID'] = 261070014
 		},
 	[262507030] = {
@@ -19466,7 +19466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 4620,
+		['AttriEquipValue'] = 3600,
 		['StarLvID'] = 261070015
 		},
 	[262507031] = {
@@ -19476,7 +19476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5050,
+		['AttriEquipValue'] = 4010,
 		['StarLvID'] = 261070016
 		},
 	[262507032] = {
@@ -19486,7 +19486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5480,
+		['AttriEquipValue'] = 4430,
 		['StarLvID'] = 261070017
 		},
 	[262507033] = {
@@ -19496,7 +19496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 5910,
+		['AttriEquipValue'] = 4850,
 		['StarLvID'] = 261070018
 		},
 	[262507034] = {
@@ -19506,7 +19506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6340,
+		['AttriEquipValue'] = 5260,
 		['StarLvID'] = 261070019
 		},
 	[262507035] = {
@@ -19516,7 +19516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 6770,
+		['AttriEquipValue'] = 5680,
 		['StarLvID'] = 261070020
 		},
 	[262507036] = {
@@ -19526,7 +19526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7200,
+		['AttriEquipValue'] = 6100,
 		['StarLvID'] = 261070021
 		},
 	[262507040] = {
@@ -19536,7 +19536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 7600,
+		['AttriEquipValue'] = 6300,
 		['StarLvID'] = 261070022
 		},
 	[262507041] = {
@@ -19546,7 +19546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8000,
+		['AttriEquipValue'] = 6900,
 		['StarLvID'] = 261070023
 		},
 	[262507042] = {
@@ -19556,7 +19556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8400,
+		['AttriEquipValue'] = 7500,
 		['StarLvID'] = 261070024
 		},
 	[262507043] = {
@@ -19566,7 +19566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 8800,
+		['AttriEquipValue'] = 8100,
 		['StarLvID'] = 261070025
 		},
 	[262507044] = {
@@ -19576,7 +19576,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9200,
+		['AttriEquipValue'] = 8700,
 		['StarLvID'] = 261070026
 		},
 	[262507045] = {
@@ -19586,7 +19586,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 9600,
+		['AttriEquipValue'] = 9300,
 		['StarLvID'] = 261070027
 		},
 	[262507046] = {
@@ -19606,7 +19606,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 10300,
 		['StarLvID'] = 261070029
 		},
 	[262507051] = {
@@ -19616,7 +19616,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 11000,
 		['StarLvID'] = 261070030
 		},
 	[262507052] = {
@@ -19626,7 +19626,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 11800,
 		['StarLvID'] = 261070031
 		},
 	[262507053] = {
@@ -19636,7 +19636,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 12600,
 		['StarLvID'] = 261070032
 		},
 	[262507054] = {
@@ -19646,7 +19646,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 13400,
 		['StarLvID'] = 261070033
 		},
 	[262507055] = {
@@ -19656,7 +19656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 14200,
 		['StarLvID'] = 261070034
 		},
 	[262507056] = {
@@ -19666,7 +19666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 10000,
+		['AttriEquipValue'] = 15000,
 		['StarLvID'] = 261070035
 		},
 	[262507060] = {
@@ -19676,7 +19676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 11420,
+		['AttriEquipValue'] = 15500,
 		['StarLvID'] = 261070036
 		},
 	[262507061] = {
@@ -19686,7 +19686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 12850,
+		['AttriEquipValue'] = 16500,
 		['StarLvID'] = 261070037
 		},
 	[262507062] = {
@@ -19696,7 +19696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 14280,
+		['AttriEquipValue'] = 17600,
 		['StarLvID'] = 261070038
 		},
 	[262507063] = {
@@ -19706,7 +19706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 15710,
+		['AttriEquipValue'] = 18700,
 		['StarLvID'] = 261070039
 		},
 	[262507064] = {
@@ -19716,7 +19716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 17140,
+		['AttriEquipValue'] = 19800,
 		['StarLvID'] = 261070040
 		},
 	[262507065] = {
@@ -19726,7 +19726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 18570,
+		['AttriEquipValue'] = 20900,
 		['StarLvID'] = 261070041
 		},
 	[262507066] = {
@@ -19736,7 +19736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 7,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 2,
-		['AttriEquipValue'] = 20000,
+		['AttriEquipValue'] = 22000,
 		['StarLvID'] = 261070042
 		},
 	[262508010] = {
@@ -19746,7 +19746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 20,
+		['AttriEquipValue'] = 8,
 		['StarLvID'] = 261080001
 		},
 	[262508011] = {
@@ -19756,7 +19756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 25,
+		['AttriEquipValue'] = 15,
 		['StarLvID'] = 261080002
 		},
 	[262508012] = {
@@ -19766,7 +19766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 30,
+		['AttriEquipValue'] = 22,
 		['StarLvID'] = 261080003
 		},
 	[262508013] = {
@@ -19776,7 +19776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 35,
+		['AttriEquipValue'] = 29,
 		['StarLvID'] = 261080004
 		},
 	[262508014] = {
@@ -19786,7 +19786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 40,
+		['AttriEquipValue'] = 36,
 		['StarLvID'] = 261080005
 		},
 	[262508015] = {
@@ -19796,7 +19796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 45,
+		['AttriEquipValue'] = 43,
 		['StarLvID'] = 261080006
 		},
 	[262508016] = {
@@ -19816,7 +19816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 50,
 		['StarLvID'] = 261080008
 		},
 	[262508021] = {
@@ -19826,7 +19826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 70,
+		['AttriEquipValue'] = 58,
 		['StarLvID'] = 261080009
 		},
 	[262508022] = {
@@ -19836,7 +19836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 80,
+		['AttriEquipValue'] = 66,
 		['StarLvID'] = 261080010
 		},
 	[262508023] = {
@@ -19846,7 +19846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 90,
+		['AttriEquipValue'] = 75,
 		['StarLvID'] = 261080011
 		},
 	[262508024] = {
@@ -19856,7 +19856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 100,
+		['AttriEquipValue'] = 83,
 		['StarLvID'] = 261080012
 		},
 	[262508025] = {
@@ -19866,7 +19866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 110,
+		['AttriEquipValue'] = 91,
 		['StarLvID'] = 261080013
 		},
 	[262508026] = {
@@ -19876,7 +19876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 120,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261080014
 		},
 	[262508030] = {
@@ -19886,7 +19886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 131,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261080015
 		},
 	[262508031] = {
@@ -19896,7 +19896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 142,
+		['AttriEquipValue'] = 113,
 		['StarLvID'] = 261080016
 		},
 	[262508032] = {
@@ -19906,7 +19906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 154,
+		['AttriEquipValue'] = 126,
 		['StarLvID'] = 261080017
 		},
 	[262508033] = {
@@ -19916,7 +19916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 165,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261080018
 		},
 	[262508034] = {
@@ -19926,7 +19926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 177,
+		['AttriEquipValue'] = 153,
 		['StarLvID'] = 261080019
 		},
 	[262508035] = {
@@ -19936,7 +19936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 188,
+		['AttriEquipValue'] = 166,
 		['StarLvID'] = 261080020
 		},
 	[262508036] = {
@@ -19946,7 +19946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 200,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261080021
 		},
 	[262508040] = {
@@ -19956,7 +19956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 217,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261080022
 		},
 	[262508041] = {
@@ -19966,7 +19966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 234,
+		['AttriEquipValue'] = 200,
 		['StarLvID'] = 261080023
 		},
 	[262508042] = {
@@ -19976,7 +19976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 251,
+		['AttriEquipValue'] = 220,
 		['StarLvID'] = 261080024
 		},
 	[262508043] = {
@@ -19986,7 +19986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 268,
+		['AttriEquipValue'] = 240,
 		['StarLvID'] = 261080025
 		},
 	[262508044] = {
@@ -19996,7 +19996,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 285,
+		['AttriEquipValue'] = 260,
 		['StarLvID'] = 261080026
 		},
 	[262508045] = {
@@ -20006,7 +20006,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 302,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261080027
 		},
 	[262508046] = {
@@ -20016,7 +20016,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 320,
+		['AttriEquipValue'] = 300,
 		['StarLvID'] = 261080028
 		},
 	[262508050] = {
@@ -20026,7 +20026,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 338,
+		['AttriEquipValue'] = 310,
 		['StarLvID'] = 261080029
 		},
 	[262508051] = {
@@ -20036,7 +20036,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 357,
+		['AttriEquipValue'] = 335,
 		['StarLvID'] = 261080030
 		},
 	[262508052] = {
@@ -20046,7 +20046,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 375,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261080031
 		},
 	[262508053] = {
@@ -20056,7 +20056,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 394,
+		['AttriEquipValue'] = 385,
 		['StarLvID'] = 261080032
 		},
 	[262508054] = {
@@ -20066,7 +20066,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 412,
+		['AttriEquipValue'] = 410,
 		['StarLvID'] = 261080033
 		},
 	[262508055] = {
@@ -20076,7 +20076,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 431,
+		['AttriEquipValue'] = 435,
 		['StarLvID'] = 261080034
 		},
 	[262508056] = {
@@ -20086,7 +20086,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 450,
+		['AttriEquipValue'] = 460,
 		['StarLvID'] = 261080035
 		},
 	[262508060] = {
@@ -20096,7 +20096,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 471,
+		['AttriEquipValue'] = 470,
 		['StarLvID'] = 261080036
 		},
 	[262508061] = {
@@ -20106,7 +20106,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 492,
+		['AttriEquipValue'] = 501,
 		['StarLvID'] = 261080037
 		},
 	[262508062] = {
@@ -20116,7 +20116,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 514,
+		['AttriEquipValue'] = 533,
 		['StarLvID'] = 261080038
 		},
 	[262508063] = {
@@ -20126,7 +20126,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 535,
+		['AttriEquipValue'] = 565,
 		['StarLvID'] = 261080039
 		},
 	[262508064] = {
@@ -20136,7 +20136,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 557,
+		['AttriEquipValue'] = 596,
 		['StarLvID'] = 261080040
 		},
 	[262508065] = {
@@ -20146,7 +20146,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 578,
+		['AttriEquipValue'] = 628,
 		['StarLvID'] = 261080041
 		},
 	[262508066] = {
@@ -20156,7 +20156,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 8,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 15,
-		['AttriEquipValue'] = 600,
+		['AttriEquipValue'] = 660,
 		['StarLvID'] = 261080042
 		},
 	[262509010] = {
@@ -20166,7 +20166,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 10,
+		['AttriEquipValue'] = 23,
 		['StarLvID'] = 261090001
 		},
 	[262509011] = {
@@ -20176,7 +20176,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 35,
+		['AttriEquipValue'] = 42,
 		['StarLvID'] = 261090002
 		},
 	[262509012] = {
@@ -20186,7 +20186,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 60,
+		['AttriEquipValue'] = 62,
 		['StarLvID'] = 261090003
 		},
 	[262509013] = {
@@ -20196,7 +20196,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 85,
+		['AttriEquipValue'] = 81,
 		['StarLvID'] = 261090004
 		},
 	[262509014] = {
@@ -20206,7 +20206,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 110,
+		['AttriEquipValue'] = 101,
 		['StarLvID'] = 261090005
 		},
 	[262509015] = {
@@ -20216,7 +20216,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 135,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261090006
 		},
 	[262509016] = {
@@ -20226,7 +20226,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 1,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 160,
+		['AttriEquipValue'] = 140,
 		['StarLvID'] = 261090007
 		},
 	[262509020] = {
@@ -20236,7 +20236,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 191,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261090008
 		},
 	[262509021] = {
@@ -20246,7 +20246,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 222,
+		['AttriEquipValue'] = 171,
 		['StarLvID'] = 261090009
 		},
 	[262509022] = {
@@ -20256,7 +20256,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 254,
+		['AttriEquipValue'] = 193,
 		['StarLvID'] = 261090010
 		},
 	[262509023] = {
@@ -20266,7 +20266,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 285,
+		['AttriEquipValue'] = 215,
 		['StarLvID'] = 261090011
 		},
 	[262509024] = {
@@ -20276,7 +20276,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 317,
+		['AttriEquipValue'] = 236,
 		['StarLvID'] = 261090012
 		},
 	[262509025] = {
@@ -20286,7 +20286,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 348,
+		['AttriEquipValue'] = 258,
 		['StarLvID'] = 261090013
 		},
 	[262509026] = {
@@ -20296,7 +20296,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 380,
+		['AttriEquipValue'] = 280,
 		['StarLvID'] = 261090014
 		},
 	[262509030] = {
@@ -20306,7 +20306,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 418,
+		['AttriEquipValue'] = 290,
 		['StarLvID'] = 261090015
 		},
 	[262509031] = {
@@ -20316,7 +20316,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 457,
+		['AttriEquipValue'] = 325,
 		['StarLvID'] = 261090016
 		},
 	[262509032] = {
@@ -20326,7 +20326,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 495,
+		['AttriEquipValue'] = 360,
 		['StarLvID'] = 261090017
 		},
 	[262509033] = {
@@ -20336,7 +20336,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 534,
+		['AttriEquipValue'] = 395,
 		['StarLvID'] = 261090018
 		},
 	[262509034] = {
@@ -20346,7 +20346,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 572,
+		['AttriEquipValue'] = 430,
 		['StarLvID'] = 261090019
 		},
 	[262509035] = {
@@ -20356,7 +20356,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 611,
+		['AttriEquipValue'] = 465,
 		['StarLvID'] = 261090020
 		},
 	[262509036] = {
@@ -20366,7 +20366,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 650,
+		['AttriEquipValue'] = 500,
 		['StarLvID'] = 261090021
 		},
 	[262509040] = {
@@ -20376,7 +20376,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 697,
+		['AttriEquipValue'] = 520,
 		['StarLvID'] = 261090022
 		},
 	[262509041] = {
@@ -20386,7 +20386,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 744,
+		['AttriEquipValue'] = 570,
 		['StarLvID'] = 261090023
 		},
 	[262509042] = {
@@ -20396,7 +20396,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 791,
+		['AttriEquipValue'] = 620,
 		['StarLvID'] = 261090024
 		},
 	[262509043] = {
@@ -20406,7 +20406,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 838,
+		['AttriEquipValue'] = 670,
 		['StarLvID'] = 261090025
 		},
 	[262509044] = {
@@ -20416,7 +20416,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 885,
+		['AttriEquipValue'] = 720,
 		['StarLvID'] = 261090026
 		},
 	[262509045] = {
@@ -20426,7 +20426,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 932,
+		['AttriEquipValue'] = 770,
 		['StarLvID'] = 261090027
 		},
 	[262509046] = {
@@ -20436,7 +20436,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 980,
+		['AttriEquipValue'] = 820,
 		['StarLvID'] = 261090028
 		},
 	[262509050] = {
@@ -20446,7 +20446,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 1034,
+		['AttriEquipValue'] = 850,
 		['StarLvID'] = 261090029
 		},
 	[262509051] = {
@@ -20456,7 +20456,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 1088,
+		['AttriEquipValue'] = 918,
 		['StarLvID'] = 261090030
 		},
 	[262509052] = {
@@ -20466,7 +20466,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 1142,
+		['AttriEquipValue'] = 986,
 		['StarLvID'] = 261090031
 		},
 	[262509053] = {
@@ -20476,7 +20476,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 1197,
+		['AttriEquipValue'] = 1055,
 		['StarLvID'] = 261090032
 		},
 	[262509054] = {
@@ -20486,7 +20486,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 1251,
+		['AttriEquipValue'] = 1123,
 		['StarLvID'] = 261090033
 		},
 	[262509055] = {
@@ -20496,7 +20496,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 1305,
+		['AttriEquipValue'] = 1191,
 		['StarLvID'] = 261090034
 		},
 	[262509056] = {
@@ -20506,7 +20506,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 1360,
+		['AttriEquipValue'] = 1260,
 		['StarLvID'] = 261090035
 		},
 	[262509060] = {
@@ -20516,7 +20516,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 1422,
+		['AttriEquipValue'] = 1300,
 		['StarLvID'] = 261090036
 		},
 	[262509061] = {
@@ -20526,7 +20526,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 1485,
+		['AttriEquipValue'] = 1383,
 		['StarLvID'] = 261090037
 		},
 	[262509062] = {
@@ -20536,7 +20536,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 1548,
+		['AttriEquipValue'] = 1466,
 		['StarLvID'] = 261090038
 		},
 	[262509063] = {
@@ -20546,7 +20546,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 1611,
+		['AttriEquipValue'] = 1550,
 		['StarLvID'] = 261090039
 		},
 	[262509064] = {
@@ -20556,7 +20556,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 1674,
+		['AttriEquipValue'] = 1633,
 		['StarLvID'] = 261090040
 		},
 	[262509065] = {
@@ -20566,7 +20566,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 9,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 7,
-		['AttriEquipValue'] = 1737,
+		['AttriEquipValue'] = 1716,
 		['StarLvID'] = 261090041
 		},
 	[262509066] = {
@@ -20656,7 +20656,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 72,
+		['AttriEquipValue'] = 60,
 		['StarLvID'] = 261100008
 		},
 	[262510021] = {
@@ -20666,7 +20666,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 85,
+		['AttriEquipValue'] = 70,
 		['StarLvID'] = 261100009
 		},
 	[262510022] = {
@@ -20676,7 +20676,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 98,
+		['AttriEquipValue'] = 80,
 		['StarLvID'] = 261100010
 		},
 	[262510023] = {
@@ -20686,7 +20686,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 111,
+		['AttriEquipValue'] = 90,
 		['StarLvID'] = 261100011
 		},
 	[262510024] = {
@@ -20696,7 +20696,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 124,
+		['AttriEquipValue'] = 100,
 		['StarLvID'] = 261100012
 		},
 	[262510025] = {
@@ -20706,7 +20706,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 137,
+		['AttriEquipValue'] = 110,
 		['StarLvID'] = 261100013
 		},
 	[262510026] = {
@@ -20716,7 +20716,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 2,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 150,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261100014
 		},
 	[262510030] = {
@@ -20726,7 +20726,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 167,
+		['AttriEquipValue'] = 120,
 		['StarLvID'] = 261100015
 		},
 	[262510031] = {
@@ -20736,7 +20736,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 184,
+		['AttriEquipValue'] = 135,
 		['StarLvID'] = 261100016
 		},
 	[262510032] = {
@@ -20746,7 +20746,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 201,
+		['AttriEquipValue'] = 150,
 		['StarLvID'] = 261100017
 		},
 	[262510033] = {
@@ -20756,7 +20756,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 218,
+		['AttriEquipValue'] = 165,
 		['StarLvID'] = 261100018
 		},
 	[262510034] = {
@@ -20766,7 +20766,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 235,
+		['AttriEquipValue'] = 180,
 		['StarLvID'] = 261100019
 		},
 	[262510035] = {
@@ -20776,7 +20776,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 252,
+		['AttriEquipValue'] = 195,
 		['StarLvID'] = 261100020
 		},
 	[262510036] = {
@@ -20786,7 +20786,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 3,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 270,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261100021
 		},
 	[262510040] = {
@@ -20796,7 +20796,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 288,
+		['AttriEquipValue'] = 210,
 		['StarLvID'] = 261100022
 		},
 	[262510041] = {
@@ -20806,7 +20806,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 307,
+		['AttriEquipValue'] = 231,
 		['StarLvID'] = 261100023
 		},
 	[262510042] = {
@@ -20816,7 +20816,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 325,
+		['AttriEquipValue'] = 253,
 		['StarLvID'] = 261100024
 		},
 	[262510043] = {
@@ -20826,7 +20826,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 344,
+		['AttriEquipValue'] = 275,
 		['StarLvID'] = 261100025
 		},
 	[262510044] = {
@@ -20836,7 +20836,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 362,
+		['AttriEquipValue'] = 296,
 		['StarLvID'] = 261100026
 		},
 	[262510045] = {
@@ -20846,7 +20846,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 381,
+		['AttriEquipValue'] = 318,
 		['StarLvID'] = 261100027
 		},
 	[262510046] = {
@@ -20856,7 +20856,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 4,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 400,
+		['AttriEquipValue'] = 340,
 		['StarLvID'] = 261100028
 		},
 	[262510050] = {
@@ -20866,7 +20866,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 422,
+		['AttriEquipValue'] = 350,
 		['StarLvID'] = 261100029
 		},
 	[262510051] = {
@@ -20876,7 +20876,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 445,
+		['AttriEquipValue'] = 378,
 		['StarLvID'] = 261100030
 		},
 	[262510052] = {
@@ -20886,7 +20886,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 468,
+		['AttriEquipValue'] = 406,
 		['StarLvID'] = 261100031
 		},
 	[262510053] = {
@@ -20896,7 +20896,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 491,
+		['AttriEquipValue'] = 435,
 		['StarLvID'] = 261100032
 		},
 	[262510054] = {
@@ -20906,7 +20906,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 514,
+		['AttriEquipValue'] = 463,
 		['StarLvID'] = 261100033
 		},
 	[262510055] = {
@@ -20916,7 +20916,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 537,
+		['AttriEquipValue'] = 491,
 		['StarLvID'] = 261100034
 		},
 	[262510056] = {
@@ -20926,7 +20926,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 5,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 560,
+		['AttriEquipValue'] = 520,
 		['StarLvID'] = 261100035
 		},
 	[262510060] = {
@@ -20936,7 +20936,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 587,
+		['AttriEquipValue'] = 530,
 		['StarLvID'] = 261100036
 		},
 	[262510061] = {
@@ -20946,7 +20946,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 614,
+		['AttriEquipValue'] = 566,
 		['StarLvID'] = 261100037
 		},
 	[262510062] = {
@@ -20956,7 +20956,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 641,
+		['AttriEquipValue'] = 603,
 		['StarLvID'] = 261100038
 		},
 	[262510063] = {
@@ -20966,7 +20966,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 668,
+		['AttriEquipValue'] = 640,
 		['StarLvID'] = 261100039
 		},
 	[262510064] = {
@@ -20976,7 +20976,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 695,
+		['AttriEquipValue'] = 676,
 		['StarLvID'] = 261100040
 		},
 	[262510065] = {
@@ -20986,7 +20986,7 @@ local EquipmentTable = {
 		['EquipmentPosition'] = 10,
 		['EquipmentQuality'] = 6,
 		['AttriEquipType'] = 17,
-		['AttriEquipValue'] = 722,
+		['AttriEquipValue'] = 713,
 		['StarLvID'] = 261100041
 		},
 	[262510066] = {

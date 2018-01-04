@@ -24,6 +24,9 @@ private:
 	int handle_refresh_player_info(EXTERN_DATA *extern_data);
 	int handle_rank_info_request(EXTERN_DATA *extern_data);
 	int handle_player_online_notify(EXTERN_DATA *extern_data);
+
+	int handle_refresh_guild_info(EXTERN_DATA *extern_data);
+
 	int handle_refresh_player_world_boss_info(EXTERN_DATA *extern_data);
 	int handle_world_boss_real_rank_info_request(EXTERN_DATA *extern_data);
 	int handle_world_boss_zhu_jiemian_info_request(EXTERN_DATA *extern_data);

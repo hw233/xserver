@@ -646,6 +646,62 @@ int chat_mod::do_one_gm_cmd( player_struct *player, int argc, char *argv[] )
 		send_chat_content( player,buff );
 		
 	}
+	else if ( argc >= 2 && strcasecmp( argv[ 0 ], "add_yaoqian_num" ) == 0 )
+	{
+		ret = 2;
+		uint32_t yaoqian_num = atoi(argv[1]);
+		player->data->yaoqian_data.sum_num += yaoqian_num;
+		player->player_yaoqian_shu_info_notify();
+	}
+	else if ( argc >= 2 && strcasecmp( argv[ 0 ], "open_func" ) == 0 )
+	{
+		std::vector<uint32_t> func_ids;
+		func_ids.push_back(atoi(argv[1]));
+		player->open_function(func_ids);
+		ret = 2;
+	}
+	else if (argc >= 2 && strcasecmp( argv[ 0 ], "add_sigin_reward_days" ) == 0)
+	{
+		ret = 2;
+		char buff[ 501 ];
+		uint32_t num = atoi(argv[1]);
+		time_t now_time_r = time_helper::get_cached_time() / 1000;
+		if(player->data->login_reward_info.open == false){
+			snprintf( buff, sizeof(buff), "登录豪礼功能未开启，增加天数失败");
+		}
+		else if((now_time_r - player->data->login_reward_info.open_time) > sg_login_reward_chixu_day * 24 * 3600)
+		{
+			snprintf( buff, sizeof(buff), "登录豪领取时间已过时，增加天数失败");
+		}
+		else 
+		{
+			for(uint32_t i = 0; i < num && i < MAX_LOGIN_REWARD_RECEIVE_NUM; i++)
+			{
+				player->data->login_reward_info.login_day++;
+				LoginGifts* login_rewrad_config =  NULL;
+				for(std::map<uint64_t, struct LoginGifts*>::iterator itr = login_gifts_config.begin(); itr != login_gifts_config.end(); itr++)
+				{
+					if(itr->second->LoginDays == (uint64_t)player->data->login_reward_info.login_day)
+						login_rewrad_config = itr->second;
+				}
+				if(login_rewrad_config != NULL)
+				{
+					for(size_t i = 0; i < MAX_LOGIN_REWARD_RECEIVE_NUM; i++)
+					{
+						if(player->data->login_reward_info.info[i].id == login_rewrad_config->ID)
+						{
+							player->data->login_reward_info.info[i].statu = 1;
+						}
+					}
+				}
+			
+			}
+			snprintf( buff, sizeof(buff), "登录豪礼增加天数成功");
+			
+		}
+		send_chat_content( player,buff );
+		player->player_login_reward_info_notify();
+	}
 	else
 	{
 		return ( -1 );
