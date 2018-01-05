@@ -11,6 +11,9 @@ message PersonalityData
 	repeated uint32 tags = 4; //标签
 	required string textIntro = 5; //文字签名
 	required string voiceIntro = 6; //语音签名
+	required uint32 province = 7; //省份
+	required uint32 city = 8; //城市
+	required uint32 bloodType = 9; //血型
 }
 
 //个人信息应答
@@ -26,6 +29,9 @@ message PersonalitySetGeneralRequest
 	required uint32 sex = 1; //性别
 	required uint32 birthday = 2; //生日（格式：20170410）
 	required string location = 3; //位置
+	required uint32 province = 4; //省份
+	required uint32 city = 5; //城市
+	required uint32 bloodType = 6; //血型
 }
 
 //设置标签信息请求

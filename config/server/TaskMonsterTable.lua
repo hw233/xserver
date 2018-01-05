@@ -1979,6 +1979,15 @@ local TaskMonsterTable = {
 		['PointY'] = 0,
 		['Orientation'] = 0
 		},
+	[240720221] = {
+		['ID'] = 240720221,
+		['MonsterID'] = 152040212,
+		['MonsterLevel'] = 26,
+		['PointX'] = 129,
+		['PointZ'] = 32,
+		['PointY'] = 57,
+		['Orientation'] = 0
+		},
 	[240720301] = {
 		['ID'] = 240720301,
 		['MonsterID'] = 151603001,

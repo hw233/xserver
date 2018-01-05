@@ -21,19 +21,12 @@ public:
 	virtual void on_collect(player_struct *player, Collect *collect);
 	virtual bool is_in_zhenying_raid();
 
-	void create_collect();
-	void delete_collect_pos(uint64_t pos);
-
 	void set_line_num(int line) { ZHENYING_DATA.m_line = line; }
 	int get_line_num() { return ZHENYING_DATA.m_line; }
 	
-	std::set<uint64_t> m_hit_flag;  //
 protected:
 	int set_m_player_and_player_info(player_struct *player, int index);	
 	int clear_m_player_and_player_info(player_struct *player, bool clear_player_info);
-
-	std::set<uint64_t> m_collect_pos;  //采集点, 宝箱位置
-	
 };
 
 

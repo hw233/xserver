@@ -100,6 +100,7 @@ struct PowerMasterTable;
 struct PulseTable;
 struct QuestionTable;
 struct RaidScriptTable;
+struct RandomBox;
 struct RandomCardRewardTable;
 struct RandomCardTable;
 struct RandomDungeonTable;
@@ -248,6 +249,7 @@ void free_PowerMasterTable(struct PowerMasterTable *p);
 void free_PulseTable(struct PulseTable *p);
 void free_QuestionTable(struct QuestionTable *p);
 void free_RaidScriptTable(struct RaidScriptTable *p);
+void free_RandomBox(struct RandomBox *p);
 void free_RandomCardRewardTable(struct RandomCardRewardTable *p);
 void free_RandomCardTable(struct RandomCardTable *p);
 void free_RandomDungeonTable(struct RandomDungeonTable *p);
@@ -838,13 +840,21 @@ struct CampDefenseTable
 	uint64_t *TruckRouteY; //4
 	uint64_t  TruckPlan; //5
 	uint64_t  ResurrectionTime; //6
-	uint64_t  TruckDrop; //7
-	uint32_t n_CollectionIntegral; //8
-	uint64_t *CollectionIntegral; //8
-	uint64_t  MineralIntegral; //9
-	uint32_t n_SupportMine; //10
-	uint64_t *SupportMine; //10
-	uint64_t  TaskID; //11
+	uint64_t  TruckDrop1; //7
+	uint64_t  CollectionIntegral1; //8
+	uint64_t  TruckDrop2; //9
+	uint64_t  CollectionIntegral2; //10
+	uint32_t n_MonsterID; //11
+	uint64_t *MonsterID; //11
+	uint32_t n_MineralIntegral1; //12
+	uint64_t *MineralIntegral1; //12
+	uint32_t n_MineralIntegral2; //13
+	uint64_t *MineralIntegral2; //13
+	uint32_t n_SupportMine; //14
+	uint64_t *SupportMine; //14
+	uint64_t  TaskID; //15
+	uint64_t  MiningLimit1; //16
+	uint64_t  MiningLimit2; //17
 }__attribute__ ((packed));
 
 struct CampTable
@@ -1903,6 +1913,21 @@ struct RaidScriptTable
 	double *Parameter1; //3
 	uint32_t n_Parameter2; //4
 	char **Parameter2; //4
+}__attribute__ ((packed));
+
+struct RandomBox
+{
+	uint64_t  ID; //1
+	uint64_t  ItemID; //2
+	uint64_t  Num; //3
+	uint32_t n_ItemID0; //4
+	uint64_t *ItemID0; //4
+	uint32_t n_Num0; //5
+	uint64_t *Num0; //5
+	uint32_t n_DisplayNum0; //6
+	uint64_t *DisplayNum0; //6
+	uint32_t n_Probability0; //7
+	uint64_t *Probability0; //7
 }__attribute__ ((packed));
 
 struct RandomCardRewardTable

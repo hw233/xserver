@@ -32,6 +32,23 @@ local BiaocheRewardTable = {
 		['RewardLv2'] = 0,
 		['RewardItem2'] = {0},
 		['RewardNum2'] = {0}
+		},
+	[440200003] = {
+		['ID'] = 440200003,
+		['Deposit'] = 5000,
+		['StartTime'] = {1000},
+		['EndTime'] = {1200},
+		['RewardMoney1'] = 1200,
+		['RewardExp1'] = 2300,
+		['RewardLv1'] = 0,
+		['RewardItem1'] = {201010021},
+		['RewardNum1'] = {5},
+		['Collection'] = 154101001,
+		['RewardMoney2'] = 0,
+		['RewardExp2'] = 0,
+		['RewardLv2'] = 0,
+		['RewardItem2'] = {0},
+		['RewardNum2'] = {0}
 		}
 	}
 return BiaocheRewardTable

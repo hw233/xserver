@@ -55,7 +55,7 @@ message ItemBaguaData
 //随机宝箱额外信息
 message ItemRandomBoxData
 {
-	required uint32 randItem = 1; //随机出来的道具ID
+	required ItemData randItem = 1; //随机出来的道具
 }
 
 //背包格子

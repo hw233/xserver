@@ -1078,6 +1078,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	DBBagGrid *bag_data_point[MAX_BAG_GRID_NUM];
 	DBItemBagua item_bagua_data[MAX_BAG_GRID_NUM];
 	DBItemPartnerFabao item_fabao_data[MAX_BAG_GRID_NUM];
+	DBItemRandomBox item_box_data[MAX_BAG_GRID_NUM];
 	DBCommonRandAttr item_bagua_attr[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_MINOR_ATTR_NUM];
 	DBCommonRandAttr* item_bagua_attr_point[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_MINOR_ATTR_NUM];
 	DBCommonRandAttr item_bagua_additional_attr[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_ADDITIONAL_ATTR_NUM];
@@ -1144,6 +1145,14 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 			}
 			item_fabao_data[i].minor_attr = item_fabao_attr_point[i];
 			item_fabao_data[i].n_minor_attr = attr_num;
+		}
+
+		if (item_is_random_box(data->bag[i].id))
+		{
+			bag_data[i].box = &item_box_data[i];
+			dbitem_random_box__init(&item_box_data[i]);
+			item_box_data[i].item_id = data->bag[i].especial_item.box.item_id;
+			item_box_data[i].item_num = data->bag[i].especial_item.box.item_num;
 		}
 	}
 	db_info.bag = bag_data_point;
@@ -2257,6 +2266,11 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 				data->bag[i].especial_item.fabao.minor_attr[j].id = db_info->bag[i]->fabao->minor_attr[j]->id;
 				data->bag[i].especial_item.fabao.minor_attr[j].val = db_info->bag[i]->fabao->minor_attr[j]->val;
 			}
+		}
+		if (db_info->bag[i]->box)
+		{
+			data->bag[i].especial_item.box.item_id = db_info->bag[i]->box->item_id;
+			data->bag[i].especial_item.box.item_num = db_info->bag[i]->box->item_num;
 		}
 	}
 	data->bag_grid_num = db_info->bag_grid_num;
@@ -6098,16 +6112,16 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 			}
 
 			std::vector<EspecialItemInfo> extra_list;
-			if (config->ItemType == 10 || config->ItemType == 14)
+			if (config->ItemType == 10 || config->ItemType == 14 || config->ItemEffect == IUE_RANDOM_BOX)
 			{
-				if (config->Stackable != 1)
+				if ((config->ItemType == 10 && config->Stackable != 1) || (config->ItemType == 14 && config->Stackable != 1))
 				{
 					ret = ERROR_ID_CONFIG;
 					LOG_ERR("[%s:%d] player[%lu] item stack error, id:%u, stack:%lu", __FUNCTION__, __LINE__, data->player_id, id, config->Stackable);
 					break;
 				}
 
-				if ((config->ItemType == 10 && config->n_ParameterEffect < 1) || (config->ItemType == 14 && config->n_ParameterEffect < 1))
+				if ((config->ItemType == 10 && config->n_ParameterEffect < 1) || (config->ItemType == 14 && config->n_ParameterEffect < 1) || (config->ItemEffect == IUE_RANDOM_BOX && config->n_ParameterEffect < 2))
 				{
 					ret = ERROR_ID_CONFIG;
 					LOG_ERR("[%s:%d] player[%lu] item config effect param num error, item_id:%u, n_param:%u", __FUNCTION__, __LINE__, data->player_id, id, config->n_ParameterEffect);
@@ -6151,6 +6165,16 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 							break;
 						}
 					}
+					else if (config->ItemEffect == IUE_RANDOM_BOX)
+					{
+						uint32_t box_id = config->ParameterEffect[1];
+						if (get_random_box_random_item(box_id, extra_info.box.item_id, extra_info.box.item_num) != 0)
+						{
+							ret = ERROR_ID_CONFIG;
+							LOG_ERR("[%s:%d] player[%lu] generate random reward failed, item_id:%u", __FUNCTION__, __LINE__, data->player_id, id);
+							break;
+						}
+					}
 
 					extra_list.push_back(extra_info);
 				}
@@ -6179,7 +6203,7 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 						grid->expire_time = now + config->ItemLimit;
 					}
 
-					if (config->ItemType == 10 || config->ItemType == 14)
+					if (config->ItemType == 10 || config->ItemType == 14 || config->ItemEffect == IUE_RANDOM_BOX)
 					{
 						memcpy(&grid->especial_item, &extra_list[list_idx], sizeof(EspecialItemInfo));
 						list_idx++;
@@ -6810,13 +6834,22 @@ void player_struct::tidy_bag(void)
 	}
 }
 
-int player_struct::check_use_prop(uint32_t item_id, uint32_t use_count, ItemUseEffectInfo *info)
+int player_struct::try_use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInfo *info)
 {
-	ItemsConfigTable *config = get_config_by_id(item_id, &item_config);
+	if (pos >= data->bag_grid_num)
+	{
+		return ERROR_ID_BAG_POS;
+	}
+
+	bag_grid_data& grid = data->bag[pos];
+	ItemsConfigTable *config = get_config_by_id(grid.id, &item_config);
 	if (!config)
 	{
 		return ERROR_ID_NO_CONFIG;
 	}
+
+//	uint32_t item_id = grid.id;
+	uint32_t use_count = (use_all == 0 ? 1 : (config->UseDegree * grid.num - grid.used_count));
 
 	if (config->UseDegree == 0)
 	{
@@ -6943,6 +6976,41 @@ int player_struct::check_use_prop(uint32_t item_id, uint32_t use_count, ItemUseE
 				}
 			}
 			break;
+		case IUE_RANDOM_BOX:
+			{
+				if (config->n_ParameterEffect < 2)
+				{
+					return ERROR_ID_CONFIG;
+				}
+				if (use_count != 1)
+				{
+					return ERROR_ID_CONFIG;
+				}
+
+				if ((uint32_t)this->get_item_can_use_num(config->ParameterEffect[0]) < use_count)
+				{
+					return ERROR_ID_PROP_NOT_ENOUGH;
+				}
+
+				uint32_t fixed_item_id = 0, fixed_item_num = 0;
+				if (get_random_box_fixed_item(config->ParameterEffect[1], fixed_item_id, fixed_item_num) != 0)
+				{
+					return ERROR_ID_CONFIG;
+				}
+				if (get_random_box_random_item(config->ParameterEffect[1], info->random_box_item_id, info->random_box_item_num) != 0)
+				{
+					return ERROR_ID_CONFIG;
+				}
+
+				info->items[fixed_item_id] += fixed_item_num;
+				info->items[grid.especial_item.box.item_id] += grid.especial_item.box.item_num;
+
+				if (!check_can_add_item_list(info->items))
+				{
+					return 190300008;
+				}
+			}
+			break;
 		default:
 			if (config->n_ParameterEffect < 1)
 			{
@@ -6961,13 +7029,9 @@ int player_struct::check_use_prop(uint32_t item_id, uint32_t use_count, ItemUseE
 	return 0;
 }
 
-int player_struct::use_prop_effect(uint32_t id, uint32_t use_count, ItemUseEffectInfo *info)
+int player_struct::use_prop_effect(bag_grid_data& grid, ItemsConfigTable *config, uint32_t use_count, ItemUseEffectInfo *info)
 {
-	ItemsConfigTable *config = get_config_by_id(id, &item_config);
-	if (!config)
-	{
-		return ERROR_ID_NO_CONFIG;
-	}
+	uint32_t &id = grid.id;
 
 	if (config->UseDegree == 0)
 	{
@@ -7117,31 +7181,18 @@ int player_struct::use_prop_effect(uint32_t id, uint32_t use_count, ItemUseEffec
 				open_function(func_ids);
 			}
 			break;
+		case IUE_RANDOM_BOX:
+			{
+				del_item(config->ParameterEffect[0], use_count, MAGIC_TYPE_BAG_USE);
+				grid.especial_item.box.item_id = info->random_box_item_id;
+				grid.especial_item.box.item_num = info->random_box_item_num;
+			}
+			break;
 	}
 
 	add_achievement_progress(ACType_USE_PROP, config->ItemEffect, config->ItemQuality, 0, use_count);
 
 	return 0;
-}
-
-int player_struct::try_use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInfo *info)
-{
-	if (pos >= data->bag_grid_num)
-	{
-		return ERROR_ID_BAG_POS;
-	}
-
-	bag_grid_data& grid = data->bag[pos];
-	ItemsConfigTable *prop_config = get_config_by_id(grid.id, &item_config);
-	if (!prop_config)
-	{
-		return ERROR_ID_NO_CONFIG;
-	}
-
-	uint32_t item_id = grid.id;
-	uint32_t use_count = (use_all == 0 ? 1 : (prop_config->UseDegree * grid.num - grid.used_count));
-
-	return check_use_prop(item_id, use_count, info);
 }
 
 int player_struct::use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInfo *info)
@@ -7167,6 +7218,12 @@ int player_struct::use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInfo *i
 
 	uint32_t item_id = grid.id;
 	uint32_t use_count = (use_all == 0 ? 1 : (prop_config->UseDegree * grid.num - grid.used_count));
+
+	ret = use_prop_effect(grid, prop_config, use_count, info); 
+	if (ret != 0)
+	{
+		return ret;
+	}
 
 	uint32_t del_num = 0;
 	if (use_all == 0)
@@ -7199,17 +7256,12 @@ int player_struct::use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInfo *i
 
 	this->add_task_progress(TCT_USE_PROP, item_id, use_count);
 
-	ret = use_prop_effect(item_id, use_count, info); 
 	if (this->data->xunbao.send_next)
 	{
 		EXTERN_DATA extern_data;
 		extern_data.player_id = data->player_id;
 		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);
 		this->data->xunbao.send_next = false;
-	}
-	if (ret != 0)
-	{
-		return ret;
 	}
 
 	return ret;
@@ -7236,6 +7288,8 @@ void player_struct::update_bag_grid(uint32_t pos)
 	AttrData item_fabao_attr[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
 	AttrData* item_fabao_attr_point[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
 	AttrData fabao_attr;
+	ItemRandomBoxData box_data;
+	ItemData box_item_data;
 
 	grid_data.index = pos;
 	grid_data.id = grid->id;
@@ -7306,6 +7360,15 @@ void player_struct::update_bag_grid(uint32_t pos)
 		}
 		fabao_data.minor_attr = item_fabao_attr_point;
 		fabao_data.n_minor_attr = attr_num;
+	}
+	if (item_is_random_box(grid->id))
+	{
+		grid_data.box = &box_data;
+		item_random_box_data__init(&box_data);
+		box_data.randitem = &box_item_data;
+		item_data__init(&box_item_data);
+		box_item_data.id =  grid->especial_item.box.item_id;
+		box_item_data.num = grid->especial_item.box.item_num;
 	}
 
 	EXTERN_DATA extern_data;
@@ -9230,6 +9293,7 @@ void player_struct::add_task_progress(uint32_t type, uint32_t target, uint32_t n
 				case TCT_FRIEND_NUM:
 				case TCT_GUILD_DONATION:
 				case TCT_JOIN_TEAM:
+				case TCT_ZHENYING_SCORE:
 					count_info.num = num;
 					break;
 				case TCT_EQUIP_STAR:

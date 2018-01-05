@@ -182,21 +182,33 @@ static void tower_raid_ai_monster_dead(raid_struct *raid, monster_struct *monste
 	}
 
 	uint32_t next = 0;
-	if (player->data->tower.cur_lv < MAX_TOWER_LEVEL && player->data->tower.top_lv < MAX_TOWER_LEVEL)
+	//if (player->data->tower.cur_lv < MAX_TOWER_LEVEL && player->data->tower.top_lv < MAX_TOWER_LEVEL)
 	{
+		if (player->data->tower.cur_lv > player->data->tower.top_lv)
+		{
+			player->data->tower.top_lv = player->data->tower.cur_lv;
+		}
 		if (player->data->tower.cur_lv + 5 > player->data->tower.top_lv)
 		{
-			next = player->data->tower.top_lv;
+			if (player->data->tower.top_lv < MAX_TOWER_LEVEL)
+			{
+				next = player->data->tower.top_lv + 1;
+			}
+			else if (player->data->tower.cur_lv < MAX_TOWER_LEVEL)
+			{
+				next = player->data->tower.top_lv;
+			}
 		}
 		else
 		{
 			next = player->data->tower.cur_lv + 5;
 		}
-		if (player->data->tower.top_lv == player->data->tower.cur_lv)
-		{
-			++player->data->tower.top_lv;
-			next = player->data->tower.top_lv;
-		}
+		//if (player->data->tower.top_lv == player->data->tower.cur_lv)
+		//{
+		//	++player->data->tower.top_lv;
+		//	next = player->data->tower.top_lv;
+		//}
+		
 	}
 	raid->data->ai_data.tower_data.state = TOWER_STATE_END;
 

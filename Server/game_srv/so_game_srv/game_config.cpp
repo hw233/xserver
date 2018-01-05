@@ -2642,6 +2642,17 @@ bool item_is_baguapai(uint32_t item_id)
 	return (config->ItemType == 10);
 }
 
+bool item_is_random_box(uint32_t item_id)
+{
+	ItemsConfigTable *config = get_config_by_id(item_id, &item_config);
+	if (!config)
+	{
+		return false;
+	}
+
+	return (config->ItemEffect == IUE_RANDOM_BOX);
+}
+
 int bagua_item_to_card(uint32_t item_id)
 {
 	ItemsConfigTable *config = get_config_by_id(item_id, &item_config);
@@ -3039,6 +3050,56 @@ int get_one_rand_attr(uint32_t pool, uint32_t &attr_id, double &attr_val, std::v
 		}
 		attr_id = attr_config->Effect;
 		attr_val = lower_val + (double)rand_val / 10000.0;
+	}
+
+	return 0;
+}
+
+int get_random_box_fixed_item(uint32_t box_id, uint32_t &item_id, uint32_t &item_num)
+{
+	RandomBox *config = get_config_by_id(box_id, &random_box_config);
+	if (!config)
+	{
+		return -1;
+	}
+
+	item_id = config->ItemID;
+	item_num = config->Num;
+
+	return 0;
+}
+
+int get_random_box_random_item(uint32_t box_id, uint32_t &item_id, uint32_t &item_num)
+{
+	RandomBox *config = get_config_by_id(box_id, &random_box_config);
+	if (!config)
+	{
+		return -1;
+	}
+
+	uint64_t total_weight = 0;
+	for (uint32_t i = 0; i < config->n_Probability0; ++i)
+	{
+		total_weight += config->Probability0[i];
+	}
+	
+	if (total_weight == 0)
+	{
+		return -1;
+	}
+
+	uint64_t count = 0;
+	uint64_t rand_val = rand() % total_weight;
+	for (uint32_t i = 0; i < config->n_Probability0; ++i)
+	{
+		if (rand_val >= count && rand_val < count + config->Probability0[i])
+		{
+			item_id = config->ItemID0[i];
+			item_num = config->Num0[i];
+			break;
+		}
+
+		count += config->Probability0[i];
 	}
 
 	return 0;
@@ -3952,6 +4013,11 @@ int read_all_excel_data()
 	type = sproto_type(sp, "CiFuTable");
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/CiFuTable.lua", (config_type)&ci_fu_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "RandomBox");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/RandomBox.lua", (config_type)&random_box_config);
 	assert(ret == 0);
 
 	adjust_escort_config();

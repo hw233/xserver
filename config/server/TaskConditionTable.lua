@@ -614,6 +614,21 @@ local TaskConditionTable = {
 		['Radius'] = 0,
 		['Island'] = 0
 		},
+	[240212011] = {
+		['ID'] = 240212011,
+		['ConditionType'] = 5,
+		['ConditionTarget'] = 2,
+		['ConditionNum'] = 1,
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['PathType'] = 0,
+		['PathID'] = 0,
+		['Scene'] = 0,
+		['PointX'] = 0,
+		['PointZ'] = 0,
+		['Radius'] = 0,
+		['Island'] = 0
+		},
 	[240212005] = {
 		['ID'] = 240212005,
 		['ConditionType'] = 1,
@@ -5964,8 +5979,23 @@ local TaskConditionTable = {
 		['PathType'] = 1,
 		['PathID'] = 0,
 		['Scene'] = 155000005,
-		['PointX'] = 101,
-		['PointZ'] = 190,
+		['PointX'] = 110,
+		['PointZ'] = 409,
+		['Radius'] = 5,
+		['Island'] = 0
+		},
+	[240222118] = {
+		['ID'] = 240222118,
+		['ConditionType'] = 33,
+		['ConditionTarget'] = 0,
+		['ConditionNum'] = 1,
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['PathType'] = 1,
+		['PathID'] = 0,
+		['Scene'] = 155000008,
+		['PointX'] = 366,
+		['PointZ'] = 87,
 		['Radius'] = 5,
 		['Island'] = 0
 		},

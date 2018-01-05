@@ -267,7 +267,9 @@ void free_CampDefenseTable(struct CampDefenseTable *p)
     if (!p) return;
     free(p->TruckRouteX);
     free(p->TruckRouteY);
-    free(p->CollectionIntegral);
+    free(p->MonsterID);
+    free(p->MineralIntegral1);
+    free(p->MineralIntegral2);
     free(p->SupportMine);
     free(p);
 };
@@ -879,6 +881,16 @@ void free_RaidScriptTable(struct RaidScriptTable *p)
     }
     free(p->Parameter2);
     p->n_Parameter2 = 0;
+    free(p);
+};
+
+void free_RandomBox(struct RandomBox *p)
+{
+    if (!p) return;
+    free(p->ItemID0);
+    free(p->Num0);
+    free(p->DisplayNum0);
+    free(p->Probability0);
     free(p);
 };
 

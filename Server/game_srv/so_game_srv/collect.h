@@ -61,7 +61,7 @@ public:
 	uint64_t m_liveTime;
 	int32_t m_state;
 	uint32_t m_dropId; //
-	int32_t m_minType; //根据类型掉落
+	int32_t m_minType; //根据类型掉落 0普通 1寻宝 2日常阵营镖车到达 3日常阵营镖车死亡
 	uint32_t m_ownerLv; //根据所有者的等级掉落
 	uint64_t m_active; //镖车活动表id 
 	float m_y;

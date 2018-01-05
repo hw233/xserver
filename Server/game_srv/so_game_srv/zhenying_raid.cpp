@@ -25,8 +25,6 @@ int zhenying_raid_struct::init_special_raid_data(player_struct *player)
 {
 	raid_set_ai_interface(9);
 	init_scene_struct(m_id, true, 0);
-	m_collect_pos.clear();
-	m_hit_flag.clear();
 	return (0);
 }
 
@@ -103,26 +101,4 @@ bool zhenying_raid_struct::is_in_zhenying_raid()
 // 	on_player_leave_raid(player);
 // 	return scene_struct::delete_player_from_scene(player);
 // }
-
-void zhenying_raid_struct::create_collect()
-{
-	std::vector<struct FactionBattleTable*>::iterator it = zhenying_battle_config.begin();
-	FactionBattleTable *table = *it;
-	while (m_collect_pos.size() < table->BoxReloadNum)
-	{
-		uint32_t r = rand() % table->n_BoxReloadX;
-		uint64_t iPos = table->BoxReloadX[r] * table->BoxReloadZ[r];
-		std::set<uint64_t>::iterator it = m_collect_pos.find(iPos);
-		if (it == m_collect_pos.end())
-		{
-			m_collect_pos.insert(iPos);
-			Collect::CreateCollectByPos(this, table->BoxID, table->BoxReloadX[r], table->BoxReloadY[r], table->BoxReloadZ[r], 0);
-		}
-	}
-}
-
-void zhenying_raid_struct::delete_collect_pos(uint64_t pos)
-{
-	m_collect_pos.erase(pos);
-}
 

@@ -359,15 +359,15 @@ int Collect::BegingGather(player_struct *player, uint32_t step)
 	}
 
 		//阵营战的宝箱限制采集次数
-	if (player->data->zhenying.mine < 1 && player->scene->is_in_zhenying_raid())
-	{
-		std::vector<struct FactionBattleTable*>::iterator it = zhenying_battle_config.begin();
-		FactionBattleTable *table = *it;
-		if (m_collectId == table->BoxID)
-		{
-			return 4;
-		}
-	}
+	//if (player->data->zhenying.mine < 1 && player->scene->is_in_zhenying_raid())
+	//{
+	//	std::vector<struct FactionBattleTable*>::iterator it = zhenying_battle_config.begin();
+	//	FactionBattleTable *table = *it;
+	//	if (m_collectId == table->BoxID)
+	//	{
+	//		return 4;
+	//	}
+	//}
 	
 	if (it->second->ConsumeTeyp == 2) //道具
 	{
@@ -459,15 +459,7 @@ int Collect::GatherComplete(player_struct *player)
 			BroadcastToSight(MSG_ID_COLLECT_COMMPLETE_NOTIFY, &send, (pack_func)notify_collect__pack);
 		}
 
-		if (m_minType == 2)
-		{
-			CampDefenseTable *tableDaily = get_config_by_id(360600001, &zhenying_daily_config);
-			if (tableDaily != NULL)
-			{
-				player->add_task_progress(TCT_ZHENYING_SCORE, 0, tableDaily->CollectionIntegral[0] + rand() % (tableDaily->CollectionIntegral[1] - tableDaily->CollectionIntegral[0]));
-			}
-		}
-		else 
+		if (m_minType != 2 && m_minType != 3) // 2 3是日常阵营镖车无掉落
 		{
 			if (m_ownerLv != 0)
 			{

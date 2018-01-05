@@ -10,6 +10,7 @@ message DBBagGrid
 	required uint32 expire_time = 4;
 	optional DBItemBagua bagua = 5;
 	optional DBItemPartnerFabao fabao = 6;
+	optional DBItemRandomBox box = 7;
 }
 
 message DBHeadIcon

@@ -29,6 +29,11 @@ union EspecialItemInfo
 		AttrInfo main_attr;	   //主属性
 		AttrInfo minor_attr[MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];//副属性
 	}fabao;
+
+	struct{
+		uint32_t item_id;
+		uint32_t item_num;
+	} box;
 };
 
 int get_item_type(uint32_t item_id); //获取道具类型

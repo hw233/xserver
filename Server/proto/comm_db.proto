@@ -27,6 +27,12 @@ message DBItemPartnerFabao
 	repeated DBAttr minor_attr = 2;	//伙伴法宝副属性
 }
 
+message DBItemRandomBox
+{
+	required uint32 item_id = 1;
+	required uint32 item_num = 2;
+}
+
 message DBCurPartnerFabao
 {
 	required uint32 fabao_id = 1;

@@ -2686,6 +2686,20 @@ local ModelTable = {
 		['PointY'] = .00,
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00
+		},
+	[130600029] = {
+		['ModelId'] = 130600029,
+		['ModelPath'] = 'Prefabs/Effect/ef_gw_huangdaxiam',
+		['TopH'] = 1.00,
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00,
+		['PointX'] = .00,
+		['PointY'] = .00,
+		['TalkScale'] = 1.00,
+		['TalkPointY'] = .00
 		}
 	}
 return ModelTable

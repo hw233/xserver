@@ -222,6 +222,7 @@ enum ItemUseEffect
 	IUE_ADD_HORSE = 18, //获得坐骑
 	IUE_ADD_TITLE = 22, //获得称号
 	IUE_OPEN_FUNCTION = 23, //开启功能
+	IUE_RANDOM_BOX = 24, //随机宝箱
 };
 
 enum TaskConditionType

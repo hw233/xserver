@@ -167,6 +167,7 @@ extern std::map<uint64_t, struct RewardBack*> reward_back_config; //活动奖励
 extern std::map<uint64_t, struct P20076Table*> tower_level_config; //冲塔表
 extern std::map<uint64_t, struct LoginGifts*> login_gifts_config; //登录奖励表
 extern std::map<uint64_t, struct CiFuTable*> ci_fu_config; //赐福奖励表
+extern std::map<uint64_t, struct RandomBox*> random_box_config; //随机宝箱表
 
 
 //////////////////

@@ -1,7 +1,8 @@
 local BiaocheTable = {
 	[440100001] = {
 		['ID'] = 440100001,	--索引
-		['Type'] = 1,	--镖车类型
+		['Type'] = 1,	--后端用镖车类型
+		['BiaoType'] = 1,	--前端用镖车类型
 		['ActivityControl'] = 330400035,	--控制表ID
 		['TaskId'] = 240130014,	--任务ID
 		['MonsterId'] = 151000047,	--镖车ID
@@ -20,6 +21,7 @@ local BiaocheTable = {
 	[440100002] = {
 		['ID'] = 440100002,
 		['Type'] = 2,
+		['BiaoType'] = 2,
 		['ActivityControl'] = 330400036,
 		['TaskId'] = 240130015,
 		['MonsterId'] = 151000048,
@@ -34,6 +36,25 @@ local BiaocheTable = {
 		['Number'] = {0},
 		['Range'] = 0,
 		['Reward'] = 440200002
+		},
+	[440100003] = {
+		['ID'] = 440100003,
+		['Type'] = 2,
+		['BiaoType'] = 3,
+		['ActivityControl'] = 330400036,
+		['TaskId'] = 240130016,
+		['MonsterId'] = 151000048,
+		['Deposit'] = 10000,
+		['StartTime'] = {1000},
+		['EndTime'] = {1200},
+		['shanfeiId'] = {0},
+		['level'] = {0},
+		['Interval'] = 0,
+		['Probability'] = 0,
+		['Time'] = 0,
+		['Number'] = {0},
+		['Range'] = 0,
+		['Reward'] = 440200003
 		}
 	}
 return BiaocheTable

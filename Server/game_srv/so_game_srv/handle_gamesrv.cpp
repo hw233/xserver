@@ -3012,6 +3012,7 @@ static int handle_bag_info_request(player_struct *player, EXTERN_DATA *extern_da
 	BagGrid *bag_data_point[MAX_BAG_GRID_NUM];
 	ItemBaguaData bagua_data[MAX_BAG_GRID_NUM];
 	ItemPartnerFabaoData fabao_data[MAX_BAG_GRID_NUM];
+	ItemRandomBoxData box_data[MAX_BAG_GRID_NUM];
 	CommonRandAttrData  bagua_attr[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_MINOR_ATTR_NUM];
 	CommonRandAttrData* bagua_attr_point[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_MINOR_ATTR_NUM];
 	CommonRandAttrData  bagua_additional_attr[MAX_BAG_GRID_NUM][MAX_BAGUAPAI_ADDITIONAL_ATTR_NUM];
@@ -3019,6 +3020,7 @@ static int handle_bag_info_request(player_struct *player, EXTERN_DATA *extern_da
 	AttrData item_fabao_attr[MAX_BAG_GRID_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
 	AttrData* item_fabao_attr_point[MAX_BAG_GRID_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
 	AttrData fabao_attr[MAX_BAG_GRID_NUM];
+	ItemData box_item_data[MAX_BAG_GRID_NUM];
 
 	resp.result = 0;
 	resp.curgridnum = player->data->bag_grid_num;
@@ -3103,6 +3105,15 @@ static int handle_bag_info_request(player_struct *player, EXTERN_DATA *extern_da
 			}
 			fabao_data[resp.n_grids].minor_attr = item_fabao_attr_point[resp.n_grids];
 			fabao_data[resp.n_grids].n_minor_attr = attr_num;
+		}
+		if (item_is_random_box(player->data->bag[i].id))
+		{
+			bag_data[resp.n_grids].box = &box_data[resp.n_grids];
+			item_random_box_data__init(&box_data[resp.n_grids]);
+			box_data[resp.n_grids].randitem = &box_item_data[resp.n_grids];
+			item_data__init(&box_item_data[resp.n_grids]);
+			box_item_data[resp.n_grids].id = player->data->bag[i].especial_item.box.item_id;
+			box_item_data[resp.n_grids].num = player->data->bag[i].especial_item.box.item_num;
 		}
 		resp.n_grids++;
 	}
@@ -13675,7 +13686,7 @@ int check_can_accept_cash_truck(player_struct *player, uint32_t type)
 	}
 	else
 	{
-		if (player->get_attr(PLAYER_ATTR_ZHENYING) == 0)
+		if (player->get_attr(PLAYER_ATTR_ZHENYING) + 1 == type % 10)
 		{
 			return 190500306;
 		}
@@ -14787,11 +14798,11 @@ static int on_login_send_zhenying(player_struct *player, EXTERN_DATA *extern_dat
 			player->data->zhenying.task = table->ID;
 			player->data->zhenying.task_type = table->Type;
 		}
-		FactionBattleTable *tableFa = get_zhenying_battle_table(player->get_attr(PLAYER_ATTR_LEVEL)); //todo delete
-		if (tableFa != NULL)
-		{
-			player->data->zhenying.mine = tableFa->BoxOpenNum;
-		}
+		//FactionBattleTable *tableFa = get_zhenying_battle_table(player->get_attr(PLAYER_ATTR_LEVEL)); //todo delete
+		//if (tableFa != NULL)
+		//{
+		//	player->data->zhenying.mine = tableFa->BoxOpenNum;
+		//}
 		player->data->zhenying.last_week = time_helper::nextWeek(5 * 3600);
 		ParameterTable *tablePa = get_config_by_id(161000355, &parameter_config);
 		if (tablePa != NULL)
@@ -14817,12 +14828,16 @@ static int handle_into_zhenying_battle_request(player_struct *player, EXTERN_DAT
 	{
 		return -2;
 	}
-	int ret = raid_manager::check_player_enter_raid(player, table->Map);
-	if (ret != 0)
+	if (player->get_attr(PLAYER_ATTR_ZHENYING) == 0)
 	{
-		send_comm_answer(MSG_ID_INTO_ZHENYING_BATTLE_ANSWER, ret, extern_data);
 		return -3;
 	}
+	//int ret = raid_manager::check_player_enter_raid(player, table->Map);
+	//if (ret != 0)
+	//{
+	//	send_comm_answer(MSG_ID_INTO_ZHENYING_BATTLE_ANSWER, ret, extern_data);
+	//	return -3;
+	//}
 	zhenying_raid_struct *raid = zhenying_raid_manager::add_player_to_zhenying_raid(player);
 	if (raid == NULL)
 	{

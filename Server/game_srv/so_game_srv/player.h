@@ -54,6 +54,8 @@ struct ItemUseEffectInfo
 	uint32_t use_all;
 	bool is_easy;
 	std::map<uint32_t, uint32_t> items;
+	uint32_t random_box_item_id;
+	uint32_t random_box_item_num;
 	~ItemUseEffectInfo();
 };
 
@@ -328,7 +330,7 @@ struct ZhenYing
 	uint32_t kill;
 	uint32_t death;
 	uint32_t help;
-	uint32_t score;
+	int score;
 	uint32_t mine; //挖宝次数
 	uint32_t kill_week; //战场一周杀人
 	uint32_t score_week; //战场周积分
@@ -1169,9 +1171,8 @@ public:
 	int merge_item(uint32_t id); //将非绑定道具变成绑定道具
 	int stack_item(uint32_t id); //调整多个格子堆叠数量
 	void tidy_bag(void);
-	int check_use_prop(uint32_t item_id, uint32_t use_count, ItemUseEffectInfo *info);
 	int try_use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInfo *info);
-	int use_prop_effect(uint32_t id, uint32_t use_count, ItemUseEffectInfo *info);
+	int use_prop_effect(bag_grid_data& grid, ItemsConfigTable *config, uint32_t use_count, ItemUseEffectInfo *info);
 	int use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInfo *info);
 	void update_bag_grid(uint32_t pos);
 	bool is_item_expire(uint32_t pos); //判断道具是否到期

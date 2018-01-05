@@ -337,7 +337,7 @@ local ControlTable = {
 		['OpenTime'] = {0},
 		['CloseTime'] = {2400},
 		['TimeType'] = 1,
-		['RewardTime'] = 2
+		['RewardTime'] = 3
 		},
 	[330400037] = {
 		['ID'] = 330400037,
@@ -475,7 +475,7 @@ local ControlTable = {
 		['MaxActor'] = 1,
 		['OpenDay'] = {0,1,2,3,4,5,6},
 		['OpenTime'] = {0},
-		['CloseTime'] = {2400},
+		['CloseTime'] = {1950},
 		['TimeType'] = 2,
 		['RewardTime'] = 15
 		},
@@ -578,6 +578,16 @@ local ControlTable = {
 		['CloseTime'] = {2000},
 		['TimeType'] = 1,
 		['RewardTime'] = 1
+		},
+	[330400061] = {
+		['ID'] = 330400061,
+		['MinActor'] = 1,
+		['MaxActor'] = 1,
+		['OpenDay'] = {0,1,2,3,4,5,6},
+		['OpenTime'] = {0},
+		['CloseTime'] = {2400},
+		['TimeType'] = 1,
+		['RewardTime'] = 3
 		}
 	}
 return ControlTable

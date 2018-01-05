@@ -108,70 +108,78 @@ unsigned int zhenying_raid_manager::get_zhenying_raid_pool_max_num()
 
 uint64_t GetOpenZhenyingDaily()
 {
-	ParameterTable *table = get_config_by_id(161000339, &parameter_config);
-	if (table == NULL)
-	{
-		return 0;
-	}
-	for (uint64_t i = 0; i < table->n_parameter1; ++i)
-	{
-		EventCalendarTable *tableCon = get_config_by_id(table->parameter1[0], &activity_config);
-		if (tableCon == NULL)
-		{
-			return 0;
-		}
-		ControlTable * tableEv = get_config_by_id(tableCon->RelationID, &all_control_config);
-			if (tableEv == NULL)
-			{
-				return 0;
-			}
-		bool open = false;
-		for (uint32_t i = 0; i < tableEv->n_OpenDay; ++i)
-		{
-			if (time_helper::getWeek() == tableEv->OpenDay[i])
-			{
-				open = true;
-				break;
-			}
-		}
-		if (!open)
-		{
-			return 0;
-		}
-		open = false;
+	//ParameterTable *table = get_config_by_id(161000339, &parameter_config);
+	//if (table == NULL)
+	//{
+	//	return 0;
+	//}
+	//for (uint64_t i = 0; i < table->n_parameter1; ++i)
+	//{
+	//	EventCalendarTable *tableCon = get_config_by_id(table->parameter1[0], &activity_config);
+	//	if (tableCon == NULL)
+	//	{
+	//		return 0;
+	//	}
+	//	ControlTable * tableEv = get_config_by_id(tableCon->RelationID, &all_control_config);
+	//		if (tableEv == NULL)
+	//		{
+	//			return 0;
+	//		}
+	//	bool open = false;
+	//	for (uint32_t i = 0; i < tableEv->n_OpenDay; ++i)
+	//	{
+	//		if (time_helper::getWeek() == tableEv->OpenDay[i])
+	//		{
+	//			open = true;
+	//			break;
+	//		}
+	//	}
+	//	if (!open)
+	//	{
+	//		return 0;
+	//	}
+	//	open = false;
 		struct tm tm;
 		time_t tmp = time_helper::get_cached_time() / 1000;
 		localtime_r(&tmp, &tm);
-		for (uint32_t i = 0; i < tableEv->n_OpenTime; ++i)
-		{
-			tm.tm_hour = tableEv->OpenTime[i] / 100;
-			tm.tm_min = tableEv->OpenTime[i] % 100;
-			tm.tm_sec = 0;
-			uint64_t st = mktime(&tm);
-			tm.tm_hour = tableEv->CloseTime[i] / 100;
-			tm.tm_min = tableEv->CloseTime[i] % 100;
-			tm.tm_sec = 59;
-			uint64_t end = mktime(&tm);
-			if (time_helper::get_cached_time() / 1000 >= st && time_helper::get_cached_time() / 1000 <= end)
-			{
-				open = true;
-				break;
-			}
-		}
-		if (!open)
-		{
-			return 0;
-		}
-		if (tableCon->ActivityValue == 4)
-		{
-			return 360600001;
-		} 
-		else
-		{
-			return 360600002;
-		}
+	//	for (uint32_t i = 0; i < tableEv->n_OpenTime; ++i)
+	//	{
+	//		tm.tm_hour = tableEv->OpenTime[i] / 100;
+	//		tm.tm_min = tableEv->OpenTime[i] % 100;
+	//		tm.tm_sec = 0;
+	//		uint64_t st = mktime(&tm);
+	//		tm.tm_hour = tableEv->CloseTime[i] / 100;
+	//		tm.tm_min = tableEv->CloseTime[i] % 100;
+	//		tm.tm_sec = 59;
+	//		uint64_t end = mktime(&tm);
+	//		if (time_helper::get_cached_time() / 1000 >= st && time_helper::get_cached_time() / 1000 <= end)
+	//		{
+	//			open = true;
+	//			break;
+	//		}
+	//	}
+	//	if (!open)
+	//	{
+	//		return 0;
+	//	}
+	//	if (tableCon->ActivityValue == 4)
+	//	{
+	//		return 360600001;
+	//	} 
+	//	else
+	//	{
+	//		return 360600002;
+	//	}
+	//}
+	//return 360600001;
+	if (tm.tm_wday == 2 || tm.tm_wday == 4 || tm.tm_wday == 6)
+	{
+		return 360600002;
 	}
-	return 360600001;
+	else
+	{
+		return 360600001;
+	}
 }
 
 void zhenying_raid_manager::GetRelivePos(FactionBattleTable *table, int zhenying, int *x, int *z, double *direct)
@@ -266,21 +274,8 @@ int zhenying_raid_manager::init_zhenying_raid_struct(int num, unsigned long key)
 
 void zhenying_raid_manager::on_tick_10()
 {
-	bool reflesh = false;
-	if (zhenying_raid_manager_reflesh_collect < time_helper::get_cached_time())
-	{
-		std::vector<struct FactionBattleTable*>::iterator it = zhenying_battle_config.begin();
-		FactionBattleTable *table = *it;
-		zhenying_raid_manager_reflesh_collect = time_helper::get_cached_time() + table->BoxReloadTime;
-		reflesh = true;
-	}
-	
 	for (std::set<zhenying_raid_struct *>::iterator iter = zhenying_raid_manager_raid_used_list.begin(); iter != zhenying_raid_manager_raid_used_list.end(); )
 	{
-		if (reflesh)
-		{
-			(*iter)->create_collect();
-		}
 		if ((*iter)->check_raid_need_delete())
 		{
 			zhenying_raid_struct *raid = (*iter);

@@ -107,6 +107,9 @@ int trade_id_to_item_id(uint32_t trade_id);
 bool strong_goal_is_open(uint32_t goal_id, uint32_t player_lv);
 int get_equip_enchant_attr_color(uint32_t pool, uint32_t attr_id, double attr_val);
 int get_one_rand_attr(uint32_t pool, uint32_t &attr_id, double &attr_val, std::vector<uint32_t> *except_attrs = NULL);
+bool item_is_random_box(uint32_t item_id);
+int get_random_box_fixed_item(uint32_t box_id, uint32_t &item_id, uint32_t &item_num);
+int get_random_box_random_item(uint32_t box_id, uint32_t &item_id, uint32_t &item_num);
 
 #define DEFAULT_SCENE_ID  (10012) 
 
