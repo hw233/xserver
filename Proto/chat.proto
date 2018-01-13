@@ -45,6 +45,7 @@ message Chat
 	optional uint32 time_stamp = 12; //
 	required string tanslation = 13;
 	optional uint32 sendTime = 14; //发送时间
+	required uint32 sendPlayerZhenying = 15; //发送者角色阵营
 }
 
 message ChatHorse

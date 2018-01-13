@@ -33,6 +33,10 @@ message FriendPlayerBriefData
 	repeated uint32 tags = 7; //标签
 	required string textIntro = 8; //文字签名
 	required uint32 head = 9; //头像
+	repeated AttrData attrs = 10; //属性列表（后面再有新属性加在这里）
+	required uint32 guildId = 11; //帮会ID
+	required string guildName = 12; //帮会名
+	optional uint32 trackTime = 13; //追踪时间戳，如果大于当前时间，表示正在追踪；否则表示可以追踪
 }
 
 //好友分组信息
@@ -51,6 +55,7 @@ message FriendInfoAnswer
 	repeated FriendGroupData fixs = 2; //固定分组
 	repeated FriendGroupData customs = 3; //新建分组
 	required uint32 contact_extend = 4; //好友上限是否扩展过，0没扩展过，非0扩展过
+	required uint32 autoAcceptApply = 5; //自动通过申请，0没勾选，非0勾选
 }
 
 //好友操作请求
@@ -220,6 +225,21 @@ message FriendUpdateStatusNotify
 {
 	required uint64 playerId = 1; //玩家ID
 	required uint32 offlineTime = 2; //下线时间，0：表示在线
+}
+
+//追踪仇人应答
+message FriendTrackEnemyAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint64 playerId = 2; //玩家ID
+	required uint32 trackTime = 3; //追踪时间戳，如果大于当前时间，表示正在追踪；否则表示可以追踪
+}
+
+//设置自动通过申请应答
+message FriendAutoAcceptApplyAnswer
+{
+	required uint32 result = 1; //结果，0：成功，否则失败
+	required uint32 autoAcceptApply = 2; //自动通过申请，0没勾选，非0勾选
 }
 
 

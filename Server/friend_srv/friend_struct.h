@@ -7,13 +7,13 @@
 #define MAX_FRIEND_GROUP_NAME_LEN   100 //好友分组名称最大长度
 #define MAX_FRIEND_RECENT_NUM       200  //最近联系人最大数
 #define MAX_FRIEND_BLOCK_NUM        200 //黑名单最大数
-#define MAX_FRIEND_ENEMY_NUM        200 //仇人最大数
 #define MAX_FRIEND_APPLY_NUM        200  //申请最大数
 #define MAX_FRIEND_GROUP_NUM        6   //分组最大数
 #define MAX_FRIEND_RECOMMEND_NUM    4   //推荐玩家数
 #define MAX_FRIEND_CHAT_NUM			100 //好友聊天数
 #define MAX_FRIEND_SYSTEM_NUM	    100 //系统消息数
 #define MAX_FRIEND_GIFT_NUM	        100 //接收礼物数
+#define MAX_FRIEND_UNIT_ATTR_NUM	10 //每个个体发送的属性数
 
 struct FriendGroup
 {
@@ -30,6 +30,12 @@ struct FriendUnit
 	uint32_t group_id; //分组ID
 };
 
+struct EnemyUnit
+{
+	uint64_t player_id; //玩家ID
+	uint32_t track_time; //追踪时间
+};
+
 struct FriendPlayer
 {
 	uint64_t player_id;
@@ -38,11 +44,12 @@ struct FriendPlayer
 	uint64_t    recents[MAX_FRIEND_RECENT_NUM]; //最近联系人
 	FriendUnit  contacts[MAX_FRIEND_CONTACT_NUM]; //我的好友
 	FriendUnit  blocks[MAX_FRIEND_BLOCK_NUM]; //黑名单
-	uint64_t    enemies[MAX_FRIEND_ENEMY_NUM]; //仇人
+	EnemyUnit   enemies[MAX_FRIEND_ENEMY_NUM]; //仇人
 	uint64_t    applys[MAX_FRIEND_APPLY_NUM]; //申请列表
 	FriendGroup groups[MAX_FRIEND_GROUP_NUM]; //分组
 	uint32_t gift_accept; //接收礼物数
 	uint32_t reset_time; //每日重置时间
+	uint32_t auto_accept_apply; //自动通过申请
 };
 
 #endif

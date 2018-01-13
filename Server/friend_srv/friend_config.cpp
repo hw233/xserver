@@ -28,6 +28,9 @@ uint32_t sg_friend_gift_send_num = 0;
 uint32_t sg_friend_gift_accept_num = 0;
 uint32_t sg_friend_group_num = 0;
 std::set<uint32_t> sg_friend_gift_id;
+uint32_t sg_friend_track_item_id;
+uint32_t sg_friend_track_item_num;
+uint32_t sg_friend_track_time;
 
 std::map<uint64_t, struct RandomCardRewardTable*> wanyaoka_reward_config; //万妖卡奖励配置
 std::map<uint64_t, struct ParameterTable *> parameter_config;
@@ -37,6 +40,7 @@ std::map<uint64_t, struct GiftTable*> friend_gift_config; //好友礼物表
 static void generate_parameters(void)
 {
 	sg_friend_gift_id.clear();
+	ParameterTable *config = NULL;
 	{
 		ParameterTable *gift_id_param = get_config_by_id(161000142, &parameter_config);
 		if (gift_id_param)
@@ -103,6 +107,13 @@ static void generate_parameters(void)
 		{
 			sg_friend_apply_num = apply_num_param->parameter1[0];
 		}
+	}
+	config = get_config_by_id(161001020, &parameter_config);
+	if (config && config->n_parameter1 >= 3)
+	{
+		sg_friend_track_item_id = config->parameter1[0];
+		sg_friend_track_item_num = config->parameter1[1];
+		sg_friend_track_time = config->parameter1[2];
 	}
 }
 

@@ -85,7 +85,6 @@ int conn_node_raidsrv::dispatch_message()
 		case SERVER_PROTO_FRIEND_GIFT_COST_ANSWER:
 		case SERVER_PROTO_FRIEND_TURN_SWITCH:
 		case SERVER_PROTO_FRIEND_SYNC_RENAME:
-		case SERVER_PROTO_FRIEND_IS_ENEMY_REQUEST:
 			return transfer_to_friendsrv(); 
 		case SERVER_PROTO_GAMESRV_START:
 			transfer_to_guildsrv();

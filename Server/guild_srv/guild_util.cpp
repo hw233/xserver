@@ -3153,48 +3153,11 @@ bool is_in_guild_battle_activity_time()
 			continue;
 		}
 
-		//检查时间
-		if (ctrl_config->n_OpenDay > 0)
+		in_time = control_is_open(ctrl_config, now);
+		if (in_time)
 		{
-			bool pass = false;
-			uint32_t week = time_helper::getWeek(now);
-			for (size_t i = 0; i < ctrl_config->n_OpenDay; ++i)
-			{
-				if (week == ctrl_config->OpenDay[i])
-				{
-					pass = true;
-					break;
-				}
-			}
-			if (pass == false)
-			{
-				continue;
-			}
+			break;
 		}
-		assert(ctrl_config->n_OpenTime == ctrl_config->n_CloseTime);
-		if (ctrl_config->n_OpenTime > 0)
-		{
-			bool pass = false;
-			for (size_t i = 0; i < ctrl_config->n_OpenTime; ++i)
-			{
-				uint32_t start = time_helper::get_timestamp_by_day(ctrl_config->OpenTime[i] / 100,
-						ctrl_config->OpenTime[i] % 100, now);
-				uint32_t end = time_helper::get_timestamp_by_day(ctrl_config->CloseTime[i] / 100,
-						ctrl_config->CloseTime[i] % 100, now);
-				if (now >= start && now <= end)
-				{
-					pass = true;
-					break;
-				}
-			}
-			if (pass == false)
-			{
-				continue;
-			}
-		}
-
-		in_time = true;
-		break;
 	}
 
 	return in_time;

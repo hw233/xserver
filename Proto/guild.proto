@@ -533,3 +533,12 @@ message GuildDonateAnswer
 	required uint32 type = 2; //捐献类型，1：慷慨解囊 2：仗义输出 3：倾囊相授
 }
 
+//帮会篝火信息通知
+message GuildBonfireInfoNotify
+{
+	required uint32 endTime = 1; //结束时间（时间戳）
+	required uint32 rewardTime = 2; //已享受收益时间（时长：秒）
+	required float posX = 3; //篝火位置，坐标X
+	required float posZ = 4; //篝火位置，坐标Z
+}
+

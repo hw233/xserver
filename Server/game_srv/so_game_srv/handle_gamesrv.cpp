@@ -6631,6 +6631,55 @@ static int handle_team_raid_cancel_request(player_struct *player, EXTERN_DATA *e
 	return (0);
 }
 
+static int handle_get_raid_monster_pos_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+	raid_struct *raid = player->get_raid();
+	if (!raid)
+	{
+		LOG_ERR("[%s:%d] player[%lu] not in raid", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-10);
+	}
+	GetRaidMonsterPosRequest *req = get_raid_monster_pos_request__unpack(NULL, get_data_len(), (uint8_t *)get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-10);
+	}
+
+	uint32_t monster_id = req->monster_id;
+	get_raid_monster_pos_request__free_unpacked(req, NULL);
+
+	GetRaidMonsterPosAnswer resp;
+	get_raid_monster_pos_answer__init(&resp);
+	resp.monster_id = monster_id;
+	resp.result = -1;
+
+	PosData pos_data;
+	pos_data__init(&pos_data);
+	resp.data = &pos_data;
+	
+	for (std::set<monster_struct*>::iterator iter = raid->m_monster.begin(); iter != raid->m_monster.end(); ++iter)
+	{
+		monster_struct *monster = *iter;
+		if (monster->data && monster->data->monster_id == monster_id)
+		{
+			struct position *pos = monster->get_pos();
+			resp.result = 0;
+			pos_data.pos_x = pos->pos_x;
+			pos_data.pos_z = pos->pos_z;			
+			break;
+		}
+	}
+
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_GET_RAID_MONSTER_POS_ANSWER, get_raid_monster_pos_answer__pack, resp);
+	return (0);
+}
+
 static int handle_enter_raid_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (!player || !player->is_online())
@@ -13686,7 +13735,7 @@ int check_can_accept_cash_truck(player_struct *player, uint32_t type)
 	}
 	else
 	{
-		if (player->get_attr(PLAYER_ATTR_ZHENYING) + 1 == type % 10)
+		if (player->get_attr(PLAYER_ATTR_ZHENYING) + 1 != type % 10)
 		{
 			return 190500306;
 		}
@@ -16159,6 +16208,9 @@ static int handle_personality_info_request(player_struct *player, EXTERN_DATA *e
 		}
 		personality_data.n_tags++;
 	}
+	personality_data.province = player->data->personality_province;
+	personality_data.city = player->data->personality_city;
+	personality_data.bloodtype = player->data->personality_blood_type;
 
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_PERSONALITY_INFO_ANSWER, personality_info_answer__pack, resp);
 
@@ -16193,6 +16245,9 @@ static int handle_personality_set_general_request(player_struct *player, EXTERN_
 		player->data->personality_sex = req->sex;
 		player->data->personality_birthday = req->birthday;
 		strcpy(player->data->personality_location, req->location);
+		player->data->personality_province = req->province;
+		player->data->personality_city = req->city;
+		player->data->personality_blood_type = req->bloodtype;
 
 		player->refresh_player_redis_info();
 	} while(0);
@@ -16302,7 +16357,7 @@ static int handle_personality_set_intro_request(player_struct *player, EXTERN_DA
 	return 0;
 }
 
-void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *target)
+void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *target, uint32_t status)
 {
 	GetOtherInfoAnswer resp;
 	get_other_info_answer__init(&resp);
@@ -16388,6 +16443,9 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 		}
 		personality_data.n_tags++;
 	}
+	personality_data.province = target->data->personality_province;
+	personality_data.city = target->data->personality_city;
+	personality_data.bloodtype = target->data->personality_blood_type;
 
 	size_t equip_num = 0;
 	for (int k = 0; k < MAX_EQUIP_NUM; ++k)
@@ -16529,6 +16587,7 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 	detail_data.baguas = dress_data_point;
 
 	detail_data.teamid = target->data->teamid;
+	detail_data.status = status;
 
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_GET_OTHER_INFO_ANSWER, get_other_info_answer__pack, resp);
 }
@@ -16557,7 +16616,7 @@ static int handle_get_other_info_request(player_struct *player, EXTERN_DATA *ext
 	player_struct *target = player_manager::get_player_by_id(target_id);
 	if (target)
 	{
-		answer_get_other_info(extern_data, 0, target);
+		answer_get_other_info(extern_data, 0, target, 1);
 	}
 	else
 	{
@@ -17266,7 +17325,8 @@ static int handle_friend_send_gift_success(player_struct *player, EXTERN_DATA *e
 	return 0;
 }
 
-static int handle_friend_is_enemy_answer(player_struct *player, EXTERN_DATA *extern_data)
+//好友服追踪仇人请求
+static int handle_friend_track_enemy_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	LOG_INFO("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 
@@ -17276,11 +17336,111 @@ static int handle_friend_is_enemy_answer(player_struct *player, EXTERN_DATA *ext
 		return (-1);
 	}
 
-	FRIEND_IS_ENEMY_ANSWER *resp = (FRIEND_IS_ENEMY_ANSWER *)get_data();
-	if (resp->is_enemy)
+	FRIEND_TRACK_REQUEST *req = (FRIEND_TRACK_REQUEST*)get_data();
+	uint64_t target_id = req->target_id;
+	uint32_t item_id = req->cost_item_id;
+	uint32_t item_num = req->cost_item_num;
+
+	int ret = 0;
+	do
 	{
-		player->add_achievement_progress(ACType_KILL_ENEMY, 0, 0, 0, 1);
+		uint32_t has_num = player->get_item_can_use_num(item_id);
+		if (has_num < item_num)
+		{
+			ret = 190500518;
+			break;
+		}
+
+		player_struct *target = player_manager::get_player_by_id(target_id);
+		if (!target)
+		{
+			ret = 190500522;
+			break;
+		}
+
+		if (target->in_watched_list(extern_data->player_id))
+		{
+			ret = 190500156;
+			break;
+		}
+
+		player->del_item(item_id, item_num, MAGIC_TYPE_FRIEND_TRACK_ENEMY);
+		target->add_watched_list(extern_data->player_id);
+
+		SpecialPlayerPosNotify nty;
+		special_player_pos_notify__init(&nty);
+		struct position *pos = target->get_pos();
+		nty.scene_id = target->data->scene_id;
+		nty.uuid = target->data->player_id;
+		nty.pos_x = pos->pos_x;
+		nty.pos_z = pos->pos_z;
+		fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_SPECIAL_PLAYER_POS_NOTIFY, special_player_pos_notify__pack, nty);
+
+		for (int i = 0; i < MAX_FRIEND_ENEMY_NUM; ++i)
+		{
+			if (player->data->friend_enemies[i].player_id == target_id)
+			{
+				player->data->friend_enemies[i].track_time = req->track_time;
+				break;
+			}
+		}
+	} while(0);
+
+	FRIEND_TRACK_ANSWER *res = (FRIEND_TRACK_ANSWER *)get_send_data();
+	uint32_t data_len = sizeof(FRIEND_TRACK_ANSWER);
+	memset(res, 0, data_len);
+	res->result = ret;
+	res->target_id = req->target_id;
+	fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_FRIEND_TRACK_ENEMY_ANSWER, data_len, 0);
+
+	return 0;
+}
+
+//好友服同步仇人信息
+static int handle_friend_sync_enemy(player_struct *player, EXTERN_DATA *extern_data)
+{
+	LOG_INFO("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
 	}
+
+	PROTO_FRIEND_SYNC_ENEMY *head = (PROTO_FRIEND_SYNC_ENEMY*)get_data();
+	memcpy(player->data->friend_enemies, head->enemies, sizeof(player->data->friend_enemies));
+
+	uint32_t now = time_helper::get_cached_time() / 1000;
+	for (int i = 0; i < MAX_FRIEND_ENEMY_NUM; ++i)
+	{
+		if (player->data->friend_enemies[i].player_id == 0)
+		{
+			break;
+		}
+
+		if (player->data->friend_enemies[i].track_time <= now)
+		{
+
+		}
+		else
+		{
+			player_struct *target = player_manager::get_player_by_id(player->data->friend_enemies[i].player_id);
+			if (target && !target->in_watched_list(extern_data->player_id))
+			{
+				target->add_watched_list(extern_data->player_id);
+
+				SpecialPlayerPosNotify nty;
+				special_player_pos_notify__init(&nty);
+				struct position *pos = target->get_pos();
+				nty.scene_id = target->data->scene_id;
+				nty.uuid = target->data->player_id;
+				nty.pos_x = pos->pos_x;
+				nty.pos_z = pos->pos_z;
+				fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_SPECIAL_PLAYER_POS_NOTIFY, special_player_pos_notify__pack, nty);
+			}
+		}
+	}
+
 	return 0;
 }
 
@@ -19612,6 +19772,29 @@ static int handle_continue_raid_ai_request(player_struct *player, EXTERN_DATA *e
 	{
 		LOG_ERR("[%s:%d] raid == NULL or raid->data == NULL", __FUNCTION__, __LINE__);
 		return -3;
+	}
+	//组队副本,得是队长才行
+	struct DungeonTable *r_config = get_config_by_id(raid->data->ID, &all_raid_config);
+	if(r_config == NULL)
+	{
+		LOG_ERR("[%s:%d]获取副本配置失败raid_id[%u]", __FUNCTION__, __LINE__, raid->data->ID);
+		return -4;
+	}
+	if(r_config->DengeonType == 1)
+	{
+		if (!player->m_team)
+		{
+			LOG_ERR("%s %d: player[%lu] raid[%u] do not have team", __FUNCTION__, __LINE__, player->get_uuid(), raid->data->ID);
+			return -5;
+		}
+		
+		//是否是队长
+		if (player->get_uuid() != player->m_team->GetLeadId())
+		{
+			LOG_DEBUG("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, player->get_uuid(), raid->data->ID);
+			return -6;
+		}
+	
 	}
 
 	raid->data->raid_ai_event = type;
@@ -23208,6 +23391,88 @@ static int handle_activitysrv_reward_request(player_struct *player, EXTERN_DATA 
 	return handle_srv_reward_request(player, extern_data, SERVER_PROTO_ACTIVITYSRV_REWARD_ANSWER);
 }
 
+//货币兑换
+int handle_player_money_exchange_request(player_struct* player, EXTERN_DATA* extern_data)
+{
+	if(!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	PlayerMoneyExchangeRequest* req = player_money_exchange_request__unpack(NULL, get_data_len(), (uint8_t*)get_data());
+	if(req == NULL)
+	{
+		LOG_ERR("[%s:%d] player money exchange request unpack faild", __FUNCTION__,__LINE__);
+		return -2;
+	}
+	uint32_t change_type = req->type;
+	uint32_t change_num  = req->num;
+	player_money_exchange_request__free_unpacked(req, NULL);
+
+
+	uint32_t level = player->get_level();
+	uint64_t id = 1041*100000 + level;
+	ActorLevelTable *level_config = get_config_by_id(id, &actor_level_config);
+	if(level_config == NULL)
+	{
+		LOG_INFO("[%s:%d]货币兑换，获取ActorLevelTable等级配置失败id[%lu]", __FUNCTION__, __LINE__, id);
+		return -3;
+	}
+	uint32_t quelv_coin = level_config->QueLvCoin / 100; //银票系数
+
+	int ret = 0;
+	switch(change_type)
+	{
+		case MONET_EXCHANG_TYPE__YUANBAO_CHANGE_YINBI:
+		{
+			uint32_t add_silver_num = change_num * sg_money_exchange_get_yinbi_num;
+			if(player->data->attrData[PLAYER_ATTR_SILVER] + add_silver_num > (uint32_t)MAX_MONEY_VALUE)
+			{
+				ret = 190500523;
+				break;
+			}
+			if(player->sub_unbind_gold(change_num, MAGIC_TYPE_MONEY_EXCHANGE_USE) !=0)
+			{
+				ret = 190500525; //元宝数量不足
+				break;
+			}
+			player->add_silver(add_silver_num, MAGIC_TYPE_MONEY_EXCHANGE_ADD);
+		}
+			break;
+		case MONET_EXCHANG_TYPE__YINBI_CHANGE_YINPIAO:
+		{
+			uint32_t add_coin_num = change_num * sg_money_exchange_get_yinpiao_num * quelv_coin;
+			if(player->data->attrData[PLAYER_ATTR_COIN] + add_coin_num > (uint32_t)MAX_MONEY_VALUE)
+			{
+				ret = 190500523;
+				break;
+			}
+			if(player->sub_silver(change_num, MAGIC_TYPE_MONEY_EXCHANGE_USE) != 0)
+			{
+				ret = 190500524; //银币数量不足
+				break;
+			}
+			player->add_coin(add_coin_num, MAGIC_TYPE_MONEY_EXCHANGE_ADD);
+		
+		}
+			break;
+		default:
+		{
+			LOG_ERR("[%s:%d] 货币兑换类型错误,type[%u]", __FUNCTION__, __LINE__, change_type);
+			return -3;
+		}
+		
+	}
+
+	CommAnswer answer;
+	comm_answer__init(&answer);
+
+	answer.result = ret;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MONEY_EXCHANGE_ANSWER, comm_answer__pack, answer);
+	return 0;
+}
+
 void install_msg_handle()
 {
 	add_msg_handle(MSG_ID_MOVE_REQUEST, handle_move_request);
@@ -23398,6 +23663,8 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_TRANSFER_FAR_TEAM_MEMBER_REQUEST, handle_transfer_far_team_member_request);
 	add_msg_handle(MSG_ID_TEAM_RAID_READY_REQUEST, handle_team_raid_ready_request);
 	add_msg_handle(MSG_ID_TEAM_RAID_CANCEL_REQUEST, handle_team_raid_cancel_request);
+	add_msg_handle(MSG_ID_GET_RAID_MONSTER_POS_REQUEST, handle_get_raid_monster_pos_request);	
+	
 
 	add_msg_handle(MSG_ID_EQUIP_LIST_REQUEST, handle_equip_list_request);
 	add_msg_handle(MSG_ID_EQUIP_STAR_UP_REQUEST, handle_equip_star_up_request);
@@ -23490,7 +23757,8 @@ void install_msg_handle()
 	add_msg_handle(SERVER_PROTO_FRIEND_ADD_GIFT, handle_friend_add_gift_request);
 	add_msg_handle(SERVER_PROTO_FRIEND_SYNC_FRIEND_NUM, handle_friend_sync_friend_num);
 	add_msg_handle(SERVER_PROTO_FRIEND_SEND_GIFT_SUCCESS, handle_friend_send_gift_success);
-	add_msg_handle(SERVER_PROTO_FRIEND_IS_ENEMY_ANSWER, handle_friend_is_enemy_answer);
+	add_msg_handle(SERVER_PROTO_FRIEND_TRACK_ENEMY_REQUEST, handle_friend_track_enemy_request);
+	add_msg_handle(SERVER_PROTO_FRIEND_SYNC_ENEMY, handle_friend_sync_enemy);
 
 	add_msg_handle(MSG_ID_AUTO_ADD_HP_SET_REQUEST, handle_auto_add_hp_set_request);
 
@@ -23587,6 +23855,8 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_CIFU_RECEIVE_REWARD_REQUEST, handle_receive_ci_fu_reward_request);
 
 	add_msg_handle(SERVER_PROTO_ACTIVITYSRV_REWARD_REQUEST, handle_activitysrv_reward_request);
+
+	add_msg_handle(MSG_ID_MONEY_EXCHANGE_REQUEST, handle_player_money_exchange_request);
 }
 
 void uninstall_msg_handle()

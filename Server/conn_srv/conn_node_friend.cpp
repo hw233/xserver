@@ -33,8 +33,8 @@ int conn_node_friend::recv_func(evutil_socket_t fd)
 	for (;;) {
 		int ret = get_one_buf();
 		if (ret == 0) {
-			if (transfer_to_client() != 0) {
-				LOG_ERR("%s %d: fd[%d] transfer_to_client failed err = %d", __FUNCTION__, __LINE__, fd, errno);
+			if (dispatch_message() != 0) {
+				LOG_ERR("%s %d: fd[%d] dispatch_message failed err = %d", __FUNCTION__, __LINE__, fd, errno);
 			}
 		}
 		
@@ -48,6 +48,41 @@ int conn_node_friend::recv_func(evutil_socket_t fd)
 		ret = remove_one_buf();
 	}
 	return (0);
+}
+
+int conn_node_friend::dispatch_message()
+{
+	PROTO_HEAD *head = (PROTO_HEAD *)buf_head();
+	uint32_t cmd = ENDION_FUNC_2(head->msg_id);
+#ifdef FLOW_MONITOR
+	add_one_other_server_request_msg(head);
+#endif
+
+	switch (cmd)
+	{
+		case SERVER_PROTO_MAIL_INSERT:
+			return transfer_to_mailsrv();
+		case SERVER_PROTO_BROADCAST:
+			return broadcast_to_client();
+		case SERVER_PROTO_GET_OFFLINE_CACHE_ANSWER:
+		case SERVER_PROTO_FRIEND_EXTEND_CONTACT_ANSWER:
+		case SERVER_PROTO_FRIENDSRV_COST_REQUEST:
+		case SERVER_PROTO_FRIEND_GIFT_COST_REQUEST:
+		case SERVER_PROTO_FRIEND_SYNC_FRIEND_NUM:
+		case SERVER_PROTO_UNDO_COST:
+		case SERVER_PROTO_FRIEND_ADD_GIFT:
+		case SERVER_PROTO_FRIEND_SEND_GIFT_SUCCESS:
+		case SERVER_PROTO_FRIEND_TRACK_ENEMY_REQUEST:
+		case SERVER_PROTO_FRIEND_SYNC_ENEMY:
+			return transfer_to_gameserver();
+		case SERVER_PROTO_FRIEND_TO_GAME:
+			return friend_to_gameserver((PROTO_HEAD *)head->data);
+		case SERVER_PROTO_BROADCAST_ALL:
+			return broadcast_to_all_client();
+		default:
+			return transfer_to_client();
+	}
+	return 0;
 }
 
 int conn_node_friend::friend_to_gameserver(PROTO_HEAD *head)
@@ -162,31 +197,6 @@ int conn_node_friend::transfer_to_client()
 
 	int cmd = ENDION_FUNC_2(head->msg_id);
 
-#ifdef FLOW_MONITOR
-	add_one_other_server_request_msg(head);
-#endif
-
-	switch (cmd)
-	{
-	case SERVER_PROTO_MAIL_INSERT:
-		return transfer_to_mailsrv();
-		case SERVER_PROTO_BROADCAST:
-			return broadcast_to_client();
-		case SERVER_PROTO_GET_OFFLINE_CACHE_ANSWER:
-		case SERVER_PROTO_FRIEND_EXTEND_CONTACT_ANSWER:
-		case SERVER_PROTO_FRIENDSRV_COST_REQUEST:
-		case SERVER_PROTO_FRIEND_GIFT_COST_REQUEST:
-		case SERVER_PROTO_FRIEND_SYNC_FRIEND_NUM:
-		case SERVER_PROTO_UNDO_COST:
-		case SERVER_PROTO_FRIEND_ADD_GIFT:
-		case SERVER_PROTO_FRIEND_SEND_GIFT_SUCCESS:
-		case SERVER_PROTO_FRIEND_IS_ENEMY_ANSWER:
-			return transfer_to_gameserver();
-		case SERVER_PROTO_FRIEND_TO_GAME:
-			return friend_to_gameserver((PROTO_HEAD *)head->data);
-		case SERVER_PROTO_BROADCAST_ALL:
-			return broadcast_to_all_client();
-	}
 
 	extern_data = get_extern_data(head);
 	LOG_DEBUG("[%s:%d]: Send Cmd To client, [%lu], cmd: %d", __FUNCTION__, __LINE__, extern_data->player_id, cmd);

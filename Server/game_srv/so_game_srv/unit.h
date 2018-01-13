@@ -118,6 +118,7 @@ public:
 	bool is_in_buff3();
 	void clear_type3_buff();
 	void clear_god_buff();
+	bool has_buff(uint32_t buff_id);
 	
 	void delete_state_buff(int state);
 	int get_free_buff_pos();
@@ -132,6 +133,7 @@ public:
 	int clear_debuff();
 	int clear_control_buff();
 	bool add_watched_list(uint64_t player_id);
+	void del_watched_list(uint64_t player_id);
 	bool in_watched_list(uint64_t player_id);
 	void clear_watched_list();
 	
@@ -176,9 +178,9 @@ protected:
 	bool check_fight_type(unit_struct *player, bool bfriend);	
 	unit_struct *get_taunt_target();
 	void calculate_buff_fight_attr(bool isNty);	
-	buff_struct *try_cover_duplicate_item_buff(struct BuffTable *buff_config, uint32_t *old_id);
+//	buff_struct *try_cover_duplicate_item_buff(struct BuffTable *buff_config, uint32_t *old_id);
 	buff_struct *try_cover_duplicate_skill_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack, uint32_t *old_id);
-	buff_struct *try_cover_duplicate_type3_buff(struct BuffTable *buff_config, uint32_t *old_id);
+//	buff_struct *try_cover_duplicate_type3_buff(struct BuffTable *buff_config, uint32_t *old_id);
 
 	bool pos_changed;   //坐标是否变化过，如果变化过，就发送给下面的监视列表
 	std::list<uint64_t> watched_player_id; //位置信息的变化要通知这些人，没放在共享内存，重启后就清空了

@@ -3,6 +3,7 @@
 #include "game_event.h"
 #include "uuid.h"
 #include "zhenying_battle.h"
+#include "../proto/zhenying.pb-c.h"
 
 // std::map<uint64_t, zhenying_raid_struct *> zhenying_raid_manager::zhenying_raid_manager_all_raid_id;
 // std::list<zhenying_raid_struct *> zhenying_raid_manager::zhenying_raid_manager_raid_free_list;
@@ -82,7 +83,7 @@ void zhenying_raid_manager::delete_zhenying_raid(zhenying_raid_struct *p)
 	}
 }
 
-zhenying_raid_struct *zhenying_raid_manager::get_avaliable_zhenying_raid(uint32_t raid_id)
+zhenying_raid_struct *zhenying_raid_manager::get_avaliable_zhenying_raid(uint32_t raid_id, player_struct *player)
 {
 	for (std::set<zhenying_raid_struct *>::iterator iter = zhenying_raid_manager_raid_used_list.begin(); iter != zhenying_raid_manager_raid_used_list.end(); ++iter)
 	{
@@ -98,7 +99,15 @@ zhenying_raid_struct *zhenying_raid_manager::get_avaliable_zhenying_raid(uint32_
 		}
 	}
 	LOG_DEBUG("[%s:%d] not find %d", __FUNCTION__, __LINE__, raid_id);
-	return create_zhenying_raid(ZHENYING_RAID_ID);	
+	//std::vector<struct FactionBattleTable*>::iterator it = zhenying_battle_config.begin();
+	//for (; it != zhenying_battle_config.end(); ++it)
+	//{
+	//	if (player->get_attr(PLAYER_ATTR_LEVEL) >= (*it)->LowerLimitLv && player->get_attr(PLAYER_ATTR_LEVEL) <= (*it)->UpperLimitLv)
+	//	{
+	//		return create_zhenying_raid(ZHENYING_RAID_ID, (*it)->LowerLimitLv);
+	//	}
+	//}
+	return NULL;
 }
 
 unsigned int zhenying_raid_manager::get_zhenying_raid_pool_max_num()
@@ -207,11 +216,11 @@ zhenying_raid_struct *zhenying_raid_manager::add_player_to_zhenying_raid(player_
 	{
 		return NULL;
 	}
-	zhenying_raid_struct *ret = get_avaliable_zhenying_raid(table->Map);
+	zhenying_raid_struct *ret = get_avaliable_zhenying_raid(table->Map, player);
 	if (ret)
 	{
-		ret->data->ai_data.zhenying_data.camp = GetOpenZhenyingDaily();
-		ret->data->ai_data.zhenying_data.lv = player->get_attr(PLAYER_ATTR_LEVEL);
+		//ret->data->ai_data.zhenying_data.camp = GetOpenZhenyingDaily();
+		//ret->data->ai_data.zhenying_data.lv = table->LowerLimitLv;
 		if (ret->add_player_to_zhenying_raid(player) != 0)
 			return NULL;
 	}
@@ -241,13 +250,16 @@ zhenying_raid_struct *zhenying_raid_manager::get_zhenying_raid_by_line(uint32_t 
 	return NULL;
 }
 
-zhenying_raid_struct *zhenying_raid_manager::create_zhenying_raid(uint32_t raid_id)
+zhenying_raid_struct *zhenying_raid_manager::create_zhenying_raid(uint32_t raid_id, uint32_t lv)
 {
 	zhenying_raid_struct *ret = alloc_zhenying_raid();
 	if (!ret)
 		return NULL;
 	ret->data->uuid = alloc_raid_uuid();
 	ret->m_id = raid_id;
+	ret->data->ai_data.zhenying_data.camp = GetOpenZhenyingDaily();
+	ret->data->ai_data.zhenying_data.lv = lv;
+	ret->data->ai_data.zhenying_data.progress = DAILY__MINE_STATE_REST;
 	ret->init_raid(NULL);
 
 	add_zhenying_raid(ret);
@@ -299,11 +311,11 @@ void zhenying_raid_manager::create_all_line()
 	{
 		for (int i = 1; i <= MAX_BATTLE_LINE_NUM; ++i)
 		{
-			zhenying_raid_struct *raid = zhenying_raid_manager::create_zhenying_raid((*it)->Map);
+			zhenying_raid_struct *raid = zhenying_raid_manager::create_zhenying_raid((*it)->Map, (*it)->LowerLimitLv);
 			raid->set_line_num(i);
-			raid->data->ai_data.zhenying_data.progress = 4;
-			raid->data->ai_data.zhenying_data.camp = GetOpenZhenyingDaily();
-			raid->data->ai_data.zhenying_data.lv = (*it)->LowerLimitLv;
+			//raid->data->ai_data.zhenying_data.progress = 4;
+			//raid->data->ai_data.zhenying_data.camp = GetOpenZhenyingDaily();
+			//raid->data->ai_data.zhenying_data.lv = (*it)->LowerLimitLv;
 			//LOG_DEBUG("%s: %s", __FUNCTION__, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		}
 	}

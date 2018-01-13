@@ -191,51 +191,57 @@ int raid_manager::check_player_enter_raid(player_struct *player, uint32_t raid_i
 	}
 
 		//检查时间
-	if (control_config->n_OpenDay > 0)
+	if (!control_is_open(control_config, time_helper::get_cached_time() / 1000))
 	{
-		bool pass = false;
-		uint32_t week = time_helper::getWeek(time_helper::get_cached_time() / 1000);
-		for (size_t i = 0; i < control_config->n_OpenDay; ++i)
-		{
-			if (week == control_config->OpenDay[i])
-			{
-				pass = true;
-				break;
-			}
-		}
-		if (pass == false)
-		{
-			LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, player->get_uuid(), raid_id);
-			send_enter_raid_fail(player, 8, 0, NULL, 0);
-			return (-20);
-		}
+		LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, player->get_uuid(), raid_id);
+		send_enter_raid_fail(player, 8, 0, NULL, 0);
+		return (-20);
 	}
-	assert(control_config->n_OpenTime == control_config->n_CloseTime);
-	if (control_config->n_OpenTime > 0)
-	{
-		bool pass = false;
-
-		uint32_t now = time_helper::get_cached_time() / 1000;
-
-		for (size_t i = 0; i < control_config->n_OpenTime; ++i)
-		{
-			uint32_t start = time_helper::get_timestamp_by_day(control_config->OpenTime[i] / 100,
-				control_config->OpenTime[i] % 100, now);
-			uint32_t end = time_helper::get_timestamp_by_day(control_config->CloseTime[i] / 100,
-				control_config->CloseTime[i] % 100, now);
-			if (now >= start && now <= end)
-			{
-				pass = true;
-				break;
-			}
-		}
-		if (pass == false)
-		{
-			LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, player->get_uuid(), raid_id);
-			send_enter_raid_fail(player, 8, 0, NULL, 0);
-			return (-20);
-		}
-	}
+//	if (control_config->n_OpenDay > 0)
+//	{
+//		bool pass = false;
+//		uint32_t week = time_helper::getWeek(time_helper::get_cached_time() / 1000);
+//		for (size_t i = 0; i < control_config->n_OpenDay; ++i)
+//		{
+//			if (week == control_config->OpenDay[i])
+//			{
+//				pass = true;
+//				break;
+//			}
+//		}
+//		if (pass == false)
+//		{
+//			LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, player->get_uuid(), raid_id);
+//			send_enter_raid_fail(player, 8, 0, NULL, 0);
+//			return (-20);
+//		}
+//	}
+//	assert(control_config->n_OpenTime == control_config->n_CloseTime);
+//	if (control_config->n_OpenTime > 0)
+//	{
+//		bool pass = false;
+//
+//		uint32_t now = time_helper::get_cached_time() / 1000;
+//
+//		for (size_t i = 0; i < control_config->n_OpenTime; ++i)
+//		{
+//			uint32_t start = time_helper::get_timestamp_by_day(control_config->OpenTime[i] / 100,
+//				control_config->OpenTime[i] % 100, now);
+//			uint32_t end = time_helper::get_timestamp_by_day(control_config->CloseTime[i] / 100,
+//				control_config->CloseTime[i] % 100, now);
+//			if (now >= start && now <= end)
+//			{
+//				pass = true;
+//				break;
+//			}
+//		}
+//		if (pass == false)
+//		{
+//			LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, player->get_uuid(), raid_id);
+//			send_enter_raid_fail(player, 8, 0, NULL, 0);
+//			return (-20);
+//		}
+//	}
 
 	
 		//个人副本通过

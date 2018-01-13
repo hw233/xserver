@@ -54,6 +54,7 @@
 #define MAX_PERSONALITY_VOICE_INTRO_LEN 200
 #define MAX_FRIEND_RECOMMEND_PLAYER    1000
 #define MAX_FRIEND_CONTACT_NUM      200 //我的好友最大数
+#define MAX_FRIEND_ENEMY_NUM        200 //仇人最大数
 
 #define MAX_PLAYER_BASE_ATTR_NUM 10
 #define MAX_RAID_TEAM_NUM  4
@@ -309,6 +310,7 @@ enum TaskType
 	TT_CASH_TRUCK = 10, //押镖
 	TT_GUILD_BUILD = 12, //帮会建设
 	TT_TRAVEL = 13, //游历
+	TT_GUIDE = 14, //引导
 };
 
 enum TaskEventClass
@@ -337,6 +339,7 @@ enum TaskEventType
 	TET_PLANES_ADD_NPC = 35, //刷新位面NPC
 	TET_PLANES_DEL_NPC = 36, //删除位面NPC
 	TET_PLANES_EXIT = 37, //退出位面
+	TET_SUB_CURRENCY = 38, //扣除货币
 };
 
 enum TaskRewardType

@@ -18,7 +18,10 @@ local CampDefenseTable = {
 		['MineralIntegral1'] = {2,4,8},	--守方采集得分
 		['MineralIntegral2'] = {1,2,4},	--攻方采集得分
 		['MiningLimit1'] = 20,	--守方挖矿次数上限
-		['MiningLimit2'] = 10	--攻方挖矿次数上限
+		['MiningLimit2'] = 10,	--攻方挖矿次数上限
+		['ProtectMonsterID'] = {151104001,151104002},	--矿车护送怪
+		['ProtectMonsterNum'] = {4,1},	--矿车护送怪
+		['ProtectBuff'] = 114430001	--无敌BUFF
 		},
 	[360600002] = {
 		['ID'] = 360600002,
@@ -39,7 +42,10 @@ local CampDefenseTable = {
 		['MineralIntegral1'] = {2,4,8},
 		['MineralIntegral2'] = {1,2,4},
 		['MiningLimit1'] = 20,
-		['MiningLimit2'] = 10
+		['MiningLimit2'] = 10,
+		['ProtectMonsterID'] = {151104003,151104004},
+		['ProtectMonsterNum'] = {4,1},
+		['ProtectBuff'] = 114430001
 		}
 	}
 return CampDefenseTable

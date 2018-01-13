@@ -12,6 +12,8 @@
 #include "time_helper.h"
 #include "lua_config.h"
 #include "zhenying_raid_manager.h"
+#include "monster_manager.h"
+#include "buff_manager.h"
 
 //uint32_t Collect::collect_manager_s_id = 1;
 //Collect::COLLECT_MAP Collect::collect_manager_s_collectContain;
@@ -339,17 +341,13 @@ int Collect::BegingGather(player_struct *player, uint32_t step)
 		return 7;
 	}
 
-	if (it->second->CollectionTeyp == 1)
+	if (it->second->DropType == 1)
 	{
-		m_dropId = it->second->DropID[0];
-	}
-	else
-	{
-		if (step >= it->second->n_DropID)
+		if (step >= it->second->n_Drop1)
 		{
 			return 6;
 		}
-		m_dropId = it->second->DropID[step];
+		m_dropId = it->second->Drop1[step];
 	}
 	std::map<uint32_t, uint32_t> item_list;
 	get_drop_item(m_dropId, item_list);
@@ -359,15 +357,28 @@ int Collect::BegingGather(player_struct *player, uint32_t step)
 	}
 
 		//阵营战的宝箱限制采集次数
-	//if (player->data->zhenying.mine < 1 && player->scene->is_in_zhenying_raid())
-	//{
-	//	std::vector<struct FactionBattleTable*>::iterator it = zhenying_battle_config.begin();
-	//	FactionBattleTable *table = *it;
-	//	if (m_collectId == table->BoxID)
-	//	{
-	//		return 4;
-	//	}
-	//}
+	if (player->scene->is_in_zhenying_raid())
+	{
+		if (player->data->zhenying.gather > 0)
+		{
+			return 9;
+		}
+		raid_struct *raid = (raid_struct *)player->scene;
+		if (m_minType == 3)
+		{
+			if (player->get_attr(PLAYER_ATTR_ZHENYING) != raid->data->ai_data.zhenying_data.camp % 10)
+			{
+				return 8;
+			}
+		} 
+		else
+		{
+			if (player->get_attr(PLAYER_ATTR_ZHENYING) == raid->data->ai_data.zhenying_data.camp % 10)
+			{
+				return 4;
+			}
+		}
+	}
 	
 	if (it->second->ConsumeTeyp == 2) //道具
 	{
@@ -418,54 +429,73 @@ int Collect::GatherComplete(player_struct *player)
 	send.collectid = m_uuid;
 	send.del = true;
 
-	int ret = 0;
-	if (m_commpleteTime <= time_helper::get_cached_time() / 1000 && m_state == COLLECT_GATHING)
+
+	if (m_commpleteTime > time_helper::get_cached_time() / 1000 && m_state == COLLECT_GATHING)
 	{
-		m_gatherPlayer = 0; 
-		SightChangedNotify notify;
-		sight_changed_notify__init(&notify);
-		notify.n_delete_collect = 1;
-		uint32_t ar[1];
-		ar[0] = m_uuid;
-		notify.delete_collect = ar;
-		if (it->second->Regeneration > 0)
+		return 190500093;
+	}
+	m_gatherPlayer = 0;
+	SightChangedNotify notify;
+	sight_changed_notify__init(&notify);
+	notify.n_delete_collect = 1;
+	uint32_t ar[1];
+	ar[0] = m_uuid;
+	notify.delete_collect = ar;
+	if (it->second->Regeneration > 0)
+	{
+		m_state = COLLECT_RELIVE;
+		m_reliveTime = time_helper::get_cached_time() / 1000 + it->second->Regeneration;
+		if (scene != NULL)
 		{
-			m_state = COLLECT_RELIVE;
-			m_reliveTime = time_helper::get_cached_time() / 1000 + it->second->Regeneration;
-			if (scene != NULL)
-			{
-				scene->delete_collect_from_scene(this);
-			}
+			scene->delete_collect_from_scene(this);
 		}
-		else if (it->second->Regeneration == 0)
+	}
+	else if (it->second->Regeneration == 0)
+	{
+		m_state = COLLECT_DESTROY;
+		if (scene != NULL)
 		{
-			m_state = COLLECT_DESTROY;
-			if (scene != NULL)
-			{
-				scene->delete_collect_from_scene(this);
-			}
+			scene->delete_collect_from_scene(this);
+		}
+	}
+	else
+	{
+		m_state = COLLECT_NORMOR;
+		send.del = false;
+	}
+
+	if (area == NULL)
+	{
+		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_COLLECT_COMMPLETE_NOTIFY, collect_complete__pack, send);
+	}
+	else {
+		BroadcastToSight(MSG_ID_COLLECT_COMMPLETE_NOTIFY, &send, (pack_func)notify_collect__pack);
+	}
+
+	return DoGatherDrop(player);
+}
+int Collect::DoGatherDrop(player_struct *player)
+{
+	if (player == NULL)
+	{
+		return 0;
+	}
+	std::map<uint64_t, struct CollectTable *>::iterator it = collect_config.find(m_collectId);
+	if (it == collect_config.end())
+	{
+		return 3;
+	}
+	EXTERN_DATA extern_data;
+	extern_data.player_id = player->get_uuid();
+	if (m_minType != 2 && m_minType != 3) // 2 3是日常阵营镖车无掉落
+	{
+		if (m_ownerLv != 0)
+		{
+			CashTruckDrop(*player);
 		}
 		else
 		{
-			m_state = COLLECT_NORMOR;
-			send.del = false;
-		}
-		
-		if (area == NULL)
-		{
-			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_COLLECT_COMMPLETE_NOTIFY, collect_complete__pack, send);
-		}
-		else {
-			BroadcastToSight(MSG_ID_COLLECT_COMMPLETE_NOTIFY, &send, (pack_func)notify_collect__pack);
-		}
-
-		if (m_minType != 2 && m_minType != 3) // 2 3是日常阵营镖车无掉落
-		{
-			if (m_ownerLv != 0)
-			{
-				CashTruckDrop(*player);
-			}
-			else
+			if (it->second->DropType == 1)
 			{
 				std::map<uint32_t, uint32_t> item_list;
 				get_drop_item(m_dropId, item_list);
@@ -476,7 +506,7 @@ int Collect::GatherComplete(player_struct *player)
 					if (it->second->ConsumeTeyp != 1)
 					{
 						resp.result = 190500406;
-					} 
+					}
 					else
 					{
 						resp.result = 190500442;
@@ -485,19 +515,28 @@ int Collect::GatherComplete(player_struct *player)
 				}
 				player->give_drop_item(m_dropId, MAGIC_TYPE_GATHER, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
 			}
+			else if (it->second->DropType == 2)
+			{
+				for (uint32_t i = 0; i < it->second->n_Drop1; ++i)
+				{
+					for (uint32_t n = 0; n < it->second->Drop2[i]; ++n)
+					{
+						monster_manager::create_monster_at_pos(this->scene, it->second->Drop1[i], player->get_attr(PLAYER_ATTR_LEVEL), m_pos.pos_x + 3 - rand() % 7, m_pos.pos_z + 3 - rand() % 7, 0, NULL, 0);
+					}
+				}
+			}
+			else if (it->second->DropType == 3)
+			{
+				buff_manager::create_default_buff(it->second->Drop1[0], player, player, true);
+			}
 		}
-		
-		if (m_minType == 1)
-		{
-			fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);
-		}
-	}
-	else
-	{
-		ret = 190500093;
 	}
 
-	return ret;
+	if (m_minType == 1)
+	{
+		fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_XUNBAO_USE_NEXT_NOTIFY, 0, 0);
+	}
+	return 0;
 }
 
 int Collect::GatherInterupt(player_struct *player)

@@ -32,12 +32,12 @@ local EntranceTable = {
 	[600100007] = {
 		['ID'] = 600100007,
 		['Level'] = 0,
-		['Time'] = 0
+		['Time'] = 330400033
 		},
 	[600100008] = {
 		['ID'] = 600100008,
 		['Level'] = 0,
-		['Time'] = 0
+		['Time'] = 330400033
 		}
 	}
 return EntranceTable

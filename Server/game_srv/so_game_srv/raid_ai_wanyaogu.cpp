@@ -115,35 +115,35 @@ static void wanyaogu_end_one_raid(raid_struct *raid, bool fail)
 	}
 }
 
-static void reward_wanyaoka(raid_struct *raid)
-{
-	WanyaokaGetNotify nty;
-	wanyaoka_get_notify__init(&nty);
-	nty.wanyaoka_id = raid->WANYAOGU_DATA.wanyaoka_id;
-	for (uint32_t i = 0; i < MAX_WANYAOKA_EACH_TIME; ++i)
-	{
-		if (raid->WANYAOGU_DATA.wanyaoka_id[i] == 0)
-			break;
-		++nty.n_wanyaoka_id;
-	}
+// static void reward_wanyaoka(raid_struct *raid)
+// {
+// 	WanyaokaGetNotify nty;
+// 	wanyaoka_get_notify__init(&nty);
+// 	nty.wanyaoka_id = raid->WANYAOGU_DATA.wanyaoka_id;
+// 	for (uint32_t i = 0; i < MAX_WANYAOKA_EACH_TIME; ++i)
+// 	{
+// 		if (raid->WANYAOGU_DATA.wanyaoka_id[i] == 0)
+// 			break;
+// 		++nty.n_wanyaoka_id;
+// 	}
 
 	
-	for (int i = 0; i < MAX_TEAM_MEM; ++i)
-	{
-		if (!raid->m_player[i] || !raid->m_player[i]->is_online())
-			continue;
-		uint32_t num = raid->m_player[i]->get_raid_reward_count(raid->data->ID);
-		if (raid->m_control_config->RewardTime <= num)
-			continue;
+// 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
+// 	{
+// 		if (!raid->m_player[i] || !raid->m_player[i]->is_online())
+// 			continue;
+// 		uint32_t num = raid->m_player[i]->get_raid_reward_count(raid->data->ID);
+// 		if (raid->m_control_config->RewardTime <= num)
+// 			continue;
 		
-//		raid->broadcast_to_raid(MSG_ID_WANYAOKA_GET_NOTIFY, &nty, (pack_func)wanyaoka_get_notify__pack);
-		EXTERN_DATA extern_data;
-		extern_data.player_id = raid->m_player[i]->get_uuid();
-		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data,
-			MSG_ID_WANYAOKA_GET_NOTIFY, wanyaoka_get_notify__pack, nty);
-		raid->m_player[i]->add_wanyaoka(nty.wanyaoka_id, nty.n_wanyaoka_id);
-	}
-}
+// //		raid->broadcast_to_raid(MSG_ID_WANYAOKA_GET_NOTIFY, &nty, (pack_func)wanyaoka_get_notify__pack);
+// 		EXTERN_DATA extern_data;
+// 		extern_data.player_id = raid->m_player[i]->get_uuid();
+// 		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data,
+// 			MSG_ID_WANYAOKA_GET_NOTIFY, wanyaoka_get_notify__pack, nty);
+// 		raid->m_player[i]->add_wanyaoka(nty.wanyaoka_id, nty.n_wanyaoka_id);
+// 	}
+// }
 
 static void send_raid_reward(raid_struct *raid, int star)
 {
@@ -167,7 +167,7 @@ static void send_raid_reward(raid_struct *raid, int star)
 	uint32_t item_num[MAX_ITEM_REWARD_PER_RAID];
 	uint32_t gold = 0, exp = 0;
 
-	reward_wanyaoka(raid);
+//	reward_wanyaoka(raid);
 
 	uint32_t drop_id = get_drop_by_lv(raid->lv, star, raid->m_config->n_Rewards, raid->m_config->Rewards,
 		raid->m_config->n_ItemRewardSection, raid->m_config->ItemRewardSection);
@@ -201,8 +201,17 @@ static void send_raid_reward(raid_struct *raid, int star)
 	notify.item_id = &item_id[0];
 	notify.item_num = &item_num[0];
 
-	raid->data->state = RAID_STATE_PASS;
+	notify.wanyaoka_id = raid->WANYAOGU_DATA.wanyaoka_id;
+	int wanyaoka_num = 0;
+	for (uint32_t i = 0; i < MAX_WANYAOKA_EACH_TIME; ++i)
+	{
+		if (raid->WANYAOGU_DATA.wanyaoka_id[i] == 0)
+			break;
+		++wanyaoka_num;
+	}
 
+	raid->data->state = RAID_STATE_PASS;
+	
 	EXTERN_DATA extern_data;
 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
 	{
@@ -215,6 +224,7 @@ static void send_raid_reward(raid_struct *raid, int star)
 		{
 			int _gold = gold;
 			int _exp = exp;
+			notify.n_wanyaoka_id = wanyaoka_num;
 			if (raid->m_config->DynamicLevel)
 			{
 				_gold *= raid->m_player[i]->get_coin_rate();
@@ -231,6 +241,7 @@ static void send_raid_reward(raid_struct *raid, int star)
 			raid->m_player[i]->add_item_list_otherwise_send_mail(item_list, MAGIC_TYPE_RAID, 270200002, NULL, true);
 			raid->m_player[i]->add_raid_reward_count(raid->data->ID);
 			raid->m_player[i]->check_activity_progress(AM_RAID, raid->data->ID);
+			raid->m_player[i]->add_wanyaoka(notify.wanyaoka_id, notify.n_wanyaoka_id);			
 //			raid->m_player[i]->send_raid_earning_time_notify();
 		}
 		else
@@ -238,6 +249,7 @@ static void send_raid_reward(raid_struct *raid, int star)
 			notify.n_item_id = notify.n_item_num = 0;
 			notify.gold = 0;
 			notify.exp = 0;
+			notify.n_wanyaoka_id = 0;
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RAID_FINISHED_NOTIFY, raid_finish_notify__pack, notify);
 		}
 

@@ -1,4 +1,5 @@
 syntax = "proto2";
+import "comm_message.proto";
 
 message enter_raid_request
 {
@@ -38,6 +39,7 @@ message raid_finish_notify
 	required uint32 exp = 6;   //经验
 	repeated uint32 item_id = 7;  //奖励物品ID
 	repeated uint32 item_num = 8;  //奖励物品数量
+ 	repeated uint32 wanyaoka_id = 9;  //获得的万妖卡列表		
 }
 
 message raid_earning_times_changed_notify
@@ -139,3 +141,14 @@ message raid_ai_continue_request
 	required uint64 ai_type = 1; //当前正在进行的副本ai
 }
 
+message get_raid_monster_pos_request
+{
+	required uint32 monster_id = 1;  //怪物ID
+}
+
+message get_raid_monster_pos_answer
+{
+	required uint32 result = 1;  //0表示找到，其他表示怪物不存在
+	required uint32 monster_id = 2;  //怪物ID
+	required pos_data data = 3;	 //坐标
+}

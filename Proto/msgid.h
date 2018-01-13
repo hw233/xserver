@@ -306,6 +306,8 @@
 #define MSG_ID_NPC_TALK_REQUEST 10831                    //告知后台和某个NPC对话了 npc_talk_request
 #define MSG_ID_RAID_AI_CONTINUE_REQUEST 10832            //客户端执行完特定的副本ai请求继续副本   RaidAiContinueRequest
 #define MSG_ID_TRANSFER_TO_LEADER_ANSWER 10833           //传送至队长应答 comm_answer
+#define MSG_ID_GET_RAID_MONSTER_POS_REQUEST 10834           //查找怪物坐标请求 get_raid_monster_pos_request
+#define MSG_ID_GET_RAID_MONSTER_POS_ANSWER 10835           //查找怪物坐标回复  get_raid_monster_pos_answer
 
 //装备
 #define MSG_ID_EQUIP_LIST_REQUEST 10900                //装备信息请求 NULL
@@ -407,7 +409,7 @@
 #define MSG_ID_LIST_WANYAOKA_ANSWER 11401   //获取万妖卡列表 list_wanyaoka_answer
 #define MSG_ID_WANYAOKA_START_NOTIFY 11402  //万妖谷关卡开始通知 wanyaogu_start_notify
 #define MSG_ID_WANYAOKA_BBQ_NOTIFY 11403    //万妖谷关卡火炉挂机通知 wanyaogu_bbq_notify
-#define MSG_ID_WANYAOKA_GET_NOTIFY 11404    //获得万妖卡通知 wanyaoka_get_notify
+//#define MSG_ID_WANYAOKA_GET_NOTIFY 11404    //获得万妖卡通知 wanyaoka_get_notify
 
 //御气道
 #define MSG_ID_YUQIDAO_INFO_REQUEST 11500          //获取御气道信息请求 NULL
@@ -603,6 +605,8 @@
 
 
 //阵营
+#define MSG_ID_GET_ZHENYING_LEADER_REQUEST 12235   //阵营领袖请求 NULL
+#define MSG_ID_GET_ZHENYING_LEADER_ANSWER 12236    //阵营领袖 ZhenyingLeader
 #define MSG_ID_RAND_CHOSE_ZHENYING_REQUEST 12237   //阵营听天由命请求 NULL
 //#define MSG_ID_RAND_CHOSE_ZHENYING_ANSWER 12237    //阵营听天由命应答 AnsChoseZhenying
 #define MSG_ID_GET_ZHENYING_DAYLY_AWARD_REQUEST 12238   //领取阵营每日奖励请求 ZhenyingDailyAward
@@ -741,6 +745,10 @@
 #define MSG_ID_FRIEND_UPDATE_UNIT_NOTIFY 12631         //更新好友通知 FriendUpdateUnitNotify
 #define MSG_ID_FRIEND_CONTACT_EXTEND_NOTIFY 12632      //好友上限扩展通知 NULL
 #define MSG_ID_FRIEND_UPDATE_STATUS_NOTIFY 12633       //更新好友状态通知 FriendUpdateStatusNotify
+#define MSG_ID_FRIEND_TRACK_ENEMY_REQUEST 12634        //追踪仇人请求 FriendOperateRequest
+#define MSG_ID_FRIEND_TRACK_ENEMY_ANSWER 12635         //追踪仇人应答 FriendTrackEnemyAnswer
+#define MSG_ID_FRIEND_AUTO_ACCEPT_APPLY_REQUEST 12636  //设置自动通过申请请求 NULL
+#define MSG_ID_FRIEND_AUTO_ACCEPT_APPLY_ANSWER 12637   //设置自动通过申请应答 FriendAutoAcceptApplyAnswer
 
 //个人信息
 #define MSG_ID_PERSONALITY_INFO_REQUEST 12701         //个人信息请求 NULL
@@ -944,6 +952,11 @@
 
 //帮会入侵活动
 #define MSG_ID_GUILD_RUQIN_REWARD_INFO_NOTIFY 14200  //帮会入侵活动广播奖励信息 GuildRuqinActiveRewardAndRankNotify
+#define MSG_ID_GUILD_BONFIRE_OPEN_REQUEST 14201      //帮会篝火开启请求 NULL
+#define MSG_ID_GUILD_BONFIRE_OPEN_ANSWER 14202       //帮会篝火开启应答 comm_answer
+#define MSG_ID_GUILD_BONFIRE_OPEN_NOTIFY 14203       //帮会篝火开启通知 NULL
+#define MSG_ID_GUILD_BONFIRE_INFO_NOTIFY 14204       //帮会篝火信息通知 GuildBonfireInfoNotify
+#define MSG_ID_GUILD_BONFIRE_CLOSE_NOTIFY 14205      //帮会篝火关闭通知 NULL
 
 //等级奖励
 #define MSG_ID_LEVEL_REWARD_INFO_REQUEST     14300    //等级奖励信息请求
@@ -1008,6 +1021,10 @@
 #define MSG_ID_CIFU_INFO_NOTIFY				   15100 //赐福信息通知 PlayerCifuInfoNotify
 #define MSG_ID_CIFU_RECEIVE_REWARD_REQUEST     15101 //赐福领奖请求 PlayerReceiveCifuRequest
 #define MSG_ID_CIFU_RECEIVE_REWARD_ANSWER      15102 //赐福领奖应答 PlayerReceiveCifuAnswer
+
+//金钱兑换
+#define MSG_ID_MONEY_EXCHANGE_REQUEST          15200 //货币兑换请求 PlayerMoneyExchangeRequest
+#define MSG_ID_MONEY_EXCHANGE_ANSWER           15201 //货币兑换回复 comm_answer
 
 
 #endif

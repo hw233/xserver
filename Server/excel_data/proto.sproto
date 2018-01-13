@@ -287,6 +287,8 @@
 	DeleteType 11 : *integer
 	IsDeBuff 12 : integer
 	IsControl 13 : integer
+	CoverType1 14 : integer
+	BuffLv 15 : integer
 }
 
 .SkillEffectTable {
@@ -372,6 +374,9 @@
 	Parameter2 13 : *integer
 	CollectionSize 14 : double
 	TaskIdShow 15 : *integer
+	DropType 16 : integer
+	Drop1 17 : *integer
+	Drop2 18 : *integer
 }
 
 .TaskTable {
@@ -1544,6 +1549,11 @@
 	TaskID 15 : integer
 	MiningLimit1 16 : integer
 	MiningLimit2 17 : integer
+	DropNum1 18 : integer
+	DropNum2 19 : integer
+	ProtectMonsterID 20 : *integer
+	ProtectMonsterNum 21 : *integer
+	ProtectBuff 22 : integer
 }
 
 .FishingTable {
@@ -1808,5 +1818,15 @@
 	Num0 5 : *integer 
 	DisplayNum0 6 : *integer 
 	Probability0 7 : *integer 
+}
+
+.RandomCollectionTable {
+	ID 1 : integer 
+	RandomType 2 : integer 
+	CollectionID 3 : integer 
+	MapID 4 : integer 
+	PointX 5 : *integer 
+	PointZ 6 : *integer 
+	Num 7 : integer 
 }
 

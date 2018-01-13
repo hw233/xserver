@@ -122,6 +122,8 @@ void ChengJieTaskManage::TaskFail(player_struct *player, player_struct *target)
 	{
 		return;
 	}
+	
+	target->del_watched_list(player->get_uuid());
 
 	SetRoleTarget(player->data->chengjie.target, 0);
 	STChengJie *pTask = FindTask(player->data->chengjie.cur_task);
@@ -177,7 +179,6 @@ void ChengJieTaskManage::TaskExpire(STChengJie &task)
 
 		player->data->chengjie.cur_task = 0;
 		player->data->chengjie.target = 0;
-		player->clear_watched_list();
 
 		ChengjieKiller send;
 		chengjie_killer__init(&send);
@@ -189,6 +190,11 @@ void ChengJieTaskManage::TaskExpire(STChengJie &task)
 	if (aventer != NULL)
 	{
 		ClientGetTaskList(aventer, 3);
+	}
+	player_struct *target = player_manager::get_player_by_id(task.pid);
+	if (target != NULL)
+	{
+		target->del_watched_list(it->second);
 	}
 	
 	ParameterTable * config = get_config_by_id(161000105, &parameter_config);
@@ -229,6 +235,7 @@ void ChengJieTaskManage::CommpleteTask(player_struct *player, player_struct *tar
 	{
 		return;
 	}
+	target->del_watched_list(player->get_uuid());
 
 	EXTERN_DATA ext_data;
 	ext_data.player_id = player->get_uuid();
@@ -734,7 +741,7 @@ int ChengJieTaskManage::CanUseFollowItem(player_struct *player)
 	else
 	{
 		ret = 190500154;
-		if (target->in_watched_list(target->get_uuid()))
+		if (target->in_watched_list(player->get_uuid()))
 		{
 			ret = 190500156;
 		}

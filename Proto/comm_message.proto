@@ -17,6 +17,7 @@ message buff_info
 {
 	required uint32 id = 1;
 	required uint32 start_time = 2;
+	required uint32 lv = 3;
 }
 
 //属性信息

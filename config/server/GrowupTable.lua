@@ -10,7 +10,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,	--条件目标
 		['ConditionNum'] = 1,	--条件值
 		['RewardType'] = {1,2},	--目标奖励类型
-		['RewardValue'] = {50000,20000},	--目标奖励数值
+		['RewardValue'] = {500,2000},	--目标奖励数值
 		['Reward'] = 201070106	--宝箱
 		},
 	[470300002] = {
@@ -24,7 +24,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 15,
 		['RewardType'] = {1},
-		['RewardValue'] = {5000},
+		['RewardValue'] = {500},
 		['Reward'] = 201070106
 		},
 	[470300003] = {
@@ -38,7 +38,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 15,
 		['RewardType'] = {1},
-		['RewardValue'] = {5000},
+		['RewardValue'] = {500},
 		['Reward'] = 201070106
 		},
 	[470300004] = {
@@ -52,7 +52,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 1,
 		['RewardType'] = {1,3},
-		['RewardValue'] = {50000,200},
+		['RewardValue'] = {500,20},
 		['Reward'] = 201070106
 		},
 	[470300005] = {
@@ -66,7 +66,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 1,
 		['RewardType'] = {1,3},
-		['RewardValue'] = {50000,100},
+		['RewardValue'] = {500,10},
 		['Reward'] = 201070106
 		},
 	[470300006] = {
@@ -80,7 +80,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 5,
 		['RewardType'] = {1,3},
-		['RewardValue'] = {50000,500},
+		['RewardValue'] = {500,50},
 		['Reward'] = 201070106
 		},
 	[470300007] = {
@@ -94,7 +94,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 5,
 		['RewardType'] = {1,2},
-		['RewardValue'] = {50000,20000},
+		['RewardValue'] = {500,2000},
 		['Reward'] = 201070106
 		},
 	[470300008] = {
@@ -108,7 +108,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 1,
 		['RewardType'] = {1,2},
-		['RewardValue'] = {100000,40000},
+		['RewardValue'] = {1000,4000},
 		['Reward'] = 201070107
 		},
 	[470300009] = {
@@ -122,7 +122,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 2,
 		['RewardType'] = {3},
-		['RewardValue'] = {100},
+		['RewardValue'] = {10},
 		['Reward'] = 201070107
 		},
 	[470300010] = {
@@ -136,7 +136,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 3,
 		['RewardType'] = {3},
-		['RewardValue'] = {100},
+		['RewardValue'] = {10},
 		['Reward'] = 201070107
 		},
 	[470300011] = {
@@ -150,7 +150,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 1,
 		['RewardType'] = {1,2},
-		['RewardValue'] = {150000,60000},
+		['RewardValue'] = {1500,6000},
 		['Reward'] = 201070108
 		},
 	[470300012] = {
@@ -164,7 +164,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 10,
 		['RewardType'] = {3},
-		['RewardValue'] = {100},
+		['RewardValue'] = {10},
 		['Reward'] = 201070108
 		},
 	[470300013] = {
@@ -178,7 +178,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 2,
 		['RewardType'] = {3},
-		['RewardValue'] = {100},
+		['RewardValue'] = {10},
 		['Reward'] = 201070108
 		},
 	[470300014] = {
@@ -192,7 +192,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 1,
 		['RewardType'] = {1,2},
-		['RewardValue'] = {200000,80000},
+		['RewardValue'] = {2000,8000},
 		['Reward'] = 201070109
 		},
 	[470300015] = {
@@ -206,7 +206,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 10,
 		['RewardType'] = {3},
-		['RewardValue'] = {100},
+		['RewardValue'] = {10},
 		['Reward'] = 201070109
 		},
 	[470300016] = {
@@ -220,7 +220,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 10,
 		['RewardType'] = {3},
-		['RewardValue'] = {100},
+		['RewardValue'] = {10},
 		['Reward'] = 201070109
 		},
 	[470300017] = {
@@ -234,7 +234,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 1,
 		['ConditionNum'] = 2,
 		['RewardType'] = {3},
-		['RewardValue'] = {100},
+		['RewardValue'] = {10},
 		['Reward'] = 201070109
 		},
 	[470300018] = {
@@ -248,7 +248,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 1,
 		['RewardType'] = {1,2,3},
-		['RewardValue'] = {2000,1000,400},
+		['RewardValue'] = {2000,1000,40},
 		['Reward'] = 201070106
 		},
 	[470300019] = {
@@ -262,7 +262,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 1,
 		['RewardType'] = {1,2,3},
-		['RewardValue'] = {2000,1000,400},
+		['RewardValue'] = {2000,1000,40},
 		['Reward'] = 201070106
 		},
 	[470300020] = {
@@ -276,7 +276,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 1,
 		['RewardType'] = {1,2,3},
-		['RewardValue'] = {2000,1000,400},
+		['RewardValue'] = {2000,1000,40},
 		['Reward'] = 201070106
 		},
 	[470300021] = {
@@ -290,7 +290,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 1,
 		['RewardType'] = {1,2,3},
-		['RewardValue'] = {2000,1000,400},
+		['RewardValue'] = {2000,1000,40},
 		['Reward'] = 201070107
 		},
 	[470300022] = {
@@ -304,7 +304,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 1,
 		['RewardType'] = {1,2,3},
-		['RewardValue'] = {2000,1000,400},
+		['RewardValue'] = {2000,1000,40},
 		['Reward'] = 201070107
 		},
 	[470300023] = {
@@ -318,7 +318,7 @@ local GrowupTable = {
 		['ConditionTarget2'] = 0,
 		['ConditionNum'] = 1,
 		['RewardType'] = {1,2,3},
-		['RewardValue'] = {2000,1000,400},
+		['RewardValue'] = {2000,1000,40},
 		['Reward'] = 201070107
 		}
 	}

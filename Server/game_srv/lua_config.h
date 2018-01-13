@@ -168,6 +168,7 @@ extern std::map<uint64_t, struct P20076Table*> tower_level_config; //冲塔表
 extern std::map<uint64_t, struct LoginGifts*> login_gifts_config; //登录奖励表
 extern std::map<uint64_t, struct CiFuTable*> ci_fu_config; //赐福奖励表
 extern std::map<uint64_t, struct RandomBox*> random_box_config; //随机宝箱表
+extern std::map<uint64_t, struct RandomCollectionTable*> random_collect_config; //随机采集点表
 
 
 //////////////////
@@ -450,5 +451,7 @@ extern uint32_t sg_login_reward_chixu_day;  //登录奖励持续天数
 extern uint32_t sg_new_battle_point;  //新手阵营战占旗加积分
 
 extern uint32_t sg_strong_function_time;
+extern uint32_t sg_money_exchange_get_yinbi_num;     //货币兑换获取银币基础系数
+extern uint32_t sg_money_exchange_get_yinpiao_num;   //货币兑换获取银票基础系数
 
 #endif /* __LUA_CONFIG_H__ */

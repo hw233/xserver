@@ -66,6 +66,9 @@ private:
 	void handle_friend_recommend_request();
 	void handle_friend_send_gift_request();
 	void handle_friend_gift_cost_answer();
+	void handle_friend_track_enemy_request();
+	void handle_friend_track_enemy_answer();
+	void handle_friend_auto_accept_apply_request();
 
 	void handle_friend_chat_request(); //好友频道聊天
 	void handle_player_online_notify(); //玩家上线
@@ -75,7 +78,6 @@ private:
 	void handle_friend_cost_answer(); //去game_srv扣除消耗结果
 	void handle_friend_turn_switch_request(); //翻转好友申请开关
 	void handle_friend_rename_request(); //玩家改名
-	void handle_friend_is_enemy_request(); //检查所杀玩家是否仇人
 };
 
 

@@ -5,8 +5,8 @@ local ActorLevelTable = {
 		['ActorLvAttri'] = 102001001,	--角色等级属性
 		['FreeGrid'] = 50,	--免费背包格子数
 		['LockGrid'] = 50,	--可解锁格子数
-		['QueLvCoin'] = 100,	--银币奖励答题等级系数
-		['QueLvExp'] = 2400	--经验奖励答题等级系数
+		['QueLvCoin'] = 100,	--银票 - 等级系数
+		['QueLvExp'] = 2400	--经验 - 等级系数
 		},
 	[104100002] = {
 		['ID'] = 104100002,

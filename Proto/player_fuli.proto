@@ -184,3 +184,17 @@ message PlayerReceiveCifuAnswer
 	required uint32 result = 1; //结果 0:成功 其余失败
 	repeated PlayerCifuMainInfo info = 2;//更新信息
 }
+
+//元宝换银币 银币换银票请求
+message PlayerMoneyExchangeRequest
+{
+	required uint32 type = 1; // 0:元宝换银币 1:银币换银票
+	required uint32 num = 2;  // 换取消耗数量(消耗的元宝 或 银币数量)
+}
+
+//货币兑换类型
+enum MonetExchangType
+{
+	YUANBAO_CHANGE_YINBI = 0; //元宝换银币
+	YINBI_CHANGE_YINPIAO = 1; //银币换银票
+}

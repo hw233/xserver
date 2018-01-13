@@ -31,7 +31,7 @@
 
 extern int pack_player_online(player_struct *player, EXTERN_DATA *extern_data, bool load_db, bool reconnect);
 extern void answer_friend_search(EXTERN_DATA *extern_data, int result, player_struct *target, uint32_t logout_time);
-extern void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *target);
+extern void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *target, uint32_t status);
 extern void notify_server_level_info(player_struct *player, EXTERN_DATA *extern_data);
 extern void notify_server_level_break(player_struct *player, EXTERN_DATA *extern_data);
 
@@ -375,7 +375,7 @@ static int handle_get_other_info_answer(EXTERN_DATA *extern_data)
 		}
 	} while(0);
 
-	answer_get_other_info(extern_data, ret, target);
+	answer_get_other_info(extern_data, ret, target, 0);
 
 	if (target)
 	{

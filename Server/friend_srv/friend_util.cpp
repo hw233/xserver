@@ -85,6 +85,8 @@ static int pack_friend_player(FriendPlayer *player, uint8_t *out_data)
 	RedisFriendUnit *contact_point[MAX_FRIEND_CONTACT_NUM];
 	RedisFriendUnit block_data[MAX_FRIEND_BLOCK_NUM];
 	RedisFriendUnit *block_point[MAX_FRIEND_BLOCK_NUM];
+	RedisEnemyUnit  enemy_data[MAX_FRIEND_ENEMY_NUM];
+	RedisEnemyUnit* enemy_point[MAX_FRIEND_ENEMY_NUM];
 	RedisFriendGroup group_data[MAX_FRIEND_GROUP_NUM];
 	RedisFriendGroup *group_point[MAX_FRIEND_GROUP_NUM];
 
@@ -136,13 +138,18 @@ static int pack_friend_player(FriendPlayer *player, uint8_t *out_data)
 		db_player->n_blocks++;
 	}
 	db_player->n_enemies = 0;
-	db_player->enemies = &player->enemies[0];
+	db_player->enemies = enemy_point;
 	for (int i = 0; i < MAX_FRIEND_ENEMY_NUM; ++i)
 	{
-		if (player->enemies[i] == 0)
+		if (player->enemies[i].player_id == 0)
 		{
 			break;
 		}
+		
+		enemy_point[db_player->n_enemies] = &enemy_data[db_player->n_enemies];
+		redis_enemy_unit__init(&enemy_data[db_player->n_enemies]);
+		enemy_data[db_player->n_enemies].player_id = player->enemies[i].player_id;
+		enemy_data[db_player->n_enemies].track_time = player->enemies[i].track_time;
 		db_player->n_enemies++;
 	}
 	db_player->n_applys= 0;
@@ -173,6 +180,7 @@ static int pack_friend_player(FriendPlayer *player, uint8_t *out_data)
 	}
 	db_player->gift_accept = player->gift_accept;
 	db_player->reset_time = player->reset_time;
+	db_player->auto_accept_apply = player->auto_accept_apply;
 
 	return redis_friend_player__pack(db_player, out_data);
 }
@@ -201,12 +209,12 @@ int save_friend_player(FriendPlayer *player)
 	return 0;
 }
 
-int unpack_friend_player(uint8_t *data, int data_len, FriendPlayer *player)
+int unpack_friend_player(uint64_t player_id, uint8_t *data, int data_len, FriendPlayer *player)
 {
 	RedisFriendPlayer *redis_friend = redis_friend_player__unpack(NULL, data_len, data);
 	if (!redis_friend)
 	{
-		LOG_ERR("[%s:%d] player[%lu] unpack friend failed, ret:%u", __FUNCTION__, __LINE__, player->player_id, data_len);
+		LOG_ERR("[%s:%d] player[%lu] unpack friend failed, ret:%u", __FUNCTION__, __LINE__, player_id, data_len);
 		return -1;
 	}
 
@@ -233,7 +241,8 @@ int unpack_friend_player(uint8_t *data, int data_len, FriendPlayer *player)
 	}
 	for (size_t i = 0; i < redis_friend->n_enemies && i < MAX_FRIEND_ENEMY_NUM; ++i)
 	{
-		player->enemies[i] = redis_friend->enemies[i];
+		player->enemies[i].player_id = redis_friend->enemies[i]->player_id;
+		player->enemies[i].track_time = redis_friend->enemies[i]->track_time;
 	}
 	for (size_t i = 0; i < redis_friend->n_applys && i < MAX_FRIEND_APPLY_NUM; ++i)
 	{
@@ -247,6 +256,7 @@ int unpack_friend_player(uint8_t *data, int data_len, FriendPlayer *player)
 	}
 	player->gift_accept = redis_friend->gift_accept;
 	player->reset_time = redis_friend->reset_time;
+	player->auto_accept_apply = redis_friend->auto_accept_apply;
 
 	redis_friend_player__free_unpacked(redis_friend, NULL);
 
@@ -266,7 +276,7 @@ int load_friend_player(uint64_t player_id, FriendPlayer *player)
 		return -1;
 	}
 
-	ret = unpack_friend_player(data_buffer, data_len, player);
+	ret = unpack_friend_player(player_id, data_buffer, data_len, player);
 	if (ret != 0)
 	{
 		LOG_ERR("[%s:%d] player[%lu] pack friend failed, ret:%d", __FUNCTION__, __LINE__, player_id, ret);
@@ -509,7 +519,7 @@ void get_all_friend_id(FriendPlayer *player, std::set<uint64_t> &player_ids)
 	}
 	for (int i = 0; i < MAX_FRIEND_ENEMY_NUM; ++i)
 	{
-		uint64_t player_id = player->enemies[i];
+		uint64_t player_id = player->enemies[i].player_id;
 		if (player_id == 0)
 		{
 			break;
@@ -586,6 +596,16 @@ void set_proto_friend(PlayerRedisInfo &player, FriendPlayerBriefData &proto_data
 	proto_data.n_tags = player.n_tags;
 	proto_data.tags = player.tags;
 	proto_data.textintro = player.textintro;
+	proto_data.guildid = player.guild_id;
+	proto_data.guildname = player.guild_name;
+
+	proto_data.n_attrs = 0;
+	proto_data.attrs[proto_data.n_attrs]->id = PLAYER_ATTR_ZHENYING;
+	proto_data.attrs[proto_data.n_attrs]->val = player.zhenying;
+	proto_data.n_attrs++;
+	proto_data.attrs[proto_data.n_attrs]->id = PLAYER_ATTR_FIGHTING_CAPACITY;
+	proto_data.attrs[proto_data.n_attrs]->val = player.fighting_capacity;
+	proto_data.n_attrs++;
 }
 
 #define MAX_FRIEND_CHANGE_LEN 200
@@ -618,6 +638,8 @@ void notify_friend_list_change(FriendPlayer *player, FriendListChangeInfo &chang
 	FriendListAddData  add_data[MAX_FRIEND_CHANGE_LEN];
 	FriendListAddData* add_point[MAX_FRIEND_CHANGE_LEN];
 	FriendPlayerBriefData  unit_data[MAX_FRIEND_CHANGE_LEN];
+	AttrData  unit_attr_data[MAX_FRIEND_CHANGE_LEN][MAX_FRIEND_UNIT_ATTR_NUM];
+	AttrData* unit_attr_point[MAX_FRIEND_CHANGE_LEN][MAX_FRIEND_UNIT_ATTR_NUM];
 	FriendListDelData  del_data[MAX_FRIEND_CHANGE_LEN];
 	FriendListDelData* del_point[MAX_FRIEND_CHANGE_LEN];
 
@@ -632,6 +654,13 @@ void notify_friend_list_change(FriendPlayer *player, FriendListChangeInfo &chang
 		add_data[nty.n_adds].groupid = unit->group_id;
 		add_data[nty.n_adds].data = &unit_data[nty.n_adds];
 		friend_player_brief_data__init(&unit_data[nty.n_adds]);
+		unit_data[nty.n_adds].attrs = unit_attr_point[nty.n_adds];
+		unit_data[nty.n_adds].n_attrs = 0;
+		for (int j = 0; j < MAX_FRIEND_UNIT_ATTR_NUM; ++j)
+		{
+			unit_attr_point[nty.n_adds][j] = &unit_attr_data[nty.n_adds][j];
+			attr_data__init(&unit_attr_data[nty.n_adds][j]);
+		}
 		unit_data[nty.n_adds].playerid = unit->player_id;
 		unit_data[nty.n_adds].closeness = unit->closeness;
 
@@ -685,6 +714,28 @@ void sync_friend_num_to_game_srv(FriendPlayer *player)
 	ext_data.player_id = player->player_id;
 
 	fast_send_msg_base(&conn_node_friendsrv::connecter, &ext_data, SERVER_PROTO_FRIEND_SYNC_FRIEND_NUM, sizeof(PROTO_FRIEND_SYNC_INFO) - sizeof(PROTO_HEAD), 0);
+}
+
+void sync_enemy_to_game_srv(FriendPlayer *player)
+{
+	PROTO_FRIEND_SYNC_ENEMY *proto = (PROTO_FRIEND_SYNC_ENEMY*)conn_node_base::get_send_data();
+	uint32_t data_len = sizeof(PROTO_FRIEND_SYNC_ENEMY);
+	memset(proto, 0, data_len);
+	for (int i = 0; i < MAX_FRIEND_ENEMY_NUM; ++i)
+	{
+		if (player->enemies[i].player_id == 0)
+		{
+			break;
+		}
+
+		proto->enemies[i].player_id  = player->enemies[i].player_id;
+		proto->enemies[i].track_time = player->enemies[i].track_time;
+	}
+
+	EXTERN_DATA ext_data;
+	ext_data.player_id = player->player_id;
+
+	fast_send_msg_base(&conn_node_friendsrv::connecter, &ext_data, SERVER_PROTO_FRIEND_SYNC_ENEMY, data_len, 0);
 }
 
 bool is_in_contact(FriendPlayer *player, uint64_t target_id)
@@ -824,7 +875,7 @@ int get_recent_num(FriendPlayer *player)
 	return num;
 }
 
-int add_contact(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo &change_info, bool bDelApply)
+int add_contact(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo &change_info, bool bDelApply, bool bAutoAcceptApply)
 {
 	if (!player_is_exist(target_id))
 	{
@@ -918,13 +969,17 @@ int add_contact(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo &
 		del_apply(player, target_id, &change_info);
 	}
 
-	//给对方的申请列表插入一条
-	FriendPlayer *target = get_friend_player(target_id);
-	if (target)
+	//如果是自动通过申请导致的加好友，不再向对方申请列表操作，否则死循环
+	if (!bAutoAcceptApply)
 	{
-		AutoReleaseBatchFriendPlayer arb_friend;
-		arb_friend.push_back(target);
-		add_apply(target, player->player_id);
+		//给对方的申请列表插入一条
+		FriendPlayer *target = get_friend_player(target_id);
+		if (target)
+		{
+			AutoReleaseBatchFriendPlayer arb_friend;
+			arb_friend.push_back(target);
+			add_apply(target, player->player_id);
+		}
 	}
 
 	return 0;
@@ -1015,38 +1070,50 @@ int add_apply(FriendPlayer *player, uint64_t target_id)
 
 	FriendListChangeInfo change_info;
 	bool bNotice = false;
-	if (empty_idx < 0)
-	{ //玩家不在列表里，没空位，顶掉最早那个
-		//必须先把要删掉的玩家信息记录下来
-		FriendListDel apply_del;
-		apply_del.group_id = FRIEND_LIST_TYPE__L_APPLY;
-		apply_del.player_id = player->applys[0];
-		change_info.dels.push_back(apply_del);
+	bool bAddApply = true;
 
-		uint32_t last_idx = limit_num - 1;
-		memmove(&player->applys[0], &player->applys[1], (last_idx) * sizeof(uint64_t));
-		memset(&player->applys[last_idx], 0, sizeof(uint64_t));
-		empty_idx = last_idx;
-		bNotice = true;
-
-		//维护反向映射表
-		if (is_friend_gone(player, apply_del.player_id))
+	//自动通过申请
+	if (player->auto_accept_apply != 0)
+	{
+		if (add_contact(player, target_id, change_info, false, true) == 0)
 		{
-			watch_me_map[apply_del.player_id].erase(player->player_id);
+			bAddApply = false;
 		}
 	}
 
-	player->applys[empty_idx] = target_id;
-	//维护反向映射表
-	watch_me_map[target_id].insert(player->player_id);
+	if (bAddApply)
+	{
+		if (empty_idx < 0)
+		{ //玩家不在列表里，没空位，顶掉最早那个
+			//必须先把要删掉的玩家信息记录下来
+			FriendListDel apply_del;
+			apply_del.group_id = FRIEND_LIST_TYPE__L_APPLY;
+			apply_del.player_id = player->applys[0];
+			change_info.dels.push_back(apply_del);
 
-	FriendListAdd apply_add;
-	apply_add.group_id = FRIEND_LIST_TYPE__L_APPLY;
-	apply_add.player_id = target_id;
-	apply_add.closeness = 0;
-	change_info.adds.push_back(apply_add);
+			uint32_t last_idx = limit_num - 1;
+			memmove(&player->applys[0], &player->applys[1], (last_idx) * sizeof(uint64_t));
+			memset(&player->applys[last_idx], 0, sizeof(uint64_t));
+			empty_idx = last_idx;
+			bNotice = true;
 
-	save_friend_player(player);
+			//维护反向映射表
+			if (is_friend_gone(player, apply_del.player_id))
+			{
+				watch_me_map[apply_del.player_id].erase(player->player_id);
+			}
+		}
+
+		player->applys[empty_idx] = target_id;
+		//维护反向映射表
+		watch_me_map[target_id].insert(player->player_id);
+
+		FriendListAdd apply_add;
+		apply_add.group_id = FRIEND_LIST_TYPE__L_APPLY;
+		apply_add.player_id = target_id;
+		apply_add.closeness = 0;
+		change_info.adds.push_back(apply_add);
+	}
 
 	AutoReleaseBatchRedisPlayer arb_redis;
 	PlayerRedisInfo *redis_player = get_redis_player(player->player_id, conn_node_friendsrv::server_key, sg_redis_client, arb_redis);
@@ -1104,6 +1171,8 @@ int add_apply(FriendPlayer *player, uint64_t target_id)
 			add_friend_offline_system(player->player_id, &sys);
 		}
 	}
+
+	save_friend_player(player);
 
 	return 0;
 }
@@ -1339,12 +1408,12 @@ int add_enemy(FriendPlayer *player, uint64_t target_id)
 	int limit_num = get_enemy_limit_num();
 	for (int i = 0; i < limit_num; ++i)
 	{
-		if (player->enemies[i] == 0)
+		if (player->enemies[i].player_id == 0)
 		{
 			empty_idx = i;
 			break;
 		}
-		if (player->enemies[i] == target_id)
+		if (player->enemies[i].player_id == target_id)
 		{
 			return 0;
 		}
@@ -1357,12 +1426,12 @@ int add_enemy(FriendPlayer *player, uint64_t target_id)
 		//必须先把要删掉的玩家信息记录下来
 		FriendListDel enemy_del;
 		enemy_del.group_id = FRIEND_LIST_TYPE__L_ENEMY;
-		enemy_del.player_id = player->enemies[0];
+		enemy_del.player_id = player->enemies[0].player_id;
 		change_info.dels.push_back(enemy_del);
 
 		uint32_t last_idx = limit_num - 1;
-		memmove(&player->enemies[0], &player->enemies[1], (last_idx) * sizeof(uint64_t));
-		memset(&player->enemies[last_idx], 0, sizeof(uint64_t));
+		memmove(&player->enemies[0], &player->enemies[1], (last_idx) * sizeof(EnemyUnit));
+		memset(&player->enemies[last_idx], 0, sizeof(EnemyUnit));
 		empty_idx = last_idx;
 		bNotice = true;
 
@@ -1373,7 +1442,7 @@ int add_enemy(FriendPlayer *player, uint64_t target_id)
 		}
 	}
 
-	player->enemies[empty_idx] = target_id;
+	player->enemies[empty_idx].player_id = target_id;
 	//维护反向映射表
 	watch_me_map[target_id].insert(player->player_id);
 
@@ -1384,6 +1453,7 @@ int add_enemy(FriendPlayer *player, uint64_t target_id)
 	change_info.adds.push_back(enemy_add);
 
 	save_friend_player(player);
+	sync_enemy_to_game_srv(player);
 
 	AutoReleaseRedisPlayer p1;
 	PlayerRedisInfo *redis_player = get_redis_player(player->player_id, conn_node_friendsrv::server_key, sg_redis_client, p1);
@@ -1423,12 +1493,12 @@ int del_enemy(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo &ch
 	int idx = -1;
 	for (int i = 0; i < MAX_FRIEND_ENEMY_NUM; ++i)
 	{
-		if (player->enemies[i] == 0)
+		if (player->enemies[i].player_id == 0)
 		{
 			break;
 		}
 
-		if (player->enemies[i] == target_id)
+		if (player->enemies[i].player_id == target_id)
 		{
 			idx = i;
 			break;
@@ -1448,15 +1518,16 @@ int del_enemy(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo &ch
 	int last_idx = MAX_FRIEND_ENEMY_NUM - 1;
 	if (idx < last_idx)
 	{
-		memmove(&player->enemies[idx], &player->enemies[idx + 1], (last_idx - idx) * sizeof(uint64_t));
+		memmove(&player->enemies[idx], &player->enemies[idx + 1], (last_idx - idx) * sizeof(EnemyUnit));
 	}
-	memset(&player->enemies[last_idx], 0, sizeof(uint64_t));
+	memset(&player->enemies[last_idx], 0, sizeof(EnemyUnit));
 
 	//维护反向映射表
 	if (is_friend_gone(player, target_id))
 	{
 		watch_me_map[target_id].erase(player->player_id);
 	}
+	sync_enemy_to_game_srv(player);
 
 	return 0;
 }
@@ -1669,7 +1740,7 @@ static void rebuild_relative_map(FriendPlayer *player)
 	}
 	for (int i = 0; i < MAX_FRIEND_ENEMY_NUM; ++i)
 	{
-		uint64_t player_id = player->enemies[i];
+		uint64_t player_id = player->enemies[i].player_id;
 		if (player_id == 0)
 		{
 			break;
@@ -1719,7 +1790,7 @@ void rebuild_watch_info(void)
 			continue;
 
 		memset(player, 0, sizeof(FriendPlayer));
-		ret = unpack_friend_player((uint8_t*)value->str, value->len, player);
+		ret = unpack_friend_player(player_id, (uint8_t*)value->str, value->len, player);
 		if (ret != 0)
 		{
 			LOG_ERR("[%s:%d] unpack player[%lu] failed, ret:%d", __FUNCTION__, __LINE__, player_id, ret);

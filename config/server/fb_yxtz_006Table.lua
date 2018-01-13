@@ -7,7 +7,7 @@
         ['PointPosY'] = 59.5217,
         ['PointPosZ'] = 44.95792,
         ['Yaw'] = 0,
-        ['Level'] = 20,
+        ['Level'] = 35,
         ['TargetInfoList'] = {
         }
     },

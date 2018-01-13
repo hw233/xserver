@@ -122,6 +122,12 @@ message RedisFriendUnit
 	required uint32 group_id = 4; //分组ID
 }
 
+message RedisEnemyUnit
+{
+	required uint64 player_id = 1; //玩家ID
+	required uint32 track_time = 2; //追踪时间
+}
+
 //玩家好友模块数据
 message RedisFriendPlayer
 {
@@ -131,11 +137,12 @@ message RedisFriendPlayer
 	repeated uint64 recents = 4; //最近联系人
 	repeated RedisFriendUnit contacts = 5; //我的好友
 	repeated RedisFriendUnit blocks = 6; //黑名单
-	repeated uint64 enemies = 7; //仇人
+	repeated RedisEnemyUnit enemies = 7; //仇人
 	repeated uint64 applys = 8; //申请列表
 	repeated RedisFriendGroup groups = 9; //分组
 	required uint32 gift_accept = 10; //接收礼物数
 	required uint32 reset_time = 11; //每日重置时间
+	required uint32 auto_accept_apply = 12; //自动通过申请
 }
 
 //斗法场信息

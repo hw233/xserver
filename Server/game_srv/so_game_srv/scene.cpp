@@ -7,6 +7,7 @@
 #include "partner.h"
 #include "collect.h"
 #include "cash_truck.h"
+#include "uuid.h"
 #include "unit.h"
 #include <assert.h>
 #include <stdlib.h>
@@ -270,7 +271,7 @@ int scene_struct::add_cash_truck_to_scene(cash_truck_struct *pTruck)
 	}
 	area->add_truck_to_area(pTruck->data->player_id);
 	pTruck->data->scene_id = m_id;
-	pTruck->data->guild_id = m_guild_id;
+//	pTruck->data->guild_id = m_guild_id;
 	pTruck->scene = this;
 	pTruck->area = area;
 
@@ -606,4 +607,44 @@ int scene_struct::player_enter_scene(player_struct *player, double pos_x, double
 	// 	player->m_team->broadcast_leader_pos(player->get_pos(), player->data->scene_id, player->get_uuid());
 	// }
 	return (0);
+}
+
+void scene_struct::broadcast_to_scene(uint16_t msg_id, void *msg_data, pack_func func)
+{
+	PROTO_HEAD_CONN_BROADCAST *head;
+	PROTO_HEAD *real_head;
+
+	/** ================广播数据============ **/
+	head = (PROTO_HEAD_CONN_BROADCAST *)conn_node_base::global_send_buf;
+	head->msg_id = ENDION_FUNC_2(SERVER_PROTO_BROADCAST);
+	real_head = &head->proto_head;
+
+	real_head->msg_id = ENDION_FUNC_2(msg_id);
+	real_head->seq = 0;
+	//	memcpy(real_head->data, msg_data, len);
+	size_t len = func(msg_data, (uint8_t *)real_head->data);
+	real_head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD)+len);
+
+	uint64_t *ppp = (uint64_t*)((char *)&head->player_id + len);
+
+	head->num_player_id = 0;
+	std::set<uint64_t> playerIds;
+	get_all_player(playerIds);
+	for (std::set<uint64_t>::iterator it = playerIds.begin(); it != playerIds.end(); ++it)
+	{
+		if (get_entity_type(*it) != ENTITY_TYPE_PLAYER)
+			continue;
+		ppp[head->num_player_id++] = *it;
+	}
+
+	if (head->num_player_id == 0)
+		return;
+
+	head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD_CONN_BROADCAST)+len + sizeof(uint64_t)* head->num_player_id);
+
+	LOG_DEBUG("%s %d: broad [%u] to %d player", __FUNCTION__, __LINE__, ENDION_FUNC_2(head->proto_head.msg_id), head->num_player_id);
+
+	if (conn_node_gamesrv::connecter.send_one_msg((PROTO_HEAD *)head, 1) != (int)(ENDION_FUNC_4(head->len))) {
+		LOG_ERR("%s %d: send to all failed err[%d]", __FUNCTION__, __LINE__, errno);
+	}
 }

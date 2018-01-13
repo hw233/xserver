@@ -100,7 +100,7 @@ int get_actor_skill_index(uint32_t job, uint32_t skill_id);
 bool item_is_partner_fabao(uint32_t item_id);
 uint32_t get_friend_close_level(uint32_t closeness);
 bool activity_is_open(uint32_t activity_id);
-uint32_t get_activity_reward_time(uint32_t activity_id);
+uint32_t get_activity_reward_time(uint32_t activity_id); //获取活动的收益次数
 int get_dungeon_type(uint32_t raid_id);
 int item_id_to_trade_id(uint32_t item_id);
 int trade_id_to_item_id(uint32_t trade_id);

@@ -538,6 +538,16 @@ local mail = {
 		['RewardID'] = {},
 		['RewardNum'] = {},
 		['time'] = ''
+		},
+	[270100011] = {
+		['ID'] = 270100011,
+		['MailType'] = 1,
+		['Title'] = '好友赠送礼物',
+		['Content'] = '您的好友%s给你赠送的礼物如下：',
+		['Sender'] = '系统',
+		['RewardID'] = {},
+		['RewardNum'] = {},
+		['time'] = ''
 		}
 	}
 return mail

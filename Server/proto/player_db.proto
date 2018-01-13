@@ -263,6 +263,9 @@ message DBPersonality
 	repeated uint32 tags = 4;
 	required string text_intro = 5;
 	required string voice_intro = 6;
+	required uint32 province = 7;
+	required uint32 city = 8;
+	required uint32 blood_type = 9;
 }
 
 message DBLiveSkill

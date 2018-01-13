@@ -263,7 +263,7 @@ void player_struct::try_return_zhenying_raid()
 	{
 		return;
 	}
-	zhenying_raid_struct *raid = zhenying_raid_manager::get_avaliable_zhenying_raid(table->Map);
+	zhenying_raid_struct *raid = zhenying_raid_manager::get_avaliable_zhenying_raid(table->Map, this);
 	if (!raid)
 	{
 		return try_out_raid();
@@ -1648,6 +1648,9 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		}
 		personality.n_tags++;
 	}
+	personality.province = data->personality_province;
+	personality.city = data->personality_city;
+	personality.blood_type = data->personality_blood_type;
 	db_info.personality = &personality;
 
 	DBLiveSkill liveSkill;
@@ -2549,6 +2552,9 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		{
 			data->personality_tags[i] = db_info->personality->tags[i];
 		}
+		data->personality_province = db_info->personality->province;
+		data->personality_city = db_info->personality->city;
+		data->personality_blood_type = db_info->personality->blood_type;
 	}
 
 	if (db_info->live_skill)
@@ -5246,6 +5252,15 @@ int player_struct::add_silver(uint32_t num, uint32_t statis_id, bool isNty)
 		// send_system_notice(notice_id, &args);
 	}
 
+	//系统提示
+	std::vector<char *> args;
+	std::string sz_num;
+	std::stringstream ss;
+	ss << realNum;
+	ss >> sz_num;
+	args.push_back(const_cast<char*>(sz_num.c_str()));
+	send_system_notice(190500526, &args);
+
 	if (realNum > 0)
 	{
 		refresh_player_redis_info();
@@ -7161,8 +7176,8 @@ int player_struct::use_prop_effect(bag_grid_data& grid, ItemsConfigTable *config
 		case IUE_OPEN_FUNCTION:
 			{
 				std::vector<uint32_t> func_ids;
-				uint32_t need_lv = 0;
-				for (uint32_t i = 0; i < config->n_ParameterEffect; ++i)
+				uint32_t need_lv = std::min(sg_player_level_limit, (int)config->ParameterEffect[0]);
+				for (uint32_t i = 1; i < config->n_ParameterEffect; ++i)
 				{
 					uint32_t func_id = config->ParameterEffect[i];
 					FunctionUnlockTable *func_config = get_config_by_id(func_id, &function_unlock_config);
@@ -7171,14 +7186,16 @@ int player_struct::use_prop_effect(bag_grid_data& grid, ItemsConfigTable *config
 						continue;
 					}
 					func_ids.push_back(func_id);
-					need_lv = std::max(need_lv, (uint32_t)func_config->Level);
 				}
 				uint32_t need_exp = get_up_to_level_exp(need_lv);
 				if (need_exp > 0)
 				{
 					add_exp(need_exp, MAGIC_TYPE_BAG_USE);
 				}
-				open_function(func_ids);
+				if (func_ids.size() > 0)
+				{
+					open_function(func_ids);
+				}
 			}
 			break;
 		case IUE_RANDOM_BOX:
@@ -8699,6 +8716,16 @@ int player_struct::execute_task_event(uint32_t event_id, uint32_t event_class, b
 				}
 			}
 			break;
+		case TET_SUB_CURRENCY:
+			{
+				switch (config->EventTarget)
+				{
+					case ACurrency_COIN:
+						sub_coin(config->EventNum, MAGIC_TYPE_TASK_EVENT);
+						break;
+				}
+			}
+			break;
 	}
 
 	LOG_DEBUG("[%s:%d] player[%lu], event_id:%u, event_class:%u, event_type:%lu", __FUNCTION__, __LINE__, data->player_id, event_id, event_class, config->EventType);
@@ -8721,6 +8748,7 @@ int player_struct::add_finish_task(uint32_t task_id)
 		case TT_BRANCH:
 		case TT_QUESTION:
 		case TT_RAID:
+		case TT_GUIDE:
 			{
 				for (int i = 1; i < MAX_TASK_NUM; ++i)
 				{
@@ -12039,7 +12067,12 @@ int player_struct::start_escort(uint32_t escort_id)
 		return -1;
 	}
 
-	monster_struct *escort_monster = monster_manager::create_monster_by_config(scene, config->MonsterIndex, 0);
+	int lv = 0;
+	raid_struct *raid = get_raid();
+	if (raid && raid->m_config && raid->m_config->DynamicLevel != 0)
+		lv = raid->lv;
+	
+	monster_struct *escort_monster = monster_manager::create_monster_by_config(scene, config->MonsterIndex, lv);
 	if (!escort_monster)
 	{
 		LOG_ERR("[%s:%d] player[%lu] create escort monster failed, escort_id:%u", __FUNCTION__, __LINE__, data->player_id, escort_id);
@@ -13450,6 +13483,29 @@ void player_struct::on_tick_10()
 
 	do_auto_add_hp();
 
+	uint32_t now = time_helper::get_cached_time() / 1000;
+	for (int i = 0; i < MAX_FRIEND_ENEMY_NUM; ++i)
+	{
+		if (data->friend_enemies[i].player_id == 0)
+		{
+			break;
+		}
+
+		if (data->friend_enemies[i].track_time == 0)
+		{
+			continue;
+		}
+		else if (data->friend_enemies[i].track_time <= now)
+		{
+			player_struct *target = player_manager::get_player_by_id(data->friend_enemies[i].player_id);
+			if (target)
+			{
+				target->del_watched_list(data->player_id);
+			}
+			data->friend_enemies[i].track_time = 0;
+		}
+	}
+
 	if (!pos_changed)
 		return;
 	pos_changed = false;
@@ -13604,13 +13660,10 @@ void player_struct::on_kill_player(player_struct *dead)
 			add_achievement_progress(ACType_ZHENYING_KILL, 0, 0, 0, 1);
 		}
 
-		FRIEND_IS_ENEMY_REQUEST	*req = (FRIEND_IS_ENEMY_REQUEST *)conn_node_gamesrv::get_send_data();
-		uint32_t data_len = sizeof(FRIEND_IS_ENEMY_REQUEST);
-		memset(req, 0, data_len);
-		req->dead_id = dead->data->player_id;
-		EXTERN_DATA ext_data;
-		ext_data.player_id = this->data->player_id;
-		fast_send_msg_base(&conn_node_gamesrv::connecter, &ext_data, SERVER_PROTO_FRIEND_IS_ENEMY_REQUEST, data_len, 0);
+		if (is_friend_enemy(dead->get_uuid()))
+		{
+			add_achievement_progress(ACType_KILL_ENEMY, 0, 0, 0, 1);
+		}
 	}
 
 	if (data->chengjie.cur_task != 0 && data->chengjie.target == dead->get_uuid())
@@ -15995,7 +16048,7 @@ int player_struct::get_partner_fabao_main_attr(uint32_t card_id, AttrInfo &attr_
 	return 0;
 }
 
-void player_struct::calc_partner_pos(struct position *pos)
+void player_struct::calc_partner_pos(struct position *pos, float distance)
 {
 	static float delta[] = {0.75, 0.7, 0.65, 0.6, 0.55, 0.5};
 
@@ -16013,8 +16066,8 @@ void player_struct::calc_partner_pos(struct position *pos)
 		double angle = data->m_angle - (M_PI * delta[i]);
 		double cos = qFastCos(angle);
 		double sin = qFastSin(angle);
-		float z = 2 * sin + cur_pos->pos_z;
-		float x = 2 * cos + cur_pos->pos_x;		
+		float z = distance * sin + cur_pos->pos_z;
+		float x = distance * cos + cur_pos->pos_x;		
 
 		struct map_block *block_start = get_map_block(scene->map_config, x, z);
 		if (!block_start || !block_start->can_walk)
@@ -16218,6 +16271,23 @@ uint32_t player_struct::get_friend_close_num(uint32_t close_lv)
 	}
 
 	return num;
+}
+
+bool player_struct::is_friend_enemy(uint64_t target_id)
+{
+	for (int i = 0; i < MAX_FRIEND_ENEMY_NUM; ++i)
+	{
+		if (data->friend_enemies[i].player_id == 0)
+		{
+			break;
+		}
+
+		if (data->friend_enemies[i].player_id == target_id)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 bool player_struct::get_rank_ranking(uint32_t rank_type, uint32_t rank_lv, uint32_t rank_score)
@@ -17418,6 +17488,40 @@ bool player_struct::strong_function_open(void)
 	return (now <= (data->create_time + sg_strong_function_time));
 }
 
+float player_struct::get_buff_effect_rate(uint32_t effect_id)
+{
+	float ret = 0;
+	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i) {
+		if (m_buffs[i] && m_buffs[i]->data)
+		{
+			if (!m_buffs[i]->effect_config)
+				continue;
+			if (m_buffs[i]->effect_config->Type != effect_id)
+				continue;
+			if (m_buffs[i]->effect_config->n_EffectAdd != 1)
+				continue;
+			ret += m_buffs[i]->data->lv * m_buffs[i]->effect_config->EffectAdd[0] / 10000.0;
+		}
+	}
+	return ret;
+}
+
+bool player_struct::can_add_buff_lv(uint32_t buff_id)
+{
+	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i) {
+		if (m_buffs[i] && m_buffs[i]->data)
+		{
+			if (m_buffs[i]->data->buff_id != buff_id)
+				continue;
+			if (m_buffs[i]->data->lv >= m_buffs[i]->config->BuffLv)
+				return false;
+			else
+				return true;
+		}
+	}
+	return true;
+}
+
 static const uint32_t fishing_buffs[2] = {114500014, 114500015};
 void player_struct::add_fishing_buff(void)
 {
@@ -17936,6 +18040,12 @@ int player_struct::check_raid_enter_cond(uint32_t raid_id)
 	uint64_t reason_player_id[MAX_TEAM_MEM];
 	struct DungeonTable *r_config = get_config_by_id(raid_id, &all_raid_config);
 
+	if (!r_config)
+	{
+		LOG_ERR("%s: player[%lu] can not find raid[%u] config", __FUNCTION__, get_uuid(), raid_id);
+		return (-5);
+	}
+
 	if (r_config->DengeonRank == DUNGEON_TYPE_GUILD_LAND)
 	{
 		if (data->guild_id == 0)
@@ -18031,51 +18141,57 @@ int player_struct::check_raid_enter_cond(uint32_t raid_id)
 	}
 
 		//检查时间
-	if (control_config->n_OpenDay > 0)
+	if (!control_is_open(control_config, time_helper::get_cached_time() / 1000))
 	{
-		bool pass = false;
-		uint32_t week = time_helper::getWeek(time_helper::get_cached_time() / 1000);
-		for (size_t i = 0; i < control_config->n_OpenDay; ++i)
-		{
-			if (week == control_config->OpenDay[i])
-			{
-				pass = true;
-				break;
-			}
-		}
-		if (pass == false)
-		{
-			LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
-			send_enter_raid_fail(8, 0, NULL, 0);
-			return (-110);
-		}
+		LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+		send_enter_raid_fail(8, 0, NULL, 0);
+		return (-110);
 	}
-	assert(control_config->n_OpenTime == control_config->n_CloseTime);
-	if (control_config->n_OpenTime > 0)
-	{
-		bool pass = false;
-
-		uint32_t now = time_helper::get_cached_time() / 1000;
-
-		for (size_t i = 0; i < control_config->n_OpenTime; ++i)
-		{
-			uint32_t start = time_helper::get_timestamp_by_day(control_config->OpenTime[i] / 100,
-				control_config->OpenTime[i] % 100, now);
-			uint32_t end = time_helper::get_timestamp_by_day(control_config->CloseTime[i] / 100,
-				control_config->CloseTime[i] % 100, now);
-			if (now >= start && now <= end)
-			{
-				pass = true;
-				break;
-			}
-		}
-		if (pass == false)
-		{
-			LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
-			send_enter_raid_fail(8, 0, NULL, 0);
-			return (-120);
-		}
-	}
+//	if (control_config->n_OpenDay > 0)
+//	{
+//		bool pass = false;
+//		uint32_t week = time_helper::getWeek(time_helper::get_cached_time() / 1000);
+//		for (size_t i = 0; i < control_config->n_OpenDay; ++i)
+//		{
+//			if (week == control_config->OpenDay[i])
+//			{
+//				pass = true;
+//				break;
+//			}
+//		}
+//		if (pass == false)
+//		{
+//			LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+//			send_enter_raid_fail(8, 0, NULL, 0);
+//			return (-110);
+//		}
+//	}
+//	assert(control_config->n_OpenTime == control_config->n_CloseTime);
+//	if (control_config->n_OpenTime > 0)
+//	{
+//		bool pass = false;
+//
+//		uint32_t now = time_helper::get_cached_time() / 1000;
+//
+//		for (size_t i = 0; i < control_config->n_OpenTime; ++i)
+//		{
+//			uint32_t start = time_helper::get_timestamp_by_day(control_config->OpenTime[i] / 100,
+//				control_config->OpenTime[i] % 100, now);
+//			uint32_t end = time_helper::get_timestamp_by_day(control_config->CloseTime[i] / 100,
+//				control_config->CloseTime[i] % 100, now);
+//			if (now >= start && now <= end)
+//			{
+//				pass = true;
+//				break;
+//			}
+//		}
+//		if (pass == false)
+//		{
+//			LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
+//			send_enter_raid_fail(8, 0, NULL, 0);
+//			return (-120);
+//		}
+//	}
 
 		//个人副本通过
 	if (r_config->DengeonType == 2)
@@ -19056,6 +19172,21 @@ int player_struct::refresh_player_online_reward_info()
 			}
 			gailv_begin = gailv_end;
 		}
+	}
+	//位置再随机一遍,避免每次物品显示在同一格子
+	uint32_t item_num = 0;
+	for(; item_num  < MAX_PLAYER_ONLINE_REWARD_NUM; item_num++)
+	{
+		if(data->online_reward.reward_id_today[item_num] == 0)
+			break;
+	}
+
+	for(size_t i = 0; i < item_num; i++)
+	{
+		uint32_t temp_item_id = data->online_reward.reward_id_today[i];
+		uint32_t xiabiao = rand() % item_num;
+		data->online_reward.reward_id_today[i] = data->online_reward.reward_id_today[xiabiao];
+		data->online_reward.reward_id_today[xiabiao] = temp_item_id;
 	}
 	player_online_reward_info_notify();
 	return 0;

@@ -1821,7 +1821,7 @@ local ModelTable = {
 		},
 	[130300068] = {
 		['ModelId'] = 130300068,
-		['ModelPath'] = 'Prefabs/Actor/npc_034',
+		['ModelPath'] = 'Prefabs/Actor/npc_040',
 		['TopH'] = 1.40,
 		['ModelIcon'] = '',
 		['Gaine'] = '',
@@ -2269,8 +2269,8 @@ local ModelTable = {
 		},
 	[130500003] = {
 		['ModelId'] = 130500003,
-		['ModelPath'] = 'Prefabs/Actor/mount_003',
-		['TopH'] = 1.70,
+		['ModelPath'] = 'Prefabs/Actor/mount_004',
+		['TopH'] = 3.10,
 		['ModelIcon'] = '',
 		['Gaine'] = '',
 		['BindPos'] = '',

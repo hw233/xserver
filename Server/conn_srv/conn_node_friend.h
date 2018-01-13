@@ -15,6 +15,7 @@ public:
 	static conn_node_friend *server_node;
 	
 private:
+	int dispatch_message();
 	int transfer_to_client();
 	int broadcast_to_all_client();
 	int transfer_to_gameserver();

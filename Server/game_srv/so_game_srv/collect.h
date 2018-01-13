@@ -84,6 +84,7 @@ public:
 
 private:
 	static Collect *CreateCollectImp(uint32_t id, double x, double y, double z, float yaw);
+	int DoGatherDrop(player_struct *player);
 };
 
 #endif

@@ -334,6 +334,7 @@ struct ZhenYing
 	uint32_t mine; //挖宝次数
 	uint32_t kill_week; //战场一周杀人
 	uint32_t score_week; //战场周积分
+	uint32_t gather; //
 	uint64_t score_time; //护送矿车给积分的时间
 	uint32_t protect_num; //护矿次数
 	uint32_t award_num; //阵营对战收益次数
@@ -767,6 +768,9 @@ struct player_data
 	uint32_t personality_tags[MAX_PERSONALITY_TAG_NUM]; //标签
 	char personality_text_intro[MAX_PERSONALITY_TEXT_INTRO_LEN + 1]; //文字签名
 	char personality_voice_intro[MAX_PERSONALITY_VOICE_INTRO_LEN + 1]; //语音签名
+	uint32_t personality_province; //省份
+	uint32_t personality_city; //城市
+	uint32_t personality_blood_type; //血型
 
 		//自动补血
 	uint64_t next_auto_add_hp_time; //下次血池补血时间或者脱战时间
@@ -804,6 +808,7 @@ struct player_data
 	bool is_team_raid_ready;  //是否ready
 
 	ProtoFriend friend_contacts[MAX_FRIEND_CONTACT_NUM];
+	ProtoEnemy  friend_enemies[MAX_FRIEND_ENEMY_NUM];
 	ProtoRank ranks[MAX_RANK_TYPE];
 
 	uint8_t  server_level_break_count; //服务器等级突破计数
@@ -1457,11 +1462,12 @@ public:
 	uint32_t get_partner_battle_num(void);
 
 	bool is_too_high_to_beattack();   //是否飞的太高不能被攻击
-	void calc_partner_pos(struct position *pos);
+	void calc_partner_pos(struct position *pos, float distance);
 
 	//好友
 	uint32_t get_friend_num(void);
 	uint32_t get_friend_close_num(uint32_t close_lv);
+	bool is_friend_enemy(uint64_t target_id);
 
 	bool get_rank_ranking(uint32_t rank_type, uint32_t rank_lv, uint32_t rank_score);
 
@@ -1500,6 +1506,10 @@ public:
 	void check_strong_chapter_open(uint32_t old_lv, uint32_t new_lv);
 	bool strong_function_open(void);
 
+		//能否增加buff层数
+	bool can_add_buff_lv(uint32_t buff_id);
+	float get_buff_effect_rate(uint32_t effect_id);	
+	
 	//钓鱼换装
 	void add_fishing_buff(void);
 	void del_fishing_buff(void);

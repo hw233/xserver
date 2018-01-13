@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include "comm_define.h"
 
+struct ControlTable;
+
 struct AttrInfo
 {
 	uint32_t id;
@@ -37,5 +39,6 @@ union EspecialItemInfo
 };
 
 int get_item_type(uint32_t item_id); //获取道具类型
+bool control_is_open(ControlTable *ctrl_config, uint64_t now); //控制表里的活动，是否在开启时间
 
 #endif

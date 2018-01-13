@@ -4,7 +4,7 @@ local RandomCardTable = {
 		['CardDengeon'] = 20018,	--所属小关卡ID
 		['Condition'] = {1,2},	--获得条件
 		['Parameter1'] = {0,151005020},	--条件参数1
-		['Parameter2'] = {0,6},	--条件参数2
+		['Parameter2'] = {0,1},	--条件参数2
 		['Probability'] = 10000	--获得概率
 		},
 	[80002] = {
@@ -36,7 +36,7 @@ local RandomCardTable = {
 		['CardDengeon'] = 20020,
 		['Condition'] = {1,2},
 		['Parameter1'] = {0,151005022},
-		['Parameter2'] = {0,8},
+		['Parameter2'] = {0,1},
 		['Probability'] = 10000
 		},
 	[80006] = {
@@ -68,7 +68,7 @@ local RandomCardTable = {
 		['CardDengeon'] = 20039,
 		['Condition'] = {1,2},
 		['Parameter1'] = {0,151005064},
-		['Parameter2'] = {0,15},
+		['Parameter2'] = {0,1},
 		['Probability'] = 10000
 		},
 	[80010] = {

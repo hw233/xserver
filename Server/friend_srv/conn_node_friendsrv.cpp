@@ -1547,9 +1547,15 @@ int conn_node_friendsrv::recv_func(evutil_socket_t fd)
 			case SERVER_PROTO_FRIEND_SYNC_RENAME:
 				handle_friend_rename_request();
 				break;
-				case SERVER_PROTO_FRIEND_IS_ENEMY_REQUEST:
-					handle_friend_is_enemy_request();
-					break;
+			case MSG_ID_FRIEND_TRACK_ENEMY_REQUEST:
+				handle_friend_track_enemy_request();
+				break;
+			case SERVER_PROTO_FRIEND_TRACK_ENEMY_ANSWER:
+				handle_friend_track_enemy_answer();
+				break;
+			case MSG_ID_FRIEND_AUTO_ACCEPT_APPLY_REQUEST:
+				handle_friend_auto_accept_apply_request();
+				break;
 			}
 
 		}
@@ -1821,14 +1827,24 @@ void conn_node_friendsrv::handle_friend_info_request()
 	FriendGroupData* custom_point[MAX_FRIEND_GROUP_NUM];
 	FriendPlayerBriefData  recent_data[MAX_FRIEND_RECENT_NUM];
 	FriendPlayerBriefData* recent_point[MAX_FRIEND_RECENT_NUM];
+	AttrData  recent_attr_data[MAX_FRIEND_RECENT_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
+	AttrData* recent_attr_point[MAX_FRIEND_RECENT_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
 	FriendPlayerBriefData  contact_data[MAX_FRIEND_CONTACT_NUM];
 	FriendPlayerBriefData* contact_point[MAX_FRIEND_CONTACT_NUM];
+	AttrData  contact_attr_data[MAX_FRIEND_CONTACT_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
+	AttrData* contact_attr_point[MAX_FRIEND_CONTACT_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
 	FriendPlayerBriefData  block_data[MAX_FRIEND_BLOCK_NUM];
 	FriendPlayerBriefData* block_point[MAX_FRIEND_BLOCK_NUM];
+	AttrData  block_attr_data[MAX_FRIEND_BLOCK_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
+	AttrData* block_attr_point[MAX_FRIEND_BLOCK_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
 	FriendPlayerBriefData  enemy_data[MAX_FRIEND_ENEMY_NUM];
 	FriendPlayerBriefData* enemy_point[MAX_FRIEND_ENEMY_NUM];
+	AttrData  enemy_attr_data[MAX_FRIEND_ENEMY_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
+	AttrData* enemy_attr_point[MAX_FRIEND_ENEMY_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
 	FriendPlayerBriefData  apply_data[MAX_FRIEND_APPLY_NUM];
 	FriendPlayerBriefData* apply_point[MAX_FRIEND_APPLY_NUM];
+	AttrData  apply_attr_data[MAX_FRIEND_APPLY_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
+	AttrData* apply_attr_point[MAX_FRIEND_APPLY_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
 
 	std::map<uint32_t, std::vector<FriendUnit*> > group_friends;
 	resp.result = ret;
@@ -1863,6 +1879,14 @@ void conn_node_friendsrv::handle_friend_info_request()
 
 			recent_point[recent_group->n_players] = &recent_data[recent_group->n_players];
 			friend_player_brief_data__init(&recent_data[recent_group->n_players]);
+			recent_data[recent_group->n_players].attrs = recent_attr_point[recent_group->n_players];
+			recent_data[recent_group->n_players].n_attrs = 0;
+			for (int j = 0; j < MAX_FRIEND_UNIT_ATTR_NUM; ++j)
+			{
+				recent_attr_point[recent_group->n_players][j] = &recent_attr_data[recent_group->n_players][j];
+				attr_data__init(&recent_attr_data[recent_group->n_players][j]);
+			}
+
 			set_proto_friend(*redis_player, recent_data[recent_group->n_players]);
 			recent_data[recent_group->n_players].playerid = player_id;
 			recent_data[recent_group->n_players].closeness = get_friend_closeness(player, player_id);
@@ -1894,6 +1918,14 @@ void conn_node_friendsrv::handle_friend_info_request()
 
 			contact_point[contact_group->n_players] = &contact_data[contact_group->n_players];
 			friend_player_brief_data__init(&contact_data[contact_group->n_players]);
+			contact_data[contact_group->n_players].attrs = contact_attr_point[contact_group->n_players];
+			contact_data[contact_group->n_players].n_attrs = 0;
+			for (int j = 0; j < MAX_FRIEND_UNIT_ATTR_NUM; ++j)
+			{
+				contact_attr_point[contact_group->n_players][j] = &contact_attr_data[contact_group->n_players][j];
+				attr_data__init(&contact_attr_data[contact_group->n_players][j]);
+			}
+
 			set_proto_friend(*redis_player, contact_data[contact_group->n_players]);
 			contact_data[contact_group->n_players].playerid = player_id;
 			contact_data[contact_group->n_players].closeness = player->contacts[i].closeness;
@@ -1920,6 +1952,14 @@ void conn_node_friendsrv::handle_friend_info_request()
 
 			block_point[block_group->n_players] = &block_data[block_group->n_players];
 			friend_player_brief_data__init(&block_data[block_group->n_players]);
+			block_data[block_group->n_players].attrs = block_attr_point[block_group->n_players];
+			block_data[block_group->n_players].n_attrs = 0;
+			for (int j = 0; j < MAX_FRIEND_UNIT_ATTR_NUM; ++j)
+			{
+				block_attr_point[block_group->n_players][j] = &block_attr_data[block_group->n_players][j];
+				attr_data__init(&block_attr_data[block_group->n_players][j]);
+			}
+
 			set_proto_friend(*redis_player, block_data[block_group->n_players]);
 			block_data[block_group->n_players].playerid = player_id;
 			block_data[block_group->n_players].closeness = player->blocks[i].closeness;
@@ -1932,7 +1972,7 @@ void conn_node_friendsrv::handle_friend_info_request()
 		enemy_group->players = enemy_point;
 		for (int i = 0; i < MAX_FRIEND_ENEMY_NUM; ++i)
 		{
-			uint64_t player_id = player->enemies[i];
+			uint64_t player_id = player->enemies[i].player_id;
 			if (player_id == 0)
 			{
 				break;
@@ -1946,9 +1986,19 @@ void conn_node_friendsrv::handle_friend_info_request()
 
 			enemy_point[enemy_group->n_players] = &enemy_data[enemy_group->n_players];
 			friend_player_brief_data__init(&enemy_data[enemy_group->n_players]);
+			enemy_data[enemy_group->n_players].attrs = enemy_attr_point[enemy_group->n_players];
+			enemy_data[enemy_group->n_players].n_attrs = 0;
+			for (int j = 0; j < MAX_FRIEND_UNIT_ATTR_NUM; ++j)
+			{
+				enemy_attr_point[enemy_group->n_players][j] = &enemy_attr_data[enemy_group->n_players][j];
+				attr_data__init(&enemy_attr_data[enemy_group->n_players][j]);
+			}
+
 			set_proto_friend(*redis_player, enemy_data[enemy_group->n_players]);
 			enemy_data[enemy_group->n_players].playerid = player_id;
 			enemy_data[enemy_group->n_players].closeness = get_friend_closeness(player, player_id);
+			enemy_data[enemy_group->n_players].has_tracktime = true;
+			enemy_data[enemy_group->n_players].tracktime = player->enemies[i].track_time;
 			enemy_group->n_players++;
 		}
 
@@ -1972,6 +2022,14 @@ void conn_node_friendsrv::handle_friend_info_request()
 
 			apply_point[apply_group->n_players] = &apply_data[apply_group->n_players];
 			friend_player_brief_data__init(&apply_data[apply_group->n_players]);
+			apply_data[apply_group->n_players].attrs = apply_attr_point[apply_group->n_players];
+			apply_data[apply_group->n_players].n_attrs = 0;
+			for (int j = 0; j < MAX_FRIEND_UNIT_ATTR_NUM; ++j)
+			{
+				apply_attr_point[apply_group->n_players][j] = &apply_attr_data[apply_group->n_players][j];
+				attr_data__init(&apply_attr_data[apply_group->n_players][j]);
+			}
+
 			set_proto_friend(*redis_player, apply_data[apply_group->n_players]);
 			apply_data[apply_group->n_players].playerid = player_id;
 			apply_group->n_players++;
@@ -2014,6 +2072,14 @@ void conn_node_friendsrv::handle_friend_info_request()
 				}
 				contact_point[contact_cnt] = &contact_data[contact_cnt];
 				friend_player_brief_data__init(&contact_data[contact_cnt]);
+				contact_data[contact_cnt].attrs = contact_attr_point[contact_cnt];
+				contact_data[contact_cnt].n_attrs = 0;
+				for (int j = 0; j < MAX_FRIEND_UNIT_ATTR_NUM; ++j)
+				{
+					contact_attr_point[contact_cnt][j] = &contact_attr_data[contact_cnt][j];
+					attr_data__init(&contact_attr_data[contact_cnt][j]);
+				}
+
 				set_proto_friend(*redis_player, contact_data[contact_cnt]);
 				contact_data[contact_cnt].playerid = unit->player_id;
 				contact_data[contact_cnt].closeness = unit->closeness;
@@ -2023,6 +2089,7 @@ void conn_node_friendsrv::handle_friend_info_request()
 		}
 
 		resp.contact_extend = player->contact_extend;
+		resp.autoacceptapply = player->auto_accept_apply;
 	}
 
 	fast_send_msg(&connecter, extern_data, MSG_ID_FRIEND_INFO_ANSWER, friend_info_answer__pack, resp);
@@ -2062,7 +2129,7 @@ void conn_node_friendsrv::handle_friend_add_contact_request()
 		arb_friend.push_back(player);
 
 		FriendListChangeInfo change_info;
-		ret = add_contact(player, target_id, change_info, true);
+		ret = add_contact(player, target_id, change_info, true, false);
 		if (ret == 0)
 		{
 			notify_friend_list_change(player, change_info);
@@ -2401,6 +2468,8 @@ void conn_node_friendsrv::handle_friend_create_group_request()
 
 	FriendPlayerBriefData member_data[MAX_FRIEND_CONTACT_NUM];
 	FriendPlayerBriefData* member_point[MAX_FRIEND_CONTACT_NUM];
+	AttrData  member_attr_data[MAX_FRIEND_CONTACT_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
+	AttrData* member_attr_point[MAX_FRIEND_CONTACT_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
 
 	resp.result = ret;
 	if (ret == 0 && player != NULL && pGroup != NULL)
@@ -2416,6 +2485,13 @@ void conn_node_friendsrv::handle_friend_create_group_request()
 			FriendUnit *unit = &player->contacts[*iter];
 			member_point[group_data.n_players] = &member_data[group_data.n_players];
 			friend_player_brief_data__init(&member_data[group_data.n_players]);
+			member_data[group_data.n_players].attrs = member_attr_point[group_data.n_players];
+			member_data[group_data.n_players].n_attrs = 0;
+			for (int j = 0; j < MAX_FRIEND_UNIT_ATTR_NUM; ++j)
+			{
+				member_attr_point[group_data.n_players][j] = &member_attr_data[group_data.n_players][j];
+				attr_data__init(&member_attr_data[group_data.n_players][j]);
+			}
 
 			PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, unit->player_id);
 			if (redis_player)
@@ -2845,7 +2921,7 @@ void conn_node_friendsrv::handle_friend_deal_apply_request()
 					break;
 				}
 
-				ret = add_contact(player, target_id, change_info, false);
+				ret = add_contact(player, target_id, change_info, false, false);
 				if (ret != 0)
 				{
 					break;
@@ -2873,7 +2949,7 @@ void conn_node_friendsrv::handle_friend_deal_apply_request()
 						break;
 					}
 
-					int ret2 = add_contact(player, player->applys[i], change_info, false);
+					int ret2 = add_contact(player, player->applys[i], change_info, false, false);
 					if (ret2 != 0)
 					{
 						break;
@@ -2976,6 +3052,8 @@ void conn_node_friendsrv::handle_friend_recommend_request()
 
 	FriendPlayerBriefData recommend_data[MAX_FRIEND_RECOMMEND_NUM];
 	FriendPlayerBriefData* recommend_point[MAX_FRIEND_RECOMMEND_NUM];
+	AttrData  recommend_attr_data[MAX_FRIEND_RECOMMEND_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
+	AttrData* recommend_attr_point[MAX_FRIEND_RECOMMEND_NUM][MAX_FRIEND_UNIT_ATTR_NUM];
 
 	resp.result = ret;
 
@@ -2987,6 +3065,13 @@ void conn_node_friendsrv::handle_friend_recommend_request()
 		uint64_t tmp_id = *iter;
 		recommend_point[resp.n_players] = &recommend_data[resp.n_players];
 		friend_player_brief_data__init(&recommend_data[resp.n_players]);
+		recommend_data[resp.n_players].attrs = recommend_attr_point[resp.n_players];
+		recommend_data[resp.n_players].n_attrs = 0;
+		for (int j = 0; j < MAX_FRIEND_UNIT_ATTR_NUM; ++j)
+		{
+			recommend_attr_point[resp.n_players][j] = &recommend_attr_data[resp.n_players][j];
+			attr_data__init(&recommend_attr_data[resp.n_players][j]);
+		}
 
 		PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, tmp_id);
 		if (redis_player)
@@ -3333,6 +3418,197 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 	}
 }
 
+void conn_node_friendsrv::handle_friend_track_enemy_request()
+{
+	PROTO_HEAD *head = get_head();
+	EXTERN_DATA *extern_data = get_extern_data(head);
+
+	FriendOperateRequest *req = friend_operate_request__unpack(NULL, get_data_len(), get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
+		return;
+	}
+
+	uint64_t target_id = req->playerid;
+	friend_operate_request__free_unpacked(req, NULL);
+
+	int ret = 0;
+	AutoReleaseBatchFriendPlayer arb_friend;
+	do
+	{
+		FriendPlayer *player = get_friend_player(extern_data->player_id);
+		if (!player)
+		{
+			ret = ERROR_ID_SERVER;
+			LOG_ERR("[%s:%d] player[%lu] get friend failed", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+		arb_friend.push_back(player);
+
+		int idx = -1;
+		for (int i = 0; i < MAX_FRIEND_ENEMY_NUM; ++i)
+		{
+			if (player->enemies[i].player_id == 0)
+			{
+				break;
+			}
+
+			if (player->enemies[i].player_id == target_id)
+			{
+				idx = i;
+				break;
+			}
+		}
+
+		if (idx < 0)
+		{
+			ret = ERROR_ID_FRIEND_NOT_IN_LIST;
+			LOG_ERR("[%s:%d] player[%lu] get enemy[%lu] failed", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
+			break;
+		}
+
+		EnemyUnit *pEnemy = &player->enemies[idx];
+		uint32_t now = time_helper::get_cached_time() / 1000;
+		if (pEnemy->track_time > now)
+		{
+			ret = 190500156;
+			LOG_ERR("[%s:%d] player[%lu] enemy[%lu] already in track", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
+			break;
+		}
+
+		pEnemy->track_time = now + sg_friend_track_time;
+		save_friend_player(player);
+		
+		{
+			FRIEND_TRACK_REQUEST *track_req = (FRIEND_TRACK_REQUEST*)get_send_data();
+			uint32_t data_len = sizeof(FRIEND_TRACK_REQUEST);
+			memset(track_req, 0, data_len);
+			track_req->target_id = target_id;
+			track_req->cost_item_id = sg_friend_track_item_id;
+			track_req->cost_item_num = sg_friend_track_item_num;
+			track_req->track_time = pEnemy->track_time;
+			fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_FRIEND_TRACK_ENEMY_REQUEST, data_len, 0);
+		}
+	} while (0);
+
+	if (ret != 0)
+	{
+		FriendTrackEnemyAnswer resp;
+		friend_track_enemy_answer__init(&resp);
+
+		resp.result = ret;
+		resp.playerid = target_id;
+		resp.tracktime = 0;
+
+		fast_send_msg(&connecter, extern_data, MSG_ID_FRIEND_TRACK_ENEMY_ANSWER, friend_track_enemy_answer__pack, resp);
+	}
+}
+
+void conn_node_friendsrv::handle_friend_track_enemy_answer()
+{
+	PROTO_HEAD *head = get_head();
+	EXTERN_DATA *extern_data = get_extern_data(head);
+
+	FRIEND_TRACK_ANSWER *res = (FRIEND_TRACK_ANSWER*)get_data();
+
+	uint64_t target_id = res->target_id;
+
+	int ret = 0;
+	AutoReleaseBatchFriendPlayer arb_friend;
+
+	EnemyUnit *pEnemy = NULL;
+	do
+	{
+		FriendPlayer *player = get_friend_player(extern_data->player_id);
+		if (!player)
+		{
+			ret = ERROR_ID_SERVER;
+			LOG_ERR("[%s:%d] player[%lu] get friend failed", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+		arb_friend.push_back(player);
+
+		int idx = -1;
+		for (int i = 0; i < MAX_FRIEND_ENEMY_NUM; ++i)
+		{
+			if (player->enemies[i].player_id == 0)
+			{
+				break;
+			}
+
+			if (player->enemies[i].player_id == target_id)
+			{
+				idx = i;
+				break;
+			}
+		}
+
+		if (idx < 0)
+		{
+			ret = ERROR_ID_FRIEND_NOT_IN_LIST;
+			LOG_ERR("[%s:%d] player[%lu] get enemy[%lu] failed", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
+			break;
+		}
+
+		pEnemy = &player->enemies[idx];
+		if (res->result != 0)
+		{
+			pEnemy->track_time = 0;
+			save_friend_player(player);
+		}
+	} while (0);
+
+	FriendTrackEnemyAnswer resp;
+	friend_track_enemy_answer__init(&resp);
+
+	resp.result = (res->result != 0 ? res->result : ret);
+	resp.playerid = target_id;
+	resp.tracktime = (pEnemy ? pEnemy->track_time : 0);
+
+	fast_send_msg(&connecter, extern_data, MSG_ID_FRIEND_TRACK_ENEMY_ANSWER, friend_track_enemy_answer__pack, resp);
+}
+
+void conn_node_friendsrv::handle_friend_auto_accept_apply_request()
+{
+	PROTO_HEAD *head = get_head();
+	EXTERN_DATA *extern_data = get_extern_data(head);
+
+	int ret = 0;
+	AutoReleaseBatchFriendPlayer arb_friend;
+	FriendPlayer *player = NULL;
+	do
+	{
+		player = get_friend_player(extern_data->player_id);
+		if (!player)
+		{
+			ret = ERROR_ID_SERVER;
+			LOG_ERR("[%s:%d] player[%lu] get friend failed", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+		arb_friend.push_back(player);
+
+		if (player->auto_accept_apply == 0)
+		{
+			player->auto_accept_apply = 1;
+		}
+		else
+		{
+			player->auto_accept_apply = 0;
+		}
+
+		save_friend_player(player);
+	} while (0);
+
+	FriendAutoAcceptApplyAnswer resp;
+	friend_auto_accept_apply_answer__init(&resp);
+
+	resp.result = ret;
+	resp.autoacceptapply = (player != NULL ? player->auto_accept_apply : 0);
+
+	fast_send_msg(&connecter, extern_data, MSG_ID_FRIEND_AUTO_ACCEPT_APPLY_ANSWER, friend_auto_accept_apply_answer__pack, resp);
+}
+
 void conn_node_friendsrv::handle_friend_chat_request()
 {
 	PROTO_HEAD *head = get_head();
@@ -3517,6 +3793,7 @@ void conn_node_friendsrv::handle_player_online_notify()
 		}
 
 		sync_friend_num_to_game_srv(player);
+		sync_enemy_to_game_srv(player);
 	} while (0);
 
 	// for (std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.begin(); iter != redis_players.end(); ++iter)
@@ -3799,45 +4076,6 @@ void conn_node_friendsrv::handle_friend_rename_request() //玩家改名
 	// {
 	// 	player_redis_info__free_unpacked(iter->second, NULL);
 	// }
-}
-
-void conn_node_friendsrv::handle_friend_is_enemy_request()
-{
-	PROTO_HEAD *head = get_head();
-	EXTERN_DATA *extern_data = get_extern_data(head);
-
-	FRIEND_IS_ENEMY_REQUEST *req = (FRIEND_IS_ENEMY_REQUEST *)get_data();
-
-	AutoReleaseBatchFriendPlayer arb_friend;
-	FriendPlayer *player = NULL;
-	do
-	{
-		player = get_friend_player(extern_data->player_id);
-		if (!player)
-		{
-			LOG_ERR("[%s:%d] player[%lu] get friend failed", __FUNCTION__, __LINE__, extern_data->player_id);
-			break;
-		}
-		arb_friend.push_back(player);
-	} while(0);
-
-	FRIEND_IS_ENEMY_ANSWER *resp = (FRIEND_IS_ENEMY_ANSWER *)get_send_data();
-	uint32_t data_len = sizeof(FRIEND_IS_ENEMY_ANSWER);
-	memset(resp, 0, data_len);
-	resp->dead_id = req->dead_id;
-	resp->is_enemy = false;
-	if (player)
-	{
-		for (int i = 0; i < get_enemy_limit_num(); ++i)
-		{
-			if (player->enemies[i] != 0 && player->enemies[i] == req->dead_id)
-			{
-				resp->is_enemy = true;
-				break;
-			}
-		}
-	}
-	fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_FRIEND_IS_ENEMY_ANSWER, data_len, 0);
 }
 
 void conn_node_friendsrv::send_to_all_player(uint16_t msg_id, void *data, pack_func func)

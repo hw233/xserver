@@ -103,6 +103,7 @@ struct RaidScriptTable;
 struct RandomBox;
 struct RandomCardRewardTable;
 struct RandomCardTable;
+struct RandomCollectionTable;
 struct RandomDungeonTable;
 struct RandomMonsterTable;
 struct RankingRewardTable;
@@ -252,6 +253,7 @@ void free_RaidScriptTable(struct RaidScriptTable *p);
 void free_RandomBox(struct RandomBox *p);
 void free_RandomCardRewardTable(struct RandomCardRewardTable *p);
 void free_RandomCardTable(struct RandomCardTable *p);
+void free_RandomCollectionTable(struct RandomCollectionTable *p);
 void free_RandomDungeonTable(struct RandomDungeonTable *p);
 void free_RandomMonsterTable(struct RandomMonsterTable *p);
 void free_RankingRewardTable(struct RankingRewardTable *p);
@@ -828,6 +830,8 @@ struct BuffTable
 	uint64_t *DeleteType; //11
 	uint64_t  IsDeBuff; //12
 	uint64_t  IsControl; //13
+	uint64_t  CoverType1; //14
+	uint64_t  BuffLv; //15
 }__attribute__ ((packed));
 
 struct CampDefenseTable
@@ -855,6 +859,13 @@ struct CampDefenseTable
 	uint64_t  TaskID; //15
 	uint64_t  MiningLimit1; //16
 	uint64_t  MiningLimit2; //17
+	uint64_t  DropNum1; //18
+	uint64_t  DropNum2; //19
+	uint32_t n_ProtectMonsterID; //20
+	uint64_t *ProtectMonsterID; //20
+	uint32_t n_ProtectMonsterNum; //21
+	uint64_t *ProtectMonsterNum; //21
+	uint64_t  ProtectBuff; //22
 }__attribute__ ((packed));
 
 struct CampTable
@@ -959,6 +970,11 @@ struct CollectTable
 	double  CollectionSize; //14
 	uint32_t n_TaskIdShow; //15
 	uint64_t *TaskIdShow; //15
+	uint64_t  DropType; //16
+	uint32_t n_Drop1; //17
+	uint64_t *Drop1; //17
+	uint32_t n_Drop2; //18
+	uint64_t *Drop2; //18
 }__attribute__ ((packed));
 
 struct ColourTable
@@ -1948,6 +1964,19 @@ struct RandomCardTable
 	uint32_t n_Parameter2; //5
 	uint64_t *Parameter2; //5
 	uint64_t  Probability; //6
+}__attribute__ ((packed));
+
+struct RandomCollectionTable
+{
+	uint64_t  ID; //1
+	uint64_t  RandomType; //2
+	uint64_t  CollectionID; //3
+	uint64_t  MapID; //4
+	uint32_t n_PointX; //5
+	uint64_t *PointX; //5
+	uint32_t n_PointZ; //6
+	uint64_t *PointZ; //6
+	uint64_t  Num; //7
 }__attribute__ ((packed));
 
 struct RandomDungeonTable

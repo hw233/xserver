@@ -14,7 +14,7 @@ message wanyaogu_bbq_notify
 	required uint32 result = 1;  //成功0，失败1
 }
 
-message wanyaoka_get_notify
-{
-	repeated uint32 wanyaoka_id = 1;  //获得的万妖卡列表	
-}
+//message wanyaoka_get_notify
+//{
+// 	repeated uint32 wanyaoka_id = 1;  //获得的万妖卡列表	
+//}

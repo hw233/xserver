@@ -72,8 +72,9 @@ enum SERVER_PROTO {
     SERVER_PROTO_FRIEND_SYNC_FRIEND_NUM,         //同步好友数
     SERVER_PROTO_FRIEND_ADD_GIFT,                //好友送礼接收
     SERVER_PROTO_FRIEND_SEND_GIFT_SUCCESS,       //好友送礼成功
-    SERVER_PROTO_FRIEND_IS_ENEMY_REQUEST,        //玩家是否仇人 game_srv --> friend_srv
-    SERVER_PROTO_FRIEND_IS_ENEMY_ANSWER,         //玩家是否仇人 friend_srv --> game_srv
+    SERVER_PROTO_FRIEND_TRACK_ENEMY_REQUEST,     //追踪仇人请求 friend_srv --> game_srv
+    SERVER_PROTO_FRIEND_TRACK_ENEMY_ANSWER,      //追踪仇人返回 game_srv --> friend_srv
+    SERVER_PROTO_FRIEND_SYNC_ENEMY,              //同步仇人信息
 
     //邮件服消息
     SERVER_PROTO_MAIL_INSERT = 1600,        //插入新邮件
@@ -535,6 +536,17 @@ typedef struct proto_friend_sync_info
     ProtoFriend contacts[MAX_FRIEND_CONTACT_NUM];
 } PROTO_FRIEND_SYNC_INFO;
 
+struct ProtoEnemy
+{
+    uint64_t player_id;
+    uint32_t track_time;
+};
+
+typedef struct proto_friend_sync_enemy
+{
+    ProtoEnemy enemies[MAX_FRIEND_ENEMY_NUM];
+} PROTO_FRIEND_SYNC_ENEMY;
+
 typedef struct proto_friend_sync_rename
 {
     PROTO_HEAD head;
@@ -542,16 +554,19 @@ typedef struct proto_friend_sync_rename
     char       new_name[MAX_PLAYER_NAME_LEN + 1];
 } PROTO_FRIEND_SYNC_RENAME;
 
-typedef struct friend_is_enemy_request
+typedef struct friend_track_request
 {
-    uint64_t dead_id;
-} FRIEND_IS_ENEMY_REQUEST;
+	uint64_t target_id;
+	uint32_t cost_item_id;
+	uint32_t cost_item_num;
+	uint32_t track_time;
+} FRIEND_TRACK_REQUEST;
 
-typedef struct friend_is_enemy_answer
+typedef struct friend_track_answer
 {
-    uint64_t dead_id;
-    bool     is_enemy;
-} FRIEND_IS_ENEMY_ANSWER;
+	uint32_t result;
+	uint64_t target_id;
+} FRIEND_TRACK_ANSWER;
 
 typedef struct proto_guild_disband
 {

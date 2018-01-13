@@ -919,6 +919,7 @@ void chat_mod::gm_go_task( player_struct *player, int task_id )
 		}
 
 		player->add_finish_task( cur_task );
+		player->give_task_reward( cur_task );
 		TaskTable *config = get_config_by_id( cur_task, &task_config );
 		if ( !config )
 		{

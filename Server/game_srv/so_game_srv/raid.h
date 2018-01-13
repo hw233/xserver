@@ -161,6 +161,8 @@ union raid_ai_data
 		uint64_t camp; //攻守表ID
 		uint64_t lv; //阵营表ID
 		uint64_t time_rest;
+		double speed; 
+		uint64_t time_speed;
 		int progress;
 	} zhenying_data;
 	struct

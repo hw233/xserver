@@ -1,6 +1,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <algorithm>
+#include <sstream>
 #include "game_event.h"
 #include "raid_ai.h"
 #include "raid_manager.h"
@@ -10,6 +11,7 @@
 #include "msgid.h"
 #include "raid.pb-c.h" 
 #include "../proto/relive.pb-c.h"
+#include "../proto/role.pb-c.h"
 #include "../proto/zhenying.pb-c.h"
 #include "../proto/player_redis_info.pb-c.h"
 #include "zhenying_battle.h"
@@ -72,6 +74,11 @@ void update_zhenying_score(player_struct *player, int add, uint64_t taskId)
 
 void zhenying_raid_ai_tick_on_truck(raid_struct *raid)
 {
+	if (raid->data->ai_data.zhenying_data.progress != DAILY__MINE_STATE_RUN)
+	{
+		return;
+	}
+
 	monster_struct *pTruck = monster_manager::get_monster_by_id(raid->data->ai_data.zhenying_data.truck);
 	if (pTruck == NULL)
 	{
@@ -117,6 +124,24 @@ void zhenying_raid_ai_tick_on_truck(raid_struct *raid)
 			player->data->zhenying.protect_num += 1;
 			update_zhenying_score(player, tableDaily->SupportMine[2], tableDaily->TaskID);
 		}
+	}
+
+	if (pTruck->get_attr(PLAYER_ATTR_MOVE_SPEED) < raid->data->ai_data.zhenying_data.speed &&
+		time_helper::get_cached_time() / 1000 > raid->data->ai_data.zhenying_data.time_speed)
+	{
+		pTruck->set_attr(PLAYER_ATTR_MOVE_SPEED, raid->data->ai_data.zhenying_data.speed);
+		//通知客户端减速
+		PlayerAttrNotify nty;
+		player_attr_notify__init(&nty);
+		AttrData attr_data;
+		AttrData *attr_data_point[2] = { &attr_data };
+		nty.player_id = pTruck->get_uuid();
+		nty.attrs = attr_data_point;
+		attr_data__init(&attr_data);
+		attr_data.id = PLAYER_ATTR_MOVE_SPEED;
+		attr_data.val = pTruck->get_speed();
+		nty.n_attrs = 1;
+		pTruck->broadcast_to_sight(MSG_ID_PLAYER_ATTR_NOTIFY, (void *)&nty, (pack_func)player_attr_notify__pack, true);
 	}
 }
 void zhenying_raid_ai_tick_check_progress(raid_struct *raid)
@@ -167,9 +192,38 @@ void zhenying_raid_ai_tick(raid_struct *raid)
 	zhenying_raid_ai_tick_check_progress(raid);
 }
 
+static void zhenying_raid_ai_create_truck(raid_struct *raid)
+{
+	CampDefenseTable *tableDaily = get_config_by_id(raid->data->ai_data.zhenying_data.camp, &zhenying_daily_config);
+	if (tableDaily == NULL)
+	{
+		return;
+	}
+	FactionBattleTable *table = get_zhenying_battle_table(raid->data->ai_data.zhenying_data.lv);
+	if (table == NULL)
+	{
+		return;
+	}
+	monster_struct *pMon = monster_manager::create_monster_at_pos(NULL, tableDaily->TruckID, table->Level, tableDaily->TruckRouteX[0], tableDaily->TruckRouteY[0], 0, NULL, 0);
+	pMon->create_config = get_daily_zhenying_truck_config(raid->data->ai_data.zhenying_data.camp);
+	//pMon->set_attr(PLAYER_ATTR_ZHENYING, raid->data->ai_data.zhenying_data.camp % 10);
+	pMon->set_camp_id(raid->data->ai_data.zhenying_data.camp % 10);
+	pMon->born_pos.pos_x = tableDaily->TruckRouteX[0];
+	pMon->born_pos.pos_z = tableDaily->TruckRouteY[0];
+	pMon->data->stop_ai = true;
+	buff_manager::create_default_buff(tableDaily->ProtectBuff, pMon, pMon, true);
+
+	if (raid->add_monster_to_scene(pMon, 0) != 0)
+	{
+		LOG_ERR("%s: uuid[%lu] monster[%u] scene[%u]", __FUNCTION__, pMon->data->player_id, pMon->data->monster_id, raid->m_id);
+	}
+	raid->data->ai_data.zhenying_data.truck = pMon->get_uuid();
+	raid->data->ai_data.zhenying_data.speed = pMon->get_attr(PLAYER_ATTR_MOVE_SPEED);
+	raid->data->ai_data.zhenying_data.time_speed = 0;
+}
 static void zhenying_raid_ai_init(raid_struct *raid, player_struct *)
 {
-	
+	zhenying_raid_ai_create_truck(raid);
 }
 
 void zhenying_raid_ai_finished(raid_struct *raid)
@@ -256,6 +310,10 @@ static void zhenying_raid_ai_player_dead(raid_struct *raid, player_struct *playe
 	{
 		player_struct *pKill = (player_struct *)killer;
 		update_task_process(1, pKill);
+		if (player->has_buff(table->parameter1[2]))
+		{
+			return;
+		}
 		int add = 0;
 		if (!player->task_is_finish(tableDaily->TaskID))
 		{
@@ -268,119 +326,169 @@ static void zhenying_raid_ai_player_dead(raid_struct *raid, player_struct *playe
 			{
 				add = table->parameter1[1];
 			}
+			buff_manager::create_default_buff(table->parameter1[2], killer, player, true);
+			std::vector<char *> args;
+			args.push_back(pKill->get_name());
+			std::string sz_num;
+			std::stringstream ss;
+			ss << add;
+			ss >> sz_num;
+			args.push_back(const_cast<char*>(sz_num.c_str()));
+			player->send_system_notice(190500511, &args);
 		}
 		update_zhenying_score(pKill, add, tableDaily->TaskID);
 	}
+}
+static void zhenying_raid_ai_box_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
+{
+	CampDefenseTable *tableDaily = get_config_by_id(raid->data->ai_data.zhenying_data.camp, &zhenying_daily_config);
+	if (tableDaily == NULL)
+	{
+		return;
+	}
+
+	player_struct *pKill = (player_struct *)killer;
+	uint32_t step = 0;
+	for (; step < tableDaily->n_MonsterID - 1; ++step)
+	{
+		if (monster->data->monster_id == tableDaily->MonsterID[step])
+		{
+			break;
+		}
+	}
+	uint32_t addScore = 0;
+	uint32_t mineLimit = 0;
+	if (pKill->get_attr(PLAYER_ATTR_ZHENYING) == raid->data->ai_data.zhenying_data.camp % 10) // 守
+	{
+		if (raid->data->ai_data.zhenying_data.progress == DAILY__MINE_STATE_REST && pKill->get_attr(PLAYER_ATTR_ZHENYING) == raid->data->ai_data.zhenying_data.camp % 10)
+		{
+			addScore = tableDaily->MineralIntegral1[step];
+			mineLimit = tableDaily->MiningLimit1;
+			uint32_t old = raid->data->ai_data.zhenying_data.cur;
+			raid->data->ai_data.zhenying_data.cur += addScore;
+			if (raid->data->ai_data.zhenying_data.cur >= tableDaily->TruckPlan && old < tableDaily->TruckPlan)
+			{
+				FactionBattleTable *table = get_zhenying_battle_table(raid->data->ai_data.zhenying_data.lv);
+				monster_struct *pMon = monster_manager::get_monster_by_id(raid->data->ai_data.zhenying_data.truck);
+				if (pMon != NULL)
+				{
+					pMon->data->stop_ai = false;
+					pMon->delete_one_buff(tableDaily->ProtectBuff, true);
+				}
+				for (uint32_t i = 0; i < tableDaily->n_ProtectMonsterID; ++i)
+				{
+					for (uint32_t j = 0; j < tableDaily->ProtectMonsterNum[i]; ++j)
+					{
+						monster_manager::create_monster_at_pos(raid, tableDaily->ProtectMonsterID[i], table->Level, tableDaily->TruckRouteX[0] + 3 - rand() % 7, tableDaily->TruckRouteY[0] + 3 - rand() % 7, 0, NULL, 0);
+					}
+				}
+				
+				MineState sendState;
+				mine_state__init(&sendState);
+				sendState.state = DAILY__MINE_STATE_RUN;
+				sendState.zhenying = pMon->get_attr(PLAYER_ATTR_ZHENYING);
+				raid->data->ai_data.zhenying_data.progress = DAILY__MINE_STATE_RUN;
+				//fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_DAILY_MINE_STATE_NOTIFY, mine_state__pack, sendState);
+				raid->broadcast_to_scene(MSG_ID_ZHENYING_DAILY_MINE_STATE_NOTIFY, &sendState, (pack_func)mine_state__pack);			
+			}
+			DailyMine sendMine;
+			daily_mine__init(&sendMine);
+			sendMine.cur = raid->data->ai_data.zhenying_data.cur;
+			sendMine.max = tableDaily->TruckPlan;
+			//EXTERN_DATA extern_data;
+			//extern_data.player_id = pKill->get_uuid();
+			//fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_DAILY_MINE_NOTIFY, daily_mine__pack, sendMine);
+			raid->broadcast_to_scene(MSG_ID_ZHENYING_DAILY_MINE_NOTIFY, &sendMine, (pack_func)daily_mine__pack);
+		}
+	}
+	else //攻
+	{
+		addScore = tableDaily->MineralIntegral2[step];
+		mineLimit = tableDaily->MiningLimit2;
+	}
+	if (pKill->data->zhenying.mine < mineLimit)
+	{
+		update_zhenying_score(pKill, addScore, tableDaily->TaskID);
+	}
+
+}
+static void zhenying_raid_ai_truck_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
+{
+	CampDefenseTable *tableDaily = get_config_by_id(raid->data->ai_data.zhenying_data.camp, &zhenying_daily_config);
+	if (tableDaily == NULL)
+	{
+		return;
+	}
+	for (uint32_t i = 0; i < tableDaily->DropNum2; ++i)
+	{
+		Collect *collct = Collect::CreateCollectByPos(raid, tableDaily->TruckDrop2, monster->get_pos()->pos_x + 3 - rand() % 7, 10001, monster->get_pos()->pos_z + 3 - rand() % 7, 0);
+		if (collct != NULL)
+		{
+			collct->m_minType = 2;
+		}
+	}
+	raid->data->ai_data.zhenying_data.cur = 0;
+	std::set<uint64_t> playerIds;
+	raid->get_all_player(playerIds);
+	for (std::set<uint64_t>::iterator it = playerIds.begin(); it != playerIds.end(); ++it)
+	{
+		if (get_entity_type(*it) == ENTITY_TYPE_AI_PLAYER)
+		{
+			continue;
+		}
+		player_struct *player = player_manager::get_player_by_id(*it);
+		if (player != NULL)
+		{
+			player->data->zhenying.protect_num = 0;
+			player->data->zhenying.score_time = 0;
+			player->data->zhenying.gather = 0;
+			//extern_data.player_id = player->get_uuid();
+			
+			raid->data->ai_data.zhenying_data.progress = DAILY__MINE_STATE_DEAD;
+			raid->data->ai_data.zhenying_data.time_rest = time_helper::get_cached_time() / 1000 + tableDaily->ResurrectionTime;
+			//fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_DAILY_MINE_STATE_NOTIFY, mine_state__pack, sendState);
+		}
+	}
+	//EXTERN_DATA extern_data;
+	MineState sendState;
+	mine_state__init(&sendState);
+	sendState.state = raid->data->ai_data.zhenying_data.progress;
+	sendState.zhenying = monster->get_attr(PLAYER_ATTR_ZHENYING);
+	sendState.x = monster->get_pos()->pos_x;
+	sendState.z = monster->get_pos()->pos_z;
+	raid->broadcast_to_scene(MSG_ID_ZHENYING_DAILY_MINE_STATE_NOTIFY, &sendState, (pack_func)mine_state__pack);
+
+	zhenying_raid_ai_create_truck(raid);
 }
 static void zhenying_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
 {
 	player_struct *pKill = NULL;
 	if (killer->get_unit_type() == UNIT_TYPE_PLAYER)
 	{
+		pKill = (player_struct *)killer;
+		update_task_process(3, pKill);
+
+		//DailyScore send;
+		//daily_score__init(&send);
+		//send.point = pKill->data->zhenying.score;
+		//EXTERN_DATA extern_data;
+		//extern_data.player_id = pKill->get_uuid();
+		//fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_DAILY_SCORE_NOTIFY, daily_score__pack, send);
+
 		CampDefenseTable *tableDaily = get_config_by_id(raid->data->ai_data.zhenying_data.camp, &zhenying_daily_config);
 		if (tableDaily == NULL)
 		{
 			return;
 		}
-
-		pKill = (player_struct *)killer;
-		update_task_process(3, pKill);
-
-		DailyScore send;
-		daily_score__init(&send);
-		send.point = pKill->data->zhenying.score;
-		EXTERN_DATA extern_data;
-		extern_data.player_id = pKill->get_uuid();
-		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_DAILY_SCORE_NOTIFY, daily_score__pack, send);
-
-		MineState sendState;
-		mine_state__init(&sendState);
 		if (monster->config->Type == 6) //阵营战的箱子
 		{
-			uint32_t step = 0;
-			for (; step < tableDaily->n_MonsterID - 1; ++step)
-			{
-				if (monster->data->monster_id == tableDaily->MonsterID[step])
-				{
-					break;
-				}
-			}
-			uint32_t addScore = 0;
-			uint32_t mineLimit = 0;
-			if (pKill->get_attr(PLAYER_ATTR_ZHENYING) == raid->data->ai_data.zhenying_data.camp % 10) // 守
-			{
-				if (raid->data->ai_data.zhenying_data.progress == DAILY__MINE_STATE_REST && pKill->get_attr(PLAYER_ATTR_ZHENYING) == raid->data->ai_data.zhenying_data.camp % 10)
-				{
-					addScore = tableDaily->MineralIntegral1[step];
-					mineLimit = tableDaily->MiningLimit1;
-					uint32_t old = raid->data->ai_data.zhenying_data.cur;
-					raid->data->ai_data.zhenying_data.cur += addScore;
-					if (raid->data->ai_data.zhenying_data.cur >= tableDaily->TruckPlan && old < tableDaily->TruckPlan)
-					{
-						FactionBattleTable *table = get_zhenying_battle_table(raid->data->ai_data.zhenying_data.lv);
-						monster_struct *pMon = monster_manager::create_monster_at_pos(NULL, tableDaily->TruckID, table->Level, tableDaily->TruckRouteX[0], tableDaily->TruckRouteY[0], 0, NULL, 0);
-						pMon->create_config = get_daily_zhenying_truck_config(raid->data->ai_data.zhenying_data.camp);
-						//pMon->set_attr(PLAYER_ATTR_ZHENYING, raid->data->ai_data.zhenying_data.camp % 10);
-						pMon->set_camp_id(raid->data->ai_data.zhenying_data.camp % 10);
-						pMon->born_pos.pos_x = tableDaily->TruckRouteX[0];
-						pMon->born_pos.pos_z = tableDaily->TruckRouteY[0];
-
-						if (raid->add_monster_to_scene(pMon, 0) != 0)
-						{
-							LOG_ERR("%s: uuid[%lu] monster[%u] scene[%u]", __FUNCTION__, pMon->data->player_id, pMon->data->monster_id, raid->m_id);
-						}
-						sendState.state = DAILY__MINE_STATE_RUN;
-						raid->data->ai_data.zhenying_data.progress = DAILY__MINE_STATE_RUN;
-						fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_DAILY_MINE_STATE_NOTIFY, mine_state__pack, sendState);
-						raid->data->ai_data.zhenying_data.truck = pMon->get_uuid();
-					}
-					DailyMine sendMine;
-					daily_mine__init(&sendMine);
-					sendMine.cur = raid->data->ai_data.zhenying_data.cur;
-					sendMine.max = tableDaily->TruckPlan;
-					fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_DAILY_MINE_NOTIFY, daily_mine__pack, sendMine);
-				}
-			} 
-			else //攻
-			{
-				addScore = tableDaily->MineralIntegral2[step]; 
-				mineLimit = tableDaily->MiningLimit2; 
-			}
-			if (pKill->data->zhenying.mine < mineLimit)
-			{
-				update_zhenying_score(pKill, addScore, tableDaily->TaskID); 
-			}
+			zhenying_raid_ai_box_dead(raid, monster, killer);
 		}
 		else if (monster->data->monster_id == tableDaily->TruckID)
 		{
-			raid->data->ai_data.zhenying_data.cur = 0;
-			std::set<uint64_t> playerIds;
-			raid->get_all_player(playerIds);
-			for (std::set<uint64_t>::iterator it = playerIds.begin(); it != playerIds.end(); ++it)
-			{
-				if (get_entity_type(*it) == ENTITY_TYPE_AI_PLAYER)
-				{
-					continue;
-				}
-				player_struct *player = player_manager::get_player_by_id(*it);
-				if (player != NULL)
-				{
-					player->data->zhenying.protect_num = 0;
-					player->data->zhenying.score_time = 0;
-					Collect *collct = Collect::CreateCollectByPos(raid, tableDaily->TruckDrop1,monster->get_pos()->pos_x,10001, monster->get_pos()->pos_z, 0);
-					if (collct != NULL)
-					{
-						collct->m_minType = 2;
-					}
-					sendState.state = DAILY__MINE_STATE_DEAD;
-					raid->data->ai_data.zhenying_data.progress = DAILY__MINE_STATE_DEAD;
-					raid->data->ai_data.zhenying_data.time_rest = time_helper::get_cached_time() / 1000 + tableDaily->ResurrectionTime;
-					fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_DAILY_MINE_STATE_NOTIFY, mine_state__pack, sendState);
-				}
-			}
+			zhenying_raid_ai_truck_dead(raid, monster, killer);
 		}
 	}
-
 }
 static void zhenying_raid_ai_collect(raid_struct *raid, player_struct *player, Collect *collect)
 {
@@ -414,10 +522,12 @@ static void zhenying_raid_ai_collect(raid_struct *raid, player_struct *player, C
 	{
 		update_zhenying_score(player, add, tableDaily->TaskID);
 	}
+	player->data->zhenying.gather = 1;
 }
 
 static void zhenying_raid_ai_player_ready(raid_struct *raid, player_struct *player)
-{	
+{
+	player->data->zhenying.score = 0;
 	if (raid->data->state != RAID_STATE_START)
 	{
 		raid->player_leave_raid(player);
@@ -515,7 +625,58 @@ static void zhenying_raid_ai_player_relive(raid_struct *raid, player_struct *pla
 
 static void zhenying_raid_ai_attack(raid_struct *raid, player_struct *player, unit_struct *target, int damage)
 {
+	CampDefenseTable *tableDaily = get_config_by_id(raid->data->ai_data.zhenying_data.camp, &zhenying_daily_config);
+	if (tableDaily == NULL)
+	{
+		return;
+	}
+	if (target->get_unit_type() == UNIT_TYPE_BOSS)
+	{
+		monster_struct *monster = (monster_struct *)target;
+		if (monster->data->monster_id == tableDaily->TruckID)
+		{
+			std::vector<char *> args;
+			char name[MAX_PLAYER_NAME_LEN];
+			if (raid->data->ai_data.zhenying_data.camp % 10 == ZHENYING__TYPE__FULONGGUO)
+			{
+				sprintf(name,"%s","朝廷");
+			} 
+			else
+			{
+				sprintf(name, "%s", "义军");
+			}
+			args.push_back(name);
+			SystemNoticeNotify nty;
+			system_notice_notify__init(&nty);
+			nty.id = 190500514;
+			nty.n_args = args.size();
+			nty.args = &args[0];
+			raid->broadcast_to_scene(MSG_ID_SYSTEM_NOTICE_NOTIFY, &nty, (pack_func)system_notice_notify__pack);
 
+			ParameterTable *table = get_config_by_id(161001021, &parameter_config);
+			if (table == NULL)
+			{
+				return;
+			}
+			if (time_helper::get_cached_time() / 1000 > raid->data->ai_data.zhenying_data.time_speed)
+			{
+				monster->set_attr(PLAYER_ATTR_MOVE_SPEED, raid->data->ai_data.zhenying_data.speed * table->parameter1[0] / 100);//raid->data->ai_data.zhenying_data.speed * (100 - table->parameter1[0]) / 100);
+				//通知客户端减速
+				PlayerAttrNotify nty;
+				player_attr_notify__init(&nty);
+				AttrData attr_data;
+				AttrData *attr_data_point[2] = {&attr_data};
+				nty.player_id = monster->get_uuid();
+				nty.attrs = attr_data_point;
+				attr_data__init(&attr_data);
+				attr_data.id = PLAYER_ATTR_MOVE_SPEED;
+				attr_data.val = monster->get_speed();
+				nty.n_attrs = 1;
+				target->broadcast_to_sight(MSG_ID_PLAYER_ATTR_NOTIFY, (void *)&nty, (pack_func)player_attr_notify__pack, true);
+			}
+			raid->data->ai_data.zhenying_data.time_speed = time_helper::get_cached_time() / 1000 + table->parameter1[1];
+		}
+	}
 }
 
 static void zhenying_raid_ai_escort_end_piont(raid_struct *raid, monster_struct *monster)
@@ -536,8 +697,16 @@ static void zhenying_raid_ai_escort_end_piont(raid_struct *raid, monster_struct 
 		raid->data->ai_data.zhenying_data.progress = DAILY__MINE_STATE_COMPLETE;
 		raid->data->ai_data.zhenying_data.time_rest = time_helper::get_cached_time() / 1000 + tableDaily->ResurrectionTime;
 		
+		for (uint32_t i = 0; i < tableDaily->DropNum1; ++i)
+		{
+			Collect *collct = Collect::CreateCollectByPos(raid, tableDaily->TruckDrop1, monster->get_pos()->pos_x + 3 - rand() % 7, 10001, monster->get_pos()->pos_z + 3 - rand() % 7, 0);
+			if (collct != NULL)
+			{
+				collct->m_minType = 3;
+			}
+		}
+
 		EXTERN_DATA extern_data;
-		
 		std::set<uint64_t> playerIds;
 		raid->get_all_player(playerIds);
 		for (std::set<uint64_t>::iterator it = playerIds.begin(); it != playerIds.end(); ++it)
@@ -549,19 +718,34 @@ static void zhenying_raid_ai_escort_end_piont(raid_struct *raid, monster_struct 
 			player_struct *player = player_manager::get_player_by_id(*it);
 			if (player != NULL)
 			{
-				Collect *collct = Collect::CreateCollectByPos(raid, tableDaily->TruckDrop2, monster->get_pos()->pos_x, 10001, monster->get_pos()->pos_z, 0);
-				if (collct != NULL)
-				{
-					collct->m_minType = 3;
-				}
 				player->data->zhenying.protect_num = 0;
 				player->data->zhenying.score_time = 0;
+				player->data->zhenying.gather = 0;
 
 				extern_data.player_id = player->get_uuid();
 				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_DAILY_MINE_STATE_NOTIFY, mine_state__pack, sendState);
 			}
 		}
+
+		std::vector<char *> args;
+		char name[MAX_PLAYER_NAME_LEN];
+		if (raid->data->ai_data.zhenying_data.camp % 10 == ZHENYING__TYPE__FULONGGUO)
+		{
+			sprintf(name, "%s", "朝廷");
+		}
+		else
+		{
+			sprintf(name, "%s", "义军");
+		}
+		args.push_back(name);
+		SystemNoticeNotify nty;
+		system_notice_notify__init(&nty);
+		nty.id = 190500515;
+		nty.n_args = args.size();
+		nty.args = &args[0];
+		raid->broadcast_to_scene(MSG_ID_SYSTEM_NOTICE_NOTIFY, &nty, (pack_func)system_notice_notify__pack);
 	}
+	zhenying_raid_ai_create_truck(raid);
 }
 
 struct raid_ai_interface raid_ai_zhenying_interface =

@@ -59,6 +59,13 @@ double cash_truck_struct::get_buff_fight_attr(uint32_t id)
 	return data->buff_fight_attr[id];
 }
 
+player_struct *cash_truck_struct::get_owner()
+{
+	if (!data)
+		return NULL;
+	return player_manager::get_player_by_id(data->owner);
+}
+
 bool cash_truck_struct::can_beattack()
 {
 	if (buff_state & BUFF_STATE_GOD)
@@ -225,17 +232,14 @@ void cash_truck_struct::on_tick()
 		//通知客户端减速
 		PlayerAttrNotify nty;
 		player_attr_notify__init(&nty);
-		AttrData attr_data[PLAYER_ATTR_MAX + 2];
-		AttrData *attr_data_point[PLAYER_ATTR_MAX + 2];
+		AttrData attr_data;
+		AttrData *attr_data_point[2] = {&attr_data};
 		nty.player_id = get_uuid();
-		nty.n_attrs = 0;
 		nty.attrs = attr_data_point;
-		attr_data_point[nty.n_attrs] = &attr_data[nty.n_attrs];
-		attr_data__init(&attr_data[nty.n_attrs]);
-		attr_data[nty.n_attrs].id = PLAYER_ATTR_MOVE_SPEED;
-		attr_data[nty.n_attrs].val = get_speed();
-		nty.n_attrs++;
-		//conn_node_gamesrv::send_to_all_player(MSG_ID_PLAYER_ATTR_NOTIFY, (void *)&nty, (pack_func)player_attr_notify__pack);
+		attr_data__init(&attr_data);
+		attr_data.id = PLAYER_ATTR_MOVE_SPEED;
+		attr_data.val = get_speed();
+		nty.n_attrs = 1;
 		if (player != NULL && player->sight_space != NULL)
 		{
 			extern_data.player_id = player->get_uuid();

@@ -174,6 +174,7 @@ std::map<uint64_t, struct P20076Table*> tower_level_config; //冲塔表
 std::map<uint64_t, struct LoginGifts*> login_gifts_config; //登录奖励表
 std::map<uint64_t, struct CiFuTable*> ci_fu_config; //赐福奖励表
 std::map<uint64_t, struct RandomBox*> random_box_config; //随机宝箱表
+std::map<uint64_t, struct RandomCollectionTable*> random_collect_config; //随机采集点表
 
 /////////////////////
 uint32_t sg_bag_unlock_base_price;
@@ -430,4 +431,6 @@ uint32_t sg_login_reward_chixu_day;  //登录奖励持续天数
 uint32_t sg_new_battle_point;  //新手阵营战占旗加积分
 
 uint32_t sg_strong_function_time;
+uint32_t sg_money_exchange_get_yinbi_num;	  //货币兑换获取银币基础系数
+uint32_t sg_money_exchange_get_yinpiao_num;   //货币兑换获取银票基础系数
 

@@ -271,6 +271,8 @@ void free_CampDefenseTable(struct CampDefenseTable *p)
     free(p->MineralIntegral1);
     free(p->MineralIntegral2);
     free(p->SupportMine);
+    free(p->ProtectMonsterID);
+    free(p->ProtectMonsterNum);
     free(p);
 };
 
@@ -338,6 +340,8 @@ void free_CollectTable(struct CollectTable *p)
     free(p->Parameter1);
     free(p->Parameter2);
     free(p->TaskIdShow);
+    free(p->Drop1);
+    free(p->Drop2);
     free(p);
 };
 
@@ -906,6 +910,14 @@ void free_RandomCardTable(struct RandomCardTable *p)
     free(p->Condition);
     free(p->Parameter1);
     free(p->Parameter2);
+    free(p);
+};
+
+void free_RandomCollectionTable(struct RandomCollectionTable *p)
+{
+    if (!p) return;
+    free(p->PointX);
+    free(p->PointZ);
     free(p);
 };
 

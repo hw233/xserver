@@ -31,8 +31,8 @@
             },
             {
                 ['TargetPos'] = {
-                    ['TargetPosX'] = 210.11,
-                    ['TargetPosY'] = 19.24602,
+                    ['TargetPosX'] = 216.11,
+                    ['TargetPosY'] = 20,
                     ['TargetPosZ'] = 229.34,
                 },
                 ['RemainTime'] = 0,
@@ -47,7 +47,7 @@
             },
             {
                 ['TargetPos'] = {
-                    ['TargetPosX'] = 200.35,
+                    ['TargetPosX'] = 195.35,
                     ['TargetPosY'] = 19,
                     ['TargetPosZ'] = 126.71,
                 },
@@ -107,7 +107,7 @@
             },
             {
                 ['TargetPos'] = {
-                    ['TargetPosX'] = 212.97,
+                    ['TargetPosX'] = 216.97,
                     ['TargetPosY'] = 19.20407,
                     ['TargetPosZ'] = 233.05,
                 },
@@ -123,7 +123,7 @@
             },
             {
                 ['TargetPos'] = {
-                    ['TargetPosX'] = 203.21,
+                    ['TargetPosX'] = 197.21,
                     ['TargetPosY'] = 19,
                     ['TargetPosZ'] = 130.42,
                 },
@@ -183,7 +183,7 @@
             },
             {
                 ['TargetPos'] = {
-                    ['TargetPosX'] = 213.03,
+                    ['TargetPosX'] = 219.03,
                     ['TargetPosY'] = 19.08138,
                     ['TargetPosZ'] = 226.02,
                 },
@@ -199,7 +199,7 @@
             },
             {
                 ['TargetPos'] = {
-                    ['TargetPosX'] = 203.27,
+                    ['TargetPosX'] = 197.27,
                     ['TargetPosY'] = 19.08,
                     ['TargetPosZ'] = 123.39,
                 },
@@ -259,7 +259,7 @@
             },
             {
                 ['TargetPos'] = {
-                    ['TargetPosX'] = 207.61,
+                    ['TargetPosX'] = 213.61,
                     ['TargetPosY'] = 19.505,
                     ['TargetPosZ'] = 232.61,
                 },
@@ -275,7 +275,7 @@
             },
             {
                 ['TargetPos'] = {
-                    ['TargetPosX'] = 197.85,
+                    ['TargetPosX'] = 192.85,
                     ['TargetPosY'] = 19,
                     ['TargetPosZ'] = 130,
                 },
@@ -335,7 +335,7 @@
             },
             {
                 ['TargetPos'] = {
-                    ['TargetPosX'] = 207.39,
+                    ['TargetPosX'] = 213.39,
                     ['TargetPosY'] = 19.25142,
                     ['TargetPosZ'] = 225.9,
                 },
@@ -351,7 +351,7 @@
             },
             {
                 ['TargetPos'] = {
-                    ['TargetPosX'] = 197.63,
+                    ['TargetPosX'] = 192.63,
                     ['TargetPosY'] = 19.25142,
                     ['TargetPosZ'] = 123.27,
                 },

@@ -879,7 +879,7 @@ void partner_struct::add_ai_interface(int ai_type, struct partner_ai_interface *
 void partner_struct::calc_target_pos(struct position *pos)
 {
 	assert(m_owner);	
-	return m_owner->calc_partner_pos(pos);
+	return m_owner->calc_partner_pos(pos, 2.0);
 	// static float delta[] = {0.75, 0.7, 0.65, 0.6, 0.55, 0.5};
 
 	// assert(m_owner);

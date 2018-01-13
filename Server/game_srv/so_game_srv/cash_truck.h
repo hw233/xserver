@@ -17,8 +17,8 @@ struct cash_truck_data
 	uint64_t player_id;
 	uint32_t monster_id;
 	uint32_t scene_id;  //场景ID 
-	uint32_t guild_id;  //帮会ID 
-	uint64_t raid_uuid; //副本唯一ID
+//	uint32_t guild_id;  //帮会ID 
+//	uint64_t raid_uuid; //副本唯一ID
 	double attrData[PLAYER_ATTR_FIGHT_MAX]; //战斗属性
 	double buff_fight_attr[MAX_BUFF_FIGHT_ATTR]; //战斗算上buff百分比属性
 
@@ -64,6 +64,7 @@ public:
 	double get_buff_fight_attr(uint32_t id);
 	uint32_t get_skill_id();
 	void clear_cur_skill();
+	player_struct *get_owner();	
 
 	bool can_beattack();
 	bool is_in_safe_region();

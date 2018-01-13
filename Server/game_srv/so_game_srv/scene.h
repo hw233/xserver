@@ -8,6 +8,7 @@
 #include "area.h"
 #include "game_config.h"
 #include "map_config.h"
+#include "conn_node_gamesrv.h"
 #include "minheap.h"
 #include <string.h>
 #include <vector>
@@ -46,6 +47,7 @@ public:
 	
 	void get_relive_pos(float pos_x, float pos_z, int32_t *ret_pos_x, int32_t *ret_pos_z, int32_t *ret_direct);
 	virtual SCENE_TYPE_DEFINE get_scene_type();  //实际的场景类型，野外或副本
+	void broadcast_to_scene(uint16_t msg_id, void *msg_data, pack_func func);
 	
 	virtual void on_monster_dead(monster_struct *monster, unit_struct *killer);
 	virtual void on_player_dead(player_struct *player, unit_struct *killer);

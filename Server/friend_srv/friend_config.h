@@ -18,6 +18,9 @@ extern uint32_t sg_friend_gift_send_num;
 extern uint32_t sg_friend_gift_accept_num;
 extern uint32_t sg_friend_group_num;
 extern std::set<uint32_t> sg_friend_gift_id;
+extern uint32_t sg_friend_track_item_id;
+extern uint32_t sg_friend_track_item_num;
+extern uint32_t sg_friend_track_time;
 
 extern std::map<uint64_t, struct RandomCardRewardTable*> wanyaoka_reward_config; //万妖卡奖励配置
 extern std::map<uint64_t, struct ParameterTable *> parameter_config;

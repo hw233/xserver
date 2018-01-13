@@ -20,6 +20,13 @@ extern void normal_ai_befly(monster_struct *monster, unit_struct *player);
 extern bool normal_ai_player_leave_sight(monster_struct *monster, player_struct *player);
 extern void normal_ai_beattack(monster_struct *monster, unit_struct *player);
 
+static float get_rand_distance()
+{
+	float ret = random() % 10000 - 5000;
+	ret = ret / 10000.0;
+	return ret;
+}
+
 static void move_to_player(monster_struct *monster, player_struct *player)
 {
 	if (monster->is_unit_in_move())
@@ -37,7 +44,7 @@ static void move_to_player(monster_struct *monster, player_struct *player)
 	{
 			// 超过10米闪现
 		struct position target_pos;
-		player->calc_partner_pos(&target_pos);
+		player->calc_partner_pos(&target_pos, get_rand_distance());
 		if (monster->scene)
 			monster->scene->delete_monster_from_scene(monster, true);
 		monster->set_pos(target_pos.pos_x, target_pos.pos_z);
@@ -49,7 +56,7 @@ static void move_to_player(monster_struct *monster, player_struct *player)
 		monster->reset_pos();
 		
 		struct position target_pos;
-		player->calc_partner_pos(&target_pos);
+		player->calc_partner_pos(&target_pos, get_rand_distance());
 
 		struct position last;
 		int ret = get_last_can_walk(monster->scene, &monster->data->move_path.pos[0], &target_pos, &last);

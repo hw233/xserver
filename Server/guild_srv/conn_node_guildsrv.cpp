@@ -2497,6 +2497,19 @@ int conn_node_guildsrv::handle_game_task_finish_notify(EXTERN_DATA *extern_data)
 			attrs[GUILD_ATTR_TYPE__ATTR_CUR_TASK] = player->cur_task_id;
 			notify_guild_attrs_update(player->player_id, attrs);
 		}
+
+		//自动接下一个任务
+		if (player->cur_week_task < (uint32_t)config->Times)
+		{
+			uint32_t task_idx = rand() % config->n_Tasklibrary;
+			uint32_t task_id = config->Tasklibrary[task_idx];
+
+			uint32_t *pData = (uint32_t *)get_send_data();
+			uint32_t data_len = sizeof(uint32_t);
+			memset(pData, 0, data_len);
+			*pData = task_id;
+			fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_GUILD_ACCEPT_TASK_REQUEST, data_len, 0);
+		}
 	} while(0);
 
 	return 0;

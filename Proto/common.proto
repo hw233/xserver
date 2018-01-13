@@ -1,5 +1,6 @@
 syntax = "proto2";
 
+//小红点
 message RedDot
 {
 	required uint32 nType = 1; //类型

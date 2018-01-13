@@ -315,6 +315,8 @@ int conn_node_client::dispatch_message()
 		case MSG_ID_FRIEND_DEAL_APPLY_REQUEST:
 //		case MSG_ID_FRIEND_RECOMMEND_REQUEST:
 		case MSG_ID_FRIEND_SEND_GIFT_REQUEST:
+		case MSG_ID_FRIEND_TRACK_ENEMY_REQUEST:
+		case MSG_ID_FRIEND_AUTO_ACCEPT_APPLY_REQUEST:
 			transfer_to_friendsrv();
 			break;
 		case MSG_ID_GUILD_LIST_REQUEST:

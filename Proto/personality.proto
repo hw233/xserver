@@ -61,6 +61,7 @@ message OtherDetailData
 	repeated EquipData equips = 12; //装备信息
 	repeated BaguapaiDressData baguas = 13; //八卦牌信息
 	required uint32 teamId = 14; //队伍ID
+	required uint32 status = 15; //在线状态，0:下线，1:在线
 }
 
 //查看他人个人信息请求

@@ -17,7 +17,8 @@ local MountsTable = {
 		['ItemQuality'] = 3,	--道具品质
 		['Lock'] = 2,	--锁定状态
 		['ListAcc'] = 1,	--列表显示
-		['PrintMounts'] = 1	--显示坐骑
+		['PrintMounts'] = 1,	--显示坐骑
+		['Fly'] = 0	--可否飞行
 		},
 	[180000004] = {
 		['ID'] = 180000004,
@@ -37,7 +38,29 @@ local MountsTable = {
 		['ItemQuality'] = 3,
 		['Lock'] = 1,
 		['ListAcc'] = 1,
-		['PrintMounts'] = 1
+		['PrintMounts'] = 1,
+		['Fly'] = 0
+		},
+	[180000007] = {
+		['ID'] = 180000007,
+		['Name'] = '战马',
+		['ResId'] = 130500003,
+		['BaseAttribute'] = 102200001,
+		['MountsAttribute'] = {21,46,2,3,16,15},
+		['AttributeCeiling'] = {15,15,550,30,50,20},
+		['LockType'] = 0,
+		['TypeParameter'] = 0,
+		['LockCondition'] = '0',
+		['Time'] = {0,604800,2592000},
+		['WingBinding'] = {0,1000,5000},
+		['Binding'] = {0,1000,5000},
+		['Item'] = {201060196,201060196,201060196},
+		['ItemNum'] = {50,10,30},
+		['ItemQuality'] = 3,
+		['Lock'] = 2,
+		['ListAcc'] = 1,
+		['PrintMounts'] = 1,
+		['Fly'] = 1
 		}
 	}
 return MountsTable

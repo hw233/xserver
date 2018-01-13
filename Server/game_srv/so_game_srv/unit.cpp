@@ -157,6 +157,8 @@ unit_struct *unit_struct::get_taunt_target()
 	{
 		if (!m_buffs[i])
 			continue;
+		if (!m_buffs[i]->effect_config)
+			continue;		
 		if (!m_buffs[i]->is_recoverable_buff())
 			continue;
 		if (m_buffs[i]->effect_config->Type != effect_id)
@@ -272,6 +274,16 @@ bool unit_struct::add_watched_list(uint64_t player_id)
 	watched_player_id.push_back(player_id);
 	return true;
 }
+
+void unit_struct::del_watched_list(uint64_t player_id)
+{
+	std::list<uint64_t>::iterator it = std::find(watched_player_id.begin(), watched_player_id.end(), player_id);
+	if (it != watched_player_id.end())
+	{
+		watched_player_id.erase(it);
+	}
+}
+
 bool unit_struct::in_watched_list(uint64_t player_id)
 {
 	std::list<uint64_t>::iterator it = std::find(watched_player_id.begin(), watched_player_id.end(), player_id);
@@ -734,6 +746,7 @@ BuffInfo **unit_struct::pack_unit_buff(size_t *n_data)
 		buff_info__init(buff_pool_buff_point[buff_pool_len]);
 		buff_pool_buff[buff_pool_len].id = m_buffs[i]->data->buff_id;
 		buff_pool_buff[buff_pool_len].start_time = m_buffs[i]->data->start_time / 1000;
+		buff_pool_buff[buff_pool_len].lv = m_buffs[i]->data->lv;
 //		buff_pool_buff[buff_pool_len].end_time = m_buffs[i]->data->end_time / 1000;
 		++buff_pool_len;
 		++(*n_data);
@@ -804,6 +817,8 @@ void unit_struct::delete_state_buff(int state)
 	{
 		if (!m_buffs[i])
 			continue;
+		if (!m_buffs[i]->effect_config)
+			continue;		
 		if (!m_buffs[i]->is_recoverable_buff())
 			continue;
 		if (m_buffs[i]->effect_config->Type == effect_id)
@@ -879,6 +894,8 @@ void unit_struct::clear_god_buff()
 	{
 		if (!m_buffs[i])
 			continue;
+		if (!m_buffs[i]->effect_config)
+			continue;
 		if (m_buffs[i]->effect_config->Type != 170000006)
 			continue;
 
@@ -919,6 +936,18 @@ bool unit_struct::is_in_buff3()
 	return false;
 }
 
+bool unit_struct::has_buff(uint32_t buff_id)
+{
+	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
+	{
+		if (!m_buffs[i])
+			continue;
+		if (m_buffs[i]->data->buff_id == buff_id)
+			return true;
+	}
+	return false;
+}
+
 void unit_struct::clear_type3_buff()
 {
 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
@@ -940,30 +969,30 @@ void unit_struct::clear_type3_buff()
 
 buff_struct *unit_struct::try_cover_duplicate_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack, uint32_t *old_id)
 {
-	if (buff_config->BuffType == 1)
-		return try_cover_duplicate_skill_buff(buff_config, end_time, attack, old_id);
-	else if (buff_config->BuffType == 2)
-		return try_cover_duplicate_item_buff(buff_config, old_id);
-	else if (buff_config->BuffType == 3)
-		return try_cover_duplicate_type3_buff(buff_config, old_id);
-	return NULL;
+//	if (buff_config->BuffType == 1)
+	return try_cover_duplicate_skill_buff(buff_config, end_time, attack, old_id);
+	// else if (buff_config->BuffType == 2)
+	// 	return try_cover_duplicate_item_buff(buff_config, old_id);
+	// else if (buff_config->BuffType == 3)
+	// 	return try_cover_duplicate_type3_buff(buff_config, old_id);
+	// return NULL;
 }
 
-buff_struct *unit_struct::try_cover_duplicate_type3_buff(struct BuffTable *buff_config, uint32_t *old_id)
-{
-	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
-	{
-		if (!m_buffs[i])
-			continue;
-		if (m_buffs[i]->config->BuffType == 3)
-		{
-			*old_id = m_buffs[i]->data->buff_id;
-			m_buffs[i]->reinit_type3_buff(buff_config);
-			return m_buffs[i];
-		}
-	}
-	return NULL;
-}
+// buff_struct *unit_struct::try_cover_duplicate_type3_buff(struct BuffTable *buff_config, uint32_t *old_id)
+// {
+// 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
+// 	{
+// 		if (!m_buffs[i])
+// 			continue;
+// 		if (m_buffs[i]->config->BuffType == 3)
+// 		{
+// 			*old_id = m_buffs[i]->data->buff_id;
+// 			m_buffs[i]->reinit_type3_buff(buff_config);
+// 			return m_buffs[i];
+// 		}
+// 	}
+// 	return NULL;
+// }
 
 buff_struct *unit_struct::try_cover_duplicate_skill_buff(struct BuffTable *buff_config, uint64_t end_time, unit_struct *attack, uint32_t *old_id)
 {
@@ -971,34 +1000,49 @@ buff_struct *unit_struct::try_cover_duplicate_skill_buff(struct BuffTable *buff_
 	{
 		if (!m_buffs[i])
 			continue;
-		if (m_buffs[i]->config->BuffType != 1)
+		// if (m_buffs[i]->config->BuffType != 1)
+		// 	continue;
+		// if (m_buffs[i]->config->CoverType == buff_config->CoverType)
+		// {
+		// 	*old_id = m_buffs[i]->data->buff_id;			
+		// 	m_buffs[i]->reinit_buff(buff_config, end_time, attack);
+		// 	return m_buffs[i];
+		// }
+		if (m_buffs[i]->config->CoverType != buff_config->CoverType)
 			continue;
-		if (m_buffs[i]->config->CoverType == buff_config->CoverType)
+		switch (buff_config->CoverType1)
 		{
-			*old_id = m_buffs[i]->data->buff_id;			
-			m_buffs[i]->reinit_buff(buff_config, end_time, attack);
-			return m_buffs[i];
+			case 0://覆盖
+				m_buffs[i]->reinit_buff(buff_config, end_time, attack);
+				break;
+			case 1: //延长时间
+				m_buffs[i]->data->end_time += buff_config->Time;				
+				break;
+			case 2: //叠加层数
+				m_buffs[i]->add_lv();
+				break;
 		}
+		return m_buffs[i];
 	}
 	return NULL;
 }
-buff_struct *unit_struct::try_cover_duplicate_item_buff(struct BuffTable *buff_config, uint32_t *old_id)
-{
-	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
-	{
-		if (!m_buffs[i])
-			continue;
-		if (m_buffs[i]->config->BuffType != 2)
-			continue;
-		if (m_buffs[i]->config->ID == buff_config->ID)
-		{
-			*old_id = m_buffs[i]->data->buff_id;			
-			m_buffs[i]->data->end_time += buff_config->Time;
-			return m_buffs[i];
-		}
-	}
-	return NULL;
-}
+// buff_struct *unit_struct::try_cover_duplicate_item_buff(struct BuffTable *buff_config, uint32_t *old_id)
+// {
+// 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
+// 	{
+// 		if (!m_buffs[i])
+// 			continue;
+// 		if (m_buffs[i]->config->BuffType != 2)
+// 			continue;
+// 		if (m_buffs[i]->config->ID == buff_config->ID)
+// 		{
+// 			*old_id = m_buffs[i]->data->buff_id;			
+// 			m_buffs[i]->data->end_time += buff_config->Time;
+// 			return m_buffs[i];
+// 		}
+// 	}
+// 	return NULL;
+// }
 void unit_struct::reset_unit_buff_state()
 {
 	uint32_t old_buff_state = buff_state;
@@ -1062,6 +1106,8 @@ void unit_struct::calculate_buff_fight_attr(bool isNty)
 	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
 	{
 		if (!m_buffs[i])
+			continue;
+		if (!m_buffs[i]->effect_config)
 			continue;
 		if (!m_buffs[i]->is_recoverable_buff())
 			continue;

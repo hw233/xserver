@@ -48,6 +48,7 @@ int get_friend_closeness(FriendPlayer *player, uint64_t friend_id);
 PlayerRedisInfo *find_redis_from_map(std::map<uint64_t, PlayerRedisInfo*> &redis_players, uint64_t player_id);
 void notify_friend_list_change(FriendPlayer *player, FriendListChangeInfo &changes);
 void sync_friend_num_to_game_srv(FriendPlayer *player);
+void sync_enemy_to_game_srv(FriendPlayer *player);
 
 bool is_in_contact(FriendPlayer *player, uint64_t target_id);
 bool is_in_block(FriendPlayer *player, uint64_t target_id);
@@ -63,7 +64,7 @@ int get_contact_idx(FriendPlayer *player, uint64_t member_id);
 uint32_t get_new_group_id(FriendPlayer *player);
 int get_recent_num(FriendPlayer *player);
 
-int add_contact(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo &change_info, bool bDelApply);
+int add_contact(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo &change_info, bool bDelApply, bool bAutoAcceptApply);
 int del_contact(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo &change_info);
 int add_apply(FriendPlayer *player, uint64_t target_id);
 int del_apply(FriendPlayer *player, uint64_t target_id, FriendListChangeInfo *change_info);

@@ -37,6 +37,7 @@ struct buff_data
 {
 	uint32_t buff_id;
 	uint64_t start_time;
+	uint32_t lv;
 	uint64_t end_time;
 	uint64_t owner;
 	uint64_t attacker;	
@@ -74,6 +75,7 @@ public:
 	int init_buff(struct BuffTable *buffconfig, uint64_t end_time, unit_struct *attack, unit_struct *owner);
 	int reinit_buff(struct BuffTable *buffconfig, uint64_t end_time, unit_struct *attack);
 	int reinit_type3_buff(struct BuffTable *buffconfig);
+	int add_lv();
 	bool is_recoverable_buff();   //需要恢复的buff, 包括属性和状态
 	bool is_attr_buff();         //属性变更的buff，恢复的时候要恢复属性
 	bool is_hp_buff();          //血量变化的buff，不需要恢复
