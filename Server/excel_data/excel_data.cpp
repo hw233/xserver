@@ -225,6 +225,7 @@ void free_BiaocheTable(struct BiaocheTable *p)
     free(p->shanfeiId);
     free(p->level);
     free(p->Number);
+    free(p->Point);
     free(p);
 };
 
@@ -271,6 +272,7 @@ void free_CampDefenseTable(struct CampDefenseTable *p)
     free(p->MineralIntegral1);
     free(p->MineralIntegral2);
     free(p->SupportMine);
+    free(p->TaskID);
     free(p->ProtectMonsterID);
     free(p->ProtectMonsterNum);
     free(p);
@@ -1287,10 +1289,11 @@ void free_UndergroundTask(struct UndergroundTask *p)
 {
     if (!p) return;
     free(p->LevelSection);
-    free(p->CoinType);
-    free(p->CoinValue);
+    free(p->TaskID);
     free(p->StarProbability);
-    free(p->Rate);
+    free(p->ExpReward);
+    free(p->MoneyReward);
+    free(p->RewardGroup);
     free(p);
 };
 

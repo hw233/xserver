@@ -281,6 +281,10 @@ int dbdata_to_guild_player(DBGuildPlayer *db_player, GuildPlayer *player)
 		player->guild_land_active_reward_id[i] = db_player->guild_land_active_reward_id[i];
 		player->guild_land_active_reward_num[i] = db_player->guild_land_active_reward_num[i];
 	}
+	for (size_t i = 0; i < db_player->n_level_gift && i < MAX_GUILD_LEVEL; ++i)
+	{
+		player->level_gift[i] = db_player->level_gift[i];
+	}
 
 	return 0;
 }
@@ -329,6 +333,7 @@ int dbdata_to_guild(DBGuild *db_guild, GuildInfo *guild)
 			strncpy(guild->important_logs[i].args[j], db_guild->important_logs[i]->args[j], MAX_GUILD_LOG_ARG_LEN); 
 		}
 	}
+	guild->bonfire_open_time = db_guild->bonfire_open_time;
 	return 0;
 }
 
@@ -445,6 +450,7 @@ int pack_guild_info(GuildInfo *guild, uint8_t *out_data)
 		}
 		db_guild->n_important_logs++;
 	}
+	db_guild->bonfire_open_time = guild->bonfire_open_time;
 
 	return dbguild__pack(&db_info, out_data);
 }
@@ -546,6 +552,8 @@ int pack_guild_player(GuildPlayer *player, uint8_t *out_data)
 	db_info.n_guild_land_active_reward_id = db_info.n_guild_land_active_reward_num = i;
 	db_info.guild_land_active_reward_id = &player->guild_land_active_reward_id[0];
 	db_info.guild_land_active_reward_num = &player->guild_land_active_reward_num[0];
+	db_player->level_gift = player->level_gift;
+	db_player->n_level_gift = MAX_GUILD_LEVEL;
 
 	return dbguild_player__pack(db_player, out_data);
 }
@@ -763,8 +771,6 @@ void sync_all_guild_to_gamesrv(void)
 			if(redis_master == NULL)
 				continue;
 			info->player_data[i].player_id = guild->members[i]->player_id;
-			info->player_data[i].level     = redis_master->lv;
-			info->player_data[i].status    = redis_master->status;
 		}
 		req->guild_num++;
 	}
@@ -1677,6 +1683,7 @@ int join_guild(uint64_t player_id, GuildInfo *guild)
 		delete_player_join_apply(player->player_id);
 		sync_guild_info_to_gamesrv(player);
 		update_redis_player_guild(player);
+		refresh_guild_redis_info(guild);
 		if (sync_task)
 		{
 			sync_guild_task_to_gamesrv(player);
@@ -3212,5 +3219,32 @@ int get_player_donate_remain_count(GuildPlayer *player)
 	}
 
 	return 0;
+}
+
+bool guild_bonfire_has_opened(GuildInfo *guild)
+{
+	return (guild->bonfire_open_time != 0 && time_helper::nextOffsetTime(daily_reset_clock, guild->bonfire_open_time) > time_helper::get_cached_time() / 1000);
+}
+
+bool is_in_guild_bonfire_activity_time()
+{
+	do
+	{
+		EventCalendarTable *act_config = get_config_by_id(330000043, &activity_config);
+		if (!act_config)
+		{
+			break;
+		}
+
+		ControlTable *ctrl_config = get_config_by_id(act_config->RelationID, &all_control_config);
+		if (!ctrl_config)
+		{
+			break;
+		}
+
+		uint32_t now = time_helper::get_cached_time() / 1000;
+		return control_is_open(ctrl_config, now);
+	} while(0);
+	return false;
 }
 

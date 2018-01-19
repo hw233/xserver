@@ -34,6 +34,9 @@ uint32_t sg_guild_donate_popularity[3];
 uint32_t sg_guild_task_popularity = 0;
 uint32_t sg_guild_battle_preliminary_popularity[4];
 uint32_t sg_guild_battle_final_popularity[5];
+uint32_t sg_guild_bonfire_popularity;
+
+uint32_t sg_guild_bonfire_open_cost;
 
 std::map<uint32_t, GangsTable*> building_config_map;
 std::map<uint32_t, GangsSkillTable*> skill_config_map;
@@ -124,6 +127,11 @@ static void generate_parameters(void)
 	{
 		sg_guild_task_popularity = config->parameter1[0];
 	}
+	config = get_config_by_id(161000430, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_bonfire_popularity = config->parameter1[0];
+	}
 	config = get_config_by_id(161000431, &parameter_config);
 	if (config && config->n_parameter1 >= 4)
 	{
@@ -139,6 +147,11 @@ static void generate_parameters(void)
 		{
 			sg_guild_battle_final_popularity[i] = config->parameter1[i];
 		}
+	}
+	config = get_config_by_id(161000440, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_bonfire_open_cost = config->parameter1[0];
 	}
 }
 

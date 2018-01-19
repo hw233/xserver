@@ -12,6 +12,7 @@ public:
 	virtual int recv_func(evutil_socket_t fd);
 	static conn_node_guild *server_node;
 private:
+	int dispatch_message();
 	int transfer_to_client();
 	int transfer_to_gamesrv();
 	int transfer_to_mailsrv();

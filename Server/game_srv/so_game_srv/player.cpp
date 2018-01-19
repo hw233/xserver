@@ -1984,12 +1984,16 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		db_info.n_hero_challenge_all_info++;
 	}
 
-	//秘境试炼任务信息
-	db_info.mijing_task_id = data->mi_jing_xiu_lian.task_id;
-	db_info.mijing_time_statu = data->mi_jing_xiu_lian.time_state;
-	db_info.mijing_reward_beilv = data->mi_jing_xiu_lian.reward_beilv;
-	db_info.mijing_huan_num = data->mi_jing_xiu_lian.huan_num;
-	db_info.mijing_lun_num = data->mi_jing_xiu_lian.lun_num;
+	//地宫试炼任务信息
+	DBPlayerDiGongXiuLianInfo digon_xiulian_info;
+	dbplayer_di_gong_xiu_lian_info__init(&digon_xiulian_info);
+	digon_xiulian_info.digong_table_id = data->mi_jing_xiu_lian.digong_id;
+	digon_xiulian_info.digong_task_id = data->mi_jing_xiu_lian.task_id;
+	digon_xiulian_info.digong_time_statu = data->mi_jing_xiu_lian.time_state;
+	digon_xiulian_info.digong_reward_beilv = data->mi_jing_xiu_lian.reward_beilv;
+	digon_xiulian_info.digong_huan_num = data->mi_jing_xiu_lian.huan_num;
+	digon_xiulian_info.digong_lun_num = data->mi_jing_xiu_lian.lun_num;
+	db_info.di_gong_xiulian_info = &digon_xiulian_info;
 	
 	db_info.fishing_bait_id = data->fishing_bait_id;
 	db_info.fishing_reward_num = data->fishing_reward_num;
@@ -2173,6 +2177,8 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		db_info.n_ci_fu_reward_info++;
 	}
 
+	db_info.guild_bonfire_reward_time = data->guild_bonfire_reward_time;
+	db_info.guild_bonfire_activity_time = data->guild_bonfire_activity_time;
 
 	return player_dbinfo__pack(&db_info, out_data);
 }
@@ -2740,12 +2746,16 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		}
 	}
 
-	//秘境试炼任务信息
-	data->mi_jing_xiu_lian.task_id = db_info->mijing_task_id;
-	data->mi_jing_xiu_lian.time_state = db_info->mijing_time_statu;
-	data->mi_jing_xiu_lian.reward_beilv = db_info->mijing_reward_beilv;
-	data->mi_jing_xiu_lian.huan_num = db_info->mijing_huan_num;
-	data->mi_jing_xiu_lian.lun_num = db_info->mijing_lun_num;
+	//地宫试炼任务信息
+	if(db_info->di_gong_xiulian_info != NULL)
+	{
+		data->mi_jing_xiu_lian.digong_id = db_info->di_gong_xiulian_info->digong_table_id;
+		data->mi_jing_xiu_lian.task_id = db_info->di_gong_xiulian_info->digong_task_id;
+		data->mi_jing_xiu_lian.time_state = db_info->di_gong_xiulian_info->digong_time_statu;
+		data->mi_jing_xiu_lian.reward_beilv = db_info->di_gong_xiulian_info->digong_reward_beilv;
+		data->mi_jing_xiu_lian.huan_num = db_info->di_gong_xiulian_info->digong_huan_num;
+		data->mi_jing_xiu_lian.lun_num = db_info->di_gong_xiulian_info->digong_lun_num;
+	}
 
 	data->fishing_bait_id = db_info->fishing_bait_id;
 	data->fishing_reward_num = db_info->fishing_reward_num;
@@ -2852,6 +2862,9 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		data->ci_fu_reward[i].id = db_info->ci_fu_reward_info[i]->id;
 		data->ci_fu_reward[i].time = db_info->ci_fu_reward_info[i]->time;
 	}
+
+	data->guild_bonfire_reward_time = db_info->guild_bonfire_reward_time;
+	data->guild_bonfire_activity_time = db_info->guild_bonfire_activity_time;
 
 	player_dbinfo__free_unpacked(db_info, NULL);
 
@@ -6875,6 +6888,11 @@ int player_struct::try_use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInf
 	{
 	}
 
+	if (config->BuffId > 0 && !can_add_buff_lv(config->BuffId))
+	{
+		return 190500488;
+	}
+
 	if (config->TaskId > 0 && (task_is_finish(config->TaskId) || get_task_info(config->TaskId) != NULL))
 	{
 		return ERROR_ID_PROP_EFFECT_TASK;
@@ -7055,6 +7073,11 @@ int player_struct::use_prop_effect(bag_grid_data& grid, ItemsConfigTable *config
 
 	if (config->SkillId > 0)
 	{
+	}
+
+	if (config->BuffId > 0)
+	{
+		buff_manager::create_default_buff(config->BuffId, this, this, true);
 	}
 
 	if (config->TaskId > 0)
@@ -7750,7 +7773,7 @@ int player_struct::deal_level_up(uint32_t level_old, uint32_t level_new)
 	open_new_fashion(level_old, level_new);
 	cache_to_dbserver();
 	
-	//秘境修炼任务等级触发
+	//地宫修炼任务等级触发
 	for(std::map<uint64_t, UndergroundTask*>::iterator itr = mijing_xiulian_config.begin(); itr != mijing_xiulian_config.end(); itr++)
 	{
 		if(itr->second->n_LevelSection < 1)
@@ -9066,6 +9089,28 @@ void player_struct::load_task_end(void)
 	}
 }
 
+void player_struct::remove_task(uint32_t task_id)
+{
+	for (int i = 0; i < MAX_TASK_ACCEPTED_NUM; ++i)
+	{
+		TaskInfo *info = &data->task_list[i];
+		if (info->id != task_id)
+		{
+			continue;
+		}
+
+		uint32_t task_type = get_task_type(info->id);
+		if (task_type == TT_TRUNK)
+		{
+			continue;
+		}
+
+		task_remove_notify(info->id);
+		memset(info, 0, sizeof(TaskInfo));
+		break;
+	}
+}
+
 void player_struct::init_task_progress(TaskInfo *info)
 {
 	for (int j = 0; j < MAX_TASK_TARGET_NUM; ++j)
@@ -9746,18 +9791,29 @@ int player_struct::accept_task(uint32_t task_id, bool check_condition)
 		}
 	}
 
-	//秘境修炼任务轮数和环数判断
-	std::map<uint64_t, UndergroundTask*>::iterator mijing_config = taskid_to_mijing_xiulian_config.find(task_id);
-	if(mijing_config != taskid_to_mijing_xiulian_config.end())
+	//地宫修炼任务轮数和环数判断
+	TaskTable *config = get_config_by_id(task_id, &task_config);
+	UndergroundTask* digong_config = NULL;
+	if(config != NULL && config->TaskType == TT_DIGONG)
 	{
-		ParameterTable *mijing_parame = get_config_by_id(161000336, &parameter_config);
-		if(mijing_parame == NULL || mijing_parame->n_parameter1 != 2)
+		if(task_id != data->mi_jing_xiu_lian.task_id)
 		{
+			LOG_ERR("[%s:%d] 接取地宫修炼任务失败,任务id跟玩家身上的任务id不匹配,task_id[%u],player_task_id[%u]", task_id, data->mi_jing_xiu_lian.task_id);
+			ret = ERROR_ID_CONFIG;
+			return ret;
+		}
+		digong_config = get_config_by_id(data->mi_jing_xiu_lian.digong_id, &mijing_xiulian_config);
+		if(digong_config == NULL)
+		{
+			LOG_ERR("[%s:%d] 地宫修炼接任务配置错误", __FUNCTION__, __LINE__);
 			ret = ERROR_ID_NO_CONFIG;
 			return ret;
 		}
-		uint32_t max_huan_num =  mijing_parame->parameter1[0];
-		uint32_t max_lun_num  =  mijing_parame->parameter1[1];
+	}
+	if(digong_config != NULL)
+	{
+		uint32_t max_huan_num =  sg_digong_xiulian_sum_huan_num;
+		uint32_t max_lun_num  =  sg_digong_xiulian_sum_lun_num;
 		uint32_t use_num = data->mi_jing_xiu_lian.huan_num * max_lun_num + data->mi_jing_xiu_lian.lun_num;
 		uint32_t all_num = max_huan_num * max_lun_num;
 		if(use_num >= all_num)
@@ -9791,10 +9847,6 @@ int player_struct::accept_task(uint32_t task_id, bool check_condition)
 		info = this->get_task_info(task_id);
 	}
 
-	if(mijing_config != taskid_to_mijing_xiulian_config.end())
-	{
-		data->mi_jing_xiu_lian.task_id = task_id;
-	}
 	this->init_task_progress(info);
 	bool achieved = task_is_achieved(info);
 	if (achieved)
@@ -13509,7 +13561,15 @@ void player_struct::on_tick_10()
 	if (!pos_changed)
 		return;
 	pos_changed = false;
+	notify_watch_pos_change();
+}
 
+void player_struct::notify_watch_pos_change()
+{
+	if (watched_player_id.empty())
+	{
+		return;
+	}
 	SpecialPlayerPosNotify nty;
 	EXTERN_DATA extern_data;
 	special_player_pos_notify__init(&nty);
@@ -14005,6 +14065,7 @@ void player_struct::refresh_oneday_job()
 	notify_travel_task_info();
 	player_active_zhaohui_reward_info_notify();
 	data->fishing_reward_num = 0;
+	data->guild_bonfire_reward_time = 0;
 }
 
 void player_struct::refresh_shop_daily(void)
@@ -14498,6 +14559,7 @@ void player_struct::send_buff_info()
 			notify.start_time = m_buffs[i]->data->start_time / 1000;
 			notify.end_time = m_buffs[i]->data->end_time / 1000;
 			notify.buff_id = m_buffs[i]->data->buff_id;
+			notify.lv = m_buffs[i]->data->lv;			
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ADD_BUFF_NOTIFY, add_buff_notify__pack, notify);
 //			owner->broadcast_to_sight(MSG_ID_ADD_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
 		}
@@ -14744,6 +14806,7 @@ int get_exp_notice_id(uint32_t statis_id)
 		case MAGIC_TYPE_TASK_REWARD:
 		case MAGIC_TYPE_WANYAOGU_BBQ:
 		case MAGIC_TYPE_GUILD_RUQIN_BBQ:
+		case MAGIC_TYPE_GUILD_BONFIRE_REWARD:
 			return 190300001;
 	}
 
@@ -14759,6 +14822,7 @@ int get_coin_notice_id(uint32_t statis_id)
 		case MAGIC_TYPE_TASK_REWARD:
 		case MAGIC_TYPE_WANYAOGU_BBQ:
 		case MAGIC_TYPE_GUILD_RUQIN_REWARD:
+		case MAGIC_TYPE_GUILD_BONFIRE_REWARD:
 			return 190300002;
 	}
 
@@ -17134,7 +17198,10 @@ int player_struct::mijing_shilian_info_notify(uint32_t type)
 			}
 			if(data->attrData[PLAYER_ATTR_LEVEL] >= itr->second->LevelSection[0] && data->attrData[PLAYER_ATTR_LEVEL] <= itr->second->LevelSection[1])
 			{
-				task_id = itr->second->TaskID;
+				uint32_t task_id_xiabiao = rand() % itr->second->n_TaskID;
+				task_id = itr->second->TaskID[task_id_xiabiao];
+				data->mi_jing_xiu_lian.task_id = task_id;
+				data->mi_jing_xiu_lian.digong_id = itr->second->ID;
 			}
 		}
 		if(task_id == 0)
@@ -17149,7 +17216,7 @@ int player_struct::mijing_shilian_info_notify(uint32_t type)
 		task_id = data->mi_jing_xiu_lian.task_id;
 	}
 
-	UndergroundTask* info = get_config_by_id(task_id, &taskid_to_mijing_xiulian_config);
+	UndergroundTask* info = get_config_by_id(data->mi_jing_xiu_lian.digong_id, &mijing_xiulian_config);
 	if(info == NULL)
 	{
 		LOG_ERR("[%s:%d] get mi jing xiu lian task info faild player_id[%lu]", __FUNCTION__, __LINE__, data->player_id);
@@ -17186,33 +17253,20 @@ int player_struct::mijing_shilian_info_notify(uint32_t type)
 		}
 
 
-		if(flag < 0 || flag >= (int)info->n_Rate)
+		if(flag < 0)
 		{
 			LOG_ERR("[%s:%d] get mi jing xiu lian task info faild player_id[%lu]", __FUNCTION__, __LINE__, data->player_id);
 			return -5;
 		}
-		data->mi_jing_xiu_lian.reward_beilv = info->Rate[flag];
-	}
-	//根据倍率获取下标
-	int xiabiao = -1;
-	for(uint32_t i = 0; i <  info->n_Rate; i++)
-	{
-		if(data->mi_jing_xiu_lian.reward_beilv == info->Rate[i])
-		{
-			xiabiao = i;
-		}
-	}
-	if(xiabiao < 0)
-	{
-		LOG_ERR("[%s:%d] get mi jing xiu lian task info faild player_id[%lu]", __FUNCTION__, __LINE__, data->player_id);
-		return -6;
+		data->mi_jing_xiu_lian.reward_beilv = (uint32_t)flag;
 	}
 
 	ans.info_flag = type;
 	ans.task_id = task_id;
-	ans.reward_beilv = xiabiao;
+	ans.reward_beilv = data->mi_jing_xiu_lian.reward_beilv;
 	ans.huan_num = data->mi_jing_xiu_lian.huan_num;
 	ans.lun_num = data->mi_jing_xiu_lian.lun_num;
+	ans.digong_id = data->mi_jing_xiu_lian.digong_id;
 	EXTERN_DATA extern_data;
 	extern_data.player_id = data->player_id;
 	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_MIJING_XIULIAN_TASK_INFO_ANSWER, mi_jing_xiu_lian_task_info_answer__pack, ans);
@@ -19655,14 +19709,8 @@ int player_struct::refresh_player_reward_back_info(uint64_t befor_time)
 				break;
 			case REWARD_BACK_MIJING_XIULIAN_ACTIVE:
 			{
-				ParameterTable *mijing_parame = get_config_by_id(161000336, &parameter_config);
-				if(mijing_parame == NULL || mijing_parame->n_parameter1 != 2)
-				{
-					LOG_ERR("[%s:%d] 秘境修炼奖励找回数据跟新失败，获取参数表失败", __FUNCTION__, __LINE__);
-					break;
-				}
-				max_num = mijing_parame->parameter1[0] * mijing_parame->parameter1[1];
-				use_num = data->mi_jing_xiu_lian.huan_num * mijing_parame->parameter1[1] + data->mi_jing_xiu_lian.lun_num;
+				max_num = sg_digong_xiulian_sum_huan_num * sg_digong_xiulian_sum_lun_num;
+				use_num = data->mi_jing_xiu_lian.huan_num * sg_digong_xiulian_sum_lun_num + data->mi_jing_xiu_lian.lun_num;
 				if(use_num >= max_num)
 					continue;
 				if(data->mi_jing_xiu_lian.task_id != 0 && max_num - use_num - 1 <= 0)

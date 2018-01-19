@@ -28,6 +28,20 @@ message ZhenyingNumberOne
 	required uint32 lv = 3;
 	required uint32 job = 4;
 	required uint32 head = 5;
+	required uint32 kill = 6;
+	required uint32 step = 7;
+	required uint32 expoit = 8;
+}
+message ZhenyingGuild
+{
+	required uint32 guild_id = 1;
+	required string guild_name = 2;
+	required uint32 exploit = 3; //总功勋
+	required string leader_name = 4; //会长
+	required uint32 guild_head = 5; //图标 
+	required uint32 leader_head = 6; //图标
+	required uint32 zhengying = 7; //
+	required uint32 rank = 8; //
 }
 message ZhenyingNumberOneSide
 {
@@ -44,9 +58,10 @@ message ZhenyingPower
 }
 message ZhenyingLeader
 {
-	required ZhenyingNumberOneSide fulongguo = 1;
-	required ZhenyingNumberOneSide dianfenggu = 2;
-	required ZhenyingNumberOne guild = 3; //门宗第一
+	repeated ZhenyingNumberOne fulongguo = 1;
+	repeated ZhenyingNumberOne dianfenggu = 2;
+	repeated ZhenyingGuild fulongguo_guild = 3; //门宗第一
+	repeated ZhenyingGuild dianfenggu_guild = 4; //门宗第一
 }
 
 enum ZHENYING_TASK_AWARD_STATE

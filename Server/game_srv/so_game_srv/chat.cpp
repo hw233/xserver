@@ -10,6 +10,7 @@
 #include "guild_battle_manager.h"
 #include "guild_land_active_manager.h"
 #include "guild_wait_raid_manager.h"
+#include "guild_land_raid_manager.h"
 #include "monster_manager.h"
 #include "msgid.h"
 #include "partner_manager.h"
@@ -701,6 +702,24 @@ int chat_mod::do_one_gm_cmd( player_struct *player, int argc, char *argv[] )
 		}
 		send_chat_content( player,buff );
 		player->player_login_reward_info_notify();
+	}
+	else if ( argc >= 1 && strcasecmp( argv[ 0 ], "guild_bonfire_open" ) == 0 )
+	{
+		if (player->data->guild_id > 0)
+		{
+			guild_land_active_manager::guild_bonfire_open(player->data->guild_id, true);
+		}
+	}
+	else if ( argc >= 1 && strcasecmp( argv[ 0 ], "guild_bonfire_close" ) == 0 )
+	{
+		if (player->data->guild_id > 0)
+		{
+			guild_land_raid_struct *raid = guild_land_raid_manager::get_guild_land_raid(player->data->guild_id);
+			if (raid)
+			{
+				guild_land_active_manager::guild_bonfire_close(raid);
+			}
+		}
 	}
 	else
 	{

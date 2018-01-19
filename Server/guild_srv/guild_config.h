@@ -24,6 +24,9 @@ extern uint32_t sg_guild_donate_popularity[3];
 extern uint32_t sg_guild_task_popularity;
 extern uint32_t sg_guild_battle_preliminary_popularity[4];
 extern uint32_t sg_guild_battle_final_popularity[5];
+extern uint32_t sg_guild_bonfire_popularity;
+
+extern uint32_t sg_guild_bonfire_open_cost;
 
 extern std::map<uint64_t, struct QuestionTable*> questions_config; //考题表
 extern std::map<uint64_t, struct ParameterTable *> parameter_config;

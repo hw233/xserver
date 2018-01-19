@@ -131,8 +131,7 @@ extern std::map<uint64_t, struct WorldBossTable*> world_boss_config; //世界bos
 extern std::map<uint64_t, struct WorldBossTable*> monster_to_world_boss_config; //世界boss表(以怪物id为索引)
 extern std::map<uint64_t, struct ChallengeTable*> hero_challenge_config; //英雄挑战
 extern std::map<uint64_t, struct ChallengeTable*> raidid_to_hero_challenge_config; //英雄挑战(以副本id为索引)
-extern std::map<uint64_t, struct UndergroundTask*> mijing_xiulian_config; //秘境修炼任务信息
-extern std::map<uint64_t, struct UndergroundTask*> taskid_to_mijing_xiulian_config; //秘境修炼任务信息(以任务id为索引)
+extern std::map<uint64_t, struct UndergroundTask*> mijing_xiulian_config; //地宫修炼任务信息
 extern std::map<uint64_t, struct CampDefenseTable*> zhenying_daily_config; //日常阵营战
 extern std::map<uint64_t, struct FishingTable*> fishing_config; //钓鱼表
 extern std::map<uint64_t, struct GrowupTable*> strong_config; //变强表
@@ -317,6 +316,7 @@ extern std::vector<uint32_t> sg_common_question;
 extern std::vector<uint32_t> sg_award_question;
 extern std::map<uint64_t, struct SearchTable*> sg_xunbao; //寻宝表
 extern std::map<uint64_t, std::vector<uint64_t> > sg_xunbao_map; //寻宝地图
+extern std::map<uint64_t, std::vector<uint64_t> > sg_rand_collect; //随机宝箱
 extern std::map<uint64_t, uint64_t> sg_show_collect; //任务ID 采集点ID
 extern std::map<uint64_t, struct FunctionUnlockTable*> sg_jijiangopen; //即将开启表
 
@@ -453,5 +453,18 @@ extern uint32_t sg_new_battle_point;  //新手阵营战占旗加积分
 extern uint32_t sg_strong_function_time;
 extern uint32_t sg_money_exchange_get_yinbi_num;     //货币兑换获取银币基础系数
 extern uint32_t sg_money_exchange_get_yinpiao_num;   //货币兑换获取银票基础系数
+
+extern uint32_t sg_guild_bonfire_id;
+extern double sg_guild_bonfire_pos_x;
+extern double sg_guild_bonfire_pos_z;
+extern double sg_guild_bonfire_radius;
+extern uint32_t sg_guild_bonfire_reward_interval;
+extern uint32_t sg_guild_bonfire_player_reward_time;
+extern uint32_t sg_guild_bonfire_time;
+extern double sg_guild_bonfire_reward[5];
+extern uint32_t sg_guild_bonfire_refresh_collection_interval;
+extern std::vector<RandomCollectionTable*> sg_guild_bonfire_collections;
+extern uint32_t sg_digong_xiulian_sum_huan_num; //地宫修炼一天可以完成的总环数
+extern uint32_t sg_digong_xiulian_sum_lun_num; //地宫修炼一环的总轮数
 
 #endif /* __LUA_CONFIG_H__ */

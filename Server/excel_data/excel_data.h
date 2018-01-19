@@ -770,6 +770,8 @@ struct BiaocheTable
 	uint64_t *Number; //11
 	uint64_t  Range; //12
 	uint64_t  Reward; //13
+	uint32_t n_Point; //14
+	double *Point; //14
 }__attribute__ ((packed));
 
 struct BootNameTable
@@ -856,7 +858,8 @@ struct CampDefenseTable
 	uint64_t *MineralIntegral2; //13
 	uint32_t n_SupportMine; //14
 	uint64_t *SupportMine; //14
-	uint64_t  TaskID; //15
+	uint32_t n_TaskID; //15
+	uint64_t *TaskID; //15
 	uint64_t  MiningLimit1; //16
 	uint64_t  MiningLimit2; //17
 	uint64_t  DropNum1; //18
@@ -1464,6 +1467,7 @@ struct ItemsConfigTable
 	uint64_t *ParameterEffect; //17
 	uint64_t  CostTime; //18
 	uint64_t  ItemCD; //19
+	uint64_t  BuffId; //20
 }__attribute__ ((packed));
 
 struct LevelReward
@@ -1973,9 +1977,9 @@ struct RandomCollectionTable
 	uint64_t  CollectionID; //3
 	uint64_t  MapID; //4
 	uint32_t n_PointX; //5
-	uint64_t *PointX; //5
+	double *PointX; //5
 	uint32_t n_PointZ; //6
-	uint64_t *PointZ; //6
+	double *PointZ; //6
 	uint64_t  Num; //7
 }__attribute__ ((packed));
 
@@ -2565,16 +2569,17 @@ struct UndergroundTask
 	uint64_t  ID; //1
 	uint32_t n_LevelSection; //2
 	uint64_t *LevelSection; //2
-	uint64_t  TaskID; //3
-	uint32_t n_CoinType; //4
-	uint64_t *CoinType; //4
-	uint32_t n_CoinValue; //5
-	uint64_t *CoinValue; //5
-	uint32_t n_StarProbability; //6
-	uint64_t *StarProbability; //6
-	uint32_t n_Rate; //7
-	uint64_t *Rate; //7
-	uint64_t  DropID; //8
+	uint32_t n_TaskID; //3
+	uint64_t *TaskID; //3
+	uint32_t n_StarProbability; //4
+	uint64_t *StarProbability; //4
+	uint64_t  DropID; //5
+	uint32_t n_ExpReward; //6
+	uint64_t *ExpReward; //6
+	uint32_t n_MoneyReward; //7
+	uint64_t *MoneyReward; //7
+	uint32_t n_RewardGroup; //8
+	uint64_t *RewardGroup; //8
 }__attribute__ ((packed));
 
 struct WeaponsEffectTable

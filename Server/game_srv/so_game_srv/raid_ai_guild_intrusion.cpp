@@ -36,6 +36,7 @@
 #include <global_param.h>
 #include "guild.pb-c.h"
 #include "lua_config.h"
+#include "guild_land_active_manager.h"
 
 static bool guild_ruqin_damage_cmp_func(struct guild_ruqin_player_data l, struct guild_ruqin_player_data r)
 {
@@ -200,6 +201,20 @@ static void guild_intrusion_raid_ai_player_ready(raid_struct* raid, player_struc
 	if(raid == NULL || raid->data == NULL || player == NULL || player->data == NULL)
 		return;
 
+	if (raid->GUILD_LAND_DATA.activity_id == GUILD_BONFIRE_ACTIVITY_ID)
+	{ //发送活动信息给玩家
+		GuildBonfireInfoNotify nty;
+		guild_bonfire_info_notify__init(&nty);
+		position *bonfire_pos = raid->GUILD_LAND_DATA.activity_data.bonfire_data.bonfire->get_pos();
+		nty.endtime = raid->GUILD_LAND_DATA.activity_data.bonfire_data.end_time;
+		nty.rewardtime = player->data->guild_bonfire_reward_time;
+		nty.posx = bonfire_pos->pos_x;
+		nty.posz = bonfire_pos->pos_z;
+
+		EXTERN_DATA ext_data;
+		ext_data.player_id = player->get_uuid();
+		fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_GUILD_BONFIRE_INFO_NOTIFY, guild_bonfire_info_notify__pack, nty);
+	}
 	//这里是判断帮会入侵活动有没有开启
 	//if(raid->ruqin_data.guild_ruqin == false)
 	//	return;
@@ -332,6 +347,7 @@ static void guild_intrusion_raid_ai_tick(raid_struct *raid)
 			else 
 			{
 				raid->ruqin_data.status = GUILD_RUQIN_ACTIVE_INIT;
+				raid->GUILD_LAND_DATA.activity_id = 0;
 				uint32_t monster_id = raid->ruqin_data.monster_id;
 				for(std::set<monster_struct*>::iterator itr = raid->m_monster.begin(); itr != raid->m_monster.end();)
 				{

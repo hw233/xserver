@@ -316,8 +316,17 @@ void cash_truck_struct::on_tick()
 			{
 				lv = tableLv->parameter1[0];
 			}
-			monster_manager::create_sight_space_monster(player->sight_space, player->scene, truck_config->shanfeiId[rand() % truck_config->n_shanfeiId], 
-				lv,player->get_pos()->pos_x + truck_config->Range - rand() % (truck_config->Range * 2), player->get_pos()->pos_z + truck_config->Range - rand() % (truck_config->Range * 2));
+			float x = player->get_pos()->pos_x + truck_config->Range - rand() % (truck_config->Range * 2);
+			float z = player->get_pos()->pos_z + truck_config->Range - rand() % (truck_config->Range * 2);
+			while (true)
+			{
+				struct map_block *block_start = get_map_block(this->scene->map_config, x, z);
+				if (block_start != NULL && block_start->can_walk == true)
+					break;
+				x = player->get_pos()->pos_x + truck_config->Range - rand() % (truck_config->Range * 2);
+				z = player->get_pos()->pos_z + truck_config->Range - rand() % (truck_config->Range * 2);
+			}
+			monster_manager::create_sight_space_monster(player->sight_space, player->scene, truck_config->shanfeiId[rand() % truck_config->n_shanfeiId], lv, x, z);
 		}
 		++player->data->truck.jiefei;
 	}

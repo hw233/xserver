@@ -50,6 +50,7 @@ message DBGuild
 	repeated DBGuildPermission permissions = 10;
 	repeated DBGuildLog usual_logs = 11;
 	repeated DBGuildLog important_logs = 12;
+	required uint32 bonfire_open_time = 13;
 }
 
 message DBGuildPlayer
@@ -73,5 +74,6 @@ message DBGuildPlayer
 	required uint32 cur_week_task = 17;
 	required uint32 cur_week_task_config_id = 18;
 	required uint32 donate_count = 19;
+	repeated uint32 level_gift = 20;
 }
 

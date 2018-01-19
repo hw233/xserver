@@ -52,7 +52,7 @@ private:
 	uint32_t n_memSize;
 	char name[3][MAX_PLAYER_NAME_LEN + 1];
 	char *pName[3];
-
+	uint64_t participators[MAX_GUILD_MEMBER_NUM]; //参与者
 	
 };
 

@@ -55,6 +55,20 @@ void player_struct::calc_zhenying_attr(double *attr)
 	}
 }
 
+void player_struct::clear_zhenying_task()
+{
+	CampDefenseTable *tableDaily = get_config_by_id(360600000 + this->get_attr(PLAYER_ATTR_ZHENYING), &zhenying_daily_config);
+	if (tableDaily == NULL)
+	{
+		return;
+	}
+	for (uint32_t i = 0; i < tableDaily->n_TaskID; ++i)
+	{
+		remove_task(tableDaily->TaskID[i]);
+	}
+	data->zhenying.score = 0;
+}
+
 void player_struct::add_zhenying_exp(uint32_t num)
 {
 	if (get_attr(PLAYER_ATTR_ZHENYING) == 0)
@@ -149,6 +163,7 @@ int on_login_send_tower_info(player_struct *player, EXTERN_DATA *extern_data)
 
 void player_struct::refresh_zhenying_task_oneday()
 {
+	clear_zhenying_task();
 	ParameterTable *table = get_config_by_id(161001004, &parameter_config);
 	if (table != NULL)
 	{
@@ -1541,9 +1556,9 @@ void ZhenyingBattle::AddFlagScore(ROOM_T::iterator &itRoom, BattlefieldTable *ta
 	{
 		return;
 	}
-	uint32_t add = isNew ? sg_new_battle_point : table->ForestSet[1];
+	
 	itRoom->second.addTick[zhenying] = now + table->ForestSet[0];
-	itRoom->second.totalPoint[zhenying] += add * itRoom->second.flag[i].playerarr[zhenying].size();
+	itRoom->second.totalPoint[zhenying] += table->ForestSet[1] * itRoom->second.flag[i].playerarr[zhenying].size();
 
 	TotalScore notify;
 	total_score__init(&notify);
@@ -1551,7 +1566,8 @@ void ZhenyingBattle::AddFlagScore(ROOM_T::iterator &itRoom, BattlefieldTable *ta
 	notify.dianfenggu = itRoom->second.totalPoint[ZHENYING__TYPE__WANYAOGU - 1];
 	BroadMessageRoom(itRoom->first, MSG_ID_ZHENYING_FIGHT_SCORE_NOTIFY, &notify, (pack_func)total_score__pack);
 
-	if (itRoom->second.totalPoint[zhenying] >= table->VictoryIntegral)
+	uint32_t VictoryIntegral = isNew ? sg_new_battle_point : table->VictoryIntegral;
+	if (itRoom->second.totalPoint[zhenying] >= VictoryIntegral)
 	{
 		Settle(itRoom->first);
 	}

@@ -137,5 +137,8 @@ void  add_guild_land_active_reward_count(GuildPlayer *player, uint32_t guild_act
 
 int get_player_donate_remain_count(GuildPlayer *player);
 
+bool guild_bonfire_has_opened(GuildInfo *guild);
+bool is_in_guild_bonfire_activity_time();
+
 
 #endif

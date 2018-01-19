@@ -602,6 +602,10 @@
 #define MSG_ID_GUILD_JOIN_NOTIFY 12162                     //帮会入帮申请通知 GuildJoinPlayerData
 #define MSG_ID_GUILD_DONATE_REQUEST 12163                  //帮会捐献请求 GuildDonateRequest
 #define MSG_ID_GUILD_DONATE_ANSWER 12164                   //帮会捐献应答 GuildDonateAnswer
+#define MSG_ID_GUILD_GET_LEVEL_GIFT_REQUEST 12165          //帮会领取等级礼包请求 GuildGetLevelGiftRequest
+#define MSG_ID_GUILD_GET_LEVEL_GIFT_ANSWER 12166           //帮会领取等级礼包应答 GuildGetLevelGiftAnswer
+#define MSG_ID_GUILD_CHUAN_GONG_INFO_REQUEST 12167         //帮会传功界面信息请求 NULL
+#define MSG_ID_GUILD_CHUAN_GONG_INFO_ANSWER  12168         //帮会传功界面信息应答 GuildChuanGongInfoAnswer
 
 
 //阵营

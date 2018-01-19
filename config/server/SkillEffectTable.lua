@@ -708,7 +708,7 @@ local SkillEffectTable = {
 		},
 	[115000102] = {
 		['ID'] = 115000102,
-		['Type'] = 170000030,
+		['Type'] = 170000031,
 		['Effect'] = {0},
 		['EffectAdd'] = {5000},
 		['EffectNum'] = {0}
@@ -1424,14 +1424,14 @@ local SkillEffectTable = {
 		['ID'] = 115110002,
 		['Type'] = 170000008,
 		['Effect'] = {21},
-		['EffectAdd'] = {-5000},
+		['EffectAdd'] = {-3000},
 		['EffectNum'] = {0}
 		},
 	[115110003] = {
 		['ID'] = 115110003,
 		['Type'] = 170000009,
 		['Effect'] = {0},
-		['EffectAdd'] = {10},
+		['EffectAdd'] = {1},
 		['EffectNum'] = {0}
 		},
 	[115110004] = {
@@ -1445,7 +1445,7 @@ local SkillEffectTable = {
 		['ID'] = 115110005,
 		['Type'] = 170000010,
 		['Effect'] = {0},
-		['EffectAdd'] = {10},
+		['EffectAdd'] = {1},
 		['EffectNum'] = {0}
 		},
 	[115110006] = {
@@ -1474,6 +1474,20 @@ local SkillEffectTable = {
 		['Type'] = 170000006,
 		['Effect'] = {0},
 		['EffectAdd'] = {0},
+		['EffectNum'] = {0}
+		},
+	[115110011] = {
+		['ID'] = 115110011,
+		['Type'] = 170000008,
+		['Effect'] = {21},
+		['EffectAdd'] = {4000},
+		['EffectNum'] = {0}
+		},
+	[115110012] = {
+		['ID'] = 115110012,
+		['Type'] = 170000010,
+		['Effect'] = {0},
+		['EffectAdd'] = {1},
 		['EffectNum'] = {0}
 		},
 	[115110100] = {

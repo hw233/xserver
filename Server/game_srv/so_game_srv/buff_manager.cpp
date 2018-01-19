@@ -211,6 +211,7 @@ buff_struct *buff_manager::create_buff(uint64_t id, uint64_t end_time, unit_stru
 			notify.start_time = ret->data->start_time / 1000;
 			notify.end_time = ret->data->end_time / 1000;		
 			notify.playerid = owner->get_uuid();
+			notify.lv = ret->data->lv;
 			owner->broadcast_to_sight(MSG_ID_ADD_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, true);
 		}
 		return ret;
@@ -248,6 +249,7 @@ buff_struct *buff_manager::create_buff(uint64_t id, uint64_t end_time, unit_stru
 		AddBuffNotify notify;
 		add_buff_notify__init(&notify);
 		notify.buff_id = id;
+		notify.lv = ret->data->lv;		
 		notify.start_time = ret->data->start_time / 1000;
 		notify.end_time = ret->data->end_time / 1000;		
 		notify.playerid = owner->get_uuid();

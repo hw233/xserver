@@ -119,6 +119,10 @@ enum SERVER_PROTO {
     SERVER_PROTO_GUILD_RUQIN_ADD_COUNT,
     SERVER_PROTO_GUILD_RUQIN_SYNC_COUNT,
     SERVER_PROTO_GUILD_SYNC_DONATE,                        //同步帮会募捐
+    SERVER_PROTO_GUILD_SYNC_PARTICIPATE_ANSWER,            //同步参与帮会答题
+    SERVER_PROTO_GUILD_BONFIRE_OPEN_REQUEST,               //开启帮会篝火请求
+    SERVER_PROTO_GUILD_BONFIRE_OPEN_ANSWER,                //开启帮会篝火应答
+    SERVER_PROTO_GUILD_BONFIRE_REWARD,                     //篝火奖励
 
     //排行榜服消息
     SERVER_PROTO_RANK_SYNC_RANK = 2000,              //同步排名
@@ -403,27 +407,6 @@ typedef struct proto_srv_reward_res
     uint8_t  data[0];
 } PROTO_SRV_REWARD_RES;
 
-typedef struct proto_guildsrv_reward_req
-{
-    PROTO_HEAD head;
-    uint32_t   statis_id;
-    uint32_t   gold;
-    uint32_t   coin;
-    uint32_t   item_id[5];
-    uint32_t   item_num[5];
-    uint32_t   data_size;
-    uint8_t    data[0];
-} PROTO_GUILDSRV_REWARD_REQ;
-
-typedef struct proto_guildsrv_reward_res
-{
-    PROTO_HEAD head;
-    uint32_t   statis_id;
-    uint32_t   result;
-    uint32_t   data_size;
-    uint8_t    data[0];
-} PROTO_GUILDSRV_REWARD_RES;
-
 typedef struct guild_skill_practice_carry
 {
     uint32_t skill_id;
@@ -438,11 +421,14 @@ typedef struct guild_shop_buy_carry
     uint32_t need_donation;
 } GUILD_SHOP_BUY_CARRY;
 
+typedef struct guild_level_gift_carry
+{
+    uint32_t level;
+} GUILD_LEVEL_GIFT_CARRY;
+
 struct guild_player_data
 {
     uint64_t player_id;
-    uint32_t level;
-    uint32_t status;  // 0表示在线,非0表示下线时间
 };
 struct ProtoGuildInfo
 {
@@ -819,6 +805,7 @@ typedef struct guild_accept_task_answer
 {
     uint32_t result;
     uint32_t task_id;
+    bool     is_next;
 } GUILD_ACCEPT_TASK_ANSWER;
 
 typedef struct guild_sync_task
@@ -872,5 +859,29 @@ typedef struct attr_changed_request
     uint32_t id;
     double   value;
 } ATTR_CHANGED_REQUEST;
+
+typedef struct guild_bonfire_open_request
+{
+	uint32_t last_begin_time;
+} GUILD_BONFIRE_OPEN_REQUEST;
+
+typedef struct guild_bonfire_open_answer
+{
+	uint32_t result;
+	uint32_t last_begin_time;
+} GUILD_BONFIRE_OPEN_ANSWER;
+
+//同个帮会的成员的篝火奖励
+typedef struct guild_bonfire_reward
+{
+    uint32_t   activity_id;
+    uint32_t   guild_id;
+    uint32_t   player_num;                          //奖励人数
+    uint64_t   player_id[MAX_GUILD_MEMBER_NUM];     //奖励玩家ID
+    uint32_t   treasure[MAX_GUILD_MEMBER_NUM];      //奖励资金
+    uint32_t   donation[MAX_GUILD_MEMBER_NUM];      //奖励帮贡
+    uint32_t   build_board[MAX_GUILD_MEMBER_NUM];   //奖励木材
+} GUILD_BONFIRE_REWARD;
+
 #pragma pack()
 #endif

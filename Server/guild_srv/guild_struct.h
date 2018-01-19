@@ -14,6 +14,7 @@
 #define MAX_GUILD_LOG_ARG_NUM 5
 #define MAX_GUILD_LOG_ARG_LEN 100
 #define MAX_GUILD_LOG_NUM 50
+#define MAX_GUILD_LEVEL 15
 
 enum GuildBuildingType
 {
@@ -145,6 +146,7 @@ struct GuildPlayer
 	uint32_t guild_land_active_reward_id[MAX_GUILD_LAND_ACTIVE_NUM]; //帮会活动FactionActivity表id
 	uint32_t guild_land_active_reward_num[MAX_GUILD_LAND_ACTIVE_NUM]; //帮会活动收益次数
 	uint32_t donate_count; //捐献次数
+	uint32_t level_gift[MAX_GUILD_LEVEL];
 };
 
 struct GuildPermission
@@ -191,6 +193,8 @@ struct GuildInfo
 	GuildPermission permissions[MAX_GUILD_OFFICE]; //权限
 	GuildLog usual_logs[MAX_GUILD_LOG_NUM]; //动态
 	GuildLog important_logs[MAX_GUILD_LOG_NUM]; //大事记
+
+	uint32_t bonfire_open_time; //篝火开启时间
 };
 
 #endif

@@ -32,7 +32,8 @@ static int handle_guild_create_cost(int data_len, uint8_t *data, int result, EXT
 static int handle_guild_rename_cost(int data_len, uint8_t *data, int result, EXTERN_DATA *extern_data);
 static int handle_guild_skill_practice_cost(int data_len, uint8_t *data, int result, EXTERN_DATA *extern_data);
 static int handle_shop_buy_answer(int data_len, uint8_t *data, int result, EXTERN_DATA *extern_data);
-static int handle_guild_donate_cost(int data_len, uint8_t *data, int result, EXTERN_DATA *extern_data);
+static int handle_guild_donate_cost(int data_len, uint8_t *data, int result, EXTERN_DATA *extern_data, SRV_COST_INFO *cost);
+static int handle_level_gift_reward_answer(int data_len, uint8_t *data, int result, EXTERN_DATA *extern_data);
 
 conn_node_guildsrv::conn_node_guildsrv()
 {
@@ -56,6 +57,7 @@ conn_node_guildsrv::conn_node_guildsrv()
 	add_msg_handle(MSG_ID_GUILD_SET_PERMISSION_REQUEST, &conn_node_guildsrv::handle_guild_set_permission_request);
 	add_msg_handle(MSG_ID_GUILD_INVITE_REQUEST, &conn_node_guildsrv::handle_guild_invite_request);
 	add_msg_handle(MSG_ID_GUILD_DEAL_INVITE_REQUEST, &conn_node_guildsrv::handle_guild_deal_invite_request);
+	add_msg_handle(MSG_ID_GUILD_GET_LEVEL_GIFT_REQUEST, &conn_node_guildsrv::handle_guild_get_level_gift_request);
 
 	add_msg_handle(SERVER_PROTO_PLAYER_ONLINE_NOTIFY, &conn_node_guildsrv::handle_player_online_notify);
 	add_msg_handle(SERVER_PROTO_GUILDSRV_COST_ANSWER, &conn_node_guildsrv::handle_check_and_cost_answer);
@@ -100,6 +102,10 @@ conn_node_guildsrv::conn_node_guildsrv()
 
 	add_msg_handle(MSG_ID_GUILD_DONATE_REQUEST, &conn_node_guildsrv::handle_guild_donate_request);
 	add_msg_handle(SERVER_PROTO_ACTIVITY_SHIDAMENZONG_GIVE_REWARD_REQUEST, &conn_node_guildsrv::handle_activity_shidamenzong_give_reward_request);
+
+	add_msg_handle(MSG_ID_GUILD_BONFIRE_OPEN_REQUEST, &conn_node_guildsrv::handle_guild_bonfire_open_request);
+	add_msg_handle(SERVER_PROTO_GUILD_BONFIRE_OPEN_ANSWER, &conn_node_guildsrv::handle_guild_bonfire_open_answer);
+	add_msg_handle(SERVER_PROTO_GUILD_BONFIRE_REWARD, &conn_node_guildsrv::handle_guild_bonfire_reward);
 }
 
 conn_node_guildsrv::~conn_node_guildsrv()
@@ -390,7 +396,7 @@ static void pack_guild_basic_data(GuildPlayer *player, AutoReleaseBatchRedisPlay
 	}
 }
 
-static void pack_guild_personal_data(GuildPlayer *player, GuildPersonalData &personal_data)
+static void pack_guild_personal_data(GuildPlayer *player, GuildPersonalData &personal_data, std::vector<uint32_t> &level_gift)
 {
 	guild_personal_data__init(&personal_data);
 	personal_data.office = player->office;
@@ -403,6 +409,16 @@ static void pack_guild_personal_data(GuildPlayer *player, GuildPersonalData &per
 	personal_data.taskamount = get_guild_build_task_amount(player->cur_week_task_config_id);
 	personal_data.curtaskid = player->cur_task_id;
 	personal_data.donatecount = player->donate_count;
+	level_gift.clear();
+	for (int i = 0; i < MAX_GUILD_LEVEL; ++i)
+	{
+		if (player->level_gift[i] > 0)
+		{
+			level_gift.push_back(i);
+		}
+	}
+	personal_data.levelgift = &level_gift[0];
+	personal_data.n_levelgift = level_gift.size();
 }
 
 static void pack_guild_building_data(GuildPlayer *player, GuildBuildingData **&buildings, size_t &n_buildings, GuildBuildingData building_data[], GuildBuildingData* building_data_point[])
@@ -439,6 +455,7 @@ void resp_guild_info(conn_node_guildsrv *node, EXTERN_DATA *extern_data, uint32_
 	char*         important_log_args[MAX_GUILD_LOG_NUM][MAX_GUILD_LOG_ARG_NUM];
 	GuildBuildingData building_data[MAX_GUILD_BUILDING_NUM];
 	GuildBuildingData* building_data_point[MAX_GUILD_BUILDING_NUM];
+	std::vector<uint32_t> level_gift_data;
 
 	AutoReleaseBatchRedisPlayer t1;			
 	resp.result = result;
@@ -453,7 +470,7 @@ void resp_guild_info(conn_node_guildsrv *node, EXTERN_DATA *extern_data, uint32_
 		}
 
 		resp.personalinfo = &personal_data;
-		pack_guild_personal_data(player, personal_data);
+		pack_guild_personal_data(player, personal_data, level_gift_data);
 	}
 
 	fast_send_msg(node, extern_data, msg_id, guild_info_answer__pack, resp);
@@ -924,6 +941,7 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 	char*         important_log_args[MAX_GUILD_LOG_NUM][MAX_GUILD_LOG_ARG_NUM];
 	GuildBuildingData building_data[MAX_GUILD_BUILDING_NUM];
 	GuildBuildingData* building_data_point[MAX_GUILD_BUILDING_NUM];
+	std::vector<uint32_t> level_gift_data;
 
 	resp.result = ret;
 	GuildPlayer *player = get_guild_player(extern_data->player_id);
@@ -938,7 +956,7 @@ int conn_node_guildsrv::handle_guild_join_request(EXTERN_DATA *extern_data)
 		}
 
 		resp.personalinfo = &personal_data;
-		pack_guild_personal_data(player, personal_data);
+		pack_guild_personal_data(player, personal_data, level_gift_data);
 	}
 
 	if (ret == 0 && applyIds.size() > 0)
@@ -1995,6 +2013,132 @@ int conn_node_guildsrv::handle_guild_deal_invite_request(EXTERN_DATA *extern_dat
 	return 0;
 }
 
+int conn_node_guildsrv::handle_guild_get_level_gift_request(EXTERN_DATA *extern_data)
+{
+	GuildGetLevelGiftRequest *req = guild_get_level_gift_request__unpack(NULL, get_data_len(), get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	uint32_t level = req->level;
+	guild_get_level_gift_request__free_unpacked(req, NULL);
+
+	int ret = 0;
+	do
+	{
+		GuildPlayer *player = get_guild_player(extern_data->player_id);
+		if (!player || !player->guild)
+		{
+			ret = ERROR_ID_GUILD_PLAYER_NOT_JOIN;
+			LOG_ERR("[%s:%d] player[%lu] not in guild", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+		if (level >= MAX_GUILD_LEVEL)
+		{
+			ret = 1;
+			LOG_ERR("[%s:%d] player[%lu] level error, level:%u", __FUNCTION__, __LINE__, extern_data->player_id, level);
+			break;
+		}
+
+		if (player->level_gift[level] > 0)
+		{
+			ret = 2;
+			LOG_ERR("[%s:%d] player[%lu] gift has got, level:%u", __FUNCTION__, __LINE__, extern_data->player_id, level);
+			break;
+		}
+
+		if ((uint32_t)get_building_level(player->guild, Building_Hall) < level)
+		{
+			ret = ERROR_ID_GUILD_HALL_LEVEL_NOT_ENOUGH;
+			LOG_ERR("[%s:%d] player[%lu] guild level not enough, level:%u", __FUNCTION__, __LINE__, extern_data->player_id, level);
+			break;
+		}
+
+		GangsTable *config = get_guild_building_config(Building_Hall, level);
+		if (!config || config->n_parameter4 < 1)
+		{
+			ret = ERROR_ID_CONFIG;
+			LOG_ERR("[%s:%d] player[%lu] get config failed, level:%u", __FUNCTION__, __LINE__, extern_data->player_id, level);
+			break;
+		}
+
+		{
+			//请求发放货物
+			PROTO_SRV_REWARD_REQ *reward_req = (PROTO_SRV_REWARD_REQ *)get_send_data();
+			uint32_t data_len = sizeof(PROTO_SRV_REWARD_REQ) + sizeof(GUILD_LEVEL_GIFT_CARRY);
+			memset(reward_req, 0, data_len);
+			reward_req->statis_id = MAGIC_TYPE_GUILD_LEVEL_GIFT;
+			reward_req->item_id[0] = config->parameter4[0];
+			reward_req->item_num[0] = 1;
+			reward_req->data_size = sizeof(GUILD_LEVEL_GIFT_CARRY);
+			GUILD_LEVEL_GIFT_CARRY *pCarry = (GUILD_LEVEL_GIFT_CARRY*)reward_req->data;
+			pCarry->level = level;
+			fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_GUILDSRV_REWARD_REQUEST, data_len, 0);
+		}
+
+		player->level_gift[level] = 1;
+		save_guild_player(player);
+	} while(0);
+	
+	if (ret != 0)
+	{
+		GuildGetLevelGiftAnswer resp;
+		guild_get_level_gift_answer__init(&resp);
+
+		resp.result = ret;
+		resp.level = level;
+		fast_send_msg(&connecter, extern_data, MSG_ID_GUILD_GET_LEVEL_GIFT_ANSWER, guild_get_level_gift_answer__pack, resp);
+	}
+
+	return 0;
+}
+
+static int handle_level_gift_reward_answer(int data_len, uint8_t *data, int result, EXTERN_DATA *extern_data)
+{
+	GUILD_LEVEL_GIFT_CARRY *pCarry = (GUILD_LEVEL_GIFT_CARRY*)data;
+	uint32_t level = pCarry->level;
+
+	int ret = 0;
+	do
+	{
+		GuildPlayer *player = get_guild_player(extern_data->player_id);
+		if (!player || !player->guild)
+		{
+			ret = ERROR_ID_GUILD_PLAYER_NOT_JOIN;
+			LOG_ERR("[%s:%d] player[%lu] not join guild yet", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+		if (level >= MAX_GUILD_LEVEL)
+		{
+			ret = 1;
+			LOG_ERR("[%s:%d] player[%lu] level error, level:%u", __FUNCTION__, __LINE__, extern_data->player_id, level);
+			break;
+		}
+
+		if (result == 0)
+		{
+		}
+		else
+		{
+			player->level_gift[level] = 0;
+			save_guild_player(player);
+		}
+	} while(0);
+
+	GuildGetLevelGiftAnswer resp;
+	guild_get_level_gift_answer__init(&resp);
+
+	resp.result = (result != 0 ? result : ret);
+	resp.level = level;
+	fast_send_msg(&conn_node_guildsrv::connecter, extern_data, MSG_ID_GUILD_GET_LEVEL_GIFT_ANSWER, guild_get_level_gift_answer__pack, resp);
+
+	return 0;
+}
+
 int conn_node_guildsrv::handle_open_guild_answer_request(EXTERN_DATA *extern_data)
 {
 	int ret = 0;
@@ -2130,7 +2274,7 @@ int conn_node_guildsrv::handle_check_and_cost_answer(EXTERN_DATA *extern_data)
 			ret = handle_guild_skill_practice_cost(res->data_size, res->data, res->result, extern_data);
 			break;
 		case MAGIC_TYPE_GUILD_DONATE:
-			ret = handle_guild_donate_cost(res->data_size, res->data, res->result, extern_data);
+			ret = handle_guild_donate_cost(res->data_size, res->data, res->result, extern_data, &res->cost);
 			break;
 	}
 
@@ -2148,11 +2292,14 @@ int conn_node_guildsrv::handle_check_and_cost_answer(EXTERN_DATA *extern_data)
 
 int conn_node_guildsrv::handle_gamesrv_reward_answer(EXTERN_DATA *extern_data)
 {
-	PROTO_GUILDSRV_REWARD_RES *res = (PROTO_GUILDSRV_REWARD_RES*)buf_head();
+	PROTO_SRV_REWARD_RES *res = (PROTO_SRV_REWARD_RES*)get_data();
 	switch(res->statis_id)
 	{
 		case MAGIC_TYPE_SHOP_BUY:
 			handle_shop_buy_answer(res->data_size, res->data, res->result, extern_data);
+			break;
+		case MAGIC_TYPE_GUILD_LEVEL_GIFT:
+			handle_level_gift_reward_answer(res->data_size, res->data, res->result, extern_data);
 			break;
 	}
 
@@ -2456,11 +2603,14 @@ int conn_node_guildsrv::handle_game_accept_task_answer(EXTERN_DATA *extern_data)
 		notify_guild_attr_update(player->player_id, GUILD_ATTR_TYPE__ATTR_CUR_TASK, player->cur_task_id);
 	} while(0);
 
-	CommAnswer resp;
-	comm_answer__init(&resp);
+	if (!ans->is_next)
+	{
+		CommAnswer resp;
+		comm_answer__init(&resp);
 
-	resp.result = ret;
-	fast_send_msg(&connecter, extern_data, MSG_ID_GUILD_ACCEPT_TASK_ANSWER, comm_answer__pack, resp);
+		resp.result = ret;
+		fast_send_msg(&connecter, extern_data, MSG_ID_GUILD_ACCEPT_TASK_ANSWER, comm_answer__pack, resp);
+	}
 
 	return 0;
 }
@@ -2964,9 +3114,9 @@ int conn_node_guildsrv::handle_guild_shop_buy_request(EXTERN_DATA *extern_data)
 
 		{
 			//请求发放货物
-			PROTO_GUILDSRV_REWARD_REQ *reward_req = (PROTO_GUILDSRV_REWARD_REQ *)get_send_buf(SERVER_PROTO_GUILDSRV_REWARD_REQUEST, get_seq());
-			reward_req->head.len = ENDION_FUNC_4(sizeof(PROTO_GUILDSRV_REWARD_REQ) + sizeof(GUILD_SHOP_BUY_CARRY));
-			memset(reward_req->head.data, 0, sizeof(PROTO_GUILDSRV_REWARD_REQ) - sizeof(PROTO_HEAD));
+			PROTO_SRV_REWARD_REQ *reward_req = (PROTO_SRV_REWARD_REQ *)get_send_data();
+			uint32_t data_len = sizeof(PROTO_SRV_REWARD_REQ) + sizeof(GUILD_SHOP_BUY_CARRY);
+			memset(reward_req, 0, data_len);
 			reward_req->statis_id = MAGIC_TYPE_SHOP_BUY;
 			reward_req->item_id[0] = config->ItemID;
 			reward_req->item_num[0] = buy_num;
@@ -2975,11 +3125,7 @@ int conn_node_guildsrv::handle_guild_shop_buy_request(EXTERN_DATA *extern_data)
 			pCarry->goods_id = goods_id;
 			pCarry->buy_num = buy_num;
 			pCarry->need_donation = need_donation;
-			add_extern_data(&reward_req->head, extern_data);
-			if (connecter.send_one_msg(&reward_req->head, 1) != (int)ENDION_FUNC_4(reward_req->head.len))
-			{
-				LOG_ERR("[%s:%d] send to gamesrv failed err[%d]", __FUNCTION__, __LINE__, errno);
-			}
+			fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_GUILDSRV_REWARD_REQUEST, data_len, 0);
 		}
 	} while(0);
 
@@ -4411,7 +4557,7 @@ int conn_node_guildsrv::handle_guild_donate_request(EXTERN_DATA *extern_data)
 	return 0;
 }
 
-static int handle_guild_donate_cost(int data_len, uint8_t *data, int result, EXTERN_DATA *extern_data)
+static int handle_guild_donate_cost(int data_len, uint8_t *data, int result, EXTERN_DATA *extern_data, SRV_COST_INFO *cost)
 {
 	GuildDonateRequest *req = guild_donate_request__unpack(NULL, data_len, data);
 	if (!req)
@@ -4485,6 +4631,10 @@ static int handle_guild_donate_cost(int data_len, uint8_t *data, int result, EXT
 				add_guild_treasure(guild, config->RewardValue[i]);
 				add_player_contribute_treasure(player, config->RewardValue[i]);
 			}
+			else if (config->RewardType[i] == 3) //门宗木材
+			{
+				add_guild_build_board(guild, config->RewardValue[i]);
+			}
 		}
 
 		if (type <= 3)
@@ -4523,9 +4673,14 @@ static int handle_guild_donate_cost(int data_len, uint8_t *data, int result, EXT
 				}
 				break;
 		}
+		uint64_t consume_value = config->ConsumeValue;
+		if (config->ConsumeType == 1)
+		{
+			consume_value = cost->coin;
+		}
 		{
 			snprintf(log->args[0], MAX_GUILD_LOG_ARG_LEN, "%s", redis_player->name);
-			snprintf(log->args[1], MAX_GUILD_LOG_ARG_LEN, "%lu", config->ConsumeValue);
+			snprintf(log->args[1], MAX_GUILD_LOG_ARG_LEN, "%lu", consume_value);
 			snprintf(log->args[2], MAX_GUILD_LOG_ARG_LEN, "%u", contribute_treasure);
 
 			log->time = now; 
@@ -4628,4 +4783,167 @@ int conn_node_guildsrv::handle_activity_shidamenzong_give_reward_request(EXTERN_
 
 	return 0;
 }
+
+int conn_node_guildsrv::handle_guild_bonfire_open_request(EXTERN_DATA *extern_data)
+{
+	int ret = 0;
+	do
+	{
+		GuildPlayer *player = get_guild_player(extern_data->player_id);
+		if (!player || !player->guild)
+		{
+			ret = ERROR_ID_GUILD_PLAYER_NOT_JOIN;
+			LOG_ERR("[%s:%d] player[%lu] not in guild", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+		GuildInfo *guild = player->guild;
+
+		if (!player_has_permission(player, GOPT_OPEN_ACTIVITY))
+		{
+			ret = 190500453;
+			LOG_ERR("[%s:%d] player[%lu] no permission, office:%u", __FUNCTION__, __LINE__, extern_data->player_id, player->office);
+			break;
+		}
+
+		if (guild->treasure < sg_guild_bonfire_open_cost)
+		{
+			ret = 190500484;
+			LOG_ERR("[%s:%d] player[%lu], need_treasure:%u, has_treasure:%u", __FUNCTION__, __LINE__, extern_data->player_id, sg_guild_bonfire_open_cost, guild->treasure);
+			break;
+		}
+
+		if (guild_bonfire_has_opened(guild))
+		{
+			ret = 190500485;
+			LOG_ERR("[%s:%d] player[%lu], guild_id:%u, open_time:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, guild->bonfire_open_time);
+			break;
+		}
+
+		if (!is_in_guild_bonfire_activity_time())
+		{
+			ret = 190500487;
+			LOG_ERR("[%s:%d] player[%lu], guild_id:%u, open_time:%u", __FUNCTION__, __LINE__, extern_data->player_id, guild->guild_id, guild->bonfire_open_time);
+			break;
+		}
+
+		{
+			GUILD_BONFIRE_OPEN_REQUEST *cost_req = (GUILD_BONFIRE_OPEN_REQUEST *)get_send_data();
+			uint32_t data_len = sizeof(GUILD_BONFIRE_OPEN_REQUEST);
+			memset(cost_req, 0, data_len);
+			cost_req->last_begin_time = guild->bonfire_open_time;
+			fast_send_msg_base(&connecter, extern_data, SERVER_PROTO_GUILD_BONFIRE_OPEN_REQUEST, data_len, 0);
+		}
+
+		guild->bonfire_open_time = time_helper::get_cached_time() / 1000;
+		sub_guild_treasure(guild, sg_guild_bonfire_open_cost);
+	} while(0);
+
+	if (ret != 0)
+	{
+		CommAnswer resp;
+		comm_answer__init(&resp);
+
+		resp.result = ret;
+
+		fast_send_msg(&connecter, extern_data, MSG_ID_GUILD_BONFIRE_OPEN_ANSWER, comm_answer__pack, resp);
+	}
+
+	return 0;
+}
+
+int conn_node_guildsrv::handle_guild_bonfire_open_answer(EXTERN_DATA *extern_data)
+{
+	GUILD_BONFIRE_OPEN_ANSWER *ans = (GUILD_BONFIRE_OPEN_ANSWER*)get_data();
+
+	int ret = 0;
+	do
+	{
+		GuildPlayer *player = get_guild_player(extern_data->player_id);
+		if (!player || !player->guild)
+		{
+			ret = ERROR_ID_GUILD_PLAYER_NOT_JOIN;
+			LOG_ERR("[%s:%d] player[%lu] not in guild", __FUNCTION__, __LINE__, extern_data->player_id);
+			break;
+		}
+
+		GuildInfo *guild = player->guild;
+		if (ans->result == 0)
+		{
+			add_guild_popularity(guild, sg_guild_bonfire_popularity);
+
+			ParameterTable *param_config = get_config_by_id(161001024, &parameter_config);
+			if (param_config)
+			{
+				Chat chat_req;
+				chat__init(&chat_req);
+				chat_req.channel = CHANNEL__family;
+				chat_req.contain = param_config->parameter2;
+
+				broadcast_guild_chat(guild, &chat_req);
+			}
+		}
+		else
+		{
+			guild->bonfire_open_time = ans->last_begin_time;
+			add_guild_treasure(guild, sg_guild_bonfire_open_cost);
+		}
+	} while(0);
+
+	CommAnswer resp;
+	comm_answer__init(&resp);
+
+	resp.result = (ans->result != 0 ? ans->result : ret);
+
+	fast_send_msg(&connecter, extern_data, MSG_ID_GUILD_BONFIRE_OPEN_ANSWER, comm_answer__pack, resp);
+
+	return 0;
+}
+
+int conn_node_guildsrv::handle_guild_bonfire_reward(EXTERN_DATA *extern_data)
+{
+	GUILD_BONFIRE_REWARD *req = (GUILD_BONFIRE_REWARD*)get_data();
+	LOG_INFO("[%s:%d] guild %u", __FUNCTION__, __LINE__, req->guild_id);
+//	uint32_t activity_id = req->activity_id;
+	
+	GuildInfo *guild = get_guild(req->guild_id);
+//	AutoReleaseBatchRedisPlayer t1;
+	do
+	{
+		if (!guild)
+		{
+			LOG_ERR("[%s:%d] can't find guild[%u]", __FUNCTION__, __LINE__, req->guild_id);
+			break;
+		}
+
+		uint32_t total_treasure = 0, total_build_board = 0;
+		for (uint32_t i = 0; i < req->player_num; ++i)
+		{
+			GuildPlayer *player = get_guild_player(req->player_id[i]);
+			if (!player)
+			{
+				LOG_ERR("[%s:%d] can't find guild player[%lu]", __FUNCTION__, __LINE__, req->player_id[i]);
+				continue;
+			}
+
+			if (player->guild != guild)
+			{
+				LOG_ERR("[%s:%d] player[%lu] guild[%u] is not guild[%u]", __FUNCTION__, __LINE__, req->player_id[i], player->guild->guild_id, guild->guild_id);
+				continue;
+			}
+
+			add_player_donation(player, req->donation[i]);
+			total_treasure += req->treasure[i];
+			add_player_contribute_treasure(player, req->treasure[i]);
+			total_build_board += req->build_board[i];
+		}
+
+		//为了减少消息广播和数据存库的次数，统计好一次过加
+		add_guild_treasure(guild, total_treasure);
+		add_guild_build_board(guild, total_build_board);
+	} while(0);
+
+	return 0;
+}
+
 

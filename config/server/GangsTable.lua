@@ -15,7 +15,7 @@ local GangsTable = {
 		['parameter1'] = 5,	--参数1
 		['parameter2'] = 2,	--参数2
 		['parameter3'] = 2,	--参数3
-		['parameter4'] = {0}	--参数4
+		['parameter4'] = {201070116}	--参数4
 		},
 	[340100002] = {
 		['ID'] = 340100002,
@@ -33,7 +33,7 @@ local GangsTable = {
 		['parameter1'] = 11,
 		['parameter2'] = 4,
 		['parameter3'] = 4,
-		['parameter4'] = {0}
+		['parameter4'] = {201070117}
 		},
 	[340100003] = {
 		['ID'] = 340100003,
@@ -51,7 +51,7 @@ local GangsTable = {
 		['parameter1'] = 12,
 		['parameter2'] = 5,
 		['parameter3'] = 5,
-		['parameter4'] = {0}
+		['parameter4'] = {201070118}
 		},
 	[340100004] = {
 		['ID'] = 340100004,
@@ -69,7 +69,7 @@ local GangsTable = {
 		['parameter1'] = 13,
 		['parameter2'] = 6,
 		['parameter3'] = 6,
-		['parameter4'] = {0}
+		['parameter4'] = {201070119}
 		},
 	[340100005] = {
 		['ID'] = 340100005,
@@ -87,7 +87,7 @@ local GangsTable = {
 		['parameter1'] = 14,
 		['parameter2'] = 7,
 		['parameter3'] = 7,
-		['parameter4'] = {0}
+		['parameter4'] = {201070120}
 		},
 	[340100006] = {
 		['ID'] = 340100006,
@@ -105,7 +105,7 @@ local GangsTable = {
 		['parameter1'] = 15,
 		['parameter2'] = 8,
 		['parameter3'] = 8,
-		['parameter4'] = {0}
+		['parameter4'] = {201070121}
 		},
 	[340100007] = {
 		['ID'] = 340100007,
@@ -123,7 +123,7 @@ local GangsTable = {
 		['parameter1'] = 16,
 		['parameter2'] = 9,
 		['parameter3'] = 9,
-		['parameter4'] = {0}
+		['parameter4'] = {201070122}
 		},
 	[340100008] = {
 		['ID'] = 340100008,
@@ -141,7 +141,7 @@ local GangsTable = {
 		['parameter1'] = 17,
 		['parameter2'] = 10,
 		['parameter3'] = 10,
-		['parameter4'] = {0}
+		['parameter4'] = {201070123}
 		},
 	[340100009] = {
 		['ID'] = 340100009,
@@ -159,7 +159,7 @@ local GangsTable = {
 		['parameter1'] = 18,
 		['parameter2'] = 11,
 		['parameter3'] = 11,
-		['parameter4'] = {0}
+		['parameter4'] = {201070124}
 		},
 	[340100010] = {
 		['ID'] = 340100010,
@@ -177,7 +177,7 @@ local GangsTable = {
 		['parameter1'] = 19,
 		['parameter2'] = 12,
 		['parameter3'] = 12,
-		['parameter4'] = {0}
+		['parameter4'] = {201070125}
 		},
 	[340100011] = {
 		['ID'] = 340100011,

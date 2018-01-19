@@ -546,6 +546,52 @@ static void generate_parameters(void)
 	}
 	sg_money_exchange_get_yinbi_num = get_config_by_id(161001022, &parameter_config)->parameter1[0];
     sg_money_exchange_get_yinpiao_num  = get_config_by_id(161001023, &parameter_config)->parameter1[0];  
+	config = get_config_by_id(161000433, &parameter_config);
+	if (config && config->n_parameter1 >= 2)
+	{
+		sg_guild_bonfire_pos_x = config->parameter1[0];
+		sg_guild_bonfire_pos_z = config->parameter1[1];
+	}
+	config = get_config_by_id(161000435, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_bonfire_id = config->parameter1[0];
+	}
+	config = get_config_by_id(161000436, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_bonfire_radius = config->parameter1[0];
+	}
+	config = get_config_by_id(161000437, &parameter_config);
+	if (config && config->n_parameter1 >= 5)
+	{
+		for (uint32_t i = 0; i < config->n_parameter1; ++i)
+		{
+			sg_guild_bonfire_reward[i] = config->parameter1[i];
+		}
+	}
+	config = get_config_by_id(161000438, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_bonfire_reward_interval = config->parameter1[0];
+	}
+	config = get_config_by_id(161000439, &parameter_config);
+	if (config && config->n_parameter1 >= 2)
+	{
+		sg_guild_bonfire_player_reward_time = config->parameter1[0];
+		sg_guild_bonfire_time = config->parameter1[1];
+	}
+	config = get_config_by_id(161000441, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_bonfire_refresh_collection_interval = config->parameter1[0];
+	}
+	config = get_config_by_id(161000336, &parameter_config);
+	if (config && config->n_parameter1 >= 2)
+	{
+		sg_digong_xiulian_sum_huan_num = config->parameter1[0];
+		sg_digong_xiulian_sum_lun_num = config->parameter1[1];
+	}
 }
 
 	// 读取刷怪配置
@@ -933,6 +979,25 @@ static void adjust_xunbao_map_table()
 			tmp.push_back(ite->first);
 			sg_xunbao_map.insert(std::make_pair(uint64_t(ite->second->MapId), tmp));
 		}
+		else
+		{
+			it->second.push_back(ite->first);
+		}
+	}
+}
+
+static void adjust_rand_collect_table()
+{
+	std::map<uint64_t, struct RandomCollectionTable*>::iterator ite = random_collect_config.begin(); //随机采集点表;
+	for (; ite != random_collect_config.end(); ++ite)
+	{
+		std::map<uint64_t, std::vector<uint64_t> >::iterator it = sg_rand_collect.find(ite->second->MapID); //随机宝箱
+		if (it == sg_rand_collect.end())
+		{
+			std::vector<uint64_t> tmp;
+			tmp.push_back(ite->first);
+			sg_rand_collect.insert(std::make_pair(ite->second->MapID, tmp));
+		} 
 		else
 		{
 			it->second.push_back(ite->first);
@@ -2037,14 +2102,6 @@ static void adjust_herochallenge_table()
 	}
 }
 
-static void adjust_mijingxiulian_table()
-{
-	std::map<uint64_t, struct UndergroundTask *>::iterator ite;
-	for (ite = mijing_xiulian_config.begin(); ite != mijing_xiulian_config.end(); ++ite)
-	{
-		taskid_to_mijing_xiulian_config.insert(std::make_pair((uint64_t)(ite->second->TaskID), ite->second));
-	}
-}
 
 static void adjust_achievement_config(void)
 {
@@ -3252,6 +3309,32 @@ static void adjust_sign_in_leiji_config()
 	}
 
 }
+UndergroundTask *get_digong_xiulian_config(uint32_t level)
+{
+	for (std::map<uint64_t, UndergroundTask *>::iterator iter = mijing_xiulian_config.begin(); iter != mijing_xiulian_config.end(); ++iter)
+	{
+		UndergroundTask *config = iter->second;
+		if (config->n_LevelSection >= 2 && level >= config->LevelSection[0] && level <= config->LevelSection[1])
+		{
+			return config;
+		}
+	}
+	return NULL;
+}
+
+static void adjust_random_collection_config(void)
+{
+	sg_guild_bonfire_collections.clear();
+	for (std::map<uint64_t, struct RandomCollectionTable*>::iterator iter = random_collect_config.begin(); iter != random_collect_config.end(); ++iter)
+	{
+		RandomCollectionTable *config = iter->second;
+		if (config->RandomType == 2)
+		{
+			sg_guild_bonfire_collections.push_back(config);
+		}
+	}
+}
+
 typedef std::map<uint64_t, void *> *config_type;
 #define READ_SPB_MAX_LEN (1024 * 1024)
 int read_all_excel_data()
@@ -3842,7 +3925,6 @@ int read_all_excel_data()
 	assert(type);		
 	ret = traverse_main_table(L, type, "../lua_data/UndergroundTask.lua", (config_type)&mijing_xiulian_config);
 	assert(ret == 0);	
-	adjust_mijingxiulian_table();
 
 	type = sproto_type(sp, "CampDefenseTable");
 	assert(type);
@@ -3983,6 +4065,7 @@ int read_all_excel_data()
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/RandomCollectionTable.lua", (config_type)&random_collect_config);
 	assert(ret == 0);
+	adjust_rand_collect_table();
 
 	adjust_escort_config();
 	adjust_achievement_config();
@@ -3997,6 +4080,7 @@ int read_all_excel_data()
 	adjust_equip_attr_table();
 	adjust_sign_in_every_day_config();
 	adjust_sign_in_leiji_config();
+	adjust_random_collection_config();
 
 	lua_close(L);
 	sproto_release(sp);

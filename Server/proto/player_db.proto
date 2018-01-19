@@ -478,28 +478,25 @@ message PlayerDBInfo
 	required bool partner_recruit_first = 83; //首次招募标志
 	repeated DBTitle title_list = 84; //称号列表
 	repeated DBHreoChallengeInfo hero_challenge_all_info = 85; //英雄挑战总信息
-	required uint32 mijing_task_id = 86; //秘境试炼任务当前身上已接未提交任务id
-	required uint32 mijing_time_statu = 87; //秘境试炼任务时间标志0:今日接 1:昨日接的
-	required uint32 mijing_reward_beilv = 88; //秘境试炼任务当前奖励倍率
-	required uint32 mijing_huan_num = 89; //秘境试炼任务今日已完成总环数
-	required uint32 mijing_lun_num = 90;  //秘境试炼任务今日已完成总轮数
-	required uint32 fishing_bait_id = 91;  //钓鱼鱼饵ID
-	repeated DBStrongGoal strong_goals = 92; //变强目标
-	repeated DBStrongChapter strong_chapters = 93; //变强章节
-	required uint32 travel_round_num = 94;  //游历当前轮数
-	required uint32 travel_round_count_out = 95;  //游历当前轮数是否算在今天轮数里
-	required uint32 travel_task_num = 96;  //游历当前环数
-	repeated DBPlayerLevelRewardInfo player_level_reward_all_info = 97; //玩家等级奖励所有信息
-	required DBPlayerOnlineRewardInfo player_online_reward_info = 98; //玩家在线奖励信息
-	optional DBPlayerSignInEveryDayInfo player_sign_in_info = 99;    //玩家签到信息
-	repeated DBPlayerActiveRewardBackInfo player_reward_back_info = 100;    //玩家活动奖励找回信息
-	optional DBPlayerYaoQianShuInfo  player_yao_qian_shu_info = 101;    //玩家摇钱树
-	optional DBPlayerLoginRewardInfo  player_login_reward_info = 102;    //登录奖励信息
-	repeated uint32 function_open = 103; //功能开启信息
-	optional DBTowerInfo tower = 104; //冲塔
-	repeated DBPlayerCifuRewardInfo ci_fu_reward_info = 105; //赐福奖励信息
-	required uint32 fishing_reward_num = 106;  //钓鱼收益次数
-	
+	optional DBPlayerDiGongXiuLianInfo di_gong_xiulian_info = 86; //地宫修炼
+	required uint32 fishing_bait_id = 87;  //钓鱼鱼饵ID
+	repeated DBStrongGoal strong_goals = 88; //变强目标
+	repeated DBStrongChapter strong_chapters = 89; //变强章节
+	required uint32 travel_round_num = 90;  //游历当前轮数
+	required uint32 travel_round_count_out = 91;  //游历当前轮数是否算在今天轮数里
+	required uint32 travel_task_num = 92;  //游历当前环数
+	repeated DBPlayerLevelRewardInfo player_level_reward_all_info = 93; //玩家等级奖励所有信息
+	required DBPlayerOnlineRewardInfo player_online_reward_info = 94; //玩家在线奖励信息
+	optional DBPlayerSignInEveryDayInfo player_sign_in_info = 95;    //玩家签到信息
+	repeated DBPlayerActiveRewardBackInfo player_reward_back_info = 96;    //玩家活动奖励找回信息
+	optional DBPlayerYaoQianShuInfo  player_yao_qian_shu_info = 97;    //玩家摇钱树
+	optional DBPlayerLoginRewardInfo  player_login_reward_info = 98;    //登录奖励信息
+	repeated uint32 function_open = 99; //功能开启信息
+	optional DBTowerInfo tower = 100; //冲塔
+	repeated DBPlayerCifuRewardInfo ci_fu_reward_info = 101; //赐福奖励信息
+	required uint32 fishing_reward_num = 102;  //钓鱼收益次数
+	required uint32 guild_bonfire_reward_time = 103;  //帮会篝火累计收益时间
+	required uint32 guild_bonfire_activity_time = 104;  //所参加的篝火活动开始时间
 }
 
 message DBAutoAddHp
@@ -634,4 +631,16 @@ message DBPlayerCifuRewardInfo
 {
 	required uint32 id = 1;  //赐福表id
 	required uint64 time = 2; //上次领取时间
+}
+
+//地宫修炼信息
+message DBPlayerDiGongXiuLianInfo
+{
+	required uint32 digong_table_id = 1; //地宫修炼表索引id
+	required uint32 digong_task_id = 2; //地宫试炼任务当前身上已接未提交任务id
+	required uint32 digong_time_statu = 3; //地宫试炼任务时间标志0:今日接 1:昨日接的
+	required uint32 digong_reward_beilv = 4; //地宫试炼任务当前奖励倍率
+	required uint32 digong_huan_num = 5; //地宫试炼任务今日已完成总环数
+	required uint32 digong_lun_num = 6;  //地宫试炼任务今日已完成总轮数
+
 }

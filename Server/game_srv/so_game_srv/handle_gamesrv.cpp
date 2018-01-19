@@ -76,6 +76,7 @@
 #include "cash_truck_manager.h"
 #include "server_level.h"
 #include "guild_land_raid_manager.h"
+#include "guild_land_active_manager.h"
 #include <assert.h>
 #include <errno.h>
 #include <vector>
@@ -123,6 +124,7 @@ static int notify_achievement_info(player_struct *player, EXTERN_DATA *extern_da
 static int notify_title_info(player_struct *player, EXTERN_DATA *extern_data);
 static int notify_strong_info(player_struct *player, EXTERN_DATA *extern_data);
 static int notify_function_info(player_struct *player, EXTERN_DATA *extern_data);
+static int handle_srv_reward_request(player_struct *player, EXTERN_DATA *extern_data, uint32_t msg_id);
 
 GameHandleMap   m_game_handle_map;
 
@@ -2897,6 +2899,7 @@ static void player_ready_enter_scene(player_struct *player, EXTERN_DATA *extern_
 
 		scene->add_player_to_scene(player);
 		bSuccess = true;
+		player->notify_watch_pos_change();
 	} while(0);
 
 	if (bSuccess)
@@ -4124,15 +4127,43 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 			break;
 		}
 
-		//获取秘境试炼任务相关参数表
-		UndergroundTask* mijing_config = get_config_by_id(task_id, &taskid_to_mijing_xiulian_config);
-		ParameterTable *mijing_parame = get_config_by_id(161000336, &parameter_config);
-		if(mijing_parame == NULL || mijing_parame->n_parameter1 != 2)
+
+		//获取地宫试炼任务相关参数表
+		UndergroundTask* digong_config = NULL;
+		if(config != NULL && config->TaskType == TT_DIGONG)
 		{
-			ret = ERROR_ID_NO_CONFIG;
-			LOG_ERR("[%s:%d] player[%lu] get mi jing shi lian task parame faild, id:%u", __FUNCTION__, __LINE__, extern_data->player_id, task_id);
+			if(task_id != player->data->mi_jing_xiu_lian.task_id)
+			{
+				LOG_ERR("[%s:%d] 提交地宫修炼任务失败,任务id跟玩家身上的任务id不匹配,task_id[%u],player_task_id[%u]", task_id, player->data->mi_jing_xiu_lian.task_id);
+				ret = ERROR_ID_CONFIG;
+				return ret;
+			}
+			digong_config = get_config_by_id(player->data->mi_jing_xiu_lian.digong_id, &mijing_xiulian_config);
+			if(digong_config == NULL)
+			{
+				LOG_ERR("[%s:%d] 地宫修炼交任务,配置错误", __FUNCTION__, __LINE__);
+				ret = ERROR_ID_NO_CONFIG;
+				return ret;
+			}
+			if(player->data->mi_jing_xiu_lian.reward_beilv >= digong_config->n_ExpReward || player->data->mi_jing_xiu_lian.reward_beilv >= digong_config->n_MoneyReward || player->data->mi_jing_xiu_lian.reward_beilv >= digong_config->n_RewardGroup)
+			{
+				LOG_ERR("[%s:%d] 地宫修炼交任务,玩家身上星级下标超过最大值player_star_xiabiao[%u]", __FUNCTION__, __LINE__, player->data->mi_jing_xiu_lian.reward_beilv);
+				ret = ERROR_ID_CONFIG;
+				break;
+			}
+		
+		}
+		//这里获取等级系数(地宫修炼给奖励需要用到)
+		uint32_t actor_id = 1041*100000 + player->get_level();
+		ActorLevelTable *level_config = get_config_by_id(actor_id, &actor_level_config);
+		if(level_config == NULL)
+		{
+			LOG_INFO("[%s:%d]提交任务失败，获取ActorLevelTable等级配置失败id[%lu]", __FUNCTION__, __LINE__, actor_id);
+			ret = ERROR_ID_CONFIG;
 			break;
 		}
+
+
 
 		GangsBuildTaskTable *build_config = get_config_by_id(player->data->guild_task_config_id, &guild_build_task_config);
 		if (config->TaskType == TT_GUILD_BUILD && !build_config)
@@ -4148,22 +4179,17 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 		std::map<uint32_t, uint32_t> build_drop;
 		player->get_task_event_item(task_id, TEC_SUBMIT, item_list);
 		player->get_task_reward_item(task_id, item_list);
-		//秘境修炼任务获取额外奖励
-		if(mijing_config != NULL)
+		//地宫修炼任务获取额外奖励
+		if(digong_config != NULL)
 		{
-			for(size_t i = 0; i < mijing_config->n_CoinType && i < mijing_config->n_CoinValue; i++ )
+			get_drop_item(digong_config->RewardGroup[player->data->mi_jing_xiu_lian.reward_beilv], mijing_drop);
+			if(player->data->mi_jing_xiu_lian.lun_num + 1 >=  sg_digong_xiulian_sum_lun_num)
 			{
-				uint32_t _item_id_ = mijing_config->CoinType[i];
-				uint32_t _item_num_ = mijing_config->CoinValue[i] * player->data->mi_jing_xiu_lian.reward_beilv;
-				item_list[_item_id_] += _item_num_;
+				get_drop_item(digong_config->DropID, mijing_drop);
 			}
-			if(player->data->mi_jing_xiu_lian.lun_num + 1 >=  mijing_parame->parameter1[1])
+			for(std::map<uint32_t, uint32_t>::iterator itr = mijing_drop.begin(); itr != mijing_drop.end(); itr++)
 			{
-				get_drop_item(mijing_config->DropID, mijing_drop);
-				for (std::map<uint32_t, uint32_t>::iterator iter = mijing_drop.begin(); iter != mijing_drop.end(); ++iter)
-				{
-					item_list[iter->first] += iter->second;
-				}
+				item_list[itr->first] += itr->second;
 			}
 		}
 		if (config->TaskType == TT_GUILD_BUILD)
@@ -4200,15 +4226,16 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 		player->task_update_notify(&tmp_info);
 		player->touch_task_event(task_id, TEC_SUBMIT);
 		player->give_task_reward(task_id);
-		if(mijing_config != NULL)
+		if(digong_config != NULL)
 		{
-			uint32_t max_lunshu = mijing_parame->parameter1[1];
-			for(size_t i = 0; i < mijing_config->n_CoinType && i <  mijing_config->n_CoinValue; i++)
-			{
-				uint32_t item_id = mijing_config->CoinType[i];
-				uint32_t iten_num = mijing_config->CoinValue[i] * player->data->mi_jing_xiu_lian.reward_beilv;
-				player->add_item(item_id, iten_num, MAGIC_TYPE_TASK_REWARD);   
-			}
+			uint32_t max_lunshu = sg_digong_xiulian_sum_lun_num;
+			//加经验和银两
+			uint32_t exp_dengji_xishu = level_config->QueLvExp / 100;
+			uint32_t coin_dengji_xishu = level_config->QueLvCoin / 100;
+			uint32_t digong_get_exp = digong_config->ExpReward[player->data->mi_jing_xiu_lian.reward_beilv] * exp_dengji_xishu;
+			uint32_t digong_get_coin = digong_config->MoneyReward[player->data->mi_jing_xiu_lian.reward_beilv] * coin_dengji_xishu;
+			player->add_coin(digong_get_coin, MAGIC_TYPE_TASK_REWARD);
+			player->add_exp(digong_get_exp, MAGIC_TYPE_TASK_REWARD);
 			player->data->mi_jing_xiu_lian.lun_num += 1;
 			player->check_activity_progress(AM_MIJINGXIULIAN, 0);
 			if(player->data->mi_jing_xiu_lian.time_state == 0)
@@ -4217,9 +4244,8 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 				{
 					player->data->mi_jing_xiu_lian.huan_num += 1;
 					player->data->mi_jing_xiu_lian.lun_num = 0;
-					player->add_item_list(mijing_drop, MAGIC_TYPE_TASK_REWARD);
 				}
-			
+				player->add_item_list(mijing_drop, MAGIC_TYPE_TASK_REWARD);
 			}
 			else 
 			{
@@ -4227,6 +4253,7 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 				player->data->mi_jing_xiu_lian.huan_num = 0;
 				player->data->mi_jing_xiu_lian.time_state = 0;
 			}
+			player->data->mi_jing_xiu_lian.digong_id = 0;
 			player->data->mi_jing_xiu_lian.task_id = 0;
 			player->data->mi_jing_xiu_lian.reward_beilv = 0;
 			
@@ -4265,14 +4292,29 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 		}
 		else if (config->TaskType == TT_GUILD_BUILD)
 		{
-			uint32_t *resp = (uint32_t*)get_send_data();
-			uint32_t data_len = sizeof(uint32_t);
-			memset(resp, 0, data_len);
-			*resp = task_id;
-			fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_GUILD_TASK_FINISH, data_len, 0);
-
 			player->add_item_list(build_drop, MAGIC_TYPE_TASK_REWARD);
-			player->check_activity_progress(AM_GUILD_BUILD, 0);
+			if (config->FollowTask > 0)
+			{ //有后续任务，要等后续任务全部做完才算完成一环
+				player->accept_task(config->FollowTask, false);
+
+				GUILD_ACCEPT_TASK_ANSWER *resp = (GUILD_ACCEPT_TASK_ANSWER*)get_send_data();
+				uint32_t data_len = sizeof(GUILD_ACCEPT_TASK_ANSWER);
+				memset(resp, 0, data_len);
+				resp->result = 0;
+				resp->task_id = config->FollowTask;
+				resp->is_next = true;
+				fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_GUILD_ACCEPT_TASK_ANSWER, data_len, 0);
+			}
+			else
+			{
+				uint32_t *resp = (uint32_t*)get_send_data();
+				uint32_t data_len = sizeof(uint32_t);
+				memset(resp, 0, data_len);
+				*resp = task_id;
+				fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_GUILD_TASK_FINISH, data_len, 0);
+
+				player->check_activity_progress(AM_GUILD_BUILD, 0);
+			}
 		}
 		else if (config->TaskType == TT_TRAVEL)
 		{
@@ -13717,6 +13759,10 @@ int check_can_accept_cash_truck(player_struct *player, uint32_t type)
 	{
 		return 2;
 	}
+	if (player->scene->m_id != table->Point[0])
+	{
+		return 8;
+	}
 	uint32_t cd = 0;
 	if (!check_active_open(table->ActivityControl, cd))
 	{
@@ -13749,27 +13795,14 @@ int check_can_accept_cash_truck(player_struct *player, uint32_t type)
 	{
 		return 5;
 	}
-	int len = player->scene->create_monster_config->size();
-	int i = 0;
-	for (; i < len; ++i)
+	
+	float dx = player->get_pos()->pos_x - table->Point[1];
+	float dz = player->get_pos()->pos_z - table->Point[2];
+	if (dx * dx + dz * dz > 18)
 	{
-		struct SceneCreateMonsterTable *create_config = (*player->scene->create_monster_config)[i];
-		if (!create_config)
-			continue;
-		if (create_config->ID != config->StartNPC)
-			continue;
-		float dx = player->get_pos()->pos_x - create_config->PointPosX;
-		float dz = player->get_pos()->pos_z - create_config->PointPosZ;
-		if (dx * dx + dz * dz > 18)
-		{
-			return 7;
-		}
-		break;
+		return 7;
 	}
-	if (i == len)
-	{
-		return 8;
-	}
+
 	if (config->Level > player->get_attr(PLAYER_ATTR_LEVEL))
 	{
 		return 190500107;
@@ -14045,6 +14078,10 @@ static int handle_srv_check_and_cost_request(player_struct *player, EXTERN_DATA 
 	int ret = 0;
 	SRV_COST_INFO real_cost;
 	memset(&real_cost, 0, sizeof(SRV_COST_INFO));
+	if (req->cost.statis_id == MAGIC_TYPE_GUILD_DONATE)
+	{
+		req->cost.coin *= player->get_coin_rate();
+	}
 	do
 	{
 		if (req->cost.gold > 0)
@@ -14186,78 +14223,7 @@ static int handle_guildsrv_check_and_cost_request(player_struct *player, EXTERN_
 //帮会服请求发放奖励
 static int handle_guildsrv_reward_request(player_struct *player, EXTERN_DATA *extern_data)
 {
-	LOG_INFO("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
-
-	if (!player || !player->is_online())
-	{
-		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
-		return (-1);
-	}
-
-	PROTO_GUILDSRV_REWARD_REQ *req = (PROTO_GUILDSRV_REWARD_REQ*)buf_head();
-
-	int ret = 0;
-	do
-	{
-		std::map<uint32_t, uint32_t> item_map;
-		size_t item_len = (sizeof(req->item_id) / sizeof(req->item_id[0]));
-		for (size_t i = 0; i < item_len; ++i)
-		{
-			uint32_t item_id = req->item_id[i];
-			uint32_t item_num = req->item_num[i];
-			if (item_id > 0 && item_num > 0)
-			{
-				item_map[item_id] += item_num;
-			}
-		}
-
-		//检查背包格子
-		if (item_map.size() > 0)
-		{
-			if (!player->check_can_add_item_list(item_map))
-			{
-				ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
-				break;
-			}
-		}
-
-		//发放奖励
-		if (req->gold > 0)
-		{
-			player->add_bind_gold(req->gold, req->statis_id);
-		}
-		if (req->coin > 0)
-		{
-			player->add_coin(req->coin, req->statis_id);
-		}
-		if (item_map.size() > 0)
-		{
-			player->add_item_list(item_map, req->statis_id, true);
-		}
-
-		if (req->statis_id == MAGIC_TYPE_SHOP_BUY)
-		{
-			player->add_task_progress(TCT_SHOP_BUY, 0, 1);
-		}
-	} while(0);
-
-	PROTO_GUILDSRV_REWARD_RES *res = (PROTO_GUILDSRV_REWARD_RES *)get_send_buf(SERVER_PROTO_GUILDSRV_REWARD_ANSWER, get_seq());
-	res->head.len = ENDION_FUNC_4(sizeof(PROTO_GUILDSRV_REWARD_RES) + req->data_size);
-	memset(res->head.data, 0, sizeof(PROTO_GUILDSRV_REWARD_RES) - sizeof(PROTO_HEAD));
-	res->result = ret;
-	res->statis_id = req->statis_id;
-	res->data_size = req->data_size;
-	if (req->data_size > 0)
-	{
-		memcpy(res->data, req->data, req->data_size);
-	}
-	add_extern_data(&res->head, extern_data);
-	if (conn_node_gamesrv::connecter.send_one_msg(&res->head, 1) != (int)ENDION_FUNC_4(res->head.len))
-	{
-		LOG_ERR("[%s:%d] send to guildsrv failed err[%d]", __FUNCTION__, __LINE__, errno);
-	}
-
-	return 0;
+	return handle_srv_reward_request(player, extern_data, SERVER_PROTO_GUILDSRV_REWARD_ANSWER);
 }
 
 //帮会服同步帮会技能
@@ -14309,11 +14275,41 @@ static int handle_sync_guild_info_request(player_struct *player, EXTERN_DATA *ex
 	if (old_guild_id > 0 && player->data->guild_id == 0)
 	{
 		player->on_leave_guild();
+		std::map<uint32_t, ProtoGuildInfo>::iterator iter = guild_summary_map.find(old_guild_id);
+		if (iter != guild_summary_map.end())
+		{
+			ProtoGuildInfo &guild = iter->second;
+			for (int i = 0; i < MAX_GUILD_MEMBER_NUM; ++i)
+			{
+				if (iter->second.player_data[i].player_id == extern_data->player_id)
+				{
+					if (i < MAX_GUILD_MEMBER_NUM - 1)
+					{
+						memmove(&guild.player_data[i], &guild.player_data[i + 1], sizeof(ProtoGuildInfo) * MAX_GUILD_MEMBER_NUM - i - 1);
+					}
+					memset(&guild.player_data[MAX_GUILD_MEMBER_NUM - 1], 0, sizeof(ProtoGuildInfo));
+					break;
+				}
+			}
+		}
 	}
 	else if (old_guild_id == 0 && player->data->guild_id > 0)
 	{
 		player->add_task_progress(TCT_GUILD_JOIN, (player->data->guild_office == 1 ? 2 : 1), 1);
 		player->add_achievement_progress(ACType_GUILD_JOIN, 0, 0, 0, 1);
+		std::map<uint32_t, ProtoGuildInfo>::iterator iter = guild_summary_map.find(old_guild_id);
+		if (iter != guild_summary_map.end())
+		{
+			ProtoGuildInfo &guild = iter->second;
+			for (int i = 0; i < MAX_GUILD_MEMBER_NUM; ++i)
+			{
+				if (iter->second.player_data[i].player_id == 0)
+				{
+					guild.player_data[i].player_id = player->get_uuid();
+					break;
+				}
+			}
+		}
 	}
 
 	SightPlayerInfoChangeNotify nty;
@@ -14344,6 +14340,9 @@ static int handle_sync_guild_info_request(player_struct *player, EXTERN_DATA *ex
 	return 0;
 }
 
+extern int send_mail(conn_node_base *connecter, uint64_t player_id, uint32_t type,
+	char *title, char *sender_name, char *content, std::vector<char *> *args,
+	std::map<uint32_t, uint32_t> *attachs, uint32_t statis_id);
 static int handle_guild_answer_award(player_struct *player, EXTERN_DATA *extern_data)
 {
 	//if (player == NULL)
@@ -14396,13 +14395,11 @@ static int handle_guild_answer_award(player_struct *player, EXTERN_DATA *extern_
 		player = player_manager::get_player_by_id(pData[i]);
 		if (player == NULL)
 		{
-			player->send_mail_by_id(270300044, NULL, &item_list, MAGIC_TYPE_QUESTION);
+			::send_mail(&conn_node_gamesrv::connecter, pData[i], 270300044, NULL, NULL, NULL, NULL, &item_list, MAGIC_TYPE_QUESTION);
 		}
 		else
 		{
 			player->add_item_list_as_much_as_possible(item_list, MAGIC_TYPE_QUESTION);
-			player->add_task_progress(TCT_QUESTION_JOIN, 0, 1);
-			player->add_achievement_progress(ACType_ANSWER, QUESTION_GUILD, 0, 0, 1);
 			if (i <= last)
 			{
 				player->send_system_notice(190500492, NULL);
@@ -14666,7 +14663,6 @@ static int handle_guild_skill_level_up(player_struct * player, EXTERN_DATA * ext
 
 static int handle_guild_accept_task_request(player_struct * player, EXTERN_DATA * extern_data)
 {
-	LOG_INFO("[%s:%d]", __FUNCTION__, __LINE__);
 	if (!player || !player->is_online())
 	{
 		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
@@ -14675,6 +14671,7 @@ static int handle_guild_accept_task_request(player_struct * player, EXTERN_DATA 
 
 	uint32_t *req = (uint32_t *)get_data();
 	uint32_t task_id = *req;
+	LOG_INFO("[%s:%d] player[%lu], task_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, task_id);
 
 	int ret = 0;
 	do
@@ -14707,6 +14704,7 @@ static int handle_guild_accept_task_request(player_struct * player, EXTERN_DATA 
 	memset(resp, 0, data_len);
 	resp->result = ret;
 	resp->task_id = task_id;
+	resp->is_next = false;
 	fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_GUILD_ACCEPT_TASK_ANSWER, data_len, 0);
 
 	return 0;
@@ -14829,6 +14827,45 @@ static int handle_guild_sync_donate(player_struct * player, EXTERN_DATA * extern
 	return 0;
 }
 
+static int handle_guild_sync_participate_answer_activity(player_struct * player, EXTERN_DATA * extern_data)
+{
+	LOG_INFO("[%s:%d]", __FUNCTION__, __LINE__);
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	player->add_task_progress(TCT_QUESTION_JOIN, 0, 1);
+	player->add_achievement_progress(ACType_ANSWER, QUESTION_GUILD, 0, 0, 1);
+	player->check_activity_progress(AM_ANSWER, QUESTION_GUILD);
+
+	return 0;
+}
+
+static int handle_guild_bonfire_open_request(player_struct * player, EXTERN_DATA * extern_data)
+{
+	LOG_INFO("[%s:%d]", __FUNCTION__, __LINE__);
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+
+	GUILD_BONFIRE_OPEN_REQUEST *req = (GUILD_BONFIRE_OPEN_REQUEST*)get_data();
+
+	int ret = guild_land_active_manager::guild_bonfire_open(player->data->guild_id, false);
+
+	GUILD_BONFIRE_OPEN_ANSWER *resp = (GUILD_BONFIRE_OPEN_ANSWER*)get_send_data();
+	uint32_t data_len = sizeof(GUILD_BONFIRE_OPEN_ANSWER);
+	memset(resp, 0, data_len);
+	resp->result = ret;
+	resp->last_begin_time = req->last_begin_time;
+	fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_GUILD_BONFIRE_OPEN_ANSWER, data_len, 0);
+
+	return 0;
+}
+
 static int on_login_send_zhenying(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (player->data->zhenying.level == 0)
@@ -14881,6 +14918,10 @@ static int handle_into_zhenying_battle_request(player_struct *player, EXTERN_DAT
 	{
 		return -3;
 	}
+	if (player->scene->is_in_zhenying_raid())
+	{
+		return -4;
+	}
 	//int ret = raid_manager::check_player_enter_raid(player, table->Map);
 	//if (ret != 0)
 	//{
@@ -14896,23 +14937,6 @@ static int handle_into_zhenying_battle_request(player_struct *player, EXTERN_DAT
 
 	send_comm_answer(MSG_ID_INTO_ZHENYING_BATTLE_ANSWER, 0, extern_data);
 	player->add_achievement_progress(ACType_ZHENYING_BATTLE, 0, 0, 0, 1);
-
-	//下面是正常的逻辑 
-	// CommAnswer *req = comm_answer__unpack(NULL, get_data_len(), (uint8_t *)get_data());
-	// if (!req)
-	// {
-	// 	LOG_ERR("[%s:%d] can not unpack player[%lu] cmd", __FUNCTION__, __LINE__, extern_data->player_id);
-	// 	return (-10);
-	// }
-	// if (req->result == 1)
-	// {
-	// 	EventCalendarTable *table = get_config_by_id(330100022, &activity_config);
-	// 	if (table != NULL && table->n_AuxiliaryValue > 0)
-	// 	{
-	// 		player->accept_task(table->AuxiliaryValue[0], false);
-	// 	}
-	// }
-	// comm_answer__free_unpacked(req, NULL);
 
 	return 0;
 }
@@ -15490,6 +15514,7 @@ static int handle_server_change_zhenying(player_struct *player, EXTERN_DATA *ext
 			}
 			player->sub_comm_gold(gold, MAGIC_TYPE_ZHENYING);
 		}
+		player->clear_zhenying_task();
 
 		player->set_attr(PLAYER_ATTR_ZHENYING, req->zhenying);
 		AttrMap nty_list;
@@ -20750,18 +20775,7 @@ static int handle_mijing_xiulian_shuaxing_request(player_struct *player, EXTERN_
 	mi_jing_xiu_lian_task_shua_xing_answer__init(&ans);
 	
 	int ret = 0;
-	uint32_t player_level = player->data->attrData[PLAYER_ATTR_LEVEL];
-	uint64_t id = 0;
-	for(std::map<uint64_t , UndergroundTask*>::iterator itr = mijing_xiulian_config.begin(); itr != mijing_xiulian_config.end(); itr++)
-	{
-		if(itr->second->n_LevelSection < 2)
-			continue;
-		if(player_level >= itr->second->LevelSection[0] && player_level <= itr->second->LevelSection[1])
-		{
-			id = itr->second->ID;
-		}
-	}
-	UndergroundTask* mijing_config = get_config_by_id(id, &mijing_xiulian_config);
+	UndergroundTask* mijing_config = get_config_by_id(player->data->mi_jing_xiu_lian.digong_id, &mijing_xiulian_config);
 	if(mijing_config == NULL)
 	{
 		LOG_ERR("[%s:%d] mijing xiulian shuaxiang faild player_id[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
@@ -20824,13 +20838,13 @@ static int handle_mijing_xiulian_shuaxing_request(player_struct *player, EXTERN_
 		}
 
 
-		if(flag < 0 || flag >= (int)mijing_config->n_Rate)
+		if(flag < 0)
 		{
 			LOG_ERR("[%s:%d] get mi jing xiu lian task info faild player_id[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 			ret = ERROR_ID_CONFIG;
 			break;
 		}
-		player->data->mi_jing_xiu_lian.reward_beilv = mijing_config->Rate[flag];
+		player->data->mi_jing_xiu_lian.reward_beilv = uint32_t(flag);
 		ans.reward_beilv = flag;
 
 	}while(0);	
@@ -23368,6 +23382,11 @@ static int handle_srv_reward_request(player_struct *player, EXTERN_DATA *extern_
 		{
 			player->add_item_list(item_map, req->statis_id, true);
 		}
+
+		if (req->statis_id == MAGIC_TYPE_SHOP_BUY)
+		{
+			player->add_task_progress(TCT_SHOP_BUY, 0, 1);
+		}
 	} while(0);
 
 	PROTO_SRV_REWARD_RES *res = (PROTO_SRV_REWARD_RES *)get_send_data();
@@ -23385,7 +23404,7 @@ static int handle_srv_reward_request(player_struct *player, EXTERN_DATA *extern_
 	return 0;
 }
 
-//活动服请求扣除消耗
+//活动服请求发奖
 static int handle_activitysrv_reward_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	return handle_srv_reward_request(player, extern_data, SERVER_PROTO_ACTIVITYSRV_REWARD_ANSWER);
@@ -23470,6 +23489,30 @@ int handle_player_money_exchange_request(player_struct* player, EXTERN_DATA* ext
 
 	answer.result = ret;
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MONEY_EXCHANGE_ANSWER, comm_answer__pack, answer);
+	return 0;
+}
+
+//门宗传功界面信息请求
+int handle_player_guild_chuan_gong_info_request(player_struct* player, EXTERN_DATA* extern_data)
+{
+	if(!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	if(player->data->guild_id == 0)
+	{
+		LOG_ERR("[%s:%d] get guild chuan gong info faild, player can't join guild, player_id[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -2;
+	}
+	ProtoGuildInfo *guild_info = get_guild_summary(player->data->guild_id);
+	if(guild_info == NULL)
+	{
+		LOG_ERR("[%s:%d] get guild chuan gong info faild, get guild info faild, player_id[%lu] guild_id[%u]", __FUNCTION__, __LINE__, extern_data->player_id, player->data->guild_id);
+		return -3;
+	}	
+
 	return 0;
 }
 
@@ -23742,6 +23785,8 @@ void install_msg_handle()
 	add_msg_handle(SERVER_PROTO_GUILD_RUQIN_ADD_COUNT, handle_guild_ruqin_add_count);
 	add_msg_handle(SERVER_PROTO_GUILD_RUQIN_SYNC_COUNT, handle_guild_ruqin_sync_count);
 	add_msg_handle(SERVER_PROTO_GUILD_SYNC_DONATE, handle_guild_sync_donate);
+	add_msg_handle(SERVER_PROTO_GUILD_SYNC_PARTICIPATE_ANSWER, handle_guild_sync_participate_answer_activity);
+	add_msg_handle(SERVER_PROTO_GUILD_BONFIRE_OPEN_REQUEST, handle_guild_bonfire_open_request);
 
 	add_msg_handle(MSG_ID_PERSONALITY_INFO_REQUEST, handle_personality_info_request);
 	add_msg_handle(MSG_ID_PERSONALITY_SET_GENERAL_REQUEST, handle_personality_set_general_request);
@@ -23857,6 +23902,8 @@ void install_msg_handle()
 	add_msg_handle(SERVER_PROTO_ACTIVITYSRV_REWARD_REQUEST, handle_activitysrv_reward_request);
 
 	add_msg_handle(MSG_ID_MONEY_EXCHANGE_REQUEST, handle_player_money_exchange_request);
+
+	add_msg_handle(MSG_ID_GUILD_CHUAN_GONG_INFO_REQUEST, handle_player_guild_chuan_gong_info_request);
 }
 
 void uninstall_msg_handle()

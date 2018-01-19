@@ -509,9 +509,10 @@ struct HeroChallengeInfo
 
 struct MiJingXiuLianTaskInfo
 {
+	uint32_t digong_id; //地宫修炼表id
 	uint32_t task_id; //当前任务id(0表示未接任务)
 	uint32_t time_state; //任务时间标志(0:今日接,1:昨日接)
-	uint32_t reward_beilv; //当前奖励倍率
+	uint32_t reward_beilv; //当前奖励倍率下标
 	uint32_t huan_num; //今日已完成总环数
 	uint32_t lun_num;  //当前环已完成轮数
 };
@@ -626,6 +627,13 @@ struct CiFuRewardData
 	uint64_t time; //上次领取时间
 };
 
+//门宗传功信息
+struct GuildChuanGong
+{
+	uint32_t bei_chuan_num; //今日已经被传功次数
+	uint32_t give_chuan_num; //今日已经传给别人的次数
+};
+
 enum
 {
 	Strong_State_Achieving = 0, //奖励不可领
@@ -734,6 +742,9 @@ struct player_data
 	ProtoGuildSkill guild_skills[MAX_GUILD_SKILL_NUM];
 	uint32_t guild_task_count;
 	uint32_t guild_task_config_id;
+	uint32_t guild_bonfire_last_ts; //用于记录开始计算的时间戳
+	uint32_t guild_bonfire_reward_time; //帮会篝火累计收益时间
+	uint32_t guild_bonfire_activity_time; //所参加的篝火活动开始时间
 
 	//八卦牌
 	BaguapaiDressInfo baguapai_dress[MAX_BAGUAPAI_STYLE_NUM]; //八卦牌装备列表
@@ -819,7 +830,7 @@ struct player_data
 
 	//英雄挑战数据
 	HeroChallengeInfo my_hero_info[MAX_HERO_CHALLENGE_MONSTER_NUM];  // size 17200
-	//秘境修炼任务信息
+	//地宫修炼任务信息
 	MiJingXiuLianTaskInfo mi_jing_xiu_lian;
 
 	//钓鱼
@@ -864,6 +875,9 @@ struct player_data
 
 	//上次赐福奖励领取信息
 	CiFuRewardData ci_fu_reward[MAX_CIFU_REWARD_NUM];
+
+	//门宗传功信息
+	GuildChuanGong guild_chuan_gong_info;
 };
 
 struct ai_player_data
@@ -1079,6 +1093,7 @@ public:
 	void send_clear_sight();
 	void send_clear_sight_monster();	
 	void send_scene_transfer(float direct, float pos_x, float pos_y, float pos_z, uint32_t scene_id, int32_t result);
+	void notify_watch_pos_change();
 
 	//属性
 	void calculate_attribute(bool isNty = false);
@@ -1146,6 +1161,7 @@ public:
 	void send_all_yaoshi_num();
 	void add_zhenying_exp(uint32_t num);
 	void send_zhenying_info();
+	void clear_zhenying_task();
 	uint32_t get_zhenying_grade(void);
 	int add_currency(uint32_t id, uint32_t num, uint32_t statis_id, uint32_t limit = UINT32_MAX, bool isNty = true);
 	int sub_currency(uint32_t id, uint32_t num, uint32_t statis_id, bool isNty = true);
@@ -1244,6 +1260,7 @@ public:
 	int give_task_reward_by_reward_id(uint32_t reward_id, uint32_t statis_id);
 	int touch_task_drop(uint32_t scene_id, uint32_t monster_id);
 	void load_task_end(void);
+	void remove_task(uint32_t task_id);
 
 	void init_task_progress(TaskInfo *info);
 	void add_task_progress(uint32_t type, uint32_t target, uint32_t num, uint32_t task_id = 0, uint32_t cond_id = 0, uint64_t teammate_id = 0);
@@ -1491,7 +1508,7 @@ public:
 
 	//英雄挑战信息初始化
 	int init_hero_challenge_data();
-	//秘境试炼任务信息推送
+	//地宫试炼任务信息推送
 	int mijing_shilian_info_notify(uint32_t type);
 
 	//我要变强

@@ -308,6 +308,7 @@ enum TaskType
 	TT_QUESTION = 6, //答题
 	TT_RAID = 9, //副本
 	TT_CASH_TRUCK = 10, //押镖
+	TT_DIGONG = 11, //地宫修炼
 	TT_GUILD_BUILD = 12, //帮会建设
 	TT_TRAVEL = 13, //游历
 	TT_GUIDE = 14, //引导

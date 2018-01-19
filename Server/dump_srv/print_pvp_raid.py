@@ -114,7 +114,7 @@ while True:
         req = cast_skill_pb2.add_buff_notify()
         req.ParseFromString(pb_data)
         oldtime=datetime.datetime.now()
-        print oldtime.time(), "%lu add buff %u %u" % (req.playerid, req.buff_id, req.start_time)
+        print oldtime.time(), "%lu add buff %u %u %u" % (req.playerid, req.buff_id, req.start_time, req.lv)
 
 # 10400 //属性变更通知 playerattrnotify        
     if msg_id == 10400:

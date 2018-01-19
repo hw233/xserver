@@ -659,3 +659,25 @@ void Collect::CashTruckDrop(player_struct &player)
 		player.add_item(reward_config->RewardItem2[i], reward_config->RewardNum2[i], MAGIC_TYPE_CASH_TRUCK);
 	}
 }
+
+void Collect::CreateRandCollect(scene_struct *scene)
+{
+	std::map<uint64_t, std::vector<uint64_t> >::iterator itRand = sg_rand_collect.find(scene->m_id);
+	if (itRand == sg_rand_collect.end())
+	{
+		return;
+	}
+	for (std::vector<uint64_t>::iterator itV = itRand->second.begin(); itV != itRand->second.end(); ++itV)
+	{
+		RandomCollectionTable *table = get_config_by_id(*itV, &random_collect_config);
+		if (table == NULL)
+		{
+			continue;
+		}
+		for (uint32_t i = 0; i < table->Num; ++i)
+		{
+			uint32_t pos = rand() % table->n_PointX;
+			CreateCollectByPos(scene, table->CollectionID, table->PointX[pos], table->PointZ[pos], 10000, 0);
+		}
+	}
+}

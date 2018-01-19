@@ -123,6 +123,8 @@ int scene_struct::init_scene_struct(uint64_t sceneid, bool create_monster, int l
 	if (create_monster)
 		create_all_monster(lv);
 
+	Collect::CreateRandCollect(this);
+
 	return (0);
 }
 

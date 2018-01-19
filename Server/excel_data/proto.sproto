@@ -319,6 +319,7 @@
 	ParameterEffect 17 : *integer
 	CostTime 18 : integer
 	ItemCD 19 : integer
+	BuffId 20 : integer
 }
 
 .ParameterTable {
@@ -1233,6 +1234,7 @@
 	Number 11 : *integer
 	Range 12 : integer
 	Reward 13 : integer
+	Point 14 : *double
 }
 
 .BiaocheRewardTable {
@@ -1523,12 +1525,12 @@
 .UndergroundTask{
 	ID 1 : integer 
 	LevelSection 2 : *integer 
-	TaskID 3 : integer 
-	CoinType 4 : *integer 
-	CoinValue 5 : *integer 
-	StarProbability 6 : *integer 
-	Rate 7 : *integer 
-	DropID 8 : integer
+	TaskID 3 : *integer 
+	StarProbability 4 : *integer 
+	DropID 5 : integer
+	ExpReward 6 : *integer
+	MoneyReward 7 : *integer
+	RewardGroup 8 : *integer
 }
 
 .CampDefenseTable{
@@ -1546,7 +1548,7 @@
 	MineralIntegral1 12 : *integer
 	MineralIntegral2 13 : *integer 
 	SupportMine 14 : *integer
-	TaskID 15 : integer
+	TaskID 15 : *integer
 	MiningLimit1 16 : integer
 	MiningLimit2 17 : integer
 	DropNum1 18 : integer
@@ -1825,8 +1827,8 @@
 	RandomType 2 : integer 
 	CollectionID 3 : integer 
 	MapID 4 : integer 
-	PointX 5 : *integer 
-	PointZ 6 : *integer 
-	Num 7 : integer 
+	PointX 5 : *double 
+	PointZ 6 : *double 
+	Num 7 : integer
 }
 

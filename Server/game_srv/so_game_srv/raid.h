@@ -89,6 +89,17 @@ struct raid_script_data
 	uint8_t cur_region_config;
 };
 
+union guild_land_ai_data
+{
+	struct bonfire_ai_data
+	{
+		uint32_t begin_time;
+		uint32_t end_time;
+		uint32_t collect_refresh_time;
+		monster_struct *bonfire;
+	} bonfire_data;
+};
+
 union raid_ai_data
 {
 	struct 
@@ -185,6 +196,9 @@ union raid_ai_data
 	{
 		uint32_t guild_id; //对应的帮会ID
 		struct raid_script_data script_data;		
+		uint32_t activity_id; //当前正在进行的活动
+		uint32_t activity_state; //当前正在进行的活动状态
+		guild_land_ai_data activity_data;
 	} guild_land_data;
 
 	struct

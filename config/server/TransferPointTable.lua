@@ -358,6 +358,12 @@ local TransferPointTable = {
 		['NameId'] = '太极之巅',
 		['limitLevel'] = 1,
 		['MapId'] = {20102}
+		},
+	[155000061] = {
+		['ID'] = 155000061,
+		['NameId'] = '太极之巅',
+		['limitLevel'] = 1,
+		['MapId'] = {20101}
 		}
 	}
 return TransferPointTable

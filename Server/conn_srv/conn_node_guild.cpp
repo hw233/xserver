@@ -30,8 +30,8 @@ int conn_node_guild::recv_func(evutil_socket_t fd)
 	for (;;) {
 		int ret = get_one_buf();
 		if (ret == 0) {
-			if (transfer_to_client() != 0) {
-				LOG_INFO("%s %d: transfer to client failed", __FUNCTION__, __LINE__);
+			if (dispatch_message() != 0) {
+				LOG_INFO("%s %d: dispatch_message failed", __FUNCTION__, __LINE__);
 //				ret = remove_one_buf();
 //				return (0);
 			}
@@ -47,17 +47,10 @@ int conn_node_guild::recv_func(evutil_socket_t fd)
 	return (0);
 }
 
-int conn_node_guild::transfer_to_client()
+int conn_node_guild::dispatch_message()
 {
-	uint32_t old_len;
-	PROTO_HEAD *head;
-	EXTERN_DATA *extern_data;
-	conn_node_client *client;
-
-	head = (PROTO_HEAD *)get_head();
-
-	int cmd = ENDION_FUNC_2(head->msg_id);
-
+	PROTO_HEAD *head = (PROTO_HEAD *)buf_head();
+	uint32_t cmd = ENDION_FUNC_2(head->msg_id);
 #ifdef FLOW_MONITOR
 	add_one_other_server_request_msg(head);
 #endif
@@ -88,6 +81,8 @@ int conn_node_guild::transfer_to_client()
 		case SERVER_PROTO_GUILD_RUQIN_ADD_COUNT:
 		case SERVER_PROTO_GUILD_RUQIN_SYNC_COUNT:
 		case SERVER_PROTO_GUILD_SYNC_DONATE:
+		case SERVER_PROTO_GUILD_SYNC_PARTICIPATE_ANSWER:
+		case SERVER_PROTO_GUILD_BONFIRE_OPEN_REQUEST:
 			return transfer_to_gamesrv();
 		case SERVER_PROTO_MAIL_INSERT:
 			return transfer_to_mailsrv();
@@ -96,7 +91,23 @@ int conn_node_guild::transfer_to_client()
 			return transfer_to_ranksrv();
 		case SERVER_PROTO_ACTIVITY_SHIDAMENZONG_GIVE_REWARD_ANSWER:
 			return transfer_to_activitysrv();
+		default:
+			return transfer_to_client();
 	}
+	return 0;
+}
+
+int conn_node_guild::transfer_to_client()
+{
+	uint32_t old_len;
+	PROTO_HEAD *head;
+	EXTERN_DATA *extern_data;
+	conn_node_client *client;
+
+	head = (PROTO_HEAD *)get_head();
+
+	int cmd = ENDION_FUNC_2(head->msg_id);
+
 	
 	extern_data = get_extern_data(head);
 	LOG_DEBUG("[%s:%d]: Send Cmd To client, [%lu], cmd: %d", __FUNCTION__, __LINE__, extern_data->player_id, cmd);

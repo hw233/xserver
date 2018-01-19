@@ -12,6 +12,7 @@
 #include "raid.pb-c.h" 
 #include "../proto/relive.pb-c.h"
 #include "../proto/role.pb-c.h"
+//#include "../proto/chat.pb-c.h" //del
 #include "../proto/zhenying.pb-c.h"
 #include "../proto/player_redis_info.pb-c.h"
 #include "zhenying_battle.h"
@@ -122,7 +123,7 @@ void zhenying_raid_ai_tick_on_truck(raid_struct *raid)
 		{
 			player->data->zhenying.score_time = now + tableDaily->SupportMine[1];
 			player->data->zhenying.protect_num += 1;
-			update_zhenying_score(player, tableDaily->SupportMine[2], tableDaily->TaskID);
+			update_zhenying_score(player, tableDaily->SupportMine[2], tableDaily->TaskID[0]);
 		}
 	}
 
@@ -264,14 +265,6 @@ static void zhenying_raid_ai_player_enter(raid_struct *raid, player_struct *play
 static void zhenying_raid_ai_player_leave(raid_struct *raid, player_struct *player)
 {
 	LOG_INFO("%s: player[%lu] del from %lu", __FUNCTION__, player->get_uuid(), raid->data->uuid);	
-//	raid->ZHENYING_DATA.cur_player_num--;
-	CampDefenseTable *tableDaily = get_config_by_id(raid->data->ai_data.zhenying_data.camp, &zhenying_daily_config);
-	if (tableDaily == NULL)
-	{
-		return;
-	}
-	//player->add_finish_task(tableDaily->TaskID);
-	player->del_finish_task(tableDaily->TaskID);
 }
 
 //static void UpdateOneTeamInfo(player_struct &player)
@@ -315,12 +308,12 @@ static void zhenying_raid_ai_player_dead(raid_struct *raid, player_struct *playe
 			return;
 		}
 		int add = 0;
-		if (!player->task_is_finish(tableDaily->TaskID))
+		if (!player->task_is_finish(tableDaily->TaskID[0]))
 		{
 			add = player->data->zhenying.score * table->parameter1[0] / 100;
 			if (add > 0)
 			{
-				update_zhenying_score(player, 0 - add, tableDaily->TaskID);
+				update_zhenying_score(player, 0 - add, tableDaily->TaskID[0]);
 			}
 			else
 			{
@@ -336,7 +329,7 @@ static void zhenying_raid_ai_player_dead(raid_struct *raid, player_struct *playe
 			args.push_back(const_cast<char*>(sz_num.c_str()));
 			player->send_system_notice(190500511, &args);
 		}
-		update_zhenying_score(pKill, add, tableDaily->TaskID);
+		update_zhenying_score(pKill, add, tableDaily->TaskID[0]);
 	}
 }
 static void zhenying_raid_ai_box_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
@@ -408,7 +401,7 @@ static void zhenying_raid_ai_box_dead(raid_struct *raid, monster_struct *monster
 	}
 	if (pKill->data->zhenying.mine < mineLimit)
 	{
-		update_zhenying_score(pKill, addScore, tableDaily->TaskID);
+		update_zhenying_score(pKill, addScore, tableDaily->TaskID[0]);
 	}
 
 }
@@ -462,6 +455,16 @@ static void zhenying_raid_ai_truck_dead(raid_struct *raid, monster_struct *monst
 }
 static void zhenying_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
 {
+/*	char      buff[512] = "一分钟后重启服务器 。。。";
+	ChatHorse send;
+	chat_horse__init(&send);
+	send.id = 0;
+	send.prior = 1;
+	send.content = buff;
+	uint32_t c[MAX_CHANNEL] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	send.channel = c;
+	send.n_channel = 9;
+	raid->broadcast_to_scene(MSG_ID_CHAT_HORSE_NOTIFY, &send, (pack_func)chat_horse__pack);*/
 	player_struct *pKill = NULL;
 	if (killer->get_unit_type() == UNIT_TYPE_PLAYER)
 	{
@@ -520,7 +523,7 @@ static void zhenying_raid_ai_collect(raid_struct *raid, player_struct *player, C
 	}
 	if (add > 0)
 	{
-		update_zhenying_score(player, add, tableDaily->TaskID);
+		update_zhenying_score(player, add, tableDaily->TaskID[0]);
 	}
 	player->data->zhenying.gather = 1;
 }
@@ -660,7 +663,7 @@ static void zhenying_raid_ai_attack(raid_struct *raid, player_struct *player, un
 			}
 			if (time_helper::get_cached_time() / 1000 > raid->data->ai_data.zhenying_data.time_speed)
 			{
-				monster->set_attr(PLAYER_ATTR_MOVE_SPEED, raid->data->ai_data.zhenying_data.speed * table->parameter1[0] / 100);//raid->data->ai_data.zhenying_data.speed * (100 - table->parameter1[0]) / 100);
+				monster->set_attr(PLAYER_ATTR_MOVE_SPEED, raid->data->ai_data.zhenying_data.speed * (100 - table->parameter1[0]) / 100);
 				//通知客户端减速
 				PlayerAttrNotify nty;
 				player_attr_notify__init(&nty);

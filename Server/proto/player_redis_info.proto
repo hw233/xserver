@@ -73,6 +73,7 @@ message RedisGuildInfo
 	required uint32 fc = 5; //门宗战力
 	required uint64 master_id = 6; //宗主ID
 	repeated uint64 member_ids = 7; //成员ID
+	required uint32 exploit = 8; //门宗功勋
 }
 
 message ZhenyingRedis

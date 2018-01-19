@@ -32,6 +32,8 @@ void GuildAnswer::Start(GuildInfo *guild)//, uint32_t *arrQuestion, uint32_t num
 	pName[1] = name[1];
 	pName[2] = name[2];
 
+	memset(participators, 0, sizeof(participators));
+
 	//uint32_t tmp = num;
 	//if (tmp > MAX_GUILD_QUESTION_NUM)
 	//{
@@ -159,12 +161,29 @@ void GuildAnswer::Answer(EXTERN_DATA *extern_data, char *answer, char *name)
 			return;
 		}
 	}
-	members[i] = extern_data->player_id;
-	++n_memSize;
-	if (i < 3)
+	for (int i = 0; i < MAX_GUILD_MEMBER_NUM; ++i)
 	{
-		strncpy(this->name[i], name, MAX_PLAYER_NAME_LEN);
+		if (participators[i] == 0)
+		{
+			participators[i] = extern_data->player_id;
+			fast_send_msg_base(&conn_node_guildsrv::connecter, extern_data, SERVER_PROTO_GUILD_SYNC_PARTICIPATE_ANSWER, 0, 0);
+			break;
+		}
+		else if (participators[i] == extern_data->player_id)
+		{
+			break;
+		}
 	}
+	if (strcmp(answer, table->GangsAnseer) == 0)
+	{
+		members[i] = extern_data->player_id;
+		++n_memSize;
+		if (i < 3)
+		{
+			strncpy(this->name[i], name, MAX_PLAYER_NAME_LEN);
+		}
+	}
+	
 	//FactionQuestionResult send;
 	//faction_question_result__init(&send);
 	//send.add = false;

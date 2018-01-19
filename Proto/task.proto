@@ -72,17 +72,18 @@ message TaskEnterPlanesAnswer
 	repeated uint32 events = 3; //需要客户端进入位面后执行的事件
 }
 
-//秘境修炼任务信息应答
+//地宫修炼任务信息应答
 message MiJingXiuLianTaskInfoAnswer
 {
 	required uint32 info_flag = 1; // 推送状态标志(0:登录主动推送 1:客户端请求推送 2:完成任务后主动推送)
 	required uint32 task_id = 2; //当前任务id
-	required uint32 reward_beilv = 3; //当前奖励倍率下标
-	required uint32 huan_num = 4; //今日已完成总环数
-	required uint32 lun_num = 5;  //今日已完成总轮数
+	required uint32 digong_id = 3; //地宫修炼表id
+	required uint32 reward_beilv = 4; //当前奖励倍率下标
+	required uint32 huan_num = 5; //今日已完成总环数
+	required uint32 lun_num = 6;  //今日已完成总轮数
 }
 
-//秘境修炼任务刷星信息应答
+//地宫修炼任务刷星信息应答
 message MiJingXiuLianTaskShuaXingAnswer
 {
 	required uint32 result = 1; //结果

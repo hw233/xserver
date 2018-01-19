@@ -224,7 +224,7 @@ int conn_node_tradesrv::handle_check_and_cost_answer(EXTERN_DATA *extern_data)
 
 int conn_node_tradesrv::handle_gamesrv_reward_answer(EXTERN_DATA *extern_data)
 {
-	PROTO_GUILDSRV_REWARD_RES *res = (PROTO_GUILDSRV_REWARD_RES*)buf_head();
+	PROTO_SRV_REWARD_RES *res = (PROTO_SRV_REWARD_RES*)get_data();
 	switch(res->statis_id)
 	{
 //		case MAGIC_TYPE_SHOP_BUY:
