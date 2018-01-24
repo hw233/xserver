@@ -630,11 +630,28 @@ struct CiFuRewardData
 	uint64_t time; //上次领取时间
 };
 
+//门宗传功单请求列表
+struct GuildChuanGongRequestList
+{
+	uint64_t player_id; //玩家id
+	uint64_t time;    //请求额时间戳
+};
+
+//当前正在传功的信息
+struct CurGuildChuanGongInfo 
+{
+	uint32_t type; //1:我传给别人 2:别人传给我
+	uint64_t player_id; //对方玩家id
+};
+
 //门宗传功信息
 struct GuildChuanGong
 {
 	uint32_t bei_chuan_num; //今日已经被传功次数
 	uint32_t give_chuan_num; //今日已经传给别人的次数
+	GuildChuanGongRequestList me_to_other[MAX_GUILD_MEMBER_NUM]; //我请求 自己传功给别的玩家的列表
+	GuildChuanGongRequestList other_to_me[MAX_GUILD_MEMBER_NUM]; //我请求 别人传功给我的玩家的列表
+	CurGuildChuanGongInfo  cur_info; //当前正在传功的信息
 };
 
 enum
@@ -1576,6 +1593,15 @@ public:
 	//赐福奖励
 	int init_player_ci_fu_reward_receive_data();
 	int player_ci_fu_info_notify();
+
+	//门宗传功切场景处理
+	void guild_chuan_gong_deal_with();
+	//判断当前是否正在传功
+	bool is_in_guild_chuan_gong();
+	//传功中断
+	void guild_chuan_gong_zhong_duan();
+	//清除传功信息
+	void clean_guild_chuan_gong_info();
 
 	uint64_t last_change_area_time;
 	sight_space_struct *sight_space;

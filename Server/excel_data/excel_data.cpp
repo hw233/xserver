@@ -759,8 +759,7 @@ void free_MountsTable(struct MountsTable *p)
     if (!p) return;
     free(p->Time);
     free(p->WingBinding);
-    free(p->MountsAttribute);
-    free(p->AttributeCeiling);
+    free(p->Speed);
     free(p->Name);
     free(p->Item);
     free(p->ItemNum);
@@ -1088,6 +1087,12 @@ void free_SkillEffectTable(struct SkillEffectTable *p)
     free(p->Effect);
     free(p->EffectAdd);
     free(p->EffectNum);
+    free(p);
+};
+
+void free_SkillLevelTable(struct SkillLevelTable *p)
+{
+    if (!p) return;
     free(p);
 };
 

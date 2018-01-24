@@ -6,6 +6,7 @@ message PartnerSkillData
 {
 	required uint32 id = 1;
 	required uint32 lv = 2;
+	required bool lock = 3;
 }
 
 message PartnerAttr

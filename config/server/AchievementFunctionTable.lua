@@ -501,166 +501,121 @@ local AchievementFunctionTable = {
 		},
 	[490200101] = {
 		['ID'] = 490200101,
-		['FunctionID'] = 8,
-		['HierarchyID'] = 101
+		['FunctionID'] = 3,
+		['HierarchyID'] = 109
 		},
 	[490200102] = {
 		['ID'] = 490200102,
-		['FunctionID'] = 8,
-		['HierarchyID'] = 102
+		['FunctionID'] = 5,
+		['HierarchyID'] = 110
 		},
 	[490200103] = {
 		['ID'] = 490200103,
-		['FunctionID'] = 8,
-		['HierarchyID'] = 103
+		['FunctionID'] = 5,
+		['HierarchyID'] = 111
 		},
 	[490200104] = {
 		['ID'] = 490200104,
-		['FunctionID'] = 8,
-		['HierarchyID'] = 104
+		['FunctionID'] = 5,
+		['HierarchyID'] = 112
 		},
 	[490200105] = {
 		['ID'] = 490200105,
-		['FunctionID'] = 8,
-		['HierarchyID'] = 105
+		['FunctionID'] = 5,
+		['HierarchyID'] = 113
 		},
 	[490200106] = {
 		['ID'] = 490200106,
-		['FunctionID'] = 8,
-		['HierarchyID'] = 106
+		['FunctionID'] = 5,
+		['HierarchyID'] = 114
 		},
 	[490200107] = {
 		['ID'] = 490200107,
-		['FunctionID'] = 8,
-		['HierarchyID'] = 107
+		['FunctionID'] = 5,
+		['HierarchyID'] = 115
 		},
 	[490200108] = {
 		['ID'] = 490200108,
-		['FunctionID'] = 8,
-		['HierarchyID'] = 108
+		['FunctionID'] = 6,
+		['HierarchyID'] = 116
 		},
 	[490200109] = {
 		['ID'] = 490200109,
-		['FunctionID'] = 3,
-		['HierarchyID'] = 109
+		['FunctionID'] = 5,
+		['HierarchyID'] = 117
 		},
 	[490200110] = {
 		['ID'] = 490200110,
 		['FunctionID'] = 5,
-		['HierarchyID'] = 110
+		['HierarchyID'] = 118
 		},
 	[490200111] = {
 		['ID'] = 490200111,
 		['FunctionID'] = 5,
-		['HierarchyID'] = 111
+		['HierarchyID'] = 119
 		},
 	[490200112] = {
 		['ID'] = 490200112,
 		['FunctionID'] = 5,
-		['HierarchyID'] = 112
+		['HierarchyID'] = 120
 		},
 	[490200113] = {
 		['ID'] = 490200113,
 		['FunctionID'] = 5,
-		['HierarchyID'] = 113
+		['HierarchyID'] = 121
 		},
 	[490200114] = {
 		['ID'] = 490200114,
 		['FunctionID'] = 5,
-		['HierarchyID'] = 114
+		['HierarchyID'] = 122
 		},
 	[490200115] = {
 		['ID'] = 490200115,
 		['FunctionID'] = 5,
-		['HierarchyID'] = 115
+		['HierarchyID'] = 123
 		},
 	[490200116] = {
 		['ID'] = 490200116,
-		['FunctionID'] = 6,
-		['HierarchyID'] = 116
+		['FunctionID'] = 5,
+		['HierarchyID'] = 124
 		},
 	[490200117] = {
 		['ID'] = 490200117,
 		['FunctionID'] = 5,
-		['HierarchyID'] = 117
+		['HierarchyID'] = 125
 		},
 	[490200118] = {
 		['ID'] = 490200118,
 		['FunctionID'] = 5,
-		['HierarchyID'] = 118
+		['HierarchyID'] = 126
 		},
 	[490200119] = {
 		['ID'] = 490200119,
 		['FunctionID'] = 5,
-		['HierarchyID'] = 119
+		['HierarchyID'] = 128
 		},
 	[490200120] = {
 		['ID'] = 490200120,
 		['FunctionID'] = 5,
-		['HierarchyID'] = 120
+		['HierarchyID'] = 129
 		},
 	[490200121] = {
 		['ID'] = 490200121,
 		['FunctionID'] = 5,
-		['HierarchyID'] = 121
+		['HierarchyID'] = 130
 		},
 	[490200122] = {
 		['ID'] = 490200122,
-		['FunctionID'] = 5,
-		['HierarchyID'] = 122
-		},
-	[490200123] = {
-		['ID'] = 490200123,
-		['FunctionID'] = 5,
-		['HierarchyID'] = 123
-		},
-	[490200124] = {
-		['ID'] = 490200124,
-		['FunctionID'] = 5,
-		['HierarchyID'] = 124
-		},
-	[490200125] = {
-		['ID'] = 490200125,
-		['FunctionID'] = 5,
-		['HierarchyID'] = 125
-		},
-	[490200126] = {
-		['ID'] = 490200126,
-		['FunctionID'] = 5,
-		['HierarchyID'] = 126
-		},
-	[490200127] = {
-		['ID'] = 490200127,
-		['FunctionID'] = 5,
-		['HierarchyID'] = 127
-		},
-	[490200128] = {
-		['ID'] = 490200128,
-		['FunctionID'] = 5,
-		['HierarchyID'] = 128
-		},
-	[490200129] = {
-		['ID'] = 490200129,
-		['FunctionID'] = 5,
-		['HierarchyID'] = 129
-		},
-	[490200130] = {
-		['ID'] = 490200130,
-		['FunctionID'] = 5,
-		['HierarchyID'] = 130
-		},
-	[490200131] = {
-		['ID'] = 490200131,
 		['FunctionID'] = 6,
 		['HierarchyID'] = 131
 		},
-	[490200132] = {
-		['ID'] = 490200132,
+	[490200123] = {
+		['ID'] = 490200123,
 		['FunctionID'] = 2,
 		['HierarchyID'] = 132
 		},
-	[490200133] = {
-		['ID'] = 490200133,
+	[490200124] = {
+		['ID'] = 490200124,
 		['FunctionID'] = 2,
 		['HierarchyID'] = 133
 		}

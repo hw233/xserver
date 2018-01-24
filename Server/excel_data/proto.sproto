@@ -41,13 +41,12 @@
 	BaseAttribute 2 : integer
 	Time 3 : *integer
 	WingBinding 4 : *integer
-	MountsAttribute 5 : *integer
-	AttributeCeiling 6 : *double
-	Name 7 : string
-	Item 8 : *integer
-	ItemNum 9 : *integer
-	CastSpiritLimit 10 : integer
-	Binding 11 : *integer
+	Speed 5 : *integer
+	Name 6 : string
+	Item 7 : *integer
+	ItemNum 8 : *integer
+	CastSpiritLimit 9 : integer
+	Binding 10 : *integer
 }
 
 .MonsterTable {
@@ -1831,3 +1830,11 @@
 	Num 7 : integer
 }
 
+.SkillLevelTable {
+	 LowLevel 1 : integer
+	 LowNeedExp 2 : integer
+	 PartnerLevel 3 : integer
+	 HighLevel 4 : integer
+	 HighNeedExp 5 : integer
+	 PartnerLevel1 6 : integer
+}

@@ -658,6 +658,26 @@ local EventCalendarTable = {
 		['TypeEffect'] = {231000054},
 		['Reward'] = {201010004,201010001,201010011},
 		['RewardNum'] = {0}
+		},
+	[330000045] = {
+		['ID'] = 330000045,
+		['RelationID'] = 330400065,
+		['Subtab'] = 1,
+		['ChivalrousID'] = 0,
+		['HotspotID'] = 0,
+		['SubtabCondition'] = 1,
+		['SubtabValue'] = 30,
+		['ActivityType'] = 0,
+		['ActivityValue'] = 0,
+		['AuxiliaryValue'] = {},
+		['Push'] = 0,
+		['Sum'] = 0,
+		['Active'] = 0,
+		['ResetCD'] = 1,
+		['JoinType'] = 3,
+		['TypeEffect'] = {231000063},
+		['Reward'] = {201010004,201010001,201010011},
+		['RewardNum'] = {0}
 		}
 	}
 return EventCalendarTable

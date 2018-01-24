@@ -2714,6 +2714,20 @@ local ModelTable = {
 		['PointY'] = .00,
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00
+		},
+	[130600030] = {
+		['ModelId'] = 130600030,
+		['ModelPath'] = 'Prefabs/Actor/mount_004',
+		['TopH'] = 1.00,
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00,
+		['PointX'] = .00,
+		['PointY'] = .00,
+		['TalkScale'] = 1.00,
+		['TalkPointY'] = .00
 		}
 	}
 return ModelTable

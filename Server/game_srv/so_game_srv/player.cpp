@@ -915,6 +915,10 @@ void player_struct::process_offline(bool again/* = false*/, EXTERN_DATA *ext_dat
 		fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
 		target->add_achievement_progress(ACType_QIECUO, QIECUO_VICTORY, 0, 0, 1);
 	}
+	if(is_in_guild_chuan_gong())
+	{
+		guild_chuan_gong_zhong_duan();
+	}
 
 	data->status = OFFLINE_SAVING;
 
@@ -12592,6 +12596,7 @@ int player_struct::add_partner(uint32_t partner_id, uint64_t *uuid)
 			partner_skill_data__init(&skill_data[skill_num]);
 			skill_data[skill_num].id = partner->data->attr_cur.skill_list[i].skill_id;
 			skill_data[skill_num].lv = partner->data->attr_cur.skill_list[i].lv;
+			skill_data[skill_num].lock = partner->data->attr_cur.skill_list[i].lock;
 			skill_num++;
 		}
 		partner_cur_attr.skills = skill_point;
@@ -15428,14 +15433,12 @@ void player_struct::unpack_horse(_PlayerDBInfo *db_info)
 void player_struct::calc_horse_attr()
 {
 	memset(data->horse_attr.total, 0, sizeof(data->horse_attr.total));
-	//std::map<uint64_t, struct MountsTable*>::iterator itBase = horse_config.find(get_attr(PLAYER_ATTR_CUR_HORSE));
-	//if (itBase != horse_config.end())
-	//{
-	//	for (uint32_t i = 0; i < itBase->second->n_MountsAttribute; ++i)
-	//	{
-	//		data->horse_attr.total[itBase->second->MountsAttribute[i]] += itBase->second->AttributeCeiling[i];
-	//	}
-	//}
+	std::map<uint64_t, struct MountsTable*>::iterator itBase = horse_config.find(get_attr(PLAYER_ATTR_CUR_HORSE)); //todo del
+	if (itBase != horse_config.end())
+	{
+		data->horse_attr.total[PLAYER_ATTR_FLY_SPEED] = itBase->second->Speed[1];
+		data->horse_attr.total[PLAYER_ATTR_MOVE_SPEED] = itBase->second->Speed[0];
+	}
 	std::map<uint64_t, struct SpiritTable*>::iterator itSp = spirit_config.find(data->horse_attr.step);
 	if (itSp != spirit_config.end())
 	{
@@ -20167,4 +20170,111 @@ int player_struct::init_player_ci_fu_reward_receive_data()
 
 	
 	return 0;
+}
+
+void player_struct::guild_chuan_gong_deal_with()
+{
+	//先判断身上有没有传功的buff,没有直接返回
+	 
+	//判断我自己身上有没有和我一起传功的玩家信息,没有即出错了
+	if(data->guild_chuan_gong_info.cur_info.type == 0 || data->guild_chuan_gong_info.cur_info.player_id == 0)
+	{
+		LOG_ERR("[%s:%d] 传功切场景后,玩家身上信息错误,player_id[%lu]", __FUNCTION__, __LINE__, data->player_id);
+		return;
+	}
+
+	//在判断对方是否在线,如果已经下线清除掉自己身上的buff和相关信息
+	player_struct* guild_player = player_manager::get_player_by_id(data->guild_chuan_gong_info.cur_info.player_id);
+	if(!guild_player || !guild_player->is_online())
+	{
+		clean_guild_chuan_gong_info();
+		return;
+	}
+
+	bool succcess = true;
+	//判断对方身上是否有传功buff,如果没有,然后清除自己的信息和buff,并报错
+	if(guild_player->is_in_guild_chuan_gong() == false)
+	{
+		succcess = false;
+	}
+
+	//判断对方身上的那个人是不是我,如不是我那就肯定出错了,然后清除自己的信息和buff,并报错
+	if(guild_player->data->player_id != data->player_id)
+	{
+		succcess = false;
+	}
+
+	//判断对方与我的场景是否相同,以及距离是否在范围内,如不满足,然后清除双方的信息和buff,并出错
+	if(data->scene_id != guild_player->data->scene_id)
+	{
+		succcess = false;
+	}
+	if(!succcess)
+	{
+		clean_guild_chuan_gong_info();
+		LOG_ERR("[%s:%d] 传功切场景后,双方玩家身上的信息不匹配,player_id[%lu] guild_player_id[%lu]", __FUNCTION__, __LINE__, data->player_id, guild_player->data->player_id);
+		return;
+	}
+
+	//条件符合,给两人发送传功开始,并读条的通知
+	CommAnswer start_notify;
+	comm_answer__init(&start_notify);
+	start_notify.result = 0;
+	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_GUILD_CHUAN_GONG_DU_TIAO_NOTIFY, &start_notify, (pack_func)comm_answer__pack);
+	ppp = conn_node_gamesrv::broadcast_msg_add_players(data->player_id, ppp);
+	ppp = conn_node_gamesrv::broadcast_msg_add_players(guild_player->data->player_id, ppp);
+	conn_node_gamesrv::broadcast_msg_send();
+	return;
+}
+
+bool player_struct::is_in_guild_chuan_gong()
+{
+	//判断身上是否有传功数据以及传功buff
+	if(data->guild_chuan_gong_info.cur_info.type != 0 && data->guild_chuan_gong_info.cur_info.player_id != 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+void player_struct::guild_chuan_gong_zhong_duan()
+{
+	player_struct* guild_player = player_manager::get_player_by_id(data->guild_chuan_gong_info.cur_info.player_id);
+
+	//清除自身buff和相关信息
+	clean_guild_chuan_gong_info();
+
+	bool flag = false;
+	if(guild_player && guild_player->is_online())
+	{
+		if(guild_player->is_in_guild_chuan_gong())
+		{
+			if(guild_player->data->guild_chuan_gong_info.cur_info.player_id == data->player_id)
+			{
+				guild_player->clean_guild_chuan_gong_info();
+				//还要清除buff
+				flag = true;
+			}
+		}
+	}
+	CommAnswer stop_notify;
+	comm_answer__init(&stop_notify);
+	stop_notify.result = 0;
+	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_GUILD_CHUAN_GONG_STOP_NOTIFY, &stop_notify, (pack_func)comm_answer__pack);
+	ppp = conn_node_gamesrv::broadcast_msg_add_players(data->player_id, ppp);
+	if(flag == true)
+	{
+		ppp = conn_node_gamesrv::broadcast_msg_add_players(guild_player->data->player_id, ppp);
+	}
+	conn_node_gamesrv::broadcast_msg_send();
+}
+
+void player_struct::clean_guild_chuan_gong_info()
+{
+	if(data)
+	{
+		data->guild_chuan_gong_info.cur_info.type = 0;
+		data->guild_chuan_gong_info.cur_info.player_id = 0;
+		//还要清除传功buff
+	}
 }

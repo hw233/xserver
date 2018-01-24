@@ -614,8 +614,8 @@
 #define MSG_ID_GUILD_CHUAN_GONG_QU_XIAO_NOTIFY  12174	   //帮会传功取消通知 GuildChuanGongQuXiaoNotify(只有当对方取消才会通知请求者,如确认,符合要求就直接传过去传功)
 #define MSG_ID_GUILD_CHUAN_GONG_DU_TIAO_NOTIFY  12175      //帮会传功正式开始通知,客户端开始读条 NULL
 #define MSG_ID_GUILD_CHUAN_GONG_STOP_NOTIFY     12176      //帮会传功,如读条的过程中有一方中断,如强制下线,通知另一方停止读条 NULL
-#define MSG_ID_GUILD_CHUAN_GONG_JIESHU_REQUEST  12177      //帮会传功结束请求 NULL 
-#define MSG_ID_GUILD_CHUAN_GONG_JIESHU_ANSWER   12178      //帮会传功结束恢复 GuildChuanGongNotify
+#define MSG_ID_GUILD_CHUAN_GONG_FINISH_REQUEST  12177      //帮会传功完成请求 NULL
+#define MSG_ID_GUILD_CHUAN_GONG_FINISH_NOTIFY   12178      //帮会传功完成通知 GuildChuanGongFinishNotify
 
 
 //阵营

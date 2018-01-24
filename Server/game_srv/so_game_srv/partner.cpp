@@ -1946,6 +1946,7 @@ void partner_struct::relesh_attr()
 		uint32_t count = rand() % tmpSkill.size();
 		data->attr_flash.skill_list[s].skill_id = tmpSkill[count];
 		data->attr_flash.skill_list[s].lv = 1;
+		data->attr_flash.skill_list[s].lock = false;
 		tmpSkill.erase(tmpSkill.begin() + count);
 		++s;
 	}

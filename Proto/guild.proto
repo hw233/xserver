@@ -584,7 +584,7 @@ message GuildChuanGongRequest
 message GuildChuanGongNotify
 {
 	required uint32 type = 1;  //1:别人来请求他自己传功给我 2:别人来请求我传功给他
-	required uint32 player_id = 2; //目标玩家id
+	required uint64 player_id = 2; //目标玩家id
 	required string name = 3; //目标玩家姓名
 }
 
@@ -603,3 +603,10 @@ message GuildChuanGongQuXiaoNotify
 	required string name = 2; //拒绝的玩家姓名
 }
 
+//传功结束的回复
+message GuildChuanGongFinishNotify
+{
+	required uint32 result = 1; //0:成功 非0失败(失败的原因可能是一方在传功的过程中下线了)
+	required uint32 type = 2;   //1:别人传给我 2:我传别人
+	required string name = 3;   //对方的名字 
+}

@@ -37,8 +37,10 @@ struct partner_ai_interface
 struct PartnerSkill
 {
 	uint32_t skill_id;
+	uint32_t exp;
 	uint32_t lv;
 	uint64_t cd;
+	bool lock;
 };
 
 #define MAX_PLAYER_IN_PARTNER_SIGHT 30
@@ -82,8 +84,8 @@ struct partner_data
 	char name[MAX_PLAYER_NAME_LEN + 1];    //名字
 	bool     partner_rename_free;   //首次改名
 
-	partner_attr_data attr_cur;
-	partner_attr_data attr_flash;
+	partner_attr_data attr_cur;   //当前属性
+	partner_attr_data attr_flash;  //洗髓属性
 
 	uint32_t god_id[MAX_PARTNER_GOD];
 	uint32_t god_level[MAX_PARTNER_GOD];

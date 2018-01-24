@@ -108,6 +108,7 @@ extern std::map<uint64_t, struct PartnerTable*> partner_config; //伙伴表
 extern std::map<uint64_t, struct GodYaoAttributeTable*> partner_god_attr_config; //伙伴表神耀属性
 extern std::map<uint64_t, struct RecruitTable*> partner_recruit_config; //伙伴招募表
 extern std::map<uint64_t, struct PartnerLevelTable*> partner_level_config; //伙伴等级表
+extern std::map<uint64_t, struct SkillLevelTable*> partner_skill_level_config; //伙伴技能等级表
 extern std::map<uint64_t, struct FetterTable*> partner_bond_config; //伙伴羁绊表
 extern std::map<uint64_t, struct BiaocheTable*> cash_truck_config; //镖车表
 extern std::map<uint64_t, struct FunctionUnlockTable*> function_unlock_config; //功能开启表
@@ -469,5 +470,9 @@ extern uint32_t sg_digong_xiulian_sum_lun_num; //地宫修炼一环的总轮数
 extern uint32_t sg_zhu_dong_chuan_gong_num;    //主动传功最大次数(自己传给别人)
 extern uint32_t sg_bei_dong_chuan_gong_num;    //被动传功最大次数(别人传给自己)
 extern uint32_t sg_chuan_gong_level_limit;    //传功等级限制
+extern uint32_t sg_zhu_chuan_gong_add_exp;    //主动传功获得经验基础值 
+extern uint32_t sg_bei_chuan_gong_add_exp;    //被动传功获得经验基础值 
+extern uint32_t sg_zhu_chuan_gong_add_item_id; //主动传功者活动物品id
+extern uint32_t sg_zhu_chuan_gong_add_item_num; //主动传功者活动物品num
 
 #endif /* __LUA_CONFIG_H__ */

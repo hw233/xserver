@@ -603,6 +603,23 @@ static void generate_parameters(void)
 	{
 		sg_chuan_gong_level_limit = config->parameter1[0];
 	}
+	config = get_config_by_id(161000444, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_zhu_chuan_gong_add_exp = config->parameter1[0];
+	}
+	config = get_config_by_id(161000445, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_bei_chuan_gong_add_exp = config->parameter1[0];
+	}
+	config = get_config_by_id(161000446, &parameter_config);
+	if (config && config->n_parameter1 >= 2)
+	{
+		sg_zhu_chuan_gong_add_item_id = config->parameter1[0];
+		sg_zhu_chuan_gong_add_item_num = config->parameter1[1];
+	}
+
 }
 
 	// 读取刷怪配置
@@ -2329,6 +2346,16 @@ PartnerLevelTable *get_partner_level_config(uint32_t level)
 	return get_config_by_id(comb_id, &partner_level_config);
 }
 
+SkillLevelTable *get_partner_skill_level_config(uint32_t id)
+{
+	return get_config_by_id(id, &partner_skill_level_config);
+}
+
+bool is_high_partner_skill(uint64_t id)
+{
+	return (id / 10000 % 100) == 65;
+}
+
 SkillLvTable *get_skill_level_config(uint32_t skill_id, uint32_t level)
 {
 	SkillTable *main_config = get_config_by_id(skill_id, &skill_config);
@@ -3821,6 +3848,11 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/PartnerLevelTable.lua", (config_type)&partner_level_config);
 	assert(ret == 0);
 
+	type = sproto_type(sp, "SkillLevelTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/SkillLevelTable.lua", (config_type)&partner_skill_level_config);
+	assert(ret == 0);
+	
 	type = sproto_type(sp, "FetterTable");
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/FetterTable.lua", (config_type)&partner_bond_config);
@@ -4626,6 +4658,12 @@ int free_all_excel_data()
 	}
 	partner_level_config.clear();
 
+	for (std::map<uint64_t, struct SkillLevelTable *>::iterator ite = partner_skill_level_config.begin(); ite != partner_skill_level_config.end(); ++ite)
+	{
+		free_SkillLevelTable(ite->second);
+	}
+	partner_skill_level_config.clear();
+	
 	for (std::map<uint64_t, struct FetterTable *>::iterator ite = partner_bond_config.begin(); ite != partner_bond_config.end(); ++ite)
 	{
 		free_FetterTable(ite->second);

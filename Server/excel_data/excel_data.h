@@ -122,6 +122,7 @@ struct ShopTable;
 struct SignDay;
 struct SignMonth;
 struct SkillEffectTable;
+struct SkillLevelTable;
 struct SkillLvTable;
 struct SkillMoveTable;
 struct SkillTable;
@@ -272,6 +273,7 @@ void free_ShopTable(struct ShopTable *p);
 void free_SignDay(struct SignDay *p);
 void free_SignMonth(struct SignMonth *p);
 void free_SkillEffectTable(struct SkillEffectTable *p);
+void free_SkillLevelTable(struct SkillLevelTable *p);
 void free_SkillLvTable(struct SkillLvTable *p);
 void free_SkillMoveTable(struct SkillMoveTable *p);
 void free_SkillTable(struct SkillTable *p);
@@ -1743,18 +1745,16 @@ struct MountsTable
 	uint64_t *Time; //3
 	uint32_t n_WingBinding; //4
 	uint64_t *WingBinding; //4
-	uint32_t n_MountsAttribute; //5
-	uint64_t *MountsAttribute; //5
-	uint32_t n_AttributeCeiling; //6
-	double *AttributeCeiling; //6
-	char  *Name; //7
-	uint32_t n_Item; //8
-	uint64_t *Item; //8
-	uint32_t n_ItemNum; //9
-	uint64_t *ItemNum; //9
-	uint64_t  CastSpiritLimit; //10
-	uint32_t n_Binding; //11
-	uint64_t *Binding; //11
+	uint32_t n_Speed; //5
+	uint64_t *Speed; //5
+	char  *Name; //6
+	uint32_t n_Item; //7
+	uint64_t *Item; //7
+	uint32_t n_ItemNum; //8
+	uint64_t *ItemNum; //8
+	uint64_t  CastSpiritLimit; //9
+	uint32_t n_Binding; //10
+	uint64_t *Binding; //10
 }__attribute__ ((packed));
 
 struct NoticeTable
@@ -2239,6 +2239,16 @@ struct SkillEffectTable
 	uint64_t *EffectAdd; //4
 	uint32_t n_EffectNum; //5
 	uint64_t *EffectNum; //5
+}__attribute__ ((packed));
+
+struct SkillLevelTable
+{
+	uint64_t  LowLevel; //1
+	uint64_t  LowNeedExp; //2
+	uint64_t  PartnerLevel; //3
+	uint64_t  HighLevel; //4
+	uint64_t  HighNeedExp; //5
+	uint64_t  PartnerLevel1; //6
 }__attribute__ ((packed));
 
 struct SkillLvTable
