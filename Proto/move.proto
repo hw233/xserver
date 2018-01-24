@@ -162,6 +162,7 @@ message sight_partner_info
 	required uint32 pk_type = 9; //pk模式
 	required uint32 zhenying_id = 10; //阵营ID
 	required uint32 maxhp = 11; //最大血量
+	required string name = 12; //名字
 }
 
 //视野变化数据

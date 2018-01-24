@@ -124,13 +124,18 @@ void partner_manager::delete_partner(partner_struct *p)
 	}
 }
 
-partner_struct *partner_manager::create_partner(uint32_t partner_id, player_struct *owner, uint64_t uuid)
+partner_struct *partner_manager::create_partner(uint32_t partner_id, player_struct *owner, uint64_t uuid, bool init_name)
 {
 	partner_struct *ret = alloc_partner();
 	if (!ret)
 		return NULL;
 	ret->data->uuid = (uuid > 0 ? uuid : alloc_partner_uuid());
 	ret->init_partner(partner_id, owner);
+	if (init_name)
+	{
+//		strcpy(ret->data->name, ret->config
+		ret->data->partner_rename_free = true;
+	}
 
 	add_partner(ret);
 

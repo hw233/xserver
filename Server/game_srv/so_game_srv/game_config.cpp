@@ -592,6 +592,17 @@ static void generate_parameters(void)
 		sg_digong_xiulian_sum_huan_num = config->parameter1[0];
 		sg_digong_xiulian_sum_lun_num = config->parameter1[1];
 	}
+	config = get_config_by_id(161000442, &parameter_config);
+	if (config && config->n_parameter1 >= 2)
+	{
+		sg_zhu_dong_chuan_gong_num = config->parameter1[0];
+		sg_bei_dong_chuan_gong_num = config->parameter1[1];
+	}
+	config = get_config_by_id(161000443, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_chuan_gong_level_limit = config->parameter1[0];
+	}
 }
 
 	// 读取刷怪配置
@@ -2379,6 +2390,11 @@ TravelTable *get_travel_config(uint32_t level)
 GradeTable *get_zhenying_grade_table(uint32_t zhenying, uint32_t level)
 {
 	return get_config_by_id((36020 + zhenying) * 10000 + level, &zhenying_level_config);
+}
+
+CastSpiritTable *get_horse_soul_table(uint64_t horseid, uint32_t step, uint32_t star)
+{
+	return get_config_by_id(1830000000 + (horseid % 1000) * 10000 + step * 100 + star, &horse_soul_config);
 }
 
 uint32_t get_item_relate_id(uint32_t id)

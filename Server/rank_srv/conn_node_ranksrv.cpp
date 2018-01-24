@@ -1303,6 +1303,7 @@ int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
 	return 0;
 }
 /*
+static const int MAX_ZHENYING_GUILD = 5;
 static int get_zhenying_guild()
 {
 	int ret = 0;
@@ -1319,7 +1320,7 @@ static int get_zhenying_guild()
 		if (rank_key == NULL)
 		{
 			ret = ERROR_ID_RANK_TYPE;
-			LOG_ERR("[%s:%d] player[%lu] rank type, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
+			LOG_ERR("[%s:%d]  rank type", __FUNCTION__, __LINE__);
 			continue;
 		}
 
@@ -1327,7 +1328,7 @@ static int get_zhenying_guild()
 		if (ret2 != 0)
 		{
 			ret = ERROR_ID_RANK_REDIS;
-			LOG_ERR("[%s:%d] player[%lu] get rank failed, rank_type:%lu, rank_key:%s", __FUNCTION__, __LINE__, extern_data->player_id, rank_type, rank_key);
+			LOG_ERR("[%s:%d] get rank failed, rank_key:%s", __FUNCTION__, __LINE__, rank_key);
 			continue;
 		}
 
@@ -1340,7 +1341,7 @@ static int get_zhenying_guild()
 		if (get_more_redis_guild(guildIds, redis_guilds, sg_guild_key, sg_redis_client, t2) != 0)
 		{
 			ret = ERROR_ID_RANK_REDIS;
-			LOG_ERR("[%s:%d] player[%lu] get guild failed, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
+			LOG_ERR("[%s:%d] get guild failed", __FUNCTION__, __LINE__);
 			continue;
 		}
 
@@ -1353,7 +1354,7 @@ static int get_zhenying_guild()
 		if (get_more_redis_player(playerIds, redis_players, sg_player_key, sg_redis_client, t1) != 0)
 		{
 			ret = ERROR_ID_RANK_REDIS;
-			LOG_ERR("[%s:%d] player[%lu] get player failed, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
+			LOG_ERR("[%s:%d]  get player failed, rank_type:%lu", __FUNCTION__, __LINE__, rank_type);
 			continue;
 		}
 		++rank_type;
@@ -1397,12 +1398,13 @@ static int get_zhenying_guild()
 		resp.n_guildranks++;
 	}
 
-	fast_send_msg(&conn_node_ranksrv::connecter, extern_data, MSG_ID_RANK_INFO_ANSWER, rank_info_answer__pack, resp);
+	//fast_send_msg(&conn_node_ranksrv::connecter, extern_data, MSG_ID_RANK_INFO_ANSWER, rank_info_answer__pack, resp);
 	return 0;
 }*/
 int conn_node_ranksrv::handle_zhenying_leader(EXTERN_DATA *extern_data)
 {
 	static const int MAX_LEADER = 3;
+	static const int MAX_ZHENYING_GUILD = 5;
 	uint32_t rankKey[2][MAX_LEADER] = {
 		{ RANK_ZHENYING_LEVEL_ZHENYING1,
 		//阵营功勋
@@ -1427,7 +1429,10 @@ int conn_node_ranksrv::handle_zhenying_leader(EXTERN_DATA *extern_data)
 	{
 		for (int i = 0; i < MAX_LEADER; ++i)
 		{
-			pNumOne[z][i] = NULL;
+			//pNumOne[z][i] = NULL; 
+			pNumOne[z][i] = &numOne[z][i];
+			zhenying_number_one__init(&numOne[z][i]);
+			numOne[z][i].playerid = 0;
 			rank_info.clear();
 			char *rank_key = get_rank_key(rankKey[z][i]);
 			if (rank_key == NULL)
@@ -1436,7 +1441,7 @@ int conn_node_ranksrv::handle_zhenying_leader(EXTERN_DATA *extern_data)
 				continue;
 			}
 
-			int ret2 = sg_redis_client.zget(rank_key, 0, 1, rank_info);
+			int ret2 = sg_redis_client.zget(rank_key, 0, 0, rank_info);
 			if (ret2 != 0)
 			{
 				LOG_ERR("[%s:%d] player[%lu] get rank failed, rank_type:%lu, rank_key:%s", __FUNCTION__, __LINE__, extern_data->player_id, rankKey[z][i], rank_key);
@@ -1446,18 +1451,84 @@ int conn_node_ranksrv::handle_zhenying_leader(EXTERN_DATA *extern_data)
 			{
 				continue;
 			}
-			playerIds.insert(rank_info[i].first);
+			playerIds.insert(rank_info[0].first);
 			//AutoReleaseRedisPlayer p1;
 			//PlayerRedisInfo *rplayer = get_redis_player(rank_info[i].first, sg_player_key, sg_redis_client, p1);
 			//if (rplayer == NULL)
 			//{
 			//	continue;
 			//}
-			pNumOne[z][i] = &numOne[z][i];
-			zhenying_number_one__init(&numOne[z][i]);
-			numOne[z][i].playerid = rank_info[i].first;
+			
+			numOne[z][i].playerid = rank_info[0].first;
 		}
 	}
+	
+	ZhenyingLeader send;
+	zhenying_leader__init(&send);
+	send.fulongguo = &pNumOne[0][0];
+	send.dianfenggu = &pNumOne[1][0];
+	send.n_fulongguo = send.n_dianfenggu = MAX_LEADER;
+	ZhenyingGuild guild[2][MAX_ZHENYING_GUILD];
+	ZhenyingGuild *pGuild[2][MAX_ZHENYING_GUILD];
+	send.fulongguo_guild = &pGuild[0][0];
+	send.dianfenggu_guild = &pGuild[1][0];
+	AutoReleaseBatchRedisGuild t2;
+	std::map<uint32_t, RedisGuildInfo *> redis_guilds;
+	uint32_t rank_type = RANK_GUILD_EXPLOIT_ZHENYING1;
+	uint32_t zhenying = 1;
+	for (; rank_type <= RANK_GUILD_EXPLOIT_ZHENYING2; 	++rank_type, ++zhenying)
+	{
+		rank_info.clear();
+		char *rank_key = get_rank_key(rank_type);
+		if (rank_key == NULL)
+		{
+			LOG_ERR("[%s:%d]  rank type", __FUNCTION__, __LINE__);
+			continue;
+		}
+
+		int ret2 = sg_redis_client.zget(rank_key, 0, 4, rank_info);
+		if (ret2 != 0)
+		{
+			LOG_ERR("[%s:%d] get rank failed, rank_key:%s", __FUNCTION__, __LINE__, rank_key);
+			continue;
+		}
+		//test
+		//for (uint32_t t = 4194310; t < 4194313; ++t)
+		//{
+		//	rank_info.push_back(std::make_pair(t, t));
+		//}
+
+		std::set<uint32_t> guildIds;
+		for (size_t i = 0; i < rank_info.size(); ++i)
+		{
+			pGuild[zhenying - 1][i] = &guild[zhenying - 1][i];
+			zhenying_guild__init(pGuild[zhenying - 1][i]);
+			guild[zhenying - 1][i].guild_id = rank_info[i].first;
+			//guild[numGuild].zhengying = zhenying;
+			guild[zhenying - 1][i].rank = i + 1;
+			guildIds.insert(rank_info[i].first);
+		}
+		if (zhenying == 1)
+		{
+			send.n_fulongguo_guild = rank_info.size();
+		}
+		else
+		{
+			send.n_dianfenggu_guild = rank_info.size();
+		}
+
+		if (get_more_redis_guild(guildIds, redis_guilds, sg_guild_key, sg_redis_client, t2) != 0)
+		{
+			LOG_ERR("[%s:%d] get guild failed", __FUNCTION__, __LINE__);
+			continue;
+		}
+
+		for (std::map<uint32_t, RedisGuildInfo *>::iterator iter = redis_guilds.begin(); iter != redis_guilds.end(); ++iter)
+		{
+			playerIds.insert(iter->second->master_id);
+		}
+	}
+
 	if (get_more_redis_player(playerIds, redis_players, sg_player_key, sg_redis_client, t1) != 0)
 	{
 		LOG_ERR("[%s:%d] player[%lu] get player failed,", __FUNCTION__, __LINE__, extern_data->player_id);
@@ -1476,7 +1547,36 @@ int conn_node_ranksrv::handle_zhenying_leader(EXTERN_DATA *extern_data)
 					numOne[z][i].job = rplayer->job;
 					numOne[z][i].lv = rplayer->lv;
 					numOne[z][i].head = rplayer->head_icon;
-				}				
+					numOne[z][i].kill = rplayer->zhenying_kill;
+					numOne[z][i].step = rplayer->zhenying_level;
+					numOne[z][i].expoit = rplayer->exploit;
+				}
+			}
+		}
+	}
+
+	zhenying = 0;
+	for (; zhenying < 2; ++zhenying)
+	{
+		uint32_t s = zhenying == 0 ? send.n_fulongguo_guild : send.n_dianfenggu_guild;
+		for (size_t i = 0; i < s; ++i)
+		{
+			RedisGuildInfo *redis_guild = find_guild_from_map(redis_guilds, guild[zhenying][i].guild_id);
+			if (redis_guild)
+			{
+				guild[zhenying][i].guild_name = redis_guild->name;
+				guild[zhenying][i].zhengying = redis_guild->zhenying;
+				guild[zhenying][i].exploit = redis_guild->exploit;
+				guild[zhenying][i].guild_head = redis_guild->head;
+				//rank_data[resp.n_guildranks].masterid = redis_guild->master_id;
+				PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, redis_guild->master_id);
+				if (redis_player)
+				{
+					guild[zhenying][i].leader_name = redis_player->name;
+					guild[zhenying][i].leader_head = redis_guild->exploit;
+					guild[zhenying][i].exploit = redis_guild->exploit;
+				}
+				guild[zhenying][i].leader_id = redis_guild->master_id;
 			}
 		}
 	}
@@ -1490,11 +1590,7 @@ int conn_node_ranksrv::handle_zhenying_leader(EXTERN_DATA *extern_data)
 	//dianfenggu.number_one_step = pNumOne[1];
 	//dianfenggu.number_one_kill = pNumOne[5];
 	//dianfenggu.number_one_contribute = pNumOne[3];
-	ZhenyingLeader send;
-	zhenying_leader__init(&send);
-	send.fulongguo = &pNumOne[0][0];
-	send.dianfenggu = &pNumOne[1][0];
-	send.n_fulongguo = send.n_dianfenggu = MAX_LEADER;
+	
 	fast_send_msg(&connecter, extern_data, MSG_ID_GET_ZHENYING_LEADER_ANSWER, zhenying_leader__pack, send);
 
 	return 0;

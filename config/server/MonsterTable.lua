@@ -2465,7 +2465,7 @@ local MonsterTable = {
 		},
 	[151002006] = {
 		['ID'] = 151002006,
-		['ResId'] = 130300076,
+		['ResId'] = 130300073,
 		['Type'] = 1,
 		['MapDisplay'] = 1,
 		['AttackType'] = 1,

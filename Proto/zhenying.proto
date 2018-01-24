@@ -42,6 +42,7 @@ message ZhenyingGuild
 	required uint32 leader_head = 6; //图标
 	required uint32 zhengying = 7; //
 	required uint32 rank = 8; //
+	required uint64 leader_id = 9; //会长id
 }
 message ZhenyingNumberOneSide
 {

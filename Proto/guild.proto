@@ -561,14 +561,45 @@ message GuildChuanGongInfoAnswer
 {
 	required uint32 bei_chuan_gong_num = 1;  //今日已经被别人传功的次数
 	required uint32 give_chuan_gong_num = 2; //今日已经传功给别人的次数
-	repeated GuildChuanGongMemberInfo can_qing_qiu_chuan_gong_number = 3; //可请求传功的玩家信息
-	repeated GuildChuanGongMemberInfo can_chuan_shou_gong_number = 4;    //可以传授功力的玩家信息
+	repeated GuildChuanGongMemberInfo can_jieshou_chuan_gong_member = 3; //可接受我的传功玩家信息
+	repeated GuildChuanGongMemberInfo can_giveme_chuan_gong_member = 4; //可传功给我的玩家信息
 }
 
-//帮会唱功符合要求的成员信息
+//帮会传功符合要求的成员信息
 message GuildChuanGongMemberInfo
 {
 	required uint64 player_id = 1; //玩家id
 	required string player_name = 2; //玩家名字
 	required uint32 player_level = 3; //玩家等级
 }
+
+//帮会传功请求
+message GuildChuanGongRequest
+{
+	required uint32 type = 1; //1:请求自己传给别人 2:请求别人传给自己
+	required uint64 player_id = 2; //请求传功对象的玩家id
+}
+
+//帮会传功通知
+message GuildChuanGongNotify
+{
+	required uint32 type = 1;  //1:别人来请求他自己传功给我 2:别人来请求我传功给他
+	required uint32 player_id = 2; //目标玩家id
+	required string name = 3; //目标玩家姓名
+}
+
+//帮会传功确认或取消请求
+message GuildChuanGongIsOrNoRequest
+{
+	required uint32 type = 1; //1:别人来请求他自己传功给我 2:别人来请求我传功给他
+	required uint32 result = 2; //1:拒绝传功 2:同意传功
+	required uint64 player_id = 3; //对方玩家id
+}
+
+//帮会传功取消通知(拒绝的通知)
+message GuildChuanGongQuXiaoNotify
+{
+	required uint64 player_id = 1; //拒绝的玩家id
+	required string name = 2; //拒绝的玩家姓名
+}
+

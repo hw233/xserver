@@ -123,11 +123,11 @@ local SkillMoveTable = {
 		['MoveDistance'] = 9,
 		['MoveSpeed'] = 26,
 		['DelayTime'] = 50,
-		['MoveTime'] = 330,
+		['MoveTime'] = 400,
 		['EndType'] = 1,
 		['EndDistance'] = .20,
 		['BallisticEffect'] = 0,
-		['ExplodedEffect'] = 0
+		['ExplodedEffect'] = 135110011
 		},
 	[112511002] = {
 		['ID'] = 112511002,

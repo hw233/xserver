@@ -595,7 +595,7 @@ local ControlTable = {
 		['MaxActor'] = 1000,
 		['OpenDay'] = {0,1,2,3,4,5,6},
 		['OpenTime'] = {0},
-		['CloseTime'] = {2400},
+		['CloseTime'] = {2059},
 		['TimeType'] = 1,
 		['RewardTime'] = 0
 		},

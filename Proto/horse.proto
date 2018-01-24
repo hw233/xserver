@@ -12,18 +12,18 @@ message HorseData
 	required bool isnew = 3;
 	required bool isexpire = 4; //true 过期
 	required bool is_current = 5; //true 激活
+	required uint32 step = 6; //铸灵
+	required uint32 star = 7;//铸灵
 }
 
 message HorseCommonAttr
 {
-	required uint32 step = 1; //阶
-	repeated uint32 attr = 2; //属性
+	required uint32 step = 1; //修灵阶
+	repeated uint32 attr = 2; //修灵属性ID
 	repeated uint32 attr_level = 3; //当前修灵次数
-	required uint32 soul_level = 4; //铸灵等级
-	required uint32 cur_soul = 5; //当前可以升级的灵
-	required uint32 power = 6; //总的战斗力
-	repeated uint32 soul_num = 7; //当前已铸灵次数
-	required bool soul_full = 8; //true铸灵已满
+	required uint32 power = 4; //总的战斗力
+	required uint32 soul_step = 5; //当前坐骑铸灵阶
+	required uint32 soul_star = 6; //当前坐骑铸灵星
 }
 
 message HorseList
@@ -87,21 +87,20 @@ message HorseAddSoul
 
 message HorseSoulAns
 {
-	required uint32 soul = 1; //铸灵id
+	required int32 ret = 1; //0:成功
 	required uint32 power = 2; //总的战斗力
-	required uint32 num = 3; //铸灵次数
-	required int32 ret = 4; //0:成功
-	required uint32 cur_soul = 5; //当前可以升级的灵
-	required bool soul_full = 6; //true铸灵已满
+	required uint32 step = 3; //铸灵 阶
+	required uint32 star = 4;//铸灵 星
+	required uint32 horseid = 5; //
 }
-
+/*
 message HorseSoulLevelAns
 {
-	required uint32 level = 1; //铸灵等级
+	required int32 ret = 1; //0:成功
 	required uint32 power = 2; //总的战斗力
-	required int32 ret = 3; //0:成功
+	required uint32 level = 3; //del	
 }
-
+*/
 message OnHorse
 {
 	required uint64 playerid = 1;

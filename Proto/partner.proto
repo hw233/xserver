@@ -47,6 +47,10 @@ message PartnerInfoAnswer
 	required uint32 recruitSeniorCount = 8; //高级招募计数
 	repeated uint32 bonds = 9; //羁绊信息
 	repeated uint32 bondReward = 10; //羁绊领奖信息
+	required uint32 partner_today_junior_recurit_count = 11;  //今日JUNIOR伙伴招募次数
+	required uint32 partner_today_junior_recurit_cd = 12;  //今日JUNIOR伙伴招募cd
+	required uint32 partner_today_senior_recurit_count = 13;  //今日senior伙伴招募次数
+	required uint32 partner_today_senior_recurit_cd = 14;  //今日senior伙伴招募cd
 }
 
 //伙伴翻转开关请求
@@ -252,4 +256,10 @@ message PartnerFabaoChangeAnswer
 {
 	required uint32 result = 1; //0成功
 	optional PartnerCurFabaoInfo cur_fabao= 2; //伙伴当前佩戴的法宝信息
+}
+
+message PartnerRenameRequest
+{
+	required uint64 uuid = 1; //伙伴唯一ID
+	required string name = 2;
 }

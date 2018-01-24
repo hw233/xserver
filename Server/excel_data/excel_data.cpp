@@ -287,17 +287,10 @@ void free_CampTable(struct CampTable *p)
 void free_CastSpiritTable(struct CastSpiritTable *p)
 {
     if (!p) return;
-    free(p->ToddlerLv);
-    free(p->CastSpiritAttribute);
-    free(p->CastAttributeCeiling);
-    free(p->Cast1Expend);
+    free(p->CastExpend);
     free(p->Expend1Num);
-    free(p->Cast2Expend);
-    free(p->Expend2Num);
-    free(p->GradeNum);
-    free(p->OrderAttribute);
-    free(p->AdvancedLv);
-    free(p->AdvancedGet);
+    free(p->MountsAttribute);
+    free(p->AttributeCeiling);
     free(p);
 };
 
@@ -771,6 +764,7 @@ void free_MountsTable(struct MountsTable *p)
     free(p->Name);
     free(p->Item);
     free(p->ItemNum);
+    free(p->Binding);
     free(p);
 };
 

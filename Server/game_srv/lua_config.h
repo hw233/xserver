@@ -466,5 +466,8 @@ extern uint32_t sg_guild_bonfire_refresh_collection_interval;
 extern std::vector<RandomCollectionTable*> sg_guild_bonfire_collections;
 extern uint32_t sg_digong_xiulian_sum_huan_num; //地宫修炼一天可以完成的总环数
 extern uint32_t sg_digong_xiulian_sum_lun_num; //地宫修炼一环的总轮数
+extern uint32_t sg_zhu_dong_chuan_gong_num;    //主动传功最大次数(自己传给别人)
+extern uint32_t sg_bei_dong_chuan_gong_num;    //被动传功最大次数(别人传给自己)
+extern uint32_t sg_chuan_gong_level_limit;    //传功等级限制
 
 #endif /* __LUA_CONFIG_H__ */

@@ -418,7 +418,7 @@ player_struct *player_manager::create_doufachang_ai_player(player_struct *player
 		{
 			continue;
 		}
-		partner_struct *partner = partner_manager::create_partner(src->data->partner_id, ret, 0);
+		partner_struct *partner = partner_manager::create_partner(src->data->partner_id, ret, 0, true);
 		if (partner == NULL)
 			continue;
 		partner->data->attrData[PLAYER_ATTR_MAXHP] = src->data->attrData[PLAYER_ATTR_MAXHP];

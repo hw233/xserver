@@ -74,6 +74,7 @@ message RedisGuildInfo
 	required uint64 master_id = 6; //宗主ID
 	repeated uint64 member_ids = 7; //成员ID
 	required uint32 exploit = 8; //门宗功勋
+	required uint32 head = 9; //图标
 }
 
 message ZhenyingRedis
@@ -155,6 +156,9 @@ message player_doufachang_info
 	required uint32 refresh_buy_count = 4;      //刷新购买次数时间
 	required uint32 reward_id = 5;     //领奖的ID, 0表示没奖
 	required uint32 refresh_reward_id = 6;     //刷新领奖ID的时间
+	required uint32 cur_continue_win = 7;  //当前连胜
+	required uint32 max_continue_win = 8;  //最大连胜	
+	required uint32 max_rank = 9;  //最大排名
 }
 
 //世界boss信息

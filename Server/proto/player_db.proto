@@ -102,6 +102,8 @@ message DbHorseData
 	required uint32 id = 1;
 	required uint64 cd = 2; //
 	required bool isnew = 3;
+	required uint32 step = 4; //铸灵
+	required uint32 star = 5;//铸灵
 }
 message DbHorseCommonAttr
 {
@@ -307,6 +309,8 @@ message DBPartner
 	repeated uint32 god_lv = 11; //
 	required uint32 strong_num = 12;
 	optional DBCurPartnerFabao cur_fabao_info = 13;
+	required string name = 14;
+	required bool partner_rename_free = 15;  //伙伴免费改名一次
 }
 
 message DBTruck
@@ -497,6 +501,10 @@ message PlayerDBInfo
 	required uint32 fishing_reward_num = 102;  //钓鱼收益次数
 	required uint32 guild_bonfire_reward_time = 103;  //帮会篝火累计收益时间
 	required uint32 guild_bonfire_activity_time = 104;  //所参加的篝火活动开始时间
+	required uint32 partner_today_junior_recurit_count = 105;  //今日JUNIOR伙伴招募次数
+	required uint32 partner_today_junior_recurit_cd = 106;  //今日JUNIOR伙伴招募cd
+	required uint32 partner_today_senior_recurit_count = 107;  //今日senior伙伴招募次数
+	required uint32 partner_today_senior_recurit_cd = 108;  //今日senior伙伴招募cd
 }
 
 message DBAutoAddHp

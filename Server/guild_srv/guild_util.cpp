@@ -766,10 +766,6 @@ void sync_all_guild_to_gamesrv(void)
 		{
 			if(guild->members[i] == NULL)
 				break;
-			AutoReleaseRedisPlayer release_master;
-			PlayerRedisInfo *redis_master = get_redis_player(guild->members[i]->player_id, sg_player_key, sg_redis_client, release_master);
-			if(redis_master == NULL)
-				continue;
 			info->player_data[i].player_id = guild->members[i]->player_id;
 		}
 		req->guild_num++;
@@ -1419,6 +1415,7 @@ void refresh_guild_redis_info(GuildInfo *guild)
 	req.level = get_building_level(guild, Building_Hall);
 	req.zhenying = guild->zhenying;
 	req.master_id = guild->master_id;
+	req.head = guild->icon;
 	for (uint32_t i = 0; i < guild->member_num; ++i)
 	{
 		member_ids.push_back(guild->members[i]->player_id);

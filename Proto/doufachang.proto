@@ -20,6 +20,9 @@ message doufachang_info_answer
 	required uint32 reward_id = 4;     //领奖的ID, 0表示没奖
 	required uint32 current_rank = 5;   //当前排名
 	repeated challenge_player player = 6;  //可挑战玩家
+	required uint32 max_rank = 7;    //最高排名
+	required uint32 max_continue_win = 8;    //最大连胜
+	required uint32 cur_continue_win = 9;    //当前连胜
 }
 
 message doufachang_challenge_request

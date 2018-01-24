@@ -23,7 +23,7 @@ public:
 	static int reset_all_partner_ai();
 	
 	static void delete_partner(partner_struct *p);
-	static partner_struct *create_partner(uint32_t partner_id, player_struct *owner, uint64_t uuid = 0);
+	static partner_struct *create_partner(uint32_t partner_id, player_struct *owner, uint64_t uuid, bool init_name);
 	static partner_struct * get_partner_by_uuid(uint64_t uuid);
 
 	static int reinit_partner_min_heap();

@@ -388,8 +388,8 @@
 #define MSG_ID_DOWN_HORSE_NOTIFY 11214             // 下坐骑 OnHorse
 #define MSG_ID_SET_HORSE_OLD_REQUEST 11215         //置旧 HorseId
 #define MSG_ID_SET_HORSE_OLD_ANSWER 11216          // HorseId
-#define MSG_ID_ADD_HORSE_SOUL_LEVEL_REQUEST 11217  //铸灵进阶 NULL
-#define MSG_ID_ADD_HORSE_SOUL_LEVEL_ANSWER 11218   // HorseSoulAns
+//#define MSG_ID_ADD_HORSE_SOUL_LEVEL_REQUEST 11217  //铸灵进阶 HorseId
+//#define MSG_ID_ADD_HORSE_SOUL_LEVEL_ANSWER 11218   // HorseSoulAns
 #define MSG_ID_SET_HORSE_FLY_REQUEST 11219         // FlyState
 #define MSG_ID_HORSE_RESTORE_REQUEST 11220         //还原
 #define MSG_ID_ADD_HORSE_NOTIFY 11221              //增加或更新一个坐骑 BuyHorseAns
@@ -606,6 +606,16 @@
 #define MSG_ID_GUILD_GET_LEVEL_GIFT_ANSWER 12166           //帮会领取等级礼包应答 GuildGetLevelGiftAnswer
 #define MSG_ID_GUILD_CHUAN_GONG_INFO_REQUEST 12167         //帮会传功界面信息请求 NULL
 #define MSG_ID_GUILD_CHUAN_GONG_INFO_ANSWER  12168         //帮会传功界面信息应答 GuildChuanGongInfoAnswer
+#define MSG_ID_GUILD_CHUAN_GONG_START_REQUEST  12169       //帮会传功请求 GuildChuanGongRequest
+#define MSG_ID_GUILD_CHUAN_GONG_START_ANSWER   12170       //帮会传功应答 comm_answer 
+#define MSG_ID_GUILD_CHUAN_GONG_START_NOTIFY   12171       //帮会传功通知 GuildChuanGongNotify
+#define MSG_ID_GUILD_CHUAN_GONG_IS_OR_NO_REQUEST 12172     //帮会传功确认或取消请求 GuildChuanGongIsOrNoRequest  
+#define MSG_ID_GUILD_CHUAN_GONG_IS_OR_NO_ANSWER  12173     //帮会传功确认或取消回复 comm_answer
+#define MSG_ID_GUILD_CHUAN_GONG_QU_XIAO_NOTIFY  12174	   //帮会传功取消通知 GuildChuanGongQuXiaoNotify(只有当对方取消才会通知请求者,如确认,符合要求就直接传过去传功)
+#define MSG_ID_GUILD_CHUAN_GONG_DU_TIAO_NOTIFY  12175      //帮会传功正式开始通知,客户端开始读条 NULL
+#define MSG_ID_GUILD_CHUAN_GONG_STOP_NOTIFY     12176      //帮会传功,如读条的过程中有一方中断,如强制下线,通知另一方停止读条 NULL
+#define MSG_ID_GUILD_CHUAN_GONG_JIESHU_REQUEST  12177      //帮会传功结束请求 NULL 
+#define MSG_ID_GUILD_CHUAN_GONG_JIESHU_ANSWER   12178      //帮会传功结束恢复 GuildChuanGongNotify
 
 
 //阵营
@@ -834,6 +844,8 @@
 #define MSG_ID_PARTNER_FABAO_STONE_ANSWER 13138     //伙伴法宝合成应答 comm_answer
 #define MSG_ID_PARTNER_FABAO_CHANGE_REQUEST 13139   //伙伴法宝佩戴或者替换请求 PartnerFabaoChangeRequest
 #define MSG_ID_PARTNER_FABAO_CHANGE_ANSWER 13140    //伙伴法宝佩戴或者替换应答 PartnerFabaoChangeAnswer
+#define MSG_ID_PARTNER_RENAME_REQUEST 13141         //伙伴改名 PartnerRenameRequest
+#define MSG_ID_PARTNER_RENAME_ANSWER 13142          //伙伴改名 comm_answer
 
 //运镖
 #define MSG_ID_CASH_TRUCK_INFO_NOTIFY 13301       //运镖信息 CashTruckInfo

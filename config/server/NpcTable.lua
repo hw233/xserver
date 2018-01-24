@@ -49,7 +49,7 @@ local NpcTable = {
 		},
 	[152000004] = {
 		['ID'] = 152000004,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -65,7 +65,7 @@ local NpcTable = {
 		},
 	[152000005] = {
 		['ID'] = 152000005,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -81,7 +81,7 @@ local NpcTable = {
 		},
 	[152000006] = {
 		['ID'] = 152000006,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -97,7 +97,7 @@ local NpcTable = {
 		},
 	[152000007] = {
 		['ID'] = 152000007,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -113,7 +113,7 @@ local NpcTable = {
 		},
 	[152000008] = {
 		['ID'] = 152000008,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -129,7 +129,7 @@ local NpcTable = {
 		},
 	[152000009] = {
 		['ID'] = 152000009,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -177,7 +177,7 @@ local NpcTable = {
 		},
 	[152000012] = {
 		['ID'] = 152000012,
-		['NameId'] = '颜胡铁',
+		['NameId'] = '张鸾',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -193,7 +193,7 @@ local NpcTable = {
 		},
 	[152000013] = {
 		['ID'] = 152000013,
-		['NameId'] = '颜胡铁',
+		['NameId'] = '张鸾',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -321,7 +321,7 @@ local NpcTable = {
 		},
 	[152000021] = {
 		['ID'] = 152000021,
-		['NameId'] = '祁府家仆',
+		['NameId'] = '文府家仆',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -337,7 +337,7 @@ local NpcTable = {
 		},
 	[152000022] = {
 		['ID'] = 152000022,
-		['NameId'] = '祁子鹭',
+		['NameId'] = '文洎',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -401,7 +401,7 @@ local NpcTable = {
 		},
 	[152000026] = {
 		['ID'] = 152000026,
-		['NameId'] = '祁鹤然',
+		['NameId'] = '文彦博',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -449,7 +449,7 @@ local NpcTable = {
 		},
 	[152000029] = {
 		['ID'] = 152000029,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -465,7 +465,7 @@ local NpcTable = {
 		},
 	[152000030] = {
 		['ID'] = 152000030,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -497,7 +497,7 @@ local NpcTable = {
 		},
 	[152000032] = {
 		['ID'] = 152000032,
-		['NameId'] = '颜胡铁',
+		['NameId'] = '张鸾',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -529,7 +529,7 @@ local NpcTable = {
 		},
 	[152000034] = {
 		['ID'] = 152000034,
-		['NameId'] = '祁鹤然',
+		['NameId'] = '文彦博',
 		['Level'] = 90,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -721,7 +721,7 @@ local NpcTable = {
 		},
 	[152000046] = {
 		['ID'] = 152000046,
-		['NameId'] = '皆悦岛颜胡铁回忆副本',
+		['NameId'] = '皆悦岛张鸾回忆副本',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -1185,7 +1185,7 @@ local NpcTable = {
 		},
 	[152060002] = {
 		['ID'] = 152060002,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -1249,7 +1249,7 @@ local NpcTable = {
 		},
 	[152060006] = {
 		['ID'] = 152060006,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 30,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -1361,7 +1361,7 @@ local NpcTable = {
 		},
 	[152060013] = {
 		['ID'] = 152060013,
-		['NameId'] = '祁鹤然',
+		['NameId'] = '文彦博',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -1441,7 +1441,7 @@ local NpcTable = {
 		},
 	[152060018] = {
 		['ID'] = 152060018,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -1521,7 +1521,7 @@ local NpcTable = {
 		},
 	[152060023] = {
 		['ID'] = 152060023,
-		['NameId'] = '赵馨彤',
+		['NameId'] = '胡永儿',
 		['Level'] = 10,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -1809,7 +1809,7 @@ local NpcTable = {
 		},
 	[152007004] = {
 		['ID'] = 152007004,
-		['NameId'] = '赵馨彤',
+		['NameId'] = '胡永儿',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -1873,7 +1873,7 @@ local NpcTable = {
 		},
 	[152007008] = {
 		['ID'] = 152007008,
-		['NameId'] = '祁府管家',
+		['NameId'] = '文府管家',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -1889,7 +1889,7 @@ local NpcTable = {
 		},
 	[152007009] = {
 		['ID'] = 152007009,
-		['NameId'] = '祁鹤然',
+		['NameId'] = '文彦博',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -1905,7 +1905,7 @@ local NpcTable = {
 		},
 	[152007010] = {
 		['ID'] = 152007010,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -1921,7 +1921,7 @@ local NpcTable = {
 		},
 	[152007011] = {
 		['ID'] = 152007011,
-		['NameId'] = '幸子',
+		['NameId'] = '卜吉',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -1937,7 +1937,7 @@ local NpcTable = {
 		},
 	[152007012] = {
 		['ID'] = 152007012,
-		['NameId'] = '祁鹤然',
+		['NameId'] = '文彦博',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -1985,7 +1985,7 @@ local NpcTable = {
 		},
 	[152007015] = {
 		['ID'] = 152007015,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -2033,7 +2033,7 @@ local NpcTable = {
 		},
 	[152007018] = {
 		['ID'] = 152007018,
-		['NameId'] = '祁府守卫',
+		['NameId'] = '文府守卫',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -2049,7 +2049,7 @@ local NpcTable = {
 		},
 	[152007019] = {
 		['ID'] = 152007019,
-		['NameId'] = '祁府守卫',
+		['NameId'] = '文府守卫',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -2097,7 +2097,7 @@ local NpcTable = {
 		},
 	[152007022] = {
 		['ID'] = 152007022,
-		['NameId'] = '赵馨彤',
+		['NameId'] = '胡永儿',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -2161,7 +2161,7 @@ local NpcTable = {
 		},
 	[152007026] = {
 		['ID'] = 152007026,
-		['NameId'] = '幸子',
+		['NameId'] = '卜吉',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -2177,7 +2177,7 @@ local NpcTable = {
 		},
 	[152007027] = {
 		['ID'] = 152007027,
-		['NameId'] = '幸子',
+		['NameId'] = '卜吉',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 1,
@@ -2193,7 +2193,7 @@ local NpcTable = {
 		},
 	[152007028] = {
 		['ID'] = 152007028,
-		['NameId'] = '幸子',
+		['NameId'] = '卜吉',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 1,
@@ -2209,7 +2209,7 @@ local NpcTable = {
 		},
 	[152007029] = {
 		['ID'] = 152007029,
-		['NameId'] = '祁府下人',
+		['NameId'] = '文府下人',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -2225,7 +2225,7 @@ local NpcTable = {
 		},
 	[152007030] = {
 		['ID'] = 152007030,
-		['NameId'] = '祁府下人',
+		['NameId'] = '文府下人',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -2241,7 +2241,7 @@ local NpcTable = {
 		},
 	[152007031] = {
 		['ID'] = 152007031,
-		['NameId'] = '祁府下人',
+		['NameId'] = '文府下人',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -2257,7 +2257,7 @@ local NpcTable = {
 		},
 	[152007032] = {
 		['ID'] = 152007032,
-		['NameId'] = '祁府下人',
+		['NameId'] = '文府下人',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -2273,7 +2273,7 @@ local NpcTable = {
 		},
 	[152007033] = {
 		['ID'] = 152007033,
-		['NameId'] = '祁府下人',
+		['NameId'] = '文府下人',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -2289,7 +2289,7 @@ local NpcTable = {
 		},
 	[152007034] = {
 		['ID'] = 152007034,
-		['NameId'] = '祁府下人',
+		['NameId'] = '文府下人',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -2305,7 +2305,7 @@ local NpcTable = {
 		},
 	[152007035] = {
 		['ID'] = 152007035,
-		['NameId'] = '祁府下人',
+		['NameId'] = '文府下人',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -2321,7 +2321,7 @@ local NpcTable = {
 		},
 	[152007036] = {
 		['ID'] = 152007036,
-		['NameId'] = '祁府下人',
+		['NameId'] = '文府下人',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -2481,7 +2481,7 @@ local NpcTable = {
 		},
 	[152012001] = {
 		['ID'] = 152012001,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -3489,7 +3489,7 @@ local NpcTable = {
 		},
 	[152030001] = {
 		['ID'] = 152030001,
-		['NameId'] = '幸子',
+		['NameId'] = '卜吉',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -3505,7 +3505,7 @@ local NpcTable = {
 		},
 	[152030002] = {
 		['ID'] = 152030002,
-		['NameId'] = '颜胡铁',
+		['NameId'] = '张鸾',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -3537,7 +3537,7 @@ local NpcTable = {
 		},
 	[152030004] = {
 		['ID'] = 152030004,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -3809,7 +3809,7 @@ local NpcTable = {
 		},
 	[152030021] = {
 		['ID'] = 152030021,
-		['NameId'] = '龙叔',
+		['NameId'] = '袁公',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -3857,7 +3857,7 @@ local NpcTable = {
 		},
 	[152030024] = {
 		['ID'] = 152030024,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -3873,7 +3873,7 @@ local NpcTable = {
 		},
 	[152030025] = {
 		['ID'] = 152030025,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -3905,7 +3905,7 @@ local NpcTable = {
 		},
 	[152030027] = {
 		['ID'] = 152030027,
-		['NameId'] = '颜胡铁',
+		['NameId'] = '张鸾',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -3921,7 +3921,7 @@ local NpcTable = {
 		},
 	[152030028] = {
 		['ID'] = 152030028,
-		['NameId'] = '刘老汉',
+		['NameId'] = '樵夫',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -3953,7 +3953,7 @@ local NpcTable = {
 		},
 	[152030030] = {
 		['ID'] = 152030030,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -4065,7 +4065,7 @@ local NpcTable = {
 		},
 	[152030037] = {
 		['ID'] = 152030037,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -4081,7 +4081,7 @@ local NpcTable = {
 		},
 	[152030038] = {
 		['ID'] = 152030038,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -4097,7 +4097,7 @@ local NpcTable = {
 		},
 	[152030039] = {
 		['ID'] = 152030039,
-		['NameId'] = '颜胡铁',
+		['NameId'] = '张鸾',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -4177,7 +4177,7 @@ local NpcTable = {
 		},
 	[152030044] = {
 		['ID'] = 152030044,
-		['NameId'] = '幸子',
+		['NameId'] = '卜吉',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -4225,7 +4225,7 @@ local NpcTable = {
 		},
 	[152030047] = {
 		['ID'] = 152030047,
-		['NameId'] = '颜胡铁',
+		['NameId'] = '张鸾',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -4737,7 +4737,7 @@ local NpcTable = {
 		},
 	[152040004] = {
 		['ID'] = 152040004,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -4753,7 +4753,7 @@ local NpcTable = {
 		},
 	[152040005] = {
 		['ID'] = 152040005,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -4769,7 +4769,7 @@ local NpcTable = {
 		},
 	[152040006] = {
 		['ID'] = 152040006,
-		['NameId'] = '颜胡铁',
+		['NameId'] = '张鸾',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -4785,7 +4785,7 @@ local NpcTable = {
 		},
 	[152040007] = {
 		['ID'] = 152040007,
-		['NameId'] = '祁鹤然',
+		['NameId'] = '文彦博',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -4801,7 +4801,7 @@ local NpcTable = {
 		},
 	[152040008] = {
 		['ID'] = 152040008,
-		['NameId'] = '赵馨彤',
+		['NameId'] = '胡永儿',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -5505,7 +5505,7 @@ local NpcTable = {
 		},
 	[152040052] = {
 		['ID'] = 152040052,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -5521,7 +5521,7 @@ local NpcTable = {
 		},
 	[152040053] = {
 		['ID'] = 152040053,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -5553,7 +5553,7 @@ local NpcTable = {
 		},
 	[152040055] = {
 		['ID'] = 152040055,
-		['NameId'] = '祁鹤然',
+		['NameId'] = '文彦博',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -6369,7 +6369,7 @@ local NpcTable = {
 		},
 	[152040106] = {
 		['ID'] = 152040106,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -6385,7 +6385,7 @@ local NpcTable = {
 		},
 	[152040107] = {
 		['ID'] = 152040107,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -6417,7 +6417,7 @@ local NpcTable = {
 		},
 	[152040109] = {
 		['ID'] = 152040109,
-		['NameId'] = '赵馨彤',
+		['NameId'] = '胡永儿',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -6433,7 +6433,7 @@ local NpcTable = {
 		},
 	[152040110] = {
 		['ID'] = 152040110,
-		['NameId'] = '祁鹤然',
+		['NameId'] = '文彦博',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -6561,7 +6561,7 @@ local NpcTable = {
 		},
 	[152040118] = {
 		['ID'] = 152040118,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -6577,7 +6577,7 @@ local NpcTable = {
 		},
 	[152040119] = {
 		['ID'] = 152040119,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -6593,7 +6593,7 @@ local NpcTable = {
 		},
 	[152040120] = {
 		['ID'] = 152040120,
-		['NameId'] = '赵馨彤',
+		['NameId'] = '胡永儿',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -6609,7 +6609,7 @@ local NpcTable = {
 		},
 	[152040121] = {
 		['ID'] = 152040121,
-		['NameId'] = '颜胡铁',
+		['NameId'] = '张鸾',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -6689,7 +6689,7 @@ local NpcTable = {
 		},
 	[152040126] = {
 		['ID'] = 152040126,
-		['NameId'] = '祁鹤然',
+		['NameId'] = '文彦博',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -6849,7 +6849,7 @@ local NpcTable = {
 		},
 	[152040136] = {
 		['ID'] = 152040136,
-		['NameId'] = '幸子',
+		['NameId'] = '卜吉',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -6913,7 +6913,7 @@ local NpcTable = {
 		},
 	[152040140] = {
 		['ID'] = 152040140,
-		['NameId'] = '虎子',
+		['NameId'] = '王则',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -6929,7 +6929,7 @@ local NpcTable = {
 		},
 	[152040141] = {
 		['ID'] = 152040141,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -6961,7 +6961,7 @@ local NpcTable = {
 		},
 	[152040143] = {
 		['ID'] = 152040143,
-		['NameId'] = '祁鹤然',
+		['NameId'] = '文彦博',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -7025,7 +7025,7 @@ local NpcTable = {
 		},
 	[152040147] = {
 		['ID'] = 152040147,
-		['NameId'] = '赵馨彤',
+		['NameId'] = '胡永儿',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -7585,7 +7585,7 @@ local NpcTable = {
 		},
 	[152040182] = {
 		['ID'] = 152040182,
-		['NameId'] = '妖师客栈老板',
+		['NameId'] = '客栈老板',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -8465,7 +8465,7 @@ local NpcTable = {
 		},
 	[152140134] = {
 		['ID'] = 152140134,
-		['NameId'] = '幸子',
+		['NameId'] = '卜吉',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -8513,7 +8513,7 @@ local NpcTable = {
 		},
 	[152140137] = {
 		['ID'] = 152140137,
-		['NameId'] = '秋玥爻',
+		['NameId'] = '乐瑶',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -8545,7 +8545,7 @@ local NpcTable = {
 		},
 	[152140139] = {
 		['ID'] = 152140139,
-		['NameId'] = '赵馨彤',
+		['NameId'] = '胡永儿',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,
@@ -8561,7 +8561,7 @@ local NpcTable = {
 		},
 	[152140140] = {
 		['ID'] = 152140140,
-		['NameId'] = '幸子',
+		['NameId'] = '卜吉',
 		['Level'] = 1,
 		['ClickType'] = 1,
 		['TalkNotice'] = 0,

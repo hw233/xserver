@@ -7,7 +7,7 @@ local TransferPointTable = {
 		},
 	[155000002] = {
 		['ID'] = 155000002,
-		['NameId'] = '云笑寺',
+		['NameId'] = '迎晖寺',
 		['limitLevel'] = 1,
 		['MapId'] = {10011}
 		},
@@ -25,7 +25,7 @@ local TransferPointTable = {
 		},
 	[155000005] = {
 		['ID'] = 155000005,
-		['NameId'] = '八宝郡',
+		['NameId'] = '贝州',
 		['limitLevel'] = 1,
 		['MapId'] = {10007}
 		},
@@ -37,7 +37,7 @@ local TransferPointTable = {
 		},
 	[155000007] = {
 		['ID'] = 155000007,
-		['NameId'] = '伏龙国都',
+		['NameId'] = '皇宫',
 		['limitLevel'] = 1,
 		['MapId'] = {10003}
 		},
@@ -61,7 +61,7 @@ local TransferPointTable = {
 		},
 	[155000011] = {
 		['ID'] = 155000011,
-		['NameId'] = '千羽国',
+		['NameId'] = '益州',
 		['limitLevel'] = 1,
 		['MapId'] = {10009}
 		},
@@ -73,13 +73,13 @@ local TransferPointTable = {
 		},
 	[155000013] = {
 		['ID'] = 155000013,
-		['NameId'] = '皆悦岛',
+		['NameId'] = '梓潼村',
 		['limitLevel'] = 1,
 		['MapId'] = {10012}
 		},
 	[155000014] = {
 		['ID'] = 155000014,
-		['NameId'] = '巅峰谷',
+		['NameId'] = '剑门关',
 		['limitLevel'] = 1,
 		['MapId'] = {10013}
 		},
@@ -91,13 +91,13 @@ local TransferPointTable = {
 		},
 	[155000016] = {
 		['ID'] = 155000016,
-		['NameId'] = '云笑寺中央传送',
+		['NameId'] = '迎晖寺中央传送',
 		['limitLevel'] = 1,
 		['MapId'] = {10011,134594,42213,133726,180}
 		},
 	[155000017] = {
 		['ID'] = 155000017,
-		['NameId'] = '云笑寺棋峰传',
+		['NameId'] = '迎晖寺棋峰传',
 		['limitLevel'] = 1,
 		['MapId'] = {10011,203017,91432,199387,0}
 		},
@@ -109,13 +109,13 @@ local TransferPointTable = {
 		},
 	[155000019] = {
 		['ID'] = 155000019,
-		['NameId'] = '八宝郡传送点',
+		['NameId'] = '贝州传送点',
 		['limitLevel'] = 1,
 		['MapId'] = {10007,120595,42739,483533,180}
 		},
 	[155000020] = {
 		['ID'] = 155000020,
-		['NameId'] = '云笑寺传送点',
+		['NameId'] = '迎晖寺传送点',
 		['limitLevel'] = 1,
 		['MapId'] = {10011,196778,30363,78321,-130}
 		},
@@ -127,13 +127,13 @@ local TransferPointTable = {
 		},
 	[155000022] = {
 		['ID'] = 155000022,
-		['NameId'] = '云笑寺传送点',
+		['NameId'] = '迎晖寺传送点',
 		['limitLevel'] = 1,
 		['MapId'] = {10011,196778,30363,78321,-130}
 		},
 	[155000023] = {
 		['ID'] = 155000023,
-		['NameId'] = '八宝郡传送点',
+		['NameId'] = '贝州传送点',
 		['limitLevel'] = 1,
 		['MapId'] = {10007,73960,12547,279264,90}
 		},
@@ -145,7 +145,7 @@ local TransferPointTable = {
 		},
 	[155000025] = {
 		['ID'] = 155000025,
-		['NameId'] = '千羽国风井',
+		['NameId'] = '益州风井',
 		['limitLevel'] = 1,
 		['MapId'] = {10015}
 		},
@@ -175,19 +175,19 @@ local TransferPointTable = {
 		},
 	[155000030] = {
 		['ID'] = 155000030,
-		['NameId'] = '皆悦岛渡口',
+		['NameId'] = '梓潼村渡口',
 		['limitLevel'] = 1,
 		['MapId'] = {10012,208000,17700,51500,116}
 		},
 	[155000031] = {
 		['ID'] = 155000031,
-		['NameId'] = '皆悦岛渡口',
+		['NameId'] = '梓潼村渡口',
 		['limitLevel'] = 1,
 		['MapId'] = {10012,168470,19410,342470,-20}
 		},
 	[155000032] = {
 		['ID'] = 155000032,
-		['NameId'] = '八宝郡幻境',
+		['NameId'] = '贝州幻境',
 		['limitLevel'] = 1,
 		['MapId'] = {20037}
 		},
@@ -211,13 +211,13 @@ local TransferPointTable = {
 		},
 	[155000036] = {
 		['ID'] = 155000036,
-		['NameId'] = '巨轮国入云村',
+		['NameId'] = '冀州入云村',
 		['limitLevel'] = 1,
 		['MapId'] = {10004,203048,18939,179541,-169644}
 		},
 	[155000037] = {
 		['ID'] = 155000037,
-		['NameId'] = '巨轮国黄大仙庙',
+		['NameId'] = '冀州黄大仙庙',
 		['limitLevel'] = 1,
 		['MapId'] = {10004,123903,57190,60633,159568}
 		},
@@ -229,7 +229,7 @@ local TransferPointTable = {
 		},
 	[155000039] = {
 		['ID'] = 155000039,
-		['NameId'] = '八宝郡传送点',
+		['NameId'] = '贝州传送点',
 		['limitLevel'] = 1,
 		['MapId'] = {10007,356965,16080,358850,0}
 		},
@@ -349,7 +349,7 @@ local TransferPointTable = {
 		},
 	[155000059] = {
 		['ID'] = 155000059,
-		['NameId'] = '茗洞县',
+		['NameId'] = '八角镇',
 		['limitLevel'] = 1,
 		['MapId'] = {20077}
 		},
@@ -364,6 +364,12 @@ local TransferPointTable = {
 		['NameId'] = '太极之巅',
 		['limitLevel'] = 1,
 		['MapId'] = {20101}
+		},
+	[155000062] = {
+		['ID'] = 155000062,
+		['NameId'] = '地下密洞',
+		['limitLevel'] = 1,
+		['MapId'] = {}
 		}
 	}
 return TransferPointTable

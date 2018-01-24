@@ -144,6 +144,8 @@ struct FashionInfo
 struct HorseInfo 
 {
 	uint32_t id;
+	uint32_t step; //铸灵
+	uint32_t star;//铸灵
 	time_t timeout;
 	bool isNew;
 };
@@ -312,7 +314,7 @@ struct ZhenYing
 	uint32_t exp_day;//每天能获得的经验 
 	uint32_t free;//免费换阵营次数
 	uint32_t change_cd; //转换阵营CD 
-	uint64_t exploit;
+	uint64_t exploit; //功勋
 	uint64_t history_exploit;
 	bool daily_award;  //军阶每日奖励
 	bool daily_step;  //军阶每日奖励
@@ -331,12 +333,13 @@ struct ZhenYing
 	uint32_t death;
 	uint32_t help;
 	int score;
-	uint32_t mine; //挖宝次数
+	uint32_t mine; //挖宝箱次数
 	uint32_t kill_week; //战场一周杀人
 	uint32_t score_week; //战场周积分
-	uint32_t gather; //
+	uint32_t gather; //是否有矿车到达终点奖励
 	uint64_t score_time; //护送矿车给积分的时间
 	uint32_t protect_num; //护矿次数
+
 	uint32_t award_num; //阵营对战收益次数
 	uint64_t fb_cd;
 	int one_award;
@@ -808,6 +811,10 @@ struct player_data
 	bool     partner_recruit_first; //首次招募标志
 	uint32_t partner_bond[MAX_PARTNER_BOND_NUM];
 	uint32_t partner_bond_reward[MAX_PARTNER_TYPE];
+	uint32_t  partner_today_junior_recurit_count;  //今日JUNIOR伙伴招募次数
+	uint32_t  partner_today_junior_recurit_cd;  //今日JUNIOR伙伴招募cd
+	uint32_t  partner_today_senior_recurit_count;  //今日senior伙伴招募次数
+	uint32_t  partner_today_senior_recurit_cd;  //今日senior伙伴招募cd
 
 	LeaveRaidPosition leaveraid; //离开副本
 	uint32_t noviceraid_flag;	//新手副本是否完成的标记

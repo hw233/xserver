@@ -2131,7 +2131,7 @@ local ParameterTable = {
 		},
 	[161000439] = {
 		['ID'] = 161000439,
-		['parameter1'] = {1200,2400},
+		['parameter1'] = {12000,24000},
 		['parameter2'] = ''
 		},
 	[161000440] = {
@@ -2142,6 +2142,16 @@ local ParameterTable = {
 	[161000441] = {
 		['ID'] = 161000441,
 		['parameter1'] = {20},
+		['parameter2'] = ''
+		},
+	[161000442] = {
+		['ID'] = 161000442,
+		['parameter1'] = {5,5},
+		['parameter2'] = ''
+		},
+	[161000443] = {
+		['ID'] = 161000443,
+		['parameter1'] = {10},
 		['parameter2'] = ''
 		},
 	[161001000] = {
@@ -2288,6 +2298,11 @@ local ParameterTable = {
 		['ID'] = 161001028,
 		['parameter1'] = {},
 		['parameter2'] = '门宗篝火持续30分钟，每个人最多可以获得10分钟的烤火奖励，如果同时使用热情如火道具，烤火奖励会有加成'
+		},
+	[161001029] = {
+		['ID'] = 161001029,
+		['parameter1'] = {30},
+		['parameter2'] = ''
 		}
 	}
 return ParameterTable

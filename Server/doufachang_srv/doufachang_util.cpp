@@ -9,6 +9,7 @@ void reinit_default_doufachang_info(PlayerDoufachangInfo *info)
 {
 	info->challenge_count = DEFAULT_CHALLENGE_COUNT;
 	info->next_add_count = 0;
+	info->max_rank = 9999;
 }
 
 AutoReleaseDoufachangInfo::AutoReleaseDoufachangInfo()

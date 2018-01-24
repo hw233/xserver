@@ -884,28 +884,16 @@ struct CampTable
 struct CastSpiritTable
 {
 	uint64_t  ID; //1
-	uint32_t n_ToddlerLv; //2
-	uint64_t *ToddlerLv; //2
-	uint32_t n_CastSpiritAttribute; //3
-	uint64_t *CastSpiritAttribute; //3
-	uint32_t n_CastAttributeCeiling; //4
-	uint64_t *CastAttributeCeiling; //4
-	uint32_t n_Cast1Expend; //5
-	uint64_t *Cast1Expend; //5
-	uint32_t n_Expend1Num; //6
-	uint64_t *Expend1Num; //6
-	uint32_t n_Cast2Expend; //7
-	uint64_t *Cast2Expend; //7
-	uint32_t n_Expend2Num; //8
-	uint64_t *Expend2Num; //8
-	uint32_t n_GradeNum; //9
-	uint64_t *GradeNum; //9
-	uint32_t n_OrderAttribute; //10
-	uint64_t *OrderAttribute; //10
-	uint32_t n_AdvancedLv; //11
-	uint64_t *AdvancedLv; //11
-	uint32_t n_AdvancedGet; //12
-	uint64_t *AdvancedGet; //12
+	uint32_t n_CastExpend; //2
+	uint64_t *CastExpend; //2
+	uint32_t n_Expend1Num; //3
+	uint64_t *Expend1Num; //3
+	uint32_t n_MountsAttribute; //4
+	uint64_t *MountsAttribute; //4
+	uint32_t n_AttributeCeiling; //5
+	uint64_t *AttributeCeiling; //5
+	uint64_t  GradeATttribute; //6
+	uint64_t  GradeATttributeNum; //7
 }__attribute__ ((packed));
 
 struct ChallengeTable
@@ -1093,6 +1081,8 @@ struct DungeonTable
 	uint64_t  ExpReward; //34
 	uint64_t  MoneyReward; //35
 	uint64_t  DynamicLevel; //36
+	uint64_t  ExpReward1; //37
+	uint64_t  MoneyReward1; //38
 }__attribute__ ((packed));
 
 struct EquipAttribute
@@ -1762,6 +1752,9 @@ struct MountsTable
 	uint64_t *Item; //8
 	uint32_t n_ItemNum; //9
 	uint64_t *ItemNum; //9
+	uint64_t  CastSpiritLimit; //10
+	uint32_t n_Binding; //11
+	uint64_t *Binding; //11
 }__attribute__ ((packed));
 
 struct NoticeTable

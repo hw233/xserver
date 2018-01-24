@@ -39,6 +39,7 @@ public:
 	static char doufachang_key[64];
 	static PlayerDoufachangInfo default_info;
 private:
+	int update_continue_win_and_best_rank(DOUFACHANG_CHALLENGE_ANSWER *ans, uint64_t attack_new_rank);
 	int handle_challenge_answer(EXTERN_DATA *extern_data);
 	int handle_challenge_request(EXTERN_DATA *extern_data);
 	int handle_info_request(EXTERN_DATA *extern_data);
@@ -49,7 +50,7 @@ private:
 	int handle_server_add_reward_answer(EXTERN_DATA *extern_data);
 	int handle_player_online_notify(EXTERN_DATA *extern_data);
 
-	uint32_t add_challenge_rank(DOUFACHANG_CHALLENGE_ANSWER *ans);	
+	uint32_t add_challenge_rank(DOUFACHANG_CHALLENGE_ANSWER *ans, uint64_t *attack_new_rank);	
 	int add_challenge_record(DOUFACHANG_CHALLENGE_ANSWER *ans, uint32_t rank_add);
 	int is_player_locked(uint64_t player_id, uint64_t now);
 	int set_player_locked(uint64_t player_id, uint64_t target_id, uint64_t now);

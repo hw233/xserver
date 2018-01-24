@@ -454,6 +454,7 @@ void partner_struct::pack_sight_partner_info(SightPartnerInfo *info)
  	info->speed = data->attrData[PLAYER_ATTR_MOVE_SPEED];
  	info->buff_info = pack_unit_buff(&info->n_buff_info);
 	info->maxhp = data->attrData[PLAYER_ATTR_MAXHP];
+	info->name = data->name;
 }
 
 void partner_struct::broadcast_to_sight_and_owner(uint16_t msg_id, void *msg_data, pack_func func, bool include_owner)

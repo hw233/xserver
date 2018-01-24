@@ -180,6 +180,8 @@ void normal_raid_ai_finished(raid_struct *raid)
 				_gold *= raid->m_player[i]->get_coin_rate();
 				_exp *= raid->m_player[i]->get_exp_rate();				
 			}
+			_gold += raid->m_config->MoneyReward1;
+			_exp += raid->m_config->ExpReward1;
 			
 			notify.n_item_id = notify.n_item_num = n_item;
 			notify.gold = _gold;

@@ -1416,6 +1416,8 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		horse[i].id = data->horse[i].id;
 		horse[i].isnew = data->horse[i].isNew;
 		horse[i].cd = data->horse[i].timeout;
+		horse[i].step = data->horse[i].step;
+		horse[i].star = data->horse[i].star;
 		horsePoint[i] = &horse[i];
 	}
 	DbHorseCommonAttr sendAttr;
@@ -1710,6 +1712,8 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		partner_data[partner_num].bind = partner->data->bind;
 		partner_data[partner_num].relive_time = partner->data->relive_time;
 		partner_data[partner_num].strong_num = partner->data->strong_num;
+		partner_data[partner_num].name = partner->data->name;
+		partner_data[partner_num].partner_rename_free = partner->data->partner_rename_free;
 
 		uint32_t attr_num = 0;
 		for (int i = 1; i < MAX_PARTNER_ATTR; ++i)
@@ -1858,6 +1862,10 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		}
 		db_info.n_partner_bond_reward++;
 	}
+	db_info.partner_today_junior_recurit_cd = data->partner_today_junior_recurit_cd;
+	db_info.partner_today_junior_recurit_count = data->partner_today_junior_recurit_count;	
+	db_info.partner_today_senior_recurit_cd = data->partner_today_senior_recurit_cd;
+	db_info.partner_today_senior_recurit_count = data->partner_today_senior_recurit_count;	
 
 	DBTruck truckData;
 	dbtruck__init(&truckData);
@@ -2595,7 +2603,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	//伙伴
 	for (size_t i = 0; i < db_info->n_partner_list && i < MAX_PARTNER_NUM; ++i)
 	{
-		partner_struct *partner = partner_manager::create_partner(db_info->partner_list[i]->partner_id, this, db_info->partner_list[i]->uuid);
+		partner_struct *partner = partner_manager::create_partner(db_info->partner_list[i]->partner_id, this, db_info->partner_list[i]->uuid, false);
 		if (partner == NULL)
 		{
 			LOG_ERR("[%s:%d] player[%lu] create partner failed, partner_id:%u, uuid:%lu", __FUNCTION__, __LINE__, data->player_id, db_info->partner_list[i]->partner_id, db_info->partner_list[i]->uuid);
@@ -2605,6 +2613,10 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		partner->data->bind = db_info->partner_list[i]->bind;
 		partner->data->relive_time = db_info->partner_list[i]->relive_time;
 		partner->data->strong_num = db_info->partner_list[i]->strong_num;
+		assert(db_info->partner_list[i]->name && strlen(db_info->partner_list[i]->name) < sizeof(partner->data->name));
+		strcpy(partner->data->name, db_info->partner_list[i]->name);
+		partner->data->partner_rename_free = db_info->partner_list[i]->partner_rename_free;
+		
 		for (size_t j = 0; j < db_info->partner_list[i]->n_attrs; ++j)
 		{
 			partner->data->attrData[db_info->partner_list[i]->attrs[j]->id] = db_info->partner_list[i]->attrs[j]->val;
@@ -2688,6 +2700,10 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	{
 		data->partner_bond_reward[i] = db_info->partner_bond_reward[i];
 	}
+	data->partner_today_junior_recurit_cd = db_info->partner_today_junior_recurit_cd;
+	data->partner_today_junior_recurit_count = db_info->partner_today_junior_recurit_count;
+	data->partner_today_senior_recurit_cd = db_info->partner_today_senior_recurit_cd;
+	data->partner_today_senior_recurit_count = db_info->partner_today_senior_recurit_count;	
 
 	if (db_info->truck != NULL)
 	{
@@ -3938,10 +3954,6 @@ void player_struct::calculate_attribute(bool isNty)
 	add_fight_attr(data->attrData, module_attr);
 	data->fc_data.equip = calculate_fighting_capacity(module_attr);
 
-	calc_horse_attr(module_attr);
-	add_fight_attr(data->attrData, module_attr);
-	data->fc_data.horse = calculate_fighting_capacity(module_attr);
-
 	calcu_yuqidao_attr(module_attr);
 	add_fight_attr(data->attrData, module_attr);
 	data->fc_data.yuqidao = calculate_fighting_capacity(module_attr);
@@ -3979,6 +3991,9 @@ void player_struct::calculate_attribute(bool isNty)
 	calculate_lv3_attribute();
 	calculate_lv4_attribute();		
 
+	calc_horse_attr(module_attr);
+	add_fight_attr(data->attrData, module_attr);
+	data->fc_data.horse = calculate_fighting_capacity(module_attr);
 //	data->speed = data->attrData[PLAYER_ATTR_MOVE_SPEED];// / 10.0;
 
 	print_attribute("total", data->attrData);
@@ -12523,7 +12538,7 @@ int player_struct::add_partner(uint32_t partner_id, uint64_t *uuid)
 		return -1;
 	}
 
-	partner_struct *partner = partner_manager::create_partner(partner_id, this);
+	partner_struct *partner = partner_manager::create_partner(partner_id, this, 0, true);
 	if (!partner)
 	{
 		return -1;
@@ -14066,6 +14081,10 @@ void player_struct::refresh_oneday_job()
 	player_active_zhaohui_reward_info_notify();
 	data->fishing_reward_num = 0;
 	data->guild_bonfire_reward_time = 0;
+	data->partner_today_junior_recurit_count = 0;
+	data->partner_today_junior_recurit_cd = 0;	
+	data->partner_today_senior_recurit_count = 0;
+	data->partner_today_senior_recurit_cd = 0;
 }
 
 void player_struct::refresh_shop_daily(void)
@@ -15260,6 +15279,7 @@ int player_struct::add_horse(uint32_t id, time_t expire)
 				data->horse[ret].timeout = 0;
 			}
 		}
+		notify_add_horse(ret);
 		return ret;
 	}
 
@@ -15267,6 +15287,8 @@ int player_struct::add_horse(uint32_t id, time_t expire)
 	data->horse[data->n_horse].id = id;
 	data->horse[data->n_horse].isNew = true;
 	data->horse[data->n_horse].timeout = expire;
+	data->horse[data->n_horse].step = 1;
+	data->horse[data->n_horse].star = 0;
 	if (expire > 0)//新买
 	{
 		data->horse[data->n_horse].timeout = time_helper::get_cached_time() / 1000 + expire;
@@ -15289,6 +15311,8 @@ void player_struct::notify_add_horse(int i)
 	horse_data__init(&hData);
 	hData.id = data->horse[i].id;
 	hData.isnew = data->horse[i].isNew;
+	hData.step = data->horse[i].step;
+	hData.star = data->horse[i].star;
 
 	if (data->horse[i].timeout != 0)
 	{
@@ -15375,6 +15399,8 @@ void player_struct::unpack_horse(_PlayerDBInfo *db_info)
 		data->horse[i].id = db_info->horse_data[i]->id;
 		data->horse[i].isNew = db_info->horse_data[i]->isnew;
 		data->horse[i].timeout = db_info->horse_data[i]->cd;
+		data->horse[i].step = db_info->horse_data[i]->step;
+		data->horse[i].star = db_info->horse_data[i]->star;
 		++data->n_horse;
 	}
 
@@ -15402,14 +15428,14 @@ void player_struct::unpack_horse(_PlayerDBInfo *db_info)
 void player_struct::calc_horse_attr()
 {
 	memset(data->horse_attr.total, 0, sizeof(data->horse_attr.total));
-	std::map<uint64_t, struct MountsTable*>::iterator itBase = horse_config.find(get_attr(PLAYER_ATTR_CUR_HORSE));
-	if (itBase != horse_config.end())
-	{
-		for (uint32_t i = 0; i < itBase->second->n_MountsAttribute; ++i)
-		{
-			data->horse_attr.total[itBase->second->MountsAttribute[i]] += itBase->second->AttributeCeiling[i];
-		}
-	}
+	//std::map<uint64_t, struct MountsTable*>::iterator itBase = horse_config.find(get_attr(PLAYER_ATTR_CUR_HORSE));
+	//if (itBase != horse_config.end())
+	//{
+	//	for (uint32_t i = 0; i < itBase->second->n_MountsAttribute; ++i)
+	//	{
+	//		data->horse_attr.total[itBase->second->MountsAttribute[i]] += itBase->second->AttributeCeiling[i];
+	//	}
+	//}
 	std::map<uint64_t, struct SpiritTable*>::iterator itSp = spirit_config.find(data->horse_attr.step);
 	if (itSp != spirit_config.end())
 	{
@@ -15435,23 +15461,28 @@ void player_struct::calc_horse_attr()
 		}
 	}
 	
-	for (uint32_t i = 1; i <= MAX_HORSE_SOUL; ++i)
+	uint64_t now = time_helper::get_cached_time() / 1000;
+	for (uint32_t j = 0; j < data->n_horse; ++j)
 	{
-		CastSpiritTable *tSpirit = get_config_by_id(i, &horse_soul_config);
+		if (data->horse[j].timeout != 0)
+		{
+			if (data->horse[j].timeout <= (time_t)now)
+			{
+				continue;
+			}
+		}
+		CastSpiritTable *tSpirit = get_horse_soul_table(data->horse[j].id, data->horse[j].step, data->horse[j].star);
 		if (tSpirit == NULL)
 		{
 			continue;
 		}
-		assert(data->horse_attr.soul <= tSpirit->n_CastSpiritAttribute);
-		if (data->horse_attr.soul <= 1)
+		for (uint32_t n = 0; n < tSpirit->n_MountsAttribute; ++n)
 		{
-			data->horse_attr.total[tSpirit->CastSpiritAttribute[0]] += (tSpirit->CastAttributeCeiling[0] * data->horse_attr.soul_exp[i] / tSpirit->GradeNum[0]);
-		}
-		else
-		{
-			data->horse_attr.total[tSpirit->CastSpiritAttribute[0]] += (tSpirit->OrderAttribute[data->horse_attr.soul - 2] +
-				(tSpirit->CastAttributeCeiling[data->horse_attr.soul - 1] - tSpirit->CastAttributeCeiling[data->horse_attr.soul - 2]) * data->horse_attr.soul_exp[i] / tSpirit->GradeNum[data->horse_attr.soul - 1] +
-				tSpirit->CastAttributeCeiling[data->horse_attr.soul - 2]);
+			data->horse_attr.total[tSpirit->MountsAttribute[n]] += tSpirit->AttributeCeiling[n];
+			if (tSpirit->MountsAttribute[n] == tSpirit->GradeATttribute)
+			{
+				data->horse_attr.total[tSpirit->GradeATttribute] += (tSpirit->AttributeCeiling[n] * tSpirit->GradeATttributeNum / 100);
+			}
 		}
 	}
 	for (uint32_t i = 1; i < PLAYER_ATTR_FIGHT_MAX; ++i)

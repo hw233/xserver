@@ -28,17 +28,12 @@
 .CastSpiritTable
 {
 	ID 1 : integer
-	ToddlerLv 2 : *integer
-	CastSpiritAttribute 3 : *integer
-	CastAttributeCeiling 4 : *integer
-	Cast1Expend 5 : *integer
-	Expend1Num 6 : *integer
-	Cast2Expend 7 : *integer
-	Expend2Num 8 : *integer
-	GradeNum 9 : *integer
-	OrderAttribute 10 : *integer
-	AdvancedLv 11 : *integer
-	AdvancedGet 12 : *integer
+	CastExpend 2 : *integer
+	Expend1Num 3 : *integer
+	MountsAttribute 4 : *integer
+	AttributeCeiling 5 : *integer
+	GradeATttribute 6 : integer
+	GradeATttributeNum 7 : integer
 }
 .MountsTable
 {
@@ -51,6 +46,8 @@
 	Name 7 : string
 	Item 8 : *integer
 	ItemNum 9 : *integer
+	CastSpiritLimit 10 : integer
+	Binding 11 : *integer
 }
 
 .MonsterTable {
@@ -505,6 +502,8 @@
 	ExpReward 34 : integer
 	MoneyReward 35 : integer
 	DynamicLevel 36 : integer
+	ExpReward1 37 : integer
+	MoneyReward1 38 : integer
 }
 
 .EquipmentTable {

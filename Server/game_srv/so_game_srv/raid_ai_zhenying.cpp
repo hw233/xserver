@@ -530,6 +530,10 @@ static void zhenying_raid_ai_collect(raid_struct *raid, player_struct *player, C
 
 static void zhenying_raid_ai_player_ready(raid_struct *raid, player_struct *player)
 {
+	if (!player->data->login_notify)
+	{
+		return;
+	}
 	player->data->zhenying.score = 0;
 	if (raid->data->state != RAID_STATE_START)
 	{

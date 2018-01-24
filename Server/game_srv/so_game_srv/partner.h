@@ -79,6 +79,9 @@ struct partner_data
 	double attrData[MAX_PARTNER_ATTR]; //战斗属性 需要战斗力属性
 	double buff_fight_attr[MAX_BUFF_FIGHT_ATTR]; //战斗算上buff百分比属性
 
+	char name[MAX_PLAYER_NAME_LEN + 1];    //名字
+	bool     partner_rename_free;   //首次改名
+
 	partner_attr_data attr_cur;
 	partner_attr_data attr_flash;
 
