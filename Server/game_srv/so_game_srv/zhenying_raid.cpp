@@ -9,16 +9,16 @@
 #include "camp_judge.h"
 #include "collect.h"
 
-int zhenying_raid_struct::raid_num;
+extern int zhenying_raid_struct_raid_num;
 
 zhenying_raid_struct::zhenying_raid_struct()
 {
-	++raid_num;
+	++zhenying_raid_struct_raid_num;
 }
 
 zhenying_raid_struct::~zhenying_raid_struct()
 {
-	--raid_num;
+	--zhenying_raid_struct_raid_num;
 }
 
 int zhenying_raid_struct::init_special_raid_data(player_struct *player)

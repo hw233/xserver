@@ -580,6 +580,13 @@ message GuildChuanGongRequest
 	required uint64 player_id = 2; //请求传功对象的玩家id
 }
 
+//帮会传功请求应答
+message GuildChuanGongAnswer 
+{
+	required uint32 result = 1; //0:成功 其余失败
+	required uint64 player_id = 2; //对方玩家id
+}
+
 //帮会传功通知
 message GuildChuanGongNotify
 {
@@ -607,6 +614,8 @@ message GuildChuanGongQuXiaoNotify
 message GuildChuanGongFinishNotify
 {
 	required uint32 result = 1; //0:成功 非0失败(失败的原因可能是一方在传功的过程中下线了)
-	required uint32 type = 2;   //1:别人传给我 2:我传别人
-	required string name = 3;   //对方的名字 
+	required uint32 type = 2;   //1:我传别人 2:别人传我
+	required uint64 player_id = 3; //对方id
+	required string name = 4;   //对方的名字 
 }
+

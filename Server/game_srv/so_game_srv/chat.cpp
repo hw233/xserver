@@ -414,7 +414,12 @@ int chat_mod::do_one_gm_cmd( player_struct *player, int argc, char *argv[] )
 	else if ( argc >= 1 && strcasecmp( argv[ 0 ], "partner_skill" ) == 0 )
 	{
 		partner_struct *partner  = player->get_battle_partner();
-		uint32_t        skill_id = partner->config->Angerskill;
+		PartnerSkillTable *tableSkill = get_config_by_id(partner->data->partner_id, &partner_rand_skill_config);
+		if (tableSkill == NULL)
+		{
+			return -1;
+		}
+		uint32_t        skill_id = tableSkill->Angerskill;
 		unit_struct *   target   = partner->ai->choose_target( partner );
 		if ( !target )
 		{
@@ -720,6 +725,11 @@ int chat_mod::do_one_gm_cmd( player_struct *player, int argc, char *argv[] )
 				guild_land_active_manager::guild_bonfire_close(raid);
 			}
 		}
+	}
+	else if( argc >= 1 && strcasecmp( argv[ 0 ], "guild_chuan_gong_num_reset") == 0)
+	{
+		player->data->guild_chuan_gong_info.give_chuan_num = 0;
+		player->data->guild_chuan_gong_info.bei_chuan_num = 0;
 	}
 	else
 	{

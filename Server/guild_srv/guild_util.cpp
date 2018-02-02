@@ -566,9 +566,10 @@ int save_guild_player(GuildPlayer *player)
 	char *p;
 	
 	uint32_t guild_id = (player->guild ? player->guild->guild_id : 0);
+	uint32_t office = player->office;
 	size_t data_size = pack_guild_player(player, save_data);
 	p = save_sql;
-	p += sprintf(save_sql, "replace guild_player set `player_id` = %lu, `guild_id` = %u, `comm_data` = \'", player->player_id, guild_id);
+	p += sprintf(save_sql, "replace guild_player set `player_id` = %lu, `guild_id` = %u, `office` = %u, `comm_data` = \'", player->player_id, guild_id, office);
 	p += escape_string(p, (const char *)save_data, data_size);
 	p += sprintf(p, "\'");
 
@@ -1416,6 +1417,7 @@ void refresh_guild_redis_info(GuildInfo *guild)
 	req.zhenying = guild->zhenying;
 	req.master_id = guild->master_id;
 	req.head = guild->icon;
+	req.popularity = guild->popularity;
 	for (uint32_t i = 0; i < guild->member_num; ++i)
 	{
 		member_ids.push_back(guild->members[i]->player_id);
@@ -1873,6 +1875,22 @@ int appoint_office(GuildPlayer *appointor, GuildPlayer *appointee, uint32_t offi
 				conn_node_guildsrv::send_system_notice(appointee->player_id, 190500446, &args);
 			}
 		}
+
+		//聊天发送
+		uint32_t param_id = (office_up ? 161000384 : 161000385);
+		ParameterTable *param_config = get_config_by_id(param_id, &parameter_config);
+		if (param_config)
+		{
+			char content[1024];
+			sprintf(content, param_config->parameter2, redis_appointor->name, redis_appointee->name, config->Name);
+
+			Chat req;
+			chat__init(&req);
+			req.channel = CHANNEL__family;
+			req.contain = content;
+
+			broadcast_guild_chat(guild, &req);
+		}
 	}
 
 	if (office == GUILD_OFFICE_TYPE__OFFICE_MASTER)
@@ -2286,7 +2304,7 @@ int add_guild_popularity(GuildInfo *guild, uint32_t num)
 	guild->popularity += num;
 	broadcast_guild_attr_update(guild, GUILD_ATTR_TYPE__ATTR_POPULARITY, guild->popularity);
 	save_guild_popularity(guild);
-
+	refresh_guild_redis_info(guild);
 	return 0;
 }
 
@@ -2400,6 +2418,7 @@ int sub_guild_popularity(GuildInfo *guild, uint32_t num)
 	guild->popularity -= num;
 	broadcast_guild_attr_update(guild, GUILD_ATTR_TYPE__ATTR_POPULARITY, guild->popularity);
 	save_guild_popularity(guild);
+	refresh_guild_redis_info(guild);
 	
 	return 0;
 }

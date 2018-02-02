@@ -597,8 +597,15 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 			}
 			return true;
 		}
-		case SCRIPT_EVENT_WAIT_NPC_TALK:		//等待玩家主动点击npc对话完毕
 		case SCRIPT_EVENT_AUTOMATIC_NPC_TALK:  //发送自动npc对话，并且等待对话完毕
+		{
+			player_struct *player = get_script_raid_event_player(raid);
+			if (player)
+			{
+				player->stop_move();
+			}
+		}		
+		case SCRIPT_EVENT_WAIT_NPC_TALK:		//等待玩家主动点击npc对话完毕
 		{
 			RaidEventNotify nty;
 			raid_event_notify__init(&nty);

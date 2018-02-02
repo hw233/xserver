@@ -713,6 +713,41 @@ local AttributeTypeTable = {
 		['Total'] = 0,
 		['ShowType'] = 0
 		},
+	[105] = {
+		['ID'] = 105,
+		['Effect'] = 'GrowthQualification',
+		['FightRatio'] = 0,
+		['Total'] = 0,
+		['ShowType'] = 0
+		},
+	[106] = {
+		['ID'] = 106,
+		['Effect'] = 'TiQualification',
+		['FightRatio'] = 0,
+		['Total'] = 0,
+		['ShowType'] = 0
+		},
+	[107] = {
+		['ID'] = 107,
+		['Effect'] = 'LiQualification',
+		['FightRatio'] = 0,
+		['Total'] = 0,
+		['ShowType'] = 0
+		},
+	[108] = {
+		['ID'] = 108,
+		['Effect'] = 'MinQualification',
+		['FightRatio'] = 0,
+		['Total'] = 0,
+		['ShowType'] = 0
+		},
+	[109] = {
+		['ID'] = 109,
+		['Effect'] = 'LingQualification',
+		['FightRatio'] = 0,
+		['Total'] = 0,
+		['ShowType'] = 0
+		},
 	[200] = {
 		['ID'] = 200,
 		['Effect'] = 'Player_Max',

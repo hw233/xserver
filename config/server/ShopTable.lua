@@ -2098,6 +2098,20 @@ local ShopTable = {
 		['BuyNum'] = -1,
 		['Reset'] = 0,
 		['RestrictionTime'] = 0
+		},
+	[282050012] = {
+		['ID'] = 282050012,
+		['ItemID'] = 201070039,
+		['ShopType'] = 280003013,
+		['Acc'] = 1,
+		['ConsumptionType'] = 8,
+		['Purchasetype'] = 0,
+		['Condition'] = 0,
+		['Price'] = 0,
+		['Discount'] = 50,
+		['BuyNum'] = -1,
+		['Reset'] = 0,
+		['RestrictionTime'] = 0
 		}
 	}
 return ShopTable

@@ -22,8 +22,6 @@
 #include "guild_battle_manager.h"
 #include <math.h>
 
-int g_raid_keep_time;
-
 int raid_struct::init_common_script_data(const char *script_name, struct raid_script_data *script_data)
 {
 	for (int i = 0; i < MAX_SCRIPT_COND_NUM; ++i)
@@ -1312,28 +1310,31 @@ int raid_struct::check_cond_finished(int index, uint64_t cond_type, uint64_t con
 		{
 			if (data->star_param[index] >= cond_value)
 			{
-				*ret_param = cond_value;
-				return (0);
+				*ret_param = cond_value1;  //要求显示后面那个数字 
+				return (1);
 			}
 			else
 			{
-				*ret_param = data->star_param[index];
-				return (1);
+//				*ret_param = data->star_param[index];
+				*ret_param = 0;
+				return (0);
 			}
 		}
 		break;
 		case 6: //猫鬼王召唤第N次小怪前将它击杀
 		{
 			assert(data->ai_type == 18);
-			if (data->ai_data.maogui_data.zhaohuan_num >= cond_value)
+			if (data->ai_data.maogui_data.raid_finished &&
+				data->ai_data.maogui_data.zhaohuan_num <= cond_value)
 			{
-				*ret_param = cond_value;
-				return (0);
+				*ret_param = cond_value1;
+				return (1);
 			}
 			else
 			{
-				*ret_param = data->ai_data.maogui_data.zhaohuan_num;
-				return (1);
+//				*ret_param = data->ai_data.maogui_data.zhaohuan_num;
+				*ret_param = 0;
+				return (0);
 			}
 		}
 		break;
@@ -1909,6 +1910,7 @@ bool raid_struct::need_show_star()
 	{
 		case 0:
 		case 8:
+		case 18:			
 			return true;
 		default:
 			return false;

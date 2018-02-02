@@ -7,7 +7,7 @@
 class zhenying_raid_struct : public raid_struct
 {
 public:
-	static int raid_num;
+//	static int raid_num;
 	zhenying_raid_struct();
 	~zhenying_raid_struct();
 

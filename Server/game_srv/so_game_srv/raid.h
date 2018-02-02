@@ -212,6 +212,7 @@ union raid_ai_data
 		uint32_t diaoxiang_id;   //雕像怪物id
 		uint32_t diaoxiang_colour; //雕像颜色
 		uint32_t gui_wang_id; //鬼王怪物id
+		bool     raid_finished;  //鬼王死亡
 		uint32_t po_buff_time; //破除猫鬼王buff时长
 		uint64_t buff_time;  //猫鬼王buff时间
 		uint32_t creat_time; //鬼王被攻击多少秒后召唤小怪

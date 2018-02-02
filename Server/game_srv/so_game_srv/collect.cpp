@@ -637,9 +637,15 @@ void Collect::Tick()
 	while (it != collect_manager_s_collectContain.end())
 	{
 		if (!it->second->OnTick())
-			DestroyCollect((it++)->first);
+		{
+			COLLECT_MAP::iterator t = it;
+			it++;
+			DestroyCollect((t)->first);
+		}
 		else
+		{
 			++it;
+		}
 	}
 }
 
@@ -660,24 +666,26 @@ void Collect::CashTruckDrop(player_struct &player)
 	}
 }
 
-void Collect::CreateRandCollect(scene_struct *scene)
+int Collect::CreateRandCollect(scene_struct *scene)
 {
 	std::map<uint64_t, std::vector<uint64_t> >::iterator itRand = sg_rand_collect.find(scene->m_id);
 	if (itRand == sg_rand_collect.end())
 	{
-		return;
+		return 1;
 	}
 	for (std::vector<uint64_t>::iterator itV = itRand->second.begin(); itV != itRand->second.end(); ++itV)
 	{
 		RandomCollectionTable *table = get_config_by_id(*itV, &random_collect_config);
 		if (table == NULL)
 		{
-			continue;
+			return 2;
 		}
 		for (uint32_t i = 0; i < table->Num; ++i)
 		{
 			uint32_t pos = rand() % table->n_PointX;
-			CreateCollectByPos(scene, table->CollectionID, table->PointX[pos], table->PointZ[pos], 10000, 0);
+			if (CreateCollectByPos(scene, table->CollectionID, table->PointX[pos], 10000, table->PointZ[pos], 0) == NULL)
+				return 3;
 		}
 	}
+	return 0;
 }

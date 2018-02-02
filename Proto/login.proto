@@ -57,6 +57,7 @@ message EnterGameAnswer
 	required uint32 CurHorseState = 8; //当前坐骑乘骑状态 0不在坐骑上  1在坐骑上
 	required int32 fly = 9; //2飞行 1陆行
 	required int32 direct = 10;	  //朝向
+	required uint32 horse_step = 11; //当前坐骑阶
 }
 
 message HeartbeatNotify

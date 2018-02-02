@@ -22,6 +22,8 @@
 #include "cast_skill.pb-c.h"
 #include <math.h>
 
+const uint32_t base_attr_id[MAX_PARTNER_BASE_ATTR] = { PLAYER_ATTR_BASELV, PLAYER_ATTR_TILV, PLAYER_ATTR_LILV, PLAYER_ATTR_MINLV, PLAYER_ATTR_LINGLV };
+
 partner_struct::partner_struct(void)
 {
 	config = NULL;
@@ -802,6 +804,37 @@ bool partner_struct::try_friend_skill(uint32_t skill_id, int skill_index)
 	return false;
 }
 
+int partner_struct::lock_skill(uint32_t skill, bool lock)
+{
+	int pos = -1;
+	uint32_t full = 0;
+	for (int i = 0; i < MAX_PARTNER_SKILL_NUM; ++i)
+	{
+		if (data->attr_cur.skill_list[i].lock)
+		{
+			++full;
+		}
+		if (data->attr_cur.skill_list[i].skill_id == skill)
+		{
+			pos = i;
+		}
+	}
+	if (full >= config->SkillLocking)
+	{
+		return 1;
+	}
+	if (pos < 0)
+	{
+		return 2;
+	}
+	if (m_owner->del_item(config->LockingItem, config->LockingItemNum, 0) != 0)
+	{
+		return 3;
+	}
+	data->attr_cur.skill_list[pos].lock = lock;
+	return 0;
+}
+
 uint32_t partner_struct::choose_skill(int *index)
 {
 	uint64_t now = time_helper::get_cached_time();
@@ -817,7 +850,12 @@ uint32_t partner_struct::choose_skill(int *index)
 	}
 	if (index)
 		*index = -1;
-	return config->BaseSkill1;
+	PartnerSkillTable *tableSkill = get_config_by_id(data->partner_id, &partner_rand_skill_config);
+	if (tableSkill == NULL)
+	{
+		return -1;
+	}
+	return tableSkill->BaseSkill1;
 //	return (0);
 }
 
@@ -922,24 +960,27 @@ void partner_struct::calculate_attribute(double *attrData, partner_attr_data &at
 	double module_attr[PLAYER_ATTR_MAX];
 	memset(module_attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
 
-	for (int i = 0; i < MAX_PARTNER_BASE_ATTR; ++i)
+	for (uint32_t i = 0; i < config->n_PartnerAttribute; ++i)
 	{
-		uint32_t attr_id = attr_cur.base_attr_id[i];
-		double attr_val = attr_cur.base_attr_vaual[i];
-		if (attr_id > 0 && attr_id < PLAYER_ATTR_FIGHT_MAX && attr_val > 0.0)
+		module_attr[config->PartnerAttribute[i]] = config->PartnerAttributeNum[i];
+	}
+	ParameterTable *tablePa = get_config_by_id(161000447, &parameter_config);
+	if (tablePa != NULL)
+	{
+		for (int i = 1; i < MAX_PARTNER_BASE_ATTR; ++i)
 		{
-			module_attr[attr_id] += attr_val;
+			module_attr[PLAYER_ATTR_TI + i - 1] += (data->attrData[PLAYER_ATTR_LEVEL] * (attr_cur.base_attr_vaual[0] / tablePa->parameter1[0] + attr_cur.base_attr_vaual[i] / tablePa->parameter1[i]));
 		}
 	}
-	for (uint32_t i = 0; i < attr_cur.n_detail_attr && i < MAX_PARTNER_DETAIL_ATTR; ++i)
-	{
-		uint32_t attr_id = attr_cur.detail_attr_id[i];
-		double attr_val = attr_cur.detail_attr_vaual[i];
-		if (attr_id > 0 && attr_id < PLAYER_ATTR_FIGHT_MAX && attr_val > 0.0)
-		{
-			module_attr[attr_id] += attr_val;
-		}
-	}
+	//for (uint32_t i = 0; i < attr_cur.n_detail_attr && i < MAX_PARTNER_DETAIL_ATTR; ++i)
+	//{
+	//	uint32_t attr_id = attr_cur.detail_attr_id[i];
+	//	double attr_val = attr_cur.detail_attr_vaual[i];
+	//	if (attr_id > 0 && attr_id < PLAYER_ATTR_FIGHT_MAX && attr_val > 0.0)
+	//	{
+	//		module_attr[attr_id] += attr_val;
+	//	}
+	//}
 	for (uint32_t i = 0; i < data->n_god; ++i)
 	{
 		for (uint32_t n_attr = 0; n_attr < config->n_GodYao; ++n_attr)
@@ -1130,36 +1171,36 @@ int partner_struct::add_exp(uint32_t val, uint32_t statis_id, uint32_t owner_lv,
 
 int partner_struct::deal_level_up(uint32_t level_old, uint32_t level_new)
 {
-	uint32_t addBaseAttr[MAX_PARTNER_BASE_ATTR];
-	for (uint32_t i = 0; i < config->n_AttributeType && i < MAX_PARTNER_BASE_ATTR; ++i)
-	{
-		addBaseAttr[i] = (level_new - level_old) * config->GrowthValue[i];
-		data->attr_cur.base_attr_up[i] += addBaseAttr[i];
-		data->attr_cur.base_attr_vaual[i] += addBaseAttr[i];
-	}
-	if (data->attr_flash.base_attr_id[0] != 0)
-	{
-		for (uint32_t i = 0; i < config->n_AttributeType && i < MAX_PARTNER_BASE_ATTR; ++i)
-		{
-			data->attr_flash.base_attr_up[i] += addBaseAttr[i];
-			data->attr_flash.base_attr_vaual[i] += addBaseAttr[i];
-		}
-		double attrData[MAX_PARTNER_ATTR]; //战斗属性 需要战斗力属性
-		calculate_attribute(attrData, data->attr_flash);
-		data->attr_flash.power_refresh = calculate_fighting_capacity(attrData);
-	}
-	if (addBaseAttr[0] > 0)
-	{
-		PartnerAddBaseAttr send;
-		partner_add_base_attr__init(&send);
-		send.uuid = get_uuid();
-		send.attr = addBaseAttr;
-		send.n_attr = MAX_PARTNER_BASE_ATTR;
-		send.power = data->attr_flash.power_refresh;
-		EXTERN_DATA extern_data;
-		extern_data.player_id = data->owner_id;
-		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_PARTNER_ADD_BASE_NOTIFY, partner_add_base_attr__pack, send);
-	}
+	//uint32_t addBaseAttr[MAX_PARTNER_BASE_ATTR];
+	//for (uint32_t i = 0; i < config->n_AttributeType && i < MAX_PARTNER_BASE_ATTR; ++i)
+	//{
+	//	addBaseAttr[i] = (level_new - level_old) * config->GrowthValue[i];
+	//	data->attr_cur.base_attr_up[i] += addBaseAttr[i];
+	//	data->attr_cur.base_attr_vaual[i] += addBaseAttr[i];
+	//}
+	//if (data->attr_flash.base_attr_up[0] != 0)
+	//{
+	//	for (uint32_t i = 0; i < config->n_AttributeType && i < MAX_PARTNER_BASE_ATTR; ++i)
+	//	{
+	//		data->attr_flash.base_attr_up[i] += addBaseAttr[i];
+	//		data->attr_flash.base_attr_vaual[i] += addBaseAttr[i];
+	//	}
+	//	double attrData[MAX_PARTNER_ATTR]; //战斗属性 需要战斗力属性
+	//	calculate_attribute(attrData, data->attr_flash);
+	//	data->attr_flash.power_refresh = calculate_fighting_capacity(attrData);
+	//}
+	//if (addBaseAttr[0] > 0)
+	//{
+	//	PartnerAddBaseAttr send;
+	//	partner_add_base_attr__init(&send);
+	//	send.uuid = get_uuid();
+	//	send.attr = addBaseAttr;
+	//	send.n_attr = MAX_PARTNER_BASE_ATTR;
+	//	send.power = data->attr_flash.power_refresh;
+	//	EXTERN_DATA extern_data;
+	//	extern_data.player_id = data->owner_id;
+	//	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_PARTNER_ADD_BASE_NOTIFY, partner_add_base_attr__pack, send);
+	//}
 
 	this->calculate_attribute(true);
 
@@ -1899,26 +1940,48 @@ struct position *partner_struct::get_skill_target_pos()
 void partner_struct::relesh_attr()
 {
 	data->attr_flash.type = rand() % 3;
-	for (uint32_t i = 0; i < config->n_AttributeType && i < MAX_PARTNER_BASE_ATTR; ++i)
+	uint32_t noUse; 
+	for (uint32_t i = 0; i < MAX_PARTNER_BASE_ATTR; ++i)
 	{
-		data->attr_flash.base_attr_id[i] = config->AttributeType[i];
-		data->attr_flash.base_attr_up[i] =  (rand() % (int)(config->UpperLimitBase[i] - config->LowerLimitBase[i]) + config->LowerLimitBase[i]) * (config->GradeCoefficient[0] + config->TypeCoefficient[data->attr_flash.type]);
-		data->attr_flash.base_attr_vaual[i] = rand() % (int)config->LowerLimitBase[i] * (config->GradeCoefficient[0] + config->TypeCoefficient[data->attr_flash.type]);
+		//data->attr_flash.base_attr_id[i] = config->AttributeType[i];
+		double tmp = 0;
+		switch (i)
+		{
+		case 0 :
+			get_one_rand_attr(config->Database1[data->attr_flash.type], noUse, tmp, NULL);
+		case 1:
+			get_one_rand_attr(config->Database2[data->attr_flash.type], noUse, tmp, NULL);
+		case 2:
+			get_one_rand_attr(config->Database3[data->attr_flash.type], noUse, tmp, NULL);
+		case 3:
+			get_one_rand_attr(config->Database4[data->attr_flash.type], noUse, tmp, NULL);
+		case 4:
+			get_one_rand_attr(config->Database5[data->attr_flash.type], noUse, tmp, NULL);
+			break;
+		}
+		data->attr_flash.base_attr_up[i] = tmp;
+		data->attr_flash.base_attr_vaual[i] = rand() % data->attr_flash.base_attr_up[i];
 
-		data->attr_flash.base_attr_up[i] += (data->attrData[PLAYER_ATTR_LEVEL] * config->GrowthValue[i]);
-		data->attr_flash.base_attr_vaual[i] += (data->attrData[PLAYER_ATTR_LEVEL] * config->GrowthValue[i]);
+		//data->attr_flash.base_attr_up[i] += (data->attrData[PLAYER_ATTR_LEVEL] * config->GrowthValue[i]);
+		//data->attr_flash.base_attr_vaual[i] += (data->attrData[PLAYER_ATTR_LEVEL] * config->GrowthValue[i]);
 	}
-	uint32_t drop_id;
-	double attrData[MAX_PARTNER_ATTR]; //战斗属性 需要战斗力属性
-	::get_attr_from_config((uint64_t)config->PartnerAttributeID[0], attrData, &drop_id);
-	for (uint32_t i = 0; i < config->n_PartnerAttributeType && i < MAX_PARTNER_DETAIL_ATTR; ++i)
+	//uint32_t drop_id;
+	//double attrData[MAX_PARTNER_ATTR]; //战斗属性 需要战斗力属性
+	//::get_attr_from_config((uint64_t)config->PartnerAttributeID[0], attrData, &drop_id);
+	//for (uint32_t i = 0; i < config->n_PartnerAttributeType && i < MAX_PARTNER_DETAIL_ATTR; ++i)
+	//{
+	//	data->attr_flash.detail_attr_id[i] = config->PartnerAttributeType[i];
+	//	data->attr_flash.detail_attr_vaual[i] = attrData[data->attr_flash.detail_attr_id[i]] * config->TypeCoefficient[data->attr_flash.type];
+
+	//	++data->attr_flash.n_detail_attr;
+	//}
+
+	PartnerSkillTable *table = get_config_by_id(data->partner_id, &partner_rand_skill_config);
+	if (table == NULL)
 	{
-		data->attr_flash.detail_attr_id[i] = config->PartnerAttributeType[i];
-		data->attr_flash.detail_attr_vaual[i] = attrData[data->attr_flash.detail_attr_id[i]] * config->TypeCoefficient[data->attr_flash.type];
-
-		++data->attr_flash.n_detail_attr;
+		LOG_ERR("[%s:%d] no table partner id =%u", __FUNCTION__, __LINE__, data->partner_id);
+		return;
 	}
-
 	memset(data->attr_flash.skill_list, 0, sizeof(data->attr_flash.skill_list));
 	uint32_t r = rand() % 100000;
 	uint32_t all = 0;
@@ -1931,10 +1994,12 @@ void partner_struct::relesh_attr()
 			break;
 		}
 	}
-	std::vector<uint64_t> tmpSkill;
-	for (uint32_t i = 0; i < config->n_Skill; ++i)
+	std::map<uint64_t, uint64_t> tmpSkill;
+	uint64_t allRand = 0;
+	for (uint32_t i = 0; i < table->n_Skill; ++i)
 	{
-		tmpSkill.push_back(config->Skill[i]);
+		tmpSkill.insert(std::make_pair(table->Skill[i], table->SkillProbability1[i]));
+		allRand += table->SkillProbability1[i];
 	}
 	int s = 0;
 	for (uint32_t i = 0; i < j; ++i)
@@ -1943,12 +2008,22 @@ void partner_struct::relesh_attr()
 		{
 			break;
 		}
-		uint32_t count = rand() % tmpSkill.size();
-		data->attr_flash.skill_list[s].skill_id = tmpSkill[count];
-		data->attr_flash.skill_list[s].lv = 1;
-		data->attr_flash.skill_list[s].lock = false;
-		tmpSkill.erase(tmpSkill.begin() + count);
-		++s;
+		uint32_t count = rand() % allRand;
+		uint32_t tmpCount = 0;
+		for (std::map<uint64_t, uint64_t>::iterator it = tmpSkill.begin(); it != tmpSkill.end(); ++it)
+		{
+			tmpCount += it->second;
+			if (count < tmpCount)
+			{
+				allRand -= it->second;
+				data->attr_flash.skill_list[s].skill_id = tmpSkill[count];
+				data->attr_flash.skill_list[s].lv = 1;
+				data->attr_flash.skill_list[s].lock = false;
+				tmpSkill.erase(it);
+				++s;
+				break;
+			}
+		}
 	}
 	//memcpy(data->attr_flash.skill_list, data->attr_cur.skill_list, sizeof(PartnerSkill) * 3);
 }

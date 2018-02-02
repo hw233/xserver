@@ -83,7 +83,7 @@ public:
 	static ZhenyingBattle *GetInstance();
 	static const int MAX_STEP = 4;
 	static const uint32_t s_border[MAX_STEP];
-	static int battle_num;
+//	static int battle_num;
 
 	int CreatePrivateBattle(player_struct &player, raid_struct *raid);
 

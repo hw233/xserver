@@ -1,7 +1,7 @@
 local TimeReward = {
 	[580200001] = {
 		['ID'] = 580200001,	--索引
-		['Position'] = 1,	--抽奖位置
+		['Position'] = 1,	--抽奖编号
 		['ItemID'] = 201010001,	--道具ID
 		['ItemValue'] = 3000,	--道具值
 		['Probability'] = 16000	--概率
@@ -116,7 +116,7 @@ local TimeReward = {
 		['Position'] = 7,
 		['ItemID'] = 201060002,
 		['ItemValue'] = 1,
-		['Probability'] = 30
+		['Probability'] = 16000
 		},
 	[580200018] = {
 		['ID'] = 580200018,

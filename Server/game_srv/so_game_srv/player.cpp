@@ -915,7 +915,7 @@ void player_struct::process_offline(bool again/* = false*/, EXTERN_DATA *ext_dat
 		fast_send_msg(&conn_node_gamesrv::connecter, &ext, MSG_ID_QIECUO_FINISH_NOTIFY, qiecuo_finish_notify__pack, nty);
 		target->add_achievement_progress(ACType_QIECUO, QIECUO_VICTORY, 0, 0, 1);
 	}
-	if(is_in_guild_chuan_gong())
+	if (is_in_guild_chuan_gong())
 	{
 		guild_chuan_gong_zhong_duan();
 	}
@@ -1168,6 +1168,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	db_info.gold = data->attrData[PLAYER_ATTR_GOLD];
 	db_info.bind_gold = data->attrData[PLAYER_ATTR_BIND_GOLD];
 	db_info.coin = data->attrData[PLAYER_ATTR_COIN];
+	db_info.silver = data->attrData[PLAYER_ATTR_SILVER];
 	db_info.teamid = data->teamid;
 
 	//头像
@@ -1427,8 +1428,8 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	DbHorseCommonAttr sendAttr;
 	db_horse_common_attr__init(&sendAttr);
 	sendAttr.step = data->horse_attr.step;
-	sendAttr.cur_soul = data->horse_attr.cur_soul;
-	sendAttr.soul_level = data->horse_attr.soul;
+	sendAttr.soul_star = data->horse_attr.soul_star;
+	sendAttr.soul_step = data->horse_attr.soul_step;
 	sendAttr.soul_num = &(data->horse_attr.soul_exp[1]);
 	sendAttr.n_soul_num = MAX_HORSE_SOUL;
 	sendAttr.attr = data->horse_attr.attr;
@@ -1437,6 +1438,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	sendAttr.power = 0;
 	sendAttr.fly = data->horse_attr.fly;
 	sendAttr.soul_full = data->horse_attr.soul_full;
+	//sendAttr.old = data->horse_attr.old;
 
 	db_info.n_horse_data = data->n_horse;
 	db_info.horse_data = horsePoint;
@@ -1749,12 +1751,13 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 			dbpartner_skill__init(&partner_skill_data[partner_num][skill_num]);
 			partner_skill_data[partner_num][skill_num].skill_id = partner->data->attr_cur.skill_list[i].skill_id;
 			partner_skill_data[partner_num][skill_num].lv = partner->data->attr_cur.skill_list[i].lv;
+			partner_skill_data[partner_num][skill_num].lock = partner->data->attr_cur.skill_list[i].lock;
 			skill_num++;
 		}
 		partner_cur_attr[partner_num].skills = partner_skill_point[partner_num];
 		partner_cur_attr[partner_num].n_skills = skill_num;
-		partner_cur_attr[partner_num].base_attr_id = partner->data->attr_cur.base_attr_id;
-		partner_cur_attr[partner_num].n_base_attr_id = MAX_PARTNER_BASE_ATTR;
+		//partner_cur_attr[partner_num].base_attr_id = partner->data->attr_cur.base_attr_id;
+		//partner_cur_attr[partner_num].n_base_attr_id = MAX_PARTNER_BASE_ATTR;
 		partner_cur_attr[partner_num].base_attr_cur = partner->data->attr_cur.base_attr_vaual;
 		partner_cur_attr[partner_num].n_base_attr_cur = MAX_PARTNER_BASE_ATTR;
 		partner_cur_attr[partner_num].base_attr_up = partner->data->attr_cur.base_attr_up;
@@ -1767,7 +1770,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		partner_cur_attr[partner_num].n_detail_attr_cur = partner->data->attr_cur.n_detail_attr;
 		partner_cur_attr[partner_num].type = partner->data->attr_cur.type;
 
-		if (partner->data->attr_flash.base_attr_id[0] != 0)
+		if (partner->data->attr_flash.base_attr_up[0] != 0)
 		{
 			partner_data[partner_num].attr_flash = partner_cur_flash + partner_num;
 			dbpartner_attr__init(partner_cur_flash + partner_num);
@@ -1778,12 +1781,13 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 				dbpartner_skill__init(&partner_skill_data_flash[partner_num][skill_num]);
 				partner_skill_data_flash[partner_num][skill_num].skill_id = partner->data->attr_flash.skill_list[i].skill_id;
 				partner_skill_data_flash[partner_num][skill_num].lv = partner->data->attr_flash.skill_list[i].lv;
+				partner_skill_data_flash[partner_num][skill_num].lock = partner->data->attr_flash.skill_list[i].lock;
 				skill_num++;
 			}
 			partner_cur_flash[partner_num].skills = partner_skill_point_flash[partner_num];
 			partner_cur_flash[partner_num].n_skills = skill_num;
-			partner_cur_flash[partner_num].base_attr_id = partner->data->attr_flash.base_attr_id;
-			partner_cur_flash[partner_num].n_base_attr_id = MAX_PARTNER_BASE_ATTR;
+			//partner_cur_flash[partner_num].base_attr_id = partner->data->attr_flash.base_attr_id;
+			//partner_cur_flash[partner_num].n_base_attr_id = MAX_PARTNER_BASE_ATTR;
 			partner_cur_flash[partner_num].base_attr_cur = partner->data->attr_flash.base_attr_vaual;
 			partner_cur_flash[partner_num].n_base_attr_cur = MAX_PARTNER_BASE_ATTR;
 			partner_cur_flash[partner_num].base_attr_up = partner->data->attr_flash.base_attr_up;
@@ -1840,9 +1844,11 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	db_info.n_partner_formation = MAX_PARTNER_FORMATION_NUM;
 	db_info.partner_battle = data->partner_battle;
 	db_info.n_partner_battle = MAX_PARTNER_BATTLE_NUM;
-	db_info.partner_recruit_junior_time = data->partner_recruit_junior_time;
+	db_info.partner_recruit_junior_free_cd = data->partner_recruit_junior_free_cd;
+	db_info.partner_recruit_junior_free_count = data->partner_recruit_junior_free_count;
 	db_info.partner_recruit_junior_count = data->partner_recruit_junior_count;
-	db_info.partner_recruit_senior_time = data->partner_recruit_senior_time;
+	db_info.partner_recruit_senior_free_cd = data->partner_recruit_senior_free_cd;
+	db_info.partner_recruit_senior_free_count = data->partner_recruit_senior_free_count;
 	db_info.partner_recruit_senior_count = data->partner_recruit_senior_count;
 	db_info.partner_recruit_first = data->partner_recruit_first;
 
@@ -2192,6 +2198,13 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	db_info.guild_bonfire_reward_time = data->guild_bonfire_reward_time;
 	db_info.guild_bonfire_activity_time = data->guild_bonfire_activity_time;
 
+	//帮会传功
+	DBPlayerGuildChuanGongInfo guild_chuan_gong;
+	dbplayer_guild_chuan_gong_info__init(&guild_chuan_gong);
+	guild_chuan_gong.bei_chuan_num = data->guild_chuan_gong_info.bei_chuan_num;
+	guild_chuan_gong.zhu_chuan_num = data->guild_chuan_gong_info.give_chuan_num;
+	db_info.guild_chuan_gong_info = &guild_chuan_gong;
+
 	return player_dbinfo__pack(&db_info, out_data);
 }
 
@@ -2301,6 +2314,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	data->attrData[PLAYER_ATTR_GOLD] = db_info->gold;
 	data->attrData[PLAYER_ATTR_BIND_GOLD] = db_info->bind_gold;
 	data->attrData[PLAYER_ATTR_COIN] = db_info->coin;
+	data->attrData[PLAYER_ATTR_SILVER] = db_info->silver;
 	data->teamid = db_info->teamid;
 
 	//头像
@@ -2633,7 +2647,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 				partner->data->attr_flash.skill_list[nAtt].skill_id = db_info->partner_list[i]->attr_flash->skills[nAtt]->skill_id;
 				partner->data->attr_flash.skill_list[nAtt].lv = db_info->partner_list[i]->attr_flash->skills[nAtt]->lv;
 			}
-			memcpy(partner->data->attr_flash.base_attr_id, db_info->partner_list[i]->attr_flash->base_attr_id, sizeof(partner->data->attr_flash.base_attr_id));
+			//memcpy(partner->data->attr_flash.base_attr_id, db_info->partner_list[i]->attr_flash->base_attr_id, sizeof(partner->data->attr_flash.base_attr_id));
 			memcpy(partner->data->attr_flash.base_attr_vaual, db_info->partner_list[i]->attr_flash->base_attr_cur, sizeof(partner->data->attr_flash.base_attr_vaual));
 			memcpy(partner->data->attr_flash.base_attr_up, db_info->partner_list[i]->attr_flash->base_attr_up, sizeof(partner->data->attr_flash.base_attr_up));
 			memcpy(partner->data->attr_flash.detail_attr_id, db_info->partner_list[i]->attr_flash->detail_attr_id, sizeof(uint32_t) * std::min(tmp, db_info->partner_list[i]->attr_flash->n_detail_attr_id));
@@ -2649,7 +2663,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 				partner->data->attr_cur.skill_list[nAtt].skill_id = db_info->partner_list[i]->attr_cur->skills[nAtt]->skill_id;
 				partner->data->attr_cur.skill_list[nAtt].lv = db_info->partner_list[i]->attr_cur->skills[nAtt]->lv;
 			}
-			memcpy(partner->data->attr_cur.base_attr_id, db_info->partner_list[i]->attr_cur->base_attr_id, sizeof(partner->data->attr_cur.base_attr_id));
+			//memcpy(partner->data->attr_cur.base_attr_id, db_info->partner_list[i]->attr_cur->base_attr_id, sizeof(partner->data->attr_cur.base_attr_id));
 			memcpy(partner->data->attr_cur.base_attr_vaual, db_info->partner_list[i]->attr_cur->base_attr_cur, sizeof(partner->data->attr_cur.base_attr_vaual));
 			memcpy(partner->data->attr_cur.base_attr_up, db_info->partner_list[i]->attr_cur->base_attr_up, sizeof(partner->data->attr_cur.base_attr_up));
 			memcpy(partner->data->attr_cur.detail_attr_id, db_info->partner_list[i]->attr_cur->detail_attr_id, sizeof(uint32_t) * std::min(tmp, db_info->partner_list[i]->attr_cur->n_detail_attr_id));
@@ -2691,9 +2705,11 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	{
 		data->partner_battle[i] = db_info->partner_battle[i];
 	}
-	data->partner_recruit_junior_time = db_info->partner_recruit_junior_time;
+	data->partner_recruit_junior_free_cd = db_info->partner_recruit_junior_free_cd;
+	data->partner_recruit_junior_free_count = db_info->partner_recruit_junior_free_count;
 	data->partner_recruit_junior_count = db_info->partner_recruit_junior_count;
-	data->partner_recruit_senior_time = db_info->partner_recruit_senior_time;
+	data->partner_recruit_senior_free_cd = db_info->partner_recruit_senior_free_cd;
+	data->partner_recruit_senior_free_count = db_info->partner_recruit_senior_free_count;
 	data->partner_recruit_senior_count = db_info->partner_recruit_senior_count;
 	data->partner_recruit_first = db_info->partner_recruit_first;
 	for (size_t i = 0; i < db_info->n_partner_bond && i < MAX_PARTNER_BOND_NUM; ++i)
@@ -2885,6 +2901,12 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 
 	data->guild_bonfire_reward_time = db_info->guild_bonfire_reward_time;
 	data->guild_bonfire_activity_time = db_info->guild_bonfire_activity_time;
+
+	if (db_info->guild_chuan_gong_info != NULL)
+	{
+		data->guild_chuan_gong_info.bei_chuan_num = db_info->guild_chuan_gong_info->bei_chuan_num;
+		data->guild_chuan_gong_info.give_chuan_num = db_info->guild_chuan_gong_info->zhu_chuan_num;
+	}
 
 	player_dbinfo__free_unpacked(db_info, NULL);
 
@@ -3799,6 +3821,7 @@ void player_struct::pack_sight_player_base_info(SightPlayerBaseInfo *info)
 	info->team_id = data->teamid;
 	info->fashion_weapon = data->attrData[PLAYER_ATTR_WEAPON];
 	info->horse = get_on_horse_id();
+	info->horse_step = data->horse_attr.soul_step;
 	info->pos_y = data->pos_y;
 	info->pk_type = data->attrData[PLAYER_ATTR_PK_TYPE];
 	info->zhenying_id = data->attrData[PLAYER_ATTR_ZHENYING];
@@ -4528,7 +4551,12 @@ void player_struct::calcu_partner_attr(double *attr)
 		{
 			do
 			{
-				SkillTable *main_config = get_config_by_id(partner->config->ProtectSkill, &skill_config);
+				PartnerSkillTable *tableSkill = get_config_by_id(partner->data->partner_id, &partner_rand_skill_config);
+				if (tableSkill == NULL)
+				{
+					break;
+				}
+				SkillTable *main_config = get_config_by_id(tableSkill->ProtectSkill, &skill_config);
 				if (!main_config)
 				{
 					break;
@@ -4819,20 +4847,17 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 		monster_struct *mon = monster_manager::create_monster_at_pos(player.scene, sTable->Parameter1[i], player.get_attr(PLAYER_ATTR_LEVEL), x, z, 0, NULL, 0);
 		if (mon != NULL)
 		{
-			//mon->data->owner = player.get_uuid();
-
-//			ParameterTable * config = get_config_by_id(161000221, &parameter_config);
-			if (player.m_team == NULL)
-			{
-				player_struct *tmpArr[MAX_TEAM_MEM] = {&player};
-				Team::CreateTeam(tmpArr, 1);
-			}
-			if (player.m_team != NULL)
-			{
-				char str[512];
-				sprintf(str, sg_xunbao_boss_notice, player.scene->res_config->SceneName, player.m_team->m_data->m_id);
-				player.send_chat(CHANNEL__world, str);
-			}
+			//if (player.m_team == NULL)
+			//{
+			//	player_struct *tmpArr[MAX_TEAM_MEM] = {&player};
+			//	Team::CreateTeam(tmpArr, 1);
+			//}
+			//if (player.m_team != NULL)
+			//{
+			//	char str[512];
+			//	sprintf(str, sg_xunbao_boss_notice, player.scene->res_config->SceneName, player.m_team->m_data->m_id);
+			//	player.send_chat(CHANNEL__world, str);
+			//}
 
 			AutoCollect send;
 			auto_collect__init(&send);
@@ -6268,18 +6293,21 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 			this->add_task_progress(TCT_CARRY_ITEM, id, num);
 
 				//系统提示
-			std::vector<char *> args;
-			std::string sz_id, sz_num;
-			std::stringstream ss;
-			ss << id;
-			ss >> sz_id;
-			ss.str("");
-			ss.clear();
-			ss << num;
-			ss >> sz_num;
-			args.push_back(const_cast<char*>(sz_id.c_str()));
-			args.push_back(const_cast<char*>(sz_num.c_str()));
-			send_system_notice(190200001, &args);
+			if (statis_id != MAGIC_TYPE_PARTNER_RECRUIT)
+			{
+				std::vector<char *> args;
+				std::string sz_id, sz_num;
+				std::stringstream ss;
+				ss << id;
+				ss >> sz_id;
+				ss.str("");
+				ss.clear();
+				ss << num;
+				ss >> sz_num;
+				args.push_back(const_cast<char*>(sz_id.c_str()));
+				args.push_back(const_cast<char*>(sz_num.c_str()));
+				send_system_notice(190200001, &args);
+			}
 
 				//道具飞背包
 			switch (statis_id)
@@ -10209,6 +10237,7 @@ void player_struct::clear_guild_task(void)
 void player_struct::on_leave_guild(void)
 {
 	data->guild_id = 0;
+	data->guild_office = 0;	
 
 	raid_struct *raid = get_raid();
 	if (raid)
@@ -12531,6 +12560,10 @@ partner_struct *player_struct::get_battle_partner()
 
 int player_struct::add_partner(uint32_t partner_id, uint64_t *uuid)
 {
+	if (has_owned_partner(partner_id))
+	{
+		return -1;
+	}
 	PartnerTable *config = get_config_by_id(partner_id, &partner_config);
 	if (!config)
 	{
@@ -12572,6 +12605,7 @@ int player_struct::add_partner(uint32_t partner_id, uint64_t *uuid)
 
 	partner_data.uuid = partner->data->uuid;
 	partner_data.partnerid = partner->data->partner_id;
+	partner_data.rename_free = partner->data->partner_rename_free;
 
 	uint32_t attr_num = 0;
 	for (int i = 1; i < MAX_PARTNER_ATTR; ++i)
@@ -12586,7 +12620,7 @@ int player_struct::add_partner(uint32_t partner_id, uint64_t *uuid)
 	partner_data.n_attrs = attr_num;
 
 	uint32_t skill_num = 0;
-	if (partner->data->attr_cur.base_attr_id[0] != 0)
+	if (partner->data->attr_cur.base_attr_up[0] != 0)
 	{
 		partner_data.cur_attr = &partner_cur_attr;
 		partner_attr__init(&partner_cur_attr);
@@ -12597,12 +12631,13 @@ int player_struct::add_partner(uint32_t partner_id, uint64_t *uuid)
 			skill_data[skill_num].id = partner->data->attr_cur.skill_list[i].skill_id;
 			skill_data[skill_num].lv = partner->data->attr_cur.skill_list[i].lv;
 			skill_data[skill_num].lock = partner->data->attr_cur.skill_list[i].lock;
+			skill_data[skill_num].exp = partner->data->attr_cur.skill_list[i].exp;
 			skill_num++;
 		}
 		partner_cur_attr.skills = skill_point;
 		partner_cur_attr.n_skills = skill_num;
-		partner_cur_attr.base_attr_id = partner->data->attr_cur.base_attr_id;
-		partner_cur_attr.n_base_attr_id = MAX_PARTNER_BASE_ATTR;
+		//partner_cur_attr.base_attr_id = partner->data->attr_cur.base_attr_id;
+		//partner_cur_attr.n_base_attr_id = MAX_PARTNER_BASE_ATTR;
 		partner_cur_attr.base_attr_cur = partner->data->attr_cur.base_attr_vaual;
 		partner_cur_attr.n_base_attr_cur = MAX_PARTNER_BASE_ATTR;
 		partner_cur_attr.base_attr_up = partner->data->attr_cur.base_attr_up;
@@ -12616,7 +12651,7 @@ int player_struct::add_partner(uint32_t partner_id, uint64_t *uuid)
 		partner_cur_attr.type = partner->data->attr_cur.type;
 	}
 
-	if (partner->data->attr_flash.base_attr_id[0] != 0)
+	if (partner->data->attr_flash.base_attr_up[0] != 0)
 	{
 		partner_data.flash_attr = &partner_cur_flash;
 		partner_attr__init(&partner_cur_flash);
@@ -12627,12 +12662,13 @@ int player_struct::add_partner(uint32_t partner_id, uint64_t *uuid)
 			partner_skill_data__init(&partner_skill_data_flash[skill_num]);
 			partner_skill_data_flash[skill_num].id = partner->data->attr_flash.skill_list[i].skill_id;
 			partner_skill_data_flash[skill_num].lv = partner->data->attr_flash.skill_list[i].lv;
+			partner_skill_data_flash[skill_num].exp = partner->data->attr_flash.skill_list[i].exp;
 			skill_num++;
 		}
 		partner_cur_flash.skills = partner_skill_point_flash;
 		partner_cur_flash.n_skills = skill_num;
-		partner_cur_flash.base_attr_id = partner->data->attr_flash.base_attr_id;
-		partner_cur_flash.n_base_attr_id = MAX_PARTNER_BASE_ATTR;
+		//partner_cur_flash.base_attr_id = partner->data->attr_flash.base_attr_id;
+		//partner_cur_flash.n_base_attr_id = MAX_PARTNER_BASE_ATTR;
 		partner_cur_flash.base_attr_cur = partner->data->attr_flash.base_attr_vaual;
 		partner_cur_flash.n_base_attr_cur = MAX_PARTNER_BASE_ATTR;
 		partner_cur_flash.base_attr_up = partner->data->attr_flash.base_attr_up;
@@ -12765,6 +12801,19 @@ void player_struct::load_partner_end(void)
 		partner_struct *partner = iter->second;
 		partner->init_end(false);
 	}
+}
+
+bool player_struct::has_owned_partner(uint32_t partner_id)
+{
+	for (PartnerMap::iterator iter = m_partners.begin(); iter != m_partners.end(); ++iter)
+	{
+		partner_struct *partner = iter->second;
+		if (partner->data->partner_id == partner_id)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 bool player_struct::is_partner_battle(void)
@@ -14090,6 +14139,10 @@ void player_struct::refresh_oneday_job()
 	data->partner_today_junior_recurit_cd = 0;	
 	data->partner_today_senior_recurit_count = 0;
 	data->partner_today_senior_recurit_cd = 0;
+	data->partner_recruit_junior_free_cd = 0;
+	data->partner_recruit_junior_free_count = 0;
+	data->partner_recruit_senior_free_cd = 0;
+	data->partner_recruit_senior_free_count = 0;
 }
 
 void player_struct::refresh_shop_daily(void)
@@ -15243,13 +15296,13 @@ void player_struct::init_horse()
 	{
 		//player->add_horse(DEFAULT_HORSE, 0);
 		data->horse_attr.step = 1;
-		data->horse_attr.soul = 1;
+		data->horse_attr.soul_step = 1;
 		for (int i = 0; i < MAX_HORSE_ATTR_NUM; ++i)
 		{
 			data->horse_attr.attr_exp[i] = 0;
 		}
 		memset(data->horse_attr.soul_exp, 0, sizeof(data->horse_attr.soul_exp));
-		data->horse_attr.cur_soul = 1;
+		data->horse_attr.soul_star = 0;
 		data->horse_attr.soul_full = false;
 		data->horse_attr.fly = 1;
 	}
@@ -15409,8 +15462,8 @@ void player_struct::unpack_horse(_PlayerDBInfo *db_info)
 		++data->n_horse;
 	}
 
-	data->horse_attr.soul = db_info->horse_attr->soul_level;
-	data->horse_attr.cur_soul = db_info->horse_attr->cur_soul;
+	data->horse_attr.soul_step = db_info->horse_attr->soul_step;
+	data->horse_attr.soul_star = db_info->horse_attr->soul_star;
 	data->horse_attr.fly = db_info->horse_attr->fly;
 	for (uint32_t i = 0; i < db_info->horse_attr->n_soul_num; ++i)
 	{
@@ -15428,6 +15481,7 @@ void player_struct::unpack_horse(_PlayerDBInfo *db_info)
 	}
 	data->horse_attr.n_attr = db_info->horse_attr->n_attr;
 	data->horse_attr.soul_full = db_info->horse_attr->soul_full;
+	//data->horse_attr.old = db_info->horse_attr->old;
 }
 
 void player_struct::calc_horse_attr()
@@ -15517,11 +15571,11 @@ void player_struct::calc_horse_attr(double *attr)
 
 void player_struct::check_horse_expire()
 {
-	for (uint32_t i = 0; i < data->n_horse;)
+	for (uint32_t i = 0; i < data->n_horse; ++i)
 	{
 		if (data->horse[i].timeout == 0)
 		{
-			++i;
+			//++i;
 			continue;
 		}
 		if (time_helper::get_cached_time() / 1000 >= (uint64_t)data->horse[i].timeout)
@@ -15539,8 +15593,13 @@ void player_struct::check_horse_expire()
 				send.power = data->horse_attr.power;
 				send.playerid = this->get_uuid();
 				send.old_id = oldHorse;
+				data->horse_attr.soul_star = data->horse[0].star;
+				data->horse_attr.soul_step = data->horse[0].step;
+				send.step = data->horse_attr.soul_step;
+				send.star = data->horse_attr.soul_star;
 				broadcast_to_sight(MSG_ID_SET_CUR_HORSE_ANSWER, &send, (pack_func)set_cur_horse_ans__pack, true);
 				calculate_attribute(true);
+				//data->horse_attr.old = horse_id;
 			}
 
 
@@ -15552,18 +15611,18 @@ void player_struct::check_horse_expire()
 			}
 			send_mail(270300029, NULL, NULL, NULL, &args, NULL, 0);
 
-			if (i + 1 != data->n_horse)
-			{
-				memcpy(data->horse + i, data->horse + data->n_horse - 1, sizeof(HorseInfo));
-			}
-			--data->n_horse;
+			//if (i + 1 != data->n_horse)
+			//{
+			//	memcpy(data->horse + i, data->horse + data->n_horse - 1, sizeof(HorseInfo));
+			//}
+			//--data->n_horse;
 			add_achievement_progress(ACType_HORSE_NUM, 0, 0, 0, get_horse_num());
 			check_title_condition(TCType_HORSE_ID, horse_id, 2);
 		}
-		else
-		{
-			++i;
-		}
+		//else
+		//{
+		//	++i;
+		//}
 	}
 }
 void player_struct::check_guoyu_expire()
@@ -17936,6 +17995,8 @@ int player_struct::move_to_raid(uint32_t raid_id, EXTERN_DATA *extern_data)
 
 int player_struct::move_to_scene_pos(uint32_t scene_id, double pos_x, double pos_z, double direct, EXTERN_DATA *extern_data)
 {
+	if (!scene)
+		return (-1);
 	if (scene_id == data->scene_id)
 	{
 		return cur_scene_jump(pos_x, pos_z, direct, extern_data);		
@@ -18586,9 +18647,26 @@ int player_struct::cur_scene_jump(double pos_x, double pos_z, double direct, EXT
 	}
 
 	assert(scene);
-	
+
+	area_struct *old_area = area;
 	set_pos_with_broadcast(pos_x, pos_z);
-	send_scene_transfer(direct, pos_x, data->pos_y, pos_z, scene->m_id, 0);
+	if (area->is_neighbour(old_area))
+	{
+			//如果是同一个area，广播一下位置
+		MoveStopNotify notify;
+		move_stop_notify__init(&notify);
+		notify.playerid = get_uuid();
+		PosData pos_data;
+		pos_data__init(&pos_data);
+		pos_data.pos_x = pos_x;
+		pos_data.pos_z = pos_z;
+		notify.cur_pos = &pos_data;
+		broadcast_to_sight(MSG_ID_MOVE_STOP_NOTIFY, &notify, (pack_func)move_stop_notify__pack, false);		
+	}
+//	else
+//	{
+		send_scene_transfer(direct, pos_x, data->pos_y, pos_z, scene->m_id, 0);
+//	}
 	// assert(scene);
 	// scene_struct *old = scene;
 	// if (sight_space)
@@ -20174,18 +20252,10 @@ int player_struct::init_player_ci_fu_reward_receive_data()
 
 void player_struct::guild_chuan_gong_deal_with()
 {
-	//先判断身上有没有传功的buff,没有直接返回
-	 
-	//判断我自己身上有没有和我一起传功的玩家信息,没有即出错了
-	if(data->guild_chuan_gong_info.cur_info.type == 0 || data->guild_chuan_gong_info.cur_info.player_id == 0)
-	{
-		LOG_ERR("[%s:%d] 传功切场景后,玩家身上信息错误,player_id[%lu]", __FUNCTION__, __LINE__, data->player_id);
-		return;
-	}
 
 	//在判断对方是否在线,如果已经下线清除掉自己身上的buff和相关信息
 	player_struct* guild_player = player_manager::get_player_by_id(data->guild_chuan_gong_info.cur_info.player_id);
-	if(!guild_player || !guild_player->is_online())
+	if (!guild_player || !guild_player->is_online())
 	{
 		clean_guild_chuan_gong_info();
 		return;
@@ -20193,28 +20263,35 @@ void player_struct::guild_chuan_gong_deal_with()
 
 	bool succcess = true;
 	//判断对方身上是否有传功buff,如果没有,然后清除自己的信息和buff,并报错
-	if(guild_player->is_in_guild_chuan_gong() == false)
+	if (guild_player->is_in_guild_chuan_gong() == false)
 	{
 		succcess = false;
 	}
 
 	//判断对方身上的那个人是不是我,如不是我那就肯定出错了,然后清除自己的信息和buff,并报错
-	if(guild_player->data->player_id != data->player_id)
+	if (guild_player->data->guild_chuan_gong_info.cur_info.player_id != data->player_id || data->guild_chuan_gong_info.cur_info.player_id != guild_player->data->player_id)
 	{
 		succcess = false;
 	}
 
 	//判断对方与我的场景是否相同,以及距离是否在范围内,如不满足,然后清除双方的信息和buff,并出错
-	if(data->scene_id != guild_player->data->scene_id)
+	if (data->scene_id != guild_player->data->scene_id)
 	{
 		succcess = false;
 	}
-	if(!succcess)
+	if (!succcess)
 	{
 		clean_guild_chuan_gong_info();
 		LOG_ERR("[%s:%d] 传功切场景后,双方玩家身上的信息不匹配,player_id[%lu] guild_player_id[%lu]", __FUNCTION__, __LINE__, data->player_id, guild_player->data->player_id);
 		return;
 	}
+	//停止移动传送通知
+	CommAnswer stop_move;
+	comm_answer__init(&stop_move);
+	stop_move.result = 0;
+	EXTERN_DATA exter_data;
+	exter_data.player_id = data->player_id;
+	fast_send_msg(&conn_node_gamesrv::connecter, &exter_data, MSG_ID_GUILD_CHUAN_GONG_STOP_MOVE_NOTIFY, comm_answer__pack, stop_move);
 
 	//条件符合,给两人发送传功开始,并读条的通知
 	CommAnswer start_notify;
@@ -20230,7 +20307,7 @@ void player_struct::guild_chuan_gong_deal_with()
 bool player_struct::is_in_guild_chuan_gong()
 {
 	//判断身上是否有传功数据以及传功buff
-	if(data->guild_chuan_gong_info.cur_info.type != 0 && data->guild_chuan_gong_info.cur_info.player_id != 0)
+	if (data->guild_chuan_gong_info.cur_info.type != 0 && data->guild_chuan_gong_info.cur_info.player_id != 0 && has_buff(sg_guild_chuan_gong_buff_id))
 	{
 		return true;
 	}
@@ -20245,11 +20322,11 @@ void player_struct::guild_chuan_gong_zhong_duan()
 	clean_guild_chuan_gong_info();
 
 	bool flag = false;
-	if(guild_player && guild_player->is_online())
+	if (guild_player && guild_player->is_online())
 	{
-		if(guild_player->is_in_guild_chuan_gong())
+		if (guild_player->is_in_guild_chuan_gong())
 		{
-			if(guild_player->data->guild_chuan_gong_info.cur_info.player_id == data->player_id)
+			if (guild_player->data->guild_chuan_gong_info.cur_info.player_id == data->player_id)
 			{
 				guild_player->clean_guild_chuan_gong_info();
 				//还要清除buff
@@ -20262,7 +20339,7 @@ void player_struct::guild_chuan_gong_zhong_duan()
 	stop_notify.result = 0;
 	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_GUILD_CHUAN_GONG_STOP_NOTIFY, &stop_notify, (pack_func)comm_answer__pack);
 	ppp = conn_node_gamesrv::broadcast_msg_add_players(data->player_id, ppp);
-	if(flag == true)
+	if (flag == true)
 	{
 		ppp = conn_node_gamesrv::broadcast_msg_add_players(guild_player->data->player_id, ppp);
 	}
@@ -20271,10 +20348,33 @@ void player_struct::guild_chuan_gong_zhong_duan()
 
 void player_struct::clean_guild_chuan_gong_info()
 {
-	if(data)
+	if (data)
 	{
 		data->guild_chuan_gong_info.cur_info.type = 0;
 		data->guild_chuan_gong_info.cur_info.player_id = 0;
 		//还要清除传功buff
+		delete_one_buff(sg_guild_chuan_gong_buff_id, true);
 	}
+}
+
+void player_struct::refresh_guild_chuan_gong_info()
+{
+	if (data)
+	{
+		data->guild_chuan_gong_info.bei_chuan_num = 0;
+		data->guild_chuan_gong_info.give_chuan_num = 0;
+	}
+}
+
+void player_struct::broadcast_sight_player_info_changed_notify()
+{
+	SightPlayerInfoChangeNotify nty;
+	sight_player_info_change_notify__init(&nty);
+	nty.player_id = get_uuid();
+	nty.guild_id = data->guild_id;
+	ProtoGuildInfo *info = get_guild_summary(data->guild_id);
+	if (info)
+		nty.guild_name = info->name;
+	nty.guild_office = data->guild_office;		
+	broadcast_to_sight(MSG_ID_SIGHT_PLAYER_CHANGE_NOTIFY, &nty, (pack_func)sight_player_info_change_notify__pack, true);
 }

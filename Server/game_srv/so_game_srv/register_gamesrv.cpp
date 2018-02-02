@@ -887,6 +887,8 @@ done:
     return ret;
 }
 
+extern int ZhenyingBattle_battle_num;
+extern int zhenying_raid_struct_raid_num;
 void on_http_request(struct evhttp_request *req, void *arg)
 {
     if (strcmp(req->uri, "/guild_wait") == 0)
@@ -924,8 +926,8 @@ void on_http_request(struct evhttp_request *req, void *arg)
 
         evbuffer_add_printf(returnbuffer, "truck: %lu/%u<br><br>\n", cash_truck_manager_all_id.size(), cash_truck_manager_data_pool.num);
 
-        evbuffer_add_printf(returnbuffer, "zhenyingraid: %d<br><br>\n", zhenying_raid_struct::raid_num);
-        evbuffer_add_printf(returnbuffer, "zhenyingbattle: %d<br><br>\n", ZhenyingBattle::battle_num);
+        evbuffer_add_printf(returnbuffer, "zhenyingraid: %d<br><br>\n", zhenying_raid_struct_raid_num);
+        evbuffer_add_printf(returnbuffer, "zhenyingbattle: %d<br><br>\n", ZhenyingBattle_battle_num);
         evbuffer_add_printf(returnbuffer, "zhenyingbattle room: %d<br><br>\n", ZhenyingBattle::GetInstance()->get_room_num());
         // evbuffer_add_printf(returnbuffer, "private zhenyingbattle:
         // %d<br><br>\n",

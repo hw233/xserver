@@ -110,12 +110,13 @@ message DbHorseCommonAttr
 	required uint32 step = 1; //阶
 	repeated uint32 attr = 2; //属性
 	repeated uint32 attr_level = 3; //当前修灵次数
-	required uint32 soul_level = 4; //铸灵等级
-	required uint32 cur_soul = 5; //当前可以升级的灵
+	required uint32 soul_step = 4; //铸灵等级
+	required uint32 soul_star = 5; //当前可以升级的灵
 	required uint32 power = 6; //总的战斗力
 	repeated uint32 soul_num = 7; //当前已铸灵次数
 	required bool soul_full = 8; //true铸灵已满
 	required int32 fly = 9; //
+	//required uint32 old = 10; //
 }
 
 message DBYuqidaoMai
@@ -282,6 +283,7 @@ message DBPartnerSkill
 {
 	required uint32 skill_id = 1;
 	required uint32 lv = 2;
+	required bool lock = 3;
 }
 
 message DBPartnerAttr
@@ -459,9 +461,9 @@ message PlayerDBInfo
 	repeated uint32 partner_dictionary = 60; //伙伴图鉴
 	repeated uint64 partner_formation = 61; //伙伴阵型
 	repeated uint64 partner_battle = 62; //伙伴出战
-	required uint32 partner_recruit_junior_time = 63; //低级招募免费时间
+	required uint32 partner_recruit_junior_free_cd = 63; //低级招募免费时间
 	required uint32 partner_recruit_junior_count = 64; //低级招募计数
-	required uint32 partner_recruit_senior_time = 65; //高级招募免费时间
+	required uint32 partner_recruit_senior_free_cd = 65; //高级招募免费时间
 	required uint32 partner_recruit_senior_count = 66; //高级招募计数
 	required uint64 ReceiveGift = 67; //即将开启已领取最大奖励类型
 	required float angle = 68;  //朝向
@@ -505,6 +507,10 @@ message PlayerDBInfo
 	required uint32 partner_today_junior_recurit_cd = 106;  //今日JUNIOR伙伴招募cd
 	required uint32 partner_today_senior_recurit_count = 107;  //今日senior伙伴招募次数
 	required uint32 partner_today_senior_recurit_cd = 108;  //今日senior伙伴招募cd
+	optional DBPlayerGuildChuanGongInfo guild_chuan_gong_info = 109; //帮会传功信息
+	required uint32 partner_recruit_junior_free_count = 110; //低级招募免费次数
+	required uint32 partner_recruit_senior_free_count = 111; //高级招募免费次数
+	required uint32 silver = 112; //银币
 }
 
 message DBAutoAddHp
@@ -651,4 +657,10 @@ message DBPlayerDiGongXiuLianInfo
 	required uint32 digong_huan_num = 5; //地宫试炼任务今日已完成总环数
 	required uint32 digong_lun_num = 6;  //地宫试炼任务今日已完成总轮数
 
+}
+
+message DBPlayerGuildChuanGongInfo
+{
+	required uint32 bei_chuan_num = 1; //被动传功次数
+	required uint32 zhu_chuan_num = 2; //主动传功次数
 }

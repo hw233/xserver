@@ -84,7 +84,7 @@ static void battle_raid_ai_player_leave(raid_struct *raid, player_struct *player
 	LOG_INFO("%s: player[%lu] del from %lu", __FUNCTION__, player->get_uuid(), raid->data->uuid);	
 	ZhenyingBattle::GetInstance()->LeaveRegion(raid->data->ai_data.battle_data.room, player, player->get_attr(PLAYER_ATTR_REGION_ID));
 	ROOM_INFO *pRoom = ZhenyingBattle::GetInstance()->GetRoom(raid->data->ai_data.battle_data.room);
-	if (pRoom != NULL && pRoom->m_state != REST_STATE && raid->m_config->DengeonRank != DUNGEON_TYPE_BATTLE)
+	if (pRoom != NULL && pRoom->m_state != REST_STATE && raid->m_config->DengeonRank != DUNGEON_TYPE_BATTLE_NEW)
 	{
 		ZhenyingBattle::GetInstance()->AddFbCd(*player);
 	}

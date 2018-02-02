@@ -25,6 +25,7 @@ public:
 	int del_monster_from_area(uint64_t uuid);
 	int get_all_neighbour_player_num();
 	bool is_all_neighbour_have_player();
+	bool is_neighbour(struct area_struct *area);
 	
 	uint64_t *m_monster_uuid;	
 	int cur_monster_num;

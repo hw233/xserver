@@ -1142,38 +1142,60 @@
 	ID 1 : integer
 	Grade 2 : integer
 	Skill 3 : *integer
-	BaseSkill1 4 : integer
-	ProtectSkill 5 : integer
-	Angerskill 6 : integer
-	AttributeType 7 : *integer
-	GradeCoefficient 8 : *double
-	TypeCoefficient 9 : *double
-	UpperLimitBase 10 : *double
-	LowerLimitBase 11 : *double
-	DetailedType 12 : *integer
-	DetailedNum 13 : *double
-	Recruit 14 : *integer
-	SeveranceItem 15 : *integer
-	SeveranceNum 16 : *integer
-	PartnerAttributeType 17 : *integer
-	PartnerAttributeID 18 : *integer
-	WashMarrowItem 19 : *integer
-	GodYao 20 : *integer
-	ThreeCurrencyItem 21 : integer
-	ThreeCurrencyItemNum 22 : integer
-	SevenCurrencyItem 23 : integer
-	SevenCurrencyItemNum 24 : integer
-	ThreeExclusiveItem 25 : integer
-	ThreeExclusiveItemNum 26 : integer
-	SevenExclusiveItem 27 : integer
-	SevenExclusiveItemNum 28 : integer
-	QualificationsItem 29 : *integer
-	Character 30 : integer
-	SkillProbability 31 : *integer
-	GrowthValue 32 : *integer
-	GodYaoAttribute 33 : *integer
-	Fetter 34 : *integer
-	Reward 35 : integer
+	AttributeType 4 : *integer
+	GradeCoefficient 5 : *double
+	TypeCoefficient 6 : *double
+	UpperLimitBase 7 : *double
+	LowerLimitBase 8 : *double
+	DetailedType 9 : *integer
+	DetailedNum 10 : *double
+	Recruit 11 : *integer
+	SeveranceItem 12 : *integer
+	SeveranceNum 13 : *integer
+	PartnerAttributeType 14 : *integer
+	PartnerAttributeID 15 : *integer
+	WashMarrowItem 16 : *integer
+	GodYao 17 : *integer
+	ThreeCurrencyItem 18 : integer
+	ThreeCurrencyItemNum 19 : integer
+	SevenCurrencyItem 20 : integer
+	SevenCurrencyItemNum 21 : integer
+	ThreeExclusiveItem 22 : integer
+	ThreeExclusiveItemNum 23 : integer
+	SevenExclusiveItem 24 : integer
+	SevenExclusiveItemNum 25 : integer
+	QualificationsItem 26 : *integer
+	Character 27 : integer
+	SkillProbability 28 : *integer
+	GrowthValue 29 : *integer
+	GodYaoAttribute 30 : *integer
+	Fetter 31 : *integer
+	FetterReward 32 : *integer
+	PartnerAttribute 33 : *integer 
+	PartnerAttributeNum 34 : *integer
+	Database1 35 : *integer
+	Database2 36 : *integer
+	Database3 37 : *integer
+	Database4 38 : *integer
+	Database5 39 : *integer
+	SkillLocking 40 : integer
+	LockingItem 41 : integer
+	LockingItemNum 42 : integer
+	RecruitReward 43 : *integer
+	PokedexItem 44 : integer
+	PokedexItemNum 45 : integer
+	FetterRewardNum 46 : *integer
+}
+
+.PartnerSkillTable
+{
+	ID 1 : integer
+	BaseSkill1 2 : integer
+	ProtectSkill 3 : integer
+	Angerskill 4 : integer
+	SkillProbability 5 : *integer
+	Skill 6 : *integer
+	SkillProbability1 7 : *integer
 }
 
 .GodYaoAttributeTable {
@@ -1187,7 +1209,7 @@
 	ID 1 : integer
 	RecruitNum 2 : integer
 	GetItem 3 : *integer
-	ConsumeType 4 : integer
+	ConsumeType 4 : *integer
 	ConsumeNum 5 : integer
 	Recruit 6 : *integer
 	RecruitGrade 7 : *integer
@@ -1199,7 +1221,10 @@
 	TypeProbability 13 : *integer
 	Item 14 : *integer
 	ItemNum 15 : *integer
-	First 16 : integer
+	First 16 : *integer
+	Discount 17 : integer
+	ConsumeNum1 18 : integer
+	FreeRecruit 19 : integer
 }
 
 .PartnerLevelTable {

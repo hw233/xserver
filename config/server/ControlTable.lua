@@ -311,7 +311,7 @@ local ControlTable = {
 		},
 	[330400034] = {
 		['ID'] = 330400034,
-		['MinActor'] = 3,
+		['MinActor'] = 1,
 		['MaxActor'] = 5,
 		['OpenDay'] = {0,1,2,3,4,5,6},
 		['OpenTime'] = {0},

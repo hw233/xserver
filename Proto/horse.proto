@@ -57,6 +57,8 @@ message SetCurHorseAns
 	required uint32 power = 3; //总的战斗力
 	required uint64 playerid = 4; //
 	required uint32 old_id = 5; //旧马id
+	required uint32 step = 6; //当前铸灵阶
+	required uint32 star = 7; //当前铸灵星
 }
 
 message HorseAttr
@@ -91,7 +93,7 @@ message HorseSoulAns
 	required uint32 power = 2; //总的战斗力
 	required uint32 step = 3; //铸灵 阶
 	required uint32 star = 4;//铸灵 星
-	required uint32 horseid = 5; //
+	required uint32 id = 5; //
 }
 /*
 message HorseSoulLevelAns

@@ -37,7 +37,7 @@ private:
 	int broadcast_world_boss_rank_info(uint64_t boss_id);
 	int updata_player_cur_world_boss_info(uint64_t boss_id, EXTERN_DATA *extern_data);
 	int world_boss_provide_rank_reward(uint64_t boss_id);
-	int receive_world_boss_reward_to_player(uint32_t rank, uint64_t boss_id, uint64_t player_id);
+	int receive_world_boss_reward_to_player(uint32_t rank, uint64_t boss_id, uint64_t player_id, uint32_t score);
 	int world_boss_provide_kill_reward(uint64_t boss_id);
 
 private:

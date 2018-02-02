@@ -215,6 +215,7 @@ message ShangjinType
 	repeated ShangjinTaskType task_type = 5; //
 	required bool accept = 6; //false 可接 true 已接
 	required uint32 free_refresh = 7; //免费刷新次数
+	required int32 daily_exp = 8;
 }
 message ShangjinTaskId
 {

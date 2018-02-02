@@ -607,7 +607,7 @@
 #define MSG_ID_GUILD_CHUAN_GONG_INFO_REQUEST 12167         //帮会传功界面信息请求 NULL
 #define MSG_ID_GUILD_CHUAN_GONG_INFO_ANSWER  12168         //帮会传功界面信息应答 GuildChuanGongInfoAnswer
 #define MSG_ID_GUILD_CHUAN_GONG_START_REQUEST  12169       //帮会传功请求 GuildChuanGongRequest
-#define MSG_ID_GUILD_CHUAN_GONG_START_ANSWER   12170       //帮会传功应答 comm_answer 
+#define MSG_ID_GUILD_CHUAN_GONG_START_ANSWER   12170       //帮会传功应答 GuildChuanGongAnswer
 #define MSG_ID_GUILD_CHUAN_GONG_START_NOTIFY   12171       //帮会传功通知 GuildChuanGongNotify
 #define MSG_ID_GUILD_CHUAN_GONG_IS_OR_NO_REQUEST 12172     //帮会传功确认或取消请求 GuildChuanGongIsOrNoRequest  
 #define MSG_ID_GUILD_CHUAN_GONG_IS_OR_NO_ANSWER  12173     //帮会传功确认或取消回复 comm_answer
@@ -616,6 +616,7 @@
 #define MSG_ID_GUILD_CHUAN_GONG_STOP_NOTIFY     12176      //帮会传功,如读条的过程中有一方中断,如强制下线,通知另一方停止读条 NULL
 #define MSG_ID_GUILD_CHUAN_GONG_FINISH_REQUEST  12177      //帮会传功完成请求 NULL
 #define MSG_ID_GUILD_CHUAN_GONG_FINISH_NOTIFY   12178      //帮会传功完成通知 GuildChuanGongFinishNotify
+#define MSG_ID_GUILD_CHUAN_GONG_STOP_MOVE_NOTIFY 12179     //帮会传功停止移动,传送等通知 NULL
 
 
 //阵营
@@ -846,6 +847,8 @@
 #define MSG_ID_PARTNER_FABAO_CHANGE_ANSWER 13140    //伙伴法宝佩戴或者替换应答 PartnerFabaoChangeAnswer
 #define MSG_ID_PARTNER_RENAME_REQUEST 13141         //伙伴改名 PartnerRenameRequest
 #define MSG_ID_PARTNER_RENAME_ANSWER 13142          //伙伴改名 comm_answer
+#define MSG_ID_PARTNER_LOCK_SKILL_REQUEST 13143         //伙伴锁定技能 ReqLockPartnerSkill
+#define MSG_ID_PARTNER_LOCK_SKILLANSWER 13144          //伙伴锁定技能 AnsLockPartnerSkill
 
 //运镖
 #define MSG_ID_CASH_TRUCK_INFO_NOTIFY 13301       //运镖信息 CashTruckInfo
@@ -915,7 +918,7 @@
 #define MSG_ID_WORLDBOSS_REAL_RANK_INFO_REQUEST 13802   //世界boss实时排名信息和玩家自己实时信息请求 RankWorldBossRealInfoRequest
 #define MSG_ID_WORLDBOSS_REAL_RANK_INFO_ANSWER 13803    //世界boss实时排名信息和玩家自己实时信息应答 RankWorldBossRealInfoAnswer
 #define MSG_ID_WORLDBOSS_ZHUJIEMIAN_INFO_REQUEST 13804  //世界boss主界面信息请求
-#define MSG_ID_WORLDBOSS_ZHUJIEMIAN_INFO_ANSWER 13805   //世界boss主界面信息应答 ankWorldBossAllBossInfoAnswer
+#define MSG_ID_WORLDBOSS_ZHUJIEMIAN_INFO_ANSWER 13805   //世界boss主界面信息应答 RankWorldBossAllBossInfoAnswer
 #define MSG_ID_WORLDBOSS_LAST_RANK_INFO_REQUEST 13806   //世界boss上轮排名信息和玩家自己上轮信息请求 RankRankWorldBossLastInfoRequest
 #define MSG_ID_WORLDBOSS_LAST_RANK_INFO_ANSWER 13807    //世界boss上轮排名信息和玩家自己上轮信息应答 RankRankWorldBossLastInfoAnswer
 #define MSG_ID_WORLDBOSS_PLAYER_RANK_INFO_NOTIFY 13808  //世界boss刷新或者死亡玩家奖励信息通知 RankWorldBossRewardNotify

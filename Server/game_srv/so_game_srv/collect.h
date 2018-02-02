@@ -82,7 +82,7 @@ public:
 	
 	static uint32_t get_total_collect_num();
 
-	static void CreateRandCollect(scene_struct *scene);
+	static int CreateRandCollect(scene_struct *scene);
 
 private:
 	static Collect *CreateCollectImp(uint32_t id, double x, double y, double z, float yaw);

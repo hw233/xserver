@@ -105,7 +105,7 @@ local EffectTable = {
 		['OffsetY'] = 0,
 		['OffsetZ'] = 0,
 		['DelayTime'] = 0,
-		['Length'] = 1490,
+		['Length'] = 1180,
 		['IsManual'] = 0,
 		['IsFollow'] = 1
 		},
@@ -115,7 +115,7 @@ local EffectTable = {
 		['OffsetY'] = 2,
 		['OffsetZ'] = 20,
 		['DelayTime'] = 0,
-		['Length'] = 2650,
+		['Length'] = 2820,
 		['IsManual'] = 0,
 		['IsFollow'] = 0
 		},
@@ -185,7 +185,7 @@ local EffectTable = {
 		['OffsetY'] = 0,
 		['OffsetZ'] = 0,
 		['DelayTime'] = 0,
-		['Length'] = 2700,
+		['Length'] = 2840,
 		['IsManual'] = 0,
 		['IsFollow'] = 0
 		},
@@ -308,6 +308,86 @@ local EffectTable = {
 		['Length'] = 400,
 		['IsManual'] = 0,
 		['IsFollow'] = 1
+		},
+	[135110026] = {
+		['ID'] = 135110026,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 1010,
+		['IsManual'] = 0,
+		['IsFollow'] = 1
+		},
+	[135110027] = {
+		['ID'] = 135110027,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 3100,
+		['IsManual'] = 0,
+		['IsFollow'] = 0
+		},
+	[135110028] = {
+		['ID'] = 135110028,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 300,
+		['Length'] = 500,
+		['IsManual'] = 0,
+		['IsFollow'] = 1
+		},
+	[135110029] = {
+		['ID'] = 135110029,
+		['OffsetX'] = 0,
+		['OffsetY'] = 11,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 0,
+		['IsManual'] = 1,
+		['IsFollow'] = 0
+		},
+	[135110030] = {
+		['ID'] = 135110030,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 100,
+		['Length'] = 1400,
+		['IsManual'] = 0,
+		['IsFollow'] = 1
+		},
+	[135110031] = {
+		['ID'] = 135110031,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 3960,
+		['IsManual'] = 0,
+		['IsFollow'] = 0
+		},
+	[135110032] = {
+		['ID'] = 135110032,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 1050,
+		['IsManual'] = 0,
+		['IsFollow'] = 1
+		},
+	[135110033] = {
+		['ID'] = 135110033,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 2540,
+		['IsManual'] = 0,
+		['IsFollow'] = 0
 		},
 	[135120001] = {
 		['ID'] = 135120001,

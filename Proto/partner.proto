@@ -7,6 +7,7 @@ message PartnerSkillData
 	required uint32 id = 1;
 	required uint32 lv = 2;
 	required bool lock = 3;
+	required uint32 exp = 4;
 }
 
 message PartnerAttr
@@ -33,6 +34,8 @@ message PartnerData
 	required uint64 power = 8; //洗髓战斗力
 	required uint32 reliveTime = 9; //复活时间，大于0处于复活状态
 	optional PartnerCurFabaoInfo cur_fabao= 10; //伙伴当前佩戴的法宝信息
+	required string name = 11;  //名字
+	required uint32 rename_free = 12; //能否免费改名，0表示不能，1表示可以
 }
 
 //伙伴信息应答
@@ -42,9 +45,11 @@ message PartnerInfoAnswer
 	repeated PartnerData partners = 2; //伙伴列表
 	repeated uint64 formation = 3; //布阵信息
 	repeated uint32 dictionary = 4; //图鉴信息
-	required uint32 recruitJuniorTime = 5; //低级招募免费时间（比当前时间大表示处于CD中）
+	required uint32 recruitJuniorFreeCD = 5; //低级招募免费CD（比当前时间大表示处于CD中）
+	required uint32 recruitJuniorFreeCount = 20; //低级招募免费次数（已用次数，比配置次数小表示还有次数）
 	required uint32 recruitJuniorCount = 6; //低级招募计数
-	required uint32 recruitSeniorTime = 7; //高级招募免费时间（比当前时间大表示处于CD中）
+	required uint32 recruitSeniorFreeCD = 7; //高级招募免费CD（比当前时间大表示处于CD中）
+	required uint32 recruitSeniorFreeCount = 21; //高级招募免费次数（已用次数，比配置次数小表示还有次数）
 	required uint32 recruitSeniorCount = 8; //高级招募计数
 	repeated uint32 bonds = 9; //羁绊信息
 	repeated uint32 bondReward = 10; //羁绊领奖信息
@@ -172,12 +177,18 @@ message PartnerRecruitRequest
 	required uint32 type = 1; //招募类型
 }
 
+message PartnerRecruitPartnerData
+{
+	required uint32 partnerId = 1; //伙伴ID
+	required uint64 uuid = 2; //伙伴唯一ID，0表示有相同的伙伴，转化成道具
+}
+
 //伙伴招募结果信息
 message PartnerRecruitResultData
 {
 	required uint32 type = 1; //1表示道具，2表示伙伴
 	optional ItemData item = 2; //道具
-	optional uint64 uuid = 3; //伙伴唯一ID
+	optional PartnerRecruitPartnerData partner = 3; //伙伴
 }
 
 //伙伴招募应答
@@ -185,10 +196,13 @@ message PartnerRecruitAnswer
 {
 	required uint32 result = 1; //结果，0：成功，否则失败
 	repeated PartnerRecruitResultData recruits = 2; //招募结果
-	required uint32 recruitJuniorTime = 5; //低级招募免费时间（比当前时间大表示处于CD中）
-	required uint32 recruitJuniorCount = 6; //低级招募计数
-	required uint32 recruitSeniorTime = 7; //高级招募免费时间（比当前时间大表示处于CD中）
+	required uint32 recruitJuniorFreeCD = 3; //低级招募免费CD（比当前时间大表示处于CD中）
+	required uint32 recruitJuniorFreeCount = 4; //低级招募免费次数（已用次数，比配置次数小表示还有次数）
+	required uint32 recruitJuniorCount = 5; //低级招募计数
+	required uint32 recruitSeniorFreeCD = 6; //高级招募免费CD（比当前时间大表示处于CD中）
+	required uint32 recruitSeniorFreeCount = 7; //高级招募免费次数（已用次数，比配置次数小表示还有次数）
 	required uint32 recruitSeniorCount = 8; //高级招募计数
+	required uint32 type = 9; //招募类型
 }
 
 //伙伴复活时间通知
@@ -263,4 +277,18 @@ message PartnerRenameRequest
 {
 	required uint64 uuid = 1; //伙伴唯一ID
 	required string name = 2;
+}
+
+message ReqLockPartnerSkill
+{
+	required bool lock = 1;
+	required uint64 uuid = 2; //伙伴唯一ID
+	required uint32 skill = 3; //
+}
+message AnsLockPartnerSkill
+{
+	required uint32 ret = 1;
+	required bool lock = 2;
+	required uint64 uuid = 3; //伙伴唯一ID
+	required uint32 skill = 4; //
 }

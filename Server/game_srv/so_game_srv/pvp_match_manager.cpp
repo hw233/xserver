@@ -14,10 +14,10 @@
 
 //player_id, 段位
 //等待匹配的玩家或者队伍
-static std::map<uint64_t, uint8_t> waiting_player_3;
-static std::map<uint64_t, uint8_t> waiting_player_5;
-static std::map<uint64_t, uint8_t> waiting_team_3;
-static std::map<uint64_t, uint8_t> waiting_team_5;
+extern std::map<uint64_t, uint8_t> pvp_waiting_player_3;
+extern std::map<uint64_t, uint8_t> pvp_waiting_player_5;
+extern std::map<uint64_t, uint8_t> pvp_waiting_team_3;
+extern std::map<uint64_t, uint8_t> pvp_waiting_team_5;
 
 struct matched_team_3
 {
@@ -32,9 +32,9 @@ struct matched_team_5
 	uint64_t team2[PVP_MATCH_PLAYER_NUM_5];
 };
 //完成匹配，等待玩家点击准备的队伍
-static std::map<uint64_t, struct matched_team_3 *> map_team_3;
-static std::map<uint64_t, struct matched_team_5 *> map_team_5;
-static uint64_t matched_index = 10;
+extern std::map<uint64_t, struct matched_team_3 *> pvp_map_team_3;
+extern std::map<uint64_t, struct matched_team_5 *> pvp_map_team_5;
+extern uint64_t pvp_matched_index;
 
 static void	send_cancel_notify(uint64_t player_id, uint64_t cancel_player_id)
 {
@@ -411,17 +411,17 @@ uint32_t pvp_match_is_player_in_cd(player_struct *player)
 
 bool pvp_match_is_player_in_waiting(uint64_t player_id)
 {
-	if (waiting_player_3.find(player_id) != waiting_player_3.end())
+	if (pvp_waiting_player_3.find(player_id) != pvp_waiting_player_3.end())
 		return true;
-	if (waiting_player_5.find(player_id) != waiting_player_5.end())
+	if (pvp_waiting_player_5.find(player_id) != pvp_waiting_player_5.end())
 		return true;
 	return false;
 }
 bool pvp_match_is_team_in_waiting(uint64_t id)
 {
-	if (waiting_team_3.find(id) != waiting_team_3.end())
+	if (pvp_waiting_team_3.find(id) != pvp_waiting_team_3.end())
 		return true;
-	if (waiting_team_5.find(id) != waiting_team_5.end())
+	if (pvp_waiting_team_5.find(id) != pvp_waiting_team_5.end())
 		return true;
 	return false;
 }
@@ -456,12 +456,12 @@ int pvp_match_add_player_to_waiting(player_struct *player, int type)
 
 	if (type == PVP_TYPE_DEFINE_3)
 	{
-		waiting_player_3[player->get_uuid()] = player->data->pvp_raid_data.level_3;
+		pvp_waiting_player_3[player->get_uuid()] = player->data->pvp_raid_data.level_3;
 		player->data->pvp_raid_data.state = pvp_match_state_waiting_3;
 	}
 	else
 	{
-		waiting_player_5[player->get_uuid()] = player->data->pvp_raid_data.level_5;
+		pvp_waiting_player_5[player->get_uuid()] = player->data->pvp_raid_data.level_5;
 		player->data->pvp_raid_data.state = pvp_match_state_waiting_5;
 	}
 	return (0);
@@ -470,7 +470,7 @@ int pvp_match_add_team_to_waiting(player_struct *player, int type)
 {
 	if (type == PVP_TYPE_DEFINE_3)
 	{
-		waiting_team_3[player->m_team->GetId()] = player->data->pvp_raid_data.level_3;
+		pvp_waiting_team_3[player->m_team->GetId()] = player->data->pvp_raid_data.level_3;
 		for (int pos = 0; pos < player->m_team->m_data->m_memSize; ++pos)
 		{
 			player_struct *t_player = player_manager::get_player_by_id(player->m_team->m_data->m_mem[pos].id);
@@ -480,7 +480,7 @@ int pvp_match_add_team_to_waiting(player_struct *player, int type)
 	}
 	else
 	{
-		waiting_team_5[player->m_team->GetId()] = player->data->pvp_raid_data.level_5;
+		pvp_waiting_team_5[player->m_team->GetId()] = player->data->pvp_raid_data.level_5;
 		for (int pos = 0; pos < player->m_team->m_data->m_memSize; ++pos)
 		{
 			player_struct *t_player = player_manager::get_player_by_id(player->m_team->m_data->m_mem[pos].id);
@@ -570,15 +570,15 @@ int pvp_match_player_set_ready(player_struct *player)
 			uint64_t player_id = player->get_uuid();
 			player->data->pvp_raid_data.state = pvp_match_state_ready_3;
 
-			std::map<uint64_t, struct matched_team_3 *>::iterator ite = map_team_3.find(player->data->pvp_raid_data.matched_index);
-			assert(ite != map_team_3.end());
+			std::map<uint64_t, struct matched_team_3 *>::iterator ite = pvp_map_team_3.find(player->data->pvp_raid_data.matched_index);
+			assert(ite != pvp_map_team_3.end());
 			struct matched_team_3 *team = ite->second;
 
 				// 检查其他人是否都准备好了
 			if (check_team_all_ready_3(team))
 			{
 				start_pvp_raid_3(team);
-				map_team_3.erase(ite);
+				pvp_map_team_3.erase(ite);
 				free(team);
 				return (0);;
 			}
@@ -598,8 +598,8 @@ int pvp_match_player_set_ready(player_struct *player)
 			uint64_t player_id = player->get_uuid();
 			player->data->pvp_raid_data.state = pvp_match_state_ready_5;
 
-			std::map<uint64_t, struct matched_team_5 *>::iterator ite = map_team_5.find(player->data->pvp_raid_data.matched_index);
-			assert(ite != map_team_5.end());
+			std::map<uint64_t, struct matched_team_5 *>::iterator ite = pvp_map_team_5.find(player->data->pvp_raid_data.matched_index);
+			assert(ite != pvp_map_team_5.end());
 			struct matched_team_5 *team = ite->second;
 
 				// TODO: 检查其他人是否都准备好了
@@ -633,10 +633,10 @@ int pvp_match_player_set_ready(player_struct *player)
 static void	cancel_match_3(uint64_t id, player_struct *player)
 {
 	LOG_DEBUG("%s: player[%lu] id[%lu]", __FUNCTION__, player->get_uuid(), id);
-	std::map<uint64_t, struct matched_team_3 *>::iterator ite = map_team_3.find(id);
-	assert(ite != map_team_3.end());
+	std::map<uint64_t, struct matched_team_3 *>::iterator ite = pvp_map_team_3.find(id);
+	assert(ite != pvp_map_team_3.end());
 	struct matched_team_3 *team = ite->second;
-	map_team_3.erase(ite);
+	pvp_map_team_3.erase(ite);
 
 	uint64_t player_id = player->get_uuid();
 
@@ -715,10 +715,10 @@ static void	cancel_match_3(uint64_t id, player_struct *player)
 static void	cancel_match_5(uint64_t id, player_struct *player)
 {
 	LOG_DEBUG("%s: player[%lu] id[%lu]", __FUNCTION__, player->get_uuid(), id);
-	std::map<uint64_t, struct matched_team_5 *>::iterator ite = map_team_5.find(id);
-	assert(ite != map_team_5.end());
+	std::map<uint64_t, struct matched_team_5 *>::iterator ite = pvp_map_team_5.find(id);
+	assert(ite != pvp_map_team_5.end());
 	struct matched_team_5 *team = ite->second;
-	map_team_5.erase(ite);
+	pvp_map_team_5.erase(ite);
 
 	uint64_t player_id = player->get_uuid();
 
@@ -812,13 +812,13 @@ int	pvp_match_player_cancel(player_struct *player)
 			break;
 		case pvp_match_state_waiting_3:
 			if (player->m_team)
-				waiting_team_3.erase(player->m_team->GetId());
-			waiting_player_3.erase(player->get_uuid());
+				pvp_waiting_team_3.erase(player->m_team->GetId());
+			pvp_waiting_player_3.erase(player->get_uuid());
 			break;
 		case pvp_match_state_waiting_5:
 			if (player->m_team)
-				waiting_team_3.erase(player->m_team->GetId());
-			waiting_player_3.erase(player->get_uuid());
+				pvp_waiting_team_3.erase(player->m_team->GetId());
+			pvp_waiting_player_3.erase(player->get_uuid());
 			break;
 		default:
 			break;
@@ -1102,7 +1102,7 @@ static void try_match_team_3()
 	uint64_t match_team_id[2];
 
 	std::multimap<uint8_t, uint64_t> sort_map;
-	for (std::map<uint64_t, uint8_t>::iterator ite = waiting_team_3.begin(); ite != waiting_team_3.end(); ++ite)
+	for (std::map<uint64_t, uint8_t>::iterator ite = pvp_waiting_team_3.begin(); ite != pvp_waiting_team_3.end(); ++ite)
 		sort_map.insert(std::make_pair(ite->second, ite->first));
 
 	sort_ite first = sort_map.begin();
@@ -1119,24 +1119,24 @@ static void try_match_team_3()
 		first = next;
 			//匹配成功
 		struct matched_team_3 *team = (struct matched_team_3 *)malloc(sizeof(struct matched_team_3));
-		map_team_3[matched_index] = team;
+		pvp_map_team_3[pvp_matched_index] = team;
 		for (int i = 0; i < PVP_MATCH_PLAYER_NUM_3; ++i)
 		{
 			// 加入匹配成功队列
 			team->team1[i] = match_player_1[i];
 			team->team2[i] = match_player_2[i];
 			// 从等待队列移走
-			waiting_team_3.erase(match_team_id[0]);
-			waiting_team_3.erase(match_team_id[1]);
+			pvp_waiting_team_3.erase(match_team_id[0]);
+			pvp_waiting_team_3.erase(match_team_id[1]);
 			// 修改状态
 			player = player_manager::get_player_by_id(team->team1[i]);
 			assert(player);
-			player->data->pvp_raid_data.matched_index = matched_index;
+			player->data->pvp_raid_data.matched_index = pvp_matched_index;
 			player->data->pvp_raid_data.state = pvp_match_state_not_ready_3;
 		}
 			// 发送MSG_ID_PVP_MATCH_SUCCESS_NOTIFY
 		send_match_success_notify_3(team);
-		++matched_index;
+		++pvp_matched_index;
 	}
 }
 
@@ -1146,7 +1146,7 @@ static void try_match_3()//std::map<uint64_t, uint8_t> *waiting_player)
 	sort_ite match_player_2[PVP_MATCH_PLAYER_NUM_3];
 
 	std::multimap<uint8_t, uint64_t> sort_map;
-	for (std::map<uint64_t, uint8_t>::iterator ite = waiting_player_3.begin(); ite != waiting_player_3.end(); ++ite)
+	for (std::map<uint64_t, uint8_t>::iterator ite = pvp_waiting_player_3.begin(); ite != pvp_waiting_player_3.end(); ++ite)
 		sort_map.insert(std::make_pair(ite->second, ite->first));
 
 	sort_ite first = sort_map.begin();
@@ -1162,29 +1162,29 @@ static void try_match_3()//std::map<uint64_t, uint8_t> *waiting_player)
 		first = next;
 			//匹配成功
 		struct matched_team_3 *team = (struct matched_team_3 *)malloc(sizeof(struct matched_team_3));
-		map_team_3[matched_index] = team;
+		pvp_map_team_3[pvp_matched_index] = team;
 		for (int i = 0; i < PVP_MATCH_PLAYER_NUM_3; ++i)
 		{
 			// 加入匹配成功队列
 			team->team1[i] = match_player_1[i]->second;
 			team->team2[i] = match_player_2[i]->second;
 			// 从等待队列移走
-			waiting_player_3.erase(match_player_1[i]->second);
-			waiting_player_3.erase(match_player_2[i]->second);
+			pvp_waiting_player_3.erase(match_player_1[i]->second);
+			pvp_waiting_player_3.erase(match_player_2[i]->second);
 			// 修改状态
 			player = player_manager::get_player_by_id(team->team1[i]);
 			assert(player);
-			player->data->pvp_raid_data.matched_index = matched_index;
+			player->data->pvp_raid_data.matched_index = pvp_matched_index;
 			player->data->pvp_raid_data.state = pvp_match_state_not_ready_3;
 
 			player = player_manager::get_player_by_id(team->team2[i]);
 			assert(player);
-			player->data->pvp_raid_data.matched_index = matched_index;
+			player->data->pvp_raid_data.matched_index = pvp_matched_index;
 			player->data->pvp_raid_data.state = pvp_match_state_not_ready_3;
 		}
 			// 发送MSG_ID_PVP_MATCH_SUCCESS_NOTIFY
 		send_match_success_notify_3(team);
-		++matched_index;
+		++pvp_matched_index;
 	}
 }
 
@@ -1284,12 +1284,12 @@ int pvp_match_single_ai_player_3(player_struct *player)
 {
 		//匹配成功
 	struct matched_team_3 *team = (struct matched_team_3 *)malloc(sizeof(struct matched_team_3));
-	map_team_3[matched_index] = team;
+	pvp_map_team_3[pvp_matched_index] = team;
 
 		// 加入匹配成功队列
 	team->team1[0] = player->get_uuid();
 		// 修改状态
-	player->data->pvp_raid_data.matched_index = matched_index;
+	player->data->pvp_raid_data.matched_index = pvp_matched_index;
 	player->data->pvp_raid_data.state = pvp_match_state_not_ready_3;
 
 	int name_index = random();
@@ -1302,7 +1302,7 @@ int pvp_match_single_ai_player_3(player_struct *player)
 
 		if (ai_player->ai_data)
 			ai_player->ai_data->patrol_index = UINT8_MAX - 1;
-		ai_player->data->pvp_raid_data.matched_index = matched_index;
+		ai_player->data->pvp_raid_data.matched_index = pvp_matched_index;
 		ai_player->data->pvp_raid_data.state = pvp_match_state_ready_3;
 	}
 	for (int i = 0; i < PVP_MATCH_PLAYER_NUM_3; ++i)
@@ -1313,7 +1313,7 @@ int pvp_match_single_ai_player_3(player_struct *player)
 
 		if (ai_player->ai_data)
 			ai_player->ai_data->patrol_index = UINT8_MAX - 1;		
-		ai_player->data->pvp_raid_data.matched_index = matched_index;
+		ai_player->data->pvp_raid_data.matched_index = pvp_matched_index;
 		ai_player->data->pvp_raid_data.state = pvp_match_state_ready_3;
 	}
 
@@ -1329,12 +1329,12 @@ int pvp_match_single_ai_player_3(player_struct *player)
 		send_ready_notify(player->get_uuid(), team->team2[i]);
 	}
 
-	++matched_index;
+	++pvp_matched_index;
 	return (0);
 }
 
 void pvp_match_manager_on_tick()
 {
 	try_match_team_3();
-	try_match_3();//&waiting_player_3);
+	try_match_3();//&pvp_waiting_player_3);
 }

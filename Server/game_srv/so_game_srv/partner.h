@@ -47,14 +47,14 @@ struct PartnerSkill
 #define MAX_MONSTER_IN_PARTNER_SIGHT 100
 #define MAX_TRUCK_IN_PARTNER_SIGHT (30)
 #define MAX_PARTNER_IN_PARTNER_SIGHT (30)
-#define  MAX_PARTNER_BASE_ATTR (6)
+#define  MAX_PARTNER_BASE_ATTR (5)
 #define  MAX_PARTNER_DETAIL_ATTR (26)
 #define  MAX_PARTNER_GOD (10)
 
 
 struct partner_attr_data
 {
-	uint32_t base_attr_id[MAX_PARTNER_BASE_ATTR];
+	//uint32_t base_attr_id[MAX_PARTNER_BASE_ATTR];
 	uint32_t base_attr_vaual[MAX_PARTNER_BASE_ATTR];
 	uint32_t base_attr_up[MAX_PARTNER_BASE_ATTR];
 
@@ -130,7 +130,7 @@ typedef struct _partner_attack_unit__
 	uint64_t time;
 } partner_attack_unit;
 #define MAX_PARTNER_ATTACK_UNIT 20
-
+extern const uint32_t base_attr_id[MAX_PARTNER_BASE_ATTR];
 class partner_struct: public unit_struct
 {
 public:
@@ -238,6 +238,7 @@ public:
 		//返回0表示没有继续执行跟随主人的AI，返回1表示不继续执行跟随主人
 	uint32_t attack_target(uint32_t skill_id, int skill_index, unit_struct *target);
 	uint32_t choose_skill(int *index);
+	int lock_skill(uint32_t skill, bool lock);
 	bool try_friend_skill(uint32_t skill_id, int skill_index);
 	void do_normal_attack();
 

@@ -1363,6 +1363,7 @@ int conn_node_guildsrv::handle_guild_appoint_office_request(EXTERN_DATA *extern_
 		}
 
 		ret = appoint_office(player, appointee, office);
+		sync_guild_info_to_gamesrv(appointee);
 	} while(0);
 
 	GuildAppointOfficeAnswer resp;

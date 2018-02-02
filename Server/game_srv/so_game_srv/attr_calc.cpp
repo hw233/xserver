@@ -12,6 +12,7 @@ void get_attr_from_config(uint64_t attr_table_id, double *attr, uint32_t *drop_i
 	ActorAttributeTable* config = get_config_by_id(attr_table_id, &actor_attribute_config);
 	if (!config)
 	{
+		attr[PLAYER_ATTR_MAXHP] = 1;
 		LOG_ERR("[%s:%d] get actor attribute config failed, id: %lu", __FUNCTION__, __LINE__, attr_table_id);
 		return;
 	}

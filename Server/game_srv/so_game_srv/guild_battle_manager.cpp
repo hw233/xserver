@@ -84,7 +84,7 @@ struct matched_team
 	player_struct *team_player[GUILD_BATTLE_PLAYER_NUM];	
 };
 
-static bool do_not_remove_team_member = false;
+extern bool do_not_remove_team_member;
 
 int del_from_guild_battle_waiting(player_struct *player)
 {

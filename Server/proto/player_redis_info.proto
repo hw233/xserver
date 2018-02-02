@@ -75,6 +75,7 @@ message RedisGuildInfo
 	repeated uint64 member_ids = 7; //成员ID
 	required uint32 exploit = 8; //门宗功勋
 	required uint32 head = 9; //图标
+	required uint32 popularity = 10; //人气
 }
 
 message ZhenyingRedis

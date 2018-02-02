@@ -2,10 +2,12 @@
 cd `dirname $0`
 
 if [ $# -lt 1 ];then 
-	echo 'please input argv[1]=server_id'
-	exit 0
+    server_id=`cat ../server_info.ini | grep game_srv_id | sed 's/.*=\([0-9]*\)/\1/g'`
+else
+    server_id=$1
 fi 
-server_id=$1
+
+echo "server_id = $server_id"
 ./mysql/clean_mysql.sh ${server_id} 
 ./shell/clean_redis.sh ${server_id}
 cd python/

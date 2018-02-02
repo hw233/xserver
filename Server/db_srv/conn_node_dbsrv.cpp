@@ -479,9 +479,10 @@ void conn_node_dbsrv::handle_enter_game(EXTERN_DATA *extern_data)
 	free_query(res);
 
 	proto->guild_id = 0;
+	proto->guild_office = 0;	
 	do
 	{
-		sprintf(sql, "SELECT `guild_id` from guild_player where player_id = %lu", player_id);
+		sprintf(sql, "SELECT `guild_id`, `office` from guild_player where player_id = %lu", player_id);
 		res = query(sql, 1, NULL);
 		if (!res) {
 			LOG_ERR("[%s : %d]: query user failed, sql: %s", __FUNCTION__, __LINE__, sql);
@@ -494,6 +495,7 @@ void conn_node_dbsrv::handle_enter_game(EXTERN_DATA *extern_data)
 		}
 
 		proto->guild_id = atoi(row[0]);
+		proto->guild_office = atoi(row[1]);
 
 		free_query(res);
 	} while(0);

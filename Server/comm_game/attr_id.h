@@ -147,6 +147,11 @@ enum PlayerAttrId
 
 	PLAYER_ATTR_TITLE = 103, //称号
 	PLAYER_ATTR_EXP_ZHENQI = 104, //经验转换的真气
+	PLAYER_ATTR_BASELV = 105, // 	体质成长
+	PLAYER_ATTR_TILV = 106, // 	体质成长
+	PLAYER_ATTR_LILV = 107, // 	力量成长
+	PLAYER_ATTR_MINLV = 108, //	敏捷成长
+	PLAYER_ATTR_LINGLV = 109, //灵巧成长
 
 	PLAYER_ATTR_MAX
 };

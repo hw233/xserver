@@ -246,83 +246,82 @@ static void maogui_raid_ai_player_dead(raid_struct* raid, player_struct *player,
 static void maogui_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *unit)
 {
 	std::map<uint64_t, struct MGLYyanseTable*>::iterator itr =  maogui_colour_config.find(monster->data->monster_id);
-	if(itr != maogui_colour_config.end())
+	if(itr == maogui_colour_config.end())
+		return;
+	switch(itr->second->Type)
 	{
-		switch(itr->second->Type)
-		{
-			case 1:
-				if((uint32_t)itr->second->Colour == raid->data->ai_data.maogui_data.diaoxiang_colour && raid->data->ai_data.maogui_data.diaoxiang_id != 0)
+		case 1:
+			if((uint32_t)itr->second->Colour == raid->data->ai_data.maogui_data.diaoxiang_colour && raid->data->ai_data.maogui_data.diaoxiang_id != 0)
+			{
+				int delete_num = 0;
+				for(std::set<monster_struct *>::iterator ite =  raid->m_monster.begin(); ite != raid->m_monster.end();)
 				{
-					int delete_num = 0;
-					for(std::set<monster_struct *>::iterator ite =  raid->m_monster.begin(); ite != raid->m_monster.end();)
-					{
 						
-						std::set<monster_struct *>::iterator next_itr = ite;
-						++next_itr;
-						if ((*ite)->data->monster_id == raid->data->ai_data.maogui_data.diaoxiang_id)
-						{
-							buff_manager::create_default_buff(sg_maogui_diaoxiang_stop_buff, *ite, *ite, true);
-						}
-						else
-						{
-
-							monster_struct *m = *ite;
-							m->broadcast_one_attr_changed(PLAYER_ATTR_HP, -1, false, true);
-							raid->delete_monster_from_scene(m, true);
-							monster_manager::delete_monster(m);
-							++delete_num;
-						}
-						ite = next_itr;
-					}
-						//击杀特殊颜色狰狞猫鬼让其他猫鬼瞬间死亡数量计算星级
-					struct DungeonTable *t_config = raid->get_raid_config();
-					if (t_config)
+					std::set<monster_struct *>::iterator next_itr = ite;
+					++next_itr;
+					if ((*ite)->data->monster_id == raid->data->ai_data.maogui_data.diaoxiang_id)
 					{
-						for (uint32_t i = 0; i < t_config->n_Score; ++i)
-						{
-							if (t_config->Score[i] != 5)
-								continue;
-							if (delete_num <= raid->data->star_param[i])
-								break;
-							raid->data->star_param[i] = delete_num;
+						buff_manager::create_default_buff(sg_maogui_diaoxiang_stop_buff, *ite, *ite, true);
+					}
+					else
+					{
 
-							if (raid->need_show_star())
-							{
-								uint32_t star_param[3];
-								uint32_t score_param[3];
-								raid->calc_raid_star(star_param, score_param);
-								raid->send_star_changed_notify(star_param, score_param);		
-							}
+						monster_struct *m = *ite;
+						m->broadcast_one_attr_changed(PLAYER_ATTR_HP, -1, false, true);
+						raid->delete_monster_from_scene(m, true);
+						monster_manager::delete_monster(m);
+						++delete_num;
+					}
+					ite = next_itr;
+				}
+					//击杀特殊颜色狰狞猫鬼让其他猫鬼瞬间死亡数量计算星级
+				struct DungeonTable *t_config = raid->get_raid_config();
+				if (t_config)
+				{
+					for (uint32_t i = 0; i < t_config->n_Score; ++i)
+					{
+						if (t_config->Score[i] != 5)
+							continue;
+						if (delete_num <= raid->data->star_param[i])
 							break;
+						raid->data->star_param[i] = delete_num;
+
+						if (raid->need_show_star())
+						{
+							uint32_t star_param[3];
+							uint32_t score_param[3];
+							raid->calc_raid_star(star_param, score_param);
+							raid->send_star_changed_notify(star_param, score_param);		
 						}
+						break;
 					}
 				}
-				break;
-			case 2:
+			}
+			break;
+		case 2:
 				//首领死了破除鬼王无敌buff
-				for(std::set<monster_struct *>::iterator itr =  raid->m_monster.begin(); itr != raid->m_monster.end(); itr++)
+			for(std::set<monster_struct *>::iterator itr =  raid->m_monster.begin(); itr != raid->m_monster.end(); itr++)
+			{
+				monster_struct *m = *itr;
+				if(raid->data->ai_data.maogui_data.gui_wang_id == m->data->monster_id)
 				{
-					monster_struct *m = *itr;
-					if(raid->data->ai_data.maogui_data.gui_wang_id == m->data->monster_id)
-					{
-						raid->data->ai_data.maogui_data.buff_time = time_helper::get_cached_time() + raid->data->ai_data.maogui_data.po_buff_time;
-						m->delete_one_buff(sg_maogui_guiwang_wudi_buff, true);
+					raid->data->ai_data.maogui_data.buff_time = time_helper::get_cached_time() + raid->data->ai_data.maogui_data.po_buff_time;
+					m->delete_one_buff(sg_maogui_guiwang_wudi_buff, true);
 						// AddBuffNotify notify;
 						// add_buff_notify__init(&notify);
 						// notify.buff_id = sg_maogui_guiwang_wudi_buff;
 						// notify.playerid = m->get_uuid();
 						// m->broadcast_to_sight(MSG_ID_DEL_BUFF_NOTIFY, &notify, (pack_func)add_buff_notify__pack, false);
-					}
 				}
-				break;
-			case 3:
-				raid->data->ai_data.maogui_data.diaoxiang_id = 0;
-				raid->data->ai_data.maogui_data.diaoxiang_colour = 0;
-				break;
-			default:
-				break;
+			}
+			break;
+		case 3:
+			raid->data->ai_data.maogui_data.diaoxiang_id = 0;
+			raid->data->ai_data.maogui_data.diaoxiang_colour = 0;
+			break;
+		default:
+			break;
 		
-		}
 	}
 }
 
@@ -356,8 +355,8 @@ static void maogui_raid_ai_player_ready(raid_struct* raid, player_struct *player
 
 static void maogui_raid_ai_finished(raid_struct* raid)
 {
-	 normal_raid_ai_finished(raid);
-
+	raid->data->ai_data.maogui_data.raid_finished = true;
+	normal_raid_ai_finished(raid);
 }
 
 

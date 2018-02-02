@@ -274,6 +274,7 @@ typedef struct proto_enter_game_resp
     char       channel[50];
     uint64_t   chengjie_cd;
     uint32_t   guild_id;
+    uint32_t   guild_office;	
     uint16_t   data_size;  //数据库blob最大64K
     uint8_t    data[0];
 } PROTO_ENTER_GAME_RESP;

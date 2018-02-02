@@ -863,23 +863,5 @@
         ['TargetInfoList'] = {
         }
     },
-    [1000073] = {
-        ['uid'] = 1000073,
-        ['ID'] = 155000053,
-        ['ResType'] = "Protal",
-        ['PointPosX'] = -2.965554,
-        ['PointPosY'] = -0.3795454,
-        ['PointPosZ'] = 48.71669,
-        ['Yaw'] = 0,
-    },
-    [1000074] = {
-        ['uid'] = 1000074,
-        ['ID'] = 155000054,
-        ['ResType'] = "Protal",
-        ['PointPosX'] = -50.8898,
-        ['PointPosY'] = 0.5257866,
-        ['PointPosZ'] = 46.91572,
-        ['Yaw'] = 0,
-    },
 }
 return map_digong_003

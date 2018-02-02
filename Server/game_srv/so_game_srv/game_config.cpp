@@ -260,6 +260,10 @@ static void generate_parameters(void)
 	sg_pvp_raid_fighting_capacity_range[0] = (int)(pvp_raid_param->parameter1[0]);
 	sg_pvp_raid_fighting_capacity_range[1] = (int)(pvp_raid_param->parameter1[1]);
 
+	pvp_raid_param = get_config_by_id(161001030, &parameter_config);	
+	sg_partner_rename_item[0] = (uint64_t)(pvp_raid_param->parameter1[0]);
+	sg_partner_rename_item[1] = (uint64_t)(pvp_raid_param->parameter1[1]);
+	
 	pvp_raid_param = get_config_by_id(161000042, &parameter_config);
 	sg_pvp_raid_win_score_param = pvp_raid_param->parameter1[0];
 	pvp_raid_param = get_config_by_id(161000043, &parameter_config);
@@ -618,6 +622,11 @@ static void generate_parameters(void)
 	{
 		sg_zhu_chuan_gong_add_item_id = config->parameter1[0];
 		sg_zhu_chuan_gong_add_item_num = config->parameter1[1];
+	}
+	config = get_config_by_id(161001033, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_choujiangquan_item_id = config->parameter1[0];
 	}
 
 }
@@ -2356,6 +2365,21 @@ bool is_high_partner_skill(uint64_t id)
 	return (id / 10000 % 100) == 65;
 }
 
+int get_partner_skill_levelup_exp(uint64_t id, int *need_lv)
+{
+	assert(need_lv);
+	SkillLevelTable *config = get_partner_skill_level_config(id);
+	if (!config)
+		return 0;
+	if (is_high_partner_skill(id))
+	{
+		*need_lv = config->PartnerLevel;
+		return config->HighNeedExp;
+	}
+	*need_lv = config->PartnerLevel1;
+	return config->LowNeedExp;
+}
+
 SkillLvTable *get_skill_level_config(uint32_t skill_id, uint32_t level)
 {
 	SkillTable *main_config = get_config_by_id(skill_id, &skill_config);
@@ -3365,6 +3389,17 @@ UndergroundTask *get_digong_xiulian_config(uint32_t level)
 	return NULL;
 }
 
+int get_partner_recruit_convert_item(uint32_t partner_id, uint32_t &item_id, uint32_t &item_num)
+{
+	PartnerTable *config = get_config_by_id(partner_id, &partner_config);
+	if (config && config->n_RecruitReward >= 2)
+	{
+		item_id = config->RecruitReward[0];
+		item_num = config->RecruitReward[1];
+	}
+	return 0;
+}
+
 static void adjust_random_collection_config(void)
 {
 	sg_guild_bonfire_collections.clear();
@@ -3831,6 +3866,11 @@ int read_all_excel_data()
 	type = sproto_type(sp, "PartnerTable");
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/PartnerTable.lua", (config_type)&partner_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "PartnerSkillTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/PartnerSkillTable.lua", (config_type)&partner_rand_skill_config);
 	assert(ret == 0);
 
 	type = sproto_type(sp, "GodYaoAttributeTable");

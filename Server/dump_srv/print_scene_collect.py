@@ -8,10 +8,12 @@ import move_pb2
 import cast_skill_pb2
 import move_direct_pb2
 import datetime
+import get_one_msg
 
 HOST='127.0.0.1'
 PORT=10697
 BUFSIZ=1024
+PORT=get_one_msg.get_dumpsrv_port()
 ADDR=(HOST, PORT)
 client=socket(AF_INET, SOCK_STREAM)
 client.connect(ADDR)
@@ -63,4 +65,4 @@ while True:
         req.ParseFromString(pb_data)
         oldtime=datetime.datetime.now()        
         for t1 in req.add_collect:
-            print oldtime.time(), ": %lu add collect %.2f %.2f %.2f %.2f" % (player_id, t1.data.pos_x, t1.data.pos_z, t1.y, t1.yaw)
+            print oldtime.time(), ": %lu add collect[%u:%u] %.2f %.2f %.2f %.2f" % (player_id, t1.collectid, t1.uuid, t1.data.pos_x, t1.data.pos_z, t1.y, t1.yaw)

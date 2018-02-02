@@ -103,6 +103,11 @@ enum
 	RANK_GUILD_EXPLOIT_TOTAL = 1101,
 	RANK_GUILD_EXPLOIT_ZHENYING1 = 1118,
 	RANK_GUILD_EXPLOIT_ZHENYING2 = 1119,
+	//门宗人气
+	RANK_GUILD_POPULAR_TOTAL = 1201,
+	RANK_GUILD_POPULAR_ZHENYING1 = 1218,
+	RANK_GUILD_POPULAR_ZHENYING2 = 1219,
+	
 };
 
 static void init_rank_key_map()
@@ -157,6 +162,9 @@ static void init_rank_key_map()
 	scm_rank_keys[RANK_GUILD_EXPLOIT_TOTAL]                    = "s%u_rank_guild_exploit_total";
 	scm_rank_keys[RANK_GUILD_EXPLOIT_ZHENYING1]                = "s%u_rank_guild_exploit_zhenying1";
 	scm_rank_keys[RANK_GUILD_EXPLOIT_ZHENYING2]                = "s%u_rank_guild_exploit_zhenying2";
+	scm_rank_keys[RANK_GUILD_POPULAR_TOTAL]                    = "s%u_rank_guild_popular_total";
+	scm_rank_keys[RANK_GUILD_POPULAR_ZHENYING1]                = "s%u_rank_guild_popular_zhenying1";
+	scm_rank_keys[RANK_GUILD_POPULAR_ZHENYING2]                = "s%u_rank_guild_popular_zhenying2";
 }
 
 void init_redis_keys(uint32_t server_id)
@@ -1156,6 +1164,10 @@ static int handle_guild_rank_info(EXTERN_DATA *extern_data, uint32_t rank_type)
 			rank_data[resp.n_guildranks].guildname = redis_guild->name;
 			rank_data[resp.n_guildranks].zhenying = redis_guild->zhenying;
 			rank_data[resp.n_guildranks].masterid = redis_guild->master_id;
+			rank_data[resp.n_guildranks].lv = redis_guild->level;
+			rank_data[resp.n_guildranks].popular = redis_guild->popularity;
+			rank_data[resp.n_guildranks].icon = redis_guild->head;
+			
 			PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, redis_guild->master_id);
 			if (redis_player)
 			{
@@ -1699,14 +1711,17 @@ int conn_node_ranksrv::handle_refresh_guild_info(EXTERN_DATA *extern_data)
 	uint32_t zhenying = req->zhenying;
 	uint32_t fc = req->fc;
 	uint32_t exploit = req->exploit;
+	uint32_t popular = req->popularity;
 
 	uint32_t old_fc = 0;
 	uint32_t old_exploit = 0;
+	uint32_t old_popular = 0;
 
 	if (old_guild)
 	{
 		old_fc = old_guild->fc;
 		old_exploit = old_guild->exploit;
+		old_popular = old_guild->popularity;
 	}
 
 	if (bDisband)
@@ -1722,9 +1737,15 @@ int conn_node_ranksrv::handle_refresh_guild_info(EXTERN_DATA *extern_data)
 		del_guild_rank(rank_type, guild_id);
 		rank_type = RANK_GUILD_FC_ZHENYING1 + zhenying - 1;
 		del_guild_rank(rank_type, guild_id);
+
 		rank_type = RANK_GUILD_EXPLOIT_TOTAL;
 		del_guild_rank(rank_type, guild_id);
 		rank_type = RANK_GUILD_EXPLOIT_ZHENYING1 + zhenying - 1;
+		del_guild_rank(rank_type, guild_id);
+
+		rank_type = RANK_GUILD_POPULAR_TOTAL;
+		del_guild_rank(rank_type, guild_id);
+		rank_type = RANK_GUILD_POPULAR_ZHENYING1 + zhenying - 1;
 		del_guild_rank(rank_type, guild_id);
 	}
 	else
@@ -1744,6 +1765,14 @@ int conn_node_ranksrv::handle_refresh_guild_info(EXTERN_DATA *extern_data)
 
 			rank_type = RANK_GUILD_EXPLOIT_ZHENYING1 + zhenying - 1;
 			update_guild_rank_score(rank_type, guild_id, old_exploit, exploit);
+		}
+		if (popular != old_popular)
+		{
+			rank_type = RANK_GUILD_POPULAR_TOTAL;
+			update_guild_rank_score(rank_type, guild_id, old_popular, popular);
+
+			rank_type = RANK_GUILD_POPULAR_ZHENYING1 + zhenying - 1;
+			update_guild_rank_score(rank_type, guild_id, old_popular, popular);
 		}
 
 		{
@@ -2347,8 +2376,16 @@ int conn_node_ranksrv::updata_player_cur_world_boss_info(uint64_t boss_id, EXTER
 		PlayerRedisInfo *last_player_redis = get_redis_player(world_boss_info[answer.n_info].last_player_id, sg_player_key, sg_redis_client, p1);
 		if(last_player_redis != NULL)
 		{
-			world_boss_info[answer.n_info].job = last_player_redis->head_icon;
+			world_boss_info[answer.n_info].head_icon = last_player_redis->head_icon;
 			world_boss_info[answer.n_info].level  = last_player_redis->lv; 
+			world_boss_info[answer.n_info].zhenying  = last_player_redis->zhenying; 
+		}
+		PlayerRedisInfo *max_player_redis = get_redis_player(world_boss_info[answer.n_info].max_score_player_id, sg_player_key, sg_redis_client, p1);
+		if(max_player_redis != NULL)
+		{
+			world_boss_info[answer.n_info].max_head_icon = max_player_redis->head_icon;
+			world_boss_info[answer.n_info].max_level  = max_player_redis->lv; 
+			world_boss_info[answer.n_info].max_zhenying  = max_player_redis->zhenying; 
 		}
 		CurWorldBossRedisinfo *cur_boss_redis = get_redis_cur_world_boss(boss_id, cur_world_boss_key, sg_redis_client, p2);
 		if(cur_boss_redis != NULL)
@@ -2722,14 +2759,16 @@ int conn_node_ranksrv::world_boss_provide_rank_reward(uint64_t boss_id)
 			}
 		} while(0);
 		uint32_t rank = i +1;
-		receive_world_boss_reward_to_player(rank, boss_id, player_id);
+		uint32_t my_score = 0;
+		rc.zget_score(rank_key, player_id, my_score);
+		receive_world_boss_reward_to_player(rank, boss_id, player_id, my_score);
 		//最后发奖励
 	}
 	
 	return 0;
 }
 
-int conn_node_ranksrv::receive_world_boss_reward_to_player(uint32_t rank, uint64_t boss_id, uint64_t player_id)
+int conn_node_ranksrv::receive_world_boss_reward_to_player(uint32_t rank, uint64_t boss_id, uint64_t player_id, uint32_t score)
 {
 	uint32_t id = 0;
 	if( rank == 1)
@@ -2804,8 +2843,26 @@ int conn_node_ranksrv::receive_world_boss_reward_to_player(uint32_t rank, uint64
 			}
 		}
 	}
+
+
+
 	//邮件发奖
-	send_mail(&connecter, player_id,reward_config->MailID , NULL, NULL, NULL, NULL, &attachs, MAGIC_TYPE_WORLDBOS_RANK_REWARD);
+	WorldBossTable *world_boss_config = get_config_by_id(boss_id, &rank_world_boss_config);
+	std::vector<char *> boss_name_vect;
+	char boss_name[1024] = {0};
+	if(world_boss_config != NULL)
+	{
+		if(world_boss_config->Type == 1)
+		{
+			snprintf(boss_name, 1024, "头目-%s", world_boss_config->Name);
+		}
+		else 
+		{
+			snprintf(boss_name, 1024, "首领-%s", world_boss_config->Name);
+		}
+		boss_name_vect.push_back(boss_name);
+	}
+	send_mail(&connecter, player_id,reward_config->MailID , NULL, NULL, NULL, &boss_name_vect, &attachs, MAGIC_TYPE_WORLDBOS_RANK_REWARD);
 
 	//通知玩家弹奖励界面
 	RankWorldBossRewardNotify notify;
@@ -2814,6 +2871,7 @@ int conn_node_ranksrv::receive_world_boss_reward_to_player(uint32_t rank, uint64
 	rank_world_boss_reward_notify__init(&notify);
 	notify.rank = rank;
 	notify.bossid = boss_id;
+	notify.score = score;
 	
 	if(attachs.size() >0)
 	{
@@ -2979,7 +3037,22 @@ int conn_node_ranksrv::world_boss_provide_kill_reward(uint64_t boss_id)
 		{
 			attachs[parame_config->parameter1[i]] = parame_config->parameter1[i+1];
 		}
-		send_mail(&connecter, player_id, 270300041, NULL, NULL, NULL, NULL, &attachs, MAGIC_TYPE_WORLDBOS_KILL_REWARD);
+		WorldBossTable *world_boss_config = get_config_by_id(boss_id, &rank_world_boss_config);
+		std::vector<char *> boss_name_vect;
+		char boss_name[1024] = {0};
+		if(world_boss_config != NULL)
+		{
+			if(world_boss_config->Type == 1)
+			{
+				snprintf(boss_name, 1024, "头目-%s", world_boss_config->Name);
+			}
+			else 
+			{
+				snprintf(boss_name, 1024, "首领-%s", world_boss_config->Name);
+			}
+			boss_name_vect.push_back(boss_name);
+		}
+		send_mail(&connecter, player_id, 270300041, NULL, NULL, NULL, &boss_name_vect, &attachs, MAGIC_TYPE_WORLDBOS_KILL_REWARD);
 	}
 		
 	return 0;

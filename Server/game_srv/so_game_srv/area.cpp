@@ -281,6 +281,18 @@ int area_struct::get_all_neighbour_player_num()
 	return (ret);
 }
 
+bool area_struct::is_neighbour(struct area_struct *area)
+{
+	if (this == area)
+		return true;
+	for (int i = 0; i < MAX_NEIGHBOUR_AREA; ++i)
+	{
+		if (neighbour[i] == area)
+			return true;
+	}
+	return false;
+}
+
 bool area_struct::is_all_neighbour_have_player()
 {
 	if (cur_player_num > 0)

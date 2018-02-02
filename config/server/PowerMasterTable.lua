@@ -5,43 +5,43 @@ local PowerMasterTable = {
 		['RewardTitle'] = '1000战力礼包',	--奖励名称
 		['RewardLimit'] = 500,	--奖励数量限制
 		['Reward'] = {201061021,201061020},	--奖励内容
-		['RewardNum'] = {30,20},	--奖励数量
+		['RewardNum'] = {5,5},	--奖励数量
 		['Batch'] = 1	--批次
 		},
 	[630200002] = {
 		['ID'] = 630200002,
-		['PowerCondition'] = 3000,
-		['RewardTitle'] = '5000战力礼包',
+		['PowerCondition'] = 2000,
+		['RewardTitle'] = '2000战力礼包',
 		['RewardLimit'] = 200,
 		['Reward'] = {201061021,201061020},
-		['RewardNum'] = {25,15},
+		['RewardNum'] = {10,10},
 		['Batch'] = 1
 		},
 	[630200003] = {
 		['ID'] = 630200003,
-		['PowerCondition'] = 5000,
-		['RewardTitle'] = '50000战力礼包',
+		['PowerCondition'] = 4000,
+		['RewardTitle'] = '4000战力礼包',
 		['RewardLimit'] = 100,
 		['Reward'] = {201061021,201061020},
-		['RewardNum'] = {20,10},
+		['RewardNum'] = {15,15},
 		['Batch'] = 1
 		},
 	[630200004] = {
 		['ID'] = 630200004,
-		['PowerCondition'] = 10000,
-		['RewardTitle'] = '100000战力礼包',
+		['PowerCondition'] = 7000,
+		['RewardTitle'] = '7000战力礼包',
 		['RewardLimit'] = 50,
 		['Reward'] = {201061021,201061020},
-		['RewardNum'] = {15,5},
+		['RewardNum'] = {25,20},
 		['Batch'] = 1
 		},
 	[630200005] = {
 		['ID'] = 630200005,
-		['PowerCondition'] = 20000,
-		['RewardTitle'] = '200000战力礼包',
+		['PowerCondition'] = 10000,
+		['RewardTitle'] = '10000战力礼包',
 		['RewardLimit'] = 10,
 		['Reward'] = {201061021,201061020},
-		['RewardNum'] = {10,1},
+		['RewardNum'] = {30,30},
 		['Batch'] = 1
 		}
 	}

@@ -94,6 +94,7 @@ struct OnlineTimes;
 struct P20076Table;
 struct ParameterTable;
 struct PartnerLevelTable;
+struct PartnerSkillTable;
 struct PartnerTable;
 struct PassiveSkillTable;
 struct PowerMasterTable;
@@ -245,6 +246,7 @@ void free_OnlineTimes(struct OnlineTimes *p);
 void free_P20076Table(struct P20076Table *p);
 void free_ParameterTable(struct ParameterTable *p);
 void free_PartnerLevelTable(struct PartnerLevelTable *p);
+void free_PartnerSkillTable(struct PartnerSkillTable *p);
 void free_PartnerTable(struct PartnerTable *p);
 void free_PassiveSkillTable(struct PassiveSkillTable *p);
 void free_PowerMasterTable(struct PowerMasterTable *p);
@@ -1822,63 +1824,98 @@ struct PartnerLevelTable
 	uint64_t  NeedExp; //2
 }__attribute__ ((packed));
 
+struct PartnerSkillTable
+{
+	uint64_t  ID; //1
+	uint64_t  BaseSkill1; //2
+	uint64_t  ProtectSkill; //3
+	uint64_t  Angerskill; //4
+	uint32_t n_SkillProbability; //5
+	uint64_t *SkillProbability; //5
+	uint32_t n_Skill; //6
+	uint64_t *Skill; //6
+	uint32_t n_SkillProbability1; //7
+	uint64_t *SkillProbability1; //7
+}__attribute__ ((packed));
+
 struct PartnerTable
 {
 	uint64_t  ID; //1
 	uint64_t  Grade; //2
 	uint32_t n_Skill; //3
 	uint64_t *Skill; //3
-	uint64_t  BaseSkill1; //4
-	uint64_t  ProtectSkill; //5
-	uint64_t  Angerskill; //6
-	uint32_t n_AttributeType; //7
-	uint64_t *AttributeType; //7
-	uint32_t n_GradeCoefficient; //8
-	double *GradeCoefficient; //8
-	uint32_t n_TypeCoefficient; //9
-	double *TypeCoefficient; //9
-	uint32_t n_UpperLimitBase; //10
-	double *UpperLimitBase; //10
-	uint32_t n_LowerLimitBase; //11
-	double *LowerLimitBase; //11
-	uint32_t n_DetailedType; //12
-	uint64_t *DetailedType; //12
-	uint32_t n_DetailedNum; //13
-	double *DetailedNum; //13
-	uint32_t n_Recruit; //14
-	uint64_t *Recruit; //14
-	uint32_t n_SeveranceItem; //15
-	uint64_t *SeveranceItem; //15
-	uint32_t n_SeveranceNum; //16
-	uint64_t *SeveranceNum; //16
-	uint32_t n_PartnerAttributeType; //17
-	uint64_t *PartnerAttributeType; //17
-	uint32_t n_PartnerAttributeID; //18
-	uint64_t *PartnerAttributeID; //18
-	uint32_t n_WashMarrowItem; //19
-	uint64_t *WashMarrowItem; //19
-	uint32_t n_GodYao; //20
-	uint64_t *GodYao; //20
-	uint64_t  ThreeCurrencyItem; //21
-	uint64_t  ThreeCurrencyItemNum; //22
-	uint64_t  SevenCurrencyItem; //23
-	uint64_t  SevenCurrencyItemNum; //24
-	uint64_t  ThreeExclusiveItem; //25
-	uint64_t  ThreeExclusiveItemNum; //26
-	uint64_t  SevenExclusiveItem; //27
-	uint64_t  SevenExclusiveItemNum; //28
-	uint32_t n_QualificationsItem; //29
-	uint64_t *QualificationsItem; //29
-	uint64_t  Character; //30
-	uint32_t n_SkillProbability; //31
-	uint64_t *SkillProbability; //31
-	uint32_t n_GrowthValue; //32
-	uint64_t *GrowthValue; //32
-	uint32_t n_GodYaoAttribute; //33
-	uint64_t *GodYaoAttribute; //33
-	uint32_t n_Fetter; //34
-	uint64_t *Fetter; //34
-	uint64_t  Reward; //35
+	uint32_t n_AttributeType; //4
+	uint64_t *AttributeType; //4
+	uint32_t n_GradeCoefficient; //5
+	double *GradeCoefficient; //5
+	uint32_t n_TypeCoefficient; //6
+	double *TypeCoefficient; //6
+	uint32_t n_UpperLimitBase; //7
+	double *UpperLimitBase; //7
+	uint32_t n_LowerLimitBase; //8
+	double *LowerLimitBase; //8
+	uint32_t n_DetailedType; //9
+	uint64_t *DetailedType; //9
+	uint32_t n_DetailedNum; //10
+	double *DetailedNum; //10
+	uint32_t n_Recruit; //11
+	uint64_t *Recruit; //11
+	uint32_t n_SeveranceItem; //12
+	uint64_t *SeveranceItem; //12
+	uint32_t n_SeveranceNum; //13
+	uint64_t *SeveranceNum; //13
+	uint32_t n_PartnerAttributeType; //14
+	uint64_t *PartnerAttributeType; //14
+	uint32_t n_PartnerAttributeID; //15
+	uint64_t *PartnerAttributeID; //15
+	uint32_t n_WashMarrowItem; //16
+	uint64_t *WashMarrowItem; //16
+	uint32_t n_GodYao; //17
+	uint64_t *GodYao; //17
+	uint64_t  ThreeCurrencyItem; //18
+	uint64_t  ThreeCurrencyItemNum; //19
+	uint64_t  SevenCurrencyItem; //20
+	uint64_t  SevenCurrencyItemNum; //21
+	uint64_t  ThreeExclusiveItem; //22
+	uint64_t  ThreeExclusiveItemNum; //23
+	uint64_t  SevenExclusiveItem; //24
+	uint64_t  SevenExclusiveItemNum; //25
+	uint32_t n_QualificationsItem; //26
+	uint64_t *QualificationsItem; //26
+	uint64_t  Character; //27
+	uint32_t n_SkillProbability; //28
+	uint64_t *SkillProbability; //28
+	uint32_t n_GrowthValue; //29
+	uint64_t *GrowthValue; //29
+	uint32_t n_GodYaoAttribute; //30
+	uint64_t *GodYaoAttribute; //30
+	uint32_t n_Fetter; //31
+	uint64_t *Fetter; //31
+	uint32_t n_FetterReward; //32
+	uint64_t *FetterReward; //32
+	uint32_t n_PartnerAttribute; //33
+	uint64_t *PartnerAttribute; //33
+	uint32_t n_PartnerAttributeNum; //34
+	uint64_t *PartnerAttributeNum; //34
+	uint32_t n_Database1; //35
+	uint64_t *Database1; //35
+	uint32_t n_Database2; //36
+	uint64_t *Database2; //36
+	uint32_t n_Database3; //37
+	uint64_t *Database3; //37
+	uint32_t n_Database4; //38
+	uint64_t *Database4; //38
+	uint32_t n_Database5; //39
+	uint64_t *Database5; //39
+	uint64_t  SkillLocking; //40
+	uint64_t  LockingItem; //41
+	uint64_t  LockingItemNum; //42
+	uint32_t n_RecruitReward; //43
+	uint64_t *RecruitReward; //43
+	uint64_t  PokedexItem; //44
+	uint64_t  PokedexItemNum; //45
+	uint32_t n_FetterRewardNum; //46
+	uint64_t *FetterRewardNum; //46
 }__attribute__ ((packed));
 
 struct PassiveSkillTable
@@ -2027,7 +2064,8 @@ struct RecruitTable
 	uint64_t  RecruitNum; //2
 	uint32_t n_GetItem; //3
 	uint64_t *GetItem; //3
-	uint64_t  ConsumeType; //4
+	uint32_t n_ConsumeType; //4
+	uint64_t *ConsumeType; //4
 	uint64_t  ConsumeNum; //5
 	uint32_t n_Recruit; //6
 	uint64_t *Recruit; //6
@@ -2047,7 +2085,11 @@ struct RecruitTable
 	uint64_t *Item; //14
 	uint32_t n_ItemNum; //15
 	uint64_t *ItemNum; //15
-	uint64_t  First; //16
+	uint32_t n_First; //16
+	uint64_t *First; //16
+	uint64_t  Discount; //17
+	uint64_t  ConsumeNum1; //18
+	uint64_t  FreeRecruit; //19
 }__attribute__ ((packed));
 
 struct RewardBack

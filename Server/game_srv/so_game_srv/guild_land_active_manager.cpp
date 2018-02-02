@@ -50,7 +50,7 @@ void guild_land_active_manager::guild_ruqin_active_open()
 			//先判断当前时间在帮会领地是否有别的活动正在进行
 			if(itr->second->GUILD_LAND_DATA.activity_id != 0)
 			{
-				LOG_ERR("[%s:%d] 开启门宗入侵活动失败,当前在门宗领地正有其他活动在进行,activity_id[%u],guild_id[%u]", itr->second->GUILD_LAND_DATA.activity_id, itr->second->data->ai_data.guild_land_data.guild_id);
+				LOG_ERR("[%s:%d] 开启门宗入侵活动失败,当前在门宗领地正有其他活动在进行,activity_id[%u],guild_id[%u]", __FUNCTION__, __LINE__, itr->second->GUILD_LAND_DATA.activity_id, itr->second->data->ai_data.guild_land_data.guild_id);
 				continue;
 			}
 			//初始化数据

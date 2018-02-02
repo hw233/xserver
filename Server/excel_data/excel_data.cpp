@@ -817,6 +817,15 @@ void free_PartnerLevelTable(struct PartnerLevelTable *p)
     free(p);
 };
 
+void free_PartnerSkillTable(struct PartnerSkillTable *p)
+{
+    if (!p) return;
+    free(p->SkillProbability);
+    free(p->Skill);
+    free(p->SkillProbability1);
+    free(p);
+};
+
 void free_PartnerTable(struct PartnerTable *p)
 {
     if (!p) return;
@@ -840,6 +849,16 @@ void free_PartnerTable(struct PartnerTable *p)
     free(p->GrowthValue);
     free(p->GodYaoAttribute);
     free(p->Fetter);
+    free(p->FetterReward);
+    free(p->PartnerAttribute);
+    free(p->PartnerAttributeNum);
+    free(p->Database1);
+    free(p->Database2);
+    free(p->Database3);
+    free(p->Database4);
+    free(p->Database5);
+    free(p->RecruitReward);
+    free(p->FetterRewardNum);
     free(p);
 };
 
@@ -951,6 +970,7 @@ void free_RecruitTable(struct RecruitTable *p)
 {
     if (!p) return;
     free(p->GetItem);
+    free(p->ConsumeType);
     free(p->Recruit);
     free(p->RecruitGrade);
     free(p->RecruitProbability);
@@ -959,6 +979,7 @@ void free_RecruitTable(struct RecruitTable *p)
     free(p->TypeProbability);
     free(p->Item);
     free(p->ItemNum);
+    free(p->First);
     free(p);
 };
 

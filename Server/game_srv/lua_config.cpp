@@ -108,6 +108,7 @@ std::map<uint64_t, struct SearchTable*> xunbao_config; //寻宝表
 std::map<uint64_t, struct TreasureTable*> xunbao_map_config; //寻宝地图表
 std::map<uint64_t, struct EscortTask*> escort_config; //护送表
 std::map<uint64_t, struct PartnerTable*> partner_config; //伙伴表
+std::map<uint64_t, struct PartnerSkillTable*> partner_rand_skill_config; //伙伴随机技能表
 std::map<uint64_t, struct GodYaoAttributeTable*> partner_god_attr_config; //伙伴表神耀属性
 std::map<uint64_t, struct RecruitTable*> partner_recruit_config; //伙伴招募表
 std::map<uint64_t, struct PartnerLevelTable*> partner_level_config; //伙伴等级表
@@ -310,6 +311,7 @@ std::map<uint64_t, std::vector<uint64_t> > sg_rand_collect; //随机宝箱
 std::map<uint64_t, uint64_t> sg_show_collect; //任务ID 采集点ID
 std::map<uint64_t, struct FunctionUnlockTable*> sg_jijiangopen; //即将开启表
 std::map<uint32_t, std::vector<BattleFieldStepRank *> > sg_battle_award;
+uint64_t sg_partner_rename_item[2];  //伙伴改名消耗的道具id和数量
 
 uint32_t sg_transfer_out_stuck_cd_time;
 uint32_t sg_guild_scene_id; //帮会领地场景ID
@@ -454,4 +456,7 @@ uint32_t sg_zhu_chuan_gong_add_exp;    //主动传功获得经验基础值
 uint32_t sg_bei_chuan_gong_add_exp;    //被动传功获得经验基础值 
 uint32_t sg_zhu_chuan_gong_add_item_id; //主动传功者活动物品id
 uint32_t sg_zhu_chuan_gong_add_item_num; //主动传功者活动物品num
+uint32_t sg_guild_chuan_gong_buff_id = 114500017;    //帮会传功专用buffid
+
+uint32_t sg_choujiangquan_item_id; //抽奖券id
 

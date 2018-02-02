@@ -296,7 +296,7 @@ int find_path(scene_struct *scene, struct position *begin, struct position *end,
 	return (0);
 }
 
-static int8_t four_direct[][2] =
+static const int8_t four_direct[][2] =
 {
 	{1, 0},
 	{-1, 0},

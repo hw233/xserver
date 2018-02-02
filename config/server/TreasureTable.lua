@@ -178,9 +178,9 @@ local TreasureTable = {
 	[430200023] = {
 		['ID'] = 430200023,
 		['MapId'] = 10012,
-		['PointX'] = 11048,
-		['PointY'] = 1804,
-		['PointZ'] = 2194,
+		['PointX'] = 35295,
+		['PointY'] = 2001,
+		['PointZ'] = 43985,
 		['TransferPoint'] = 155000013
 		},
 	[430200024] = {
@@ -194,9 +194,17 @@ local TreasureTable = {
 	[430200025] = {
 		['ID'] = 430200025,
 		['MapId'] = 10012,
-		['PointX'] = 13619,
-		['PointY'] = 1909,
-		['PointZ'] = 34327,
+		['PointX'] = 7002,
+		['PointY'] = 1940,
+		['PointZ'] = 23512,
+		['TransferPoint'] = 155000013
+		},
+	[430200026] = {
+		['ID'] = 430200026,
+		['MapId'] = 10012,
+		['PointX'] = 23662,
+		['PointY'] = 1772,
+		['PointZ'] = 38367,
 		['TransferPoint'] = 155000013
 		}
 	}

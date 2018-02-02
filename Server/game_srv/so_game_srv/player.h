@@ -158,14 +158,15 @@ struct HorseCommonInfo
 	uint32_t attr_exp[MAX_HORSE_ATTR_NUM + 1]; //修灵次数
 	uint32_t n_attr;
 
-	uint32_t soul;
+	uint32_t soul_step;
 	uint32_t soul_exp[MAX_HORSE_SOUL + 1];
-	uint32_t cur_soul;
+	uint32_t soul_star;
 	bool soul_full;
 	uint64_t power;
 
 	uint32_t total[PLAYER_ATTR_FIGHT_MAX];
 	int fly;
+	//uint32_t old;
 };
 
 struct GoodsInfo
@@ -818,16 +819,18 @@ struct player_data
 	CashTruckData truck;
 
 	//伙伴
-	uint32_t partner_dictionary[MAX_PARTNER_TYPE];
-	uint64_t partner_formation[MAX_PARTNER_FORMATION_NUM];
-	uint64_t partner_battle[MAX_PARTNER_BATTLE_NUM];
-	uint32_t partner_recruit_junior_time; //低级招募免费时间
-	uint32_t partner_recruit_junior_count; //低级招募计数
-	uint32_t partner_recruit_senior_time; //高级招募免费时间
-	uint32_t partner_recruit_senior_count; //高级招募计数
+	uint32_t partner_dictionary[MAX_PARTNER_TYPE]; //伙伴图鉴
+	uint64_t partner_formation[MAX_PARTNER_FORMATION_NUM]; //伙伴上阵
+	uint64_t partner_battle[MAX_PARTNER_BATTLE_NUM]; //伙伴出战
+	uint32_t partner_recruit_junior_free_cd; //低级招募免费CD
+	uint32_t partner_recruit_junior_free_count; //低级招募免费次数
+	uint32_t partner_recruit_junior_count; //低级招募计数，用于保底概率
+	uint32_t partner_recruit_senior_free_cd; //高级招募免费CD
+	uint32_t partner_recruit_senior_free_count; //高级招募免费次数
+	uint32_t partner_recruit_senior_count; //高级招募计数，用于保底概率
 	bool     partner_recruit_first; //首次招募标志
-	uint32_t partner_bond[MAX_PARTNER_BOND_NUM];
-	uint32_t partner_bond_reward[MAX_PARTNER_TYPE];
+	uint32_t partner_bond[MAX_PARTNER_BOND_NUM]; //伙伴羁绊
+	uint32_t partner_bond_reward[MAX_PARTNER_TYPE]; //伙伴羁绊奖励领取记录
 	uint32_t  partner_today_junior_recurit_count;  //今日JUNIOR伙伴招募次数
 	uint32_t  partner_today_junior_recurit_cd;  //今日JUNIOR伙伴招募cd
 	uint32_t  partner_today_senior_recurit_count;  //今日senior伙伴招募次数
@@ -1118,6 +1121,7 @@ public:
 	void send_clear_sight_monster();	
 	void send_scene_transfer(float direct, float pos_x, float pos_y, float pos_z, uint32_t scene_id, int32_t result);
 	void notify_watch_pos_change();
+	void broadcast_sight_player_info_changed_notify();	
 
 	//属性
 	void calculate_attribute(bool isNty = false);
@@ -1465,6 +1469,7 @@ public:
 	bool partner_is_in_formation(uint64_t partner_uuid);
 	bool partner_is_in_battle(uint64_t partner_uuid);
 	void load_partner_end(void);
+	bool has_owned_partner(uint32_t partner_id);
 	bool is_partner_battle(void); //伙伴是否参战
 	bool is_partner_precedence(void); //主战伙伴是否优先出战
 	int add_partner_to_scene(uint64_t partner_uuid); //把伙伴加入到玩家所在的场景
@@ -1602,6 +1607,8 @@ public:
 	void guild_chuan_gong_zhong_duan();
 	//清除传功信息
 	void clean_guild_chuan_gong_info();
+	//更新传功信息
+	void refresh_guild_chuan_gong_info();
 
 	uint64_t last_change_area_time;
 	sight_space_struct *sight_space;

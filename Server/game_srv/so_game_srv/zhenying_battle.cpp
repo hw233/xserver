@@ -204,19 +204,19 @@ void player_struct::refresh_zhenying_task_oneday()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 extern ZhenyingBattle *g_battle_ins;
-int ZhenyingBattle::battle_num;
+extern int ZhenyingBattle_battle_num;
 const uint32_t ZhenyingBattle::s_border[MAX_STEP] = { 49, 69, 89, 0 };
 
 ZhenyingBattle::ZhenyingBattle()
 {
-	++battle_num;
+	++ZhenyingBattle_battle_num;
 	memset(m_tmpRoom, 0, sizeof(m_tmpRoom));
 }
 
 ZhenyingBattle::~ZhenyingBattle()
 {
 	LOG_INFO("%s: %p", __FUNCTION__, this);
-	--battle_num;
+	--ZhenyingBattle_battle_num;
 }
 
 ZhenyingBattle *ZhenyingBattle::GetInstance()
@@ -947,7 +947,7 @@ void ZhenyingBattle::DoRealSettle(ROOM_T::iterator &itRoom, BattlefieldTable *ta
 				}
 				else
 				{
-					if (!player->data->zhenying.one_award && player->get_attr(PLAYER_ATTR_ZHENYING) == send->winer)
+					if (!player->data->zhenying.one_award)// && player->get_attr(PLAYER_ATTR_ZHENYING) == send->winer)
 					{
 						player->data->zhenying.one_award = true; //新手奖励
 						giveAward = true;

@@ -12,7 +12,7 @@ typedef struct {
 }srv_signal_t;
 
 
-srv_signal_t  signals[] = {
+static const srv_signal_t  signals[] = {
 	{ SIGUSR1, (char*)"SIGUSR1", (char*)"reopen",srv_signal_handler },
 	{ SIGUSR2,(char*)"SIGUSR2",(char*)"",srv_signal_handler },
 
@@ -32,7 +32,7 @@ srv_signal_t  signals[] = {
 
 
 void srv_signal_handler(int signo) {
-	srv_signal_t* sig = NULL;
+	const srv_signal_t* sig = NULL;
 	bool isOK = false;
 	for (sig = signals; sig->signo != 0; sig++) {
 		if (sig->signo == signo) {
@@ -84,7 +84,7 @@ void srv_signal_handler(int signo) {
 }
 
 int init_signals() {
-	srv_signal_t      *sig;
+	const srv_signal_t      *sig;
 	struct sigaction   sa;
 
 	for (sig = signals; sig->signo != 0; sig++) {

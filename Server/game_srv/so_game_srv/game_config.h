@@ -73,6 +73,7 @@ PartnerLevelTable *get_partner_level_config(uint32_t level);
 SkillLvTable *get_skill_level_config(uint32_t skill_id, uint32_t level);
 SkillLevelTable *get_partner_skill_level_config(uint32_t id);
 bool is_high_partner_skill(uint64_t id);   //是否是高级伙伴技能
+int get_partner_skill_levelup_exp(uint64_t id, int *need_lv);   //获取伙伴技能升级所需经验
 RecruitTable *get_partner_recruit_config(uint32_t type);
 GangsSkillTable *get_guild_skill_config(uint32_t type, uint32_t level);
 AchievementHierarchyTable *get_achievement_config(uint32_t achievement_id, uint32_t star);
@@ -114,6 +115,7 @@ bool item_is_random_box(uint32_t item_id);
 int get_random_box_fixed_item(uint32_t box_id, uint32_t &item_id, uint32_t &item_num);
 int get_random_box_random_item(uint32_t box_id, uint32_t &item_id, uint32_t &item_num);
 UndergroundTask *get_digong_xiulian_config(uint32_t level);
+int get_partner_recruit_convert_item(uint32_t partner_id, uint32_t &item_id, uint32_t &item_num);
 
 #define DEFAULT_SCENE_ID  (10012) 
 
