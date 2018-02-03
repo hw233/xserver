@@ -8,6 +8,7 @@ import struct
 import move_pb2
 import move_direct_pb2
 import cast_skill_pb2
+import get_one_msg
 import scene_transfer_pb2
 
 WATCH_PLAYER = {12884902632}
@@ -15,6 +16,7 @@ WATCH_PLAYER = {12884902632}
 HOST='127.0.0.1'
 PORT=10697
 BUFSIZ=1024
+PORT=get_one_msg.get_dumpsrv_port()
 ADDR=(HOST, PORT)
 client=socket(AF_INET, SOCK_STREAM)
 client.connect(ADDR)

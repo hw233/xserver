@@ -1002,7 +1002,7 @@ local ModelTable = {
 		['PointY'] = 153.00,
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00,
-		['Size'] = 1.30
+		['Size'] = 1.60
 		},
 	[130300002] = {
 		['ModelId'] = 130300002,
@@ -1017,7 +1017,7 @@ local ModelTable = {
 		['PointY'] = .00,
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00,
-		['Size'] = 1.30
+		['Size'] = 1.60
 		},
 	[130300003] = {
 		['ModelId'] = 130300003,
@@ -1077,7 +1077,7 @@ local ModelTable = {
 		['PointY'] = .00,
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00,
-		['Size'] = 1.30
+		['Size'] = 1.60
 		},
 	[130300007] = {
 		['ModelId'] = 130300007,
@@ -2232,7 +2232,7 @@ local ModelTable = {
 		['PointY'] = .00,
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00,
-		['Size'] = 1.30
+		['Size'] = 2.50
 		},
 	[130310003] = {
 		['ModelId'] = 130310003,
@@ -2277,7 +2277,7 @@ local ModelTable = {
 		['PointY'] = .00,
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00,
-		['Size'] = 1.30
+		['Size'] = 1.50
 		},
 	[130310006] = {
 		['ModelId'] = 130310006,
@@ -2292,7 +2292,7 @@ local ModelTable = {
 		['PointY'] = .00,
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00,
-		['Size'] = 1.30
+		['Size'] = 1.80
 		},
 	[130310007] = {
 		['ModelId'] = 130310007,
@@ -2307,7 +2307,7 @@ local ModelTable = {
 		['PointY'] = .00,
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00,
-		['Size'] = 1.30
+		['Size'] = 3.00
 		},
 	[130310008] = {
 		['ModelId'] = 130310008,
@@ -2337,7 +2337,7 @@ local ModelTable = {
 		['PointY'] = .00,
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00,
-		['Size'] = 1.30
+		['Size'] = 1.70
 		},
 	[130310010] = {
 		['ModelId'] = 130310010,

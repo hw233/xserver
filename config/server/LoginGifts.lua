@@ -3,7 +3,7 @@ local LoginGifts = {
 		['ID'] = 620100001,	--索引
 		['LoginDays'] = 1,	--登录天数
 		['RewardsType'] = 1,	--特殊奖励类型
-		['lRewards'] = {201020005},	--奖励
+		['lRewards'] = {201060001},	--奖励
 		['Quantity'] = {1},	--奖励数量
 		['Time'] = 0	--有效时间
 		},
@@ -19,7 +19,7 @@ local LoginGifts = {
 		['ID'] = 620100003,
 		['LoginDays'] = 3,
 		['RewardsType'] = 1,
-		['lRewards'] = {201070023},
+		['lRewards'] = {201060021},
 		['Quantity'] = {2},
 		['Time'] = 0
 		},
@@ -27,7 +27,7 @@ local LoginGifts = {
 		['ID'] = 620100004,
 		['LoginDays'] = 4,
 		['RewardsType'] = 1,
-		['lRewards'] = {201070020},
+		['lRewards'] = {201060020},
 		['Quantity'] = {3},
 		['Time'] = 0
 		},
@@ -43,7 +43,7 @@ local LoginGifts = {
 		['ID'] = 620100006,
 		['LoginDays'] = 6,
 		['RewardsType'] = 1,
-		['lRewards'] = {201070017},
+		['lRewards'] = {201060011},
 		['Quantity'] = {4},
 		['Time'] = 0
 		},
@@ -51,8 +51,8 @@ local LoginGifts = {
 		['ID'] = 620100007,
 		['LoginDays'] = 7,
 		['RewardsType'] = 1,
-		['lRewards'] = {201070023},
-		['Quantity'] = {6},
+		['lRewards'] = {201060193},
+		['Quantity'] = {5},
 		['Time'] = 0
 		},
 	[620100008] = {

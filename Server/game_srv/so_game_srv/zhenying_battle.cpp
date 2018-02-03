@@ -57,7 +57,8 @@ void player_struct::calc_zhenying_attr(double *attr)
 
 void player_struct::clear_zhenying_task()
 {
-	CampDefenseTable *tableDaily = get_config_by_id(360600000 + this->get_attr(PLAYER_ATTR_ZHENYING), &zhenying_daily_config);
+	int tmp = this->get_attr(PLAYER_ATTR_ZHENYING);
+	CampDefenseTable *tableDaily = get_config_by_id(360600000 + (tmp + 1) % 2, &zhenying_daily_config);
 	if (tableDaily == NULL)
 	{
 		return;

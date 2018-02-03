@@ -30,6 +30,7 @@ enum RAID_STATE_DEFINE
 #define MAX_ITEM_REWARD_PER_RAID 20
 #define MAX_WANYAOGU_RAID_NUM 3
 #define MAX_SCRIPT_COND_NUM 5
+static const int MAX_ZHENYING_FOLLOW = 8;
 #define WANYAOGU_DATA data->ai_data.wanyaogu_data
 #define PVP_DATA data->ai_data.pvp_data
 #define DOUFACHANG_DATA data->ai_data.doufachang_data
@@ -175,6 +176,7 @@ union raid_ai_data
 		double speed; 
 		uint64_t time_speed;
 		int progress;
+		uint64_t follow[MAX_ZHENYING_FOLLOW];
 	} zhenying_data;
 	struct
 	{

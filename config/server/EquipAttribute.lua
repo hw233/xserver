@@ -2191,645 +2191,445 @@ local EquipAttribute = {
 		['QualityWeight'] = {20,25,25,15,10,5},
 		['FluctuationValue1'] = 1
 		},
+	[10105] = {
+		['ID'] = 10105,
+		['Database'] = 10,
+		['Effect'] = 105,
+		['Rand'] = {45,90,140,200,270,340},
+		['QualityWeight'] = {20,25,25,15,10,5},
+		['FluctuationValue1'] = 100
+		},
+	[10106] = {
+		['ID'] = 10106,
+		['Database'] = 10,
+		['Effect'] = 106,
+		['Rand'] = {45,90,140,200,270,340},
+		['QualityWeight'] = {20,25,25,15,10,5},
+		['FluctuationValue1'] = 100
+		},
+	[10107] = {
+		['ID'] = 10107,
+		['Database'] = 10,
+		['Effect'] = 107,
+		['Rand'] = {45,90,140,200,270,340},
+		['QualityWeight'] = {20,25,25,15,10,5},
+		['FluctuationValue1'] = 100
+		},
+	[10108] = {
+		['ID'] = 10108,
+		['Database'] = 10,
+		['Effect'] = 108,
+		['Rand'] = {45,90,140,200,270,340},
+		['QualityWeight'] = {20,25,25,15,10,5},
+		['FluctuationValue1'] = 100
+		},
+	[10109] = {
+		['ID'] = 10109,
+		['Database'] = 10,
+		['Effect'] = 109,
+		['Rand'] = {45,90,140,200,270,340},
+		['QualityWeight'] = {20,25,25,15,10,5},
+		['FluctuationValue1'] = 100
+		},
 	[11090] = {
 		['ID'] = 11090,
 		['Database'] = 11,
 		['Effect'] = 90,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
+		['FluctuationValue1'] = 1
+		},
+	[11092] = {
+		['ID'] = 11092,
+		['Database'] = 11,
+		['Effect'] = 92,
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[11003] = {
 		['ID'] = 11003,
 		['Database'] = 11,
 		['Effect'] = 3,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
+		['Rand'] = {30,37},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[11016] = {
 		['ID'] = 11016,
 		['Database'] = 11,
 		['Effect'] = 16,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
+		['Rand'] = {30,37},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[11017] = {
 		['ID'] = 11017,
 		['Database'] = 11,
 		['Effect'] = 17,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
-	[11019] = {
-		['ID'] = 11019,
-		['Database'] = 11,
-		['Effect'] = 19,
-		['Rand'] = {0.01},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1E-3
-		},
-	[11004] = {
-		['ID'] = 11004,
-		['Database'] = 11,
-		['Effect'] = 4,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[11096] = {
-		['ID'] = 11096,
-		['Database'] = 11,
-		['Effect'] = 96,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[11094] = {
-		['ID'] = 11094,
-		['Database'] = 11,
-		['Effect'] = 94,
-		['Rand'] = {4.0000000000000001E-3},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1E-3
-		},
-	[12095] = {
-		['ID'] = 12095,
+	[12089] = {
+		['ID'] = 12089,
 		['Database'] = 12,
-		['Effect'] = 95,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
+		['Effect'] = 89,
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[12091] = {
 		['ID'] = 12091,
 		['Database'] = 12,
 		['Effect'] = 91,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[12002] = {
 		['ID'] = 12002,
 		['Database'] = 12,
 		['Effect'] = 2,
-		['Rand'] = {400},
-		['QualityWeight'] = {100},
+		['Rand'] = {400,500},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 20
 		},
-	[12010] = {
-		['ID'] = 12010,
+	[12015] = {
+		['ID'] = 12015,
 		['Database'] = 12,
-		['Effect'] = 10,
-		['Rand'] = {75},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 5
+		['Effect'] = 15,
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
+		['FluctuationValue1'] = 1
 		},
-	[12011] = {
-		['ID'] = 12011,
+	[12095] = {
+		['ID'] = 12095,
 		['Database'] = 12,
-		['Effect'] = 11,
-		['Rand'] = {75},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 5
-		},
-	[12012] = {
-		['ID'] = 12012,
-		['Database'] = 12,
-		['Effect'] = 12,
-		['Rand'] = {75},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 5
-		},
-	[12013] = {
-		['ID'] = 12013,
-		['Database'] = 12,
-		['Effect'] = 13,
-		['Rand'] = {75},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 5
-		},
-	[12014] = {
-		['ID'] = 12014,
-		['Database'] = 12,
-		['Effect'] = 14,
-		['Rand'] = {75},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 5
-		},
-	[13002] = {
-		['ID'] = 13002,
-		['Database'] = 13,
-		['Effect'] = 2,
-		['Rand'] = {400},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 20
+		['Effect'] = 95,
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
+		['FluctuationValue1'] = 1
 		},
 	[13089] = {
 		['ID'] = 13089,
 		['Database'] = 13,
 		['Effect'] = 89,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
+		['FluctuationValue1'] = 1
+		},
+	[13091] = {
+		['ID'] = 13091,
+		['Database'] = 13,
+		['Effect'] = 91,
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
+		['FluctuationValue1'] = 1
+		},
+	[13002] = {
+		['ID'] = 13002,
+		['Database'] = 13,
+		['Effect'] = 2,
+		['Rand'] = {400,500},
+		['QualityWeight'] = {75,25},
+		['FluctuationValue1'] = 20
+		},
+	[13015] = {
+		['ID'] = 13015,
+		['Database'] = 13,
+		['Effect'] = 15,
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[13095] = {
 		['ID'] = 13095,
 		['Database'] = 13,
 		['Effect'] = 95,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
-		},
-	[13020] = {
-		['ID'] = 13020,
-		['Database'] = 13,
-		['Effect'] = 20,
-		['Rand'] = {1.4999999999999999E-2},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1E-3
-		},
-	[13028] = {
-		['ID'] = 13028,
-		['Database'] = 13,
-		['Effect'] = 28,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[13029] = {
-		['ID'] = 13029,
-		['Database'] = 13,
-		['Effect'] = 29,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[13097] = {
-		['ID'] = 13097,
-		['Database'] = 13,
-		['Effect'] = 97,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[13093] = {
-		['ID'] = 13093,
-		['Database'] = 13,
-		['Effect'] = 93,
-		['Rand'] = {4.0000000000000001E-3},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1E-3
-		},
-	[14002] = {
-		['ID'] = 14002,
-		['Database'] = 14,
-		['Effect'] = 2,
-		['Rand'] = {400},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 20
 		},
 	[14089] = {
 		['ID'] = 14089,
 		['Database'] = 14,
 		['Effect'] = 89,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[14091] = {
 		['ID'] = 14091,
 		['Database'] = 14,
 		['Effect'] = 91,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
-	[14020] = {
-		['ID'] = 14020,
+	[14002] = {
+		['ID'] = 14002,
 		['Database'] = 14,
-		['Effect'] = 20,
-		['Rand'] = {1.4999999999999999E-2},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1E-3
+		['Effect'] = 2,
+		['Rand'] = {400,500},
+		['QualityWeight'] = {75,25},
+		['FluctuationValue1'] = 20
 		},
-	[14018] = {
-		['ID'] = 14018,
+	[14015] = {
+		['ID'] = 14015,
 		['Database'] = 14,
-		['Effect'] = 18,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
+		['Effect'] = 15,
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
-	[14030] = {
-		['ID'] = 14030,
+	[14095] = {
+		['ID'] = 14095,
 		['Database'] = 14,
-		['Effect'] = 30,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
+		['Effect'] = 95,
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
-		},
-	[14097] = {
-		['ID'] = 14097,
-		['Database'] = 14,
-		['Effect'] = 97,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[14093] = {
-		['ID'] = 14093,
-		['Database'] = 14,
-		['Effect'] = 93,
-		['Rand'] = {4.0000000000000001E-3},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1E-3
 		},
 	[15090] = {
 		['ID'] = 15090,
 		['Database'] = 15,
 		['Effect'] = 90,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[15092] = {
 		['ID'] = 15092,
 		['Database'] = 15,
 		['Effect'] = 92,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[15003] = {
 		['ID'] = 15003,
 		['Database'] = 15,
 		['Effect'] = 3,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
+		['Rand'] = {30,37},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[15016] = {
 		['ID'] = 15016,
 		['Database'] = 15,
 		['Effect'] = 16,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
+		['Rand'] = {30,37},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[15017] = {
 		['ID'] = 15017,
 		['Database'] = 15,
 		['Effect'] = 17,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[15019] = {
-		['ID'] = 15019,
-		['Database'] = 15,
-		['Effect'] = 19,
-		['Rand'] = {0.01},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1E-3
-		},
-	[15022] = {
-		['ID'] = 15022,
-		['Database'] = 15,
-		['Effect'] = 22,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[15004] = {
-		['ID'] = 15004,
-		['Database'] = 15,
-		['Effect'] = 4,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[16090] = {
 		['ID'] = 16090,
 		['Database'] = 16,
 		['Effect'] = 90,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[16092] = {
 		['ID'] = 16092,
 		['Database'] = 16,
 		['Effect'] = 92,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[16003] = {
 		['ID'] = 16003,
 		['Database'] = 16,
 		['Effect'] = 3,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
+		['Rand'] = {30,37},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[16016] = {
 		['ID'] = 16016,
 		['Database'] = 16,
 		['Effect'] = 16,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
+		['Rand'] = {30,37},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[16017] = {
 		['ID'] = 16017,
 		['Database'] = 16,
 		['Effect'] = 17,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
-	[16019] = {
-		['ID'] = 16019,
-		['Database'] = 16,
-		['Effect'] = 19,
-		['Rand'] = {0.01},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1E-3
-		},
-	[16022] = {
-		['ID'] = 16022,
-		['Database'] = 16,
-		['Effect'] = 22,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
+	[17089] = {
+		['ID'] = 17089,
+		['Database'] = 17,
+		['Effect'] = 89,
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
-	[16096] = {
-		['ID'] = 16096,
-		['Database'] = 16,
-		['Effect'] = 96,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
+	[17091] = {
+		['ID'] = 17091,
+		['Database'] = 17,
+		['Effect'] = 91,
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[17002] = {
 		['ID'] = 17002,
 		['Database'] = 17,
 		['Effect'] = 2,
-		['Rand'] = {400},
-		['QualityWeight'] = {100},
+		['Rand'] = {400,500},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 20
-		},
-	[17089] = {
-		['ID'] = 17089,
-		['Database'] = 17,
-		['Effect'] = 89,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
 		},
 	[17015] = {
 		['ID'] = 17015,
 		['Database'] = 17,
 		['Effect'] = 15,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
-	[17018] = {
-		['ID'] = 17018,
+	[17095] = {
+		['ID'] = 17095,
 		['Database'] = 17,
-		['Effect'] = 18,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
+		['Effect'] = 95,
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
-	[17031] = {
-		['ID'] = 17031,
-		['Database'] = 17,
-		['Effect'] = 31,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[17032] = {
-		['ID'] = 17032,
-		['Database'] = 17,
-		['Effect'] = 32,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[17097] = {
-		['ID'] = 17097,
-		['Database'] = 17,
-		['Effect'] = 97,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[17093] = {
-		['ID'] = 17093,
-		['Database'] = 17,
-		['Effect'] = 93,
-		['Rand'] = {4.0000000000000001E-3},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1E-3
-		},
-	[18015] = {
-		['ID'] = 18015,
+	[18089] = {
+		['ID'] = 18089,
 		['Database'] = 18,
-		['Effect'] = 15,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
+		['Effect'] = 89,
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[18091] = {
 		['ID'] = 18091,
 		['Database'] = 18,
 		['Effect'] = 91,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[18002] = {
 		['ID'] = 18002,
 		['Database'] = 18,
 		['Effect'] = 2,
-		['Rand'] = {400},
-		['QualityWeight'] = {100},
+		['Rand'] = {400,500},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 20
 		},
-	[18010] = {
-		['ID'] = 18010,
+	[18015] = {
+		['ID'] = 18015,
 		['Database'] = 18,
-		['Effect'] = 10,
-		['Rand'] = {75},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 5
+		['Effect'] = 15,
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
+		['FluctuationValue1'] = 1
 		},
-	[18011] = {
-		['ID'] = 18011,
+	[18095] = {
+		['ID'] = 18095,
 		['Database'] = 18,
-		['Effect'] = 11,
-		['Rand'] = {75},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 5
-		},
-	[18012] = {
-		['ID'] = 18012,
-		['Database'] = 18,
-		['Effect'] = 12,
-		['Rand'] = {75},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 5
-		},
-	[18013] = {
-		['ID'] = 18013,
-		['Database'] = 18,
-		['Effect'] = 13,
-		['Rand'] = {75},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 5
-		},
-	[18014] = {
-		['ID'] = 18014,
-		['Database'] = 18,
-		['Effect'] = 14,
-		['Rand'] = {75},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 5
+		['Effect'] = 95,
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
+		['FluctuationValue1'] = 1
 		},
 	[19090] = {
 		['ID'] = 19090,
 		['Database'] = 19,
 		['Effect'] = 90,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[19092] = {
 		['ID'] = 19092,
 		['Database'] = 19,
 		['Effect'] = 92,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[19003] = {
 		['ID'] = 19003,
 		['Database'] = 19,
 		['Effect'] = 3,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
+		['Rand'] = {30,37},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[19016] = {
 		['ID'] = 19016,
 		['Database'] = 19,
 		['Effect'] = 16,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
+		['Rand'] = {30,37},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[19017] = {
 		['ID'] = 19017,
 		['Database'] = 19,
 		['Effect'] = 17,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
-	[19022] = {
-		['ID'] = 19022,
-		['Database'] = 19,
-		['Effect'] = 22,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
+	[20090] = {
+		['ID'] = 20090,
+		['Database'] = 20,
+		['Effect'] = 90,
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
-		},
-	[19004] = {
-		['ID'] = 19004,
-		['Database'] = 19,
-		['Effect'] = 4,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[19094] = {
-		['ID'] = 19094,
-		['Database'] = 19,
-		['Effect'] = 94,
-		['Rand'] = {4.0000000000000001E-3},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1E-3
 		},
 	[20092] = {
 		['ID'] = 20092,
 		['Database'] = 20,
 		['Effect'] = 92,
-		['Rand'] = {20},
-		['QualityWeight'] = {100},
+		['Rand'] = {20,25},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[20003] = {
 		['ID'] = 20003,
 		['Database'] = 20,
 		['Effect'] = 3,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
+		['Rand'] = {30,37},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[20016] = {
 		['ID'] = 20016,
 		['Database'] = 20,
 		['Effect'] = 16,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
+		['Rand'] = {30,37},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
 		},
 	[20017] = {
 		['ID'] = 20017,
 		['Database'] = 20,
 		['Effect'] = 17,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
+		['Rand'] = {15,18},
+		['QualityWeight'] = {75,25},
 		['FluctuationValue1'] = 1
-		},
-	[20019] = {
-		['ID'] = 20019,
-		['Database'] = 20,
-		['Effect'] = 19,
-		['Rand'] = {0.01},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1E-3
-		},
-	[20022] = {
-		['ID'] = 20022,
-		['Database'] = 20,
-		['Effect'] = 22,
-		['Rand'] = {15},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[20096] = {
-		['ID'] = 20096,
-		['Database'] = 20,
-		['Effect'] = 96,
-		['Rand'] = {30},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1
-		},
-	[20094] = {
-		['ID'] = 20094,
-		['Database'] = 20,
-		['Effect'] = 94,
-		['Rand'] = {4.0000000000000001E-3},
-		['QualityWeight'] = {100},
-		['FluctuationValue1'] = 1E-3
 		},
 	[21090] = {
 		['ID'] = 21090,
@@ -11719,2165 +11519,5045 @@ local EquipAttribute = {
 		['QualityWeight'] = {0,0,0,0,25,75},
 		['FluctuationValue1'] = 5
 		},
-	[4000105] = {
-		['ID'] = 4000105,
-		['Database'] = 4000,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4001105] = {
-		['ID'] = 4001105,
-		['Database'] = 4001,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4002105] = {
-		['ID'] = 4002105,
-		['Database'] = 4002,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4003105] = {
-		['ID'] = 4003105,
-		['Database'] = 4003,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4004105] = {
-		['ID'] = 4004105,
-		['Database'] = 4004,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4005105] = {
-		['ID'] = 4005105,
-		['Database'] = 4005,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4006105] = {
-		['ID'] = 4006105,
-		['Database'] = 4006,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4007105] = {
-		['ID'] = 4007105,
-		['Database'] = 4007,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4008105] = {
-		['ID'] = 4008105,
-		['Database'] = 4008,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4009105] = {
-		['ID'] = 4009105,
-		['Database'] = 4009,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4010105] = {
-		['ID'] = 4010105,
-		['Database'] = 4010,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4011105] = {
-		['ID'] = 4011105,
-		['Database'] = 4011,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4012105] = {
-		['ID'] = 4012105,
-		['Database'] = 4012,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4013105] = {
-		['ID'] = 4013105,
-		['Database'] = 4013,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4014105] = {
-		['ID'] = 4014105,
-		['Database'] = 4014,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4015105] = {
-		['ID'] = 4015105,
-		['Database'] = 4015,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4016105] = {
-		['ID'] = 4016105,
-		['Database'] = 4016,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4017105] = {
-		['ID'] = 4017105,
-		['Database'] = 4017,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4018105] = {
-		['ID'] = 4018105,
-		['Database'] = 4018,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4019105] = {
-		['ID'] = 4019105,
-		['Database'] = 4019,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4020105] = {
-		['ID'] = 4020105,
-		['Database'] = 4020,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4021105] = {
-		['ID'] = 4021105,
-		['Database'] = 4021,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4022105] = {
-		['ID'] = 4022105,
-		['Database'] = 4022,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4023105] = {
-		['ID'] = 4023105,
-		['Database'] = 4023,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4024105] = {
-		['ID'] = 4024105,
-		['Database'] = 4024,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4025105] = {
-		['ID'] = 4025105,
-		['Database'] = 4025,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4026105] = {
-		['ID'] = 4026105,
-		['Database'] = 4026,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4027105] = {
-		['ID'] = 4027105,
-		['Database'] = 4027,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4028105] = {
-		['ID'] = 4028105,
-		['Database'] = 4028,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4029105] = {
-		['ID'] = 4029105,
-		['Database'] = 4029,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4030105] = {
-		['ID'] = 4030105,
-		['Database'] = 4030,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4031105] = {
-		['ID'] = 4031105,
-		['Database'] = 4031,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4032105] = {
-		['ID'] = 4032105,
-		['Database'] = 4032,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4033105] = {
-		['ID'] = 4033105,
-		['Database'] = 4033,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4034105] = {
-		['ID'] = 4034105,
-		['Database'] = 4034,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4035105] = {
-		['ID'] = 4035105,
-		['Database'] = 4035,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4036105] = {
-		['ID'] = 4036105,
-		['Database'] = 4036,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4037105] = {
-		['ID'] = 4037105,
-		['Database'] = 4037,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4038105] = {
-		['ID'] = 4038105,
-		['Database'] = 4038,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4039105] = {
-		['ID'] = 4039105,
-		['Database'] = 4039,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4040105] = {
-		['ID'] = 4040105,
-		['Database'] = 4040,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4041105] = {
-		['ID'] = 4041105,
-		['Database'] = 4041,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4042105] = {
-		['ID'] = 4042105,
-		['Database'] = 4042,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4043105] = {
-		['ID'] = 4043105,
-		['Database'] = 4043,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4044105] = {
-		['ID'] = 4044105,
-		['Database'] = 4044,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4045105] = {
-		['ID'] = 4045105,
-		['Database'] = 4045,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4046105] = {
-		['ID'] = 4046105,
-		['Database'] = 4046,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4047105] = {
-		['ID'] = 4047105,
-		['Database'] = 4047,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4048105] = {
-		['ID'] = 4048105,
-		['Database'] = 4048,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4049105] = {
-		['ID'] = 4049105,
-		['Database'] = 4049,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4050105] = {
-		['ID'] = 4050105,
-		['Database'] = 4050,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4051105] = {
-		['ID'] = 4051105,
-		['Database'] = 4051,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4052105] = {
-		['ID'] = 4052105,
-		['Database'] = 4052,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4053105] = {
-		['ID'] = 4053105,
-		['Database'] = 4053,
-		['Effect'] = 105,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4054106] = {
-		['ID'] = 4054106,
-		['Database'] = 4054,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4055106] = {
-		['ID'] = 4055106,
-		['Database'] = 4055,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4056106] = {
-		['ID'] = 4056106,
-		['Database'] = 4056,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4057106] = {
-		['ID'] = 4057106,
-		['Database'] = 4057,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4058106] = {
-		['ID'] = 4058106,
-		['Database'] = 4058,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4059106] = {
-		['ID'] = 4059106,
-		['Database'] = 4059,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4060106] = {
-		['ID'] = 4060106,
-		['Database'] = 4060,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4061106] = {
-		['ID'] = 4061106,
-		['Database'] = 4061,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4062106] = {
-		['ID'] = 4062106,
-		['Database'] = 4062,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4063106] = {
-		['ID'] = 4063106,
-		['Database'] = 4063,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4064106] = {
-		['ID'] = 4064106,
-		['Database'] = 4064,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4065106] = {
-		['ID'] = 4065106,
-		['Database'] = 4065,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4066106] = {
-		['ID'] = 4066106,
-		['Database'] = 4066,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4067106] = {
-		['ID'] = 4067106,
-		['Database'] = 4067,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4068106] = {
-		['ID'] = 4068106,
-		['Database'] = 4068,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4069106] = {
-		['ID'] = 4069106,
-		['Database'] = 4069,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4070106] = {
-		['ID'] = 4070106,
-		['Database'] = 4070,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4071106] = {
-		['ID'] = 4071106,
-		['Database'] = 4071,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4072106] = {
-		['ID'] = 4072106,
-		['Database'] = 4072,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4073106] = {
-		['ID'] = 4073106,
-		['Database'] = 4073,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4074106] = {
-		['ID'] = 4074106,
-		['Database'] = 4074,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4075106] = {
-		['ID'] = 4075106,
-		['Database'] = 4075,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4076106] = {
-		['ID'] = 4076106,
-		['Database'] = 4076,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4077106] = {
-		['ID'] = 4077106,
-		['Database'] = 4077,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4078106] = {
-		['ID'] = 4078106,
-		['Database'] = 4078,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4079106] = {
-		['ID'] = 4079106,
-		['Database'] = 4079,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4080106] = {
-		['ID'] = 4080106,
-		['Database'] = 4080,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4081106] = {
-		['ID'] = 4081106,
-		['Database'] = 4081,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4082106] = {
-		['ID'] = 4082106,
-		['Database'] = 4082,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4083106] = {
-		['ID'] = 4083106,
-		['Database'] = 4083,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4084106] = {
-		['ID'] = 4084106,
-		['Database'] = 4084,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4085106] = {
-		['ID'] = 4085106,
-		['Database'] = 4085,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4086106] = {
-		['ID'] = 4086106,
-		['Database'] = 4086,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4087106] = {
-		['ID'] = 4087106,
-		['Database'] = 4087,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4088106] = {
-		['ID'] = 4088106,
-		['Database'] = 4088,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4089106] = {
-		['ID'] = 4089106,
-		['Database'] = 4089,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4090106] = {
-		['ID'] = 4090106,
-		['Database'] = 4090,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4091106] = {
-		['ID'] = 4091106,
-		['Database'] = 4091,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4092106] = {
-		['ID'] = 4092106,
-		['Database'] = 4092,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4093106] = {
-		['ID'] = 4093106,
-		['Database'] = 4093,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4094106] = {
-		['ID'] = 4094106,
-		['Database'] = 4094,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4095106] = {
-		['ID'] = 4095106,
-		['Database'] = 4095,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4096106] = {
-		['ID'] = 4096106,
-		['Database'] = 4096,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4097106] = {
-		['ID'] = 4097106,
-		['Database'] = 4097,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4098106] = {
-		['ID'] = 4098106,
-		['Database'] = 4098,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4099106] = {
-		['ID'] = 4099106,
-		['Database'] = 4099,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4100106] = {
-		['ID'] = 4100106,
-		['Database'] = 4100,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4101106] = {
-		['ID'] = 4101106,
-		['Database'] = 4101,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4102106] = {
-		['ID'] = 4102106,
-		['Database'] = 4102,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4103106] = {
-		['ID'] = 4103106,
-		['Database'] = 4103,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4104106] = {
-		['ID'] = 4104106,
-		['Database'] = 4104,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4105106] = {
-		['ID'] = 4105106,
-		['Database'] = 4105,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4106106] = {
-		['ID'] = 4106106,
-		['Database'] = 4106,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4107106] = {
-		['ID'] = 4107106,
-		['Database'] = 4107,
-		['Effect'] = 106,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4108107] = {
-		['ID'] = 4108107,
-		['Database'] = 4108,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4109107] = {
-		['ID'] = 4109107,
-		['Database'] = 4109,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4110107] = {
-		['ID'] = 4110107,
-		['Database'] = 4110,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4111107] = {
-		['ID'] = 4111107,
+	[4111105] = {
+		['ID'] = 4111105,
 		['Database'] = 4111,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {200,300,400,500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
 		},
-	[4112107] = {
-		['ID'] = 4112107,
+	[4112105] = {
+		['ID'] = 4112105,
 		['Database'] = 4112,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {200,400,600,800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
 		},
-	[4113107] = {
-		['ID'] = 4113107,
+	[4113105] = {
+		['ID'] = 4113105,
 		['Database'] = 4113,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {300,500,800,1000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
 		},
-	[4114107] = {
-		['ID'] = 4114107,
+	[4114105] = {
+		['ID'] = 4114105,
 		['Database'] = 4114,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {400,700,1000,1300},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
 		},
-	[4115107] = {
-		['ID'] = 4115107,
+	[4115105] = {
+		['ID'] = 4115105,
 		['Database'] = 4115,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
 		},
-	[4116107] = {
-		['ID'] = 4116107,
+	[4116105] = {
+		['ID'] = 4116105,
 		['Database'] = 4116,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
 		},
-	[4117107] = {
-		['ID'] = 4117107,
+	[4117105] = {
+		['ID'] = 4117105,
 		['Database'] = 4117,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4118107] = {
-		['ID'] = 4118107,
-		['Database'] = 4118,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4119107] = {
-		['ID'] = 4119107,
-		['Database'] = 4119,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4120107] = {
-		['ID'] = 4120107,
-		['Database'] = 4120,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4121107] = {
-		['ID'] = 4121107,
-		['Database'] = 4121,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4122107] = {
-		['ID'] = 4122107,
-		['Database'] = 4122,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4123107] = {
-		['ID'] = 4123107,
-		['Database'] = 4123,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4124107] = {
-		['ID'] = 4124107,
-		['Database'] = 4124,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4125107] = {
-		['ID'] = 4125107,
-		['Database'] = 4125,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4126107] = {
-		['ID'] = 4126107,
-		['Database'] = 4126,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4127107] = {
-		['ID'] = 4127107,
-		['Database'] = 4127,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4128107] = {
-		['ID'] = 4128107,
-		['Database'] = 4128,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4129107] = {
-		['ID'] = 4129107,
-		['Database'] = 4129,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4130107] = {
-		['ID'] = 4130107,
-		['Database'] = 4130,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4131107] = {
-		['ID'] = 4131107,
-		['Database'] = 4131,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4132107] = {
-		['ID'] = 4132107,
-		['Database'] = 4132,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4133107] = {
-		['ID'] = 4133107,
-		['Database'] = 4133,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4134107] = {
-		['ID'] = 4134107,
-		['Database'] = 4134,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4135107] = {
-		['ID'] = 4135107,
-		['Database'] = 4135,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4136107] = {
-		['ID'] = 4136107,
-		['Database'] = 4136,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4137107] = {
-		['ID'] = 4137107,
-		['Database'] = 4137,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4138107] = {
-		['ID'] = 4138107,
-		['Database'] = 4138,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4139107] = {
-		['ID'] = 4139107,
-		['Database'] = 4139,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4140107] = {
-		['ID'] = 4140107,
-		['Database'] = 4140,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4141107] = {
-		['ID'] = 4141107,
-		['Database'] = 4141,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4142107] = {
-		['ID'] = 4142107,
-		['Database'] = 4142,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4143107] = {
-		['ID'] = 4143107,
-		['Database'] = 4143,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4144107] = {
-		['ID'] = 4144107,
-		['Database'] = 4144,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4145107] = {
-		['ID'] = 4145107,
-		['Database'] = 4145,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4146107] = {
-		['ID'] = 4146107,
-		['Database'] = 4146,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4147107] = {
-		['ID'] = 4147107,
-		['Database'] = 4147,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4148107] = {
-		['ID'] = 4148107,
-		['Database'] = 4148,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4149107] = {
-		['ID'] = 4149107,
-		['Database'] = 4149,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4150107] = {
-		['ID'] = 4150107,
-		['Database'] = 4150,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4151107] = {
-		['ID'] = 4151107,
-		['Database'] = 4151,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4152107] = {
-		['ID'] = 4152107,
-		['Database'] = 4152,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4153107] = {
-		['ID'] = 4153107,
-		['Database'] = 4153,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4154107] = {
-		['ID'] = 4154107,
-		['Database'] = 4154,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4155107] = {
-		['ID'] = 4155107,
-		['Database'] = 4155,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4156107] = {
-		['ID'] = 4156107,
-		['Database'] = 4156,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4157107] = {
-		['ID'] = 4157107,
-		['Database'] = 4157,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4158107] = {
-		['ID'] = 4158107,
-		['Database'] = 4158,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4159107] = {
-		['ID'] = 4159107,
-		['Database'] = 4159,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4160107] = {
-		['ID'] = 4160107,
-		['Database'] = 4160,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4161107] = {
-		['ID'] = 4161107,
-		['Database'] = 4161,
-		['Effect'] = 107,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4162108] = {
-		['ID'] = 4162108,
-		['Database'] = 4162,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4163108] = {
-		['ID'] = 4163108,
-		['Database'] = 4163,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4164108] = {
-		['ID'] = 4164108,
-		['Database'] = 4164,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4165108] = {
-		['ID'] = 4165108,
-		['Database'] = 4165,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4166108] = {
-		['ID'] = 4166108,
-		['Database'] = 4166,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4167108] = {
-		['ID'] = 4167108,
-		['Database'] = 4167,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4168108] = {
-		['ID'] = 4168108,
-		['Database'] = 4168,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4169108] = {
-		['ID'] = 4169108,
-		['Database'] = 4169,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4170108] = {
-		['ID'] = 4170108,
-		['Database'] = 4170,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4171108] = {
-		['ID'] = 4171108,
-		['Database'] = 4171,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4172108] = {
-		['ID'] = 4172108,
-		['Database'] = 4172,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4173108] = {
-		['ID'] = 4173108,
-		['Database'] = 4173,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4174108] = {
-		['ID'] = 4174108,
-		['Database'] = 4174,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4175108] = {
-		['ID'] = 4175108,
-		['Database'] = 4175,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4176108] = {
-		['ID'] = 4176108,
-		['Database'] = 4176,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4177108] = {
-		['ID'] = 4177108,
-		['Database'] = 4177,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4178108] = {
-		['ID'] = 4178108,
-		['Database'] = 4178,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4179108] = {
-		['ID'] = 4179108,
-		['Database'] = 4179,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4180108] = {
-		['ID'] = 4180108,
-		['Database'] = 4180,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4181108] = {
-		['ID'] = 4181108,
-		['Database'] = 4181,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4182108] = {
-		['ID'] = 4182108,
-		['Database'] = 4182,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4183108] = {
-		['ID'] = 4183108,
-		['Database'] = 4183,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4184108] = {
-		['ID'] = 4184108,
-		['Database'] = 4184,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4185108] = {
-		['ID'] = 4185108,
-		['Database'] = 4185,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4186108] = {
-		['ID'] = 4186108,
-		['Database'] = 4186,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4187108] = {
-		['ID'] = 4187108,
-		['Database'] = 4187,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4188108] = {
-		['ID'] = 4188108,
-		['Database'] = 4188,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4189108] = {
-		['ID'] = 4189108,
-		['Database'] = 4189,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4190108] = {
-		['ID'] = 4190108,
-		['Database'] = 4190,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4191108] = {
-		['ID'] = 4191108,
-		['Database'] = 4191,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4192108] = {
-		['ID'] = 4192108,
-		['Database'] = 4192,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4193108] = {
-		['ID'] = 4193108,
-		['Database'] = 4193,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4194108] = {
-		['ID'] = 4194108,
-		['Database'] = 4194,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4195108] = {
-		['ID'] = 4195108,
-		['Database'] = 4195,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4196108] = {
-		['ID'] = 4196108,
-		['Database'] = 4196,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4197108] = {
-		['ID'] = 4197108,
-		['Database'] = 4197,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4198108] = {
-		['ID'] = 4198108,
-		['Database'] = 4198,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4199108] = {
-		['ID'] = 4199108,
-		['Database'] = 4199,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4200108] = {
-		['ID'] = 4200108,
-		['Database'] = 4200,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4201108] = {
-		['ID'] = 4201108,
-		['Database'] = 4201,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4202108] = {
-		['ID'] = 4202108,
-		['Database'] = 4202,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4203108] = {
-		['ID'] = 4203108,
-		['Database'] = 4203,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4204108] = {
-		['ID'] = 4204108,
-		['Database'] = 4204,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4205108] = {
-		['ID'] = 4205108,
-		['Database'] = 4205,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4206108] = {
-		['ID'] = 4206108,
-		['Database'] = 4206,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4207108] = {
-		['ID'] = 4207108,
-		['Database'] = 4207,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4208108] = {
-		['ID'] = 4208108,
-		['Database'] = 4208,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4209108] = {
-		['ID'] = 4209108,
-		['Database'] = 4209,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4210108] = {
-		['ID'] = 4210108,
-		['Database'] = 4210,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
-		},
-	[4211108] = {
-		['ID'] = 4211108,
+		['Effect'] = 105,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4211105] = {
+		['ID'] = 4211105,
 		['Database'] = 4211,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {200,300,400,500,700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4212108] = {
-		['ID'] = 4212108,
+	[4212105] = {
+		['ID'] = 4212105,
 		['Database'] = 4212,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {200,400,600,800,1000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4213108] = {
-		['ID'] = 4213108,
+	[4213105] = {
+		['ID'] = 4213105,
 		['Database'] = 4213,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {300,500,800,1000,1300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4214108] = {
-		['ID'] = 4214108,
+	[4214105] = {
+		['ID'] = 4214105,
 		['Database'] = 4214,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {400,700,1000,1300,1600},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4215108] = {
-		['ID'] = 4215108,
+	[4215105] = {
+		['ID'] = 4215105,
 		['Database'] = 4215,
-		['Effect'] = 108,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4216109] = {
-		['ID'] = 4216109,
+	[4216105] = {
+		['ID'] = 4216105,
 		['Database'] = 4216,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {500,900,1400,1800,2200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4217109] = {
-		['ID'] = 4217109,
+	[4217105] = {
+		['ID'] = 4217105,
 		['Database'] = 4217,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4218109] = {
-		['ID'] = 4218109,
-		['Database'] = 4218,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4311105] = {
+		['ID'] = 4311105,
+		['Database'] = 4311,
+		['Effect'] = 105,
+		['Rand'] = {200,300,400,500,700,800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4219109] = {
-		['ID'] = 4219109,
-		['Database'] = 4219,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4312105] = {
+		['ID'] = 4312105,
+		['Database'] = 4312,
+		['Effect'] = 105,
+		['Rand'] = {200,400,600,800,1000,1200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4220109] = {
-		['ID'] = 4220109,
-		['Database'] = 4220,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4313105] = {
+		['ID'] = 4313105,
+		['Database'] = 4313,
+		['Effect'] = 105,
+		['Rand'] = {300,500,800,1000,1300,1500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4221109] = {
-		['ID'] = 4221109,
+	[4314105] = {
+		['ID'] = 4314105,
+		['Database'] = 4314,
+		['Effect'] = 105,
+		['Rand'] = {400,700,1000,1300,1600,1900},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4315105] = {
+		['ID'] = 4315105,
+		['Database'] = 4315,
+		['Effect'] = 105,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4316105] = {
+		['ID'] = 4316105,
+		['Database'] = 4316,
+		['Effect'] = 105,
+		['Rand'] = {500,900,1400,1800,2200,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4317105] = {
+		['ID'] = 4317105,
+		['Database'] = 4317,
+		['Effect'] = 105,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4121105] = {
+		['ID'] = 4121105,
+		['Database'] = 4121,
+		['Effect'] = 105,
+		['Rand'] = {200,300,500,600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4122105] = {
+		['ID'] = 4122105,
+		['Database'] = 4122,
+		['Effect'] = 105,
+		['Rand'] = {300,500,700,900},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4123105] = {
+		['ID'] = 4123105,
+		['Database'] = 4123,
+		['Effect'] = 105,
+		['Rand'] = {300,600,900,1200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4124105] = {
+		['ID'] = 4124105,
+		['Database'] = 4124,
+		['Effect'] = 105,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4125105] = {
+		['ID'] = 4125105,
+		['Database'] = 4125,
+		['Effect'] = 105,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4126105] = {
+		['ID'] = 4126105,
+		['Database'] = 4126,
+		['Effect'] = 105,
+		['Rand'] = {600,1100,1600,2100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4127105] = {
+		['ID'] = 4127105,
+		['Database'] = 4127,
+		['Effect'] = 105,
+		['Rand'] = {600,1200,1800,2400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4221105] = {
+		['ID'] = 4221105,
 		['Database'] = 4221,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {200,300,500,600,800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4222109] = {
-		['ID'] = 4222109,
+	[4222105] = {
+		['ID'] = 4222105,
 		['Database'] = 4222,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {300,500,700,900,1200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4223109] = {
-		['ID'] = 4223109,
+	[4223105] = {
+		['ID'] = 4223105,
 		['Database'] = 4223,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {300,600,900,1200,1500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4224109] = {
-		['ID'] = 4224109,
+	[4224105] = {
+		['ID'] = 4224105,
 		['Database'] = 4224,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4225109] = {
-		['ID'] = 4225109,
+	[4225105] = {
+		['ID'] = 4225105,
 		['Database'] = 4225,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {500,900,1400,1800,2300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4226109] = {
-		['ID'] = 4226109,
+	[4226105] = {
+		['ID'] = 4226105,
 		['Database'] = 4226,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {600,1100,1600,2100,2700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4227109] = {
-		['ID'] = 4227109,
+	[4227105] = {
+		['ID'] = 4227105,
 		['Database'] = 4227,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {600,1200,1800,2400,3000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4228109] = {
-		['ID'] = 4228109,
-		['Database'] = 4228,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4321105] = {
+		['ID'] = 4321105,
+		['Database'] = 4321,
+		['Effect'] = 105,
+		['Rand'] = {200,300,500,600,800,900},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4229109] = {
-		['ID'] = 4229109,
-		['Database'] = 4229,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4322105] = {
+		['ID'] = 4322105,
+		['Database'] = 4322,
+		['Effect'] = 105,
+		['Rand'] = {300,500,700,900,1200,1400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4230109] = {
-		['ID'] = 4230109,
-		['Database'] = 4230,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4323105] = {
+		['ID'] = 4323105,
+		['Database'] = 4323,
+		['Effect'] = 105,
+		['Rand'] = {300,600,900,1200,1500,1800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4231109] = {
-		['ID'] = 4231109,
+	[4324105] = {
+		['ID'] = 4324105,
+		['Database'] = 4324,
+		['Effect'] = 105,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4325105] = {
+		['ID'] = 4325105,
+		['Database'] = 4325,
+		['Effect'] = 105,
+		['Rand'] = {500,900,1400,1800,2300,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4326105] = {
+		['ID'] = 4326105,
+		['Database'] = 4326,
+		['Effect'] = 105,
+		['Rand'] = {600,1100,1600,2100,2700,3200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4327105] = {
+		['ID'] = 4327105,
+		['Database'] = 4327,
+		['Effect'] = 105,
+		['Rand'] = {600,1200,1800,2400,3000,3600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4131105] = {
+		['ID'] = 4131105,
+		['Database'] = 4131,
+		['Effect'] = 105,
+		['Rand'] = {200,400,600,700},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4132105] = {
+		['ID'] = 4132105,
+		['Database'] = 4132,
+		['Effect'] = 105,
+		['Rand'] = {300,600,800,1100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4133105] = {
+		['ID'] = 4133105,
+		['Database'] = 4133,
+		['Effect'] = 105,
+		['Rand'] = {400,700,1100,1400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4134105] = {
+		['ID'] = 4134105,
+		['Database'] = 4134,
+		['Effect'] = 105,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4135105] = {
+		['ID'] = 4135105,
+		['Database'] = 4135,
+		['Effect'] = 105,
+		['Rand'] = {600,1100,1600,2100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4136105] = {
+		['ID'] = 4136105,
+		['Database'] = 4136,
+		['Effect'] = 105,
+		['Rand'] = {700,1300,1900,2500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4137105] = {
+		['ID'] = 4137105,
+		['Database'] = 4137,
+		['Effect'] = 105,
+		['Rand'] = {700,1400,2100,2800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4231105] = {
+		['ID'] = 4231105,
 		['Database'] = 4231,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {200,400,600,700,900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4232109] = {
-		['ID'] = 4232109,
+	[4232105] = {
+		['ID'] = 4232105,
 		['Database'] = 4232,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {300,600,800,1100,1400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4233109] = {
-		['ID'] = 4233109,
+	[4233105] = {
+		['ID'] = 4233105,
 		['Database'] = 4233,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {400,700,1100,1400,1800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4234109] = {
-		['ID'] = 4234109,
+	[4234105] = {
+		['ID'] = 4234105,
 		['Database'] = 4234,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {500,900,1400,1800,2200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4235109] = {
-		['ID'] = 4235109,
+	[4235105] = {
+		['ID'] = 4235105,
 		['Database'] = 4235,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {600,1100,1600,2100,2700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4236109] = {
-		['ID'] = 4236109,
+	[4236105] = {
+		['ID'] = 4236105,
 		['Database'] = 4236,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {700,1300,1900,2500,3100},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4237109] = {
-		['ID'] = 4237109,
+	[4237105] = {
+		['ID'] = 4237105,
 		['Database'] = 4237,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {700,1400,2100,2800,3500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4238109] = {
-		['ID'] = 4238109,
-		['Database'] = 4238,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4331105] = {
+		['ID'] = 4331105,
+		['Database'] = 4331,
+		['Effect'] = 105,
+		['Rand'] = {200,400,600,700,900,1100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4239109] = {
-		['ID'] = 4239109,
-		['Database'] = 4239,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4332105] = {
+		['ID'] = 4332105,
+		['Database'] = 4332,
+		['Effect'] = 105,
+		['Rand'] = {300,600,800,1100,1400,1600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4240109] = {
-		['ID'] = 4240109,
-		['Database'] = 4240,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4333105] = {
+		['ID'] = 4333105,
+		['Database'] = 4333,
+		['Effect'] = 105,
+		['Rand'] = {400,700,1100,1400,1800,2100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4241109] = {
-		['ID'] = 4241109,
+	[4334105] = {
+		['ID'] = 4334105,
+		['Database'] = 4334,
+		['Effect'] = 105,
+		['Rand'] = {500,900,1400,1800,2200,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4335105] = {
+		['ID'] = 4335105,
+		['Database'] = 4335,
+		['Effect'] = 105,
+		['Rand'] = {600,1100,1600,2100,2700,3200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4336105] = {
+		['ID'] = 4336105,
+		['Database'] = 4336,
+		['Effect'] = 105,
+		['Rand'] = {700,1300,1900,2500,3100,3700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4337105] = {
+		['ID'] = 4337105,
+		['Database'] = 4337,
+		['Effect'] = 105,
+		['Rand'] = {700,1400,2100,2800,3500,4200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4141105] = {
+		['ID'] = 4141105,
+		['Database'] = 4141,
+		['Effect'] = 105,
+		['Rand'] = {200,400,600,800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4142105] = {
+		['ID'] = 4142105,
+		['Database'] = 4142,
+		['Effect'] = 105,
+		['Rand'] = {300,600,900,1200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4143105] = {
+		['ID'] = 4143105,
+		['Database'] = 4143,
+		['Effect'] = 105,
+		['Rand'] = {400,800,1200,1600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4144105] = {
+		['ID'] = 4144105,
+		['Database'] = 4144,
+		['Effect'] = 105,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4145105] = {
+		['ID'] = 4145105,
+		['Database'] = 4145,
+		['Effect'] = 105,
+		['Rand'] = {600,1200,1800,2400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4146105] = {
+		['ID'] = 4146105,
+		['Database'] = 4146,
+		['Effect'] = 105,
+		['Rand'] = {700,1400,2100,2800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4147105] = {
+		['ID'] = 4147105,
+		['Database'] = 4147,
+		['Effect'] = 105,
+		['Rand'] = {800,1600,2400,3200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4241105] = {
+		['ID'] = 4241105,
 		['Database'] = 4241,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {200,400,600,800,1000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4242109] = {
-		['ID'] = 4242109,
+	[4242105] = {
+		['ID'] = 4242105,
 		['Database'] = 4242,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {300,600,900,1200,1500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4243109] = {
-		['ID'] = 4243109,
+	[4243105] = {
+		['ID'] = 4243105,
 		['Database'] = 4243,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {400,800,1200,1600,2000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4244109] = {
-		['ID'] = 4244109,
+	[4244105] = {
+		['ID'] = 4244105,
 		['Database'] = 4244,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4245109] = {
-		['ID'] = 4245109,
+	[4245105] = {
+		['ID'] = 4245105,
 		['Database'] = 4245,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {600,1200,1800,2400,3000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4246109] = {
-		['ID'] = 4246109,
+	[4246105] = {
+		['ID'] = 4246105,
 		['Database'] = 4246,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {700,1400,2100,2800,3500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4247109] = {
-		['ID'] = 4247109,
+	[4247105] = {
+		['ID'] = 4247105,
 		['Database'] = 4247,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {800,1600,2400,3200,4000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4248109] = {
-		['ID'] = 4248109,
-		['Database'] = 4248,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4341105] = {
+		['ID'] = 4341105,
+		['Database'] = 4341,
+		['Effect'] = 105,
+		['Rand'] = {200,400,600,800,1000,1200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4249109] = {
-		['ID'] = 4249109,
-		['Database'] = 4249,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4342105] = {
+		['ID'] = 4342105,
+		['Database'] = 4342,
+		['Effect'] = 105,
+		['Rand'] = {300,600,900,1200,1500,1800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4250109] = {
-		['ID'] = 4250109,
-		['Database'] = 4250,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4343105] = {
+		['ID'] = 4343105,
+		['Database'] = 4343,
+		['Effect'] = 105,
+		['Rand'] = {400,800,1200,1600,2000,2400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4251109] = {
-		['ID'] = 4251109,
+	[4344105] = {
+		['ID'] = 4344105,
+		['Database'] = 4344,
+		['Effect'] = 105,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4345105] = {
+		['ID'] = 4345105,
+		['Database'] = 4345,
+		['Effect'] = 105,
+		['Rand'] = {600,1200,1800,2400,3000,3600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4346105] = {
+		['ID'] = 4346105,
+		['Database'] = 4346,
+		['Effect'] = 105,
+		['Rand'] = {700,1400,2100,2800,3500,4200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4347105] = {
+		['ID'] = 4347105,
+		['Database'] = 4347,
+		['Effect'] = 105,
+		['Rand'] = {800,1600,2400,3200,4000,4800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4151105] = {
+		['ID'] = 4151105,
+		['Database'] = 4151,
+		['Effect'] = 105,
+		['Rand'] = {300,500,700,900},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4152105] = {
+		['ID'] = 4152105,
+		['Database'] = 4152,
+		['Effect'] = 105,
+		['Rand'] = {400,700,1100,1400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4153105] = {
+		['ID'] = 4153105,
+		['Database'] = 4153,
+		['Effect'] = 105,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4154105] = {
+		['ID'] = 4154105,
+		['Database'] = 4154,
+		['Effect'] = 105,
+		['Rand'] = {600,1200,1700,2300},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4155105] = {
+		['ID'] = 4155105,
+		['Database'] = 4155,
+		['Effect'] = 105,
+		['Rand'] = {700,1400,2100,2700},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4156105] = {
+		['ID'] = 4156105,
+		['Database'] = 4156,
+		['Effect'] = 105,
+		['Rand'] = {800,1600,2400,3200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4157105] = {
+		['ID'] = 4157105,
+		['Database'] = 4157,
+		['Effect'] = 105,
+		['Rand'] = {900,1800,2700,3600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4251105] = {
+		['ID'] = 4251105,
 		['Database'] = 4251,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {300,500,700,900,1200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4252109] = {
-		['ID'] = 4252109,
+	[4252105] = {
+		['ID'] = 4252105,
 		['Database'] = 4252,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {400,700,1100,1400,1700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4253109] = {
-		['ID'] = 4253109,
+	[4253105] = {
+		['ID'] = 4253105,
 		['Database'] = 4253,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {500,900,1400,1800,2300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4254109] = {
-		['ID'] = 4254109,
+	[4254105] = {
+		['ID'] = 4254105,
 		['Database'] = 4254,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {600,1200,1700,2300,2900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4255109] = {
-		['ID'] = 4255109,
+	[4255105] = {
+		['ID'] = 4255105,
 		['Database'] = 4255,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {700,1400,2100,2700,3400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4256109] = {
-		['ID'] = 4256109,
+	[4256105] = {
+		['ID'] = 4256105,
 		['Database'] = 4256,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {800,1600,2400,3200,4000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4257109] = {
-		['ID'] = 4257109,
+	[4257105] = {
+		['ID'] = 4257105,
 		['Database'] = 4257,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {900,1800,2700,3600,4500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4258109] = {
-		['ID'] = 4258109,
-		['Database'] = 4258,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4351105] = {
+		['ID'] = 4351105,
+		['Database'] = 4351,
+		['Effect'] = 105,
+		['Rand'] = {300,500,700,900,1200,1400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4259109] = {
-		['ID'] = 4259109,
-		['Database'] = 4259,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4352105] = {
+		['ID'] = 4352105,
+		['Database'] = 4352,
+		['Effect'] = 105,
+		['Rand'] = {400,700,1100,1400,1700,2100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4260109] = {
-		['ID'] = 4260109,
-		['Database'] = 4260,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4353105] = {
+		['ID'] = 4353105,
+		['Database'] = 4353,
+		['Effect'] = 105,
+		['Rand'] = {500,900,1400,1800,2300,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4261109] = {
-		['ID'] = 4261109,
+	[4354105] = {
+		['ID'] = 4354105,
+		['Database'] = 4354,
+		['Effect'] = 105,
+		['Rand'] = {600,1200,1700,2300,2900,3400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4355105] = {
+		['ID'] = 4355105,
+		['Database'] = 4355,
+		['Effect'] = 105,
+		['Rand'] = {700,1400,2100,2700,3400,4100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4356105] = {
+		['ID'] = 4356105,
+		['Database'] = 4356,
+		['Effect'] = 105,
+		['Rand'] = {800,1600,2400,3200,4000,4800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4357105] = {
+		['ID'] = 4357105,
+		['Database'] = 4357,
+		['Effect'] = 105,
+		['Rand'] = {900,1800,2700,3600,4500,5400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4161105] = {
+		['ID'] = 4161105,
+		['Database'] = 4161,
+		['Effect'] = 105,
+		['Rand'] = {300,500,800,1000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4162105] = {
+		['ID'] = 4162105,
+		['Database'] = 4162,
+		['Effect'] = 105,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4163105] = {
+		['ID'] = 4163105,
+		['Database'] = 4163,
+		['Effect'] = 105,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4164105] = {
+		['ID'] = 4164105,
+		['Database'] = 4164,
+		['Effect'] = 105,
+		['Rand'] = {700,1300,1900,2500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4165105] = {
+		['ID'] = 4165105,
+		['Database'] = 4165,
+		['Effect'] = 105,
+		['Rand'] = {800,1500,2300,3000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4166105] = {
+		['ID'] = 4166105,
+		['Database'] = 4166,
+		['Effect'] = 105,
+		['Rand'] = {900,1800,2700,3500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4167105] = {
+		['ID'] = 4167105,
+		['Database'] = 4167,
+		['Effect'] = 105,
+		['Rand'] = {1000,2000,3000,4000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4261105] = {
+		['ID'] = 4261105,
 		['Database'] = 4261,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {300,500,800,1000,1300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4262109] = {
-		['ID'] = 4262109,
+	[4262105] = {
+		['ID'] = 4262105,
 		['Database'] = 4262,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4263109] = {
-		['ID'] = 4263109,
+	[4263105] = {
+		['ID'] = 4263105,
 		['Database'] = 4263,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4264109] = {
-		['ID'] = 4264109,
+	[4264105] = {
+		['ID'] = 4264105,
 		['Database'] = 4264,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {700,1300,1900,2500,3200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4265109] = {
-		['ID'] = 4265109,
+	[4265105] = {
+		['ID'] = 4265105,
 		['Database'] = 4265,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {800,1500,2300,3000,3800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4266109] = {
-		['ID'] = 4266109,
+	[4266105] = {
+		['ID'] = 4266105,
 		['Database'] = 4266,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {900,1800,2700,3500,4400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4267109] = {
-		['ID'] = 4267109,
+	[4267105] = {
+		['ID'] = 4267105,
 		['Database'] = 4267,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Effect'] = 105,
+		['Rand'] = {1000,2000,3000,4000,5000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
 		},
-	[4268109] = {
-		['ID'] = 4268109,
-		['Database'] = 4268,
-		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+	[4361105] = {
+		['ID'] = 4361105,
+		['Database'] = 4361,
+		['Effect'] = 105,
+		['Rand'] = {300,500,800,1000,1300,1500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		},
-	[4269109] = {
-		['ID'] = 4269109,
-		['Database'] = 4269,
+	[4362105] = {
+		['ID'] = 4362105,
+		['Database'] = 4362,
+		['Effect'] = 105,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4363105] = {
+		['ID'] = 4363105,
+		['Database'] = 4363,
+		['Effect'] = 105,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4364105] = {
+		['ID'] = 4364105,
+		['Database'] = 4364,
+		['Effect'] = 105,
+		['Rand'] = {700,1300,1900,2500,3200,3800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4365105] = {
+		['ID'] = 4365105,
+		['Database'] = 4365,
+		['Effect'] = 105,
+		['Rand'] = {800,1500,2300,3000,3800,4500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4366105] = {
+		['ID'] = 4366105,
+		['Database'] = 4366,
+		['Effect'] = 105,
+		['Rand'] = {900,1800,2700,3500,4400,5300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4367105] = {
+		['ID'] = 4367105,
+		['Database'] = 4367,
+		['Effect'] = 105,
+		['Rand'] = {1000,2000,3000,4000,5000,6000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4411106] = {
+		['ID'] = 4411106,
+		['Database'] = 4411,
+		['Effect'] = 106,
+		['Rand'] = {200,300,400,500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4412106] = {
+		['ID'] = 4412106,
+		['Database'] = 4412,
+		['Effect'] = 106,
+		['Rand'] = {200,400,600,800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4413106] = {
+		['ID'] = 4413106,
+		['Database'] = 4413,
+		['Effect'] = 106,
+		['Rand'] = {300,500,800,1000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4414106] = {
+		['ID'] = 4414106,
+		['Database'] = 4414,
+		['Effect'] = 106,
+		['Rand'] = {400,700,1000,1300},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4415106] = {
+		['ID'] = 4415106,
+		['Database'] = 4415,
+		['Effect'] = 106,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4416106] = {
+		['ID'] = 4416106,
+		['Database'] = 4416,
+		['Effect'] = 106,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4417106] = {
+		['ID'] = 4417106,
+		['Database'] = 4417,
+		['Effect'] = 106,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4511106] = {
+		['ID'] = 4511106,
+		['Database'] = 4511,
+		['Effect'] = 106,
+		['Rand'] = {200,300,400,500,700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4512106] = {
+		['ID'] = 4512106,
+		['Database'] = 4512,
+		['Effect'] = 106,
+		['Rand'] = {200,400,600,800,1000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4513106] = {
+		['ID'] = 4513106,
+		['Database'] = 4513,
+		['Effect'] = 106,
+		['Rand'] = {300,500,800,1000,1300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4514106] = {
+		['ID'] = 4514106,
+		['Database'] = 4514,
+		['Effect'] = 106,
+		['Rand'] = {400,700,1000,1300,1600},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4515106] = {
+		['ID'] = 4515106,
+		['Database'] = 4515,
+		['Effect'] = 106,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4516106] = {
+		['ID'] = 4516106,
+		['Database'] = 4516,
+		['Effect'] = 106,
+		['Rand'] = {500,900,1400,1800,2200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4517106] = {
+		['ID'] = 4517106,
+		['Database'] = 4517,
+		['Effect'] = 106,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4611106] = {
+		['ID'] = 4611106,
+		['Database'] = 4611,
+		['Effect'] = 106,
+		['Rand'] = {200,300,400,500,700,800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4612106] = {
+		['ID'] = 4612106,
+		['Database'] = 4612,
+		['Effect'] = 106,
+		['Rand'] = {200,400,600,800,1000,1200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4613106] = {
+		['ID'] = 4613106,
+		['Database'] = 4613,
+		['Effect'] = 106,
+		['Rand'] = {300,500,800,1000,1300,1500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4614106] = {
+		['ID'] = 4614106,
+		['Database'] = 4614,
+		['Effect'] = 106,
+		['Rand'] = {400,700,1000,1300,1600,1900},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4615106] = {
+		['ID'] = 4615106,
+		['Database'] = 4615,
+		['Effect'] = 106,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4616106] = {
+		['ID'] = 4616106,
+		['Database'] = 4616,
+		['Effect'] = 106,
+		['Rand'] = {500,900,1400,1800,2200,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4617106] = {
+		['ID'] = 4617106,
+		['Database'] = 4617,
+		['Effect'] = 106,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4421106] = {
+		['ID'] = 4421106,
+		['Database'] = 4421,
+		['Effect'] = 106,
+		['Rand'] = {200,300,500,600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4422106] = {
+		['ID'] = 4422106,
+		['Database'] = 4422,
+		['Effect'] = 106,
+		['Rand'] = {300,500,700,900},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4423106] = {
+		['ID'] = 4423106,
+		['Database'] = 4423,
+		['Effect'] = 106,
+		['Rand'] = {300,600,900,1200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4424106] = {
+		['ID'] = 4424106,
+		['Database'] = 4424,
+		['Effect'] = 106,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4425106] = {
+		['ID'] = 4425106,
+		['Database'] = 4425,
+		['Effect'] = 106,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4426106] = {
+		['ID'] = 4426106,
+		['Database'] = 4426,
+		['Effect'] = 106,
+		['Rand'] = {600,1100,1600,2100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4427106] = {
+		['ID'] = 4427106,
+		['Database'] = 4427,
+		['Effect'] = 106,
+		['Rand'] = {600,1200,1800,2400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4521106] = {
+		['ID'] = 4521106,
+		['Database'] = 4521,
+		['Effect'] = 106,
+		['Rand'] = {200,300,500,600,800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4522106] = {
+		['ID'] = 4522106,
+		['Database'] = 4522,
+		['Effect'] = 106,
+		['Rand'] = {300,500,700,900,1200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4523106] = {
+		['ID'] = 4523106,
+		['Database'] = 4523,
+		['Effect'] = 106,
+		['Rand'] = {300,600,900,1200,1500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4524106] = {
+		['ID'] = 4524106,
+		['Database'] = 4524,
+		['Effect'] = 106,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4525106] = {
+		['ID'] = 4525106,
+		['Database'] = 4525,
+		['Effect'] = 106,
+		['Rand'] = {500,900,1400,1800,2300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4526106] = {
+		['ID'] = 4526106,
+		['Database'] = 4526,
+		['Effect'] = 106,
+		['Rand'] = {600,1100,1600,2100,2700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4527106] = {
+		['ID'] = 4527106,
+		['Database'] = 4527,
+		['Effect'] = 106,
+		['Rand'] = {600,1200,1800,2400,3000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4621106] = {
+		['ID'] = 4621106,
+		['Database'] = 4621,
+		['Effect'] = 106,
+		['Rand'] = {200,300,500,600,800,900},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4622106] = {
+		['ID'] = 4622106,
+		['Database'] = 4622,
+		['Effect'] = 106,
+		['Rand'] = {300,500,700,900,1200,1400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4623106] = {
+		['ID'] = 4623106,
+		['Database'] = 4623,
+		['Effect'] = 106,
+		['Rand'] = {300,600,900,1200,1500,1800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4624106] = {
+		['ID'] = 4624106,
+		['Database'] = 4624,
+		['Effect'] = 106,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4625106] = {
+		['ID'] = 4625106,
+		['Database'] = 4625,
+		['Effect'] = 106,
+		['Rand'] = {500,900,1400,1800,2300,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4626106] = {
+		['ID'] = 4626106,
+		['Database'] = 4626,
+		['Effect'] = 106,
+		['Rand'] = {600,1100,1600,2100,2700,3200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4627106] = {
+		['ID'] = 4627106,
+		['Database'] = 4627,
+		['Effect'] = 106,
+		['Rand'] = {600,1200,1800,2400,3000,3600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4431106] = {
+		['ID'] = 4431106,
+		['Database'] = 4431,
+		['Effect'] = 106,
+		['Rand'] = {200,400,600,700},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4432106] = {
+		['ID'] = 4432106,
+		['Database'] = 4432,
+		['Effect'] = 106,
+		['Rand'] = {300,600,800,1100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4433106] = {
+		['ID'] = 4433106,
+		['Database'] = 4433,
+		['Effect'] = 106,
+		['Rand'] = {400,700,1100,1400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4434106] = {
+		['ID'] = 4434106,
+		['Database'] = 4434,
+		['Effect'] = 106,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4435106] = {
+		['ID'] = 4435106,
+		['Database'] = 4435,
+		['Effect'] = 106,
+		['Rand'] = {600,1100,1600,2100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4436106] = {
+		['ID'] = 4436106,
+		['Database'] = 4436,
+		['Effect'] = 106,
+		['Rand'] = {700,1300,1900,2500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4437106] = {
+		['ID'] = 4437106,
+		['Database'] = 4437,
+		['Effect'] = 106,
+		['Rand'] = {700,1400,2100,2800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4531106] = {
+		['ID'] = 4531106,
+		['Database'] = 4531,
+		['Effect'] = 106,
+		['Rand'] = {200,400,600,700,900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4532106] = {
+		['ID'] = 4532106,
+		['Database'] = 4532,
+		['Effect'] = 106,
+		['Rand'] = {300,600,800,1100,1400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4533106] = {
+		['ID'] = 4533106,
+		['Database'] = 4533,
+		['Effect'] = 106,
+		['Rand'] = {400,700,1100,1400,1800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4534106] = {
+		['ID'] = 4534106,
+		['Database'] = 4534,
+		['Effect'] = 106,
+		['Rand'] = {500,900,1400,1800,2200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4535106] = {
+		['ID'] = 4535106,
+		['Database'] = 4535,
+		['Effect'] = 106,
+		['Rand'] = {600,1100,1600,2100,2700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4536106] = {
+		['ID'] = 4536106,
+		['Database'] = 4536,
+		['Effect'] = 106,
+		['Rand'] = {700,1300,1900,2500,3100},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4537106] = {
+		['ID'] = 4537106,
+		['Database'] = 4537,
+		['Effect'] = 106,
+		['Rand'] = {700,1400,2100,2800,3500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4631106] = {
+		['ID'] = 4631106,
+		['Database'] = 4631,
+		['Effect'] = 106,
+		['Rand'] = {200,400,600,700,900,1100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4632106] = {
+		['ID'] = 4632106,
+		['Database'] = 4632,
+		['Effect'] = 106,
+		['Rand'] = {300,600,800,1100,1400,1600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4633106] = {
+		['ID'] = 4633106,
+		['Database'] = 4633,
+		['Effect'] = 106,
+		['Rand'] = {400,700,1100,1400,1800,2100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4634106] = {
+		['ID'] = 4634106,
+		['Database'] = 4634,
+		['Effect'] = 106,
+		['Rand'] = {500,900,1400,1800,2200,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4635106] = {
+		['ID'] = 4635106,
+		['Database'] = 4635,
+		['Effect'] = 106,
+		['Rand'] = {600,1100,1600,2100,2700,3200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4636106] = {
+		['ID'] = 4636106,
+		['Database'] = 4636,
+		['Effect'] = 106,
+		['Rand'] = {700,1300,1900,2500,3100,3700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4637106] = {
+		['ID'] = 4637106,
+		['Database'] = 4637,
+		['Effect'] = 106,
+		['Rand'] = {700,1400,2100,2800,3500,4200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4441106] = {
+		['ID'] = 4441106,
+		['Database'] = 4441,
+		['Effect'] = 106,
+		['Rand'] = {200,400,600,800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4442106] = {
+		['ID'] = 4442106,
+		['Database'] = 4442,
+		['Effect'] = 106,
+		['Rand'] = {300,600,900,1200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4443106] = {
+		['ID'] = 4443106,
+		['Database'] = 4443,
+		['Effect'] = 106,
+		['Rand'] = {400,800,1200,1600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4444106] = {
+		['ID'] = 4444106,
+		['Database'] = 4444,
+		['Effect'] = 106,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4445106] = {
+		['ID'] = 4445106,
+		['Database'] = 4445,
+		['Effect'] = 106,
+		['Rand'] = {600,1200,1800,2400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4446106] = {
+		['ID'] = 4446106,
+		['Database'] = 4446,
+		['Effect'] = 106,
+		['Rand'] = {700,1400,2100,2800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4447106] = {
+		['ID'] = 4447106,
+		['Database'] = 4447,
+		['Effect'] = 106,
+		['Rand'] = {800,1600,2400,3200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4541106] = {
+		['ID'] = 4541106,
+		['Database'] = 4541,
+		['Effect'] = 106,
+		['Rand'] = {200,400,600,800,1000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4542106] = {
+		['ID'] = 4542106,
+		['Database'] = 4542,
+		['Effect'] = 106,
+		['Rand'] = {300,600,900,1200,1500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4543106] = {
+		['ID'] = 4543106,
+		['Database'] = 4543,
+		['Effect'] = 106,
+		['Rand'] = {400,800,1200,1600,2000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4544106] = {
+		['ID'] = 4544106,
+		['Database'] = 4544,
+		['Effect'] = 106,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4545106] = {
+		['ID'] = 4545106,
+		['Database'] = 4545,
+		['Effect'] = 106,
+		['Rand'] = {600,1200,1800,2400,3000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4546106] = {
+		['ID'] = 4546106,
+		['Database'] = 4546,
+		['Effect'] = 106,
+		['Rand'] = {700,1400,2100,2800,3500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4547106] = {
+		['ID'] = 4547106,
+		['Database'] = 4547,
+		['Effect'] = 106,
+		['Rand'] = {800,1600,2400,3200,4000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4641106] = {
+		['ID'] = 4641106,
+		['Database'] = 4641,
+		['Effect'] = 106,
+		['Rand'] = {200,400,600,800,1000,1200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4642106] = {
+		['ID'] = 4642106,
+		['Database'] = 4642,
+		['Effect'] = 106,
+		['Rand'] = {300,600,900,1200,1500,1800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4643106] = {
+		['ID'] = 4643106,
+		['Database'] = 4643,
+		['Effect'] = 106,
+		['Rand'] = {400,800,1200,1600,2000,2400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4644106] = {
+		['ID'] = 4644106,
+		['Database'] = 4644,
+		['Effect'] = 106,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4645106] = {
+		['ID'] = 4645106,
+		['Database'] = 4645,
+		['Effect'] = 106,
+		['Rand'] = {600,1200,1800,2400,3000,3600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4646106] = {
+		['ID'] = 4646106,
+		['Database'] = 4646,
+		['Effect'] = 106,
+		['Rand'] = {700,1400,2100,2800,3500,4200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4647106] = {
+		['ID'] = 4647106,
+		['Database'] = 4647,
+		['Effect'] = 106,
+		['Rand'] = {800,1600,2400,3200,4000,4800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4451106] = {
+		['ID'] = 4451106,
+		['Database'] = 4451,
+		['Effect'] = 106,
+		['Rand'] = {300,500,700,900},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4452106] = {
+		['ID'] = 4452106,
+		['Database'] = 4452,
+		['Effect'] = 106,
+		['Rand'] = {400,700,1100,1400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4453106] = {
+		['ID'] = 4453106,
+		['Database'] = 4453,
+		['Effect'] = 106,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4454106] = {
+		['ID'] = 4454106,
+		['Database'] = 4454,
+		['Effect'] = 106,
+		['Rand'] = {600,1200,1700,2300},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4455106] = {
+		['ID'] = 4455106,
+		['Database'] = 4455,
+		['Effect'] = 106,
+		['Rand'] = {700,1400,2100,2700},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4456106] = {
+		['ID'] = 4456106,
+		['Database'] = 4456,
+		['Effect'] = 106,
+		['Rand'] = {800,1600,2400,3200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4457106] = {
+		['ID'] = 4457106,
+		['Database'] = 4457,
+		['Effect'] = 106,
+		['Rand'] = {900,1800,2700,3600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4551106] = {
+		['ID'] = 4551106,
+		['Database'] = 4551,
+		['Effect'] = 106,
+		['Rand'] = {300,500,700,900,1200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4552106] = {
+		['ID'] = 4552106,
+		['Database'] = 4552,
+		['Effect'] = 106,
+		['Rand'] = {400,700,1100,1400,1700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4553106] = {
+		['ID'] = 4553106,
+		['Database'] = 4553,
+		['Effect'] = 106,
+		['Rand'] = {500,900,1400,1800,2300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4554106] = {
+		['ID'] = 4554106,
+		['Database'] = 4554,
+		['Effect'] = 106,
+		['Rand'] = {600,1200,1700,2300,2900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4555106] = {
+		['ID'] = 4555106,
+		['Database'] = 4555,
+		['Effect'] = 106,
+		['Rand'] = {700,1400,2100,2700,3400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4556106] = {
+		['ID'] = 4556106,
+		['Database'] = 4556,
+		['Effect'] = 106,
+		['Rand'] = {800,1600,2400,3200,4000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4557106] = {
+		['ID'] = 4557106,
+		['Database'] = 4557,
+		['Effect'] = 106,
+		['Rand'] = {900,1800,2700,3600,4500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4651106] = {
+		['ID'] = 4651106,
+		['Database'] = 4651,
+		['Effect'] = 106,
+		['Rand'] = {300,500,700,900,1200,1400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4652106] = {
+		['ID'] = 4652106,
+		['Database'] = 4652,
+		['Effect'] = 106,
+		['Rand'] = {400,700,1100,1400,1700,2100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4653106] = {
+		['ID'] = 4653106,
+		['Database'] = 4653,
+		['Effect'] = 106,
+		['Rand'] = {500,900,1400,1800,2300,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4654106] = {
+		['ID'] = 4654106,
+		['Database'] = 4654,
+		['Effect'] = 106,
+		['Rand'] = {600,1200,1700,2300,2900,3400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4655106] = {
+		['ID'] = 4655106,
+		['Database'] = 4655,
+		['Effect'] = 106,
+		['Rand'] = {700,1400,2100,2700,3400,4100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4656106] = {
+		['ID'] = 4656106,
+		['Database'] = 4656,
+		['Effect'] = 106,
+		['Rand'] = {800,1600,2400,3200,4000,4800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4657106] = {
+		['ID'] = 4657106,
+		['Database'] = 4657,
+		['Effect'] = 106,
+		['Rand'] = {900,1800,2700,3600,4500,5400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4461106] = {
+		['ID'] = 4461106,
+		['Database'] = 4461,
+		['Effect'] = 106,
+		['Rand'] = {300,500,800,1000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4462106] = {
+		['ID'] = 4462106,
+		['Database'] = 4462,
+		['Effect'] = 106,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4463106] = {
+		['ID'] = 4463106,
+		['Database'] = 4463,
+		['Effect'] = 106,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4464106] = {
+		['ID'] = 4464106,
+		['Database'] = 4464,
+		['Effect'] = 106,
+		['Rand'] = {700,1300,1900,2500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4465106] = {
+		['ID'] = 4465106,
+		['Database'] = 4465,
+		['Effect'] = 106,
+		['Rand'] = {800,1500,2300,3000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4466106] = {
+		['ID'] = 4466106,
+		['Database'] = 4466,
+		['Effect'] = 106,
+		['Rand'] = {900,1800,2700,3500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4467106] = {
+		['ID'] = 4467106,
+		['Database'] = 4467,
+		['Effect'] = 106,
+		['Rand'] = {1000,2000,3000,4000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4561106] = {
+		['ID'] = 4561106,
+		['Database'] = 4561,
+		['Effect'] = 106,
+		['Rand'] = {300,500,800,1000,1300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4562106] = {
+		['ID'] = 4562106,
+		['Database'] = 4562,
+		['Effect'] = 106,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4563106] = {
+		['ID'] = 4563106,
+		['Database'] = 4563,
+		['Effect'] = 106,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4564106] = {
+		['ID'] = 4564106,
+		['Database'] = 4564,
+		['Effect'] = 106,
+		['Rand'] = {700,1300,1900,2500,3200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4565106] = {
+		['ID'] = 4565106,
+		['Database'] = 4565,
+		['Effect'] = 106,
+		['Rand'] = {800,1500,2300,3000,3800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4566106] = {
+		['ID'] = 4566106,
+		['Database'] = 4566,
+		['Effect'] = 106,
+		['Rand'] = {900,1800,2700,3500,4400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4567106] = {
+		['ID'] = 4567106,
+		['Database'] = 4567,
+		['Effect'] = 106,
+		['Rand'] = {1000,2000,3000,4000,5000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4661106] = {
+		['ID'] = 4661106,
+		['Database'] = 4661,
+		['Effect'] = 106,
+		['Rand'] = {300,500,800,1000,1300,1500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4662106] = {
+		['ID'] = 4662106,
+		['Database'] = 4662,
+		['Effect'] = 106,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4663106] = {
+		['ID'] = 4663106,
+		['Database'] = 4663,
+		['Effect'] = 106,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4664106] = {
+		['ID'] = 4664106,
+		['Database'] = 4664,
+		['Effect'] = 106,
+		['Rand'] = {700,1300,1900,2500,3200,3800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4665106] = {
+		['ID'] = 4665106,
+		['Database'] = 4665,
+		['Effect'] = 106,
+		['Rand'] = {800,1500,2300,3000,3800,4500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4666106] = {
+		['ID'] = 4666106,
+		['Database'] = 4666,
+		['Effect'] = 106,
+		['Rand'] = {900,1800,2700,3500,4400,5300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4667106] = {
+		['ID'] = 4667106,
+		['Database'] = 4667,
+		['Effect'] = 106,
+		['Rand'] = {1000,2000,3000,4000,5000,6000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4711107] = {
+		['ID'] = 4711107,
+		['Database'] = 4711,
+		['Effect'] = 107,
+		['Rand'] = {200,300,400,500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4712107] = {
+		['ID'] = 4712107,
+		['Database'] = 4712,
+		['Effect'] = 107,
+		['Rand'] = {200,400,600,800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4713107] = {
+		['ID'] = 4713107,
+		['Database'] = 4713,
+		['Effect'] = 107,
+		['Rand'] = {300,500,800,1000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4714107] = {
+		['ID'] = 4714107,
+		['Database'] = 4714,
+		['Effect'] = 107,
+		['Rand'] = {400,700,1000,1300},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4715107] = {
+		['ID'] = 4715107,
+		['Database'] = 4715,
+		['Effect'] = 107,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4716107] = {
+		['ID'] = 4716107,
+		['Database'] = 4716,
+		['Effect'] = 107,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4717107] = {
+		['ID'] = 4717107,
+		['Database'] = 4717,
+		['Effect'] = 107,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4811107] = {
+		['ID'] = 4811107,
+		['Database'] = 4811,
+		['Effect'] = 107,
+		['Rand'] = {200,300,400,500,700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4812107] = {
+		['ID'] = 4812107,
+		['Database'] = 4812,
+		['Effect'] = 107,
+		['Rand'] = {200,400,600,800,1000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4813107] = {
+		['ID'] = 4813107,
+		['Database'] = 4813,
+		['Effect'] = 107,
+		['Rand'] = {300,500,800,1000,1300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4814107] = {
+		['ID'] = 4814107,
+		['Database'] = 4814,
+		['Effect'] = 107,
+		['Rand'] = {400,700,1000,1300,1600},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4815107] = {
+		['ID'] = 4815107,
+		['Database'] = 4815,
+		['Effect'] = 107,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4816107] = {
+		['ID'] = 4816107,
+		['Database'] = 4816,
+		['Effect'] = 107,
+		['Rand'] = {500,900,1400,1800,2200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4817107] = {
+		['ID'] = 4817107,
+		['Database'] = 4817,
+		['Effect'] = 107,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4911107] = {
+		['ID'] = 4911107,
+		['Database'] = 4911,
+		['Effect'] = 107,
+		['Rand'] = {200,300,400,500,700,800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4912107] = {
+		['ID'] = 4912107,
+		['Database'] = 4912,
+		['Effect'] = 107,
+		['Rand'] = {200,400,600,800,1000,1200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4913107] = {
+		['ID'] = 4913107,
+		['Database'] = 4913,
+		['Effect'] = 107,
+		['Rand'] = {300,500,800,1000,1300,1500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4914107] = {
+		['ID'] = 4914107,
+		['Database'] = 4914,
+		['Effect'] = 107,
+		['Rand'] = {400,700,1000,1300,1600,1900},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4915107] = {
+		['ID'] = 4915107,
+		['Database'] = 4915,
+		['Effect'] = 107,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4916107] = {
+		['ID'] = 4916107,
+		['Database'] = 4916,
+		['Effect'] = 107,
+		['Rand'] = {500,900,1400,1800,2200,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4917107] = {
+		['ID'] = 4917107,
+		['Database'] = 4917,
+		['Effect'] = 107,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4721107] = {
+		['ID'] = 4721107,
+		['Database'] = 4721,
+		['Effect'] = 107,
+		['Rand'] = {200,300,500,600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4722107] = {
+		['ID'] = 4722107,
+		['Database'] = 4722,
+		['Effect'] = 107,
+		['Rand'] = {300,500,700,900},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4723107] = {
+		['ID'] = 4723107,
+		['Database'] = 4723,
+		['Effect'] = 107,
+		['Rand'] = {300,600,900,1200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4724107] = {
+		['ID'] = 4724107,
+		['Database'] = 4724,
+		['Effect'] = 107,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4725107] = {
+		['ID'] = 4725107,
+		['Database'] = 4725,
+		['Effect'] = 107,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4726107] = {
+		['ID'] = 4726107,
+		['Database'] = 4726,
+		['Effect'] = 107,
+		['Rand'] = {600,1100,1600,2100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4727107] = {
+		['ID'] = 4727107,
+		['Database'] = 4727,
+		['Effect'] = 107,
+		['Rand'] = {600,1200,1800,2400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4821107] = {
+		['ID'] = 4821107,
+		['Database'] = 4821,
+		['Effect'] = 107,
+		['Rand'] = {200,300,500,600,800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4822107] = {
+		['ID'] = 4822107,
+		['Database'] = 4822,
+		['Effect'] = 107,
+		['Rand'] = {300,500,700,900,1200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4823107] = {
+		['ID'] = 4823107,
+		['Database'] = 4823,
+		['Effect'] = 107,
+		['Rand'] = {300,600,900,1200,1500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4824107] = {
+		['ID'] = 4824107,
+		['Database'] = 4824,
+		['Effect'] = 107,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4825107] = {
+		['ID'] = 4825107,
+		['Database'] = 4825,
+		['Effect'] = 107,
+		['Rand'] = {500,900,1400,1800,2300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4826107] = {
+		['ID'] = 4826107,
+		['Database'] = 4826,
+		['Effect'] = 107,
+		['Rand'] = {600,1100,1600,2100,2700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4827107] = {
+		['ID'] = 4827107,
+		['Database'] = 4827,
+		['Effect'] = 107,
+		['Rand'] = {600,1200,1800,2400,3000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4921107] = {
+		['ID'] = 4921107,
+		['Database'] = 4921,
+		['Effect'] = 107,
+		['Rand'] = {200,300,500,600,800,900},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4922107] = {
+		['ID'] = 4922107,
+		['Database'] = 4922,
+		['Effect'] = 107,
+		['Rand'] = {300,500,700,900,1200,1400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4923107] = {
+		['ID'] = 4923107,
+		['Database'] = 4923,
+		['Effect'] = 107,
+		['Rand'] = {300,600,900,1200,1500,1800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4924107] = {
+		['ID'] = 4924107,
+		['Database'] = 4924,
+		['Effect'] = 107,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4925107] = {
+		['ID'] = 4925107,
+		['Database'] = 4925,
+		['Effect'] = 107,
+		['Rand'] = {500,900,1400,1800,2300,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4926107] = {
+		['ID'] = 4926107,
+		['Database'] = 4926,
+		['Effect'] = 107,
+		['Rand'] = {600,1100,1600,2100,2700,3200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4927107] = {
+		['ID'] = 4927107,
+		['Database'] = 4927,
+		['Effect'] = 107,
+		['Rand'] = {600,1200,1800,2400,3000,3600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4731107] = {
+		['ID'] = 4731107,
+		['Database'] = 4731,
+		['Effect'] = 107,
+		['Rand'] = {200,400,600,700},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4732107] = {
+		['ID'] = 4732107,
+		['Database'] = 4732,
+		['Effect'] = 107,
+		['Rand'] = {300,600,800,1100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4733107] = {
+		['ID'] = 4733107,
+		['Database'] = 4733,
+		['Effect'] = 107,
+		['Rand'] = {400,700,1100,1400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4734107] = {
+		['ID'] = 4734107,
+		['Database'] = 4734,
+		['Effect'] = 107,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4735107] = {
+		['ID'] = 4735107,
+		['Database'] = 4735,
+		['Effect'] = 107,
+		['Rand'] = {600,1100,1600,2100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4736107] = {
+		['ID'] = 4736107,
+		['Database'] = 4736,
+		['Effect'] = 107,
+		['Rand'] = {700,1300,1900,2500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4737107] = {
+		['ID'] = 4737107,
+		['Database'] = 4737,
+		['Effect'] = 107,
+		['Rand'] = {700,1400,2100,2800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4831107] = {
+		['ID'] = 4831107,
+		['Database'] = 4831,
+		['Effect'] = 107,
+		['Rand'] = {200,400,600,700,900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4832107] = {
+		['ID'] = 4832107,
+		['Database'] = 4832,
+		['Effect'] = 107,
+		['Rand'] = {300,600,800,1100,1400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4833107] = {
+		['ID'] = 4833107,
+		['Database'] = 4833,
+		['Effect'] = 107,
+		['Rand'] = {400,700,1100,1400,1800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4834107] = {
+		['ID'] = 4834107,
+		['Database'] = 4834,
+		['Effect'] = 107,
+		['Rand'] = {500,900,1400,1800,2200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4835107] = {
+		['ID'] = 4835107,
+		['Database'] = 4835,
+		['Effect'] = 107,
+		['Rand'] = {600,1100,1600,2100,2700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4836107] = {
+		['ID'] = 4836107,
+		['Database'] = 4836,
+		['Effect'] = 107,
+		['Rand'] = {700,1300,1900,2500,3100},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4837107] = {
+		['ID'] = 4837107,
+		['Database'] = 4837,
+		['Effect'] = 107,
+		['Rand'] = {700,1400,2100,2800,3500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4931107] = {
+		['ID'] = 4931107,
+		['Database'] = 4931,
+		['Effect'] = 107,
+		['Rand'] = {200,400,600,700,900,1100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4932107] = {
+		['ID'] = 4932107,
+		['Database'] = 4932,
+		['Effect'] = 107,
+		['Rand'] = {300,600,800,1100,1400,1600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4933107] = {
+		['ID'] = 4933107,
+		['Database'] = 4933,
+		['Effect'] = 107,
+		['Rand'] = {400,700,1100,1400,1800,2100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4934107] = {
+		['ID'] = 4934107,
+		['Database'] = 4934,
+		['Effect'] = 107,
+		['Rand'] = {500,900,1400,1800,2200,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4935107] = {
+		['ID'] = 4935107,
+		['Database'] = 4935,
+		['Effect'] = 107,
+		['Rand'] = {600,1100,1600,2100,2700,3200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4936107] = {
+		['ID'] = 4936107,
+		['Database'] = 4936,
+		['Effect'] = 107,
+		['Rand'] = {700,1300,1900,2500,3100,3700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4937107] = {
+		['ID'] = 4937107,
+		['Database'] = 4937,
+		['Effect'] = 107,
+		['Rand'] = {700,1400,2100,2800,3500,4200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4741107] = {
+		['ID'] = 4741107,
+		['Database'] = 4741,
+		['Effect'] = 107,
+		['Rand'] = {200,400,600,800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4742107] = {
+		['ID'] = 4742107,
+		['Database'] = 4742,
+		['Effect'] = 107,
+		['Rand'] = {300,600,900,1200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4743107] = {
+		['ID'] = 4743107,
+		['Database'] = 4743,
+		['Effect'] = 107,
+		['Rand'] = {400,800,1200,1600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4744107] = {
+		['ID'] = 4744107,
+		['Database'] = 4744,
+		['Effect'] = 107,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4745107] = {
+		['ID'] = 4745107,
+		['Database'] = 4745,
+		['Effect'] = 107,
+		['Rand'] = {600,1200,1800,2400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4746107] = {
+		['ID'] = 4746107,
+		['Database'] = 4746,
+		['Effect'] = 107,
+		['Rand'] = {700,1400,2100,2800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4747107] = {
+		['ID'] = 4747107,
+		['Database'] = 4747,
+		['Effect'] = 107,
+		['Rand'] = {800,1600,2400,3200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4841107] = {
+		['ID'] = 4841107,
+		['Database'] = 4841,
+		['Effect'] = 107,
+		['Rand'] = {200,400,600,800,1000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4842107] = {
+		['ID'] = 4842107,
+		['Database'] = 4842,
+		['Effect'] = 107,
+		['Rand'] = {300,600,900,1200,1500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4843107] = {
+		['ID'] = 4843107,
+		['Database'] = 4843,
+		['Effect'] = 107,
+		['Rand'] = {400,800,1200,1600,2000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4844107] = {
+		['ID'] = 4844107,
+		['Database'] = 4844,
+		['Effect'] = 107,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4845107] = {
+		['ID'] = 4845107,
+		['Database'] = 4845,
+		['Effect'] = 107,
+		['Rand'] = {600,1200,1800,2400,3000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4846107] = {
+		['ID'] = 4846107,
+		['Database'] = 4846,
+		['Effect'] = 107,
+		['Rand'] = {700,1400,2100,2800,3500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4847107] = {
+		['ID'] = 4847107,
+		['Database'] = 4847,
+		['Effect'] = 107,
+		['Rand'] = {800,1600,2400,3200,4000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4941107] = {
+		['ID'] = 4941107,
+		['Database'] = 4941,
+		['Effect'] = 107,
+		['Rand'] = {200,400,600,800,1000,1200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4942107] = {
+		['ID'] = 4942107,
+		['Database'] = 4942,
+		['Effect'] = 107,
+		['Rand'] = {300,600,900,1200,1500,1800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4943107] = {
+		['ID'] = 4943107,
+		['Database'] = 4943,
+		['Effect'] = 107,
+		['Rand'] = {400,800,1200,1600,2000,2400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4944107] = {
+		['ID'] = 4944107,
+		['Database'] = 4944,
+		['Effect'] = 107,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4945107] = {
+		['ID'] = 4945107,
+		['Database'] = 4945,
+		['Effect'] = 107,
+		['Rand'] = {600,1200,1800,2400,3000,3600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4946107] = {
+		['ID'] = 4946107,
+		['Database'] = 4946,
+		['Effect'] = 107,
+		['Rand'] = {700,1400,2100,2800,3500,4200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4947107] = {
+		['ID'] = 4947107,
+		['Database'] = 4947,
+		['Effect'] = 107,
+		['Rand'] = {800,1600,2400,3200,4000,4800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4751107] = {
+		['ID'] = 4751107,
+		['Database'] = 4751,
+		['Effect'] = 107,
+		['Rand'] = {300,500,700,900},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4752107] = {
+		['ID'] = 4752107,
+		['Database'] = 4752,
+		['Effect'] = 107,
+		['Rand'] = {400,700,1100,1400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4753107] = {
+		['ID'] = 4753107,
+		['Database'] = 4753,
+		['Effect'] = 107,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4754107] = {
+		['ID'] = 4754107,
+		['Database'] = 4754,
+		['Effect'] = 107,
+		['Rand'] = {600,1200,1700,2300},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4755107] = {
+		['ID'] = 4755107,
+		['Database'] = 4755,
+		['Effect'] = 107,
+		['Rand'] = {700,1400,2100,2700},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4756107] = {
+		['ID'] = 4756107,
+		['Database'] = 4756,
+		['Effect'] = 107,
+		['Rand'] = {800,1600,2400,3200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4757107] = {
+		['ID'] = 4757107,
+		['Database'] = 4757,
+		['Effect'] = 107,
+		['Rand'] = {900,1800,2700,3600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4851107] = {
+		['ID'] = 4851107,
+		['Database'] = 4851,
+		['Effect'] = 107,
+		['Rand'] = {300,500,700,900,1200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4852107] = {
+		['ID'] = 4852107,
+		['Database'] = 4852,
+		['Effect'] = 107,
+		['Rand'] = {400,700,1100,1400,1700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4853107] = {
+		['ID'] = 4853107,
+		['Database'] = 4853,
+		['Effect'] = 107,
+		['Rand'] = {500,900,1400,1800,2300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4854107] = {
+		['ID'] = 4854107,
+		['Database'] = 4854,
+		['Effect'] = 107,
+		['Rand'] = {600,1200,1700,2300,2900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4855107] = {
+		['ID'] = 4855107,
+		['Database'] = 4855,
+		['Effect'] = 107,
+		['Rand'] = {700,1400,2100,2700,3400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4856107] = {
+		['ID'] = 4856107,
+		['Database'] = 4856,
+		['Effect'] = 107,
+		['Rand'] = {800,1600,2400,3200,4000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4857107] = {
+		['ID'] = 4857107,
+		['Database'] = 4857,
+		['Effect'] = 107,
+		['Rand'] = {900,1800,2700,3600,4500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4951107] = {
+		['ID'] = 4951107,
+		['Database'] = 4951,
+		['Effect'] = 107,
+		['Rand'] = {300,500,700,900,1200,1400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4952107] = {
+		['ID'] = 4952107,
+		['Database'] = 4952,
+		['Effect'] = 107,
+		['Rand'] = {400,700,1100,1400,1700,2100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4953107] = {
+		['ID'] = 4953107,
+		['Database'] = 4953,
+		['Effect'] = 107,
+		['Rand'] = {500,900,1400,1800,2300,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4954107] = {
+		['ID'] = 4954107,
+		['Database'] = 4954,
+		['Effect'] = 107,
+		['Rand'] = {600,1200,1700,2300,2900,3400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4955107] = {
+		['ID'] = 4955107,
+		['Database'] = 4955,
+		['Effect'] = 107,
+		['Rand'] = {700,1400,2100,2700,3400,4100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4956107] = {
+		['ID'] = 4956107,
+		['Database'] = 4956,
+		['Effect'] = 107,
+		['Rand'] = {800,1600,2400,3200,4000,4800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4957107] = {
+		['ID'] = 4957107,
+		['Database'] = 4957,
+		['Effect'] = 107,
+		['Rand'] = {900,1800,2700,3600,4500,5400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4761107] = {
+		['ID'] = 4761107,
+		['Database'] = 4761,
+		['Effect'] = 107,
+		['Rand'] = {300,500,800,1000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4762107] = {
+		['ID'] = 4762107,
+		['Database'] = 4762,
+		['Effect'] = 107,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4763107] = {
+		['ID'] = 4763107,
+		['Database'] = 4763,
+		['Effect'] = 107,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4764107] = {
+		['ID'] = 4764107,
+		['Database'] = 4764,
+		['Effect'] = 107,
+		['Rand'] = {700,1300,1900,2500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4765107] = {
+		['ID'] = 4765107,
+		['Database'] = 4765,
+		['Effect'] = 107,
+		['Rand'] = {800,1500,2300,3000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4766107] = {
+		['ID'] = 4766107,
+		['Database'] = 4766,
+		['Effect'] = 107,
+		['Rand'] = {900,1800,2700,3500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4767107] = {
+		['ID'] = 4767107,
+		['Database'] = 4767,
+		['Effect'] = 107,
+		['Rand'] = {1000,2000,3000,4000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[4861107] = {
+		['ID'] = 4861107,
+		['Database'] = 4861,
+		['Effect'] = 107,
+		['Rand'] = {300,500,800,1000,1300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4862107] = {
+		['ID'] = 4862107,
+		['Database'] = 4862,
+		['Effect'] = 107,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4863107] = {
+		['ID'] = 4863107,
+		['Database'] = 4863,
+		['Effect'] = 107,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4864107] = {
+		['ID'] = 4864107,
+		['Database'] = 4864,
+		['Effect'] = 107,
+		['Rand'] = {700,1300,1900,2500,3200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4865107] = {
+		['ID'] = 4865107,
+		['Database'] = 4865,
+		['Effect'] = 107,
+		['Rand'] = {800,1500,2300,3000,3800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4866107] = {
+		['ID'] = 4866107,
+		['Database'] = 4866,
+		['Effect'] = 107,
+		['Rand'] = {900,1800,2700,3500,4400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4867107] = {
+		['ID'] = 4867107,
+		['Database'] = 4867,
+		['Effect'] = 107,
+		['Rand'] = {1000,2000,3000,4000,5000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[4961107] = {
+		['ID'] = 4961107,
+		['Database'] = 4961,
+		['Effect'] = 107,
+		['Rand'] = {300,500,800,1000,1300,1500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4962107] = {
+		['ID'] = 4962107,
+		['Database'] = 4962,
+		['Effect'] = 107,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4963107] = {
+		['ID'] = 4963107,
+		['Database'] = 4963,
+		['Effect'] = 107,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4964107] = {
+		['ID'] = 4964107,
+		['Database'] = 4964,
+		['Effect'] = 107,
+		['Rand'] = {700,1300,1900,2500,3200,3800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4965107] = {
+		['ID'] = 4965107,
+		['Database'] = 4965,
+		['Effect'] = 107,
+		['Rand'] = {800,1500,2300,3000,3800,4500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4966107] = {
+		['ID'] = 4966107,
+		['Database'] = 4966,
+		['Effect'] = 107,
+		['Rand'] = {900,1800,2700,3500,4400,5300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[4967107] = {
+		['ID'] = 4967107,
+		['Database'] = 4967,
+		['Effect'] = 107,
+		['Rand'] = {1000,2000,3000,4000,5000,6000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5011108] = {
+		['ID'] = 5011108,
+		['Database'] = 5011,
+		['Effect'] = 108,
+		['Rand'] = {200,300,400,500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5012108] = {
+		['ID'] = 5012108,
+		['Database'] = 5012,
+		['Effect'] = 108,
+		['Rand'] = {200,400,600,800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5013108] = {
+		['ID'] = 5013108,
+		['Database'] = 5013,
+		['Effect'] = 108,
+		['Rand'] = {300,500,800,1000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5014108] = {
+		['ID'] = 5014108,
+		['Database'] = 5014,
+		['Effect'] = 108,
+		['Rand'] = {400,700,1000,1300},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5015108] = {
+		['ID'] = 5015108,
+		['Database'] = 5015,
+		['Effect'] = 108,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5016108] = {
+		['ID'] = 5016108,
+		['Database'] = 5016,
+		['Effect'] = 108,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5017108] = {
+		['ID'] = 5017108,
+		['Database'] = 5017,
+		['Effect'] = 108,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5111108] = {
+		['ID'] = 5111108,
+		['Database'] = 5111,
+		['Effect'] = 108,
+		['Rand'] = {200,300,400,500,700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5112108] = {
+		['ID'] = 5112108,
+		['Database'] = 5112,
+		['Effect'] = 108,
+		['Rand'] = {200,400,600,800,1000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5113108] = {
+		['ID'] = 5113108,
+		['Database'] = 5113,
+		['Effect'] = 108,
+		['Rand'] = {300,500,800,1000,1300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5114108] = {
+		['ID'] = 5114108,
+		['Database'] = 5114,
+		['Effect'] = 108,
+		['Rand'] = {400,700,1000,1300,1600},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5115108] = {
+		['ID'] = 5115108,
+		['Database'] = 5115,
+		['Effect'] = 108,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5116108] = {
+		['ID'] = 5116108,
+		['Database'] = 5116,
+		['Effect'] = 108,
+		['Rand'] = {500,900,1400,1800,2200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5117108] = {
+		['ID'] = 5117108,
+		['Database'] = 5117,
+		['Effect'] = 108,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5211108] = {
+		['ID'] = 5211108,
+		['Database'] = 5211,
+		['Effect'] = 108,
+		['Rand'] = {200,300,400,500,700,800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5212108] = {
+		['ID'] = 5212108,
+		['Database'] = 5212,
+		['Effect'] = 108,
+		['Rand'] = {200,400,600,800,1000,1200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5213108] = {
+		['ID'] = 5213108,
+		['Database'] = 5213,
+		['Effect'] = 108,
+		['Rand'] = {300,500,800,1000,1300,1500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5214108] = {
+		['ID'] = 5214108,
+		['Database'] = 5214,
+		['Effect'] = 108,
+		['Rand'] = {400,700,1000,1300,1600,1900},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5215108] = {
+		['ID'] = 5215108,
+		['Database'] = 5215,
+		['Effect'] = 108,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5216108] = {
+		['ID'] = 5216108,
+		['Database'] = 5216,
+		['Effect'] = 108,
+		['Rand'] = {500,900,1400,1800,2200,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5217108] = {
+		['ID'] = 5217108,
+		['Database'] = 5217,
+		['Effect'] = 108,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5021108] = {
+		['ID'] = 5021108,
+		['Database'] = 5021,
+		['Effect'] = 108,
+		['Rand'] = {200,300,500,600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5022108] = {
+		['ID'] = 5022108,
+		['Database'] = 5022,
+		['Effect'] = 108,
+		['Rand'] = {300,500,700,900},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5023108] = {
+		['ID'] = 5023108,
+		['Database'] = 5023,
+		['Effect'] = 108,
+		['Rand'] = {300,600,900,1200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5024108] = {
+		['ID'] = 5024108,
+		['Database'] = 5024,
+		['Effect'] = 108,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5025108] = {
+		['ID'] = 5025108,
+		['Database'] = 5025,
+		['Effect'] = 108,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5026108] = {
+		['ID'] = 5026108,
+		['Database'] = 5026,
+		['Effect'] = 108,
+		['Rand'] = {600,1100,1600,2100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5027108] = {
+		['ID'] = 5027108,
+		['Database'] = 5027,
+		['Effect'] = 108,
+		['Rand'] = {600,1200,1800,2400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5121108] = {
+		['ID'] = 5121108,
+		['Database'] = 5121,
+		['Effect'] = 108,
+		['Rand'] = {200,300,500,600,800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5122108] = {
+		['ID'] = 5122108,
+		['Database'] = 5122,
+		['Effect'] = 108,
+		['Rand'] = {300,500,700,900,1200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5123108] = {
+		['ID'] = 5123108,
+		['Database'] = 5123,
+		['Effect'] = 108,
+		['Rand'] = {300,600,900,1200,1500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5124108] = {
+		['ID'] = 5124108,
+		['Database'] = 5124,
+		['Effect'] = 108,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5125108] = {
+		['ID'] = 5125108,
+		['Database'] = 5125,
+		['Effect'] = 108,
+		['Rand'] = {500,900,1400,1800,2300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5126108] = {
+		['ID'] = 5126108,
+		['Database'] = 5126,
+		['Effect'] = 108,
+		['Rand'] = {600,1100,1600,2100,2700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5127108] = {
+		['ID'] = 5127108,
+		['Database'] = 5127,
+		['Effect'] = 108,
+		['Rand'] = {600,1200,1800,2400,3000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5221108] = {
+		['ID'] = 5221108,
+		['Database'] = 5221,
+		['Effect'] = 108,
+		['Rand'] = {200,300,500,600,800,900},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5222108] = {
+		['ID'] = 5222108,
+		['Database'] = 5222,
+		['Effect'] = 108,
+		['Rand'] = {300,500,700,900,1200,1400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5223108] = {
+		['ID'] = 5223108,
+		['Database'] = 5223,
+		['Effect'] = 108,
+		['Rand'] = {300,600,900,1200,1500,1800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5224108] = {
+		['ID'] = 5224108,
+		['Database'] = 5224,
+		['Effect'] = 108,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5225108] = {
+		['ID'] = 5225108,
+		['Database'] = 5225,
+		['Effect'] = 108,
+		['Rand'] = {500,900,1400,1800,2300,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5226108] = {
+		['ID'] = 5226108,
+		['Database'] = 5226,
+		['Effect'] = 108,
+		['Rand'] = {600,1100,1600,2100,2700,3200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5227108] = {
+		['ID'] = 5227108,
+		['Database'] = 5227,
+		['Effect'] = 108,
+		['Rand'] = {600,1200,1800,2400,3000,3600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5031108] = {
+		['ID'] = 5031108,
+		['Database'] = 5031,
+		['Effect'] = 108,
+		['Rand'] = {200,400,600,700},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5032108] = {
+		['ID'] = 5032108,
+		['Database'] = 5032,
+		['Effect'] = 108,
+		['Rand'] = {300,600,800,1100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5033108] = {
+		['ID'] = 5033108,
+		['Database'] = 5033,
+		['Effect'] = 108,
+		['Rand'] = {400,700,1100,1400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5034108] = {
+		['ID'] = 5034108,
+		['Database'] = 5034,
+		['Effect'] = 108,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5035108] = {
+		['ID'] = 5035108,
+		['Database'] = 5035,
+		['Effect'] = 108,
+		['Rand'] = {600,1100,1600,2100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5036108] = {
+		['ID'] = 5036108,
+		['Database'] = 5036,
+		['Effect'] = 108,
+		['Rand'] = {700,1300,1900,2500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5037108] = {
+		['ID'] = 5037108,
+		['Database'] = 5037,
+		['Effect'] = 108,
+		['Rand'] = {700,1400,2100,2800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5131108] = {
+		['ID'] = 5131108,
+		['Database'] = 5131,
+		['Effect'] = 108,
+		['Rand'] = {200,400,600,700,900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5132108] = {
+		['ID'] = 5132108,
+		['Database'] = 5132,
+		['Effect'] = 108,
+		['Rand'] = {300,600,800,1100,1400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5133108] = {
+		['ID'] = 5133108,
+		['Database'] = 5133,
+		['Effect'] = 108,
+		['Rand'] = {400,700,1100,1400,1800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5134108] = {
+		['ID'] = 5134108,
+		['Database'] = 5134,
+		['Effect'] = 108,
+		['Rand'] = {500,900,1400,1800,2200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5135108] = {
+		['ID'] = 5135108,
+		['Database'] = 5135,
+		['Effect'] = 108,
+		['Rand'] = {600,1100,1600,2100,2700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5136108] = {
+		['ID'] = 5136108,
+		['Database'] = 5136,
+		['Effect'] = 108,
+		['Rand'] = {700,1300,1900,2500,3100},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5137108] = {
+		['ID'] = 5137108,
+		['Database'] = 5137,
+		['Effect'] = 108,
+		['Rand'] = {700,1400,2100,2800,3500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5231108] = {
+		['ID'] = 5231108,
+		['Database'] = 5231,
+		['Effect'] = 108,
+		['Rand'] = {200,400,600,700,900,1100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5232108] = {
+		['ID'] = 5232108,
+		['Database'] = 5232,
+		['Effect'] = 108,
+		['Rand'] = {300,600,800,1100,1400,1600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5233108] = {
+		['ID'] = 5233108,
+		['Database'] = 5233,
+		['Effect'] = 108,
+		['Rand'] = {400,700,1100,1400,1800,2100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5234108] = {
+		['ID'] = 5234108,
+		['Database'] = 5234,
+		['Effect'] = 108,
+		['Rand'] = {500,900,1400,1800,2200,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5235108] = {
+		['ID'] = 5235108,
+		['Database'] = 5235,
+		['Effect'] = 108,
+		['Rand'] = {600,1100,1600,2100,2700,3200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5236108] = {
+		['ID'] = 5236108,
+		['Database'] = 5236,
+		['Effect'] = 108,
+		['Rand'] = {700,1300,1900,2500,3100,3700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5237108] = {
+		['ID'] = 5237108,
+		['Database'] = 5237,
+		['Effect'] = 108,
+		['Rand'] = {700,1400,2100,2800,3500,4200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5041108] = {
+		['ID'] = 5041108,
+		['Database'] = 5041,
+		['Effect'] = 108,
+		['Rand'] = {200,400,600,800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5042108] = {
+		['ID'] = 5042108,
+		['Database'] = 5042,
+		['Effect'] = 108,
+		['Rand'] = {300,600,900,1200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5043108] = {
+		['ID'] = 5043108,
+		['Database'] = 5043,
+		['Effect'] = 108,
+		['Rand'] = {400,800,1200,1600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5044108] = {
+		['ID'] = 5044108,
+		['Database'] = 5044,
+		['Effect'] = 108,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5045108] = {
+		['ID'] = 5045108,
+		['Database'] = 5045,
+		['Effect'] = 108,
+		['Rand'] = {600,1200,1800,2400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5046108] = {
+		['ID'] = 5046108,
+		['Database'] = 5046,
+		['Effect'] = 108,
+		['Rand'] = {700,1400,2100,2800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5047108] = {
+		['ID'] = 5047108,
+		['Database'] = 5047,
+		['Effect'] = 108,
+		['Rand'] = {800,1600,2400,3200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5141108] = {
+		['ID'] = 5141108,
+		['Database'] = 5141,
+		['Effect'] = 108,
+		['Rand'] = {200,400,600,800,1000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5142108] = {
+		['ID'] = 5142108,
+		['Database'] = 5142,
+		['Effect'] = 108,
+		['Rand'] = {300,600,900,1200,1500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5143108] = {
+		['ID'] = 5143108,
+		['Database'] = 5143,
+		['Effect'] = 108,
+		['Rand'] = {400,800,1200,1600,2000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5144108] = {
+		['ID'] = 5144108,
+		['Database'] = 5144,
+		['Effect'] = 108,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5145108] = {
+		['ID'] = 5145108,
+		['Database'] = 5145,
+		['Effect'] = 108,
+		['Rand'] = {600,1200,1800,2400,3000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5146108] = {
+		['ID'] = 5146108,
+		['Database'] = 5146,
+		['Effect'] = 108,
+		['Rand'] = {700,1400,2100,2800,3500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5147108] = {
+		['ID'] = 5147108,
+		['Database'] = 5147,
+		['Effect'] = 108,
+		['Rand'] = {800,1600,2400,3200,4000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5241108] = {
+		['ID'] = 5241108,
+		['Database'] = 5241,
+		['Effect'] = 108,
+		['Rand'] = {200,400,600,800,1000,1200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5242108] = {
+		['ID'] = 5242108,
+		['Database'] = 5242,
+		['Effect'] = 108,
+		['Rand'] = {300,600,900,1200,1500,1800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5243108] = {
+		['ID'] = 5243108,
+		['Database'] = 5243,
+		['Effect'] = 108,
+		['Rand'] = {400,800,1200,1600,2000,2400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5244108] = {
+		['ID'] = 5244108,
+		['Database'] = 5244,
+		['Effect'] = 108,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5245108] = {
+		['ID'] = 5245108,
+		['Database'] = 5245,
+		['Effect'] = 108,
+		['Rand'] = {600,1200,1800,2400,3000,3600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5246108] = {
+		['ID'] = 5246108,
+		['Database'] = 5246,
+		['Effect'] = 108,
+		['Rand'] = {700,1400,2100,2800,3500,4200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5247108] = {
+		['ID'] = 5247108,
+		['Database'] = 5247,
+		['Effect'] = 108,
+		['Rand'] = {800,1600,2400,3200,4000,4800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5051108] = {
+		['ID'] = 5051108,
+		['Database'] = 5051,
+		['Effect'] = 108,
+		['Rand'] = {300,500,700,900},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5052108] = {
+		['ID'] = 5052108,
+		['Database'] = 5052,
+		['Effect'] = 108,
+		['Rand'] = {400,700,1100,1400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5053108] = {
+		['ID'] = 5053108,
+		['Database'] = 5053,
+		['Effect'] = 108,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5054108] = {
+		['ID'] = 5054108,
+		['Database'] = 5054,
+		['Effect'] = 108,
+		['Rand'] = {600,1200,1700,2300},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5055108] = {
+		['ID'] = 5055108,
+		['Database'] = 5055,
+		['Effect'] = 108,
+		['Rand'] = {700,1400,2100,2700},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5056108] = {
+		['ID'] = 5056108,
+		['Database'] = 5056,
+		['Effect'] = 108,
+		['Rand'] = {800,1600,2400,3200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5057108] = {
+		['ID'] = 5057108,
+		['Database'] = 5057,
+		['Effect'] = 108,
+		['Rand'] = {900,1800,2700,3600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5151108] = {
+		['ID'] = 5151108,
+		['Database'] = 5151,
+		['Effect'] = 108,
+		['Rand'] = {300,500,700,900,1200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5152108] = {
+		['ID'] = 5152108,
+		['Database'] = 5152,
+		['Effect'] = 108,
+		['Rand'] = {400,700,1100,1400,1700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5153108] = {
+		['ID'] = 5153108,
+		['Database'] = 5153,
+		['Effect'] = 108,
+		['Rand'] = {500,900,1400,1800,2300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5154108] = {
+		['ID'] = 5154108,
+		['Database'] = 5154,
+		['Effect'] = 108,
+		['Rand'] = {600,1200,1700,2300,2900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5155108] = {
+		['ID'] = 5155108,
+		['Database'] = 5155,
+		['Effect'] = 108,
+		['Rand'] = {700,1400,2100,2700,3400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5156108] = {
+		['ID'] = 5156108,
+		['Database'] = 5156,
+		['Effect'] = 108,
+		['Rand'] = {800,1600,2400,3200,4000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5157108] = {
+		['ID'] = 5157108,
+		['Database'] = 5157,
+		['Effect'] = 108,
+		['Rand'] = {900,1800,2700,3600,4500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5251108] = {
+		['ID'] = 5251108,
+		['Database'] = 5251,
+		['Effect'] = 108,
+		['Rand'] = {300,500,700,900,1200,1400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5252108] = {
+		['ID'] = 5252108,
+		['Database'] = 5252,
+		['Effect'] = 108,
+		['Rand'] = {400,700,1100,1400,1700,2100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5253108] = {
+		['ID'] = 5253108,
+		['Database'] = 5253,
+		['Effect'] = 108,
+		['Rand'] = {500,900,1400,1800,2300,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5254108] = {
+		['ID'] = 5254108,
+		['Database'] = 5254,
+		['Effect'] = 108,
+		['Rand'] = {600,1200,1700,2300,2900,3400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5255108] = {
+		['ID'] = 5255108,
+		['Database'] = 5255,
+		['Effect'] = 108,
+		['Rand'] = {700,1400,2100,2700,3400,4100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5256108] = {
+		['ID'] = 5256108,
+		['Database'] = 5256,
+		['Effect'] = 108,
+		['Rand'] = {800,1600,2400,3200,4000,4800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5257108] = {
+		['ID'] = 5257108,
+		['Database'] = 5257,
+		['Effect'] = 108,
+		['Rand'] = {900,1800,2700,3600,4500,5400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5061108] = {
+		['ID'] = 5061108,
+		['Database'] = 5061,
+		['Effect'] = 108,
+		['Rand'] = {300,500,800,1000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5062108] = {
+		['ID'] = 5062108,
+		['Database'] = 5062,
+		['Effect'] = 108,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5063108] = {
+		['ID'] = 5063108,
+		['Database'] = 5063,
+		['Effect'] = 108,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5064108] = {
+		['ID'] = 5064108,
+		['Database'] = 5064,
+		['Effect'] = 108,
+		['Rand'] = {700,1300,1900,2500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5065108] = {
+		['ID'] = 5065108,
+		['Database'] = 5065,
+		['Effect'] = 108,
+		['Rand'] = {800,1500,2300,3000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5066108] = {
+		['ID'] = 5066108,
+		['Database'] = 5066,
+		['Effect'] = 108,
+		['Rand'] = {900,1800,2700,3500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5067108] = {
+		['ID'] = 5067108,
+		['Database'] = 5067,
+		['Effect'] = 108,
+		['Rand'] = {1000,2000,3000,4000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5161108] = {
+		['ID'] = 5161108,
+		['Database'] = 5161,
+		['Effect'] = 108,
+		['Rand'] = {300,500,800,1000,1300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5162108] = {
+		['ID'] = 5162108,
+		['Database'] = 5162,
+		['Effect'] = 108,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5163108] = {
+		['ID'] = 5163108,
+		['Database'] = 5163,
+		['Effect'] = 108,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5164108] = {
+		['ID'] = 5164108,
+		['Database'] = 5164,
+		['Effect'] = 108,
+		['Rand'] = {700,1300,1900,2500,3200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5165108] = {
+		['ID'] = 5165108,
+		['Database'] = 5165,
+		['Effect'] = 108,
+		['Rand'] = {800,1500,2300,3000,3800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5166108] = {
+		['ID'] = 5166108,
+		['Database'] = 5166,
+		['Effect'] = 108,
+		['Rand'] = {900,1800,2700,3500,4400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5167108] = {
+		['ID'] = 5167108,
+		['Database'] = 5167,
+		['Effect'] = 108,
+		['Rand'] = {1000,2000,3000,4000,5000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5261108] = {
+		['ID'] = 5261108,
+		['Database'] = 5261,
+		['Effect'] = 108,
+		['Rand'] = {300,500,800,1000,1300,1500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5262108] = {
+		['ID'] = 5262108,
+		['Database'] = 5262,
+		['Effect'] = 108,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5263108] = {
+		['ID'] = 5263108,
+		['Database'] = 5263,
+		['Effect'] = 108,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5264108] = {
+		['ID'] = 5264108,
+		['Database'] = 5264,
+		['Effect'] = 108,
+		['Rand'] = {700,1300,1900,2500,3200,3800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5265108] = {
+		['ID'] = 5265108,
+		['Database'] = 5265,
+		['Effect'] = 108,
+		['Rand'] = {800,1500,2300,3000,3800,4500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5266108] = {
+		['ID'] = 5266108,
+		['Database'] = 5266,
+		['Effect'] = 108,
+		['Rand'] = {900,1800,2700,3500,4400,5300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5267108] = {
+		['ID'] = 5267108,
+		['Database'] = 5267,
+		['Effect'] = 108,
+		['Rand'] = {1000,2000,3000,4000,5000,6000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5311109] = {
+		['ID'] = 5311109,
+		['Database'] = 5311,
 		['Effect'] = 109,
-		['Rand'] = {300,500,700,900,1100,1300},
-		['QualityWeight'] = {100,110,120,130,150,170},
-		['FluctuationValue1'] = 40
+		['Rand'] = {200,300,400,500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5312109] = {
+		['ID'] = 5312109,
+		['Database'] = 5312,
+		['Effect'] = 109,
+		['Rand'] = {200,400,600,800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5313109] = {
+		['ID'] = 5313109,
+		['Database'] = 5313,
+		['Effect'] = 109,
+		['Rand'] = {300,500,800,1000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5314109] = {
+		['ID'] = 5314109,
+		['Database'] = 5314,
+		['Effect'] = 109,
+		['Rand'] = {400,700,1000,1300},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5315109] = {
+		['ID'] = 5315109,
+		['Database'] = 5315,
+		['Effect'] = 109,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5316109] = {
+		['ID'] = 5316109,
+		['Database'] = 5316,
+		['Effect'] = 109,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5317109] = {
+		['ID'] = 5317109,
+		['Database'] = 5317,
+		['Effect'] = 109,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5411109] = {
+		['ID'] = 5411109,
+		['Database'] = 5411,
+		['Effect'] = 109,
+		['Rand'] = {200,300,400,500,700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5412109] = {
+		['ID'] = 5412109,
+		['Database'] = 5412,
+		['Effect'] = 109,
+		['Rand'] = {200,400,600,800,1000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5413109] = {
+		['ID'] = 5413109,
+		['Database'] = 5413,
+		['Effect'] = 109,
+		['Rand'] = {300,500,800,1000,1300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5414109] = {
+		['ID'] = 5414109,
+		['Database'] = 5414,
+		['Effect'] = 109,
+		['Rand'] = {400,700,1000,1300,1600},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5415109] = {
+		['ID'] = 5415109,
+		['Database'] = 5415,
+		['Effect'] = 109,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5416109] = {
+		['ID'] = 5416109,
+		['Database'] = 5416,
+		['Effect'] = 109,
+		['Rand'] = {500,900,1400,1800,2200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5417109] = {
+		['ID'] = 5417109,
+		['Database'] = 5417,
+		['Effect'] = 109,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5511109] = {
+		['ID'] = 5511109,
+		['Database'] = 5511,
+		['Effect'] = 109,
+		['Rand'] = {200,300,400,500,700,800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5512109] = {
+		['ID'] = 5512109,
+		['Database'] = 5512,
+		['Effect'] = 109,
+		['Rand'] = {200,400,600,800,1000,1200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5513109] = {
+		['ID'] = 5513109,
+		['Database'] = 5513,
+		['Effect'] = 109,
+		['Rand'] = {300,500,800,1000,1300,1500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5514109] = {
+		['ID'] = 5514109,
+		['Database'] = 5514,
+		['Effect'] = 109,
+		['Rand'] = {400,700,1000,1300,1600,1900},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5515109] = {
+		['ID'] = 5515109,
+		['Database'] = 5515,
+		['Effect'] = 109,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5516109] = {
+		['ID'] = 5516109,
+		['Database'] = 5516,
+		['Effect'] = 109,
+		['Rand'] = {500,900,1400,1800,2200,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5517109] = {
+		['ID'] = 5517109,
+		['Database'] = 5517,
+		['Effect'] = 109,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5321109] = {
+		['ID'] = 5321109,
+		['Database'] = 5321,
+		['Effect'] = 109,
+		['Rand'] = {200,300,500,600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5322109] = {
+		['ID'] = 5322109,
+		['Database'] = 5322,
+		['Effect'] = 109,
+		['Rand'] = {300,500,700,900},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5323109] = {
+		['ID'] = 5323109,
+		['Database'] = 5323,
+		['Effect'] = 109,
+		['Rand'] = {300,600,900,1200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5324109] = {
+		['ID'] = 5324109,
+		['Database'] = 5324,
+		['Effect'] = 109,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5325109] = {
+		['ID'] = 5325109,
+		['Database'] = 5325,
+		['Effect'] = 109,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5326109] = {
+		['ID'] = 5326109,
+		['Database'] = 5326,
+		['Effect'] = 109,
+		['Rand'] = {600,1100,1600,2100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5327109] = {
+		['ID'] = 5327109,
+		['Database'] = 5327,
+		['Effect'] = 109,
+		['Rand'] = {600,1200,1800,2400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5421109] = {
+		['ID'] = 5421109,
+		['Database'] = 5421,
+		['Effect'] = 109,
+		['Rand'] = {200,300,500,600,800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5422109] = {
+		['ID'] = 5422109,
+		['Database'] = 5422,
+		['Effect'] = 109,
+		['Rand'] = {300,500,700,900,1200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5423109] = {
+		['ID'] = 5423109,
+		['Database'] = 5423,
+		['Effect'] = 109,
+		['Rand'] = {300,600,900,1200,1500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5424109] = {
+		['ID'] = 5424109,
+		['Database'] = 5424,
+		['Effect'] = 109,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5425109] = {
+		['ID'] = 5425109,
+		['Database'] = 5425,
+		['Effect'] = 109,
+		['Rand'] = {500,900,1400,1800,2300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5426109] = {
+		['ID'] = 5426109,
+		['Database'] = 5426,
+		['Effect'] = 109,
+		['Rand'] = {600,1100,1600,2100,2700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5427109] = {
+		['ID'] = 5427109,
+		['Database'] = 5427,
+		['Effect'] = 109,
+		['Rand'] = {600,1200,1800,2400,3000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5521109] = {
+		['ID'] = 5521109,
+		['Database'] = 5521,
+		['Effect'] = 109,
+		['Rand'] = {200,300,500,600,800,900},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5522109] = {
+		['ID'] = 5522109,
+		['Database'] = 5522,
+		['Effect'] = 109,
+		['Rand'] = {300,500,700,900,1200,1400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5523109] = {
+		['ID'] = 5523109,
+		['Database'] = 5523,
+		['Effect'] = 109,
+		['Rand'] = {300,600,900,1200,1500,1800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5524109] = {
+		['ID'] = 5524109,
+		['Database'] = 5524,
+		['Effect'] = 109,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5525109] = {
+		['ID'] = 5525109,
+		['Database'] = 5525,
+		['Effect'] = 109,
+		['Rand'] = {500,900,1400,1800,2300,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5526109] = {
+		['ID'] = 5526109,
+		['Database'] = 5526,
+		['Effect'] = 109,
+		['Rand'] = {600,1100,1600,2100,2700,3200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5527109] = {
+		['ID'] = 5527109,
+		['Database'] = 5527,
+		['Effect'] = 109,
+		['Rand'] = {600,1200,1800,2400,3000,3600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5331109] = {
+		['ID'] = 5331109,
+		['Database'] = 5331,
+		['Effect'] = 109,
+		['Rand'] = {200,400,600,700},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5332109] = {
+		['ID'] = 5332109,
+		['Database'] = 5332,
+		['Effect'] = 109,
+		['Rand'] = {300,600,800,1100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5333109] = {
+		['ID'] = 5333109,
+		['Database'] = 5333,
+		['Effect'] = 109,
+		['Rand'] = {400,700,1100,1400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5334109] = {
+		['ID'] = 5334109,
+		['Database'] = 5334,
+		['Effect'] = 109,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5335109] = {
+		['ID'] = 5335109,
+		['Database'] = 5335,
+		['Effect'] = 109,
+		['Rand'] = {600,1100,1600,2100},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5336109] = {
+		['ID'] = 5336109,
+		['Database'] = 5336,
+		['Effect'] = 109,
+		['Rand'] = {700,1300,1900,2500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5337109] = {
+		['ID'] = 5337109,
+		['Database'] = 5337,
+		['Effect'] = 109,
+		['Rand'] = {700,1400,2100,2800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5431109] = {
+		['ID'] = 5431109,
+		['Database'] = 5431,
+		['Effect'] = 109,
+		['Rand'] = {200,400,600,700,900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5432109] = {
+		['ID'] = 5432109,
+		['Database'] = 5432,
+		['Effect'] = 109,
+		['Rand'] = {300,600,800,1100,1400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5433109] = {
+		['ID'] = 5433109,
+		['Database'] = 5433,
+		['Effect'] = 109,
+		['Rand'] = {400,700,1100,1400,1800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5434109] = {
+		['ID'] = 5434109,
+		['Database'] = 5434,
+		['Effect'] = 109,
+		['Rand'] = {500,900,1400,1800,2200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5435109] = {
+		['ID'] = 5435109,
+		['Database'] = 5435,
+		['Effect'] = 109,
+		['Rand'] = {600,1100,1600,2100,2700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5436109] = {
+		['ID'] = 5436109,
+		['Database'] = 5436,
+		['Effect'] = 109,
+		['Rand'] = {700,1300,1900,2500,3100},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5437109] = {
+		['ID'] = 5437109,
+		['Database'] = 5437,
+		['Effect'] = 109,
+		['Rand'] = {700,1400,2100,2800,3500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5531109] = {
+		['ID'] = 5531109,
+		['Database'] = 5531,
+		['Effect'] = 109,
+		['Rand'] = {200,400,600,700,900,1100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5532109] = {
+		['ID'] = 5532109,
+		['Database'] = 5532,
+		['Effect'] = 109,
+		['Rand'] = {300,600,800,1100,1400,1600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5533109] = {
+		['ID'] = 5533109,
+		['Database'] = 5533,
+		['Effect'] = 109,
+		['Rand'] = {400,700,1100,1400,1800,2100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5534109] = {
+		['ID'] = 5534109,
+		['Database'] = 5534,
+		['Effect'] = 109,
+		['Rand'] = {500,900,1400,1800,2200,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5535109] = {
+		['ID'] = 5535109,
+		['Database'] = 5535,
+		['Effect'] = 109,
+		['Rand'] = {600,1100,1600,2100,2700,3200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5536109] = {
+		['ID'] = 5536109,
+		['Database'] = 5536,
+		['Effect'] = 109,
+		['Rand'] = {700,1300,1900,2500,3100,3700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5537109] = {
+		['ID'] = 5537109,
+		['Database'] = 5537,
+		['Effect'] = 109,
+		['Rand'] = {700,1400,2100,2800,3500,4200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5341109] = {
+		['ID'] = 5341109,
+		['Database'] = 5341,
+		['Effect'] = 109,
+		['Rand'] = {200,400,600,800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5342109] = {
+		['ID'] = 5342109,
+		['Database'] = 5342,
+		['Effect'] = 109,
+		['Rand'] = {300,600,900,1200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5343109] = {
+		['ID'] = 5343109,
+		['Database'] = 5343,
+		['Effect'] = 109,
+		['Rand'] = {400,800,1200,1600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5344109] = {
+		['ID'] = 5344109,
+		['Database'] = 5344,
+		['Effect'] = 109,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5345109] = {
+		['ID'] = 5345109,
+		['Database'] = 5345,
+		['Effect'] = 109,
+		['Rand'] = {600,1200,1800,2400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5346109] = {
+		['ID'] = 5346109,
+		['Database'] = 5346,
+		['Effect'] = 109,
+		['Rand'] = {700,1400,2100,2800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5347109] = {
+		['ID'] = 5347109,
+		['Database'] = 5347,
+		['Effect'] = 109,
+		['Rand'] = {800,1600,2400,3200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5441109] = {
+		['ID'] = 5441109,
+		['Database'] = 5441,
+		['Effect'] = 109,
+		['Rand'] = {200,400,600,800,1000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5442109] = {
+		['ID'] = 5442109,
+		['Database'] = 5442,
+		['Effect'] = 109,
+		['Rand'] = {300,600,900,1200,1500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5443109] = {
+		['ID'] = 5443109,
+		['Database'] = 5443,
+		['Effect'] = 109,
+		['Rand'] = {400,800,1200,1600,2000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5444109] = {
+		['ID'] = 5444109,
+		['Database'] = 5444,
+		['Effect'] = 109,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5445109] = {
+		['ID'] = 5445109,
+		['Database'] = 5445,
+		['Effect'] = 109,
+		['Rand'] = {600,1200,1800,2400,3000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5446109] = {
+		['ID'] = 5446109,
+		['Database'] = 5446,
+		['Effect'] = 109,
+		['Rand'] = {700,1400,2100,2800,3500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5447109] = {
+		['ID'] = 5447109,
+		['Database'] = 5447,
+		['Effect'] = 109,
+		['Rand'] = {800,1600,2400,3200,4000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5541109] = {
+		['ID'] = 5541109,
+		['Database'] = 5541,
+		['Effect'] = 109,
+		['Rand'] = {200,400,600,800,1000,1200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5542109] = {
+		['ID'] = 5542109,
+		['Database'] = 5542,
+		['Effect'] = 109,
+		['Rand'] = {300,600,900,1200,1500,1800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5543109] = {
+		['ID'] = 5543109,
+		['Database'] = 5543,
+		['Effect'] = 109,
+		['Rand'] = {400,800,1200,1600,2000,2400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5544109] = {
+		['ID'] = 5544109,
+		['Database'] = 5544,
+		['Effect'] = 109,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5545109] = {
+		['ID'] = 5545109,
+		['Database'] = 5545,
+		['Effect'] = 109,
+		['Rand'] = {600,1200,1800,2400,3000,3600},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5546109] = {
+		['ID'] = 5546109,
+		['Database'] = 5546,
+		['Effect'] = 109,
+		['Rand'] = {700,1400,2100,2800,3500,4200},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5547109] = {
+		['ID'] = 5547109,
+		['Database'] = 5547,
+		['Effect'] = 109,
+		['Rand'] = {800,1600,2400,3200,4000,4800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5351109] = {
+		['ID'] = 5351109,
+		['Database'] = 5351,
+		['Effect'] = 109,
+		['Rand'] = {300,500,700,900},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5352109] = {
+		['ID'] = 5352109,
+		['Database'] = 5352,
+		['Effect'] = 109,
+		['Rand'] = {400,700,1100,1400},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5353109] = {
+		['ID'] = 5353109,
+		['Database'] = 5353,
+		['Effect'] = 109,
+		['Rand'] = {500,900,1400,1800},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5354109] = {
+		['ID'] = 5354109,
+		['Database'] = 5354,
+		['Effect'] = 109,
+		['Rand'] = {600,1200,1700,2300},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5355109] = {
+		['ID'] = 5355109,
+		['Database'] = 5355,
+		['Effect'] = 109,
+		['Rand'] = {700,1400,2100,2700},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5356109] = {
+		['ID'] = 5356109,
+		['Database'] = 5356,
+		['Effect'] = 109,
+		['Rand'] = {800,1600,2400,3200},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5357109] = {
+		['ID'] = 5357109,
+		['Database'] = 5357,
+		['Effect'] = 109,
+		['Rand'] = {900,1800,2700,3600},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5451109] = {
+		['ID'] = 5451109,
+		['Database'] = 5451,
+		['Effect'] = 109,
+		['Rand'] = {300,500,700,900,1200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5452109] = {
+		['ID'] = 5452109,
+		['Database'] = 5452,
+		['Effect'] = 109,
+		['Rand'] = {400,700,1100,1400,1700},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5453109] = {
+		['ID'] = 5453109,
+		['Database'] = 5453,
+		['Effect'] = 109,
+		['Rand'] = {500,900,1400,1800,2300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5454109] = {
+		['ID'] = 5454109,
+		['Database'] = 5454,
+		['Effect'] = 109,
+		['Rand'] = {600,1200,1700,2300,2900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5455109] = {
+		['ID'] = 5455109,
+		['Database'] = 5455,
+		['Effect'] = 109,
+		['Rand'] = {700,1400,2100,2700,3400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5456109] = {
+		['ID'] = 5456109,
+		['Database'] = 5456,
+		['Effect'] = 109,
+		['Rand'] = {800,1600,2400,3200,4000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5457109] = {
+		['ID'] = 5457109,
+		['Database'] = 5457,
+		['Effect'] = 109,
+		['Rand'] = {900,1800,2700,3600,4500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5551109] = {
+		['ID'] = 5551109,
+		['Database'] = 5551,
+		['Effect'] = 109,
+		['Rand'] = {300,500,700,900,1200,1400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5552109] = {
+		['ID'] = 5552109,
+		['Database'] = 5552,
+		['Effect'] = 109,
+		['Rand'] = {400,700,1100,1400,1700,2100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5553109] = {
+		['ID'] = 5553109,
+		['Database'] = 5553,
+		['Effect'] = 109,
+		['Rand'] = {500,900,1400,1800,2300,2700},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5554109] = {
+		['ID'] = 5554109,
+		['Database'] = 5554,
+		['Effect'] = 109,
+		['Rand'] = {600,1200,1700,2300,2900,3400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5555109] = {
+		['ID'] = 5555109,
+		['Database'] = 5555,
+		['Effect'] = 109,
+		['Rand'] = {700,1400,2100,2700,3400,4100},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5556109] = {
+		['ID'] = 5556109,
+		['Database'] = 5556,
+		['Effect'] = 109,
+		['Rand'] = {800,1600,2400,3200,4000,4800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5557109] = {
+		['ID'] = 5557109,
+		['Database'] = 5557,
+		['Effect'] = 109,
+		['Rand'] = {900,1800,2700,3600,4500,5400},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5361109] = {
+		['ID'] = 5361109,
+		['Database'] = 5361,
+		['Effect'] = 109,
+		['Rand'] = {300,500,800,1000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5362109] = {
+		['ID'] = 5362109,
+		['Database'] = 5362,
+		['Effect'] = 109,
+		['Rand'] = {400,800,1200,1500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5363109] = {
+		['ID'] = 5363109,
+		['Database'] = 5363,
+		['Effect'] = 109,
+		['Rand'] = {500,1000,1500,2000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5364109] = {
+		['ID'] = 5364109,
+		['Database'] = 5364,
+		['Effect'] = 109,
+		['Rand'] = {700,1300,1900,2500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5365109] = {
+		['ID'] = 5365109,
+		['Database'] = 5365,
+		['Effect'] = 109,
+		['Rand'] = {800,1500,2300,3000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5366109] = {
+		['ID'] = 5366109,
+		['Database'] = 5366,
+		['Effect'] = 109,
+		['Rand'] = {900,1800,2700,3500},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5367109] = {
+		['ID'] = 5367109,
+		['Database'] = 5367,
+		['Effect'] = 109,
+		['Rand'] = {1000,2000,3000,4000},
+		['QualityWeight'] = {20,35,30,15},
+		['FluctuationValue1'] = 100
+		},
+	[5461109] = {
+		['ID'] = 5461109,
+		['Database'] = 5461,
+		['Effect'] = 109,
+		['Rand'] = {300,500,800,1000,1300},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5462109] = {
+		['ID'] = 5462109,
+		['Database'] = 5462,
+		['Effect'] = 109,
+		['Rand'] = {400,800,1200,1500,1900},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5463109] = {
+		['ID'] = 5463109,
+		['Database'] = 5463,
+		['Effect'] = 109,
+		['Rand'] = {500,1000,1500,2000,2500},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5464109] = {
+		['ID'] = 5464109,
+		['Database'] = 5464,
+		['Effect'] = 109,
+		['Rand'] = {700,1300,1900,2500,3200},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5465109] = {
+		['ID'] = 5465109,
+		['Database'] = 5465,
+		['Effect'] = 109,
+		['Rand'] = {800,1500,2300,3000,3800},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5466109] = {
+		['ID'] = 5466109,
+		['Database'] = 5466,
+		['Effect'] = 109,
+		['Rand'] = {900,1800,2700,3500,4400},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5467109] = {
+		['ID'] = 5467109,
+		['Database'] = 5467,
+		['Effect'] = 109,
+		['Rand'] = {1000,2000,3000,4000,5000},
+		['QualityWeight'] = {10,15,30,25,20},
+		['FluctuationValue1'] = 100
+		},
+	[5561109] = {
+		['ID'] = 5561109,
+		['Database'] = 5561,
+		['Effect'] = 109,
+		['Rand'] = {300,500,800,1000,1300,1500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5562109] = {
+		['ID'] = 5562109,
+		['Database'] = 5562,
+		['Effect'] = 109,
+		['Rand'] = {400,800,1200,1500,1900,2300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5563109] = {
+		['ID'] = 5563109,
+		['Database'] = 5563,
+		['Effect'] = 109,
+		['Rand'] = {500,1000,1500,2000,2500,3000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5564109] = {
+		['ID'] = 5564109,
+		['Database'] = 5564,
+		['Effect'] = 109,
+		['Rand'] = {700,1300,1900,2500,3200,3800},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5565109] = {
+		['ID'] = 5565109,
+		['Database'] = 5565,
+		['Effect'] = 109,
+		['Rand'] = {800,1500,2300,3000,3800,4500},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5566109] = {
+		['ID'] = 5566109,
+		['Database'] = 5566,
+		['Effect'] = 109,
+		['Rand'] = {900,1800,2700,3500,4400,5300},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
+		},
+	[5567109] = {
+		['ID'] = 5567109,
+		['Database'] = 5567,
+		['Effect'] = 109,
+		['Rand'] = {1000,2000,3000,4000,5000,6000},
+		['QualityWeight'] = {0,10,20,20,20,30},
+		['FluctuationValue1'] = 100
 		}
 	}
 return EquipAttribute

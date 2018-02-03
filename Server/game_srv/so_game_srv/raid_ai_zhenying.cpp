@@ -193,6 +193,18 @@ void zhenying_raid_ai_tick(raid_struct *raid)
 	zhenying_raid_ai_tick_check_progress(raid);
 }
 
+static void zhenying_raid_clear_follow(raid_struct *raid)
+{
+	for (int i = 0; i < MAX_ZHENYING_FOLLOW; ++i)
+	{
+		monster_struct *pMon = monster_manager::get_monster_by_id(raid->data->ai_data.zhenying_data.follow[i]);
+		if (pMon != NULL)
+		{
+			pMon->scene->delete_monster_from_scene(pMon, true);
+			monster_manager::delete_monster(pMon);
+		}
+	}
+}
 static void zhenying_raid_ai_create_truck(raid_struct *raid)
 {
 	CampDefenseTable *tableDaily = get_config_by_id(raid->data->ai_data.zhenying_data.camp, &zhenying_daily_config);
@@ -368,11 +380,16 @@ static void zhenying_raid_ai_box_dead(raid_struct *raid, monster_struct *monster
 					pMon->data->stop_ai = false;
 					pMon->delete_one_buff(tableDaily->ProtectBuff, true);
 				}
+				int gen = 0;
 				for (uint32_t i = 0; i < tableDaily->n_ProtectMonsterID; ++i)
 				{
-					for (uint32_t j = 0; j < tableDaily->ProtectMonsterNum[i]; ++j)
+					for (uint32_t j = 0; j < tableDaily->ProtectMonsterNum[i] && gen < MAX_ZHENYING_FOLLOW; ++j,++gen)
 					{
-						monster_manager::create_monster_at_pos(raid, tableDaily->ProtectMonsterID[i], table->Level, tableDaily->TruckRouteX[0] + 3 - rand() % 7, tableDaily->TruckRouteY[0] + 3 - rand() % 7, 0, NULL, 0);
+						monster_struct *pFollow = monster_manager::create_monster_at_pos(raid, tableDaily->ProtectMonsterID[i], table->Level, tableDaily->TruckRouteX[0] + 3 - rand() % 7, tableDaily->TruckRouteY[0] + 3 - rand() % 7, 0, NULL, 0);
+						if (pFollow != NULL)
+						{
+							raid->data->ai_data.zhenying_data.follow[gen] = pFollow->get_uuid();
+						}
 					}
 				}
 				
@@ -452,6 +469,8 @@ static void zhenying_raid_ai_truck_dead(raid_struct *raid, monster_struct *monst
 	raid->broadcast_to_scene(MSG_ID_ZHENYING_DAILY_MINE_STATE_NOTIFY, &sendState, (pack_func)mine_state__pack);
 
 	zhenying_raid_ai_create_truck(raid);
+
+	zhenying_raid_clear_follow(raid);
 }
 static void zhenying_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
 {
@@ -753,6 +772,7 @@ static void zhenying_raid_ai_escort_end_piont(raid_struct *raid, monster_struct 
 		raid->broadcast_to_scene(MSG_ID_SYSTEM_NOTICE_NOTIFY, &nty, (pack_func)system_notice_notify__pack);
 	}
 	zhenying_raid_ai_create_truck(raid);
+	zhenying_raid_clear_follow(raid);
 }
 
 struct raid_ai_interface raid_ai_zhenying_interface =

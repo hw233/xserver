@@ -15612,7 +15612,6 @@ static int handle_server_change_zhenying(player_struct *player, EXTERN_DATA *ext
 			}
 			player->sub_comm_gold(gold, MAGIC_TYPE_ZHENYING);
 		}
-		player->clear_zhenying_task();
 
 		player->set_attr(PLAYER_ATTR_ZHENYING, req->zhenying);
 		AttrMap nty_list;
@@ -15644,6 +15643,10 @@ static int handle_server_change_zhenying(player_struct *player, EXTERN_DATA *ext
 	send.free = player->data->zhenying.free;
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_CHANGE_ZHENYING_ANSWER, ans_chose_zhenying__pack, send);
 
+	if (req->ret == 0)
+	{
+		player->clear_zhenying_task();
+	}
 	add_zhenying_player__free_unpacked(req, NULL);
 
 	return 0;

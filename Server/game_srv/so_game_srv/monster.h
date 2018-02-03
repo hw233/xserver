@@ -369,6 +369,13 @@ public:
 		{
 			uint8_t state;   //1: 血量低于60%, 发呆  //2: 发呆结束
 		} type32_ai;
+		struct
+		{
+			monster_struct *truck;  //要保护的镖车
+			uint64_t truck_uuid;    //要保护的镖车
+			uint32_t start_time;    //开始移动的时间
+		} type34_ai;
+		
 	} ai_data;
 	struct position born_pos; //出生点
 

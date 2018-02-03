@@ -15437,7 +15437,7 @@ void player_struct::down_horse()
 
 uint32_t player_struct::get_horse_num()
 {
-	return (data->n_horse + 1);
+	return (data->n_horse);
 }
 
 int player_struct::get_on_horse_id()

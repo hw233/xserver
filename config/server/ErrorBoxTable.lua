@@ -3565,7 +3565,7 @@ local ErrorBoxTable = {
 		},
 	[190500515] = {
 		['ID'] = 190500515,
-		['Type'] = 5,
+		['Type'] = 6,
 		['Text'] = '[f69e40]%s[-]的矿车成功护送至目的地！',
 		['SystemChannel'] = 0
 		},
@@ -3831,6 +3831,12 @@ local ErrorBoxTable = {
 		['ID'] = 190500559,
 		['Type'] = 1,
 		['Text'] = '招募获得伙伴:%s',
+		['SystemChannel'] = 0
+		},
+	[190500560] = {
+		['ID'] = 190500560,
+		['Type'] = 4,
+		['Text'] = '需要击败%s才能进行挑战',
 		['SystemChannel'] = 0
 		}
 	}

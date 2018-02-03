@@ -1045,7 +1045,7 @@ local TaskRewardTable = {
 		['RewardMoney'] = 200,
 		['RewardType'] = {1},
 		['RewardTarget'] = {201060001},
-		['RewardNum'] = {1}
+		['RewardNum'] = {2}
 		},
 	[240610124] = {
 		['ID'] = 240610124,
@@ -1221,7 +1221,7 @@ local TaskRewardTable = {
 		['RewardMoney'] = 200,
 		['RewardType'] = {1},
 		['RewardTarget'] = {201060001},
-		['RewardNum'] = {1}
+		['RewardNum'] = {2}
 		},
 	[240610153] = {
 		['ID'] = 240610153,
@@ -1277,7 +1277,7 @@ local TaskRewardTable = {
 		['RewardMoney'] = 200,
 		['RewardType'] = {1},
 		['RewardTarget'] = {201060021},
-		['RewardNum'] = {1}
+		['RewardNum'] = {2}
 		},
 	[240610161] = {
 		['ID'] = 240610161,
@@ -1421,7 +1421,7 @@ local TaskRewardTable = {
 		['RewardMoney'] = 200,
 		['RewardType'] = {1},
 		['RewardTarget'] = {201060001},
-		['RewardNum'] = {1}
+		['RewardNum'] = {2}
 		},
 	[240610192] = {
 		['ID'] = 240610192,
@@ -1453,7 +1453,7 @@ local TaskRewardTable = {
 		['RewardMoney'] = 200,
 		['RewardType'] = {1},
 		['RewardTarget'] = {201060021},
-		['RewardNum'] = {1}
+		['RewardNum'] = {2}
 		},
 	[240610196] = {
 		['ID'] = 240610196,
