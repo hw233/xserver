@@ -3838,6 +3838,30 @@ local ErrorBoxTable = {
 		['Type'] = 4,
 		['Text'] = '需要击败%s才能进行挑战',
 		['SystemChannel'] = 0
+		},
+	[190500561] = {
+		['ID'] = 190500561,
+		['Type'] = 1,
+		['Text'] = '您的[50b7d7]扫荡券[-]不足，请前往[40f765]商城[-]购买',
+		['SystemChannel'] = 0
+		},
+	[190500562] = {
+		['ID'] = 190500562,
+		['Type'] = 1,
+		['Text'] = '您的[eb5032]%s[-]不足',
+		['SystemChannel'] = 0
+		},
+	[190500563] = {
+		['ID'] = 190500563,
+		['Type'] = 1,
+		['Text'] = '您已处于该场景中',
+		['SystemChannel'] = 0
+		},
+	[190500564] = {
+		['ID'] = 190500564,
+		['Type'] = 1,
+		['Text'] = '本次资源，一人只可采集一次',
+		['SystemChannel'] = 0
 		}
 	}
 return ErrorBoxTable

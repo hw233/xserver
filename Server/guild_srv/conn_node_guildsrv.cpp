@@ -1363,7 +1363,8 @@ int conn_node_guildsrv::handle_guild_appoint_office_request(EXTERN_DATA *extern_
 		}
 
 		ret = appoint_office(player, appointee, office);
-		sync_guild_info_to_gamesrv(appointee);
+		if (ret == 0)
+			sync_guild_info_to_gamesrv(appointee);
 	} while(0);
 
 	GuildAppointOfficeAnswer resp;
@@ -2178,7 +2179,7 @@ int conn_node_guildsrv::handle_open_guild_answer_request(EXTERN_DATA *extern_dat
 		{
 			if (player->guild->treasure < table->parameter1[0])
 			{
-				ret = 190500484;
+				resp.result = 190500484;
 			}
 			else
 			{

@@ -993,6 +993,8 @@ void free_RewardBack(struct RewardBack *p)
 void free_RewardTable(struct RewardTable *p)
 {
     if (!p) return;
+    free(p->RewardType);
+    free(p->RewardValue);
     free(p);
 };
 
@@ -1326,6 +1328,7 @@ void free_WeaponsEffectTable(struct WeaponsEffectTable *p)
 void free_WeekTable(struct WeekTable *p)
 {
     if (!p) return;
+    free(p->MonsterID);
     free(p);
 };
 

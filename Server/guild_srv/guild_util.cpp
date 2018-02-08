@@ -1908,6 +1908,8 @@ int appoint_office(GuildPlayer *appointor, GuildPlayer *appointee, uint32_t offi
 		{
 			broadcast_guild_str_attr_update(guild, GUILD_STR_ATTR_TYPE__ATTR_MASTER_NAME, redis_appointee->name);
 		}
+
+		sync_guild_info_to_gamesrv(appointor);		
 	}
 
 	if (mail_id > 0)

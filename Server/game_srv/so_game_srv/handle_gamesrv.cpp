@@ -13327,7 +13327,7 @@ static int handle_add_chengjie_task_request(player_struct *player, EXTERN_DATA *
 
 	STChengJie task;
 	ParameterTable *param_config = get_config_by_id(161000096, &parameter_config);
-	RewardTable * table = get_chengjie_reward_table(lv);
+	//RewardTable * table = get_chengjie_reward_table(lv);
 	AnsAddChengjieTask send;
 	ans_add_chengjie_task__init(&send);
 
@@ -13363,11 +13363,11 @@ static int handle_add_chengjie_task_request(player_struct *player, EXTERN_DATA *
 		task.timeOut = time_helper::get_cached_time() / 1000 + param_config->parameter1[0];
 	}
 
-	if (table != NULL)
-	{
-		task.exp = table->ExpCoefficient;
-		task.courage = table->CoinReward;
-	}
+	//if (table != NULL)
+	//{
+	//	task.exp = table->ExpCoefficient;
+	//	task.courage = table->CoinReward;
+	//}
 	//ChengJieTaskManage::AddTask(task);
 	ChengJieTaskManage::AddTaskDb(task, extern_data);
 
@@ -13420,10 +13420,20 @@ int CheckCanAcceptChengjieTask(player_struct *player, STChengJie * task)
 	{
 		return 190500137;
 	}
+	int rate = task->fail;
+	ParameterTable * config = get_config_by_id(161000087, &parameter_config);
+	if (config != NULL)
+	{
+		rate = rate / config->parameter1[1];
+		if (rate > config->parameter1[0])
+		{
+			rate = config->parameter1[0];
+		}
+	}
 	ParameterTable * param_config = get_config_by_id(161000091, &parameter_config);
 	if (param_config != NULL)
 	{
-		uint64_t cost = param_config->parameter1[0] * task->shuangjin / 10000;
+		uint64_t cost = param_config->parameter1[0] *(rate / 10000 + 1) * task->shuangjin / 10000;
 		if (player->sub_coin(cost, MAGIC_TYPE_YAOSHI) < 0)
 		{
 			return 190500139;
@@ -13517,6 +13527,9 @@ static int handle_submit_chengjie_task_request(player_struct *player, EXTERN_DAT
 	STChengJie * pTask = ChengJieTaskManage::FindTask(player->data->chengjie.cur_task);
 	SpecialtySkillTable *tableSkill = get_yaoshi_skill_config(CHENGJIE_EIGHT, player->data->chengjie.level);
 	uint32_t expadd = 0;
+	uint32_t lv = 0;
+	RewardTable * table = NULL;
+	int rate = pTask->fail / config->parameter1[1];
 	if (player->data->cur_yaoshi == MAJOR__TYPE__CHENGJIE)
 	{
 		SpecialTitleTable *title = get_yaoshi_title_table(player->data->cur_yaoshi, player->data->chengjie.level);
@@ -13540,20 +13553,20 @@ static int handle_submit_chengjie_task_request(player_struct *player, EXTERN_DAT
 		goto done;
 	}
 
-	if (param_config != NULL)
-	{
-		cost = param_config->parameter1[0]; //押金
-	}
+	//if (param_config != NULL)
+	//{
+	//	cost = param_config->parameter1[0]; //押金
+	//}
+	
 	if (config != NULL)
 	{
-		int rate = pTask->fail;
 		if (rate > config->parameter1[0])
 		{
 			rate = config->parameter1[0];
 		}
 		if (rate > 0)
 		{
-			cost += (config->parameter1[1] * rate); //失败次数加成
+			cost += (config->parameter1[2] * rate); //失败次数加成
 		}
 	}
 
@@ -13562,9 +13575,19 @@ static int handle_submit_chengjie_task_request(player_struct *player, EXTERN_DAT
 		cost += tableSkill->EffectValue[0];
 		expadd += tableSkill->EffectValue[0];
 	}
-	player->add_coin(pTask->shuangjin * (10000 + cost)/10000, MAGIC_TYPE_YAOSHI);
-	player->add_chengjie_exp(pTask->exp * (10000 + expadd)/10000);
-//	player->add_chengjie_courage(pTask->courage * (10000 + expadd) / 10000);
+	player->add_coin(pTask->shuangjin * (10000 + cost) / 10000 + param_config->parameter1[0] * (rate / 10000 + 1) * pTask->shuangjin / 10000, MAGIC_TYPE_YAOSHI);
+	lv = ChengJieTaskManage::GetRoleLevel(pTask->pid);
+	table = get_chengjie_reward_table(lv);
+	if (table != NULL)
+	{
+		for (int i = 0; i < 2; ++i)
+		{
+			player->add_item(table->RewardType[i], table->RewardValue[i] * ((config->parameter1[4 + i] + expadd) * rate / 10000.0 + 1), MAGIC_TYPE_YAOSHI);
+		}
+	}
+	
+	//player->add_chengjie_exp(pTask->exp * (10000 + expadd)/10000);
+	//player->add_chengjie_courage(pTask->courage * (10000 + expadd) / 10000);
 	send.taskid = player->data->chengjie.cur_task;
 
 	ChengJieTaskManage::DelTask(player->data->chengjie.cur_task);
@@ -14353,7 +14376,7 @@ static int handle_sync_guild_info_request(player_struct *player, EXTERN_DATA *ex
 
 	if (!player || !player->is_online())
 	{
-		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		LOG_INFO("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 		return (-1);
 	}
 
@@ -14954,6 +14977,11 @@ static int handle_guild_bonfire_open_request(player_struct * player, EXTERN_DATA
 
 	int ret = guild_land_active_manager::guild_bonfire_open(player->data->guild_id, false);
 
+	if (ret == 0)
+	{
+		player->check_activity_progress(AM_GUILD_BBQ, 0);		
+	}
+
 	GUILD_BONFIRE_OPEN_ANSWER *resp = (GUILD_BONFIRE_OPEN_ANSWER*)get_send_data();
 	uint32_t data_len = sizeof(GUILD_BONFIRE_OPEN_ANSWER);
 	memset(resp, 0, data_len);
@@ -15018,6 +15046,7 @@ static int handle_into_zhenying_battle_request(player_struct *player, EXTERN_DAT
 	}
 	if (player->scene->is_in_zhenying_raid())
 	{
+		send_comm_answer(MSG_ID_INTO_ZHENYING_BATTLE_ANSWER, 190500563, extern_data);
 		return -4;
 	}
 	//int ret = raid_manager::check_player_enter_raid(player, table->Map);
@@ -15723,51 +15752,11 @@ static int handle_chose_zhenying_request(player_struct *player, EXTERN_DATA *ext
 }
 
 
-static void gen_common_question(player_struct *player)
-{
-	player->data->common_answer.question = get_rand_question(sg_common_question);
-	QuestionTable *table = get_config_by_id(player->data->common_answer.question, &questions_config);
-	player->data->common_answer.answer[0] = 1;
-	player->data->common_answer.answer[1] = 2;
-	player->data->common_answer.answer[2] = 3;
-	player->data->common_answer.answer[3] = 4;
-	if (table != NULL)
-	{
-		int j = rand() % 3;
-		uint32_t tmp = player->data->common_answer.answer[0];
-		player->data->common_answer.answer[0] = player->data->common_answer.answer[j + 1];
-		player->data->common_answer.answer[j + 1] = tmp;
-
-		j = 0;
-		for (int i = 0; i < MAX_QUESTION_ANSWER; ++i)
-		{
-			if (player->data->common_answer.answer[i] != table->RightAnseer)
-			{
-				player->data->common_answer.answer_tip[j++] = i + 1;
-			}
-		}
-	}
-}
 static void on_login_send_question(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (player->data->common_answer.number == 0)
 	{
-		player->data->common_answer.number = 1;
-		ParameterTable *table = get_config_by_id(161000165, &parameter_config);
-		if (table != NULL)
-		{
-			player->data->common_answer.tip = table->parameter1[0];
-		}
-		table = get_config_by_id(161000164, &parameter_config);
-		if (table != NULL)
-		{
-			player->data->common_answer.help = table->parameter1[0];
-		}
-		gen_common_question(player);
-
-		player->data->award_answer.number = 1;
-		player->data->award_answer.trun = 1;
-		player->data->award_answer.question = get_rand_question(sg_award_question);
+		player->refresh_question_oneday();
 	}
 
 	AwardAnswer send;
@@ -15795,22 +15784,7 @@ static int handle_get_common_question_request(player_struct *player, EXTERN_DATA
 	{
 		if (player->data->common_answer.question == 0 && player->data->common_answer.next_open < time_helper::get_cached_time() / 1000)
 		{
-			player->data->common_answer.number = 1;
-			ParameterTable *table = get_config_by_id(161000165, &parameter_config);
-			if (table != NULL)
-			{
-				player->data->common_answer.tip = table->parameter1[0];
-			}
-			table = get_config_by_id(161000164, &parameter_config);
-			if (table != NULL)
-			{
-				player->data->common_answer.help = table->parameter1[0];
-			}
-			player->data->common_answer.contin = 0;
-			player->data->common_answer.exp = 0;
-			player->data->common_answer.money = 0;
-			player->data->common_answer.right = 0;
-			gen_common_question(player);
+			player->refresh_question_oneday();
 		}
 	}
 
@@ -15938,12 +15912,12 @@ static int handle_answer_common_question_request(player_struct *player, EXTERN_D
 		{
 			player->add_achievement_progress(ACType_DAILY_ANSWER_ALL_RIGHT, 0, 0, 0, 1);
 		}
-		player->data->common_answer.next_open = time_helper::get_cached_time() / 1000 + 3600 + cd;
+		player->data->common_answer.next_open = time_helper::get_cached_time() / 1000 + 3 + cd;
 	}
 	else
 	{
 		++player->data->common_answer.number;
-		gen_common_question(player);
+		player->gen_common_question();
 	}
 	player->data->common_answer.bhelp = false;
 	player->data->common_answer.btip = false;
@@ -16173,7 +16147,7 @@ static int handle_interupt_award_question_request(player_struct *player, EXTERN_
 static int handle_first_award_question_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	LOG_INFO("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
-	if (comm_check_player_valid(player, extern_data->player_id) != 0)
+	if (!player || !player->data)
 	{
 		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
 		return (-1);
@@ -21193,6 +21167,8 @@ static int handle_fishing_reward_request(player_struct *player, EXTERN_DATA *ext
 
 	fishing_reward_request__free_unpacked(req, NULL);
 
+	LOG_INFO("%s: player[%lu], type[%u]", __FUNCTION__, extern_data->player_id, type);
+	
 	int ret = 0;
 	std::map<uint32_t, uint32_t> reward_map;
 	do
@@ -22993,7 +22969,7 @@ int handle_clean_tower_request(player_struct* player, EXTERN_DATA* extern_data)
 		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 		return -1;
 	}
-	if (player->data->tower.cur_num == 0)
+	if (player->data->tower.cur_num == 0 || player->data->tower.top_lv == 1)
 	{
 		return 1;
 	}
@@ -23172,99 +23148,32 @@ int handle_yao_qian_shu_start_request(player_struct* player, EXTERN_DATA* extern
 		}
 	
 		//判断消耗的金票够不够
-		uint32_t one_time_need_use_gold = 0;
-		uint32_t ten_time_need_use_gold = 0;
-		if(player->data->yaoqian_data.free_num > 0)
-		{
-			one_time_need_use_gold = 0;
-			if(player->data->yaoqian_data.free_num >= 10)
-			{
-				ten_time_need_use_gold = 0;
-			}
-			else 
-			{
-				uint32_t use_money_num = 10 - player->data->yaoqian_data.free_num;	
-				uint32_t nend_money = 0;
-				uint32_t next_money = sg_yaoqian_shu_use_gold;
-				for(size_t i = 0; i < use_money_num; i++)
-				{
-					if(next_money >= sg_yaoqian_shu_max_gold)
-					{
-						next_money = sg_yaoqian_shu_max_gold;
-					}
-					nend_money += next_money;
-					next_money += sg_yaoqian_shu_add_gold;
-				}
-				ten_time_need_use_gold = nend_money;
-			}
-		}
-		else 
-		{
-			one_time_need_use_gold = player->data->yaoqian_data.next_need_money;
-			uint32_t nend_money = 0;
-			uint32_t next_money = player->data->yaoqian_data.next_need_money;
-			for(size_t i = 0; i < 10; i++)
-			{
-				if(next_money >= sg_yaoqian_shu_max_gold)
-				{
-					next_money = sg_yaoqian_shu_max_gold;
-				}
-				nend_money += next_money;
-				next_money += sg_yaoqian_shu_add_gold;
-			}
-			ten_time_need_use_gold = nend_money;
-		}
-		uint32_t all_need_money = 0;
-		if(statu == 0)
-		{
-			all_need_money = one_time_need_use_gold;
-		}
-		else 
-		{
-			all_need_money = ten_time_need_use_gold;
-		}
+		uint32_t all_need_money;
+		uint32_t next_need_money;
+		bool free;
 
+		free = player->count_yaoqian_shu_money(yao_num, &all_need_money, &next_need_money);
+		
 		if(all_need_money !=0)
 		{
-		
-			if(player->sub_comm_gold(all_need_money, MSGIC_TYPE_YAOQIAN_SHU_USE_GOLD) < 0)
+			if(player->sub_unbind_gold(all_need_money, MSGIC_TYPE_YAOQIAN_SHU_USE_GOLD) < 0)
 			{
-				ret = 190400005;     //金票数量不够
+				ret = 190400005;     //元宝数量不够
 				break;
 			}
 		}
+
+		if (free)
+		{
+			player->data->yaoqian_data.free_num -= 1;			
+		}
+		
+		player->data->yaoqian_data.use_num += yao_num;		
+		player->data->yaoqian_data.next_need_money = next_need_money;
 		
 		uint32_t give_coin = 0;
 		for(uint32_t i = 0; i < yao_num; i++)
 		{
-			//有免费次数的要扣除一次免费次数，并增加已使用次数
-			if(player->data->yaoqian_data.free_num > 0)
-			{
-				player->data->yaoqian_data.free_num -= 1;
-				player->data->yaoqian_data.use_num += 1;
-			}
-			else 
-			{
-				player->data->yaoqian_data.use_num += 1;
-			}
-
-			if(player->data->yaoqian_data.free_num <=0)
-			{
-				if(player->data->yaoqian_data.next_need_money == 0)
-				{
-					player->data->yaoqian_data.next_need_money = sg_yaoqian_shu_use_gold;
-				}
-				else 
-				{
-					player->data->yaoqian_data.next_need_money += sg_yaoqian_shu_add_gold;
-					if(player->data->yaoqian_data.next_need_money >= sg_yaoqian_shu_max_gold)
-					{
-						player->data->yaoqian_data.next_need_money = sg_yaoqian_shu_max_gold;
-					}
-				}
-			
-			}
-
 			//如果达到倍率机制要求，根据机制算获取的银票数量，在初始化机制条件
 			ParameterTable *parame_config = NULL;
 			player->data->yaoqian_data.cur_jizhi_num += 1;
@@ -23329,51 +23238,14 @@ int handle_yao_qian_shu_start_request(player_struct* player, EXTERN_DATA* extern
 	
 	}while(0);
 
+	
 	PlayerYaoQianInfoNotify notify;
 	player_yao_qian_info_notify__init(&notify);
 	notify.sum_num = player->data->yaoqian_data.sum_num;
 	notify.use_num = player->data->yaoqian_data.use_num;
 	notify.free_num = player->data->yaoqian_data.free_num;
-	if(player->data->yaoqian_data.free_num > 0)
-	{
-		notify.one_times = 0;
-		if(player->data->yaoqian_data.free_num >= 10)
-		{
-			notify.ten_times = 0;
-		}
-		else 
-		{
-			uint32_t use_money_num = 10 - player->data->yaoqian_data.free_num;	
-			uint32_t nend_money = 0;
-			uint32_t next_money = sg_yaoqian_shu_use_gold;
-			for(size_t i = 0; i < use_money_num; i++)
-			{
-				if(next_money >= sg_yaoqian_shu_max_gold)
-				{
-					next_money = sg_yaoqian_shu_max_gold;
-				}
-				nend_money += next_money;
-				next_money += sg_yaoqian_shu_add_gold;
-			}
-			notify.ten_times = nend_money;
-		}
-	}
-	else 
-	{
-		notify.one_times = player->data->yaoqian_data.next_need_money;
-		uint32_t nend_money = 0;
-		uint32_t next_money = player->data->yaoqian_data.next_need_money;
-		for(size_t i = 0; i < 10; i++)
-		{
-			if(next_money >= sg_yaoqian_shu_max_gold)
-			{
-				next_money = sg_yaoqian_shu_max_gold;
-			}
-			nend_money += next_money;
-			next_money += sg_yaoqian_shu_add_gold;
-		}
-		notify.ten_times = nend_money;
-	}
+	player->count_yaoqian_shu_money(1, &notify.one_times, NULL);
+	player->count_yaoqian_shu_money(10, &notify.ten_times, NULL);
 
 	answer.result = ret;
 	answer.into = &notify;
@@ -24473,6 +24345,7 @@ int handle_player_guild_chuan_gong_finish_request(player_struct* player, EXTERN_
 			}
 		} while (0);
 
+		guild_player->check_activity_progress(AM_GUILD_CHUANGONG, 0);		
 		//清除信息
 		uint32_t he_type = guild_player->data->guild_chuan_gong_info.cur_info.type;
 		guild_player->clean_guild_chuan_gong_info();
@@ -24493,6 +24366,7 @@ int handle_player_guild_chuan_gong_finish_request(player_struct* player, EXTERN_
 
 	} while (0);
 
+	player->check_activity_progress(AM_GUILD_CHUANGONG, 0);			
 	player->clean_guild_chuan_gong_info();
 	uint32_t my_type = player->data->guild_chuan_gong_info.cur_info.type;
 

@@ -368,6 +368,10 @@ void cash_truck_struct::on_beattack(unit_struct *player, uint32_t skill_id, int3
 		return;
 	}
 	pOwner->send_system_notice(190500299, NULL);
+	if (pOwner->data->truck.on_truck)
+	{
+		pOwner->go_down_cash_truck();
+	}
 }
 
 void cash_truck_struct::pack_sight_cash_truck_info(SightCashTruckInfo *info)

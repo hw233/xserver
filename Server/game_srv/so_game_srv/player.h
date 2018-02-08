@@ -1119,7 +1119,7 @@ public:
 	void pack_sight_player_base_info(SightPlayerBaseInfo *info);
 	void send_clear_sight();
 	void send_clear_sight_monster();	
-	void send_scene_transfer(float direct, float pos_x, float pos_y, float pos_z, uint32_t scene_id, int32_t result);
+	void send_scene_transfer(float direct, float pos_x, float pos_y, float pos_z, uint32_t old_scene_id, uint32_t scene_id, int32_t result);
 	void notify_watch_pos_change();
 	void broadcast_sight_player_info_changed_notify();	
 
@@ -1186,6 +1186,8 @@ public:
 	void add_shangjin_exp(uint32_t num);
 	void refresh_yaoshi_oneday();
 	void refresh_zhenying_task_oneday();
+	void refresh_question_oneday();
+	void gen_common_question();
 	void send_all_yaoshi_num();
 	void add_zhenying_exp(uint32_t num);
 	void send_zhenying_info();
@@ -1586,6 +1588,7 @@ public:
 	//摇钱树信息更新
 	void refresh_yao_qian_shu_data(uint64_t befor_time);
 	void player_yaoqian_shu_info_notify();
+	bool count_yaoqian_shu_money(int num, uint32_t *all, uint32_t *next);
 
 	//玩家登录奖励信息
 	int init_player_login_reward_receive_data();

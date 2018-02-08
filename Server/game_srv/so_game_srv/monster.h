@@ -231,7 +231,8 @@ public:
 	int prepare_add_partner_to_sight(partner_struct *partner);
 
 	uint64_t count_rand_patrol_time();  //计算一个巡逻的定时器时间
-
+	unit_struct *get_hate_target();
+	
 		//计算技能命中的对象
 //	int count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct *target, bool bfriend);
 //	int count_skill_friend_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, unit_struct *target);
@@ -373,7 +374,7 @@ public:
 		{
 			monster_struct *truck;  //要保护的镖车
 			uint64_t truck_uuid;    //要保护的镖车
-			uint32_t start_time;    //开始移动的时间
+			uint64_t start_time;    //开始移动的时间
 		} type34_ai;
 		
 	} ai_data;

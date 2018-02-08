@@ -253,6 +253,7 @@ int chat_mod::do_one_gm_cmd( player_struct *player, int argc, char *argv[] )
 	}
 	else if ( argc >= 1 && strcasecmp( argv[ 0 ], "oneday" ) == 0 )
 	{
+		player->data->shop_reset.next_day_time = 0;
 		player->refresh_oneday_job();
 	}
 	else if ( argc >= 2 && strcasecmp( argv[ 0 ], "addbuff" ) == 0 )

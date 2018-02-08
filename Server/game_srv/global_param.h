@@ -11,8 +11,8 @@
 #include "minheap.h"
 
 #define MAX_PARTNER_AI_INTERFACE 20
-#define MAX_MONSTER_AI_INTERFACE 40
-#define MAX_RAID_AI_INTERFACE 20
+#define MAX_MONSTER_AI_INTERFACE 50
+#define MAX_RAID_AI_INTERFACE 30
 
 class Collect;
 typedef std::map<uint32_t, Collect *> COLLECT_MAP;

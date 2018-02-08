@@ -2110,8 +2110,10 @@ struct RewardBack
 struct RewardTable
 {
 	uint64_t  ID; //1
-	uint64_t  ExpCoefficient; //2
-	uint64_t  CoinReward; //3
+	uint32_t n_RewardType; //2
+	uint64_t *RewardType; //2
+	uint32_t n_RewardValue; //3
+	uint64_t *RewardValue; //3
 }__attribute__ ((packed));
 
 struct RobotPatrolTable
@@ -2643,6 +2645,8 @@ struct WeekTable
 	uint64_t  Type; //2
 	uint64_t  Num; //3
 	uint64_t  Reward; //4
+	uint32_t n_MonsterID; //5
+	uint64_t *MonsterID; //5
 }__attribute__ ((packed));
 
 struct WorldBossRewardTable

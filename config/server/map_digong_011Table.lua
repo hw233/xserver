@@ -1,11 +1,11 @@
 ﻿local map_digong_011 = {
     [1000001] = {
         ['uid'] = 1000001,
-        ['ID'] = 155000056,
+        ['ID'] = 155000057,
         ['ResType'] = "Protal",
-        ['PointPosX'] = 56.06093,
-        ['PointPosY'] = 0.5257866,
-        ['PointPosZ'] = -35.03644,
+        ['PointPosX'] = 56.70945,
+        ['PointPosY'] = 0.71,
+        ['PointPosZ'] = -33.09,
         ['Yaw'] = 0,
     },
     [1000002] = {

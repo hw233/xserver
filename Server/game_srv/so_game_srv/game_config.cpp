@@ -1240,7 +1240,7 @@ WeekTable *get_rand_week_config()
 {
 	if (zhenying_week_config.size() > 0)
 	{
-		//return zhenying_week_config[360300003];
+		//return zhenying_week_config[360300002];
 		return zhenying_week_config[360300001 + rand() % zhenying_week_config.size()];
 	}
 

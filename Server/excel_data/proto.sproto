@@ -830,8 +830,8 @@
 .RewardTable
 {
 	ID 1 : integer
-	ExpCoefficient 2 : integer
-	CoinReward 3 : integer
+	RewardType 2 : *integer
+	RewardValue 3 : *integer
 }
 
 .SpecialTitleTable
@@ -990,6 +990,7 @@
 	Type 2 : integer
 	Num 3 : integer
 	Reward 4 : integer
+	MonsterID 5 : *integer
 }
 
 .RaidScriptTable {

@@ -3092,12 +3092,12 @@ void player_struct::clear_player_sight()
 	data->cur_sight_partner = 0;
 }
 
-void player_struct::send_scene_transfer(float direct, float pos_x, float pos_y, float pos_z, uint32_t scene_id, int32_t result)
+void player_struct::send_scene_transfer(float direct, float pos_x, float pos_y, float pos_z, uint32_t old_scene_id, uint32_t scene_id, int32_t result)
 {
 	if (get_entity_type(data->player_id) == ENTITY_TYPE_AI_PLAYER)
 		return;
 
-	if (data->scene_id != scene_id)
+	if (old_scene_id != scene_id)
 	{
 		for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
 		{
@@ -12636,8 +12636,8 @@ int player_struct::add_partner(uint32_t partner_id, uint64_t *uuid)
 		}
 		partner_cur_attr.skills = skill_point;
 		partner_cur_attr.n_skills = skill_num;
-		//partner_cur_attr.base_attr_id = partner->data->attr_cur.base_attr_id;
-		//partner_cur_attr.n_base_attr_id = MAX_PARTNER_BASE_ATTR;
+		partner_cur_attr.base_attr_id = (uint32_t *)&base_attr_id[0];
+		partner_cur_attr.n_base_attr_id = MAX_PARTNER_BASE_ATTR;
 		partner_cur_attr.base_attr_cur = partner->data->attr_cur.base_attr_vaual;
 		partner_cur_attr.n_base_attr_cur = MAX_PARTNER_BASE_ATTR;
 		partner_cur_attr.base_attr_up = partner->data->attr_cur.base_attr_up;
@@ -14102,6 +14102,7 @@ void player_struct::refresh_oneday_job()
 
 	refresh_yaoshi_oneday();
 	refresh_zhenying_task_oneday();
+	refresh_question_oneday();
 
 	ParameterTable *tablePar = get_config_by_id(161000175, &parameter_config);
 	if (tablePar != NULL)
@@ -14434,7 +14435,7 @@ int player_struct::transfer_to_new_scene_impl(scene_struct *new_scene, double po
 	data->pos_y = pos_y;
 
 	data->m_angle = unity_angle_to_c_angle(direct);
-	send_scene_transfer(direct, pos_x, pos_y, pos_z, new_scene->m_id, 0);
+	send_scene_transfer(direct, pos_x, pos_y, pos_z, old_scence, new_scene->m_id, 0);
 
 	interrupt();
 
@@ -18665,7 +18666,7 @@ int player_struct::cur_scene_jump(double pos_x, double pos_z, double direct, EXT
 	}
 //	else
 //	{
-		send_scene_transfer(direct, pos_x, data->pos_y, pos_z, scene->m_id, 0);
+		send_scene_transfer(direct, pos_x, data->pos_y, pos_z, scene->m_id, scene->m_id, 0);
 //	}
 	// assert(scene);
 	// scene_struct *old = scene;
@@ -19928,6 +19929,39 @@ void player_struct::refresh_yao_qian_shu_data(uint64_t befor_time)
 	player_yaoqian_shu_info_notify();
 }
 
+bool player_struct::count_yaoqian_shu_money(int num, uint32_t *all, uint32_t *next)
+{
+	bool free = false;
+	uint32_t all_need_money = 0;
+	uint32_t next_need_money = data->yaoqian_data.next_need_money;
+	if (next_need_money == 0)
+		next_need_money = sg_yaoqian_shu_use_gold;
+
+	if(data->yaoqian_data.free_num <= 0 || num != 1)
+	{
+		for(int i = 0; i < num; i++)
+		{
+			all_need_money += next_need_money;
+			next_need_money += sg_yaoqian_shu_add_gold;							
+			if(next_need_money >= sg_yaoqian_shu_max_gold)
+			{
+				next_need_money = sg_yaoqian_shu_max_gold;
+			}
+		}
+	}
+	else
+	{
+		free = true;
+	}
+
+	if (all)
+		*all = all_need_money;
+	if (next)
+		*next = next_need_money;
+	
+	return (free);
+}
+
 void player_struct::player_yaoqian_shu_info_notify()
 {
 	PlayerYaoQianInfoNotify notify;
@@ -19935,46 +19969,49 @@ void player_struct::player_yaoqian_shu_info_notify()
 	notify.sum_num = data->yaoqian_data.sum_num;
 	notify.use_num = data->yaoqian_data.use_num;
 	notify.free_num = data->yaoqian_data.free_num;
-	if(data->yaoqian_data.free_num > 0)
-	{
-		notify.one_times = 0;
-		if(data->yaoqian_data.free_num >= 10)
-		{
-			notify.ten_times = 0;
-		}
-		else 
-		{
-			uint32_t use_money_num = 10 - data->yaoqian_data.free_num;	
-			uint32_t need_money = 0;
-			uint32_t next_money = sg_yaoqian_shu_use_gold;
-			for(size_t i = 0; i < use_money_num; i++)
-			{
-				if(next_money >= sg_yaoqian_shu_max_gold)
-				{
-					next_money = sg_yaoqian_shu_max_gold;
-				}
-				need_money += next_money;
-				next_money += sg_yaoqian_shu_add_gold;
-			}
-			notify.ten_times = need_money;
-		}
-	}
-	else 
-	{
-		notify.one_times = data->yaoqian_data.next_need_money;
-		uint32_t need_money = 0;
-		uint32_t next_money = data->yaoqian_data.next_need_money;
-		for(size_t i = 0; i < 10; i++)
-		{
-			if(next_money >= sg_yaoqian_shu_max_gold)
-			{
-				next_money = sg_yaoqian_shu_max_gold;
-			}
-			need_money += next_money;
-			next_money += sg_yaoqian_shu_add_gold;
-		}
-		notify.ten_times = need_money;
-	}
+	count_yaoqian_shu_money(1, &notify.one_times, NULL);
+	count_yaoqian_shu_money(10, &notify.ten_times, NULL);
+	
+	// if(data->yaoqian_data.free_num > 0)
+	// {
+	// 	notify.one_times = 0;
+	// 	if(data->yaoqian_data.free_num >= 10)
+	// 	{
+	// 		notify.ten_times = 0;
+	// 	}
+	// 	else 
+	// 	{
+	// 		uint32_t use_money_num = 10 - data->yaoqian_data.free_num;	
+	// 		uint32_t need_money = 0;
+	// 		uint32_t next_money = sg_yaoqian_shu_use_gold;
+	// 		for(size_t i = 0; i < use_money_num; i++)
+	// 		{
+	// 			if(next_money >= sg_yaoqian_shu_max_gold)
+	// 			{
+	// 				next_money = sg_yaoqian_shu_max_gold;
+	// 			}
+	// 			need_money += next_money;
+	// 			next_money += sg_yaoqian_shu_add_gold;
+	// 		}
+	// 		notify.ten_times = need_money;
+	// 	}
+	// }
+	// else 
+	// {
+	// 	notify.one_times = data->yaoqian_data.next_need_money;
+	// 	uint32_t need_money = 0;
+	// 	uint32_t next_money = data->yaoqian_data.next_need_money;
+	// 	for(size_t i = 0; i < 10; i++)
+	// 	{
+	// 		if(next_money >= sg_yaoqian_shu_max_gold)
+	// 		{
+	// 			next_money = sg_yaoqian_shu_max_gold;
+	// 		}
+	// 		need_money += next_money;
+	// 		next_money += sg_yaoqian_shu_add_gold;
+	// 	}
+	// 	notify.ten_times = need_money;
+	// }
 	EXTERN_DATA extern_data;
 	extern_data.player_id = get_uuid();
 	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_YAOQIAN_SHU_INFO_NOTIFY, player_yao_qian_info_notify__pack, notify);

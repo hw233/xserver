@@ -255,6 +255,7 @@ static void send_raid_reward(raid_struct *raid, int star)
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_RAID_FINISHED_NOTIFY, raid_finish_notify__pack, notify);
 		}
 
+		raid->m_player[i]->check_activity_progress(AM_WANYAOGU, 0);
 		raid->m_player[i]->add_task_progress(TCT_WANYAOGU, raid->data->ID, 1);
 		server_level_listen_raid_finish(raid->data->ID, raid->m_player[i]);
 		raid->m_player[i]->add_achievement_progress(ACType_RAID_PASS_STAR, raid->data->ID, star, 0, 1);

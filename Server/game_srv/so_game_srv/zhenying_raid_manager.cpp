@@ -115,7 +115,7 @@ unsigned int zhenying_raid_manager::get_zhenying_raid_pool_max_num()
 	return zhenying_raid_manager_raid_data_pool.num;
 }
 
-uint64_t GetOpenZhenyingDaily()
+uint64_t zhenying_raid_manager::GetOpenZhenyingDaily()
 {
 	//ParameterTable *table = get_config_by_id(161000339, &parameter_config);
 	//if (table == NULL)

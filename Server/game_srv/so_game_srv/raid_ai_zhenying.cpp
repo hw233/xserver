@@ -198,7 +198,7 @@ static void zhenying_raid_clear_follow(raid_struct *raid)
 	for (int i = 0; i < MAX_ZHENYING_FOLLOW; ++i)
 	{
 		monster_struct *pMon = monster_manager::get_monster_by_id(raid->data->ai_data.zhenying_data.follow[i]);
-		if (pMon != NULL)
+		if (pMon != NULL && pMon->scene != NULL)
 		{
 			pMon->scene->delete_monster_from_scene(pMon, true);
 			monster_manager::delete_monster(pMon);
@@ -307,7 +307,7 @@ static void zhenying_raid_ai_player_dead(raid_struct *raid, player_struct *playe
 		return;
 	}
 	ParameterTable *table = get_config_by_id(161001019, &parameter_config);
-	if (table != NULL)
+	if (table == NULL)
 	{
 		return;
 	}
@@ -380,6 +380,7 @@ static void zhenying_raid_ai_box_dead(raid_struct *raid, monster_struct *monster
 					pMon->data->stop_ai = false;
 					pMon->delete_one_buff(tableDaily->ProtectBuff, true);
 				}
+				uint64_t now = time_helper::get_cached_time();
 				int gen = 0;
 				for (uint32_t i = 0; i < tableDaily->n_ProtectMonsterID; ++i)
 				{
@@ -389,6 +390,12 @@ static void zhenying_raid_ai_box_dead(raid_struct *raid, monster_struct *monster
 						if (pFollow != NULL)
 						{
 							raid->data->ai_data.zhenying_data.follow[gen] = pFollow->get_uuid();
+							if (pFollow->ai_type == 34 && pMon)
+							{
+								pFollow->ai_data.type34_ai.start_time = now + 2000;
+								pFollow->ai_data.type34_ai.truck = pMon;
+								pFollow->ai_data.type34_ai.truck_uuid = pMon->get_uuid();
+							}
 						}
 					}
 				}
@@ -474,28 +481,22 @@ static void zhenying_raid_ai_truck_dead(raid_struct *raid, monster_struct *monst
 }
 static void zhenying_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
 {
-/*	char      buff[512] = "一分钟后重启服务器 。。。";
-	ChatHorse send;
-	chat_horse__init(&send);
-	send.id = 0;
-	send.prior = 1;
-	send.content = buff;
-	uint32_t c[MAX_CHANNEL] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-	send.channel = c;
-	send.n_channel = 9;
-	raid->broadcast_to_scene(MSG_ID_CHAT_HORSE_NOTIFY, &send, (pack_func)chat_horse__pack);*/
 	player_struct *pKill = NULL;
 	if (killer->get_unit_type() == UNIT_TYPE_PLAYER)
 	{
 		pKill = (player_struct *)killer;
-		update_task_process(3, pKill);
-
-		//DailyScore send;
-		//daily_score__init(&send);
-		//send.point = pKill->data->zhenying.score;
-		//EXTERN_DATA extern_data;
-		//extern_data.player_id = pKill->get_uuid();
-		//fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ZHENYING_DAILY_SCORE_NOTIFY, daily_score__pack, send);
+		WeekTable *table = get_config_by_id(360300002, &zhenying_week_config);
+		if (table != NULL)
+		{
+			if (monster->data->monster_id == table->MonsterID[0] || monster->data->monster_id == table->MonsterID[1])
+			{
+				update_task_process(2, pKill);
+			}
+			else
+			{
+				update_task_process(3, pKill);
+			}
+		}
 
 		CampDefenseTable *tableDaily = get_config_by_id(raid->data->ai_data.zhenying_data.camp, &zhenying_daily_config);
 		if (tableDaily == NULL)

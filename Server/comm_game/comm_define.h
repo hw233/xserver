@@ -424,6 +424,9 @@ enum ActivityMatter
 	AM_GUILD_DONATE = 11, //门宗募捐
 	AM_FISHING = 12, //钓鱼
 	AM_GUILD_BUILD = 13, //门宗建设
+	AM_GUILD_BBQ = 14, //门宗篝火
+	AM_GUILD_CHUANGONG = 15, //传功
+	AM_WANYAOGU = 16, //万妖谷
 };
 
 enum AchievementConditionType

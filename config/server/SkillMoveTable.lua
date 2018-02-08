@@ -155,6 +155,32 @@ local SkillMoveTable = {
 		['BallisticEffect'] = 0,
 		['ExplodedEffect'] = 0
 		},
+	[112511004] = {
+		['ID'] = 112511004,
+		['MoveType'] = 1,
+		['DmgType'] = 1,
+		['MoveDistance'] = 7,
+		['MoveSpeed'] = 13,
+		['DelayTime'] = 100,
+		['MoveTime'] = 570,
+		['EndType'] = 1,
+		['EndDistance'] = .50,
+		['BallisticEffect'] = 0,
+		['ExplodedEffect'] = 135110036
+		},
+	[112511005] = {
+		['ID'] = 112511005,
+		['MoveType'] = 1,
+		['DmgType'] = 1,
+		['MoveDistance'] = 7,
+		['MoveSpeed'] = 13,
+		['DelayTime'] = 100,
+		['MoveTime'] = 570,
+		['EndType'] = 1,
+		['EndDistance'] = .50,
+		['BallisticEffect'] = 0,
+		['ExplodedEffect'] = 135110038
+		},
 	[112512001] = {
 		['ID'] = 112512001,
 		['MoveType'] = 1,

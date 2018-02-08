@@ -361,7 +361,7 @@ int Collect::BegingGather(player_struct *player, uint32_t step)
 	{
 		if (player->data->zhenying.gather > 0)
 		{
-			return 9;
+			return 190500564;
 		}
 		raid_struct *raid = (raid_struct *)player->scene;
 		if (m_minType == 3)

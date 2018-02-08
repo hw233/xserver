@@ -186,11 +186,7 @@ void ChengJieTaskManage::TaskExpire(STChengJie &task)
 		ext_data.player_id = task.pid;
 		fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_CHENGJIE_KILLER_NOTIFY, chengjie_killer__pack, send);
 	}
-	player_struct *aventer = player_manager::get_player_by_id(task.investor);
-	if (aventer != NULL)
-	{
-		ClientGetTaskList(aventer, 3);
-	}
+	
 	player_struct *target = player_manager::get_player_by_id(task.pid);
 	if (target != NULL)
 	{
@@ -204,7 +200,13 @@ void ChengJieTaskManage::TaskExpire(STChengJie &task)
 	}
 	SetRoleTarget(task.pid, 0);
 	task.taskTime = 0;
-	UpdateTaskDb(task);
+	UpdateTaskDb(task); 
+	
+	player_struct *aventer = player_manager::get_player_by_id(task.investor);
+	if (aventer != NULL)
+	{
+		ClientGetTaskList(aventer, 3);
+	}
 }
 
 void send_system_msg(char * str, player_struct *player)
@@ -511,45 +513,55 @@ bool ChengJieTaskManage::PackTask(STChengJie &task, _ChengjieTask &send)
 	send.investor = task.investor;
 
 	uint64_t add = 0;
+	int rate = send.fail;
 	ParameterTable * config = get_config_by_id(161000087, &parameter_config);
 	if (config != NULL)
 	{
-		int rate = send.fail;
+		rate = rate / config->parameter1[1];
 		if (rate > config->parameter1[0])
 		{
 			rate = config->parameter1[0];
 		}
 		if (rate > 0)
 		{
-			add = task.shuangjin * config->parameter1[1] * rate / 10000.0;
+			add = task.shuangjin * config->parameter1[2] * rate / 10000.0;
 		}
 	}
 	send.shuangjin = task.shuangjin + add;
-	send.exp = task.exp;
-	send.courage = task.courage;
-	send.taskid = task.id;
-	if (time_helper::get_cached_time() / 1000 < task.timeOut)
+	uint32_t lv = ChengJieTaskManage::GetRoleLevel(send.playerid);
+	RewardTable * table = get_chengjie_reward_table(lv);
+	if (table != NULL)
 	{
-		send.cd = task.timeOut - time_helper::get_cached_time() / 1000;
+		send.exp = table->RewardValue[0] * (config->parameter1[3] * rate / 10000.0 + 1);
+		send.courage = table->RewardValue[0] * (config->parameter1[4] * rate / 10000.0 + 1);
 	}
+	
+	send.taskid = task.id;
+	//if (time_helper::get_cached_time() / 1000 < task.timeOut)
+	//{
+	//	send.cd = task.timeOut - time_helper::get_cached_time() / 1000;
+	//}
+	send.cd = task.timeOut;
 
 	send.complete = task.complete;
-	if (!task.complete && time_helper::get_cached_time() / 1000 < task.taskTime)
-	{
-		send.complete_cd = task.taskTime - time_helper::get_cached_time() / 1000;
-	}
-	else
-	{
-		send.complete_cd = 0;
-	}
-	if (time_helper::get_cached_time() / 1000 < task.acceptCd)
-	{
-		send.accept_cd = task.acceptCd - time_helper::get_cached_time() / 1000;
-	}
-	else
-	{
-		send.accept_cd = 0;
-	}
+	//if (!task.complete && time_helper::get_cached_time() / 1000 < task.taskTime)
+	//{
+	//	send.complete_cd = task.taskTime - time_helper::get_cached_time() / 1000;
+	//}
+	//else
+	//{
+	//	send.complete_cd = 0;
+	//}
+	send.complete_cd = task.taskTime;
+	//if (time_helper::get_cached_time() / 1000 < task.acceptCd)
+	//{
+	//	send.accept_cd = task.acceptCd - time_helper::get_cached_time() / 1000;
+	//}
+	//else
+	//{
+	//	send.accept_cd = 0;
+	//}
+	send.accept_cd = task.acceptCd;
 
 	return toFr;
 }

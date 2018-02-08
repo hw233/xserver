@@ -1050,7 +1050,8 @@ void Team::SetLimited(TeamLimited &limit, player_struct &player)
 	std::map<uint64_t, struct SceneResTable *>::iterator itfb = scene_res_config.find(m_data->m_targrt);
 	if (m_data->m_targrt == 0)
 	{
-		sprintf(str, "无目标, 不限等级 {申请入队_%lu}", m_data->m_id);
+		sprintf(str, "{[\"content\"]=\"无目标, 不限等级\",[\"title\"] = \"申请入队\",[\"id\"] = %lu,[\"type\"] = \"team talk\",[\"effect\"] = \"\",}", 
+			m_data->m_id);
 		m_data->m_lvMin = 0;
 		m_data->m_lvMax = 1000;
 	}
@@ -1076,7 +1077,7 @@ void Team::SetLimited(TeamLimited &limit, player_struct &player)
 
 				if (itfb != scene_res_config.end())
 				{
-					sprintf(str, "%s 等级 : %d~%d{ 申请入队_%lu }", itfb->second->SceneName, m_data->m_lvMin, m_data->m_lvMax, m_data->m_id);
+					sprintf(str, "{[\"content\"]=\"%s 等级 : %d~%d\",[\"title\"] = \"申请入队\",[\"id\"] = %lu,[\"type\"] = \"team talk\",[\"effect\"] = \"\",}", itfb->second->SceneName, m_data->m_lvMin, m_data->m_lvMax, m_data->m_id);
 				}
 			}
 		}
@@ -1085,7 +1086,7 @@ void Team::SetLimited(TeamLimited &limit, player_struct &player)
 
 			if (itfb != scene_res_config.end())
 			{
-				sprintf(str, "%s 等级:%lu以上{申请入队_%lu}", itfb->second->SceneName, itfb->second->Level, m_data->m_id);
+				sprintf(str, "{[\"content\"]=\"%s 等级:%lu以上\",[\"title\"] = \"申请入队\",[\"id\"] = %lu,[\"type\"] = \"team talk\",[\"effect\"] = \"\",}", itfb->second->SceneName, itfb->second->Level, m_data->m_id);
 				m_data->m_lvMin = itfb->second->Level;
 				m_data->m_lvMax = 1000;
 			}

@@ -786,7 +786,7 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 	}
 	arb_redis.push_back(req);
 
-	LOG_INFO("[%s:%d] player[%lu], refresh_type:%u, status:%u", __FUNCTION__, __LINE__, extern_data->player_id, refresh_type, req->status);
+	LOG_INFO("[%s:%d] player[%lu], refresh_type:%u, status:%u, zhenying:%u", __FUNCTION__, __LINE__, extern_data->player_id, refresh_type, req->status, req->zhenying);
 
 	CRedisClient &rc = sg_redis_client;
 	char field[128];

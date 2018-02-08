@@ -57,16 +57,20 @@ void player_struct::calc_zhenying_attr(double *attr)
 
 void player_struct::clear_zhenying_task()
 {
-	int tmp = this->get_attr(PLAYER_ATTR_ZHENYING);
-	CampDefenseTable *tableDaily = get_config_by_id(360600000 + (tmp + 1) % 2, &zhenying_daily_config);
-	if (tableDaily == NULL)
+	CampDefenseTable *tableDaily = NULL;
+	for (uint64_t t = 0; t < 2; ++t)
 	{
-		return;
+		tableDaily = get_config_by_id(360600001 + t, &zhenying_daily_config); 
+		if (tableDaily == NULL)
+		{
+			continue;
+		}
+		for (uint32_t i = 0; i < tableDaily->n_TaskID; ++i)
+		{
+			remove_task(tableDaily->TaskID[i]);
+		}
 	}
-	for (uint32_t i = 0; i < tableDaily->n_TaskID; ++i)
-	{
-		remove_task(tableDaily->TaskID[i]);
-	}
+	
 	data->zhenying.score = 0;
 }
 
@@ -188,6 +192,52 @@ void player_struct::refresh_zhenying_task_oneday()
 		data->zhenying.award_num = tablePa->parameter1[3];
 	}
 	send_zhenying_info();
+}
+
+void player_struct::refresh_question_oneday()
+{
+	data->common_answer.number = 1;
+	ParameterTable *table = get_config_by_id(161000165, &parameter_config);
+	if (table != NULL)
+	{
+		data->common_answer.tip = table->parameter1[0];
+	}
+	table = get_config_by_id(161000164, &parameter_config);
+	if (table != NULL)
+	{
+		data->common_answer.help = table->parameter1[0];
+	}
+	data->common_answer.contin = 0;
+	data->common_answer.exp = 0;
+	data->common_answer.money = 0;
+	data->common_answer.right = 0;
+	gen_common_question();
+}
+
+void player_struct::gen_common_question()
+{
+	data->common_answer.question = get_rand_question(sg_common_question);
+	QuestionTable *table = get_config_by_id(data->common_answer.question, &questions_config);
+	data->common_answer.answer[0] = 1;
+	data->common_answer.answer[1] = 2;
+	data->common_answer.answer[2] = 3;
+	data->common_answer.answer[3] = 4;
+	if (table != NULL)
+	{
+		int j = rand() % 3;
+		uint32_t tmp = data->common_answer.answer[0];
+		data->common_answer.answer[0] = data->common_answer.answer[j + 1];
+		data->common_answer.answer[j + 1] = tmp;
+
+		j = 0;
+		for (int i = 0; i < MAX_QUESTION_ANSWER; ++i)
+		{
+			if (data->common_answer.answer[i] != table->RightAnseer)
+			{
+				data->common_answer.answer_tip[j++] = i + 1;
+			}
+		}
+	}
 }
 
 

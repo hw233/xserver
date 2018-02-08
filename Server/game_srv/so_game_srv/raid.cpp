@@ -832,13 +832,16 @@ int raid_struct::set_m_player_and_player_info(player_struct *player, int index)
 
 int raid_struct::player_enter_raid_impl(player_struct *player, int index, double pos_x, double pos_z, double direct)
 {
+	uint32_t old_scene = 0;
 	set_m_player_and_player_info(player, index);
 	
 	if (player->sight_space)
 		sight_space_manager::del_player_from_sight_space(player->sight_space, player, false);
 	if (player->scene)
+	{
+		old_scene = player->scene->m_id;
 		player->scene->player_leave_scene(player);
-	
+	}
 	player->conserve_out_raid_pos_and_scene(m_config);
 	player->set_enter_raid_pos_and_scene(this, pos_x, pos_z);
 
@@ -858,7 +861,7 @@ int raid_struct::player_enter_raid_impl(player_struct *player, int index, double
 		}
 		player->data->m_angle = unity_angle_to_c_angle(direct);
 		player->send_scene_transfer(direct, pos_x, res_config->BirthPointY,
-			pos_z, m_id, 0);
+			pos_z, old_scene, m_id, 0);
 	}
 	else
 	{

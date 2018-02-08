@@ -50,19 +50,32 @@ void monster_34_patrol(monster_struct *monster)
 		return;
 //	if (monster->ai_type != AI_TYPE_NORMAL)
 //		return;
-	
-	struct position *cur_pos = monster->get_pos();
-
-		// TODO: 走回马车附近
-	if (monster->create_config &&
-		(fabsf(cur_pos->pos_x - monster->get_born_pos_x()) > (int)(monster->ai_config->GuardRange)
-			|| fabsf(cur_pos->pos_z - monster->get_born_pos_z()) > (int)(monster->ai_config->GuardRange)))
-	{
-		return monster->go_back();
-	}
-	
 	if (monster->is_unit_in_move())
 		return;
+	
+	monster_struct *truck = monster->ai_data.type34_ai.truck;
+	struct position *cur_pos = monster->get_pos();
+	struct position *his_pos = truck->get_pos();
+
+		// 走回马车附近
+	if (!check_distance_in_range(cur_pos, his_pos, monster->ai_config->GuardRange))
+	{
+		if (get_circle_random_position_v2(monster->scene, cur_pos, his_pos, monster->ai_config->GuardRange / 4, &monster->data->move_path.pos[1]))		
+		{
+			monster->send_patrol_move();
+		}
+		else  //寻路不了就拉扯过去
+		{
+			if (monster->scene)
+			{
+				scene_struct *scene = monster->scene;
+				monster->scene->delete_monster_from_scene(monster, true);
+				monster->set_pos(his_pos->pos_x, his_pos->pos_z);
+				scene->add_monster_to_scene(monster, 0);
+			}
+		}
+		return;
+	}
 
 		// TODO: 选择马车的仇恨目标
 	if (monster->try_active_attack())
@@ -90,7 +103,8 @@ void monster_34_patrol(monster_struct *monster)
 
 static unit_struct *monster_34_choose_target(monster_struct *monster)
 {
-	return NULL;
+	monster_struct *truck = monster->ai_data.type34_ai.truck;
+	return truck->get_hate_target();
 }
 
 // static void move_to_player(monster_struct *monster, player_struct *player)

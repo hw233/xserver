@@ -312,7 +312,7 @@ int scene_struct::add_collect_to_scene(Collect *pCollect)
 	area_struct *area = get_area_by_pos(pCollect->m_pos.pos_x, pCollect->m_pos.pos_z);
 	if (!area)
 	{
-		LOG_ERR("%s %d: collect[%u] add area[%.1f][%.1f] failed", __FUNCTION__, __LINE__, pCollect->m_collectId, pCollect->m_pos.pos_x, pCollect->m_pos.pos_z);
+		LOG_ERR("%s %d: scene[%u] collect[%u] add area[%.1f][%.1f] failed", __FUNCTION__, __LINE__, m_id, pCollect->m_collectId, pCollect->m_pos.pos_x, pCollect->m_pos.pos_z);
 		return -1;
 	}
 	area->add_collect_to_area(pCollect->m_uuid);
@@ -595,7 +595,7 @@ int scene_struct::player_enter_scene(player_struct *player, double pos_x, double
 	player->data->pos_y = pos_y;
 
 	player->data->m_angle = unity_angle_to_c_angle(direct);
-	player->send_scene_transfer(direct, pos_x, pos_y, pos_z, m_id, 0);
+	player->send_scene_transfer(direct, pos_x, pos_y, pos_z, player->data->last_scene_id, m_id, 0);
 
 	player->interrupt();
 

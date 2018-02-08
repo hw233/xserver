@@ -1926,11 +1926,12 @@ bool monster_struct::on_unit_leave_sight(uint64_t uuid)
 	return true;
 }
 
-void monster_struct::update_target()
+unit_struct *monster_struct::get_hate_target()
 {
 	if (config->HateType != MONSTER_HATETYPE_DEFINE_BOSS)
-		return;
-	
+		return target;
+
+	unit_struct *ret = NULL;
 	int max_hate = 0;
 	uint64_t target_uuid = 0;
 	for (int i = 0; i < MAX_HATE_UNIT; ++i)
@@ -1946,19 +1947,56 @@ void monster_struct::update_target()
 	
 	if (target_uuid > 0)
 	{
-		target = unit_struct::get_unit_by_uuid(target_uuid);
-		if (!target)
+		ret = unit_struct::get_unit_by_uuid(target_uuid);
+		if (!ret)
 		{
 			LOG_INFO("%s %d: no target %lu", __FUNCTION__, __LINE__, target_uuid);
-			return;
+			return NULL;
 		}
-		if (!target->is_avaliable())
-			target = NULL;
+		if (!ret->is_avaliable())
+			ret = NULL;
 	}
 	else
 	{
-		target = NULL;
+		ret = NULL;
 	}
+	return ret;
+}
+
+void monster_struct::update_target()
+{
+	target = get_hate_target();
+	// if (config->HateType != MONSTER_HATETYPE_DEFINE_BOSS)
+	// 	return;
+	
+	// int max_hate = 0;
+	// uint64_t target_uuid = 0;
+	// for (int i = 0; i < MAX_HATE_UNIT; ++i)
+	// {
+	// 	if (hate_unit[i].uuid != 0 && hate_unit[i].hate_value > max_hate)
+	// 	{
+	// 		max_hate = hate_unit[i].hate_value;
+	// 		target_uuid = hate_unit[i].uuid;
+	// 	}
+	// }
+
+	// LOG_DEBUG("%s: monster %lu set target = %lu[%d]", __FUNCTION__, get_uuid(), target_uuid, max_hate);
+	
+	// if (target_uuid > 0)
+	// {
+	// 	target = unit_struct::get_unit_by_uuid(target_uuid);
+	// 	if (!target)
+	// 	{
+	// 		LOG_INFO("%s %d: no target %lu", __FUNCTION__, __LINE__, target_uuid);
+	// 		return;
+	// 	}
+	// 	if (!target->is_avaliable())
+	// 		target = NULL;
+	// }
+	// else
+	// {
+	// 	target = NULL;
+	// }
 }
 
 void monster_struct::count_hate(unit_struct *player, uint32_t skill_id, int32_t damage)
