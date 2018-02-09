@@ -28,6 +28,7 @@ public:
 
 	static int reinit_partner_min_heap();
 	static int init_partner_struct(int num, unsigned long key);
+	static int resume_partner_struct(int num, unsigned long key);	
 private:
 	static int add_partner(partner_struct *p);
 	static int remove_partner(partner_struct *p);

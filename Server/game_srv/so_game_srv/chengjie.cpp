@@ -63,7 +63,7 @@ void ChengJieTaskManage::AddTask(STChengJie &task, uint64_t accepter)
 			EXTERN_DATA extern_data;
 			extern_data.player_id = 0;
 			conn_node_base::add_extern_data(&todb->head, &extern_data);
-			if (conn_node_dbsrv::connecter.send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
+			if (conn_node_dbsrv::connecter->send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
 				LOG_ERR("%s %d: send to dbsrv err[%d]", __FUNCTION__, __LINE__, errno);
 			}
 		}
@@ -99,7 +99,7 @@ void ChengJieTaskManage::DelTaskDb(uint32_t taskId)
 	todb->taskid = taskId;
 	EXTERN_DATA extern_data;
 	conn_node_base::add_extern_data(&todb->head, &extern_data);
-	if (conn_node_dbsrv::connecter.send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
+	if (conn_node_dbsrv::connecter->send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
 		LOG_ERR("%s %d: send to dbsrv err[%d]", __FUNCTION__, __LINE__, errno);
 	}
 }
@@ -111,7 +111,7 @@ void ChengJieTaskManage::LoadAllTask()
 	todb->head.len = ENDION_FUNC_4(sizeof(PROTO_CHENGJIE_ID));
 	EXTERN_DATA extern_data;
 	conn_node_base::add_extern_data(&todb->head, &extern_data);
-	if (conn_node_dbsrv::connecter.send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
+	if (conn_node_dbsrv::connecter->send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
 		LOG_ERR("%s %d: send to dbsrv err[%d]", __FUNCTION__, __LINE__, errno);
 	}
 }
@@ -313,7 +313,7 @@ void ChengJieTaskManage::UpdateTaskDb(STChengJie &task)
 	todb->head.len += todb->data_size;
 	EXTERN_DATA extern_data;
 	conn_node_base::add_extern_data(&todb->head, &extern_data);
-	if (conn_node_dbsrv::connecter.send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
+	if (conn_node_dbsrv::connecter->send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
 		LOG_ERR("%s %d: send to dbsrv err[%d]", __FUNCTION__, __LINE__, errno);
 	}
 }
@@ -342,7 +342,7 @@ void ChengJieTaskManage::AddTaskDb(STChengJie &task, EXTERN_DATA *extern_data)
 	todb->data_size = chengjie_task_db__pack(&send, todb->data);
 	todb->head.len += todb->data_size;
 	conn_node_base::add_extern_data(&todb->head, extern_data);
-	if (conn_node_dbsrv::connecter.send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
+	if (conn_node_dbsrv::connecter->send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
 		LOG_ERR("%s %d: send to dbsrv err[%d]", __FUNCTION__, __LINE__, errno);
 	}
 	ChengJieTaskManage_m_target.insert(std::make_pair(task.pid, 0));

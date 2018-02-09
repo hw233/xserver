@@ -192,7 +192,7 @@ int conn_node_gamesrv::transfer_to_dbsrv(void)
 {
 	int ret = 0;
 	PROTO_HEAD *head = get_head();
-	if (conn_node_dbsrv::connecter.send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len))
+	if (conn_node_dbsrv::connecter->send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len))
 	{
 		LOG_ERR("[%s:%d] send to dbsrv failed err[%d]", __FUNCTION__, __LINE__, errno);
 		ret = -2;

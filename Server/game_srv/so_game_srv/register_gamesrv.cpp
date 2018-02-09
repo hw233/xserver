@@ -50,6 +50,9 @@
 #include "zhenying_raid_manager.h"
 //#define run_with_period(_ms_) if ((_ms_ <= 1000/server.hz) ||
 //!(server.cronloops%((_ms_)/(1000/server.hz))))
+
+static int g_dump_mode;
+
 #define run_with_period(_ms_) if (timer_loop_count % _ms_ == 0)
 
 static int default_handle(player_struct *player, EXTERN_DATA *extern_data)
@@ -343,6 +346,7 @@ int install(int argc, char **argv)
         else if (strcmp(argv[i], "-o") == 0)
         {  /// dump shared memory data to db
             dump = 1;
+			g_dump_mode = 1;
         }
         else if (strcmp(argv[i], "-t") == 0)
         {  /// test for mem check
@@ -406,7 +410,7 @@ int install(int argc, char **argv)
         ret = -1;
         goto done;
     }
-    if (player_manager::init_player_struct(player_num, player_key) != 0)
+    if (!dump && player_manager::init_player_struct(player_num, player_key) != 0)
     {
         LOG_ERR("init player struct failed");
         ret = -1;
@@ -429,7 +433,7 @@ int install(int argc, char **argv)
         ret = -1;
         goto done;
     }
-    if (raid_manager::init_raid_struct(player_num, player_key) != 0)
+    if (!dump && raid_manager::init_raid_struct(player_num, player_key) != 0)
     {
         LOG_ERR("init raid struct failed");
         ret = -1;
@@ -444,7 +448,7 @@ int install(int argc, char **argv)
         ret = -1;
         goto done;
     }
-    if (init_global_shared_data(player_key) != 0)
+    if (!dump && init_global_shared_data(player_key) != 0)
     {
         LOG_ERR("init global shared data failed");
         ret = -1;
@@ -468,7 +472,7 @@ int install(int argc, char **argv)
             ret = -1;
             goto done;
         }
-        if (zhenying_raid_manager::init_zhenying_raid_struct(player_num, player_key) != 0)
+        if (!dump && zhenying_raid_manager::init_zhenying_raid_struct(player_num, player_key) != 0)
         {
             LOG_ERR("init zhenying raid struct failed");
             ret = -1;
@@ -495,7 +499,7 @@ int install(int argc, char **argv)
             ret = -1;
             goto done;
         }
-        if (guild_wait_raid_manager::init_guild_wait_raid_struct(player_num, player_key) != 0)
+        if (!dump && guild_wait_raid_manager::init_guild_wait_raid_struct(player_num, player_key) != 0)
         {
             LOG_ERR("init guild_wait raid struct failed");
             ret = -1;
@@ -520,7 +524,7 @@ int install(int argc, char **argv)
             ret = -1;
             goto done;
         }
-        if (guild_land_raid_manager::init_guild_land_raid_struct(player_num, player_key) != 0)
+        if (!dump && guild_land_raid_manager::init_guild_land_raid_struct(player_num, player_key) != 0)
         {
             LOG_ERR("init guild_land raid struct failed");
             ret = -1;
@@ -545,7 +549,7 @@ int install(int argc, char **argv)
         ret = -1;
         goto done;
     }
-    if (skill_manager::init_skill_struct(player_num, player_key) != 0)
+    if (!dump && skill_manager::init_skill_struct(player_num, player_key) != 0)
     {
         LOG_ERR("init skill struct failed");
         ret = -1;
@@ -568,7 +572,7 @@ int install(int argc, char **argv)
         ret = -1;
         goto done;
     }
-    if (buff_manager::init_buff_struct(player_num, player_key) != 0)
+    if (!dump && buff_manager::init_buff_struct(player_num, player_key) != 0)
     {
         LOG_ERR("%d init buff struct failed", __LINE__);
         ret = -1;
@@ -591,7 +595,7 @@ int install(int argc, char **argv)
         ret = -1;
         goto done;
     }
-    if (Team::InitTeamData(player_num * 2, player_key) != 0)
+    if (!dump && Team::InitTeamData(player_num * 2, player_key) != 0)
     {
         LOG_ERR("%d: init TeamData failed", __LINE__);
         ret = -1;
@@ -616,7 +620,7 @@ int install(int argc, char **argv)
         ret = -1;
         goto done;
     }
-    if (sight_space_manager::init_sight_space(player_num, player_key) != 0)
+    if (!dump && sight_space_manager::init_sight_space(player_num, player_key) != 0)
     {
         LOG_ERR("init sight space struct failed");
         ret = -1;
@@ -640,7 +644,7 @@ int install(int argc, char **argv)
         ret = -1;
         goto done;
     }
-    if (monster_manager::init_monster_struct(player_num, player_key) != 0)
+    if (!dump && monster_manager::init_monster_struct(player_num, player_key) != 0)
     {
         LOG_ERR("%d init monster struct failed", __LINE__);
         ret = -1;
@@ -684,7 +688,7 @@ int install(int argc, char **argv)
             ret = -1;
             goto done;
         }
-        if (partner_manager::init_partner_struct(player_num, player_key) != 0)
+        if (!dump && partner_manager::init_partner_struct(player_num, player_key) != 0)
         {
             LOG_ERR("init partner struct failed");
             ret = -1;
@@ -713,19 +717,23 @@ int install(int argc, char **argv)
             ret = -1;
             goto done;
         }
-        if (cash_truck_manager::init_cash_truck_struct(player_num, player_key) != 0)
+        if (!dump && cash_truck_manager::init_cash_truck_struct(player_num, player_key) != 0)
         {
             LOG_ERR("init truck struct failed");
             ret = -1;
             goto done;
         }
     }
-    if (add_all_scene() != 0)
-    {
-        LOG_ERR("add all scene fail");
-        goto done;
-    }
-    zhenying_raid_manager::create_all_line();
+
+	if (!dump)
+	{
+		if (add_all_scene() != 0)
+		{
+			LOG_ERR("add all scene fail");
+			goto done;
+		}
+		zhenying_raid_manager::create_all_line();
+	}
 #endif
 
     if (!dump)
@@ -776,7 +784,8 @@ int install(int argc, char **argv)
             goto done;
         }
 
-        ret = game_add_connect_event((struct sockaddr *)&sin, sizeof(sin), &conn_node_dbsrv::connecter);
+		conn_node_dbsrv::connecter = new conn_node_dbsrv;		
+        ret = game_add_connect_event((struct sockaddr *)&sin, sizeof(sin), conn_node_dbsrv::connecter);
         if (ret <= 0)
             goto done;
 #endif
@@ -791,6 +800,127 @@ int install(int argc, char **argv)
 
     line                    = get_first_key(file, (char *)"game_srv_tick_time");
     gamesrv_timeout.tv_usec = atoi(get_value(line)) * 1000;
+
+	if (dump)
+	{		
+		line       = get_first_key(file, (char *)"game_srv_player_num");
+		player_num = atoi(get_value(line));
+		if (player_num <= 0)
+		{
+			LOG_ERR("config file wrong, no game_srv_player_num");
+			ret = -1;
+			goto done;
+		}
+		line       = get_first_key(file, (char *)"game_srv_player_key");
+		player_key = strtoul(get_value(line), NULL, 0);
+		if (player_key == 0 || player_key == ULONG_MAX)
+		{
+			LOG_ERR("config file wrong, no game_srv_key");
+			ret = -1;
+			goto done;
+		}
+			//todo buff  truck
+		if (player_manager::resume_player_struct(player_num, player_key) != 0)
+		{
+			LOG_ERR("resume player struct failed");
+			ret = -1;
+			goto done;
+		}
+
+        line       = get_first_key(file, (char *)"game_srv_partner_num");
+        player_num = atoi(get_value(line));
+        if (player_num <= 0)
+        {
+            LOG_ERR("config file wrong, no game_srv_partner_num");
+            ret = -1;
+            goto done;
+        }
+        line       = get_first_key(file, (char *)"game_srv_partner_key");
+        player_key = strtoul(get_value(line), NULL, 0);
+        if (player_key == 0 || player_key == ULONG_MAX)
+        {
+            LOG_ERR("config file wrong, no game_srv_partner_key");
+            ret = -1;
+            goto done;
+        }
+        if (partner_manager::resume_partner_struct(player_num, player_key) != 0)
+        {
+            LOG_ERR("init partner struct failed");
+            ret = -1;
+            goto done;
+        }
+
+        line       = get_first_key(file, (char *)"game_srv_truck_num");
+        player_num = atoi(get_value(line));
+        if (player_num <= 0)
+        {
+            LOG_ERR("config file wrong, no game_srv_truck_num");
+            ret = -1;
+            goto done;
+        }
+        line       = get_first_key(file, (char *)"game_srv_truck_key");
+        player_key = strtoul(get_value(line), NULL, 0);
+        if (player_key == 0 || player_key == ULONG_MAX)
+        {
+            LOG_ERR("config file wrong, no game_srv_truck_key");
+            ret = -1;
+            goto done;
+        }
+        if (cash_truck_manager::resume_cash_truck_struct(player_num, player_key) != 0)
+        {
+            LOG_ERR("init truck struct failed");
+            ret = -1;
+            goto done;
+        }
+		
+        // connect db_srv
+        line = get_first_key(file, (char *)"db_srv_port");
+        port = atoi(get_value(line));
+        if (port <= 0)
+        {
+            LOG_ERR("config file wrong, no db_srv_port");
+            ret = -1;
+            goto done;
+        }
+        memset(&sin, 0, sizeof(sin));
+        sin.sin_family = AF_INET;
+        sin.sin_port   = htons(port);
+        ret            = evutil_inet_pton(AF_INET, "127.0.0.1", &sin.sin_addr);
+        if (ret != 1)
+        {
+            LOG_ERR("%s %d: evutil_inet_pton failed[%d]", __FUNCTION__, __LINE__, ret);
+            goto done;
+        }
+
+		conn_node_dbsrv::connecter = new conn_node_dbsrv;
+        ret = game_add_connect_event((struct sockaddr *)&sin, sizeof(sin), conn_node_dbsrv::connecter);
+        if (ret <= 0)
+            goto done;
+
+		std::map<uint64_t, player_struct *>::iterator it = player_manager_all_players_id.begin();
+		for (; it != player_manager_all_players_id.end(); ++it)
+		{
+			player_struct *player = it->second;
+			if (!player || !player->data)
+				continue;
+
+			if (get_entity_type(player->get_uuid()) != ENTITY_TYPE_PLAYER)
+				continue;
+
+			player->data->status = ONLINE;
+                //		player->process_kick_player();
+				//head = (PROTO_HEAD *)node->buf_head();
+                //			extern_data = get_extern_data(head);
+			EXTERN_DATA ext_data;
+			ext_data.player_id = player->data->player_id;
+			player->cache_to_dbserver(false, &ext_data);
+//			player->refresh_player_redis_info(true);
+		}
+
+		shutdown(conn_node_dbsrv::connecter->fd, SHUT_WR);
+		ret = 0;
+		goto done;
+	}
 
 /*
   if (dump) {
@@ -940,6 +1070,8 @@ void on_http_request(struct evhttp_request *req, void *arg)
 
 void cb_gamesrv_timer()
 {
+	if (g_dump_mode)
+		return;
     uint64_t times = time_helper::get_micro_time();
     time_helper::set_cached_time(times / 1000);
 
@@ -1181,6 +1313,8 @@ int db_recv_func(evutil_socket_t fd, conn_node_dbsrv *node)
         if (ret < 0)
         {
             LOG_INFO("%s %d: connect closed from fd %u, err = %d", __FUNCTION__, __LINE__, fd, errno);
+			if (g_dump_mode)
+				exit(0);
             return (-1);
         }
         else if (ret > 0)

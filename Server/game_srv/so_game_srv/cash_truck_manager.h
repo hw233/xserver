@@ -34,6 +34,7 @@ public:
 	static cash_truck_struct * get_cash_truck_by_id(uint64_t id);
 
 	static int init_cash_truck_struct(int num, unsigned long key);
+	static int resume_cash_truck_struct(int num, unsigned long key);	
 
 	static void cash_truck_drop(player_struct &player);
 

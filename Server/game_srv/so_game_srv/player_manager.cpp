@@ -103,10 +103,9 @@ int player_manager::init_player_struct(int num, unsigned long key)
 	return init_comm_pool(0, sizeof(player_data), num, key, &player_manager_player_data_pool);
 #endif			
 }
-/*
+
 int player_manager::resume_player_struct(int num, unsigned long key)
 {
-	scene_struct *scene;
 	player_struct *player;
 	for (int i = 0; i < num; ++i) {
 		player = new player_struct();
@@ -119,8 +118,8 @@ int player_manager::resume_player_struct(int num, unsigned long key)
 		struct player_data *data = (struct player_data *)get_next_inuse_comm_pool_entry(&player_manager_player_data_pool, &index);
 		if (!data)
 			break;
-		LOG_DEBUG("%s %d: status[%d], player_id[%lu], name[%s] posx[%f] posy[%f]\n",
-			__FUNCTION__, __LINE__, data->status, data->player_id, data->name, data->attrData[PLAYER_ATTR_POSX], data->attrData[PLAYER_ATTR_POSY]);
+		LOG_DEBUG("%s %d: status[%d], player_id[%lu], name[%s]\n",
+			__FUNCTION__, __LINE__, data->status, data->player_id, data->name);
 		player = player_manager_player_free_list.back();
 		if (!player) {
 			LOG_ERR("%s %d: get free player failed", __FUNCTION__, __LINE__);
@@ -128,50 +127,11 @@ int player_manager::resume_player_struct(int num, unsigned long key)
 		}
 		player_manager_player_free_list.pop_back();	
 		player->data = data;
-		data->scene = NULL;
-		data->raid = NULL;		
-
-		if (resume_player_bag_data(player) != 0) {
-			LOG_ERR("%s %d: resume player bag data failed", __FUNCTION__, __LINE__);
-			return (-10);			
-		}
-		
 		add_player(player);
-		if (data->status == ONLINE) {
-			scene = scene_manager::get_scene(player->get_scene_id());
-			if (!scene) {
-				LOG_ERR("%s %d: get scene[%d] fail", __FUNCTION__, __LINE__, player->get_scene_id());
-				return (-20);
-			}
-			scene->add_player_to_scene(player, false);
-
-			raid_struct *raid = raid_manager::get_raid_by_id(data->raid_uuid);
-			if (raid) {
-//				raid->add_player_to_scene(player, false);
-				raid->resume_player_to_scene(player);
-				data->raid = raid;
-
-				if (!raid->data->is_start) {
-					raid_manager::insert_to_wait(raid->data->raid_id, raid);
-				}
-			}
-
-
-			player->check_power();	/// 每次登陆时重计算一下体力
-			player->map_task();		/// 映射已完成的任务列表
-//			player->create_index_task();
-			player->item_index_create();
-			player->temp_index_create();
-			player->map_dragon();
-			player->load_raid_to_cache();
-			player->load_achievement_to_cache();
-			player->load_daily_quest_to_cache();
-			player->check_skin_ts();
-		}
 	}
 	return (ret);
 }
-
+/*
 int player_manager::resume_player_bag_data(player_struct *player)
 {
 	for (int i = 0; i < player->data->active_equip_bag_grids; ++i) {

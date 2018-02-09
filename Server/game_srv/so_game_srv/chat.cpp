@@ -76,13 +76,13 @@ static void send_script_info( player_struct *player, struct raid_script_data *da
 
 static void do_test2_cmd( player_struct *player, uint64_t target_id )
 {
-	DOUFACHANG_LOAD_PLAYER_REQUEST *req = (DOUFACHANG_LOAD_PLAYER_REQUEST *) conn_node_dbsrv::connecter.get_send_data();
+	DOUFACHANG_LOAD_PLAYER_REQUEST *req = (DOUFACHANG_LOAD_PLAYER_REQUEST *) conn_node_dbsrv::connecter->get_send_data();
 	req->player_id                      = player->get_uuid();
 	req->target_id                      = target_id;
 
 	EXTERN_DATA extern_data;
 	extern_data.player_id = req->player_id;
-	fast_send_msg_base( &conn_node_dbsrv::connecter, &extern_data, SERVER_PROTO_DOUFACHANG_LOAD_PLAYER_REQUEST, sizeof( *req ), 0 );
+	fast_send_msg_base( conn_node_dbsrv::connecter, &extern_data, SERVER_PROTO_DOUFACHANG_LOAD_PLAYER_REQUEST, sizeof( *req ), 0 );
 }
 
 static void do_test_cmd( player_struct *player ) { return; }

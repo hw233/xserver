@@ -1081,7 +1081,11 @@ int raid_struct::get_id_monster_num(uint32_t id)
 
 int raid_struct::player_leave_raid(player_struct *player)
 {
-	player_leave_scene(player);
+	if (player_leave_scene(player) != 0)
+	{
+		LOG_ERR("%s: player[%lu] leave raid %u failed", __FUNCTION__, player->get_uuid(), m_id);
+		return -1;
+	}
 #ifdef __RAID_SRV__
 	EXTERN_DATA extern_data;
 	extern_data.player_id = player->get_uuid();

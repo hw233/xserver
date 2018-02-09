@@ -179,7 +179,7 @@ static void send_trade_statis(uint64_t player_id, uint32_t operate_id, uint32_t 
 	req->ext_num6 = ext_num6;
 	
 	EXTERN_DATA ext_data;
-	fast_send_msg_base(&conn_node_dbsrv::connecter, &ext_data, SERVER_PROTO_TRADE_STATIS, data_len, 0);
+	fast_send_msg_base(conn_node_dbsrv::connecter, &ext_data, SERVER_PROTO_TRADE_STATIS, data_len, 0);
 }
 
 /*
@@ -2951,7 +2951,7 @@ static int handle_enter_game(player_struct *player, EXTERN_DATA *extern_data)
 		}
 	}
 	else {
-		int result = conn_node_dbsrv::connecter.send_one_msg(&req->head, 1);
+		int result = conn_node_dbsrv::connecter->send_one_msg(&req->head, 1);
 		if (result != (int)ENDION_FUNC_4(req->head.len)) {
 			LOG_ERR("[%s : %d]: send data to db server failed", __FUNCTION__, __LINE__);
 		}
@@ -3675,7 +3675,7 @@ static int handle_rename_request(player_struct *player, EXTERN_DATA *extern_data
 	if (ret == 0)
 	{
 		memcpy(get_send_data(), get_data(), get_data_len());
-		fast_send_msg_base(&conn_node_dbsrv::connecter, extern_data, MSG_ID_PLAYER_RENAME_REQUEST, get_data_len(), get_seq());
+		fast_send_msg_base(conn_node_dbsrv::connecter, extern_data, MSG_ID_PLAYER_RENAME_REQUEST, get_data_len(), get_seq());
 	}
 	else
 	{
@@ -5146,7 +5146,7 @@ int handle_private_chat_find_target_request(player_struct *player, EXTERN_DATA *
 				todb->org_msg = MSG_ID_PRIVATE_CHAT_FIND_TARGET_REQUEST;
 
 				conn_node_base::add_extern_data(&todb->head, extern_data);
-				if (conn_node_dbsrv::connecter.send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
+				if (conn_node_dbsrv::connecter->send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
 					LOG_ERR("%s %d: send to dbsrv err[%d]", __FUNCTION__, __LINE__, errno);
 				}
 			}
@@ -13231,7 +13231,7 @@ static int handle_chengjie_find_target_request(player_struct *player, EXTERN_DAT
 				todb->org_msg = MSG_ID_CHENGJIE_FIND_TARGET_REQUEST;
 
 				conn_node_base::add_extern_data(&todb->head, extern_data);
-				if (conn_node_dbsrv::connecter.send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
+				if (conn_node_dbsrv::connecter->send_one_msg(&todb->head, 1) != (int)ENDION_FUNC_4(todb->head.len)) {
 					LOG_ERR("%s %d: send to dbsrv err[%d]", __FUNCTION__, __LINE__, errno);
 				}
 			}
@@ -17288,13 +17288,13 @@ static int handle_doufachang_challenge(player_struct *player, EXTERN_DATA *exter
 	if (!target)
 	{
 			// 让DB srv加载玩家数据
-		DOUFACHANG_LOAD_PLAYER_REQUEST *req = (DOUFACHANG_LOAD_PLAYER_REQUEST *)conn_node_dbsrv::connecter.get_send_data();
+		DOUFACHANG_LOAD_PLAYER_REQUEST *req = (DOUFACHANG_LOAD_PLAYER_REQUEST *)conn_node_dbsrv::connecter->get_send_data();
 		req->player_id = player->get_uuid();
 		req->target_id = target_id;
 
 		EXTERN_DATA extern_data;
 		extern_data.player_id = req->player_id;
-		fast_send_msg_base(&conn_node_dbsrv::connecter, &extern_data, SERVER_PROTO_DOUFACHANG_LOAD_PLAYER_REQUEST, sizeof(*req), 0);
+		fast_send_msg_base(conn_node_dbsrv::connecter, &extern_data, SERVER_PROTO_DOUFACHANG_LOAD_PLAYER_REQUEST, sizeof(*req), 0);
 		return 0;
 	}
 

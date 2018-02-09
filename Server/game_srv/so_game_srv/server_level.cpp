@@ -16,7 +16,7 @@ extern void notify_server_level_info(player_struct *player, EXTERN_DATA *extern_
 void load_server_level_info(void)
 {
 	EXTERN_DATA ext_data;
-	fast_send_msg_base(&conn_node_dbsrv::connecter, &ext_data, SERVER_PROTO_LOAD_SERVER_LEVEL_REQUEST, 0, 0);
+	fast_send_msg_base(conn_node_dbsrv::connecter, &ext_data, SERVER_PROTO_LOAD_SERVER_LEVEL_REQUEST, 0, 0);
 }
 
 void save_server_level_info(void)
@@ -31,7 +31,7 @@ void save_server_level_info(void)
 	db_info.n_break_reward = MAX_SERVER_LEVEL_REWARD_NUM;
 
 	EXTERN_DATA ext_data;
-	fast_send_msg(&conn_node_dbsrv::connecter, &ext_data, SERVER_PROTO_SAVE_SERVER_LEVEL_REQUEST, dbserver_level__pack, db_info);
+	fast_send_msg(conn_node_dbsrv::connecter, &ext_data, SERVER_PROTO_SAVE_SERVER_LEVEL_REQUEST, dbserver_level__pack, db_info);
 }
 
 void break_server_level(void)
@@ -42,11 +42,11 @@ void break_server_level(void)
 		return;
 	}
 
-	uint32_t *pData = (uint32_t*)conn_node_dbsrv::connecter.get_send_data();
+	uint32_t *pData = (uint32_t*)conn_node_dbsrv::connecter->get_send_data();
 	*pData++ = global_shared_data->server_level.config->Level;
 
 	EXTERN_DATA ext_data;
-	fast_send_msg_base(&conn_node_dbsrv::connecter, &ext_data, SERVER_PROTO_BREAK_SERVER_LEVEL_REQUEST, sizeof(uint32_t), 0);
+	fast_send_msg_base(conn_node_dbsrv::connecter, &ext_data, SERVER_PROTO_BREAK_SERVER_LEVEL_REQUEST, sizeof(uint32_t), 0);
 }
 
 void check_server_level(void)

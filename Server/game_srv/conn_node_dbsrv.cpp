@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include <string.h>
 
-conn_node_dbsrv conn_node_dbsrv::connecter;
+conn_node_dbsrv *conn_node_dbsrv::connecter = NULL;
 //char conn_node_dbsrv::send_buf[1024];
 
 extern uint64_t  sg_server_id;

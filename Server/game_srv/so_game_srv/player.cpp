@@ -1041,7 +1041,7 @@ void player_struct::cache_to_dbserver(bool again/* = false*/, EXTERN_DATA *ext_d
 	conn_node_base::add_extern_data(&req->head, &extern_data);
 
 
-	if (conn_node_dbsrv::connecter.send_one_msg(&req->head, 1) != (int)ENDION_FUNC_4(req->head.len)) {
+	if (conn_node_dbsrv::connecter->send_one_msg(&req->head, 1) != (int)ENDION_FUNC_4(req->head.len)) {
 		LOG_ERR("%s %d: send to dbsrv err[%d]", __FUNCTION__, __LINE__, errno);
 	}
 }

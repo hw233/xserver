@@ -13,6 +13,17 @@ int cash_truck_manager::init_cash_truck_struct(int num, unsigned long key)
 	return init_comm_pool(0, sizeof(cash_truck_data), num, key, &cash_truck_manager_data_pool);
 } 
 
+int cash_truck_manager::resume_cash_truck_struct(int num, unsigned long key)
+{
+	cash_truck_struct *truck;
+	for (int i = 0; i < num; ++i) {
+		truck = new cash_truck_struct();
+		cash_truck_manager_free_list.push_back(truck);
+	}
+	LOG_DEBUG("%s: init mem[%lu][%lu]", __FUNCTION__, sizeof(cash_truck_struct) * num, sizeof(cash_truck_data) * num);					
+	return init_comm_pool(1, sizeof(cash_truck_data), num, key, &cash_truck_manager_data_pool);
+} 
+
 cash_truck_struct *cash_truck_manager::create_cash_truck_at_pos(scene_struct *scene, uint64_t id, player_struct &player)
 {
 	return create_cash_truck_at_pos(scene, id, player, player.get_pos()->pos_x, player.get_pos()->pos_z, 0);

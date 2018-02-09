@@ -1,4 +1,5 @@
 #include "partner_manager.h"
+#include "so_game_srv/player_manager.h"
 #include "uuid.h"
 
 partner_manager::partner_manager()
@@ -72,6 +73,56 @@ int partner_manager::init_partner_struct(int num, unsigned long key)
 #endif	
 	LOG_DEBUG("%s: init mem[%lu][%lu]", __FUNCTION__, sizeof(partner_struct) * num, sizeof(partner_data) * num);				
 	return init_mass_pool(0, sizeof(partner_data), num, key, &partner_manager_partner_data_pool);
+}
+
+int partner_manager::resume_partner_struct(int num, unsigned long key)
+{
+	init_heap(&partner_manager_minheap, num, minheap_cmp_partner_timeout, minheap_get_partner_timeout_index, minheap_set_partner_timeout_index);
+	
+	partner_struct *partner;
+	for (int i = 0; i < num; ++i) {
+		partner = new partner_struct();
+		partner_manager_partner_free_list.push_back(partner);
+#ifdef __RAID_SRV__
+		partner->data = (partner_data *)malloc(sizeof(partner_data));
+#endif		
+	}
+#ifdef __RAID_SRV__
+	return (0);
+#endif	
+	LOG_DEBUG("%s: init mem[%lu][%lu]", __FUNCTION__, sizeof(partner_struct) * num, sizeof(partner_data) * num);				
+	int ret = init_mass_pool(1, sizeof(partner_data), num, key, &partner_manager_partner_data_pool);
+	if (ret != 0)
+	{
+		LOG_ERR("%s: resume partner failed", __FUNCTION__);
+		return ret;
+	}
+
+	int index = 0;	
+	for (;;) {
+		struct partner_data *data = (struct partner_data *)get_next_inuse_mass_pool_entry(&partner_manager_partner_data_pool, &index);
+		if (!data)
+			break;
+		LOG_DEBUG("%s %d: partner_id[%lu] uuid[%lu]\n",
+			__FUNCTION__, __LINE__, data->partner_id, data->uuid);
+		partner = partner_manager_partner_free_list.back();
+		if (!partner) {
+			LOG_ERR("%s %d: get free partner failed", __FUNCTION__, __LINE__);
+			return (-1);
+		}
+		partner_manager_partner_free_list.pop_back();	
+		partner->data = data;
+		add_partner(partner);
+
+		player_struct *player = player_manager::get_player_by_id(data->owner_id);
+		if (!player)
+		{
+			LOG_ERR("%s: partner can not find owner %lu", __FUNCTION__, data->owner_id);
+			return (-10);
+		}
+		player->m_partners[data->uuid] = partner;
+	}
+	return (0);
 }
 
 int partner_manager::reinit_partner_min_heap()

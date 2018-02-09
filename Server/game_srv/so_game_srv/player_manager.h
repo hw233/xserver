@@ -46,7 +46,7 @@ public:
 	static unsigned int get_pool_max_num();
 	
 	static int init_player_struct(int num, unsigned long key);
-//	static int resume_player_struct(int num, unsigned long key);
+	static int resume_player_struct(int num, unsigned long key);
 	
 //	static std::map<uint64_t, player_struct *> all_players_id;
 //	static std::map<uint64_t, player_struct *> all_ai_players_id;

@@ -45,7 +45,7 @@ static int add_msg_handle(uint32_t msg_id, db_handle_func func)
 
 static int handle_find_player_answer(EXTERN_DATA *extern_data)
 {
-	PROTO_FIND_PLAYER_ANS *proto = (PROTO_FIND_PLAYER_ANS *)conn_node_dbsrv::connecter.buf_head();
+	PROTO_FIND_PLAYER_ANS *proto = (PROTO_FIND_PLAYER_ANS *)conn_node_dbsrv::connecter->buf_head();
 	LOG_DEBUG("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 
 	AnsFindTarget send;
@@ -106,7 +106,7 @@ void add_chengjie_task_immp(ChengjieTaskDb *req, uint32_t taskid)
 
 static int handle_load_chengjie_answer(EXTERN_DATA *extern_data)
 {
-	PROTO_ADD_CHENGJIE *proto = (PROTO_ADD_CHENGJIE *)conn_node_dbsrv::connecter.buf_head();
+	PROTO_ADD_CHENGJIE *proto = (PROTO_ADD_CHENGJIE *)conn_node_dbsrv::connecter->buf_head();
 	LOG_DEBUG("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 
 	LoadChengjieTask *req = load_chengjie_task__unpack(NULL, proto->data_size, proto->data);
@@ -128,7 +128,7 @@ static int handle_load_chengjie_answer(EXTERN_DATA *extern_data)
 
 static int handle_add_chengjie_answer(EXTERN_DATA *extern_data)
 {
-	PROTO_ADD_CHENGJIE_ANS *proto = (PROTO_ADD_CHENGJIE_ANS *)conn_node_dbsrv::connecter.buf_head();
+	PROTO_ADD_CHENGJIE_ANS *proto = (PROTO_ADD_CHENGJIE_ANS *)conn_node_dbsrv::connecter->buf_head();
 	LOG_DEBUG("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 
 	ChengjieTaskDb *req = chengjie_task_db__unpack(NULL, proto->data_size, proto->data);
@@ -152,7 +152,7 @@ static int handle_add_chengjie_answer(EXTERN_DATA *extern_data)
 
 static int handle_doufachang_load_player_answer(EXTERN_DATA *extern_data)
 {
-	DOUFACHANG_LOAD_PLAYER_ANSWER *ans = (DOUFACHANG_LOAD_PLAYER_ANSWER *)conn_node_dbsrv::connecter.get_data();
+	DOUFACHANG_LOAD_PLAYER_ANSWER *ans = (DOUFACHANG_LOAD_PLAYER_ANSWER *)conn_node_dbsrv::connecter->get_data();
 	LOG_DEBUG("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 	
 	player_struct *player1 = player_manager::get_player_by_id(ans->player_id);
@@ -186,7 +186,7 @@ static int handle_doufachang_load_player_answer(EXTERN_DATA *extern_data)
 //从db_srv返回登录结果
 static int handle_player_enter_game_answer(EXTERN_DATA *extern_data)
 {
-	PROTO_ENTER_GAME_RESP *proto = (PROTO_ENTER_GAME_RESP *)conn_node_dbsrv::connecter.buf_head();
+	PROTO_ENTER_GAME_RESP *proto = (PROTO_ENTER_GAME_RESP *)conn_node_dbsrv::connecter->buf_head();
 	LOG_DEBUG("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 
 	player_struct * player = player_manager::create_player(proto, extern_data->player_id);
@@ -219,7 +219,7 @@ static int handle_player_save_answer(EXTERN_DATA *extern_data)
 
 	player_manager::delete_player(player);
 
-	PROTO_SAVE_PLAYER_RESP *req = (PROTO_SAVE_PLAYER_RESP *)conn_node_dbsrv::connecter.buf_head();
+	PROTO_SAVE_PLAYER_RESP *req = (PROTO_SAVE_PLAYER_RESP *)conn_node_dbsrv::connecter->buf_head();
 
 	if (req->again>0) {
 		CommAnswer resp;
@@ -243,7 +243,7 @@ static int handle_player_rename_answer(EXTERN_DATA *extern_data)
 		return (-1);
 	}
 
-	PLAYER_RENAME_DB_ANSWER *req = (PLAYER_RENAME_DB_ANSWER *)conn_node_dbsrv::connecter.buf_head();
+	PLAYER_RENAME_DB_ANSWER *req = (PLAYER_RENAME_DB_ANSWER *)conn_node_dbsrv::connecter->buf_head();
 
 	if (req->result == 0)
 	{
@@ -303,7 +303,7 @@ static int handle_friend_search_answer(EXTERN_DATA *extern_data)
 		return (-1);
 	}
 
-	PROTO_ENTER_GAME_RESP *proto = (PROTO_ENTER_GAME_RESP *)conn_node_dbsrv::connecter.buf_head();
+	PROTO_ENTER_GAME_RESP *proto = (PROTO_ENTER_GAME_RESP *)conn_node_dbsrv::connecter->buf_head();
 
 	int ret = 0;
 	uint32_t logout_time = 0;
@@ -354,7 +354,7 @@ static int handle_get_other_info_answer(EXTERN_DATA *extern_data)
 		return (-1);
 	}
 
-	PROTO_ENTER_GAME_RESP *proto = (PROTO_ENTER_GAME_RESP *)conn_node_dbsrv::connecter.buf_head();
+	PROTO_ENTER_GAME_RESP *proto = (PROTO_ENTER_GAME_RESP *)conn_node_dbsrv::connecter->buf_head();
 
 	int ret = 0;
 //	uint32_t logout_time = 0;
@@ -390,11 +390,11 @@ static int handle_load_server_level_answer(EXTERN_DATA *extern_data)
 	LOG_INFO("[%s:%d] ", __FUNCTION__, __LINE__);
 	memset(&global_shared_data->server_level, 0, sizeof(global_shared_data->server_level));
 
-	int data_size = conn_node_dbsrv::connecter.get_data_len();
+	int data_size = conn_node_dbsrv::connecter->get_data_len();
 	DBServerLevel *db_info = NULL;
 	if (data_size != 0)
 	{
-		db_info = dbserver_level__unpack(NULL, data_size, conn_node_dbsrv::connecter.get_data());
+		db_info = dbserver_level__unpack(NULL, data_size, conn_node_dbsrv::connecter->get_data());
 	}
 
 	ServerLevelTable *config = NULL;
@@ -437,7 +437,7 @@ static int handle_break_server_level_answer(EXTERN_DATA *extern_data)
 {
 	LOG_INFO("[%s:%d] ", __FUNCTION__, __LINE__);
 
-	uint32_t* pData = (uint32_t*)conn_node_dbsrv::connecter.get_data();
+	uint32_t* pData = (uint32_t*)conn_node_dbsrv::connecter->get_data();
 	uint32_t num = *pData++;
 
 	ServerLevelTable *config = get_config_by_id(global_shared_data->server_level.level_id + 1, &server_level_config);

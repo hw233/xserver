@@ -342,6 +342,9 @@ int conn_node_dbsrv::recv_func(evutil_socket_t fd)
 		
 		if (ret < 0) {
 			LOG_INFO("%s %d: connect closed from fd %u, err = %d", __FUNCTION__, __LINE__, fd, errno);
+
+            event_del(&event_recv);
+            evutil_closesocket(fd);
 			exit(0);
 			return (-1);		
 		} else if (ret > 0) {

@@ -11,7 +11,7 @@ public:
 
 	virtual int recv_func(evutil_socket_t fd);
 	
-	static conn_node_dbsrv connecter;
+	static conn_node_dbsrv *connecter;
 //	static char send_buf[1024];
 
 	int transfer_to_connsrv(void);
