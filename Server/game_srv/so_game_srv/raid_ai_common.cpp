@@ -503,7 +503,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 			nty.n_param1 = config->n_Parameter1;
 			nty.param2 = config->Parameter2;
 			nty.n_param2 = config->n_Parameter2;
-			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
+			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack, false);
 			return true;
 		}
 		case SCRIPT_EVENT_CREATE_NPC_NUM: //刷新配置表内指定NPC
@@ -526,7 +526,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 			nty.n_param1 = config->n_Parameter1;
 			nty.param2 = config->Parameter2;
 			nty.n_param2 = config->n_Parameter2;
-			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
+			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack, false);
 			return true;
 		}
 		case SCRIPT_EVENT_RAID_STOP:
@@ -614,7 +614,7 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 			nty.n_param1 = config->n_Parameter1;
 			nty.param2 = config->Parameter2;
 			nty.n_param2 = config->n_Parameter2;
-			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
+			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack, false);
 		}
 		case SCRIPT_EVENT_MONSTER_DEAD_ALL: //所有指定怪物死亡 等同于检测副本内还存活指定怪物数量小于某值
 		case SCRIPT_EVENT_ALIVE_MONSTER_EQUEL: //检测副本内还存活指定怪物数量等于某值
@@ -942,7 +942,7 @@ void script_ai_common_monster_dead(raid_struct *raid, monster_struct *monster, u
 				nty.n_param1 = 1;
 				nty.param2 = config->Parameter2;
 				nty.n_param2 = config->n_Parameter2;
-				raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
+				raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack, false);
 				script_data->cur_finished_num[i / 2] = config->Parameter1[i+1];
 				break;		
 			}

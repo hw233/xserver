@@ -14144,6 +14144,9 @@ void player_struct::refresh_oneday_job()
 	data->partner_recruit_junior_free_count = 0;
 	data->partner_recruit_senior_free_cd = 0;
 	data->partner_recruit_senior_free_count = 0;
+
+	data->guild_chuan_gong_info.bei_chuan_num = 0;
+	data->guild_chuan_gong_info.give_chuan_num = 0;	
 }
 
 void player_struct::refresh_shop_daily(void)

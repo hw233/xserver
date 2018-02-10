@@ -11,7 +11,7 @@ public:
 	virtual int add_player_to_scene(player_struct *player);
 	virtual int delete_player_from_scene(player_struct *player);
 
-	virtual int broadcast_to_raid(uint32_t msg_id, void *msg_data, pack_func func);
+	virtual int broadcast_to_raid(uint32_t msg_id, void *msg_data, pack_func func, bool include_not_ready);
 	virtual bool use_m_player();
 protected:
 	virtual int set_m_player_and_player_info(player_struct *player, int index);	

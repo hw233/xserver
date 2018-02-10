@@ -808,7 +808,7 @@ int cash_truck_struct::del_partner_from_sight_both(partner_struct *partner)
 	int ret = del_partner_from_sight(partner->data->uuid);
 	if (ret >= 0)
 	{
-		int ret1 = partner->del_partner_from_sight(data->player_id);
+		int ret1 = partner->del_truck_from_sight(data->player_id);
 		assert(ret1 >= 0);
 	}
 	return ret;

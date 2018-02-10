@@ -32,7 +32,7 @@ int multi_raid_struct::delete_player_from_scene(player_struct *player)
 	return 0;
 }
 
-int multi_raid_struct::broadcast_to_raid(uint32_t msg_id, void *msg_data, pack_func func)
+int multi_raid_struct::broadcast_to_raid(uint32_t msg_id, void *msg_data, pack_func func, bool include_not_ready)
 {
 	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(msg_id, msg_data, func);
 	PROTO_HEAD_CONN_BROADCAST *head;
@@ -40,7 +40,8 @@ int multi_raid_struct::broadcast_to_raid(uint32_t msg_id, void *msg_data, pack_f
 
 	for (std::map<uint64_t, player_struct*>::iterator iter = m_players.begin(); iter != m_players.end(); ++iter)
 	{
-		conn_node_gamesrv::broadcast_msg_add_players(iter->first, ppp);					
+		broadcast_msg_add_players(iter->second, ppp, include_not_ready);		
+//		conn_node_gamesrv::broadcast_msg_add_players(iter->first, ppp);					
 	}
 
 	if (head->num_player_id > 0)

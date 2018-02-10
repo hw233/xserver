@@ -76,7 +76,7 @@ static void guild_raid_player_kill(raid_struct *raid, player_struct *player, pla
 		guild_battle_kill_notify__init(&nty);
 		nty.killerid = player->get_uuid();
 		nty.deadid = target->get_uuid();
-		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_KILL_NOTIFY, &nty, (pack_func)guild_battle_kill_notify__pack);
+		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_KILL_NOTIFY, &nty, (pack_func)guild_battle_kill_notify__pack, true);
 	} while(0);
 }
 
@@ -118,7 +118,7 @@ static void guild_raid_final_ai_monster_dead(raid_struct *raid, monster_struct *
 		guild_battle_kill_notify__init(&nty);
 		nty.killerid = player->get_uuid();
 		nty.deadid = monster->get_uuid();
-		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_KILL_MONSTER_NOTIFY, &nty, (pack_func)guild_battle_kill_notify__pack);
+		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_KILL_MONSTER_NOTIFY, &nty, (pack_func)guild_battle_kill_notify__pack, true);
 	} while(0);
 		// 如果指定的怪物死光了，关闭对应的空气墙
 	uint32_t num = raid->get_id_monster_num(monster->data->monster_id);
@@ -140,7 +140,7 @@ static void guild_raid_final_ai_monster_dead(raid_struct *raid, monster_struct *
 	raid_show_hide_air_wall_notify__init(&nty);
 	nty.show_hide = 0;
 	nty.air_wall_id = monster_index + 1;
-	raid->broadcast_to_raid(MSG_ID_RAID_SHOW_HIDE_AIR_WALL_NOTIFY, &nty, (pack_func)raid_show_hide_air_wall_notify__pack);
+	raid->broadcast_to_raid(MSG_ID_RAID_SHOW_HIDE_AIR_WALL_NOTIFY, &nty, (pack_func)raid_show_hide_air_wall_notify__pack, true);
 	
 }
 
@@ -217,7 +217,7 @@ static void guild_raid_final_ai_player_attack(raid_struct *raid, player_struct *
 		nty.playerid = player->get_uuid();
 		nty.damage = damage;
 		nty.kill = !target->is_alive();
-		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_BOSS_DAMAGE_NOTIFY, &nty, (pack_func)guild_battle_boss_damage_notify__pack);
+		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_BOSS_DAMAGE_NOTIFY, &nty, (pack_func)guild_battle_boss_damage_notify__pack, true);
 	} while(0);
 }
 

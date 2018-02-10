@@ -924,7 +924,7 @@ int pvp_match_player_praise(player_struct *player, uint64_t target_id)
 //		if (raid->PVP_DATA.praise_index[i] == target_index)
 			++nty.praise_num;
 	}
-	raid->broadcast_to_raid(MSG_ID_PVP_RAID_PRAISE_NOTIFY, &nty, (pack_func)pvp_raid_praise_notify__pack);
+	raid->broadcast_to_raid(MSG_ID_PVP_RAID_PRAISE_NOTIFY, &nty, (pack_func)pvp_raid_praise_notify__pack, true);
 	return (0);
 }
 

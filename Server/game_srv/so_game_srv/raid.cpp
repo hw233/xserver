@@ -1681,7 +1681,7 @@ static void do_raid_failed(raid_struct *raid)
 		raid_finish_notify__init(&notify);
 		notify.result = -1;
 		notify.raid_id = raid->data->ID;
-		raid->broadcast_to_raid(MSG_ID_RAID_FINISHED_NOTIFY, &notify, (pack_func)raid_finish_notify__pack);
+		raid->broadcast_to_raid(MSG_ID_RAID_FINISHED_NOTIFY, &notify, (pack_func)raid_finish_notify__pack, true);
 	}
 }
 
@@ -1771,7 +1771,7 @@ void raid_struct::broadcast_player_hit_statis_changed(struct raid_player_info *i
 //	notify.job = player->get_attr(PLAYER_ATTR_JOB);
 //	notify.lv = player->get_attr(PLAYER_ATTR_LEVEL);
 //	notify.name = player->data->name;
-	broadcast_to_raid(MSG_ID_RAID_HIT_STATIS_CHANGED_NOTIFY, &notify, (pack_func)raid_hit_statis_changed_notify__pack);
+	broadcast_to_raid(MSG_ID_RAID_HIT_STATIS_CHANGED_NOTIFY, &notify, (pack_func)raid_hit_statis_changed_notify__pack, true);
 }
 
 void raid_struct::on_player_attack(player_struct *player, unit_struct *target, int damage)
@@ -1876,7 +1876,7 @@ void raid_struct::send_raid_pass_param(player_struct *player)
 	nty.pass_value = data->pass_value;
 	
 	if (!player)
-		broadcast_to_raid(MSG_ID_RAID_PASS_PARAM_CHANGED_NOTIFY, &nty, (pack_func)raid_pass_param_changed_notify__pack);
+		broadcast_to_raid(MSG_ID_RAID_PASS_PARAM_CHANGED_NOTIFY, &nty, (pack_func)raid_pass_param_changed_notify__pack, true);
 	else
 	{
 		EXTERN_DATA  extern_data;
@@ -1932,7 +1932,7 @@ void raid_struct::send_star_changed_notify(uint32_t star_param[3], uint32_t scor
 	nty.n_param = 3;	
 	nty.star = star_param;
 	nty.param = score_param;	
-	broadcast_to_raid(MSG_ID_RAID_STAR_CHANGED_NOTIFY, &nty, (pack_func)raid_star_changed_notify__pack)	;
+	broadcast_to_raid(MSG_ID_RAID_STAR_CHANGED_NOTIFY, &nty, (pack_func)raid_star_changed_notify__pack, true);
 }
 
 void raid_struct::on_monster_dead(monster_struct *monster, unit_struct *killer)
@@ -2018,7 +2018,23 @@ void raid_struct::on_monster_dead(monster_struct *monster, unit_struct *killer)
 */
 }
 
-int raid_struct::broadcast_to_raid(uint32_t msg_id, void *msg_data, pack_func func)
+void raid_struct::broadcast_msg_add_players(player_struct *player, uint64_t *ppp, bool include_not_ready)
+{
+	if (!player)
+		return;
+	if (!player->is_avaliable())
+		return;
+	if (!include_not_ready)
+	{
+		if (player->scene != this)
+			return;
+		if (!player->area)
+			return;
+	}
+	conn_node_gamesrv::broadcast_msg_add_players(player->get_uuid(), ppp);
+}
+
+int raid_struct::broadcast_to_raid(uint32_t msg_id, void *msg_data, pack_func func, bool include_not_ready)
 {
 	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(msg_id, msg_data, func);
 	PROTO_HEAD_CONN_BROADCAST *head;
@@ -2026,14 +2042,18 @@ int raid_struct::broadcast_to_raid(uint32_t msg_id, void *msg_data, pack_func fu
 
 	for (int i = 0; i < MAX_TEAM_MEM; ++i)
 	{
-		if (m_player[i] && m_player[i]->is_avaliable())
-			conn_node_gamesrv::broadcast_msg_add_players(m_player[i]->get_uuid(), ppp);
-		if (m_player2[i] && m_player2[i]->is_avaliable())
-			conn_node_gamesrv::broadcast_msg_add_players(m_player2[i]->get_uuid(), ppp);
-		if (m_player3[i] && m_player3[i]->is_avaliable())
-			conn_node_gamesrv::broadcast_msg_add_players(m_player3[i]->get_uuid(), ppp);
-		if (m_player4[i] && m_player4[i]->is_avaliable())
-			conn_node_gamesrv::broadcast_msg_add_players(m_player4[i]->get_uuid(), ppp);					
+		broadcast_msg_add_players(m_player[i], ppp, include_not_ready);
+		broadcast_msg_add_players(m_player2[i], ppp, include_not_ready);
+		broadcast_msg_add_players(m_player3[i], ppp, include_not_ready);
+		broadcast_msg_add_players(m_player4[i], ppp, include_not_ready);		
+		// if (m_player[i] && m_player[i]->is_avaliable())
+		// 	conn_node_gamesrv::broadcast_msg_add_players(m_player[i]->get_uuid(), ppp);
+		// if (m_player2[i] && m_player2[i]->is_avaliable())
+		// 	conn_node_gamesrv::broadcast_msg_add_players(m_player2[i]->get_uuid(), ppp);
+		// if (m_player3[i] && m_player3[i]->is_avaliable())
+		// 	conn_node_gamesrv::broadcast_msg_add_players(m_player3[i]->get_uuid(), ppp);
+		// if (m_player4[i] && m_player4[i]->is_avaliable())
+		// 	conn_node_gamesrv::broadcast_msg_add_players(m_player4[i]->get_uuid(), ppp);					
 	}
 
 	if (head->num_player_id > 0)

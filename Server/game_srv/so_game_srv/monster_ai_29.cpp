@@ -75,7 +75,7 @@ static int monster_type29_ai_hp_deal_with(monster_struct *monster, scene_struct 
 			nty.n_param1 = 5;
 			nty.param2 = &monster->ai_data.circle_ai.ai_config->Effects;
 			nty.n_param2 = 1;
-			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
+			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack, false);
 		}
 		monster_struct *t_monster = monster_manager::create_monster_at_pos(o_scene, monster->ai_data.circle_ai.ai_config->SeparateMonster[xiabiao], raid->lv, pos_x, pos_z, 0, NULL, 0);
 		if(t_monster)

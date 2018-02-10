@@ -50,7 +50,7 @@ static void send_get_buff(raid_struct *raid, uint32_t type, uint64_t player_id)
 	pvp_raid_buff_get_notify__init(&nty);
 	nty.type = type;
 	nty.player_id = player_id;
-	raid->broadcast_to_raid(MSG_ID_PVP_RAID_BUFF_GET_NOTIFY, &nty, (pack_func)pvp_raid_buff_get_notify__pack);
+	raid->broadcast_to_raid(MSG_ID_PVP_RAID_BUFF_GET_NOTIFY, &nty, (pack_func)pvp_raid_buff_get_notify__pack, true);
 }
 
 static player_struct *get_last_attack_player(raid_struct *raid, player_struct *player)
@@ -139,7 +139,7 @@ static void	do_region_effect(raid_struct *raid, player_struct *player)
 			PvpRaidPlayerFallNotify nty;
 			pvp_raid_player_fall_notify__init(&nty);
 			nty.player_id = player->get_uuid();
-			raid->broadcast_to_raid(MSG_ID_PVP_RAID_PLAYER_FALL_NOTIFY, &nty, (pack_func)pvp_raid_player_fall_notify__pack);
+			raid->broadcast_to_raid(MSG_ID_PVP_RAID_PLAYER_FALL_NOTIFY, &nty, (pack_func)pvp_raid_player_fall_notify__pack, true);
 
 //			player->send_enter_region_notify(region_id);
 			player->set_attr(PLAYER_ATTR_HP, -1);
@@ -179,7 +179,7 @@ static void send_center_buff_changed_notify(raid_struct *raid)
 	nty.red_center_buff_relive_time = raid->PVP_DATA.red_buff_relive_time;	
 	nty.blue_center_buff_relive_time = raid->PVP_DATA.blue_buff_relive_time;
 
-	raid->broadcast_to_raid(MSG_ID_PVP_RAID_BUFF_RELIVE_TIME_NOTIFY, &nty, (pack_func)pvp_raid_buff_relive_time_notify__pack);	
+	raid->broadcast_to_raid(MSG_ID_PVP_RAID_BUFF_RELIVE_TIME_NOTIFY, &nty, (pack_func)pvp_raid_buff_relive_time_notify__pack, true);	
 }
 
 static void	check_buff_range(raid_struct *raid, uint32_t now)
@@ -275,7 +275,7 @@ static void pvp_raid_wait_start(raid_struct *raid)
 	PvpRaidStartNotify nty;
 	pvp_raid_start_notify__init(&nty);
 	nty.start_time = raid->data->start_time / 1000;
-	raid->broadcast_to_raid(MSG_ID_PVP_RAID_START_NOTIFY, &nty, (pack_func)pvp_raid_start_notify__pack);
+	raid->broadcast_to_raid(MSG_ID_PVP_RAID_START_NOTIFY, &nty, (pack_func)pvp_raid_start_notify__pack, true);
 }
 
 static void pvp_raid_start(raid_struct *raid)
@@ -843,7 +843,7 @@ static void pvp_raid_player_kill(raid_struct *raid, int target_index, player_str
 		assist_player_id[nty.n_assist_player_id++] = raid->PVP_DATA.assist_data[target_index][i].player_id;
 	}
 	nty.assist_player_id = assist_player_id;
-	raid->broadcast_to_raid(MSG_ID_PVP_RAID_KILL_NOTIFY, &nty, (pack_func)pvp_kill_notify__pack);
+	raid->broadcast_to_raid(MSG_ID_PVP_RAID_KILL_NOTIFY, &nty, (pack_func)pvp_kill_notify__pack, true);
 
 		// 检查杀人数目是否足够结束游戏
 	int team_kill_1, team_kill_2;

@@ -49,7 +49,7 @@ static void ai_tick_27(monster_struct *monster)
 		nty.n_param1 = 5;
 		nty.param2 = &monster->ai_data.type27_ai.ai_27_config->Effects;
 		nty.n_param2 = 1;
-		raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
+		raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack, false);
 	}
 
 	monster_struct *t_monster = monster_manager::create_monster_at_pos(monster->scene, monster->ai_data.type27_ai.ai_27_config->MonsterID, raid->lv, pos->pos_x, pos->pos_z, 0, NULL, 0);

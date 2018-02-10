@@ -49,7 +49,7 @@ static void wanyaogu_end_one_raid(raid_struct *raid, bool fail)
 		notify.result = 1;
 //		notify.pos_x = 0;
 //		notify.pos_z = 0;
-	raid->broadcast_to_raid(MSG_ID_WANYAOKA_BBQ_NOTIFY, &notify, (pack_func)wanyaogu_bbq_notify__pack);
+	raid->broadcast_to_raid(MSG_ID_WANYAOKA_BBQ_NOTIFY, &notify, (pack_func)wanyaogu_bbq_notify__pack, true);
 	
 //	raid->broadcast_to_raid(MSG_ID_WANYAOKA_BBQ_NOTIFY, NULL, NULL);
 
@@ -356,7 +356,7 @@ static void wanyaogu_raid_ai_tick(raid_struct *raid)
 							raid_finish_notify__init(&notify);
 							notify.result = -1;
 							notify.raid_id = raid->data->ID;
-							raid->broadcast_to_raid(MSG_ID_RAID_FINISHED_NOTIFY, &notify, (pack_func)raid_finish_notify__pack);
+							raid->broadcast_to_raid(MSG_ID_RAID_FINISHED_NOTIFY, &notify, (pack_func)raid_finish_notify__pack, true);
 						}
 						else
 						{
@@ -431,7 +431,7 @@ static void wanyaogu_raid_ai_tick(raid_struct *raid)
 						resp.pos_y = raid->m_born_y;
 						resp.pos_z = raid->m_born_z;
 //							fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_TRANSFER_ANSWER, scene_transfer_answer__pack, resp);
-						raid->broadcast_to_raid(MSG_ID_TRANSFER_ANSWER, &resp, (pack_func)scene_transfer_answer__pack);
+						raid->broadcast_to_raid(MSG_ID_TRANSFER_ANSWER, &resp, (pack_func)scene_transfer_answer__pack, true);
 					}
 					break;
 				}

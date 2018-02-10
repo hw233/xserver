@@ -2156,7 +2156,7 @@ local ParameterTable = {
 		},
 	[161000444] = {
 		['ID'] = 161000444,
-		['parameter1'] = {4400},
+		['parameter1'] = {4500},
 		['parameter2'] = ''
 		},
 	[161000445] = {

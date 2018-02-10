@@ -72,7 +72,7 @@ static void guild_raid_player_kill(raid_struct *raid, player_struct *player, pla
 		guild_battle_kill_notify__init(&nty);
 		nty.killerid = player->get_uuid();
 		nty.deadid = target->get_uuid();
-		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_KILL_NOTIFY, &nty, (pack_func)guild_battle_kill_notify__pack);
+		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_KILL_NOTIFY, &nty, (pack_func)guild_battle_kill_notify__pack, true);
 	} while(0);
 
 		// 检查杀人数目是否足够结束游戏

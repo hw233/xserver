@@ -1608,7 +1608,7 @@ void check_guild_participate_num(uint32_t guild_id)
 		nty.participatenum = cur_num;
 		nty.has_participatenum = true;
 
-		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_WAIT_INFO_NOTIFY, &nty, (pack_func)guild_battle_wait_info_notify__pack);
+		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_WAIT_INFO_NOTIFY, &nty, (pack_func)guild_battle_wait_info_notify__pack, true);
 	}
 }
 
@@ -1627,7 +1627,7 @@ uint32_t set_guild_call_cd(uint32_t guild_id)
 		nty.callcd = tick;
 		nty.has_callcd = true;
 
-		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_WAIT_INFO_NOTIFY, &nty, (pack_func)guild_battle_wait_info_notify__pack);
+		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_WAIT_INFO_NOTIFY, &nty, (pack_func)guild_battle_wait_info_notify__pack, true);
 	}
 	return tick;
 }

@@ -391,7 +391,9 @@ public:
 	bool check_raid_failed();  //副本是否已经失败
 	int check_cond_finished(int index, uint64_t cond_type, uint64_t cond_value, uint64_t cond_value1, uint32_t *ret_param);  //判断指定的完成条件是否达成
 	int calc_raid_star(uint32_t star_param[3], uint32_t score_param[3]);
-	virtual int broadcast_to_raid(uint32_t msg_id, void *msg_data, pack_func func);
+	virtual int broadcast_to_raid(uint32_t msg_id, void *msg_data, pack_func func, bool include_not_ready);
+	void broadcast_msg_add_players(player_struct *player, uint64_t *ppp, bool include_not_ready);
+	
 	int init_common_script_data(const char *script_name, struct raid_script_data *script_data);	
 	struct DungeonTable *get_raid_config();
 	player_struct *get_team_leader_player();

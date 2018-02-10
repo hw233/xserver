@@ -104,7 +104,7 @@ static void magui_raid_creat_zhengning_maogui(raid_struct *raid, monster_struct 
 		nty.n_param1 = 5;
 		nty.param2 = &itr->second->Effects;
 		nty.n_param2 = 1;
-		raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
+		raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack, false);
 	}
 	monster_manager::create_monster_at_pos(raid, shouling_id, raid->lv, pos_x, pos_z, 0, NULL, 0);
 
@@ -143,7 +143,7 @@ static void magui_raid_creat_zhengning_maogui(raid_struct *raid, monster_struct 
 			nty.n_param1 = 5;
 			nty.param2 = &itr->second->Effects;
 			nty.n_param2 = 1;
-			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack);
+			raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack, false);
 		}
 		monster_manager::create_monster_at_pos(raid, xiaoguai_id, raid->lv, pos_x, pos_z, 0, NULL, 0);
 	}
