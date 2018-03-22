@@ -220,7 +220,7 @@ int unit_struct::check_pos_distance(float pos_x, float pos_z)
 	struct map_block *block = get_map_block(scene->map_config, pos->pos_x, pos->pos_z);
 	if (!block || !block->can_walk)
 	{
-		LOG_ERR("%s: unit %lu in block[%p]", __FUNCTION__, get_uuid(), block);
+		LOG_INFO("%s: unit %lu in block[%p]", __FUNCTION__, get_uuid(), block);
 		return (0);
 	}
 	

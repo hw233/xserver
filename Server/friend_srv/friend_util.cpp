@@ -1552,9 +1552,11 @@ int add_recent(FriendPlayer *player, uint64_t target_id)
 		{
 			//把联系人提到最新
 			int last_idx = get_recent_num(player);
-			if (i != last_idx - 1)
+			if (i < last_idx - 1)
 			{
-				player->recents[i] = player->recents[last_idx - 1];
+				//player->recents[i] = player->recents[last_idx - 1];
+				//player->recents[last_idx - 1] = target_id;
+				memmove(&player->recents[i], &player->recents[i+1], (limit_num - i - 1) * sizeof(uint64_t));
 				player->recents[last_idx - 1] = target_id;
 				save_friend_player(player);
 			}

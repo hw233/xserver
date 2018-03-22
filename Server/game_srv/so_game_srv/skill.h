@@ -11,7 +11,7 @@ class skill_struct
 public:
 	void copy(skill_struct *skill);  //复制一份，机器人用
 	int init_skill(uint32_t id, uint64_t owner, uint64_t target);
-	int add_cd(struct SkillLvTable *lv_config, struct ActiveSkillTable *active_config);
+	int add_cd(uint64_t cd);
 	int get_skill_id_and_lv(int fuwen_index, int *id, int *lv);	
 //	int get_skill_lv(int fuwen_index);
 //	void on_tick();

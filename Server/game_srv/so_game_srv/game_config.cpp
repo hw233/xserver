@@ -715,6 +715,10 @@ bool is_guild_battle_raid(uint32_t id)
 
 bool scene_can_make_team(uint32_t scene_id)
 {
+	if (scene_id == 20031) //todo 
+	{
+		return true;
+	}
 	if (get_scene_looks_type(scene_id) == SCENE_TYPE_WILD)
 		return true;
 	return false;
@@ -835,12 +839,24 @@ static void adjust_skill_entry(struct SkillTable *config)
 			continue;
 		struct ActiveSkillTable *act_config = get_config_by_id(t->SkillAffectId, &active_skill_config);
 		if (!act_config)
+		{
 			continue;
+		}
+		
 		if (act_config->NextSkill == config->ID || act_config->AutoNextSkill == config->ID)
 		{
 			config->pre_skill = t->ID;
-			return;
+			break;
 		}
+	}
+
+	assert(config->n_TimeID <= MAX_SKILL_TIME_CONFIG_NUM);
+	config->n_time_config = config->n_TimeID;
+	config->time_config = (struct SkillTimeTable **)malloc(sizeof(void *) * config->n_time_config);
+	for (uint32_t i = 0; i < config->n_time_config; ++i)
+	{
+		config->time_config[i] = get_config_by_id(config->TimeID[i], &skill_time_config);
+		assert(config->time_config[i]);
 	}
 
 //	add_passive_skill(config);
@@ -868,6 +884,23 @@ static void adjust_skill_table()
 	for (ite = skill_config.begin(); ite != skill_config.end(); ++ite)
 	{
 		struct SkillTable *config = ite->second;
+		if (config->SkillType == 1 || config->SkillType == 2)
+		{
+			struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
+			if (!act_config)
+			{
+				printf("%s: skill %lu do not have act_config[%lu]\n", __FUNCTION__, config->ID, config->SkillAffectId);
+			}
+			for (size_t i = 0; i < act_config->n_SkillLength; ++i)
+			{
+				config->TotalSkillDelay += act_config->SkillLength[i];
+					// if (config->TotalSkillDelay <= config->ActionTime)
+					// 	config->TotalSkillDelay = 0;
+					// else
+					// 	config->TotalSkillDelay -= config->ActionTime;
+			}
+		}
+		
 		adjust_skill_entry(config);
 
 		for (uint32_t i = 0; i < config->n_RuneID; ++i)
@@ -877,7 +910,7 @@ static void adjust_skill_table()
 				continue;
 			if (fuwen_config.find(fuwen_id) != fuwen_config.end())
 			{
-				LOG_ERR("%s: duplicate fuwen id %lu", __FUNCTION__, fuwen_id);
+				printf("%s: duplicate fuwen id %lu\n", __FUNCTION__, fuwen_id);
 			}
 			fuwen_config[fuwen_id] = config;
 		}
@@ -885,7 +918,7 @@ static void adjust_skill_table()
 		{
 			if (fuwen_config.find(config->ID) != fuwen_config.end())
 			{
-				LOG_ERR("%s: duplicate fuwen id %lu", __FUNCTION__, config->ID);
+				printf("%s: duplicate fuwen id %lu\n", __FUNCTION__, config->ID);
 			}
 			fuwen_config[config->ID] = config;
 		}
@@ -901,7 +934,7 @@ static void adjust_monster_talk_table()
 			continue;
 		if (talk_ite->second->n_EventNum2 < 1)
 		{
-			LOG_ERR("%s: %lu config wrong, ignore this config", __FUNCTION__, talk_ite->first);
+			printf("%s: %lu config wrong, ignore this config\n", __FUNCTION__, talk_ite->first);
 			talk_ite->second->Type = 1;
 		}
 	}
@@ -1033,7 +1066,7 @@ static void adjust_rand_collect_table()
 		{
 			std::vector<uint64_t> tmp;
 			tmp.push_back(ite->first);
-			sg_rand_collect.insert(std::make_pair(ite->second->MapID, tmp));
+			sg_rand_collect.insert(std::make_pair((uint64_t)(ite->second->MapID), tmp));
 		} 
 		else
 		{
@@ -1108,7 +1141,7 @@ static void	adjust_robot_config(std::vector<struct ActorRobotTable*> *config)
 		int index = t->Type - 1;
 		if (index >= ROBOT_CONFIG_TYPE_SIZE || index < 0)
 		{
-			LOG_ERR("%s: [%lu]type[%lu] wrong", __FUNCTION__, t->ID, t->Type);
+			printf("%s: [%lu]type[%lu] wrong\n", __FUNCTION__, t->ID, t->Type);
 			continue;
 		}
 		robot_config[index].push_back(t);
@@ -1322,34 +1355,34 @@ bool escort_is_team(uint32_t escort_id)
 	return false;
 }
 
-void get_skill_configs(uint32_t skill_lv, uint32_t skill_id, struct SkillTable **ski_config, struct SkillLvTable **lv_config1, struct PassiveSkillTable **pas_config, struct SkillLvTable **lv_config2, struct ActiveSkillTable **act_config)
-{
-	*lv_config1 = NULL;
-	*lv_config2 = NULL;
-	*pas_config = NULL;
-	*ski_config = get_config_by_id(skill_id, &skill_config);
-	if (!ski_config)
-		return;
+// void get_skill_configs(uint32_t skill_lv, uint32_t skill_id, struct SkillTable **ski_config, struct SkillLvTable **lv_config1, struct PassiveSkillTable **pas_config, struct SkillLvTable **lv_config2, struct ActiveSkillTable **act_config)
+// {
+// 	*lv_config1 = NULL;
+// 	*lv_config2 = NULL;
+// 	*pas_config = NULL;
+// 	*ski_config = get_config_by_id(skill_id, &skill_config);
+// 	if (!ski_config)
+// 		return;
 
-	if (act_config)
-	{
-		*act_config = get_config_by_id((*ski_config)->SkillAffectId, &active_skill_config);
-	}
+// 	if (act_config)
+// 	{
+// 		*act_config = get_config_by_id((*ski_config)->SkillAffectId, &active_skill_config);
+// 	}
 
-	std::map<uint64_t, struct SkillLvTable *>::iterator iter = skill_lv_config.find((*ski_config)->SkillLv + skill_lv - 1);
-	if (iter != skill_lv_config.end())
-		*lv_config1 = iter->second;
+// 	std::map<uint64_t, struct SkillLvTable *>::iterator iter = skill_lv_config.find((*ski_config)->SkillLv + skill_lv - 1);
+// 	if (iter != skill_lv_config.end())
+// 		*lv_config1 = iter->second;
 
-	if ((*ski_config)->PassiveID)
-	{
-		*pas_config = get_config_by_id((uint32_t)((*ski_config)->PassiveID), &passive_skill_config);
-		if (!pas_config)
-			return;
-		iter = skill_lv_config.find((*ski_config)->PassiveLv + skill_lv - 1);
-		if (iter != skill_lv_config.end())
-			*lv_config2 = iter->second;
-	}
-}
+// 	if ((*ski_config)->PassiveID)
+// 	{
+// 		*pas_config = get_config_by_id((uint32_t)((*ski_config)->PassiveID), &passive_skill_config);
+// 		// if (!pas_config)
+// 		// 	return;
+// 		// iter = skill_lv_config.find((*ski_config)->PassiveLv + skill_lv - 1);
+// 		// if (iter != skill_lv_config.end())
+// 		// 	*lv_config2 = iter->second;
+// 	}
+// }
 
 uint64_t get_task_chapter_id(uint32_t task_id)
 {
@@ -1387,6 +1420,27 @@ void get_task_reward_item_from_config(uint32_t reward_id, std::map<uint32_t, uin
 
 static void adjust_lv_skill_entry(struct SkillLvTable *config)
 {
+	// if (config->n_BuffIdEnemy == 1 && config->BuffIdEnemy[0] == 0)
+	// 	config->n_BuffIdEnemy = 0;
+	// if (config->n_BuffIdFriend == 1 && config->BuffIdFriend[0] == 0)
+	// 	config->n_BuffIdFriend = 0;
+	
+	// if (config->n_EffectIdEnemy == 1 && config->EffectIdEnemy[0] == 0)
+	// 	config->n_EffectIdEnemy = 0;
+	// if (config->n_EffectIdFriend == 1 && config->EffectIdFriend[0] == 0)
+	// 	config->n_EffectIdFriend = 0;	
+}
+static void adjust_lv_skill_table()
+{
+	std::map<uint64_t, struct SkillLvTable *>::iterator ite;
+	for (ite = skill_lv_config.begin(); ite != skill_lv_config.end(); ++ite)
+	{
+		struct SkillLvTable *config = ite->second;
+		adjust_lv_skill_entry(config);
+	}
+}
+static void adjust_time_skill_entry(struct SkillTimeTable *config)
+{
 	if (config->n_BuffIdEnemy == 1 && config->BuffIdEnemy[0] == 0)
 		config->n_BuffIdEnemy = 0;
 	if (config->n_BuffIdFriend == 1 && config->BuffIdFriend[0] == 0)
@@ -1397,13 +1451,13 @@ static void adjust_lv_skill_entry(struct SkillLvTable *config)
 	if (config->n_EffectIdFriend == 1 && config->EffectIdFriend[0] == 0)
 		config->n_EffectIdFriend = 0;	
 }
-static void adjust_lv_skill_table()
+static void adjust_time_skill_table()
 {
-	std::map<uint64_t, struct SkillLvTable *>::iterator ite;
-	for (ite = skill_lv_config.begin(); ite != skill_lv_config.end(); ++ite)
+	std::map<uint64_t, struct SkillTimeTable *>::iterator ite;
+	for (ite = skill_time_config.begin(); ite != skill_time_config.end(); ++ite)
 	{
-		struct SkillLvTable *config = ite->second;
-		adjust_lv_skill_entry(config);
+		struct SkillTimeTable *config = ite->second;
+		adjust_time_skill_entry(config);
 	}
 }
 
@@ -1993,17 +2047,17 @@ static void adjust_pktype_table()
 
 static void adjust_active_skill_tables(void)
 {
-	for (std::map<uint64_t, struct ActiveSkillTable*>::iterator iter = active_skill_config.begin(); iter != active_skill_config.end(); ++iter)
-	{
-		struct ActiveSkillTable *config = iter->second;
-		for (size_t i = 0; i < config->n_SkillLength; ++i)
-			config->TotalSkillDelay += config->SkillLength[i];
+	// for (std::map<uint64_t, struct ActiveSkillTable*>::iterator iter = active_skill_config.begin(); iter != active_skill_config.end(); ++iter)
+	// {
+	// 	struct ActiveSkillTable *config = iter->second;
+	// 	for (size_t i = 0; i < config->n_SkillLength; ++i)
+	// 		config->TotalSkillDelay += config->SkillLength[i];
 
-		if (config->TotalSkillDelay <= config->ActionTime)
-			config->TotalSkillDelay = 0;
-		else
-			config->TotalSkillDelay -= config->ActionTime;
-	}
+	// 	if (config->TotalSkillDelay <= config->ActionTime)
+	// 		config->TotalSkillDelay = 0;
+	// 	else
+	// 		config->TotalSkillDelay -= config->ActionTime;
+	// }
 }
 
 static void adjust_baguapai_tables(void)
@@ -3480,7 +3534,13 @@ int read_all_excel_data()
 	type = sproto_type(sp, "PassiveSkillTable");
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/PassiveSkillTable.lua", (config_type)&passive_skill_config);
-	assert(ret == 0);	
+	assert(ret == 0);
+
+	type = sproto_type(sp, "SkillTimeTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/SkillTimeTable.lua", (config_type)&skill_time_config);
+	assert(ret == 0);
+	adjust_time_skill_table();	
 	
 	type = sproto_type(sp, "SkillTable");
 	assert(type);		
@@ -3519,6 +3579,11 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/ItemsConfigTable.lua", (config_type)&item_config);
 	assert(ret == 0);	
 	generate_item_relative_info();
+
+	type = sproto_type(sp, "SyntheticTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/SyntheticTable.lua", (config_type)&item_combin_config);
+	assert(ret == 0);	
 
 	type = sproto_type(sp, "ParameterTable");
 	assert(type);		
@@ -4154,6 +4219,11 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/RandomCollectionTable.lua", (config_type)&random_collect_config);
 	assert(ret == 0);
 	adjust_rand_collect_table();
+
+	type = sproto_type(sp, "NineEightTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/NineEightTable.lua", (config_type)&jiu_gong_ba_gua_reward_config);
+	assert(ret == 0);
 
 	adjust_escort_config();
 	adjust_achievement_config();

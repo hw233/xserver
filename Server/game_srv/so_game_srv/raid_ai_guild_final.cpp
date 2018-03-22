@@ -314,6 +314,7 @@ static void guild_raid_final_ai_player_ready(raid_struct *raid, player_struct *p
 			guild_battle_match_data__init(&team_data[nty.n_teams]);
 			team_data[nty.n_teams].guildid = guild_id;
 			team_data[nty.n_teams].guildname = get_guild_name(guild_id);
+			team_data[nty.n_teams].icon = get_guild_icon(guild_id);
 
 			uint8_t player_num = 0;
 			for (int i = 0; i < MAX_TEAM_MEM; ++i)

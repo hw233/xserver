@@ -145,7 +145,8 @@ static bool check_can_add_buff(unit_struct *unit, uint32_t buff_id)
 	return true;
 }
 
-static void count_friend_buff(struct SkillLvTable *lvconfig,
+static void count_friend_buff(struct SkillTimeTable *timeconfig,
+	uint32_t skill_lv,
 	unit_struct *attack_unit,
 	unit_struct *defence_unit,
 	uint32_t buff_add[],
@@ -158,12 +159,12 @@ static void count_friend_buff(struct SkillLvTable *lvconfig,
 	int n = 0;
 //	uint64_t now = time_helper::get_cached_time();	
 
-	for (size_t i = 0; i < lvconfig->n_BuffIdFriend; ++i)
+	for (size_t i = 0; i < timeconfig->n_BuffIdFriend; ++i)
 	{
-		if (!check_can_add_buff(defence_unit, lvconfig->BuffIdFriend[i]))
+		if (!check_can_add_buff(defence_unit, timeconfig->BuffIdFriend[i]))
 			continue;
 
-		config = get_config_by_id(lvconfig->BuffIdFriend[i], &buff_config);
+		config = get_config_by_id(timeconfig->BuffIdFriend[i] + skill_lv - 1, &buff_config);
 		if (!config)
 			continue;
 
@@ -178,16 +179,17 @@ static void count_friend_buff(struct SkillLvTable *lvconfig,
 			continue;
 
 //		uint32_t time = config->Time;
-		buff_manager::create_default_buff(lvconfig->BuffIdFriend[i], attack_unit, defence_unit);
+		buff_manager::create_default_buff(timeconfig->BuffIdFriend[i], attack_unit, defence_unit);
 		
-		buff_add[*n_buff_add + n] = lvconfig->BuffIdFriend[i];
+		buff_add[*n_buff_add + n] = timeconfig->BuffIdFriend[i];
 //		buff_add_end_time[*n_buff_add + n] = (now + time) / 1000;		
 		++n;
 	}
 //	buff_manager::add_skill_buff(attack_unit, defence_unit, n, &buff_add[*n_buff_add], &buff_add_end_time[*n_buff_add]);
 	(*n_buff_add) += n;
 }
-static void count_enemy_buff(struct SkillLvTable *lvconfig,
+static void count_enemy_buff(struct SkillTimeTable *timeconfig,
+	uint32_t skill_lv,
 	unit_struct *attack_unit,
 	unit_struct *defence_unit,
 	uint32_t buff_add[],
@@ -200,12 +202,12 @@ static void count_enemy_buff(struct SkillLvTable *lvconfig,
 	int n = 0;
 //	uint64_t now = time_helper::get_cached_time();
 
-	for (size_t i = 0; i < lvconfig->n_BuffIdEnemy; ++i)
+	for (size_t i = 0; i < timeconfig->n_BuffIdEnemy; ++i)
 	{
-		if (!check_can_add_buff(defence_unit, lvconfig->BuffIdEnemy[i]))
+		if (!check_can_add_buff(defence_unit, timeconfig->BuffIdEnemy[i]))
 			continue;
 
-		config = get_config_by_id(lvconfig->BuffIdEnemy[i], &buff_config);
+		config = get_config_by_id(timeconfig->BuffIdEnemy[i] + skill_lv - 1, &buff_config);
 		if (!config)
 			continue;
 
@@ -310,9 +312,9 @@ static void count_enemy_buff(struct SkillLvTable *lvconfig,
 		// 	time = time * (1 + attack_rate - defence_rate);
 
 		//buff_manager::create_buff(lvconfig->BuffIdEnemy[i], now + time, attack_unit, defence_unit);
-		buff_manager::create_default_buff(lvconfig->BuffIdEnemy[i], attack_unit, defence_unit);		
+		buff_manager::create_default_buff(timeconfig->BuffIdEnemy[i], attack_unit, defence_unit);		
 
-		buff_add[*n_buff_add + n] = lvconfig->BuffIdEnemy[i];
+		buff_add[*n_buff_add + n] = timeconfig->BuffIdEnemy[i];
 //		buff_add_end_time[*n_buff_add + n] = (now + time) / 1000;
 		++n;
 //		++(*n_buff_add);
@@ -328,10 +330,10 @@ static void count_enemy_buff(struct SkillLvTable *lvconfig,
 //	return false;
 // }
 
-static int32_t count_friend_damage(struct SkillLvTable *lvconfig,
-	unit_struct *attack_unit, unit_struct *defence_unit)
+static int32_t count_friend_damage(struct SkillTimeTable *timeconfig,
+	uint32_t skill_lv, unit_struct *attack_unit, unit_struct *defence_unit)
 {
-	if (lvconfig->n_EffectIdFriend == 0)
+	if (timeconfig->n_EffectIdFriend == 0)
 		return (0);
 	double *attack = attack_unit->get_all_attr();
 	double *defence = defence_unit->get_all_attr();
@@ -339,9 +341,9 @@ static int32_t count_friend_damage(struct SkillLvTable *lvconfig,
 	double *buff_fight_defence = defence_unit->get_all_buff_fight_attr();
 
 	int32_t damage = 0;
-	for (size_t i = 0; i < lvconfig->n_EffectIdFriend; ++i)
+	for (size_t i = 0; i < timeconfig->n_EffectIdFriend; ++i)
 	{
-		struct SkillEffectTable *effectconfig = get_config_by_id(lvconfig->EffectIdFriend[i], &skill_effect_config);
+		struct SkillEffectTable *effectconfig = get_config_by_id(timeconfig->EffectIdFriend[i] + skill_lv - 1, &skill_effect_config);
 		if (!effectconfig)
 			return (0);
 		damage += count_skill_effect(attack, defence, buff_fight_attack, buff_fight_defence, effectconfig);
@@ -366,13 +368,15 @@ static int32_t count_friend_damage(struct SkillLvTable *lvconfig,
 }
 
 static int32_t count_enemy_damage(struct SkillTable *skillconfig,
-	struct SkillLvTable *lvconfig,
+	struct SkillTimeTable *timeconfig,
+	uint32_t skill_lv,
+//	struct SkillLvTable *lvconfig,
 	unit_struct *attack_unit,
 	unit_struct *defence_unit,
 	uint32_t effect,
 	int32_t other_rate)
 {
-	if (lvconfig->n_EffectIdEnemy == 0 || effect == SKILL_EFFECT_MISS)
+	if (timeconfig->n_EffectIdEnemy == 0 || effect == SKILL_EFFECT_MISS)
 		return (0);
 	double *attack = attack_unit->get_all_attr();
 	double *defence = defence_unit->get_all_attr();
@@ -391,9 +395,9 @@ static int32_t count_enemy_damage(struct SkillTable *skillconfig,
 	}
 
 	int32_t damage = 0;
-	for (size_t i = 0; i < lvconfig->n_EffectIdEnemy; ++i)
+	for (size_t i = 0; i < timeconfig->n_EffectIdEnemy; ++i)
 	{
-		struct SkillEffectTable *effectconfig = get_config_by_id(lvconfig->EffectIdEnemy[i], &skill_effect_config);
+		struct SkillEffectTable *effectconfig = get_config_by_id(timeconfig->EffectIdEnemy[i] + skill_lv - 1, &skill_effect_config);
 		if (!effectconfig)
 			return (0);
 		damage += count_skill_effect(attack, defence, buff_fight_attack, buff_fight_defence, effectconfig);
@@ -429,25 +433,25 @@ static int32_t count_enemy_damage(struct SkillTable *skillconfig,
 }
 
 //判断主动技能的被动效果是否被触发
-static bool check_skill_pas_active(struct PassiveSkillTable *pas_config, uint32_t effect)
-{
-	switch (pas_config->TriggerType)
-	{
-		case 0://命中
-			if (effect != SKILL_EFFECT_MISS)
-				return true;
-			return false;
-		case 1: //暴击
-			if (effect == SKILL_EFFECT_CRIT)
-				return true;
-			return false;
-		case 2: //闪避
-			if (effect == SKILL_EFFECT_MISS)
-				return true;
-			return false;
-	}
-	return false;
-}
+// static bool check_skill_pas_active(struct PassiveSkillTable *pas_config, uint32_t effect)
+// {
+// 	switch (pas_config->TriggerType)
+// 	{
+// 		case 0://命中
+// 			if (effect != SKILL_EFFECT_MISS)
+// 				return true;
+// 			return false;
+// 		case 1: //暴击
+// 			if (effect == SKILL_EFFECT_CRIT)
+// 				return true;
+// 			return false;
+// 		case 2: //闪避
+// 			if (effect == SKILL_EFFECT_MISS)
+// 				return true;
+// 			return false;
+// 	}
+// 	return false;
+// }
 
 static uint32_t get_skill_effect(unit_struct *attack_unit, unit_struct *defence_unit)
 {
@@ -633,17 +637,16 @@ int32_t count_other_skill_damage_effect(unit_struct *attack, unit_struct *defenc
 }
 
 
-int32_t count_skill_total_damage(UNIT_FIGHT_TYPE type, struct SkillTable *skillconfig, struct SkillLvTable *act_lvconfig,
-	struct PassiveSkillTable *pas_config, struct SkillLvTable *pas_lvconfig, unit_struct *attack_unit,
+int32_t count_skill_total_damage(UNIT_FIGHT_TYPE type, struct SkillTable *skillconfig, uint32_t skill_lv, unit_struct *attack_unit,
 	unit_struct *defence_unit, uint32_t *effect, uint32_t buff_add[], uint32_t buff_end_time[], uint32_t *n_buff_add, int32_t other_rate)
 {
 //	uint32_t skill_id = attack->data->skill.skill_id;
 //	if (skill_id == 0)
 //		return 0;
-	int32_t ret;
-	bool pas_active = false; //被动技能是否触发
+	int32_t ret = 0;
+//	bool pas_active = false; //被动技能是否触发
 
-	if (!skillconfig || !act_lvconfig)
+	if (!skillconfig)
 		return (0);
 
 //	bool b_is_friend = is_friend(attack_unit, defence_unit);
@@ -657,20 +660,26 @@ int32_t count_skill_total_damage(UNIT_FIGHT_TYPE type, struct SkillTable *skillc
 //		struct SkillTable *skillconfig = get_config_by_id(skill_id, &skill_config);
 //		if (!skillconfig)
 //			return (0);
-		ret = count_enemy_damage(skillconfig, act_lvconfig, attack_unit, defence_unit, *effect, other_rate);
-		if (pas_config && pas_lvconfig)
+		for (uint32_t i = 0; i < skillconfig->n_time_config; ++i)
 		{
-			pas_active = check_skill_pas_active(pas_config, *effect);
+			ret += count_enemy_damage(skillconfig, skillconfig->time_config[i], skill_lv, attack_unit, defence_unit, *effect, other_rate);
 		}
-		if (pas_active)
-		{
-			ret += count_enemy_damage(skillconfig, pas_lvconfig, attack_unit, defence_unit, 0, other_rate);
-		}
+		// if (pas_config && pas_lvconfig)
+		// {
+		// 	pas_active = check_skill_pas_active(pas_config, *effect);
+		// }
+		// if (pas_active)
+		// {
+		// 	ret += count_enemy_damage(skillconfig, pas_lvconfig, attack_unit, defence_unit, 0, other_rate);
+		// }
 	}
 	else
 	{
 		*effect = SKILL_EFFECT_ADDHP;
-		ret = count_friend_damage(act_lvconfig, attack_unit, defence_unit);
+		for (uint32_t i = 0; i < skillconfig->n_time_config; ++i)
+		{
+			ret += count_friend_damage(skillconfig->time_config[i], skill_lv, attack_unit, defence_unit);
+		}
 		if (ret == 0)
 			*effect = 0;
 	}
@@ -685,13 +694,15 @@ int32_t count_skill_total_damage(UNIT_FIGHT_TYPE type, struct SkillTable *skillc
 
 	if (type == UNIT_FIGHT_TYPE_ENEMY)
 	{
-		count_enemy_buff(act_lvconfig, attack_unit, defence_unit, buff_add, buff_end_time, n_buff_add);
-		if (pas_active)
-			count_enemy_buff(pas_lvconfig, attack_unit, defence_unit, buff_add, buff_end_time, n_buff_add);
+		for (uint32_t i = 0; i < skillconfig->n_time_config; ++i)		
+			count_enemy_buff(skillconfig->time_config[i], skill_lv, attack_unit, defence_unit, buff_add, buff_end_time, n_buff_add);
+//		if (pas_active)
+//			count_enemy_buff(pas_lvconfig, attack_unit, defence_unit, buff_add, buff_end_time, n_buff_add);
 	}
 	else
 	{
-		count_friend_buff(act_lvconfig, attack_unit, defence_unit, buff_add, buff_end_time, n_buff_add);
+		for (uint32_t i = 0; i < skillconfig->n_time_config; ++i)				
+			count_friend_buff(skillconfig->time_config[i], skill_lv, attack_unit, defence_unit, buff_add, buff_end_time, n_buff_add);
 	}
 
 //	count_buff_add(attack, defence, buff_add, n_buff_add ,lvconfig);

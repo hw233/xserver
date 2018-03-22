@@ -26,6 +26,7 @@ std::vector<conn_node_clientsrv *> vector_person;
 uint64_t timer_client_loop_count;
 #define run_with_period_client(_ms_) if (timer_client_loop_count % _ms_ == 0)
 uint32_t sg_person_num;
+uint32_t sg_clientsrv_tick_time;
 uint32_t sg_move_or_useskill;
 uint32_t sg_player_split;
 uint32_t sg_move_type;
@@ -54,7 +55,7 @@ void client_on_timer(evutil_socket_t, short, void* /*arg*/)
 			{
 				if (sg_move_type == 0)
 				{
-					run_with_period_client(60)
+//					run_with_period_client(1)
 					{
 						(*itr)->send_move_request();
 					}
@@ -212,6 +213,12 @@ int main(int argc, char **argv)
 		sg_person_num = atoi(get_value(line));
 	}
 
+	line = get_first_key(file,(char*)"clientsrv_tick_time");
+	if(line)
+	{
+		sg_clientsrv_tick_time = atoi(get_value(line));
+	}
+
 	line = get_first_key(file,(char*)"move_or_useskill");
 	if(line)
 	{
@@ -306,7 +313,7 @@ int main(int argc, char **argv)
 	
 	sg_clientsrv_timer.ev_callback = client_on_timer;
 	//clientsrv_timeout.tv_sec = 3;
-	clientsrv_timeout.tv_usec = 1000;
+	clientsrv_timeout.tv_usec = sg_clientsrv_tick_time;
 	add_timer(clientsrv_timeout, &sg_clientsrv_timer, NULL);
 	ret = event_base_loop(base, 0);
 	LOG_INFO("event_base_loop stoped[%d]", ret);	

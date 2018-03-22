@@ -246,14 +246,14 @@ int conn_node_client::send_one_msg(PROTO_HEAD *head, uint8_t force) {
 	int len = ENDION_FUNC_4(head->len);
 //	head->seq = ENDION_FUNC_2(seq++);
 
-	if (send_buffer_end_pos+len >= MAX_SEND_BUFFER_SIZE) {  ///缓冲区溢出, 关闭连接
-		LOG_DEBUG("[%s: %d]: fd: %d: send msg[%d] len[%d], seq[%d] buffer full", __PRETTY_FUNCTION__, __LINE__, fd, ENDION_FUNC_2(head->msg_id), ENDION_FUNC_4(head->len), ENDION_FUNC_2(head->seq));
+	if (send_buffer_end_pos+len >= MAX_CLIENT_SEND_BUFFER_SIZE) {  ///缓冲区溢出, 关闭连接
+		LOG_DEBUG("[%s: %d]: fd: %d: send msg[%d] len[%d], seq[%d] begin[%d]end[%d] buffer full", __PRETTY_FUNCTION__, __LINE__, fd, ENDION_FUNC_2(head->msg_id), ENDION_FUNC_4(head->len), ENDION_FUNC_2(head->seq), send_buffer_begin_pos, send_buffer_end_pos);
 		return -1;
 	}
 
 
 	if (head->msg_id != MSG_ID_HEARTBEAT_NOTIFY)
-		LOG_DEBUG("[%s: %d]: fd: %d: send msg[%d] len[%d], seq[%d]", __PRETTY_FUNCTION__, __LINE__, fd, ENDION_FUNC_2(head->msg_id), ENDION_FUNC_4(head->len), ENDION_FUNC_2(head->seq));
+		LOG_DEBUG("[%s: %d]: fd: %d: send msg[%d] len[%d], seq[%d] begin[%d]end[%d]", __PRETTY_FUNCTION__, __LINE__, fd, ENDION_FUNC_2(head->msg_id), ENDION_FUNC_4(head->len), ENDION_FUNC_2(head->seq), send_buffer_begin_pos, send_buffer_end_pos);
 
 	memcpy(send_buffer+send_buffer_end_pos, p, len);
 	encoder_data((PROTO_HEAD*)(send_buffer+send_buffer_end_pos));
@@ -317,6 +317,7 @@ int conn_node_client::dispatch_message()
 		case MSG_ID_FRIEND_SEND_GIFT_REQUEST:
 		case MSG_ID_FRIEND_TRACK_ENEMY_REQUEST:
 		case MSG_ID_FRIEND_AUTO_ACCEPT_APPLY_REQUEST:
+		case MSG_ID_FRIEND_ID_OR_NO_EACH_OTHER_REQUEST:
 			transfer_to_friendsrv();
 			break;
 		case MSG_ID_GUILD_LIST_REQUEST:
@@ -467,7 +468,7 @@ int conn_node_client::transfer_to_loginserver()
 
 	conn_node_login *server = conn_node_login::get_normal_node();
 	if (!server) {
-		LOG_ERR("[%s:%d] do not have login server connected", __FUNCTION__, __LINE__);
+		LOG_ERR("[%s:%d] do not have login server connected cmd[%u]", __FUNCTION__, __LINE__, cmd);
 		ret = -1;
 		goto done;
 	}
@@ -722,7 +723,7 @@ conn_node_client *conn_node_client::get_nodes_by_open_id(uint32_t open_id)
 }
 
 
-void on_write(int fd, short ev, void *arg) {
+void on_client_write(int fd, short ev, void *arg) {
 	assert(arg);
 	conn_node_client *client = (conn_node_client *)arg;
 	client->send_data_to_client();
@@ -734,7 +735,7 @@ void conn_node_client::send_data_to_client() {
 
 	int len = write(this->fd, send_buffer + send_buffer_begin_pos, send_buffer_end_pos-send_buffer_begin_pos);
 
-	LOG_DEBUG("%s %d: write to fd[%u] ret %d, end pos = %d, begin pos = %d", __PRETTY_FUNCTION__, __LINE__, fd, len, send_buffer_end_pos, send_buffer_begin_pos);
+	LOG_DEBUG("%s %d: write to fd: %u: ret %d, end pos = %d, begin pos = %d", __PRETTY_FUNCTION__, __LINE__, fd, len, send_buffer_end_pos, send_buffer_begin_pos);
 
 	if (len == -1) {  //发送失败
 		if (errno == EINTR || errno == EAGAIN) {
@@ -765,7 +766,7 @@ void conn_node_client::send_data_to_client() {
 //		return;
 //	}
 
-	if (send_buffer_end_pos>=MAX_SEND_BUFFER_SIZE/2 && (send_buffer_begin_pos/1024) > 0 && send_buffer_end_pos>send_buffer_begin_pos) {
+	if (send_buffer_end_pos>=MAX_CLIENT_SEND_BUFFER_SIZE/2 && (send_buffer_begin_pos/1024) > 0 && send_buffer_end_pos>send_buffer_begin_pos) {
 		int sz = send_buffer_end_pos - send_buffer_begin_pos;
 		memmove(send_buffer, send_buffer+send_buffer_begin_pos, sz);
 		send_buffer_begin_pos = 0;

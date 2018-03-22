@@ -20,6 +20,7 @@ message GuildBattleRankData
 	required string guildName = 3; //帮会名字
 	required uint32 guildScore = 4; //帮会积分
 	required uint32 guildCamp = 5; //帮会阵营
+	required uint32 icon = 6; //帮会图标
 }
 
 //帮会战成员贡献信息
@@ -54,6 +55,8 @@ message GuildBattleMatchData
 	required uint32 guildId = 1; //帮会ID
 	required string guildName = 2; //帮会名字
 	repeated PlayerBaseData members = 3; //成员信息
+	required uint32 icon = 4; //帮会图标
+//	required uint32 guildScore = 5; //帮会积分
 }
 
 //帮会战参与者信息通知
@@ -83,6 +86,7 @@ message GuildBattleRecordNotify
 message GuildBattleRoundFinishNotify
 {
 	required uint32 result = 1; //胜败
+	required uint32 my_rank = 3; //
 	required uint32 score = 4; //积分
 	required uint32 guildTreasure = 5; //帮会资金
 	required uint32 guildDonation = 6; //帮贡

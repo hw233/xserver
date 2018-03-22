@@ -393,8 +393,8 @@ local EffectTable = {
 		['ID'] = 135110034,
 		['OffsetX'] = 0,
 		['OffsetY'] = 2,
-		['OffsetZ'] = 20,
-		['DelayTime'] = 1300,
+		['OffsetZ'] = 10,
+		['DelayTime'] = 500,
 		['Length'] = 6320,
 		['IsManual'] = 0,
 		['IsFollow'] = 0
@@ -485,7 +485,7 @@ local EffectTable = {
 		['OffsetY'] = 0,
 		['OffsetZ'] = 0,
 		['DelayTime'] = 0,
-		['Length'] = 1200,
+		['Length'] = 1320,
 		['IsManual'] = 0,
 		['IsFollow'] = 1
 		},
@@ -525,7 +525,7 @@ local EffectTable = {
 		['OffsetY'] = 0,
 		['OffsetZ'] = 0,
 		['DelayTime'] = 0,
-		['Length'] = 2000,
+		['Length'] = 700,
 		['IsManual'] = 0,
 		['IsFollow'] = 1
 		},
@@ -538,6 +538,36 @@ local EffectTable = {
 		['Length'] = 850,
 		['IsManual'] = 0,
 		['IsFollow'] = 0
+		},
+	[135120010] = {
+		['ID'] = 135120010,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 1320,
+		['IsManual'] = 0,
+		['IsFollow'] = 1
+		},
+	[135120011] = {
+		['ID'] = 135120011,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 1320,
+		['IsManual'] = 0,
+		['IsFollow'] = 1
+		},
+	[135120012] = {
+		['ID'] = 135120012,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 1320,
+		['IsManual'] = 0,
+		['IsFollow'] = 1
 		},
 	[135130001] = {
 		['ID'] = 135130001,
@@ -779,6 +809,36 @@ local EffectTable = {
 		['IsManual'] = 1,
 		['IsFollow'] = 0
 		},
+	[135172007] = {
+		['ID'] = 135172007,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 0,
+		['IsManual'] = 1,
+		['IsFollow'] = 0
+		},
+	[135172008] = {
+		['ID'] = 135172008,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 0,
+		['IsManual'] = 1,
+		['IsFollow'] = 0
+		},
+	[135172009] = {
+		['ID'] = 135172009,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 0,
+		['IsManual'] = 1,
+		['IsFollow'] = 0
+		},
 	[135173001] = {
 		['ID'] = 135173001,
 		['OffsetX'] = 0,
@@ -886,6 +946,16 @@ local EffectTable = {
 		['OffsetZ'] = 0,
 		['DelayTime'] = 0,
 		['Length'] = 610,
+		['IsManual'] = 0,
+		['IsFollow'] = 1
+		},
+	[135182003] = {
+		['ID'] = 135182003,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 510,
 		['IsManual'] = 0,
 		['IsFollow'] = 1
 		},
@@ -1079,6 +1149,16 @@ local EffectTable = {
 		['IsManual'] = 1,
 		['IsFollow'] = 1
 		},
+	[135190017] = {
+		['ID'] = 135190017,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 0,
+		['IsManual'] = 1,
+		['IsFollow'] = 1
+		},
 	[135200001] = {
 		['ID'] = 135200001,
 		['OffsetX'] = 0,
@@ -1152,8 +1232,18 @@ local EffectTable = {
 	[135200008] = {
 		['ID'] = 135200008,
 		['OffsetX'] = 0,
-		['OffsetY'] = 0,
+		['OffsetY'] = 5,
 		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 1000,
+		['IsManual'] = 1,
+		['IsFollow'] = 0
+		},
+	[135200009] = {
+		['ID'] = 135200009,
+		['OffsetX'] = 0,
+		['OffsetY'] = 10,
+		['OffsetZ'] = 10,
 		['DelayTime'] = 0,
 		['Length'] = 1000,
 		['IsManual'] = 1,
@@ -1186,6 +1276,26 @@ local EffectTable = {
 		['OffsetZ'] = 0,
 		['DelayTime'] = 0,
 		['Length'] = 600,
+		['IsManual'] = 1,
+		['IsFollow'] = 0
+		},
+	[135200016] = {
+		['ID'] = 135200016,
+		['OffsetX'] = 0,
+		['OffsetY'] = 13,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 800,
+		['IsManual'] = 1,
+		['IsFollow'] = 0
+		},
+	[135200017] = {
+		['ID'] = 135200017,
+		['OffsetX'] = 0,
+		['OffsetY'] = 16,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 800,
 		['IsManual'] = 1,
 		['IsFollow'] = 0
 		},
@@ -1279,6 +1389,46 @@ local EffectTable = {
 		['IsManual'] = 0,
 		['IsFollow'] = 0
 		},
+	[135201014] = {
+		['ID'] = 135201014,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 400,
+		['Length'] = 460,
+		['IsManual'] = 0,
+		['IsFollow'] = 0
+		},
+	[135201015] = {
+		['ID'] = 135201015,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 550,
+		['Length'] = 430,
+		['IsManual'] = 0,
+		['IsFollow'] = 0
+		},
+	[135201016] = {
+		['ID'] = 135201016,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 100,
+		['Length'] = 1180,
+		['IsManual'] = 0,
+		['IsFollow'] = 0
+		},
+	[135201017] = {
+		['ID'] = 135201017,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 500,
+		['Length'] = 510,
+		['IsManual'] = 0,
+		['IsFollow'] = 0
+		},
 	[135202001] = {
 		['ID'] = 135202001,
 		['OffsetX'] = 0,
@@ -1287,7 +1437,7 @@ local EffectTable = {
 		['DelayTime'] = 0,
 		['Length'] = 500,
 		['IsManual'] = 0,
-		['IsFollow'] = 1
+		['IsFollow'] = 0
 		},
 	[135202002] = {
 		['ID'] = 135202002,
@@ -1297,7 +1447,7 @@ local EffectTable = {
 		['DelayTime'] = 0,
 		['Length'] = 400,
 		['IsManual'] = 0,
-		['IsFollow'] = 1
+		['IsFollow'] = 0
 		},
 	[135202003] = {
 		['ID'] = 135202003,
@@ -1307,7 +1457,7 @@ local EffectTable = {
 		['DelayTime'] = 0,
 		['Length'] = 2000,
 		['IsManual'] = 0,
-		['IsFollow'] = 1
+		['IsFollow'] = 0
 		},
 	[135202004] = {
 		['ID'] = 135202004,
@@ -1317,7 +1467,7 @@ local EffectTable = {
 		['DelayTime'] = 0,
 		['Length'] = 300,
 		['IsManual'] = 0,
-		['IsFollow'] = 1
+		['IsFollow'] = 0
 		},
 	[135202005] = {
 		['ID'] = 135202005,
@@ -1327,7 +1477,7 @@ local EffectTable = {
 		['DelayTime'] = 0,
 		['Length'] = 1000,
 		['IsManual'] = 0,
-		['IsFollow'] = 1
+		['IsFollow'] = 0
 		},
 	[135202006] = {
 		['ID'] = 135202006,
@@ -1336,18 +1486,18 @@ local EffectTable = {
 		['OffsetZ'] = 0,
 		['DelayTime'] = 0,
 		['Length'] = 1000,
-		['IsManual'] = 1,
-		['IsFollow'] = 1
+		['IsManual'] = 0,
+		['IsFollow'] = 0
 		},
 	[135202007] = {
 		['ID'] = 135202007,
 		['OffsetX'] = 0,
-		['OffsetY'] = -7,
+		['OffsetY'] = 0,
 		['OffsetZ'] = 0,
 		['DelayTime'] = 0,
 		['Length'] = 700,
 		['IsManual'] = 0,
-		['IsFollow'] = 1
+		['IsFollow'] = 0
 		},
 	[135202008] = {
 		['ID'] = 135202008,
@@ -1357,7 +1507,7 @@ local EffectTable = {
 		['DelayTime'] = 0,
 		['Length'] = 550,
 		['IsManual'] = 0,
-		['IsFollow'] = 1
+		['IsFollow'] = 0
 		},
 	[135202010] = {
 		['ID'] = 135202010,
@@ -1367,7 +1517,7 @@ local EffectTable = {
 		['DelayTime'] = 0,
 		['Length'] = 800,
 		['IsManual'] = 0,
-		['IsFollow'] = 1
+		['IsFollow'] = 0
 		},
 	[135203001] = {
 		['ID'] = 135203001,
@@ -1756,6 +1906,46 @@ local EffectTable = {
 		['OffsetZ'] = 0,
 		['DelayTime'] = 700,
 		['Length'] = 1500,
+		['IsManual'] = 0,
+		['IsFollow'] = 0
+		},
+	[135211501] = {
+		['ID'] = 135211501,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 600,
+		['Length'] = 730,
+		['IsManual'] = 0,
+		['IsFollow'] = 0
+		},
+	[135211502] = {
+		['ID'] = 135211502,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 1050,
+		['IsManual'] = 0,
+		['IsFollow'] = 0
+		},
+	[135211503] = {
+		['ID'] = 135211503,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 200,
+		['Length'] = 1630,
+		['IsManual'] = 0,
+		['IsFollow'] = 0
+		},
+	[135211504] = {
+		['ID'] = 135211504,
+		['OffsetX'] = 0,
+		['OffsetY'] = 0,
+		['OffsetZ'] = 0,
+		['DelayTime'] = 0,
+		['Length'] = 1550,
 		['IsManual'] = 0,
 		['IsFollow'] = 0
 		},
@@ -2296,7 +2486,7 @@ local EffectTable = {
 		['OffsetZ'] = 0,
 		['DelayTime'] = 0,
 		['Length'] = 500,
-		['IsManual'] = 0,
+		['IsManual'] = 1,
 		['IsFollow'] = 0
 		},
 	[115300001] = {

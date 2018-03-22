@@ -2636,48 +2636,12 @@ local TaskMonsterTable = {
 		['PointY'] = 0,
 		['Orientation'] = 0
 		},
-	[240720568] = {
-		['ID'] = 240720568,
-		['MonsterID'] = 151077038,
-		['MonsterLevel'] = 4,
-		['PointX'] = 85,
-		['PointZ'] = 386,
-		['PointY'] = 0,
-		['Orientation'] = 0
-		},
-	[240720569] = {
-		['ID'] = 240720569,
-		['MonsterID'] = 151077038,
-		['MonsterLevel'] = 4,
-		['PointX'] = 85,
-		['PointZ'] = 388,
-		['PointY'] = 0,
-		['Orientation'] = 0
-		},
-	[240720570] = {
-		['ID'] = 240720570,
-		['MonsterID'] = 151077038,
-		['MonsterLevel'] = 4,
-		['PointX'] = 84,
-		['PointZ'] = 391,
-		['PointY'] = 0,
-		['Orientation'] = 0
-		},
-	[240720571] = {
-		['ID'] = 240720571,
-		['MonsterID'] = 151077039,
-		['MonsterLevel'] = 4,
-		['PointX'] = 87,
-		['PointZ'] = 384,
-		['PointY'] = 0,
-		['Orientation'] = 0
-		},
 	[240720572] = {
 		['ID'] = 240720572,
 		['MonsterID'] = 151077040,
 		['MonsterLevel'] = 4,
-		['PointX'] = 98,
-		['PointZ'] = 345,
+		['PointX'] = 95,
+		['PointZ'] = 344,
 		['PointY'] = 0,
 		['Orientation'] = 0
 		},
@@ -2685,8 +2649,8 @@ local TaskMonsterTable = {
 		['ID'] = 240720573,
 		['MonsterID'] = 151077040,
 		['MonsterLevel'] = 4,
-		['PointX'] = 95,
-		['PointZ'] = 342,
+		['PointX'] = 93,
+		['PointZ'] = 346,
 		['PointY'] = 0,
 		['Orientation'] = 0
 		},
@@ -2694,8 +2658,8 @@ local TaskMonsterTable = {
 		['ID'] = 240720574,
 		['MonsterID'] = 151077040,
 		['MonsterLevel'] = 4,
-		['PointX'] = 91,
-		['PointZ'] = 344,
+		['PointX'] = 96,
+		['PointZ'] = 340,
 		['PointY'] = 0,
 		['Orientation'] = 0
 		},
@@ -2703,8 +2667,8 @@ local TaskMonsterTable = {
 		['ID'] = 240720575,
 		['MonsterID'] = 151077040,
 		['MonsterLevel'] = 4,
-		['PointX'] = 95,
-		['PointZ'] = 347,
+		['PointX'] = 91,
+		['PointZ'] = 342,
 		['PointY'] = 0,
 		['Orientation'] = 0
 		},
@@ -2717,47 +2681,110 @@ local TaskMonsterTable = {
 		['PointY'] = 0,
 		['Orientation'] = 0
 		},
-	[240720576] = {
-		['ID'] = 240720576,
-		['MonsterID'] = 151077041,
+	[240720597] = {
+		['ID'] = 240720597,
+		['MonsterID'] = 151077040,
 		['MonsterLevel'] = 4,
-		['PointX'] = 118,
-		['PointZ'] = 227,
+		['PointX'] = 92,
+		['PointZ'] = 340,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720598] = {
+		['ID'] = 240720598,
+		['MonsterID'] = 151077040,
+		['MonsterLevel'] = 4,
+		['PointX'] = 91,
+		['PointZ'] = 344,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720599] = {
+		['ID'] = 240720599,
+		['MonsterID'] = 151077040,
+		['MonsterLevel'] = 4,
+		['PointX'] = 96,
+		['PointZ'] = 342,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720600] = {
+		['ID'] = 240720600,
+		['MonsterID'] = 151077047,
+		['MonsterLevel'] = 4,
+		['PointX'] = 96,
+		['PointZ'] = 339,
 		['PointY'] = 0,
 		['Orientation'] = 0
 		},
 	[240720577] = {
 		['ID'] = 240720577,
-		['MonsterID'] = 151077041,
+		['MonsterID'] = 151077049,
 		['MonsterLevel'] = 4,
-		['PointX'] = 116,
-		['PointZ'] = 230,
+		['PointX'] = 118,
+		['PointZ'] = 223,
 		['PointY'] = 0,
 		['Orientation'] = 0
 		},
 	[240720578] = {
 		['ID'] = 240720578,
-		['MonsterID'] = 151077041,
+		['MonsterID'] = 151077049,
+		['MonsterLevel'] = 4,
+		['PointX'] = 116,
+		['PointZ'] = 223,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720579] = {
+		['ID'] = 240720579,
+		['MonsterID'] = 151077049,
 		['MonsterLevel'] = 4,
 		['PointX'] = 117,
 		['PointZ'] = 224,
 		['PointY'] = 0,
 		['Orientation'] = 0
 		},
-	[240720579] = {
-		['ID'] = 240720579,
-		['MonsterID'] = 151077041,
+	[240720580] = {
+		['ID'] = 240720580,
+		['MonsterID'] = 151077049,
 		['MonsterLevel'] = 4,
-		['PointX'] = 113,
+		['PointX'] = 116,
 		['PointZ'] = 225,
 		['PointY'] = 0,
 		['Orientation'] = 0
 		},
-	[240720580] = {
-		['ID'] = 240720580,
-		['MonsterID'] = 151077041,
+	[240720593] = {
+		['ID'] = 240720593,
+		['MonsterID'] = 151077049,
 		['MonsterLevel'] = 4,
 		['PointX'] = 121,
+		['PointZ'] = 229,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720594] = {
+		['ID'] = 240720594,
+		['MonsterID'] = 151077049,
+		['MonsterLevel'] = 4,
+		['PointX'] = 123,
+		['PointZ'] = 224,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720595] = {
+		['ID'] = 240720595,
+		['MonsterID'] = 151077049,
+		['MonsterLevel'] = 4,
+		['PointX'] = 115,
+		['PointZ'] = 225,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720596] = {
+		['ID'] = 240720596,
+		['MonsterID'] = 151077049,
+		['MonsterLevel'] = 4,
+		['PointX'] = 117,
 		['PointZ'] = 229,
 		['PointY'] = 0,
 		['Orientation'] = 0
@@ -2804,6 +2831,177 @@ local TaskMonsterTable = {
 		['MonsterLevel'] = 4,
 		['PointX'] = 44,
 		['PointZ'] = 206,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720586] = {
+		['ID'] = 240720586,
+		['MonsterID'] = 151077048,
+		['MonsterLevel'] = 4,
+		['PointX'] = 117.88,
+		['PointZ'] = 221.37,
+		['PointY'] = 17.29,
+		['Orientation'] = -34.299999999999997
+		},
+	[240720568] = {
+		['ID'] = 240720568,
+		['MonsterID'] = 151077038,
+		['MonsterLevel'] = 4,
+		['PointX'] = 82,
+		['PointZ'] = 367,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720569] = {
+		['ID'] = 240720569,
+		['MonsterID'] = 151077038,
+		['MonsterLevel'] = 4,
+		['PointX'] = 73,
+		['PointZ'] = 369,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720570] = {
+		['ID'] = 240720570,
+		['MonsterID'] = 151077038,
+		['MonsterLevel'] = 4,
+		['PointX'] = 74,
+		['PointZ'] = 369,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720588] = {
+		['ID'] = 240720588,
+		['MonsterID'] = 151077038,
+		['MonsterLevel'] = 4,
+		['PointX'] = 74,
+		['PointZ'] = 371,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720589] = {
+		['ID'] = 240720589,
+		['MonsterID'] = 151077038,
+		['MonsterLevel'] = 4,
+		['PointX'] = 74,
+		['PointZ'] = 366,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720590] = {
+		['ID'] = 240720590,
+		['MonsterID'] = 151077038,
+		['MonsterLevel'] = 4,
+		['PointX'] = 75,
+		['PointZ'] = 372,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720591] = {
+		['ID'] = 240720591,
+		['MonsterID'] = 151077038,
+		['MonsterLevel'] = 4,
+		['PointX'] = 71,
+		['PointZ'] = 373,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720592] = {
+		['ID'] = 240720592,
+		['MonsterID'] = 151077038,
+		['MonsterLevel'] = 4,
+		['PointX'] = 71,
+		['PointZ'] = 376,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720571] = {
+		['ID'] = 240720571,
+		['MonsterID'] = 151077039,
+		['MonsterLevel'] = 4,
+		['PointX'] = 71,
+		['PointZ'] = 378,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720601] = {
+		['ID'] = 240720601,
+		['MonsterID'] = 151077051,
+		['MonsterLevel'] = 4,
+		['PointX'] = 407,
+		['PointZ'] = 181,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720602] = {
+		['ID'] = 240720602,
+		['MonsterID'] = 151077051,
+		['MonsterLevel'] = 4,
+		['PointX'] = 403,
+		['PointZ'] = 182,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720603] = {
+		['ID'] = 240720603,
+		['MonsterID'] = 151077051,
+		['MonsterLevel'] = 4,
+		['PointX'] = 406,
+		['PointZ'] = 185,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720604] = {
+		['ID'] = 240720604,
+		['MonsterID'] = 151077051,
+		['MonsterLevel'] = 4,
+		['PointX'] = 404,
+		['PointZ'] = 184,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720605] = {
+		['ID'] = 240720605,
+		['MonsterID'] = 151077051,
+		['MonsterLevel'] = 4,
+		['PointX'] = 405,
+		['PointZ'] = 186,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720606] = {
+		['ID'] = 240720606,
+		['MonsterID'] = 151077051,
+		['MonsterLevel'] = 4,
+		['PointX'] = 408,
+		['PointZ'] = 183,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720607] = {
+		['ID'] = 240720607,
+		['MonsterID'] = 151077051,
+		['MonsterLevel'] = 4,
+		['PointX'] = 408,
+		['PointZ'] = 188,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720608] = {
+		['ID'] = 240720608,
+		['MonsterID'] = 151077051,
+		['MonsterLevel'] = 4,
+		['PointX'] = 404,
+		['PointZ'] = 188,
+		['PointY'] = 0,
+		['Orientation'] = 0
+		},
+	[240720609] = {
+		['ID'] = 240720609,
+		['MonsterID'] = 151077052,
+		['MonsterLevel'] = 4,
+		['PointX'] = 406,
+		['PointZ'] = 188,
 		['PointY'] = 0,
 		['Orientation'] = 0
 		}

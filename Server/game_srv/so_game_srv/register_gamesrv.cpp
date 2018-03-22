@@ -371,6 +371,34 @@ int install(int argc, char **argv)
     if (ret != 0)
         goto done;
 
+    file = fopen("../showurl.ini", "r");
+    if (!file)
+    {
+        LOG_ERR("open showurl.ini failed[%d]", errno);
+        ret = -1;
+        goto done;
+    }
+
+    line = get_first_key(file, (char *)"url");
+    if (!line)
+    {
+        LOG_ERR("config file wrong, no url");
+        ret = -1;
+        goto done;
+    }
+	sg_show_url = get_value(line);
+
+    line = get_first_key(file, (char *)"path");
+    if (!line)
+    {
+        LOG_ERR("config file wrong, no path");
+        ret = -1;
+        goto done;
+    }
+	sg_show_path = get_value(line);
+	
+	fclose(file);
+
     file = fopen("../server_info.ini", "r");
     if (!file)
     {

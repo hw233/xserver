@@ -270,7 +270,7 @@
         ['PointPosX'] = 227.63,
         ['PointPosY'] = 47.49,
         ['PointPosZ'] = 432.27,
-        ['Yaw'] = 189.9615,
+        ['Yaw'] = 189.9616,
         ['Level'] = 1,
         ['TargetInfoList'] = {
         }
@@ -3113,6 +3113,18 @@
         ['PointPosZ'] = 475.8664,
         ['Yaw'] = 0,
         ['Level'] = 40,
+        ['TargetInfoList'] = {
+        }
+    },
+    [1000276] = {
+        ['uid'] = 1000276,
+        ['ID'] = 152140224,
+        ['ResType'] = "Npc",
+        ['PointPosX'] = 70.35637,
+        ['PointPosY'] = 22.68866,
+        ['PointPosZ'] = 387.0728,
+        ['Yaw'] = 90.90001,
+        ['Level'] = 1,
         ['TargetInfoList'] = {
         }
     },

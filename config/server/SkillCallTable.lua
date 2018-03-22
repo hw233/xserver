@@ -1,13 +1,13 @@
 local SkillCallTable = {
 	[112700004] = {
 		['ID'] = 112700004,	--技能作用
-		['CallScriptPath'] = 171000004,	--脚本路径
+		['CallScriptPath'] = 172000002,	--脚本路径
 		['ConditionScriptId'] = {0},	--条件脚本id
 		['OperationScriptId'] = {0}	--操作脚本id
 		},
 	[112700005] = {
 		['ID'] = 112700005,
-		['CallScriptPath'] = 171000005,
+		['CallScriptPath'] = 170000209,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
@@ -31,43 +31,43 @@ local SkillCallTable = {
 		},
 	[112710001] = {
 		['ID'] = 112710001,
-		['CallScriptPath'] = 171000001,
+		['CallScriptPath'] = 170000201,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
 	[112710002] = {
 		['ID'] = 112710002,
-		['CallScriptPath'] = 171000002,
+		['CallScriptPath'] = 170000202,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
 	[112710003] = {
 		['ID'] = 112710003,
-		['CallScriptPath'] = 171000003,
+		['CallScriptPath'] = 170000203,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
 	[112710004] = {
 		['ID'] = 112710004,
-		['CallScriptPath'] = 171000007,
+		['CallScriptPath'] = 170000204,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
 	[112710005] = {
 		['ID'] = 112710005,
-		['CallScriptPath'] = 171000010,
+		['CallScriptPath'] = 170000208,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
 	[112710006] = {
 		['ID'] = 112710006,
-		['CallScriptPath'] = 171000008,
+		['CallScriptPath'] = 170000205,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
 	[112710007] = {
 		['ID'] = 112710007,
-		['CallScriptPath'] = 171000009,
+		['CallScriptPath'] = 170000206,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
@@ -98,6 +98,12 @@ local SkillCallTable = {
 	[112710012] = {
 		['ID'] = 112710012,
 		['CallScriptPath'] = 171000018,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112710013] = {
+		['ID'] = 112710013,
+		['CallScriptPath'] = 170000207,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
@@ -211,13 +217,13 @@ local SkillCallTable = {
 		},
 	[112711035] = {
 		['ID'] = 112711035,
-		['CallScriptPath'] = 171011035,
+		['CallScriptPath'] = 170000101,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
 	[112711041] = {
 		['ID'] = 112711041,
-		['CallScriptPath'] = 171011041,
+		['CallScriptPath'] = 170000102,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
@@ -254,6 +260,12 @@ local SkillCallTable = {
 	[112720019] = {
 		['ID'] = 112720019,
 		['CallScriptPath'] = 172000019,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112720021] = {
+		['ID'] = 112720021,
+		['CallScriptPath'] = 172000021,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		},
@@ -296,6 +308,30 @@ local SkillCallTable = {
 	[112720063] = {
 		['ID'] = 112720063,
 		['CallScriptPath'] = 172000063,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112720200] = {
+		['ID'] = 112720200,
+		['CallScriptPath'] = 172000200,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112720500] = {
+		['ID'] = 112720500,
+		['CallScriptPath'] = 172000500,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112720501] = {
+		['ID'] = 112720501,
+		['CallScriptPath'] = 172000501,
+		['ConditionScriptId'] = {0},
+		['OperationScriptId'] = {0}
+		},
+	[112720502] = {
+		['ID'] = 112720502,
+		['CallScriptPath'] = 172000502,
 		['ConditionScriptId'] = {0},
 		['OperationScriptId'] = {0}
 		}

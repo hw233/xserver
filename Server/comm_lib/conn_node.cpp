@@ -60,7 +60,7 @@ int conn_node_base::send_one_msg(PROTO_HEAD *head, uint8_t force)
 done:
 	if (unlikely(head->msg_id == SERVER_PROTO_BROADCAST || head->msg_id == SERVER_PROTO_BROADCAST_ALL))
 	{
-		PROTO_HEAD *real_head;
+		__attribute__((unused)) PROTO_HEAD *real_head;
 		PROTO_HEAD_CONN_BROADCAST *t_head = (PROTO_HEAD_CONN_BROADCAST *)head;
 		real_head = &t_head->proto_head;
 		LOG_DEBUG("%s %d: %d send msg[%d] len[%d], seq[%d], ret [%d]", __PRETTY_FUNCTION__, fd, __LINE__, ENDION_FUNC_2(real_head->msg_id), ENDION_FUNC_4(real_head->len), ENDION_FUNC_2(real_head->seq), ret);
@@ -90,37 +90,6 @@ fail:
 	return ret;
 }
 
-uint32_t conn_node_base::get_real_head_len(PROTO_HEAD *head)
-{
-//	if (!head)
-//		head = (PROTO_HEAD *)buf_head();
-	assert(head);
-
-	uint32_t real_len;
-//	if (head->len == 0)
-//	{
-//		real_len = ENDION_FUNC_4(head->crc);
-//	}
-//	else
-	{
-		real_len = ENDION_FUNC_4(head->len);
-	}
-	return real_len;
-}
-
-bool conn_node_base::is_full_packet()
-{
-	uint32_t len = buf_size();
-
-	if (len < sizeof(PROTO_HEAD))  //没有够一个包头
-		return (false);
-
-	PROTO_HEAD *head = (PROTO_HEAD *)buf_head();
-	uint32_t real_len = get_real_head_len(head);
-	if (len >= real_len)
-		return true;
-	return false;
-}
 
 //返回0表示接收完毕，返回大于0表示没接收完毕。返回小于零表示断开
 int conn_node_base::get_one_buf()

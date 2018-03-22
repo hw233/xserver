@@ -15,6 +15,8 @@ extern uint32_t sg_gm_cmd_open;
 extern uint32_t sg_server_open_time;
 extern struct timeval gamesrv_timeout;
 extern uint64_t timer_loop_count;
+extern char * sg_show_url;
+extern char * sg_show_path;
 
 typedef int (*game_handle_func)(player_struct*, EXTERN_DATA*);
 typedef std::map<uint32_t, game_handle_func> GameHandleMap;

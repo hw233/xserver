@@ -133,8 +133,9 @@ message pvp_raid_praise_request
 
 message pvp_raid_praise_notify
 {
-	required uint64 player_id = 1;
-	required uint32 praise_num = 2;  //当前点赞次数
+	required uint64 player_id = 1;  //主动点赞玩家id
+	required uint64 target_id = 2;  //被点赞玩家id
+	required uint32 praise_num = 3;  //当前点赞次数 (target_id此玩家获得的点赞次数)
 }
 
 message pvp_raid_player_fall_notify

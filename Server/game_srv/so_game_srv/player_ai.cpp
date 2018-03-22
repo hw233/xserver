@@ -109,11 +109,12 @@ static void ai_player_hit_notify_to_many_player(uint64_t skill_id, player_struct
 		return;
 	}
 */
-	struct SkillLvTable *lv_config1, *lv_config2;
-	struct PassiveSkillTable *pas_config;
-	struct SkillTable *ski_config;
-	get_skill_configs(1, skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, NULL);
-	if (!lv_config1 && !lv_config2)
+//	struct SkillLvTable *lv_config1, *lv_config2;
+//	struct PassiveSkillTable *pas_config;
+	struct SkillTable *ski_config = get_config_by_id(skill_id, &skill_config);
+		//get_skill_configs(1, skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, NULL);
+		//if (!lv_config1 && !lv_config2)
+	if (!ski_config)
 	{
 		LOG_ERR("%s %d: skill[%lu] no config", __FUNCTION__, __LINE__, skill_id);
 		return;
@@ -146,9 +147,8 @@ static void ai_player_hit_notify_to_many_player(uint64_t skill_id, player_struct
 		uint32_t add_num = 0;
 		int32_t damage = 0;
 		int32_t other_rate = count_other_skill_damage_effect(monster, player);							
-		damage += count_skill_total_damage(fight_type, ski_config, lv_config1,
-			pas_config, lv_config2,
-			monster, player,
+		damage += count_skill_total_damage(fight_type, ski_config,
+			1, monster, player,
 			&cached_hit_effect[n_hit_effect].effect,
 			&cached_buff_id[n_buff],
 			&cached_buff_end_time[n_buff],
@@ -279,20 +279,20 @@ static void ai_player_cast_immediate_skill_to_player(uint64_t skill_id, player_s
 	uint32_t add_num = 0;
 	int32_t damage = 0;
 
-	struct SkillLvTable *lv_config1, *lv_config2;
-	struct PassiveSkillTable *pas_config;
-	struct SkillTable *ski_config;
-	get_skill_configs(1, skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, NULL);
-	if (!lv_config1 && !lv_config2)
+//	struct SkillLvTable *lv_config1, *lv_config2;
+//	struct PassiveSkillTable *pas_config;
+	struct SkillTable *ski_config = get_config_by_id(skill_id, &skill_config);
+//	get_skill_configs(1, skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, NULL);
+//	if (!lv_config1 && !lv_config2)
+	if (!ski_config)
 	{
 		LOG_ERR("%s %d: skill[%lu] no config", __FUNCTION__, __LINE__, skill_id);
 		return;
 	}
 
 	int32_t other_rate = count_other_skill_damage_effect(monster, player);						
-	damage += count_skill_total_damage(fight_type, ski_config, lv_config1,
-		pas_config, lv_config2,
-		monster, player,
+	damage += count_skill_total_damage(fight_type, ski_config,
+		1, monster, player,
 		&cached_hit_effect[n_hit_effect].effect,
 		&cached_buff_id[n_buff],
 		&cached_buff_end_time[n_buff],		
@@ -375,10 +375,10 @@ static uint32_t count_skill_delay_time(struct SkillTable *config)
 		//普通攻击或者主动攻击, 计算硬直时间
 	if (config->SkillType == 1 || config->SkillType == 2)
 	{
-		struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
-		if (act_config)
+		// struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
+		// if (act_config)
 		{
-			ret += act_config->TotalSkillDelay + random() % (500 * act_config->n_SkillLength);			
+			ret += config->TotalSkillDelay + random() % 1000; //(500 * act_config->n_SkillLength);			
 			// for (size_t i = 0; i < act_config->n_SkillLength; ++i)
 			// {
 			// 	ret += act_config->SkillLength[i] + random() % 500;
@@ -386,6 +386,21 @@ static uint32_t count_skill_delay_time(struct SkillTable *config)
 		}
 	}
 	return ret;
+}
+
+static void set_ai_player_skill_next_timeout(struct ai_player_data *ai_player_data)
+{
+	uint64_t min = UINT64_MAX;
+	for (int i = 0; i < MAX_SKILL_TIME_CONFIG_NUM; ++i)
+	{
+		if (ai_player_data->skill_next_time[i] < min)
+		{
+			min = ai_player_data->skill_next_time[i];
+			ai_player_data->skill_next_time_idx = i;
+		}
+	}
+	if (min != UINT64_MAX)
+		ai_player_data->ontick_time = min;	
 }
 
 bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, player_struct *target, uint32_t skill_id)
@@ -398,11 +413,12 @@ bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, pla
 	if (skill_id == 0)
 		return false;
 
-	struct SkillLvTable *lv_config1, *lv_config2;
-	struct PassiveSkillTable *pas_config;
-	struct SkillTable *config;
-	get_skill_configs(1, skill_id, &config, &lv_config1, &pas_config, &lv_config2, NULL);
-	if (!config || !lv_config1)
+//	struct SkillLvTable *lv_config1, *lv_config2;
+//	struct PassiveSkillTable *pas_config;
+	struct SkillTable *config = get_config_by_id(skill_id, &skill_config);
+//	get_skill_configs(1, skill_id, &config, &lv_config1, &pas_config, &lv_config2, NULL);
+//	if (!config || !lv_config1)
+	if (!config)
 	{
 		LOG_ERR("%s: %lu skill[%u] do not have config", __FUNCTION__, player->get_uuid(), skill_id);
 		return false;
@@ -478,25 +494,51 @@ bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, pla
 		
 		uint64_t now = time_helper::get_cached_time();
 
-		if (act_config->ActionTime > 0)
+		bool immediate_skill = true;
+		for (uint32_t i = 0; i < config->n_time_config; ++i)
 		{
-			ai_player_data->ontick_time = now + act_config->ActionTime;// + 1500;
+			if (config->time_config[i]->ActionTime > 0)
+			{
+				ai_player_data->skill_next_time[i] = now + config->time_config[i]->ActionTime;// + 1500;
+//				monster->data->ontick_time = now + config->time_config[i]->ActionTime;// + 1500;
+				ai_player_data->skill_finished_time[i] = now + config->time_config[i]->ActionTime +
+					config->time_config[i]->Frequency * config->time_config[i]->Interval;
+				immediate_skill = false;
+			}
+			else
+			{
+				ai_player_data->skill_next_time[i] = 0;
+				LOG_ERR("%s: SKILL CONFIG ERR [%lu %lu]", __FUNCTION__, config->ID, config->time_config[i]->ID);
+			}
+		}
+		if (!immediate_skill)
+		{
+			set_ai_player_skill_next_timeout(ai_player_data);
 			ai_player_data->skill_id = skill_id;
 			ai_player_data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
 			ai_player_data->skill_target_pos.pos_x = his_pos->pos_x;
 			ai_player_data->skill_target_pos.pos_z = his_pos->pos_z;			
 			ai_player_data->ai_state = AI_ATTACK_STATE;
 		}
+		// if (act_config->ActionTime > 0)
+		// {
+		// 	ai_player_data->ontick_time = now + act_config->ActionTime;// + 1500;
+		// 	ai_player_data->skill_id = skill_id;
+		// 	ai_player_data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
+		// 	ai_player_data->skill_target_pos.pos_x = his_pos->pos_x;
+		// 	ai_player_data->skill_target_pos.pos_z = his_pos->pos_z;			
+		// 	ai_player_data->ai_state = AI_ATTACK_STATE;
+		// }
 		else
 		{
-			ai_player_data->ontick_time = now + act_config->TotalSkillDelay + 1500;
+			ai_player_data->ontick_time = now + config->TotalSkillDelay + 1500;
 			ai_player_data->skill_id = 0;
 			ai_player_data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
 			ai_player_data->ai_state = AI_PURSUE_STATE;
 		}
 		player->reset_pos();
 		ai_player_cast_skill_to_player(skill_id, player->get_uuid(), &save_pos, &new_pos, target);
-		skill_struct->add_cd(lv_config1, act_config);
+		skill_struct->add_cd(config->CD);
 
 // 		LOG_DEBUG("%s: skillid[%u] cur_pos = %.1f %.1f, target_pos %.1f %.1f new_pos %.1f %.1f, now[%lu] tick[%lu] act[%lu] delay[%lu]",
 // 			__FUNCTION__, skill_id,
@@ -639,7 +681,7 @@ void do_ai_player_attack(player_struct *monster, struct ai_player_data *ai_playe
 	if (act_config)
 	{
 
-		ai_player_data->ontick_time += act_config->TotalSkillDelay;
+		ai_player_data->ontick_time += config->TotalSkillDelay;
 //		LOG_DEBUG("aitest: %s %d: [%s]onticktime += %lu", __FUNCTION__, __LINE__, monster->get_name(), act_config->TotalSkillDelay);
 		// for (size_t i = 0; i < act_config->n_SkillLength; ++i)
 		// {
@@ -673,7 +715,7 @@ void do_ai_player_attack(player_struct *monster, struct ai_player_data *ai_playe
 		ai_player_data->normal_skill_id = 0;
 		ai_player_data->skill_id = 0;
 	}
-	ai_player_data->ontick_time = time_helper::get_cached_time() + act_config->TotalSkillDelay;	
+	ai_player_data->ontick_time = time_helper::get_cached_time() + config->TotalSkillDelay;	
 
 	// 	//攻击的时候, 计算位移
 	// if (act_config->FlyId != 0 && act_config->CanMove == 2)

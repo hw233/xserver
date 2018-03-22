@@ -1698,6 +1698,16 @@ char *get_guild_name(uint32_t guild_id)
 	return NULL;
 }
 
+uint32_t get_guild_icon(uint32_t guild_id)
+{
+	ProtoGuildInfo *info = get_guild_summary(guild_id);
+	if (info)
+	{
+		return info->icon;
+	}
+	return 0;
+}
+
 uint32_t get_cur_round_end_time()
 {
 	if (guild_battle_manager_action_state == GBS_BATTLE)

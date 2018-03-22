@@ -81,6 +81,7 @@ message FashionDbData
 	required uint32 color = 2;
 	required uint32 cd = 3; //剩余秒数 0：永久
 	required bool isnew = 4;
+	required uint32 colordown = 5; //下衣颜色
 }
 
 message DBGoods
@@ -239,6 +240,7 @@ message DBAwardQuestion
 	required uint32 timer = 8; //总耗时
 	required uint32 question = 9; //题目
 	required uint32 number = 10; //第几题
+	required uint32 score = 11; //积分
 }
 message DBCommonQuestion
 {
@@ -511,6 +513,7 @@ message PlayerDBInfo
 	required uint32 partner_recruit_junior_free_count = 110; //低级招募免费次数
 	required uint32 partner_recruit_senior_free_count = 111; //高级招募免费次数
 	required uint32 silver = 112; //银币
+	repeated DBPlayerJiuGongBaGuaInfo jiu_gong_ba_gua_reward_info = 113; //九宫八卦领奖信息
 }
 
 message DBAutoAddHp
@@ -663,4 +666,12 @@ message DBPlayerGuildChuanGongInfo
 {
 	required uint32 bei_chuan_num = 1; //被动传功次数
 	required uint32 zhu_chuan_num = 2; //主动传功次数
+}
+
+//九宫八卦领奖信息
+message DBPlayerJiuGongBaGuaInfo
+{
+	required uint32 id = 1; //奖励id
+	required uint32 task_id = 2; //对应的任务id
+	required uint32 statu = 3; //奖励领取状态
 }

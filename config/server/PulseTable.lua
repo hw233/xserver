@@ -17,42 +17,42 @@ local PulseTable = {
 		['ID'] = 301020001,
 		['Type'] = 3,
 		['Break'] = 303000002,
-		['BreakCondition'] = 303000001,
+		['BreakCondition'] = 0,
 		['AcupunctureType'] = 302030001
 		},
 	[301020002] = {
 		['ID'] = 301020002,
 		['Type'] = 4,
 		['Break'] = 303000002,
-		['BreakCondition'] = 303000001,
+		['BreakCondition'] = 0,
 		['AcupunctureType'] = 302040001
 		},
 	[301030001] = {
 		['ID'] = 301030001,
 		['Type'] = 5,
 		['Break'] = 303000003,
-		['BreakCondition'] = 303000002,
+		['BreakCondition'] = 0,
 		['AcupunctureType'] = 302050001
 		},
 	[301030002] = {
 		['ID'] = 301030002,
 		['Type'] = 6,
 		['Break'] = 303000003,
-		['BreakCondition'] = 303000002,
+		['BreakCondition'] = 0,
 		['AcupunctureType'] = 302060001
 		},
 	[301040001] = {
 		['ID'] = 301040001,
 		['Type'] = 7,
 		['Break'] = 303000004,
-		['BreakCondition'] = 303000003,
+		['BreakCondition'] = 0,
 		['AcupunctureType'] = 302070001
 		},
 	[301040002] = {
 		['ID'] = 301040002,
 		['Type'] = 8,
 		['Break'] = 303000004,
-		['BreakCondition'] = 303000003,
+		['BreakCondition'] = 0,
 		['AcupunctureType'] = 302080001
 		}
 	}

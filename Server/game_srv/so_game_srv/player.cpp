@@ -87,6 +87,7 @@
 #include "partner_manager.h"
 #include "partner.pb-c.h"
 #include "server_level.h"
+#include "guild_land_active_manager.h"
 
 extern uint32_t guild_battle_manager_activity_start_ts;
 ItemUseEffectInfo::~ItemUseEffectInfo()
@@ -1370,6 +1371,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		fashion[i].color =data->fashion[i].color;
 		fashion[i].isnew = data->fashion[i].isNew;
 		fashion[i].cd = data->fashion[i].timeout;
+		fashion[i].colordown = data->fashion[i].colordown;
 
 		fashionPoint[i] = &fashion[i];
 	}
@@ -2205,6 +2207,23 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	guild_chuan_gong.zhu_chuan_num = data->guild_chuan_gong_info.give_chuan_num;
 	db_info.guild_chuan_gong_info = &guild_chuan_gong;
 
+	//九宫八卦领奖信息
+	DBPlayerJiuGongBaGuaInfo db_jiu_gong_ba_gua_reward_info[MAX_JIU_GONG_BA_GUA_REWARD_NUM];
+	DBPlayerJiuGongBaGuaInfo *db_jiu_gong_ba_gua_reward_info_point[MAX_JIU_GONG_BA_GUA_REWARD_NUM];
+	db_info.n_jiu_gong_ba_gua_reward_info = 0;
+	db_info.jiu_gong_ba_gua_reward_info = db_jiu_gong_ba_gua_reward_info_point;
+	for(size_t i = 0; i < MAX_JIU_GONG_BA_GUA_REWARD_NUM; i++)
+	{
+		if(data->jiu_gong_ba_gua_reward[i].id == 0)
+			break;
+		db_jiu_gong_ba_gua_reward_info_point[db_info.n_jiu_gong_ba_gua_reward_info] = &db_jiu_gong_ba_gua_reward_info[db_info.n_jiu_gong_ba_gua_reward_info];
+		dbplayer_jiu_gong_ba_gua_info__init(&db_jiu_gong_ba_gua_reward_info[db_info.n_jiu_gong_ba_gua_reward_info]);
+		db_jiu_gong_ba_gua_reward_info[db_info.n_jiu_gong_ba_gua_reward_info].id = data->jiu_gong_ba_gua_reward[i].id;
+		db_jiu_gong_ba_gua_reward_info[db_info.n_jiu_gong_ba_gua_reward_info].task_id = data->jiu_gong_ba_gua_reward[i].task_id;
+		db_jiu_gong_ba_gua_reward_info[db_info.n_jiu_gong_ba_gua_reward_info].statu = data->jiu_gong_ba_gua_reward[i].statu;
+		db_info.n_jiu_gong_ba_gua_reward_info++;
+	}
+
 	return player_dbinfo__pack(&db_info, out_data);
 }
 
@@ -2386,7 +2405,8 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	for (uint32_t i = 0; i < db_info->n_fashion; ++i)
 	{
 		data->fashion[i].id = db_info->fashion[i]->id;
-		data->fashion[i].color = db_info->fashion[i]->color;
+		data->fashion[i].color = db_info->fashion[i]->color; 
+		data->fashion[i].colordown = db_info->fashion[i]->colordown;
 		data->fashion[i].isNew = db_info->fashion[i]->isnew;
 		data->fashion[i].timeout = db_info->fashion[i]->cd;
 	}
@@ -2906,6 +2926,13 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	{
 		data->guild_chuan_gong_info.bei_chuan_num = db_info->guild_chuan_gong_info->bei_chuan_num;
 		data->guild_chuan_gong_info.give_chuan_num = db_info->guild_chuan_gong_info->zhu_chuan_num;
+	}
+
+	for(size_t i = 0; i < db_info->n_jiu_gong_ba_gua_reward_info && i < MAX_JIU_GONG_BA_GUA_REWARD_NUM; i++)
+	{
+		data->jiu_gong_ba_gua_reward[i].id = db_info->jiu_gong_ba_gua_reward_info[i]->id;
+		data->jiu_gong_ba_gua_reward[i].task_id = db_info->jiu_gong_ba_gua_reward_info[i]->task_id;
+		data->jiu_gong_ba_gua_reward[i].statu = db_info->jiu_gong_ba_gua_reward_info[i]->statu;
 	}
 
 	player_dbinfo__free_unpacked(db_info, NULL);
@@ -4578,9 +4605,9 @@ void player_struct::calcu_partner_attr(double *attr)
 						break;
 					}
 
-					if (lv_config->n_EffectIdFriend > 0)
+					if (lv_config->EffectIdPartner > 0)
 					{
-						effect_id = lv_config->EffectIdFriend[0];
+						effect_id = lv_config->EffectIdPartner;
 					}
 
 					lv_id++;
@@ -5245,34 +5272,34 @@ int player_struct::add_coin(uint32_t num, uint32_t statis_id, bool isNty)
 
 int player_struct::sub_coin(uint32_t num, uint32_t statis_id, bool isNty)
 {
-	return sub_comm_coin(num, statis_id, isNty);
-	// if (num == 0)
-	// {
-	// 	return 0;
-	// }
+	//return sub_comm_coin(num, statis_id, isNty);
+	if (num == 0)
+	 {
+	 	return 0;
+	 }
 
-	// uint32_t prevVal = data->attrData[PLAYER_ATTR_COIN];
-	// if (prevVal < num)
-	// {
-	// 	LOG_ERR("[%s:%d] player[%lu] coin not enough, prevVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevVal, num);
-	// 	return -1;
-	// }
+	 uint32_t prevVal = data->attrData[PLAYER_ATTR_COIN];
+	 if (prevVal < num)
+	 {
+	 	LOG_ERR("[%s:%d] player[%lu] coin not enough, prevVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevVal, num);
+	 	return -1;
+	 }
 
-	// data->attrData[PLAYER_ATTR_COIN] -= num;
-	// uint32_t curVal = data->attrData[PLAYER_ATTR_COIN];
-	// LOG_INFO("[%s:%d] player[%lu] prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevVal, curVal, num);
+	 data->attrData[PLAYER_ATTR_COIN] -= num;
+	 uint32_t curVal = data->attrData[PLAYER_ATTR_COIN];
+	 LOG_INFO("[%s:%d] player[%lu] prevVal:%u, curVal:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, prevVal, curVal, num);
 
-	// this->add_task_progress(TCT_BASIC, TBC_COIN, curVal);
-	// if (isNty)
-	// {
-	// 	AttrMap attrs;
-	// 	attrs[PLAYER_ATTR_COIN] = data->attrData[PLAYER_ATTR_COIN];
-	// 	this->notify_attr(attrs);
-	// }
+	 this->add_task_progress(TCT_BASIC, TBC_COIN, curVal);
+	 if (isNty)
+	 {
+	 	AttrMap attrs;
+	 	attrs[PLAYER_ATTR_COIN] = data->attrData[PLAYER_ATTR_COIN];
+	 	this->notify_attr(attrs);
+	 }
 
-	// refresh_player_redis_info();
+	 refresh_player_redis_info();
 
-	// return 0;
+	 return 0;
 }
 int player_struct::add_silver(uint32_t num, uint32_t statis_id, bool isNty)
 {
@@ -8592,13 +8619,13 @@ int player_struct::touch_task_event(uint32_t task_id, uint32_t event_class)
 
 	for (uint32_t i = 0; i < config->n_EventID; ++i)
 	{
-		execute_task_event(config->EventID[i], event_class, true);
+		execute_task_event(config->EventID[i], event_class, true, task_id);
 	}
 
 	return 0;
 }
 
-int player_struct::execute_task_event(uint32_t event_id, uint32_t event_class, bool internal)
+int player_struct::execute_task_event(uint32_t event_id, uint32_t event_class, bool internal, uint32_t task_id)
 {
 	TaskEventTable *config = get_config_by_id(event_id, &task_event_config);
 	if (!config)
@@ -8796,6 +8823,28 @@ int player_struct::execute_task_event(uint32_t event_id, uint32_t event_class, b
 				}
 			}
 			break;
+		case TET_ADD_TRUCK:
+		{
+			down_horse();
+			cash_truck_struct *pTruck = cash_truck_manager::create_cash_truck_at_pos(this->scene, config->EventTarget, *this);
+			if (pTruck == NULL)
+			{
+				LOG_ERR("[%s:%d] player[%lu], event_id:%u, event_class:%u, event_type:%lu", __FUNCTION__, __LINE__, data->player_id, event_id, event_class, config->EventType);
+			}
+			else
+			{
+				data->truck.truck_id = pTruck->get_uuid();
+				data->truck.active_id = 440100003;
+				ResAcceptCashTruck send;
+				res_accept_cash_truck__init(&send);
+				send.id = task_id;
+				send.type = 4;
+				EXTERN_DATA extern_data;
+				extern_data.player_id = this->get_uuid();
+				fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ACCEPT_CASH_TRUCK_ANSWER, res_accept_cash_truck__pack, send);
+			}
+		}
+			break;
 	}
 
 	LOG_DEBUG("[%s:%d] player[%lu], event_id:%u, event_class:%u, event_type:%lu", __FUNCTION__, __LINE__, data->player_id, event_id, event_class, config->EventType);
@@ -8816,7 +8865,7 @@ int player_struct::add_finish_task(uint32_t task_id)
 			}
 			break;
 		case TT_BRANCH:
-		case TT_QUESTION:
+		//case TT_QUESTION:
 		case TT_RAID:
 		case TT_GUIDE:
 			{
@@ -8832,14 +8881,14 @@ int player_struct::add_finish_task(uint32_t task_id)
 			break;
 	}
 	
-	EventCalendarTable *table = get_config_by_id(AWARD_QUESTION_ACTIVE_ID, &activity_config);
-	if (table != NULL)
-	{
-		if (task_id == table->AuxiliaryValue[0])
-		{
-			empty_idx = -1;
-		}
-	}
+	//EventCalendarTable *table = get_config_by_id(AWARD_QUESTION_ACTIVE_ID, &activity_config);
+	//if (table != NULL)
+	//{
+	//	if (task_id == table->AuxiliaryValue[0])
+	//	{
+	//		empty_idx = -1;
+	//	}
+	//}
 
 	if (empty_idx >= 0)
 	{
@@ -9571,14 +9620,24 @@ int player_struct::set_task_fail(TaskInfo *info)
 		if (truck != NULL)
 		{
 			//系统提示
-			uint64_t noId = 0;
-			if (truck->get_attr(PLAYER_ATTR_HP) < 1)
+			uint64_t noId = 0; 
+			
+			if (truck->get_attr(PLAYER_ATTR_HP) < 1) //死亡不发视野删除消息
 			{
 				noId = 190500298;
 			}
 			else
 			{
 				noId = 190500295;
+				if (sight_space)
+				{
+					sight_space->broadcast_truck_delete(truck);
+					sight_space_manager::mark_sight_space_delete(this->sight_space);
+				}
+				else
+				{
+					truck->scene->delete_cash_truck_from_scene(truck);
+				}
 			}
 			CommAnswer resp;
 			comm_answer__init(&resp);
@@ -9586,15 +9645,7 @@ int player_struct::set_task_fail(TaskInfo *info)
 			EXTERN_DATA ext_data;
 			ext_data.player_id = data->player_id;
 			fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_CASH_TRUCK_TASK_FAIL_NOTIFY, comm_answer__pack, resp);
-			if (sight_space)
-			{
-				sight_space->broadcast_truck_delete(truck);							
-				sight_space_manager::mark_sight_space_delete(this->sight_space);
-			}
-			else
-			{			
-				truck->scene->delete_cash_truck_from_scene(truck);
-			}
+			
 			cash_truck_manager::delete_cash_truck(truck); 
 		}
 		data->truck.truck_id = 0;
@@ -9845,7 +9896,8 @@ int player_struct::accept_task(uint32_t task_id, bool check_condition)
 	{
 		if(task_id != data->mi_jing_xiu_lian.task_id)
 		{
-			LOG_ERR("[%s:%d] 接取地宫修炼任务失败,任务id跟玩家身上的任务id不匹配,task_id[%u],player_task_id[%u]", task_id, data->mi_jing_xiu_lian.task_id);
+			LOG_ERR("[%s:%d] 接取地宫修炼任务失败,任务id跟玩家身上的任务id不匹配,task_id[%u],player_task_id[%u]",
+				__FUNCTION__, __LINE__, task_id, data->mi_jing_xiu_lian.task_id);
 			ret = ERROR_ID_CONFIG;
 			return ret;
 		}
@@ -11699,6 +11751,7 @@ int player_struct::add_activeness(uint32_t num, uint32_t statis_id, bool isNty)
 	//活跃度达到要求增加签到补签次数
 	player_huo_yue_du_add_sign_in_num(prevVal, curVal);
 
+	add_achievement_progress(ACType_ACTIVENESS, curVal, 0, 0, 1);	
 	return 0;
 }
 
@@ -14718,6 +14771,7 @@ void player_struct::refresh_player_redis_info(bool offline)
 	info.zhenying_level = data->zhenying.level;
 	info.zhenying_kill = data->zhenying.kill;
 	info.exploit = data->zhenying.history_exploit;
+	info.award_question = data->award_answer.score;
 //	info.guild_id = guild_id;
 //	info.guild_name = guild_name;
 	info.n_tags = 0;
@@ -15739,10 +15793,10 @@ void player_struct::do_taunt_action()
 		}
 		else
 		{
-			struct ActiveSkillTable *active_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
-			if (!active_config)
-				return;
-			uint32_t delay_time = active_config->TotalSkillDelay;
+//			struct ActiveSkillTable *active_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
+//			if (!active_config)
+//				return;
+			uint32_t delay_time = config->TotalSkillDelay;
 //			for (uint32_t i = 0; i < active_config->n_SkillLength; ++i)
 //				delay_time += active_config->SkillLength[i];
 			if (delay_time > time_helper::get_cached_time() - data->cur_skill.start_time)
@@ -15975,7 +16029,7 @@ void player_struct::refresh_yaoshi_oneday()
 		{
 			data->truck.num_coin = tableAct->RewardTime;
 		}
-		else
+		else if (it->second->Type == 2)
 		{
 			data->truck.num_gold = tableAct->RewardTime;
 		}
@@ -16058,6 +16112,7 @@ void player_struct::pack_answer_db(_PlayerDBInfo &db_info)
 	send1.trun = data->award_answer.trun;
 	send1.timer = data->award_answer.timer;
 	send1.next_open = data->award_answer.next_open;
+	send1.score = data->award_answer.score;
 
 	db_info.award_question = &send1;
 	db_info.common_question = &send;
@@ -16093,6 +16148,7 @@ void player_struct::unpack_answer_db(_PlayerDBInfo *db_info)
 		data->award_answer.trun = db_info->award_question->trun;
 		data->award_answer.timer = db_info->award_question->timer;
 		data->award_answer.next_open = db_info->award_question->next_open;
+		data->award_answer.score = db_info->award_question->score;
 	}
 }
 
@@ -16777,6 +16833,12 @@ void player_struct::init_achievement_progress(AchievementInfo *info)
 			break;
 		}
 
+		if (!is_function_unlock(func_config->Condition))
+		{
+			info->progress = 0;
+			break;
+		}
+		
 		AchievementHierarchyTable *hier_config = get_config_by_id(func_config->Hierarchys[info->star], &achievement_hierarchy_config);
 		if (!hier_config)
 		{
@@ -16932,6 +16994,9 @@ void player_struct::add_achievement_progress(uint32_t type, uint32_t target1, ui
 		{
 			continue;
 		}
+
+		if (!is_function_unlock(func_config->Condition))
+			continue;
 
 		AchievementHierarchyTable *hier_config = get_config_by_id(func_config->Hierarchys[info->star], &achievement_hierarchy_config);
 		if (!hier_config)
@@ -17370,6 +17435,22 @@ int player_struct::mijing_shilian_info_notify(uint32_t type)
 	
 	return 0;
 
+}
+
+bool player_struct::is_function_unlock(uint32_t id)
+{
+	if (id == 0)
+		return true;
+	FunctionUnlockTable *func_config = get_config_by_id(id, &function_unlock_config);
+	if (!func_config)
+		return false;
+	if (get_level() < func_config->Level)
+		return false;
+	if (func_config->Quest != 0 && !task_is_finish(func_config->Quest))
+	{
+		return false;
+	}
+	return true;
 }
 
 void player_struct::load_strong_end(void)
@@ -18842,16 +18923,18 @@ void player_struct::deal_skill_hit_request(SkillHitRequest *req)
 	std::vector<unit_struct *> dead_all;
 	sight_all.push_back(this);
 
-	struct SkillLvTable *lv_config1, *lv_config2;
-	struct PassiveSkillTable *pas_config;
-	struct SkillTable *ski_config;
-	struct ActiveSkillTable *act_config;
+//	struct SkillLvTable *lv_config1, *lv_config2;
+//	struct PassiveSkillTable *pas_config;
+	struct SkillTable *ski_config = NULL;
+	int skill_lv = 1;
+//	struct ActiveSkillTable *act_config;
 
 //	uint32_t skill_lv = m_skill.GetSkillLevel(get_skill_id());
 //	if (skill_lv < 1)
 	if (is_in_buff3())
 	{
-		get_skill_configs(1, get_skill_id(), &ski_config, &lv_config1, &pas_config, &lv_config2, &act_config);		
+//		get_skill_configs(1, get_skill_id(), &ski_config, &lv_config1, &pas_config, &lv_config2, &act_config);
+		ski_config = get_config_by_id(get_skill_id(), &skill_config);		
 	}
 	else
 	{
@@ -18861,10 +18944,10 @@ void player_struct::deal_skill_hit_request(SkillHitRequest *req)
 			LOG_ERR("%s %d: player[%lu] skill[%u] no config", __FUNCTION__, __LINE__, data->player_id, get_skill_id());
 			return;
 		}
-		int skill_lv;
 		int skill_id;
 		skill_struct->get_skill_id_and_lv(m_skill.m_index, &skill_id, &skill_lv);
-		get_skill_configs(skill_lv, skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, &act_config);
+		ski_config = get_config_by_id(skill_id, &skill_config);				
+//		get_skill_configs(skill_lv, skill_id, &ski_config, &lv_config1, &pas_config, &lv_config2, &act_config);
 	}
 
 		// 校验目标人数
@@ -18876,11 +18959,11 @@ void player_struct::deal_skill_hit_request(SkillHitRequest *req)
 	}
 	
 
-	if (!lv_config1 && !lv_config2)
-	{
-		LOG_ERR("%s %d: player[%lu] skill[%u] no config", __FUNCTION__, __LINE__, data->player_id, get_skill_id());
-		return;
-	}
+	// if (!lv_config1 && !lv_config2)
+	// {
+	// 	LOG_ERR("%s %d: player[%lu] skill[%u] no config", __FUNCTION__, __LINE__, data->player_id, get_skill_id());
+	// 	return;
+	// }
 	
 
 		//技能可能带位移，而这个命中的位置发送的是释放技能时候的位置，所以不能用来做位置校正
@@ -18949,8 +19032,7 @@ void player_struct::deal_skill_hit_request(SkillHitRequest *req)
 		int32_t damage;
 		int32_t other_rate = count_other_skill_damage_effect(this, target);
 		damage = count_skill_total_damage(fight_type, ski_config,
-			lv_config1, pas_config, lv_config2,
-			this, target,
+			skill_lv, this, target,
 			&cached_hit_effect[n_hit_effect].effect,
 			&cached_buff_id[n_buff],
 			&cached_buff_end_time[n_buff],
@@ -19249,7 +19331,8 @@ int player_struct::player_online_reward_info_notify()
 
 	if(sun_num < data->online_reward.use_reward_num || config_time == 0)
 	{
-		LOG_ERR("[%s:%d] online reward info erro, sun num > use num, sun num[%u], use_num[%u]", __FUNCTION__, __LINE__, sun_num, data->online_reward.use_reward_num, config_time);
+		LOG_ERR("[%s:%d] online reward info erro, sun num > use num, sun num[%u], use_num[%u] configtime[%u]",
+			__FUNCTION__, __LINE__, sun_num, data->online_reward.use_reward_num, config_time);
 		return -1;
 	}
 
@@ -19313,7 +19396,7 @@ int player_struct::refresh_player_online_reward_info()
 	{
 		if(itr->second->Position < 1 && itr->second->Position > MAX_PLAYER_ONLINE_REWARD_NUM)
 			continue;
-		reward_id_v[itr->second->Position -1].insert(std::make_pair(itr->second->ID, itr->second->Probability));
+		reward_id_v[itr->second->Position -1].insert(std::make_pair((uint32_t)(itr->second->ID), (uint32_t)(itr->second->Probability)));
 
 	}
 	uint32_t j = 0;
@@ -19702,7 +19785,7 @@ int player_struct::refresh_player_reward_back_info(uint64_t befor_time)
 			}
 			if(calendar_table->SubtabCondition !=1)
 			{
-				LOG_ERR("[%s:%d] 获取的不是等级，配置出错, RewardBack表id[%lu]", itr->second->ID);
+				LOG_ERR("[%s:%d] 获取的不是等级，配置出错, RewardBack表id[%lu]", __FUNCTION__, __LINE__, itr->second->ID);
 				continue;
 			}
 			if(calendar_table->SubtabValue > level)
@@ -19726,13 +19809,13 @@ int player_struct::refresh_player_reward_back_info(uint64_t befor_time)
 		}
 		if(flag >= MAX_ACTIVE_CAN_ZHAOHUI_REWARD)
 		{
-			LOG_ERR("[%s:%d] 奖励找回,宏长度不够", __FUNCTION__, __LINE__)
-				return -3;
+			LOG_ERR("[%s:%d] 奖励找回,宏长度不够 flag = %u", __FUNCTION__, __LINE__, flag);
+			return -3;
 		}
 		ControlTable *reward_control_config = NULL;
 		if(itr->second->n_Value <= 0)
 		{
-			LOG_ERR("[%s:%d] 奖励找回表出错?", __FUNCTION__, __LINE__);
+			LOG_ERR("[%s:%d] [%lu]奖励找回表出错?", __FUNCTION__, __LINE__, itr->second->ID);
 		}
 		uint32_t max_num = 0; //每日可用最大收益次数
 		uint32_t use_num = 0; //已经被使用了的收益次数
@@ -19788,7 +19871,7 @@ int player_struct::refresh_player_reward_back_info(uint64_t befor_time)
 				TypeLevelTable *table = get_guoyu_level_table(GUOYU__TASK__TYPE__CRITICAL);
 				if (table == NULL)
 				{
-					LOG_ERR("[%s:%d] 官府悬赏奖励找回数据跟新失败，获取参数表失败", __FUNCTION__, __LINE__)
+					LOG_ERR("[%s:%d] 官府悬赏奖励找回数据跟新失败，获取参数表失败", __FUNCTION__, __LINE__);
 					continue;
 				}
 				if(kua_num > 1)
@@ -19873,7 +19956,7 @@ int player_struct::refresh_player_reward_back_info(uint64_t befor_time)
 						if(sg_travel_round_amount - data->travel_round_num <= 0)
 							continue;
 				
-							data->zhaohui_data[flag].num = sg_travel_round_amount - data->travel_round_num;
+						data->zhaohui_data[flag].num = sg_travel_round_amount - data->travel_round_num;
 					}
 				}
 			}
@@ -20417,4 +20500,136 @@ void player_struct::broadcast_sight_player_info_changed_notify()
 		nty.guild_name = info->name;
 	nty.guild_office = data->guild_office;		
 	broadcast_to_sight(MSG_ID_SIGHT_PLAYER_CHANGE_NOTIFY, &nty, (pack_func)sight_player_info_change_notify__pack, true);
+}
+
+void player_struct::guild_ruqin_activity_notify()
+{
+	if(data->guild_id == 0)
+	{
+		return;
+	}	
+	
+	std::map<uint32_t, guild_land_raid_struct *>::iterator itr = guild_land_raid_manager_raid_map.find(data->guild_id);
+	if(itr == guild_land_raid_manager_raid_map.end())
+	{
+		return;
+	}
+
+	guild_land_raid_struct *guild_land_raid = itr->second;
+	if(guild_land_raid == NULL)
+	{
+		return;
+	}
+
+	if(guild_land_raid->GUILD_LAND_DATA.activity_id != GUILD_RUQIN_ACTIVITY_ID || guild_land_raid->ruqin_data.guild_ruqin == false)
+	{
+		return;
+	}
+	EXTERN_DATA ext_data;
+	ext_data.player_id = data->player_id;
+
+	CommAnswer resp;
+	comm_answer__init(&resp);
+	resp.result = 0;
+
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_GUILD_RUQIN_IS_OR_NO_OPEN_NOTIFY, comm_answer__pack, resp);
+
+	return;
+}
+
+void player_struct::jiu_gong_ba_gua_reward_info_init()
+{
+	for(size_t j = 0; j < MAX_JIU_GONG_BA_GUA_REWARD_NUM;)
+	{
+		if(data->jiu_gong_ba_gua_reward[j].id == 0)
+			break;
+		if(jiu_gong_ba_gua_reward_config.find(data->jiu_gong_ba_gua_reward[j].id) == jiu_gong_ba_gua_reward_config.end())
+		{
+			if(j + 1 < MAX_JIU_GONG_BA_GUA_REWARD_NUM)
+			{
+				memmove(&data->jiu_gong_ba_gua_reward[j], &data->jiu_gong_ba_gua_reward[j+1], sizeof(JiuGongBaGuaRewardInfo)*(MAX_JIU_GONG_BA_GUA_REWARD_NUM - j - 1));
+			}
+			memset(&data->jiu_gong_ba_gua_reward[MAX_JIU_GONG_BA_GUA_REWARD_NUM - 1], 0, sizeof(JiuGongBaGuaRewardInfo));
+		}
+		else 
+		{
+			j++;
+		}
+	}
+
+	for(std::map<uint64_t, NineEightTable*>::iterator ite = jiu_gong_ba_gua_reward_config.begin(); ite != jiu_gong_ba_gua_reward_config.end(); ite++)
+	{
+		int dex = -1;
+		for(uint32_t i =0; i < MAX_JIU_GONG_BA_GUA_REWARD_NUM; i++)
+		{
+			if(data->jiu_gong_ba_gua_reward[i].id == 0)
+			{
+				dex = i;
+				break;
+			}
+			else if(data->jiu_gong_ba_gua_reward[i].id == ite->second->ID)
+			{
+				data->jiu_gong_ba_gua_reward[i].task_id = ite->second->TaskID;
+				break;
+			}
+		}
+		if(dex == -1)
+			continue;
+		
+		data->jiu_gong_ba_gua_reward[dex].id = ite->second->ID;
+		data->jiu_gong_ba_gua_reward[dex].task_id = ite->second->TaskID;
+		data->jiu_gong_ba_gua_reward[dex].statu = 0;
+	}
+
+	return;
+}
+
+void player_struct::jiu_gong_ba_gua_reward_info_notify()
+{
+	JiuGongBaGuaRewardNotify notify;
+	JiuGongBaGuaRewardRelatedInfo info[MAX_JIU_GONG_BA_GUA_REWARD_NUM];
+	JiuGongBaGuaRewardRelatedInfo *info_point[MAX_JIU_GONG_BA_GUA_REWARD_NUM];
+
+	jiu_gong_ba_gua_reward_notify__init(&notify);
+	notify.n_info = 0;
+	notify.info = info_point;
+
+	for(size_t i = 0; i < MAX_JIU_GONG_BA_GUA_REWARD_NUM; i++)
+	{
+		if(data->jiu_gong_ba_gua_reward[i].id == 0)
+			break;
+		info_point[notify.n_info] = &info[notify.n_info];
+		jiu_gong_ba_gua_reward_related_info__init(&info[notify.n_info]);
+		info[notify.n_info].id = data->jiu_gong_ba_gua_reward[i].id;
+		info[notify.n_info].statu = data->jiu_gong_ba_gua_reward[i].statu;
+		notify.n_info++;
+	}
+	EXTERN_DATA ext_data;
+	ext_data.player_id = data->player_id;
+
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_JIU_GONG_BA_GUA_REWARD_INFO_NOTIFY, jiu_gong_ba_gua_reward_notify__pack, notify);
+	return;
+}
+
+void player_struct::finish_jiu_gong_bagua_task(uint32_t task_id)
+{
+	JiuGongBaGuaRewardInfo *reward_info = NULL;
+	for(size_t i = 0; i < MAX_JIU_GONG_BA_GUA_REWARD_NUM; i++)
+	{
+		if(data->jiu_gong_ba_gua_reward[i].id == 0)
+		   break;	
+		if(data->jiu_gong_ba_gua_reward[i].task_id == task_id)
+		{
+			reward_info = &data->jiu_gong_ba_gua_reward[i];
+			break;
+		}
+	}
+
+	if(reward_info == NULL)
+		return;
+	if(reward_info->statu == Strong_State_Achieving)
+		reward_info->statu = Strong_State_Achieved;
+
+	jiu_gong_ba_gua_reward_info_notify();
+	return;
 }

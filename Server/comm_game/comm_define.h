@@ -122,6 +122,9 @@
 //最大赐福奖励个数
 #define MAX_CIFU_REWARD_NUM 5
 
+//九宫八卦最大奖励数量
+#define MAX_JIU_GONG_BA_GUA_REWARD_NUM 10
+
 //玩家状态
 enum PlayerStatus
 {
@@ -285,6 +288,7 @@ enum TaskConditionType
 	TCT_HORSE_ADD_SOUL = 63, //坐骑铸灵
 	TCT_PARTNER_USE_EXP_ITEM = 64, //伙伴吃经验丹
 	TCT_LIVE_SKILL_PRODUCE = 65, //生活技能生产
+	TCT_CLIENT_QUESTION = 66, //任务答题
 };
 
 enum TaskBasicCondition
@@ -341,6 +345,7 @@ enum TaskEventType
 	TET_PLANES_DEL_NPC = 36, //删除位面NPC
 	TET_PLANES_EXIT = 37, //退出位面
 	TET_SUB_CURRENCY = 38, //扣除货币
+	TET_ADD_TRUCK = 43, //创建镖车
 };
 
 enum TaskRewardType
@@ -554,5 +559,12 @@ enum
 	REWARD_BACK_JIANGHU_YOULI_ACTIVE = 5,    //游历任务
 };
 
+//送礼消耗货币类型
+enum
+{
+	FRIENF_SONGLI_SUB_ACER = 54,   //消耗元宝
+	FRIENF_SONGLI_SUB_GOLD = 55,   //消耗金票
+	FRIENF_SONGLI_SUB_COIN = 56,   //消耗银两
+};
 
 #endif

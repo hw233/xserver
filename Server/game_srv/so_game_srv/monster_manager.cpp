@@ -779,7 +779,8 @@ monster_struct *monster_manager::create_monster_by_config(scene_struct *scene, i
 			monster->set_pos(monster->get_born_pos_x(), monster->get_born_pos_z());
 			break;
 	}
-	if (scene->add_monster_to_scene(monster, 0) != 0)
+	uint32_t effectid = 0;
+	if (scene->add_monster_to_scene(monster, effectid) != 0)
 	{
 		LOG_ERR("%s: uuid[%lu] monster[%lu] scene[%u]", __FUNCTION__, monster->data->player_id, create_config->ID, scene->m_id);
 	}

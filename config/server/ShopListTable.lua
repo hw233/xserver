@@ -124,6 +124,20 @@ local ShopListTable = {
 		['EndTime'] = 0,
 		['ConsumptionType'] = 9,
 		['TabDescribe'] = '使用声望可兑换下列物品'
+		},
+	[280004011] = {
+		['ID'] = 280004011,
+		['ShopType'] = 4,
+		['ShopTypeName'] = 'NPC',
+		['ShopType1'] = 3,
+		['TabName'] = 'NPC商店',
+		['GroupingName'] = 'NPC商店',
+		['OpenConditionType'] = 0,
+		['OpenCondition'] = '',
+		['StartTime'] = 0,
+		['EndTime'] = 0,
+		['ConsumptionType'] = 9,
+		['TabDescribe'] = '使用声望可兑换下列物品'
 		}
 	}
 return ShopListTable

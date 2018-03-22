@@ -2,6 +2,7 @@
 #define _CONN_NODE_H__
 
 #include "server_proto.h"
+#include <assert.h>
 #include <string.h>
 #include <stdint.h>
 #include <event2/bufferevent.h>
@@ -218,8 +219,24 @@ public:
 	static uint8_t global_send_buf[MAX_GLOBAL_SEND_BUF + sizeof(EXTERN_DATA)];
 //protected:
 
-	uint32_t get_real_head_len(PROTO_HEAD *head);
-	
+	inline uint32_t get_real_head_len(PROTO_HEAD *head)
+	{
+//	if (!head)
+//		head = (PROTO_HEAD *)buf_head();
+		assert(head);
+
+		uint32_t real_len;
+//	if (head->len == 0)
+//	{
+//		real_len = ENDION_FUNC_4(head->crc);
+//	}
+//	else
+		{
+			real_len = ENDION_FUNC_4(head->len);
+		}
+		return real_len;
+	}
+
 	inline int buf_size() {
 		return pos_end - pos_begin;
 	}
@@ -272,7 +289,19 @@ public:
 		return (EXTERN_DATA *)(&head->data[get_real_head_len(head) - sizeof(PROTO_HEAD) - sizeof(EXTERN_DATA)]);
 	}
 
-	inline bool is_full_packet();
+	inline bool is_full_packet()
+	{
+		uint32_t len = buf_size();
+
+		if (len < sizeof(PROTO_HEAD))  //没有够一个包头
+			return (false);
+
+		PROTO_HEAD *head = (PROTO_HEAD *)buf_head();
+		uint32_t real_len = get_real_head_len(head);
+		if (len >= real_len)
+			return true;
+		return false;
+	}
 
 	int get_one_buf();
 	int remove_one_buf();

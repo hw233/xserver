@@ -35,10 +35,10 @@ struct GuildBonfireRewardInfo
 	uint32_t build_board;
 };
 
-void guild_land_active_manager::guild_ruqin_active_open()
+void guild_land_active_manager::guild_ruqin_active_open(uint64_t end_time)
 {
 
-	uint64_t mnow_time = time_helper::get_cached_time() / 1000;
+	//uint64_t mnow_time = time_helper::get_cached_time() / 1000;
 	FactionActivity *faction_table = get_config_by_id(GUILD_INTRUSION_CONTROLTABLE_ID, &guild_activ_config);
 	if(faction_table == NULL)
 		return;
@@ -59,7 +59,7 @@ void guild_land_active_manager::guild_ruqin_active_open()
 			itr->second->ruqin_data.status = GUILD_RUQIN_ACTIVE_START;
 			itr->second->GUILD_LAND_DATA.activity_id = GUILD_RUQIN_ACTIVITY_ID;
 			//帮会入侵活动开启
-			itr->second->ruqin_data.open_time = mnow_time;
+			itr->second->ruqin_data.end_time = end_time;
 
 			//这里要判断帮派阵营
 			ProtoGuildInfo *info = get_guild_summary(itr->second->data->ai_data.guild_land_data.guild_id);	
@@ -87,6 +87,14 @@ void guild_land_active_manager::guild_ruqin_active_open()
 			do_script_raid_init_cond(itr->second, &itr->second->data->ai_data.guild_land_data.script_data);
 		}
 	}
+
+
+	//开始时通知客户端
+	CommAnswer resp;
+	comm_answer__init(&resp);
+
+	resp.result = 0;
+	conn_node_gamesrv::send_to_all_player(MSG_ID_GUILD_RUQIN_ACTIVITY_START_NOTIFY, &resp, (pack_func)comm_answer__pack);
 }
 void guild_land_active_manager::guild_ruqin_active_stop()
 {
@@ -184,9 +192,16 @@ void guild_land_active_manager::on_tick_10()
 					tm.tm_min = table->OpenTime[i] % 100;
 					tm.tm_sec = 0;
 					uint64_t st = mktime(&tm);
+
+					//计算结束时间戳
+					tm.tm_hour = table->CloseTime[i] / 100;
+					tm.tm_min = table->CloseTime[i] % 100;
+					tm.tm_sec = 0;
+					uint64_t end_time = mktime(&tm);
 					if(st == mnow_time)
 					{
-						guild_ruqin_active_open();
+						guild_ruqin_active_open(end_time);
+
 					}
 				}
 

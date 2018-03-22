@@ -45,6 +45,9 @@
 #define MSG_ID_BOATING_START_REQUEST 10127       //开始划船，从视野删除 boating_start_request
 #define MSG_ID_BOATING_START_ANSWER 10128        // comm_answer
 #define MSG_ID_BOATING_STOP_REQUEST 10129        //划船结束  NULL
+#define MSG_ID_ONE_WAY_TRANSFER_START_REQUEST 10130       //单向定点传送请求  NULL
+#define MSG_ID_ONE_WAY_TRANSFER_START_ANSWER 10131        //comm_answer
+#define MSG_ID_ONE_WAY_TRANSFER_STOP_REQUEST 10132        //单向定点传送结束  NULL
 
 
 //技能模块
@@ -110,6 +113,8 @@
 #define MSG_ID_ITEM_FLOW_TO_BAG_NOTIFY 10315  //道具飞向背包通知 ItemFlowToBagNotify
 #define MSG_ID_BAG_BATCH_SELL_REQUEST 10316   //背包批量出售物品请求 BagBatchSellRequest
 #define MSG_ID_BAG_BATCH_SELL_ANSWER 10317    //背包批量出售物品应答 comm_answer
+#define MSG_ID_BAG_ITEM_COMBIN_REQUEST 10318   //背包物品合成 ItemCombin
+#define MSG_ID_BAG_ITEM_COMBIN_ANSWER 10319    //背包物品合成应答 comm_answer
 
 //角色信息
 #define MSG_ID_PLAYER_ATTR_NOTIFY 10400         //属性变更通知 playerattrnotify
@@ -167,6 +172,10 @@
 #define MSG_ID_CHAT_BROADCAST_REQUEST 10553            //广播 Chat
 #define MSG_ID_CHAT_BROADCAST_NOTIFY 10554             //广播 Chat
 #define MSG_ID_CHAT_HORSE_NOTIFY 10555                 //跑马灯 ChatHorse
+#define MSG_ID_CHAT_SHOW_EQUIP_REQUEST   10556                 //展示装备 ChatShowEquipRequest
+#define MSG_ID_CHAT_SHOW_EQUIP_ANSWER   10557                 //展示装备 ChatShowEquipAnswer
+#define MSG_ID_CHAT_SHOW_PARTNER_REQUEST 10558                 //展示伙伴 ChatShowPartnerRequest
+#define MSG_ID_CHAT_SHOW_PARTNER_ANSWER 10559                 //展示伙伴 ChatShowPartnerAnswer
 
 //采集点
 #define MSG_ID_COLLECT_BEGIN_REQUEST 10560      //开始采集 StartCollect
@@ -764,6 +773,10 @@
 #define MSG_ID_FRIEND_TRACK_ENEMY_ANSWER 12635         //追踪仇人应答 FriendTrackEnemyAnswer
 #define MSG_ID_FRIEND_AUTO_ACCEPT_APPLY_REQUEST 12636  //设置自动通过申请请求 NULL
 #define MSG_ID_FRIEND_AUTO_ACCEPT_APPLY_ANSWER 12637   //设置自动通过申请应答 FriendAutoAcceptApplyAnswer
+#define MSG_ID_FRIEND_TRACK_ENEMY_POX_REQUEST 12638    //实时请求仇人位置请求 FriendGetChouRenPoxRequest
+#define MSG_ID_FRIEND_TRACK_ENEMY_POX_ANSWER  12639    //实时请求仇人位置应答 FriendGetChouRenPoxAnswer
+#define MSG_ID_FRIEND_ID_OR_NO_EACH_OTHER_REQUEST  12640    //判断玩家是否互为好友请求 FriendIsOrNoEachOtherRequest
+#define MSG_ID_FRIEND_ID_OR_NO_EACH_OTHER_ANSWER   12641    //判断玩家是否互为好友应答 comm_answer
 
 //个人信息
 #define MSG_ID_PERSONALITY_INFO_REQUEST 12701         //个人信息请求 NULL
@@ -1045,5 +1058,14 @@
 #define MSG_ID_MONEY_EXCHANGE_REQUEST          15200 //货币兑换请求 PlayerMoneyExchangeRequest
 #define MSG_ID_MONEY_EXCHANGE_ANSWER           15201 //货币兑换回复 comm_answer
 
+#define MSG_ID_GUILD_RUQIN_SHISHI_INFO_REQUEST   15300 //帮会入侵实时信息请求 NULL
+#define MSG_ID_GUILD_RUQIN_SHISHI_INFO_ANSWER    15301 //帮会入侵实时信息回复 GuildRuqinActiveRewardAndRankNotify
+#define MSG_ID_GUILD_RUQIN_ACTIVITY_START_NOTIFY 15302 //帮会入侵活动开始通知 NULL
+#define MSG_ID_GUILD_RUQIN_IS_OR_NO_OPEN_NOTIFY  15303 //帮会入侵活动是否开启 NULL (登录的时候有推送这个消息,说明需要显示消息按钮,否则不显示)
+
+//九宫八卦奖励
+#define MSG_ID_JIU_GONG_BA_GUA_REWARD_INFO_NOTIFY 15400 //九宫八卦奖励信息通知 JiuGongBaGuaRewardNotify 
+#define MSG_ID_JIU_GONG_BA_GUA_RECIVE_REWARD_REQUEST 15401 //九宫八卦领奖请求 JiuGongBaGuaReciveRewardRequest
+#define MSG_ID_JIU_GONG_BA_GUA_RECIVE_REWARD_ANSWER 15402 //九宫八卦领奖应答 JiuGongBaGuaReciveRewardAnswer
 
 #endif

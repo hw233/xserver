@@ -1035,10 +1035,14 @@ int CRedisClient::zget(const char* key, int startNo, int endNo, std::vector<std:
 		redisReply* childReply = r->element[i*2];
 		if (childReply->type == REDIS_REPLY_STRING)
 			playerid = strtoull(childReply->str, NULL, 0);
+		else
+			continue;
 
 		childReply = r->element[i*2+1];
 		if (childReply->type == REDIS_REPLY_STRING)
 			score = strtod(childReply->str, NULL);
+		else
+			continue;
 
 		out.push_back(std::make_pair(playerid, (uint32_t)(score>>32)));
 	}

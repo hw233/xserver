@@ -198,3 +198,29 @@ enum MonetExchangType
 	YUANBAO_CHANGE_YINBI = 0; //元宝换银币
 	YINBI_CHANGE_YINPIAO = 1; //银币换银票
 }
+
+//九宫八卦奖励信息通知
+message JiuGongBaGuaRewardNotify
+{
+	repeated JiuGongBaGuaRewardRelatedInfo info = 1; //具体信息
+}
+
+//九宫八卦奖励信息
+message JiuGongBaGuaRewardRelatedInfo
+{
+	required uint32 id = 1; //NineEightTable表id
+	required uint32 statu = 2; //奖励领取状态 0:奖励不可领 1:可领 2:已领
+}
+
+//九宫八卦领奖请求
+message JiuGongBaGuaReciveRewardRequest
+{
+	required uint32 id = 1; // NineEightTable表id
+}
+
+//九宫八卦领奖应答
+message JiuGongBaGuaReciveRewardAnswer
+{
+	required uint32 result = 1; //0:成功 否则失败
+	required uint32 id = 2; // NineEightTable表id
+}

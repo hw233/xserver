@@ -37,6 +37,7 @@ Collect::Collect()
 	m_active = 0;
 	m_raid_uuid = 0;
 	m_dropId = 0;
+	m_rand_id = 0;
 	++collect_g_collect_num;
 }
 
@@ -582,54 +583,86 @@ bool Collect::OnTick()
 	{
 		return false;
 	}
-	if (m_liveTime != 0 && m_liveTime < time_helper::get_cached_time() /1000 )
+	if (m_liveTime != 0 && m_liveTime < time_helper::get_cached_time() / 1000)
 	{
+		m_liveTime = 0;
 		if (scene != NULL)
 		{
 			scene->delete_collect_from_scene(this, true);
 		}
+		std::map<uint64_t, struct CollectTable *>::iterator it = collect_config.find(m_collectId);
+		if (it == collect_config.end())
+		{
+			return false;
+		}
+		if (it->second->Regeneration > 0)
+		{
+			m_state = COLLECT_RELIVE;
+			m_reliveTime = time_helper::get_cached_time() / 1000 + it->second->Regeneration;
+			return true;
+		}
 		return false;
 	}
-	if (m_state == COLLECT_RELIVE)
+	if (m_state == COLLECT_RELIVE && m_reliveTime <= time_helper::get_cached_time() / 1000)
 	{
-		if (m_reliveTime <= time_helper::get_cached_time() / 1000)
-		{
-			m_state = COLLECT_NORMOR;
-			
-			scene_struct *pScence;
-
-			if (m_raid_uuid)
-			{
-				DungeonTable* config = get_config_by_id(m_scenceId, &all_raid_config);
-				if (config != NULL && config->DengeonRank == DUNGEON_TYPE_ZHENYING)
-				{
-					pScence = zhenying_raid_manager::get_zhenying_raid_by_uuid(m_raid_uuid);
-				}
-				else
-				{
-					pScence = raid_manager::get_raid_by_uuid(m_raid_uuid);
-				}
-			}
-			else
-			{
-				pScence = scene_manager::get_scene(m_scenceId);
-			}
-			
-			if (pScence != NULL)
-			{
-				if (pScence->add_collect_to_scene(this) != 0)
-					return false;
-				else
-					return true;
-			}
-			{
-				return false;
-			}
-		}
+		return Relive();
 	}
 	return true;
 }
 
+bool Collect::Relive()
+{
+	std::map<uint64_t, struct CollectTable *>::iterator it = collect_config.find(m_collectId);
+	if (it == collect_config.end())
+	{
+		return false;
+	}
+	if (it->second->LifeTime != 0)
+	{
+		m_liveTime = time_helper::get_cached_time() / 1000 + it->second->LifeTime;
+	}
+
+	m_state = COLLECT_NORMOR;
+
+	scene_struct *pScence;
+	if (m_raid_uuid)
+	{
+		DungeonTable* config = get_config_by_id(m_scenceId, &all_raid_config);
+		if (config != NULL && config->DengeonRank == DUNGEON_TYPE_ZHENYING)
+		{
+			pScence = zhenying_raid_manager::get_zhenying_raid_by_uuid(m_raid_uuid);
+		}
+		else
+		{
+			pScence = raid_manager::get_raid_by_uuid(m_raid_uuid);
+		}
+	}
+	else
+	{
+		pScence = scene_manager::get_scene(m_scenceId);
+	}
+	if (pScence == NULL)
+	{
+		return false;
+	}
+
+	if (m_rand_id != 0)
+	{
+		RandomCollectionTable *table = get_config_by_id(m_rand_id, &random_collect_config);
+		if (table == NULL)
+		{
+			return false;
+		}
+		uint32_t pos = rand() % table->n_PointX;
+		m_pos.pos_x = table->PointX[pos];
+		m_pos.pos_z = table->PointZ[pos];
+	}
+
+	if (pScence->add_collect_to_scene(this) != 0)
+		return false;
+	else
+		return true;
+}
 
 void Collect::Tick()
 {
@@ -680,11 +713,14 @@ int Collect::CreateRandCollect(scene_struct *scene)
 		{
 			return 2;
 		}
-		for (uint32_t i = 0; i < table->Num; ++i)
+		//for (uint32_t i = 0; i < table->Num; ++i)
 		{
 			uint32_t pos = rand() % table->n_PointX;
-			if (CreateCollectByPos(scene, table->CollectionID, table->PointX[pos], 10000, table->PointZ[pos], 0) == NULL)
+			Collect *ret = CreateCollectByPos(scene, table->CollectionID, table->PointX[pos], 10000, table->PointZ[pos], 0);
+			if (ret == NULL)
 				return 3;
+			ret->m_rand_id = *itV;
+			LOG_ERR("%s %d: scene[%lu] CreateRandCollect failed x=%f,y=%f", __FUNCTION__, __LINE__, scene->m_id, table->PointX[pos], table->PointZ[pos]);
 		}
 	}
 	return 0;

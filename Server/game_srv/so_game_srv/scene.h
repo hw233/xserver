@@ -80,7 +80,7 @@ public:
 	std::vector<struct SceneCreateMonsterTable *> *create_monster_config;
 protected:
 	int broadcast_partner_create(partner_struct *partner);	
-	int broadcast_monster_create(monster_struct *monster, uint32_t effectid);
+	int broadcast_monster_create(monster_struct *monster);
 	int broadcast_player_create(player_struct *player);
 	int broadcast_player_delete(player_struct *player);		
 	

@@ -71,12 +71,12 @@ int skill_struct::get_skill_id_and_lv(int fuwen_index, int *id, int *lv)
 	return -1;
 }
 
-int skill_struct::add_cd(struct SkillLvTable *lv_config, struct ActiveSkillTable *active_config)
+int skill_struct::add_cd(uint64_t cd)
 {
-	if (lv_config->CD != 0)
-		data->cd_time = time_helper::get_cached_time() + lv_config->CD - 200;
+	if (cd != 0)
+		data->cd_time = time_helper::get_cached_time() + cd - 200;
 	else
-		data->cd_time = time_helper::get_cached_time() + active_config->TotalSkillDelay - 200;
+		data->cd_time = time_helper::get_cached_time() + config->TotalSkillDelay - 200;
 	return (0);
 }
 

@@ -147,6 +147,7 @@ struct GuildPlayer
 	uint32_t guild_land_active_reward_num[MAX_GUILD_LAND_ACTIVE_NUM]; //帮会活动收益次数
 	uint32_t donate_count; //捐献次数
 	uint32_t level_gift[MAX_GUILD_LEVEL];
+	bool oneday_popularity;
 };
 
 struct GuildPermission

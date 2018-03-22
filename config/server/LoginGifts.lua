@@ -59,7 +59,7 @@ local LoginGifts = {
 		['ID'] = 620100008,
 		['LoginDays'] = 8,
 		['RewardsType'] = 4,
-		['lRewards'] = {420106003},
+		['lRewards'] = {420150037},
 		['Quantity'] = {1},
 		['Time'] = 0
 		}

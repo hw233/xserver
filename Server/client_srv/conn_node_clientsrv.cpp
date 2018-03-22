@@ -26,6 +26,7 @@
 #include "player_db.pb-c.h"
 #include "../proto/login.pb-c.h"
 #include "move.pb-c.h"
+#include "move_direct.pb-c.h"
 #include "../proto/chat.pb-c.h"
 #include "../proto/cast_skill.pb-c.h"
 #include "../proto/pk.pb-c.h"
@@ -433,8 +434,8 @@ int conn_node_clientsrv::handle_enter_game_answer(void)
 		}
 		
 		//升级设置pk模式
-		send_chat_info_request();
-		send_chat_info_request();
+		//send_chat_info_request();
+		//send_chat_info_request();
 		handle_player_setpkmodle_request();
 	}
 
@@ -446,50 +447,60 @@ int conn_node_clientsrv::send_move_request()
 //	sleep(2);
 	if(posx==-1 || posz==-1)
 	{
-		LOG_ERR("[%s:%d]让玩家随机移动失败，未能获取玩家当前位置", __FUNCTION__, __LINE__);
+		LOG_ERR("[%s:%d]让玩家[%u][%lu]随机移动失败，未能获取玩家当前位置", __FUNCTION__, __LINE__, open_id, player_id);
 		return -1;
 	}
 	size_t size ;
-	MoveRequest req;
-	size_t i = 0;
-	move_request__init(&req);
-	req.n_data = 3;
-	PosData data[req.n_data];
-	PosData *pdata[req.n_data];
+	MoveStartRequest req;
+//	size_t i = 0;
+	move_start_request__init(&req);
+	PosData cur_pos;
+	pos_data__init(&cur_pos);
+	cur_pos.pos_x = posx;
+	cur_pos.pos_z = posz;
+	req.cur_pos = &cur_pos;
+//	req.n_data = 3;
+//	PosData data[req.n_data];
+//	PosData *pdata[req.n_data];
 
 	
 	if (move_lag == 0)
 	{
 		move_lag = 1;
-		for (i = 0; i < req.n_data; i++)
-		{
-			pos_data__init(&data[i]);
-			pdata[i] = &data[i];
-			data[i].pos_x = posx + i ;
-			data[i].pos_z = posz + i ;
-			LOG_DEBUG("让玩家随机移动成功，玩家openid[%u]移动的第[%lu]步位置posx[%f],posz[%f]", open_id, i, data[i].pos_x, data[i].pos_z);
-		}
+		req.direct_x = 1000;
+		req.direct_z = 0;		
+		// for (i = 0; i < req.n_data; i++)
+		// {
+		// 	pos_data__init(&data[i]);
+		// 	pdata[i] = &data[i];
+		// 	data[i].pos_x = posx + i ;
+		// 	data[i].pos_z = posz + i ;
+		// 	LOG_DEBUG("让玩家随机移动成功，玩家openid[%u]移动的第[%lu]步位置posx[%f],posz[%f]", open_id, i, data[i].pos_x, data[i].pos_z);
+		// }
 	}
 	else
 	{
 		move_lag = 0;
-		for (i = 0; i < req.n_data; i++)
-		{
-			pos_data__init(&data[i]);
-			pdata[i] = &data[i];
-			data[i].pos_x = posx - i;
-			data[i].pos_z = posz - i;
-			LOG_DEBUG("让玩家随机移动成功，玩家openid[%u]移动的第[%lu]步位置posx[%f],posz[%f]", open_id, i, data[i].pos_x, data[i].pos_z);
-		}
+		req.direct_x = -1000;
+		req.direct_z = 0;		
+		
+		// for (i = 0; i < req.n_data; i++)
+		// {
+		// 	pos_data__init(&data[i]);
+		// 	pdata[i] = &data[i];
+		// 	data[i].pos_x = posx - i;
+		// 	data[i].pos_z = posz - i;
+		// 	LOG_DEBUG("让玩家随机移动成功，玩家openid[%u]移动的第[%lu]步位置posx[%f],posz[%f]", open_id, i, data[i].pos_x, data[i].pos_z);
+		// }
 	}
 	
-	posx = data[i - 1].pos_x;
-	posz = data[i - 1].pos_z;
-	req.data = &pdata[0];
-	size = move_request__pack(&req, get_send_data());
+	// posx = data[i - 1].pos_x;
+	// posz = data[i - 1].pos_z;
+	// req.data = &pdata[0];
+	size = move_start_request__pack(&req, get_send_data());
 	if (size != (size_t)-1)
 	{
-		PROTO_HEAD* head = get_send_buf(MSG_ID_MOVE_REQUEST, seq++);
+		PROTO_HEAD* head = get_send_buf(MSG_ID_MOVE_START_REQUEST, seq++);
 		head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD) + size);
 		int ret = this->send_one_msg(head, 1);
 		if (ret != (int)ENDION_FUNC_4(head->len))

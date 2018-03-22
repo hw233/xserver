@@ -518,7 +518,10 @@ int ldb_step(int *printline)
 	printf("$>>>> ");
 	*printline = 0;
 	
-	fgets(ldb_buf, 1024, stdin);
+	if (fgets(ldb_buf, 1024, stdin) == NULL)
+	{
+		return -1;
+	}
 
 	int n = sscanf(ldb_buf, "%s %s %s", command, param1, param2);
 	if (n <= 0)

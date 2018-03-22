@@ -620,7 +620,7 @@ int chat_mod::do_one_gm_cmd( player_struct *player, int argc, char *argv[] )
 	}
 	else if ( argc >= 1 && strcasecmp( argv[ 0 ], "guild_ruqin_open" ) == 0 )
 	{
-		guild_land_active_manager::guild_ruqin_active_open();
+		guild_land_active_manager::guild_ruqin_active_open(0);
 	}
 	else if ( argc >= 1 && strcasecmp( argv[ 0 ], "guild_ruqin_stop" ) == 0 )
 	{
@@ -709,7 +709,7 @@ int chat_mod::do_one_gm_cmd( player_struct *player, int argc, char *argv[] )
 		send_chat_content( player,buff );
 		player->player_login_reward_info_notify();
 	}
-	else if ( argc >= 1 && strcasecmp( argv[ 0 ], "guild_bonfire_open" ) == 0 )
+	else if ( argc >= 1 && strcasecmp( argv[ 0 ], "guild_bonfire_open" ) == 0 ) //工会篝火
 	{
 		if (player->data->guild_id > 0)
 		{
@@ -938,6 +938,7 @@ void chat_mod::gm_go_task( player_struct *player, int task_id )
 
 	task_info->status = TASK_STATUS__FINISH;
 	player->task_update_notify( task_info );
+	player->finish_jiu_gong_bagua_task(task_id);
 	uint32_t cur_task = task_info->id;
 	memset( task_info, 0, sizeof( TaskInfo ) );
 

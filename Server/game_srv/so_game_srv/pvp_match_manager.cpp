@@ -904,7 +904,7 @@ int pvp_match_player_praise(player_struct *player, uint64_t target_id)
 	}
 	raid->PVP_DATA.praise_index[player_index].praise[target_index] = true;
 
-	++target_index;
+	//++target_index;
 
 	// if (raid->PVP_DATA.praise_index[player_index] != 0)
 	// {
@@ -916,7 +916,8 @@ int pvp_match_player_praise(player_struct *player, uint64_t target_id)
 
 	PvpRaidPraiseNotify nty;
 	pvp_raid_praise_notify__init(&nty);
-	nty.player_id = target_id;
+	nty.player_id = player->data->player_id;
+	nty.target_id = target_id;
 
 	for (int i = 0; i < MAX_TEAM_MEM * 2; ++i)
 	{
@@ -1200,8 +1201,8 @@ __attribute_used__ static bool try_match_notuse(std::map<uint64_t, uint8_t> *wai
 
 	std::vector<std::map<uint64_t, uint8_t>::iterator> team1, team2;
 
-	uint8_t team1_min_level, team1_max_level;
-	uint8_t team2_min_level, team2_max_level;
+	uint8_t team1_min_level = 0, team1_max_level = 0;
+	uint8_t team2_min_level = 0, team2_max_level = 0;
 
 	std::map<uint64_t, uint8_t>::iterator ite;
 	int left = waiting_player->size();

@@ -72,7 +72,8 @@
 	LifeTime 20  : integer
 	talk_config 21 : NpcTalkTable
 	PkType 22 : integer
-	HateBase 23 : integer 
+	HateBase 23 : integer
+	BirthTime 24 : integer
 }
 
 .SpiritTable {
@@ -211,7 +212,7 @@
 	HateAdd 14 : integer
 	HateValue 15 : integer
 	SkillLv 16 : integer
-	PassiveLv 17 : integer
+#	PassiveLv 17 : integer
 	Career 18 : integer
 	OpenLv 19 : integer
 	SkillRune 20 : integer
@@ -219,6 +220,10 @@
 	SkillAcc 22 : integer
 	IsRune 23 : integer
 	pre_skill 24 : integer
+	CD 25 : integer
+	TimeID 26 : *integer
+	time_config 27 : *SkillTimeTable
+	TotalSkillDelay 28 : integer	
 }
 
 .ActiveSkillTable {
@@ -228,13 +233,13 @@
 	  SkillEffect 4 : *integer
 	  WarningEffect 5 : integer
 	  HitEffect 6 : integer
-	  ActionTime 7 : integer
-	  Interval 8 : integer
+#	  ActionTime 7 : integer
+#	  Interval 8 : integer
 	  FlyId 9 : integer
 	  CanMove 10 : integer
 	  NextSkill 11 : integer
 	  AutoNextSkill 12 : integer	  
-	  TotalSkillDelay 13 : integer
+#	  TotalSkillDelay 13 : integer
 }
 
 .PassiveSkillTable {
@@ -254,11 +259,11 @@
 
 .SkillLvTable {
 	ID 1 : integer
-	CD 2 : integer
-	EffectIdEnemy 3 : *integer
-	EffectIdFriend 4 : *integer
-	BuffIdEnemy 5 : *integer
-	BuffIdFriend 6 : *integer
+#	CD 2 : integer
+#	EffectIdEnemy 3 : *integer
+#	EffectIdFriend 4 : *integer
+#	BuffIdEnemy 5 : *integer
+#	BuffIdFriend 6 : *integer
 	MonsterID 7 : integer
 	MonsterLv 8 : integer
 	CostCoin 9 : integer
@@ -267,6 +272,7 @@
 	CostItem 12 : integer
 	CostNum 13 : integer
 	NeedLv 14 : integer
+	EffectIdPartner 15 : integer
 }
 
 .BuffTable {
@@ -640,6 +646,7 @@
 	GradeNum 4 : integer
 	ExpendSilver 5 : integer
 	ExpendQi 6 : integer
+	Level 7 : integer
 }
 
 #御气道冲穴
@@ -941,6 +948,7 @@
 	UseMoney2 8 : integer
 	BuildingLeve 9 : integer
 	skillName 10 : string
+	CreateWood 11 : integer
 }
 
 .GangsBuildTaskTable {
@@ -1287,6 +1295,7 @@
     IsSoon 4 : integer
     ItemID 5 : integer
     ItemNum 6 : integer
+    Quest 7 : integer
 }
 
 .NpcTalkTable
@@ -1425,6 +1434,8 @@
 	FunctionID 2 : integer
 	HierarchyID 3 : integer
 	Hierarchys 4 : *integer
+	Condition 5 : integer
+	ConditionWay 6 : integer
 }
 
 .AchievementHierarchyTable {
@@ -1853,7 +1864,6 @@
 	MapID 4 : integer 
 	PointX 5 : *double 
 	PointZ 6 : *double 
-	Num 7 : integer
 }
 
 .SkillLevelTable {
@@ -1863,4 +1873,33 @@
 	 HighLevel 4 : integer
 	 HighNeedExp 5 : integer
 	 PartnerLevel1 6 : integer
+}
+
+.SkillTimeTable {
+	ID 1 : integer
+	ActionTime 2 : integer
+	Frequency 3 : integer
+	Interval 4 : integer
+	EffectIdEnemy 5 : *integer
+	EffectIdFriend 6 : *integer
+	BuffIdEnemy 7 : *integer
+	BuffIdFriend 8 : *integer
+	CallTime 9 : integer
+	CallId 10 : integer
+}
+
+.SyntheticTable {
+	ID 1 : integer 
+	SyntheticTarget 2 : integer 
+	SyntheticMaterial 3 : *integer 
+	SyntheticMaterialNum 4 : *integer 
+	Consume 5 : integer 
+}
+
+.NineEightTable
+{
+	ID 1 : integer
+	TaskID 2 : integer
+	Reward 3 : *integer
+	RewardNum 4 : *integer
 }

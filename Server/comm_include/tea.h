@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <string>
 
-uint32_t crc32_long(u_char *p, uint32_t len);
+uint32_t crc32_long(unsigned char *p, uint32_t len);
 
 void sg_encrypt(uint32_t *v);
 void sg_decrypt(uint32_t *v);

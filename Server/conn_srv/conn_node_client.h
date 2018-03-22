@@ -4,7 +4,7 @@
 #include "conn_node.h"
 #include "game_event.h"
 
-#define MAX_SEND_BUFFER_SIZE (1024*256)
+#define MAX_CLIENT_SEND_BUFFER_SIZE (1024*256)
 
 class conn_node_client: public conn_node_base
 {
@@ -41,7 +41,7 @@ public:
 	struct event ev_write;
 
 private:	
-	char send_buffer[MAX_SEND_BUFFER_SIZE];
+	char send_buffer[MAX_CLIENT_SEND_BUFFER_SIZE];
 	int32_t send_buffer_begin_pos;
 	int32_t send_buffer_end_pos;
 

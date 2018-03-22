@@ -13,10 +13,10 @@ message PartnerSkillData
 message PartnerAttr
 {
 	repeated PartnerSkillData skills = 1; //技能列表
-	repeated uint32 base_attr_id = 2; //基本属性id
-	repeated uint32 base_attr_cur = 3; //基本属性当前值
-	repeated uint32 base_attr_up = 4; //基本属性上限
-	repeated uint32 detail_attr_id = 5; //详细属性id
+	repeated uint32 base_attr_id = 2; //资质id
+	repeated uint32 base_attr_cur = 3; //资质当前值
+	repeated uint32 base_attr_up = 4; //资质上限
+	repeated uint32 detail_attr_id = 5; //详细属性id 废弃不用
 	repeated uint32 detail_attr_cur = 6; //详细属性当前值
 	required uint32 type = 7; //伙伴类型 0普通,1平凡,2天才
 }

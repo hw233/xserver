@@ -158,6 +158,7 @@ int conn_node_loginsrv::handle_login(EXTERN_DATA *extern_data)
 	LoginRequest *req;
 	req = login_request__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 	if (!req) {
+		LOG_ERR("%s: login_request__unpack fail %u", __FUNCTION__, get_data_len());
 		ret = -1;
 		goto done;
 	}

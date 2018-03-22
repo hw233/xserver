@@ -286,6 +286,42 @@ local RankingRewardTable = {
 		['RewardNum'] = {3},
 		['RankingTableId'] = {718,719},
 		['RankingTableIdName'] = {'阵营-功勋-朝廷','阵营-功勋-义军'}
+		},
+	[400201033] = {
+		['ID'] = 400201033,
+		['RankStart'] = 1,
+		['RankEnd'] = 1,
+		['Reward'] = {201061027,201061028,201061029},
+		['RewardNum'] = {8,2,1},
+		['RankingTableId'] = {111},
+		['RankingTableIdName'] = {'竞技-答题-综合'}
+		},
+	[400201034] = {
+		['ID'] = 400201034,
+		['RankStart'] = 2,
+		['RankEnd'] = 2,
+		['Reward'] = {201061027,201061028},
+		['RewardNum'] = {2,5},
+		['RankingTableId'] = {111},
+		['RankingTableIdName'] = {'竞技-答题-综合'}
+		},
+	[400201035] = {
+		['ID'] = 400201035,
+		['RankStart'] = 3,
+		['RankEnd'] = 3,
+		['Reward'] = {201061027},
+		['RewardNum'] = {4},
+		['RankingTableId'] = {111},
+		['RankingTableIdName'] = {'竞技-答题-综合'}
+		},
+	[400201036] = {
+		['ID'] = 400201036,
+		['RankStart'] = 4,
+		['RankEnd'] = 10,
+		['Reward'] = {201061021},
+		['RewardNum'] = {3},
+		['RankingTableId'] = {111},
+		['RankingTableIdName'] = {'竞技-答题-综合'}
 		}
 	}
 return RankingRewardTable

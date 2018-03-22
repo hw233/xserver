@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#define UNUSED(x) (void)(x)
+
 static char *saved_pwd_path;
 int change_to_deamon()
 {
@@ -48,7 +50,8 @@ uint64_t write_pid_file()
 	uint64_t pid;
 	pid = getpid();
 	sprintf(buf, "%lu", pid);
-	write(fd, buf, strlen(buf));
+	size_t ret = write(fd, buf, strlen(buf));
+	UNUSED(ret);
 	close(fd);
 	return pid;
 }

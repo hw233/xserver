@@ -242,7 +242,24 @@ message FriendAutoAcceptApplyAnswer
 	required uint32 autoAcceptApply = 2; //自动通过申请，0没勾选，非0勾选
 }
 
+//获取仇人的实时位置请求
+message FriendGetChouRenPoxRequest
+{
+	required uint64 player_id = 1; //玩家id
+}
 
+//获取仇人的实时位置信息应答
+message FriendGetChouRenPoxAnswer
+{
+	required uint32 result = 1; //结果0:成功 非0:失败
+	required uint64 player_id = 2; //玩家id
+	required uint32 scene_id = 3; //所在场景id
+	required int32 pos_x = 4; //x坐标点
+	required int32 pos_z = 5; //z坐标点
+}
 
-
-
+//判断对方是否互为好友
+message FriendIsOrNoEachOtherRequest
+{
+	required uint64 player_id = 1; //需要判断的对方玩家id
+}

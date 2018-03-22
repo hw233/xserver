@@ -141,7 +141,7 @@ union raid_ai_data
 	struct
 	{
 		uint8_t kill_record[MAX_TEAM_MEM * 2];  //击杀记录		
-//		struct assist_data assist_data[MAX_TEAM_MEM * 2][MAX_TEAM_MEM]; //伤害记录，用来计算助攻
+		struct assist_data assist_data[MAX_TEAM_MEM * 2][MAX_TEAM_MEM]; //伤害记录，用来计算助攻
 		uint32_t guild_id[2]; //对应的工会ID
 	} guild_data;
 
@@ -235,7 +235,7 @@ struct guild_ruqin_player_data
 //帮会入侵活动数据
 struct guild_ruqin_data{
 	bool guild_ruqin; //帮会入侵活动是否已经开启，在开启状态不再重复开启的操作
-	uint64_t open_time; //本轮开启时间
+	uint64_t end_time; //本轮结束时间戳
 	uint32_t zhengying; //帮会阵营
 	uint32_t level; //活动刷怪等级
 	uint32_t monster_boshu; //刷出第几波怪物

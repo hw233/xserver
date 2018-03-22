@@ -88,6 +88,7 @@ struct MonsterIDTable;
 struct MonsterPkTypeTable;
 struct MonsterTable;
 struct MountsTable;
+struct NineEightTable;
 struct NoticeTable;
 struct NpcTalkTable;
 struct OnlineTimes;
@@ -127,11 +128,13 @@ struct SkillLevelTable;
 struct SkillLvTable;
 struct SkillMoveTable;
 struct SkillTable;
+struct SkillTimeTable;
 struct SpecialTitleTable;
 struct SpecialtyLevelTable;
 struct SpecialtySkillTable;
 struct SpiritTable;
 struct StageTable;
+struct SyntheticTable;
 struct TargetInfoEntry;
 struct TargetPos;
 struct TaskChapterTable;
@@ -240,6 +243,7 @@ void free_MonsterIDTable(struct MonsterIDTable *p);
 void free_MonsterPkTypeTable(struct MonsterPkTypeTable *p);
 void free_MonsterTable(struct MonsterTable *p);
 void free_MountsTable(struct MountsTable *p);
+void free_NineEightTable(struct NineEightTable *p);
 void free_NoticeTable(struct NoticeTable *p);
 void free_NpcTalkTable(struct NpcTalkTable *p);
 void free_OnlineTimes(struct OnlineTimes *p);
@@ -279,11 +283,13 @@ void free_SkillLevelTable(struct SkillLevelTable *p);
 void free_SkillLvTable(struct SkillLvTable *p);
 void free_SkillMoveTable(struct SkillMoveTable *p);
 void free_SkillTable(struct SkillTable *p);
+void free_SkillTimeTable(struct SkillTimeTable *p);
 void free_SpecialTitleTable(struct SpecialTitleTable *p);
 void free_SpecialtyLevelTable(struct SpecialtyLevelTable *p);
 void free_SpecialtySkillTable(struct SpecialtySkillTable *p);
 void free_SpiritTable(struct SpiritTable *p);
 void free_StageTable(struct StageTable *p);
+void free_SyntheticTable(struct SyntheticTable *p);
 void free_TargetInfoEntry(struct TargetInfoEntry *p);
 void free_TargetPos(struct TargetPos *p);
 void free_TaskChapterTable(struct TaskChapterTable *p);
@@ -315,6 +321,8 @@ struct AchievementFunctionTable
 	uint64_t  HierarchyID; //3
 	uint32_t n_Hierarchys; //4
 	uint64_t *Hierarchys; //4
+	uint64_t  Condition; //5
+	uint64_t  ConditionWay; //6
 }__attribute__ ((packed));
 
 struct AchievementHierarchyTable
@@ -343,13 +351,10 @@ struct ActiveSkillTable
 	uint64_t *SkillEffect; //4
 	uint64_t  WarningEffect; //5
 	uint64_t  HitEffect; //6
-	uint64_t  ActionTime; //7
-	uint64_t  Interval; //8
 	uint64_t  FlyId; //9
 	uint64_t  CanMove; //10
 	uint64_t  NextSkill; //11
 	uint64_t  AutoNextSkill; //12
-	uint64_t  TotalSkillDelay; //13
 }__attribute__ ((packed));
 
 struct ActiveTable
@@ -526,6 +531,7 @@ struct AcupunctureTable
 	uint64_t  GradeNum; //4
 	uint64_t  ExpendSilver; //5
 	uint64_t  ExpendQi; //6
+	uint64_t  Level; //7
 }__attribute__ ((packed));
 
 struct ArenaRewardTable
@@ -1285,6 +1291,7 @@ struct FunctionUnlockTable
 	uint64_t  IsSoon; //4
 	uint64_t  ItemID; //5
 	uint64_t  ItemNum; //6
+	uint64_t  Quest; //7
 }__attribute__ ((packed));
 
 struct GangsBuildTaskTable
@@ -1340,6 +1347,7 @@ struct GangsSkillTable
 	uint64_t  UseMoney2; //8
 	uint64_t  BuildingLeve; //9
 	char  *skillName; //10
+	uint64_t  CreateWood; //11
 }__attribute__ ((packed));
 
 struct GangsTable
@@ -1737,6 +1745,7 @@ struct MonsterTable
 	struct NpcTalkTable  *talk_config; //21
 	uint64_t  PkType; //22
 	uint64_t  HateBase; //23
+	uint64_t  BirthTime; //24
 }__attribute__ ((packed));
 
 struct MountsTable
@@ -1757,6 +1766,16 @@ struct MountsTable
 	uint64_t  CastSpiritLimit; //9
 	uint32_t n_Binding; //10
 	uint64_t *Binding; //10
+}__attribute__ ((packed));
+
+struct NineEightTable
+{
+	uint64_t  ID; //1
+	uint64_t  TaskID; //2
+	uint32_t n_Reward; //3
+	uint64_t *Reward; //3
+	uint32_t n_RewardNum; //4
+	uint64_t *RewardNum; //4
 }__attribute__ ((packed));
 
 struct NoticeTable
@@ -2010,7 +2029,6 @@ struct RandomCollectionTable
 	double *PointX; //5
 	uint32_t n_PointZ; //6
 	double *PointZ; //6
-	uint64_t  Num; //7
 }__attribute__ ((packed));
 
 struct RandomDungeonTable
@@ -2298,15 +2316,6 @@ struct SkillLevelTable
 struct SkillLvTable
 {
 	uint64_t  ID; //1
-	uint64_t  CD; //2
-	uint32_t n_EffectIdEnemy; //3
-	uint64_t *EffectIdEnemy; //3
-	uint32_t n_EffectIdFriend; //4
-	uint64_t *EffectIdFriend; //4
-	uint32_t n_BuffIdEnemy; //5
-	uint64_t *BuffIdEnemy; //5
-	uint32_t n_BuffIdFriend; //6
-	uint64_t *BuffIdFriend; //6
 	uint64_t  MonsterID; //7
 	uint64_t  MonsterLv; //8
 	uint64_t  CostCoin; //9
@@ -2315,6 +2324,7 @@ struct SkillLvTable
 	uint64_t  CostItem; //12
 	uint64_t  CostNum; //13
 	uint64_t  NeedLv; //14
+	uint64_t  EffectIdPartner; //15
 }__attribute__ ((packed));
 
 struct SkillMoveTable
@@ -2346,7 +2356,6 @@ struct SkillTable
 	uint64_t  HateAdd; //14
 	uint64_t  HateValue; //15
 	uint64_t  SkillLv; //16
-	uint64_t  PassiveLv; //17
 	uint64_t  Career; //18
 	uint64_t  OpenLv; //19
 	uint64_t  SkillRune; //20
@@ -2355,6 +2364,30 @@ struct SkillTable
 	uint64_t  SkillAcc; //22
 	uint64_t  IsRune; //23
 	uint64_t  pre_skill; //24
+	uint64_t  CD; //25
+	uint32_t n_TimeID; //26
+	uint64_t *TimeID; //26
+	uint32_t n_time_config; //27
+	struct SkillTimeTable **time_config; //27
+	uint64_t  TotalSkillDelay; //28
+}__attribute__ ((packed));
+
+struct SkillTimeTable
+{
+	uint64_t  ID; //1
+	uint64_t  ActionTime; //2
+	uint64_t  Frequency; //3
+	uint64_t  Interval; //4
+	uint32_t n_EffectIdEnemy; //5
+	uint64_t *EffectIdEnemy; //5
+	uint32_t n_EffectIdFriend; //6
+	uint64_t *EffectIdFriend; //6
+	uint32_t n_BuffIdEnemy; //7
+	uint64_t *BuffIdEnemy; //7
+	uint32_t n_BuffIdFriend; //8
+	uint64_t *BuffIdFriend; //8
+	uint64_t  CallTime; //9
+	uint64_t  CallId; //10
 }__attribute__ ((packed));
 
 struct SpecialTitleTable
@@ -2416,6 +2449,17 @@ struct StageTable
 	uint64_t *VictoryReward5; //10
 	uint64_t  stageTotalScore; //11
 	uint64_t  stageLastScore; //12
+}__attribute__ ((packed));
+
+struct SyntheticTable
+{
+	uint64_t  ID; //1
+	uint64_t  SyntheticTarget; //2
+	uint32_t n_SyntheticMaterial; //3
+	uint64_t *SyntheticMaterial; //3
+	uint32_t n_SyntheticMaterialNum; //4
+	uint64_t *SyntheticMaterialNum; //4
+	uint64_t  Consume; //5
 }__attribute__ ((packed));
 
 struct TargetInfoEntry

@@ -51,7 +51,7 @@ int conn_node_dump::transfer_to_client()
 {
 //	uint16_t old_len;
 	PROTO_HEAD *head;
-	EXTERN_DATA *extern_data;
+	__attribute__((unused)) EXTERN_DATA *extern_data;
 //	conn_node_client *client;
 
 	head = (PROTO_HEAD *)get_head();

@@ -62,6 +62,7 @@ message player_redis_info
 	required uint32 zhenying_level = 31; //阵营军阶
 	required uint32 zhenying_kill = 32; //阵营杀人数
 	required uint32 exploit = 33;  //历史功勋
+	required uint32 award_question = 34;  //有奖答题
 }
 
 message RedisGuildInfo

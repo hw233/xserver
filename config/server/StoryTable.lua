@@ -526,6 +526,149 @@ local StoryTable = {
 		['TriggerPoint'] = {0},
 		['StoryLoop'] = 0,
 		['TriggerDistance'] = 20
+		},
+	[450000050] = {
+		['ID'] = 450000050,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'jyd_daodi_001',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000051] = {
+		['ID'] = 450000051,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0002',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000052] = {
+		['ID'] = 450000052,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0003',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000053] = {
+		['ID'] = 450000053,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0004',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000054] = {
+		['ID'] = 450000054,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0005',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000055] = {
+		['ID'] = 450000055,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0006',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000056] = {
+		['ID'] = 450000056,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0007',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000057] = {
+		['ID'] = 450000057,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0008',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000058] = {
+		['ID'] = 450000058,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0009',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000059] = {
+		['ID'] = 450000059,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0010',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000060] = {
+		['ID'] = 450000060,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0011',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000061] = {
+		['ID'] = 450000061,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0012',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000062] = {
+		['ID'] = 450000062,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0013',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
 		}
 	}
 return StoryTable

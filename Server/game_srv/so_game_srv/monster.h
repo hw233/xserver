@@ -52,6 +52,7 @@ struct hate_unit_struct
 struct monster_data
 {
 	int create_config_index;
+	uint64_t create_time;  //创建时间
 	uint64_t player_id;
 	uint32_t monster_id;
 	uint32_t scene_id;  //场景ID 
@@ -85,7 +86,10 @@ struct monster_data
 
 	uint32_t next_skill_id;  //AI控制的下一个选择释放的技能
 	uint32_t skill_id;  //即将释放的技能
-	uint64_t skill_finished_time;
+	uint64_t skill_finished_time[MAX_SKILL_TIME_CONFIG_NUM];
+	uint64_t skill_next_time[MAX_SKILL_TIME_CONFIG_NUM];
+	uint8_t  skill_next_time_idx; 
+	
 	double angle;     //技能的角度
 	struct position skill_target_pos; //技能释放的位置，现在只有SKILL_RANGE_TYPE_TARGET_RECT类型的技能用
 	struct position target_pos; //追击对象的位置，如果没有发生变化就不需要重新寻路
@@ -218,7 +222,7 @@ public:
 	void on_repel(unit_struct *player);
 	void pack_sight_monster_info(SightMonsterInfo *info);
 	int broadcast_monster_delete(bool send_msg);
-	int broadcast_monster_create(uint32_t effectid);
+	int broadcast_monster_create();
 	int broadcast_monster_move();
 //	int add_player_to_sight(uint64_t player_id);
 //	int del_player_from_sight(uint64_t player_id);

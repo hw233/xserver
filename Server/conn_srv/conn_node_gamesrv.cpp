@@ -14,6 +14,8 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <string.h>
+#include <unistd.h>
 #include "msgid.h"
 
 #include "move.pb-c.h"
@@ -21,6 +23,9 @@
 
 conn_node_gamesrv::conn_node_gamesrv()
 {
+	send_buffer_begin_pos = 0;
+	send_buffer_end_pos = 0;
+	
 	max_buf_len = 1024 * 1024;
 	buf = (uint8_t *)malloc(max_buf_len + sizeof(EXTERN_DATA));
 	assert(buf);	
@@ -597,6 +602,93 @@ fail:
 		memmove(&cached_buf[0], &cached_buf[pos], cached_len - pos);
 	}
 	return (-1);
+}
+
+
+int conn_node_gamesrv::send_one_msg(PROTO_HEAD *head, uint8_t force) {
+#if 1
+//	static int seq = 1;
+	char *p = (char *)head;
+	int len = ENDION_FUNC_4(head->len);
+//	head->seq = ENDION_FUNC_2(seq++);
+
+	if (send_buffer_end_pos+len >= MAX_GAMESRV_SEND_BUFFER_SIZE) {  ///缓冲区溢出, 关闭连接
+		LOG_ERR("[%s: %d]: fd: %d: send msg[%d] len[%d], seq[%d] buffer full, begin[%d] end[%d]", __PRETTY_FUNCTION__, __LINE__, fd, ENDION_FUNC_2(head->msg_id), ENDION_FUNC_4(head->len), ENDION_FUNC_2(head->seq), send_buffer_begin_pos, send_buffer_end_pos);
+		return -1;
+	}
+
+
+	if (head->msg_id != MSG_ID_HEARTBEAT_NOTIFY)
+		LOG_DEBUG("[%s: %d]: fd: %d: send msg[%d] len[%d], seq[%d] , begin[%d] end[%d]", __PRETTY_FUNCTION__, __LINE__, fd, ENDION_FUNC_2(head->msg_id), ENDION_FUNC_4(head->len), ENDION_FUNC_2(head->seq), send_buffer_begin_pos, send_buffer_end_pos);
+
+	memcpy(send_buffer+send_buffer_end_pos, p, len);
+//	encoder_data((PROTO_HEAD*)(send_buffer+send_buffer_end_pos));
+
+	send_buffer_end_pos += len;
+
+	if (send_buffer_begin_pos == 0) {
+		int result = event_add(&this->ev_write, NULL);
+		if (0 != result) {
+			LOG_ERR("[%s : %d]: event add failed, result: %d", __PRETTY_FUNCTION__, __LINE__, result);
+			return result;
+		}
+	}
+
+	return len;
+#else
+	return conn_node_base::send_one_msg(head, force);
+#endif
+}
+
+void on_gamesrv_write(int fd, short ev, void *arg) {
+	assert(arg);
+	conn_node_gamesrv *client = (conn_node_gamesrv *)arg;
+	client->send_data_to_server();
+}
+
+void conn_node_gamesrv::send_data_to_server() {
+	if (send_buffer_end_pos-send_buffer_begin_pos<=0)
+		return;
+
+	int len = write(this->fd, send_buffer + send_buffer_begin_pos, send_buffer_end_pos-send_buffer_begin_pos);
+
+	LOG_DEBUG("%s %d: write to fd: %u: ret %d, end pos = %d, begin pos = %d", __PRETTY_FUNCTION__, __LINE__, fd, len, send_buffer_end_pos, send_buffer_begin_pos);
+
+	if (len == -1) {  //发送失败
+		if (errno == EINTR || errno == EAGAIN) {
+			int result = event_add(&this->ev_write, NULL);
+			if (0 != result) {
+				LOG_ERR("[%s : %d]: event add failed, result: %d", __PRETTY_FUNCTION__, __LINE__, result);
+				return;
+			}
+		}
+	}
+	else if (send_buffer_begin_pos + len < send_buffer_end_pos) {  //没发完
+		send_buffer_begin_pos += len;
+		int result = event_add(&this->ev_write, NULL);
+		if (0 != result) {
+			LOG_ERR("[%s : %d]: event add failed, result: %d", __PRETTY_FUNCTION__, __LINE__, result);
+			return;
+		}
+	}
+	else {  //发完了
+		send_buffer_begin_pos = send_buffer_end_pos = 0;
+		return;
+	}
+
+
+	/// 当数据发送完毕后pos归0
+//	if (send_buffer_begin_pos == send_buffer_end_pos) {
+//		send_buffer_begin_pos = send_buffer_end_pos = 0;
+//		return;
+//	}
+
+	if (send_buffer_end_pos>=MAX_GAMESRV_SEND_BUFFER_SIZE/2 && (send_buffer_begin_pos/1024) > 0 && send_buffer_end_pos>send_buffer_begin_pos) {
+		int sz = send_buffer_end_pos - send_buffer_begin_pos;
+		memmove(send_buffer, send_buffer+send_buffer_begin_pos, sz);
+		send_buffer_begin_pos = 0;
+		send_buffer_end_pos = sz;
+	}
 }
 
 

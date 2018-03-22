@@ -33,6 +33,7 @@ int main(void)
 		if (lenstr == NULL || lenstr[0] == '0' || lenstr[0] == '\0')
 		{
 			printf("{\"code\":2, \"reason\":\"not input param\"}");
+			fprintf(stderr, "{\"code\":2, \"reason\":\"not input param\"}");			
 			break;
 		}
 
@@ -41,6 +42,7 @@ int main(void)
 		if (!pOpenId)
 		{
 			printf("{\"code\":3, \"reason\":\"not key open_id\"}");
+			fprintf(stderr, "{\"code\":3, \"reason\":\"not key open_id\"}");			
 			break;
 		}
 
@@ -48,6 +50,7 @@ int main(void)
 		if (!pChannel)
 		{
 			printf("{\"code\":4, \"reason\":\"not key channel\"}");
+			fprintf(stderr, "{\"code\":4, \"reason\":\"not key channel\"}");			
 			break;
 		}
 		uint32_t nChannel = strtoul(pChannel, NULL, 10);
@@ -58,12 +61,14 @@ int main(void)
 			if (outOpenId == 0)
 			{
 				printf("{\"code\":5, \"reason\":\"open_id invalid\"}");
+				fprintf(stderr, "{\"code\":5, \"reason\":\"open_id invalid\"}");				
 				break;
 			}
 		}
 		else
 		{
 			printf("{\"code\":6, \"reason\":\"channel error\"}");
+			fprintf(stderr, "{\"code\":6, \"reason\":\"channel error\"}");			
 			break;
 		}
 

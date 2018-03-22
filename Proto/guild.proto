@@ -487,14 +487,16 @@ message GuildRuqinActivePlayerInfo
 	required uint32 damage = 2;
 	required bool   on_land = 3;
 }
-//帮会入侵活动结束,奖励信息到guild服通知
+//帮会入侵活动奖励信息到guild服通知
 message GuildRuqinActiveRewardNotify
 {
 	required uint32 guild_id = 1;    //帮会id
-	required uint32 all_damage = 2;  //总伤害
-	required uint32 boshu = 3;      //守住波数
-	required uint32 all_bushu = 4; //总波数
-	repeated GuildRuqinActivePlayerInfo all_palyer = 5; //玩家信息
+	required uint64 player_id = 2; //通知类型(为0说明是活动结束后主动推送, 否者是对应玩家请求推送)
+	required uint32 all_damage = 3;  //总伤害
+	required uint32 boshu = 4;      //当前守住波数
+	required uint32 all_bushu = 5; //总波数
+	required uint64 end_time = 6; //当前轮结束时间戳
+	repeated GuildRuqinActivePlayerInfo all_palyer = 7; //玩家信息
 }
 
 message GuildRuqinRewardItemInfo
@@ -514,6 +516,7 @@ message GuildRuqinPlayerRewardInfo
 message GuildRuqinActiveRewardAndRankNotify
 {
 	repeated GuildRuqinPlayerRewardInfo reward_info = 1; //奖励信息
+	required uint64 time = 2; //本轮活动结束时间戳
 }
 
 message GuildRuqinBossCreatNotify

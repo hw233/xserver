@@ -57,6 +57,8 @@ uint64_t  sg_server_id;
 uint32_t sg_ai_srv_port;
 uint32_t sg_gm_cmd_open;
 uint32_t sg_server_open_time;
+char * sg_show_url;
+char * sg_show_path;
 
 typedef int (*install_func)(int argc, char **argv);
 typedef int (*reload_func)();

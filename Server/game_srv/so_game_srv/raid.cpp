@@ -265,7 +265,7 @@ int raid_struct::init_raid(player_struct *player)
 	ruqin_data.guild_ruqin = false;
 	ruqin_data.zhengying = 0;
 	ruqin_data.level = 0;
-	ruqin_data.open_time = 0;
+	ruqin_data.end_time = 0;
 	ruqin_data.all_boshu = 0;
 	ruqin_data.monster_boshu = 0;
 	ruqin_data.monster_id = 0;

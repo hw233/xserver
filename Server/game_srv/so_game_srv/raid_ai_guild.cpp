@@ -59,6 +59,7 @@ static void guild_raid_ai_tick(raid_struct *raid)
 
 static void guild_raid_player_kill(raid_struct *raid, player_struct *player, player_struct *target)
 {
+	uint32_t now = time_helper::get_cached_time() / 1000;
 	int t;
 	struct raid_player_info *tmp = raid->get_raid_player_info(player->get_uuid(), &t);
 	assert(tmp);
@@ -68,11 +69,48 @@ static void guild_raid_player_kill(raid_struct *raid, player_struct *player, pla
 	//广播给所有玩家
 	do
 	{
-		GuildBattleKillNotify nty;
-		guild_battle_kill_notify__init(&nty);
-		nty.killerid = player->get_uuid();
-		nty.deadid = target->get_uuid();
-		raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_KILL_NOTIFY, &nty, (pack_func)guild_battle_kill_notify__pack, true);
+		//GuildBattleKillNotify nty;
+		//guild_battle_kill_notify__init(&nty);
+		//nty.killerid = player->get_uuid();
+		//nty.deadid = target->get_uuid();
+		//raid->broadcast_to_raid(MSG_ID_GUILD_BATTLE_KILL_NOTIFY, &nty, (pack_func)guild_battle_kill_notify__pack, true);
+
+		PvpKillNotify nty;
+		pvp_kill_notify__init(&nty);
+		nty.dead_player_id = target->get_uuid();
+		nty.kill_player_id = player->get_uuid();
+		uint64_t assist_player_id[MAX_TEAM_MEM];
+		int target_index;
+		struct raid_player_info *tmp = raid->get_raid_player_info(target->get_uuid(), &target_index);
+		if (tmp == NULL)
+		{
+			return;
+		}
+
+		for (int i = 0; i < MAX_TEAM_MEM; ++i)
+		{
+			if (raid->PVP_DATA.assist_data[target_index][i].player_id == 0)
+				break;
+			if (raid->PVP_DATA.assist_data[target_index][i].player_id == player->get_uuid())
+				continue;
+
+			// 检查时间
+			if (now - raid->PVP_DATA.assist_data[target_index][i].damage_time > 5)
+				continue;
+
+			int	t;
+			tmp = raid->get_raid_player_info(raid->PVP_DATA.assist_data[target_index][i].player_id, &t);
+			if (tmp == NULL)
+			{
+				continue;
+			}
+
+			raid->PVP_DATA.assist_record[t]++;
+			assist_player_id[nty.n_assist_player_id++] = raid->PVP_DATA.assist_data[target_index][i].player_id;
+		}
+		nty.assist_player_id = assist_player_id;
+		raid->broadcast_to_raid(MSG_ID_PVP_RAID_KILL_NOTIFY, &nty, (pack_func)pvp_kill_notify__pack, true);
+
 	} while(0);
 
 		// 检查杀人数目是否足够结束游戏
@@ -153,8 +191,39 @@ static void guild_raid_ai_player_relive(raid_struct *raid, player_struct *player
 	player->m_team == NULL ? true : player->m_team->OnMemberHpChange(*player);
 }
 
+static struct assist_data *guild_raid_get_assist_data(raid_struct *raid, uint64_t player_id, int index)
+{
+	for (int i = 0; i < MAX_TEAM_MEM; ++i)
+	{
+		if (raid->GUILD_DATA.assist_data[index][i].player_id == 0)
+		{
+			raid->GUILD_DATA.assist_data[index][i].player_id = player_id;
+			return &raid->GUILD_DATA.assist_data[index][i];
+		}
+		if (raid->GUILD_DATA.assist_data[index][i].player_id == player_id)
+			return &raid->GUILD_DATA.assist_data[index][i];
+	}
+	return NULL;
+}
+
 static void guild_raid_ai_player_attack(raid_struct *raid, player_struct *player, unit_struct *target, int damage)
 {
+	if (target->get_unit_type() != UNIT_TYPE_PLAYER)
+		return;
+
+	int index;
+	struct raid_player_info *t = raid->get_raid_player_info(target->get_uuid(), &index);
+	if (t == NULL)
+	{
+		return;
+	}
+
+	struct assist_data *data = guild_raid_get_assist_data(raid, player->get_uuid(), index);
+	if (data == NULL)
+	{
+		return;
+	}
+	data->damage_time = time_helper::get_cached_time() / 1000;
 }
 
 static void guild_raid_ai_player_leave(raid_struct *raid, player_struct *player)
@@ -183,7 +252,7 @@ static void guild_raid_ai_player_leave(raid_struct *raid, player_struct *player)
 
 	if (finished)
 	{
-		int win_team = (pos >= MAX_TEAM_MEM ? 2 : 1);
+		int win_team = (pos >= MAX_TEAM_MEM ? 1 : 2);
 		finished_raid(raid, win_team);
 	}
 }
@@ -266,6 +335,8 @@ static void guild_raid_ai_player_ready(raid_struct *raid, player_struct *player)
 			guild_battle_match_data__init(&team_data[nty.n_teams]);
 			team_data[nty.n_teams].guildid = guild_id;
 			team_data[nty.n_teams].guildname = get_guild_name(guild_id);
+			team_data[nty.n_teams].icon = get_guild_icon(guild_id);
+			//rank_data[nty.n_teams].guildscore = rank_info[i].second;
 
 			uint8_t player_num = 0;
 			for (int i = 0; i < MAX_TEAM_MEM; ++i)

@@ -48,7 +48,7 @@ static bool guild_ruqin_damage_cmp_func(struct guild_ruqin_player_data l, struct
 }
 
 //帮会入侵成功或者失败通知帮会服发奖
-static void guild_ruqin_reward_info_to_guildsrv(raid_struct *raid, bool succe)
+void guild_ruqin_reward_info_to_guildsrv(raid_struct *raid, uint64_t player_id, bool succe)
 {
 
 	if(raid == NULL || raid->data == NULL)
@@ -101,7 +101,9 @@ static void guild_ruqin_reward_info_to_guildsrv(raid_struct *raid, bool succe)
 		notify.boshu = raid->ruqin_data.monster_boshu;
 	}
 	notify.all_bushu = raid->ruqin_data.all_boshu;
+	notify.player_id = player_id;
 	notify.all_damage = all_damage;
+	notify.end_time = raid->ruqin_data.end_time;
 	notify.all_palyer = player_data_point;
 	notify.n_all_palyer = player_num;
 	EXTERN_DATA extern_data;
@@ -239,7 +241,7 @@ static void guild_intrusion_raid_ai_finished(raid_struct* raid)
 		raid->ruqin_data.status = GUILD_RUQIN_ACTIVE_BBQ;
 		raid->ruqin_data.guild_ruqin = false;
 		//帮会入侵走到这里说明在限定时间内守护成功
-		guild_ruqin_reward_info_to_guildsrv(raid, true);
+		guild_ruqin_reward_info_to_guildsrv(raid, 0, true);
 	}
 
 }
@@ -262,7 +264,7 @@ static void guild_intrusion_raid_ai_failed(raid_struct *raid)
 		raid->clear_monster(); //清除剩余怪物
 		raid->ruqin_data.guild_ruqin = false;
 		raid->ruqin_data.status = GUILD_RUQIN_ACTIVE_BBQ;
-		guild_ruqin_reward_info_to_guildsrv(raid, false);
+		guild_ruqin_reward_info_to_guildsrv(raid, 0, false);
 
 		if(monster_alive == false)
 		{

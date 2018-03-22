@@ -170,7 +170,9 @@ extern std::map<uint64_t, struct LoginGifts*> login_gifts_config; //登录奖励
 extern std::map<uint64_t, struct CiFuTable*> ci_fu_config; //赐福奖励表
 extern std::map<uint64_t, struct RandomBox*> random_box_config; //随机宝箱表
 extern std::map<uint64_t, struct RandomCollectionTable*> random_collect_config; //随机采集点表
-
+extern std::map<uint64_t, struct SkillTimeTable*> skill_time_config; //技能时间表
+extern std::map<uint64_t, struct SyntheticTable*> item_combin_config; //合成表
+extern std::map<uint64_t, struct NineEightTable*> jiu_gong_ba_gua_reward_config; //九宫八卦奖励表
 
 //////////////////
 extern uint32_t sg_bag_unlock_base_price;

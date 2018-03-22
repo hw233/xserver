@@ -41,11 +41,11 @@ enum
 	SIGHT_PRIORITY_NORMAL = 100,
 };
 
-#define MAX_PLAYER_IN_PLAYER_SIGHT 100
+#define MAX_PLAYER_IN_PLAYER_SIGHT 60
 #define MAX_TRUCK_IN_PLAYER_SIGHT 30
 #define MAX_MONSTER_IN_PLAYER_SIGHT 200
 #define MAX_COLLECT_IN_PLAYER_SIGHT 50
-#define MAX_PARTNER_IN_PLAYER_SIGHT 50
+#define MAX_PARTNER_IN_PLAYER_SIGHT 60
 
 
 struct ItemUseEffectInfo
@@ -374,6 +374,7 @@ struct NpcAnswer
 	uint32_t money; //
 	uint32_t exp; //
 	uint32_t timer; //总耗时
+	uint32_t score; //积分
 	uint32_t question; //题目
 	uint32_t number; //第几题
 	bool bOpenWin;   //打开了答题界面
@@ -655,6 +656,13 @@ struct GuildChuanGong
 	CurGuildChuanGongInfo  cur_info; //当前正在传功的信息
 };
 
+struct JiuGongBaGuaRewardInfo
+{
+	uint32_t id; //九宫八卦奖励表id
+	uint32_t task_id; //九宫八卦奖励对应的任务id
+	uint32_t statu; //领取标记 0:不可领, 1:可领 2:已领
+};
+
 enum
 {
 	Strong_State_Achieving = 0, //奖励不可领
@@ -905,6 +913,9 @@ struct player_data
 
 	//门宗传功信息
 	GuildChuanGong guild_chuan_gong_info;
+
+	//九宫八卦奖励信息
+	JiuGongBaGuaRewardInfo jiu_gong_ba_gua_reward[MAX_JIU_GONG_BA_GUA_REWARD_NUM];
 };
 
 struct ai_player_data
@@ -916,6 +927,10 @@ struct ai_player_data
 	struct position skill_target_pos;  //技能释放的位置
 	uint64_t relive_time;
 	uint64_t target_player_id;
+	uint64_t skill_finished_time[MAX_SKILL_TIME_CONFIG_NUM];
+	uint64_t skill_next_time[MAX_SKILL_TIME_CONFIG_NUM];
+	uint8_t  skill_next_time_idx; 
+	
 		//ai巡逻配置
 	struct RobotPatrolTable *ai_patrol_config;
 
@@ -1281,7 +1296,7 @@ public:
 	void check_task_collect(TaskInfo *info); //是否要增加 删除采集点
 	void get_task_event_item(uint32_t task_id, uint32_t event_class, std::map<uint32_t, uint32_t> &item_list);
 	int touch_task_event(uint32_t task_id, uint32_t event_class);
-	int execute_task_event(uint32_t event_id, uint32_t event_class, bool internal);
+	int execute_task_event(uint32_t event_id, uint32_t event_class, bool internal, uint32_t task_id);
 	int add_finish_task(uint32_t task_id);
 	int del_finish_task(uint32_t task_id);
 	int submit_task(uint32_t task_id);
@@ -1542,6 +1557,9 @@ public:
 	//地宫试炼任务信息推送
 	int mijing_shilian_info_notify(uint32_t type);
 
+		//功能是否已经开启
+	bool is_function_unlock(uint32_t id);
+
 	//我要变强
 	void load_strong_end(void);
 	void init_strong_goal_progress(StrongGoalInfo *info);
@@ -1612,6 +1630,14 @@ public:
 	void clean_guild_chuan_gong_info();
 	//更新传功信息
 	void refresh_guild_chuan_gong_info();
+	//通知玩家当前是否是帮会入侵活动期间
+	void guild_ruqin_activity_notify();
+	//九宫八卦奖励信息初始化
+	void jiu_gong_ba_gua_reward_info_init();
+	//九宫八卦奖励信息通知
+	void jiu_gong_ba_gua_reward_info_notify();
+	//九宫八卦任务完成处理
+	void finish_jiu_gong_bagua_task(uint32_t task_id);
 
 	uint64_t last_change_area_time;
 	sight_space_struct *sight_space;

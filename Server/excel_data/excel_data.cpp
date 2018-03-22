@@ -767,6 +767,14 @@ void free_MountsTable(struct MountsTable *p)
     free(p);
 };
 
+void free_NineEightTable(struct NineEightTable *p)
+{
+    if (!p) return;
+    free(p->Reward);
+    free(p->RewardNum);
+    free(p);
+};
+
 void free_NoticeTable(struct NoticeTable *p)
 {
     if (!p) return;
@@ -1122,10 +1130,6 @@ void free_SkillLevelTable(struct SkillLevelTable *p)
 void free_SkillLvTable(struct SkillLvTable *p)
 {
     if (!p) return;
-    free(p->EffectIdEnemy);
-    free(p->EffectIdFriend);
-    free(p->BuffIdEnemy);
-    free(p->BuffIdFriend);
     free(p);
 };
 
@@ -1140,6 +1144,23 @@ void free_SkillTable(struct SkillTable *p)
     if (!p) return;
     free(p->TargetType);
     free(p->RuneID);
+    free(p->TimeID);
+    for(size_t i = 0; i < p->n_time_config; ++i)
+    {
+        free_SkillTimeTable(p->time_config[i]);
+    }
+    free(p->time_config);
+    p->n_time_config = 0;
+    free(p);
+};
+
+void free_SkillTimeTable(struct SkillTimeTable *p)
+{
+    if (!p) return;
+    free(p->EffectIdEnemy);
+    free(p->EffectIdFriend);
+    free(p->BuffIdEnemy);
+    free(p->BuffIdFriend);
     free(p);
 };
 
@@ -1178,6 +1199,14 @@ void free_StageTable(struct StageTable *p)
     free(p->VictoryTime);
     free(p->VictoryReward3);
     free(p->VictoryReward5);
+    free(p);
+};
+
+void free_SyntheticTable(struct SyntheticTable *p)
+{
+    if (!p) return;
+    free(p->SyntheticMaterial);
+    free(p->SyntheticMaterialNum);
     free(p);
 };
 

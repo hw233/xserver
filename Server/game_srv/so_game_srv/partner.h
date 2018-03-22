@@ -116,6 +116,9 @@ struct partner_data
 	uint32_t relive_time; //复活时间
 
 	uint32_t skill_id;  //即将释放的技能
+	uint64_t skill_finished_time[MAX_SKILL_TIME_CONFIG_NUM];
+	uint64_t skill_next_time[MAX_SKILL_TIME_CONFIG_NUM];
+	uint8_t  skill_next_time_idx; 
 	double angle;     //技能的角度
 	struct position skill_target_pos; //技能释放的位置，现在只有SKILL_RANGE_TYPE_TARGET_RECT类型的技能用	
 
@@ -268,6 +271,7 @@ public:
 	} ai_data;
 
 private:
+	void set_skill_next_timeout();	
 	int add_skill_cd(int index, uint64_t now);
 	bool is_skill_in_cd(uint32_t index, uint64_t now);
 	int broadcast_partner_move();	

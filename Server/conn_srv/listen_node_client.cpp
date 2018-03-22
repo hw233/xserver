@@ -4,7 +4,7 @@
 #include <errno.h>
 #include "game_event.h"
 
-extern void on_write(int fd, short ev, void *arg);
+extern void on_client_write(int fd, short ev, void *arg);
 
 listen_node_client::listen_node_client()
 {
@@ -49,7 +49,7 @@ conn_node_base * listen_node_client::get_conn_node(evutil_socket_t fd)
 	
 	/* 创建写事件，但是在我们有数据可写之前，不要添加它。 */
 //	event_set(&ret->ev_write, fd, EV_WRITE, on_write, ret);
-	if (0 != event_assign(&ret->ev_write, base, fd, EV_WRITE, on_write, (void *)ret)) {
+	if (0 != event_assign(&ret->ev_write, base, fd, EV_WRITE, on_client_write, (void *)ret)) {
 		LOG_ERR("%s: event_new failed[%d]", __FUNCTION__, errno);
 		delete ret;
 		return NULL;

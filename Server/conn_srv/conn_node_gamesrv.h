@@ -3,6 +3,8 @@
 
 #include "conn_node.h"
 
+#define MAX_GAMESRV_SEND_BUFFER_SIZE (1024*1024*10)
+
 class conn_node_gamesrv: public conn_node_base
 {
 public:
@@ -10,9 +12,20 @@ public:
 	virtual ~conn_node_gamesrv();
 
 	virtual int recv_func(evutil_socket_t fd);
+	virtual int send_one_msg(PROTO_HEAD *head, uint8_t force);
+	virtual struct event* get_write_event() { return &ev_write; }
+	
 	static int add_cached_buf(PROTO_HEAD *head);
 	static int send_all_cached_buf();	
 	static conn_node_gamesrv *server_node;
+
+	struct event ev_write;
+	void send_data_to_server();	
+private:
+	char send_buffer[MAX_GAMESRV_SEND_BUFFER_SIZE];
+	int32_t send_buffer_begin_pos;
+	int32_t send_buffer_end_pos;
+	
 private:
 	int dispatch_message();
 	int transfer_to_client();

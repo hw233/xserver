@@ -178,7 +178,7 @@ int conn_node_item::send_one_msg(PROTO_HEAD *head, uint8_t force) {
 	int len = ENDION_FUNC_4(head->len);
 //	head->seq = ENDION_FUNC_2(seq++);
 
-	if (send_buffer_end_pos+len >= MAX_SEND_BUFFER_SIZE) {  ///缓冲区溢出, 关闭连接
+	if (send_buffer_end_pos+len >= MAX_ITEMSRV_SEND_BUFFER_SIZE) {  ///缓冲区溢出, 关闭连接
 		LOG_DEBUG("[%s: %d]: fd: %d: send msg[%d] len[%d], seq[%d] buffer full", __PRETTY_FUNCTION__, __LINE__, fd, ENDION_FUNC_2(head->msg_id), ENDION_FUNC_4(head->len), ENDION_FUNC_2(head->seq));
 		return -1;
 	} 
@@ -324,7 +324,7 @@ void conn_node_item::send_data_to_client() {
 //		return;
 //	}
 
-	if (send_buffer_end_pos>=MAX_SEND_BUFFER_SIZE/2 && (send_buffer_begin_pos/1024) > 0 && send_buffer_end_pos>send_buffer_begin_pos) {
+	if (send_buffer_end_pos>=MAX_ITEMSRV_SEND_BUFFER_SIZE/2 && (send_buffer_begin_pos/1024) > 0 && send_buffer_end_pos>send_buffer_begin_pos) {
 		int sz = send_buffer_end_pos - send_buffer_begin_pos;
 		memmove(send_buffer, send_buffer+send_buffer_begin_pos, sz);
 		send_buffer_begin_pos = 0;

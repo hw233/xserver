@@ -6,7 +6,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {800},	--属性上限
 		['GradeNum'] = 10,	--升级次数
 		['ExpendSilver'] = 1000,	--升级消耗银币
-		['ExpendQi'] = 100	--升级消耗真气
+		['ExpendQi'] = 100,	--升级消耗真气
+		['Level'] = 40	--等级限制
 		},
 	[302010002] = {
 		['ID'] = 302010002,
@@ -15,7 +16,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {430,20},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 40
 		},
 	[302010003] = {
 		['ID'] = 302010003,
@@ -24,7 +26,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {560,10},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 40
 		},
 	[302010004] = {
 		['ID'] = 302010004,
@@ -33,7 +36,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {600,0.015},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 40
 		},
 	[302010005] = {
 		['ID'] = 302010005,
@@ -42,7 +46,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1070},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 41
 		},
 	[302010006] = {
 		['ID'] = 302010006,
@@ -51,7 +56,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {570,20},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 41
 		},
 	[302010007] = {
 		['ID'] = 302010007,
@@ -60,7 +66,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {480,10,0.014},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 42
 		},
 	[302020001] = {
 		['ID'] = 302020001,
@@ -69,7 +76,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {60},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 42
 		},
 	[302020002] = {
 		['ID'] = 302020002,
@@ -78,7 +86,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {30,30},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 43
 		},
 	[302020003] = {
 		['ID'] = 302020003,
@@ -87,7 +96,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {40,10},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 43
 		},
 	[302020004] = {
 		['ID'] = 302020004,
@@ -96,7 +106,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {40,40},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 44
 		},
 	[302020005] = {
 		['ID'] = 302020005,
@@ -105,7 +116,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {40,10},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 44
 		},
 	[302020006] = {
 		['ID'] = 302020006,
@@ -114,7 +126,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {40,0.014},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 45
 		},
 	[302020007] = {
 		['ID'] = 302020007,
@@ -123,7 +136,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {50,50},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 45
 		},
 	[302030001] = {
 		['ID'] = 302030001,
@@ -132,7 +146,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1270},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 46
 		},
 	[302030002] = {
 		['ID'] = 302030002,
@@ -141,7 +156,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {670,30},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 46
 		},
 	[302030003] = {
 		['ID'] = 302030003,
@@ -150,7 +166,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1120,30,30},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 47
 		},
 	[302030004] = {
 		['ID'] = 302030004,
@@ -159,7 +176,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1470},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 47
 		},
 	[302030005] = {
 		['ID'] = 302030005,
@@ -168,7 +186,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1070,20},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 48
 		},
 	[302030006] = {
 		['ID'] = 302030006,
@@ -177,7 +196,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1280,30,30},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 48
 		},
 	[302030007] = {
 		['ID'] = 302030007,
@@ -186,7 +206,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1670},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 49
 		},
 	[302040001] = {
 		['ID'] = 302040001,
@@ -195,7 +216,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {100},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 49
 		},
 	[302040002] = {
 		['ID'] = 302040002,
@@ -204,7 +226,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {50,30},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 50
 		},
 	[302040003] = {
 		['ID'] = 302040003,
@@ -213,7 +236,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {50,30},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 50
 		},
 	[302040004] = {
 		['ID'] = 302040004,
@@ -222,7 +246,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {110},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 51
 		},
 	[302040005] = {
 		['ID'] = 302040005,
@@ -231,7 +256,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {60,0.019},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 51
 		},
 	[302040006] = {
 		['ID'] = 302040006,
@@ -240,7 +266,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {60,30},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 52
 		},
 	[302040007] = {
 		['ID'] = 302040007,
@@ -249,7 +276,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {130},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 52
 		},
 	[302050001] = {
 		['ID'] = 302050001,
@@ -258,7 +286,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1800},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 53
 		},
 	[302050002] = {
 		['ID'] = 302050002,
@@ -267,7 +296,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1420,30,30,30},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 53
 		},
 	[302050003] = {
 		['ID'] = 302050003,
@@ -276,7 +306,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1930},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 54
 		},
 	[302050004] = {
 		['ID'] = 302050004,
@@ -285,7 +316,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {2000},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 54
 		},
 	[302050005] = {
 		['ID'] = 302050005,
@@ -294,7 +326,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1630,30,30,30},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 55
 		},
 	[302050006] = {
 		['ID'] = 302050006,
@@ -303,7 +336,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {2130},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 55
 		},
 	[302050007] = {
 		['ID'] = 302050007,
@@ -312,7 +346,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {2200},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 56
 		},
 	[302060001] = {
 		['ID'] = 302060001,
@@ -321,7 +356,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {140},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 56
 		},
 	[302060002] = {
 		['ID'] = 302060002,
@@ -330,7 +366,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {70,0.023},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 57
 		},
 	[302060003] = {
 		['ID'] = 302060003,
@@ -339,7 +376,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {70,40},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 57
 		},
 	[302060004] = {
 		['ID'] = 302060004,
@@ -348,7 +386,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {150},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 58
 		},
 	[302060005] = {
 		['ID'] = 302060005,
@@ -357,7 +396,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {80,40},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 58
 		},
 	[302060006] = {
 		['ID'] = 302060006,
@@ -366,7 +406,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {80,0.027},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 59
 		},
 	[302060007] = {
 		['ID'] = 302060007,
@@ -375,7 +416,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {170},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 59
 		},
 	[302070001] = {
 		['ID'] = 302070001,
@@ -384,7 +426,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {2270},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 60
 		},
 	[302070002] = {
 		['ID'] = 302070002,
@@ -393,7 +436,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1170,40},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 60
 		},
 	[302070003] = {
 		['ID'] = 302070003,
@@ -402,7 +446,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {960,10,0.027},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 61
 		},
 	[302070004] = {
 		['ID'] = 302070004,
@@ -411,7 +456,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {2470},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 61
 		},
 	[302070005] = {
 		['ID'] = 302070005,
@@ -420,7 +466,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1520,10,0.019},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 62
 		},
 	[302070006] = {
 		['ID'] = 302070006,
@@ -429,7 +476,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {1300,50},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 62
 		},
 	[302070007] = {
 		['ID'] = 302070007,
@@ -438,7 +486,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {2670},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 63
 		},
 	[302080001] = {
 		['ID'] = 302080001,
@@ -447,7 +496,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {170},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 63
 		},
 	[302080002] = {
 		['ID'] = 302080002,
@@ -456,7 +506,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {90,20},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 64
 		},
 	[302080003] = {
 		['ID'] = 302080003,
@@ -465,7 +516,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {90,90},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 64
 		},
 	[302080004] = {
 		['ID'] = 302080004,
@@ -474,7 +526,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {90,0.031},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 65
 		},
 	[302080005] = {
 		['ID'] = 302080005,
@@ -483,7 +536,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {100,20},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 65
 		},
 	[302080006] = {
 		['ID'] = 302080006,
@@ -492,7 +546,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {120,10,0.013},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 66
 		},
 	[302080007] = {
 		['ID'] = 302080007,
@@ -501,7 +556,8 @@ local AcupunctureTable = {
 		['AttributeCeiling'] = {200},
 		['GradeNum'] = 10,
 		['ExpendSilver'] = 1000,
-		['ExpendQi'] = 100
+		['ExpendQi'] = 100,
+		['Level'] = 66
 		}
 	}
 return AcupunctureTable

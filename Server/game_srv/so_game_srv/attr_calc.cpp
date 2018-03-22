@@ -125,5 +125,35 @@ uint32_t calculate_fighting_capacity(double *attr, bool total)
 	return ceil(t);
 }
 
+void calculate_lv3_attribute(double *attrData)
+{
+	// 面板生命=面板体质*（1+最终基础生命加成）*体质转生命系数+角色等级生命+其他系统附加属性
+	attrData[PLAYER_ATTR_MAXHP] += attrData[PLAYER_ATTR_TI] * (1 + attrData[PLAYER_ATTR_HEALTHPRO]) * sg_fight_param_161000274;
+	// 面板攻击=面板力量*（1+最终基础攻击加成）*力量转攻击系数+角色等级攻击+其他系统附加属性
+	attrData[PLAYER_ATTR_ATTACK] += attrData[PLAYER_ATTR_LI] * (1 + attrData[PLAYER_ATTR_ATTACKPRO]) * sg_fight_param_161000275;
+	// 最终全系抗性=面板敏捷*敏捷转全系抗性系数+其他系统附加属性
+	attrData[PLAYER_ATTR_DFWU] += attrData[PLAYER_ATTR_MIN] * sg_fight_param_161000277;
+	// 面板忽略全抗=角色忽略全抗+其他系统附加属性
+	// 最终金系伤害=角色金系伤害+其他系统附加属性	
+	// 最终木系伤害=角色木系伤害+其他系统附加属性	
+	// 最终水系伤害=角色水系伤害+其他系统附加属性	
+	// 最终火系伤害=角色火系伤害+其他系统附加属性	
+	// 最终土系伤害=角色土系伤害+其他系统附加属性	
+	// 面板命中=面板灵巧*灵巧转命中系数+角色命中+其他系统附加属性
+	attrData[PLAYER_ATTR_HIT] += attrData[PLAYER_ATTR_LING] * sg_fight_param_161000278;
+	// 面板闪避=面板敏捷*敏捷转闪避系数+角色闪避+其他系统附加属性
+	attrData[PLAYER_ATTR_DODGE] += attrData[PLAYER_ATTR_MIN] * sg_fight_param_161000276;
+	// 面板会心几率=面板灵巧*灵巧转会心几率系数+角色会心几率+其他系统附加属性
+	attrData[PLAYER_ATTR_CRIT] += attrData[PLAYER_ATTR_LING] * sg_fight_param_161000279;
+	// 面板忽略闪避=角色忽略闪避+其他系统附加属性
+	// 面板抗会心几率=角色抗会心几率+其他系统附加属性	
+	// 面板会心伤害=角色会心伤害+其他系统附加属性	
+	// 面板会心免伤=角色会心免伤+其他系统附加属性	
+	// 面板移动速度=角色移动速度+其他系统附加属性	
+	// 最终属性效果几率=其他系统附加属性	
+	// 最终抗属性效果几率=其他系统附加属性	
+	// 最终属性效果时间=其他系统附加属性	
+	// 最终抗属性效果时间=其他系统附加属性	
+}
 
 #endif /* ATTR_CALC_H */

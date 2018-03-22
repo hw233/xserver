@@ -75,5 +75,6 @@ message DBGuildPlayer
 	required uint32 cur_week_task_config_id = 18;
 	required uint32 donate_count = 19;
 	repeated uint32 level_gift = 20;
+	required bool oneday_popularity = 21;
 }
 

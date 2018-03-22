@@ -73,7 +73,7 @@ message sight_monster_info
 	repeated buff_info buff_info = 7;	 //buff信息
 	required uint32 pk_type = 8; //pk模式
 	required uint32 zhenying_id = 9; //阵营ID
-	required uint32 effectid = 10;  //召唤怪物出生特效
+	required uint32 is_new = 10;  //是否新出生，0表示不是，1表示是新出生
 	required float direct = 11; //出生朝向
 }
 

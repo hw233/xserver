@@ -224,41 +224,41 @@ static void do_attack(monster_struct* monster)
 	struct SkillTable *config = get_config_by_id(skill_id, &skill_config);
 	if (!config)
 		return;
-	struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
+//	struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
 
 	uint64_t now = time_helper::get_cached_time();
-	if (act_config)
+	if (now > monster->ai_data.feijian_ai.trigger_time)
 	{
-		if (now > monster->ai_data.feijian_ai.trigger_time)
-		{
-			monster->data->ontick_time = now + 3000;
-			monster->ai_state = AI_PATROL_STATE;
-			return;
-		}
-
+		monster->data->ontick_time = now + 3000;
+		monster->ai_state = AI_PATROL_STATE;
+		return;
+	}
+	if (config->n_time_config > 0)
+	{
 		if ( monster->ai_data.feijian_ai.hurt_flag == 1 )
 		{
 			monster->ai_data.feijian_ai.hurt_flag = 0;
-			if (act_config->ActionTime > 0)
+			if (config->time_config[0]->ActionTime > 0)
 			{
-				monster->data->ontick_time = now + act_config->ActionTime;
+				monster->data->ontick_time = now + config->time_config[0]->ActionTime;
 			}
-			else if (act_config->Interval > 0)
+			else if (config->time_config[0]->Interval > 0)
 			{
-				monster->data->ontick_time = now + act_config->Interval;
+				monster->data->ontick_time = now + config->time_config[0]->Interval;
 			}
 		
 		}
 		else
 		{
-			if (act_config->Interval > 0)
+			if (config->time_config[0]->Interval > 0)
 			{
-				monster->data->ontick_time = now + act_config->Interval;
+				monster->data->ontick_time = now + config->time_config[0]->Interval;
 			}
 		}
 
-		if (act_config->ActionTime <= 0 && act_config->Interval <= 0)
+		if (config->time_config[0]->ActionTime <= 0 && config->time_config[0]->Interval <= 0)
 		{
+			struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);			
 			if (act_config->n_SkillLength >= 3 && (int)act_config->SkillLength[2] >= 0)
 			{
 				monster->data->ontick_time = now + 3000;
@@ -266,6 +266,47 @@ static void do_attack(monster_struct* monster)
 			}
 		}
 	}
+
+	
+	// if (act_config)
+	// {
+	// 	if (now > monster->ai_data.feijian_ai.trigger_time)
+	// 	{
+	// 		monster->data->ontick_time = now + 3000;
+	// 		monster->ai_state = AI_PATROL_STATE;
+	// 		return;
+	// 	}
+
+	// 	if ( monster->ai_data.feijian_ai.hurt_flag == 1 )
+	// 	{
+	// 		monster->ai_data.feijian_ai.hurt_flag = 0;
+	// 		if (act_config->ActionTime > 0)
+	// 		{
+	// 			monster->data->ontick_time = now + act_config->ActionTime;
+	// 		}
+	// 		else if (act_config->Interval > 0)
+	// 		{
+	// 			monster->data->ontick_time = now + act_config->Interval;
+	// 		}
+		
+	// 	}
+	// 	else
+	// 	{
+	// 		if (act_config->Interval > 0)
+	// 		{
+	// 			monster->data->ontick_time = now + act_config->Interval;
+	// 		}
+	// 	}
+
+	// 	if (act_config->ActionTime <= 0 && act_config->Interval <= 0)
+	// 	{
+	// 		if (act_config->n_SkillLength >= 3 && (int)act_config->SkillLength[2] >= 0)
+	// 		{
+	// 			monster->data->ontick_time = now + 3000;
+	// 			monster->ai_state = AI_PATROL_STATE;
+	// 		}
+	// 	}
+	// }
 
 	choose_target(monster, skill_id, &target);
 	if (target.empty())
@@ -308,9 +349,9 @@ static void do_patrol(monster_struct* monster)
 	monster->ai_data.feijian_ai.trigger_time = now ;
 	monster->ai_data.feijian_ai.hurt_flag = 1;
 	monster->ai_state = AI_ATTACK_STATE;
-	if (act_config->ActionTime > 0)
+	if (config->n_time_config > 0 && config->time_config[0]->ActionTime > 0)
 	{
-		monster->data->ontick_time = m_now + act_config->ActionTime;
+		monster->data->ontick_time = m_now + config->time_config[0]->ActionTime;
 	}
 	else
 	{

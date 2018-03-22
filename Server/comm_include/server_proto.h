@@ -110,7 +110,7 @@ enum SERVER_PROTO {
     SERVER_PROTO_GUILD_RENAME,                             //帮会改名
     SERVER_PROTO_GUILD_ACCEPT_TASK_REQUEST,                //接取帮会建设任务请求
     SERVER_PROTO_GUILD_ACCEPT_TASK_ANSWER,                 //接取帮会建设任务应答
-    SERVER_PROTO_GUILD_TASK_FINISH,                        //帮会建设任务完成
+    SERVER_PROTO_GUILD_TASK_FINISH,                        //帮会建设任务完成 1828
     SERVER_PROTO_GUILD_SYNC_TASK,                          //同步帮会建设任务进度
     SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_REQUEST,  //帮会入侵活动刷怪等级请求game_srv到guild_srv
     SERVER_PROTO_GUILD_RUQIN_CREAT_MONSTER_LEVEL_ANSWER,   //帮会入侵活动刷怪等级回复guild_srv到game_srv
@@ -436,6 +436,7 @@ struct ProtoGuildInfo
     uint32_t          guild_id;
     char              name[MAX_GUILD_NAME_LEN + 1];  //帮名
     uint32_t          zhenying;                      //帮派阵营
+	uint32_t icon; //图标
     uint64_t          master_id;                     //帮主ID
     guild_player_data player_data[MAX_GUILD_MEMBER_NUM];
 };

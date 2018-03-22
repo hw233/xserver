@@ -123,7 +123,11 @@ int scene_struct::init_scene_struct(uint64_t sceneid, bool create_monster, int l
 	if (create_monster)
 		create_all_monster(lv);
 
-	Collect::CreateRandCollect(this);
+	int ret = Collect::CreateRandCollect(this);
+	if (ret != 0)
+	{
+		LOG_ERR("%s %d: scene[%lu] CreateRandCollect failed ret =  %d", __FUNCTION__, __LINE__, sceneid, ret);
+	}
 
 	return (0);
 }
@@ -180,9 +184,9 @@ int scene_struct::broadcast_partner_create(partner_struct *partner)
 	partner->broadcast_partner_create();
 	return (0);
 }
-int scene_struct::broadcast_monster_create(monster_struct *monster, uint32_t effectid)
+int scene_struct::broadcast_monster_create(monster_struct *monster)
 {
-	monster->broadcast_monster_create(effectid);
+	monster->broadcast_monster_create();
 	return (0);
 }
 int scene_struct::broadcast_player_create(player_struct *player)
@@ -256,7 +260,7 @@ int scene_struct::add_monster_to_scene(monster_struct *monster, uint32_t effecti
 	monster->area = area;
 	if (monster->ai && monster->ai->on_alive)
 		monster->ai->on_alive(monster);
-	broadcast_monster_create(monster, effectid);
+	broadcast_monster_create(monster);
 	return (0);
 }
 

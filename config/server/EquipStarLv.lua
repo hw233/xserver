@@ -470,7 +470,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {12,12,12}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261020002] = {
 		['ID'] = 261020002,
@@ -481,7 +481,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 1,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {12,12,12}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261020003] = {
 		['ID'] = 261020003,
@@ -492,7 +492,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1200,
-		['DatabaseSelection'] = {12,12,12}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261020004] = {
 		['ID'] = 261020004,
@@ -503,7 +503,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1400,
-		['DatabaseSelection'] = {12,12,12}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261020005] = {
 		['ID'] = 261020005,
@@ -514,7 +514,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1600,
-		['DatabaseSelection'] = {12,12,12}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261020006] = {
 		['ID'] = 261020006,
@@ -525,7 +525,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1800,
-		['DatabaseSelection'] = {12,12,12}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261020007] = {
 		['ID'] = 261020007,
@@ -536,7 +536,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2000,
-		['DatabaseSelection'] = {12,12,12}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261020008] = {
 		['ID'] = 261020008,
@@ -547,7 +547,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {22,22,22}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261020009] = {
 		['ID'] = 261020009,
@@ -558,7 +558,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {22,22,22}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261020010] = {
 		['ID'] = 261020010,
@@ -569,7 +569,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2800,
-		['DatabaseSelection'] = {22,22,22}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261020011] = {
 		['ID'] = 261020011,
@@ -580,7 +580,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 5,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3100,
-		['DatabaseSelection'] = {22,22,22}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261020012] = {
 		['ID'] = 261020012,
@@ -591,7 +591,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 6,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3400,
-		['DatabaseSelection'] = {22,22,22}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261020013] = {
 		['ID'] = 261020013,
@@ -602,7 +602,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 7,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3700,
-		['DatabaseSelection'] = {22,22,22}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261020014] = {
 		['ID'] = 261020014,
@@ -613,7 +613,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 4000,
-		['DatabaseSelection'] = {22,22,22}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261020015] = {
 		['ID'] = 261020015,
@@ -624,7 +624,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {32,32,32}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261020016] = {
 		['ID'] = 261020016,
@@ -635,7 +635,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {32,32,32}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261020017] = {
 		['ID'] = 261020017,
@@ -646,7 +646,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 9,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5400,
-		['DatabaseSelection'] = {32,32,32}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261020018] = {
 		['ID'] = 261020018,
@@ -657,7 +657,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 10,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5800,
-		['DatabaseSelection'] = {32,32,32}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261020019] = {
 		['ID'] = 261020019,
@@ -668,7 +668,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 11,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6200,
-		['DatabaseSelection'] = {32,32,32}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261020020] = {
 		['ID'] = 261020020,
@@ -679,7 +679,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 12,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6600,
-		['DatabaseSelection'] = {32,32,32}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261020021] = {
 		['ID'] = 261020021,
@@ -690,7 +690,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 13,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 7000,
-		['DatabaseSelection'] = {32,32,32}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261020022] = {
 		['ID'] = 261020022,
@@ -701,7 +701,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {42,42,42}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261020023] = {
 		['ID'] = 261020023,
@@ -712,7 +712,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 15,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {42,42,42}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261020024] = {
 		['ID'] = 261020024,
@@ -723,7 +723,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 17,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8500,
-		['DatabaseSelection'] = {42,42,42}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261020025] = {
 		['ID'] = 261020025,
@@ -734,7 +734,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 19,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9000,
-		['DatabaseSelection'] = {42,42,42}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261020026] = {
 		['ID'] = 261020026,
@@ -745,7 +745,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 21,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9500,
-		['DatabaseSelection'] = {42,42,42}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261020027] = {
 		['ID'] = 261020027,
@@ -756,7 +756,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 23,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10000,
-		['DatabaseSelection'] = {42,42,42}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261020028] = {
 		['ID'] = 261020028,
@@ -767,7 +767,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 25,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10500,
-		['DatabaseSelection'] = {42,42,42}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261020029] = {
 		['ID'] = 261020029,
@@ -778,7 +778,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {52,52,52}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261020030] = {
 		['ID'] = 261020030,
@@ -789,7 +789,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 24,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {52,52,52}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261020031] = {
 		['ID'] = 261020031,
@@ -800,7 +800,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 27,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12600,
-		['DatabaseSelection'] = {52,52,52}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261020032] = {
 		['ID'] = 261020032,
@@ -811,7 +811,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 30,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13200,
-		['DatabaseSelection'] = {52,52,52}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261020033] = {
 		['ID'] = 261020033,
@@ -822,7 +822,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 33,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13800,
-		['DatabaseSelection'] = {52,52,52}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261020034] = {
 		['ID'] = 261020034,
@@ -833,7 +833,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 36,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 14400,
-		['DatabaseSelection'] = {52,52,52}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261020035] = {
 		['ID'] = 261020035,
@@ -844,7 +844,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {52,52,52}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261020036] = {
 		['ID'] = 261020036,
@@ -855,7 +855,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {62,62,62}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261020037] = {
 		['ID'] = 261020037,
@@ -866,7 +866,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 16500,
-		['DatabaseSelection'] = {62,62,62}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261020038] = {
 		['ID'] = 261020038,
@@ -877,7 +877,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 44,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17200,
-		['DatabaseSelection'] = {62,62,62}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261020039] = {
 		['ID'] = 261020039,
@@ -888,7 +888,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 48,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17900,
-		['DatabaseSelection'] = {62,62,62}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261020040] = {
 		['ID'] = 261020040,
@@ -899,7 +899,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 52,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 18600,
-		['DatabaseSelection'] = {62,62,62}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261020041] = {
 		['ID'] = 261020041,
@@ -910,7 +910,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 56,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 19300,
-		['DatabaseSelection'] = {62,62,62}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261020042] = {
 		['ID'] = 261020042,
@@ -921,7 +921,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 60,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 20000,
-		['DatabaseSelection'] = {62,62,62}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261030001] = {
 		['ID'] = 261030001,
@@ -932,7 +932,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {13,13,13}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261030002] = {
 		['ID'] = 261030002,
@@ -943,7 +943,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 1,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {13,13,13}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261030003] = {
 		['ID'] = 261030003,
@@ -954,7 +954,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1200,
-		['DatabaseSelection'] = {13,13,13}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261030004] = {
 		['ID'] = 261030004,
@@ -965,7 +965,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1400,
-		['DatabaseSelection'] = {13,13,13}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261030005] = {
 		['ID'] = 261030005,
@@ -976,7 +976,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1600,
-		['DatabaseSelection'] = {13,13,13}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261030006] = {
 		['ID'] = 261030006,
@@ -987,7 +987,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1800,
-		['DatabaseSelection'] = {13,13,13}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261030007] = {
 		['ID'] = 261030007,
@@ -998,7 +998,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2000,
-		['DatabaseSelection'] = {13,13,13}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261030008] = {
 		['ID'] = 261030008,
@@ -1009,7 +1009,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {23,23,23}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261030009] = {
 		['ID'] = 261030009,
@@ -1020,7 +1020,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {23,23,23}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261030010] = {
 		['ID'] = 261030010,
@@ -1031,7 +1031,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2800,
-		['DatabaseSelection'] = {23,23,23}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261030011] = {
 		['ID'] = 261030011,
@@ -1042,7 +1042,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 5,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3100,
-		['DatabaseSelection'] = {23,23,23}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261030012] = {
 		['ID'] = 261030012,
@@ -1053,7 +1053,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 6,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3400,
-		['DatabaseSelection'] = {23,23,23}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261030013] = {
 		['ID'] = 261030013,
@@ -1064,7 +1064,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 7,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3700,
-		['DatabaseSelection'] = {23,23,23}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261030014] = {
 		['ID'] = 261030014,
@@ -1075,7 +1075,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 4000,
-		['DatabaseSelection'] = {23,23,23}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261030015] = {
 		['ID'] = 261030015,
@@ -1086,7 +1086,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {33,33,33}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261030016] = {
 		['ID'] = 261030016,
@@ -1097,7 +1097,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {33,33,33}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261030017] = {
 		['ID'] = 261030017,
@@ -1108,7 +1108,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 9,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5400,
-		['DatabaseSelection'] = {33,33,33}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261030018] = {
 		['ID'] = 261030018,
@@ -1119,7 +1119,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 10,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5800,
-		['DatabaseSelection'] = {33,33,33}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261030019] = {
 		['ID'] = 261030019,
@@ -1130,7 +1130,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 11,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6200,
-		['DatabaseSelection'] = {33,33,33}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261030020] = {
 		['ID'] = 261030020,
@@ -1141,7 +1141,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 12,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6600,
-		['DatabaseSelection'] = {33,33,33}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261030021] = {
 		['ID'] = 261030021,
@@ -1152,7 +1152,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 13,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 7000,
-		['DatabaseSelection'] = {33,33,33}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261030022] = {
 		['ID'] = 261030022,
@@ -1163,7 +1163,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {43,43,43}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261030023] = {
 		['ID'] = 261030023,
@@ -1174,7 +1174,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 15,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {43,43,43}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261030024] = {
 		['ID'] = 261030024,
@@ -1185,7 +1185,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 17,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8500,
-		['DatabaseSelection'] = {43,43,43}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261030025] = {
 		['ID'] = 261030025,
@@ -1196,7 +1196,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 19,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9000,
-		['DatabaseSelection'] = {43,43,43}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261030026] = {
 		['ID'] = 261030026,
@@ -1207,7 +1207,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 21,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9500,
-		['DatabaseSelection'] = {43,43,43}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261030027] = {
 		['ID'] = 261030027,
@@ -1218,7 +1218,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 23,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10000,
-		['DatabaseSelection'] = {43,43,43}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261030028] = {
 		['ID'] = 261030028,
@@ -1229,7 +1229,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 25,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10500,
-		['DatabaseSelection'] = {43,43,43}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261030029] = {
 		['ID'] = 261030029,
@@ -1240,7 +1240,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {53,53,53}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261030030] = {
 		['ID'] = 261030030,
@@ -1251,7 +1251,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 24,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {53,53,53}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261030031] = {
 		['ID'] = 261030031,
@@ -1262,7 +1262,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 27,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12600,
-		['DatabaseSelection'] = {53,53,53}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261030032] = {
 		['ID'] = 261030032,
@@ -1273,7 +1273,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 30,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13200,
-		['DatabaseSelection'] = {53,53,53}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261030033] = {
 		['ID'] = 261030033,
@@ -1284,7 +1284,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 33,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13800,
-		['DatabaseSelection'] = {53,53,53}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261030034] = {
 		['ID'] = 261030034,
@@ -1295,7 +1295,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 36,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 14400,
-		['DatabaseSelection'] = {53,53,53}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261030035] = {
 		['ID'] = 261030035,
@@ -1306,7 +1306,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {53,53,53}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261030036] = {
 		['ID'] = 261030036,
@@ -1317,7 +1317,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {63,63,63}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261030037] = {
 		['ID'] = 261030037,
@@ -1328,7 +1328,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 16500,
-		['DatabaseSelection'] = {63,63,63}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261030038] = {
 		['ID'] = 261030038,
@@ -1339,7 +1339,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 44,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17200,
-		['DatabaseSelection'] = {63,63,63}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261030039] = {
 		['ID'] = 261030039,
@@ -1350,7 +1350,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 48,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17900,
-		['DatabaseSelection'] = {63,63,63}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261030040] = {
 		['ID'] = 261030040,
@@ -1361,7 +1361,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 52,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 18600,
-		['DatabaseSelection'] = {63,63,63}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261030041] = {
 		['ID'] = 261030041,
@@ -1372,7 +1372,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 56,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 19300,
-		['DatabaseSelection'] = {63,63,63}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261030042] = {
 		['ID'] = 261030042,
@@ -1383,7 +1383,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 60,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 20000,
-		['DatabaseSelection'] = {63,63,63}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261040001] = {
 		['ID'] = 261040001,
@@ -1394,7 +1394,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {14,14,14}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261040002] = {
 		['ID'] = 261040002,
@@ -1405,7 +1405,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 1,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {14,14,14}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261040003] = {
 		['ID'] = 261040003,
@@ -1416,7 +1416,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1200,
-		['DatabaseSelection'] = {14,14,14}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261040004] = {
 		['ID'] = 261040004,
@@ -1427,7 +1427,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1400,
-		['DatabaseSelection'] = {14,14,14}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261040005] = {
 		['ID'] = 261040005,
@@ -1438,7 +1438,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1600,
-		['DatabaseSelection'] = {14,14,14}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261040006] = {
 		['ID'] = 261040006,
@@ -1449,7 +1449,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1800,
-		['DatabaseSelection'] = {14,14,14}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261040007] = {
 		['ID'] = 261040007,
@@ -1460,7 +1460,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2000,
-		['DatabaseSelection'] = {14,14,14}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261040008] = {
 		['ID'] = 261040008,
@@ -1471,7 +1471,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {24,24,24}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261040009] = {
 		['ID'] = 261040009,
@@ -1482,7 +1482,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {24,24,24}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261040010] = {
 		['ID'] = 261040010,
@@ -1493,7 +1493,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2800,
-		['DatabaseSelection'] = {24,24,24}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261040011] = {
 		['ID'] = 261040011,
@@ -1504,7 +1504,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 5,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3100,
-		['DatabaseSelection'] = {24,24,24}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261040012] = {
 		['ID'] = 261040012,
@@ -1515,7 +1515,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 6,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3400,
-		['DatabaseSelection'] = {24,24,24}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261040013] = {
 		['ID'] = 261040013,
@@ -1526,7 +1526,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 7,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3700,
-		['DatabaseSelection'] = {24,24,24}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261040014] = {
 		['ID'] = 261040014,
@@ -1537,7 +1537,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 4000,
-		['DatabaseSelection'] = {24,24,24}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261040015] = {
 		['ID'] = 261040015,
@@ -1548,7 +1548,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {34,34,34}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261040016] = {
 		['ID'] = 261040016,
@@ -1559,7 +1559,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {34,34,34}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261040017] = {
 		['ID'] = 261040017,
@@ -1570,7 +1570,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 9,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5400,
-		['DatabaseSelection'] = {34,34,34}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261040018] = {
 		['ID'] = 261040018,
@@ -1581,7 +1581,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 10,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5800,
-		['DatabaseSelection'] = {34,34,34}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261040019] = {
 		['ID'] = 261040019,
@@ -1592,7 +1592,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 11,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6200,
-		['DatabaseSelection'] = {34,34,34}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261040020] = {
 		['ID'] = 261040020,
@@ -1603,7 +1603,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 12,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6600,
-		['DatabaseSelection'] = {34,34,34}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261040021] = {
 		['ID'] = 261040021,
@@ -1614,7 +1614,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 13,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 7000,
-		['DatabaseSelection'] = {34,34,34}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261040022] = {
 		['ID'] = 261040022,
@@ -1625,7 +1625,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {44,44,44}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261040023] = {
 		['ID'] = 261040023,
@@ -1636,7 +1636,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 15,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {44,44,44}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261040024] = {
 		['ID'] = 261040024,
@@ -1647,7 +1647,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 17,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8500,
-		['DatabaseSelection'] = {44,44,44}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261040025] = {
 		['ID'] = 261040025,
@@ -1658,7 +1658,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 19,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9000,
-		['DatabaseSelection'] = {44,44,44}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261040026] = {
 		['ID'] = 261040026,
@@ -1669,7 +1669,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 21,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9500,
-		['DatabaseSelection'] = {44,44,44}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261040027] = {
 		['ID'] = 261040027,
@@ -1680,7 +1680,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 23,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10000,
-		['DatabaseSelection'] = {44,44,44}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261040028] = {
 		['ID'] = 261040028,
@@ -1691,7 +1691,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 25,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10500,
-		['DatabaseSelection'] = {44,44,44}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261040029] = {
 		['ID'] = 261040029,
@@ -1702,7 +1702,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {54,54,54}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261040030] = {
 		['ID'] = 261040030,
@@ -1713,7 +1713,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 24,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {54,54,54}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261040031] = {
 		['ID'] = 261040031,
@@ -1724,7 +1724,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 27,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12600,
-		['DatabaseSelection'] = {54,54,54}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261040032] = {
 		['ID'] = 261040032,
@@ -1735,7 +1735,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 30,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13200,
-		['DatabaseSelection'] = {54,54,54}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261040033] = {
 		['ID'] = 261040033,
@@ -1746,7 +1746,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 33,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13800,
-		['DatabaseSelection'] = {54,54,54}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261040034] = {
 		['ID'] = 261040034,
@@ -1757,7 +1757,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 36,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 14400,
-		['DatabaseSelection'] = {54,54,54}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261040035] = {
 		['ID'] = 261040035,
@@ -1768,7 +1768,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {54,54,54}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261040036] = {
 		['ID'] = 261040036,
@@ -1779,7 +1779,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {64,64,64}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261040037] = {
 		['ID'] = 261040037,
@@ -1790,7 +1790,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 16500,
-		['DatabaseSelection'] = {64,64,64}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261040038] = {
 		['ID'] = 261040038,
@@ -1801,7 +1801,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 44,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17200,
-		['DatabaseSelection'] = {64,64,64}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261040039] = {
 		['ID'] = 261040039,
@@ -1812,7 +1812,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 48,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17900,
-		['DatabaseSelection'] = {64,64,64}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261040040] = {
 		['ID'] = 261040040,
@@ -1823,7 +1823,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 52,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 18600,
-		['DatabaseSelection'] = {64,64,64}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261040041] = {
 		['ID'] = 261040041,
@@ -1834,7 +1834,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 56,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 19300,
-		['DatabaseSelection'] = {64,64,64}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261040042] = {
 		['ID'] = 261040042,
@@ -1845,7 +1845,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 60,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 20000,
-		['DatabaseSelection'] = {64,64,64}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261050001] = {
 		['ID'] = 261050001,
@@ -1856,7 +1856,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {15,15,15}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261050002] = {
 		['ID'] = 261050002,
@@ -1867,7 +1867,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 1,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {15,15,15}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261050003] = {
 		['ID'] = 261050003,
@@ -1878,7 +1878,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1200,
-		['DatabaseSelection'] = {15,15,15}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261050004] = {
 		['ID'] = 261050004,
@@ -1889,7 +1889,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1400,
-		['DatabaseSelection'] = {15,15,15}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261050005] = {
 		['ID'] = 261050005,
@@ -1900,7 +1900,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1600,
-		['DatabaseSelection'] = {15,15,15}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261050006] = {
 		['ID'] = 261050006,
@@ -1911,7 +1911,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1800,
-		['DatabaseSelection'] = {15,15,15}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261050007] = {
 		['ID'] = 261050007,
@@ -1922,7 +1922,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2000,
-		['DatabaseSelection'] = {15,15,15}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261050008] = {
 		['ID'] = 261050008,
@@ -1933,7 +1933,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {25,25,25}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261050009] = {
 		['ID'] = 261050009,
@@ -1944,7 +1944,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {25,25,25}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261050010] = {
 		['ID'] = 261050010,
@@ -1955,7 +1955,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2800,
-		['DatabaseSelection'] = {25,25,25}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261050011] = {
 		['ID'] = 261050011,
@@ -1966,7 +1966,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 5,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3100,
-		['DatabaseSelection'] = {25,25,25}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261050012] = {
 		['ID'] = 261050012,
@@ -1977,7 +1977,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 6,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3400,
-		['DatabaseSelection'] = {25,25,25}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261050013] = {
 		['ID'] = 261050013,
@@ -1988,7 +1988,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 7,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3700,
-		['DatabaseSelection'] = {25,25,25}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261050014] = {
 		['ID'] = 261050014,
@@ -1999,7 +1999,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 4000,
-		['DatabaseSelection'] = {25,25,25}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261050015] = {
 		['ID'] = 261050015,
@@ -2010,7 +2010,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {35,35,35}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261050016] = {
 		['ID'] = 261050016,
@@ -2021,7 +2021,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {35,35,35}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261050017] = {
 		['ID'] = 261050017,
@@ -2032,7 +2032,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 9,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5400,
-		['DatabaseSelection'] = {35,35,35}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261050018] = {
 		['ID'] = 261050018,
@@ -2043,7 +2043,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 10,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5800,
-		['DatabaseSelection'] = {35,35,35}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261050019] = {
 		['ID'] = 261050019,
@@ -2054,7 +2054,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 11,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6200,
-		['DatabaseSelection'] = {35,35,35}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261050020] = {
 		['ID'] = 261050020,
@@ -2065,7 +2065,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 12,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6600,
-		['DatabaseSelection'] = {35,35,35}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261050021] = {
 		['ID'] = 261050021,
@@ -2076,7 +2076,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 13,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 7000,
-		['DatabaseSelection'] = {35,35,35}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261050022] = {
 		['ID'] = 261050022,
@@ -2087,7 +2087,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {45,45,45}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261050023] = {
 		['ID'] = 261050023,
@@ -2098,7 +2098,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 15,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {45,45,45}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261050024] = {
 		['ID'] = 261050024,
@@ -2109,7 +2109,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 17,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8500,
-		['DatabaseSelection'] = {45,45,45}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261050025] = {
 		['ID'] = 261050025,
@@ -2120,7 +2120,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 19,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9000,
-		['DatabaseSelection'] = {45,45,45}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261050026] = {
 		['ID'] = 261050026,
@@ -2131,7 +2131,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 21,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9500,
-		['DatabaseSelection'] = {45,45,45}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261050027] = {
 		['ID'] = 261050027,
@@ -2142,7 +2142,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 23,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10000,
-		['DatabaseSelection'] = {45,45,45}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261050028] = {
 		['ID'] = 261050028,
@@ -2153,7 +2153,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 25,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10500,
-		['DatabaseSelection'] = {45,45,45}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261050029] = {
 		['ID'] = 261050029,
@@ -2164,7 +2164,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {55,55,55}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261050030] = {
 		['ID'] = 261050030,
@@ -2175,7 +2175,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 24,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {55,55,55}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261050031] = {
 		['ID'] = 261050031,
@@ -2186,7 +2186,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 27,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12600,
-		['DatabaseSelection'] = {55,55,55}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261050032] = {
 		['ID'] = 261050032,
@@ -2197,7 +2197,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 30,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13200,
-		['DatabaseSelection'] = {55,55,55}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261050033] = {
 		['ID'] = 261050033,
@@ -2208,7 +2208,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 33,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13800,
-		['DatabaseSelection'] = {55,55,55}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261050034] = {
 		['ID'] = 261050034,
@@ -2219,7 +2219,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 36,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 14400,
-		['DatabaseSelection'] = {55,55,55}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261050035] = {
 		['ID'] = 261050035,
@@ -2230,7 +2230,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {55,55,55}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261050036] = {
 		['ID'] = 261050036,
@@ -2241,7 +2241,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {65,65,65}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261050037] = {
 		['ID'] = 261050037,
@@ -2252,7 +2252,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 16500,
-		['DatabaseSelection'] = {65,65,65}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261050038] = {
 		['ID'] = 261050038,
@@ -2263,7 +2263,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 44,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17200,
-		['DatabaseSelection'] = {65,65,65}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261050039] = {
 		['ID'] = 261050039,
@@ -2274,7 +2274,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 48,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17900,
-		['DatabaseSelection'] = {65,65,65}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261050040] = {
 		['ID'] = 261050040,
@@ -2285,7 +2285,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 52,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 18600,
-		['DatabaseSelection'] = {65,65,65}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261050041] = {
 		['ID'] = 261050041,
@@ -2296,7 +2296,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 56,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 19300,
-		['DatabaseSelection'] = {65,65,65}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261050042] = {
 		['ID'] = 261050042,
@@ -2307,7 +2307,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 60,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 20000,
-		['DatabaseSelection'] = {65,65,65}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261060001] = {
 		['ID'] = 261060001,
@@ -2318,7 +2318,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {16,16,16}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261060002] = {
 		['ID'] = 261060002,
@@ -2329,7 +2329,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 1,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {16,16,16}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261060003] = {
 		['ID'] = 261060003,
@@ -2340,7 +2340,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1200,
-		['DatabaseSelection'] = {16,16,16}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261060004] = {
 		['ID'] = 261060004,
@@ -2351,7 +2351,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1400,
-		['DatabaseSelection'] = {16,16,16}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261060005] = {
 		['ID'] = 261060005,
@@ -2362,7 +2362,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1600,
-		['DatabaseSelection'] = {16,16,16}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261060006] = {
 		['ID'] = 261060006,
@@ -2373,7 +2373,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1800,
-		['DatabaseSelection'] = {16,16,16}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261060007] = {
 		['ID'] = 261060007,
@@ -2384,7 +2384,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2000,
-		['DatabaseSelection'] = {16,16,16}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261060008] = {
 		['ID'] = 261060008,
@@ -2395,7 +2395,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {26,26,26}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261060009] = {
 		['ID'] = 261060009,
@@ -2406,7 +2406,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {26,26,26}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261060010] = {
 		['ID'] = 261060010,
@@ -2417,7 +2417,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2800,
-		['DatabaseSelection'] = {26,26,26}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261060011] = {
 		['ID'] = 261060011,
@@ -2428,7 +2428,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 5,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3100,
-		['DatabaseSelection'] = {26,26,26}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261060012] = {
 		['ID'] = 261060012,
@@ -2439,7 +2439,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 6,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3400,
-		['DatabaseSelection'] = {26,26,26}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261060013] = {
 		['ID'] = 261060013,
@@ -2450,7 +2450,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 7,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3700,
-		['DatabaseSelection'] = {26,26,26}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261060014] = {
 		['ID'] = 261060014,
@@ -2461,7 +2461,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 4000,
-		['DatabaseSelection'] = {26,26,26}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261060015] = {
 		['ID'] = 261060015,
@@ -2472,7 +2472,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {36,36,36}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261060016] = {
 		['ID'] = 261060016,
@@ -2483,7 +2483,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {36,36,36}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261060017] = {
 		['ID'] = 261060017,
@@ -2494,7 +2494,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 9,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5400,
-		['DatabaseSelection'] = {36,36,36}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261060018] = {
 		['ID'] = 261060018,
@@ -2505,7 +2505,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 10,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5800,
-		['DatabaseSelection'] = {36,36,36}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261060019] = {
 		['ID'] = 261060019,
@@ -2516,7 +2516,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 11,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6200,
-		['DatabaseSelection'] = {36,36,36}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261060020] = {
 		['ID'] = 261060020,
@@ -2527,7 +2527,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 12,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6600,
-		['DatabaseSelection'] = {36,36,36}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261060021] = {
 		['ID'] = 261060021,
@@ -2538,7 +2538,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 13,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 7000,
-		['DatabaseSelection'] = {36,36,36}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261060022] = {
 		['ID'] = 261060022,
@@ -2549,7 +2549,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {46,46,46}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261060023] = {
 		['ID'] = 261060023,
@@ -2560,7 +2560,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 15,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {46,46,46}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261060024] = {
 		['ID'] = 261060024,
@@ -2571,7 +2571,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 17,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8500,
-		['DatabaseSelection'] = {46,46,46}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261060025] = {
 		['ID'] = 261060025,
@@ -2582,7 +2582,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 19,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9000,
-		['DatabaseSelection'] = {46,46,46}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261060026] = {
 		['ID'] = 261060026,
@@ -2593,7 +2593,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 21,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9500,
-		['DatabaseSelection'] = {46,46,46}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261060027] = {
 		['ID'] = 261060027,
@@ -2604,7 +2604,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 23,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10000,
-		['DatabaseSelection'] = {46,46,46}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261060028] = {
 		['ID'] = 261060028,
@@ -2615,7 +2615,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 25,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10500,
-		['DatabaseSelection'] = {46,46,46}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261060029] = {
 		['ID'] = 261060029,
@@ -2626,7 +2626,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {56,56,56}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261060030] = {
 		['ID'] = 261060030,
@@ -2637,7 +2637,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 24,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {56,56,56}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261060031] = {
 		['ID'] = 261060031,
@@ -2648,7 +2648,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 27,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12600,
-		['DatabaseSelection'] = {56,56,56}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261060032] = {
 		['ID'] = 261060032,
@@ -2659,7 +2659,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 30,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13200,
-		['DatabaseSelection'] = {56,56,56}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261060033] = {
 		['ID'] = 261060033,
@@ -2670,7 +2670,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 33,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13800,
-		['DatabaseSelection'] = {56,56,56}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261060034] = {
 		['ID'] = 261060034,
@@ -2681,7 +2681,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 36,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 14400,
-		['DatabaseSelection'] = {56,56,56}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261060035] = {
 		['ID'] = 261060035,
@@ -2692,7 +2692,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {56,56,56}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261060036] = {
 		['ID'] = 261060036,
@@ -2703,7 +2703,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {66,66,66}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261060037] = {
 		['ID'] = 261060037,
@@ -2714,7 +2714,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 16500,
-		['DatabaseSelection'] = {66,66,66}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261060038] = {
 		['ID'] = 261060038,
@@ -2725,7 +2725,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 44,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17200,
-		['DatabaseSelection'] = {66,66,66}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261060039] = {
 		['ID'] = 261060039,
@@ -2736,7 +2736,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 48,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17900,
-		['DatabaseSelection'] = {66,66,66}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261060040] = {
 		['ID'] = 261060040,
@@ -2747,7 +2747,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 52,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 18600,
-		['DatabaseSelection'] = {66,66,66}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261060041] = {
 		['ID'] = 261060041,
@@ -2758,7 +2758,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 56,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 19300,
-		['DatabaseSelection'] = {66,66,66}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261060042] = {
 		['ID'] = 261060042,
@@ -2769,7 +2769,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 60,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 20000,
-		['DatabaseSelection'] = {66,66,66}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261070001] = {
 		['ID'] = 261070001,
@@ -2780,7 +2780,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {17,17,17}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261070002] = {
 		['ID'] = 261070002,
@@ -2791,7 +2791,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 1,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {17,17,17}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261070003] = {
 		['ID'] = 261070003,
@@ -2802,7 +2802,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1200,
-		['DatabaseSelection'] = {17,17,17}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261070004] = {
 		['ID'] = 261070004,
@@ -2813,7 +2813,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1400,
-		['DatabaseSelection'] = {17,17,17}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261070005] = {
 		['ID'] = 261070005,
@@ -2824,7 +2824,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1600,
-		['DatabaseSelection'] = {17,17,17}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261070006] = {
 		['ID'] = 261070006,
@@ -2835,7 +2835,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1800,
-		['DatabaseSelection'] = {17,17,17}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261070007] = {
 		['ID'] = 261070007,
@@ -2846,7 +2846,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2000,
-		['DatabaseSelection'] = {17,17,17}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261070008] = {
 		['ID'] = 261070008,
@@ -2857,7 +2857,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {27,27,27}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261070009] = {
 		['ID'] = 261070009,
@@ -2868,7 +2868,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {27,27,27}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261070010] = {
 		['ID'] = 261070010,
@@ -2879,7 +2879,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2800,
-		['DatabaseSelection'] = {27,27,27}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261070011] = {
 		['ID'] = 261070011,
@@ -2890,7 +2890,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 5,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3100,
-		['DatabaseSelection'] = {27,27,27}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261070012] = {
 		['ID'] = 261070012,
@@ -2901,7 +2901,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 6,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3400,
-		['DatabaseSelection'] = {27,27,27}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261070013] = {
 		['ID'] = 261070013,
@@ -2912,7 +2912,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 7,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3700,
-		['DatabaseSelection'] = {27,27,27}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261070014] = {
 		['ID'] = 261070014,
@@ -2923,7 +2923,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 4000,
-		['DatabaseSelection'] = {27,27,27}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261070015] = {
 		['ID'] = 261070015,
@@ -2934,7 +2934,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {37,37,37}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261070016] = {
 		['ID'] = 261070016,
@@ -2945,7 +2945,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {37,37,37}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261070017] = {
 		['ID'] = 261070017,
@@ -2956,7 +2956,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 9,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5400,
-		['DatabaseSelection'] = {37,37,37}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261070018] = {
 		['ID'] = 261070018,
@@ -2967,7 +2967,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 10,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5800,
-		['DatabaseSelection'] = {37,37,37}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261070019] = {
 		['ID'] = 261070019,
@@ -2978,7 +2978,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 11,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6200,
-		['DatabaseSelection'] = {37,37,37}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261070020] = {
 		['ID'] = 261070020,
@@ -2989,7 +2989,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 12,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6600,
-		['DatabaseSelection'] = {37,37,37}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261070021] = {
 		['ID'] = 261070021,
@@ -3000,7 +3000,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 13,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 7000,
-		['DatabaseSelection'] = {37,37,37}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261070022] = {
 		['ID'] = 261070022,
@@ -3011,7 +3011,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {47,47,47}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261070023] = {
 		['ID'] = 261070023,
@@ -3022,7 +3022,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 15,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {47,47,47}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261070024] = {
 		['ID'] = 261070024,
@@ -3033,7 +3033,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 17,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8500,
-		['DatabaseSelection'] = {47,47,47}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261070025] = {
 		['ID'] = 261070025,
@@ -3044,7 +3044,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 19,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9000,
-		['DatabaseSelection'] = {47,47,47}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261070026] = {
 		['ID'] = 261070026,
@@ -3055,7 +3055,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 21,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9500,
-		['DatabaseSelection'] = {47,47,47}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261070027] = {
 		['ID'] = 261070027,
@@ -3066,7 +3066,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 23,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10000,
-		['DatabaseSelection'] = {47,47,47}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261070028] = {
 		['ID'] = 261070028,
@@ -3077,7 +3077,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 25,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10500,
-		['DatabaseSelection'] = {47,47,47}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261070029] = {
 		['ID'] = 261070029,
@@ -3088,7 +3088,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {57,57,57}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261070030] = {
 		['ID'] = 261070030,
@@ -3099,7 +3099,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 24,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {57,57,57}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261070031] = {
 		['ID'] = 261070031,
@@ -3110,7 +3110,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 27,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12600,
-		['DatabaseSelection'] = {57,57,57}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261070032] = {
 		['ID'] = 261070032,
@@ -3121,7 +3121,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 30,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13200,
-		['DatabaseSelection'] = {57,57,57}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261070033] = {
 		['ID'] = 261070033,
@@ -3132,7 +3132,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 33,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13800,
-		['DatabaseSelection'] = {57,57,57}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261070034] = {
 		['ID'] = 261070034,
@@ -3143,7 +3143,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 36,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 14400,
-		['DatabaseSelection'] = {57,57,57}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261070035] = {
 		['ID'] = 261070035,
@@ -3154,7 +3154,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {57,57,57}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261070036] = {
 		['ID'] = 261070036,
@@ -3165,7 +3165,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {67,67,67}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261070037] = {
 		['ID'] = 261070037,
@@ -3176,7 +3176,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 16500,
-		['DatabaseSelection'] = {67,67,67}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261070038] = {
 		['ID'] = 261070038,
@@ -3187,7 +3187,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 44,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17200,
-		['DatabaseSelection'] = {67,67,67}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261070039] = {
 		['ID'] = 261070039,
@@ -3198,7 +3198,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 48,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17900,
-		['DatabaseSelection'] = {67,67,67}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261070040] = {
 		['ID'] = 261070040,
@@ -3209,7 +3209,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 52,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 18600,
-		['DatabaseSelection'] = {67,67,67}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261070041] = {
 		['ID'] = 261070041,
@@ -3220,7 +3220,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 56,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 19300,
-		['DatabaseSelection'] = {67,67,67}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261070042] = {
 		['ID'] = 261070042,
@@ -3231,7 +3231,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 60,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 20000,
-		['DatabaseSelection'] = {67,67,67}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261080001] = {
 		['ID'] = 261080001,
@@ -3242,7 +3242,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {18,18,18}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261080002] = {
 		['ID'] = 261080002,
@@ -3253,7 +3253,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 1,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {18,18,18}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261080003] = {
 		['ID'] = 261080003,
@@ -3264,7 +3264,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1200,
-		['DatabaseSelection'] = {18,18,18}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261080004] = {
 		['ID'] = 261080004,
@@ -3275,7 +3275,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1400,
-		['DatabaseSelection'] = {18,18,18}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261080005] = {
 		['ID'] = 261080005,
@@ -3286,7 +3286,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1600,
-		['DatabaseSelection'] = {18,18,18}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261080006] = {
 		['ID'] = 261080006,
@@ -3297,7 +3297,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1800,
-		['DatabaseSelection'] = {18,18,18}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261080007] = {
 		['ID'] = 261080007,
@@ -3308,7 +3308,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2000,
-		['DatabaseSelection'] = {18,18,18}
+		['DatabaseSelection'] = {16,16,16}
 		},
 	[261080008] = {
 		['ID'] = 261080008,
@@ -3319,7 +3319,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {28,28,28}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261080009] = {
 		['ID'] = 261080009,
@@ -3330,7 +3330,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {28,28,28}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261080010] = {
 		['ID'] = 261080010,
@@ -3341,7 +3341,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2800,
-		['DatabaseSelection'] = {28,28,28}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261080011] = {
 		['ID'] = 261080011,
@@ -3352,7 +3352,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 5,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3100,
-		['DatabaseSelection'] = {28,28,28}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261080012] = {
 		['ID'] = 261080012,
@@ -3363,7 +3363,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 6,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3400,
-		['DatabaseSelection'] = {28,28,28}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261080013] = {
 		['ID'] = 261080013,
@@ -3374,7 +3374,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 7,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3700,
-		['DatabaseSelection'] = {28,28,28}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261080014] = {
 		['ID'] = 261080014,
@@ -3385,7 +3385,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 4000,
-		['DatabaseSelection'] = {28,28,28}
+		['DatabaseSelection'] = {26,26,26}
 		},
 	[261080015] = {
 		['ID'] = 261080015,
@@ -3396,7 +3396,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {38,38,38}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261080016] = {
 		['ID'] = 261080016,
@@ -3407,7 +3407,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {38,38,38}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261080017] = {
 		['ID'] = 261080017,
@@ -3418,7 +3418,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 9,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5400,
-		['DatabaseSelection'] = {38,38,38}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261080018] = {
 		['ID'] = 261080018,
@@ -3429,7 +3429,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 10,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5800,
-		['DatabaseSelection'] = {38,38,38}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261080019] = {
 		['ID'] = 261080019,
@@ -3440,7 +3440,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 11,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6200,
-		['DatabaseSelection'] = {38,38,38}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261080020] = {
 		['ID'] = 261080020,
@@ -3451,7 +3451,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 12,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6600,
-		['DatabaseSelection'] = {38,38,38}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261080021] = {
 		['ID'] = 261080021,
@@ -3462,7 +3462,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 13,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 7000,
-		['DatabaseSelection'] = {38,38,38}
+		['DatabaseSelection'] = {36,36,36}
 		},
 	[261080022] = {
 		['ID'] = 261080022,
@@ -3473,7 +3473,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {48,48,48}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261080023] = {
 		['ID'] = 261080023,
@@ -3484,7 +3484,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 15,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {48,48,48}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261080024] = {
 		['ID'] = 261080024,
@@ -3495,7 +3495,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 17,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8500,
-		['DatabaseSelection'] = {48,48,48}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261080025] = {
 		['ID'] = 261080025,
@@ -3506,7 +3506,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 19,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9000,
-		['DatabaseSelection'] = {48,48,48}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261080026] = {
 		['ID'] = 261080026,
@@ -3517,7 +3517,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 21,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9500,
-		['DatabaseSelection'] = {48,48,48}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261080027] = {
 		['ID'] = 261080027,
@@ -3528,7 +3528,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 23,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10000,
-		['DatabaseSelection'] = {48,48,48}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261080028] = {
 		['ID'] = 261080028,
@@ -3539,7 +3539,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 25,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10500,
-		['DatabaseSelection'] = {48,48,48}
+		['DatabaseSelection'] = {46,46,46}
 		},
 	[261080029] = {
 		['ID'] = 261080029,
@@ -3550,7 +3550,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {58,58,58}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261080030] = {
 		['ID'] = 261080030,
@@ -3561,7 +3561,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 24,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {58,58,58}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261080031] = {
 		['ID'] = 261080031,
@@ -3572,7 +3572,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 27,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12600,
-		['DatabaseSelection'] = {58,58,58}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261080032] = {
 		['ID'] = 261080032,
@@ -3583,7 +3583,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 30,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13200,
-		['DatabaseSelection'] = {58,58,58}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261080033] = {
 		['ID'] = 261080033,
@@ -3594,7 +3594,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 33,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13800,
-		['DatabaseSelection'] = {58,58,58}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261080034] = {
 		['ID'] = 261080034,
@@ -3605,7 +3605,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 36,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 14400,
-		['DatabaseSelection'] = {58,58,58}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261080035] = {
 		['ID'] = 261080035,
@@ -3616,7 +3616,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {58,58,58}
+		['DatabaseSelection'] = {56,56,56}
 		},
 	[261080036] = {
 		['ID'] = 261080036,
@@ -3627,7 +3627,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {68,68,68}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261080037] = {
 		['ID'] = 261080037,
@@ -3638,7 +3638,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 16500,
-		['DatabaseSelection'] = {68,68,68}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261080038] = {
 		['ID'] = 261080038,
@@ -3649,7 +3649,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 44,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17200,
-		['DatabaseSelection'] = {68,68,68}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261080039] = {
 		['ID'] = 261080039,
@@ -3660,7 +3660,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 48,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17900,
-		['DatabaseSelection'] = {68,68,68}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261080040] = {
 		['ID'] = 261080040,
@@ -3671,7 +3671,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 52,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 18600,
-		['DatabaseSelection'] = {68,68,68}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261080041] = {
 		['ID'] = 261080041,
@@ -3682,7 +3682,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 56,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 19300,
-		['DatabaseSelection'] = {68,68,68}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261080042] = {
 		['ID'] = 261080042,
@@ -3693,7 +3693,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 60,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 20000,
-		['DatabaseSelection'] = {68,68,68}
+		['DatabaseSelection'] = {66,66,66}
 		},
 	[261090001] = {
 		['ID'] = 261090001,
@@ -3704,7 +3704,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {19,19,19}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261090002] = {
 		['ID'] = 261090002,
@@ -3715,7 +3715,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 1,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {19,19,19}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261090003] = {
 		['ID'] = 261090003,
@@ -3726,7 +3726,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1200,
-		['DatabaseSelection'] = {19,19,19}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261090004] = {
 		['ID'] = 261090004,
@@ -3737,7 +3737,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1400,
-		['DatabaseSelection'] = {19,19,19}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261090005] = {
 		['ID'] = 261090005,
@@ -3748,7 +3748,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1600,
-		['DatabaseSelection'] = {19,19,19}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261090006] = {
 		['ID'] = 261090006,
@@ -3759,7 +3759,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1800,
-		['DatabaseSelection'] = {19,19,19}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261090007] = {
 		['ID'] = 261090007,
@@ -3770,7 +3770,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2000,
-		['DatabaseSelection'] = {19,19,19}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261090008] = {
 		['ID'] = 261090008,
@@ -3781,7 +3781,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {29,29,29}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261090009] = {
 		['ID'] = 261090009,
@@ -3792,7 +3792,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {29,29,29}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261090010] = {
 		['ID'] = 261090010,
@@ -3803,7 +3803,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2800,
-		['DatabaseSelection'] = {29,29,29}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261090011] = {
 		['ID'] = 261090011,
@@ -3814,7 +3814,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 5,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3100,
-		['DatabaseSelection'] = {29,29,29}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261090012] = {
 		['ID'] = 261090012,
@@ -3825,7 +3825,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 6,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3400,
-		['DatabaseSelection'] = {29,29,29}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261090013] = {
 		['ID'] = 261090013,
@@ -3836,7 +3836,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 7,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3700,
-		['DatabaseSelection'] = {29,29,29}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261090014] = {
 		['ID'] = 261090014,
@@ -3847,7 +3847,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 4000,
-		['DatabaseSelection'] = {29,29,29}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261090015] = {
 		['ID'] = 261090015,
@@ -3858,7 +3858,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {39,39,39}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261090016] = {
 		['ID'] = 261090016,
@@ -3869,7 +3869,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {39,39,39}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261090017] = {
 		['ID'] = 261090017,
@@ -3880,7 +3880,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 9,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5400,
-		['DatabaseSelection'] = {39,39,39}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261090018] = {
 		['ID'] = 261090018,
@@ -3891,7 +3891,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 10,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5800,
-		['DatabaseSelection'] = {39,39,39}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261090019] = {
 		['ID'] = 261090019,
@@ -3902,7 +3902,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 11,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6200,
-		['DatabaseSelection'] = {39,39,39}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261090020] = {
 		['ID'] = 261090020,
@@ -3913,7 +3913,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 12,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6600,
-		['DatabaseSelection'] = {39,39,39}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261090021] = {
 		['ID'] = 261090021,
@@ -3924,7 +3924,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 13,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 7000,
-		['DatabaseSelection'] = {39,39,39}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261090022] = {
 		['ID'] = 261090022,
@@ -3935,7 +3935,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {49,49,49}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261090023] = {
 		['ID'] = 261090023,
@@ -3946,7 +3946,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 15,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {49,49,49}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261090024] = {
 		['ID'] = 261090024,
@@ -3957,7 +3957,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 17,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8500,
-		['DatabaseSelection'] = {49,49,49}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261090025] = {
 		['ID'] = 261090025,
@@ -3968,7 +3968,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 19,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9000,
-		['DatabaseSelection'] = {49,49,49}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261090026] = {
 		['ID'] = 261090026,
@@ -3979,7 +3979,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 21,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9500,
-		['DatabaseSelection'] = {49,49,49}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261090027] = {
 		['ID'] = 261090027,
@@ -3990,7 +3990,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 23,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10000,
-		['DatabaseSelection'] = {49,49,49}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261090028] = {
 		['ID'] = 261090028,
@@ -4001,7 +4001,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 25,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10500,
-		['DatabaseSelection'] = {49,49,49}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261090029] = {
 		['ID'] = 261090029,
@@ -4012,7 +4012,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {59,59,59}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261090030] = {
 		['ID'] = 261090030,
@@ -4023,7 +4023,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 24,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {59,59,59}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261090031] = {
 		['ID'] = 261090031,
@@ -4034,7 +4034,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 27,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12600,
-		['DatabaseSelection'] = {59,59,59}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261090032] = {
 		['ID'] = 261090032,
@@ -4045,7 +4045,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 30,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13200,
-		['DatabaseSelection'] = {59,59,59}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261090033] = {
 		['ID'] = 261090033,
@@ -4056,7 +4056,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 33,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13800,
-		['DatabaseSelection'] = {59,59,59}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261090034] = {
 		['ID'] = 261090034,
@@ -4067,7 +4067,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 36,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 14400,
-		['DatabaseSelection'] = {59,59,59}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261090035] = {
 		['ID'] = 261090035,
@@ -4078,7 +4078,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {59,59,59}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261090036] = {
 		['ID'] = 261090036,
@@ -4089,7 +4089,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {69,69,69}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261090037] = {
 		['ID'] = 261090037,
@@ -4100,7 +4100,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 16500,
-		['DatabaseSelection'] = {69,69,69}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261090038] = {
 		['ID'] = 261090038,
@@ -4111,7 +4111,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 44,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17200,
-		['DatabaseSelection'] = {69,69,69}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261090039] = {
 		['ID'] = 261090039,
@@ -4122,7 +4122,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 48,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17900,
-		['DatabaseSelection'] = {69,69,69}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261090040] = {
 		['ID'] = 261090040,
@@ -4133,7 +4133,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 52,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 18600,
-		['DatabaseSelection'] = {69,69,69}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261090041] = {
 		['ID'] = 261090041,
@@ -4144,7 +4144,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 56,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 19300,
-		['DatabaseSelection'] = {69,69,69}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261090042] = {
 		['ID'] = 261090042,
@@ -4155,7 +4155,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 60,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 20000,
-		['DatabaseSelection'] = {69,69,69}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261100001] = {
 		['ID'] = 261100001,
@@ -4166,7 +4166,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {20,20,20}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261100002] = {
 		['ID'] = 261100002,
@@ -4177,7 +4177,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 1,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1000,
-		['DatabaseSelection'] = {20,20,20}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261100003] = {
 		['ID'] = 261100003,
@@ -4188,7 +4188,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1200,
-		['DatabaseSelection'] = {20,20,20}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261100004] = {
 		['ID'] = 261100004,
@@ -4199,7 +4199,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 2,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1400,
-		['DatabaseSelection'] = {20,20,20}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261100005] = {
 		['ID'] = 261100005,
@@ -4210,7 +4210,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1600,
-		['DatabaseSelection'] = {20,20,20}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261100006] = {
 		['ID'] = 261100006,
@@ -4221,7 +4221,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 1800,
-		['DatabaseSelection'] = {20,20,20}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261100007] = {
 		['ID'] = 261100007,
@@ -4232,7 +4232,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2000,
-		['DatabaseSelection'] = {20,20,20}
+		['DatabaseSelection'] = {11,11,11}
 		},
 	[261100008] = {
 		['ID'] = 261100008,
@@ -4243,7 +4243,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {30,30,30}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261100009] = {
 		['ID'] = 261100009,
@@ -4254,7 +4254,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 3,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2500,
-		['DatabaseSelection'] = {30,30,30}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261100010] = {
 		['ID'] = 261100010,
@@ -4265,7 +4265,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 4,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 2800,
-		['DatabaseSelection'] = {30,30,30}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261100011] = {
 		['ID'] = 261100011,
@@ -4276,7 +4276,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 5,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3100,
-		['DatabaseSelection'] = {30,30,30}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261100012] = {
 		['ID'] = 261100012,
@@ -4287,7 +4287,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 6,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3400,
-		['DatabaseSelection'] = {30,30,30}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261100013] = {
 		['ID'] = 261100013,
@@ -4298,7 +4298,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 7,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 3700,
-		['DatabaseSelection'] = {30,30,30}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261100014] = {
 		['ID'] = 261100014,
@@ -4309,7 +4309,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060001,
 		['ConsumeCoin'] = 4000,
-		['DatabaseSelection'] = {30,30,30}
+		['DatabaseSelection'] = {21,21,21}
 		},
 	[261100015] = {
 		['ID'] = 261100015,
@@ -4320,7 +4320,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {40,40,40}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261100016] = {
 		['ID'] = 261100016,
@@ -4331,7 +4331,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 8,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5000,
-		['DatabaseSelection'] = {40,40,40}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261100017] = {
 		['ID'] = 261100017,
@@ -4342,7 +4342,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 9,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5400,
-		['DatabaseSelection'] = {40,40,40}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261100018] = {
 		['ID'] = 261100018,
@@ -4353,7 +4353,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 10,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 5800,
-		['DatabaseSelection'] = {40,40,40}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261100019] = {
 		['ID'] = 261100019,
@@ -4364,7 +4364,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 11,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6200,
-		['DatabaseSelection'] = {40,40,40}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261100020] = {
 		['ID'] = 261100020,
@@ -4375,7 +4375,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 12,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 6600,
-		['DatabaseSelection'] = {40,40,40}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261100021] = {
 		['ID'] = 261100021,
@@ -4386,7 +4386,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 13,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 7000,
-		['DatabaseSelection'] = {40,40,40}
+		['DatabaseSelection'] = {31,31,31}
 		},
 	[261100022] = {
 		['ID'] = 261100022,
@@ -4397,7 +4397,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {50,50,50}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261100023] = {
 		['ID'] = 261100023,
@@ -4408,7 +4408,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 15,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8000,
-		['DatabaseSelection'] = {50,50,50}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261100024] = {
 		['ID'] = 261100024,
@@ -4419,7 +4419,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 17,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 8500,
-		['DatabaseSelection'] = {50,50,50}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261100025] = {
 		['ID'] = 261100025,
@@ -4430,7 +4430,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 19,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9000,
-		['DatabaseSelection'] = {50,50,50}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261100026] = {
 		['ID'] = 261100026,
@@ -4441,7 +4441,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 21,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 9500,
-		['DatabaseSelection'] = {50,50,50}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261100027] = {
 		['ID'] = 261100027,
@@ -4452,7 +4452,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 23,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10000,
-		['DatabaseSelection'] = {50,50,50}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261100028] = {
 		['ID'] = 261100028,
@@ -4463,7 +4463,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 25,
 		['ConsumeItem'] = 201060002,
 		['ConsumeCoin'] = 10500,
-		['DatabaseSelection'] = {50,50,50}
+		['DatabaseSelection'] = {41,41,41}
 		},
 	[261100029] = {
 		['ID'] = 261100029,
@@ -4474,7 +4474,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {60,60,60}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261100030] = {
 		['ID'] = 261100030,
@@ -4485,7 +4485,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 24,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12000,
-		['DatabaseSelection'] = {60,60,60}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261100031] = {
 		['ID'] = 261100031,
@@ -4496,7 +4496,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 27,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 12600,
-		['DatabaseSelection'] = {60,60,60}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261100032] = {
 		['ID'] = 261100032,
@@ -4507,7 +4507,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 30,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13200,
-		['DatabaseSelection'] = {60,60,60}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261100033] = {
 		['ID'] = 261100033,
@@ -4518,7 +4518,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 33,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 13800,
-		['DatabaseSelection'] = {60,60,60}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261100034] = {
 		['ID'] = 261100034,
@@ -4529,7 +4529,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 36,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 14400,
-		['DatabaseSelection'] = {60,60,60}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261100035] = {
 		['ID'] = 261100035,
@@ -4540,7 +4540,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {60,60,60}
+		['DatabaseSelection'] = {51,51,51}
 		},
 	[261100036] = {
 		['ID'] = 261100036,
@@ -4551,7 +4551,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 0,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 15000,
-		['DatabaseSelection'] = {70,70,70}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261100037] = {
 		['ID'] = 261100037,
@@ -4562,7 +4562,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 40,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 16500,
-		['DatabaseSelection'] = {70,70,70}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261100038] = {
 		['ID'] = 261100038,
@@ -4573,7 +4573,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 44,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17200,
-		['DatabaseSelection'] = {70,70,70}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261100039] = {
 		['ID'] = 261100039,
@@ -4584,7 +4584,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 48,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 17900,
-		['DatabaseSelection'] = {70,70,70}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261100040] = {
 		['ID'] = 261100040,
@@ -4595,7 +4595,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 52,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 18600,
-		['DatabaseSelection'] = {70,70,70}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261100041] = {
 		['ID'] = 261100041,
@@ -4606,7 +4606,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 56,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 19300,
-		['DatabaseSelection'] = {70,70,70}
+		['DatabaseSelection'] = {61,61,61}
 		},
 	[261100042] = {
 		['ID'] = 261100042,
@@ -4617,7 +4617,7 @@ local EquipStarLv = {
 		['StarSchedule'] = 60,
 		['ConsumeItem'] = 201060003,
 		['ConsumeCoin'] = 20000,
-		['DatabaseSelection'] = {70,70,70}
+		['DatabaseSelection'] = {61,61,61}
 		}
 	}
 return EquipStarLv

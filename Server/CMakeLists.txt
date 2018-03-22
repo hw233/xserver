@@ -27,6 +27,7 @@ option(MEMERR
 add_subdirectory(proto)
 add_subdirectory(comm_lib)
 add_subdirectory(conn_srv)
+add_subdirectory(conn_srv_2)
 add_subdirectory(game_srv)
 add_subdirectory(game_srv/so_game_srv)
 

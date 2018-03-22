@@ -103,7 +103,7 @@ int partner_manager::resume_partner_struct(int num, unsigned long key)
 		struct partner_data *data = (struct partner_data *)get_next_inuse_mass_pool_entry(&partner_manager_partner_data_pool, &index);
 		if (!data)
 			break;
-		LOG_DEBUG("%s %d: partner_id[%lu] uuid[%lu]\n",
+		LOG_DEBUG("%s %d: partner_id[%u] uuid[%lu]\n",
 			__FUNCTION__, __LINE__, data->partner_id, data->uuid);
 		partner = partner_manager_partner_free_list.back();
 		if (!partner) {

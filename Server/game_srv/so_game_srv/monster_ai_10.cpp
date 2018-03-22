@@ -51,7 +51,7 @@ static void start_use_shiguan_skill(monster_struct *monster)
 		struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
 		if (act_config)
 		{
-			monster->data->ontick_time = time_helper::get_cached_time() + act_config->TotalSkillDelay - act_config->ActionTime;
+			monster->data->ontick_time = time_helper::get_cached_time() + config->TotalSkillDelay;// - act_config->ActionTime;
 		}
 		return;
 	}	

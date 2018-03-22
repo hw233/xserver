@@ -83,3 +83,24 @@ message AnsLatelyChat
 	repeated LatelyChat player = 1;
 }
 
+message ChatShowEquipRequest
+{
+	required uint32 pos = 1;   //装备位置
+}
+
+message ChatShowEquipAnswer
+{
+	required uint32 pos = 1;   //装备位置
+	required string url = 2;   //下载地址
+}
+
+message ChatShowPartnerRequest
+{
+	required uint64 uuid = 1;  //伙伴的UUID
+}
+message ChatShowPartnerAnswer
+{
+	required uint64 uuid = 1;  //伙伴的UUID
+	required string url = 2;
+}
+

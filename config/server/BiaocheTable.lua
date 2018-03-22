@@ -58,6 +58,26 @@ local BiaocheTable = {
 		['Number'] = {0},
 		['Range'] = 0,
 		['Reward'] = 440200003
+		},
+	[440100004] = {
+		['ID'] = 440100004,
+		['Type'] = 3,
+		['BiaoType'] = 4,
+		['ActivityControl'] = 330400035,
+		['TaskId'] = 240110058,
+		['MonsterId'] = 151000047,
+		['Point'] = {10007,482.57,239.75},
+		['Deposit'] = 0,
+		['StartTime'] = {0},
+		['EndTime'] = {0},
+		['shanfeiId'] = {0},
+		['level'] = {0},
+		['Interval'] = 0,
+		['Probability'] = 0,
+		['Time'] = 0,
+		['Number'] = {0},
+		['Range'] = 0,
+		['Reward'] = 0
 		}
 	}
 return BiaocheTable

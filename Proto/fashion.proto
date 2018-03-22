@@ -8,7 +8,7 @@ message FashionData
 	required bool isnew = 4;
 	required bool isexpire = 5; //true 过期
 	required bool ison = 6; //true 穿上
-//	required uint32 colordown = 7; //下衣颜色
+	required uint32 colordown = 7; //下衣颜色
 }
 
 message FashionList

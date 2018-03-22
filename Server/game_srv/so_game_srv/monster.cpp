@@ -287,7 +287,17 @@ void monster_struct::calculate_attribute(void)
 //	data->speed = data->attrData[PLAYER_ATTR_MOVE_SPEED] + ai_config->MovingChange / 100.0;
 	data->attrData[PLAYER_ATTR_MOVE_SPEED] += (int)(ai_config->MovingChange) / 100.0;
 	assert(data->ontick_time == 0);
-	set_timer(time_helper::get_cached_time() + ai_config->Response + random() % 200);
+
+	uint64_t now = time_helper::get_cached_time();
+	data->create_time = now;
+	if (ite->second->BirthTime > 0)
+	{
+		set_timer(now + ai_config->Response + ite->second->BirthTime + random() % 200);
+	}
+	else
+	{
+		set_timer(now + ai_config->Response + random() % 200);
+	}
 	calculate_buff_fight_attr(true);	
 }
 
@@ -532,6 +542,8 @@ bool monster_struct::can_beattack()
 		return false;
 	if (config->AttackType == 2)
 		return false;
+	if (config->BirthTime > 0 && time_helper::get_cached_time() < config->BirthTime + data->create_time)
+		return false;
 	return true;
 }
 
@@ -554,10 +566,10 @@ int monster_struct::add_skill_cd(uint32_t index, uint64_t now)
 	if (!config)
 		return (0);
 	
-	struct SkillLvTable *lv_config = get_config_by_id(config->SkillLv, &skill_lv_config);
-	if (!lv_config)
-		return (0);
-	skill_cd[index] = now + lv_config->CD;
+	// struct SkillLvTable *lv_config = get_config_by_id(config->SkillLv, &skill_lv_config);
+	// if (!lv_config)
+	// 	return (0);
+	skill_cd[index] = now + config->CD;
 	LOG_INFO("%s: %p add index[%u] cd[%lu]", __FUNCTION__, this, index, skill_cd[index]);
 	return (0); 
 }
@@ -584,7 +596,7 @@ void monster_struct::set_camp_id(int id)
 	data->camp_id = id;
 }
 
-int monster_struct::broadcast_monster_create(uint32_t effectid)
+int monster_struct::broadcast_monster_create()
 {
 	if (!area)
 		return (0);
@@ -600,7 +612,8 @@ int monster_struct::broadcast_monster_create(uint32_t effectid)
 	notify.n_add_monster = 1;
 	notify.add_monster = monster_info_point;
 	pack_sight_monster_info(monster_info_point[0]);
-	monster_info_point[0]->effectid = effectid;
+//	monster_info_point[0]->effectid = effectid;
+	monster_info_point[0]->is_new = 1;
 
 	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SIGHT_CHANGED_NOTIFY, &notify, (pack_func)sight_changed_notify__pack);
 	PROTO_HEAD_CONN_BROADCAST *head;	
@@ -2027,6 +2040,9 @@ void monster_struct::count_hate(unit_struct *player, uint32_t skill_id, int32_t 
 			break;
 		case JOB_DEFINE_GONG:
 			hate_job = config->HateGong / 10000.0;
+			break;
+		default:
+			hate_job = 0;
 			break;
 	}
 	uint64_t add_hate = hate_job * damage * _skill_config->HateAdd / 10000.0 + _skill_config->HateValue;

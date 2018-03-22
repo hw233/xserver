@@ -39,6 +39,8 @@ void cb_reward_timeout(evutil_socket_t, short, void* /*arg*/);
 #define MAX_RANK_GET_NUM  100 //前端显示数目
 #define MAX_RANK_ADD_NUM  5000 //最多排行数
 #define MAX_RANK_ATTR_NUM  10
+//斗法场最大排名
+#define DOUFACHANG_MAX_RANK 7000
 
 enum
 {
@@ -107,6 +109,12 @@ enum
 	RANK_GUILD_POPULAR_TOTAL = 1201,
 	RANK_GUILD_POPULAR_ZHENYING1 = 1218,
 	RANK_GUILD_POPULAR_ZHENYING2 = 1219,
+	//有奖答题
+	RANK_AWARD_QUESTION_TOTAL = 1301,
+	//斗法场排行(1400 - 1499 斗法场专用)
+	RANK_DOU_FA_CHANG_TOTAL = 1401,
+	RANK_DOU_FA_CHANG_ZHENYING1 = 1418,
+	RANK_DOU_FA_CHANG_ZHENYING2 = 1419,
 	
 };
 
@@ -165,6 +173,10 @@ static void init_rank_key_map()
 	scm_rank_keys[RANK_GUILD_POPULAR_TOTAL]                    = "s%u_rank_guild_popular_total";
 	scm_rank_keys[RANK_GUILD_POPULAR_ZHENYING1]                = "s%u_rank_guild_popular_zhenying1";
 	scm_rank_keys[RANK_GUILD_POPULAR_ZHENYING2]                = "s%u_rank_guild_popular_zhenying2";
+	scm_rank_keys[RANK_AWARD_QUESTION_TOTAL]                   = "s%u_rank_award_question";
+	scm_rank_keys[RANK_DOU_FA_CHANG_TOTAL]					   = "doufachang_rank_%u";
+	scm_rank_keys[RANK_DOU_FA_CHANG_ZHENYING1]				   = "doufachang_rank_%u";
+	scm_rank_keys[RANK_DOU_FA_CHANG_ZHENYING2]				   = "doufachang_rank_%u";
 }
 
 void init_redis_keys(uint32_t server_id)
@@ -822,6 +834,7 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		uint32_t zhenying_level = req->zhenying_level;
 		uint32_t zhenying_kill = req->zhenying_kill;
 		uint32_t exploit = req->exploit;
+		uint32_t award_question = req->award_question;
 		
 		uint32_t old_level = 0;
 		uint32_t old_fc_total = 0;
@@ -836,6 +849,7 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		uint32_t old_zhenying_level = 0;
 		uint32_t old_zhenying_kill = 0;
 		uint32_t old_exploit = 0;
+		uint32_t old_question = 0;
 
 		if (redis_player)
 		{
@@ -855,6 +869,7 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 			old_zhenying_level = redis_player->zhenying_level;
 			old_zhenying_kill = redis_player->zhenying_kill;
 			old_exploit = redis_player->exploit;
+			old_question = redis_player->award_question;
 		}
 		else
 		{
@@ -1000,6 +1015,12 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 				del_player_rank(rank_type, player_id);
 			}
 		}
+
+		if (award_question != old_question)
+		{
+			rank_type = RANK_AWARD_QUESTION_TOTAL;
+			update_player_rank_score(rank_type, player_id, old_question, award_question);
+		}
 	}
 	else if (refresh_type == 2) //从guild_srv同步的消息，只更新帮会信息
 	{
@@ -1100,7 +1121,7 @@ static int handle_guild_rank_info(EXTERN_DATA *extern_data, uint32_t rank_type)
 		if (rank_key == NULL)
 		{
 			ret = ERROR_ID_RANK_TYPE;
-			LOG_ERR("[%s:%d] player[%lu] rank type, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
+			LOG_ERR("[%s:%d] player[%lu] rank type, rank_type:%u", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
 			break;
 		}
 
@@ -1108,7 +1129,7 @@ static int handle_guild_rank_info(EXTERN_DATA *extern_data, uint32_t rank_type)
 		if (ret2 != 0)
 		{
 			ret = ERROR_ID_RANK_REDIS;
-			LOG_ERR("[%s:%d] player[%lu] get rank failed, rank_type:%lu, rank_key:%s", __FUNCTION__, __LINE__, extern_data->player_id, rank_type, rank_key);
+			LOG_ERR("[%s:%d] player[%lu] get rank failed, rank_type:%u, rank_key:%s", __FUNCTION__, __LINE__, extern_data->player_id, rank_type, rank_key);
 			break;
 		}
 
@@ -1121,7 +1142,7 @@ static int handle_guild_rank_info(EXTERN_DATA *extern_data, uint32_t rank_type)
 		if (get_more_redis_guild(guildIds, redis_guilds, sg_guild_key, sg_redis_client, t2) != 0)
 		{
 			ret = ERROR_ID_RANK_REDIS;
-			LOG_ERR("[%s:%d] player[%lu] get guild failed, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
+			LOG_ERR("[%s:%d] player[%lu] get guild failed, rank_type:%u", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
 			break;
 		}
 
@@ -1134,7 +1155,7 @@ static int handle_guild_rank_info(EXTERN_DATA *extern_data, uint32_t rank_type)
 		if (get_more_redis_player(playerIds, redis_players, sg_player_key, sg_redis_client, t1) != 0)
 		{
 			ret = ERROR_ID_RANK_REDIS;
-			LOG_ERR("[%s:%d] player[%lu] get player failed, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
+			LOG_ERR("[%s:%d] player[%lu] get player failed, rank_type:%u", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
 			break;
 		}
 	} while(0);
@@ -1185,6 +1206,158 @@ static int handle_guild_rank_info(EXTERN_DATA *extern_data, uint32_t rank_type)
 	return 0;
 }
 
+static int handle_dou_fa_chang_rank_info(EXTERN_DATA *extern_data, uint64_t rank_type)
+{
+	int ret = 0;
+	//std::vector<std::pair<uint64_t, uint32_t> > rank_info;
+	AutoReleaseBatchRedisPlayer t1;		
+	std::map<uint64_t, PlayerRedisInfo *> redis_players;
+	uint64_t my_rank = 0;
+	uint32_t my_score = 0;
+	uint64_t my_player_id = extern_data->player_id;
+	uint64_t rank_player_id[MAX_RANK_GET_NUM] = {0};
+	uint64_t rank_player_rank[MAX_RANK_GET_NUM] = {0};
+	uint64_t rank_player_id_zhengying1[MAX_RANK_GET_NUM] = {0};
+	uint64_t rank_player_id_zhengying2[MAX_RANK_GET_NUM] = {0};
+	for(uint64_t i = 0; i < MAX_RANK_GET_NUM; i++)
+	{
+		rank_player_rank[i] = i + 1;
+	}
+	do
+	{
+		char *rank_key = get_rank_key(rank_type);
+		if (rank_key == NULL)
+		{
+			ret = ERROR_ID_RANK_TYPE;
+			LOG_ERR("[%s:%d] player[%lu] rank type, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
+			break;
+		}
+		sg_redis_client.mget_uint64(rank_key, MAX_RANK_GET_NUM, rank_player_rank, rank_player_id);
+
+		std::set<uint64_t> playerIds;
+		for (size_t i = 0; i < MAX_RANK_GET_NUM; ++i)
+		{
+			if(rank_player_id[i] == 0)
+				break;
+			playerIds.insert(rank_player_id[i]);
+
+			if (rank_player_id[i] == extern_data->player_id)
+			{
+				my_rank = i + 1;
+			}
+		}
+
+		if (get_more_redis_player(playerIds, redis_players, sg_player_key, sg_redis_client, t1) != 0)
+		{
+			ret = ERROR_ID_RANK_REDIS;
+			LOG_ERR("[%s:%d] player[%lu] get player failed, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
+			break;
+		}
+
+		if (my_rank == 0)
+		{
+			sg_redis_client.mget_uint64(rank_key, 1, &my_player_id, &my_rank);
+		}
+
+		for (size_t i = 0; i < MAX_RANK_GET_NUM; ++i)
+		{
+			uint64_t player_id = rank_player_id[i];
+			if(player_id == 0)
+				break;
+			PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, player_id);
+			if(redis_player == NULL)
+				continue;
+			for(size_t j = 0; j < MAX_RANK_GET_NUM; j++)
+			{
+				if(redis_player->zhenying == 1)
+				{
+					if(rank_player_id_zhengying1[j] == 0)
+					{
+						rank_player_id_zhengying1[j] = player_id;
+						break;
+					}
+				}
+				else 
+				{
+					if(rank_player_id_zhengying1[j] == 0)
+					{
+						rank_player_id_zhengying2[j] = player_id;
+						break;
+					}
+					
+				}
+			}
+
+		}
+
+	} while(0);
+
+	RankInfoAnswer resp;
+	rank_info_answer__init(&resp);
+
+	RankPlayerData  rank_data[MAX_RANK_GET_NUM];
+	RankPlayerData* rank_point[MAX_RANK_GET_NUM];
+	PlayerBaseData  base_data[MAX_RANK_GET_NUM];
+	AttrData  attr_data[MAX_RANK_GET_NUM][MAX_RANK_ATTR_NUM];
+	AttrData* attr_point[MAX_RANK_GET_NUM][MAX_RANK_ATTR_NUM];
+
+	resp.result = ret;
+	resp.type = rank_type;
+	resp.myrank = my_rank;
+	resp.myscore = my_score;
+	resp.infos = rank_point;
+	resp.n_infos = 0;
+	for (size_t i = 0; i < MAX_RANK_GET_NUM; ++i)
+	{
+		uint64_t player_id = 0;
+		uint32_t score = 0;
+		switch(rank_type)
+		{
+			case RANK_DOU_FA_CHANG_TOTAL:
+				player_id = rank_player_id[i];
+				break;
+			case RANK_DOU_FA_CHANG_ZHENYING1:
+				player_id = rank_player_id_zhengying1[i];
+				break;
+			case RANK_DOU_FA_CHANG_ZHENYING2:
+				player_id = rank_player_id_zhengying2[i];
+				break;
+			default:
+				break;
+		}
+		if(player_id == 0)
+			break;
+
+		rank_point[resp.n_infos] = &rank_data[resp.n_infos];
+		rank_player_data__init(&rank_data[resp.n_infos]);
+
+		player_base_data__init(&base_data[resp.n_infos]);
+		rank_data[resp.n_infos].baseinfo = &base_data[resp.n_infos];
+
+		rank_data[resp.n_infos].baseinfo->attrs = attr_point[resp.n_infos];
+		rank_data[resp.n_infos].baseinfo->n_attrs = 0;
+		for (int j = 0; j < MAX_RANK_ATTR_NUM; ++j)
+		{
+			attr_point[resp.n_infos][j] = &attr_data[resp.n_infos][j];
+			attr_data__init(&attr_data[resp.n_infos][j]);
+		}
+
+		PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, player_id);
+		if (redis_player)
+		{
+			fill_rank_player(redis_player, &rank_data[resp.n_infos]);
+		}
+
+		rank_data[resp.n_infos].baseinfo->playerid = player_id;
+		rank_data[resp.n_infos].ranknum = i + 1;
+		rank_data[resp.n_infos].score = score;
+		resp.n_infos++;
+	}
+
+	fast_send_msg(&conn_node_ranksrv::connecter, extern_data, MSG_ID_RANK_INFO_ANSWER, rank_info_answer__pack, resp);
+
+	return 0;
+}
 int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
 {
 	RankInfoRequest *req = rank_info_request__unpack(NULL, get_data_len(), get_data());
@@ -1200,6 +1373,11 @@ int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
 	if (rank_type / 100 == 10)
 	{
 		return handle_guild_rank_info(extern_data, rank_type);
+	}
+
+	if(rank_type / 100 == 14)
+	{
+		return handle_dou_fa_chang_rank_info(extern_data, rank_type);
 	}
 
 	int ret = 0;
@@ -1296,14 +1474,18 @@ int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
 		}
 
 		PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, player_id);
+		rank_data[resp.n_infos].score = score;
 		if (redis_player)
 		{
 			fill_rank_player(redis_player, &rank_data[resp.n_infos]);
+			if((rank_type == RANK_ZHENYING_LEVEL_TOTAL || rank_type == RANK_ZHENYING_LEVEL_ZHENYING1 || rank_type == RANK_ZHENYING_LEVEL_ZHENYING2) && redis_player->zhenying != 0)
+			{
+				rank_data[resp.n_infos].score = 360200000 + redis_player->zhenying * 10000 + score;
+			}
 		}
 
 		rank_data[resp.n_infos].baseinfo->playerid = player_id;
 		rank_data[resp.n_infos].ranknum = i + 1;
-		rank_data[resp.n_infos].score = score;
 		resp.n_infos++;
 	}
 
@@ -1450,14 +1632,14 @@ int conn_node_ranksrv::handle_zhenying_leader(EXTERN_DATA *extern_data)
 			char *rank_key = get_rank_key(rankKey[z][i]);
 			if (rank_key == NULL)
 			{
-				LOG_ERR("[%s:%d] player[%lu] rank type, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rankKey[z][i]);
+				LOG_ERR("[%s:%d] player[%lu] rank type, rank_type:%u", __FUNCTION__, __LINE__, extern_data->player_id, rankKey[z][i]);
 				continue;
 			}
 
 			int ret2 = sg_redis_client.zget(rank_key, 0, 0, rank_info);
 			if (ret2 != 0)
 			{
-				LOG_ERR("[%s:%d] player[%lu] get rank failed, rank_type:%lu, rank_key:%s", __FUNCTION__, __LINE__, extern_data->player_id, rankKey[z][i], rank_key);
+				LOG_ERR("[%s:%d] player[%lu] get rank failed, rank_type:%u, rank_key:%s", __FUNCTION__, __LINE__, extern_data->player_id, rankKey[z][i], rank_key);
 				continue;
 			}
 			if (rank_info.size() == 0)
@@ -2631,11 +2813,11 @@ int conn_node_ranksrv::handle_world_timing_birth_updata_info(EXTERN_DATA *extern
 		}
 	}while(0);
 
-	//发奖励
-	if(cur_boss_redis != NULL)
+	//发奖励(非击杀死亡不给奖励)
+	/*if(cur_boss_redis != NULL)
 	{
 		world_boss_provide_rank_reward(boss_id);
-	}
+	}*/
 
 	return 0;
 }

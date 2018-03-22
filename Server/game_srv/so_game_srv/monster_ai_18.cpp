@@ -89,21 +89,49 @@ static void do_pursue(monster_struct *monster)
 		//主动技能
 	if (config->SkillType == 2)
 	{
-		struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
-		if (!act_config)
-			return;
-		if (act_config->ActionTime > 0)
+		bool immediate_skill = true;
+		uint64_t now = time_helper::get_cached_time();
+		for (uint32_t i = 0; i < config->n_time_config; ++i)
 		{
-			uint64_t now = time_helper::get_cached_time();		
-			monster->data->ontick_time = now + act_config->ActionTime;// + 1500;
-//			monster->data->skill_id = skill_id;
-//			monster->data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
+			if (config->time_config[i]->ActionTime > 0)
+			{
+				monster->data->skill_next_time[i] = now + config->time_config[i]->ActionTime;// + 1500;
+				monster->data->skill_finished_time[i] = now + config->time_config[i]->ActionTime +
+					config->time_config[i]->Frequency * config->time_config[i]->Interval;
+				immediate_skill = false;
+			}
+			else
+			{
+				monster->data->skill_next_time[i] = 0;
+				LOG_ERR("%s: SKILL CONFIG ERR [%lu %lu]", __FUNCTION__, config->ID, config->time_config[i]->ID);
+			}
+		}
+		
+		if (!immediate_skill)
+		{
+			set_monster_skill_next_timeout(monster);
 			monster->ai_state = AI_ATTACK_STATE;
 
 			monster->reset_pos();
-			monster_cast_skill_to_target(skill_id, monster, monster->target, false);		
+			monster_cast_skill_to_target(skill_id, monster, monster->target, false);
 			return;
 		}
+		
+// 		struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
+// 		if (!act_config)
+// 			return;
+// 		if (act_config->ActionTime > 0)
+// 		{
+// 			uint64_t now = time_helper::get_cached_time();		
+// 			monster->data->ontick_time = now + act_config->ActionTime;// + 1500;
+// //			monster->data->skill_id = skill_id;
+// //			monster->data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
+// 			monster->ai_state = AI_ATTACK_STATE;
+
+// 			monster->reset_pos();
+// 			monster_cast_skill_to_target(skill_id, monster, monster->target, false);		
+// 			return;
+// 		}
 	}
 
 	monster->reset_pos();

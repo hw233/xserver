@@ -12,3 +12,21 @@ message RedDotList
 {
 	repeated RedDot dotList = 1;
 }
+
+//新手引导
+message NewguideData
+{
+	required uint32 guideId = 1; //引导id
+	required uint32 step = 2;   //引导步骤
+}
+
+message NewguideDataList
+{
+	repeated NewguideData guidedataList = 1;
+}
+
+message PlayerClientData
+{
+	optional RedDotList dotList = 1;
+	optional NewguideDataList guidedataList = 2;
+}

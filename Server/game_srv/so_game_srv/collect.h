@@ -69,6 +69,7 @@ public:
 	uint32_t m_scenceId;
 	uint32_t m_guild_id;
 	uint64_t m_raid_uuid; //副本唯一ID
+	uint64_t m_rand_id; //随机宝箱
 
 	static Collect *create_sight_space_collect(sight_space_struct *sight_space, uint32_t id, double x, double y, double z, float yaw);	
 	static Collect *CreateCollectByConfig(scene_struct *scene, int index);
@@ -87,6 +88,7 @@ public:
 private:
 	static Collect *CreateCollectImp(uint32_t id, double x, double y, double z, float yaw);
 	int DoGatherDrop(player_struct *player);
+	bool Relive();
 };
 
 #endif

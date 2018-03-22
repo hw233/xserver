@@ -41,6 +41,7 @@ message AwardQuestion
 	required uint32 question = 9; //题目
 	required uint32 number = 10; //第几题
 	required uint32 cd = 11; //活动剩余时间
+	required uint32 score = 12; //积分
 }
 
 message FactionQuestion

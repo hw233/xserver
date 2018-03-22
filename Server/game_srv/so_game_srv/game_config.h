@@ -21,6 +21,8 @@
 //以目标为中心的圆形
 #define SKILL_RANGE_TYPE_TARGET_CIRCLE 4
 
+#define MAX_SKILL_TIME_CONFIG_NUM 5
+
 //直接命中
 //#define SKILL_RANGE_TYPE_DIRECT 3
 
@@ -49,9 +51,9 @@ bool escort_is_team(uint32_t escort_id);
 uint64_t get_task_chapter_id(uint32_t task_id);
 TaskChapterTable *get_task_chapter_config(uint32_t chapter_id);
 void get_task_reward_item_from_config(uint32_t reward_id, std::map<uint32_t, uint32_t> &item_list);
-void get_skill_configs(uint32_t skill_lv, uint32_t skill_id, struct SkillTable **ski_config,
-	struct SkillLvTable **lv_config1, struct PassiveSkillTable **pas_config,
-	struct SkillLvTable **lv_config2, struct ActiveSkillTable **act_config);
+/* void get_skill_configs(uint32_t skill_lv, uint32_t skill_id, struct SkillTable **ski_config, */
+/* 	struct SkillLvTable **lv_config1, struct PassiveSkillTable **pas_config, */
+/* 	struct SkillLvTable **lv_config2, struct ActiveSkillTable **act_config); */
 
 ActorTable *get_actor_config(uint32_t job);
 ActorLevelTable *get_actor_level_config(uint32_t job, uint32_t level);

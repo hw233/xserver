@@ -85,4 +85,11 @@ message BagBatchSellRequest
 	repeated uint32 indexs = 1; //格子服务器索引列表
 }
 
+message ItemCombin
+{
+	required uint32 id = 1; //合成ID
+	required uint32 num = 2; //合成次数
+	required uint32 cost_type = 3; //消耗类型 0默认 1只消耗非绑定
+} 
+
 

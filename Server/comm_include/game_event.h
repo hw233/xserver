@@ -32,6 +32,8 @@ extern "C" {
 #undef LOG_DEBUG
 #endif // LOG_DEBUG
 #define LOG_DEBUG(fmt, arg...) 			log4c_category_log(mycat, LOG4C_PRIORITY_DEBUG, fmt, ##arg);
+//这样屏蔽掉可以提高性能
+//#define LOG_DEBUG(fmt, arg...) 			
 #endif
 
 extern struct event_base *base;

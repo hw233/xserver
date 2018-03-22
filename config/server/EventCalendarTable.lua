@@ -534,8 +534,8 @@ local EventCalendarTable = {
 		['Sum'] = 2,
 		['Active'] = 5,
 		['ResetCD'] = 1,
-		['JoinType'] = 3,
-		['TypeEffect'] = {231000016},
+		['JoinType'] = 1,
+		['TypeEffect'] = {40001},
 		['Reward'] = {201010004,201010001,201010011},
 		['RewardNum'] = {0}
 		},

@@ -686,6 +686,21 @@ void partner_struct::cast_skill_to_target(uint64_t skill_id, unit_struct *target
 // 	}	
 // }
 
+void partner_struct::set_skill_next_timeout()
+{
+	uint64_t min = UINT64_MAX;
+	for (int i = 0; i < MAX_SKILL_TIME_CONFIG_NUM; ++i)
+	{
+		if (data->skill_next_time[i] < min)
+		{
+			min = data->skill_next_time[i];
+			data->skill_next_time_idx = i;
+		}
+	}
+	if (min != UINT64_MAX)
+		data->ontick_time = min;	
+}
+
 	//返回0表示没有继续执行跟随主人的AI，返回1表示不继续执行跟随主人
 uint32_t partner_struct::attack_target(uint32_t skill_id, int skill_index, unit_struct *target)
 {
@@ -717,26 +732,57 @@ uint32_t partner_struct::attack_target(uint32_t skill_id, int skill_index, unit_
 		//主动技能
 	if (config->SkillType == 2)
 	{
-		struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
-		if (!act_config)
+		bool immediate_skill = true;
+		uint64_t now = time_helper::get_cached_time();
+		for (uint32_t i = 0; i < config->n_time_config; ++i)
 		{
-			LOG_ERR("%s: can not find skillaffectid[%lu] config", __FUNCTION__, config->SkillAffectId);
-			return 1;
+			if (config->time_config[i]->ActionTime > 0)
+			{
+				data->skill_next_time[i] = now + config->time_config[i]->ActionTime;// + 1500;
+				data->skill_finished_time[i] = now + config->time_config[i]->ActionTime +
+					config->time_config[i]->Frequency * config->time_config[i]->Interval;
+				immediate_skill = false;
+			}
+			else
+			{
+				data->skill_next_time[i] = 0;
+				LOG_ERR("%s: SKILL CONFIG ERR [%lu %lu]", __FUNCTION__, config->ID, config->time_config[i]->ID);
+			}
 		}
-		if (act_config->ActionTime > 0)
+		if (!immediate_skill)
 		{
-			add_skill_cd(skill_index, now);
-			data->ontick_time = now + act_config->ActionTime;// + 1500;
+			add_skill_cd(skill_index, now);			
+			set_skill_next_timeout();
 			data->skill_id = skill_id;
 			data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
-//			LOG_DEBUG("jacktang: mypos[%.2f][%.2f] hispos[%.2f][%.2f]", my_pos->pos_x, my_pos->pos_z, his_pos->pos_x, his_pos->pos_z);
 			ai_state = AI_ATTACK_STATE;
-			m_target = target;
+			m_target = target;			
 
 			reset_pos();
-			cast_skill_to_target(skill_id, target);		
+			cast_skill_to_target(skill_id, target);					
 			return 1;
 		}
+		
+// 		struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
+// 		if (!act_config)
+// 		{
+// 			LOG_ERR("%s: can not find skillaffectid[%lu] config", __FUNCTION__, config->SkillAffectId);
+// 			return 1;
+// 		}
+// 		if (act_config->ActionTime > 0)
+// 		{
+// 			add_skill_cd(skill_index, now);
+// 			data->ontick_time = now + act_config->ActionTime;// + 1500;
+// 			data->skill_id = skill_id;
+// 			data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
+// //			LOG_DEBUG("jacktang: mypos[%.2f][%.2f] hispos[%.2f][%.2f]", my_pos->pos_x, my_pos->pos_z, his_pos->pos_x, his_pos->pos_z);
+// 			ai_state = AI_ATTACK_STATE;
+// 			m_target = target;
+
+// 			reset_pos();
+// 			cast_skill_to_target(skill_id, target);		
+// 			return 1;
+// 		}
 	}
 
 	reset_pos();
@@ -778,26 +824,57 @@ bool partner_struct::try_friend_skill(uint32_t skill_id, int skill_index)
 		if (!target)
 			return false;
 
-		struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
-		if (!act_config)
+		bool immediate_skill = true;
+		uint64_t now = time_helper::get_cached_time();
+		for (uint32_t i = 0; i < config->n_time_config; ++i)
 		{
-			LOG_ERR("%s: can not find skillaffectid[%lu] config", __FUNCTION__, config->SkillAffectId);
-			return 1;
+			if (config->time_config[i]->ActionTime > 0)
+			{
+				data->skill_next_time[i] = now + config->time_config[i]->ActionTime;// + 1500;
+				data->skill_finished_time[i] = now + config->time_config[i]->ActionTime +
+					config->time_config[i]->Frequency * config->time_config[i]->Interval;
+				immediate_skill = false;
+			}
+			else
+			{
+				data->skill_next_time[i] = 0;
+				LOG_ERR("%s: SKILL CONFIG ERR [%lu %lu]", __FUNCTION__, config->ID, config->time_config[i]->ID);
+			}
 		}
-		if (act_config->ActionTime > 0)
+		if (!immediate_skill)
 		{
-			uint64_t now = time_helper::get_cached_time();			
-			add_skill_cd(skill_index, now);
-			data->ontick_time = now + act_config->ActionTime;// + 1500;
+			add_skill_cd(skill_index, now);			
+			set_skill_next_timeout();
 			data->skill_id = skill_id;
 //			data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
-//			LOG_DEBUG("jacktang: mypos[%.2f][%.2f] hispos[%.2f][%.2f]", my_pos->pos_x, my_pos->pos_z, his_pos->pos_x, his_pos->pos_z);
 			ai_state = AI_ATTACK_STATE;
+//			m_target = target;			
 
 			reset_pos();
-			cast_skill_to_target(skill_id, target);		
+			cast_skill_to_target(skill_id, target);					
 			return 1;
 		}
+
+// 		struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
+// 		if (!act_config)
+// 		{
+// 			LOG_ERR("%s: can not find skillaffectid[%lu] config", __FUNCTION__, config->SkillAffectId);
+// 			return 1;
+// 		}
+// 		if (act_config->ActionTime > 0)
+// 		{
+// 			uint64_t now = time_helper::get_cached_time();			
+// 			add_skill_cd(skill_index, now);
+// 			data->ontick_time = now + act_config->ActionTime;// + 1500;
+// 			data->skill_id = skill_id;
+// //			data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
+// //			LOG_DEBUG("jacktang: mypos[%.2f][%.2f] hispos[%.2f][%.2f]", my_pos->pos_x, my_pos->pos_z, his_pos->pos_x, his_pos->pos_z);
+// 			ai_state = AI_ATTACK_STATE;
+
+// 			reset_pos();
+// 			cast_skill_to_target(skill_id, target);		
+// 			return 1;
+// 		}
 	
 		return true;
 	}
@@ -887,10 +964,10 @@ int partner_struct::add_skill_cd(int index, uint64_t now)
 	if (!config)
 		return (0);
 	
-	struct SkillLvTable *lv_config = get_config_by_id(config->SkillLv, &skill_lv_config);
-	if (!lv_config)
-		return (0);
-	data->attr_cur.skill_list[index].cd = now + lv_config->CD;
+	// struct SkillLvTable *lv_config = get_config_by_id(config->SkillLv, &skill_lv_config);
+	// if (!lv_config)
+	// 	return (0);
+	data->attr_cur.skill_list[index].cd = now + config->CD;
 	LOG_INFO("%s: %p add partner skill[%u] index[%u] cd[%lu]", __FUNCTION__, this, skill_id, index, data->attr_cur.skill_list[index].cd);
 	return (0); 
 }
@@ -969,7 +1046,7 @@ void partner_struct::calculate_attribute(double *attrData, partner_attr_data &at
 	{
 		for (int i = 1; i < MAX_PARTNER_BASE_ATTR; ++i)
 		{
-			module_attr[PLAYER_ATTR_TI + i - 1] += (data->attrData[PLAYER_ATTR_LEVEL] * (attr_cur.base_attr_vaual[0] / tablePa->parameter1[0] + attr_cur.base_attr_vaual[i] / tablePa->parameter1[i]));
+			module_attr[PLAYER_ATTR_TI + i - 1] += (uint64_t)(data->attrData[PLAYER_ATTR_LEVEL] * (attr_cur.base_attr_vaual[0] / tablePa->parameter1[0] + attr_cur.base_attr_vaual[i] / tablePa->parameter1[i]));
 		}
 	}
 	//for (uint32_t i = 0; i < attr_cur.n_detail_attr && i < MAX_PARTNER_DETAIL_ATTR; ++i)
@@ -1017,6 +1094,7 @@ void partner_struct::calculate_attribute(double *attrData, partner_attr_data &at
 		}
 	}
 	add_fight_attr(attrData, module_attr);
+	calculate_lv3_attribute(attrData);
 }
 
 void partner_struct::calculate_attribute(bool isNty)
@@ -1049,7 +1127,10 @@ void partner_struct::calculate_attribute(bool isNty)
 			}
 			nty_list[i] = data->attrData[i];
 		}
-
+		for (uint32_t i = PLAYER_ATTR_TI; i <= PLAYER_ATTR_LING; ++i)
+		{
+			nty_list[i] = data->attrData[i];
+		}
 		if (NtyFp)
 		{
 			nty_list[PLAYER_ATTR_FIGHTING_CAPACITY] = data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY];
@@ -2061,11 +2142,12 @@ void partner_struct::do_normal_attack()
 	
 	if (!config)
 		return;
-	struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
-	if (act_config)
-	{
-		data->ontick_time += act_config->TotalSkillDelay;
-	}
+	// struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
+	// if (act_config)
+	// {
+	// 	data->ontick_time += act_config->TotalSkillDelay;
+	// }
+	data->ontick_time += config->TotalSkillDelay;	
 
 	if (config->MaxCount <= 1)
 	{

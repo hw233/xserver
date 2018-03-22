@@ -78,6 +78,7 @@ uint32_t set_guild_call_cd(uint32_t guild_id);
 uint32_t get_guild_call_cd(uint32_t guild_id);
 int pack_guild_wait_info(uint32_t guild_id, uint8_t *out_data);
 char *get_guild_name(uint32_t guild_id);
+uint32_t get_guild_icon(uint32_t guild_id);
 uint32_t get_cur_round_end_time();
 void get_guild_battle_fight_reward(player_struct *player, int result, uint32_t &score, uint32_t &treasure, uint32_t &donation, uint32_t kill_num = 0, uint32_t dead_num = 0, uint32_t monster_num = 0, uint32_t boss_damage = 0, uint32_t boss_num = 0);
 void notify_guild_battle_fight_reward(player_struct *player, int result, uint32_t score, uint32_t treasure, uint32_t donation);

@@ -1556,6 +1556,8 @@ int conn_node_friendsrv::recv_func(evutil_socket_t fd)
 			case MSG_ID_FRIEND_AUTO_ACCEPT_APPLY_REQUEST:
 				handle_friend_auto_accept_apply_request();
 				break;
+			case MSG_ID_FRIEND_ID_OR_NO_EACH_OTHER_REQUEST:
+				handle_friend_is_or_no_each_other_request(); 
 			}
 
 		}
@@ -3378,6 +3380,10 @@ void conn_node_friendsrv::handle_friend_gift_cost_answer()
 				system_notice_notify__init(&sys);
 
 				sys.id = 190500195;
+				if(res->item_id != 0)
+				{
+					sys.id = 190500528;
+				}
 				sys.args = &args[0];
 				sys.n_args = args.size();
 				sys.targetid = player->player_id;
@@ -4096,4 +4102,65 @@ void conn_node_friendsrv::send_to_all_player(uint16_t msg_id, void *data, pack_f
 	}
 }
 
+void conn_node_friendsrv::handle_friend_is_or_no_each_other_request()
+{
+	PROTO_HEAD *head = get_head();
+	EXTERN_DATA *extern_data = get_extern_data(head);
 
+	FriendIsOrNoEachOtherRequest *req = friend_is_or_no_each_other_request__unpack(NULL, get_data_len(), get_data());
+	if (!req)
+	{
+		LOG_ERR("[%s:%d] player[%lu] unpack failed", __FUNCTION__, __LINE__, extern_data->player_id);
+		return;
+	}
+
+	uint64_t target_id = req->player_id;
+	friend_is_or_no_each_other_request__free_unpacked(req, NULL);
+
+	AutoReleaseBatchFriendPlayer arb_friend;
+	FriendPlayer *player = NULL;
+	player = get_friend_player(extern_data->player_id);
+	if (!player)
+	{
+		LOG_ERR("[%s:%d] player[%lu] get friend failed", __FUNCTION__, __LINE__, extern_data->player_id);
+		return;
+	}
+	arb_friend.push_back(player);
+
+	if (!player_is_exist(target_id))
+	{
+		LOG_ERR("[%s:%d] player[%lu] target not exist, target_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
+		return;
+	}
+
+	FriendPlayer *target = get_friend_player(target_id);
+	if (!target)
+	{
+		LOG_ERR("[%s:%d] player[%lu] get target failed, target_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
+		return;
+	}
+
+	int ret = 0;
+	do
+	{
+		//检查是否互为好友
+		int target_idx = get_contact_idx(player, target->player_id);
+		if (target_idx < 0)
+		{
+			ret = 190500198;
+			LOG_ERR("[%s:%d] player[%lu] target not friend, target_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
+			break;
+		}
+
+		if (!is_in_contact(target, player->player_id))
+		{
+			ret = 190500198;
+			LOG_ERR("[%s:%d] player[%lu] not target friend, target_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
+			break;
+		}
+	}while(0);
+	CommAnswer answer;
+	comm_answer__init(&answer);
+	answer.result = ret;
+	fast_send_msg(&connecter, extern_data, MSG_ID_FRIEND_ID_OR_NO_EACH_OTHER_ANSWER, comm_answer__pack, answer);
+}

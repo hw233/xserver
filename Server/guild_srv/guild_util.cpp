@@ -247,6 +247,7 @@ void cb_second_timer(evutil_socket_t, short, void* /*arg*/)
 int dbdata_to_guild_player(DBGuildPlayer *db_player, GuildPlayer *player)
 {
 	player->donation = db_player->donation;
+	player->oneday_popularity = db_player->oneday_popularity;
 	player->all_history_donation = db_player->all_history_donation;
 	player->cur_history_donation = db_player->cur_history_donation;
 	player->office = db_player->office;
@@ -496,6 +497,7 @@ int pack_guild_player(GuildPlayer *player, uint8_t *out_data)
 	dbguild_shop_reset__init(&shop_reset_data);
 
 	db_player->donation = player->donation;
+	db_player->oneday_popularity = player->oneday_popularity;
 	db_player->all_history_donation = player->all_history_donation;
 	db_player->cur_history_donation = player->cur_history_donation;
 	db_player->office = player->office;
@@ -763,6 +765,7 @@ void sync_all_guild_to_gamesrv(void)
 		memcpy(info->name, guild->name, sizeof(guild->name));
 		info->zhenying = guild->zhenying;
 		info->master_id = guild->master_id;
+		info->icon = guild->icon;
 		for(size_t i = 0; i < MAX_GUILD_MEMBER_NUM; i++)
 		{
 			if(guild->members[i] == NULL)
@@ -1437,6 +1440,7 @@ void sync_guild_create_to_gamesrv(GuildInfo *guild)
 	memcpy(pData->name, guild->name, sizeof(guild->name));
 	pData->zhenying = guild->zhenying;
 	pData->master_id = guild->master_id;
+	pData->icon = guild->icon;
 
 	EXTERN_DATA ext_data;
 
@@ -1610,6 +1614,7 @@ int create_guild(uint64_t player_id, uint32_t icon, std::string &name, GuildPlay
 		if (player_new)
 		{
 			free(player);
+			player = NULL;
 		}
 		else
 		{
@@ -1621,6 +1626,7 @@ int create_guild(uint64_t player_id, uint32_t icon, std::string &name, GuildPlay
 		if (guild)
 		{
 			free(guild);
+			guild = NULL;
 		}
 	}
 
