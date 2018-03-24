@@ -126,13 +126,26 @@ static int32_t count_skill_effect_entry(const double *attack, const double *defe
 
 int32_t count_skill_effect(const double *attack, const double *defence,
 	const double *buff_fight_attack, const double *buff_fight_defence,
-	struct SkillEffectTable *effectconfig)
+	struct SkillEffectTable *effectconfig, unit_struct *attack_unit)
 {
 	int32_t ret = 0;
+	uint32_t other_skill_lv = 0;
+	if (effectconfig->SkillID != 0)
+	{
+		other_skill_lv = attack_unit->get_skill_lv(effectconfig->SkillID);
+	}
 	for (size_t i = 0; i < effectconfig->n_Effect; ++i)
 	{
+		uint64_t effectadd = effectconfig->EffectAdd[i];
+		uint64_t effectnum = effectconfig->EffectNum[i];
+		if (other_skill_lv != 0)
+		{
+			effectadd += other_skill_lv * effectconfig->EffectAdd1[i];
+			effectnum += other_skill_lv * effectconfig->EffectNum1[i];
+		}
+		
 		ret += count_skill_effect_entry(attack, defence, buff_fight_attack, buff_fight_defence,
-			effectconfig->Effect[i], effectconfig->EffectAdd[i], effectconfig->EffectNum[i]);
+			effectconfig->Effect[i], effectadd, effectnum);
 	}
 	return ret;
 }
@@ -346,7 +359,7 @@ static int32_t count_friend_damage(struct SkillTimeTable *timeconfig,
 		struct SkillEffectTable *effectconfig = get_config_by_id(timeconfig->EffectIdFriend[i] + skill_lv - 1, &skill_effect_config);
 		if (!effectconfig)
 			return (0);
-		damage += count_skill_effect(attack, defence, buff_fight_attack, buff_fight_defence, effectconfig);
+		damage += count_skill_effect(attack, defence, buff_fight_attack, buff_fight_defence, effectconfig, attack_unit);
 	}
 		//技能效果1=伤害*攻方暴击倍率*（1+攻方伤害加成-守方伤害减免+攻方惩戒-守方豁免）
 	// double tmp_rate = 1 + attack[PLAYER_ATTR_DMG_ADD]
@@ -400,7 +413,7 @@ static int32_t count_enemy_damage(struct SkillTable *skillconfig,
 		struct SkillEffectTable *effectconfig = get_config_by_id(timeconfig->EffectIdEnemy[i] + skill_lv - 1, &skill_effect_config);
 		if (!effectconfig)
 			return (0);
-		damage += count_skill_effect(attack, defence, buff_fight_attack, buff_fight_defence, effectconfig);
+		damage += count_skill_effect(attack, defence, buff_fight_attack, buff_fight_defence, effectconfig, attack_unit);
 	}
 		//技能效果1=伤害*攻方暴击倍率*（1+攻方伤害加成-守方伤害减免+攻方惩戒-守方豁免）
 	// double tmp_rate = 1 + attack[PLAYER_ATTR_DMG_ADD]

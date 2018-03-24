@@ -3313,6 +3313,21 @@ local ModelTable = {
 		['TalkScale'] = 1.00,
 		['TalkPointY'] = .00,
 		['Size'] = 1.30
+		},
+	[130600047] = {
+		['ModelId'] = 130600047,
+		['ModelPath'] = 'Prefabs/Actor/npc_074',
+		['TopH'] = 1.00,
+		['ModelIcon'] = '',
+		['Gaine'] = '',
+		['BindPos'] = '',
+		['BindEffect'] = {''},
+		['Scale'] = 1.00,
+		['PointX'] = .00,
+		['PointY'] = .00,
+		['TalkScale'] = 1.00,
+		['TalkPointY'] = .00,
+		['Size'] = 1.30
 		}
 	}
 return ModelTable

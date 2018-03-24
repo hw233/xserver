@@ -156,8 +156,8 @@ local RandomCollectionTable = {
 		['RandomType'] = 1,
 		['CollectionID'] = 154000057,
 		['MapID'] = 10012,
-		['PointX'] = {168.8189,248.7113},
-		['PointZ'] = {343.3502,142.3828}
+		['PointX'] = {172.538,248.7113},
+		['PointZ'] = {343.8139,142.3828}
 		},
 	[150020021] = {
 		['ID'] = 150020021,

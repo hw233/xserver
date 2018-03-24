@@ -2301,7 +2301,7 @@ static int handle_skill_cast_request(player_struct *player, EXTERN_DATA *extern_
 			pos->pos_x, pos->pos_z, req->cur_pos->pos_x, req->cur_pos->pos_z);
 	}
 
-	player->deal_skill_cast_request(req, config, active_config);
+	player->deal_skill_cast_request(req, fuwen_config, active_config);
 	skill_cast_request__free_unpacked(req, NULL);
 
 	return (0);

@@ -3,7 +3,7 @@ local SignMonth = {
 		['ID'] = 580500001,	--索引
 		['Month'] = 1,	--月份
 		['Days'] = 3,	--天数
-		['ItemID'] = 201010014,	--道具ID
+		['ItemID'] = 201010019,	--道具ID
 		['ItemValue'] = 3	--道具值
 		},
 	[580500002] = {
@@ -17,7 +17,7 @@ local SignMonth = {
 		['ID'] = 580500003,
 		['Month'] = 1,
 		['Days'] = 7,
-		['ItemID'] = 201010016,
+		['ItemID'] = 201010018,
 		['ItemValue'] = 3
 		},
 	[580500004] = {
@@ -52,7 +52,7 @@ local SignMonth = {
 		['ID'] = 580500008,
 		['Month'] = 2,
 		['Days'] = 3,
-		['ItemID'] = 201010014,
+		['ItemID'] = 201010019,
 		['ItemValue'] = 3
 		},
 	[580500009] = {
@@ -66,7 +66,7 @@ local SignMonth = {
 		['ID'] = 580500010,
 		['Month'] = 2,
 		['Days'] = 7,
-		['ItemID'] = 201010016,
+		['ItemID'] = 201010018,
 		['ItemValue'] = 3
 		},
 	[580500011] = {
@@ -101,7 +101,7 @@ local SignMonth = {
 		['ID'] = 580500015,
 		['Month'] = 3,
 		['Days'] = 3,
-		['ItemID'] = 201010014,
+		['ItemID'] = 201010019,
 		['ItemValue'] = 3
 		},
 	[580500016] = {
@@ -115,7 +115,7 @@ local SignMonth = {
 		['ID'] = 580500017,
 		['Month'] = 3,
 		['Days'] = 7,
-		['ItemID'] = 201010016,
+		['ItemID'] = 201010018,
 		['ItemValue'] = 3
 		},
 	[580500018] = {
@@ -150,7 +150,7 @@ local SignMonth = {
 		['ID'] = 580500022,
 		['Month'] = 4,
 		['Days'] = 3,
-		['ItemID'] = 201010014,
+		['ItemID'] = 201010019,
 		['ItemValue'] = 3
 		},
 	[580500023] = {
@@ -164,7 +164,7 @@ local SignMonth = {
 		['ID'] = 580500024,
 		['Month'] = 4,
 		['Days'] = 7,
-		['ItemID'] = 201010016,
+		['ItemID'] = 201010018,
 		['ItemValue'] = 3
 		},
 	[580500025] = {
@@ -199,7 +199,7 @@ local SignMonth = {
 		['ID'] = 580500029,
 		['Month'] = 5,
 		['Days'] = 3,
-		['ItemID'] = 201010014,
+		['ItemID'] = 201010019,
 		['ItemValue'] = 3
 		},
 	[580500030] = {
@@ -213,7 +213,7 @@ local SignMonth = {
 		['ID'] = 580500031,
 		['Month'] = 5,
 		['Days'] = 7,
-		['ItemID'] = 201010016,
+		['ItemID'] = 201010018,
 		['ItemValue'] = 3
 		},
 	[580500032] = {
@@ -248,7 +248,7 @@ local SignMonth = {
 		['ID'] = 580500036,
 		['Month'] = 6,
 		['Days'] = 3,
-		['ItemID'] = 201010014,
+		['ItemID'] = 201010019,
 		['ItemValue'] = 3
 		},
 	[580500037] = {
@@ -262,7 +262,7 @@ local SignMonth = {
 		['ID'] = 580500038,
 		['Month'] = 6,
 		['Days'] = 7,
-		['ItemID'] = 201010016,
+		['ItemID'] = 201010018,
 		['ItemValue'] = 3
 		},
 	[580500039] = {
@@ -297,7 +297,7 @@ local SignMonth = {
 		['ID'] = 580500043,
 		['Month'] = 7,
 		['Days'] = 3,
-		['ItemID'] = 201010014,
+		['ItemID'] = 201010019,
 		['ItemValue'] = 3
 		},
 	[580500044] = {
@@ -311,7 +311,7 @@ local SignMonth = {
 		['ID'] = 580500045,
 		['Month'] = 7,
 		['Days'] = 7,
-		['ItemID'] = 201010016,
+		['ItemID'] = 201010018,
 		['ItemValue'] = 3
 		},
 	[580500046] = {
@@ -346,7 +346,7 @@ local SignMonth = {
 		['ID'] = 580500050,
 		['Month'] = 8,
 		['Days'] = 3,
-		['ItemID'] = 201010014,
+		['ItemID'] = 201010019,
 		['ItemValue'] = 3
 		},
 	[580500051] = {
@@ -360,7 +360,7 @@ local SignMonth = {
 		['ID'] = 580500052,
 		['Month'] = 8,
 		['Days'] = 7,
-		['ItemID'] = 201010016,
+		['ItemID'] = 201010018,
 		['ItemValue'] = 3
 		},
 	[580500053] = {
@@ -395,7 +395,7 @@ local SignMonth = {
 		['ID'] = 580500057,
 		['Month'] = 9,
 		['Days'] = 3,
-		['ItemID'] = 201010014,
+		['ItemID'] = 201010019,
 		['ItemValue'] = 3
 		},
 	[580500058] = {
@@ -409,7 +409,7 @@ local SignMonth = {
 		['ID'] = 580500059,
 		['Month'] = 9,
 		['Days'] = 7,
-		['ItemID'] = 201010016,
+		['ItemID'] = 201010018,
 		['ItemValue'] = 3
 		},
 	[580500060] = {
@@ -444,7 +444,7 @@ local SignMonth = {
 		['ID'] = 580500064,
 		['Month'] = 10,
 		['Days'] = 3,
-		['ItemID'] = 201010014,
+		['ItemID'] = 201010019,
 		['ItemValue'] = 3
 		},
 	[580500065] = {
@@ -458,7 +458,7 @@ local SignMonth = {
 		['ID'] = 580500066,
 		['Month'] = 10,
 		['Days'] = 7,
-		['ItemID'] = 201010016,
+		['ItemID'] = 201010018,
 		['ItemValue'] = 3
 		},
 	[580500067] = {
@@ -493,7 +493,7 @@ local SignMonth = {
 		['ID'] = 580500071,
 		['Month'] = 11,
 		['Days'] = 3,
-		['ItemID'] = 201010014,
+		['ItemID'] = 201010019,
 		['ItemValue'] = 3
 		},
 	[580500072] = {
@@ -507,7 +507,7 @@ local SignMonth = {
 		['ID'] = 580500073,
 		['Month'] = 11,
 		['Days'] = 7,
-		['ItemID'] = 201010016,
+		['ItemID'] = 201010018,
 		['ItemValue'] = 3
 		},
 	[580500074] = {
@@ -542,7 +542,7 @@ local SignMonth = {
 		['ID'] = 580500078,
 		['Month'] = 12,
 		['Days'] = 3,
-		['ItemID'] = 201010014,
+		['ItemID'] = 201010019,
 		['ItemValue'] = 3
 		},
 	[580500079] = {
@@ -556,7 +556,7 @@ local SignMonth = {
 		['ID'] = 580500080,
 		['Month'] = 12,
 		['Days'] = 7,
-		['ItemID'] = 201010016,
+		['ItemID'] = 201010018,
 		['ItemValue'] = 3
 		},
 	[580500081] = {

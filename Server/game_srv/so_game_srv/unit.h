@@ -81,6 +81,8 @@ public:
 	virtual double get_skill_angle();
 	virtual struct position *get_skill_target_pos();
 	virtual player_struct *get_owner();
+	virtual uint32_t get_skill_lv(uint32_t skillid);
+	
 	int count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, bool bfriend);	
 	int count_rect_unit_at_pos(double angle, struct position *start_pos, std::vector<unit_struct *> *ret, uint max, double length, double width, bool bfriend);	
 	int count_rect_unit(double angle, std::vector<unit_struct *> *ret, uint max, double length, double width, bool bfriend);

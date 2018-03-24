@@ -875,6 +875,16 @@ static void adjust_skill_effect_table()
 			assert(0);
 			exit(0);
 		}
+
+		if (config->SkillID != 0)
+		{
+			if (config->n_Effect > config->n_EffectAdd1 || config->n_Effect > config->n_EffectNum1)
+			{
+				LOG_ERR("skill effect config %lu wrong", config->ID);
+				assert(0);
+				exit(0);
+			}
+		}
 	}	
 }
 

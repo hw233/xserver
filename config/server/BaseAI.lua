@@ -654,7 +654,7 @@ local BaseAI = {
 		['MovingChange'] = 300,
 		['Regeneration'] = 999,
 		['AIType'] = 1,
-		['GuardRange'] = 12,
+		['GuardRange'] = 15,
 		['StopMin'] = 100,
 		['StopMax'] = 500,
 		['Response'] = 50
@@ -897,7 +897,7 @@ local BaseAI = {
 		['GuardRange'] = 2,
 		['StopMin'] = 100,
 		['StopMax'] = 200,
-		['Response'] = 100
+		['Response'] = 50
 		},
 	[153100528] = {
 		['BaseID'] = 153100528,
@@ -922,6 +922,18 @@ local BaseAI = {
 		['StopMin'] = 100,
 		['StopMax'] = 200,
 		['Response'] = 5
+		},
+	[153100530] = {
+		['BaseID'] = 153100530,
+		['ActiveAttackRange'] = 0,
+		['ChaseRange'] = 0,
+		['MovingChange'] = -100,
+		['Regeneration'] = 999,
+		['AIType'] = 1,
+		['GuardRange'] = 12,
+		['StopMin'] = 100,
+		['StopMax'] = 500,
+		['Response'] = 50
 		},
 	[153100601] = {
 		['BaseID'] = 153100601,
@@ -1629,7 +1641,7 @@ local BaseAI = {
 		['GuardRange'] = 4,
 		['StopMin'] = 100,
 		['StopMax'] = 500,
-		['Response'] = 50
+		['Response'] = 500
 		},
 	[153101923] = {
 		['BaseID'] = 153101923,
@@ -1690,6 +1702,18 @@ local BaseAI = {
 		['StopMin'] = 500,
 		['StopMax'] = 1000,
 		['Response'] = 100
+		},
+	[153101928] = {
+		['BaseID'] = 153101928,
+		['ActiveAttackRange'] = 100,
+		['ChaseRange'] = 100,
+		['MovingChange'] = 300,
+		['Regeneration'] = 9999,
+		['AIType'] = 1,
+		['GuardRange'] = 4,
+		['StopMin'] = 100,
+		['StopMax'] = 500,
+		['Response'] = 500
 		}
 	}
 return BaseAI

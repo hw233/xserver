@@ -21,6 +21,6 @@ extern int32_t count_other_skill_damage_effect(unit_struct *attack, unit_struct 
 
 extern int32_t count_skill_effect(const double *attack, const double *defence,
 	const double *buff_fight_attack, const double *buff_fight_defence,
-	struct SkillEffectTable *effectconfig);
+	struct SkillEffectTable *effectconfig, unit_struct *attack_unit);
 
 #endif /* COUNT_SKILL_DAMAGE_H */

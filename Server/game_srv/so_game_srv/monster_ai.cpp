@@ -829,7 +829,7 @@ void do_normal_attack(monster_struct *monster)
 			//总时间到了，结束伤害
 		if (monster->data->ontick_time > monster->data->skill_finished_time[monster->data->skill_next_time_idx])
 		{
-			LOG_DEBUG("%s: jack111 skill[%u] 总时间到了，结束伤害", __FUNCTION__, monster->data->skill_id);
+//			LOG_DEBUG("%s: jack111 skill[%u] 总时间到了，结束伤害", __FUNCTION__, monster->data->skill_id);
 			
 			monster->data->ontick_time = monster->data->skill_finished_time[monster->data->skill_next_time_idx] + random() % 1000;					
 			monster->data->skill_finished_time[monster->data->skill_next_time_idx] = 0;
@@ -842,7 +842,7 @@ void do_normal_attack(monster_struct *monster)
 	}
 	else
 	{
-		LOG_DEBUG("%s: jack111 skill[%u] 总时间到了，结束伤害", __FUNCTION__, monster->data->skill_id);
+//		LOG_DEBUG("%s: jack111 skill[%u] 总时间到了，结束伤害", __FUNCTION__, monster->data->skill_id);
 		
 		monster->data->ontick_time += config->TotalSkillDelay;
 		monster->ai_state = AI_PURSUE_STATE;
@@ -1071,9 +1071,9 @@ void do_normal_pursue(monster_struct *monster)
 				monster->data->skill_finished_time[i] = now + config->time_config[i]->ActionTime +
 					config->time_config[i]->Frequency * config->time_config[i]->Interval;
 
-				LOG_DEBUG("%s: jack111 skill[%u] 开始攻击，actiontime[%lu] finishedtime[%lu] frequency[%lu] interval[%lu]",
-					__FUNCTION__, config->ID, config->time_config[i]->ActionTime, monster->data->skill_finished_time[i],
-					config->time_config[i]->Frequency, config->time_config[i]->Interval);
+//				LOG_DEBUG("%s: jack111 skill[%u] 开始攻击，actiontime[%lu] finishedtime[%lu] frequency[%lu] interval[%lu]",
+//					__FUNCTION__, config->ID, config->time_config[i]->ActionTime, monster->data->skill_finished_time[i],
+//					config->time_config[i]->Frequency, config->time_config[i]->Interval);
 				
 				immediate_skill = false;
 			}

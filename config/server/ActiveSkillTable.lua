@@ -3131,6 +3131,24 @@ local ActiveSkillTable = {
 		['HideDelay'] = .00,
 		['HideTime'] = .00
 		},
+	[112140101] = {
+		['ID'] = 112140101,
+		['NextTime'] = 0,
+		['NextSkill'] = 0,
+		['AutoNextSkill'] = 0,
+		['SkillLength'] = {0,0,1000,0},
+		['HitEffect'] = 135202003,
+		['StartSound'] = '0',
+		['HitSound'] = 'Prefabs/Sound/sound_d_at1',
+		['CanMove'] = 0,
+		['FlyId'] = 0,
+		['MoveSpeed'] = 0,
+		['MoveDelay'] = 0,
+		['MoveTime'] = 0,
+		['HideIs'] = 0,
+		['HideDelay'] = .00,
+		['HideTime'] = .00
+		},
 	[112140100] = {
 		['ID'] = 112140100,
 		['NextTime'] = 0,

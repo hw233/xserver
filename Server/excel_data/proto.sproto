@@ -299,6 +299,9 @@
 	Effect 3 : *integer
 	EffectAdd 4 : *integer
 	EffectNum 5 : *integer
+	SkillID	6 : integer
+	EffectAdd1 7 : *integer
+	EffectNum1 8 : *integer
 }
 
 .ItemsConfigTable {
@@ -509,6 +512,7 @@
 	DynamicLevel 36 : integer
 	ExpReward1 37 : integer
 	MoneyReward1 38 : integer
+	WhetherSettlement 39 : integer
 }
 
 .EquipmentTable {

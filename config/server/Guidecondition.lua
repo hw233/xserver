@@ -127,7 +127,7 @@ local Guidecondition = {
 		['MaterialId'] = 0,
 		['Num'] = 0,
 		['PartnerNum'] = 0,
-		['FunctionID'] = 291040008
+		['FunctionID'] = 0
 		},
 	[510173] = {
 		['ID'] = 510173,

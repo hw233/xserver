@@ -95,8 +95,8 @@ int conn_node_client::send_hello_resp()
 
 int conn_node_client::respond_websocket_request()
 {
-	ws_req_t ws_req;
-	parse_websocket_request((char *)buf_head(), &ws_req); //parse request
+//	ws_req_t ws_req;
+//	parse_websocket_request((char *)buf_head(), &ws_req); //parse request
 //	print_websocket_request(&ws_req);
 	// 	//TODO
 	// 	//check if it is a websocket request
@@ -104,8 +104,15 @@ int conn_node_client::respond_websocket_request()
 	// 	//	ws_serve_exit(conn);
 	// 	//	return;
 	// 	//}
+
+	char *key = get_websocket_request_key((char *)buf_head());
+	if (!key)
+	{
+		return -1;
+	}
+	
 	int len;
-	char *resp = generate_websocket_response(&ws_req, &len); //generate response
+	char *resp = generate_websocket_response(key, &len); //generate response
 	if (resp)
 	{
 		send_one_buffer(resp, len);
@@ -213,21 +220,24 @@ int conn_node_client::frame_read_cb(evutil_socket_t fd)
 			{
 //			char tmp[conn->ntoread];
 //			bufferevent_read(bev, tmp, conn->ntoread);
-				if (len < 4)
-					return (0);
 				LOG_DEBUG("---- STEP 3 ---- len %d", len);
-			
-				memcpy(frame.masking_key, buf_head(), 4);
-				remove_buflen(4);			
+
+				if (frame.mask)
+				{
+					if (len < 4)
+						return (0);
+					memcpy(frame.masking_key, buf_head(), 4);
+					remove_buflen(4);
+				}
 				if (frame.payload_len > 0) {
 					conn_step = 4;
 //				conn->ntoread = conn->frame->payload_len;
 //				bufferevent_setwatermark(bev, EV_READ, conn->ntoread, conn->ntoread);
 				} else if (frame.payload_len == 0) {
 						/*recv a whole frame*/
-					if (frame.mask == 0) {
+//					if (frame.mask == 0) {
 							//recv an unmasked frame
-					}
+//					}
 					if (frame.fin == 1 && frame.opcode == 0x8) {
 							//0x8 denotes a connection close
 //						char resp[32];
@@ -271,14 +281,15 @@ int conn_node_client::frame_read_cb(evutil_socket_t fd)
 				LOG_DEBUG("---- STEP 4 ---- len %d", len);
 				if (frame.payload_len > 0) {
 					if (len < (int)frame.payload_len)
-						break;
+						return 0;
 						// if (conn->frame->payload_data) {
 						// 	delete[] conn->frame->payload_data;
 						// 	conn->frame->payload_data = NULL;
 						// }
 						// conn->frame->payload_data = new char[conn->frame->payload_len];
 						// bufferevent_read(bev, conn->frame->payload_data, conn->frame->payload_len);
-					unmask_payload_data((char *)buf_head(), frame.payload_len, frame.masking_key);
+					if (frame.mask)
+						unmask_payload_data((char *)buf_head(), frame.payload_len, frame.masking_key);
 				}
 
 
@@ -381,11 +392,12 @@ int conn_node_client::recv_handshake(evutil_socket_t fd)
 
 	char *end = (char *)buf_tail();
 	if (len >= 4 && end[-1] == '\n' && end[-2] == '\r' && end[-3] == '\n' && end[-4] == '\r') {
-		respond_websocket_request(); //send websocket response		
+		if (respond_websocket_request() != 0) //send websocket response
+			return -1;
 //		LOG_INFO("[%s : %d]: packet header error, len: %d, leave: %d", __PRETTY_FUNCTION__, __LINE__, len, buf_leave());
 		pos_begin = pos_end = 0;
 		handshake = true;
-		return (1);
+		return (0);
 	}
 	return (0);
 }

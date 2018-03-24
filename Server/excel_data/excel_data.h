@@ -1093,6 +1093,7 @@ struct DungeonTable
 	uint64_t  DynamicLevel; //36
 	uint64_t  ExpReward1; //37
 	uint64_t  MoneyReward1; //38
+	uint64_t  WhetherSettlement; //39
 }__attribute__ ((packed));
 
 struct EquipAttribute
@@ -2301,6 +2302,11 @@ struct SkillEffectTable
 	uint64_t *EffectAdd; //4
 	uint32_t n_EffectNum; //5
 	uint64_t *EffectNum; //5
+	uint64_t  SkillID; //6
+	uint32_t n_EffectAdd1; //7
+	uint64_t *EffectAdd1; //7
+	uint32_t n_EffectNum1; //8
+	uint64_t *EffectNum1; //8
 }__attribute__ ((packed));
 
 struct SkillLevelTable

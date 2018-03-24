@@ -1381,6 +1381,11 @@ player_struct *unit_struct::get_owner()
 	return NULL;
 }
 
+uint32_t unit_struct::get_skill_lv(uint32_t skillid)
+{
+	return (0);
+}
+
 int unit_struct::count_skill_hit_unit(std::vector<unit_struct *> *ret, struct SkillTable *config, bool bfriend)
 {
 	if (!config)

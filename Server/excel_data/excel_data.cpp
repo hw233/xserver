@@ -1118,6 +1118,8 @@ void free_SkillEffectTable(struct SkillEffectTable *p)
     free(p->Effect);
     free(p->EffectAdd);
     free(p->EffectNum);
+    free(p->EffectAdd1);
+    free(p->EffectNum1);
     free(p);
 };
 

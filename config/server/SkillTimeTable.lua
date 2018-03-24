@@ -2294,7 +2294,7 @@ local SkillTimeTable = {
 		['Interval'] = 0,
 		['EffectIdEnemy'] = {115000001},
 		['EffectIdFriend'] = {0},
-		['BuffIdEnemy'] = {114120001},
+		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
 		['CallId'] = 0
 		},

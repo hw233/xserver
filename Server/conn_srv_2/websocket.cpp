@@ -7,6 +7,30 @@
 #include <openssl/sha.h>
 #include <arpa/inet.h>
 
+#define UNUSED(x) (void)(x)
+
+char *get_websocket_request_key(char *s_req)
+{
+	const char *delim = "\r\n";
+	char *p = NULL;
+//	char *q = NULL;
+//	UNUSED(q);
+
+	p = strtok((char *)s_req, delim);
+	if (p) {
+		while ((p = strtok(NULL, delim)) != NULL) {
+			if (strncasecmp(p, "Sec-WebSocket-Key:", 18) != 0) {
+				continue;
+			}
+			p += 18;
+			while (*++p == ' ');
+//			q = p;
+			return p; 
+		}
+	}
+	return NULL;
+}
+
 int32_t parse_websocket_request(char *s_req, ws_req_t *ws_req)
 {
 	if (!s_req || !ws_req) {
@@ -115,11 +139,11 @@ static char *generate_key(const char *key, char *res)
 	return res;
 }
 
-char *generate_websocket_response(const ws_req_t *ws_req, int *len)
+char *generate_websocket_response(const char *key, int *len)
 {
 	static char resp[] = "HTTP/1.1 101 WebSocket Protocol HandShake\r\nConnection: Upgrade\r\nUpgrade: WebSocket\r\nServer: WebChat Demo Server\r\nSec-WebSocket-Accept: 1234567890123456789012345678\r\n\r\n";
 	
-	if (!generate_key(ws_req->sec_websocket_key, &resp[135]))
+	if (!generate_key(key, &resp[135]))
 		return NULL;
 //		resp = (char *)"HTTP/1.1 101 WebSocket Protocol HandShake\r\nConnection: Upgrade\r\nUpgrade: WebSocket\r\nServer: WebChat Demo Server\r\nSec-WebSocket-Accept: 258EAFA5-E914-47DA-95CA-C5AB0DC85B11\r\n\r\n";
 		// resp += "HTTP/1.1 101 WebSocket Protocol HandShake\r\n";
