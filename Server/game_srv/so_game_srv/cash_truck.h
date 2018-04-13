@@ -101,7 +101,7 @@ public:
 
 
 	void pack_sight_cash_truck_info(SightCashTruckInfo *info);
-	int broadcast_cash_truck_delete();
+	int broadcast_cash_truck_delete(bool send);
 	int broadcast_cash_truck_create();
 	int broadcast_cash_truck_move();
 

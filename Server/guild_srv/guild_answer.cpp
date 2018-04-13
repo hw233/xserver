@@ -110,7 +110,7 @@ void GuildAnswer::OnTimer()
 	{
 		n_memSize = 0;
 		ParameterTable *tableNum = get_config_by_id(161000413, &parameter_config);
-		if (tableNum != NULL)
+		if (tableNum == NULL)
 		{
 			return;
 		}

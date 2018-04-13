@@ -159,6 +159,9 @@ enum SERVER_PROTO {
     SERVER_PROTO_TRADE_GET_EARNING_GIVE_REQUEST,      //交易领取收益发放请求
     SERVER_PROTO_TRADE_LOT_INSERT,                    //交易新增拍卖品
     SERVER_PROTO_TRADE_BID_FAIL_RETURN,               //拍卖失败返还
+	SERVER_PROTO_TRADE_SEND_RED_PACKET_REQUEST,       //玩家发红包请求 game_server->trade_server
+	SERVER_PROTO_TRADE_SEND_RED_PACKET_FAILED_ANSWER, //玩家红包数据存储失败 trade_server->game_server
+	SERVER_PROTO_TRADE_GRAB_RED_PACKET_REQUEST,       //玩家抢红包给钱 trade_server->game_server
 
     // raid server消息
     SERVER_PROTO_RAID_PLAYER_ENTER_REQUEST,  //进入raid服 game_srv -> raid_srv
@@ -884,6 +887,25 @@ typedef struct guild_bonfire_reward
     uint32_t   donation[MAX_GUILD_MEMBER_NUM];      //奖励帮贡
     uint32_t   build_board[MAX_GUILD_MEMBER_NUM];   //奖励木材
 } GUILD_BONFIRE_REWARD;
+
+//发红包请求数据到交易服
+typedef struct red_packet_send_data_request
+{
+  uint32_t red_type;  //红包类型 1:世界频道红包 5:帮派频道红包
+  uint32_t guild_type; //如果是帮派频道红包 0:是自己发的 1:是系统发的
+  uint32_t red_coin_type; //红包样式 0:元宝红包 1:银票红包
+  uint32_t money_num; //发红包的金钱数量
+  uint32_t red_num; //发红包个数
+  char player_text[MAX_RED_PACKET_LIU_YAN_LEN]; //玩家留言
+
+} RED_PACKET_SEND_DATA_REQUEST; 
+
+typedef struct red_packet_recive_give_money
+{
+	uint32_t result;
+	uint32_t money_type;
+	uint32_t money_num;
+} RED_PACKET_PLAYER_ADD_MONEY;
 
 #pragma pack()
 #endif

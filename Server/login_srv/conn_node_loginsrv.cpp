@@ -154,6 +154,7 @@ int conn_node_loginsrv::handle_login(EXTERN_DATA *extern_data)
 	std::string szOut;
 
 	std::map<uint32_t, std::pair<uint32_t, uint32_t> >::iterator iter;
+	struct ServerResTable *server_res_table = get_config_by_id(sg_server_id, &server_res_config);
 
 	LoginRequest *req;
 	req = login_request__unpack(NULL, get_data_len(), (uint8_t *)get_data());
@@ -215,6 +216,24 @@ int conn_node_loginsrv::handle_login(EXTERN_DATA *extern_data)
 		goto done;
 	}
 
+	//判断服务器是否开启
+	if(server_res_table == NULL)
+	{
+		LOG_ERR("[%s:%d] longin failed get server res table failed server_id[%u]", __FUNCTION__, __LINE__, sg_server_id);
+		ret = -1;
+		goto done;
+	}
+	else 
+	{
+		uint64_t cur_times = time_helper::get_micro_time() / 1000000;
+		if(cur_times < server_res_table->OpenTime)
+		{
+			LOG_ERR("[%s:%d] longin failed get server no open  server_id[%u] cur_time[%lu] open_time[%lu]", __FUNCTION__, __LINE__, sg_server_id, cur_times, server_res_table->OpenTime);
+			ret = 190500587;
+			goto done;
+			
+		}
+	}
 done:
 	PROTO_ROLE_LOGIN* proto = (PROTO_ROLE_LOGIN*)get_send_buf(SERVER_PROTO_LOGIN, seq);
 	proto->head.len = ENDION_FUNC_4(sizeof(proto));
@@ -367,8 +386,8 @@ int conn_node_loginsrv::select_player_base_info(uint32_t open_id, size_t *n_play
 				}
 				attrs_id[*n_playerinfo].push_back(PLAYER_ATTR_WEAPON);
 				attrs_val[*n_playerinfo].push_back(actor_table->WeaponId);
-				attrs_id[*n_playerinfo].push_back(PLAYER_ATTR_HEAD);
-				attrs_val[*n_playerinfo].push_back(actor_table->InitialHead);
+//				attrs_id[*n_playerinfo].push_back(PLAYER_ATTR_HEAD);
+//				attrs_val[*n_playerinfo].push_back(actor_table->InitialHead);
 			}
 		}
 		else
@@ -915,6 +934,7 @@ int conn_node_loginsrv::handle_create_player(EXTERN_DATA *extern_data)
 		PlayerCreateRequest *req;
 		req = player_create_request__unpack(NULL, get_data_len(), (uint8_t *)get_data());
 		if (!req || !req->name || strlen(req->name)==0 || !(req->job>=JOB_DEFINE_DAO && req->job <=JOB_DEFINE_FAZHANG)) {
+			LOG_ERR("%s: %d: create player unpack failed", __FUNCTION__, __LINE__);
 			return (-10);
 		}
 		LOG_INFO("[%s:%d] create_player [%s][%d] result[%u]", __FUNCTION__, __LINE__, req->name, req->job, result);
@@ -922,6 +942,12 @@ int conn_node_loginsrv::handle_create_player(EXTERN_DATA *extern_data)
 		{
 			PlayerDBInfo info;
 			player_dbinfo__init(&info);
+
+			info.default_down_color = req->default_down_color;
+			info.default_hair = req->default_hair;
+			info.default_hair_color = req->default_hair_color;
+			info.default_icon = req->default_icon;
+			info.default_up_color = req->default_up_color;
 
 			ParameterTable *birth_config = get_config_by_id(161000023, &parameter_config);
 			if (birth_config && birth_config->n_parameter1 >= 4)
@@ -942,13 +968,30 @@ int conn_node_loginsrv::handle_create_player(EXTERN_DATA *extern_data)
 			info.auto_add_hp->open_auto_add_hp = 1;
 			info.auto_add_hp->auto_add_hp_item_id = 201070049;
 
-			info.fishing_bait_id = 440400001;
+			info.fishing_bait_id = 440400007;
 
-			const static int MAX_CREATE_ATTR = 20;
+			const static int MAX_CREATE_ATTR = 30;
 			int arrNum = 0;
 			uint32_t arrId[MAX_CREATE_ATTR] = {0};
 			uint32_t arrVaual[MAX_CREATE_ATTR] = { 0 };
-			uint32_t carrerid = 101000000 + req->job;
+			uint32_t carrerid = 101000000 + req->job + req->sex * 100;
+
+			arrId[arrNum] = PLAYER_ATTR_CLOTHES_COLOR_DOWN;
+			arrVaual[arrNum] = req->default_down_color;
+			++arrNum;
+			arrId[arrNum] = PLAYER_ATTR_CLOTHES_COLOR_UP;
+			arrVaual[arrNum] = req->default_up_color;
+			++arrNum;
+			arrId[arrNum] = PLAYER_ATTR_HAT;
+			arrVaual[arrNum] = req->default_hair;
+			++arrNum;
+			arrId[arrNum] = PLAYER_ATTR_HAT_COLOR;
+			arrVaual[arrNum] = req->default_hair_color;
+			++arrNum;
+			arrId[arrNum] = PLAYER_ATTR_HEAD;
+			arrVaual[arrNum] = req->default_icon;
+			++arrNum;
+			
 			std::map<uint64_t, struct ActorTable *>::iterator it = actor_config.find(carrerid);
 			if (it != actor_config.end())
 			{
@@ -956,40 +999,40 @@ int conn_node_loginsrv::handle_create_player(EXTERN_DATA *extern_data)
 				{
 					arrId[arrNum] = PLAYER_ATTR_CLOTHES;
 					arrVaual[arrNum] = it->second->ResId[0];
-					++arrNum;
-					std::map<uint64_t, struct ActorFashionTable *>::iterator itFashion = fashion_config.find(it->second->ResId[0]);
-					if (itFashion != fashion_config.end())
-					{
-						if (itFashion->second->n_ColourID1 > 0)
-						{
-							arrId[arrNum] = PLAYER_ATTR_CLOTHES_COLOR_UP;
-							arrVaual[arrNum] = itFashion->second->ColourID1[0];
-							++arrNum;
-						}
-						if (itFashion->second->n_ColourID2 > 0)
-						{
-							arrId[arrNum] = PLAYER_ATTR_CLOTHES_COLOR_DOWN;
-							arrVaual[arrNum] = itFashion->second->ColourID2[0];
-							++arrNum;
-						}
-					}
+					++arrNum;					
+					// std::map<uint64_t, struct ActorFashionTable *>::iterator itFashion = fashion_config.find(it->second->ResId[0]);
+					// if (itFashion != fashion_config.end())
+					// {
+					// 	if (itFashion->second->n_ColourID1 > 0)
+					// 	{
+					// 		arrId[arrNum] = PLAYER_ATTR_CLOTHES_COLOR_UP;
+					// 		arrVaual[arrNum] = itFashion->second->ColourID1[0];
+					// 		++arrNum;
+					// 	}
+					// 	if (itFashion->second->n_ColourID2 > 0)
+					// 	{
+					// 		arrId[arrNum] = PLAYER_ATTR_CLOTHES_COLOR_DOWN;
+					// 		arrVaual[arrNum] = itFashion->second->ColourID2[0];
+					// 		++arrNum;
+					// 	}
+					// }
 				}
-				if (it->second->n_HairResId > 0)
-				{
-					arrId[arrNum] = PLAYER_ATTR_HAT;
-					arrVaual[arrNum] = it->second->HairResId[0];
-					++arrNum;
-					std::map<uint64_t, struct ActorFashionTable *>::iterator itFashion = fashion_config.find(it->second->HairResId[0]);
-					if (itFashion != fashion_config.end())
-					{
-						if (itFashion->second->n_ColourID1 > 0)
-						{						
-							arrId[arrNum] = PLAYER_ATTR_HAT_COLOR;
-							arrVaual[arrNum] = itFashion->second->ColourID1[0];
-							++arrNum;
-						}
-					}
-				}
+				// if (it->second->n_HairResId > 0)
+				// {
+				// 	arrId[arrNum] = PLAYER_ATTR_HAT;
+				// 	arrVaual[arrNum] = it->second->HairResId[0];
+				// 	++arrNum;
+				// 	std::map<uint64_t, struct ActorFashionTable *>::iterator itFashion = fashion_config.find(it->second->HairResId[0]);
+				// 	if (itFashion != fashion_config.end())
+				// 	{
+				// 		if (itFashion->second->n_ColourID1 > 0)
+				// 		{						
+				// 			arrId[arrNum] = PLAYER_ATTR_HAT_COLOR;
+				// 			arrVaual[arrNum] = itFashion->second->ColourID1[0];
+				// 			++arrNum;
+				// 		}
+				// 	}
+				// }
 				arrId[arrNum] = PLAYER_ATTR_WEAPON;
 				arrVaual[arrNum] = it->second->WeaponId;
 				++arrNum;
@@ -1005,6 +1048,10 @@ int conn_node_loginsrv::handle_create_player(EXTERN_DATA *extern_data)
 					++arrNum;
 				}
 			}
+
+			arrId[arrNum] = PLAYER_ATTR_SEX;
+			arrVaual[arrNum] = req->sex;
+			++arrNum;
 
 			const static int MAX_INIT_BAG = 10;
 			DBBagGrid  grid_data[MAX_INIT_BAG];

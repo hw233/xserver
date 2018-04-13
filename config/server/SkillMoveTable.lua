@@ -138,7 +138,7 @@ local SkillMoveTable = {
 		['DelayTime'] = 50,
 		['MoveTime'] = 400,
 		['EndType'] = 1,
-		['EndDistance'] = .10,
+		['EndDistance'] = 1.00,
 		['BallisticEffect'] = 0,
 		['ExplodedEffect'] = 0
 		},

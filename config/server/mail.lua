@@ -548,6 +548,16 @@ local mail = {
 		['RewardID'] = {},
 		['RewardNum'] = {},
 		['time'] = ''
+		},
+	[270100012] = {
+		['ID'] = 270100012,
+		['MailType'] = 1,
+		['Title'] = '红包退回',
+		['Content'] = '你于%s发送的%s已超时，退回未被领取的货币如下：',
+		['Sender'] = '系统',
+		['RewardID'] = {},
+		['RewardNum'] = {},
+		['time'] = ''
 		}
 	}
 return mail

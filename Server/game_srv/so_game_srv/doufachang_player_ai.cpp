@@ -24,7 +24,9 @@ static void doufachang_player_ai_tick(player_struct *player)
 	if (!ai_player_data)
 		return;
 	
-	if (player->buff_state & BUFF_STATE_STUN)
+	if (player->buff_state & BUFF_STATE_STUN
+		|| player->buff_state & BUFF_STATE_CHANRAO
+		|| player->buff_state & BUFF_STATE_FENGYIN)
 	{
 //		LOG_DEBUG("aitest: [%s] lock", player->get_name());		
 		return;

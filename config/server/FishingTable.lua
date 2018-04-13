@@ -52,6 +52,15 @@ local FishingTable = {
 		['Response'] = 1,
 		['Drop'] = 220100245,
 		['Drop1'] = 220100241
+		},
+	[440400007] = {
+		['ID'] = 440400007,
+		['Stosh'] = 201061249,
+		['TimeMin'] = 2,
+		['TimeMax'] = 2,
+		['Response'] = 3,
+		['Drop'] = 220100241,
+		['Drop1'] = 220100241
 		}
 	}
 return FishingTable

@@ -394,7 +394,7 @@ int scene_struct::delete_monster_from_scene(monster_struct *monster, bool send_m
 	return (0);
 }
 
-int scene_struct::delete_cash_truck_from_scene(cash_truck_struct *pTruck)
+int scene_struct::delete_cash_truck_from_scene(cash_truck_struct *pTruck, bool send_msg)
 {
 	area_struct *area = pTruck->area;
 	if (!area)
@@ -404,7 +404,7 @@ int scene_struct::delete_cash_truck_from_scene(cash_truck_struct *pTruck)
 		__FUNCTION__, __LINE__, m_id, pTruck->data->player_id, area,
 		pTruck->data->cur_sight_player, pTruck->data->cur_sight_monster);
 
-	pTruck->broadcast_cash_truck_delete();
+	pTruck->broadcast_cash_truck_delete(send_msg);
 	if (area->del_truck_from_area(pTruck->data->player_id) != 0)
 	{
 		LOG_ERR("%s %d: can not del monster[%lu] from area[%ld]", __FUNCTION__, __LINE__, pTruck->data->player_id, area - m_area);

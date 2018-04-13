@@ -310,6 +310,10 @@ static void tower_raid_ai_player_ready(raid_struct *raid, player_struct *player)
 	{
 		LOG_ERR("[%s:%d] ret = %d", __FUNCTION__, __LINE__, ret);
 	}
+	else
+	{
+		player->add_task_progress(TCT_PLAY_TOWER, 0, 1);
+	}
 }
 
 static void tower_raid_ai_player_relive(raid_struct *raid, player_struct *player, uint32_t type)

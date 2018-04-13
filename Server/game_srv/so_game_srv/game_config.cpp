@@ -105,6 +105,11 @@ static void generate_parameters(void)
 	for (int i = 0; i < 6; ++i)
 		sg_3v3_pvp_raid_param2[i] = (int)(pvp_raid_param->parameter1[i]);
 	sg_3v3_pvp_raid_param2[5] *= 100;
+	
+	sg_player_speed = 5;	
+	pvp_raid_param = get_config_by_id(161000486, &parameter_config);
+	if (pvp_raid_param && pvp_raid_param->n_parameter1 > 0)
+		sg_player_speed = pvp_raid_param->parameter1[0];
 
 /// 工会战
 	pvp_raid_param = get_config_by_id(161000178, &parameter_config);
@@ -300,6 +305,7 @@ static void generate_parameters(void)
 	sg_guild_battle_settle_time = get_config_by_id(161000186, &parameter_config)->parameter1[0];
 	sg_guild_battle_final_match_time = get_config_by_id(161000187, &parameter_config)->parameter1[0];
 	sg_guild_battle_final_fight_time = get_config_by_id(161000188, &parameter_config)->parameter1[0];
+	sg_rand_collect_num = get_config_by_id(161000455, &parameter_config)->parameter1[0];
 	sg_guild_battle_final_settle_time = get_config_by_id(161000189, &parameter_config)->parameter1[0];
 	sg_guild_battle_wait_award_interval = get_config_by_id(161000203, &parameter_config)->parameter1[0];
 	ParameterTable *guild_battle_wait_id_param = get_config_by_id(161000204, &parameter_config);
@@ -629,6 +635,73 @@ static void generate_parameters(void)
 		sg_choujiangquan_item_id = config->parameter1[0];
 	}
 
+	//红包相关
+	config = get_config_by_id(161000457, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_world_yinpiao_red_packet_min_num = config->parameter1[0];
+	}
+	config = get_config_by_id(161000458, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_world_yinpiao_red_packet_max_num = config->parameter1[0];
+	}
+	config = get_config_by_id(161000469, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_world_yuanbao_red_packet_min_num = config->parameter1[0];
+	}
+	config = get_config_by_id(161000470, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_world_yuanbao_red_packet_max_num = config->parameter1[0];
+	}
+	config = get_config_by_id(161000460, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_yinpiao_red_packet_min_num = config->parameter1[0];
+	}
+	config = get_config_by_id(161000461, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_yinpiao_red_packet_max_num = config->parameter1[0];
+	}
+	config = get_config_by_id(161000472, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_yuanbao_red_packet_min_num = config->parameter1[0];
+	}
+	config = get_config_by_id(161000473, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_yuanbao_red_packet_max_num = config->parameter1[0];
+	}
+	config = get_config_by_id(161000464, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_yinpiao_red_packet_min_money = config->parameter1[0];
+	}
+	config = get_config_by_id(161000465, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_yinpiao_red_packet_max_money = config->parameter1[0];
+	}
+	config = get_config_by_id(161000476, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_yuanbao_red_packet_min_money = config->parameter1[0];
+	}
+	config = get_config_by_id(161000477, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_yuanbao_red_packet_max_money = config->parameter1[0];
+	}
+	config = get_config_by_id(161000481, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		send_red_packet_min_level = config->parameter1[0];
+	}
+
 }
 
 	// 读取刷怪配置
@@ -920,7 +993,7 @@ static void adjust_skill_table()
 				continue;
 			if (fuwen_config.find(fuwen_id) != fuwen_config.end())
 			{
-				printf("%s: duplicate fuwen id %lu\n", __FUNCTION__, fuwen_id);
+				printf("%s: %lu duplicate fuwen id %lu\n", __FUNCTION__, config->ID, fuwen_id);
 			}
 			fuwen_config[fuwen_id] = config;
 		}
@@ -1082,6 +1155,15 @@ static void adjust_rand_collect_table()
 		{
 			it->second.push_back(ite->first);
 		}
+	}
+}
+
+static void adjust_script_raid_table()
+{
+	std::map<uint64_t, struct TaskDungeonsTable*>::iterator ite = script_raid_config.begin(); 
+	for (; ite != script_raid_config.end(); ++ite)
+	{
+		sg_script_raid_config.insert(std::make_pair(ite->second->DungeonID, ite->second));
 	}
 }
 
@@ -1858,6 +1940,31 @@ static void adjust_dungeon_table(lua_State *L, struct sproto_type *type)
 			int n_star = config->n_Rewards;
 			assert(n_level * 3 == n_star);
 		}
+
+		if (config->n_PointingType > 0 && config->ArrowPointing)
+		{
+			config->n_point_monster_id = config->n_PointingType;
+			config->point_monster_id = (uint64_t *)malloc(sizeof(uint64_t) * config->n_point_monster_id);
+			char *p = config->ArrowPointing;
+			for (size_t i = 0; i < config->n_point_monster_id && p; ++i)
+			{
+				char *end = strchr(p, ',');
+				char *nextp = NULL;
+				if (end)
+				{
+					*end = '\0';
+					nextp = end + 1;
+				}
+				if (config->PointingType[i] != 2)
+				{
+					config->point_monster_id[i] = 0;					
+					p = nextp;
+					continue;
+				}
+				config->point_monster_id[i] = (uint64_t)strtoull(p, NULL, 0);
+				p = nextp;
+			}
+		}
 		
 		if (config->DengeonRank == DUNGEON_TYPE_RAND_MASTER)
 		{
@@ -2183,6 +2290,18 @@ static void adjust_jijiangopen_table()
 		if (ite->second->IsSoon == 0)
 			continue;
 		sg_jijiangopen.insert(std::make_pair((uint64_t)(ite->second->IsSoon), ite->second));
+	}
+}
+
+static void adjust_every_level_all_charm()
+{
+	for(std::map<uint64_t, struct CharmTable *>::iterator itr =  charm_config.begin(); itr != charm_config.end(); itr++)
+	{
+		uint32_t level = 1;
+		uint32_t sun_num = 0;
+		sun_num += itr->second->Exp;
+		every_level_all_charm.insert(std::make_pair(level, sun_num));
+		level++;
 	}
 }
 
@@ -2610,7 +2729,7 @@ void add_drop_item(uint32_t item_id, uint32_t num_max, uint32_t num_min, std::ma
 {
 	if (item_id > 200000000 && item_id < 209999999)
 	{
-		uint32_t rand_num = random() % (num_max - num_min + 1) + num_min;
+		uint32_t rand_num = rand_between(num_min, num_max);
 		if (rand_num > 0)
 		{
 			item_list[item_id] += rand_num;
@@ -3453,6 +3572,11 @@ UndergroundTask *get_digong_xiulian_config(uint32_t level)
 	return NULL;
 }
 
+bool is_script_raid(uint32_t raid_id)
+{
+	return get_config_by_id(raid_id, &sg_script_raid_config) == NULL ? false : true;
+}
+
 int get_partner_recruit_convert_item(uint32_t partner_id, uint32_t &item_id, uint32_t &item_num)
 {
 	PartnerTable *config = get_config_by_id(partner_id, &partner_config);
@@ -3713,6 +3837,7 @@ int read_all_excel_data()
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/CharmTable.lua", (config_type)&charm_config);
 	assert(ret == 0);
+	adjust_every_level_all_charm();
 
 	type = sproto_type(sp, "WeaponsEffectTable");
 	assert(type);
@@ -4234,6 +4359,12 @@ int read_all_excel_data()
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/NineEightTable.lua", (config_type)&jiu_gong_ba_gua_reward_config);
 	assert(ret == 0);
+
+	type = sproto_type(sp, "TaskDungeonsTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/TaskDungeonsTable.lua", (config_type)&script_raid_config);
+	assert(ret == 0);
+	adjust_script_raid_table();
 
 	adjust_escort_config();
 	adjust_achievement_config();

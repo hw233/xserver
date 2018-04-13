@@ -99,6 +99,19 @@ int buff_struct::init_buff(struct BuffTable *buffconfig, uint64_t end_time, unit
 				m_owner->stop_move();
 			}
 			break;
+			case 170000013: //-缠绕
+			{
+				data->effect.buff_state.state = BUFF_STATE_CHANRAO;
+				m_owner->buff_state |= BUFF_STATE_CHANRAO;
+				m_owner->stop_move();
+			}
+			break;
+			case 170000014: //封印
+			{
+				data->effect.buff_state.state = BUFF_STATE_FENGYIN;
+				m_owner->buff_state |= BUFF_STATE_FENGYIN;
+			}
+			break;
 			case 170000006: //-无敌，不受任何伤害
 			{
 				data->effect.buff_state.state = BUFF_STATE_GOD;
@@ -187,6 +200,10 @@ uint32_t buff_struct::get_skill_effect_by_buff_state(int state)
 			return 170000006;
 		case BUFF_STATE_STUN:
 			return 170000004;
+		case BUFF_STATE_CHANRAO:
+			return 170000013;
+		case BUFF_STATE_FENGYIN:
+			return 170000014;
 		case BUFF_STATE_CRIT:
 			return (0);
 		case BUFF_STATE_TAUNT:
@@ -518,6 +535,8 @@ void buff_struct::deal_with_recover_effect()
 			}
 		}
 		break;
+		case 170000013: //-缠绕
+		case 170000014: //-封印
 		case 170000004: //-眩晕，不能移动不能攻击
 		case 170000006: //-无敌，不受任何伤害
 		case 170000022: //-嘲讽

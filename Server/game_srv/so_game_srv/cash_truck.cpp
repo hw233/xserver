@@ -177,7 +177,9 @@ void cash_truck_struct::calculate_attribute(void)
 	if (ite == monster_config.end())
 		return;
 	config = ite->second;
-	::get_attr_from_config(config->BaseAttribute * 1000 + get_attr(PLAYER_ATTR_LEVEL), data->attrData, &drop_id);
+	::get_attr_from_config(config->BaseAttribute * 1000 + get_attr(PLAYER_ATTR_LEVEL), data->attrData);
+	drop_id = config->DropID * 1000 + 1;
+	data->attrData[PLAYER_ATTR_MOVE_SPEED] = config->MoveSpeed;	
 	data->attrData[PLAYER_ATTR_HP] = data->attrData[PLAYER_ATTR_MAXHP];
 	//data->attrData[PLAYER_ATTR_MOVE_SPEED] = 2;
 
@@ -411,6 +413,7 @@ void cash_truck_struct::pack_sight_cash_truck_info(SightCashTruckInfo *info)
 			info->direct_x = player->data->move_path.direct_x;
 			info->direct_z = player->data->move_path.direct_z; 
 			self_path = false;
+			info->on = true;
 		}
 	}
 	if (self_path)
@@ -421,7 +424,7 @@ void cash_truck_struct::pack_sight_cash_truck_info(SightCashTruckInfo *info)
 	}
 }
 
-int cash_truck_struct::broadcast_cash_truck_delete()
+int cash_truck_struct::broadcast_cash_truck_delete(bool send)
 {
 	assert(data);
 
@@ -480,8 +483,11 @@ int cash_truck_struct::broadcast_cash_truck_delete()
 			LOG_ERR("%s: %lu can not find sight partner %lu", __FUNCTION__, get_uuid(), data->sight_partner[i]);
 		}
 	}
-		
-	conn_node_gamesrv::broadcast_msg_send();
+	
+	if (send)
+	{
+		conn_node_gamesrv::broadcast_msg_send();
+	}
 
 	clear_cash_truck_sight();
 	return (0);

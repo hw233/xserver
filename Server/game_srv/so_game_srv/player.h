@@ -675,6 +675,12 @@ struct player_data
 	uint64_t player_id;
 	PlayerStatus status;
 
+	uint32_t default_hair;
+	uint32_t default_icon;
+	uint32_t default_hair_color;
+	uint32_t default_up_color;
+	uint32_t default_down_color;
+
 	char name[MAX_PLAYER_NAME_LEN + 1];    //名字
 	uint32_t create_time; //创角时间
 //	uint32_t headicon;    //头像ID
@@ -725,7 +731,8 @@ struct player_data
 
 //	struct player_raid_data raid_data;
 	uint32_t raid_reward_id[MAX_RAID_NUM];
-	uint32_t raid_reward_num[MAX_RAID_NUM];	
+	uint32_t raid_reward_num[MAX_RAID_NUM];
+	uint32_t script_reward_num;
 
 	//装备
 	EquipInfo equip_list[MAX_EQUIP_NUM];
@@ -764,6 +771,7 @@ struct player_data
 	struct pvp_raid_data pvp_raid_data;
 
 	uint32_t m_collect_uuid;  //玩家当前正在采集的采集物的唯一ID
+	uint32_t m_rand_collect_num;  //随机采集次数
 	uint32_t guild_id;
 	uint32_t guild_office;
 	uint32_t guild_donation;
@@ -845,7 +853,7 @@ struct player_data
 	uint32_t  partner_today_senior_recurit_cd;  //今日senior伙伴招募cd
 
 	LeaveRaidPosition leaveraid; //离开副本
-	uint32_t noviceraid_flag;	//新手副本是否完成的标记
+	bool noviceraid_flag;	//新手副本是否完成的标记
 	uint64_t Receive_type;		//即将开启，已经领取最大奖励的类型
 
 	uint64_t world_chat_cd;
@@ -1025,6 +1033,7 @@ public:
 	bool is_chengjie_target(uint64_t player_id);
 
 	JobDefine get_job();
+	uint32_t get_sex();	
 	uint32_t get_level();
 
 	virtual uint32_t count_life_steal_effect(int32_t damage);
@@ -1131,7 +1140,7 @@ public:
 	int broadcast_player_create(scene_struct *scene);
 	int broadcast_player_delete();
 	void update_player_pos_and_sight();	
-	void pack_sight_player_base_info(SightPlayerBaseInfo *info);
+	void pack_sight_player_base_info(SightPlayerBaseInfo *info, ChuangongTarget *chuan_gong_info);
 	void send_clear_sight();
 	void send_clear_sight_monster();	
 	void send_scene_transfer(float direct, float pos_x, float pos_y, float pos_z, uint32_t old_scene_id, uint32_t scene_id, int32_t result);
@@ -1262,7 +1271,7 @@ public:
 	void send_player_sight_add_to_aisrv(player_struct *add_player);
 
 		//
-	void deal_skill_cast_request(SkillCastRequest *req, SkillTable *config, struct ActiveSkillTable *active_config);
+	void deal_skill_cast_request(SkillCastRequest *req, uint32_t ori_skill_id, SkillTable *config, struct ActiveSkillTable *active_config);
 	void deal_skill_hit_request(SkillHitRequest *req);	
 
 	//掉落
@@ -1295,6 +1304,7 @@ public:
 	void task_update_notify(TaskInfo *info);
 	void check_task_collect(TaskInfo *info); //是否要增加 删除采集点
 	void get_task_event_item(uint32_t task_id, uint32_t event_class, std::map<uint32_t, uint32_t> &item_list);
+	void get_task_event_partner(uint32_t task_id, uint32_t event_class);
 	int touch_task_event(uint32_t task_id, uint32_t event_class);
 	int execute_task_event(uint32_t event_id, uint32_t event_class, bool internal, uint32_t task_id);
 	int add_finish_task(uint32_t task_id);
@@ -1311,6 +1321,7 @@ public:
 	void add_task_progress(uint32_t type, uint32_t target, uint32_t num, uint32_t task_id = 0, uint32_t cond_id = 0, uint64_t teammate_id = 0);
 	bool task_is_achieved(TaskInfo *info);
 	int set_task_fail(TaskInfo *info);
+	int send_task_submit(uint32_t task_id);
 	static bool task_condition_can_fail(uint32_t task_id);
 
 	void logout_check_task_time(void);

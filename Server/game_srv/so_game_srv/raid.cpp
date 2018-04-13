@@ -1737,6 +1737,8 @@ void raid_struct::on_tick()
 					}
 					break;
 				}
+
+				try_notify_monster_pos();
 			}
 		}
 		break;
@@ -1748,7 +1750,7 @@ void raid_struct::on_tick()
 		case 2: //成功了
 		{
 			mark_finished = 999;
-			if (ai && ai->raid_on_finished)
+			if (ai && ai->raid_on_finished && m_config->WhetherSettlement != 1)
 				ai->raid_on_finished(this);
 		}
 		break;
@@ -1900,6 +1902,8 @@ bool raid_struct::add_raid_pass_value(uint32_t pass_type, struct DungeonTable* c
 	}
 
 	send_raid_pass_param(NULL);
+	next_notify_monster_pos_time = 0;
+	try_notify_monster_pos();
 	// RaidPassParamChangedNotify nty;
 	// raid_pass_param_changed_notify__init(&nty);
 	// nty.pass_index = data->pass_index;
@@ -2167,4 +2171,44 @@ int raid_struct::player_enter_raid(player_struct *player, double pos_x, double p
 		return (-1);
 	}
 	return player_enter_raid_impl(player, index, pos_x, pos_z, direct);
+}
+
+void raid_struct::try_notify_monster_pos()
+{
+	if (time_helper::get_cached_time() < next_notify_monster_pos_time)
+		return;
+	
+		//间隔一秒广播
+	next_notify_monster_pos_time = time_helper::get_cached_time() + 1000;
+
+	struct DungeonTable *t_config = get_raid_config();
+	if (!t_config)
+		return;
+	if (t_config->n_PointingType <= data->pass_index)
+		return;
+	if (t_config->PointingType[data->pass_index] != 2)
+		return;
+	if (t_config->point_monster_id[data->pass_index] == 0)
+		return;
+
+	monster_struct *monster = NULL;
+	for (std::set<monster_struct *>::iterator ite = m_monster.begin(); ite != m_monster.end(); ++ite)
+	{
+		if ((*ite)->data->monster_id == t_config->point_monster_id[data->pass_index])
+		{
+			monster = *ite;
+			break;
+		}
+	}
+	if (!monster)
+		return;
+	struct position *pos = monster->get_pos();
+	if (!pos)
+		return;
+	RefreshMonsterPosNotify nty;
+	refresh_monster_pos_notify__init(&nty);
+	nty.monster_id = t_config->point_monster_id[data->pass_index];
+	nty.pos_x = pos->pos_x;
+	nty.pos_z = pos->pos_z;
+	broadcast_to_raid(MSG_ID_RAID_REFRESH_MONSTER_POS_NOTIFY, &nty, (pack_func)refresh_monster_pos_notify__pack, true);	
 }

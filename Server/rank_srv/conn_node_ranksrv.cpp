@@ -115,6 +115,15 @@ enum
 	RANK_DOU_FA_CHANG_TOTAL = 1401,
 	RANK_DOU_FA_CHANG_ZHENYING1 = 1418,
 	RANK_DOU_FA_CHANG_ZHENYING2 = 1419,
+
+	//魅力值
+	RANK_MEI_LI_ZHI_TATAL = 1501,
+	RANK_MEI_LI_ZHI_ZHENYING1 = 1518,
+	RANK_MEI_LI_ZHI_ZHENYING2 = 1519,
+	//最强伙伴
+	RANK_ZUI_QIANG_PARTNER_TATAL = 1601,
+	RANK_ZUI_QIANG_PARTNER_ZHENYING1 = 1618,
+	RANK_ZUI_QIANG_PARTNER_ZHENYING2 = 1619,
 	
 };
 
@@ -177,6 +186,12 @@ static void init_rank_key_map()
 	scm_rank_keys[RANK_DOU_FA_CHANG_TOTAL]					   = "doufachang_rank_%u";
 	scm_rank_keys[RANK_DOU_FA_CHANG_ZHENYING1]				   = "doufachang_rank_%u";
 	scm_rank_keys[RANK_DOU_FA_CHANG_ZHENYING2]				   = "doufachang_rank_%u";
+	scm_rank_keys[RANK_MEI_LI_ZHI_TATAL]					   = "s%u_rank_mei_li_zhi_total";
+	scm_rank_keys[RANK_MEI_LI_ZHI_ZHENYING1]				   = "s%u_rank_mei_li_zhi_zhengying1";
+	scm_rank_keys[RANK_MEI_LI_ZHI_ZHENYING2]				   = "s%u_rank_mei_li_zhi_zhengying2";
+	scm_rank_keys[RANK_ZUI_QIANG_PARTNER_TATAL]				   = "s%u_rank_zui_qiang_partner_tatal";
+	scm_rank_keys[RANK_ZUI_QIANG_PARTNER_ZHENYING1]			   = "s%u_rank_zui_qiang_partner_zhengying1";
+	scm_rank_keys[RANK_ZUI_QIANG_PARTNER_ZHENYING2]			   = "s%u_rank_zui_qiang_partner_zhengying2";
 }
 
 void init_redis_keys(uint32_t server_id)
@@ -835,6 +850,8 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		uint32_t zhenying_kill = req->zhenying_kill;
 		uint32_t exploit = req->exploit;
 		uint32_t award_question = req->award_question;
+		MaxPowerPartner *new_max_partner = req->maxpartner;
+		uint32_t new_meili = req->meili_num;
 		
 		uint32_t old_level = 0;
 		uint32_t old_fc_total = 0;
@@ -850,6 +867,8 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		uint32_t old_zhenying_kill = 0;
 		uint32_t old_exploit = 0;
 		uint32_t old_question = 0;
+		MaxPowerPartner *old_max_partner = NULL;
+		uint32_t old_meili = 0;
 
 		if (redis_player)
 		{
@@ -870,12 +889,106 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 			old_zhenying_kill = redis_player->zhenying_kill;
 			old_exploit = redis_player->exploit;
 			old_question = redis_player->award_question;
+			old_max_partner = redis_player->maxpartner;
+			old_meili = redis_player->meili_num;
 		}
 		else
 		{
 			save_player = req;
 		}
 
+		if(old_meili != new_meili)
+		{
+			rank_type = RANK_MEI_LI_ZHI_TATAL;
+			update_player_rank_score(rank_type, player_id, 0, new_meili);
+			if (zhenying > 0)
+			{
+				rank_type = RANK_MEI_LI_ZHI_ZHENYING1 + zhenying - 1;
+				update_player_rank_score(rank_type, player_id, 0, new_meili);
+			}
+		
+		}
+
+		if(old_max_partner != NULL)
+		{
+			if(new_max_partner != NULL)
+			{
+				if(old_max_partner->id != new_max_partner->id || old_max_partner->power != new_max_partner->power)
+				{
+					rank_type = RANK_ZUI_QIANG_PARTNER_TATAL;
+					update_player_rank_score(rank_type, player_id, 0, new_max_partner->power);
+					if (zhenying > 0)
+					{
+						rank_type = RANK_ZUI_QIANG_PARTNER_ZHENYING1 + zhenying - 1;
+						update_player_rank_score(rank_type, player_id, 0, new_max_partner->power);
+					}
+				}
+
+			}
+			else 
+			{
+				rank_type = RANK_ZUI_QIANG_PARTNER_TATAL;
+				del_player_rank(rank_type, player_id);
+				if(zhenying > 0)
+				{
+					rank_type = RANK_ZUI_QIANG_PARTNER_ZHENYING1 + zhenying - 1;
+					del_player_rank(rank_type, player_id);
+				}
+			}
+		}
+		else 
+		{
+			if(new_max_partner != NULL)
+			{
+				rank_type = RANK_ZUI_QIANG_PARTNER_TATAL;
+				update_player_rank_score(rank_type, player_id, 0, new_max_partner->power);
+				if (zhenying > 0)
+				{
+					rank_type = RANK_ZUI_QIANG_PARTNER_ZHENYING1 + zhenying - 1;
+					update_player_rank_score(rank_type, player_id, 0, new_max_partner->power);
+				}
+			
+			}
+		}
+		if (zhenying != old_zhenying)
+		{
+			if(old_zhenying == 0)
+			{
+				if(new_max_partner != NULL)
+				{
+					rank_type = RANK_ZUI_QIANG_PARTNER_ZHENYING1 + zhenying - 1;
+					update_player_rank_score(rank_type, player_id, 0, new_max_partner->power);
+				}
+				rank_type =  RANK_MEI_LI_ZHI_ZHENYING1 + zhenying - 1;
+				update_player_rank_score(rank_type, player_id, 0, new_meili);
+			}
+			else 
+			{
+				if(new_max_partner != NULL)
+				{
+					if(zhenying == 0)
+					{
+						rank_type = RANK_ZUI_QIANG_PARTNER_ZHENYING1 + old_zhenying - 1;
+						del_player_rank(rank_type, player_id);
+						rank_type = RANK_MEI_LI_ZHI_ZHENYING1 + old_zhenying - 1;
+						del_player_rank(rank_type, player_id);
+					}
+					else 
+					{
+						rank_type = RANK_ZUI_QIANG_PARTNER_ZHENYING1 + zhenying - 1;
+						update_player_rank_score(rank_type, player_id, 0, new_max_partner->power);
+						rank_type = RANK_ZUI_QIANG_PARTNER_ZHENYING1 + old_zhenying - 1;
+						del_player_rank(rank_type, player_id);
+						rank_type = RANK_MEI_LI_ZHI_ZHENYING1 + zhenying - 1;
+						update_player_rank_score(rank_type, player_id, 0, new_meili);
+						rank_type = RANK_MEI_LI_ZHI_ZHENYING1 + old_zhenying - 1;
+						del_player_rank(rank_type, player_id);
+					}
+				}
+			
+			}
+		}
+		
 		if (level != old_level)
 		{
 			rank_type = RANK_LEVEL_TOTAL;
@@ -1310,7 +1423,6 @@ static int handle_dou_fa_chang_rank_info(EXTERN_DATA *extern_data, uint64_t rank
 	for (size_t i = 0; i < MAX_RANK_GET_NUM; ++i)
 	{
 		uint64_t player_id = 0;
-		uint32_t score = 0;
 		switch(rank_type)
 		{
 			case RANK_DOU_FA_CHANG_TOTAL:
@@ -1350,7 +1462,7 @@ static int handle_dou_fa_chang_rank_info(EXTERN_DATA *extern_data, uint64_t rank
 
 		rank_data[resp.n_infos].baseinfo->playerid = player_id;
 		rank_data[resp.n_infos].ranknum = i + 1;
-		rank_data[resp.n_infos].score = score;
+		rank_data[resp.n_infos].score = redis_player->fighting_capacity;
 		resp.n_infos++;
 	}
 
@@ -1358,6 +1470,122 @@ static int handle_dou_fa_chang_rank_info(EXTERN_DATA *extern_data, uint64_t rank
 
 	return 0;
 }
+static int handle_rank_zui_qiang_partner_info_request(EXTERN_DATA *extern_data, uint64_t rank_type)
+{
+
+	int ret = 0;
+	std::vector<std::pair<uint64_t, uint32_t> > rank_info;
+	AutoReleaseBatchRedisPlayer t1;		
+	std::map<uint64_t, PlayerRedisInfo *> redis_players;
+	uint32_t my_rank = 0, my_score = 0;
+	do
+	{
+		char *rank_key = get_rank_key(rank_type);
+		if (rank_key == NULL)
+		{
+			ret = ERROR_ID_RANK_TYPE;
+			LOG_ERR("[%s:%d] player[%lu] rank type, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
+			break;
+		}
+
+		int ret2 = sg_redis_client.zget(rank_key, 0, 99, rank_info);
+		if (ret2 != 0)
+		{
+			ret = ERROR_ID_RANK_REDIS;
+			LOG_ERR("[%s:%d] player[%lu] get rank failed, rank_type:%lu, rank_key:%s", __FUNCTION__, __LINE__, extern_data->player_id, rank_type, rank_key);
+			break;
+		}
+
+		std::set<uint64_t> playerIds;
+		for (size_t i = 0; i < rank_info.size(); ++i)
+		{
+			playerIds.insert(rank_info[i].first);
+			if (rank_info[i].first == extern_data->player_id)
+			{
+				my_rank = i + 1;
+			}
+		}
+
+		if (get_more_redis_player(playerIds, redis_players, sg_player_key, sg_redis_client, t1) != 0)
+		{
+			ret = ERROR_ID_RANK_REDIS;
+			LOG_ERR("[%s:%d] player[%lu] get player failed, rank_type:%lu", __FUNCTION__, __LINE__, extern_data->player_id, rank_type);
+			break;
+		}
+
+		if (my_rank == 0)
+		{
+			int ret2 = sg_redis_client.zget_rank(rank_key, extern_data->player_id, my_rank);
+			if (ret2 == 0)
+			{
+				if (my_rank >= MAX_RANK_ADD_NUM)
+				{
+					my_rank = 0;
+				}
+				else
+				{
+					my_rank++;
+				}
+			}
+		}
+
+		sg_redis_client.zget_score(rank_key, extern_data->player_id, my_score);
+	} while(0);
+
+	RankInfoAnswer resp;
+	rank_info_answer__init(&resp);
+
+	RankPlayerData  rank_data[MAX_RANK_GET_NUM];
+	RankPlayerData* rank_point[MAX_RANK_GET_NUM];
+	PlayerBaseData  base_data[MAX_RANK_GET_NUM];
+	AttrData  attr_data[MAX_RANK_GET_NUM][MAX_RANK_ATTR_NUM];
+	AttrData* attr_point[MAX_RANK_GET_NUM][MAX_RANK_ATTR_NUM];
+
+	resp.result = ret;
+	resp.type = rank_type;
+	resp.myrank = my_rank;
+	resp.myscore = my_score;
+	resp.infos = rank_point;
+	resp.n_infos = 0;
+	for (size_t i = 0; i < rank_info.size() && resp.n_infos < MAX_RANK_GET_NUM; ++i)
+	{
+		uint64_t player_id = rank_info[i].first;
+		uint32_t score = rank_info[i].second;
+
+		rank_point[resp.n_infos] = &rank_data[resp.n_infos];
+		rank_player_data__init(&rank_data[resp.n_infos]);
+
+		player_base_data__init(&base_data[resp.n_infos]);
+		rank_data[resp.n_infos].baseinfo = &base_data[resp.n_infos];
+
+		rank_data[resp.n_infos].baseinfo->attrs = attr_point[resp.n_infos];
+		rank_data[resp.n_infos].baseinfo->n_attrs = 0;
+		for (int j = 0; j < MAX_RANK_ATTR_NUM; ++j)
+		{
+			attr_point[resp.n_infos][j] = &attr_data[resp.n_infos][j];
+			attr_data__init(&attr_data[resp.n_infos][j]);
+		}
+
+		PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, player_id);
+		if (redis_player && redis_player->maxpartner)
+		{
+			fill_rank_player(redis_player, &rank_data[resp.n_infos]);
+			rank_data[resp.n_infos].score = score;
+			rank_data[resp.n_infos].baseinfo->playerid = player_id;
+			rank_data[resp.n_infos].ranknum = resp.n_infos + 1;
+			rank_data[resp.n_infos].partner_id = redis_player->maxpartner->id;
+			rank_data[resp.n_infos].partner_level = redis_player->maxpartner->level;
+			rank_data[resp.n_infos].partner_name = redis_player->maxpartner->partner_name;
+			resp.n_infos++;
+		}
+
+	}
+
+	fast_send_msg(&conn_node_ranksrv::connecter, extern_data, MSG_ID_RANK_INFO_ANSWER, rank_info_answer__pack, resp);
+
+	return 0;
+}
+
 int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
 {
 	RankInfoRequest *req = rank_info_request__unpack(NULL, get_data_len(), get_data());
@@ -1378,6 +1606,11 @@ int conn_node_ranksrv::handle_rank_info_request(EXTERN_DATA *extern_data)
 	if(rank_type / 100 == 14)
 	{
 		return handle_dou_fa_chang_rank_info(extern_data, rank_type);
+	}
+
+	if(rank_type / 100 == 16)
+	{
+		return handle_rank_zui_qiang_partner_info_request(extern_data, rank_type);
 	}
 
 	int ret = 0;

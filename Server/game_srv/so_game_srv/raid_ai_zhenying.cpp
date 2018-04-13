@@ -218,6 +218,10 @@ static void zhenying_raid_ai_create_truck(raid_struct *raid)
 		return;
 	}
 	monster_struct *pMon = monster_manager::create_monster_at_pos(NULL, tableDaily->TruckID, table->Level, tableDaily->TruckRouteX[0], tableDaily->TruckRouteY[0], 0, NULL, 0);
+	if (pMon == NULL)
+	{
+		return;
+	}
 	pMon->create_config = get_daily_zhenying_truck_config(raid->data->ai_data.zhenying_data.camp);
 	//pMon->set_attr(PLAYER_ATTR_ZHENYING, raid->data->ai_data.zhenying_data.camp % 10);
 	pMon->set_camp_id(raid->data->ai_data.zhenying_data.camp % 10);

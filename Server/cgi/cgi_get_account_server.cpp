@@ -4,6 +4,8 @@
 #include "player_db.pb-c.h"
 #include "attr_id.h"
 #include "tea.h"
+#include<time.h>
+#include<sys/time.h>
 
 static const char* scg_user_conf = "./user.conf";
 static const uint32_t sg_init_head[] =
@@ -169,8 +171,8 @@ int main(void)
 				PlayerBaseInfo *base_info = (PlayerBaseInfo*)malloc(sizeof(PlayerBaseInfo));
 				player_base_info__init(base_info);
 				base_info->name = (char*)malloc(lengths[2] + 1);
-				base_info->attrid = (uint32_t*)malloc(3 * sizeof(uint32_t));
-				base_info->attrval = (uint32_t*)malloc(3 * sizeof(uint32_t));
+				base_info->attrid = (uint32_t*)malloc(4 * sizeof(uint32_t));
+				base_info->attrval = (uint32_t*)malloc(4 * sizeof(uint32_t));
 				pServer->n_playerlist++;
 				pServer->playerlist = (PlayerBaseInfo**)realloc(pServer->playerlist, pServer->n_playerlist * sizeof(PlayerBaseInfo*));
 				pServer->playerlist[pServer->n_playerlist - 1] = base_info;
@@ -199,6 +201,18 @@ int main(void)
 				}
 
 				base_info->attrval[2] = db_info->head_icon;
+				for (size_t i = 0; i < db_info->n_attr_id; ++i)
+				{
+					if (db_info->attr_id[i] == PLAYER_ATTR_SEX)
+					{
+						base_info->attrid[base_info->n_attrid] = PLAYER_ATTR_SEX;
+						base_info->attrval[base_info->n_attrval] = db_info->attr[i];
+						base_info->n_attrid++;
+						base_info->n_attrval++;
+						break;
+					}
+				}
+					
 			}
 
 			if (pServer->n_playerlist == 0)
@@ -216,6 +230,10 @@ int main(void)
 			free_query(res);
 			close_db();
 		}
+		timeval t;
+		gettimeofday(&t, NULL);
+		uint64_t cur_time =  (t.tv_sec * 1000000 + t.tv_usec) / 1000000;
+		resp->cur_server_time = cur_time;
 
 		uint8_t data_buffer[64*1024];
 		int data_len = account_server_list_answer__pack(resp, data_buffer);

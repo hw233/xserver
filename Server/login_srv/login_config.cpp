@@ -20,6 +20,7 @@ std::map<uint64_t, struct SceneResTable *> scene_res_config; //阻挡，寻路�
 std::map<uint64_t, struct ActorFashionTable *> fashion_config; //时装配置
 std::map<uint64_t, struct ParameterTable *> parameter_config; //参数配置
 std::map<uint64_t, struct ActorTable *> actor_config;
+std::map<uint64_t, struct ServerResTable *> server_res_config; //服务器配置表
 
 typedef std::map<uint64_t, void *> *config_type;
 #define READ_SPB_MAX_LEN (1024 * 1024)
@@ -59,6 +60,11 @@ int read_all_excel_data()
 	type = sproto_type(sp, "ParameterTable");
 	assert(type);		
 	ret = traverse_main_table(L, type, "../lua_data/ParameterTable.lua", (config_type)&parameter_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "ServerResTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/ServerResTable.lua", (config_type)&server_res_config);
 	assert(ret == 0);
 	
 	lua_close(L);	

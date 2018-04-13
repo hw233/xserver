@@ -36,7 +36,7 @@ public:
 	int broadcast_player_delete(player_struct *player, bool enter_scene);
 	int broadcast_monster_delete(monster_struct *monster);
 	int broadcast_partner_delete(partner_struct *partner);
-	int broadcast_truck_delete(cash_truck_struct *truck);
+	int broadcast_truck_delete(cash_truck_struct *truck, bool send);
 //	int broadcast_collect_delete(Collect *collect);		
 	
 	bool is_task_event_exist(uint64_t event_id);

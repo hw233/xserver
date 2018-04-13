@@ -580,7 +580,7 @@ static int handle_move_y_start_request(player_struct *player, EXTERN_DATA *exter
 		return (-1);
 	}
 
-	if (player->buff_state & BUFF_STATE_STUN)
+	if (player->buff_state & BUFF_STATE_STUN || player->buff_state & BUFF_STATE_CHANRAO)
 	{
 		LOG_ERR("%s: %lu is in lock state", __FUNCTION__, extern_data->player_id);
 		return (-10);
@@ -615,7 +615,7 @@ static int handle_move_y_stop_request(player_struct *player, EXTERN_DATA *extern
 		return -10;
 	}
 
-	if (player->buff_state & BUFF_STATE_STUN)
+	if (player->buff_state & BUFF_STATE_STUN || player->buff_state & BUFF_STATE_CHANRAO)
 	{
 		LOG_ERR("%s: %lu is in lock state", __FUNCTION__, extern_data->player_id);
 		return (-20);
@@ -644,7 +644,7 @@ static int handle_move_start_request(player_struct *player, EXTERN_DATA *extern_
 		return (-1);
 	}
 
-	if (player->buff_state & BUFF_STATE_STUN)
+	if (player->buff_state & BUFF_STATE_STUN || player->buff_state & BUFF_STATE_CHANRAO)
 	{
 		LOG_ERR("%s: %lu is in lock state", __FUNCTION__, extern_data->player_id);
 		return (-10);
@@ -678,7 +678,7 @@ static int handle_move_stop_request(player_struct *player, EXTERN_DATA *extern_d
 		return -10;
 	}
 
-	if (player->buff_state & BUFF_STATE_STUN)
+	if (player->buff_state & BUFF_STATE_STUN || player->buff_state & BUFF_STATE_CHANRAO)
 	{
 		LOG_ERR("%s: %lu is in lock state", __FUNCTION__, extern_data->player_id);
 		return (-20);
@@ -707,7 +707,7 @@ static int handle_move_request(player_struct *player, EXTERN_DATA *extern_data)
 		return (-1);
 	}
 
-	if (player->buff_state & BUFF_STATE_STUN)
+	if (player->buff_state & BUFF_STATE_STUN || player->buff_state & BUFF_STATE_CHANRAO)
 	{
 		LOG_ERR("%s: %lu is in lock state", __FUNCTION__, extern_data->player_id);
 		return (-10);
@@ -2199,8 +2199,8 @@ static int handle_skill_cast_request(player_struct *player, EXTERN_DATA *extern_
 
 	// if (player->buff_state & BUFF_STATE_STUN)
 	// {
-	//	LOG_ERR("%s: %lu is in lock state", __FUNCTION__, extern_data->player_id);
-	//	return (-10);
+	// 	LOG_ERR("%s: %lu is in stun state", __FUNCTION__, extern_data->player_id);
+	// 	return (-10);
 	// }
 	// if (player->buff_state & BUFF_STATE_TAUNT)
 	// {
@@ -2221,12 +2221,24 @@ static int handle_skill_cast_request(player_struct *player, EXTERN_DATA *extern_
 		skill_cast_request__free_unpacked(req, NULL);
 		return (-40);
 	}
+
+		//不是普通攻击就检查缠绕和封印
+	// if (config->SkillType != 1)
+	// {
+	// 	if (player->buff_state & BUFF_STATE_CHANRAO || player->buff_state & BUFF_STATE_FENGYIN)
+	// 	{
+	// 		LOG_ERR("%s: %lu cast skill %u but player in charao,fengying state", __FUNCTION__, extern_data->player_id, req->skillid);
+	// 		skill_cast_request__free_unpacked(req, NULL);
+	// 		return (-42);
+	// 	}
+	// }
+	
 	SkillTable *fuwen_config = get_config_by_id(req->skillid, &skill_config);
 	if (!fuwen_config)
 	{
 		LOG_ERR("%s: %lu cast skill %u but no config", __FUNCTION__, extern_data->player_id, req->skillid);
 		skill_cast_request__free_unpacked(req, NULL);
-		return (-41);
+		return (-45);
 	}
 	
    
@@ -2301,7 +2313,7 @@ static int handle_skill_cast_request(player_struct *player, EXTERN_DATA *extern_
 			pos->pos_x, pos->pos_z, req->cur_pos->pos_x, req->cur_pos->pos_z);
 	}
 
-	player->deal_skill_cast_request(req, fuwen_config, active_config);
+	player->deal_skill_cast_request(req, config->ID, fuwen_config, active_config);
 	skill_cast_request__free_unpacked(req, NULL);
 
 	return (0);
@@ -2345,6 +2357,7 @@ static int on_login_send_live_skill(player_struct *player, EXTERN_DATA *extern_d
 static int on_login_send_yaoshi(player_struct *player, EXTERN_DATA *extern_data);
 static int on_login_send_auto_add_hp_data(player_struct *player, EXTERN_DATA *extern_data);
 static int notify_jijiangopen_gift_info(player_struct* player, EXTERN_DATA* extern_data);
+static int handle_team_info_request(player_struct *player, EXTERN_DATA *extern_data);
 //玩家上线处理
 int pack_player_online(player_struct *player, EXTERN_DATA *extern_data, bool load_db, bool reconnect)
 {
@@ -2424,7 +2437,7 @@ int pack_player_online(player_struct *player, EXTERN_DATA *extern_data, bool loa
 
 #ifndef NO_NEWRAID
 	//如果是新手直接传入新手副本
-	if (player->data->noviceraid_flag == 0)
+	if (player->data->noviceraid_flag == false)
 	{
 		raid_struct *raid = raid_manager::create_raid(20035, player);
 		if (raid != NULL)
@@ -2465,7 +2478,6 @@ int pack_player_online(player_struct *player, EXTERN_DATA *extern_data, bool loa
 
 	player->m_skill.Init();
 
-	player->send_raid_earning_time_notify();
 	resp.result = 0;
 	resp.posx = player->get_pos()->pos_x;
 	resp.posz = player->get_pos()->pos_z;
@@ -2479,7 +2491,7 @@ int pack_player_online(player_struct *player, EXTERN_DATA *extern_data, bool loa
 	resp.horse_step = player->data->horse_attr.soul_step;
 
 	LOG_DEBUG("[%s:%d] result[%d] player_id[%lu] scene[%u] posx[%f] posz[%f]", __FUNCTION__, __LINE__, resp.result, extern_data->player_id, resp.sceneid, resp.posx, resp.posz);
-
+	//在MSG_ID_ENTER_GAME_ANSWER 之前发的消息客户端很可能没响应
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_ENTER_GAME_ANSWER, enter_game_answer__pack, resp);
 
 	//放在MSG_ID_ENTER_GAME_ANSWER后面，防止客户端出错
@@ -2504,6 +2516,7 @@ extern int on_login_send_tower_info(player_struct *player, EXTERN_DATA *extern_d
 static int player_online_enter_scene_after(player_struct *player, EXTERN_DATA *extern_data)
 {
 	LOG_INFO("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+	player->send_raid_earning_time_notify();
 	on_login_send_auto_add_hp_data(player, extern_data);
 	on_login_send_yaoshi(player, extern_data);
 	notify_task_list(player, extern_data);
@@ -2538,6 +2551,8 @@ static int player_online_enter_scene_after(player_struct *player, EXTERN_DATA *e
 	player->guild_ruqin_activity_notify();
 	player->jiu_gong_ba_gua_reward_info_notify();
 
+	handle_team_info_request(player, extern_data);
+	
 	player->data->login_notify = true;
 
 	player_online_to_other_srvs(player, extern_data, false);
@@ -2854,7 +2869,15 @@ static int handle_transfer_request(player_struct *player, EXTERN_DATA *extern_da
 		return (-30);
 	}
 
-	player->move_to_transfer(id, extern_data);
+	ret = player->move_to_transfer(id, extern_data);
+	if (ret != 0)
+	{
+		LOG_ERR("%s player[%lu] can not transfer type[%u] scene[%u]", __FUNCTION__, extern_data->player_id, type, player->scene->m_id);
+		SceneTransferAnswer resp;
+		scene_transfer_answer__init(&resp);
+		resp.result = ret;
+		fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_TRANSFER_ANSWER, scene_transfer_answer__pack, resp);
+	}
 //	player->transfer_to_new_scene_by_config(id, extern_data);
 /*
 	scene_struct *scene = scene_manager::get_scene(scene_id);
@@ -2925,7 +2948,7 @@ static void player_ready_enter_scene(player_struct *player, EXTERN_DATA *extern_
 		if (raid)
 		{
 			raid->add_player_to_scene(player);
-			if (player->data->noviceraid_flag == 0 && raid->res_config->SceneID == 20035 && get_entity_type(player->get_uuid()) == ENTITY_TYPE_PLAYER)
+			if (player->data->noviceraid_flag == false && raid->res_config->SceneID == 20035 && get_entity_type(player->get_uuid()) == ENTITY_TYPE_PLAYER)
 			{
 					//为了通知客户端隐藏副本UI
 				EXTERN_DATA extern_data;
@@ -4050,6 +4073,7 @@ static int notify_task_list(player_struct *player, EXTERN_DATA *extern_data)
 		task_data[resp.n_ongoing_list].id = info.id;
 		task_data[resp.n_ongoing_list].status = info.status;
 		task_data[resp.n_ongoing_list].expiretime = player->get_task_expire_time(&info);
+		LOG_INFO("[%s:%d] player[%lu] name=%s,task_id=%d, status=%d,expiretime=%d", __FUNCTION__, __LINE__, extern_data->player_id, player->get_name(), info.id, info.status, task_data[resp.n_ongoing_list].expiretime);
 		uint32_t nTarget = 0;
 		for (int j = 0; j < MAX_TASK_TARGET_NUM; j++)
 		{
@@ -4167,7 +4191,7 @@ static int notify_task_list(player_struct *player, EXTERN_DATA *extern_data)
 		}
 		resp.n_ongoing_list++;
 	}
-
+	LOG_INFO("[%s:%d] player[%lu] name=%s,task_id=%d, ", __FUNCTION__, __LINE__, extern_data->player_id, player->get_name(), resp.n_ongoing_list);
 	std::vector<uint32_t> finish_data;
 	std::copy(player->task_finish_set.begin(), player->task_finish_set.end(), back_inserter(finish_data));
 	resp.n_finish_list = finish_data.size();
@@ -4379,6 +4403,7 @@ static int handle_task_submit_request(player_struct *player, EXTERN_DATA *extern
 		memcpy(&tmp_info, task_info, sizeof(TaskInfo));
 		memset(task_info, 0, sizeof(TaskInfo));
 		tmp_info.status = TASK_STATUS__FINISH;
+		player->get_task_event_partner(task_id, TEC_SUBMIT);
 		player->task_update_notify(&tmp_info);
 		player->touch_task_event(task_id, TEC_SUBMIT);
 		player->give_task_reward(task_id);
@@ -4700,6 +4725,7 @@ int check_task_complete_pos(TaskConditionTable *config, player_struct *player, u
 	}
 	return 0;
 }
+extern int direct_next_script(raid_struct *raid, struct raid_script_data *script_data);
 //任务完成请求
 static int handle_task_complete_request(player_struct *player, EXTERN_DATA *extern_data)
 {
@@ -4797,14 +4823,14 @@ static int handle_task_complete_request(player_struct *player, EXTERN_DATA *exte
 			{
 				if (truck->sight_space != NULL)
 				{
-					truck->sight_space->broadcast_truck_delete(truck);							
+					truck->sight_space->broadcast_truck_delete(truck, true);							
 					sight_space_manager::del_player_from_sight_space(truck->sight_space, player, true);
 				}
 				else
 				{
 					//player->data->truck.truck_id = 0;
 					//player->data->truck.active_id = 0;			
-					truck->scene->delete_cash_truck_from_scene(truck);
+					truck->scene->delete_cash_truck_from_scene(truck, true);
 				}
 				cash_truck_manager::delete_cash_truck(truck); 
 				
@@ -7146,6 +7172,25 @@ static int handle_team_raid_cancel_request(player_struct *player, EXTERN_DATA *e
 	return (0);
 }
 
+static int handle_complete_raid_ai_requrest(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-1);
+	}
+	raid_struct *raid = player->get_raid();
+	if (!raid)
+	{
+		LOG_ERR("[%s:%d] player[%lu] not in raid", __FUNCTION__, __LINE__, extern_data->player_id);
+		return (-10);
+	}
+	
+	direct_next_script(raid, &raid->SCRIPT_DATA.script_data);
+
+	return 0;
+}
+
 static int handle_get_raid_monster_pos_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (!player || !player->is_online())
@@ -7899,7 +7944,8 @@ static int handle_equip_enchant_request(player_struct *player, EXTERN_DATA *exte
 			break;
 		}
 
-		EquipStarLv *star_config = get_equip_star_config(player_job, type, equip_info->stair, equip_info->star_lv);
+//		EquipStarLv *star_config = get_equip_star_config(player_job, type, equip_info->stair, equip_info->star_lv);
+		EquipmentTable *star_config = get_equip_config(player_job, type, equip_info->stair, equip_info->star_lv);
 		if (!star_config || star_config->n_DatabaseSelection <= index)
 		{
 			ret = ERROR_ID_NO_CONFIG;
@@ -9316,19 +9362,19 @@ static int  handle_takeoff_fashion_request(player_struct *player, EXTERN_DATA *e
 	}
 	else if (itFashion->second->Type == FASHION_TYPE_HAT)
 	{
-		if (it->second->n_HairResId > 0)
+//		if (it->second->n_HairResId > 0)
 		{
-			player->set_attr(PLAYER_ATTR_HAT, it->second->HairResId[0]);
-			attrs[PLAYER_ATTR_HAT] = it->second->HairResId[0];
+			player->set_attr(PLAYER_ATTR_HAT, player->data->default_hair);
+			attrs[PLAYER_ATTR_HAT] = player->data->default_hair;
 			send.newid = it->second->HairResId[0];
 		}
-		std::map<uint64_t, struct ActorFashionTable *>::iterator itFNew = fashion_config.find(attrs[PLAYER_ATTR_HAT]);
-		if (itFNew != fashion_config.end())
+//		std::map<uint64_t, struct ActorFashionTable *>::iterator itFNew = fashion_config.find(attrs[PLAYER_ATTR_HAT]);
+//		if (itFNew != fashion_config.end())
 		{
-			if (itFNew->second->n_ColourID1 > 0)
+//			if (itFNew->second->n_ColourID1 > 0)
 			{
-				player->set_attr(PLAYER_ATTR_HAT_COLOR, itFNew->second->ColourID1[0]);
-				attrs[PLAYER_ATTR_HAT_COLOR] = itFNew->second->ColourID1[0];
+				player->set_attr(PLAYER_ATTR_HAT_COLOR, player->data->default_hair_color);
+				attrs[PLAYER_ATTR_HAT_COLOR] = player->data->default_hair_color;
 			}
 		}
 	}
@@ -9340,18 +9386,18 @@ static int  handle_takeoff_fashion_request(player_struct *player, EXTERN_DATA *e
 			attrs[PLAYER_ATTR_CLOTHES] = it->second->ResId[0];
 			send.newid = it->second->ResId[0];
 		}
-		std::map<uint64_t, struct ActorFashionTable *>::iterator itFNew = fashion_config.find(it->second->ResId[0]);
-		if (itFNew != fashion_config.end())
+//		std::map<uint64_t, struct ActorFashionTable *>::iterator itFNew = fashion_config.find(it->second->ResId[0]);
+//		if (itFNew != fashion_config.end())
 		{
-			if (itFNew->second->n_ColourID1 > 0)
+//			if (itFNew->second->n_ColourID1 > 0)
 			{
-				player->set_attr(PLAYER_ATTR_CLOTHES_COLOR_UP, itFNew->second->ColourID1[0]);
-				attrs[PLAYER_ATTR_CLOTHES_COLOR_UP] = itFNew->second->ColourID1[0];
+				player->set_attr(PLAYER_ATTR_CLOTHES_COLOR_UP, player->data->default_up_color);
+				attrs[PLAYER_ATTR_CLOTHES_COLOR_UP] = player->data->default_up_color;
 			}
-			if (itFNew->second->n_ColourID2 > 0)
+//			if (itFNew->second->n_ColourID2 > 0)
 			{
-				player->set_attr(PLAYER_ATTR_CLOTHES_COLOR_DOWN, itFNew->second->ColourID2[0]);
-				attrs[PLAYER_ATTR_CLOTHES_COLOR_DOWN] = itFNew->second->ColourID2[0];
+				player->set_attr(PLAYER_ATTR_CLOTHES_COLOR_DOWN, player->data->default_down_color);
+				attrs[PLAYER_ATTR_CLOTHES_COLOR_DOWN] = player->data->default_down_color;
 			}
 		}
 	}
@@ -15208,6 +15254,7 @@ static int handle_guild_sync_donation(player_struct * player, EXTERN_DATA * exte
 
 	player->data->guild_donation = pData->cur_donation;
 	player->add_task_progress(TCT_GUILD_DONATION, 0, player->data->guild_donation);
+	player->add_task_progress(TCT_GUILD_DONATION1, 0, 1);
 	if (pData->is_change == 1)
 	{
 		player->add_achievement_progress(ACType_ADD_CURRENCY, ACurrency_GUILD_DONATION, 0, 0, pData->change_val);
@@ -16775,7 +16822,7 @@ static int on_login_send_live_skill(player_struct *player, EXTERN_DATA *extern_d
 	return 0;
 }
 
-static int handle_team_info_request(player_struct *player, EXTERN_DATA *extern_data) //todo 客户端重复发请求
+static int handle_team_info_request(player_struct *player, EXTERN_DATA *extern_data) 
 {
 	LOG_INFO("[%s:%d] player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 	if (!player || !player->is_online())
@@ -18874,6 +18921,12 @@ static int handle_partner_dismiss_request(player_struct *player, EXTERN_DATA *ex
 		player->add_item_list(recycle_item_map, MAGIC_TYPE_PARTNER_DISMISS);
 	} while(0);
 
+	if(ret == 0)
+	{
+		//同步信息到redis，放在最后
+		player->refresh_player_redis_info();
+	}
+
 
 	PartnerDismissAnswer resp;
 	partner_dismiss_answer__init(&resp);
@@ -19874,6 +19927,8 @@ static int handle_partner_reset_attr_request(player_struct *player, EXTERN_DATA 
 
 		player->add_task_progress(TCT_PARTNER_RESET_ATTR, 0, 1);
 		player->add_achievement_progress(ACType_PARTNER_RESET_ATTR, 0, 0, 0, 1);
+		//同步信息到redis，放在最后
+		player->refresh_player_redis_info();
 	}
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_PARTNER_RESET_ATTR_ANSWER, res_reset_attr__pack, send);
 
@@ -20003,6 +20058,8 @@ static int handle_partner_add_attr_request(player_struct *player, EXTERN_DATA *e
 	send.attr_cur = partner->data->attr_cur.base_attr_vaual[i];
 
 	partner->calculate_attribute(true);
+	//同步信息到redis，放在最后
+	player->refresh_player_redis_info();
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_PARTNER_ADD_ATTR_ANSWER, res_strong_partner__pack, send);
 
 	return 0;
@@ -20109,6 +20166,8 @@ static int handle_partner_add_god_request(player_struct *player, EXTERN_DATA *ex
 		partner->calculate_attribute(true);
 		player->add_task_progress(TCT_PARTNER_ADD_GOD, 0, 1);
 		player->add_achievement_progress(ACType_PARTNER_ADD_GOD, 0, 0, 0, 1);
+		//同步信息到redis，放在最后
+		player->refresh_player_redis_info();
 	}
 
 	send.uuids = partner_uuid;
@@ -20339,6 +20398,8 @@ static int handle_partner_rename_request(player_struct *player, EXTERN_DATA *ext
 	}
 	strcpy(partner->data->name, req->name);
 	send_comm_answer(MSG_ID_PARTNER_RENAME_ANSWER, 0, extern_data);
+	//同步信息到redis，放在最后
+	player->refresh_player_redis_info();
 
 done:	
 	partner_rename_request__free_unpacked(req, NULL);
@@ -20486,6 +20547,8 @@ static int handle_partner_fabao_change_request(player_struct *player, EXTERN_DAT
 		partner->calculate_attribute(true);
 
 		player->add_achievement_progress(ACType_PARTNER_WEAR_FABAO, 0, 0, 0, 1);
+		//同步信息到redis，放在最后
+		player->refresh_player_redis_info();
 	}while(0);
 
 	PartnerFabaoChangeAnswer resp;
@@ -20698,7 +20761,7 @@ static int handle_skip_new_raid_request(player_struct *player, EXTERN_DATA *exte
 	}
 
 	//将pk模式和阵营设置回去
-	player->data->noviceraid_flag = 1;
+	player->data->noviceraid_flag = true;
 	player->set_attr(PLAYER_ATTR_PK_TYPE, 0);
 	player->broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, 0, false, true);
 	player->set_attr(PLAYER_ATTR_ZHENYING, 0);		
@@ -24466,6 +24529,7 @@ int handle_player_guild_chuan_gong_start_request(player_struct* player, EXTERN_D
 			}
 
 		}
+		player->add_task_progress(TCT_GUILD_CHUAN_GONG, 0, 1);
 		GuildChuanGongNotify notify;
 		char player_name[MAX_PLAYER_NAME_LEN + 1];
 		memset(player_name, 0, MAX_PLAYER_NAME_LEN + 1);
@@ -24792,6 +24856,26 @@ int handle_player_guild_chuan_gong_queren_request(player_struct* player, EXTERN_
 			ppp = conn_node_gamesrv::broadcast_msg_add_players(guild_player->data->player_id, ppp);
 			conn_node_gamesrv::broadcast_msg_send();
 
+			//广播给视野内玩家
+			GuildChuanGongStatuNotify chuan_gong_broad;
+			guild_chuan_gong_statu_notify__init(&chuan_gong_broad);
+			GuildPlayerPosInfo chuangong_player1;
+			GuildPlayerPosInfo chuangong_player2;
+			guild_player_pos_info__init(&chuangong_player1);
+			guild_player_pos_info__init(&chuangong_player2);
+			chuan_gong_broad.statu = 1;
+			struct position *my_pos = player->get_pos();
+			struct position *guild_pos = guild_player->get_pos();
+			chuangong_player1.player_id = player->data->player_id;
+			chuangong_player1.pos_x = my_pos->pos_x;
+			chuangong_player1.pos_z = my_pos->pos_z;
+			chuangong_player2.player_id = guild_player->data->player_id;
+			chuangong_player2.pos_x = guild_pos->pos_x;
+			chuangong_player2.pos_z = guild_pos->pos_z;
+			chuan_gong_broad.player1_info = & chuangong_player1;
+			chuan_gong_broad.player2_info = & chuangong_player2;
+			player->broadcast_to_sight(MSG_ID_GUILD_CHUAN_GONG_ZHUANGTAI_BROADCAST, &chuan_gong_broad, (pack_func)guild_chuan_gong_statu_notify__pack, true);
+			guild_player->broadcast_to_sight(MSG_ID_GUILD_CHUAN_GONG_ZHUANGTAI_BROADCAST, &chuan_gong_broad, (pack_func)guild_chuan_gong_statu_notify__pack, true);
 		}
 
 	}
@@ -24946,8 +25030,30 @@ int handle_player_guild_chuan_gong_finish_request(player_struct* player, EXTERN_
 		notify.type = my_type;
 		notify.player_id = guild_player->data->player_id;
 		notify.name = he_name;
+		fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_GUILD_CHUAN_GONG_FINISH_NOTIFY, guild_chuan_gong_finish_notify__pack, notify);
+
+
+		//广播给视野内玩家
+		GuildChuanGongStatuNotify chuan_gong_broad;
+		guild_chuan_gong_statu_notify__init(&chuan_gong_broad);
+		GuildPlayerPosInfo chuangong_player1;
+		GuildPlayerPosInfo chuangong_player2;
+		guild_player_pos_info__init(&chuangong_player1);
+		guild_player_pos_info__init(&chuangong_player2);
+		chuan_gong_broad.statu = 2;
+		struct position *my_pos = player->get_pos();
+		struct position *guild_pos = guild_player->get_pos();
+		chuangong_player1.player_id = player->data->player_id;
+		chuangong_player1.pos_x = my_pos->pos_x;
+		chuangong_player1.pos_z = my_pos->pos_z;
+		chuangong_player2.player_id = guild_player->data->player_id;
+		chuangong_player2.pos_x = guild_pos->pos_x;
+		chuangong_player2.pos_z = guild_pos->pos_z;
+		chuan_gong_broad.player1_info = & chuangong_player1;
+		chuan_gong_broad.player2_info = & chuangong_player2;
+		player->broadcast_to_sight(MSG_ID_GUILD_CHUAN_GONG_ZHUANGTAI_BROADCAST, &chuan_gong_broad, (pack_func)guild_chuan_gong_statu_notify__pack, true);
+		guild_player->broadcast_to_sight(MSG_ID_GUILD_CHUAN_GONG_ZHUANGTAI_BROADCAST, &chuan_gong_broad, (pack_func)guild_chuan_gong_statu_notify__pack, true);
 	}
-	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_GUILD_CHUAN_GONG_FINISH_NOTIFY, guild_chuan_gong_finish_notify__pack, notify);
 	return 0;
 }
 
@@ -25139,6 +25245,221 @@ int handle_jiu_gong_ba_gua_recive_reward_request(player_struct* player, EXTERN_D
 	return 0;
 }
 
+//发红包请求请求
+int handle_red_packet_send_red_request(player_struct* player, EXTERN_DATA* extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	RedPacketSendRequest *req = red_packet_send_request__unpack(NULL, get_data_len(), (uint8_t*)get_data());
+	if(req == NULL)
+	{
+		LOG_ERR("[%s:%d] red packet send unpack faild player_id[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -2;
+	}
+	ParameterTable *red_text_config = get_config_by_id(161001064, &parameter_config);
+	if(red_text_config == NULL)
+	{
+		LOG_ERR("[%s:%d] send_red_packet_failed, get parame config error player_id[%lu] config_id[161001064]", __FUNCTION__, __LINE__, extern_data->player_id);
+		red_packet_send_request__free_unpacked(req, NULL);
+		return -3;
+	}
+	uint32_t red_type = req->red_type;
+	uint32_t red_coin_type = req->red_coin_type;
+	uint32_t red_money_num = req->money_num;
+	uint32_t send_red_packet_num = req->red_num;
+	if((red_type != 1 && red_type != 5) || (red_coin_type != 0 && red_coin_type != 1) || red_money_num == 0)
+	{
+		LOG_ERR("[%s:%d] send red packet faild, data error red_type[%u] red_coin_type[%u] red_money_num[%u]", __FUNCTION__, __LINE__, red_type, red_coin_type, red_money_num);
+		red_packet_send_request__free_unpacked(req, NULL);
+		return -3;
+	}
+
+	int ret = 0;
+	do {
+		if(red_type == 5 && player->data->guild_id == 0)
+		{
+			ret = 190500269; //帮会红包没有帮会
+			break;
+		}
+		//判断等级是否符合
+		if(player->get_level() < send_red_packet_min_level)
+		{
+			ret = 190500582;
+			break;
+		}
+
+		//元宝红包
+		if(req->red_coin_type == 0)
+		{
+			//判断发红包的金钱数量和个数
+			if(red_money_num < sg_yuanbao_red_packet_min_money || red_money_num > sg_yuanbao_red_packet_max_money)
+			{
+				ret = 190500157;
+				break;
+			}
+			if(red_type == 1)
+			{
+				if(send_red_packet_num < sg_world_yuanbao_red_packet_min_num || send_red_packet_num > sg_world_yuanbao_red_packet_max_num)
+				{
+					ret = 190500157;
+					break;
+				}
+			}
+			else 
+			{
+				if(send_red_packet_num < sg_guild_yuanbao_red_packet_min_num || send_red_packet_num >sg_guild_yuanbao_red_packet_max_num)
+				{
+					ret = 190500157;
+					break;
+				}
+			
+			}
+
+			if(player->sub_unbind_gold(red_money_num, MAGIC_TYPE_RED_PACKET_SEND_USE_MONEY) !=0)
+			{
+				ret = 190400005; //元宝不足
+				break;
+			}
+		}
+		else 
+		{
+			if(red_money_num < sg_yinpiao_red_packet_min_money || red_money_num > sg_yinpiao_red_packet_max_money)
+			{
+				ret = 190500157;
+				break;
+			}
+			if(red_type == 1)
+			{
+				if(send_red_packet_num < sg_world_yinpiao_red_packet_min_num || send_red_packet_num > sg_world_yinpiao_red_packet_max_num)
+				{
+					ret = 190500157;
+					break;
+				}
+			}
+			else 
+			{
+				if(send_red_packet_num < sg_guild_yuanbao_red_packet_min_num || send_red_packet_num > sg_guild_yuanbao_red_packet_max_num)
+				{
+					ret = 190500157;
+					break;
+				}
+			
+			}
+			if(player->sub_coin(red_money_num, MAGIC_TYPE_RED_PACKET_SEND_USE_MONEY) !=0)
+			{
+				ret = 190500498; //银票不足
+				break;
+			}
+		}
+		RED_PACKET_SEND_DATA_REQUEST *resq = (RED_PACKET_SEND_DATA_REQUEST*)get_send_data();
+		uint32_t data_len = sizeof(RED_PACKET_SEND_DATA_REQUEST);
+		memset(resq, 0, data_len);
+		resq->red_type = red_type;
+		resq->guild_type = 0;
+		resq->red_coin_type = red_coin_type;
+		resq->money_num = red_money_num;
+		resq->red_num = req->red_num;
+		if(strlen(req->player_text) == 0)
+		{
+			strcpy(resq->player_text, red_text_config->parameter2);
+		}
+		else 
+		{
+			strcpy(resq->player_text, req->player_text);
+		}
+		fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_TRADE_SEND_RED_PACKET_REQUEST, data_len, 0);
+
+	}while(0);
+
+	red_packet_send_request__free_unpacked(req, NULL);
+	if(ret == 0)
+	{
+		LOG_INFO("[%s:%d] sed red packet success player_id[%lu] red_type[%u] red_coin_type[%u] red_money_num[%u] red_num[%u]", __FUNCTION__, __LINE__, extern_data->player_id, red_type, red_coin_type, red_money_num, req->red_num);
+	}
+	CommAnswer answer;
+	comm_answer__init(&answer);
+
+	answer.result = ret;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_RED_BACKET_SEND_TO_MANY_PLAYER_ANSWER, comm_answer__pack, answer);
+
+	return 0;
+}
+
+//抢红包给钱
+int handle_red_packet_grab_red_add_money_request(player_struct* player, EXTERN_DATA* extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	RED_PACKET_PLAYER_ADD_MONEY *req = (RED_PACKET_PLAYER_ADD_MONEY*)get_data();
+	uint32_t money_type = req->money_type;
+	uint32_t money_num = req->money_num;
+	if((money_type != 0 && money_type != 1) || money_num == 0)
+	{
+		LOG_ERR("[%s:%d] grad red packet add money failed, money_type[%u] error money_num[%u] error", __FUNCTION__, __LINE__, money_type, money_num);
+		return -2;
+	}
+	
+	if(money_type == 0)
+	{
+		player->add_unbind_gold(money_num, MAGIC_TYPE_RED_PACKET_GRAB_ADD_MONEY_MONEY);
+	}
+	else 
+	{
+		player->add_coin(money_num, MAGIC_TYPE_RED_PACKET_GRAB_ADD_MONEY_MONEY);	
+	}
+
+	/*RedPacketGrabRedAnswer answer;
+	red_packet_grab_red_answer__init(&answer);
+	answer.result = 0;
+	answer.money_num = money_num;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_RED_BACKET_QIANG_HONGBAO_ANSWER, red_packet_grab_red_answer__pack, answer);*/
+
+	return 0;
+}
+
+//发红包失败还钱
+int handle_red_packet_send_failed_still_money_request(player_struct* player, EXTERN_DATA* extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	RED_PACKET_PLAYER_ADD_MONEY *req = (RED_PACKET_PLAYER_ADD_MONEY*)get_data();
+	uint32_t money_type = req->money_type;
+	uint32_t money_num = req->money_num;
+	if((money_type != 0 && money_type != 1) || money_num == 0)
+	{
+		LOG_ERR("[%s:%d] send red packet failed still money failed, money_type[%u] error money_num[%u] error", __FUNCTION__, __LINE__, money_type, money_num);
+		return -2;
+	}
+	
+	if(money_type == 0)
+	{
+		player->add_unbind_gold(money_num, MAGIC_TYPE_RED_PACKET_GRAB_ADD_MONEY_MONEY);
+	}
+	else 
+	{
+		player->add_coin(money_num, MAGIC_TYPE_RED_PACKET_GRAB_ADD_MONEY_MONEY);	
+	}
+
+	CommAnswer answer;
+	comm_answer__init(&answer);
+
+	answer.result = req->result;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_RED_BACKET_SEND_TO_MANY_PLAYER_ANSWER, comm_answer__pack, answer);
+	return 0;
+}
+
 void install_msg_handle()
 {
 	add_msg_handle(MSG_ID_MOVE_REQUEST, handle_move_request);
@@ -25263,7 +25584,7 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_INVITE_TEAM_REQUEST, handle_team_invite_request);
 	add_msg_handle(MSG_ID_HANDLEINVITE_TEAM_REQUEST, handle_team_invite_handle_request);
 	add_msg_handle(MSG_ID_TEAM_LIST_REQUEST, handle_team_list_request);
-	add_msg_handle(MSG_ID_TEAM_INFO_REQUEST, handle_team_info_request);
+	//add_msg_handle(MSG_ID_TEAM_INFO_REQUEST, handle_team_info_request);
 	add_msg_handle(MSG_ID_TEAM_HANDLE_BE_LEAD_REQUEST, handle_be_team_lead_request);
 	add_msg_handle(MSG_ID_TEAM_MATCH_REQUEST, handle_team_match_request);
 	add_msg_handle(MSG_ID_TEAM_CANCEL_MATCH_REQUEST, handle_cancel_team_match_request);
@@ -25334,7 +25655,8 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_TRANSFER_FAR_TEAM_MEMBER_REQUEST, handle_transfer_far_team_member_request);
 	add_msg_handle(MSG_ID_TEAM_RAID_READY_REQUEST, handle_team_raid_ready_request);
 	add_msg_handle(MSG_ID_TEAM_RAID_CANCEL_REQUEST, handle_team_raid_cancel_request);
-	add_msg_handle(MSG_ID_GET_RAID_MONSTER_POS_REQUEST, handle_get_raid_monster_pos_request);	
+	add_msg_handle(MSG_ID_GET_RAID_MONSTER_POS_REQUEST, handle_get_raid_monster_pos_request);
+	add_msg_handle(MSG_ID_COMPLETE_RAID_AI_REQUEST, handle_complete_raid_ai_requrest);
 	
 
 	add_msg_handle(MSG_ID_EQUIP_LIST_REQUEST, handle_equip_list_request);
@@ -25541,6 +25863,10 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_GUILD_RUQIN_SHISHI_INFO_REQUEST, handle_guild_ruqin_shishi_info_request);
 	add_msg_handle(MSG_ID_FRIEND_TRACK_ENEMY_POX_REQUEST, handle_friend_get_enemy_pox_info_request);
 	add_msg_handle(MSG_ID_JIU_GONG_BA_GUA_RECIVE_REWARD_REQUEST, handle_jiu_gong_ba_gua_recive_reward_request);
+
+	add_msg_handle(MSG_ID_RED_BACKET_SEND_TO_MANY_PLAYER_REQUEST, handle_red_packet_send_red_request);
+	add_msg_handle(SERVER_PROTO_TRADE_GRAB_RED_PACKET_REQUEST, handle_red_packet_grab_red_add_money_request);
+	add_msg_handle(SERVER_PROTO_TRADE_SEND_RED_PACKET_FAILED_ANSWER, handle_red_packet_send_failed_still_money_request);
 }
 
 void uninstall_msg_handle()

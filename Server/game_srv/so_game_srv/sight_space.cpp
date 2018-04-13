@@ -99,7 +99,7 @@ int sight_space_struct::broadcast_player_delete(player_struct *player, bool ente
 // 	}
 // }
 
-int sight_space_struct::broadcast_truck_delete(cash_truck_struct *truck)
+int sight_space_struct::broadcast_truck_delete(cash_truck_struct *truck, bool send)
 {
 	LOG_DEBUG("%s %d: delete sightspace truck %u %lu at %p [%.1f][%.1f]", __FUNCTION__, __LINE__,
 		truck->data->monster_id, truck->get_uuid(), this, 
@@ -115,7 +115,7 @@ int sight_space_struct::broadcast_truck_delete(cash_truck_struct *truck)
 	}
 
 	truck->sight_space = NULL;
-	truck->broadcast_cash_truck_delete();
+	truck->broadcast_cash_truck_delete(send);
 	return (0);
 }
 

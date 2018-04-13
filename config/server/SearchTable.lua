@@ -59,11 +59,11 @@ local SearchTable = {
 		['ItemId'] = 201070079,
 		['Quality'] = 2,
 		['TreasureId'] = {10007},
-		['Event'] = {1,2,3},
-		['Probability'] = {3000,3000,4000},
-		['Parameter1'] = {220100001,154000024,151000045},
-		['Parameter2'] = {0,2,3},
-		['Parameter3'] = {0,1,1}
+		['Event'] = {2,2},
+		['Probability'] = {5000,5000},
+		['Parameter1'] = {154000024,154000025},
+		['Parameter2'] = {2,2},
+		['Parameter3'] = {1,1}
 		},
 	[430100007] = {
 		['ID'] = 430100007,

@@ -85,7 +85,11 @@ void free_ActorTable(struct ActorTable *p)
     free(p->HairResId);
     free(p->Skill);
     free(p->PassiveSkill);
+    free(p->InitialHead);
     free(p->SkillLevelID);
+    free(p->HairColorID);
+    free(p->ClotheColorID1);
+    free(p->ClotheColorID2);
     free(p);
 };
 
@@ -204,6 +208,9 @@ void free_BattlefieldTable(struct BattlefieldTable *p)
     free(p->Num);
     free(p->BottomReward);
     free(p->BottomRewardNum);
+    free(p->WarBoss);
+    free(p->MineBoss);
+    free(p->ForestBoss);
     free(p);
 };
 
@@ -399,6 +406,9 @@ void free_DungeonTable(struct DungeonTable *p)
     free(p->FailValue);
     free(p->FailValue1);
     free(p->ItemRewardSection);
+    free(p->PointingType);
+    free(p->ArrowPointing);
+    free(p->point_monster_id);
     free(p);
 };
 
@@ -430,13 +440,13 @@ void free_EquipLock(struct EquipLock *p)
 void free_EquipStarLv(struct EquipStarLv *p)
 {
     if (!p) return;
-    free(p->DatabaseSelection);
     free(p);
 };
 
 void free_EquipmentTable(struct EquipmentTable *p)
 {
     if (!p) return;
+    free(p->DatabaseSelection);
     free(p);
 };
 
@@ -1240,6 +1250,12 @@ void free_TaskConditionTable(struct TaskConditionTable *p)
 };
 
 void free_TaskDropTable(struct TaskDropTable *p)
+{
+    if (!p) return;
+    free(p);
+};
+
+void free_TaskDungeonsTable(struct TaskDungeonsTable *p)
 {
     if (!p) return;
     free(p);

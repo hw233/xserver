@@ -147,6 +147,10 @@ void normal_raid_ai_finished(raid_struct *raid)
 	{
 		if (!raid->m_player[i])
 			continue;
+		if (raid->m_player[i]->scene != raid)
+		{
+			continue;
+		}
 
 		//英雄挑战副本星级要存到人物身上
 		std::map<uint64_t, ChallengeTable*>::iterator itr = raidid_to_hero_challenge_config.find(raid->data->ID);

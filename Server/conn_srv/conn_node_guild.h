@@ -19,6 +19,7 @@ private:
 	int transfer_to_ranksrv();	
 	int transfer_to_activitysrv();	
 	int broadcast_to_client();
+	int transfer_to_tradesrv();
 };
 
 #endif

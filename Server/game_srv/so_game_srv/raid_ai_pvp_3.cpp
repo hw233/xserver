@@ -716,16 +716,16 @@ static void	finished_raid(raid_struct *raid, int win_team)
 			{
 				nty.courage_gold_changed = 0;
 			}
-			else
+			else if (win_team == 1)
 			{
 //				nty.courage_gold_changed = calc_courage_gold_changed(raid, raid->m_player[i], i, team1_kill, team1_assist, gold_param1);
 //				raid->m_player[i]->add_attr(PLAYER_ATTR_COURAGE_GOLD, nty.courage_gold_changed);
-				raid->m_player[i]->add_raid_reward_count(sg_3v3_pvp_raid_param1[0]);				
+				raid->m_player[i]->add_raid_reward_count(sg_3v3_pvp_raid_param1[0]);
+				raid->m_player[i]->check_activity_progress(AM_RAID, raid->data->ID);
 			}
 			extern_data.player_id = raid->m_player[i]->get_uuid();
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_PVP_RAID_FINISHED_NOTIFY, pvp_raid_finished_notify__pack, nty);
 			raid->m_player[i]->change_pvp_raid_score(PVP_TYPE_DEFINE_3, nty.score_changed);
-			raid->m_player[i]->check_activity_progress(AM_RAID, raid->data->ID);
 			server_level_listen_raid_finish(raid->data->ID, raid->m_player[i]);
 		}
 		if (raid->m_player2[i] && get_entity_type(raid->m_player2[i]->get_uuid()) != ENTITY_TYPE_AI_PLAYER)
@@ -740,16 +740,16 @@ static void	finished_raid(raid_struct *raid, int win_team)
 			{
 				nty.courage_gold_changed = 0;				
 			}
-			else
+			else if (win_team == 2)
 			{
 //				nty.courage_gold_changed = calc_courage_gold_changed(raid, raid->m_player2[i], i + MAX_TEAM_MEM, team2_kill, team2_assist, gold_param2);
 //				raid->m_player2[i]->add_attr(PLAYER_ATTR_COURAGE_GOLD, nty.courage_gold_changed);
 				raid->m_player2[i]->add_raid_reward_count(sg_3v3_pvp_raid_param1[0]);
+				raid->m_player2[i]->check_activity_progress(AM_RAID, raid->data->ID);
 			}
 			extern_data.player_id = raid->m_player2[i]->get_uuid();
 			fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_PVP_RAID_FINISHED_NOTIFY, pvp_raid_finished_notify__pack, nty);
 			raid->m_player2[i]->change_pvp_raid_score(PVP_TYPE_DEFINE_3, -nty.score_changed);
-			raid->m_player2[i]->check_activity_progress(AM_RAID, raid->data->ID);
 			server_level_listen_raid_finish(raid->data->ID, raid->m_player2[i]);
 		}
 //		add_team_raid_score(raid->m_player);

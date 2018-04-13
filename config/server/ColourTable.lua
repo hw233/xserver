@@ -238,6 +238,126 @@ local ColourTable = {
 		['ColourItem'] = 201060017,
 		['ColourNum'] = 1,
 		['Charm'] = 50
+		},
+	[131000021] = {
+		['Id'] = 131000021,
+		['R'] = 0.8862,
+		['G'] = 0.9176,
+		['B'] = 1,
+		['A'] = 1,
+		['OpenColourItem'] = 201060016,
+		['OpenColourNum'] = 1,
+		['ColourItem'] = 201060017,
+		['ColourNum'] = 1,
+		['Charm'] = 50
+		},
+	[131000022] = {
+		['Id'] = 131000022,
+		['R'] = 1,
+		['G'] = 0.5529,
+		['B'] = 0.3294,
+		['A'] = 1,
+		['OpenColourItem'] = 201060016,
+		['OpenColourNum'] = 1,
+		['ColourItem'] = 201060017,
+		['ColourNum'] = 1,
+		['Charm'] = 50
+		},
+	[131000023] = {
+		['Id'] = 131000023,
+		['R'] = 1,
+		['G'] = 0.7764,
+		['B'] = 0.3294,
+		['A'] = 1,
+		['OpenColourItem'] = 201060016,
+		['OpenColourNum'] = 1,
+		['ColourItem'] = 201060017,
+		['ColourNum'] = 1,
+		['Charm'] = 50
+		},
+	[131000024] = {
+		['Id'] = 131000024,
+		['R'] = 0.9960,
+		['G'] = 1,
+		['B'] = 0.3294,
+		['A'] = 1,
+		['OpenColourItem'] = 201060016,
+		['OpenColourNum'] = 1,
+		['ColourItem'] = 201060017,
+		['ColourNum'] = 1,
+		['Charm'] = 50
+		},
+	[131000025] = {
+		['Id'] = 131000025,
+		['R'] = 0.7725,
+		['G'] = 1,
+		['B'] = 0.3294,
+		['A'] = 1,
+		['OpenColourItem'] = 201060016,
+		['OpenColourNum'] = 1,
+		['ColourItem'] = 201060017,
+		['ColourNum'] = 1,
+		['Charm'] = 50
+		},
+	[131000026] = {
+		['Id'] = 131000026,
+		['R'] = 0.3294,
+		['G'] = 1,
+		['B'] = 0.3333,
+		['A'] = 1,
+		['OpenColourItem'] = 201060016,
+		['OpenColourNum'] = 1,
+		['ColourItem'] = 201060017,
+		['ColourNum'] = 1,
+		['Charm'] = 50
+		},
+	[131000027] = {
+		['Id'] = 131000027,
+		['R'] = 0.3294,
+		['G'] = 1,
+		['B'] = 0.7803,
+		['A'] = 1,
+		['OpenColourItem'] = 201060016,
+		['OpenColourNum'] = 1,
+		['ColourItem'] = 201060017,
+		['ColourNum'] = 1,
+		['Charm'] = 50
+		},
+	[131000028] = {
+		['Id'] = 131000028,
+		['R'] = 0.3294,
+		['G'] = 0.9921,
+		['B'] = 1,
+		['A'] = 1,
+		['OpenColourItem'] = 201060016,
+		['OpenColourNum'] = 1,
+		['ColourItem'] = 201060017,
+		['ColourNum'] = 1,
+		['Charm'] = 50
+		},
+	[131000029] = {
+		['Id'] = 131000029,
+		['R'] = 0.3294,
+		['G'] = 0.7686,
+		['B'] = 1,
+		['A'] = 1,
+		['OpenColourItem'] = 201060016,
+		['OpenColourNum'] = 1,
+		['ColourItem'] = 201060017,
+		['ColourNum'] = 1,
+		['Charm'] = 50
+		},
+	[131000030] = {
+		['Id'] = 131000030,
+		['R'] = 0.3254,
+		['G'] = 0.5450,
+		['B'] = 1,
+		['A'] = 1,
+		['OpenColourItem'] = 201060016,
+		['OpenColourNum'] = 1,
+		['ColourItem'] = 201060017,
+		['ColourNum'] = 1,
+		['Charm'] = 50
 		}
 	}
 return ColourTable

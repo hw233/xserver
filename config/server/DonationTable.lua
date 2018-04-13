@@ -5,7 +5,7 @@ local DonationTable = {
 		['ConsumeType'] = 1,	--祈福消耗类型
 		['ConsumeValue'] = 1000,	--消耗类型值
 		['RewardType'] = {1,2,3},	--奖励类型
-		['RewardValue'] = {100,1000,100},	--奖励类型值
+		['RewardValue'] = {10,50,10},	--奖励类型值
 		['RewardEffect'] = 0	--普通同庆效果
 		},
 	[600200002] = {
@@ -14,7 +14,7 @@ local DonationTable = {
 		['ConsumeType'] = 4,
 		['ConsumeValue'] = 50,
 		['RewardType'] = {1,2,3},
-		['RewardValue'] = {600,5000,500},
+		['RewardValue'] = {50,150,20},
 		['RewardEffect'] = 0
 		},
 	[600200003] = {
@@ -23,7 +23,7 @@ local DonationTable = {
 		['ConsumeType'] = 4,
 		['ConsumeValue'] = 200,
 		['RewardType'] = {1,2,3},
-		['RewardValue'] = {3000,20000,2000},
+		['RewardValue'] = {200,300,50},
 		['RewardEffect'] = 1
 		}
 	}

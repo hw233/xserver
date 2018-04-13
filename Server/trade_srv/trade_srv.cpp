@@ -202,8 +202,12 @@ int main(int argc, char **argv)
 
 	//初始化数据
 	sprintf(sg_player_key, "server_%u", sg_server_id);
+	sprintf(sg_normal_red_packet_key, "all_normal_red_packet_%u", sg_server_id);
+	sprintf(sg_guild_red_packet_key, "all_guild_red_packet_%u", sg_server_id);
+	sprintf(sg_player_red_packet_record_key, "all_player_red_packet_recive_record_%u", sg_server_id);
 	read_all_excel_data();
 	load_trade_module();
+	load_red_packet_redis_data();
 	handle_daily_reset_timeout(true); //启动每天刷新定时器
 	second_timeout.tv_sec = 1;
 	second_timer.ev_callback = cb_second_timer;

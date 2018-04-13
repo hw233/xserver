@@ -50,6 +50,12 @@ struct REGION_INFO
 	uint32_t id;
 	uint32_t npc;
 	uint64_t endTime;
+	uint64_t monUUID;
+	uint64_t monsterId[3];
+	uint64_t buff;
+	uint64_t point;
+	float x;
+	float z;
 	std::set<uint64_t> playerarr[2];
 };
 
@@ -101,7 +107,7 @@ public:
 	uint32_t CalcStep(player_struct &player);
 	void SendMyScore(player_struct &player);
 	void GetMySideScore(player_struct &player);
-	void KillEnemy(unit_struct *killer, player_struct &dead);
+	void KillEnemy(raid_struct *raid, unit_struct *killer, player_struct &dead);
 	BATTLE_JOINER *GetJoins(uint64_t pid);
 	void Settle(uint32_t room);
 	void BroadMessageRoom(uint32_t room, uint16_t msg_id, void *msg_data, pack_func func, uint64_t except = 0);
@@ -111,6 +117,8 @@ public:
 	void DestroyRoom(uint32_t room);
 	ROOM_INFO *GetRoom(uint32_t room);
 	void AddFbCd(player_struct &player);
+	void OnMonsterDead(raid_struct *raid, monster_struct *monster, unit_struct *killer);
+	void InitFlag(raid_struct *raid);
 
 	bool PackOneScore(_OneScore *side, uint32_t rank, uint64_t playerid);
 	void GetRelivePos(BattlefieldTable *table, int zhenying, int *x, int *z, double *direct);
@@ -125,8 +133,9 @@ public:
 protected:
 	ZhenyingBattle();
 
-	void FlagOnTick(ROOM_T::iterator &itRoom, BattlefieldTable *table, uint64_t now, bool isNew);
+	void FlagOnTick(ROOM_T::iterator &itRoom, BattlefieldTable *table, uint64_t now, bool isNew, raid_struct *raid);
 	void AddFlagScore(ROOM_T::iterator &itRoom, BattlefieldTable *table, uint32_t i, uint64_t now, bool isNew);
+	void AddTotalScore(ROOM_T::iterator &itRoom, BattlefieldTable *table, int zhenying, uint64_t score, bool isNew);
 	uint32_t CalcFlagTime(int state, uint64_t &end); //计算夺旗时间
 	void DoRealSettle(ROOM_T::iterator &itRoom, BattlefieldTable *table, _ZhenYingResult *send, bool toF);
 	void AddJoiner(player_struct &player, BATTLE_JOINER &tmp, uint32_t room);

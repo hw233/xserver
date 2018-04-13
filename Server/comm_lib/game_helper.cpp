@@ -137,3 +137,19 @@ bool control_is_open(ControlTable *ctrl_config, uint64_t now) //控制表里的�
 	return in_time;
 }
 
+uint64_t rand_between(uint64_t a, uint64_t b)
+{
+	uint64_t min, max;
+	if (a > b)
+	{
+		max = a;
+		min = b;
+	}
+	else
+	{
+		max = b;
+		min = a;
+	}
+	return random() % (max - min + 1) + min;
+}
+

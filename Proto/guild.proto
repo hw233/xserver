@@ -58,6 +58,7 @@ message GuildData
 	repeated GuildPermissionData permissions = 18; //权限
 	repeated GuildLogData usual_logs = 19; //动态
 	repeated GuildLogData important_logs = 20; //大事记
+	required uint32 apply_num = 21;  //申请入帮人数
 }
 
 //帮会个人信息
@@ -426,12 +427,20 @@ message GuildSkillData
 	required uint32 level = 2; //技能等级
 }
 
+//帮会研发技能cd
+message GuildSkillDevelopcd
+{
+	required uint32 cd = 1; //时间戳
+}
+
 //帮会技能信息应答
 message GuildSkillInfoAnswer
 {
 	required uint32 result = 1; //结果，0：成功，否则失败
 	repeated GuildSkillData develops = 2; //研发技能ID列表
 	repeated GuildSkillData practices = 3; //修炼技能ID列表
+	required uint32 upgradeId = 4; //正在升级的技能，0表示没有在升级
+	required uint32 upgradeEnd = 5; //技能升级结束时间戳
 }
 
 //帮会技能提升请求
@@ -446,6 +455,7 @@ message GuildSkillUpgradeAnswer
 	required uint32 result = 1; //结果，0：成功，否则失败
 	required uint32 skillId = 2; //要提升的技能ID
 	required uint32 level = 3; //技能等级
+	required uint32 upgradeEnd = 4; //升级结束时间戳
 }
 
 //帮会技能修炼请求
@@ -622,3 +632,18 @@ message GuildChuanGongFinishNotify
 	required string name = 4;   //对方的名字 
 }
 
+//传功状态通知
+message GuildChuanGongStatuNotify
+{
+	required uint32 statu = 1; //1:开始传功 否则停止传功
+	optional GuildPlayerPosInfo player1_info = 2; //玩家1的信息
+	optional GuildPlayerPosInfo player2_info = 3; //玩家2的信息
+}
+
+//传功玩家位置信息
+message GuildPlayerPosInfo
+{
+	required uint64 player_id = 1; //玩家id
+	required float  pos_x = 2; //玩家x坐标
+	required float  pos_z = 3; //玩家z坐标
+}

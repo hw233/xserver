@@ -59,6 +59,15 @@ message sight_player_base_info
 	required bool team_lead = 31;   //ture 队长
 	required uint32 title_id = 32;   //称号ID
 	required uint32 horse_step = 33; //当前铸灵阶
+	optional chuangong_target chuan_gong = 34; //传功对象
+	required uint32 sex = 35; //性别，0男，1女
+}
+
+message chuangong_target
+{
+	required uint64 player_id = 1;        //唯一ID
+	required float pos_x = 2;
+	required float pos_z = 3;
 }
 
 //视野怪物的基本信息
@@ -78,7 +87,7 @@ message sight_monster_info
 }
 
 //视野镖车上的玩家的基本信息
-message player_on_cash_truck_info
+message player_on_cash_truck_info //没用
 {
 	required uint64 playerid = 1;
 	required string name = 3;
@@ -120,6 +129,7 @@ message sight_cash_truck_info
 	required uint32 pk_type = 15; //pk模式
 	required float direct_x = 16;   //移动x方向
 	required float direct_z = 17;   //移动z方向
+	required bool on = 18;  //是否乘坐 服务器用
 }
 
 //视野采集点的基本信息
@@ -224,6 +234,7 @@ message monster_talk_notify
 {
 	required uint64 uuid = 1;	//唯一ID
 	required uint32 talkid = 2; //NpcTalkTable表中的索引ID
+	required uint32 msgid  =3;  //表示要显示第几句话
 }
 
 message boating_start_request

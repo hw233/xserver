@@ -37,6 +37,7 @@ uint32_t sg_guild_battle_final_popularity[5];
 uint32_t sg_guild_bonfire_popularity;
 
 uint32_t sg_guild_bonfire_open_cost;
+uint32_t sg_guild_system_red_packet_num; //系统以玩家的身份发送普天同庆红包数量
 
 std::map<uint32_t, GangsTable*> building_config_map;
 std::map<uint32_t, GangsSkillTable*> skill_config_map;
@@ -152,6 +153,11 @@ static void generate_parameters(void)
 	if (config && config->n_parameter1 >= 1)
 	{
 		sg_guild_bonfire_open_cost = config->parameter1[0];
+	}
+	config = get_config_by_id(161000487, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_guild_system_red_packet_num = config->parameter1[0];
 	}
 }
 

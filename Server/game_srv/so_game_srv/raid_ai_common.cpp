@@ -343,6 +343,8 @@ static bool script_raid_check_finished(raid_struct *raid, struct raid_script_dat
 			return flag;
 		
 		}
+		case SCRIPT_EVENT_TRIGGER_JIGSAW:
+			return false;
 		default:
 			return false;
 	}
@@ -860,6 +862,29 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 				}
 		}
 			return true;
+		case SCRIPT_EVENT_NEXT_RAID:
+		{
+			player_struct *player = get_script_raid_event_player(raid);
+			if (player)
+			{
+				player->add_task_progress(TCT_FINISH_RAID, raid->data->ID, 1);
+				EXTERN_DATA extern_data;
+				extern_data.player_id = player->get_uuid();
+				player->move_to_scene(config->Parameter1[0], &extern_data);
+			}
+			return true;
+		}
+		case SCRIPT_EVENT_OPEN_FANCTION:
+		{
+			player_struct *player = get_script_raid_event_player(raid);
+			if (player)
+			{
+				std::vector<uint32_t> func_ids;
+				func_ids.push_back(config->Parameter1[0]);
+				player->open_function(func_ids);
+			}
+			return true;
+		}
 		default:
 			return false;
 	}
@@ -1154,4 +1179,25 @@ static bool do_check_script_raid_monster_hp(double percent, monster_struct* mons
 		return true;
 	}
 	return false;
+}
+
+int direct_next_script(raid_struct *raid, struct raid_script_data *script_data)
+{
+	if (script_data->cur_index >= script_data->script_config->size())
+	{
+		return 1;
+	}
+	struct RaidScriptTable *config = (*script_data->script_config)[script_data->cur_index];
+	if (config == NULL)
+	{
+		return 2;
+	}
+	switch (config->TypeID)
+	{
+	case SCRIPT_EVENT_TRIGGER_JIGSAW: 
+		script_raid_next(raid, script_data);
+	default:
+		return 0;
+	}
+	return 0;
 }

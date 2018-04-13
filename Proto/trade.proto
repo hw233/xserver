@@ -161,3 +161,100 @@ message AuctionBuyNowAnswer
 	required uint64 uuid = 2; //拍卖品唯一ID
 }
 
+
+//红包相关
+//红包直接面信息请求
+message RedPacketMainInfoRequest
+{
+	required uint32 red_type = 1; //红包类型 1:世界红包 5:帮派红包
+}
+
+//红包主界面信息应答
+message RedPacketMainInfoAnswer
+{
+	required uint32 result = 1; //0成功 否则失败
+	required uint32 red_type = 2; //红包类型 1:世界频道红包 5:帮派频道红包
+	repeated RedPacketMainInfo red_info = 3;
+}
+
+//红包主要信息
+message RedPacketMainInfo
+{
+	required uint32 red_coin_type = 1; //红包样式 0:元宝红包 1:银票红包
+	required uint64 red_id = 2; //红包唯一id
+	required uint32 open_flag = 3; //红包状态 0:未打开 1:已领取 2:已抢光
+	required uint64 player_id = 4; //发红包玩家id
+	required uint32 player_level = 5; //发红包玩家等级
+	required uint32 player_head_id = 6; //发红包玩家头像id
+	required string player_name = 7; //发红包玩家名字
+	required string player_text = 8; //发红包玩家留言
+	required uint32 red_money_num = 9; //红包总金额
+}
+
+//红包详情请求
+message RedPacketDetailedInfoRequest
+{
+	required uint32 red_type = 1; //红包类型 1:世界频道红包 5:帮派频道红包
+	required uint64 red_id = 2; //红包唯一id
+}
+
+//红包领取详情
+message RedPacketDetailedInfoAnswer
+{
+	required uint32 result = 1; //0成功 否则失败
+	required uint32 red_type = 2; //红包类型 1:世界频道红包 5:帮派频道红包
+	required uint64 red_id = 3; //红包唯一id
+	required uint32 red_money_num = 4; //红包总金额
+	required uint32 red_money_use = 5; //红包已经被领取的金额数
+	required uint32 red_sum_num = 6; //红包总个数
+	required uint32 red_use_num = 7; //红包已被领取个数
+	optional RedPacketPlayerReciveInfo max_player = 8; //当前手气最佳的玩家 
+	optional RedPacketPlayerReciveInfo min_player = 9; //当前手气最差的玩家 
+	repeated RedPacketPlayerReciveInfo all_player = 10; //所有领了红包的玩家
+}
+
+//玩家领取红包信息
+message RedPacketPlayerReciveInfo
+{
+	required string player_name = 1; //玩家名字
+	required uint32 money_num = 2; //玩家抢到的红包金额
+}
+
+//发红包请求
+message RedPacketSendRequest
+{
+	required uint32 red_type = 1; //红包类型 1:世界频道红包 5:帮派频道红包
+	required uint32 red_coin_type = 2; //红包样式 0:元宝红包 1:银票红包
+	required uint32 money_num = 3; //发红包的金钱数量
+	required uint32 red_num = 4; //发红包个数
+	required string player_text = 5; //玩家留言
+}
+
+//抢红包请求
+message RedPacketGrabRedRequest
+{
+	required uint32 red_type = 1; //红包类型 1:世界频道红包 5:帮派频道红包
+	required uint64 red_id = 2; //红包唯一id
+}
+
+//抢红包应答
+message RedPacketGrabRedAnswer
+{
+	required uint32 result = 1; //结果 0:成功 否则失败
+	required uint32 money_num = 2; //抢到的金额
+	optional RedPacketMainInfo info = 3; //抢完后信息更新
+}
+
+//玩家历史记录应答
+message RedPacketHistoryInfoAnswer
+{
+	repeated RedPacketPlayerRedInfo info = 1;
+}
+
+message RedPacketPlayerRedInfo
+{
+	required uint32 type = 1; //类型 0:抢到的非手气最佳红包 1:抢到的手气最佳红包 2:发出的红包
+	required uint32 red_coin_type = 2; //红包样式 0:元宝红包 1:银票红包
+	required uint64 time = 3; //时间戳
+	required uint32 money_num = 4; //金钱数量
+}

@@ -1284,6 +1284,11 @@ int partner_struct::deal_level_up(uint32_t level_old, uint32_t level_new)
 	//}
 
 	this->calculate_attribute(true);
+	//同步信息到redis，放在最后
+	if(this->m_owner)
+	{
+		this->m_owner->refresh_player_redis_info();
+	}
 
 	//当前血量回满
 	data->attrData[PLAYER_ATTR_HP] = data->attrData[PLAYER_ATTR_MAXHP];

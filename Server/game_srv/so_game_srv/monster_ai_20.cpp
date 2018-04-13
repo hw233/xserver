@@ -31,7 +31,9 @@ static void ai_tick_20(monster_struct *monster)
 	{
 		monster->config = get_config_by_id(NEW_YAODI_ID, &monster_config);
 		monster->data->monster_id = NEW_YAODI_ID;
-		::get_attr_from_config(monster->config->BaseAttribute * 1000 + monster->get_attr(PLAYER_ATTR_LEVEL), monster->data->attrData, &monster->drop_id);
+		::get_attr_from_config(monster->config->BaseAttribute * 1000 + monster->get_attr(PLAYER_ATTR_LEVEL), monster->data->attrData);
+		monster->data->attrData[PLAYER_ATTR_MOVE_SPEED] = monster->config->MoveSpeed;			
+		monster->drop_id = monster->config->DropID * 1000 + monster->get_attr(PLAYER_ATTR_LEVEL);		
 		monster->ai_data.yaodi_ai.state = 2;
 		if (monster->config->n_Skill >= 3)
 			monster->data->next_skill_id = monster->config->Skill[2];

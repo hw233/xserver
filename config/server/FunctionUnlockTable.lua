@@ -215,6 +215,15 @@ local FunctionUnlockTable = {
 		['ItemID'] = 0,
 		['ItemNum'] = 0
 		},
+	[292010611] = {
+		['ID'] = 292010611,
+		['Type'] = 6,
+		['Level'] = 1,
+		['Quest'] = 240110024,
+		['IsSoon'] = 0,
+		['ItemID'] = 0,
+		['ItemNum'] = 0
+		},
 	[292020001] = {
 		['ID'] = 292020001,
 		['Type'] = 7,
@@ -235,9 +244,9 @@ local FunctionUnlockTable = {
 		},
 	[292020003] = {
 		['ID'] = 292020003,
-		['Type'] = 7,
+		['Type'] = 5,
 		['Level'] = 6,
-		['Quest'] = 240110022,
+		['Quest'] = 240110015,
 		['IsSoon'] = 2,
 		['ItemID'] = 201010001,
 		['ItemNum'] = 1000
@@ -300,7 +309,7 @@ local FunctionUnlockTable = {
 		['ID'] = 292020201,
 		['Type'] = 9,
 		['Level'] = 6,
-		['Quest'] = 240110022,
+		['Quest'] = 0,
 		['IsSoon'] = 0,
 		['ItemID'] = 0,
 		['ItemNum'] = 0

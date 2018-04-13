@@ -5,10 +5,13 @@ import "comm_message.proto";
 message RankPlayerData
 {
 	required PlayerBaseData baseInfo = 1; //角色基本信息
-	required uint32 guildId = 4; //帮会ID
-	required string guildName = 5; //帮会名
-	required uint32 rankNum = 6; //排名
-	required uint32 score = 7; //分数（根据排行榜类型不同，意义不同）
+	required uint32 guildId = 2; //帮会ID
+	required string guildName = 3; //帮会名
+	required uint32 rankNum = 4; //排名
+	required uint32 score = 5; //分数（根据排行榜类型不同，意义不同）
+	required uint32 partner_id = 6; //伙伴id (伙伴排行榜专用)
+	required uint32 partner_level = 7; //伙伴等级 (伙伴排行榜专用)
+	required string partner_name = 8; //伙伴名字 (伙伴排行榜专用)
 }
 
 //排行榜帮会信息
@@ -142,3 +145,4 @@ message RankWorldBossRefreshNotify
 {
 	required uint32 bossid = 1; //世界bossid
 }
+

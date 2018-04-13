@@ -87,7 +87,7 @@ static int handle_ai_player_cast_skill(EXTERN_DATA *extern_data)
 //	int skill_id = req->skillid;	
 	
 	struct ActiveSkillTable *active_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
-	player->deal_skill_cast_request(req, config, active_config);
+	player->deal_skill_cast_request(req, config->ID, config, active_config);
 	skill_cast_request__free_unpacked(req, NULL);
 	return (0);
 }

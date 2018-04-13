@@ -63,6 +63,8 @@ message player_redis_info
 	required uint32 zhenying_kill = 32; //阵营杀人数
 	required uint32 exploit = 33;  //历史功勋
 	required uint32 award_question = 34;  //有奖答题
+	optional MaxPowerPartner maxpartner = 35; //最高战力宠物信息
+	required uint32 meili_num = 36; //玩家当前总魅力
 }
 
 message RedisGuildInfo
@@ -217,4 +219,13 @@ message TowerRecord
 	repeated TowerMaxCd maxcd = 1;//全服最短时间
 	required uint32 maxlv = 2;//全服最高层 
 	required string lv_name = 3;
+}
+
+//最高战力宠物信息
+message MaxPowerPartner
+{
+	required uint32 id = 1; //伙伴表id
+	required uint32 level = 2; //宠物等级
+	required uint32 power = 3; //宠物战力
+	required string partner_name = 4; //宠物名称
 }

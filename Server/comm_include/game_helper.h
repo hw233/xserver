@@ -40,5 +40,6 @@ union EspecialItemInfo
 
 int get_item_type(uint32_t item_id); //获取道具类型
 bool control_is_open(ControlTable *ctrl_config, uint64_t now); //控制表里的活动，是否在开启时间
+uint64_t rand_between(uint64_t a, uint64_t b);
 
 #endif

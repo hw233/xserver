@@ -27,3 +27,45 @@ message DBAuctionLot
 	repeated uint64 masters = 1; //激活该拍卖品的玩家
 }
 
+message RedPacketRedisInfo
+{
+	required uint64 red_uuid = 1; //红包唯一id
+	required uint64 player_id = 2; //发红包玩家id
+	required string player_name = 3; //发红包玩家名字
+	required uint32 head_icon = 4; //发红包玩家头像id
+	required uint32 player_level = 5; //发红包玩家等级
+	required uint64 send_red_time = 6; //发红包时间
+	required uint32 red_typ = 7; //红包类型 1:世界频道红包 5:帮派频道红包
+	required uint32 guild_id = 8; //帮派id  0:世界红包  非0:所属帮派id
+	required uint32 system_or_player = 9;  // 0:玩家自己发的  1:系统以玩家名义发的普通同庆
+	required uint32 red_coin_type = 10; //红包样式 0:元宝红包 1:银票红包
+	required uint32 red_sum_money = 11; //红包总金额大小
+	required uint32 red_use_money = 12; //红包已经被领取的金额数
+	required uint32 red_sum_num = 13; //红包总个数
+	required uint32 red_use_num = 14; //红包已经被领取的个数
+	required string player_text = 15; //发红包玩家留言
+	optional RedPacketRedisPlayerReciveInfo max_player = 16; //当前手气最佳的玩家
+	optional RedPacketRedisPlayerReciveInfo min_player = 17; //当前手气最差的玩家
+	repeated RedPacketRedisPlayerReciveInfo all_player = 18; //所有领取了红包的玩家
+}
+
+message RedPacketRedisPlayerReciveInfo
+{
+	required uint64 player_id = 1; //玩家id
+	required string player_name = 2; //玩家名字
+	required uint32 money_num = 3; //玩家抢到的红包金额
+}
+
+message RedPacketRedisPlayeNormalInfo
+{
+	required uint64 red_uuid = 1; //红包id
+	required uint64 grab_time = 2; //抢红包的时间
+	required uint32 money_type = 3; //红包类型
+	required uint32 money_num = 4;  //红包金额
+	required uint32 red_type = 5;   //0:抢到的非手气最佳红包 1:抢到的手气最佳红包 2:发出的红包
+}
+
+message RedPacketRedisPlayerReciveRecord
+{
+	repeated RedPacketRedisPlayeNormalInfo info = 1; //详细信息
+}

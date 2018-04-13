@@ -124,7 +124,7 @@ int chat_mod::do_one_gm_cmd( player_struct *player, int argc, char *argv[] )
 	{
 		player->broadcast_one_attr_changed( PLAYER_ATTR_PK_TYPE, 0, false, false );
 		player->broadcast_one_attr_changed( PLAYER_ATTR_ZHENYING, 0, false, false );
-		player->data->noviceraid_flag = 1;
+		player->data->noviceraid_flag = true;
 		player->set_attr( PLAYER_ATTR_PK_TYPE, 0 );
 		player->set_attr( PLAYER_ATTR_ZHENYING, 0 );
 

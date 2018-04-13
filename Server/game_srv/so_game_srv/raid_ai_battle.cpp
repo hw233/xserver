@@ -34,6 +34,7 @@ static void battle_raid_ai_init(raid_struct *raid, player_struct *player)
 			LOG_INFO("%s: player[%lu] ret = %d", __FUNCTION__, player->get_uuid(), ret);
 		}
 	}
+	ZhenyingBattle::GetInstance()->InitFlag(raid);
 }
 
 void battle_raid_ai_finished(raid_struct *raid)
@@ -97,11 +98,11 @@ static void battle_raid_ai_player_dead(raid_struct *raid, player_struct *player,
 		return;
 	}
 	
-	ZhenyingBattle::GetInstance()->KillEnemy(killer, *player);
+	ZhenyingBattle::GetInstance()->KillEnemy(raid, killer, *player);
 }
 static void battle_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
 {
-
+	ZhenyingBattle::GetInstance()->OnMonsterDead(raid, monster, killer);
 }
 static void battle_raid_ai_collect(raid_struct *raid, player_struct *player, Collect *collect)
 {

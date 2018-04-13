@@ -17,6 +17,8 @@ extern int send_mail(conn_node_base *connecter, uint64_t player_id, uint32_t typ
 
 TradeItemMap trade_item_map; //所有交易道具
 TradePlayerMap trade_player_map; //交易服玩家数据
+std::map<uint64_t, uint64_t> normal_red_packet_time_map; //普通红包唯一id对应发红包时间
+std::map<uint32_t, std::map<uint64_t, uint64_t> > guild_red_packet_time_map; //帮会id对应本帮会所有红包
 static TradeSoldMap trade_sold_map; //所有已售道具信息
 static std::list<TradeItem *> trade_item_free_list;
 static std::list<TradeSoldInfo *> trade_sold_free_list;
@@ -26,12 +28,146 @@ static AuctionBidMap auction_bid_map; //拍卖竞价列表
 static std::list<AuctionLot *> auction_lot_free_list;
 
 char sg_player_key[64];
+char sg_normal_red_packet_key[64];
+char sg_guild_red_packet_key[64];
+char sg_player_red_packet_record_key[64];
 struct event second_timer;
 struct timeval second_timeout;
 struct event five_oclock_timer;
 struct timeval five_oclock_timeout;
 static const uint32_t week_reset_day = 1 * 24 * 3600; //每周一刷新
 static const uint32_t daily_reset_clock = 5 * 3600; //每天五点刷新
+
+AutoReleaseTradeRedisInfo::AutoReleaseTradeRedisInfo()
+{
+	red_packet_redis_info = NULL;
+	player_recive_record = NULL;
+}
+
+AutoReleaseTradeRedisInfo::~AutoReleaseTradeRedisInfo() 
+{
+	if(red_packet_redis_info)
+		red_packet_redis_info__free_unpacked(red_packet_redis_info, NULL);
+	if(player_recive_record)
+		red_packet_redis_player_recive_record__free_unpacked(player_recive_record, NULL);
+
+}
+
+void AutoReleaseTradeRedisInfo::set_cur_red_packet(RedPacketRedisInfo* r)
+{
+
+	if (red_packet_redis_info)
+	{
+		red_packet_redis_info__free_unpacked(red_packet_redis_info, NULL);
+	}
+	red_packet_redis_info  = r;
+}
+void AutoReleaseTradeRedisInfo::set_player_red_packet_record(RedPacketRedisPlayerReciveRecord* r)
+{
+
+	if (player_recive_record)
+	{
+		red_packet_redis_player_recive_record__free_unpacked(player_recive_record, NULL);
+	}
+	player_recive_record  = r;
+}
+
+AutoReleaseBatchRedRedisInfo::AutoReleaseBatchRedRedisInfo()
+{
+
+}
+
+AutoReleaseBatchRedRedisInfo::~AutoReleaseBatchRedRedisInfo()
+{
+	
+	for(std::vector<RedPacketRedisInfo *>::iterator iter = pointer_vec.begin(); iter != pointer_vec.end(); iter++)
+	{
+		red_packet_redis_info__free_unpacked(*iter, NULL);
+	}
+}
+
+void AutoReleaseBatchRedRedisInfo::push_back(RedPacketRedisInfo* r)
+{
+	pointer_vec.push_back(r);
+}
+RedPacketRedisInfo *get_red_packet_redis_info(uint64_t red_uuid, char *red_packet_key, CRedisClient &rc, AutoReleaseTradeRedisInfo &_pool)
+{
+	static uint8_t data_buffer[1024 * 1024];
+	int data_len = sizeof(data_buffer);
+	char field[64];
+	sprintf(field, "%lu", red_uuid);
+	int ret = rc.hget_bin(red_packet_key, field, (char *)data_buffer, &data_len);
+	if (ret == 0)
+	{
+		RedPacketRedisInfo *ret = red_packet_redis_info__unpack(NULL, data_len, data_buffer);
+		if(ret)
+			_pool.set_cur_red_packet(ret);
+		return ret;
+	}
+
+	return NULL;
+}
+int get_more_red_packet_redis_info(std::set<uint64_t> &red_uuid, std::map<uint64_t, RedPacketRedisInfo*> &redis_players, char *red_packet_key, CRedisClient &rc, AutoReleaseBatchRedRedisInfo &_pool)
+{
+	if (red_uuid.size() == 0)
+	{
+		return 0;
+	}
+
+	std::vector<std::relation_three<uint64_t, char*, int> > red_packet_infos;
+	for (std::set<uint64_t>::iterator iter = red_uuid.begin(); iter != red_uuid.end(); ++iter)
+	{
+		std::relation_three<uint64_t, char*, int> tmp(*iter, NULL, 0);
+		red_packet_infos.push_back(tmp);
+	}
+
+	int ret = rc.get(red_packet_key, red_packet_infos);
+	if (ret != 0)
+	{
+		LOG_ERR("[%s:%d] hmget failed, ret:%d", __FUNCTION__, __LINE__, ret);
+		return -1;
+	}
+
+	for (std::vector<std::relation_three<uint64_t, char*, int> >::iterator iter = red_packet_infos.begin(); iter != red_packet_infos.end(); ++iter)
+	{
+		RedPacketRedisInfo *redis_red_packet = red_packet_redis_info__unpack(NULL, iter->three, (uint8_t*)iter->second);
+		if (!redis_red_packet)
+		{
+			ret = -1;
+			LOG_ERR("[%s:%d] unpack redis failed, player_id:%lu", __FUNCTION__, __LINE__, iter->first);
+			continue;
+		}
+
+		redis_players[iter->first] = redis_red_packet;
+		_pool.push_back(redis_red_packet);
+	}
+
+	for (std::vector<std::relation_three<uint64_t, char*, int> >::iterator iter = red_packet_infos.begin(); iter != red_packet_infos.end(); ++iter)
+	{
+		free(iter->second);
+	}
+
+	return ret;
+}
+
+RedPacketRedisPlayerReciveRecord *get_player_red_packet_redis_recive_record(uint64_t player_id, char *red_packet_key, CRedisClient &rc, AutoReleaseTradeRedisInfo &_pool)
+{
+	static uint8_t data_buffer[1024 * 1024];
+	int data_len = sizeof(data_buffer);
+	char field[64];
+	sprintf(field, "%lu", player_id);
+	int ret = rc.hget_bin(red_packet_key, field, (char *)data_buffer, &data_len);
+	if (ret == 0)
+	{
+		RedPacketRedisPlayerReciveRecord *ret = red_packet_redis_player_recive_record__unpack(NULL, data_len, data_buffer);
+		if(ret)
+			_pool.set_player_red_packet_record(ret);
+		return ret;
+	}
+
+	return NULL;
+}
+
 static void cb_5clock_timer(evutil_socket_t, short, void* /*arg*/)
 {
 	handle_daily_reset_timeout(false);
@@ -196,6 +332,7 @@ void cb_second_timer(evutil_socket_t, short, void* /*arg*/)
 			iter++;
 		}
 	}
+	refresh_all_red_packet_redis_data();
 
 	add_timer(second_timeout, &second_timer, NULL);
 }
@@ -1348,6 +1485,327 @@ void send_player_auction_bid_fail(uint64_t player_id, uint32_t price)
 }
 
 
+uint64_t alloc_red_packet_uuid()
+{
+//	static uint64_t last_uuid;
+	uint64_t t = time_helper::get_cached_time() / 1000 & 0xffffffff;
 
+//	{
+		static union uuid_data last_ret_data;
+		union uuid_data ret_data;
 
+		if (last_ret_data.data2.time == t)
+		{
+			last_ret_data.data2.type = RED_PACKET_TYPE_UUID;			
+			last_ret_data.data2.auto_inc++;
+			ret_data.data1 = last_ret_data.data1;
+		}
+		else
+		{
+			ret_data.data1 = 0;
+			ret_data.data2.time = t;
+			ret_data.data2.type = RED_PACKET_TYPE_UUID;			
+			last_ret_data.data1 = ret_data.data1;
+		}
+//	}
+	
+	// if ((last_uuid & 0xffffffff) == t) {
+	// 	uint64_t high = last_uuid >> 32;
+	// 	++high;
+	// 	last_uuid = high << 32 | t;
+	// 	last_uuid |= AI_PLAYER_TYPE_BIT;
+	// 	goto done;
+	// }
+	// last_uuid = t | AI_PLAYER_TYPE_BIT;
+//done:
+	LOG_DEBUG("%s %d: uuid[%lu]", __FUNCTION__, __LINE__, ret_data.data1);
+//	assert(last_uuid == ret_data.data1);
+//	return (last_uuid);
+	return ret_data.data1;
+}
 
+//加载所有红包uuid->time数据
+void load_red_packet_redis_data()
+{
+	normal_red_packet_time_map.clear();
+	guild_red_packet_time_map.clear();
+
+	uint64_t cur_times = time_helper::get_micro_time() / 1000000;
+	//普通红包
+	CAutoRedisReply autoR;		
+	redisReply *r = sg_redis_client.hgetall_bin(sg_normal_red_packet_key, autoR);
+	if (!r || r->type != REDIS_REPLY_ARRAY)
+	{
+		LOG_ERR("[%s:%d] hgetall  normal red packet failed", __FUNCTION__, __LINE__);
+	}
+	else 
+	{
+		for(size_t i = 0; i + 1 <  r->elements; i = i + 2)
+		{
+			uint64_t red_uuid = 0;
+			struct redisReply *field = r->element[i];
+			struct redisReply *value = r->element[i+1];
+			if (field->type != REDIS_REPLY_STRING || value->type != REDIS_REPLY_STRING)
+				continue;
+			red_uuid = strtoull(field->str, NULL, 10);
+		
+			if(red_uuid == 0)
+				continue;
+			RedPacketRedisInfo *red_redis_info = red_packet_redis_info__unpack(NULL, value->len, (const uint8_t*)value->str);
+			if(red_redis_info == NULL)
+			{
+				LOG_ERR("[%s:%d] loading 红包信息时,解包红包信息失败 red_uuid[%lu]", __FUNCTION__, __LINE__, red_uuid);
+				continue;
+			}
+			if(cur_times < red_redis_info->send_red_time)
+			{
+				LOG_ERR("[%s:%d] loading 红包信息时,时间有误 red_uuid[%lu] cur_time[%lu] send_time[%lu]", __FUNCTION__, __LINE__, red_uuid, cur_times, red_redis_info->send_red_time);
+				continue;
+			}
+
+			//超过限定的存在时间将其在当前redis里面的数据清除
+			if(cur_times - red_redis_info->send_red_time >= sg_red_packet_baocun_time )
+			{
+				if(sg_redis_client.hdel(sg_normal_red_packet_key, red_uuid) < 0)
+				{
+					LOG_ERR("[%s:%d] loading 红包信息时,删除超时红包出错 red_uuid[%lu] cur_time[%lu] send_time[%lu]", __FUNCTION__, __LINE__, red_uuid, cur_times, red_redis_info->send_red_time);
+					continue;
+				}
+
+				//把剩余的钱退给发红包的玩家
+				if(red_redis_info->red_use_money < red_redis_info->red_sum_money && red_redis_info->red_use_num < red_redis_info->red_sum_num)
+				{
+					red_packet_surplus_money_give_back_player(red_redis_info->player_id, red_redis_info->red_typ, red_redis_info->red_coin_type, red_redis_info->send_red_time, red_redis_info->red_sum_money, red_redis_info->red_use_money);
+				}
+				continue;
+			}
+			normal_red_packet_time_map.insert(std::make_pair(red_uuid, red_redis_info->send_red_time));
+		}
+	
+	}
+
+	//帮派红包
+	r = sg_redis_client.hgetall_bin(sg_guild_red_packet_key, autoR);
+	if (!r || r->type != REDIS_REPLY_ARRAY)
+	{
+		LOG_ERR("[%s:%d] hgetall guild red packet failed", __FUNCTION__, __LINE__);
+	}
+	else 
+	{
+		for(size_t i = 0; i + 1 <  r->elements; i = i + 2)
+		{
+			uint64_t red_uuid = 0;
+			struct redisReply *field = r->element[i];
+			struct redisReply *value = r->element[i+1];
+			if (field->type != REDIS_REPLY_STRING || value->type != REDIS_REPLY_STRING)
+				continue;
+			red_uuid = strtoull(field->str, NULL, 10);
+		
+			if(red_uuid == 0)
+				continue;
+			RedPacketRedisInfo *red_redis_info = red_packet_redis_info__unpack(NULL, value->len, (const uint8_t*)value->str);
+			if(red_redis_info == NULL)
+			{
+				LOG_ERR("[%s:%d] loading 红包信息时,解包红包信息失败 red_uuid[%lu]", __FUNCTION__, __LINE__, red_uuid);
+				continue;
+			}
+			if(cur_times < red_redis_info->send_red_time)
+			{
+				LOG_ERR("[%s:%d] loading 红包信息时,时间有误 red_uuid[%lu] cur_time[%lu] send_time[%lu]", __FUNCTION__, __LINE__, red_uuid, cur_times, red_redis_info->send_red_time);
+				continue;
+			}
+
+			//超过限定的存在时间将其在当前redis里面的数据清除
+			if(cur_times - red_redis_info->send_red_time >= sg_red_packet_baocun_time )
+			{
+				if(sg_redis_client.hdel(sg_guild_red_packet_key, red_uuid) < 0)
+				{
+					LOG_ERR("[%s:%d] loading 红包信息时,删除超时红包出错 red_uuid[%lu] cur_time[%lu] send_time[%lu]", __FUNCTION__, __LINE__, red_uuid, cur_times, red_redis_info->send_red_time);
+					continue;
+				}
+
+				//把剩余的钱退给发红包的玩家
+				if(red_redis_info->red_use_money < red_redis_info->red_sum_money && red_redis_info->red_use_num < red_redis_info->red_sum_num && red_redis_info->system_or_player == 0)
+				{
+					red_packet_surplus_money_give_back_player(red_redis_info->player_id, red_redis_info->red_typ, red_redis_info->red_coin_type, red_redis_info->send_red_time, red_redis_info->red_sum_money, red_redis_info->red_use_money);
+				}
+				continue;
+			}
+			std::map<uint32_t, std::map<uint64_t, uint64_t> >::iterator iter = guild_red_packet_time_map.find(red_redis_info->guild_id);
+			if(iter != guild_red_packet_time_map.end())
+			{
+				std::map<uint64_t, uint64_t> &guild_red_map = iter->second;
+				guild_red_map[red_uuid] = red_redis_info->send_red_time;
+			}
+			else 
+			{
+				std::map<uint64_t, uint64_t> guild_red_map;
+				guild_red_map[red_uuid] = red_redis_info->send_red_time;
+				guild_red_packet_time_map.insert(std::make_pair(red_redis_info->guild_id, guild_red_map));
+			}
+		}
+	
+	}
+
+}
+
+//定时更新过时红包信息
+void refresh_all_red_packet_redis_data()
+{
+	uint64_t cur_times = time_helper::get_micro_time() / 1000000;
+	AutoReleaseTradeRedisInfo autoR;
+	for(std::map<uint64_t, uint64_t>::iterator itr = normal_red_packet_time_map.begin(); itr != normal_red_packet_time_map.end();)
+	{
+		uint64_t red_uuid = itr->first;
+		uint64_t send_time = itr->second;
+		if(cur_times < send_time)
+		{
+			itr++;
+			LOG_ERR("[%s:%d] 更新普通红包信息时,时间有误 red_uuid[%lu] cur_time[%lu] send_time[%lu]", __FUNCTION__, __LINE__, red_uuid, cur_times, send_time);
+			continue;
+		}
+		if(cur_times - send_time > sg_red_packet_baocun_time)
+		{
+			RedPacketRedisInfo *last_red_info = get_red_packet_redis_info(red_uuid, sg_normal_red_packet_key, sg_redis_client, autoR);
+			if(last_red_info == NULL)
+			{
+				LOG_ERR("[%s:%d] 删除过时普通红包失败,获取redis信息失败 red_uuid[%lu]", __FUNCTION__, __LINE__, red_uuid);
+			}
+			else{
+				if(sg_redis_client.hdel(sg_normal_red_packet_key, red_uuid) < 0)
+				{
+					LOG_ERR("[%s:%d] 删除过时普通红包失败,删除redis信息失败 red_uuid[%lu]", __FUNCTION__, __LINE__, red_uuid);
+				}
+				else 
+				{
+					red_packet_surplus_money_give_back_player(last_red_info->player_id, last_red_info->red_typ, last_red_info->red_coin_type, last_red_info->send_red_time, last_red_info->red_sum_money, last_red_info->red_use_money);
+					normal_red_packet_time_map.erase(itr++);
+					continue;
+				}
+			}
+		}
+		itr++;
+	}
+
+	//帮会红包
+	for(std::map<uint32_t, std::map<uint64_t, uint64_t> >::iterator itr = guild_red_packet_time_map.begin(); itr != guild_red_packet_time_map.end();itr++)
+	{
+		std::map<uint64_t, uint64_t> &guild_red_packet_map = itr->second;
+		for(std::map<uint64_t, uint64_t>::iterator ite = guild_red_packet_map.begin(); ite != guild_red_packet_map.end();)
+		{
+			uint64_t red_uuid = ite->first;
+			uint64_t send_time = ite->second;
+			if(cur_times < send_time)
+			{
+				ite++;
+				LOG_ERR("[%s:%d] 更新门宗红包信息时,时间有误 red_uuid[%lu] cur_time[%lu] send_time[%lu]", __FUNCTION__, __LINE__, red_uuid, cur_times, send_time);
+				continue;
+			}
+			if(cur_times - send_time > sg_red_packet_baocun_time)
+			{
+				RedPacketRedisInfo *last_red_info = get_red_packet_redis_info(red_uuid, sg_guild_red_packet_key, sg_redis_client, autoR);
+				if(last_red_info == NULL)
+				{
+					LOG_ERR("[%s:%d] 删除过时门宗红包失败,获取redis信息失败 red_uuid[%lu]", __FUNCTION__, __LINE__, red_uuid);
+				}
+				else{
+					if(sg_redis_client.hdel(sg_guild_red_packet_key, red_uuid) < 0)
+					{
+						LOG_ERR("[%s:%d] 删除过时门宗红包失败,删除redis信息失败 red_uuid[%lu]", __FUNCTION__, __LINE__, red_uuid);
+					}
+					else 
+					{
+						if(last_red_info->system_or_player == 0)
+						{
+							red_packet_surplus_money_give_back_player(last_red_info->player_id, last_red_info->red_typ, last_red_info->red_coin_type, last_red_info->send_red_time, last_red_info->red_sum_money, last_red_info->red_use_money);
+						}
+						guild_red_packet_map.erase(ite++);
+						continue;
+					}
+				}
+			}
+			ite++;
+		}
+	}
+}
+
+//将过期的红包里面剩余的金钱还给玩家
+void red_packet_surplus_money_give_back_player(uint64_t player_id, uint32_t red_type, uint32_t money_type, uint64_t send_time, uint32_t sum_money, uint32_t use_money)
+{
+	std::map<uint32_t, uint32_t> mail_item_map;
+	std::vector<char *> red_tui_huan_vect;
+	struct tm tm;
+	time_t befor_send_time = send_time;
+	localtime_r(&befor_send_time, &tm);
+	char red_time_text[256] = {0};
+	char red_type_text[256] = {0};
+	if(red_type == 1)
+	{
+		snprintf(red_type_text, 256, "世界红包");
+	}
+	else
+	{
+		snprintf(red_type_text, 256, "帮会红包");
+	}
+	snprintf(red_time_text, 256, "%d-%d-%d %d:%d:%d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+	uint32_t shengyu_money = sum_money - use_money;
+	if(money_type == 0)
+	{
+		mail_item_map[201010003] = shengyu_money;
+	}
+	else 
+	{
+		mail_item_map[201010001] = shengyu_money;
+	}
+	red_tui_huan_vect.push_back(red_time_text);
+	red_tui_huan_vect.push_back(red_type_text);
+	send_mail(&conn_node_tradesrv::connecter, player_id, 270100012, NULL, NULL, NULL, &red_tui_huan_vect, &mail_item_map, MAGIC_TYPE_RED_PACKET_TUIHUAN_MONEY);
+
+}
+
+int delete_one_red_packet_for_redis(uint64_t last_red_uuid ,char* red_packet_key, std::map<uint64_t, uint64_t> &red_map)
+{
+	AutoReleaseTradeRedisInfo autoR;
+	RedPacketRedisInfo *last_red_info = get_red_packet_redis_info(last_red_uuid, red_packet_key, sg_redis_client, autoR);
+	if(last_red_info == NULL)
+	{
+		LOG_ERR("[%s:%d] 删除红包reids信息失败,获取红包redis信息失败", __FUNCTION__, __LINE__);
+		return -1;
+	}
+	//将其在当前redis里面的数据清除
+	if(sg_redis_client.hdel(red_packet_key, last_red_uuid) < 0)
+	{
+		LOG_ERR("[%s:%d] 删除红包reids信息失败,hdel redis信息失败", __FUNCTION__, __LINE__);
+		return -2;
+	}
+	red_map.erase(last_red_uuid);
+
+	//把剩余的钱退给发红包的玩家
+	if(last_red_info->red_use_money < last_red_info->red_sum_money && last_red_info->red_use_num < last_red_info->red_sum_num && last_red_info->system_or_player == 0)
+	{
+		red_packet_surplus_money_give_back_player(last_red_info->player_id, last_red_info->red_typ, last_red_info->red_coin_type, last_red_info->send_red_time, last_red_info->red_sum_money, last_red_info->red_use_money);
+	}
+	return 0;
+
+}
+
+int save_one_red_packet_for_redis(RedPacketRedisInfo *redis_info, uint64_t red_uuid, char* red_packet_key)
+{
+	//数据存redis
+	uint8_t data_buffer[1024 * 1024];
+	size_t data_len = red_packet_redis_info__pack(redis_info, data_buffer);
+	if (data_len == (size_t)-1)
+	{
+		LOG_ERR("[%s:%d] 红包存数据库失败,数据长度有误 data_len[%d]", __FUNCTION__, __LINE__, data_len);
+		return -1;
+	}
+	char red_field[64];
+	sprintf(red_field, "%lu", red_uuid);
+	if (sg_redis_client.hset_bin(red_packet_key, red_field, (const char *)data_buffer, (int)data_len) < 0)
+	{
+		LOG_ERR("[%s:%d] 红包存数据库失败,hset redis 失败 data_len[%d]", __FUNCTION__, __LINE__, data_len);
+		return -2;
+	}
+
+	return 0;
+}

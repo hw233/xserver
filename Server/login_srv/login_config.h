@@ -11,6 +11,7 @@ extern std::map<uint64_t, struct SceneResTable *> scene_res_config; //阻挡，�
 extern std::map<uint64_t, struct ActorFashionTable *> fashion_config; //时装配置
 extern std::map<uint64_t, struct ParameterTable *> parameter_config; //参数配置
 extern std::map<uint64_t, struct ActorTable *> actor_config;
+extern std::map<uint64_t, struct ServerResTable *> server_res_config; //服务器配置表
 
 int read_all_excel_data();
 

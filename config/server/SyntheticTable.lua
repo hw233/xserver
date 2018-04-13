@@ -47,6 +47,13 @@ local SyntheticTable = {
 		['SyntheticMaterial'] = {201060232,201060013},
 		['SyntheticMaterialNum'] = {3,4},
 		['Consume'] = 800
+		},
+	[651000008] = {
+		['ID'] = 651000008,
+		['SyntheticTarget'] = 201050124,
+		['SyntheticMaterial'] = {201050121,201050122,201050123},
+		['SyntheticMaterialNum'] = {1,1,1},
+		['Consume'] = 0
 		}
 	}
 return SyntheticTable

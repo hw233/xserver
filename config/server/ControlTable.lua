@@ -177,7 +177,7 @@ local ControlTable = {
 		['OpenTime'] = {0},
 		['CloseTime'] = {2359},
 		['TimeType'] = 2,
-		['RewardTime'] = 3
+		['RewardTime'] = 5
 		},
 	[330400019] = {
 		['ID'] = 330400019,
@@ -187,7 +187,7 @@ local ControlTable = {
 		['OpenTime'] = {1500},
 		['CloseTime'] = {1600},
 		['TimeType'] = 2,
-		['RewardTime'] = 3
+		['RewardTime'] = 5
 		},
 	[330400020] = {
 		['ID'] = 330400020,
@@ -387,7 +387,7 @@ local ControlTable = {
 		['OpenTime'] = {1000},
 		['CloseTime'] = {2100},
 		['TimeType'] = 2,
-		['RewardTime'] = 5
+		['RewardTime'] = 2
 		},
 	[330400042] = {
 		['ID'] = 330400042,
@@ -474,7 +474,7 @@ local ControlTable = {
 		['MinActor'] = 1,
 		['MaxActor'] = 1,
 		['OpenDay'] = {0,1,2,3,4,5,6},
-		['OpenTime'] = {0},
+		['OpenTime'] = {1200},
 		['CloseTime'] = {2400},
 		['TimeType'] = 2,
 		['RewardTime'] = 15
@@ -628,6 +628,16 @@ local ControlTable = {
 		['CloseTime'] = {2400},
 		['TimeType'] = 1,
 		['RewardTime'] = 0
+		},
+	[330400066] = {
+		['ID'] = 330400066,
+		['MinActor'] = 1,
+		['MaxActor'] = 5,
+		['OpenDay'] = {0,1,2,3,4,5,6},
+		['OpenTime'] = {0},
+		['CloseTime'] = {2400},
+		['TimeType'] = 1,
+		['RewardTime'] = 10
 		}
 	}
 return ControlTable

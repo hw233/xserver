@@ -328,6 +328,9 @@ static void pack_guild_basic_data(GuildPlayer *player, AutoReleaseBatchRedisPlay
 	basic_data.buildboard = guild->build_board;
 	basic_data.masterid = guild->master_id;
 	basic_data.renametime = guild->rename_time;
+	std::vector<uint64_t> applyIds;
+	get_guild_join_apply(guild->guild_id, applyIds);
+	basic_data.apply_num = applyIds.size();
 	PlayerRedisInfo *redis_master = get_redis_player(guild->master_id, sg_player_key, sg_redis_client, t1);
 	if (redis_master)
 	{
@@ -2266,6 +2269,7 @@ int conn_node_guildsrv::handle_player_online_notify(EXTERN_DATA *extern_data)
 			req.contain = content;
 
 			broadcast_guild_chat(guild, &req);
+
 		} while(0);
 
 		//if (player->guild)
@@ -2718,6 +2722,8 @@ int conn_node_guildsrv::handle_guild_skill_info_request(EXTERN_DATA *extern_data
 	{
 		if (player->guild)
 		{
+			resp.upgradeid = player->guild->skill_upgrade_id;
+			resp.upgradeend = player->guild->skill_upgrade_end;
 			resp.develops = develop_data_point;
 			resp.n_develops = 0;
 			for (int i = 0; i < MAX_GUILD_SKILL_NUM; ++i)
@@ -2790,6 +2796,12 @@ int conn_node_guildsrv::handle_guild_skill_develop_request(EXTERN_DATA *extern_d
 			break;
 		}
 
+		if (guild->skill_upgrade_id != 0)
+		{
+			ret = 190500250;
+			break;
+		}
+
 		pSkill = get_guild_skill_info(guild, skill_id);
 		if (!pSkill)
 		{
@@ -2841,10 +2853,10 @@ int conn_node_guildsrv::handle_guild_skill_develop_request(EXTERN_DATA *extern_d
 		sub_guild_treasure(guild, need_treasure, true);
 		sub_guild_build_board(guild, need_board, true);
 
-		pSkill->skill_id = skill_id;
-		pSkill->skill_lv++;
-		broadcast_skill_develop_update(guild, pSkill);
-		broadcast_guild_object_attr_update(guild, GUILD_OBJECT_ATTR_TYPE__ATTR_SKILL_DEVELOP, skill_id, pSkill->skill_lv);
+		//pSkill->skill_id = skill_id;
+		//pSkill->skill_lv++;
+		//broadcast_skill_develop_update(guild, pSkill);
+		//broadcast_guild_object_attr_update(guild, GUILD_OBJECT_ATTR_TYPE__ATTR_SKILL_DEVELOP, skill_id, pSkill->skill_lv);
 
 		uint32_t now = time_helper::get_cached_time() / 1000;
 		GuildLog *log = get_important_insert_log(guild);
@@ -2852,6 +2864,9 @@ int conn_node_guildsrv::handle_guild_skill_develop_request(EXTERN_DATA *extern_d
 		log->time = now;
 		snprintf(log->args[0], MAX_GUILD_LOG_ARG_LEN, "%s", config->skillName);
 		broadcast_important_log_add(guild, log);
+
+		guild->skill_upgrade_id = skill_id;
+		guild->skill_upgrade_end = now + config->CreateTime;
 
 		save_guild_info(guild);
 	} while(0);
@@ -2864,6 +2879,7 @@ int conn_node_guildsrv::handle_guild_skill_develop_request(EXTERN_DATA *extern_d
 	if (pSkill)
 	{
 		resp.level = pSkill->skill_lv;
+		resp.upgradeend = player->guild->skill_upgrade_end;
 	}
 
 	fast_send_msg(&connecter, extern_data, MSG_ID_GUILD_SKILL_DEVELOP_ANSWER, guild_skill_upgrade_answer__pack, resp);
@@ -4757,7 +4773,39 @@ static int handle_guild_donate_cost(int data_len, uint8_t *data, int result, EXT
 		}
 
 		save_guild_info(guild);
+		//如果玩家时倾囊相授,系统以玩家的名义发送普天同庆的红包
+		if(type == 3)
+		{
+			uint32_t building_level = get_building_level(guild, Building_Vault);
+			GangsTable *config = get_guild_building_config(Building_Vault, building_level);
+			ParameterTable *parame_config = get_config_by_id(161000381, &parameter_config);
+			if (!config || config->n_parameter4 <= 0 || !parame_config)
+			{
+				LOG_ERR("[%s:%d] player[%lu] 帮会发普天同庆红包失败,获取帮会建筑表失败, building_id:%u, level:%u", __FUNCTION__, __LINE__, extern_data->player_id, Building_Vault, building_level);
+				break;
+			}
+			uint32_t red_packet_num = config->parameter4[0];
+			uint32_t red_packet_money = sg_guild_system_red_packet_num * red_packet_num;
+			if(red_packet_num == 0 || red_packet_money == 0)
+			{
+				LOG_ERR("[%s:%d] player[%lu] 帮会发普天同庆红包失败,获取的红包数量和金额有误,red_packet_num:%u, red_packet_money:%u", __FUNCTION__, __LINE__, extern_data->player_id, red_packet_num, red_packet_money);
+				break;
+			}
+			RED_PACKET_SEND_DATA_REQUEST *resq = (RED_PACKET_SEND_DATA_REQUEST*)conn_node_guildsrv::get_send_data();
+			uint32_t data_len = sizeof(RED_PACKET_SEND_DATA_REQUEST);
+			memset(resq, 0, data_len);
+			resq->red_type = 5;
+			resq->guild_type = 1;
+			resq->red_coin_type = 1;
+			resq->money_num = red_packet_money;
+			resq->red_num = red_packet_num;
+			//strcpy(resq->player_text, parame_config->parameter2);
+			sprintf(resq->player_text, parame_config->parameter2, log->args[0], log->args[1]);
+			fast_send_msg_base(&conn_node_guildsrv::connecter, extern_data, SERVER_PROTO_TRADE_SEND_RED_PACKET_REQUEST, data_len, 0);
+
+		}
 	} while(0);
+
 
 	GuildDonateAnswer resp;
 	guild_donate_answer__init(&resp);

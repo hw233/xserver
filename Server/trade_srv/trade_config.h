@@ -20,6 +20,12 @@ extern uint32_t sg_keep_time;
 extern uint32_t sg_shelf_init_num;
 extern uint32_t sg_shelf_max_num;
 extern uint32_t sg_shelf_enlarge_price;
+extern uint32_t sg_grab_red_packet_min_level; //领取红包最低等级要求
+extern uint32_t sg_red_packet_baocun_max_num; //红包保存最大数量
+extern uint32_t sg_red_packet_jilu_max_num;   //红包历史记录最大数量
+extern uint32_t sg_red_packet_baocun_time;    //红包保存时间
+extern uint32_t sg_red_packet_max_can_recive_num; //所有类型红包中可领取的最大数量
+extern uint32_t sg_red_packet_max_recive_replace; //最大数量替换值
 
 int read_all_excel_data();
 

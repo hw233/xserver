@@ -88,6 +88,7 @@
 #include "partner.pb-c.h"
 #include "server_level.h"
 #include "guild_land_active_manager.h"
+#include "guild.pb-c.h"
 
 extern uint32_t guild_battle_manager_activity_start_ts;
 ItemUseEffectInfo::~ItemUseEffectInfo()
@@ -489,6 +490,11 @@ bool player_struct::is_chengjie_target(uint64_t player_id)
 	if (data->chengjie.cur_task != 0 && data->chengjie.target == player_id)
 		return true;
 	return false;
+}
+
+uint32_t player_struct::get_sex()
+{
+	return (uint32_t)(data->attrData[PLAYER_ATTR_SEX]);	
 }
 
 JobDefine player_struct::get_job()
@@ -998,7 +1004,7 @@ void player_struct::process_offline(bool again/* = false*/, EXTERN_DATA *ext_dat
 		cash_truck_struct *truck = cash_truck_manager::get_cash_truck_by_id(data->truck.truck_id);
 		if (truck != NULL)
 		{
-			truck->scene->delete_cash_truck_from_scene(truck);
+			truck->scene->delete_cash_truck_from_scene(truck, true);
 			cash_truck_manager::delete_cash_truck(truck);
 		}
 	}
@@ -1052,6 +1058,12 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	PlayerDBInfo db_info;
 	player_dbinfo__init(&db_info);
 
+	db_info.default_down_color = data->default_down_color;
+	db_info.default_hair = data->default_hair;
+	db_info.default_hair_color = data->default_hair_color;
+	db_info.default_icon = data->default_icon;
+	db_info.default_up_color = data->default_up_color;
+	
 	db_info.exp = data->attrData[PLAYER_ATTR_EXP];
 	db_info.scene_id = data->scene_id;
 	db_info.last_scene_id = data->last_scene_id;
@@ -1682,6 +1694,8 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	tower.cur_num = data->tower.cur_num;
 	tower.reset_num = data->tower.reset_num;
 	tower.award_lv = data->tower.award_lv;
+	tower.rand_collect_num = data->m_rand_collect_num;
+	tower.script_reward_num = data->script_reward_num;
 	db_info.tower = &tower;
 
 	//保存离开副本后要到的场景的位置
@@ -2237,6 +2251,12 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		return -1;
 	}
 
+	data->default_down_color = db_info->default_down_color;
+	data->default_hair = db_info->default_hair;
+	data->default_hair_color = db_info->default_hair_color;
+	data->default_icon = db_info->default_icon;
+	data->default_up_color = db_info->default_up_color;
+
 	data->attrData[PLAYER_ATTR_EXP] = db_info->exp;
 	data->scene_id = db_info->scene_id;
 	data->last_scene_id = db_info->last_scene_id;
@@ -2627,7 +2647,8 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		data->tower.cur_num = db_info->tower->cur_num;
 		data->tower.reset_num = db_info->tower->reset_num;
 		data->tower.award_lv = db_info->tower->award_lv;
-
+		data->m_rand_collect_num = db_info->tower->rand_collect_num;
+		data->script_reward_num = db_info->tower->script_reward_num;
 	}
 	//离开副本后要到的场景的位置
 	data->leaveraid.scene_id = db_info->leaveraid_sceneid;
@@ -3033,6 +3054,7 @@ void player_struct::add_area_truck_to_sight(area_struct *area, int *add_truck_id
 //	}
 //	return false;
 // }
+static ChuangongTarget player_chuan_gong_info[MAX_PLAYER_IN_PLAYER_SIGHT];
 
 void player_struct::add_area_player_to_sight(area_struct *area, int *add_player_id_index, SightPlayerBaseInfo *add_player)
 {
@@ -3054,7 +3076,7 @@ void player_struct::add_area_player_to_sight(area_struct *area, int *add_player_
 		{
 			if (!player->data->truck.on_truck)
 			{
-				player->pack_sight_player_base_info(&add_player[*add_player_id_index]);
+				player->pack_sight_player_base_info(&add_player[*add_player_id_index], &player_chuan_gong_info[*add_player_id_index]);
 				(*add_player_id_index)++;
 			}
 		}
@@ -3327,10 +3349,11 @@ int player_struct::broadcast_player_create(scene_struct *scene)
 //广播自己信息给别人
 		sight_changed_notify__init(&notify);
 		SightPlayerBaseInfo my_player_info[1];
+		ChuangongTarget my_chuan_gong_info[1];
 		SightPlayerBaseInfo *my_player_info_point[1];
 		my_player_info_point[0] = &my_player_info[0];
 		notify.add_player = my_player_info_point;
-		pack_sight_player_base_info(&my_player_info[0]);
+		pack_sight_player_base_info(&my_player_info[0], &my_chuan_gong_info[0]);
 			//发送给需要在视野里面添加玩家的通知
 		notify.n_add_player = 1;
 
@@ -3575,20 +3598,35 @@ void player_struct::update_sight(area_struct *old_area, area_struct *new_area)
 
 
 		//把自己发送给别的玩家
-	if (add_player_id_index > 0 && !data->truck.on_truck)
+	if (!data->truck.on_truck)
 	{
 		sight_changed_notify__init(&notify);
 		SightPlayerBaseInfo my_player_info[1];
 		SightPlayerBaseInfo *my_player_info_point[1];
+		ChuangongTarget my_chuan_gong_info[1];
 		my_player_info_point[0] = &my_player_info[0];
 		notify.add_player = my_player_info_point;
-		pack_sight_player_base_info(my_player_info_point[0]);
+		pack_sight_player_base_info(my_player_info_point[0], &my_chuan_gong_info[0]);
 			//发送给需要在视野里面添加玩家的通知
 		notify.n_add_player = 1;
 
 		ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SIGHT_CHANGED_NOTIFY, &notify, (pack_func)sight_changed_notify__pack);
-		for (int i = 0; i < add_player_id_index; ++i)
-			conn_node_gamesrv::broadcast_msg_add_players(player_info[i].playerid, ppp);
+		if (add_player_id_index > 0)
+		{
+			for (int i = 0; i < add_player_id_index; ++i)
+				conn_node_gamesrv::broadcast_msg_add_players(player_info[i].playerid, ppp);
+		}
+		if (add_truck_uuid_index > 0)
+		{
+			for (int i = 0; i < add_truck_uuid_index; ++i)
+			{
+				if (cash_truck_info[i].on)
+				{
+					conn_node_gamesrv::broadcast_msg_add_players(cash_truck_info[i].owner, ppp);
+				}
+			}
+		}
+		
 //		for (int i = 0; i < *get_cur_sight_player(); ++i)
 //			conn_node_gamesrv::broadcast_msg_add_players(data->sight_player[i], ppp);
 		conn_node_gamesrv::broadcast_msg_send();
@@ -3827,7 +3865,7 @@ void player_struct::update_region_id()
 	}
 }
 
-void player_struct::pack_sight_player_base_info(SightPlayerBaseInfo *info)
+void player_struct::pack_sight_player_base_info(SightPlayerBaseInfo *info, ChuangongTarget *chuan_gong_info)
 {
 //	PosData *pos_point[MAX_PATH_POSITION];
 //	PosData pos[MAX_PATH_POSITION];
@@ -3835,6 +3873,7 @@ void player_struct::pack_sight_player_base_info(SightPlayerBaseInfo *info)
 	info->name = data->name;
 	info->playerid = data->player_id;
 	info->job = data->attrData[PLAYER_ATTR_JOB];
+	info->sex = data->attrData[PLAYER_ATTR_SEX];
 	info->speed = data->attrData[PLAYER_ATTR_MOVE_SPEED];
 	info->hp = data->attrData[PLAYER_ATTR_HP];
 	info->icon = data->attrData[PLAYER_ATTR_HEAD];
@@ -3861,6 +3900,19 @@ void player_struct::pack_sight_player_base_info(SightPlayerBaseInfo *info)
 	if (m_team != NULL && m_team->GetLeadId() == this->get_uuid())
 	{
 		info->team_lead = true;
+	}
+	if(is_in_guild_chuan_gong())
+	{
+		player_struct* guild_player = player_manager::get_player_by_id(data->guild_chuan_gong_info.cur_info.player_id);
+		if(guild_player != NULL)
+		{
+			chuangong_target__init(chuan_gong_info);
+			info->chuan_gong = chuan_gong_info;
+			chuan_gong_info->player_id = data->guild_chuan_gong_info.cur_info.player_id;
+			struct position *guild_pos = guild_player->get_pos();
+			chuan_gong_info->pos_x = guild_pos->pos_x;
+			chuan_gong_info->pos_z = guild_pos->pos_z;
+		}
 	}
 	
 /*
@@ -4230,7 +4282,8 @@ void player_struct::calcu_level_attr(double *attr)
 	}
 
 	memset(attr, 0, sizeof(double) * PLAYER_ATTR_MAX);
-	::get_attr_from_config(level_config->ActorLvAttri, attr, NULL);
+	::get_attr_from_config(level_config->ActorLvAttri, attr);
+	data->attrData[PLAYER_ATTR_MOVE_SPEED] = sg_player_speed;
 	print_attribute("level", attr);
 }
 
@@ -4916,6 +4969,7 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 	}
 		break;
 	case 5:
+	case 6:
 	{
 		SightNpcInfo send;
 		sight_npc_info__init(&send);
@@ -4937,21 +4991,22 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 
 		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_ADD_NPC_NOTIFY, sight_npc_info__pack, send);
 
-
-		player.send_system_notice(190500290, &args);
-
-		ParameterTable * config = get_config_by_id(161000222, &parameter_config);
-		char str[512] = "aaaaaaaaaaaaaaaaaaa";
-		if (player.m_team == NULL)
+		if (event == 5)
 		{
-			player_struct *tmpArr[MAX_TEAM_MEM] = { &player };
-			Team::CreateTeam(tmpArr, 1);
+			player.send_system_notice(190500290, &args);
+			ParameterTable * config = get_config_by_id(161000222, &parameter_config);
+			char str[512] = "aaaaaaaaaaaaaaaaaaa";
+			if (player.m_team == NULL)
+			{
+				player_struct *tmpArr[MAX_TEAM_MEM] = { &player };
+				Team::CreateTeam(tmpArr, 1);
+			}
+			if (config != NULL && player.m_team != NULL)
+			{
+				sprintf(str, config->parameter2, player.scene->res_config->SceneName, player.m_team->m_data->m_id);
+			}
+			player.send_chat(CHANNEL__world, str);
 		}
-		if (config != NULL && player.m_team != NULL)
-		{
-			sprintf(str, config->parameter2, player.scene->res_config->SceneName, player.m_team->m_data->m_id);
-		}
-		player.send_chat(CHANNEL__world, str);
 	}
 		break;
 	}
@@ -4976,6 +5031,8 @@ bool player_struct::is_qiecuo_target(player_struct *target)
 
 bool player_struct::is_in_qiecuo()
 {
+	if (!data)
+		return false;
 	if (data->qiecuo_start_time == 0)
 		return false;
 	return true;
@@ -5527,7 +5584,10 @@ int player_struct::add_shengwang(uint32_t num, uint32_t statis_id, bool isNty)
 		char str_num[64];
 		sprintf(str_num, "%u", num);
 		args.push_back(str_num);
-		send_system_notice(190500170, &args);
+		uint32_t notic_id = 190500170; 
+		if(statis_id == MAGIC_TYPE_GUILD_CHUAN_GONG)
+			notic_id = 190500552;
+		send_system_notice(notic_id, &args);
 	}
 	return 0;
 }
@@ -6160,6 +6220,11 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 		case ITEM_TYPE_GUILD_TREASURE:
 		{
 			add_guild_resource(2, num);
+		}
+		break;
+		case ITEM_TYPE_GUILD_BUILD_BOARD:
+		{
+			add_guild_resource(3, num);
 		}
 		break;
 		case ITEM_TYPE_GUILD_DONATION:
@@ -7237,7 +7302,8 @@ int player_struct::use_prop_effect(bag_grid_data& grid, ItemsConfigTable *config
 				uint32_t value = data->hp_pool_num + config->ParameterEffect[0] * use_count;
 				if (value > sg_hp_pool_max)
 				{
-					LOG_ERR("%s: player[%lu] use hp pool too much", __FUNCTION__, data->player_id);
+					//LOG_ERR("%s: player[%lu] use hp pool too much", __FUNCTION__, data->player_id);
+					send_system_notice(190500277, NULL);
 					return (ERROR_ID_PROP_CAN_NOT_USE);
 				}
 				data->hp_pool_num = value;
@@ -7270,6 +7336,10 @@ int player_struct::use_prop_effect(bag_grid_data& grid, ItemsConfigTable *config
 				add_title(config->ParameterEffect[0], config->ParameterEffect[1]);
 			}
 			break;
+		case IUE_DINNER:
+		{
+			Collect::CreateTeamCollect(this, config->ParameterEffect[0]);
+		}
 		case IUE_OPEN_FUNCTION:
 			{
 				std::vector<uint32_t> func_ids;
@@ -7779,6 +7849,12 @@ int player_struct::deal_level_up(uint32_t level_old, uint32_t level_new)
 {
 	this->calculate_attribute(false);
 
+		//如果死亡那么复活
+	if (!is_alive())
+	{
+		relive();
+	}
+
 	//当前血量回满
 	data->attrData[PLAYER_ATTR_HP] = data->attrData[PLAYER_ATTR_MAXHP];
 	on_hp_changed(0);
@@ -8009,14 +8085,14 @@ int player_struct::add_head_icon(uint32_t icon_id)
 int player_struct::init_head_icon(void)
 {
 	uint32_t player_job = data->attrData[PLAYER_ATTR_JOB];
-	if (data->attrData[PLAYER_ATTR_HEAD] == 0)
-	{
-		ActorTable *config = get_actor_config(player_job);
-		if (config)
-		{
-			data->attrData[PLAYER_ATTR_HEAD] = config->InitialHead;
-		}
-	}
+	// if (data->attrData[PLAYER_ATTR_HEAD] == 0)
+	// {
+	// 	ActorTable *config = get_actor_config(player_job);
+	// 	if (config)
+	// 	{
+	// 		data->attrData[PLAYER_ATTR_HEAD] = config->InitialHead;
+	// 	}
+	// }
 
 	if (data->head_icon_list[0].id == 0)
 	{
@@ -8292,6 +8368,19 @@ TaskInfo *player_struct::get_task_info(uint32_t task_id)
 	}
 
 	return NULL;
+}
+
+int player_struct::send_task_submit(uint32_t task_id)
+{
+	TaskCommAnswer resp;
+	task_comm_answer__init(&resp);
+	resp.result = 0;
+	resp.task_id = task_id;
+	EXTERN_DATA ext_data;
+	ext_data.player_id = data->player_id;
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_TASK_SUBMIT_ANSWER, task_comm_answer__pack, resp);
+
+	return 0;
 }
 
 int player_struct::add_task(uint32_t task_id, uint32_t status, bool isNty)
@@ -8604,9 +8693,41 @@ void player_struct::get_task_event_item(uint32_t task_id, uint32_t event_class, 
 		{
 			continue;
 		}
-
 		item_list[event_config->EventTarget] += event_config->EventNum;
+
 	}
+}
+void player_struct::get_task_event_partner(uint32_t task_id, uint32_t event_class)
+{
+	TaskTable *config = get_config_by_id(task_id, &task_config);
+	if (!config)
+	{
+		return ;
+	}
+
+	for (uint32_t i =0; i < config->n_EventID; ++i)
+	{
+		uint32_t event_id = config->EventID[i];
+		TaskEventTable *event_config = get_config_by_id(event_id, &task_event_config);
+		if (!event_config)
+		{
+			continue;
+		}
+
+		if (event_config->EventClass != event_class)
+		{
+			continue;
+		}
+
+		if (event_config->EventType != TET_ADD_PARTNER)
+		{
+			continue;
+		}
+
+		add_partner(event_config->EventTarget);
+
+	}
+
 }
 
 int player_struct::touch_task_event(uint32_t task_id, uint32_t event_class)
@@ -8834,7 +8955,7 @@ int player_struct::execute_task_event(uint32_t event_id, uint32_t event_class, b
 			else
 			{
 				data->truck.truck_id = pTruck->get_uuid();
-				data->truck.active_id = 440100003;
+				data->truck.active_id = 440100004;
 				ResAcceptCashTruck send;
 				res_accept_cash_truck__init(&send);
 				send.id = task_id;
@@ -9582,9 +9703,10 @@ bool player_struct::go_down_cash_truck()
 	sight_changed_notify__init(&notify);
 	SightPlayerBaseInfo my_player_info[1];
 	SightPlayerBaseInfo *my_player_info_point[1];
+	ChuangongTarget my_chuan_gong_info[1];
 	my_player_info_point[0] = &my_player_info[0];
 	notify.add_player = my_player_info_point;
-	this->pack_sight_player_base_info(&my_player_info[0]);
+	this->pack_sight_player_base_info(&my_player_info[0], &my_chuan_gong_info[0]);
 	//发送给需要在视野里面添加玩家的通知
 	notify.n_add_player = 1;
 	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_SIGHT_CHANGED_NOTIFY, &notify, (pack_func)sight_changed_notify__pack);
@@ -9620,8 +9742,8 @@ int player_struct::set_task_fail(TaskInfo *info)
 		if (truck != NULL)
 		{
 			//系统提示
-			uint64_t noId = 0; 
-			
+			uint64_t noId = 0;
+			bool del = false;
 			if (truck->get_attr(PLAYER_ATTR_HP) < 1) //死亡不发视野删除消息
 			{
 				noId = 190500298;
@@ -9629,16 +9751,20 @@ int player_struct::set_task_fail(TaskInfo *info)
 			else
 			{
 				noId = 190500295;
-				if (sight_space)
-				{
-					sight_space->broadcast_truck_delete(truck);
-					sight_space_manager::mark_sight_space_delete(this->sight_space);
-				}
-				else
-				{
-					truck->scene->delete_cash_truck_from_scene(truck);
-				}
+				del = true;
+
 			}
+
+			if (sight_space)
+			{
+				sight_space->broadcast_truck_delete(truck, del);
+				sight_space_manager::mark_sight_space_delete(this->sight_space);
+			}
+			else
+			{
+				truck->scene->delete_cash_truck_from_scene(truck, del);
+			}
+
 			CommAnswer resp;
 			comm_answer__init(&resp);
 			resp.result = noId;
@@ -12739,6 +12865,8 @@ int player_struct::add_partner(uint32_t partner_id, uint64_t *uuid)
 	partner_data.n_god_id = partner->data->n_god;
 	partner_data.god_level = partner->data->god_level;
 	partner_data.n_god_level = partner->data->n_god;
+	//同步信息到redis，放在最后
+	refresh_player_redis_info();
 
 	EXTERN_DATA ext_data;
 	ext_data.player_id = data->player_id;
@@ -13046,7 +13174,7 @@ void player_struct::take_truck_into_sight_space(void)
 	if (!sight_space)
 		return;
 	truck->sight_space = sight_space;
-	scene->delete_cash_truck_from_scene(truck);
+	scene->delete_cash_truck_from_scene(truck, true);
 	truck->scene = scene;
 	sight_space->broadcast_truck_create(truck);	
 }
@@ -13060,7 +13188,7 @@ void player_struct::take_truck_out_sight_space(sight_space_struct *sp)
 	if (!truck)
 		return;
 	assert(truck->sight_space == sp);
-	sp->broadcast_truck_delete(truck);
+	sp->broadcast_truck_delete(truck, true);
 }
 
 void player_struct::take_partner_into_sight_space(void)
@@ -13146,7 +13274,7 @@ void player_struct::del_battle_partner_from_scene()
 void player_struct::adjust_battle_partner(void)
 {
 //	LOG_DEBUG("[%s:%u] player[%lu] ", __FUNCTION__, __LINE__, data->player_id);
-	if (!scene)
+	if (!scene || !data)
 	{
 		return;
 	}
@@ -13898,6 +14026,9 @@ void player_struct::on_dead(unit_struct *killer)
 	if (scene)
 		scene->on_player_dead(this, killer);
 
+	if (!data)
+		return;
+
 	m_team == NULL ? 0 : m_team->OnMemberHpChange(*this);
 
 	if (is_in_qiecuo())
@@ -14134,6 +14265,7 @@ void player_struct::refresh_oneday_job()
 	data->attrData[PLAYER_ATTR_RELIVE_TYPE1] = 0;
 	data->attrData[PLAYER_ATTR_RELIVE_TYPE2] = 0;
 	memset(data->raid_reward_id, 0, sizeof(data->raid_reward_id));
+	data->script_reward_num = 0;
 	send_raid_earning_time_notify();
 //	memset(data->raid_reward_num, 0, sizeof());
 	data->attrData[PLAYER_ATTR_ACTIVENESS] = 0;
@@ -14317,6 +14449,8 @@ void player_struct::refresh_shop_daily(void)
 
 void player_struct::interrupt()
 {
+	if (!data)
+		return;
 	interrupt_sing();
 	if (data->m_collect_uuid == 0)
 	{
@@ -14596,6 +14730,10 @@ int player_struct::transfer_to_birth_position(EXTERN_DATA *extern_data)
 
 uint32_t player_struct::get_raid_reward_count(uint32_t raid_id)
 {
+	if (is_script_raid(raid_id))
+	{
+		return data->script_reward_num;
+	}
 	for (int i = 0; i < MAX_RAID_NUM; ++i)
 	{
 		if (data->raid_reward_id[i] == 0)
@@ -14614,7 +14752,12 @@ void player_struct::add_raid_reward_count(uint32_t raid_id)
 {
 	int i;
 
-	if (is_wanyaogu_raid(raid_id))
+	if (is_script_raid(raid_id))
+	{
+		++data->script_reward_num;
+		return;
+	}
+	else if (is_wanyaogu_raid(raid_id))
 	{
 		for (i = 0; i < MAX_RAID_NUM; ++i)
 		{
@@ -14716,6 +14859,7 @@ void player_struct::send_raid_earning_time_notify()
 	notify.n_raid_id = notify.n_earning_times = i;
 	notify.raid_id = &data->raid_reward_id[0];
 	notify.earning_times = &data->raid_reward_num[0];
+	notify.script_fb = data->script_reward_num;
 
 	EXTERN_DATA extern_data;
 	extern_data.player_id = data->player_id;
@@ -14767,10 +14911,20 @@ void player_struct::refresh_player_redis_info(bool offline)
 	info.weapon_color = data->attrData[PLAYER_ATTR_WEAPON_COLOR];
 	info.fighting_capacity = data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY];
 	info.status = (offline ? time_helper::get_cached_time() / 1000 : 0); //保存下线时间，0表示在线
-	info.zhenying = data->attrData[PLAYER_ATTR_ZHENYING];
+	//新手副本内下线,阵营相关数据置0
+	if (data->noviceraid_flag == false)
+	{
+		info.zhenying = 0;
+		info.zhenying_kill = 0;
+		info.exploit = 0;
+	}
+	else 
+	{
+		info.zhenying = data->attrData[PLAYER_ATTR_ZHENYING];
+		info.zhenying_kill = data->zhenying.kill;
+		info.exploit = data->zhenying.history_exploit;
+	}
 	info.zhenying_level = data->zhenying.level;
-	info.zhenying_kill = data->zhenying.kill;
-	info.exploit = data->zhenying.history_exploit;
 	info.award_question = data->award_answer.score;
 //	info.guild_id = guild_id;
 //	info.guild_name = guild_name;
@@ -14805,6 +14959,43 @@ void player_struct::refresh_player_redis_info(bool offline)
 		partner_formation[info.n_partner++] = ite->second->config->ID;
 	}
 	info.partner = partner_formation;
+
+	MaxPowerPartner max_power_partner;
+	partner_struct *my_partner = NULL;
+	for(PartnerMap::iterator ite = m_partners.begin(); ite !=  m_partners.end(); ite++)
+	{
+		if(my_partner == NULL)
+		{
+			my_partner = ite->second;
+		}
+		else 
+		{
+			if(ite->second->data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY] > my_partner->data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY])
+			{
+				my_partner = ite->second;
+			}
+		}
+	
+	}
+	if(my_partner != NULL)
+	{
+		info.maxpartner = &max_power_partner;
+		max_power_partner__init(&max_power_partner);
+		max_power_partner.id = my_partner->config->ID;  //todo my_partner->config 策划删掉配置 旧号会core
+		max_power_partner.power = my_partner->data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY];
+		max_power_partner.level = my_partner->data->attrData[PLAYER_ATTR_LEVEL];
+		max_power_partner.partner_name = my_partner->data->name;
+	}
+
+	info.meili_num = data->charm_total;
+	if(data->charm_level > 1)
+	{
+		std::map<uint32_t, uint32_t>::iterator itr_exp = every_level_all_charm.find(data->charm_level);
+		if(itr_exp != every_level_all_charm.end())
+		{
+			info.meili_num += itr_exp->second;
+		}
+	}
 
 	EXTERN_DATA extern_data;
 	extern_data.player_id = data->player_id;
@@ -15068,6 +15259,8 @@ int player_struct::add_fashion(uint32_t id, uint32_t color, time_t expire)
 		extern_data.player_id = get_uuid();
 		fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_FACTION_CHARM_NOTIFY, fashion_charm__pack, send);
 	}
+	//更新redis魅力值
+	refresh_player_redis_info();
 	return  ret;
 }
 
@@ -15317,6 +15510,8 @@ void player_struct::check_fashion_expire()
 	extern_data.player_id = get_uuid();
 	if (have)
 	{
+		//更新redis魅力值
+		refresh_player_redis_info();
 		FashionCharm sendCharm;
 		fashion_charm__init(&sendCharm);
 		sendCharm.level = data->charm_level;
@@ -15472,8 +15667,8 @@ void player_struct::down_horse()
 		if (config != NULL)
 		{
 			AttrMap attrs;
-			attrs[PLAYER_ATTR_MOVE_SPEED] = config->MoveSpeed;
-			set_attr(PLAYER_ATTR_MOVE_SPEED, config->MoveSpeed);
+			attrs[PLAYER_ATTR_MOVE_SPEED] = sg_player_speed;
+			set_attr(PLAYER_ATTR_MOVE_SPEED, sg_player_speed);
 			notify_attr(attrs, true, true);
 		}
 	}
@@ -15995,6 +16190,7 @@ void player_struct::send_all_yaoshi_num()
 
 void player_struct::refresh_yaoshi_oneday()
 {
+	data->m_rand_collect_num = 0;
 	TypeLevelTable *table = get_guoyu_level_table(GUOYU__TASK__TYPE__CRITICAL);
 	if (table != NULL)
 	{
@@ -18433,7 +18629,7 @@ int player_struct::check_raid_enter_cond(uint32_t raid_id)
 		if (m_team)
 		{
 			LOG_ERR("%s %d: player[%lu] raid[%u]", __FUNCTION__, __LINE__, get_uuid(), raid_id);
-			return (-130);
+			return 190500042;
 		}
 
 		int ret = check_enter_raid_reward_time(raid_id, control_config);
@@ -18835,7 +19031,7 @@ uint32_t player_struct::count_life_steal_effect(int32_t damage)
 	return ret;
 }
 
-void player_struct::deal_skill_cast_request(SkillCastRequest *req, SkillTable *config, struct ActiveSkillTable *active_config)
+void player_struct::deal_skill_cast_request(SkillCastRequest *req, uint32_t ori_skill_id, SkillTable *config, struct ActiveSkillTable *active_config)
 {
 	struct position new_pos;
 	new_pos.pos_x = req->cur_pos->pos_x;
@@ -18860,7 +19056,7 @@ void player_struct::deal_skill_cast_request(SkillCastRequest *req, SkillTable *c
 	}
 
 	set_pos_with_broadcast(new_pos.pos_x, new_pos.pos_z);
-	data->cur_skill.skill_id = config->ID;
+	data->cur_skill.skill_id = ori_skill_id;
 //	data->cur_skill.direct_x = req->direct_x;
 //	data->cur_skill.direct_z = req->direct_z;
 	data->cur_skill.start_time = time_helper::get_cached_time();
@@ -18883,7 +19079,8 @@ void player_struct::deal_skill_cast_request(SkillCastRequest *req, SkillTable *c
 
 	broadcast_to_sight(MSG_ID_SKILL_CAST_NOTIFY, &notify, (pack_func)skill_cast_notify__pack, true);
 
-	if (config->IsMonster)
+	SkillLvTable *lv_config = get_config_by_id(config->SkillLv, &skill_lv_config);		
+	if (lv_config && lv_config->MonsterID != 0 && lv_config->MonsterLv != 0)	
 	{
 		data->cur_skill.skill_id = 0;
 		monster_manager::create_call_monster(this, config);
@@ -20424,6 +20621,27 @@ void player_struct::guild_chuan_gong_deal_with()
 	ppp = conn_node_gamesrv::broadcast_msg_add_players(data->player_id, ppp);
 	ppp = conn_node_gamesrv::broadcast_msg_add_players(guild_player->data->player_id, ppp);
 	conn_node_gamesrv::broadcast_msg_send();
+
+	//广播给视野内玩家
+	GuildChuanGongStatuNotify chuan_gong_broad;
+	guild_chuan_gong_statu_notify__init(&chuan_gong_broad);
+	GuildPlayerPosInfo chuangong_player1;
+	GuildPlayerPosInfo chuangong_player2;
+	guild_player_pos_info__init(&chuangong_player1);
+	guild_player_pos_info__init(&chuangong_player2);
+	chuan_gong_broad.statu = 2;
+	struct position *my_pos = get_pos();
+	struct position *guild_pos = guild_player->get_pos();
+	chuangong_player1.player_id = data->player_id;
+	chuangong_player1.pos_x = my_pos->pos_x;
+	chuangong_player1.pos_z = my_pos->pos_z;
+	chuangong_player2.player_id = guild_player->data->player_id;
+	chuangong_player2.pos_x = guild_pos->pos_x;
+	chuangong_player2.pos_z = guild_pos->pos_z;
+	chuan_gong_broad.player1_info = & chuangong_player1;
+	chuan_gong_broad.player2_info = & chuangong_player2;
+	broadcast_to_sight(MSG_ID_GUILD_CHUAN_GONG_ZHUANGTAI_BROADCAST, &chuan_gong_broad, (pack_func)guild_chuan_gong_statu_notify__pack, true);
+	guild_player->broadcast_to_sight(MSG_ID_GUILD_CHUAN_GONG_ZHUANGTAI_BROADCAST, &chuan_gong_broad, (pack_func)guild_chuan_gong_statu_notify__pack, true);
 	return;
 }
 
@@ -20467,6 +20685,27 @@ void player_struct::guild_chuan_gong_zhong_duan()
 		ppp = conn_node_gamesrv::broadcast_msg_add_players(guild_player->data->player_id, ppp);
 	}
 	conn_node_gamesrv::broadcast_msg_send();
+
+	//广播给视野内玩家
+	GuildChuanGongStatuNotify chuan_gong_broad;
+	guild_chuan_gong_statu_notify__init(&chuan_gong_broad);
+	GuildPlayerPosInfo chuangong_player1;
+	GuildPlayerPosInfo chuangong_player2;
+	guild_player_pos_info__init(&chuangong_player1);
+	guild_player_pos_info__init(&chuangong_player2);
+	chuan_gong_broad.statu = 2;
+	struct position *my_pos = get_pos();
+	struct position *guild_pos = guild_player->get_pos();
+	chuangong_player1.player_id = data->player_id;
+	chuangong_player1.pos_x = my_pos->pos_x;
+	chuangong_player1.pos_z = my_pos->pos_z;
+	chuangong_player2.player_id = guild_player->data->player_id;
+	chuangong_player2.pos_x = guild_pos->pos_x;
+	chuangong_player2.pos_z = guild_pos->pos_z;
+	chuan_gong_broad.player1_info = & chuangong_player1;
+	chuan_gong_broad.player2_info = & chuangong_player2;
+	broadcast_to_sight(MSG_ID_GUILD_CHUAN_GONG_ZHUANGTAI_BROADCAST, &chuan_gong_broad, (pack_func)guild_chuan_gong_statu_notify__pack, true);
+	guild_player->broadcast_to_sight(MSG_ID_GUILD_CHUAN_GONG_ZHUANGTAI_BROADCAST, &chuan_gong_broad, (pack_func)guild_chuan_gong_statu_notify__pack, true);
 }
 
 void player_struct::clean_guild_chuan_gong_info()

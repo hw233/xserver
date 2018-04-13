@@ -111,7 +111,8 @@ int sub_building_upgrade_time(GuildInfo *guild, uint32_t time);
 //帮会技能
 GuildSkill *get_guild_skill_info(GuildInfo *guild, uint32_t skill_id);
 GuildSkill *get_player_skill_info(GuildPlayer *player, uint32_t skill_id);
-void broadcast_skill_develop_update(GuildInfo *guild, GuildSkill *skill);
+int upgrade_skill_level(GuildInfo *guild);
+void broadcast_skill_develop_update(GuildInfo *guild);
 void sync_guild_skill_to_gamesrv(GuildPlayer *player);
 
 //帮会商店

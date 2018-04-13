@@ -160,10 +160,10 @@ void MySkill::OnPlayerLevelUp(uint32_t lv)
 			skill_struct * pSkillStruct = InsertSkill(it->second->ID);
 			if (pSkillStruct != NULL)
 			{
-				if (it->second->SkillAcc == 0)
-				{
-					continue;
-				}
+				// if (it->second->SkillAcc == 0)
+				// {
+				// 	continue;
+				// }
 				skill_data__init(skillData + i);
 				skillData[i].id = it->first;
 				skillData[i].lv = pSkillStruct->data->lv;
@@ -469,10 +469,10 @@ void MySkill::SendAllSkill()
 	int i = 0;
 	for (; it != m_skill.end(); ++it)
 	{
-		if ((*it)->config->SkillAcc == 0)
-		{
-			continue;
-		}
+		// if ((*it)->config->SkillAcc == 0)
+		// {
+		// 	continue;
+		// }
 		skill_data__init(skillData + i);
 		skillData[i].id = (*it)->data->skill_id;
 		skillData[i].lv = (*it)->data->lv;

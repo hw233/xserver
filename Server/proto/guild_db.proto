@@ -51,6 +51,8 @@ message DBGuild
 	repeated DBGuildLog usual_logs = 11;
 	repeated DBGuildLog important_logs = 12;
 	required uint32 bonfire_open_time = 13;
+	required uint32 skill_upgrade_id = 14;
+	required uint32 skill_upgrade_end = 15;
 }
 
 message DBGuildPlayer

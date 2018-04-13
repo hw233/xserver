@@ -430,7 +430,9 @@ public:
 	
 protected:
 	uint16_t player_num;  //记录玩家数目，没有玩家了才可以删除
+	uint64_t next_notify_monster_pos_time;
 	void delete_raid_collect_safe(uint32_t uuid);
+	void try_notify_monster_pos();
 	void set_raid_lv(player_struct *player);	
 	int init_script_data();
 	int	init_wanyaogu_data();

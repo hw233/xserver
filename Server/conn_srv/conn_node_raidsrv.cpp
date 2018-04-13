@@ -134,6 +134,7 @@ int conn_node_raidsrv::dispatch_message()
 		case SERVER_PROTO_TRADE_RE_SHELF_CHANGE_ANSWER:
 		case SERVER_PROTO_TRADESRV_COST_ANSWER:
 		case SERVER_PROTO_TRADE_BUY_EXECUTE_ANSWER:
+		case SERVER_PROTO_TRADE_SEND_RED_PACKET_REQUEST:
 			return transfer_to_tradesrv();
 		case SERVER_PROTO_TRADE_LOT_INSERT:
 			transfer_to_guildsrv();

@@ -37,5 +37,6 @@ cp lua_data/*.dat pack_dir/map_res/
 cp excel_data/1.spb pack_dir/excel_data/
 cp raidsrv_config.lua pack_dir/
 cp tools pack_dir/  -a
+cp showurl.ini pack_dir/
 tar zcvf pack.tgz pack_dir
 

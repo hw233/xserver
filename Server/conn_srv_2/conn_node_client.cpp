@@ -714,6 +714,10 @@ int conn_node_client::dispatch_message()
 		case MSG_ID_AUCTION_BID_REQUEST:
 		case MSG_ID_AUCTION_BUY_NOW_REQUEST:
 		case MSG_ID_AUCTION_INFO_REQUEST:
+		case MSG_ID_RED_BACKET_MAIN_JIEMAIN_INFO_REQUEST:
+		case MSG_ID_RED_BACKET_DETAILED_INFO_REQUEST:
+		case MSG_ID_RED_BACKET_QIANG_HONGBAO_REQUEST:
+		case MSG_ID_RED_BACKET_HISTORY_INFO_REQUEST:
 			return transfer_to_tradesrv();
 		case MSG_ID_ZHANLIDAREN_GET_REWARD_REQUEST:
 			return transfer_to_activitysrv();

@@ -150,10 +150,11 @@ int32_t count_skill_effect(const double *attack, const double *defence,
 	return ret;
 }
 
-static bool check_can_add_buff(unit_struct *unit, uint32_t buff_id)
+	static bool check_can_add_buff(unit_struct *attack_unit, unit_struct *defence_unit, uint32_t buff_id)
 {
 	uint64_t type = buff_manager::get_buff_first_effect_type(buff_id);
-	if (unit->is_in_lock_time() && buff_manager::is_move_buff_effect(type))
+	if (buff_manager::is_move_buff_effect(type) &&
+		(defence_unit->is_in_lock_time() || (attack_unit->get_unit_type() == UNIT_TYPE_PLAYER && attack_unit->get_unit_type() == UNIT_TYPE_PLAYER )))
 		return false;
 	return true;
 }
@@ -174,7 +175,7 @@ static void count_friend_buff(struct SkillTimeTable *timeconfig,
 
 	for (size_t i = 0; i < timeconfig->n_BuffIdFriend; ++i)
 	{
-		if (!check_can_add_buff(defence_unit, timeconfig->BuffIdFriend[i]))
+		if (!check_can_add_buff(attack_unit, defence_unit, timeconfig->BuffIdFriend[i]))
 			continue;
 
 		config = get_config_by_id(timeconfig->BuffIdFriend[i] + skill_lv - 1, &buff_config);
@@ -217,7 +218,7 @@ static void count_enemy_buff(struct SkillTimeTable *timeconfig,
 
 	for (size_t i = 0; i < timeconfig->n_BuffIdEnemy; ++i)
 	{
-		if (!check_can_add_buff(defence_unit, timeconfig->BuffIdEnemy[i]))
+		if (!check_can_add_buff(attack_unit, defence_unit, timeconfig->BuffIdEnemy[i]))
 			continue;
 
 		config = get_config_by_id(timeconfig->BuffIdEnemy[i] + skill_lv - 1, &buff_config);

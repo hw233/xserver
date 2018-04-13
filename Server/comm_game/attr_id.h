@@ -153,10 +153,11 @@ enum PlayerAttrId
 	PLAYER_ATTR_MINLV = 108, //	敏捷成长
 	PLAYER_ATTR_LINGLV = 109, //灵巧成长
 
+	PLAYER_ATTR_SEX = 110, //性别
 	PLAYER_ATTR_MAX
 };
 
 typedef std::map<uint32_t, double> AttrMap;
-#define MAX_BUFF_FIGHT_ATTR (PLAYER_ATTR_MOVE_SPEED + 1)
+#define MAX_BUFF_FIGHT_ATTR (PLAYER_ATTR_FIGHTING_CAPACITY)
 #define MAX_PARTNER_ATTR (PLAYER_ATTR_ALLEFFDF + 1)
 #endif

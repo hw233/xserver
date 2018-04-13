@@ -125,6 +125,9 @@
 //九宫八卦最大奖励数量
 #define MAX_JIU_GONG_BA_GUA_REWARD_NUM 10
 
+//发红包留言最大长度
+#define MAX_RED_PACKET_LIU_YAN_LEN 500
+
 //玩家状态
 enum PlayerStatus
 {
@@ -154,7 +157,8 @@ enum ItemType
 	ITEM_TYPE_GONGXUN = 17, //功勋
 	ITEM_TYPE_LINGSHI = 18, //灵石
 	ITEM_TYPE_XUEJING = 19, //血晶
-	ITEM_TYPE_SHENGWANG = 20, //声望	
+	ITEM_TYPE_SHENGWANG = 20, //声望
+	ITEM_TYPE_GUILD_BUILD_BOARD = 21, //建设令
 };
 
 enum JobDefine
@@ -227,6 +231,7 @@ enum ItemUseEffect
 	IUE_ADD_TITLE = 22, //获得称号
 	IUE_OPEN_FUNCTION = 23, //开启功能
 	IUE_RANDOM_BOX = 24, //随机宝箱
+	IUE_DINNER = 26, //队伍共享的采集点
 };
 
 enum TaskConditionType
@@ -289,6 +294,9 @@ enum TaskConditionType
 	TCT_PARTNER_USE_EXP_ITEM = 64, //伙伴吃经验丹
 	TCT_LIVE_SKILL_PRODUCE = 65, //生活技能生产
 	TCT_CLIENT_QUESTION = 66, //任务答题
+	TCT_GUILD_CHUAN_GONG = 67, //门宗传功
+	TCT_GUILD_DONATION1 = 68, //门宗募捐
+	TCT_PLAY_TOWER = 69, //幻宝地牢
 };
 
 enum TaskBasicCondition
@@ -346,6 +354,7 @@ enum TaskEventType
 	TET_PLANES_EXIT = 37, //退出位面
 	TET_SUB_CURRENCY = 38, //扣除货币
 	TET_ADD_TRUCK = 43, //创建镖车
+	TET_ADD_PARTNER = 46, //增加宠物
 };
 
 enum TaskRewardType

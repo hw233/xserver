@@ -317,6 +317,8 @@
 #define MSG_ID_TRANSFER_TO_LEADER_ANSWER 10833           //传送至队长应答 comm_answer
 #define MSG_ID_GET_RAID_MONSTER_POS_REQUEST 10834           //查找怪物坐标请求 get_raid_monster_pos_request
 #define MSG_ID_GET_RAID_MONSTER_POS_ANSWER 10835           //查找怪物坐标回复  get_raid_monster_pos_answer
+#define MSG_ID_COMPLETE_RAID_AI_REQUEST 10836           //完成副本ai请求 NULL
+#define MSG_ID_RAID_REFRESH_MONSTER_POS_NOTIFY 10837     //刷新怪物坐标，副本目标箭头用 refresh_monster_pos_notify
 
 //装备
 #define MSG_ID_EQUIP_LIST_REQUEST 10900                //装备信息请求 NULL
@@ -590,7 +592,7 @@
 #define MSG_ID_GUILD_SKILL_INFO_ANSWER 12141               //帮会技能信息应答 GuildSkillInfoAnswer
 #define MSG_ID_GUILD_SKILL_DEVELOP_REQUEST 12142           //帮会技能研发请求 GuildSkillUpgradeRequest
 #define MSG_ID_GUILD_SKILL_DEVELOP_ANSWER 12143            //帮会技能研发应答 GuildSkillUpgradeAnswer
-#define MSG_ID_GUILD_SKILL_DEVELOP_NOTIFY 12144            //帮会技能研发通知 GuildSkillData
+#define MSG_ID_GUILD_SKILL_DEVELOP_NOTIFY 12144            //帮会技能研发通知 GuildSkillDevelopcd
 #define MSG_ID_GUILD_SKILL_PRACTICE_REQUEST 12145          //帮会技能修炼请求 GuildSkillPracticeRequest
 #define MSG_ID_GUILD_SKILL_PRACTICE_ANSWER 12146           //帮会技能修炼应答 GuildSkillUpgradeAnswer
 #define MSG_ID_GUILD_SHORT_INFO_NOTIFY 12147               //帮会简短信息通知 GuildShortInfoNotify
@@ -626,6 +628,7 @@
 #define MSG_ID_GUILD_CHUAN_GONG_FINISH_REQUEST  12177      //帮会传功完成请求 NULL
 #define MSG_ID_GUILD_CHUAN_GONG_FINISH_NOTIFY   12178      //帮会传功完成通知 GuildChuanGongFinishNotify
 #define MSG_ID_GUILD_CHUAN_GONG_STOP_MOVE_NOTIFY 12179     //帮会传功停止移动,传送等通知 NULL
+#define MSG_ID_GUILD_CHUAN_GONG_ZHUANGTAI_BROADCAST  12180   //帮会传功状态广播 GuildChuanGongStatuNotify
 
 
 //阵营
@@ -1067,5 +1070,17 @@
 #define MSG_ID_JIU_GONG_BA_GUA_REWARD_INFO_NOTIFY 15400 //九宫八卦奖励信息通知 JiuGongBaGuaRewardNotify 
 #define MSG_ID_JIU_GONG_BA_GUA_RECIVE_REWARD_REQUEST 15401 //九宫八卦领奖请求 JiuGongBaGuaReciveRewardRequest
 #define MSG_ID_JIU_GONG_BA_GUA_RECIVE_REWARD_ANSWER 15402 //九宫八卦领奖应答 JiuGongBaGuaReciveRewardAnswer
+
+//红包相关
+#define MSG_ID_RED_BACKET_MAIN_JIEMAIN_INFO_REQUEST 15500 //红包主界面信息请求 RedPacketMainInfoRequest
+#define MSG_ID_RED_BACKET_MAIN_JIEMAIN_INFO_ANSWER 15501  //红包主界面信息应答 RedPacketMainInfoAnswer
+#define MSG_ID_RED_BACKET_DETAILED_INFO_REQUEST 15502  // 红包详情请求 RedPacketDetailedInfoRequest
+#define MSG_ID_RED_BACKET_DETAILED_INFO_ANSWER 15503  // 红包详情应答 RedPacketDetailedInfoAnswer
+#define MSG_ID_RED_BACKET_SEND_TO_MANY_PLAYER_REQUEST  15504  // 发红包请求 RedPacketSendRequest
+#define MSG_ID_RED_BACKET_SEND_TO_MANY_PLAYER_ANSWER  15505   // 发红包应答 CommAnswer
+#define MSG_ID_RED_BACKET_QIANG_HONGBAO_REQUEST  15506  // 抢红包请求 RedPacketGrabRedRequest
+#define MSG_ID_RED_BACKET_QIANG_HONGBAO_ANSWER  15507   // 抢红包应答 RedPacketGrabRedAnswer
+#define MSG_ID_RED_BACKET_HISTORY_INFO_REQUEST  15508  // 红包历史记录请求 NULL
+#define MSG_ID_RED_BACKET_HISTORY_INFO_ANSWER  15509   // 红包历史记录应答 RedPacketHistoryInfoAnswer
 
 #endif

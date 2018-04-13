@@ -195,7 +195,7 @@ local GangsTable = {
 		['parameter1'] = 20000,
 		['parameter2'] = 2000,
 		['parameter3'] = 1000,
-		['parameter4'] = {0}
+		['parameter4'] = {5}
 		},
 	[340100012] = {
 		['ID'] = 340100012,
@@ -213,7 +213,7 @@ local GangsTable = {
 		['parameter1'] = 50000,
 		['parameter2'] = 5000,
 		['parameter3'] = 2500,
-		['parameter4'] = {0}
+		['parameter4'] = {10}
 		},
 	[340100013] = {
 		['ID'] = 340100013,
@@ -231,7 +231,7 @@ local GangsTable = {
 		['parameter1'] = 100000,
 		['parameter2'] = 10000,
 		['parameter3'] = 5000,
-		['parameter4'] = {0}
+		['parameter4'] = {15}
 		},
 	[340100014] = {
 		['ID'] = 340100014,
@@ -249,7 +249,7 @@ local GangsTable = {
 		['parameter1'] = 200000,
 		['parameter2'] = 20000,
 		['parameter3'] = 10000,
-		['parameter4'] = {0}
+		['parameter4'] = {20}
 		},
 	[340100015] = {
 		['ID'] = 340100015,
@@ -267,7 +267,7 @@ local GangsTable = {
 		['parameter1'] = 300000,
 		['parameter2'] = 30000,
 		['parameter3'] = 15000,
-		['parameter4'] = {0}
+		['parameter4'] = {25}
 		},
 	[340100016] = {
 		['ID'] = 340100016,
@@ -285,7 +285,7 @@ local GangsTable = {
 		['parameter1'] = 400000,
 		['parameter2'] = 40000,
 		['parameter3'] = 20000,
-		['parameter4'] = {0}
+		['parameter4'] = {30}
 		},
 	[340100017] = {
 		['ID'] = 340100017,
@@ -303,7 +303,7 @@ local GangsTable = {
 		['parameter1'] = 550000,
 		['parameter2'] = 55000,
 		['parameter3'] = 27500,
-		['parameter4'] = {0}
+		['parameter4'] = {35}
 		},
 	[340100018] = {
 		['ID'] = 340100018,
@@ -321,7 +321,7 @@ local GangsTable = {
 		['parameter1'] = 700000,
 		['parameter2'] = 70000,
 		['parameter3'] = 35000,
-		['parameter4'] = {0}
+		['parameter4'] = {40}
 		},
 	[340100019] = {
 		['ID'] = 340100019,
@@ -339,7 +339,7 @@ local GangsTable = {
 		['parameter1'] = 850000,
 		['parameter2'] = 85000,
 		['parameter3'] = 42500,
-		['parameter4'] = {0}
+		['parameter4'] = {45}
 		},
 	[340100020] = {
 		['ID'] = 340100020,
@@ -357,7 +357,7 @@ local GangsTable = {
 		['parameter1'] = 1000000,
 		['parameter2'] = 100000,
 		['parameter3'] = 50000,
-		['parameter4'] = {0}
+		['parameter4'] = {50}
 		},
 	[340100021] = {
 		['ID'] = 340100021,
@@ -375,7 +375,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {282020001}
+		['parameter4'] = {201060011}
 		},
 	[340100022] = {
 		['ID'] = 340100022,
@@ -393,7 +393,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {282020001,282020002}
+		['parameter4'] = {201060011,201060013}
 		},
 	[340100023] = {
 		['ID'] = 340100023,
@@ -411,7 +411,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {282020001,282020002,282020003}
+		['parameter4'] = {201060011,201060013,201060012}
 		},
 	[340100024] = {
 		['ID'] = 340100024,
@@ -429,7 +429,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {282020001,282020002,282020003,282020004}
+		['parameter4'] = {201060011,201060013,201060012,201060025}
 		},
 	[340100025] = {
 		['ID'] = 340100025,
@@ -447,7 +447,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {0}
+		['parameter4'] = {201060011,201060013,201060012,201060025,201060193}
 		},
 	[340100026] = {
 		['ID'] = 340100026,
@@ -465,7 +465,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {0}
+		['parameter4'] = {201060011,201060013,201060012,201060025,201060193,201060242}
 		},
 	[340100027] = {
 		['ID'] = 340100027,
@@ -483,7 +483,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {0}
+		['parameter4'] = {201060011,201060013,201060012,201060025,201060193,201060242,201070024}
 		},
 	[340100028] = {
 		['ID'] = 340100028,
@@ -501,7 +501,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {0}
+		['parameter4'] = {201060011,201060013,201060012,201060025,201060193,201060242,201070024}
 		},
 	[340100029] = {
 		['ID'] = 340100029,
@@ -519,7 +519,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {0}
+		['parameter4'] = {201060011,201060013,201060012,201060025,201060193,201060242,201070024}
 		},
 	[340100030] = {
 		['ID'] = 340100030,
@@ -537,7 +537,7 @@ local GangsTable = {
 		['parameter1'] = 0,
 		['parameter2'] = 0,
 		['parameter3'] = 0,
-		['parameter4'] = {0}
+		['parameter4'] = {201060011,201060013,201060012,201060025,201060193,201060242,201070024}
 		},
 	[340100031] = {
 		['ID'] = 340100031,

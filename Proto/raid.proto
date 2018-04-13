@@ -46,6 +46,7 @@ message raid_earning_times_changed_notify
 {
 	repeated uint32 raid_id = 1;       //副本ID
 	repeated uint32 earning_times = 2;	 //已经获得收益的次数
+	required uint32 script_fb = 3;   //剧情副本收益次数
 }
 
 message raid_hit_statis_changed_notify
@@ -151,4 +152,12 @@ message get_raid_monster_pos_answer
 	required uint32 result = 1;  //0表示找到，其他表示怪物不存在
 	required uint32 monster_id = 2;  //怪物ID
 	required pos_data data = 3;	 //坐标
+}
+
+//刷新怪物坐标，副本目标箭头用
+message refresh_monster_pos_notify
+{
+	required uint32 monster_id = 1;
+	required float pos_x = 2;
+	required float pos_z = 3;
 }

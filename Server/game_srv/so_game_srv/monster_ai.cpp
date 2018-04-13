@@ -61,6 +61,9 @@ uint32_t count_skill_delay_time(struct SkillTable *config)
 
 uint32_t choose_skill_and_add_cd(monster_struct *monster)
 {
+	if (monster->config->n_Skill == 0)
+		return (0);
+	
 	uint64_t now = time_helper::get_cached_time();
 	if (monster->data->next_skill_id > 0)
 	{
@@ -86,7 +89,7 @@ uint32_t choose_skill_and_add_cd(monster_struct *monster)
 		return monster->config->Skill[i];		
 	}
 
-	if (!monster->is_skill_in_cd(0, now))
+	if (!monster->is_skill_in_cd(0, now) && monster->config->n_Skill > 0)
 	{
 		monster->add_skill_cd(0, now);
 		return monster->config->Skill[0];				
@@ -97,7 +100,8 @@ uint32_t choose_skill_and_add_cd(monster_struct *monster)
 
 uint32_t choose_first_skill(monster_struct *monster)
 {
-	assert(monster->config->n_Skill != 0);
+	if (monster->config->n_Skill == 0)
+		return (0);
 	return monster->config->Skill[0];
 }
 /*
@@ -375,16 +379,15 @@ void hit_notify_to_target(uint64_t skill_id, unit_struct *attack, unit_struct *t
 void monster_cast_call_monster_skill(monster_struct *monster, uint64_t skill_id)
 {
 	SkillTable *config = get_config_by_id(skill_id, &skill_config);
-	if (config && config->IsMonster)
+	if (!config)
+		return;
+	SkillLvTable *lv_config = get_config_by_id(config->SkillLv, &skill_lv_config);
+	if (lv_config && lv_config->MonsterID != 0 && lv_config->MonsterLv != 0)
 	{
 		monster_cast_skill_to_target(monster->ai_data.leixinye_ai.call_skill_id, monster, NULL, false);
-		SkillLvTable *lv_config = get_config_by_id(config->SkillLv, &skill_lv_config);
-		if (lv_config && lv_config->MonsterID != 0 && lv_config->MonsterLv != 0)
-		{
-			struct position *t_pos = monster->get_pos();
-			monster_manager::create_monster_at_pos(monster->scene, lv_config->MonsterID,
-				lv_config->MonsterLv, t_pos->pos_x, t_pos->pos_z, lv_config->MonsterEff, monster, 0);
-		}
+		struct position *t_pos = monster->get_pos();
+		monster_manager::create_monster_at_pos(monster->scene, lv_config->MonsterID,
+			lv_config->MonsterLv, t_pos->pos_x, t_pos->pos_z, lv_config->MonsterEff, monster, 0);
 	}	
 }
 
@@ -851,13 +854,10 @@ void do_normal_attack(monster_struct *monster)
 		monster->data->skill_id = 0;
 	}
 
+	SkillLvTable *lv_config = get_config_by_id(config->SkillLv, &skill_lv_config);	
 		//召唤技能
-	if (config->IsMonster)
+	if (lv_config && lv_config->MonsterID != 0 && lv_config->MonsterLv != 0)
 	{
-		SkillLvTable *lv_config = get_config_by_id(config->SkillLv, &skill_lv_config);
-		if (!lv_config || lv_config->MonsterID == 0 || lv_config->MonsterLv == 0)
-			return;
-		
 		struct position *t_pos = monster->get_pos();
 		struct position pos;
 

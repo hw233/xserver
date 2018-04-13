@@ -282,7 +282,9 @@ void monster_struct::calculate_attribute(void)
 	if (ite == monster_config.end())
 		return;
 	config = ite->second;
-	::get_attr_from_config(config->BaseAttribute * 1000 + get_attr(PLAYER_ATTR_LEVEL), data->attrData, &drop_id);
+	::get_attr_from_config(config->BaseAttribute * 1000 + get_attr(PLAYER_ATTR_LEVEL), data->attrData);
+	drop_id = config->DropID * 1000 + get_attr(PLAYER_ATTR_LEVEL);
+	data->attrData[PLAYER_ATTR_MOVE_SPEED] = config->MoveSpeed;		
 	data->attrData[PLAYER_ATTR_HP] = data->attrData[PLAYER_ATTR_MAXHP];
 //	data->speed = data->attrData[PLAYER_ATTR_MOVE_SPEED] + ai_config->MovingChange / 100.0;
 	data->attrData[PLAYER_ATTR_MOVE_SPEED] += (int)(ai_config->MovingChange) / 100.0;
@@ -737,16 +739,22 @@ void monster_struct::on_hp_changed(int damage)
 			if (talk_config->EventNum1 != 2)
 				continue;
 			assert(talk_config->n_EventNum2 > 0);
-			if (percent > talk_config->EventNum2[0])
-				continue;
-			if (old_percent <= talk_config->EventNum2[0])
-				continue;
-			
-			MonsterTalkNotify nty;
-			monster_talk_notify__init(&nty);
-			nty.talkid = talk_config->ID;
-			nty.uuid = get_uuid();
-			broadcast_to_sight(MSG_ID_MONSTER_TALK_NOTIFY, &nty, (pack_func)monster_talk_notify__pack, false);
+			//判断血量在哪个区间
+			for (unsigned int i=0; i<talk_config->n_EventNum2; ++i)
+			{
+				if (percent > talk_config->EventNum2[0])
+					continue;
+				if (old_percent <= talk_config->EventNum2[0])
+					continue;
+
+				MonsterTalkNotify nty;
+				monster_talk_notify__init(&nty);
+				nty.talkid = talk_config->ID;
+				nty.uuid = get_uuid();
+				nty.msgid = i;
+				broadcast_to_sight(MSG_ID_MONSTER_TALK_NOTIFY, &nty, (pack_func)monster_talk_notify__pack, false);
+				break;
+			}
 			break;
 		}
 	}
@@ -1802,29 +1810,30 @@ void monster_struct::monster_dead_creat_collect(unit_struct *murderer)
 		return;
 	}
 
-	uint64_t baseAttribute = this->config->BaseAttribute;
-	uint64_t id = baseAttribute * 1000 + this->get_attr(PLAYER_ATTR_LEVEL); 
-	ActorAttributeTable* actor_config = get_config_by_id(id, &actor_attribute_config);
-	if(actor_config == NULL)
-	{
-		LOG_ERR("[%s]:[%d] get ActorAttributeTable failed", __FUNCTION__, __LINE__);
-		return;
-	}
+//	uint64_t baseAttribute = this->config->BaseAttribute;
+//	uint64_t id = baseAttribute * 1000 + this->get_attr(PLAYER_ATTR_LEVEL); 
+//	ActorAttributeTable* actor_config = get_config_by_id(id, &actor_attribute_config);
+//	if(actor_config == NULL)
+//	{
+//		LOG_ERR("[%s]:[%d] get ActorAttributeTable failed", __FUNCTION__, __LINE__);
+//		return;
+//	}
 
-	if(actor_config->CollectionDrop == 0)
+	if(config->CollectionDrop == 0)
 	{
 		return;
 	}
 
 	uint64_t drop_gailv = rand() % 10000 + 1;
 
-	if(drop_gailv > actor_config->CollectionProbability)
+	uint64_t probability = config->CollectionProbability * 1000 + get_attr(PLAYER_ATTR_LEVEL);
+	if(drop_gailv > probability)
 	{
 		return;
 	}
 
-	Collect::CreateCollectByPos(this->scene, actor_config->CollectionDrop, this->get_pos()->pos_x , 10000, this->get_pos()->pos_z, 0, player);
-
+	Collect::CreateCollectByPos(this->scene, config->CollectionDrop * 1000 + get_attr(PLAYER_ATTR_LEVEL),
+		this->get_pos()->pos_x , 10000, this->get_pos()->pos_z, 0, player);
 }
 
 void monster_struct::monster_suffer_damage(unit_struct *murderer, double befor_hp, int32_t damage)

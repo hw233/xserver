@@ -140,6 +140,7 @@ struct TargetPos;
 struct TaskChapterTable;
 struct TaskConditionTable;
 struct TaskDropTable;
+struct TaskDungeonsTable;
 struct TaskEventTable;
 struct TaskMonsterTable;
 struct TaskRewardTable;
@@ -295,6 +296,7 @@ void free_TargetPos(struct TargetPos *p);
 void free_TaskChapterTable(struct TaskChapterTable *p);
 void free_TaskConditionTable(struct TaskConditionTable *p);
 void free_TaskDropTable(struct TaskDropTable *p);
+void free_TaskDungeonsTable(struct TaskDungeonsTable *p);
 void free_TaskEventTable(struct TaskEventTable *p);
 void free_TaskMonsterTable(struct TaskMonsterTable *p);
 void free_TaskRewardTable(struct TaskRewardTable *p);
@@ -371,8 +373,6 @@ struct ActorAttributeTable
 {
 	uint64_t  ID; //1
 	uint64_t  Lv; //2
-	uint64_t  DropID; //3
-	uint64_t  FlySpeed; //4
 	uint64_t  Health; //5
 	uint64_t  MaxHP; //6
 	uint64_t  Attack; //7
@@ -394,7 +394,6 @@ struct ActorAttributeTable
 	uint64_t  CriticalDf; //23
 	double  CtDmg; //24
 	double  CtDmgDf; //25
-	uint64_t  MoveSpeed; //26
 	uint64_t  Dizzy; //27
 	uint64_t  Slow; //28
 	uint64_t  Mabi; //29
@@ -419,8 +418,6 @@ struct ActorAttributeTable
 	uint64_t  CanTimeDf; //48
 	uint64_t  DeEffDf; //49
 	uint64_t  DeTimeDf; //50
-	uint64_t  CollectionDrop; //51
-	uint64_t  CollectionProbability; //52
 }__attribute__ ((packed));
 
 struct ActorFashionTable
@@ -508,7 +505,8 @@ struct ActorTable
 	uint64_t *Skill; //8
 	uint32_t n_PassiveSkill; //9
 	uint64_t *PassiveSkill; //9
-	uint64_t  InitialHead; //10
+	uint32_t n_InitialHead; //10
+	uint64_t *InitialHead; //10
 	uint64_t  TiLv; //11
 	uint64_t  LiLv; //12
 	uint64_t  MinLv; //13
@@ -519,6 +517,12 @@ struct ActorTable
 	uint64_t  Ling; //18
 	uint32_t n_SkillLevelID; //19
 	uint64_t *SkillLevelID; //19
+	uint32_t n_HairColorID; //20
+	uint64_t *HairColorID; //20
+	uint32_t n_ClotheColorID1; //21
+	uint64_t *ClotheColorID1; //21
+	uint32_t n_ClotheColorID2; //22
+	uint64_t *ClotheColorID2; //22
 }__attribute__ ((packed));
 
 struct AcupunctureTable
@@ -735,6 +739,12 @@ struct BattlefieldTable
 	uint32_t n_BottomRewardNum; //18
 	uint64_t *BottomRewardNum; //18
 	uint64_t  VictoryIntegral; //19
+	uint32_t n_WarBoss; //20
+	uint64_t *WarBoss; //20
+	uint32_t n_MineBoss; //21
+	uint64_t *MineBoss; //21
+	uint32_t n_ForestBoss; //22
+	uint64_t *ForestBoss; //22
 }__attribute__ ((packed));
 
 struct BiaocheRewardTable
@@ -1094,6 +1104,11 @@ struct DungeonTable
 	uint64_t  ExpReward1; //37
 	uint64_t  MoneyReward1; //38
 	uint64_t  WhetherSettlement; //39
+	uint32_t n_PointingType; //40
+	uint64_t *PointingType; //40
+	char  *ArrowPointing; //41
+	uint32_t n_point_monster_id; //42
+	uint64_t *point_monster_id; //42
 }__attribute__ ((packed));
 
 struct EquipAttribute
@@ -1144,8 +1159,6 @@ struct EquipStarLv
 	uint64_t  ConsumeCoin; //5
 	uint64_t  Quality; //7
 	uint64_t  StarLv; //8
-	uint32_t n_DatabaseSelection; //9
-	uint64_t *DatabaseSelection; //9
 }__attribute__ ((packed));
 
 struct EquipmentTable
@@ -1157,6 +1170,8 @@ struct EquipmentTable
 	uint64_t  AttriEquipType; //5
 	double  AttriEquipValue; //6
 	uint64_t  StarLvID; //7
+	uint32_t n_DatabaseSelection; //8
+	uint64_t *DatabaseSelection; //8
 }__attribute__ ((packed));
 
 struct EscortTask
@@ -1349,6 +1364,7 @@ struct GangsSkillTable
 	uint64_t  BuildingLeve; //9
 	char  *skillName; //10
 	uint64_t  CreateWood; //11
+	uint64_t  CreateTime; //12
 }__attribute__ ((packed));
 
 struct GangsTable
@@ -1747,6 +1763,11 @@ struct MonsterTable
 	uint64_t  PkType; //22
 	uint64_t  HateBase; //23
 	uint64_t  BirthTime; //24
+	uint64_t  FlySpeed; //25
+	uint64_t  MoveSpeed; //26
+	uint64_t  DropID; //27
+	uint64_t  CollectionDrop; //28
+	uint64_t  CollectionProbability; //29
 }__attribute__ ((packed));
 
 struct MountsTable
@@ -2357,17 +2378,14 @@ struct SkillTable
 	uint64_t  RangeType; //9
 	double  Radius; //10
 	double  Angle; //11
-	uint64_t  IsMonster; //12
 	double  SkillRange; //13
 	uint64_t  HateAdd; //14
 	uint64_t  HateValue; //15
 	uint64_t  SkillLv; //16
 	uint64_t  Career; //18
 	uint64_t  OpenLv; //19
-	uint64_t  SkillRune; //20
 	uint32_t n_RuneID; //21
 	uint64_t *RuneID; //21
-	uint64_t  SkillAcc; //22
 	uint64_t  IsRune; //23
 	uint64_t  pre_skill; //24
 	uint64_t  CD; //25
@@ -2393,7 +2411,6 @@ struct SkillTimeTable
 	uint32_t n_BuffIdFriend; //8
 	uint64_t *BuffIdFriend; //8
 	uint64_t  CallTime; //9
-	uint64_t  CallId; //10
 }__attribute__ ((packed));
 
 struct SpecialTitleTable
@@ -2506,6 +2523,13 @@ struct TaskDropTable
 	uint64_t  SceneID; //3
 	uint64_t  DropItem; //4
 	uint64_t  DropPro; //5
+}__attribute__ ((packed));
+
+struct TaskDungeonsTable
+{
+	uint64_t  ID; //1
+	uint64_t  DungeonID; //2
+	uint64_t  TaskID; //3
 }__attribute__ ((packed));
 
 struct TaskEventTable

@@ -32,6 +32,10 @@
 #define BUFF_STATE_AVOID_RED_BUFF 0x40
 //剩余一滴血不死
 #define BUFF_STATE_ONEBLOOD 0x80
+//缠绕: 不能移动，技能，轻功
+#define BUFF_STATE_CHANRAO 0x100
+//封印: 不能技能，轻功
+#define BUFF_STATE_FENGYIN 0x200
 
 struct buff_data
 {

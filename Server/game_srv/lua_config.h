@@ -173,6 +173,7 @@ extern std::map<uint64_t, struct RandomCollectionTable*> random_collect_config; 
 extern std::map<uint64_t, struct SkillTimeTable*> skill_time_config; //技能时间表
 extern std::map<uint64_t, struct SyntheticTable*> item_combin_config; //合成表
 extern std::map<uint64_t, struct NineEightTable*> jiu_gong_ba_gua_reward_config; //九宫八卦奖励表
+extern std::map<uint64_t, struct TaskDungeonsTable*> script_raid_config; //剧情副本表
 
 //////////////////
 extern uint32_t sg_bag_unlock_base_price;
@@ -218,6 +219,8 @@ extern double sg_fighting_capacity_crt_dmg_init_val;
 
 extern struct ControlTable *sg_pvp_control_config_3;
 extern struct ControlTable *sg_pvp_control_config_5;
+
+extern int sg_player_speed;
 
 extern int sg_guild_raid_param1[6];  //队伍1出生点
 extern int sg_guild_raid_param2[6];  //队伍2出生点
@@ -324,6 +327,8 @@ extern std::map<uint64_t, std::vector<uint64_t> > sg_rand_collect; //随机宝�
 extern std::map<uint64_t, uint64_t> sg_show_collect; //任务ID 采集点ID
 extern std::map<uint64_t, struct FunctionUnlockTable*> sg_jijiangopen; //即将开启表
 extern uint64_t sg_partner_rename_item[2];  //伙伴改名消耗的道具id和数量
+extern std::map<uint64_t, struct TaskDungeonsTable*> sg_script_raid_config; //剧情副本表
+extern std::map<uint32_t, uint32_t> every_level_all_charm;  //每一级对应的总魅力
 
 struct BattleFieldStepRank
 {
@@ -479,7 +484,23 @@ extern uint32_t sg_bei_chuan_gong_add_exp;    //被动传功获得经验基础�
 extern uint32_t sg_zhu_chuan_gong_add_item_id; //主动传功者活动物品id
 extern uint32_t sg_zhu_chuan_gong_add_item_num; //主动传功者活动物品num
 extern uint32_t sg_guild_chuan_gong_buff_id;    //帮会传功专用buffid
+extern uint64_t sg_rand_collect_num;    //
 
 extern uint32_t sg_choujiangquan_item_id; //抽奖券id
+
+extern uint32_t sg_world_yinpiao_red_packet_min_num;  //世界银票红包最小数量
+extern uint32_t sg_world_yinpiao_red_packet_max_num;  //世界银票红包最大数量
+extern uint32_t sg_world_yuanbao_red_packet_min_num;  //世界元宝红包最小数量
+extern uint32_t sg_world_yuanbao_red_packet_max_num;  //世界元宝红包最大数量
+
+extern uint32_t sg_guild_yinpiao_red_packet_min_num;  //帮会银票红包最小数量
+extern uint32_t sg_guild_yinpiao_red_packet_max_num;  //帮会银票红包最大数量
+extern uint32_t sg_guild_yuanbao_red_packet_min_num;  //帮会元宝红包最小数量
+extern uint32_t sg_guild_yuanbao_red_packet_max_num;  //帮会元宝红包最大数量
+extern uint32_t sg_yinpiao_red_packet_min_money;      //银票红包最小货币值
+extern uint32_t sg_yinpiao_red_packet_max_money;      //银票红包最大货币值
+extern uint32_t sg_yuanbao_red_packet_min_money;      //元宝红包最小货币值
+extern uint32_t sg_yuanbao_red_packet_max_money;      //元宝红包最大货币值
+extern uint32_t send_red_packet_min_level;            //发红包最小等级要求
 
 #endif /* __LUA_CONFIG_H__ */

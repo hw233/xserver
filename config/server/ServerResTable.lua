@@ -78,7 +78,7 @@ local ServerResTable = {
 		},
 	[8] = {
 		['ID'] = 8,
-		['Name'] = '8服-陈端私服',
+		['Name'] = '8服-陈端',
 		['ResName1'] = 'pic_dl_1huise',
 		['State2Name'] = '',
 		['ResName2'] = '',
@@ -122,7 +122,7 @@ local ServerResTable = {
 		},
 	[12] = {
 		['ID'] = 12,
-		['Name'] = '兆邦私服',
+		['Name'] = '12-森楷',
 		['ResName1'] = 'pic_dl_1huise',
 		['State2Name'] = '冷',
 		['ResName2'] = '',
@@ -133,13 +133,35 @@ local ServerResTable = {
 		},
 	[13] = {
 		['ID'] = 13,
-		['Name'] = '回超私服2',
+		['Name'] = '版署测试服（内网）',
 		['ResName1'] = 'pic_dl_1huise',
 		['State2Name'] = '',
 		['ResName2'] = '',
 		['Ip'] = '192.168.2.114',
 		['Port'] = 21686,
 		['ServerId'] = 13,
+		['OpenTime'] = 1506700800
+		},
+	[14] = {
+		['ID'] = 14,
+		['Name'] = '版署测试服（外网）',
+		['ResName1'] = 'pic_dl_1huise',
+		['State2Name'] = '',
+		['ResName2'] = '',
+		['Ip'] = '120.92.139.120',
+		['Port'] = 21686,
+		['ServerId'] = 14,
+		['OpenTime'] = 1506700800
+		},
+	[15] = {
+		['ID'] = 15,
+		['Name'] = '15服-王东',
+		['ResName1'] = 'pic_dl_1huise',
+		['State2Name'] = '',
+		['ResName2'] = '',
+		['Ip'] = '192.168.2.114',
+		['Port'] = 22686,
+		['ServerId'] = 15,
 		['OpenTime'] = 1506700800
 		}
 	}

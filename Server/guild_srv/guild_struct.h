@@ -188,6 +188,8 @@ struct GuildInfo
 	uint32_t building_upgrade_end; //建筑升级结束时间戳
 
 	GuildSkill skills[MAX_GUILD_SKILL_NUM]; //研发技能列表
+	uint32_t skill_upgrade_id; //正在升级的技能
+	uint32_t skill_upgrade_end; //技能升级结束时间戳
 	GuildAnswer answer; // 帮会答题
 	uint32_t battle_score; //帮战积分
 

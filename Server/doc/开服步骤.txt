@@ -1,0 +1,6 @@
+1: 编译代码
+2：执行generate_config.sh生成服务器配置文件, 比如 ./generate_config.sh 16 23686 0x23000000 70 > server_info.ini
+3：生成MYSQL建库SQL语句, ./create_sql.sh   ./create_name.sh
+4: 把步骤3生成的sql语句在mysql里运行
+5: 启动服务器
+6: 客户端增加服务器配置

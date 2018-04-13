@@ -42,7 +42,7 @@ public:
 	virtual int delete_player_from_scene(player_struct *player);
 	virtual int delete_monster_from_scene(monster_struct *monster, bool send_msg);	
 	virtual int delete_collect_from_scene(Collect *pCollect, bool send_msg = false);
-	virtual int delete_cash_truck_from_scene(cash_truck_struct *pTruck);
+	virtual int delete_cash_truck_from_scene(cash_truck_struct *pTruck, bool send_msg);
 	virtual int delete_partner_from_scene(partner_struct *partner, bool send_msg);
 	
 	void get_relive_pos(float pos_x, float pos_z, int32_t *ret_pos_x, int32_t *ret_pos_z, int32_t *ret_direct);

@@ -7,7 +7,7 @@
 #include "attr_calc.h"
 #include <math.h>
 
-void get_attr_from_config(uint64_t attr_table_id, double *attr, uint32_t *drop_id)
+void get_attr_from_config(uint64_t attr_table_id, double *attr)
 {
 	ActorAttributeTable* config = get_config_by_id(attr_table_id, &actor_attribute_config);
 	if (!config)
@@ -16,9 +16,6 @@ void get_attr_from_config(uint64_t attr_table_id, double *attr, uint32_t *drop_i
 		LOG_ERR("[%s:%d] get actor attribute config failed, id: %lu", __FUNCTION__, __LINE__, attr_table_id);
 		return;
 	}
-
-	if (drop_id)
-		*drop_id = config->DropID;
 
 	attr[PLAYER_ATTR_MAXHP] = config->Health;
 //	attr[PLAYER_ATTR_HP] = config->Health;	
@@ -40,7 +37,7 @@ void get_attr_from_config(uint64_t attr_table_id, double *attr, uint32_t *drop_i
 	attr[PLAYER_ATTR_CRIT_DEF] = config->CriticalDf;
 	attr[PLAYER_ATTR_CRT_DMG] = config->CtDmg;
 	attr[PLAYER_ATTR_CRT_DMG_DEF] = config->CtDmgDf;
-	attr[PLAYER_ATTR_MOVE_SPEED] = config->MoveSpeed;
+//	attr[PLAYER_ATTR_MOVE_SPEED] = config->MoveSpeed;
 	attr[PLAYER_ATTR_DFWUDEL] = config->DfWuDel;
 	attr[PLAYER_ATTR_DODGEDF] = config->DodgeDf;
 	attr[PLAYER_ATTR_DIZZY] = config->Dizzy;

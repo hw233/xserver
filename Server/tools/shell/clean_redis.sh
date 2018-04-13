@@ -34,7 +34,7 @@ del_redis $t
 t=`redis-cli -h ${host} -p ${port} keys  "s${server_id}_*"`
 del_redis $t
 
-t=`redis-cli -h ${host} -p ${port} keys  "*${server_id}"`
+t=`redis-cli -h ${host} -p ${port} keys  "*_${server_id}"`
 del_redis $t
 
 #redis-cli -h ${host} -p ${port} --scan --pattern "server*_${server_id}" | awk '{print "del " $0}' | redis-cli -h ${host} -p ${port}

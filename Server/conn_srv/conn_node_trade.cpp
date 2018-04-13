@@ -9,6 +9,7 @@
 #include <errno.h>
 #include "msgid.h"
 #include <stdlib.h>
+#include "conn_node_guild.h"
 
 conn_node_trade *conn_node_trade::server_node;
 
@@ -67,11 +68,15 @@ int conn_node_trade::dispatch_message()
 		case SERVER_PROTO_TRADE_BUY_EXECUTE_REQUEST:
 		case SERVER_PROTO_TRADE_GET_EARNING_GIVE_REQUEST:
 		case SERVER_PROTO_TRADE_BID_FAIL_RETURN:
+		case SERVER_PROTO_TRADE_GRAB_RED_PACKET_REQUEST:
+		case SERVER_PROTO_TRADE_SEND_RED_PACKET_FAILED_ANSWER:
 			return transfer_to_gamesrv();
 		case SERVER_PROTO_MAIL_INSERT:
 			return transfer_to_mailsrv();
 		case SERVER_PROTO_REFRESH_PLAYER_REDIS_INFO:
 			return transfer_to_ranksrv();
+		case SERVER_PROTO_GUILD_CHAT:
+			return transfer_to_guildsrv();
 		default:
 			return transfer_to_client();
 	}
@@ -247,3 +252,26 @@ int conn_node_trade::broadcast_to_all_client()
 	return (0);
 }
 
+int conn_node_trade::transfer_to_guildsrv()
+{
+	int ret = 0;
+	PROTO_HEAD *head;
+	head = (PROTO_HEAD *)buf_head();
+
+	if (!conn_node_guild::server_node) {
+		LOG_ERR("[%s:%d] do not have guild server connected", __FUNCTION__, __LINE__);
+		ret = -1;
+		goto done;
+	}
+
+	if (conn_node_guild::server_node->send_one_msg(head, 1) != (int)ENDION_FUNC_4(head->len)) {
+		LOG_ERR("[%s:%d] send to guild failed err[%d]", __FUNCTION__, __LINE__, errno);
+		ret = -2;
+		goto done;
+	}
+#ifdef FLOW_MONITOR
+	add_on_other_server_answer_msg(head);
+#endif
+done:	
+	return (ret);
+}

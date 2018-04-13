@@ -74,6 +74,11 @@
 	PkType 22 : integer
 	HateBase 23 : integer
 	BirthTime 24 : integer
+	FlySpeed 25 : integer
+	MoveSpeed 26 : integer
+	DropID 27 : integer
+	CollectionDrop 28 : integer
+	CollectionProbability 29 : integer
 }
 
 .SpiritTable {
@@ -97,7 +102,7 @@
 	BaseAttribute 7 : integer
 	Skill 8 : *integer
 	PassiveSkill 9 : *integer
-	InitialHead 10 : integer
+	InitialHead 10 : *integer
 	TiLv 11 : integer
 	LiLv 12 : integer
  	MinLv 13 : integer
@@ -107,13 +112,16 @@
 	Min 17 : integer
 	Ling 18 : integer
 	SkillLevelID 19 : *integer
+	HairColorID 20 : *integer
+	ClotheColorID1 21: *integer
+	ClotheColorID2 22 : *integer
 }
 
 .ActorAttributeTable {
 	ID 1 : integer
 	Lv 2 : integer
-	DropID 3 : integer
-	FlySpeed 4 : integer
+#	DropID 3 : integer
+#	FlySpeed 4 : integer
 	Health 5 : integer
 	MaxHP 6 : integer
 	Attack 7 : integer
@@ -135,7 +143,7 @@
 	CriticalDf 23 : integer
 	CtDmg 24 : double
 	CtDmgDf 25 : double
-	MoveSpeed 26 : integer
+#	MoveSpeed 26 : integer
 	Dizzy 27 : integer
 	Slow 28 : integer
 	Mabi 29 : integer
@@ -160,8 +168,8 @@
 	CanTimeDf 48 : integer
 	DeEffDf 49 : integer
 	DeTimeDf 50 : integer
-	CollectionDrop 51 : integer
-	CollectionProbability 52 : integer
+#	CollectionDrop 51 : integer
+#	CollectionProbability 52 : integer
 }
 
 .ActorLevelTable {
@@ -207,7 +215,7 @@
 	RangeType 9 : integer
 	Radius 10 : double
 	Angle 11 : double
-	IsMonster 12 : integer
+#	IsMonster 12 : integer
 	SkillRange 13 : double
 	HateAdd 14 : integer
 	HateValue 15 : integer
@@ -215,15 +223,15 @@
 #	PassiveLv 17 : integer
 	Career 18 : integer
 	OpenLv 19 : integer
-	SkillRune 20 : integer
+#	SkillRune 20 : integer
 	RuneID 21 : *integer
-	SkillAcc 22 : integer
+#	SkillAcc 22 : integer
 	IsRune 23 : integer
 	pre_skill 24 : integer
 	CD 25 : integer
 	TimeID 26 : *integer
 	time_config 27 : *SkillTimeTable
-	TotalSkillDelay 28 : integer	
+	TotalSkillDelay 28 : integer
 }
 
 .ActiveSkillTable {
@@ -513,6 +521,9 @@
 	ExpReward1 37 : integer
 	MoneyReward1 38 : integer
 	WhetherSettlement 39 : integer
+	PointingType 40 : *integer
+	ArrowPointing 41 : string
+	point_monster_id 42 : *integer
 }
 
 .EquipmentTable {
@@ -523,6 +534,7 @@
 	AttriEquipType 5 : integer
 	AttriEquipValue 6 : double
 	StarLvID 7 : integer
+	DatabaseSelection 8 : *integer 
 }
 
 .EquipStarLv {
@@ -533,7 +545,6 @@
 	ConsumeCoin 5 : integer
 	Quality 7 : integer
 	StarLv 8 : integer 
-	DatabaseSelection 9 : *integer 
 }
 
 .EquipLock {
@@ -953,6 +964,7 @@
 	BuildingLeve 9 : integer
 	skillName 10 : string
 	CreateWood 11 : integer
+	CreateTime 12 : integer
 }
 
 .GangsBuildTaskTable {
@@ -1525,6 +1537,9 @@
 	BottomReward 17 : *integer
 	BottomRewardNum 18 : *integer
 	VictoryIntegral 19 : integer
+	WarBoss 20 : *integer
+	MineBoss 21 : *integer
+	ForestBoss 22 : *integer
 }
 
 .BattleFieldRank
@@ -1889,7 +1904,7 @@
 	BuffIdEnemy 7 : *integer
 	BuffIdFriend 8 : *integer
 	CallTime 9 : integer
-	CallId 10 : integer
+#	CallId 10 : integer
 }
 
 .SyntheticTable {
@@ -1906,4 +1921,10 @@
 	TaskID 2 : integer
 	Reward 3 : *integer
 	RewardNum 4 : *integer
+}
+
+.TaskDungeonsTable{
+	ID 1 : integer
+	DungeonID 2 : integer
+	TaskID 3 : integer
 }

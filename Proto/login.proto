@@ -28,6 +28,12 @@ message PlayerCreateRequest
 {
 	required string name = 1; //角色名
 	required uint32 job = 2; //角色职业
+	required uint32 sex = 3; //性别，0男，1女
+	required uint32 default_hair = 4;
+	required uint32 default_icon = 5;
+	required uint32 default_hair_color = 6;
+	required uint32 default_up_color = 7;
+	required uint32 default_down_color = 8;
 }
 
 //创建角色应答
@@ -77,5 +83,6 @@ message AccountServerData
 message AccountServerListAnswer
 {
 	repeated AccountServerData serverList = 2; //服务器列表
+	required uint64 cur_server_time = 3;  //当前服务器时间
 }
 

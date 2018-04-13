@@ -28,6 +28,12 @@ uint32_t sg_keep_time;
 uint32_t sg_shelf_init_num;
 uint32_t sg_shelf_max_num;
 uint32_t sg_shelf_enlarge_price;
+uint32_t sg_grab_red_packet_min_level; //领取红包最低等级要求
+uint32_t sg_red_packet_baocun_max_num; //红包保存最大数量
+uint32_t sg_red_packet_jilu_max_num;   //红包历史记录最大数量
+uint32_t sg_red_packet_baocun_time;    //红包保存时间
+uint32_t sg_red_packet_max_can_recive_num; //所有类型红包中可领取的最大数量
+uint32_t sg_red_packet_max_recive_replace; //最大数量替换值
 
 
 static void generate_parameters(void)
@@ -64,6 +70,54 @@ static void generate_parameters(void)
 	if (config && config->n_parameter1 >= 1)
 	{
 		sg_shelf_enlarge_price = config->parameter1[0];
+	}
+
+	//红包相关
+	config = get_config_by_id(161000480, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_grab_red_packet_min_level = config->parameter1[0];
+	}
+	config = get_config_by_id(161000483, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_red_packet_baocun_max_num = config->parameter1[0];
+	}
+	config = get_config_by_id(161000484, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_red_packet_jilu_max_num = config->parameter1[0];
+	}
+	config = get_config_by_id(161000485, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_red_packet_baocun_time = config->parameter1[0];
+	}
+
+	sg_red_packet_max_can_recive_num = 0;
+	config = get_config_by_id(161000458, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_red_packet_max_recive_replace = config->parameter1[0];
+		sg_red_packet_max_can_recive_num = ((sg_red_packet_max_recive_replace > sg_red_packet_max_can_recive_num)? sg_red_packet_max_recive_replace : sg_red_packet_max_can_recive_num);
+	}
+	config = get_config_by_id(161000461, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_red_packet_max_recive_replace = config->parameter1[0];
+		sg_red_packet_max_can_recive_num = ((sg_red_packet_max_recive_replace > sg_red_packet_max_can_recive_num)? sg_red_packet_max_recive_replace : sg_red_packet_max_can_recive_num);
+	}
+	config = get_config_by_id(161000470, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_red_packet_max_recive_replace = config->parameter1[0];
+		sg_red_packet_max_can_recive_num = ((sg_red_packet_max_recive_replace > sg_red_packet_max_can_recive_num)? sg_red_packet_max_recive_replace : sg_red_packet_max_can_recive_num);
+	}
+	config = get_config_by_id(161000473, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		sg_red_packet_max_recive_replace = config->parameter1[0];
+		sg_red_packet_max_can_recive_num = ((sg_red_packet_max_recive_replace > sg_red_packet_max_can_recive_num)? sg_red_packet_max_recive_replace : sg_red_packet_max_can_recive_num);
 	}
 }
 

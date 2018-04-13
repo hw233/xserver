@@ -324,6 +324,10 @@ int Collect::BegingGather(player_struct *player, uint32_t step)
 	{
 		return 5;
 	}
+	if (m_rand_id != 0 && player->data->m_rand_collect_num > sg_rand_collect_num)
+	{
+		return 190500577;
+	}
 	std::map<uint64_t, struct CollectTable *>::iterator it = collect_config.find(m_collectId);
 	if (it == collect_config.end())
 	{
@@ -402,7 +406,8 @@ int Collect::BegingGather(player_struct *player, uint32_t step)
 			return 190400005;
 		}
 	}
-	if (m_state == COLLECT_NORMOR || (m_state == COLLECT_GATHING && m_commpleteTime + 2 < time_helper::get_cached_time() / 1000))
+	if (m_state == COLLECT_NORMOR 
+		|| (m_state == COLLECT_GATHING && m_commpleteTime + 2 < time_helper::get_cached_time() / 1000)) //客户端未发完成
 	{
 		m_state = COLLECT_GATHING;
 		m_gatherPlayer = player->get_uuid();
@@ -431,7 +436,7 @@ int Collect::GatherComplete(player_struct *player)
 	send.del = true;
 
 
-	if (m_commpleteTime > time_helper::get_cached_time() / 1000 && m_state == COLLECT_GATHING)
+	if (m_commpleteTime > time_helper::get_cached_time() / 1000 && m_state == COLLECT_GATHING) //谁先完成就给谁
 	{
 		return 190500093;
 	}
@@ -472,7 +477,10 @@ int Collect::GatherComplete(player_struct *player)
 	else {
 		BroadcastToSight(MSG_ID_COLLECT_COMMPLETE_NOTIFY, &send, (pack_func)notify_collect__pack);
 	}
-
+	if (m_rand_id > 0)
+	{
+		++player->data->m_rand_collect_num;
+	}
 	return DoGatherDrop(player);
 }
 int Collect::DoGatherDrop(player_struct *player)
@@ -722,6 +730,31 @@ int Collect::CreateRandCollect(scene_struct *scene)
 			ret->m_rand_id = *itV;
 			LOG_ERR("%s %d: scene[%lu] CreateRandCollect failed x=%f,y=%f", __FUNCTION__, __LINE__, scene->m_id, table->PointX[pos], table->PointZ[pos]);
 		}
+	}
+	return 0;
+}
+
+int Collect::CreateTeamCollect(player_struct *player, uint32_t id)
+{
+	player_struct * m_mem[MAX_TEAM_MEM + 1];
+	if (player->m_team == NULL)
+	{
+		m_mem[0] = player;
+	}
+	else
+	{
+		for (int i = 0; i < MAX_TEAM_MEM; ++i)
+		{
+			if (player->m_team->m_team_player[i] != NULL && player->m_team->m_team_player[i]->data->scene_id == player->data->scene_id)
+			{
+				m_mem[i] = player->m_team->m_team_player[i];
+			}
+		}
+	}
+
+	for (int i = 0; i < MAX_TEAM_MEM; ++i)
+	{
+		CreateCollectByPos(player->scene, id, player->get_pos()->pos_x, 0, player->get_pos()->pos_z, 0, m_mem[i]);
 	}
 	return 0;
 }

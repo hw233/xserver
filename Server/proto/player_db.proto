@@ -397,6 +397,8 @@ message DBTowerInfo
 	required uint32 cur_num = 3; //当前层次数
 	required uint32 award_lv = 4;//
 	required uint32 top_lv = 5; //最高层
+	required uint32 rand_collect_num = 6; //随机宝箱采集次数 与冲塔无关
+	required uint32 script_reward_num = 7; //剧情副本次数 与冲塔无关
 }
 
 message PlayerDBInfo
@@ -458,7 +460,7 @@ message PlayerDBInfo
 	required double ExitPointY = 55; //离开副本后要去的场景高度坐标
 	required double ExitPointZ = 56; //离开副本后要去的场景纵坐标
 	required double FaceY = 57; //离开副本后朝向
-	required uint32 NoviceRaid = 58; //新手副本是否完成的标志
+	required bool NoviceRaid = 58; //新手副本是否完成的标志
 	repeated DBPartner partner_list = 59; //伙伴列表
 	repeated uint32 partner_dictionary = 60; //伙伴图鉴
 	repeated uint64 partner_formation = 61; //伙伴阵型
@@ -514,6 +516,12 @@ message PlayerDBInfo
 	required uint32 partner_recruit_senior_free_count = 111; //高级招募免费次数
 	required uint32 silver = 112; //银币
 	repeated DBPlayerJiuGongBaGuaInfo jiu_gong_ba_gua_reward_info = 113; //九宫八卦领奖信息
+
+	required uint32 default_hair = 114;
+	required uint32 default_icon = 115;
+	required uint32 default_hair_color = 116;
+	required uint32 default_up_color = 117;
+	required uint32 default_down_color = 118;
 }
 
 message DBAutoAddHp

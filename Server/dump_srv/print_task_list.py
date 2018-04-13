@@ -62,7 +62,7 @@ while True:
 	req.ParseFromString(pb_data)
 	oldtime=datetime.datetime.now()
         ongotask = get_task_data(req)
-	print oldtime.time(), "%lu: task list ret[%d] ongoing[%s] finish_list[%d] chapterid[%u] chapterstate[%u]" % (player_id, req.result, ongotask, len(req.finish_list), req.chapterId, req.chapterState)
+	print oldtime.time(), "%lu: task list ret[%d] ongoing[%s] finish_list[%s] chapterid[%u] chapterstate[%u]" % (player_id, req.result, ongotask, req.finish_list, req.chapterId, req.chapterState)
 
 #MSG_ID_TASK_ACCEPT_REQUEST 10603                //接任务请求 TaskCommRequest
     if msg_id == 10603:

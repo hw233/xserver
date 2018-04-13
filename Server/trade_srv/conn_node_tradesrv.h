@@ -47,6 +47,16 @@ private:
 	int handle_auction_bid_request(EXTERN_DATA *extern_data);
 	int handle_auction_buy_now_request(EXTERN_DATA *extern_data);
 
+	int handle_red_packet_send_red_packet_request(EXTERN_DATA *extern_data);
+	int handle_red_packet_main_jiemian_info_request(EXTERN_DATA *extern_data);
+	int handle_red_packet_detalled_info_request(EXTERN_DATA *extern_data);
+	int handle_red_packet_grab_red_packet_request(EXTERN_DATA *extern_data);
+	int handle_red_packet_recive_record_request(EXTERN_DATA *extern_data);
+
+
+	int record_player_recive_red_packet_info(uint64_t player_id, uint64_t red_uuid, uint32_t money_type, uint32_t money_num, bool is_send_red_packet);
+	int modify_player_red_packet_optimum_record(uint64_t player_id, uint64_t red_uuid);
+
 private:
 	HandleMap   m_handleMap;
 };

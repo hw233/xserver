@@ -232,6 +232,10 @@ void cb_second_timer(evutil_socket_t, short, void* /*arg*/)
 		{
 			upgrade_building_level(guild);
 		}
+		if (guild->skill_upgrade_id > 0 && guild->skill_upgrade_end <= now)
+		{
+			upgrade_skill_level(guild);
+		}
 		if (time_helper::get_micro_time() / 1000 > guild->answer.m_cd)
 		{
 			guild->answer.OnTimer();
@@ -302,6 +306,8 @@ int dbdata_to_guild(DBGuild *db_guild, GuildInfo *guild)
 	}
 	guild->building_upgrade_id = db_guild->building_upgrade_id;
 	guild->building_upgrade_end = db_guild->building_upgrade_end;
+	guild->skill_upgrade_id = db_guild->skill_upgrade_id;
+	guild->skill_upgrade_end = db_guild->skill_upgrade_end;
 	for (size_t i = 0; i < db_guild->n_skills && i < MAX_GUILD_SKILL_NUM; ++i)
 	{
 		guild->skills[i].skill_id = db_guild->skills[i]->skill_id;
@@ -2798,6 +2804,34 @@ int upgrade_building_level(GuildInfo *guild)
 	return 0;
 }
 
+int upgrade_skill_level(GuildInfo *guild)
+{
+	if (guild->skill_upgrade_id == 0)
+	{
+		return -1;
+	}
+
+	GuildSkill *pSkill = get_guild_skill_info(guild, guild->skill_upgrade_id);
+	if (pSkill == NULL)
+	{
+		return -1;
+	}
+
+	++pSkill->skill_lv;
+	pSkill->skill_id = guild->skill_upgrade_id;
+	guild->skill_upgrade_id = 0;
+	guild->skill_upgrade_end = 0;
+
+	broadcast_skill_develop_update(guild);
+	broadcast_guild_object_attr_update(guild, GUILD_OBJECT_ATTR_TYPE__ATTR_SKILL_DEVELOP, pSkill->skill_id, pSkill->skill_lv);
+
+	refresh_guild_redis_info(guild);
+	save_guild_info(guild);
+
+	return 0;
+}
+
+
 void broadcast_building_upgrade_update(GuildInfo *guild)
 {
 	std::vector<uint64_t> player_ids;
@@ -2818,27 +2852,50 @@ void broadcast_building_upgrade_update(GuildInfo *guild)
 
 int sub_building_upgrade_time(GuildInfo *guild, uint32_t time)
 {
-	if (time == 0 || guild->building_upgrade_id == 0 || guild->building_upgrade_end == 0)
+	if (time == 0)
 	{
 		return -1;
 	}
 
 	uint32_t now = time_helper::get_cached_time() / 1000;
-	uint32_t left_time = (guild->building_upgrade_end > now ? guild->building_upgrade_end - now : 0);
-	if (time > left_time)
+	uint32_t left_time = 0;
+	if( guild->building_upgrade_id != 0 && guild->building_upgrade_end != 0)
 	{
-		time = left_time;
-	}
+		left_time = (guild->building_upgrade_end > now ? guild->building_upgrade_end - now : 0);
+		if (time > left_time)
+		{
+			time = left_time;
+		}
 
-	guild->building_upgrade_end -= time;
-	if (guild->building_upgrade_end <= now)
-	{
-		upgrade_building_level(guild);
+		guild->building_upgrade_end -= time;
+		if (guild->building_upgrade_end <= now)
+		{
+			upgrade_building_level(guild);
+		}
+		else
+		{
+			broadcast_building_upgrade_update(guild);
+			save_guild_info(guild);
+		}
 	}
-	else
+	if (guild->skill_upgrade_id != 0 && guild->skill_upgrade_end != 0)
 	{
-		broadcast_building_upgrade_update(guild);
-		save_guild_info(guild);
+		left_time = (guild->skill_upgrade_end > now ? guild->skill_upgrade_end - now : 0);
+		if (time > left_time)
+		{
+			time = left_time;
+		}
+
+		guild->skill_upgrade_end -= time;
+		if (guild->skill_upgrade_end <= now)
+		{
+			upgrade_skill_level(guild);
+		}
+		else
+		{
+			broadcast_skill_develop_update(guild);
+			save_guild_info(guild);
+		}
 	}
 	
 	return 0;
@@ -2871,7 +2928,7 @@ GuildSkill *get_player_skill_info(GuildPlayer *player, uint32_t skill_id)
 	return NULL;
 }
 
-void broadcast_skill_develop_update(GuildInfo *guild, GuildSkill *skill)
+void broadcast_skill_develop_update(GuildInfo *guild)
 {
 	std::vector<uint64_t> player_ids;
 	get_guild_broadcast_objects(guild, player_ids);
@@ -2880,13 +2937,11 @@ void broadcast_skill_develop_update(GuildInfo *guild, GuildSkill *skill)
 		return ;
 	}
 
-	GuildSkillData nty;
-	guild_skill_data__init(&nty);
+	GuildSkillDevelopcd nty;
+	guild_skill_developcd__init(&nty);
+	nty.cd = guild->skill_upgrade_end;
 
-	nty.skillid = skill->skill_id;
-	nty.level = skill->skill_lv;
-
-	conn_node_guildsrv::broadcast_message(MSG_ID_GUILD_SKILL_DEVELOP_NOTIFY, &nty, (pack_func)guild_skill_data__pack, player_ids);
+	conn_node_guildsrv::broadcast_message(MSG_ID_GUILD_SKILL_DEVELOP_NOTIFY, &nty, (pack_func)guild_skill_developcd__pack, player_ids);
 }
 
 void sync_guild_skill_to_gamesrv(GuildPlayer *player)
