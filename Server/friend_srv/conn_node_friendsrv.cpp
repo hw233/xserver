@@ -76,6 +76,9 @@ void send_friend_to_game(EXTERN_DATA *extern_data, uint16_t msg_id, void *data, 
 conn_node_friendsrv conn_node_friendsrv::connecter;
 char conn_node_friendsrv::server_key[64];
 char conn_node_friendsrv::server_wyk_key[64];
+char conn_node_friendsrv::tower_cd_key[64];
+char conn_node_friendsrv::zhenying_key[64] = "zhenying";
+char conn_node_friendsrv::tower_max_key[64] = "tower_max";
 
 char sg_str_server_id[64];
 uint32_t sg_server_id = 0;
@@ -142,7 +145,7 @@ void conn_node_friendsrv::handle_chose_zhenying()
 {
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
-	char key[128] = "zhenying";
+
 	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	AddZhenyingPlayer *req = add_zhenying_player__unpack(NULL, get_data_len(), (uint8_t *)get_data());
@@ -153,7 +156,7 @@ void conn_node_friendsrv::handle_chose_zhenying()
 	}
 
 	data_len = MAX_GLOBAL_SEND_BUF;
-	int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	int ret = sg_redis_client.hget_bin(zhenying_key, server_key, (char *)conn_node_base::global_send_buf, &data_len);
 	ZhenyingRedis *rzhenying = NULL;
 	ZhenyingRedis send;
 	bool release = false;
@@ -203,7 +206,7 @@ void conn_node_friendsrv::handle_chose_zhenying()
 	}
 
 	data_len = zhenying_redis__pack(rzhenying, (uint8_t *)conn_node_base::global_send_buf);
-	ret = sg_redis_client.hset_bin(server_key, key, (char *)conn_node_base::global_send_buf, data_len);
+	ret = sg_redis_client.hset_bin(zhenying_key, server_key, (char *)conn_node_base::global_send_buf, data_len);
 	if (ret < 0)
 	{
 		LOG_ERR("%s: oper failed, ret = %d", __FUNCTION__, ret);
@@ -225,7 +228,7 @@ void conn_node_friendsrv::handle_zhenying_power()
 {
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
-	char key[128] = "zhenying";
+
 	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	AddZhenyingPlayer *req = add_zhenying_player__unpack(NULL, get_data_len(), (uint8_t *)get_data());
@@ -236,7 +239,7 @@ void conn_node_friendsrv::handle_zhenying_power()
 	}
 
 	data_len = MAX_GLOBAL_SEND_BUF;
-	int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	int ret = sg_redis_client.hget_bin(zhenying_key, server_key, (char *)conn_node_base::global_send_buf, &data_len);
 	ZhenyingPower send;
 	zhenying_power__init(&send);
 	if (ret >= 0)
@@ -284,7 +287,6 @@ void conn_node_friendsrv::handle_zhenying_change_power()
 {
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
-	char key[128] = "zhenying";
 	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	PROTO_ZHENYIN_CHANGE_POWER *req = (PROTO_ZHENYIN_CHANGE_POWER *)get_data();
@@ -295,7 +297,7 @@ void conn_node_friendsrv::handle_zhenying_change_power()
 	}
 
 	data_len = MAX_GLOBAL_SEND_BUF;
-	int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	int ret = sg_redis_client.hget_bin(zhenying_key, server_key, (char *)conn_node_base::global_send_buf, &data_len);
 	if (ret >= 0)
 	{
 		ZhenyingRedis *rzhenying = zhenying_redis__unpack(NULL, data_len, conn_node_base::global_send_buf);
@@ -311,7 +313,7 @@ void conn_node_friendsrv::handle_zhenying_change_power()
 			}
 
 			data_len = zhenying_redis__pack(rzhenying, (uint8_t *)conn_node_base::global_send_buf);
-			ret = sg_redis_client.hset_bin(server_key, key, (char *)conn_node_base::global_send_buf, data_len);
+			ret = sg_redis_client.hset_bin(zhenying_key, server_key, (char *)conn_node_base::global_send_buf, data_len);
 			if (ret < 0)
 			{
 				LOG_ERR("%s: oper failed, ret = %d", __FUNCTION__, ret);
@@ -402,7 +404,7 @@ void conn_node_friendsrv::handle_change_zhenying()
 {
 	PROTO_HEAD *head = get_head();
 	EXTERN_DATA *extern_data = get_extern_data(head);
-	char key[128] = "zhenying";
+
 	int data_len = ENDION_FUNC_4(head->len) - sizeof(PROTO_HEAD)-sizeof(EXTERN_DATA);
 
 	AddZhenyingPlayer *req = add_zhenying_player__unpack(NULL, get_data_len(), (uint8_t *)get_data());
@@ -413,7 +415,7 @@ void conn_node_friendsrv::handle_change_zhenying()
 	}
 
 	data_len = MAX_GLOBAL_SEND_BUF;
-	int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	int ret = sg_redis_client.hget_bin(zhenying_key, server_key, (char *)conn_node_base::global_send_buf, &data_len);
 	if (ret >= 0)
 	{
 		ZhenyingRedis *rzhenying = zhenying_redis__unpack(NULL, data_len, conn_node_base::global_send_buf);
@@ -462,7 +464,7 @@ void conn_node_friendsrv::handle_change_zhenying()
 				}
 
 				data_len = zhenying_redis__pack(rzhenying, (uint8_t *)conn_node_base::global_send_buf);
-				ret = sg_redis_client.hset_bin(server_key, key, (char *)conn_node_base::global_send_buf, data_len);
+				ret = sg_redis_client.hset_bin(zhenying_key, server_key, (char *)conn_node_base::global_send_buf, data_len);
 				if (ret < 0)
 				{
 					LOG_ERR("%s: oper failed, ret = %d", __FUNCTION__, ret);
@@ -500,6 +502,7 @@ void pack_team_mem_info(TeamMemInfo *mem, PlayerRedisInfo *rplayer)
 	mem->zhenying = rplayer->zhenying;
 	mem->head_icon = rplayer->head_icon;
 	mem->guild = rplayer->guild_id;
+	mem->sex = rplayer->sex;
 }
 
 //char allname[5 * 20 * 2][MAX_PLAYER_NAME_LEN];
@@ -1180,14 +1183,13 @@ void conn_node_friendsrv::handle_tower_max()
 	tower_max__init(&send);
 	send.cur_lv = req->lv;
 
-	sprintf(key, "tower_max");
 	data_len = MAX_GLOBAL_SEND_BUF;
 	TowerRecord *tMax = NULL;
-	int ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	int ret = sg_redis_client.hget_bin(tower_max_key, server_key, (char *)conn_node_base::global_send_buf, &data_len);
 	if (ret >= 0)
 	{
 		tMax = tower_record__unpack(NULL, data_len, conn_node_base::global_send_buf); 
-		if (tMax != NULL)
+		if (tMax != NULL && req->lv < tMax->n_maxcd)
 		{
 			send.maxcd = tMax->maxcd[req->lv]->cd;
 			send.cd_name = tMax->maxcd[req->lv]->name;
@@ -1196,14 +1198,14 @@ void conn_node_friendsrv::handle_tower_max()
 		}
 	}
 	
-	sprintf(key, "tower%lu", extern_data->player_id);
+	sprintf(key, "%lu", extern_data->player_id);
 	data_len = MAX_GLOBAL_SEND_BUF;
 	TowerCd *tCd = NULL;
-	ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	ret = sg_redis_client.hget_bin(tower_cd_key, key, (char *)conn_node_base::global_send_buf, &data_len);
 	if (ret >= 0)
 	{
 		tCd = tower_cd__unpack(NULL, data_len, conn_node_base::global_send_buf);
-		if (tCd != NULL && tCd->cd != NULL)
+		if (tCd != NULL && tCd->cd != NULL && req->lv < tCd->n_cd)
 		{
 			send.self_cd = tCd->cd[req->lv];
 		}
@@ -1251,16 +1253,17 @@ void conn_node_friendsrv::handle_update_tower()
 		return;
 	}
 
-	sprintf(key, "tower_max");
+	static const int MAX_TOWER_LEVEL_SAVE = 100;
+
 	data_len = MAX_GLOBAL_SEND_BUF;
 	bool beNew = false;
 	bool save = false;
 	TowerRecord saveMax;
 	tower_record__init(&saveMax);
 	TowerRecord *tMax = NULL;
-	TowerMaxCd arr[MAX_TOWER_LEVEL + 1];
-	TowerMaxCd *arrP[MAX_TOWER_LEVEL + 1];
-	ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	TowerMaxCd arr[MAX_TOWER_LEVEL_SAVE + 1];
+	TowerMaxCd *arrP[MAX_TOWER_LEVEL_SAVE + 1];
+	ret = sg_redis_client.hget_bin(tower_max_key, server_key, (char *)conn_node_base::global_send_buf, &data_len);
 	if (ret < 0)
 	{
 		beNew = true;
@@ -1286,7 +1289,7 @@ void conn_node_friendsrv::handle_update_tower()
 			}
 			if (tMax->maxcd[req->lv]->cd == 0 || tMax->maxcd[req->lv]->cd > req->cd)
 			{
-				for (int i = 0; i <= MAX_TOWER_LEVEL; ++i)
+				for (uint32_t i = 0; i <= MAX_TOWER_LEVEL_SAVE; ++i)
 				{
 					tower_max_cd__init(&arr[i]);
 					arrP[i] = &arr[i];
@@ -1294,7 +1297,7 @@ void conn_node_friendsrv::handle_update_tower()
 					arrP[i]->cd = tMax->maxcd[i]->cd;
 				}
 				saveMax.maxcd = arrP;
-				saveMax.n_maxcd = MAX_TOWER_LEVEL + 1;
+				saveMax.n_maxcd = 100 + 1;
 				saveMax.maxcd[req->lv]->cd = req->cd;
 				saveMax.maxcd[req->lv]->name = rplayer->name;
 				save = true;
@@ -1303,14 +1306,14 @@ void conn_node_friendsrv::handle_update_tower()
 	}
 	if (beNew)
 	{
-		for (int i = 0; i <= MAX_TOWER_LEVEL; ++i)
+		for (uint32_t i = 0; i <= MAX_TOWER_LEVEL_SAVE; ++i)
 		{
 			tower_max_cd__init(&arr[i]);
 			arrP[i] = &arr[i];
 		}
 		save = true;
 		saveMax.maxcd = arrP;
-		saveMax.n_maxcd = MAX_TOWER_LEVEL + 1;
+		saveMax.n_maxcd = MAX_TOWER_LEVEL_SAVE + 1;
 		saveMax.maxlv = req->lv;
 		saveMax.lv_name = rplayer->name;
 		saveMax.maxcd[req->lv]->cd = req->cd;
@@ -1319,7 +1322,7 @@ void conn_node_friendsrv::handle_update_tower()
 	if (save)
 	{
 		data_len = tower_record__pack(&saveMax, (uint8_t *)conn_node_base::global_send_buf);
-		ret = sg_redis_client.hset_bin(server_key, key, (char *)conn_node_base::global_send_buf, data_len);
+		ret = sg_redis_client.hset_bin(tower_max_key, server_key, (char *)conn_node_base::global_send_buf, data_len);
 		if (ret < 0)
 		{
 			LOG_ERR("%s: save tower max fail, ret = %d", __FUNCTION__, ret);
@@ -1330,15 +1333,14 @@ void conn_node_friendsrv::handle_update_tower()
 		tower_record__free_unpacked(tMax, NULL);
 	}
 
-	sprintf(key, "tower%lu", extern_data->player_id);
 	data_len = MAX_GLOBAL_SEND_BUF;
-	uint32_t arrCd[MAX_TOWER_LEVEL + 1];
+	uint32_t arrCd[MAX_TOWER_LEVEL_SAVE + 1];
 	beNew = false;
 	save = false;
 	TowerCd saveCd;
 	tower_cd__init(&saveCd);
 	TowerCd *tCd = NULL;
-	ret = sg_redis_client.hget_bin(server_key, key, (char *)conn_node_base::global_send_buf, &data_len);
+	ret = sg_redis_client.hget_bin(tower_cd_key, key, (char *)conn_node_base::global_send_buf, &data_len);
 	if (ret < 0)
 	{
 		
@@ -1366,7 +1368,7 @@ void conn_node_friendsrv::handle_update_tower()
 	if (beNew)
 	{
 		saveCd.cd = arrCd;
-		saveCd.n_cd = MAX_TOWER_LEVEL + 1;
+		saveCd.n_cd = MAX_TOWER_LEVEL_SAVE + 1;
 		memset(arrCd, 0, sizeof(arrCd));
 		arrCd[req->lv] = req->cd;
 		save = true;
@@ -1374,7 +1376,7 @@ void conn_node_friendsrv::handle_update_tower()
 	if (save)
 	{
 		data_len = tower_cd__pack(&saveCd, (uint8_t *)conn_node_base::global_send_buf);
-		ret = sg_redis_client.hset_bin(server_key, key, (char *)conn_node_base::global_send_buf, data_len);
+		ret = sg_redis_client.hset_bin(tower_cd_key, key, (char *)conn_node_base::global_send_buf, data_len);
 		if (ret < 0)
 		{
 			LOG_ERR("%s: save tower max fail, ret = %d", __FUNCTION__, ret);

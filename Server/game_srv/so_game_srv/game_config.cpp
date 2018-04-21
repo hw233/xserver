@@ -306,6 +306,7 @@ static void generate_parameters(void)
 	sg_guild_battle_final_match_time = get_config_by_id(161000187, &parameter_config)->parameter1[0];
 	sg_guild_battle_final_fight_time = get_config_by_id(161000188, &parameter_config)->parameter1[0];
 	sg_rand_collect_num = get_config_by_id(161000455, &parameter_config)->parameter1[0];
+	sg_team_collect_num = get_config_by_id(161001070, &parameter_config)->parameter1[0];
 	sg_guild_battle_final_settle_time = get_config_by_id(161000189, &parameter_config)->parameter1[0];
 	sg_guild_battle_wait_award_interval = get_config_by_id(161000203, &parameter_config)->parameter1[0];
 	ParameterTable *guild_battle_wait_id_param = get_config_by_id(161000204, &parameter_config);
@@ -701,6 +702,8 @@ static void generate_parameters(void)
 	{
 		send_red_packet_min_level = config->parameter1[0];
 	}
+
+	MAX_TOWER_LEVEL = tower_level_config.size();
 
 }
 
@@ -1537,11 +1540,18 @@ static void adjust_time_skill_entry(struct SkillTimeTable *config)
 		config->n_BuffIdEnemy = 0;
 	if (config->n_BuffIdFriend == 1 && config->BuffIdFriend[0] == 0)
 		config->n_BuffIdFriend = 0;
+	if (config->n_BuffIdEnemyFixed == 1 && config->BuffIdEnemyFixed[0] == 0)
+		config->n_BuffIdEnemyFixed = 0;
+	if (config->n_BuffIdFriendFixed == 1 && config->BuffIdFriendFixed[0] == 0)
+		config->n_BuffIdFriendFixed = 0;
 	
 	if (config->n_EffectIdEnemy == 1 && config->EffectIdEnemy[0] == 0)
 		config->n_EffectIdEnemy = 0;
 	if (config->n_EffectIdFriend == 1 && config->EffectIdFriend[0] == 0)
-		config->n_EffectIdFriend = 0;	
+		config->n_EffectIdFriend = 0;
+
+	if (config->ActionTime > 0 && config->Frequency > 0)
+		--config->Frequency;
 }
 static void adjust_time_skill_table()
 {
@@ -3798,6 +3808,11 @@ int read_all_excel_data()
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/ControlTable.lua", (config_type)&all_control_config);
 	assert(ret == 0);
+
+	type = sproto_type(sp, "P20076Table");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/P20076Table.lua", (config_type)&tower_level_config);
+	assert(ret == 0);
 	
 	adjust_task_tables(); //要放在任务配置读取完成之后
 	generate_parameters();
@@ -4329,10 +4344,6 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/RewardBack.lua", (config_type)&reward_back_config);
 	assert(ret == 0);
 
-	type = sproto_type(sp, "P20076Table");
-	assert(type);
-	ret = traverse_main_table(L, type, "../lua_data/P20076Table.lua", (config_type)&tower_level_config);
-	assert(ret == 0);
 
 	type = sproto_type(sp, "LoginGifts");
 	assert(type);

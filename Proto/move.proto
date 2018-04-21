@@ -84,6 +84,7 @@ message sight_monster_info
 	required uint32 zhenying_id = 9; //阵营ID
 	required uint32 is_new = 10;  //是否新出生，0表示不是，1表示是新出生
 	required float direct = 11; //出生朝向
+	required uint64 caller_id = 12;  //召唤怪物的玩家ID, 0表示不是召唤怪
 }
 
 //视野镖车上的玩家的基本信息
@@ -246,4 +247,15 @@ message move_answer
 {
 	required uint32 result = 1;
 	optional pos_data pos = 2;
+}
+
+message SpecialMonPos
+{
+	required uint32 id = 1; //怪物表ID
+	required float x = 2;
+	required float z = 3;
+}
+message OpenBigMapAns
+{
+	repeated SpecialMonPos monster = 1;
 }

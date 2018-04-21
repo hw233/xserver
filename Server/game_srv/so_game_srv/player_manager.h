@@ -12,6 +12,7 @@ typedef void (*ai_player_handle)(player_struct *);
 
 extern std::map<uint64_t, player_struct *> player_manager_all_players_id;
 extern std::map<uint64_t, player_struct *> player_manager_all_ai_players_id;
+extern std::list<player_struct *> player_manager_delete_ai_players;
 extern std::list<player_struct *> player_manager_player_free_list;
 extern std::set<player_struct *> player_manager_player_used_list;
 extern std::list<struct ai_player_data *> player_manager_ai_data_free_list;
@@ -42,6 +43,11 @@ public:
 	static player_struct * get_ai_player_by_id(uint64_t id);
 	static player_struct *get_online_player(uint64_t id);
 	static int send_to_player(uint64_t player_id, PROTO_HEAD *head);
+
+	static void delete_ai_player(player_struct *p)
+	{
+		player_manager_delete_ai_players.push_back(p);
+	}
 
 	static unsigned int get_pool_max_num();
 	

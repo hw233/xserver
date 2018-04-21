@@ -1264,6 +1264,44 @@ int unit_struct::count_rect_unit_at_pos(double angle, struct position *start_pos
 //			LOG_DEBUG("%s: miss: angle[%.2f] x1[%.2f] x2[%.2f] x[%.2f] z1[%.2f] z2[%.2f] z[%.2f]", "jacktang", angle, x1, x2, target_x1, z1, z2, target_z1);
 //		}
 	}
+
+	int cur_sight_monster = *get_cur_sight_monster();
+	uint64_t *sight_monster = get_all_sight_monster();
+	for (int i = 0; i < cur_sight_monster; ++i)
+	{
+		monster_struct *monster = monster_manager::get_monster_by_id(sight_monster[i]);
+		if (!monster || monster->mark_delete || !monster->is_alive())
+		{
+			LOG_ERR("%s %d: player[%lu] in sight", __FUNCTION__, __LINE__, sight_monster[i]);
+			continue;
+		}
+
+		if (!check_fight_type(monster, bfriend))
+			continue;
+
+		struct position *pos = monster->get_pos();
+
+		double pos_x = pos->pos_x - start_pos->pos_x;
+		double pos_z = pos->pos_z - start_pos->pos_z;
+		double target_x1 = cos*(pos_x)-sin*(pos_z);
+		double target_z1 = cos*(pos_z)+sin*(pos_x);
+
+//		double target_x1 = cos*(pos->pos_x)-sin*(pos->pos_z);
+//		double target_z1 = cos*(pos->pos_z)+sin*(pos->pos_x);
+
+		if (target_x1 >= x1 && target_x1 <= x2 && target_z1 >= z1 && target_z1 <= z2)
+		{
+//			LOG_DEBUG("%s:  hit: angle[%.2f] x1[%.2f] x2[%.2f] x[%.2f] z1[%.2f] z2[%.2f] z[%.2f]", "jacktang", angle, x1, x2, target_x1, z1, z2, target_z1);
+			ret->push_back(monster);
+			if (ret->size() >= max)
+				return (0);
+		}
+//		else
+//		{
+//			LOG_DEBUG("%s: miss: angle[%.2f] x1[%.2f] x2[%.2f] x[%.2f] z1[%.2f] z2[%.2f] z[%.2f]", "jacktang", angle, x1, x2, target_x1, z1, z2, target_z1);
+//		}
+	}
+	
 	return (0);
 }
 

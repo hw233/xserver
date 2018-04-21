@@ -38,7 +38,7 @@ void cb_reward_timeout(evutil_socket_t, short, void* /*arg*/);
 
 #define MAX_RANK_GET_NUM  100 //前端显示数目
 #define MAX_RANK_ADD_NUM  5000 //最多排行数
-#define MAX_RANK_ATTR_NUM  10
+#define MAX_RANK_ATTR_NUM  11
 //斗法场最大排名
 #define DOUFACHANG_MAX_RANK 7000
 
@@ -1210,6 +1210,9 @@ static void fill_rank_player(PlayerRedisInfo *redis, RankPlayerData *rank)
 	rank->baseinfo->attrs[rank->baseinfo->n_attrs]->id = PLAYER_ATTR_ZHENYING;
 	rank->baseinfo->attrs[rank->baseinfo->n_attrs]->val = redis->zhenying;
 	rank->baseinfo->n_attrs++;
+	rank->baseinfo->attrs[rank->baseinfo->n_attrs]->id = PLAYER_ATTR_SEX;
+	rank->baseinfo->attrs[rank->baseinfo->n_attrs]->val = redis->sex;
+	rank->baseinfo->n_attrs++;
 
 	rank->baseinfo->tags = redis->tags;
 	rank->baseinfo->n_tags = redis->n_tags;
@@ -1439,6 +1442,11 @@ static int handle_dou_fa_chang_rank_info(EXTERN_DATA *extern_data, uint64_t rank
 		}
 		if(player_id == 0)
 			break;
+		PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, player_id);
+		if (redis_player == NULL)
+		{
+			continue;
+		}
 
 		rank_point[resp.n_infos] = &rank_data[resp.n_infos];
 		rank_player_data__init(&rank_data[resp.n_infos]);
@@ -1453,12 +1461,8 @@ static int handle_dou_fa_chang_rank_info(EXTERN_DATA *extern_data, uint64_t rank
 			attr_point[resp.n_infos][j] = &attr_data[resp.n_infos][j];
 			attr_data__init(&attr_data[resp.n_infos][j]);
 		}
-
-		PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, player_id);
-		if (redis_player)
-		{
-			fill_rank_player(redis_player, &rank_data[resp.n_infos]);
-		}
+		
+		fill_rank_player(redis_player, &rank_data[resp.n_infos]);
 
 		rank_data[resp.n_infos].baseinfo->playerid = player_id;
 		rank_data[resp.n_infos].ranknum = i + 1;

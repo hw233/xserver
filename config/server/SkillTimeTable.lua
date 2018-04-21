@@ -8,6 +8,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},	--1级友方即时效果
 		['BuffIdEnemy'] = {0},	--1级敌方BUFF
 		['BuffIdFriend'] = {0},	--1级友方BUFF
+		['BuffIdEnemyFixed'] = {0},	--固定的敌方BUFF
+		['BuffIdFriendFixed'] = {0},	--固定的友方BUFF
 		['CallId'] = 0	--远程技能id
 		},
 	[112410102] = {
@@ -19,6 +21,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410103] = {
@@ -30,6 +34,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410111] = {
@@ -41,6 +47,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410112] = {
@@ -50,8 +58,10 @@ local SkillTimeTable = {
 		['Interval'] = 250,
 		['EffectIdEnemy'] = {115221000},
 		['EffectIdFriend'] = {0},
-		['BuffIdEnemy'] = {114110000},
+		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {114110000},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410113] = {
@@ -63,6 +73,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410114] = {
@@ -74,6 +86,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114110002},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410121] = {
@@ -85,6 +99,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410122] = {
@@ -96,6 +112,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114110003},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410123] = {
@@ -107,6 +125,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114100008},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112711035
 		},
 	[112410124] = {
@@ -118,6 +138,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114100009},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410125] = {
@@ -129,6 +151,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410126] = {
@@ -140,6 +164,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410127] = {
@@ -151,6 +177,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112711041
 		},
 	[112410128] = {
@@ -162,6 +190,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410131] = {
@@ -173,6 +203,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114110100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410132] = {
@@ -184,6 +216,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114110100,114110200},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410133] = {
@@ -195,6 +229,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114110100,114110300},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410134] = {
@@ -206,6 +242,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114110100,114110400},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410141] = {
@@ -217,6 +255,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114110008},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410142] = {
@@ -228,6 +268,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410143] = {
@@ -239,6 +281,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410144] = {
@@ -250,6 +294,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114110012},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410151] = {
@@ -261,6 +307,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114110009},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410161] = {
@@ -272,6 +320,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410162] = {
@@ -283,6 +333,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410163] = {
@@ -294,6 +346,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410164] = {
@@ -305,6 +359,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410165] = {
@@ -316,6 +372,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410166] = {
@@ -327,6 +385,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114110100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410167] = {
@@ -338,6 +398,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114110008},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410201] = {
@@ -349,17 +411,21 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710001
 		},
 	[112410202] = {
 		['ID'] = 112410202,
-		['ActionTime'] = 500,
-		['Frequency'] = 1,
-		['Interval'] = 0,
+		['ActionTime'] = 560,
+		['Frequency'] = 2,
+		['Interval'] = 260,
 		['EffectIdEnemy'] = {115120200},
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710002
 		},
 	[112410203] = {
@@ -371,6 +437,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710003
 		},
 	[112410211] = {
@@ -382,6 +450,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710004
 		},
 	[112410212] = {
@@ -393,6 +463,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710006
 		},
 	[112410213] = {
@@ -404,6 +476,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710007
 		},
 	[112410214] = {
@@ -415,6 +489,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114110002,114120000},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710013
 		},
 	[112410221] = {
@@ -426,6 +502,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410222] = {
@@ -437,6 +515,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410223] = {
@@ -448,6 +528,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410224] = {
@@ -459,6 +541,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410231] = {
@@ -470,6 +554,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114120100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410232] = {
@@ -481,6 +567,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114120200},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410233] = {
@@ -492,6 +580,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114120300},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410234] = {
@@ -503,6 +593,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114120100,114120002},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410241] = {
@@ -514,6 +606,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114120001},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710005
 		},
 	[112410242] = {
@@ -525,6 +619,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114120001},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710005
 		},
 	[112410243] = {
@@ -536,6 +632,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410244] = {
@@ -547,6 +645,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114120004},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710014
 		},
 	[112410251] = {
@@ -558,6 +658,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114110009},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410261] = {
@@ -569,6 +671,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710001
 		},
 	[112410262] = {
@@ -580,6 +684,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710001
 		},
 	[112410263] = {
@@ -591,6 +697,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710001
 		},
 	[112410264] = {
@@ -602,6 +710,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710004
 		},
 	[112410265] = {
@@ -613,6 +723,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410266] = {
@@ -624,6 +736,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114120100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410267] = {
@@ -635,6 +749,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710005
 		},
 	[112400056] = {
@@ -646,6 +762,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710008
 		},
 	[112400057] = {
@@ -657,6 +775,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400058] = {
@@ -668,6 +788,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710011
 		},
 	[112400059] = {
@@ -679,6 +801,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114130100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400060] = {
@@ -690,6 +814,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114130000},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400061] = {
@@ -701,6 +827,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114110009},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400062] = {
@@ -712,6 +840,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710009
 		},
 	[112400063] = {
@@ -723,6 +853,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710010
 		},
 	[112400064] = {
@@ -734,6 +866,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114130001},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400065] = {
@@ -745,6 +879,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114130002},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400066] = {
@@ -756,6 +892,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400067] = {
@@ -767,6 +905,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114130003},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400068] = {
@@ -778,6 +918,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {115130005},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114130004},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400069] = {
@@ -789,6 +931,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400070] = {
@@ -800,6 +944,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114130200},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400071] = {
@@ -811,6 +957,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114130300},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400072] = {
@@ -822,6 +970,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114130100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400073] = {
@@ -833,6 +983,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710008
 		},
 	[112400074] = {
@@ -844,6 +996,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710008
 		},
 	[112400075] = {
@@ -855,6 +1009,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710008
 		},
 	[112400076] = {
@@ -866,6 +1022,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400077] = {
@@ -877,6 +1035,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710011
 		},
 	[112400078] = {
@@ -888,6 +1048,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114130100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400079] = {
@@ -899,6 +1061,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400080] = {
@@ -910,6 +1074,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400081] = {
@@ -921,6 +1087,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400082] = {
@@ -932,6 +1100,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400083] = {
@@ -943,6 +1113,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114140100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400084] = {
@@ -954,6 +1126,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114140000},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400085] = {
@@ -965,6 +1139,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114110009},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400086] = {
@@ -976,6 +1152,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400087] = {
@@ -987,6 +1165,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400088] = {
@@ -998,6 +1178,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114140001},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400089] = {
@@ -1009,6 +1191,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114140003},
 		['BuffIdFriend'] = {114140002},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400090] = {
@@ -1020,6 +1204,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114140004},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400091] = {
@@ -1031,6 +1217,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114140005},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400092] = {
@@ -1042,6 +1230,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {115140007},
 		['BuffIdEnemy'] = {114140006},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400093] = {
@@ -1053,6 +1243,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400094] = {
@@ -1064,6 +1256,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114140100,114140008},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400095] = {
@@ -1075,6 +1269,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114140200},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400096] = {
@@ -1086,6 +1282,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114140300},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400097] = {
@@ -1097,6 +1295,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400098] = {
@@ -1108,6 +1308,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400099] = {
@@ -1119,6 +1321,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400100] = {
@@ -1130,6 +1334,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400101] = {
@@ -1141,6 +1347,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400102] = {
@@ -1152,6 +1360,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114140100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400103] = {
@@ -1163,6 +1373,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400104] = {
@@ -1174,6 +1386,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400105] = {
@@ -1185,6 +1399,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400106] = {
@@ -1196,6 +1412,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400107] = {
@@ -1207,6 +1425,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114140100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400108] = {
@@ -1218,6 +1438,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114140000},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400109] = {
@@ -1229,6 +1451,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114110009},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400110] = {
@@ -1240,6 +1464,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400111] = {
@@ -1251,6 +1477,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400112] = {
@@ -1262,6 +1490,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400113] = {
@@ -1273,6 +1503,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400114] = {
@@ -1284,6 +1516,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400115] = {
@@ -1295,6 +1529,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400116] = {
@@ -1306,6 +1542,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400117] = {
@@ -1317,6 +1555,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400118] = {
@@ -1328,6 +1568,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114140100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400119] = {
@@ -1339,6 +1581,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114140100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400120] = {
@@ -1350,6 +1594,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114140100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400121] = {
@@ -1361,6 +1607,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400122] = {
@@ -1372,6 +1620,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400123] = {
@@ -1383,6 +1633,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114140100},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400124] = {
@@ -1394,6 +1646,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114140000},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400125] = {
@@ -1405,6 +1659,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720020
 		},
 	[112400126] = {
@@ -1416,6 +1672,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {115000036},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400127] = {
@@ -1427,50 +1685,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
-		['CallId'] = 0
-		},
-	[112400128] = {
-		['ID'] = 112400128,
-		['ActionTime'] = 0,
-		['Frequency'] = 1,
-		['Interval'] = 0,
-		['EffectIdEnemy'] = {115120500},
-		['EffectIdFriend'] = {115000036},
-		['BuffIdEnemy'] = {0},
-		['BuffIdFriend'] = {0},
-		['CallId'] = 0
-		},
-	[112400129] = {
-		['ID'] = 112400129,
-		['ActionTime'] = 0,
-		['Frequency'] = 1,
-		['Interval'] = 0,
-		['EffectIdEnemy'] = {115121200},
-		['EffectIdFriend'] = {115000036},
-		['BuffIdEnemy'] = {0},
-		['BuffIdFriend'] = {0},
-		['CallId'] = 0
-		},
-	[112400130] = {
-		['ID'] = 112400130,
-		['ActionTime'] = 700,
-		['Frequency'] = 1,
-		['Interval'] = 0,
-		['EffectIdEnemy'] = {115121300},
-		['EffectIdFriend'] = {0},
-		['BuffIdEnemy'] = {0},
-		['BuffIdFriend'] = {0},
-		['CallId'] = 112720020
-		},
-	[112400131] = {
-		['ID'] = 112400131,
-		['ActionTime'] = 0,
-		['Frequency'] = 1,
-		['Interval'] = 0,
-		['EffectIdEnemy'] = {115121400},
-		['EffectIdFriend'] = {115000036},
-		['BuffIdEnemy'] = {114110008},
-		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400132] = {
@@ -1482,6 +1698,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {114500006},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400133] = {
@@ -1493,6 +1711,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {114500006},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400134] = {
@@ -1504,17 +1724,21 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {114500006},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400135] = {
 		['ID'] = 112400135,
 		['ActionTime'] = 2000,
-		['Frequency'] = 1,
+		['Frequency'] = 10,
 		['Interval'] = 250,
 		['EffectIdEnemy'] = {115000012},
 		['EffectIdFriend'] = {114500006},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114400001},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400136] = {
@@ -1526,17 +1750,21 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400137] = {
 		['ID'] = 112400137,
 		['ActionTime'] = 2000,
-		['Frequency'] = 1,
+		['Frequency'] = 3,
 		['Interval'] = 200,
 		['EffectIdEnemy'] = {115000009},
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400138] = {
@@ -1548,6 +1776,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114400023},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400139] = {
@@ -1559,6 +1789,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400140] = {
@@ -1570,6 +1802,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400141] = {
@@ -1581,17 +1815,21 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400142] = {
 		['ID'] = 112400142,
 		['ActionTime'] = 1000,
-		['Frequency'] = 1,
+		['Frequency'] = 10,
 		['Interval'] = 200,
 		['EffectIdEnemy'] = {115000012},
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400143] = {
@@ -1603,6 +1841,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710012
 		},
 	[112400144] = {
@@ -1614,6 +1854,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400145] = {
@@ -1625,6 +1867,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400146] = {
@@ -1636,6 +1880,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400147] = {
@@ -1647,6 +1893,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400148] = {
@@ -1658,6 +1906,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710012
 		},
 	[112400149] = {
@@ -1669,6 +1919,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400150] = {
@@ -1680,6 +1932,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400151] = {
@@ -1691,6 +1945,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114400010},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400152] = {
@@ -1702,6 +1958,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400153] = {
@@ -1713,6 +1971,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400154] = {
@@ -1724,6 +1984,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400155] = {
@@ -1735,6 +1997,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400156] = {
@@ -1746,17 +2010,21 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400157] = {
 		['ID'] = 112400157,
 		['ActionTime'] = 2000,
-		['Frequency'] = 1,
+		['Frequency'] = 3,
 		['Interval'] = 200,
 		['EffectIdEnemy'] = {115000012},
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400158] = {
@@ -1768,17 +2036,21 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400159] = {
 		['ID'] = 112400159,
 		['ActionTime'] = 2480,
-		['Frequency'] = 1,
+		['Frequency'] = 3,
 		['Interval'] = 200,
 		['EffectIdEnemy'] = {115000012},
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400160] = {
@@ -1790,6 +2062,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400161] = {
@@ -1801,6 +2075,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710081
 		},
 	[112400162] = {
@@ -1812,6 +2088,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400163] = {
@@ -1823,6 +2101,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400164] = {
@@ -1834,6 +2114,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400165] = {
@@ -1845,6 +2127,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400166] = {
@@ -1856,6 +2140,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400167] = {
@@ -1867,6 +2153,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400168] = {
@@ -1878,6 +2166,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400169] = {
@@ -1889,6 +2179,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400170] = {
@@ -1900,6 +2192,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400171] = {
@@ -1911,6 +2205,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410001] = {
@@ -1922,6 +2218,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114000014},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410002] = {
@@ -1933,6 +2231,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114000015},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410003] = {
@@ -1944,6 +2244,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114000016},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410004] = {
@@ -1955,6 +2257,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114000017},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112410005] = {
@@ -1966,6 +2270,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114000018},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420010] = {
@@ -1977,6 +2283,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420020] = {
@@ -1988,7 +2296,22 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720020
+		},
+	[112420021] = {
+		['ID'] = 112420021,
+		['ActionTime'] = 700,
+		['Frequency'] = 1,
+		['Interval'] = 0,
+		['EffectIdEnemy'] = {115000001},
+		['EffectIdFriend'] = {0},
+		['BuffIdEnemy'] = {0},
+		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
+		['CallId'] = 112720892
 		},
 	[112420030] = {
 		['ID'] = 112420030,
@@ -1999,6 +2322,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420040] = {
@@ -2010,6 +2335,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420050] = {
@@ -2021,6 +2348,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720050
 		},
 	[112420051] = {
@@ -2032,6 +2361,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720051
 		},
 	[112420052] = {
@@ -2043,6 +2374,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720052
 		},
 	[112420060] = {
@@ -2054,6 +2387,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420070] = {
@@ -2065,6 +2400,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420080] = {
@@ -2076,6 +2413,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420090] = {
@@ -2087,17 +2426,21 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420100] = {
 		['ID'] = 112420100,
-		['ActionTime'] = 800,
+		['ActionTime'] = 700,
 		['Frequency'] = 1,
 		['Interval'] = 0,
 		['EffectIdEnemy'] = {115000001},
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720100
 		},
 	[112420110] = {
@@ -2109,6 +2452,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720110
 		},
 	[112420120] = {
@@ -2120,6 +2465,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720120
 		},
 	[112420130] = {
@@ -2131,6 +2478,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420140] = {
@@ -2142,6 +2491,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420150] = {
@@ -2153,6 +2504,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420160] = {
@@ -2164,6 +2517,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420180] = {
@@ -2175,6 +2530,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420190] = {
@@ -2186,6 +2543,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720190
 		},
 	[112420200] = {
@@ -2197,6 +2556,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420210] = {
@@ -2208,6 +2569,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720210
 		},
 	[112420220] = {
@@ -2219,6 +2582,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420230] = {
@@ -2230,6 +2595,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420240] = {
@@ -2241,6 +2608,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720240
 		},
 	[112420250] = {
@@ -2252,6 +2621,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420260] = {
@@ -2263,6 +2634,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720260
 		},
 	[112420270] = {
@@ -2271,20 +2644,24 @@ local SkillTimeTable = {
 		['Frequency'] = 1,
 		['Interval'] = 0,
 		['EffectIdEnemy'] = {115000001},
-		['EffectIdFriend'] = {0},
+		['EffectIdFriend'] = {115000036},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
-		['CallId'] = 112720240
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
+		['CallId'] = 0
 		},
 	[112420280] = {
 		['ID'] = 112420280,
 		['ActionTime'] = 100,
-		['Frequency'] = 10,
-		['Interval'] = 500,
+		['Frequency'] = 4,
+		['Interval'] = 200,
 		['EffectIdEnemy'] = {115000001},
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420290] = {
@@ -2296,6 +2673,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720240
 		},
 	[112420300] = {
@@ -2307,6 +2686,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720240
 		},
 	[112420310] = {
@@ -2318,6 +2699,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420320] = {
@@ -2329,6 +2712,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420330] = {
@@ -2340,6 +2725,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720240
 		},
 	[112420340] = {
@@ -2351,6 +2738,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720340
 		},
 	[112420350] = {
@@ -2362,6 +2751,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720240
 		},
 	[112420360] = {
@@ -2373,6 +2764,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720360
 		},
 	[112420370] = {
@@ -2384,6 +2777,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710371
 		},
 	[112420371] = {
@@ -2395,6 +2790,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {115000372},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420372] = {
@@ -2406,6 +2803,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {115000373},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420373] = {
@@ -2417,6 +2816,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {115000374},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420380] = {
@@ -2428,6 +2829,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420381] = {
@@ -2439,17 +2842,60 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420390] = {
 		['ID'] = 112420390,
-		['ActionTime'] = 340,
+		['ActionTime'] = 330,
 		['Frequency'] = 1,
 		['Interval'] = 0,
 		['EffectIdEnemy'] = {115000001},
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
+		['CallId'] = 0
+		},
+	[112420391] = {
+		['ID'] = 112420391,
+		['ActionTime'] = 460,
+		['Frequency'] = 1,
+		['Interval'] = 1167,
+		['EffectIdEnemy'] = {115000001},
+		['EffectIdFriend'] = {0},
+		['BuffIdEnemy'] = {0},
+		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
+		['CallId'] = 0
+		},
+	[112420392] = {
+		['ID'] = 112420392,
+		['ActionTime'] = 800,
+		['Frequency'] = 1,
+		['Interval'] = 1167,
+		['EffectIdEnemy'] = {115000001},
+		['EffectIdFriend'] = {0},
+		['BuffIdEnemy'] = {0},
+		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
+		['CallId'] = 0
+		},
+	[112420393] = {
+		['ID'] = 112420393,
+		['ActionTime'] = 330,
+		['Frequency'] = 1,
+		['Interval'] = 0,
+		['EffectIdEnemy'] = {115000001},
+		['EffectIdFriend'] = {0},
+		['BuffIdEnemy'] = {114110003},
+		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420400] = {
@@ -2461,6 +2907,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420401] = {
@@ -2472,6 +2920,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420410] = {
@@ -2483,6 +2933,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710411
 		},
 	[112420411] = {
@@ -2494,6 +2946,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420412] = {
@@ -2505,6 +2959,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710413
 		},
 	[112420413] = {
@@ -2516,6 +2972,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420420] = {
@@ -2527,6 +2985,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710421
 		},
 	[112420421] = {
@@ -2538,6 +2998,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114200422},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420422] = {
@@ -2549,6 +3011,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114200423},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420430] = {
@@ -2560,6 +3024,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710431
 		},
 	[112420431] = {
@@ -2571,6 +3037,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710432
 		},
 	[112420432] = {
@@ -2582,6 +3050,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710433
 		},
 	[112420440] = {
@@ -2593,6 +3063,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710441
 		},
 	[112420441] = {
@@ -2604,6 +3076,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710442
 		},
 	[112420442] = {
@@ -2615,6 +3089,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710443
 		},
 	[112420450] = {
@@ -2626,6 +3102,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420451] = {
@@ -2637,6 +3115,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420452] = {
@@ -2648,6 +3128,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420460] = {
@@ -2659,6 +3141,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710461
 		},
 	[112420461] = {
@@ -2670,6 +3154,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114200462},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710462
 		},
 	[112420462] = {
@@ -2681,6 +3167,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114200463},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710463
 		},
 	[112420470] = {
@@ -2692,6 +3180,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710471
 		},
 	[112420471] = {
@@ -2703,6 +3193,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710472
 		},
 	[112420480] = {
@@ -2714,6 +3206,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420490] = {
@@ -2725,6 +3219,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420500] = {
@@ -2736,6 +3232,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420510] = {
@@ -2747,6 +3245,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420520] = {
@@ -2758,6 +3258,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720520
 		},
 	[112420550] = {
@@ -2769,6 +3271,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420570] = {
@@ -2780,6 +3284,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420580] = {
@@ -2791,6 +3297,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720360
 		},
 	[112420600] = {
@@ -2802,6 +3310,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420610] = {
@@ -2813,6 +3323,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720610
 		},
 	[112420620] = {
@@ -2824,6 +3336,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420630] = {
@@ -2835,6 +3349,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720630
 		},
 	[112420640] = {
@@ -2846,6 +3362,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420650] = {
@@ -2857,6 +3375,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420651] = {
@@ -2868,6 +3388,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420652] = {
@@ -2879,6 +3401,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420653] = {
@@ -2890,6 +3414,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114400023},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420660] = {
@@ -2901,6 +3427,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420661] = {
@@ -2912,6 +3440,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112710662
 		},
 	[112420662] = {
@@ -2923,6 +3453,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420690] = {
@@ -2934,6 +3466,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420730] = {
@@ -2945,6 +3479,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420740] = {
@@ -2956,6 +3492,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420750] = {
@@ -2967,6 +3505,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420760] = {
@@ -2978,6 +3518,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420770] = {
@@ -2989,6 +3531,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420780] = {
@@ -3000,6 +3544,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420830] = {
@@ -3011,6 +3557,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112420890] = {
@@ -3022,17 +3570,21 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720890
 		},
 	[112420891] = {
 		['ID'] = 112420891,
 		['ActionTime'] = 200,
-		['Frequency'] = 1,
-		['Interval'] = 0,
+		['Frequency'] = 2,
+		['Interval'] = 500,
 		['EffectIdEnemy'] = {115000001},
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720891
 		},
 	[112400270] = {
@@ -3044,6 +3596,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400271] = {
@@ -3055,6 +3609,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400272] = {
@@ -3066,6 +3622,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400288] = {
@@ -3077,6 +3635,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400289] = {
@@ -3088,6 +3648,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720020
 		},
 	[112400290] = {
@@ -3099,6 +3661,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400291] = {
@@ -3110,6 +3674,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400292] = {
@@ -3121,6 +3687,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720050
 		},
 	[112400293] = {
@@ -3132,6 +3700,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400294] = {
@@ -3143,6 +3713,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400295] = {
@@ -3154,6 +3726,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400296] = {
@@ -3165,6 +3739,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400297] = {
@@ -3176,6 +3752,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720100
 		},
 	[112400298] = {
@@ -3187,6 +3765,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720110
 		},
 	[112400299] = {
@@ -3198,6 +3778,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720120
 		},
 	[112400300] = {
@@ -3209,6 +3791,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400301] = {
@@ -3220,6 +3804,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400302] = {
@@ -3231,6 +3817,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400303] = {
@@ -3242,6 +3830,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400304] = {
@@ -3253,6 +3843,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400305] = {
@@ -3264,6 +3856,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720190
 		},
 	[112400306] = {
@@ -3275,6 +3869,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400307] = {
@@ -3286,6 +3882,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720210
 		},
 	[112400308] = {
@@ -3297,6 +3895,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400309] = {
@@ -3308,6 +3908,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400310] = {
@@ -3319,6 +3921,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720240
 		},
 	[112400311] = {
@@ -3330,6 +3934,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400312] = {
@@ -3341,6 +3947,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400313] = {
@@ -3352,6 +3960,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720240
 		},
 	[112400314] = {
@@ -3363,6 +3973,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720240
 		},
 	[112400315] = {
@@ -3374,6 +3986,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720240
 		},
 	[112400316] = {
@@ -3385,6 +3999,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720240
 		},
 	[112400317] = {
@@ -3396,6 +4012,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400318] = {
@@ -3407,6 +4025,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400319] = {
@@ -3418,6 +4038,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720240
 		},
 	[112400320] = {
@@ -3429,6 +4051,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400321] = {
@@ -3440,6 +4064,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720240
 		},
 	[112400322] = {
@@ -3451,6 +4077,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720360
 		},
 	[112400323] = {
@@ -3462,6 +4090,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400324] = {
@@ -3473,6 +4103,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400325] = {
@@ -3484,6 +4116,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400326] = {
@@ -3495,6 +4129,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400327] = {
@@ -3506,6 +4142,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400328] = {
@@ -3517,6 +4155,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400329] = {
@@ -3528,6 +4168,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400330] = {
@@ -3539,6 +4181,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400331] = {
@@ -3550,6 +4194,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400332] = {
@@ -3561,6 +4207,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400333] = {
@@ -3572,6 +4220,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400334] = {
@@ -3583,6 +4233,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400335] = {
@@ -3594,6 +4246,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400336] = {
@@ -3605,6 +4259,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400337] = {
@@ -3616,6 +4272,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400338] = {
@@ -3627,6 +4285,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400339] = {
@@ -3638,6 +4298,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400340] = {
@@ -3649,6 +4311,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400341] = {
@@ -3660,6 +4324,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720360
 		},
 	[112400450] = {
@@ -3671,6 +4337,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400451] = {
@@ -3682,6 +4350,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400452] = {
@@ -3693,6 +4363,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720050
 		},
 	[112400453] = {
@@ -3704,6 +4376,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400454] = {
@@ -3715,6 +4389,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400455] = {
@@ -3726,6 +4402,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400456] = {
@@ -3737,6 +4415,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720050
 		},
 	[112400457] = {
@@ -3748,6 +4428,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720050
 		},
 	[112400458] = {
@@ -3759,6 +4441,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400459] = {
@@ -3770,6 +4454,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400460] = {
@@ -3781,6 +4467,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400461] = {
@@ -3792,6 +4480,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400462] = {
@@ -3803,6 +4493,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400463] = {
@@ -3814,6 +4506,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720050
 		},
 	[112400464] = {
@@ -3825,6 +4519,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400465] = {
@@ -3836,6 +4532,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400466] = {
@@ -3847,6 +4545,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400467] = {
@@ -3858,6 +4558,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720020
 		},
 	[112400468] = {
@@ -3869,6 +4571,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400469] = {
@@ -3880,6 +4584,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720050
 		},
 	[112400470] = {
@@ -3891,6 +4597,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400471] = {
@@ -3902,6 +4610,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400472] = {
@@ -3913,6 +4623,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400473] = {
@@ -3924,6 +4636,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720100
 		},
 	[112400474] = {
@@ -3935,6 +4649,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720110
 		},
 	[112400475] = {
@@ -3946,6 +4662,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720120
 		},
 	[112400476] = {
@@ -3957,6 +4675,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400477] = {
@@ -3968,6 +4688,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400478] = {
@@ -3979,6 +4701,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400479] = {
@@ -3990,6 +4714,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400480] = {
@@ -4001,6 +4727,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 112720190
 		},
 	[112400481] = {
@@ -4012,6 +4740,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400482] = {
@@ -4023,6 +4753,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114000006},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400483] = {
@@ -4034,6 +4766,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114000006},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400484] = {
@@ -4045,6 +4779,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114000002,114000007},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400485] = {
@@ -4056,6 +4792,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114000003,114000008},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400486] = {
@@ -4067,6 +4805,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114000003,114000008},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400487] = {
@@ -4078,6 +4818,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114000012},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400488] = {
@@ -4089,6 +4831,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {114000005},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400489] = {
@@ -4100,6 +4844,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {115140007},
 		['BuffIdEnemy'] = {114140006},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400490] = {
@@ -4111,6 +4857,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114100021},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400491] = {
@@ -4122,6 +4870,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {0},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {114100022},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400492] = {
@@ -4133,6 +4883,8 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {115000041},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		},
 	[112400493] = {
@@ -4144,6 +4896,21 @@ local SkillTimeTable = {
 		['EffectIdFriend'] = {115000042},
 		['BuffIdEnemy'] = {0},
 		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
+		['CallId'] = 0
+		},
+	[112400494] = {
+		['ID'] = 112400494,
+		['ActionTime'] = 0,
+		['Frequency'] = 1,
+		['Interval'] = 0,
+		['EffectIdEnemy'] = {0},
+		['EffectIdFriend'] = {0},
+		['BuffIdEnemy'] = {114500006},
+		['BuffIdFriend'] = {0},
+		['BuffIdEnemyFixed'] = {0},
+		['BuffIdFriendFixed'] = {0},
 		['CallId'] = 0
 		}
 	}

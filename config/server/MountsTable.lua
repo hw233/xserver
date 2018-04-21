@@ -83,6 +83,27 @@ local MountsTable = {
 		['Fly'] = 0,
 		['CastSpiritLimit'] = 5
 		},
+	[180000006] = {
+		['ID'] = 180000006,
+		['Name'] = '筋斗云',
+		['ResId'] = {130500006,130500006,130500006,130500006,130500006},
+		['BaseAttribute'] = 102200001,
+		['LockType'] = 1,
+		['TypeParameter'] = 0,
+		['LockCondition'] = '0',
+		['Time'] = {0,604800,2592000},
+		['WingBinding'] = {},
+		['Binding'] = {10000,1000,5000},
+		['Item'] = {},
+		['ItemNum'] = {},
+		['ItemQuality'] = 3,
+		['Lock'] = 1,
+		['ListAcc'] = 1,
+		['PrintMounts'] = 1,
+		['Speed'] = {15,15},
+		['Fly'] = 0,
+		['CastSpiritLimit'] = 5
+		},
 	[180000007] = {
 		['ID'] = 180000007,
 		['Name'] = '战马',

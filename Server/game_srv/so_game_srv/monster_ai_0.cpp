@@ -67,6 +67,8 @@ static void ai_dead_0(monster_struct *monster, scene_struct *scene)
 {
 	if (monster->scene)
 		monster->scene->delete_monster_from_scene(monster, true);
+	if (monster->sight_space)
+		monster->sight_space->delete_monster(monster);
 	monster_manager::delete_monster(monster);
 }
 
@@ -113,7 +115,14 @@ static void ai_befly_0(monster_struct *monster, unit_struct *player)
 static void ai_alive_0(monster_struct *monster)
 {
 		// TODO: 添加无敌buff
-	monster->data->relive_time = monster->ai_config->Regeneration * 1000 + time_helper::get_cached_time();
+	if (monster->ai_config->RegenerationTpye == 1)
+	{
+		monster->data->relive_time = monster->ai_config->Regeneration[0] * 1000 + time_helper::get_cached_time();
+	}
+	else
+	{
+		monster->data->relive_time = rand_between(monster->ai_config->Regeneration[0], monster->ai_config->Regeneration[1]) * 1000 + time_helper::get_cached_time();
+	}
 }
 
 struct ai_interface monster_ai_0_interface =

@@ -9,231 +9,231 @@ local AttributeTypeTable = {
 	[2] = {
 		['ID'] = 2,
 		['Effect'] = 'MaxHP',
-		['FightRatio'] = 7.4999999999999997E-2,
+		['FightRatio'] = 0.15,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[3] = {
 		['ID'] = 3,
 		['Effect'] = 'Attack',
-		['FightRatio'] = 1,
+		['FightRatio'] = 2,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[4] = {
 		['ID'] = 4,
 		['Effect'] = 'DfWuDel',
-		['FightRatio'] = 2,
+		['FightRatio'] = 4,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[5] = {
 		['ID'] = 5,
 		['Effect'] = 'AtGold',
-		['FightRatio'] = 1,
+		['FightRatio'] = 2,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[6] = {
 		['ID'] = 6,
 		['Effect'] = 'AtWood',
-		['FightRatio'] = 1,
+		['FightRatio'] = 2,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[7] = {
 		['ID'] = 7,
 		['Effect'] = 'AtWater',
-		['FightRatio'] = 1,
+		['FightRatio'] = 2,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[8] = {
 		['ID'] = 8,
 		['Effect'] = 'AtFire',
-		['FightRatio'] = 1,
+		['FightRatio'] = 2,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[9] = {
 		['ID'] = 9,
 		['Effect'] = 'AtEarth',
-		['FightRatio'] = 1,
+		['FightRatio'] = 2,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[10] = {
 		['ID'] = 10,
 		['Effect'] = 'AtGoldDf',
-		['FightRatio'] = 0.4,
+		['FightRatio'] = 0.8,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[11] = {
 		['ID'] = 11,
 		['Effect'] = 'AtWoodDf',
-		['FightRatio'] = 0.4,
+		['FightRatio'] = 0.8,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[12] = {
 		['ID'] = 12,
 		['Effect'] = 'AtWaterDf',
-		['FightRatio'] = 0.4,
+		['FightRatio'] = 0.8,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[13] = {
 		['ID'] = 13,
 		['Effect'] = 'AtFireDf',
-		['FightRatio'] = 0.4,
+		['FightRatio'] = 0.8,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[14] = {
 		['ID'] = 14,
 		['Effect'] = 'AtEarthDf',
-		['FightRatio'] = 0.4,
+		['FightRatio'] = 0.8,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[15] = {
 		['ID'] = 15,
 		['Effect'] = 'Dodge',
-		['FightRatio'] = 2,
+		['FightRatio'] = 4,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[16] = {
 		['ID'] = 16,
 		['Effect'] = 'Hit',
-		['FightRatio'] = 1,
+		['FightRatio'] = 2,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[17] = {
 		['ID'] = 17,
 		['Effect'] = 'Critical',
-		['FightRatio'] = 2,
+		['FightRatio'] = 4,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[18] = {
 		['ID'] = 18,
 		['Effect'] = 'CriticalDf',
-		['FightRatio'] = 2,
+		['FightRatio'] = 4,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[19] = {
 		['ID'] = 19,
 		['Effect'] = 'CtDmg',
-		['FightRatio'] = 3000,
+		['FightRatio'] = 6000,
 		['Total'] = 1,
 		['ShowType'] = 1
 		},
 	[20] = {
 		['ID'] = 20,
 		['Effect'] = 'CtDmgDf',
-		['FightRatio'] = 2000,
+		['FightRatio'] = 4000,
 		['Total'] = 1,
 		['ShowType'] = 1
 		},
 	[21] = {
 		['ID'] = 21,
 		['Effect'] = 'MoveSpeed',
-		['FightRatio'] = 0,
+		['FightRatio'] = 200,
 		['Total'] = 0,
 		['ShowType'] = 0
 		},
 	[22] = {
 		['ID'] = 22,
 		['Effect'] = 'DodgeDf',
-		['FightRatio'] = 2,
+		['FightRatio'] = 4,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[23] = {
 		['ID'] = 23,
 		['Effect'] = 'Dizzy',
-		['FightRatio'] = 1,
+		['FightRatio'] = 5,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[24] = {
 		['ID'] = 24,
 		['Effect'] = 'Slow',
-		['FightRatio'] = 1,
+		['FightRatio'] = 5,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[25] = {
 		['ID'] = 25,
 		['Effect'] = 'Mabi',
-		['FightRatio'] = 1,
+		['FightRatio'] = 5,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[26] = {
 		['ID'] = 26,
 		['Effect'] = 'Hurt',
-		['FightRatio'] = 1,
+		['FightRatio'] = 5,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[27] = {
 		['ID'] = 27,
 		['Effect'] = 'Can',
-		['FightRatio'] = 1,
+		['FightRatio'] = 5,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[28] = {
 		['ID'] = 28,
 		['Effect'] = 'DizzyDf',
-		['FightRatio'] = 1,
+		['FightRatio'] = 5,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[29] = {
 		['ID'] = 29,
 		['Effect'] = 'SlowDf',
-		['FightRatio'] = 1,
+		['FightRatio'] = 5,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[30] = {
 		['ID'] = 30,
 		['Effect'] = 'MabiDf',
-		['FightRatio'] = 1,
+		['FightRatio'] = 5,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[31] = {
 		['ID'] = 31,
 		['Effect'] = 'HurtDf',
-		['FightRatio'] = 1,
+		['FightRatio'] = 5,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[32] = {
 		['ID'] = 32,
 		['Effect'] = 'CanDf',
-		['FightRatio'] = 1,
+		['FightRatio'] = 5,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[33] = {
 		['ID'] = 33,
 		['Effect'] = 'PVPAt',
-		['FightRatio'] = 1,
+		['FightRatio'] = 6,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
 	[34] = {
 		['ID'] = 34,
 		['Effect'] = 'PVPDf',
-		['FightRatio'] = 1,
+		['FightRatio'] = 6,
 		['Total'] = 1,
 		['ShowType'] = 0
 		},
@@ -604,49 +604,49 @@ local AttributeTypeTable = {
 	[89] = {
 		['ID'] = 89,
 		['Effect'] = 'Ti',
-		['FightRatio'] = 1.5,
+		['FightRatio'] = 3,
 		['Total'] = 0,
 		['ShowType'] = 0
 		},
 	[90] = {
 		['ID'] = 90,
 		['Effect'] = 'Li',
-		['FightRatio'] = 1.5,
+		['FightRatio'] = 3,
 		['Total'] = 0,
 		['ShowType'] = 0
 		},
 	[91] = {
 		['ID'] = 91,
 		['Effect'] = 'Min',
-		['FightRatio'] = 1.5,
+		['FightRatio'] = 3,
 		['Total'] = 0,
 		['ShowType'] = 0
 		},
 	[92] = {
 		['ID'] = 92,
 		['Effect'] = 'Ling',
-		['FightRatio'] = 1.5,
+		['FightRatio'] = 3,
 		['Total'] = 0,
 		['ShowType'] = 0
 		},
 	[93] = {
 		['ID'] = 93,
 		['Effect'] = 'HealthPro',
-		['FightRatio'] = 8000,
+		['FightRatio'] = 16000,
 		['Total'] = 0,
 		['ShowType'] = 1
 		},
 	[94] = {
 		['ID'] = 94,
 		['Effect'] = 'AttackPro',
-		['FightRatio'] = 8000,
+		['FightRatio'] = 16000,
 		['Total'] = 0,
 		['ShowType'] = 1
 		},
 	[95] = {
 		['ID'] = 95,
 		['Effect'] = 'DfWu',
-		['FightRatio'] = 2,
+		['FightRatio'] = 4,
 		['Total'] = 0,
 		['ShowType'] = 0
 		},

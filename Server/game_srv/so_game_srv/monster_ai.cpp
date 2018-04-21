@@ -473,15 +473,15 @@ void monster_cast_skill_to_target(uint64_t skill_id, monster_struct *monster, un
 void cast_immediate_skill_to_target(uint64_t skill_id, uint32_t skill_lv, unit_struct *attack, unit_struct *target)
 {
 	player_struct *a_owner = attack->get_owner();
-	player_struct *d_owner = target->get_owner();
+//	player_struct *d_owner = target->get_owner();
 
 	struct position *a_pos = attack->get_pos();
 	struct position *d_pos = target->get_pos();
 
 	unit_struct *a = a_owner ? a_owner : attack;
-	unit_struct *d = d_owner ? d_owner : target;	
+//	unit_struct *d = d_owner ? d_owner : target;	
 
-	if (get_unit_fight_type(a, d) != UNIT_FIGHT_TYPE_ENEMY)
+	if (get_unit_fight_type(attack, target) != UNIT_FIGHT_TYPE_ENEMY)
 		return;
 
 //	if (player->buff_state & BUFF_STATE_GOD)
@@ -822,8 +822,7 @@ void do_normal_attack(monster_struct *monster)
 	
 	if (monster->data->skill_next_time_idx < config->n_time_config && config->time_config[monster->data->skill_next_time_idx]->Interval > 0)
 	{
-		monster->data->ontick_time = now + config->time_config[monster->data->skill_next_time_idx]->Interval;
-
+		monster->data->skill_next_time[monster->data->skill_next_time_idx] = now + config->time_config[monster->data->skill_next_time_idx]->Interval;
 		// 	//第一次计算伤害
 		// if (monster->data->skill_finished_time == 0)
 		// {
@@ -832,9 +831,13 @@ void do_normal_attack(monster_struct *monster)
 			//总时间到了，结束伤害
 		if (monster->data->ontick_time > monster->data->skill_finished_time[monster->data->skill_next_time_idx])
 		{
-//			LOG_DEBUG("%s: jack111 skill[%u] 总时间到了，结束伤害", __FUNCTION__, monster->data->skill_id);
+			monster->data->skill_next_time[monster->data->skill_next_time_idx] = 0;
+		}
 			
-			monster->data->ontick_time = monster->data->skill_finished_time[monster->data->skill_next_time_idx] + random() % 1000;					
+//			LOG_DEBUG("%s: jack111 skill[%u] 总时间到了，结束伤害", __FUNCTION__, monster->data->skill_id);
+		if (set_monster_skill_next_timeout(monster) != 0)
+		{
+			monster->data->ontick_time += monster->count_rand_patrol_time();
 			monster->data->skill_finished_time[monster->data->skill_next_time_idx] = 0;
 			monster->ai_state = AI_PURSUE_STATE;
 			monster->data->target_pos.pos_x = 0;
@@ -886,6 +889,9 @@ void do_normal_attack(monster_struct *monster)
 	{
 		try_attack(monster, config);
 	}
+
+//	LOG_DEBUG("%s: jack111 skill[%u] 计算伤害", __FUNCTION__, monster->data->skill_id);			
+	
 }
 
 void do_normal_dead(monster_struct *monster)
@@ -902,7 +908,7 @@ void do_normal_dead(monster_struct *monster)
 	}
 }
 
-void set_monster_skill_next_timeout(monster_struct *monster)
+int set_monster_skill_next_timeout(monster_struct *monster)
 {
 	uint64_t min = UINT64_MAX;
 	for (int i = 0; i < MAX_SKILL_TIME_CONFIG_NUM; ++i)
@@ -914,7 +920,88 @@ void set_monster_skill_next_timeout(monster_struct *monster)
 		}
 	}
 	if (min != UINT64_MAX)
-		monster->data->ontick_time = min;	
+	{
+		monster->data->ontick_time = min;
+		return (0);
+	}
+	return -1;
+}
+
+void do_monster_active_attack_to_target(monster_struct *monster, uint32_t skill_id, struct SkillTable *config)
+{
+		//主动技能
+	if (config->SkillType == 2)
+	{
+		bool immediate_skill = true;
+		uint64_t now = time_helper::get_cached_time();
+		for (uint32_t i = 0; i < config->n_time_config; ++i)
+		{
+			if (config->time_config[i]->ActionTime > 0)
+			{
+				monster->data->skill_next_time[i] = now + config->time_config[i]->ActionTime;// + 1500;
+//				monster->data->ontick_time = now + config->time_config[i]->ActionTime;// + 1500;
+				monster->data->skill_finished_time[i] = now + config->time_config[i]->ActionTime +
+					config->time_config[i]->Frequency * config->time_config[i]->Interval;
+
+//				LOG_DEBUG("%s: jack111 skill[%u] 开始攻击，actiontime[%lu] finishedtime[%lu] frequency[%lu] interval[%lu]",
+//					__FUNCTION__, config->ID, config->time_config[i]->ActionTime, monster->data->skill_finished_time[i],
+//					config->time_config[i]->Frequency, config->time_config[i]->Interval);
+				
+				immediate_skill = false;
+			}
+			else
+			{
+				monster->data->skill_next_time[i] = 0;
+				LOG_ERR("%s: SKILL CONFIG ERR [%lu %lu]", __FUNCTION__, config->ID, config->time_config[i]->ID);
+			}
+		}
+		
+		if (!immediate_skill)
+		{
+			set_monster_skill_next_timeout(monster);
+			monster->ai_state = AI_ATTACK_STATE;
+
+			monster->reset_pos();
+			if (config->RangeType == 4 || config->RangeType == 3)
+				monster_cast_skill_to_target(skill_id, monster, monster->target, true);
+			else
+				monster_cast_skill_to_target(skill_id, monster, monster->target, false);
+			return;
+		}
+		
+// 		struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
+// 		if (!act_config)
+// 			return;
+
+// 		if (act_config->ActionTime > 0)
+// 		{
+// 			uint64_t now = time_helper::get_cached_time();		
+// 			monster->data->ontick_time = now + act_config->ActionTime;// + 1500;
+// 			monster->data->skill_finished_time = now + act_config->TotalSkillDelay + act_config->ActionTime;
+
+// //			monster->data->skill_id = skill_id;
+// //			monster->data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
+// 			monster->ai_state = AI_ATTACK_STATE;
+
+// 			monster->reset_pos();
+// 			if (config->RangeType == 4 || config->RangeType == 3)
+// 				monster_cast_skill_to_target(skill_id, monster, monster->target, true);
+// 			else
+// 				monster_cast_skill_to_target(skill_id, monster, monster->target, false);		
+// 			return;
+// 		}
+	}
+
+	monster->reset_pos();
+	cast_immediate_skill_to_target(skill_id, 1, monster, monster->target);
+		//被反弹死了
+	if (!monster->data)
+		return;
+	
+	monster->data->skill_id = 0;
+
+		//计算硬直时间
+	monster->data->ontick_time += count_skill_delay_time(config);
 }
 
 void do_normal_pursue(monster_struct *monster)
@@ -1057,77 +1144,7 @@ void do_normal_pursue(monster_struct *monster)
 	if (monster->target && monster->target->is_too_high_to_beattack())
 		return;
 
-		//主动技能
-	if (config->SkillType == 2)
-	{
-		bool immediate_skill = true;
-		uint64_t now = time_helper::get_cached_time();
-		for (uint32_t i = 0; i < config->n_time_config; ++i)
-		{
-			if (config->time_config[i]->ActionTime > 0)
-			{
-				monster->data->skill_next_time[i] = now + config->time_config[i]->ActionTime;// + 1500;
-//				monster->data->ontick_time = now + config->time_config[i]->ActionTime;// + 1500;
-				monster->data->skill_finished_time[i] = now + config->time_config[i]->ActionTime +
-					config->time_config[i]->Frequency * config->time_config[i]->Interval;
+	do_monster_active_attack_to_target(monster, skill_id, config);
 
-//				LOG_DEBUG("%s: jack111 skill[%u] 开始攻击，actiontime[%lu] finishedtime[%lu] frequency[%lu] interval[%lu]",
-//					__FUNCTION__, config->ID, config->time_config[i]->ActionTime, monster->data->skill_finished_time[i],
-//					config->time_config[i]->Frequency, config->time_config[i]->Interval);
-				
-				immediate_skill = false;
-			}
-			else
-			{
-				monster->data->skill_next_time[i] = 0;
-				LOG_ERR("%s: SKILL CONFIG ERR [%lu %lu]", __FUNCTION__, config->ID, config->time_config[i]->ID);
-			}
-		}
-		
-		if (!immediate_skill)
-		{
-			set_monster_skill_next_timeout(monster);
-			monster->ai_state = AI_ATTACK_STATE;
-
-			monster->reset_pos();
-			if (config->RangeType == 4 || config->RangeType == 3)
-				monster_cast_skill_to_target(skill_id, monster, monster->target, true);
-			else
-				monster_cast_skill_to_target(skill_id, monster, monster->target, false);
-			return;
-		}
-		
-// 		struct ActiveSkillTable *act_config = get_config_by_id(config->SkillAffectId, &active_skill_config);
-// 		if (!act_config)
-// 			return;
-
-// 		if (act_config->ActionTime > 0)
-// 		{
-// 			uint64_t now = time_helper::get_cached_time();		
-// 			monster->data->ontick_time = now + act_config->ActionTime;// + 1500;
-// 			monster->data->skill_finished_time = now + act_config->TotalSkillDelay + act_config->ActionTime;
-
-// //			monster->data->skill_id = skill_id;
-// //			monster->data->angle = -(pos_to_angle(his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z));
-// 			monster->ai_state = AI_ATTACK_STATE;
-
-// 			monster->reset_pos();
-// 			if (config->RangeType == 4 || config->RangeType == 3)
-// 				monster_cast_skill_to_target(skill_id, monster, monster->target, true);
-// 			else
-// 				monster_cast_skill_to_target(skill_id, monster, monster->target, false);		
-// 			return;
-// 		}
-	}
-
-	monster->reset_pos();
-	cast_immediate_skill_to_target(skill_id, 1, monster, monster->target);
-		//被反弹死了
-	if (!monster->data)
-		return;
-	
-	monster->data->skill_id = 0;
-
-		//计算硬直时间
-	monster->data->ontick_time += count_skill_delay_time(config);
+	LOG_DEBUG("%s: jack111 skill[%u] 释放技能", __FUNCTION__, skill_id);	
 }

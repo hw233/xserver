@@ -4,6 +4,7 @@
 class player_struct;
 std::map<uint64_t, player_struct *> player_manager_all_players_id;
 std::map<uint64_t, player_struct *> player_manager_all_ai_players_id;
+std::list<player_struct *> player_manager_delete_ai_players;
 std::list<player_struct *> player_manager_player_free_list;
 std::set<player_struct *> player_manager_player_used_list;
 std::list<struct ai_player_data *> player_manager_ai_data_free_list;
@@ -144,6 +145,8 @@ std::map<uint64_t, uint8_t> pvp_waiting_team_5;
 std::map<uint64_t, struct matched_team_3 *> pvp_map_team_3;
 std::map<uint64_t, struct matched_team_5 *> pvp_map_team_5;
 uint64_t pvp_matched_index = 10;
+
+std::map<uint64_t, uint64_t> g_special_mon_map;
 
 
 

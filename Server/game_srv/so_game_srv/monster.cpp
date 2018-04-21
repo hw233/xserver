@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <role.pb-c.h>
 #include <math.h>
 #include "game_event.h"
 #include "check_range.h"
@@ -373,6 +374,7 @@ void monster_struct::pack_sight_monster_info(SightMonsterInfo *info)
 	info->speed = data->attrData[PLAYER_ATTR_MOVE_SPEED];
 	info->buff_info = pack_unit_buff(&info->n_buff_info);
 	info->direct = data->born_direct;
+	info->caller_id = data->owner;
 /*	
 	info->n_data = 1;
 	info->data = &pos_pool_pos_point[pos_pool_len];
@@ -674,6 +676,19 @@ void monster_struct::on_beattack(unit_struct *player, uint32_t skill_id, int32_t
 
 	if (damage > 0)
 	{
+			//攻击谷仓，写死ID
+		if (data->monster_id == 151005052)
+		{
+			raid_struct *raid = get_raid();
+			if (raid)
+			{
+				SystemNoticeNotify nty;
+				system_notice_notify__init(&nty);
+				nty.id = 190500588;
+				raid->broadcast_to_raid(MSG_ID_SYSTEM_NOTICE_NOTIFY, &nty, (pack_func)system_notice_notify__pack, false);
+			}
+		}
+		
 		count_hate(player, skill_id, damage);
 		update_target();
 	}	
@@ -729,8 +744,10 @@ void monster_struct::on_hp_changed(int damage)
 	{
 		double max_hp = get_attr(PLAYER_ATTR_MAXHP);
 		double cur_hp = get_attr(PLAYER_ATTR_HP);
-		uint32_t old_percent = (int)((cur_hp + damage) / max_hp * 100);
-		uint32_t percent = get_monster_hp_percent(this);
+		int  old_percent = (int)((cur_hp + damage) / max_hp * 100);
+		int  cur_percent = get_monster_hp_percent(this);
+		if(cur_percent<0)
+			cur_percent = 0;
 		struct NpcTalkTable *talk_config;
 		for (talk_config = config->talk_config; talk_config; talk_config = talk_config->next)
 		{
@@ -740,25 +757,32 @@ void monster_struct::on_hp_changed(int damage)
 				continue;
 			assert(talk_config->n_EventNum2 > 0);
 			//判断血量在哪个区间
-			for (unsigned int i=0; i<talk_config->n_EventNum2; ++i)
+			//先确定 percent 和 old_percent 在哪两个区间
+			//[90,60,30]，血量一次从95%到 25% ，推送三次消息。
+			int section_cur = 0, section_bef = 0;
+			for(unsigned int idx=0; idx < talk_config->n_EventNum2; ++idx)
 			{
-				if (percent > talk_config->EventNum2[0])
-					continue;
-				if (old_percent <= talk_config->EventNum2[0])
-					continue;
+				if ((uint32_t)cur_percent < talk_config->EventNum2[idx])	
+					section_cur = idx + 1;
+				if ((uint32_t)old_percent < talk_config->EventNum2[idx])	
+					section_bef = idx + 1;
+			}
+
+			//同一区间不推送	
+			for(int idx = section_bef; idx < section_cur; ++idx)
+			{
 
 				MonsterTalkNotify nty;
 				monster_talk_notify__init(&nty);
 				nty.talkid = talk_config->ID;
 				nty.uuid = get_uuid();
-				nty.msgid = i;
+				nty.msgid = idx;
 				broadcast_to_sight(MSG_ID_MONSTER_TALK_NOTIFY, &nty, (pack_func)monster_talk_notify__pack, false);
-				break;
 			}
+
 			break;
 		}
 	}
-	
 	if (ai && ai->on_hp_changed)
 	{
 		ai->on_hp_changed(this, damage);
@@ -783,8 +807,15 @@ void monster_struct::on_dead(unit_struct *killer)
 
 	if (killer && drop_id > 0) //todo 国御目标怪根据任务掉落
 		killer->give_drop_item(drop_id, MAGIC_TYPE_MONSTER_DEAD, ADD_ITEM_AS_MUCH_AS_POSSIBLE);
-		
-	data->relive_time = ai_config->Regeneration * 1000 + time_helper::get_cached_time();
+	if (ai_config->RegenerationTpye == 1)
+	{
+		data->relive_time = ai_config->Regeneration[0] * 1000 + time_helper::get_cached_time();
+	} 
+	else
+	{
+		data->relive_time = rand_between(ai_config->Regeneration[0], ai_config->Regeneration[1]) * 1000 + time_helper::get_cached_time();
+	}
+			
 	scene_struct *o_scene = scene;
 	scene->delete_monster_from_scene(this, false);
 //	broadcast_monster_delete();
@@ -796,7 +827,7 @@ void monster_struct::on_dead(unit_struct *killer)
 	if (sight_space != NULL)
 	{
 		sight_space->broadcast_monster_delete(this);
-		if (sight_space->data->n_monster_uuid == 0)
+		if (sight_space->data->n_monster_uuid - sight_space->data->n_monster_call == 0)
 		{
 			if (player_kill)
 			{

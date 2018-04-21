@@ -8,7 +8,7 @@
 
 #define MAX_PLAYER_IN_SIGHT_SPACE 2
 #define MAX_PARTNER_IN_SIGHT_SPACE (MAX_PLAYER_IN_SIGHT_SPACE * MAX_PARTNER_BATTLE_NUM)
-#define MAX_MONSTER_IN_SIGHT_SPACE 30
+#define MAX_MONSTER_IN_SIGHT_SPACE 50
 #define MAX_COLLECT_IN_SIGHT_SPACE 20
 
 struct sight_space_data
@@ -19,6 +19,7 @@ struct sight_space_data
 //	uint64_t partner_uuid[MAX_PARTNER_IN_SIGHT_SPACE];	
 	uint64_t task_event[MAX_MONSTER_IN_SIGHT_SPACE];
 	uint64_t n_monster_uuid;
+	uint64_t n_monster_call;
 	uint64_t type; //0 ÈÎÎñ 1Ñ°±¦ 2ÑºïÚ
 };
 

@@ -16,6 +16,7 @@
 #include "buff_manager.h"
 #include "player_manager.h"
 #include "monster_manager.h"
+#include "partner_manager.h"
 
 //static const int MAX_TOWER_LEVEL = 100;
 enum TOWER_STATE
@@ -77,24 +78,33 @@ int refresh_next_tower(player_struct *player)
 	extern_data.player_id = player->get_uuid();
 	fast_send_msg(&conn_node_gamesrv::connecter, &extern_data, MSG_ID_START_CLIMB_TOWER_NOTIFY, start_tower__pack, send);
 
-	P20076Table *monTable = get_config_by_id(351601000 + player->data->tower.cur_lv, &tower_level_config);
-	if (monTable == NULL)
+	player->cur_scene_jump(raid->m_born_x, raid->m_born_z, 0, &extern_data);
+	uint64_t partner_uuid = player->get_fighting_partner();
+	partner_struct *pPartner = partner_manager::get_partner_by_uuid(partner_uuid);
+	if (pPartner != NULL && pPartner->scene != NULL)
 	{
-		return 7;
+		pPartner->jump_to_owner();
 	}
-	for (uint32_t i = 0; i < monTable->n_MonsterID; ++i)
-	{
-		for (uint32_t num = 0; num < monTable->MonsterNum[i]; ++num)
-		{
-			uint64_t x = monTable->BirthPointX + monTable->BirthRange - rand() % (2 * monTable->BirthRange + 1);
-			uint64_t z = monTable->BirthPointZ + monTable->BirthRange - rand() % (2 * monTable->BirthRange + 1);
-			monster_struct *mon = monster_manager::create_monster_at_pos(player->scene, monTable->MonsterID[i], monTable->MonsterLevel[i], x, z, 0, NULL, 0);
-			if (mon == NULL)
-			{
-				LOG_INFO("%s: player[%lu] add to %lu", __FUNCTION__, player->get_uuid(), raid->data->uuid);
-			}
-		}
-	}
+
+	raid->data->ai_data.tower_data.refresh = true;
+	//P20076Table *monTable = get_config_by_id(351601000 + player->data->tower.cur_lv, &tower_level_config);
+	//if (monTable == NULL)
+	//{
+	//	return 7;
+	//}
+	//for (uint32_t i = 0; i < monTable->n_MonsterID; ++i)
+	//{
+	//	for (uint32_t num = 0; num < monTable->MonsterNum[i]; ++num)
+	//	{
+	//		uint64_t x = monTable->BirthPointX + monTable->BirthRange - rand() % (2 * monTable->BirthRange + 1);
+	//		uint64_t z = monTable->BirthPointZ + monTable->BirthRange - rand() % (2 * monTable->BirthRange + 1);
+	//		monster_struct *mon = monster_manager::create_monster_at_pos(player->scene, monTable->MonsterID[i], monTable->MonsterLevel[i], x, z, 0, NULL, 0);
+	//		if (mon == NULL)
+	//		{
+	//			LOG_INFO("%s: player[%lu] add to %lu", __FUNCTION__, player->get_uuid(), raid->data->uuid);
+	//		}
+	//	}
+	//}
 	return 0;
 }
 
@@ -363,6 +373,33 @@ static void tower_raid_ai_attack(raid_struct *raid, player_struct *player, unit_
 
 }
 
+static void tower_raid_ai_player_region_changed(raid_struct *raid, player_struct *player, uint32_t old_region, uint32_t new_region)
+{
+	if (raid->data->ai_data.tower_data.refresh && new_region > 1)
+	{
+		raid->data->ai_data.tower_data.refresh = false;
+
+		P20076Table *monTable = get_config_by_id(351601000 + player->data->tower.cur_lv, &tower_level_config);
+		if (monTable == NULL)
+		{
+			return;
+		}
+		for (uint32_t i = 0; i < monTable->n_MonsterID; ++i)
+		{
+			for (uint32_t num = 0; num < monTable->MonsterNum[i]; ++num)
+			{
+				uint64_t x = monTable->BirthPointX + monTable->BirthRange - rand() % (2 * monTable->BirthRange + 1);
+				uint64_t z = monTable->BirthPointZ + monTable->BirthRange - rand() % (2 * monTable->BirthRange + 1);
+				monster_struct *mon = monster_manager::create_monster_at_pos(player->scene, monTable->MonsterID[i], monTable->MonsterLevel[i], x, z, 0, NULL, 0);
+				if (mon == NULL)
+				{
+					LOG_INFO("%s: player[%lu] add to %lu", __FUNCTION__, player->get_uuid(), raid->data->uuid);
+				}
+			}
+		}
+	}
+}
+
 
 //副本阵营战(阵营攻防)  新手阵营战
 struct raid_ai_interface raid_ai_tower_interface =
@@ -378,7 +415,7 @@ struct raid_ai_interface raid_ai_tower_interface =
 	tower_raid_ai_player_ready,
 	tower_raid_ai_finished,
 	tower_raid_ai_attack,
-	NULL,
+	tower_raid_ai_player_region_changed,
 	NULL, //护送结果
 	NULL, //和npc对话
 	NULL, //获取配置，主要是万妖谷的配置

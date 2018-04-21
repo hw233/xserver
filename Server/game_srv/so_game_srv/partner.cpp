@@ -368,6 +368,15 @@ player_struct *partner_struct::get_owner()
 	return m_owner;
 }
 
+void partner_struct::jump_to_owner()
+{
+	struct position target_pos;
+	calc_target_pos(&target_pos);
+	if (scene)
+		scene->delete_partner_from_scene(this, true);
+	set_pos(target_pos.pos_x, target_pos.pos_z);
+	m_owner->scene->add_partner_to_scene(this);
+}
 
 void partner_struct::on_tick()
 {
@@ -407,13 +416,7 @@ void partner_struct::on_tick()
 	if (!partner_sight_space && (d >= 24 * 24 || scene != m_owner->scene))
 	{
 			// 超过10米闪现
-		struct position target_pos;
-		calc_target_pos(&target_pos);
-		if (scene)
-			scene->delete_partner_from_scene(this, true);
-		set_pos(target_pos.pos_x, target_pos.pos_z);
-		m_owner->scene->add_partner_to_scene(this);
-//		set_pos_with_broadcast(target_pos.pos_x, target_pos.pos_z);
+		jump_to_owner();
 	}
 	else if (d >= 3 * 3)
 	{
@@ -487,7 +490,7 @@ void partner_struct::broadcast_to_sight_and_owner(uint16_t msg_id, void *msg_dat
 	}
 }
 
-int partner_struct::init_partner(uint32_t partner_id, player_struct *owner)
+int partner_struct::init_partner(uint32_t partner_id, player_struct *owner, PartnerTable *table)
 {
 	assert(data);
 	init_unit_struct();
@@ -495,12 +498,13 @@ int partner_struct::init_partner(uint32_t partner_id, player_struct *owner)
 	data->partner_id = partner_id;
 	data->owner_id = owner->get_uuid();
 	m_owner = owner;
-	config = get_config_by_id(partner_id, &partner_config);
-	if (!config)
-	{
-		LOG_ERR("[%s:%u] can't find config, partner_id:%u", __FUNCTION__, __LINE__, partner_id);
-		return -1;
-	}
+	config = table;
+	//config = get_config_by_id(partner_id, &partner_config);
+	//if (!config)
+	//{
+	//	LOG_ERR("[%s:%u] can't find config, partner_id:%u", __FUNCTION__, __LINE__, partner_id);
+	//	return -1;
+	//}
 	
 	scene = NULL;
 	area = NULL;

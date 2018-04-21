@@ -158,6 +158,6 @@ enum PlayerAttrId
 };
 
 typedef std::map<uint32_t, double> AttrMap;
-#define MAX_BUFF_FIGHT_ATTR (PLAYER_ATTR_FIGHTING_CAPACITY)
+#define MAX_BUFF_FIGHT_ATTR (PLAYER_ATTR_SHENGWANG)
 #define MAX_PARTNER_ATTR (PLAYER_ATTR_ALLEFFDF + 1)
 #endif

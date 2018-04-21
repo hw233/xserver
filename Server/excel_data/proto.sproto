@@ -79,6 +79,7 @@
 	DropID 27 : integer
 	CollectionDrop 28 : integer
 	CollectionProbability 29 : integer
+	SpecialDisplayIs 30 : integer
 }
 
 .SpiritTable {
@@ -356,12 +357,13 @@
 #	IsChase 3 : integer
 	ChaseRange 4 : integer
 	MovingChange 5 : integer
-	Regeneration 6 : integer
+	Regeneration 6 : *integer
 	AIType 7 : integer
 	GuardRange 8 : integer
 	StopMin 9 : integer
 	StopMax 10 : integer
 	Response 11 : integer
+	RegenerationTpye 12 : integer
 }
 
 .ActorHeadTable {
@@ -1905,6 +1907,8 @@
 	BuffIdFriend 8 : *integer
 	CallTime 9 : integer
 #	CallId 10 : integer
+	BuffIdEnemyFixed 11 : *integer
+	BuffIdFriendFixed 12 : *integer
 }
 
 .SyntheticTable {

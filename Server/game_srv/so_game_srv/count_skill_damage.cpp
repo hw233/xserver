@@ -150,13 +150,35 @@ int32_t count_skill_effect(const double *attack, const double *defence,
 	return ret;
 }
 
-	static bool check_can_add_buff(unit_struct *attack_unit, unit_struct *defence_unit, uint32_t buff_id)
+static bool check_can_add_buff(unit_struct *attack_unit, unit_struct *defence_unit, uint32_t buff_id)
 {
 	uint64_t type = buff_manager::get_buff_first_effect_type(buff_id);
 	if (buff_manager::is_move_buff_effect(type) &&
 		(defence_unit->is_in_lock_time() || (attack_unit->get_unit_type() == UNIT_TYPE_PLAYER && attack_unit->get_unit_type() == UNIT_TYPE_PLAYER )))
 		return false;
 	return true;
+}
+
+static void count_friend_buff_entry(struct BuffTable *config,
+	unit_struct *attack_unit, unit_struct *defence_unit,
+	uint32_t buff_add[], uint32_t *n_buff_add)
+{
+		int32_t rate;
+//		if (config->AtPro == 0 || config->DfPro)
+		rate = config->NeedPro;
+//		else
+//			rate = attack[config->AtPro] - defence[config->DfPro] + config->NeedPro;
+		int32_t randnum = random() % 10000;
+
+		if (randnum > rate)
+			return;
+
+//		uint32_t time = config->Time;
+		buff_manager::create_default_buff(config->ID, attack_unit, defence_unit);
+		
+		buff_add[*n_buff_add] = config->ID;
+//		buff_add_end_time[*n_buff_add + n] = (now + time) / 1000;		
+		++(*n_buff_add);
 }
 
 static void count_friend_buff(struct SkillTimeTable *timeconfig,
@@ -170,7 +192,7 @@ static void count_friend_buff(struct SkillTimeTable *timeconfig,
 	struct BuffTable *config;
 //	double *attack = attack_unit->get_all_attr();
 //	double *defence = defence_unit->get_all_attr();
-	int n = 0;
+//	int n = 0;
 //	uint64_t now = time_helper::get_cached_time();	
 
 	for (size_t i = 0; i < timeconfig->n_BuffIdFriend; ++i)
@@ -181,104 +203,85 @@ static void count_friend_buff(struct SkillTimeTable *timeconfig,
 		config = get_config_by_id(timeconfig->BuffIdFriend[i] + skill_lv - 1, &buff_config);
 		if (!config)
 			continue;
+		count_friend_buff_entry(config, attack_unit, defence_unit, buff_add, n_buff_add);
 
-		int32_t rate;
-//		if (config->AtPro == 0 || config->DfPro)
-			rate = config->NeedPro;
-//		else
-//			rate = attack[config->AtPro] - defence[config->DfPro] + config->NeedPro;
-		int32_t randnum = random() % 10000;
-
-		if (randnum > rate)
-			continue;
-
-//		uint32_t time = config->Time;
-		buff_manager::create_default_buff(timeconfig->BuffIdFriend[i], attack_unit, defence_unit);
-		
-		buff_add[*n_buff_add + n] = timeconfig->BuffIdFriend[i];
-//		buff_add_end_time[*n_buff_add + n] = (now + time) / 1000;		
-		++n;
 	}
-//	buff_manager::add_skill_buff(attack_unit, defence_unit, n, &buff_add[*n_buff_add], &buff_add_end_time[*n_buff_add]);
-	(*n_buff_add) += n;
-}
-static void count_enemy_buff(struct SkillTimeTable *timeconfig,
-	uint32_t skill_lv,
-	unit_struct *attack_unit,
-	unit_struct *defence_unit,
-	uint32_t buff_add[],
-	uint32_t buff_add_end_time[],
-	uint32_t *n_buff_add)
-{
-	struct BuffTable *config;
-	double *attack = attack_unit->get_all_attr();
-	double *defence = defence_unit->get_all_attr();
-	int n = 0;
-//	uint64_t now = time_helper::get_cached_time();
-
-	for (size_t i = 0; i < timeconfig->n_BuffIdEnemy; ++i)
+	for (size_t i = 0; i < timeconfig->n_BuffIdFriendFixed; ++i)
 	{
-		if (!check_can_add_buff(attack_unit, defence_unit, timeconfig->BuffIdEnemy[i]))
+		if (!check_can_add_buff(attack_unit, defence_unit, timeconfig->BuffIdFriendFixed[i]))
 			continue;
 
-		config = get_config_by_id(timeconfig->BuffIdEnemy[i] + skill_lv - 1, &buff_config);
+		config = get_config_by_id(timeconfig->BuffIdFriendFixed[i], &buff_config);
 		if (!config)
 			continue;
+		count_friend_buff_entry(config, attack_unit, defence_unit, buff_add, n_buff_add);
 
-		if (defence_unit->buff_state & BUFF_STATE_AVOID_TRAP && config->IsControl)
-			continue;
+	}
+	
+//	buff_manager::add_skill_buff(attack_unit, defence_unit, n, &buff_add[*n_buff_add], &buff_add_end_time[*n_buff_add]);
+//	(*n_buff_add) += n;
+}
 
-			  // 攻方实际受伤几率=攻方受伤几率/（攻方受伤几率+特殊属性基础值）
-			  // 守方实际抗受伤几率=守方抗受伤几率/（守方抗受伤几率+特殊属性基础值）
+static void count_enemy_buff_entry(	unit_struct *attack_unit,
+	unit_struct *defence_unit, struct BuffTable *config,
+	double *attack,	double *defence,
+	uint32_t buff_add[], uint32_t buff_add_end_time[],
+	uint32_t *n_buff_add )
+{
+	if (defence_unit->buff_state & BUFF_STATE_AVOID_TRAP && config->IsControl)
+		return;
 
-			  // if（攻方技能几率+攻方实际受伤几率<守方实际抗受伤几率)
-			  //      攻方受伤buff触发几率=0
-			  // else
-			  //      攻方受伤buff触发几率=攻方技能几率+攻方实际受伤几率-守方实际抗受伤几率
+		// 攻方实际受伤几率=攻方受伤几率/（攻方受伤几率+特殊属性基础值）
+		// 守方实际抗受伤几率=守方抗受伤几率/（守方抗受伤几率+特殊属性基础值）
 
-		int32_t rate;
-		double attack_rate, defence_rate;
-		switch (config->DfPro)
-		{
+		// if（攻方技能几率+攻方实际受伤几率<守方实际抗受伤几率)
+		//      攻方受伤buff触发几率=0
+		// else
+		//      攻方受伤buff触发几率=攻方技能几率+攻方实际受伤几率-守方实际抗受伤几率
+
+	int32_t rate;
+	double attack_rate, defence_rate;
+	switch (config->DfPro)
+	{
 			// case PLAYER_ATTR_DEEFFDF:
 			// 	attack_rate = 0;
 			// 	defence_rate = defence[config->DfPro];
 			// 	break;
-			case PLAYER_ATTR_DIZZYDF:
-				attack_rate = attack[PLAYER_ATTR_DIZZY];
-				defence_rate = defence[config->DfPro];
-				break;
-			case PLAYER_ATTR_SLOWDF:
-				attack_rate = attack[PLAYER_ATTR_SLOW];
-				defence_rate = defence[config->DfPro];
-				break;
-			case PLAYER_ATTR_MABIDF:
-				attack_rate = attack[PLAYER_ATTR_MABI];
-				defence_rate = defence[config->DfPro];
-				break;
-			case PLAYER_ATTR_HURTDF:
-				attack_rate = attack[PLAYER_ATTR_HURT];
-				defence_rate = defence[config->DfPro];
-				break;
-			case PLAYER_ATTR_CANDF:
-				attack_rate = attack[PLAYER_ATTR_CAN];
-				defence_rate = defence[config->DfPro];
-				break;
-			default:
-				attack_rate = defence_rate = 0;
-				break;
-		}
-		attack_rate = attack_rate / (attack_rate + sg_fight_param_161000289);
-		defence_rate = defence_rate / (defence_rate + sg_fight_param_161000289);
+		case PLAYER_ATTR_DIZZYDF:
+			attack_rate = attack[PLAYER_ATTR_DIZZY];
+			defence_rate = defence[config->DfPro];
+			break;
+		case PLAYER_ATTR_SLOWDF:
+			attack_rate = attack[PLAYER_ATTR_SLOW];
+			defence_rate = defence[config->DfPro];
+			break;
+		case PLAYER_ATTR_MABIDF:
+			attack_rate = attack[PLAYER_ATTR_MABI];
+			defence_rate = defence[config->DfPro];
+			break;
+		case PLAYER_ATTR_HURTDF:
+			attack_rate = attack[PLAYER_ATTR_HURT];
+			defence_rate = defence[config->DfPro];
+			break;
+		case PLAYER_ATTR_CANDF:
+			attack_rate = attack[PLAYER_ATTR_CAN];
+			defence_rate = defence[config->DfPro];
+			break;
+		default:
+			attack_rate = defence_rate = 0;
+			break;
+	}
+	attack_rate = attack_rate / (attack_rate + sg_fight_param_161000289);
+	defence_rate = defence_rate / (defence_rate + sg_fight_param_161000289);
 
-		if (config->NeedPro + attack_rate < defence_rate)
-			continue;
+	if (config->NeedPro + attack_rate < defence_rate)
+		return;
 
-		rate = config->NeedPro + attack_rate - defence_rate;
-		int32_t randnum = random() % 10000;
+	rate = config->NeedPro + attack_rate - defence_rate;
+	int32_t randnum = random() % 10000;
 
-		if (randnum > rate)
-			continue;
+	if (randnum > rate)
+		return;
 
 		// 	  // 攻方实际受伤时间比例=攻方受伤时间/（攻方受伤时间+特殊属性基础值）
 		// 	  // 守方实际抗受伤时间比例=守方抗受伤时间/（守方抗受伤时间+特殊属性基础值）
@@ -326,14 +329,55 @@ static void count_enemy_buff(struct SkillTimeTable *timeconfig,
 		// 	time = time * (1 + attack_rate - defence_rate);
 
 		//buff_manager::create_buff(lvconfig->BuffIdEnemy[i], now + time, attack_unit, defence_unit);
-		buff_manager::create_default_buff(timeconfig->BuffIdEnemy[i], attack_unit, defence_unit);		
+	buff_manager::create_default_buff(config->ID, attack_unit, defence_unit);		
 
-		buff_add[*n_buff_add + n] = timeconfig->BuffIdEnemy[i];
+	buff_add[*n_buff_add] = config->ID;
 //		buff_add_end_time[*n_buff_add + n] = (now + time) / 1000;
-		++n;
+	++(*n_buff_add);
 //		++(*n_buff_add);
+	
+}
+
+static void count_enemy_buff(struct SkillTimeTable *timeconfig,
+	uint32_t skill_lv,
+	unit_struct *attack_unit,
+	unit_struct *defence_unit,
+	uint32_t buff_add[],
+	uint32_t buff_add_end_time[],
+	uint32_t *n_buff_add)
+{
+	struct BuffTable *config;
+	double *attack = attack_unit->get_all_attr();
+	double *defence = defence_unit->get_all_attr();
+//	int n = 0;
+//	uint64_t now = time_helper::get_cached_time();
+
+	for (size_t i = 0; i < timeconfig->n_BuffIdEnemy; ++i)
+	{
+		if (!check_can_add_buff(attack_unit, defence_unit, timeconfig->BuffIdEnemy[i]))
+			continue;
+
+		config = get_config_by_id(timeconfig->BuffIdEnemy[i] + skill_lv - 1, &buff_config);
+		if (!config)
+			continue;
+		
+		count_enemy_buff_entry(attack_unit, defence_unit, config, attack, defence, buff_add, buff_add_end_time, n_buff_add);
 	}
-	(*n_buff_add) += n;
+
+	for (size_t i = 0; i < timeconfig->n_BuffIdEnemyFixed; ++i)
+	{
+		if (!check_can_add_buff(attack_unit, defence_unit, timeconfig->BuffIdEnemyFixed[i]))
+			continue;
+
+		config = get_config_by_id(timeconfig->BuffIdEnemyFixed[i], &buff_config);
+		if (!config)
+			continue;
+		
+		count_enemy_buff_entry(attack_unit, defence_unit, config, attack, defence, buff_add, buff_add_end_time, n_buff_add);
+	}
+
+	
+//	(*n_buff_add) += n;
 }
 
 // // TODO: 阵营神马的

@@ -48,7 +48,7 @@ public:
 
 		//刷出一个怪物并加入相位
 	static monster_struct *create_sight_space_monster(sight_space_struct *sight_space, scene_struct *scene,
-		uint32_t monster_id, uint32_t level, double pos_x, double pos_z);	
+		uint32_t monster_id, uint32_t level, double pos_x, double pos_z, unit_struct *owner);	
 		//刷出一个只有指定玩家能看到的怪物, 没有用
 //	static monster_struct *create_sight_only_monster(player_struct *player, uint32_t monster_id, uint32_t level, double pos_x, double pos_z);
 		//刷出一个技能召唤的怪物

@@ -205,6 +205,7 @@ int main(int argc, char **argv)
 	sprintf(sg_normal_red_packet_key, "all_normal_red_packet_%u", sg_server_id);
 	sprintf(sg_guild_red_packet_key, "all_guild_red_packet_%u", sg_server_id);
 	sprintf(sg_player_red_packet_record_key, "all_player_red_packet_recive_record_%u", sg_server_id);
+	sprintf(sg_player_red_packet_all_history_key, "all_player_red_packet_all_history_%u", sg_server_id);
 	read_all_excel_data();
 	load_trade_module();
 	load_red_packet_redis_data();

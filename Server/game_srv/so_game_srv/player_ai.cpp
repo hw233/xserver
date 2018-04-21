@@ -403,7 +403,7 @@ static void set_ai_player_skill_next_timeout(struct ai_player_data *ai_player_da
 		ai_player_data->ontick_time = min;	
 }
 
-bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, player_struct *target, uint32_t skill_id)
+bool do_attack(player_struct *player, struct ai_player_data *ai_player_data, unit_struct *target, uint32_t skill_id)
 {
 	struct position *my_pos = player->get_pos();
 	struct position *his_pos = target->get_pos();

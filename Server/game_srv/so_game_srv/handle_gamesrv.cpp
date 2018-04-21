@@ -748,6 +748,44 @@ static int handle_skill_hit_notify(player_struct *player, EXTERN_DATA *extern_da
 }
 */
 
+extern std::map<uint64_t, uint64_t> g_special_mon_map;
+static int handle_open_big_map_request(player_struct *player, EXTERN_DATA *extern_data)
+{
+	if (comm_check_player_valid(player, extern_data->player_id) != 0)
+	{
+		LOG_ERR("%s: %lu common check failed", __FUNCTION__, extern_data->player_id);
+		return (-1);
+	}
+	OpenBigMapAns send;
+	open_big_map_ans__init(&send);
+	SpecialMonPos mon[20];
+	SpecialMonPos *monPoint[20];
+	int num = 0;
+	for (std::map<uint64_t, uint64_t>::iterator it = g_special_mon_map.begin(); it != g_special_mon_map.end() && num < 20; ++it)
+	{
+		if (it->second != player->data->scene_id)
+		{
+			continue;
+		}
+		monster_struct *pMon = monster_manager::get_monster_by_id(it->first);
+		if (pMon == NULL)
+		{
+			continue;
+		}
+		monPoint[num] = &mon[num];
+		special_mon_pos__init(monPoint[num]);
+		mon[num].id = pMon->data->monster_id;
+		mon[num].x = pMon->get_pos()->pos_x;
+		mon[num].z = pMon->get_pos()->pos_z;
+		++num;
+	}
+	send.n_monster = num;
+	send.monster = monPoint;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_OPEN_BIG_MAP_ANSWER, open_big_map_ans__pack, send);
+
+	return 0;
+}
+
 static int handle_learn_skill_request(player_struct *player, EXTERN_DATA *extern_data)
 {
 	if (comm_check_player_valid(player, extern_data->player_id) != 0)
@@ -2769,8 +2807,8 @@ static int handle_one_way_trans_start_request(player_struct *player, EXTERN_DATA
 		return (-1);
 	}
 
-	const static struct position pos1 = {333.8, 232.1};
-	const static struct position pos2 = {135.5, 297.3};
+	//const static struct position pos1 = {347.1, 246.0};
+	const static struct position pos2 = {104.0, 233.5};
 	
 	if (player->scene->m_id != DEFAULT_SCENE_ID)
 	{
@@ -2789,12 +2827,12 @@ static int handle_one_way_trans_start_request(player_struct *player, EXTERN_DATA
 	}
 	uint32_t scene_id;
 	float pos_x, pos_z;
-	if (!check_circle_in_range(&pos1, player->get_pos(), 8))
+	/*if (!check_circle_in_range(&pos1, player->get_pos(), 30))
 	{
 		LOG_ERR("%s: player[%lu] at scene[%u][%.1f][%.1f] too far", __FUNCTION__, extern_data->player_id, player->scene->m_id, player->get_pos()->pos_x, player->get_pos()->pos_z);
 		send_comm_answer(MSG_ID_ONE_WAY_TRANSFER_START_ANSWER, -4, extern_data);
 		return (-5);
-	}
+	}*/
 	scene_id = DEFAULT_SCENE_ID;
 	pos_x = pos2.pos_x;
 	pos_z = pos2.pos_z;
@@ -4191,7 +4229,7 @@ static int notify_task_list(player_struct *player, EXTERN_DATA *extern_data)
 		}
 		resp.n_ongoing_list++;
 	}
-	LOG_INFO("[%s:%d] player[%lu] name=%s,task_id=%d, ", __FUNCTION__, __LINE__, extern_data->player_id, player->get_name(), resp.n_ongoing_list);
+	LOG_INFO("[%s:%d] player[%lu] name=%s,task_id=%lu ", __FUNCTION__, __LINE__, extern_data->player_id, player->get_name(), resp.n_ongoing_list);
 	std::vector<uint32_t> finish_data;
 	std::copy(player->task_finish_set.begin(), player->task_finish_set.end(), back_inserter(finish_data));
 	resp.n_finish_list = finish_data.size();
@@ -13575,6 +13613,9 @@ static int handle_guoyu_boss_appear_request(player_struct *player, EXTERN_DATA *
 		return (-10);
 	}
 	int bossId = req->id;
+	float x = req->x;
+	float z = req->z;
+	float y = req->y;
 	boss_id__free_unpacked(req, NULL);
 
 	if (player->data->scene_id < SCENCE_DEPART)
@@ -13588,6 +13629,9 @@ static int handle_guoyu_boss_appear_request(player_struct *player, EXTERN_DATA *
 		BossId send;
 		boss_id__init(&send);
 		send.id = bossId;
+		send.x = x;
+		send.z = z;
+		send.y = y;
 		fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_GUOYU_BOSS_APPEAR_NOTIFY, boss_id__pack, send);
 		raid->data->ai_data.guoyu_data.note_boss = true;
 	}
@@ -17081,20 +17125,124 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 	detail_data.name = target->data->name;
 
 	std::vector<uint32_t> attrIds;
-	attrIds.push_back(PLAYER_ATTR_LEVEL);
-	attrIds.push_back(PLAYER_ATTR_JOB);
-	attrIds.push_back(PLAYER_ATTR_HEAD);
-	attrIds.push_back(PLAYER_ATTR_CLOTHES);
-	attrIds.push_back(PLAYER_ATTR_CLOTHES_COLOR_UP);
-	attrIds.push_back(PLAYER_ATTR_CLOTHES_COLOR_DOWN);
-	attrIds.push_back(PLAYER_ATTR_HAT);
-	attrIds.push_back(PLAYER_ATTR_HAT_COLOR);
-	attrIds.push_back(PLAYER_ATTR_WEAPON);
-	attrIds.push_back(PLAYER_ATTR_BAGUA);
-	attrIds.push_back(PLAYER_ATTR_ZHENYING);
-	attrIds.push_back(PLAYER_ATTR_FIGHTING_CAPACITY);
+// s
+	attrIds.push_back(PLAYER_ATTR_HP);//生命
+	attrIds.push_back(PLAYER_ATTR_MAXHP);  //生命值上限
+	attrIds.push_back(PLAYER_ATTR_ATTACK); //攻击
+	attrIds.push_back(PLAYER_ATTR_DFWUDEL );//= 4, //忽略全抗
+	attrIds.push_back(PLAYER_ATTR_ATK_METAL );//= 5, //金攻
+	attrIds.push_back(PLAYER_ATTR_ATK_WOOD );//= 6, //木攻
+	attrIds.push_back(PLAYER_ATTR_ATK_WATER );//= 7, //水攻
+	attrIds.push_back(PLAYER_ATTR_ATK_FIRE);// = 8, //火攻
+	attrIds.push_back(PLAYER_ATTR_ATK_EARTH );//= 9, //土攻
+	attrIds.push_back(PLAYER_ATTR_DEF_METAL );//= 10, //金抗
+	attrIds.push_back(PLAYER_ATTR_DEF_WOOD );//= 11, //木抗
+	attrIds.push_back(PLAYER_ATTR_DEF_WATER );//= 12, //水抗
+	attrIds.push_back(PLAYER_ATTR_DEF_FIRE );//= 13, //火抗
+	attrIds.push_back(PLAYER_ATTR_DEF_EARTH );//= 14, //土抗
+	attrIds.push_back(PLAYER_ATTR_DODGE);// 15, //闪避
+	attrIds.push_back(PLAYER_ATTR_HIT );//= 16, //命中
+	attrIds.push_back(PLAYER_ATTR_CRIT ); //17, //暴击
+	attrIds.push_back(PLAYER_ATTR_CRIT_DEF );//= 18, //暴抗
+	attrIds.push_back(PLAYER_ATTR_CRT_DMG );// 19, //暴击伤害
+	attrIds.push_back(PLAYER_ATTR_CRT_DMG_DEF );//= 20, //暴击免伤
+	attrIds.push_back(PLAYER_ATTR_MOVE_SPEED );//= 21, //移动速度
+	
+	attrIds.push_back(PLAYER_ATTR_DODGEDF );//= 22, //	忽略闪避
+	attrIds.push_back(PLAYER_ATTR_DIZZY );// 23, //	眩晕几率
+	attrIds.push_back(PLAYER_ATTR_SLOW );//= 24, //	迟缓几率
+	attrIds.push_back(PLAYER_ATTR_MABI );//= 25, //	麻痹几率
+	attrIds.push_back(PLAYER_ATTR_HURT );//= 26, //	受伤几率
+	attrIds.push_back(PLAYER_ATTR_CAN );//= 27, //	致残几率
+	attrIds.push_back(PLAYER_ATTR_DIZZYDF );//= 28, //	抗眩晕几率
+	attrIds.push_back(PLAYER_ATTR_SLOWDF );//= 29, //	抗迟缓几率
+	attrIds.push_back(PLAYER_ATTR_MABIDF );//= 30, //	抗麻痹几率
+    attrIds.push_back(PLAYER_ATTR_HURTDF );//= 31, //	抗受伤几率
+	attrIds.push_back(PLAYER_ATTR_CANDF );// 32, //	抗致残几率
+	attrIds.push_back(PLAYER_ATTR_CANDF );//= 32, //	抗致残几率
+	attrIds.push_back(PLAYER_ATTR_PVPAT );//= 33, // 穿刺
+	attrIds.push_back(PLAYER_ATTR_PVPDF );//= 34, //霸体
+	attrIds.push_back(PLAYER_ATTR_REGION_ID );//= 35, //区域ID
+	attrIds.push_back(PLAYER_ATTR_FIGHTING_CAPACITY );//= 36, //战斗力
+	
+	attrIds.push_back(PLAYER_ATTR_PVPAT );//= 33, // 穿刺
+	attrIds.push_back(PLAYER_ATTR_PVPDF );//= 34, //霸体
+	attrIds.push_back(PLAYER_ATTR_REGION_ID );//= 35, //区域ID
+	attrIds.push_back(PLAYER_ATTR_FIGHTING_CAPACITY );//= 36, //战斗力
+	
+	attrIds.push_back(PLAYER_ATTR_LEVEL );//= 45, //等级
+	attrIds.push_back(PLAYER_ATTR_FLY_SPEED );//= 46, //飞行速度
+	attrIds.push_back(PLAYER_ATTR_ZHENYING );//= 47, //阵营
+	attrIds.push_back(PLAYER_ATTR_PK_TYPE );//= 48, //pk模式 0和平,1阵营,2杀戮
+	attrIds.push_back(PLAYER_ATTR_FIGHT_MAX);       //战斗相关的最大属性ID
+
+	attrIds.push_back(PLAYER_ATTR_JOB );//= 51, //职业
+	attrIds.push_back(PLAYER_ATTR_SILVER );//= 52, //银两
+	attrIds.push_back(PLAYER_ATTR_EXP );//= 53, //经验
+
+	attrIds.push_back(PLAYER_ATTR_GOLD );//= 54, //元宝
+	attrIds.push_back(PLAYER_ATTR_BIND_GOLD );//= 55, //绑定元宝
+	attrIds.push_back(PLAYER_ATTR_COIN );//= 56, //银票
+	attrIds.push_back(PLAYER_ATTR_HEAD );//= 57, //头像
+	attrIds.push_back(PLAYER_ATTR_CLOTHES );//= 58, //衣服
+	attrIds.push_back(PLAYER_ATTR_CLOTHES_COLOR_UP );//= 59, //衣服颜色
+	attrIds.push_back(PLAYER_ATTR_HAT );//= 60, //帽子
+	attrIds.push_back(PLAYER_ATTR_HAT_COLOR );//= 61, //帽子颜色
+	attrIds.push_back(PLAYER_ATTR_CLOTHES_COLOR_DOWN );// 62, //衣服颜色
+
+	attrIds.push_back(PLAYER_ATTR_RELIVE_TYPE1 );//= 63, //原地复活，类型1
+	attrIds.push_back(PLAYER_ATTR_RELIVE_TYPE2 );//= 64, //原地复活，类型2
+
+	attrIds.push_back(PLAYER_ATTR_WEAPON );//= 65, //武器外形
+	
+	attrIds.push_back(PLAYER_ATTR_CUR_HORSE );//= 67, //当前坐骑
+	attrIds.push_back(PLAYER_ATTR_ON_HORSE_STATE );//= 68, //乘骑状态 0:下坐骑 1:上坐骑
+	attrIds.push_back(PLAYER_ATTR_ZHENQI );//= 69, //真气
+
+	attrIds.push_back(PLAYER_ATTR_MURDER );//= 70, //杀戮值
+	attrIds.push_back(PLAYER_ATTR_GONGXUN );//= 71, //功勋
+	attrIds.push_back(PLAYER_ATTR_BAGUA );//= 72, //八卦牌
+	attrIds.push_back(PLAYER_ATTR_ACTIVENESS );//= 73, //活动活跃度
+
+	attrIds.push_back(PLAYER_ATTR_ENERGY );//= 77, //精力值
+	attrIds.push_back(PLAYER_ATTR_BRAVE );//= 78, //勇武值
+	
+	attrIds.push_back(PLAYER_ATTR_ITEM_HP_CD );//= 79, //加血药剂CD
+	attrIds.push_back(PLAYER_ATTR_ITEM_HP_POOL_CD );//== 80, //血池药品CD	
+	attrIds.push_back(PLAYER_ATTR_PARTNER_FIGHT );// 81, //伙伴出战状态
+	attrIds.push_back(PLAYER_ATTR_PARTNER_PRECEDENCE );//= 82, //主战伙伴是否优先出战
+	attrIds.push_back(PLAYER_ATTR_PARTNER_ANGER ); //伙伴怒气
+	attrIds.push_back(PLAYER_ATTR_WEAPON_COLOR ); //武器外形
+	attrIds.push_back(PLAYER_ATTR_TI ); //		 体质
+	attrIds.push_back(PLAYER_ATTR_LI ); // 	力量
+	attrIds.push_back(PLAYER_ATTR_MIN ); //	敏捷
+	attrIds.push_back(PLAYER_ATTR_LING ); //	灵巧
+	attrIds.push_back(PLAYER_ATTR_HEALTHPRO ); // 	基础生命加成
+	attrIds.push_back(PLAYER_ATTR_ATTACKPRO ); // 	基础攻击加成
+	attrIds.push_back(PLAYER_ATTR_DFWU ); //	全系抗性
+	attrIds.push_back(PLAYER_ATTR_ALLEFF ); //	属性效果几率
+	attrIds.push_back(PLAYER_ATTR_ALLEFFDF ); //	抗属性效果几率
+	attrIds.push_back(PLAYER_ATTR_SHENGWANG ); //声望
+	attrIds.push_back(PLAYER_ATTR_XUEJING ); //血晶
+	attrIds.push_back(PLAYER_ATTR_LINGSHI ); //灵石
+
+	attrIds.push_back(PLAYER_ATTR_TITLE ); //称号
+	attrIds.push_back(PLAYER_ATTR_EXP_ZHENQI ); //经验转换的真气
+	attrIds.push_back(PLAYER_ATTR_BASELV ); // 	体质成长
+	attrIds.push_back(PLAYER_ATTR_TILV ); // 	体质成长
+	attrIds.push_back(PLAYER_ATTR_LILV ); // 	力量成长
+	attrIds.push_back(PLAYER_ATTR_MINLV ); //	敏捷成长
+	attrIds.push_back(PLAYER_ATTR_LINGLV ); //灵巧成长
+
+	attrIds.push_back(PLAYER_ATTR_SEX ); //性别
+
+// e
+
+
+
 	detail_data.n_attrs = 0;
 	detail_data.attrs = player_attr_point;
+
 	for (std::vector<uint32_t>::iterator iter = attrIds.begin(); iter != attrIds.end(); ++iter)
 	{
 		player_attr_point[detail_data.n_attrs] = &player_attr[detail_data.n_attrs];
@@ -17103,6 +17251,9 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 		player_attr[detail_data.n_attrs].val = target->get_attr(*iter);
 		detail_data.n_attrs++;
 	}
+
+	//read configure file 2.calulate id , send 
+	
 
 	detail_data.personality = &personality_data;
 	personality_data.sex = target->data->personality_sex;
@@ -17266,6 +17417,7 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 
 	detail_data.teamid = target->data->teamid;
 	detail_data.status = status;
+
 
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_GET_OTHER_INFO_ANSWER, get_other_info_answer__pack, resp);
 }
@@ -25277,6 +25429,11 @@ int handle_red_packet_send_red_request(player_struct* player, EXTERN_DATA* exter
 		red_packet_send_request__free_unpacked(req, NULL);
 		return -3;
 	}
+	if(red_money_num < send_red_packet_num)
+	{
+		LOG_ERR("[%s:%d] send red packet data error red_money_num[%u] send_red_packet_num[%u]", __FUNCTION__, __LINE__, red_money_num, send_red_packet_num);
+		return -4;
+	}
 
 	int ret = 0;
 	do {
@@ -25605,6 +25762,8 @@ void install_msg_handle()
 
 	add_msg_handle(MSG_ID_MOVE_Y_START_REQUEST, handle_move_y_start_request);
 	add_msg_handle(MSG_ID_MOVE_Y_STOP_REQUEST, handle_move_y_stop_request);
+
+	add_msg_handle(MSG_ID_OPEN_BIG_MAP_REQUEST, handle_open_big_map_request);
 
 	add_msg_handle(MSG_ID_BAG_INFO_REQUEST, handle_bag_info_request);
 	add_msg_handle(MSG_ID_BAG_UNLOCK_GRID_REQUEST, handle_bag_unlock_grid_request);

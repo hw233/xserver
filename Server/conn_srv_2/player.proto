@@ -1,0 +1,8 @@
+syntax = "proto2";
+package grace.proto.msg;
+
+message Player {
+    required uint32  id = 1;         //唯一ID  首次登录时设置为0，由服务器分配
+    required string  name = 2;       //显示名字
+    required uint64  enterTime = 3;  //登录时间
+}

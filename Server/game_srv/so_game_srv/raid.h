@@ -186,6 +186,7 @@ union raid_ai_data
 	struct
 	{
 		uint32_t state;   //
+		bool refresh;
 		uint64_t end;   //
 	} tower_data;
 

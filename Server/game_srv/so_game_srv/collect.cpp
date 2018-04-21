@@ -38,6 +38,7 @@ Collect::Collect()
 	m_raid_uuid = 0;
 	m_dropId = 0;
 	m_rand_id = 0;
+	m_isTeam = false;
 	++collect_g_collect_num;
 }
 
@@ -328,6 +329,10 @@ int Collect::BegingGather(player_struct *player, uint32_t step)
 	{
 		return 190500577;
 	}
+	else if (m_isTeam && player->data->m_team_collect_num > sg_team_collect_num)
+	{
+		return 190500577;
+	}
 	std::map<uint64_t, struct CollectTable *>::iterator it = collect_config.find(m_collectId);
 	if (it == collect_config.end())
 	{
@@ -480,6 +485,10 @@ int Collect::GatherComplete(player_struct *player)
 	if (m_rand_id > 0)
 	{
 		++player->data->m_rand_collect_num;
+	}
+	else if (m_isTeam)
+	{
+		++player->data->m_team_collect_num;
 	}
 	return DoGatherDrop(player);
 }
@@ -728,7 +737,7 @@ int Collect::CreateRandCollect(scene_struct *scene)
 			if (ret == NULL)
 				return 3;
 			ret->m_rand_id = *itV;
-			LOG_ERR("%s %d: scene[%lu] CreateRandCollect failed x=%f,y=%f", __FUNCTION__, __LINE__, scene->m_id, table->PointX[pos], table->PointZ[pos]);
+			LOG_DEBUG("%s %d: scene[%u] CreateRandCollect failed x=%f,y=%f", __FUNCTION__, __LINE__, scene->m_id, table->PointX[pos], table->PointZ[pos]);
 		}
 	}
 	return 0;
@@ -737,9 +746,11 @@ int Collect::CreateRandCollect(scene_struct *scene)
 int Collect::CreateTeamCollect(player_struct *player, uint32_t id)
 {
 	player_struct * m_mem[MAX_TEAM_MEM + 1];
+	int num = 0;
 	if (player->m_team == NULL)
 	{
 		m_mem[0] = player;
+		++num;
 	}
 	else
 	{
@@ -747,14 +758,18 @@ int Collect::CreateTeamCollect(player_struct *player, uint32_t id)
 		{
 			if (player->m_team->m_team_player[i] != NULL && player->m_team->m_team_player[i]->data->scene_id == player->data->scene_id)
 			{
-				m_mem[i] = player->m_team->m_team_player[i];
+				m_mem[num++] = player->m_team->m_team_player[i];
 			}
 		}
 	}
 
-	for (int i = 0; i < MAX_TEAM_MEM; ++i)
+	for (int i = 0; i < num; ++i)
 	{
-		CreateCollectByPos(player->scene, id, player->get_pos()->pos_x, 0, player->get_pos()->pos_z, 0, m_mem[i]);
+		Collect *pCollect = CreateCollectByPos(player->scene, id, player->get_pos()->pos_x, 10000, player->get_pos()->pos_z, 0, m_mem[i]);
+		if (pCollect != NULL)
+		{
+			pCollect->m_isTeam = true;
+		}
 	}
 	return 0;
 }

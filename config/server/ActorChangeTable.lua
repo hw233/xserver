@@ -22,6 +22,12 @@ local ActorChangeTable = {
 		['ResId'] = 130300041,
 		['Skill'] = {111304101,111304102,111304104,0,0,0},
 		['PassiveSkill'] = {0}
+		},
+	[106000005] = {
+		['ID'] = 106000005,
+		['ResId'] = 130300040,
+		['Skill'] = {111304001,111304002,0,0,0,0},
+		['PassiveSkill'] = {0}
 		}
 	}
 return ActorChangeTable

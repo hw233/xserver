@@ -31,11 +31,13 @@ std::set<uint32_t> sg_friend_gift_id;
 uint32_t sg_friend_track_item_id;
 uint32_t sg_friend_track_item_num;
 uint32_t sg_friend_track_time;
+uint32_t  MAX_TOWER_LEVEL;
 
 std::map<uint64_t, struct RandomCardRewardTable*> wanyaoka_reward_config; //万妖卡奖励配置
 std::map<uint64_t, struct ParameterTable *> parameter_config;
 std::map<uint64_t, struct CampTable*> zhenying_base_config; //阵营基础信息表
 std::map<uint64_t, struct GiftTable*> friend_gift_config; //好友礼物表
+std::map<uint64_t, struct P20076Table*> tower_level_config; //冲塔表
 
 static void generate_parameters(void)
 {
@@ -115,6 +117,8 @@ static void generate_parameters(void)
 		sg_friend_track_item_num = config->parameter1[1];
 		sg_friend_track_time = config->parameter1[2];
 	}
+
+	MAX_TOWER_LEVEL = tower_level_config.size();
 }
 
 typedef std::map<uint64_t, void *> *config_type;
@@ -139,6 +143,11 @@ int read_all_excel_data()
 	struct sproto_type *type = sproto_type(sp, "RandomCardRewardTable");
 	assert(type);
 	ret = traverse_main_table(L, type, "../lua_data/RandomCardRewardTable.lua", (config_type)&wanyaoka_reward_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "P20076Table");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/P20076Table.lua", (config_type)&tower_level_config);
 	assert(ret == 0);
 
 	type = sproto_type(sp, "ParameterTable");

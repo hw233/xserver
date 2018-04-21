@@ -140,6 +140,10 @@ int sight_space_struct::broadcast_partner_delete(partner_struct *partner)
 int sight_space_struct::broadcast_monster_delete(monster_struct *monster)
 {
 	--data->n_monster_uuid;
+	if (monster->data->owner != 0)
+	{
+		--data->n_monster_call;
+	}
 	return (0);
 }
 

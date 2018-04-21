@@ -51,6 +51,7 @@ void init_redis_keys(uint32_t server_id)
 	sprintf(sg_player_cache_key, "s%u_player_cache", server_id);
 	sprintf(sg_friend_key, "s%u_friend", server_id);
 	sprintf(sg_friend_chat_key, "s%u_friend_chat", server_id);
+	sprintf(conn_node_friendsrv::tower_cd_key, "tcd_%u", server_id);
 }
 
 // PlayerRedisInfo *get_redis_player(uint64_t player_id)

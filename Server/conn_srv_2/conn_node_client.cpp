@@ -5,6 +5,7 @@
 #include "tea.h"
 #include "msgid.h"
 #include "flow_record.h"
+#include "player.pb-c.h"
 #include <errno.h>
 #include <string.h>
 #include <assert.h>
@@ -143,6 +144,19 @@ void conn_node_client::remove_buflen(int len)
 	return;
 }
 
+void conn_node_client::on_recv_frame()
+{
+	Grace__Proto__Msg__Player *player = grace__proto__msg__player__unpack(NULL, buf_size(), buf_head());
+	UNUSED(player);
+//	char *data = (char *)buf_head();
+//					LOG_DEBUG("%s: get frame step4 fin %d opcode %d, len = %d, data = %s",
+//						__FUNCTION__, frame.fin, frame.opcode, frame.payload_len, data);
+//					int len = set_frame_head(1, 1, frame.payload_len, debug_send_buf);
+//					memcpy(&debug_send_buf[len], data, frame.payload_len);
+//					send_one_buffer(1, 1, data, frame.payload_len);
+	
+}
+
 int conn_node_client::frame_read_cb(evutil_socket_t fd)
 {
 	int ret = recv_from_fd();
@@ -163,9 +177,9 @@ int conn_node_client::frame_read_cb(evutil_socket_t fd)
 //			bufferevent_read(bev, tmp, conn->ntoread);
 					//parse header
 				if (parse_frame_header((const char *)buf_head(), &frame) == 0) {
-					LOG_DEBUG("FIN         = %lu", frame.fin);
-					LOG_DEBUG("OPCODE      = %lu", frame.opcode);
-					LOG_DEBUG("MASK        = %lu", frame.mask);
+					LOG_DEBUG("FIN         = %u", frame.fin);
+					LOG_DEBUG("OPCODE      = %u", frame.opcode);
+					LOG_DEBUG("MASK        = %u", frame.mask);
 					LOG_DEBUG("PAYLOAD_LEN = %lu", frame.payload_len);
 						//payload_len is [0, 127]
 					if (frame.payload_len <= 125) {
@@ -186,7 +200,7 @@ int conn_node_client::frame_read_cb(evutil_socket_t fd)
 					//TODO
 					//validate frame header
 				if (!is_frame_valid(&frame)) {
-					LOG_ERR("%s: not a valid frame");
+					LOG_ERR("%s: not a valid frame", __FUNCTION__);
 					return (-1);
 				}
 				break;
@@ -208,7 +222,7 @@ int conn_node_client::frame_read_cb(evutil_socket_t fd)
 						return (0);
 					frame.payload_len = ntohl(*(uint64_t*)buf_head());
 					remove_buflen(8);
-					LOG_DEBUG("PAYLOAD_LEN = %llu", frame.payload_len);
+					LOG_DEBUG("PAYLOAD_LEN = %lu", frame.payload_len);
 				}
 				conn_step = 3;
 //			conn->ntoread = 4;
@@ -315,14 +329,15 @@ int conn_node_client::frame_read_cb(evutil_socket_t fd)
 //						int len = set_frame_head(1, 10, 0, resp);
 						send_one_buffer(1, 10, NULL, 0);
 					}
-					
-					char *data = (char *)buf_head();
-					data[frame.payload_len] = '\0';
-					LOG_DEBUG("%s: get frame step4 fin %d opcode %d, len = %d, data = %s",
-						__FUNCTION__, frame.fin, frame.opcode, frame.payload_len, data);
+
+					on_recv_frame();
+//					char *data = (char *)buf_head();
+//					data[frame.payload_len] = '\0';
+//					LOG_DEBUG("%s: get frame step4 fin %d opcode %d, len = %d, data = %s",
+//						__FUNCTION__, frame.fin, frame.opcode, frame.payload_len, data);
 //					int len = set_frame_head(1, 1, frame.payload_len, debug_send_buf);
 //					memcpy(&debug_send_buf[len], data, frame.payload_len);
-					send_one_buffer(1, 1, data, frame.payload_len);
+//					send_one_buffer(1, 1, data, frame.payload_len);
 						//todo 添加处理
 						//execute custom operation
 						// if (conn->frame_recv_cb_unit.cb) {

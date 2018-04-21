@@ -666,12 +666,14 @@ struct BaseAITable
 	uint64_t  ActiveAttackRange; //2
 	uint64_t  ChaseRange; //4
 	uint64_t  MovingChange; //5
-	uint64_t  Regeneration; //6
+	uint32_t n_Regeneration; //6
+	uint64_t *Regeneration; //6
 	uint64_t  AIType; //7
 	uint64_t  GuardRange; //8
 	uint64_t  StopMin; //9
 	uint64_t  StopMax; //10
 	uint64_t  Response; //11
+	uint64_t  RegenerationTpye; //12
 }__attribute__ ((packed));
 
 struct BattleFieldRank
@@ -1768,6 +1770,7 @@ struct MonsterTable
 	uint64_t  DropID; //27
 	uint64_t  CollectionDrop; //28
 	uint64_t  CollectionProbability; //29
+	uint64_t  SpecialDisplayIs; //30
 }__attribute__ ((packed));
 
 struct MountsTable
@@ -2411,6 +2414,10 @@ struct SkillTimeTable
 	uint32_t n_BuffIdFriend; //8
 	uint64_t *BuffIdFriend; //8
 	uint64_t  CallTime; //9
+	uint32_t n_BuffIdEnemyFixed; //11
+	uint64_t *BuffIdEnemyFixed; //11
+	uint32_t n_BuffIdFriendFixed; //12
+	uint64_t *BuffIdFriendFixed; //12
 }__attribute__ ((packed));
 
 struct SpecialTitleTable

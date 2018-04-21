@@ -18,6 +18,8 @@ struct minheap g_minheap;
 struct map_block **closed_map_block;
 //#define AREA_WIDTH (15)
 
+extern std::map<uint64_t, uint64_t> g_special_mon_map;
+
 __attribute__((unused)) static void	dump_map_config(struct map_config *map_config)
 {
 	printf("offset %d %d\n", map_config->offset_x, map_config->offset_z);
@@ -261,6 +263,10 @@ int scene_struct::add_monster_to_scene(monster_struct *monster, uint32_t effecti
 	if (monster->ai && monster->ai->on_alive)
 		monster->ai->on_alive(monster);
 	broadcast_monster_create(monster);
+	if (monster->config->SpecialDisplayIs > 0)
+	{
+		g_special_mon_map.insert(std::make_pair(monster->get_uuid(), m_id));
+	}
 	return (0);
 }
 
@@ -391,6 +397,10 @@ int scene_struct::delete_monster_from_scene(monster_struct *monster, bool send_m
 //	player->data->scene_id = 0;
 	monster->scene = NULL;
 	monster->area = NULL;
+	if (monster->config->SpecialDisplayIs > 0)
+	{
+		g_special_mon_map.erase(monster->get_uuid());
+	}
 	return (0);
 }
 

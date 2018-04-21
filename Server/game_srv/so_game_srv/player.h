@@ -772,6 +772,7 @@ struct player_data
 
 	uint32_t m_collect_uuid;  //玩家当前正在采集的采集物的唯一ID
 	uint32_t m_rand_collect_num;  //随机采集次数
+	uint32_t m_team_collect_num;  //队伍共享采集次数
 	uint32_t guild_id;
 	uint32_t guild_office;
 	uint32_t guild_donation;

@@ -44,7 +44,7 @@ seri_str = req.SerializeToString()
 
 msg_len = 8 + 8 + 4 + len(seri_str)
 msg_id = 1600
-player_id = 42949673559
+player_id = 42949673826
 
 data = struct.pack('=IHHQI', msg_len, msg_id, 0, player_id, len(seri_str)) + seri_str
 

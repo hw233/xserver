@@ -1,5 +1,6 @@
 FILE(GLOB_RECURSE SRC_LIST
   "./*.cpp"
+  "player.pb-c.c"
   )
 
 
@@ -12,6 +13,9 @@ INCLUDE_DIRECTORIES(
   "${PROJECT_SOURCE_DIR}/thirdlib/libevent/include"
   "${PROJECT_SOURCE_DIR}/thirdlib/libevent"
   )
+
+add_custom_target(conn2_proto
+  COMMAND protoc-c --c_out=. player.proto)
 
 link_libraries(protobuf-c)
 link_libraries(proto)

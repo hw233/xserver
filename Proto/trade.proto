@@ -189,6 +189,7 @@ message RedPacketMainInfo
 	required string player_name = 7; //发红包玩家名字
 	required string player_text = 8; //发红包玩家留言
 	required uint32 red_money_num = 9; //红包总金额
+	required uint32 zheng_ying = 10; //玩家阵营
 }
 
 //红包详情请求
@@ -248,7 +249,14 @@ message RedPacketGrabRedAnswer
 //玩家历史记录应答
 message RedPacketHistoryInfoAnswer
 {
-	repeated RedPacketPlayerRedInfo info = 1;
+	required uint32 send_red_num = 1;  //发出红包个数(已经被清除的)
+	required uint32 send_gold_num = 2; //发红包元宝总数量(已经被清除的)
+	required uint32 send_coin_num = 3; //发红包银两总数量(已经被清除的)
+	required uint32 grab_red_num = 4;  //抢到红包个数(已经被清除的)
+	required uint32 grab_gold_num = 5; //抢红包元宝总数量(已经被清除的)
+	required uint32 grab_coin_num = 6; //抢红包银两总数量(已经被清除的)
+	required uint32 grab_max_red_num = 7; //抢到手气最佳红包个数(已经被清除的)
+	repeated RedPacketPlayerRedInfo info = 8; //当前还未被清除的红包信息
 }
 
 message RedPacketPlayerRedInfo

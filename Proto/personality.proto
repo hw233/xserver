@@ -1,6 +1,9 @@
 syntax = "proto2";
 import "comm_message.proto";
 import "baguapai.proto";
+import "horse.proto";
+import "partner.proto";
+import "fashion.proto";
 
 //个人信息
 message PersonalityData
@@ -62,6 +65,14 @@ message OtherDetailData
 	repeated BaguapaiDressData baguas = 13; //八卦牌信息
 	required uint32 teamId = 14; //队伍ID
 	required uint32 status = 15; //在线状态，0:下线，1:在线
+
+	required uint32 guildIcon = 16;		//帮会ICON
+	repeated PartnerData partners = 17;	// 伙伴列表
+	repeated uint64 embattleinfo = 18;	//布阵信息
+	required HorseList mounts = 19;		// 坐骑列表
+	required FashionList fashions = 20; 
+	required uint32 charmlevel = 21;			// 魅力等级
+	required uint32 charmtotal = 22;			// 总魅力
 }
 
 //查看他人个人信息请求

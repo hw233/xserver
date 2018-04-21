@@ -384,8 +384,8 @@ local ControlTable = {
 		['MinActor'] = 30,
 		['MaxActor'] = 30,
 		['OpenDay'] = {0,1,2,3,4,5,6},
-		['OpenTime'] = {1000},
-		['CloseTime'] = {2100},
+		['OpenTime'] = {900},
+		['CloseTime'] = {2400},
 		['TimeType'] = 2,
 		['RewardTime'] = 2
 		},

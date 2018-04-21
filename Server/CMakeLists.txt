@@ -6,7 +6,8 @@ find_package(Lua 5.2  REQUIRED)
 
 add_custom_target(protoup
   COMMAND ${PROJECT_SOURCE_DIR}/../Proto/create_server_file.sh
-  COMMAND make -C proto)
+  COMMAND make -C proto
+  COMMAND make -C conn_srv_2 conn2_proto)
 
 add_custom_target(proto_file
   COMMAND ${PROJECT_SOURCE_DIR}/proto/proto2c.sh)

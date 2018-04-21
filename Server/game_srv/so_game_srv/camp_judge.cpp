@@ -68,6 +68,11 @@ static UNIT_FIGHT_TYPE adjust_unit_fight_type(unit_struct *attack, unit_struct *
 
 UNIT_FIGHT_TYPE get_unit_fight_type(unit_struct *attack, unit_struct *defence)
 {
+		//无敌buff
+		//被设置成不能攻击的怪物
+	if (!defence->can_beattack())
+		return UNIT_FIGHT_TYPE_NONE;
+	
 	// 	//伙伴使用主人的攻击关系
 	// if (defence->get_unit_type() == UNIT_TYPE_PARTNER)
 	// {
@@ -107,11 +112,6 @@ UNIT_FIGHT_TYPE get_unit_fight_type(unit_struct *attack, unit_struct *defence)
 	if (!defence->is_alive())
 		return UNIT_FIGHT_TYPE_NONE;
 	
-		//无敌buff
-		//被设置成不能攻击的怪物
-	if (!defence->can_beattack())
-		return adjust_unit_fight_type(attack, defence, UNIT_FIGHT_TYPE_NONE);
-
 		//副本中的阵营关系，比如PVP副本
 	int camp1 = attack->get_camp_id();
 	int camp2 = defence->get_camp_id();

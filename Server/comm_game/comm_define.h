@@ -19,7 +19,7 @@
 #define MAX_HORSE_NUM           100 //最大坐骑数
 //#define DEFAULT_HORSE           180000001 //
 #define MAX_BATTLE_LINE_NUM     (8) //阵营战分线
-#define MAX_TOWER_LEVEL  (15) 
+//#define MAX_TOWER_LEVEL  (20) 
 //最大副本数目
 #define MAX_RAID_NUM            1000 
 #define SCENCE_DEPART           (20000)

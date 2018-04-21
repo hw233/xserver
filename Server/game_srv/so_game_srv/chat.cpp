@@ -793,7 +793,7 @@ void chat_mod::gm_add_sight_space_monster( player_struct *player, int val )
 
 	//	for (size_t i = 0; i < ARRAY_SIZE(monster_id); ++i)
 	//	{
-	monster_manager::create_sight_space_monster( sight, player->scene, val, 90, player->get_pos()->pos_x, player->get_pos()->pos_z );
+	monster_manager::create_sight_space_monster( sight, player->scene, val, 90, player->get_pos()->pos_x, player->get_pos()->pos_z, NULL );
 	//	if (!monster)
 	//	{
 	//		LOG_ERR("%s: create monster fail", __FUNCTION__);

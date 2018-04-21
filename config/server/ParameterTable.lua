@@ -161,7 +161,7 @@ local ParameterTable = {
 		},
 	[161000031] = {
 		['ID'] = 161000031,
-		['parameter1'] = {5},
+		['parameter1'] = {30},
 		['parameter2'] = ''
 		},
 	[161000032] = {
@@ -1946,7 +1946,7 @@ local ParameterTable = {
 		},
 	[161000393] = {
 		['ID'] = 161000393,
-		['parameter1'] = {50},
+		['parameter1'] = {100},
 		['parameter2'] = ''
 		},
 	[161000394] = {
@@ -1961,7 +1961,7 @@ local ParameterTable = {
 		},
 	[161000396] = {
 		['ID'] = 161000396,
-		['parameter1'] = {0.003},
+		['parameter1'] = {0.008},
 		['parameter2'] = ''
 		},
 	[161000397] = {
@@ -2216,17 +2216,17 @@ local ParameterTable = {
 		},
 	[161000456] = {
 		['ID'] = 161000456,
-		['parameter1'] = {10},
+		['parameter1'] = {100},
 		['parameter2'] = ''
 		},
 	[161000457] = {
 		['ID'] = 161000457,
-		['parameter1'] = {5},
+		['parameter1'] = {50},
 		['parameter2'] = ''
 		},
 	[161000458] = {
 		['ID'] = 161000458,
-		['parameter1'] = {20},
+		['parameter1'] = {200},
 		['parameter2'] = ''
 		},
 	[161000459] = {
@@ -2351,17 +2351,17 @@ local ParameterTable = {
 		},
 	[161000483] = {
 		['ID'] = 161000483,
-		['parameter1'] = {20},
+		['parameter1'] = {5},
 		['parameter2'] = ''
 		},
 	[161000484] = {
 		['ID'] = 161000484,
-		['parameter1'] = {5},
+		['parameter1'] = {10},
 		['parameter2'] = ''
 		},
 	[161000485] = {
 		['ID'] = 161000485,
-		['parameter1'] = {86400},
+		['parameter1'] = {60},
 		['parameter2'] = ''
 		},
 	[161000486] = {
@@ -2703,6 +2703,11 @@ local ParameterTable = {
 		['ID'] = 161001070,
 		['parameter1'] = {1},
 		['parameter2'] = ''
+		},
+	[161001080] = {
+		['ID'] = 161001080,
+		['parameter1'] = {},
+		['parameter2'] = '第%s层'
 		}
 	}
 return ParameterTable

@@ -347,6 +347,12 @@ local ErrorBoxTable = {
 		['Text'] = '%s级开启',
 		['SystemChannel'] = 0
 		},
+	[190300038] = {
+		['ID'] = 190300038,
+		['Type'] = 1,
+		['Text'] = '敬请期待',
+		['SystemChannel'] = 0
+		},
 	[190400001] = {
 		['ID'] = 190400001,
 		['Type'] = 1,
@@ -4005,6 +4011,24 @@ local ErrorBoxTable = {
 		['ID'] = 190500587,
 		['Type'] = 4,
 		['Text'] = '服务器未开启，无法登陆',
+		['SystemChannel'] = 0
+		},
+	[190500588] = {
+		['ID'] = 190500588,
+		['Type'] = 4,
+		['Text'] = '%s正在被攻击，请立即保护',
+		['SystemChannel'] = 0
+		},
+	[190500589] = {
+		['ID'] = 190500589,
+		['Type'] = 4,
+		['Text'] = '门宗召集已经发送成功',
+		['SystemChannel'] = 0
+		},
+	[190500590] = {
+		['ID'] = 190500590,
+		['Type'] = 4,
+		['Text'] = '功能尚未开启，敬请期待',
 		['SystemChannel'] = 0
 		}
 	}

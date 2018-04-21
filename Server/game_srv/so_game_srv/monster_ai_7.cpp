@@ -171,7 +171,14 @@ static void ai_befly_7(monster_struct *monster, unit_struct *player)
 
 static void ai_alive_7(monster_struct *monster)
 {
-	monster->data->relive_time = monster->ai_config->Regeneration * 1000 + time_helper::get_cached_time();
+	if (monster->ai_config->RegenerationTpye == 1)
+	{
+		monster->data->relive_time = monster->ai_config->Regeneration[0] * 1000 + time_helper::get_cached_time();
+	}
+	else
+	{
+		monster->data->relive_time = rand_between(monster->ai_config->Regeneration[0], monster->ai_config->Regeneration[1]) * 1000 + time_helper::get_cached_time();
+	}
 }
 
 static void ai_owner_attack_7(monster_struct *monster, player_struct *owner, unit_struct *target)

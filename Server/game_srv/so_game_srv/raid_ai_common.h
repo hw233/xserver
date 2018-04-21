@@ -69,6 +69,9 @@ enum
 	SCRIPT_EVENT_NEXT_RAID = 65, //传到下个副本
 	SCRIPT_EVENT_TRIGGER_JIGSAW = 67, //触发拼图
 	SCRIPT_EVENT_OPEN_FANCTION = 68, //开启功能
+	SCRIPT_EVENT_MOVE_TO_AND_COLLECT = 69, //走到指定坐标范围探查读条
+	SCRIPT_EVENT_LOCK_CAMERA = 70, //调整玩家当前视角并锁定  备注主摄像机视角
+	SCRIPT_EVENT_UNLOCK_CAMERA = 71, //解除玩家当前视角
 };
 
 void do_script_raid_init_cond(raid_struct *raid, struct raid_script_data *script_data);

@@ -177,6 +177,7 @@ void free_BaguaViceAttributeTable(struct BaguaViceAttributeTable *p)
 void free_BaseAITable(struct BaseAITable *p)
 {
     if (!p) return;
+    free(p->Regeneration);
     free(p);
 };
 
@@ -1173,6 +1174,8 @@ void free_SkillTimeTable(struct SkillTimeTable *p)
     free(p->EffectIdFriend);
     free(p->BuffIdEnemy);
     free(p->BuffIdFriend);
+    free(p->BuffIdEnemyFixed);
+    free(p->BuffIdFriendFixed);
     free(p);
 };
 

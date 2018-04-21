@@ -375,6 +375,7 @@ static int handle_get_other_info_answer(EXTERN_DATA *extern_data)
 		}
 	} while(0);
 
+	target->calculate_attribute(false);
 	answer_get_other_info(extern_data, ret, target, 0);
 
 	if (target)

@@ -328,7 +328,8 @@ void cash_truck_struct::on_tick()
 				x = player->get_pos()->pos_x + truck_config->Range - rand() % (truck_config->Range * 2);
 				z = player->get_pos()->pos_z + truck_config->Range - rand() % (truck_config->Range * 2);
 			}
-			monster_manager::create_sight_space_monster(player->sight_space, player->scene, truck_config->shanfeiId[rand() % truck_config->n_shanfeiId], lv, x, z);
+			monster_manager::create_sight_space_monster(player->sight_space, player->scene,
+				truck_config->shanfeiId[rand() % truck_config->n_shanfeiId], lv, x, z, NULL);
 		}
 		++player->data->truck.jiefei;
 	}

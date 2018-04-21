@@ -55,7 +55,6 @@ private:
 
 
 	int record_player_recive_red_packet_info(uint64_t player_id, uint64_t red_uuid, uint32_t money_type, uint32_t money_num, bool is_send_red_packet);
-	int modify_player_red_packet_optimum_record(uint64_t player_id, uint64_t red_uuid);
 
 private:
 	HandleMap   m_handleMap;

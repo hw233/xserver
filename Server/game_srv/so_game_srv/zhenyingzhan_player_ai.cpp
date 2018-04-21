@@ -1,6 +1,7 @@
 #include "path_algorithm.h"
 #include "so_game_srv/zhenying_battle.h"
 #include "player_manager.h"
+#include "monster_manager.h"
 #include "time_helper.h"
 #include "msgid.h"
 #include "camp_judge.h"
@@ -18,6 +19,32 @@
 
 //static player_struct **get_enemy_team_player(player_struct *player);
 static void do_ai_player_relive(raid_struct *raid, player_struct *player, struct ai_player_data *ai_player_data);
+
+static void zhenyingzhan_player_ai_attack_enemy(player_struct *player, unit_struct *enemy, uint32_t skill_id)
+{
+	if (get_unit_fight_type(player, enemy) != UNIT_FIGHT_TYPE_ENEMY)
+		return;
+
+	if (player->ai_data->target_player_id == 0)
+	{
+		//检查主动攻击距离
+		struct position *my_pos = player->get_pos();
+		struct position *his_pos = enemy->get_pos();
+		if (!check_distance_in_range(my_pos, his_pos, player->ai_data->active_attack_range))
+		{
+			//					LOG_DEBUG("aitest: [%s] active attack distance = %.1f %.1f", player->get_name(),
+			//						his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z);
+			return;
+		}
+	}
+
+	if (do_attack(player, player->ai_data, enemy, skill_id))
+	{
+		player->ai_data->target_player_id = enemy->get_uuid();
+		//				LOG_DEBUG("aitest: [%s] try attack %s", player->get_name(), enemy[i]->get_name());
+		return;
+	}
+}
 
 static void zhenyingzhan_player_ai_tick(player_struct *player)
 {
@@ -104,28 +131,17 @@ static void zhenyingzhan_player_ai_tick(player_struct *player)
 				LOG_ERR("%s: player[%lu] can't find sight player[%lu]", __FUNCTION__, player->get_uuid(), player->data->sight_player[i]);
 				continue;
 			}
-			if (get_unit_fight_type(player, enemy) != UNIT_FIGHT_TYPE_ENEMY)							
+			zhenyingzhan_player_ai_attack_enemy(player, enemy, skill_id);
+		}
+		for (int i = 0; i < player->data->cur_sight_monster; ++i)
+		{
+			monster_struct *monster = monster_manager::get_monster_by_id(player->data->sight_monster[i]);
+			if (!monster)
+			{
+				LOG_ERR("%s: player[%lu] can't find sight player[%lu]", __FUNCTION__, monster->get_uuid(), player->data->sight_monster[i]);
 				continue;
-
-			if (ai_player_data->target_player_id == 0)
-			{
-					//检查主动攻击距离
-				struct position *my_pos = player->get_pos();
-				struct position *his_pos = enemy->get_pos();
-				if (!check_distance_in_range(my_pos, his_pos, ai_player_data->active_attack_range))
-				{
-//					LOG_DEBUG("aitest: [%s] active attack distance = %.1f %.1f", player->get_name(),
-//						his_pos->pos_x - my_pos->pos_x, his_pos->pos_z - my_pos->pos_z);
-					continue;
-				}
 			}
-			
-			if (do_attack(player, ai_player_data, enemy, skill_id))
-			{
-				ai_player_data->target_player_id = enemy->get_uuid();
-//				LOG_DEBUG("aitest: [%s] try attack %s", player->get_name(), enemy[i]->get_name());
-				return;
-			}
+			zhenyingzhan_player_ai_attack_enemy(player, monster, skill_id);
 		}
 	}
 

@@ -28,7 +28,7 @@ int main(void)
 			break;
 		}*/
 
-		printf("Content-Type:text/html\n\n");
+		printf("Content-Type:text/html\nAccess-Control-Allow-Origin:*\n\n");
 		lenstr = getenv("QUERY_STRING");
 		if (lenstr == NULL || lenstr[0] == '0' || lenstr[0] == '\0')
 		{

@@ -31,6 +31,7 @@ extern char sg_player_key[];
 extern char sg_normal_red_packet_key[];
 extern char sg_guild_red_packet_key[];
 extern char sg_player_red_packet_record_key[];
+extern char sg_player_red_packet_all_history_key[];
 extern TradeItemMap trade_item_map; //所有交易道具
 extern AuctionLotMap auction_lot_map; //所有拍卖道具
 extern std::map<uint64_t, uint64_t> normal_red_packet_time_map;//普通红包唯一id对应发红包时间
@@ -43,9 +44,11 @@ public:
 	~AutoReleaseTradeRedisInfo();
 	void set_cur_red_packet(RedPacketRedisInfo* r);
 	void set_player_red_packet_record(RedPacketRedisPlayerReciveRecord* r);
+	void set_player_red_packet_history(RedPacketRedisPlayerAllJiluInfo *r);
 private:
 	RedPacketRedisInfo *red_packet_redis_info;
 	RedPacketRedisPlayerReciveRecord *player_recive_record;
+	RedPacketRedisPlayerAllJiluInfo *player_all_hisotry;
 };
 
 class AutoReleaseBatchRedRedisInfo
@@ -62,6 +65,7 @@ private:
 RedPacketRedisInfo *get_red_packet_redis_info(uint64_t red_uuid, char *red_packet_key, CRedisClient &rc,AutoReleaseTradeRedisInfo &_pool);
 int get_more_red_packet_redis_info(std::set<uint64_t> &red_uuid, std::map<uint64_t, RedPacketRedisInfo*> &redis_players, char *red_packet_key, CRedisClient &rc, AutoReleaseBatchRedRedisInfo &_pool);
 RedPacketRedisPlayerReciveRecord *get_player_red_packet_redis_recive_record(uint64_t player_id, char *red_packet_key, CRedisClient &rc, AutoReleaseTradeRedisInfo &_pool);
+RedPacketRedisPlayerAllJiluInfo *get_player_red_packet_redis_all_history_record(uint64_t player_id, char *red_packet_key, CRedisClient &rc, AutoReleaseTradeRedisInfo &_pool);
 
 void handle_daily_reset_timeout(bool start);
 void cb_second_timer(evutil_socket_t, short, void* /*arg*/);
@@ -113,5 +117,11 @@ void refresh_all_red_packet_redis_data();
 void load_red_packet_redis_data();
 int delete_one_red_packet_for_redis(uint64_t last_red_uuid ,char* red_packet_key, std::map<uint64_t, uint64_t> &red_map);
 int save_one_red_packet_for_redis(RedPacketRedisInfo *redis_info, uint64_t red_uuid, char* red_packet_key);
+//修改玩家领取红包最佳记录
+int modify_player_red_packet_optimum_record(uint64_t player_id, uint64_t red_uuid);
+//更新玩家历史红包记录
+void updata_player_red_packet_history_info(RedPacketRedisPlayeNormalInfo* temp_info, uint64_t player_id);
+//增加玩家历史记录里面的手气最佳个数
+void add_player_red_packet_history_max_num(uint64_t player_id);
 
 #endif

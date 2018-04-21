@@ -213,6 +213,7 @@ uint32_t sg_qiecuo_god_time;  //切磋倒计时
 
 float sg_hp_pool_percent;
 
+uint32_t  MAX_TOWER_LEVEL;
 int sg_raid_keep_time;
 
 std::vector<uint32_t> sg_vec_wanyaogu_raid_id;
@@ -466,6 +467,7 @@ uint32_t sg_zhu_chuan_gong_add_item_id; //主动传功者活动物品id
 uint32_t sg_zhu_chuan_gong_add_item_num; //主动传功者活动物品num
 uint32_t sg_guild_chuan_gong_buff_id = 114500017;    //帮会传功专用buffid
 uint64_t sg_rand_collect_num;    //
+uint64_t sg_team_collect_num;
 
 uint32_t sg_choujiangquan_item_id; //抽奖券id
 

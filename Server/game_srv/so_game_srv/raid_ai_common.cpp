@@ -520,6 +520,9 @@ static bool script_raid_init_cur_cond(raid_struct *raid, struct raid_script_data
 		case SCRIPT_EVENT_PLAY_EFFECT:
 		case SCRIPT_EVENT_POPUP_TALK:
 		case SCRIPT_EVENT_PLAYER_DUMIAO_CARTOON:
+		case SCRIPT_EVENT_MOVE_TO_AND_COLLECT:
+		case SCRIPT_EVENT_LOCK_CAMERA:
+		case SCRIPT_EVENT_UNLOCK_CAMERA:			
 		{
 			RaidEventNotify nty;
 			raid_event_notify__init(&nty);

@@ -66,7 +66,8 @@ void cast_immediate_skill_to_target(uint64_t skill_id, uint32_t skill_lv, unit_s
 //void monster_cast_immediate_skill_to_player(uint64_t skill_id, monster_struct *monster, player_struct *owner, unit_struct *player);
 //void monster_cast_skill_to_friend(monster_struct *monster, struct SkillTable *config);
 //void monster_cast_delay_skill_to_player(uint64_t skill_id, monster_struct *monster, unit_struct *player);
-void set_monster_skill_next_timeout(monster_struct *monster);
+int set_monster_skill_next_timeout(monster_struct *monster);
+void do_monster_active_attack_to_target(monster_struct *monster, uint32_t skill_id, struct SkillTable *config);
 bool check_monster_relive(monster_struct *monster);
 void normal_ai_dead(monster_struct *monster, scene_struct *scene);
 void do_normal_patrol(monster_struct *monster);

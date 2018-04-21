@@ -1825,6 +1825,7 @@ int conn_node_tradesrv::handle_red_packet_send_red_packet_request(EXTERN_DATA *e
 		cur_red_packet_info.player_name = redis_player->name;
 		cur_red_packet_info.head_icon = redis_player->head_icon;
 		cur_red_packet_info.player_level = redis_player->lv;
+		cur_red_packet_info.player_zhengyin = redis_player->zhenying;
 		uint32_t guild_id = redis_player->guild_id;
 		cur_red_packet_info.guild_id = guild_id;
 		//先判断uuid是否被占用
@@ -2091,6 +2092,7 @@ int conn_node_tradesrv::handle_red_packet_main_jiemian_info_request(EXTERN_DATA 
 			red_packet_info[answer.n_red_info].red_coin_type = ite->second->red_coin_type;
 			red_packet_info[answer.n_red_info].player_text = ite->second->player_text;
 			red_packet_info[answer.n_red_info].red_money_num = ite->second->red_sum_money;
+			red_packet_info[answer.n_red_info].zheng_ying = ite->second->player_zhengyin;
 			for(size_t i = 0; i < ite->second->n_all_player; i++)
 			{
 				if(extern_data->player_id == ite->second->all_player[i]->player_id)
@@ -2381,7 +2383,7 @@ int conn_node_tradesrv::handle_red_packet_grab_red_packet_request(EXTERN_DATA *e
 			{
 				sui_ji_money = sui_ji_money - red_packet_shengyu_num;
 			}
-			give_player_money = sui_ji_money % rand() +1;
+			give_player_money = rand() % sui_ji_money + 1;
 		}
 		if(give_player_money == 0)
 		{
@@ -2404,6 +2406,7 @@ int conn_node_tradesrv::handle_red_packet_grab_red_packet_request(EXTERN_DATA *e
 		updata_red_info.send_red_time = cur_red_info->send_red_time;
 		updata_red_info.red_typ = cur_red_info->red_typ;
 		updata_red_info.guild_id = cur_red_info->guild_id;
+		updata_red_info.system_or_player = cur_red_info->system_or_player;
 		updata_red_info.red_coin_type = cur_red_info->red_coin_type;
 		updata_red_info.red_sum_money = cur_red_info->red_sum_money;
 		updata_red_info.red_use_money = cur_red_info->red_use_money + give_player_money;
@@ -2482,7 +2485,7 @@ int conn_node_tradesrv::handle_red_packet_grab_red_packet_request(EXTERN_DATA *e
 			updata_red_info.n_all_player++;
 		}
 		//数据存redis
-		uint8_t data_buffer[1024 * 1024];
+		uint8_t data_buffer[200 * 1024];
 		size_t data_len = red_packet_redis_info__pack(&updata_red_info, data_buffer);
 		if (data_len == (size_t)-1)
 		{
@@ -2572,7 +2575,7 @@ int conn_node_tradesrv::record_player_recive_red_packet_info(uint64_t player_id,
 		}
 		player_info_record.n_info++;
 		//数据存redis
-		uint8_t data_buffer[1024 * 1024];
+		uint8_t data_buffer[200 * 1024];
 		size_t data_len = red_packet_redis_player_recive_record__pack(&player_info_record, data_buffer);
 		if (data_len == (size_t)-1)
 		{
@@ -2653,7 +2656,7 @@ int conn_node_tradesrv::record_player_recive_red_packet_info(uint64_t player_id,
 			}
 			else 
 			{
-				if(temp_info->grab_time < base_info[player_info_record.n_info].grab_time)
+				if(temp_info->grab_time > base_info[player_info_record.n_info].grab_time)
 				{
 					temp_info = &base_info[player_info_record.n_info];
 				}
@@ -2664,6 +2667,7 @@ int conn_node_tradesrv::record_player_recive_red_packet_info(uint64_t player_id,
 
 		if(temp_info != NULL)
 		{
+			updata_player_red_packet_history_info(temp_info, player_id);
 			temp_info->red_uuid = red_uuid;
 			temp_info->grab_time = recive_red_times;
 			temp_info->money_type = money_type;
@@ -2680,7 +2684,7 @@ int conn_node_tradesrv::record_player_recive_red_packet_info(uint64_t player_id,
 	
 	}
 	//数据存redis
-	uint8_t data_buffer[1024 * 1024];
+	uint8_t data_buffer[200 * 1024];
 	size_t data_len = red_packet_redis_player_recive_record__pack(&player_info_record, data_buffer);
 	if (data_len == (size_t)-1)
 	{
@@ -2698,55 +2702,33 @@ int conn_node_tradesrv::record_player_recive_red_packet_info(uint64_t player_id,
 	return 0;
 }
 
-//修改玩家领取红包最佳记录
-int conn_node_tradesrv::modify_player_red_packet_optimum_record(uint64_t player_id, uint64_t red_uuid)
-{
-	AutoReleaseTradeRedisInfo pool;
-	RedPacketRedisPlayerReciveRecord *player_recive_info = get_player_red_packet_redis_recive_record(player_id, sg_player_red_packet_record_key, sg_redis_client, pool);
-	if(player_recive_info == NULL)
-	{
-		LOG_ERR("[%s:%d] 更新玩家手气最佳红包信息失败,获取玩家redis信息失败player_id[%lu] red_uuid[%lu]", __FUNCTION__, __LINE__, player_id, red_uuid);
-		return -1;
-	}
-	for(size_t i = 0; i < player_recive_info->n_info; i++)
-	{
-		if(player_recive_info->info[i]->red_uuid == red_uuid && player_recive_info->info[i]->red_type == 0)
-		{
-			player_recive_info->info[i]->red_type = 1;
-		}
-	}
-	//数据存redis
-	uint8_t data_buffer[1024 * 1024];
-	size_t data_len = red_packet_redis_player_recive_record__pack(player_recive_info, data_buffer);
-	if (data_len == (size_t)-1)
-	{
-		LOG_ERR("[%s:%d] 更新玩家手气最佳红包信息失败,打包数据失败player_id[%lu] red_uuid[%lu]", __FUNCTION__, __LINE__, player_id, red_uuid);
-		return -2;
-	}
-	char red_field[64];
-	sprintf(red_field, "%lu", player_id);
-	if (sg_redis_client.hset_bin(sg_player_red_packet_record_key, red_field, (const char *)data_buffer, (int)data_len) < 0)
-	{
-		LOG_ERR("[%s:%d} 更新玩家手气最佳红包信息失败,存储失败player_id[%lu] red_uuid[%lu]", __FUNCTION__, __LINE__, player_id, red_uuid);
-		return -3;
-	}
-	return 0;
-}
 
 int conn_node_tradesrv::handle_red_packet_recive_record_request(EXTERN_DATA *extern_data)
 {
 	AutoReleaseTradeRedisInfo pool;
+	AutoReleaseTradeRedisInfo poo2;
 	RedPacketRedisPlayerReciveRecord *player_recive_info = get_player_red_packet_redis_recive_record(extern_data->player_id, sg_player_red_packet_record_key, sg_redis_client, pool);
 	if(player_recive_info == NULL)
 	{
-		LOG_ERR("[%s:%d] 请求玩家红包详情失败,获取玩家redis信息失败player_id[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		LOG_DEBUG("[%s:%d] 请求玩家红包详情失败,没有玩家红包信息或者获取玩家redis信息失败player_id[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 		return -1;
 	}
+	RedPacketRedisPlayerAllJiluInfo *red_packet_history = get_player_red_packet_redis_all_history_record(extern_data->player_id, sg_player_red_packet_all_history_key, sg_redis_client, pool);
 
 	RedPacketHistoryInfoAnswer answer;
 	RedPacketPlayerRedInfo base_info[sg_red_packet_jilu_max_num];
 	RedPacketPlayerRedInfo *base_info_point[sg_red_packet_jilu_max_num];
 	red_packet_history_info_answer__init(&answer);
+	if(red_packet_history != NULL)
+	{
+		answer.send_red_num = red_packet_history->send_red_num;
+		answer.send_gold_num = red_packet_history->send_gold_num;
+		answer.send_coin_num = red_packet_history->send_coin_num;
+		answer.grab_red_num = red_packet_history->grab_red_num;
+		answer.grab_gold_num = red_packet_history->grab_gold_num;
+		answer.grab_coin_num = red_packet_history->grab_coin_num;
+		answer.grab_max_red_num = red_packet_history->grab_max_red_num;
+	}
 	answer.n_info = 0;
 	answer.info = base_info_point;
 	for(; answer.n_info < sg_red_packet_jilu_max_num && answer.n_info < player_recive_info->n_info;)

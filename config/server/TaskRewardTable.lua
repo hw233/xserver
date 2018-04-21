@@ -1395,9 +1395,9 @@ local TaskRewardTable = {
 		['ID'] = 240610204,
 		['RewardEXP'] = 36300,
 		['RewardMoney'] = 200,
-		['RewardType'] = {1},
-		['RewardTarget'] = {201100108},
-		['RewardNum'] = {1}
+		['RewardType'] = {0},
+		['RewardTarget'] = {0},
+		['RewardNum'] = {0}
 		},
 	[240610205] = {
 		['ID'] = 240610205,

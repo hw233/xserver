@@ -257,6 +257,14 @@ void player_manager::on_tick_1()
 	{
 		(*iter)->on_tick();
 	}
+	for (std::list<player_struct *>::iterator itDelAi = player_manager_delete_ai_players.begin(); itDelAi != player_manager_delete_ai_players.end(); ++itDelAi)
+	{
+		delete_player(*itDelAi);
+	}
+	if (!player_manager_delete_ai_players.empty())
+	{
+		player_manager_delete_ai_players.clear();
+	}
 }
 
 player_struct *player_manager::add_player(uint64_t player_id)

@@ -31,6 +31,7 @@ char sg_player_key[64];
 char sg_normal_red_packet_key[64];
 char sg_guild_red_packet_key[64];
 char sg_player_red_packet_record_key[64];
+char sg_player_red_packet_all_history_key[64];
 struct event second_timer;
 struct timeval second_timeout;
 struct event five_oclock_timer;
@@ -42,6 +43,7 @@ AutoReleaseTradeRedisInfo::AutoReleaseTradeRedisInfo()
 {
 	red_packet_redis_info = NULL;
 	player_recive_record = NULL;
+	player_all_hisotry = NULL;
 }
 
 AutoReleaseTradeRedisInfo::~AutoReleaseTradeRedisInfo() 
@@ -50,6 +52,8 @@ AutoReleaseTradeRedisInfo::~AutoReleaseTradeRedisInfo()
 		red_packet_redis_info__free_unpacked(red_packet_redis_info, NULL);
 	if(player_recive_record)
 		red_packet_redis_player_recive_record__free_unpacked(player_recive_record, NULL);
+	if(player_all_hisotry)
+		red_packet_redis_player_all_jilu_info__free_unpacked(player_all_hisotry, NULL);
 
 }
 
@@ -72,6 +76,16 @@ void AutoReleaseTradeRedisInfo::set_player_red_packet_record(RedPacketRedisPlaye
 	player_recive_record  = r;
 }
 
+void AutoReleaseTradeRedisInfo::set_player_red_packet_history(RedPacketRedisPlayerAllJiluInfo* r)
+{
+
+	if(player_all_hisotry)
+	{
+		red_packet_redis_player_all_jilu_info__free_unpacked(player_all_hisotry, NULL);
+	}
+	player_all_hisotry  = r;
+}
+
 AutoReleaseBatchRedRedisInfo::AutoReleaseBatchRedRedisInfo()
 {
 
@@ -92,7 +106,7 @@ void AutoReleaseBatchRedRedisInfo::push_back(RedPacketRedisInfo* r)
 }
 RedPacketRedisInfo *get_red_packet_redis_info(uint64_t red_uuid, char *red_packet_key, CRedisClient &rc, AutoReleaseTradeRedisInfo &_pool)
 {
-	static uint8_t data_buffer[1024 * 1024];
+	static uint8_t data_buffer[200 * 1024];
 	int data_len = sizeof(data_buffer);
 	char field[64];
 	sprintf(field, "%lu", red_uuid);
@@ -152,7 +166,7 @@ int get_more_red_packet_redis_info(std::set<uint64_t> &red_uuid, std::map<uint64
 
 RedPacketRedisPlayerReciveRecord *get_player_red_packet_redis_recive_record(uint64_t player_id, char *red_packet_key, CRedisClient &rc, AutoReleaseTradeRedisInfo &_pool)
 {
-	static uint8_t data_buffer[1024 * 1024];
+	static uint8_t data_buffer[200 * 1024];
 	int data_len = sizeof(data_buffer);
 	char field[64];
 	sprintf(field, "%lu", player_id);
@@ -162,6 +176,24 @@ RedPacketRedisPlayerReciveRecord *get_player_red_packet_redis_recive_record(uint
 		RedPacketRedisPlayerReciveRecord *ret = red_packet_redis_player_recive_record__unpack(NULL, data_len, data_buffer);
 		if(ret)
 			_pool.set_player_red_packet_record(ret);
+		return ret;
+	}
+
+	return NULL;
+}
+
+RedPacketRedisPlayerAllJiluInfo *get_player_red_packet_redis_all_history_record(uint64_t player_id, char *red_packet_key, CRedisClient &rc, AutoReleaseTradeRedisInfo &_pool)
+{
+	static uint8_t data_buffer[512];
+	int data_len = sizeof(data_buffer);
+	char field[64];
+	sprintf(field, "%lu", player_id);
+	int ret = rc.hget_bin(red_packet_key, field, (char *)data_buffer, &data_len);
+	if (ret == 0)
+	{
+		RedPacketRedisPlayerAllJiluInfo *ret = red_packet_redis_player_all_jilu_info__unpack(NULL, data_len, data_buffer);
+		if(ret)
+			_pool.set_player_red_packet_history(ret);
 		return ret;
 	}
 
@@ -1722,6 +1754,7 @@ void refresh_all_red_packet_redis_data()
 						guild_red_packet_map.erase(ite++);
 						continue;
 					}
+
 				}
 			}
 			ite++;
@@ -1732,6 +1765,10 @@ void refresh_all_red_packet_redis_data()
 //将过期的红包里面剩余的金钱还给玩家
 void red_packet_surplus_money_give_back_player(uint64_t player_id, uint32_t red_type, uint32_t money_type, uint64_t send_time, uint32_t sum_money, uint32_t use_money)
 {
+	if(use_money >= sum_money)
+	{
+		return;
+	}
 	std::map<uint32_t, uint32_t> mail_item_map;
 	std::vector<char *> red_tui_huan_vect;
 	struct tm tm;
@@ -1792,20 +1829,193 @@ int delete_one_red_packet_for_redis(uint64_t last_red_uuid ,char* red_packet_key
 int save_one_red_packet_for_redis(RedPacketRedisInfo *redis_info, uint64_t red_uuid, char* red_packet_key)
 {
 	//数据存redis
-	uint8_t data_buffer[1024 * 1024];
+	uint8_t data_buffer[200 * 1024];
 	size_t data_len = red_packet_redis_info__pack(redis_info, data_buffer);
 	if (data_len == (size_t)-1)
 	{
-		LOG_ERR("[%s:%d] 红包存数据库失败,数据长度有误 data_len[%d]", __FUNCTION__, __LINE__, data_len);
+		LOG_ERR("[%s:%d] 红包存数据库失败,数据长度有误 data_len[%lu]", __FUNCTION__, __LINE__, data_len);
 		return -1;
 	}
 	char red_field[64];
 	sprintf(red_field, "%lu", red_uuid);
 	if (sg_redis_client.hset_bin(red_packet_key, red_field, (const char *)data_buffer, (int)data_len) < 0)
 	{
-		LOG_ERR("[%s:%d] 红包存数据库失败,hset redis 失败 data_len[%d]", __FUNCTION__, __LINE__, data_len);
+		LOG_ERR("[%s:%d] 红包存数据库失败,hset redis 失败 data_len[%lu]", __FUNCTION__, __LINE__, data_len);
 		return -2;
 	}
 
 	return 0;
 }
+
+//修改玩家领取红包最佳记录
+int modify_player_red_packet_optimum_record(uint64_t player_id, uint64_t red_uuid)
+{
+	AutoReleaseTradeRedisInfo pool;
+	RedPacketRedisPlayerReciveRecord *player_recive_info = get_player_red_packet_redis_recive_record(player_id, sg_player_red_packet_record_key, sg_redis_client, pool);
+	if(player_recive_info == NULL)
+	{
+		LOG_ERR("[%s:%d] 更新玩家手气最佳红包信息失败,获取玩家redis信息失败player_id[%lu] red_uuid[%lu]", __FUNCTION__, __LINE__, player_id, red_uuid);
+		return -1;
+	}
+
+	bool flag = false;
+	for(size_t i = 0; i < player_recive_info->n_info; i++)
+	{
+		if(player_recive_info->info[i]->red_uuid == red_uuid && player_recive_info->info[i]->red_type == 0)
+		{
+			player_recive_info->info[i]->red_type = 1;
+			flag = true;
+		}
+	}
+	if(flag == false)
+	{
+		add_player_red_packet_history_max_num(player_id);
+	}
+	//数据存redis
+	uint8_t data_buffer[200 * 1024];
+	size_t data_len = red_packet_redis_player_recive_record__pack(player_recive_info, data_buffer);
+	if (data_len == (size_t)-1)
+	{
+		LOG_ERR("[%s:%d] 更新玩家手气最佳红包信息失败,打包数据失败player_id[%lu] red_uuid[%lu]", __FUNCTION__, __LINE__, player_id, red_uuid);
+		return -2;
+	}
+	char red_field[64];
+	sprintf(red_field, "%lu", player_id);
+	if (sg_redis_client.hset_bin(sg_player_red_packet_record_key, red_field, (const char *)data_buffer, (int)data_len) < 0)
+	{
+		LOG_ERR("[%s:%d} 更新玩家手气最佳红包信息失败,存储失败player_id[%lu] red_uuid[%lu]", __FUNCTION__, __LINE__, player_id, red_uuid);
+		return -3;
+	}
+	return 0;
+}
+
+//更新玩家历史红包记录
+void updata_player_red_packet_history_info(RedPacketRedisPlayeNormalInfo* temp_info, uint64_t player_id)
+{
+	if(temp_info == NULL)
+	{
+		LOG_ERR("[%s:%d] 更新玩家红包历史记录有错 player_id[%lu]", __FUNCTION__, __LINE__, player_id);
+		return;
+	}
+	AutoReleaseTradeRedisInfo pool;
+	//将移除的记录计入到历史库
+	RedPacketRedisPlayerAllJiluInfo *red_packet_history = get_player_red_packet_redis_all_history_record(player_id, sg_player_red_packet_all_history_key, sg_redis_client, pool);
+	RedPacketRedisPlayerAllJiluInfo new_red_packet_history;
+	red_packet_redis_player_all_jilu_info__init(&new_red_packet_history);
+	if(red_packet_history == NULL)
+	{
+		if(temp_info->red_type == 0 || temp_info->red_type == 1)
+		{
+			new_red_packet_history.grab_red_num = 1;
+			if(temp_info->red_type == 1)
+			{
+				new_red_packet_history.grab_max_red_num = 1;
+			}
+			if(temp_info->money_type == 0)
+			{
+				new_red_packet_history.grab_gold_num = temp_info->money_num;
+			}
+			else 
+			{
+				new_red_packet_history.grab_coin_num = temp_info->money_num;
+			}
+		}
+		else 
+		{
+			new_red_packet_history.send_red_num = 1;
+			if(temp_info->money_type == 0)
+			{
+				new_red_packet_history.send_gold_num = temp_info->money_num;
+			}
+			else 
+			{
+				new_red_packet_history.send_coin_num = temp_info->money_num;
+			}
+		}
+	}
+	else 
+	{
+		new_red_packet_history.send_red_num = red_packet_history->send_red_num;
+		new_red_packet_history.send_gold_num = red_packet_history->send_gold_num;
+		new_red_packet_history.send_coin_num = red_packet_history->send_coin_num;
+		new_red_packet_history.grab_red_num = red_packet_history->grab_red_num;
+		new_red_packet_history.grab_gold_num = red_packet_history->grab_gold_num;
+		new_red_packet_history.grab_coin_num = red_packet_history->grab_coin_num;
+		new_red_packet_history.grab_max_red_num = red_packet_history->grab_max_red_num;
+		if(temp_info->red_type == 0 || temp_info->red_type == 1)
+		{
+			new_red_packet_history.grab_red_num += 1;
+			if(temp_info->red_type == 1)
+			{
+				new_red_packet_history.grab_max_red_num += 1;
+			}
+			if(temp_info->money_type == 0)
+			{
+				new_red_packet_history.grab_gold_num += temp_info->money_num;
+			}
+			else 
+			{
+				new_red_packet_history.grab_coin_num += temp_info->money_num;
+			}
+		}
+		else 
+		{
+			new_red_packet_history.send_red_num += 1;
+			if(temp_info->money_type == 0)
+			{
+				new_red_packet_history.send_gold_num += temp_info->money_num;
+			}
+			else 
+			{
+				new_red_packet_history.send_coin_num += temp_info->money_num;
+			}
+		}
+		
+	}
+	//数据存redis
+	uint8_t data_buffer[512];
+	size_t data_len = red_packet_redis_player_all_jilu_info__pack(&new_red_packet_history, data_buffer);
+	if (data_len == (size_t)-1)
+	{
+		LOG_ERR("[%s:%d] 玩家已移除的红包记录计入历史失败,打包数据失败player_id[%lu] red_id[%lu] red_money_type[%u] red_money_num[%u] time[%lu] type[%u]", __FUNCTION__, __LINE__, player_id, temp_info->red_uuid, temp_info->money_type, temp_info->money_num, temp_info->grab_time, temp_info->red_type);
+		return ;
+	}
+	char red_field[64];
+	sprintf(red_field, "%lu", player_id);
+	if (sg_redis_client.hset_bin(sg_player_red_packet_all_history_key, red_field, (const char *)data_buffer, (int)data_len) < 0)
+	{
+		LOG_ERR("[%s:%d] 玩家已移除的红包记录计入历史失败,存储数据失败player_id[%lu] red_id[%lu] red_money_type[%u] red_money_num[%u] time[%lu] type[%u]", __FUNCTION__, __LINE__, player_id, temp_info->red_uuid, temp_info->money_type, temp_info->money_num, temp_info->grab_time, temp_info->red_type);
+		return;
+	}
+
+}
+
+//增加玩家历史记录里面的手气最佳个数
+void add_player_red_packet_history_max_num(uint64_t player_id)
+{
+	AutoReleaseTradeRedisInfo pool;
+	//将移除的记录计入到历史库
+	RedPacketRedisPlayerAllJiluInfo *red_packet_history = get_player_red_packet_redis_all_history_record(player_id, sg_player_red_packet_all_history_key, sg_redis_client, pool);
+	if(red_packet_history == NULL)
+	{
+		LOG_ERR("[%s:%d] 增加玩家最佳手气红包数量失败, 获取redis数据失败player_id[%lu]", __FUNCTION__, __LINE__, player_id);
+		return;
+	}
+	red_packet_history->grab_max_red_num += 1;
+	//数据存redis
+	uint8_t data_buffer[512];
+	size_t data_len = red_packet_redis_player_all_jilu_info__pack(red_packet_history, data_buffer);
+	if (data_len == (size_t)-1)
+	{
+		LOG_ERR("[%s:%d] 增加玩家最佳手气红包数量失败,打包数据失败player_id[%lu]", __FUNCTION__, __LINE__, player_id);
+		return ;
+	}
+	char red_field[64];
+	sprintf(red_field, "%lu", player_id);
+	if (sg_redis_client.hset_bin(sg_player_red_packet_all_history_key, red_field, (const char *)data_buffer, (int)data_len) < 0)
+	{
+		LOG_ERR("[%s:%d] 增加玩家最佳手气红包数量失败,存储数据失败player_id[%lu]", __FUNCTION__, __LINE__, player_id);
+		return;
+	}
+}
+

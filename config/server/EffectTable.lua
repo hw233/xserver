@@ -1565,7 +1565,7 @@ local EffectTable = {
 		['OffsetY'] = 0,
 		['OffsetZ'] = 0,
 		['DelayTime'] = 100,
-		['Length'] = 5000,
+		['Length'] = 1000,
 		['IsManual'] = 0,
 		['IsFollow'] = 0
 		},

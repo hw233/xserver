@@ -1695,6 +1695,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	tower.reset_num = data->tower.reset_num;
 	tower.award_lv = data->tower.award_lv;
 	tower.rand_collect_num = data->m_rand_collect_num;
+	tower.team_collect_num = data->m_team_collect_num;
 	tower.script_reward_num = data->script_reward_num;
 	db_info.tower = &tower;
 
@@ -2648,6 +2649,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		data->tower.reset_num = db_info->tower->reset_num;
 		data->tower.award_lv = db_info->tower->award_lv;
 		data->m_rand_collect_num = db_info->tower->rand_collect_num;
+		data->m_team_collect_num = db_info->tower->team_collect_num;
 		data->script_reward_num = db_info->tower->script_reward_num;
 	}
 	//离开副本后要到的场景的位置
@@ -2666,7 +2668,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		if (partner == NULL)
 		{
 			LOG_ERR("[%s:%d] player[%lu] create partner failed, partner_id:%u, uuid:%lu", __FUNCTION__, __LINE__, data->player_id, db_info->partner_list[i]->partner_id, db_info->partner_list[i]->uuid);
-			return -1;
+			continue;
 		}
 
 		partner->data->bind = db_info->partner_list[i]->bind;
@@ -4963,7 +4965,9 @@ void xunbao_drop(player_struct &player, uint32_t itemid)
 		
 		for (uint32_t num = 0; num < sTable->Parameter2[i]; ++num)
 		{
-			monster_manager::create_sight_space_monster(player.sight_space, player.scene, sTable->Parameter1[i], player.get_attr(PLAYER_ATTR_LEVEL), x + sTable->Parameter3[i] - rand()% 2*sTable->Parameter3[i], z + sTable->Parameter3[i] - rand() % 2*sTable->Parameter3[i]);
+			monster_manager::create_sight_space_monster(player.sight_space, player.scene, sTable->Parameter1[i],
+				player.get_attr(PLAYER_ATTR_LEVEL), x + sTable->Parameter3[i] - rand()% 2*sTable->Parameter3[i],
+				z + sTable->Parameter3[i] - rand() % 2*sTable->Parameter3[i], NULL);
 		}
 
 	}
@@ -8801,7 +8805,7 @@ int player_struct::execute_task_event(uint32_t event_id, uint32_t event_class, b
 				for (uint64_t i = 0; i < config->EventNum; ++i)
 				{
 					monster_struct *monster = monster_manager::create_sight_space_monster(sight_space, scene,
-						monster_config->MonsterID, get_attr(PLAYER_ATTR_LEVEL), monster_config->PointX, monster_config->PointZ);
+						monster_config->MonsterID, get_attr(PLAYER_ATTR_LEVEL), monster_config->PointX, monster_config->PointZ, NULL);
 					if (!monster)
 					{
 						LOG_ERR("[%s:%d] player[%lu] create monster failed, create_id:%lu", __FUNCTION__, __LINE__, data->player_id, config->EventTarget);
@@ -8966,6 +8970,11 @@ int player_struct::execute_task_event(uint32_t event_id, uint32_t event_class, b
 			}
 		}
 			break;
+		case TET_ADD_PARTNER:
+		{
+			add_partner(config->EventTarget);
+		}
+		break;
 	}
 
 	LOG_DEBUG("[%s:%d] player[%lu], event_id:%u, event_class:%u, event_type:%lu", __FUNCTION__, __LINE__, data->player_id, event_id, event_class, config->EventType);
@@ -14907,6 +14916,7 @@ void player_struct::refresh_player_redis_info(bool offline)
 	info.clothes_color_down = data->attrData[PLAYER_ATTR_CLOTHES_COLOR_DOWN];
 	info.hat = data->attrData[PLAYER_ATTR_HAT];
 	info.hat_color = data->attrData[PLAYER_ATTR_HAT_COLOR];
+	info.sex = data->attrData[PLAYER_ATTR_SEX];
 	info.weapon = data->attrData[PLAYER_ATTR_WEAPON];
 	info.weapon_color = data->attrData[PLAYER_ATTR_WEAPON_COLOR];
 	info.fighting_capacity = data->attrData[PLAYER_ATTR_FIGHTING_CAPACITY];
@@ -16191,6 +16201,7 @@ void player_struct::send_all_yaoshi_num()
 void player_struct::refresh_yaoshi_oneday()
 {
 	data->m_rand_collect_num = 0;
+	data->m_team_collect_num = 0;
 	TypeLevelTable *table = get_guoyu_level_table(GUOYU__TASK__TYPE__CRITICAL);
 	if (table != NULL)
 	{
@@ -17564,7 +17575,7 @@ int player_struct::mijing_shilian_info_notify(uint32_t type)
 		}
 		if(task_id == 0)
 		{
-			LOG_ERR("[%s:%d] get mi jing xiu lian task info faild player_id[%lu]", __FUNCTION__, __LINE__, data->player_id);
+			LOG_DEBUG("[%s:%d] get mi jing xiu lian task info faild player_id[%lu]", __FUNCTION__, __LINE__, data->player_id);
 			return -2;
 		}
 

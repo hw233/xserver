@@ -220,6 +220,7 @@ extern double sg_fighting_capacity_crt_dmg_init_val;
 extern struct ControlTable *sg_pvp_control_config_3;
 extern struct ControlTable *sg_pvp_control_config_5;
 
+extern uint32_t  MAX_TOWER_LEVEL;
 extern int sg_player_speed;
 
 extern int sg_guild_raid_param1[6];  //队伍1出生点
@@ -485,6 +486,7 @@ extern uint32_t sg_zhu_chuan_gong_add_item_id; //主动传功者活动物品id
 extern uint32_t sg_zhu_chuan_gong_add_item_num; //主动传功者活动物品num
 extern uint32_t sg_guild_chuan_gong_buff_id;    //帮会传功专用buffid
 extern uint64_t sg_rand_collect_num;    //
+extern uint64_t sg_team_collect_num;    //
 
 extern uint32_t sg_choujiangquan_item_id; //抽奖券id
 

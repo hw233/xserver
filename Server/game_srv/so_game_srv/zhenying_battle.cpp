@@ -738,27 +738,28 @@ int ZhenyingBattle::IntoBattle(player_struct &player)
 		//raid->data->start_time = (m_nextTick - table->ReadyTime) * 1000;
 		itRoom->second.uid = raid->data->uuid;
 		itRoom->second.m_state = AI_PLAYER_WAIT_STATE;
-		
-		//int name_index = random();
-		//for (int iZhenying = 1; iZhenying <= 2; ++iZhenying)
-		//{
-		//	for (size_t i = itRoom->second.fighter[iZhenying - 1].size(); i < MAX_ROOM_SIDE; ++i)
-		//	{
-		//		player_struct *rob = player_manager::create_ai_player(&player, NULL, name_index++, 2);
+		InitFlag(raid);
 
-		//		rob->ai_data->ai_patrol_config = robot_zhenyingzhan_config[i + (iZhenying - 1) * MAX_ROOM_SIDE];
-		//		rob->ai_data->player_ai_index = 3;
-		//		rob->set_camp_id(iZhenying);
+		int name_index = random();
+		for (int iZhenying = 1; iZhenying <= 2; ++iZhenying)
+		{
+			for (size_t i = itRoom->second.fighter[iZhenying - 1].size(); i < MAX_ROOM_SIDE; ++i)
+			{
+				player_struct *rob = player_manager::create_ai_player(&player, NULL, name_index++, 2);
 
-		//		rob->set_attr(PLAYER_ATTR_ZHENYING, iZhenying);
-		//		rob->set_attr(PLAYER_ATTR_PK_TYPE, 1);
-		//		GetRelivePos(table, rob->get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
-		//		raid->player_enter_raid_impl(rob, -1, x, z, direct);
-		//		BATTLE_JOINER tmp;
-		//		AddJoiner(*rob, tmp, itRoom->first);
-		//		itRoom->second.fighter[iZhenying - 1].push_back(rob->get_uuid());
-		//	}
-		//}
+				rob->ai_data->ai_patrol_config = robot_zhenyingzhan_config[i + (iZhenying - 1) * MAX_ROOM_SIDE];
+				rob->ai_data->player_ai_index = 3;
+				rob->set_camp_id(iZhenying);
+
+				rob->set_attr(PLAYER_ATTR_ZHENYING, iZhenying);
+				rob->set_attr(PLAYER_ATTR_PK_TYPE, 1);
+				GetRelivePos(table, rob->get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
+				raid->player_enter_raid_impl(rob, -1, x, z, direct);
+				BATTLE_JOINER tmp;
+				AddJoiner(*rob, tmp, itRoom->first);
+				itRoom->second.fighter[iZhenying - 1].push_back(rob->get_uuid());
+			}
+		}
 	}
 	else
 	{
@@ -771,11 +772,11 @@ int ZhenyingBattle::IntoBattle(player_struct &player)
 
 	it->second.in = true;
 	player.set_camp_id(zhenying);
-	//	if (player.get_attr(PLAYER_ATTR_PK_TYPE) != PK_TYPE_CAMP)
-	//	{
-	//		player.set_attr(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP);
-	//		player.broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP, true, true);
-	//	}
+	if (player.get_attr(PLAYER_ATTR_PK_TYPE) != PK_TYPE_CAMP)
+	{
+		player.set_attr(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP);
+		player.broadcast_one_attr_changed(PLAYER_ATTR_PK_TYPE, PK_TYPE_CAMP, true, true);
+	}
 	GetRelivePos(table, player.get_attr(PLAYER_ATTR_ZHENYING), &x, &z, &direct);
 	raid->player_enter_raid_impl(&player, -1, x, z, direct);
 	return 0;
@@ -1132,7 +1133,13 @@ void ZhenyingBattle::ClearRob(uint32_t room)
 			{
 				continue;
 			}
-			player_manager::delete_player_by_id(itRoom->second.fighter[i][c]);
+			player_struct *robot = player_manager::get_player_by_id(itRoom->second.fighter[i][c]);
+			if (robot == NULL)
+			{
+				continue;
+			}
+			robot->ai_data->stop_ai = true;
+			player_manager::delete_ai_player(robot);
 		}
 	}
 	itRoom->second.m_state = REST_STATE;
@@ -1650,19 +1657,6 @@ void ZhenyingBattle::AddFlagScore(ROOM_T::iterator &itRoom, BattlefieldTable *ta
 	
 	itRoom->second.addTick[zhenying] = now + table->ForestSet[0];
 	AddTotalScore(itRoom, table, zhenying, table->ForestSet[1] * itRoom->second.flag[i].playerarr[zhenying].size(), isNew);
-	//itRoom->second.totalPoint[zhenying] += table->ForestSet[1] * itRoom->second.flag[i].playerarr[zhenying].size();
-
-	//TotalScore notify;
-	//total_score__init(&notify);
-	//notify.fulongguo = itRoom->second.totalPoint[ZHENYING__TYPE__FULONGGUO - 1];
-	//notify.dianfenggu = itRoom->second.totalPoint[ZHENYING__TYPE__WANYAOGU - 1];
-	//BroadMessageRoom(itRoom->first, MSG_ID_ZHENYING_FIGHT_SCORE_NOTIFY, &notify, (pack_func)total_score__pack);
-
-	//uint32_t VictoryIntegral = isNew ? sg_new_battle_point : table->VictoryIntegral;
-	//if (itRoom->second.totalPoint[zhenying] >= VictoryIntegral)
-	//{
-	//	Settle(itRoom->first);
-	//}
 }
 void ZhenyingBattle::FlagOnTick(ROOM_T::iterator &itRoom, BattlefieldTable *table, uint64_t now, bool isNew, raid_struct *raid)
 {
@@ -1846,6 +1840,8 @@ int ZhenyingBattle::CreatePrivateBattle(player_struct &player, raid_struct *raid
 	{
 		LOG_ERR("%s: player[%lu] get table %u", __FUNCTION__, player.get_uuid(), itRoom->second.step + 360500001);
 	}
+
+	InitFlag(raid);
 
 	return 0;
 }

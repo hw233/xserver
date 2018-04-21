@@ -61,6 +61,7 @@ private:
 	int recv_from_fd();
 	int recv_handshake(evutil_socket_t fd);
 	int frame_read_cb(evutil_socket_t fd);
+	void on_recv_frame();
 	int decode_and_check_crc(PROTO_HEAD *head);
 	int dispatch_message();
 	int transfer_to_gameserver();

@@ -215,11 +215,12 @@ public:
 	void pack_sight_partner_info(SightPartnerInfo *info);
 	void broadcast_to_sight_and_owner(uint16_t msg_id, void *msg_data, pack_func func, bool include_owner);
 
-	int init_partner(uint32_t partner_id, player_struct *owner); //初始化简单的数据
+	int init_partner(uint32_t partner_id, player_struct *owner, PartnerTable *table); //初始化简单的数据
 	int init_create_data(void); //新创建的伙伴要初始化随机的数据
 	int init_end(bool isNty); //初始化最后一步，其他通过配置表和计算得出的数据
 //	void clear(void);
 	void relesh_attr();
+	void jump_to_owner();
 
 	void on_owner_attack(uint64_t uuid);
 	void on_owner_beattack(uint64_t uuid);

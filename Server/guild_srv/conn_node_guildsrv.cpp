@@ -536,6 +536,7 @@ int conn_node_guildsrv::handle_guild_member_list_request(EXTERN_DATA *extern_dat
 			{
 				member_data[resp.n_members].name = redis_player->name;
 				member_data[resp.n_members].job = redis_player->job;
+				member_data[resp.n_members].sex = redis_player->sex;
 				member_data[resp.n_members].level = redis_player->lv;
 				member_data[resp.n_members].head = redis_player->head_icon;
 				member_data[resp.n_members].fc = redis_player->fighting_capacity;

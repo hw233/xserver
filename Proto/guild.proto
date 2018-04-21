@@ -91,18 +91,19 @@ message GuildMemberData
 	required uint64 playerId = 1; //玩家ID
 	required string name = 2; //玩家名
 	required uint32 job = 3; //职业
-	required uint32 level = 4; //等级
-	required uint32 head = 5; //头像
-	required uint32 fc = 6; //战力
-	required uint32 offlineTime = 7; //下线时间，0：表示在线
-	required uint32 office = 8; //职位
-	required uint32 donation = 9; //帮贡
-	required uint32 curHistoryDonation = 10; //当前帮会历史帮贡
-	required uint32 curWeekDonation = 11; //本周帮贡
-	required uint32 taskCount = 12; //内政次数
-	required uint32 cfCount = 13; //阵营次数
-	required uint32 joinTime = 14; //入帮时间
-	required uint32 curWeekTreasure = 15; //本周资金
+	required uint32 sex = 4; //玩家性别
+	required uint32 level = 5; //等级
+	required uint32 head = 6; //头像
+	required uint32 fc = 7; //战力
+	required uint32 offlineTime = 8; //下线时间，0：表示在线
+	required uint32 office = 9; //职位
+	required uint32 donation = 10; //帮贡
+	required uint32 curHistoryDonation = 11; //当前帮会历史帮贡
+	required uint32 curWeekDonation = 12; //本周帮贡
+	required uint32 taskCount = 13; //内政次数
+	required uint32 cfCount = 14; //阵营次数
+	required uint32 joinTime = 15; //入帮时间
+	required uint32 curWeekTreasure = 16; //本周资金
 }
 
 //帮会入帮申请玩家信息

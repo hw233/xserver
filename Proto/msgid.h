@@ -48,6 +48,8 @@
 #define MSG_ID_ONE_WAY_TRANSFER_START_REQUEST 10130       //单向定点传送请求  NULL
 #define MSG_ID_ONE_WAY_TRANSFER_START_ANSWER 10131        //comm_answer
 #define MSG_ID_ONE_WAY_TRANSFER_STOP_REQUEST 10132        //单向定点传送结束  NULL
+#define MSG_ID_OPEN_BIG_MAP_REQUEST 10133        //打开大地图界面  NULL
+#define MSG_ID_OPEN_BIG_MAP_ANSWER 10134        //打开大地图界面  OpenBigMapAns
 
 
 //技能模块

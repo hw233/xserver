@@ -435,12 +435,13 @@ void monster_manager::on_tick_10()
 			}
 			if (monster->sight_space != NULL)
 			{
-				sight_space_manager::mark_sight_space_delete(monster->sight_space);
-				monster = get_ontick_monster(now);
-				continue; //位面副本 等出位面再删
+				sight_space_manager::mark_sight_space_delete(monster->sight_space);  //位面副本 等出位面再删
 			}
-			monster->scene->delete_monster_from_scene(monster, true);
-			delete_monster(monster);
+			else
+			{
+				monster->scene->delete_monster_from_scene(monster, true);
+				delete_monster(monster);
+			}
 			monster = get_ontick_monster(now);
 			continue;
 		}
@@ -614,6 +615,12 @@ monster_struct *monster_manager::create_call_monster(player_struct *player, Skil
 		return NULL;
 	if (lv_config->MonsterID == 0 || lv_config->MonsterLv == 0)
 		return NULL;
+
+	if (player->sight_space)
+	{
+		return monster_manager::create_sight_space_monster(player->sight_space, player->scene, lv_config->MonsterID, lv_config->MonsterLv, player->get_pos()->pos_x, player->get_pos()->pos_z, player);		
+	}
+	
 	monster_struct *monster = add_monster(lv_config->MonsterID, lv_config->MonsterLv, player);
 	if (!monster)
 		return NULL;
@@ -622,6 +629,7 @@ monster_struct *monster_manager::create_call_monster(player_struct *player, Skil
 	monster->born_pos.pos_z = player->get_pos()->pos_z;			
 	monster->data->create_config_index = -1;
 	monster->set_pos(player->get_pos()->pos_x, player->get_pos()->pos_z);
+
 	if (player->scene->add_monster_to_scene(monster, lv_config->MonsterEff) != 0)
 	{
 		LOG_ERR("%s: uuid[%lu] monster[%lu] scene[%u]", __FUNCTION__, monster->data->player_id, lv_config->MonsterID, player->scene->m_id);
@@ -631,14 +639,14 @@ monster_struct *monster_manager::create_call_monster(player_struct *player, Skil
 	return monster;
 }
 
-monster_struct *monster_manager::create_sight_space_monster(sight_space_struct *sight_space, scene_struct *scene, uint32_t monster_id, uint32_t level, double pos_x, double pos_z)
+monster_struct *monster_manager::create_sight_space_monster(sight_space_struct *sight_space, scene_struct *scene, uint32_t monster_id, uint32_t level, double pos_x, double pos_z, unit_struct *owner)
 {
 	for (int i = 0; i < MAX_MONSTER_IN_SIGHT_SPACE; ++i)
 	{
 		if (sight_space->monsters[i] != NULL)
 			continue;
 
-		monster_struct *monster = add_monster(monster_id, level);
+		monster_struct *monster = add_monster(monster_id, level, owner);
 		if (!monster)
 			return NULL;
 
@@ -658,6 +666,10 @@ monster_struct *monster_manager::create_sight_space_monster(sight_space_struct *
 		if (sight_space->players[0] && sight_space->players[0]->data->playing_drama)
 		{
 			monster->data->stop_ai = true;
+		}
+		if (owner != NULL)
+		{
+			++sight_space->data->n_monster_call;
 		}
 		return monster;
 	}

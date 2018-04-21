@@ -34,7 +34,6 @@ static void battle_raid_ai_init(raid_struct *raid, player_struct *player)
 			LOG_INFO("%s: player[%lu] ret = %d", __FUNCTION__, player->get_uuid(), ret);
 		}
 	}
-	ZhenyingBattle::GetInstance()->InitFlag(raid);
 }
 
 void battle_raid_ai_finished(raid_struct *raid)

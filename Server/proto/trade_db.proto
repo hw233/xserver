@@ -44,9 +44,10 @@ message RedPacketRedisInfo
 	required uint32 red_sum_num = 13; //红包总个数
 	required uint32 red_use_num = 14; //红包已经被领取的个数
 	required string player_text = 15; //发红包玩家留言
-	optional RedPacketRedisPlayerReciveInfo max_player = 16; //当前手气最佳的玩家
-	optional RedPacketRedisPlayerReciveInfo min_player = 17; //当前手气最差的玩家
-	repeated RedPacketRedisPlayerReciveInfo all_player = 18; //所有领取了红包的玩家
+	required uint32 player_zhengyin = 16; //发红包玩家阵营
+	optional RedPacketRedisPlayerReciveInfo max_player = 17; //当前手气最佳的玩家
+	optional RedPacketRedisPlayerReciveInfo min_player = 18; //当前手气最差的玩家
+	repeated RedPacketRedisPlayerReciveInfo all_player = 19; //所有领取了红包的玩家
 }
 
 message RedPacketRedisPlayerReciveInfo
@@ -68,4 +69,16 @@ message RedPacketRedisPlayeNormalInfo
 message RedPacketRedisPlayerReciveRecord
 {
 	repeated RedPacketRedisPlayeNormalInfo info = 1; //详细信息
+}
+
+//顽疾所有已经被移除的红包历史记录总和
+message RedPacketRedisPlayerAllJiluInfo
+{
+	required uint32 send_red_num = 1;  //发出红包个数 
+	required uint32 send_gold_num = 2; //发红包元宝总数量
+	required uint32 send_coin_num = 3; //发红包银两总数量
+	required uint32 grab_red_num = 4;  //抢到红包个数
+	required uint32 grab_gold_num = 5; //抢红包元宝总数量
+	required uint32 grab_coin_num = 6; //抢红包银两总数量
+	required uint32 grab_max_red_num = 7; //抢到手气最佳红包个数
 }

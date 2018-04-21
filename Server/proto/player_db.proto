@@ -399,6 +399,7 @@ message DBTowerInfo
 	required uint32 top_lv = 5; //最高层
 	required uint32 rand_collect_num = 6; //随机宝箱采集次数 与冲塔无关
 	required uint32 script_reward_num = 7; //剧情副本次数 与冲塔无关
+	required uint32 team_collect_num = 8; // 与冲塔无关
 }
 
 message PlayerDBInfo

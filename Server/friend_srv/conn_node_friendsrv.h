@@ -26,6 +26,9 @@ public:
 
 	static conn_node_friendsrv connecter;
 	static char server_key[64];
+	static char zhenying_key[64];
+	static char tower_max_key[64];
+	static char tower_cd_key[64];
 	static char server_wyk_key[64];	
 private:
 	void handle_team_info();
