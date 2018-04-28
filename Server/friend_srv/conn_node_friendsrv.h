@@ -82,6 +82,7 @@ private:
 	void handle_friend_cost_answer(); //去game_srv扣除消耗结果
 	void handle_friend_turn_switch_request(); //翻转好友申请开关
 	void handle_friend_rename_request(); //玩家改名
+	void handle_friend_clean_closeness_request(); //清除玩家对应好友的好感度
 };
 
 

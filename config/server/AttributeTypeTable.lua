@@ -142,7 +142,7 @@ local AttributeTypeTable = {
 	[21] = {
 		['ID'] = 21,
 		['Effect'] = 'MoveSpeed',
-		['FightRatio'] = 200,
+		['FightRatio'] = 0,
 		['Total'] = 0,
 		['ShowType'] = 0
 		},

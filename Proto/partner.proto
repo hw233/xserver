@@ -57,6 +57,7 @@ message PartnerInfoAnswer
 	required uint32 partner_today_junior_recurit_cd = 12;  //今日JUNIOR伙伴招募cd
 	required uint32 partner_today_senior_recurit_count = 13;  //今日senior伙伴招募次数
 	required uint32 partner_today_senior_recurit_cd = 14;  //今日senior伙伴招募cd
+	required uint32 cd = 15; //怒气值cd
 }
 
 //伙伴翻转开关请求

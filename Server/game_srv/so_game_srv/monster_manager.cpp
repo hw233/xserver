@@ -398,15 +398,48 @@ void monster_manager::on_tick_1()
 {
 }
 
+void monster_manager::do_monster_on_tick(monster_struct *monster, uint64_t now)
+{
+	monster->data->ontick_time = now + monster->ai_config->Response;
+	if (!monster->data->stop_ai)
+		monster->on_tick();
+	if (monster->m_liveTime != 0 && now > monster->m_liveTime)
+	{
+		if (monster->config->Type == 4)  //寻宝boss
+		{
+			player_struct *player = player_manager::get_player_by_id(monster->data->owner);
+			if (player != NULL)
+			{
+					//系统提示
+				player->send_system_notice(190500285, NULL);
+			}
+		}
+		monster->broadcast_one_attr_changed(PLAYER_ATTR_HP, -1, false, false);
+		
+		if (monster->sight_space != NULL)
+		{
+//			sight_space_manager::mark_sight_space_delete(monster->sight_space);  //位面副本 等出位面再删
+		}
+		else
+		{
+			monster->scene->delete_monster_from_scene(monster, false);
+			delete_monster(monster);
+		}
+		return;
+	}
+}
+
 void monster_manager::on_tick_5()
 {
 	uint64_t now = time_helper::get_cached_time();
 	monster_struct *boss = get_ontick_boss(now);
 	while (boss != NULL)
 	{
-		boss->data->ontick_time = now + boss->ai_config->Response;
-		if (!boss->data->stop_ai)
-			boss->on_tick();
+		// boss->data->ontick_time = now + boss->ai_config->Response;
+		// if (!boss->data->stop_ai)
+		// 	boss->on_tick();
+		do_monster_on_tick(boss, now);
+		
 		if (boss->data && !boss->mark_delete)
 			boss_ontick_settimer(boss);
 		boss = get_ontick_boss(now);
@@ -419,32 +452,33 @@ void monster_manager::on_tick_10()
 	monster_struct *monster = get_ontick_monster(now);
 	while (monster != NULL)
 	{
-		monster->data->ontick_time = now + monster->ai_config->Response;
-		if (!monster->data->stop_ai)
-			monster->on_tick();
-		if (monster->m_liveTime != 0 && now > monster->m_liveTime)
-		{
-			if (monster->config->Type == 4)  //寻宝boss
-			{
-				player_struct *player = player_manager::get_player_by_id(monster->data->owner);
-				if (player != NULL)
-				{
-					//系统提示
-					player->send_system_notice(190500285, NULL);
-				}
-			}
-			if (monster->sight_space != NULL)
-			{
-				sight_space_manager::mark_sight_space_delete(monster->sight_space);  //位面副本 等出位面再删
-			}
-			else
-			{
-				monster->scene->delete_monster_from_scene(monster, true);
-				delete_monster(monster);
-			}
-			monster = get_ontick_monster(now);
-			continue;
-		}
+		do_monster_on_tick(monster, now);		
+		// monster->data->ontick_time = now + monster->ai_config->Response;
+		// if (!monster->data->stop_ai)
+		// 	monster->on_tick();
+		// if (monster->m_liveTime != 0 && now > monster->m_liveTime)
+		// {
+		// 	if (monster->config->Type == 4)  //寻宝boss
+		// 	{
+		// 		player_struct *player = player_manager::get_player_by_id(monster->data->owner);
+		// 		if (player != NULL)
+		// 		{
+		// 			//系统提示
+		// 			player->send_system_notice(190500285, NULL);
+		// 		}
+		// 	}
+		// 	if (monster->sight_space != NULL)
+		// 	{
+		// 		sight_space_manager::mark_sight_space_delete(monster->sight_space);  //位面副本 等出位面再删
+		// 	}
+		// 	else
+		// 	{
+		// 		monster->scene->delete_monster_from_scene(monster, true);
+		// 		delete_monster(monster);
+		// 	}
+		// 	monster = get_ontick_monster(now);
+		// 	continue;
+		// }
 		if (monster->data && !monster->mark_delete)
 			monster_ontick_settimer(monster);
 		monster = get_ontick_monster(now);
@@ -598,7 +632,7 @@ monster_struct *monster_manager::add_monster(uint64_t monster_id, uint64_t lv, u
 	}
 	else
 	{
-		ret->m_liveTime = time_helper::get_cached_time() + ret->config->LifeTime * 1000;
+		ret->m_liveTime = time_helper::get_cached_time() + ret->config->LifeTime;
 	}
 
 	if (ret->ai && ret->ai->on_monster_ai_init)

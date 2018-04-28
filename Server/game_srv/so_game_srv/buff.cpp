@@ -462,6 +462,14 @@ void buff_struct::set_next_timer()
 
 void buff_struct::deal_with_del_effect()
 {
+	if (config->BuffType == 4)
+	{
+		if (m_owner->get_unit_type() == UNIT_TYPE_PLAYER)
+		{
+			player_struct *player = (player_struct *)m_owner;
+			player->adjust_battle_partner();
+		}
+	}
 	if (config->n_DelEffectID <= 0)
 		return;
 	if (config->DelEffectID[0] == 0)

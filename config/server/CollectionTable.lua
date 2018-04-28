@@ -2094,7 +2094,7 @@ local CollectionTable = {
 		},
 	[154200003] = {
 		['ID'] = 154200003,
-		['NameId'] = '紫苏草',
+		['NameId'] = '茯苓草',
 		['IconNameId'] = '采摘',
 		['LoadingName'] = '采摘',
 		['Icon'] = 'ico_task_collect',
@@ -2232,7 +2232,7 @@ local CollectionTable = {
 		},
 	[154200009] = {
 		['ID'] = 154200009,
-		['NameId'] = '紫苏草',
+		['NameId'] = '茯苓草',
 		['IconNameId'] = '采集',
 		['LoadingName'] = '采集',
 		['Icon'] = 'ico_task_collect',
@@ -2577,7 +2577,7 @@ local CollectionTable = {
 		},
 	[154200024] = {
 		['ID'] = 154200024,
-		['NameId'] = '紫苏草',
+		['NameId'] = '茯苓草',
 		['IconNameId'] = '采摘',
 		['LoadingName'] = '采摘',
 		['Icon'] = 'ico_task_collect',

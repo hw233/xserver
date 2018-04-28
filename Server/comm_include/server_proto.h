@@ -75,6 +75,7 @@ enum SERVER_PROTO {
     SERVER_PROTO_FRIEND_TRACK_ENEMY_REQUEST,     //追踪仇人请求 friend_srv --> game_srv
     SERVER_PROTO_FRIEND_TRACK_ENEMY_ANSWER,      //追踪仇人返回 game_srv --> friend_srv
     SERVER_PROTO_FRIEND_SYNC_ENEMY,              //同步仇人信息
+    SERVER_PROTO_FRIEND_DUMP_CLOSENESS_REQUEST,	 //将好友双方好感度清零
 
     //邮件服消息
     SERVER_PROTO_MAIL_INSERT = 1600,        //插入新邮件
@@ -558,6 +559,11 @@ typedef struct friend_track_answer
 	uint32_t result;
 	uint64_t target_id;
 } FRIEND_TRACK_ANSWER;
+
+typedef struct friend_dump_closeness 
+{
+	uint64_t target_id;
+} FRIEND_DUMP_CLOSENESS;
 
 typedef struct proto_guild_disband
 {

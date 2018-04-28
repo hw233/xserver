@@ -232,6 +232,7 @@ enum ItemUseEffect
 	IUE_OPEN_FUNCTION = 23, //开启功能
 	IUE_RANDOM_BOX = 24, //随机宝箱
 	IUE_DINNER = 26, //队伍共享的采集点
+	IUE_PROPOSE_POST = 27, //传送到情人岛
 };
 
 enum TaskConditionType
@@ -576,4 +577,20 @@ enum
 	FRIENF_SONGLI_SUB_COIN = 56,   //消耗银两
 };
 
+//玩家婚姻状态
+enum
+{
+	MARRY_STATU_SINGLE_NOT_MARRIAGE_HISTORY = 0,   //单身(且无婚史)
+	MARRY_STATU_SINGLE_HAVE_MARRIAGE_HISTORY = 1,  //单身(且有婚史)
+	MARRY_STATU_HAVE_PROPOSE_NOT_RESERVE_MARRY = 2,  //当前已经订婚(未预定婚礼)
+	MARRY_STATU_HAVE_PROPOSE_HAVE_RESERVE_MARRY = 3,  //当前已经订婚(已预定婚礼)
+	MARRY_STATU_HAVE_ALREADY_MARRIED   = 4,  //已婚
+};
+
+//求婚过程中玩家扮演的角色
+enum 
+{
+	MARRY_PROPOSE_IS_ACTIVE = 0, //主动求婚者
+	MARRY_PROPOSE_IS_PASSIVE = 1, //被动求婚者
+};
 #endif

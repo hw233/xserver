@@ -427,7 +427,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 300,
 		['Career'] = 1,
-		['OpenLv'] = 28,
+		['OpenLv'] = 31,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -454,7 +454,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 300,
 		['Career'] = 1,
-		['OpenLv'] = 31,
+		['OpenLv'] = 34,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -481,7 +481,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 300,
 		['Career'] = 1,
-		['OpenLv'] = 34,
+		['OpenLv'] = 37,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -508,7 +508,7 @@ local SkillTable = {
 		['HateAdd'] = 12000,
 		['HateValue'] = 200,
 		['Career'] = 1,
-		['OpenLv'] = 39,
+		['OpenLv'] = 38,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -535,7 +535,7 @@ local SkillTable = {
 		['HateAdd'] = 12000,
 		['HateValue'] = 200,
 		['Career'] = 1,
-		['OpenLv'] = 40,
+		['OpenLv'] = 41,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -562,7 +562,7 @@ local SkillTable = {
 		['HateAdd'] = 12000,
 		['HateValue'] = 200,
 		['Career'] = 1,
-		['OpenLv'] = 41,
+		['OpenLv'] = 44,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -589,7 +589,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 200,
 		['Career'] = 1,
-		['OpenLv'] = 41,
+		['OpenLv'] = 42,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -616,7 +616,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 200,
 		['Career'] = 1,
-		['OpenLv'] = 42,
+		['OpenLv'] = 45,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -643,7 +643,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 200,
 		['Career'] = 1,
-		['OpenLv'] = 43,
+		['OpenLv'] = 48,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -921,7 +921,7 @@ local SkillTable = {
 		['ID'] = 111100204,
 		['SkillType'] = 2,
 		['levelMax'] = 100,
-		['CD'] = 20000,
+		['CD'] = 5000,
 		['TimeID'] = {112410231},
 		['SkillLv'] = 113204000,
 		['PassiveLv'] = 0,
@@ -1075,7 +1075,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 2,
-		['OpenLv'] = 12,
+		['OpenLv'] = 15,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1102,7 +1102,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 2,
-		['OpenLv'] = 22,
+		['OpenLv'] = 20,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1129,7 +1129,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 2,
-		['OpenLv'] = 32,
+		['OpenLv'] = 25,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1156,7 +1156,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 2,
-		['OpenLv'] = 16,
+		['OpenLv'] = 31,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1183,7 +1183,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 2,
-		['OpenLv'] = 26,
+		['OpenLv'] = 34,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1210,7 +1210,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 2,
-		['OpenLv'] = 36,
+		['OpenLv'] = 37,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1237,7 +1237,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 2,
-		['OpenLv'] = 20,
+		['OpenLv'] = 38,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1264,7 +1264,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 2,
-		['OpenLv'] = 30,
+		['OpenLv'] = 41,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1291,7 +1291,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 2,
-		['OpenLv'] = 40,
+		['OpenLv'] = 44,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1318,7 +1318,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 2,
-		['OpenLv'] = 15,
+		['OpenLv'] = 42,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1345,7 +1345,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 2,
-		['OpenLv'] = 15,
+		['OpenLv'] = 45,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1372,7 +1372,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 2,
-		['OpenLv'] = 15,
+		['OpenLv'] = 48,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1804,7 +1804,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 3,
-		['OpenLv'] = 12,
+		['OpenLv'] = 15,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1831,7 +1831,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 3,
-		['OpenLv'] = 22,
+		['OpenLv'] = 20,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1858,7 +1858,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 3,
-		['OpenLv'] = 32,
+		['OpenLv'] = 25,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1885,7 +1885,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 3,
-		['OpenLv'] = 16,
+		['OpenLv'] = 31,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1912,7 +1912,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 3,
-		['OpenLv'] = 26,
+		['OpenLv'] = 34,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1939,7 +1939,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 3,
-		['OpenLv'] = 36,
+		['OpenLv'] = 37,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1966,7 +1966,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 3,
-		['OpenLv'] = 20,
+		['OpenLv'] = 38,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -1993,7 +1993,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 3,
-		['OpenLv'] = 30,
+		['OpenLv'] = 41,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -2020,7 +2020,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 3,
-		['OpenLv'] = 40,
+		['OpenLv'] = 44,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -2452,7 +2452,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 4,
-		['OpenLv'] = 12,
+		['OpenLv'] = 15,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -2479,7 +2479,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 4,
-		['OpenLv'] = 22,
+		['OpenLv'] = 20,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -2506,7 +2506,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 4,
-		['OpenLv'] = 32,
+		['OpenLv'] = 25,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -2533,7 +2533,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 200,
 		['Career'] = 4,
-		['OpenLv'] = 16,
+		['OpenLv'] = 31,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -2560,7 +2560,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 200,
 		['Career'] = 4,
-		['OpenLv'] = 26,
+		['OpenLv'] = 34,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -2587,7 +2587,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 200,
 		['Career'] = 4,
-		['OpenLv'] = 36,
+		['OpenLv'] = 37,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -2614,7 +2614,7 @@ local SkillTable = {
 		['HateAdd'] = 12000,
 		['HateValue'] = 300,
 		['Career'] = 4,
-		['OpenLv'] = 20,
+		['OpenLv'] = 38,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -2641,7 +2641,7 @@ local SkillTable = {
 		['HateAdd'] = 12000,
 		['HateValue'] = 300,
 		['Career'] = 4,
-		['OpenLv'] = 30,
+		['OpenLv'] = 41,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -2668,7 +2668,7 @@ local SkillTable = {
 		['HateAdd'] = 12000,
 		['HateValue'] = 300,
 		['Career'] = 4,
-		['OpenLv'] = 40,
+		['OpenLv'] = 44,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -3100,7 +3100,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 5,
-		['OpenLv'] = 12,
+		['OpenLv'] = 15,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -3127,7 +3127,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 5,
-		['OpenLv'] = 22,
+		['OpenLv'] = 20,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -3154,7 +3154,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 100,
 		['Career'] = 5,
-		['OpenLv'] = 32,
+		['OpenLv'] = 25,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -3181,7 +3181,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 200,
 		['Career'] = 5,
-		['OpenLv'] = 16,
+		['OpenLv'] = 31,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -3208,7 +3208,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 200,
 		['Career'] = 5,
-		['OpenLv'] = 26,
+		['OpenLv'] = 34,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -3235,7 +3235,7 @@ local SkillTable = {
 		['HateAdd'] = 10000,
 		['HateValue'] = 200,
 		['Career'] = 5,
-		['OpenLv'] = 36,
+		['OpenLv'] = 37,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -3262,7 +3262,7 @@ local SkillTable = {
 		['HateAdd'] = 12000,
 		['HateValue'] = 300,
 		['Career'] = 5,
-		['OpenLv'] = 20,
+		['OpenLv'] = 38,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -3289,7 +3289,7 @@ local SkillTable = {
 		['HateAdd'] = 12000,
 		['HateValue'] = 300,
 		['Career'] = 5,
-		['OpenLv'] = 30,
+		['OpenLv'] = 41,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -3316,7 +3316,7 @@ local SkillTable = {
 		['HateAdd'] = 12000,
 		['HateValue'] = 300,
 		['Career'] = 5,
-		['OpenLv'] = 40,
+		['OpenLv'] = 44,
 		['IsRune'] = 1,
 		['RuneID'] = {0}
 		},
@@ -4510,9 +4510,9 @@ local SkillTable = {
 		},
 	[111301502] = {
 		['ID'] = 111301502,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 12000,
 		['TimeID'] = {112400169},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -4537,9 +4537,9 @@ local SkillTable = {
 		},
 	[111301503] = {
 		['ID'] = 111301503,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 15000,
 		['TimeID'] = {112400170},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12448,16 +12448,16 @@ local SkillTable = {
 		},
 	[111620001] = {
 		['ID'] = 111620001,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400466},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
 		['SkillAffectId'] = 112162001,
 		['PassiveID'] = 0,
 		['TargetNeed'] = 3,
-		['TargetType'] = {1},
+		['TargetType'] = {102},
 		['MaxCount'] = 1,
 		['SearchRadius'] = 15,
 		['AutoSkillRange'] = 2,
@@ -12475,9 +12475,9 @@ local SkillTable = {
 		},
 	[111620002] = {
 		['ID'] = 111620002,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400467},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12502,9 +12502,9 @@ local SkillTable = {
 		},
 	[111620003] = {
 		['ID'] = 111620003,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400468},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12529,9 +12529,9 @@ local SkillTable = {
 		},
 	[111620004] = {
 		['ID'] = 111620004,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400469},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12556,9 +12556,9 @@ local SkillTable = {
 		},
 	[111620005] = {
 		['ID'] = 111620005,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400470},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12583,9 +12583,9 @@ local SkillTable = {
 		},
 	[111620006] = {
 		['ID'] = 111620006,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400471},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12610,9 +12610,9 @@ local SkillTable = {
 		},
 	[111620007] = {
 		['ID'] = 111620007,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400472},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12637,9 +12637,9 @@ local SkillTable = {
 		},
 	[111620008] = {
 		['ID'] = 111620008,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400473},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12664,9 +12664,9 @@ local SkillTable = {
 		},
 	[111620009] = {
 		['ID'] = 111620009,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400474},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12691,9 +12691,9 @@ local SkillTable = {
 		},
 	[111620010] = {
 		['ID'] = 111620010,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400475},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12718,9 +12718,9 @@ local SkillTable = {
 		},
 	[111620011] = {
 		['ID'] = 111620011,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400476},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12745,9 +12745,9 @@ local SkillTable = {
 		},
 	[111620012] = {
 		['ID'] = 111620012,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400477},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12772,9 +12772,9 @@ local SkillTable = {
 		},
 	[111620013] = {
 		['ID'] = 111620013,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400478},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12799,9 +12799,9 @@ local SkillTable = {
 		},
 	[111620014] = {
 		['ID'] = 111620014,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400479},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12826,9 +12826,9 @@ local SkillTable = {
 		},
 	[111620015] = {
 		['ID'] = 111620015,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400480},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,
@@ -12853,9 +12853,9 @@ local SkillTable = {
 		},
 	[111620016] = {
 		['ID'] = 111620016,
-		['SkillType'] = 1,
+		['SkillType'] = 2,
 		['levelMax'] = 1,
-		['CD'] = 0,
+		['CD'] = 5000,
 		['TimeID'] = {112400481},
 		['SkillLv'] = 113000000,
 		['PassiveLv'] = 0,

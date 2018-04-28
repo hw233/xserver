@@ -1079,6 +1079,26 @@ local SkillEffectTable = {
 		['EffectAdd1'] = {0},
 		['EffectNum1'] = {0}
 		},
+	[115000109] = {
+		['ID'] = 115000109,
+		['Type'] = 170000018,
+		['Effect'] = {0},
+		['EffectAdd'] = {0},
+		['EffectNum'] = {106000006},
+		['SkillID'] = 0,
+		['EffectAdd1'] = {0},
+		['EffectNum1'] = {0}
+		},
+	[115000110] = {
+		['ID'] = 115000110,
+		['Type'] = 170000002,
+		['Effect'] = {0},
+		['EffectAdd'] = {0},
+		['EffectNum'] = {0},
+		['SkillID'] = 0,
+		['EffectAdd1'] = {0},
+		['EffectNum1'] = {0}
+		},
 	[115000372] = {
 		['ID'] = 115000372,
 		['Type'] = 170000001,

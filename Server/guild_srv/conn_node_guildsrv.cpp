@@ -3351,11 +3351,14 @@ int conn_node_guildsrv::handle_get_other_info_request(EXTERN_DATA *extern_data)
 	else
 	{
 		GuildPlayer *target = get_guild_player(req->data->playerid);
+		
 		if (target && target->guild)
 		{
 			req->data->guildid = target->guild->guild_id;
 			req->data->guildoffice = target->office;
-
+			// 
+			req->data->guildicon = target->guild->icon;
+			LOG_INFO("%s:%d:djx:req->data->guildicon:%u",__FUNCTION__,__LINE__,target->guild->icon);
 			int name_len = strlen(target->guild->name);
 			if (name_len == 0)
 			{

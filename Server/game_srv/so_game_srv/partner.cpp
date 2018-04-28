@@ -1036,7 +1036,10 @@ void partner_struct::calculate_attribute(double *attrData, partner_attr_data &at
 {
 //	memset(&attrData[PLAYER_ATTR_MAXHP], 0, sizeof(double));
 //	memset(&attrData[PLAYER_ATTR_ATTACK], 0, (PLAYER_ATTR_DETIMEDF - PLAYER_ATTR_ATTACK + 1) * sizeof(double));
-	memset(&data->attrData[PLAYER_ATTR_MAXHP], 0, (PLAYER_ATTR_PVPDF - PLAYER_ATTR_MAXHP + 1) * sizeof(double));
+	memset(&data->attrData[PLAYER_ATTR_MAXHP], 0, (PLAYER_ATTR_PVPDF - PLAYER_ATTR_MAXHP + 1) * sizeof(double)); 
+	//memset(&data->attrData[PLAYER_ATTR_BASELV], 0, (PLAYER_ATTR_LINGLV - PLAYER_ATTR_BASELV + 1) * sizeof(double));
+	for (int i = PLAYER_ATTR_TI; i <= PLAYER_ATTR_ALLEFFDF; ++i)
+		data->attrData[i] = 0;
 	
 	double module_attr[PLAYER_ATTR_MAX];
 	memset(module_attr, 0, sizeof(double) * PLAYER_ATTR_MAX);

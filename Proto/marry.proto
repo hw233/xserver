@@ -1,0 +1,97 @@
+syntax = "proto2";
+
+
+//求婚正式开始请求
+message PlayerProposeStartRequest
+{
+	required string propose_enounce = 1; //求婚宣言
+	required uint32 propose_type = 2; //求婚的档次(根据玩家身上的婚戒来)
+}
+
+//求婚状态通知(开始和结束都走这个)
+message PlayerProposeStatetNotify
+{
+	required uint32 type = 1; //0:表示开始求婚状态 否则就是结束求婚状态
+	required bool result = 2; //求婚是否成功(此字段只有当 type !=0 才有用)
+	optional PlayerProposeStartInfo propose_Info = 3; //求婚的额外信息(此字段只有当 type ==0 才有用)
+	optional PlayerProposePlayerPosInfo active_player = 4;  //主动求婚玩家信息
+	optional PlayerProposePlayerPosInfo passive_player = 5; //被求婚者玩家信息
+}
+
+//玩家信息
+message PlayerProposePlayerPosInfo
+{
+	required uint64 player_id = 1; //玩家id
+	required string player_name = 2; //玩家名字
+	required float  pos_x = 3; //玩家x坐标
+	required float  pos_z = 4; //玩家z坐标
+}
+
+//求婚开始的相关信息
+message PlayerProposeStartInfo
+{
+	required uint64 time = 1;								//正式开始的时间戳
+	required string propose_enounce = 2;					//求婚宣言
+	required uint32 propose_type = 3;						//求婚档次
+}
+
+//被求婚者对求婚的回复
+message PlayerProposeQuerenRequest
+{
+	required uint32 statu = 1; //1:表示拒绝 否则就是同意
+}
+
+//求婚成功全服广播
+message PlayerProposeBroadcast
+{
+	required uint32 type = 1; //SENIOR_PROPOSE:高级求婚 LUXURY_PROPOSE:豪华求婚 LUXURIOUS_PROPOSE:奢华求婚
+	optional playerProposeSomeInfo active_player = 2; //主动求婚者
+	optional playerProposeSomeInfo passive_player = 3; //被求婚者
+}
+
+//求婚 or 婚礼等级定义
+enum ProposeStatus
+{
+	SENIOR_PROPOSE = 1; //高级求婚,婚礼 
+	LUXURY_PROPOSE = 2; //豪华求婚,婚礼
+	LUXURIOUS_PROPOSE = 3; //奢华求婚,婚礼
+}
+
+//进行求婚仪式的玩家数据
+message playerProposeSomeInfo
+{
+	required uint64 player_id = 1; //玩家id
+	required string player_name = 2; //玩家名字
+}
+
+message PlayerReserveMarriageRequest
+{
+	required uint32 type = 1; //SENIOR_PROPOSE:高级婚礼 LUXURY_PROPOSE:豪华婚礼 LUXURIOUS_PROPOSE:奢华婚礼
+	required uint64 marry_time = 2; //婚期时间戳
+}
+
+//玩家当前情缘信息通知
+message PlayerCurMarryInfoNotify
+{
+	required uint32 statu = 1; //玩家当前的婚姻状态 0:单身(且无婚史) 1:单身(且有婚史) 2:当前已订婚(未预定婚礼) 3:当前已订婚(且已经预定婚礼) 4:已婚
+	required uint32 my_role = 2; //0:表示我是求婚者 1:是被求婚者
+	required uint32 reserve_marry_type = 3; //所预定的婚礼档次
+	required uint64 reserve_marry_time = 4; //所预定的婚礼时间戳
+	required uint64 target_id = 5; //当前对象id
+	required string target_name = 6; //当前对象名字
+	required uint32 target_sex = 7; //当前对象性别
+	required uint64 divorce_time = 8; //上次离婚时间
+}
+
+//取消订婚最终结果通知
+message PlayerCancelProposeResultNotify
+{
+	required uint32 result = 1; //0:成功 否则有一方拒绝取消
+	required uint64 player_id = 2; //拒绝一方的玩家id
+}
+
+//取消订婚确认请求
+message PlayerCancelProposeConfirmRequest
+{
+	required uint32 result = 1; //0:接受取消 否则拒绝取消
+}

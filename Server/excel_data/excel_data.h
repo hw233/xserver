@@ -155,6 +155,8 @@ struct TreasureTable;
 struct TypeLevelTable;
 struct UndergroundTask;
 struct WeaponsEffectTable;
+struct WeddingRing;
+struct WeddingTable;
 struct WeekTable;
 struct WorldBossRewardTable;
 struct WorldBossTable;
@@ -311,6 +313,8 @@ void free_TreasureTable(struct TreasureTable *p);
 void free_TypeLevelTable(struct TypeLevelTable *p);
 void free_UndergroundTask(struct UndergroundTask *p);
 void free_WeaponsEffectTable(struct WeaponsEffectTable *p);
+void free_WeddingRing(struct WeddingRing *p);
+void free_WeddingTable(struct WeddingTable *p);
 void free_WeekTable(struct WeekTable *p);
 void free_WorldBossRewardTable(struct WorldBossRewardTable *p);
 void free_WorldBossTable(struct WorldBossTable *p);
@@ -523,6 +527,16 @@ struct ActorTable
 	uint64_t *ClotheColorID1; //21
 	uint32_t n_ClotheColorID2; //22
 	uint64_t *ClotheColorID2; //22
+	uint32_t n_BasiceAttribute; //23
+	uint64_t *BasiceAttribute; //23
+	uint32_t n_LvAttributeNum; //24
+	uint64_t *LvAttributeNum; //24
+	uint32_t n_FiveAttribute; //25
+	uint64_t *FiveAttribute; //25
+	uint32_t n_SeniorAttribute; //26
+	uint64_t *SeniorAttribute; //26
+	uint32_t n_BuffAttribute; //27
+	uint64_t *BuffAttribute; //27
 }__attribute__ ((packed));
 
 struct AcupunctureTable
@@ -1852,6 +1866,7 @@ struct P20076Table
 	uint64_t  MoneyReward; //12
 	uint32_t n_MonsterLevel; //13
 	uint64_t *MonsterLevel; //13
+	uint64_t  BirthDirection; //14
 }__attribute__ ((packed));
 
 struct ParameterTable
@@ -2228,6 +2243,7 @@ struct SceneResTable
 	uint64_t *UseDelivery; //18
 	uint64_t  Recovery; //19
 	uint64_t  Partner; //20
+	uint64_t  ViewSize; //21
 }__attribute__ ((packed));
 
 struct ScriptTable
@@ -2718,6 +2734,33 @@ struct WeaponsEffectTable
 	uint64_t  Requirement2; //3
 	uint64_t  Item; //4
 	uint64_t  ItemNum; //5
+}__attribute__ ((packed));
+
+struct WeddingRing
+{
+	uint64_t  ID; //1
+	uint64_t  RingGrade; //2
+	uint64_t  ItemsID; //3
+	uint32_t n_AttributeType; //4
+	uint64_t *AttributeType; //4
+	uint32_t n_AttributeValue; //5
+	uint64_t *AttributeValue; //5
+}__attribute__ ((packed));
+
+struct WeddingTable
+{
+	uint64_t  ID; //1
+	uint64_t  WeddingGrade; //2
+	uint32_t n_RewardItem1; //3
+	uint64_t *RewardItem1; //3
+	uint32_t n_RewardItem2; //4
+	uint64_t *RewardItem2; //4
+	uint32_t n_RewardNum; //5
+	uint64_t *RewardNum; //5
+	uint64_t  SceneID; //6
+	uint64_t  Cost; //7
+	uint32_t n_Time; //8
+	uint64_t *Time; //8
 }__attribute__ ((packed));
 
 struct WeekTable

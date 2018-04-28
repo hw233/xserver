@@ -1,4 +1,5 @@
 #include "game_event.h"
+#include <string.h>
 #include "time_helper.h"
 #include "player.h"
 #include "uuid.h"
@@ -50,6 +51,7 @@
 #include "../../proto/trade.pb-c.h"
 #include "../../proto/player_fuli.pb-c.h"
 #include "../../proto/guild.pb-c.h"
+#include "../../proto/marry.pb-c.h"
 #include "auto_add_hp.pb-c.h"
 #include "horse.pb-c.h"
 #include "unit_path.h"
@@ -2209,15 +2211,54 @@ static int handle_partner_skill_cast_request(player_struct *player, EXTERN_DATA 
 		return  (-21);
 	}
 	uint32_t skill_id = table->Angerskill;
-	unit_struct *target = partner->ai->choose_target(partner);
-	if (!target)
+	uint32_t type3 = 0;
+	struct SkillTable *config = get_config_by_id(skill_id, &skill_config);
+	if (config != NULL)
 	{
-		send_comm_answer(MSG_ID_PARTNER_SKILL_CAST_ANSWER, 190500320, extern_data);		
-		return (0);
+		for (uint32_t i = 0; i < config->n_TimeID; ++i)
+		{
+			SkillTimeTable *skillTime = get_config_by_id(config->TimeID[i], &skill_time_config);
+			if (skillTime == NULL)
+			{
+				continue;
+			}
+			for (uint32_t n = 0; n < skillTime->n_BuffIdFriend; ++n)
+			{
+				BuffTable *buffTable = get_config_by_id(skillTime->BuffIdFriend[n], &buff_config);
+				if (buffTable == NULL)
+				{
+					continue;
+				}
+				if (buffTable->BuffType == 4)
+				{
+					type3 = skillTime->BuffIdFriend[n];
+					break;
+				}
+			}
+		}
+	}
+	if (type3 != 0)
+	{
+		buff_manager::create_default_buff(type3, player, player, true);
+		player->adjust_battle_partner();
+	} 
+	else
+	{
+		unit_struct *target = partner->ai->choose_target(partner);
+		if (!target)
+		{
+			send_comm_answer(MSG_ID_PARTNER_SKILL_CAST_ANSWER, 190500320, extern_data);
+			return (0);
+		}
+		partner->attack_target(skill_id, -1, target);
 	}
 
 	player->reset_partner_anger(true);
-	partner->attack_target(skill_id, -1, target);
+	ParameterTable *tablePa = get_config_by_id(161000502, &parameter_config);
+	if (tablePa != NULL)
+	{
+		player->data->partner_add_angry_cd = time_helper::get_cached_time() / 1000 + tablePa->parameter1[0];
+	}
 	send_comm_answer(MSG_ID_PARTNER_SKILL_CAST_ANSWER, 0, extern_data);
 	return (0);
 }
@@ -2588,6 +2629,7 @@ static int player_online_enter_scene_after(player_struct *player, EXTERN_DATA *e
 	player->player_ci_fu_info_notify();
 	player->guild_ruqin_activity_notify();
 	player->jiu_gong_ba_gua_reward_info_notify();
+	player->player_cur_marry_info_notify();
 
 	handle_team_info_request(player, extern_data);
 	
@@ -7626,6 +7668,7 @@ static int notify_equip_list(player_struct *player, EXTERN_DATA *extern_data)
 	CommonRandAttrData* cur_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
 	CommonRandAttrData rand_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
 	CommonRandAttrData* rand_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
+	ProposeRingInfo ring_attr_info;
 
 	resp.result = 0;
 	size_t equip_num = 0;
@@ -7644,6 +7687,18 @@ static int notify_equip_list(player_struct *player, EXTERN_DATA *extern_data)
 		equip_data[equip_num].stair = equip_info.stair;
 		equip_data[equip_num].starlv = equip_info.star_lv;
 		equip_data[equip_num].starexp = equip_info.star_exp;
+		//指环部位额外加求婚戒指属性
+		if(equip_data[equip_num].type == 9)
+		{
+			WeddingRing *wedding_ring_config = get_config_by_id(player->data->player_marry_info.propose_type, &propose_ring_config);
+			if(wedding_ring_config != NULL)
+			{
+				propose_ring_info__init(&ring_attr_info);
+				ring_attr_info.ring_id = wedding_ring_config->ID;
+				ring_attr_info.target_name = player->data->player_marry_info.target_name;
+				equip_data[equip_num].ring_info = &ring_attr_info;
+			}
+		}
 		size_t enchant_num = 0;
 		for (int i = 0; i < MAX_EQUIP_ENCHANT_NUM; ++i)
 		{
@@ -8342,10 +8397,10 @@ static int handle_equip_inlay_request(player_struct *player, EXTERN_DATA *extern
 				LOG_ERR("[%s:%d] player[%lu] coin not enough, type:%u, index:%u, need_num:%u, has_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, type, index, need_coin, player_coin);
 				break;
 			}
-
-			if (!player->check_can_add_item(equip_info->inlay[index], 1, NULL))
+		
+			ret = player->check_can_add_item(equip_info->inlay[index], 1, NULL);
+			if (ret != 0)
 			{
-				ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
 				LOG_ERR("[%s:%d] player[%lu] bag not enough, type:%u, index:%u, item_id:%u, item_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, type, index, equip_info->inlay[index], 1);
 				break;
 			}
@@ -8450,9 +8505,9 @@ static int handle_equip_strip_request(player_struct *player, EXTERN_DATA *extern
 			break;
 		}
 
-		if (!player->check_can_add_item(equip_info->inlay[index], 1, NULL))
+		ret = player->check_can_add_item(equip_info->inlay[index], 1, NULL);
+		if(ret != 0)
 		{
-			ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
 			LOG_ERR("[%s:%d] player[%lu] bag not enough, type:%u, index:%u, item_id:%u, item_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, type, index, equip_info->inlay[index], 1);
 			break;
 		}
@@ -8621,9 +8676,9 @@ static int handle_equip_gem_compose_request(player_struct *player, EXTERN_DATA *
 		}
 
 		uint32_t product_num = 1;
-		if (!player->check_can_add_item(product_id, product_num, NULL))
+		ret = player->check_can_add_item(product_id, product_num, NULL);
+		if(ret != 0)
 		{
-			ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
 			LOG_ERR("[%s:%d] player[%lu] bag not enough, item_id:%u, item_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, product_id, product_num);
 			break;
 		}
@@ -10313,9 +10368,13 @@ static int handle_shop_buy_request(player_struct *player, EXTERN_DATA *extern_da
 		}
 
 		uint32_t item_id = goods_config->ItemID;
-		if (!player->check_can_add_item(item_id, buy_num, NULL))
+		ret = player->check_can_add_item(item_id, buy_num, NULL);
+		if(ret != 0)
 		{
-			ret = 190300016;
+			if(ret == ERROR_ID_BAG_GRID_NOT_ENOUGH)
+			{
+				ret = 190300016;
+			}
 			LOG_ERR("[%s:%d] player[%lu] bag not enough, goods_id:%u, want_buy_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, goods_id, buy_num);
 			break;
 		}
@@ -14063,16 +14122,8 @@ static int handle_submit_chengjie_task_request(player_struct *player, EXTERN_DAT
 	uint32_t expadd = 0;
 	uint32_t lv = 0;
 	RewardTable * table = NULL;
-	int rate = pTask->fail / config->parameter1[1];
-	if (player->data->cur_yaoshi == MAJOR__TYPE__CHENGJIE)
-	{
-		SpecialTitleTable *title = get_yaoshi_title_table(player->data->cur_yaoshi, player->data->chengjie.level);
-		if (title != NULL)
-		{
-			expadd = title->TitleEffect2;
-		}
-	}
-
+	int rate = 0;
+	
 	AnsAcceptChengjieTask send;
 	ans_accept_chengjie_task__init(&send);
 	send.ret = 0;
@@ -14091,7 +14142,15 @@ static int handle_submit_chengjie_task_request(player_struct *player, EXTERN_DAT
 	//{
 	//	cost = param_config->parameter1[0]; //押金
 	//}
-	
+	rate = pTask->fail / config->parameter1[1]; 
+	if (player->data->cur_yaoshi == MAJOR__TYPE__CHENGJIE)
+	{
+		SpecialTitleTable *title = get_yaoshi_title_table(player->data->cur_yaoshi, player->data->chengjie.level);
+		if (title != NULL)
+		{
+			expadd = title->TitleEffect2;
+		}
+	}
 	if (config != NULL)
 	{
 		if (rate > config->parameter1[0])
@@ -14124,7 +14183,7 @@ static int handle_submit_chengjie_task_request(player_struct *player, EXTERN_DAT
 	//player->add_chengjie_courage(pTask->courage * (10000 + expadd) / 10000);
 	send.taskid = player->data->chengjie.cur_task;
 
-	ChengJieTaskManage::DelTask(player->data->chengjie.cur_task);
+	ChengJieTaskManage::DelTask(player->data->chengjie.cur_task, false);
 	player->data->chengjie.cur_task = 0;
 	player->data->chengjie.target = 0;
 
@@ -17094,12 +17153,6 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 	OtherDetailData detail_data;
 	other_detail_data__init(&detail_data);
 
-	PersonalityData personality_data;
-	personality_data__init(&personality_data);
-
-	AttrData player_attr[PLAYER_ATTR_MAX];
-	AttrData* player_attr_point[PLAYER_ATTR_MAX];
-
 	EquipData equip_data[MAX_EQUIP_NUM];
 	EquipData* equip_data_point[MAX_EQUIP_NUM];
 	EquipEnchantData enchant_data[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
@@ -17108,6 +17161,7 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 	CommonRandAttrData* cur_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM];
 	CommonRandAttrData rand_attr[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
 	CommonRandAttrData* rand_attr_point[MAX_EQUIP_NUM][MAX_EQUIP_ENCHANT_NUM][MAX_EQUIP_ENCHANT_RAND_NUM];
+	ProposeRingInfo ring_attr_info;
 
 	BaguapaiDressData dress_data[MAX_BAGUAPAI_STYLE_NUM];
 	BaguapaiDressData* dress_data_point[MAX_BAGUAPAI_STYLE_NUM];
@@ -17123,138 +17177,60 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 	resp.data = &detail_data;
 	detail_data.playerid = target->data->player_id;
 	detail_data.name = target->data->name;
+	//AttrData Info
+	AttrData player_attr[PLAYER_ATTR_MAX];
+	AttrData* player_attr_point[PLAYER_ATTR_MAX];
+	std::set<uint32_t> sAttrIds;
+	sAttrIds.insert(PLAYER_ATTR_HP);//1
+	sAttrIds.insert(PLAYER_ATTR_MAXHP);//2
+	sAttrIds.insert(PLAYER_ATTR_FIGHTING_CAPACITY);//36
+	sAttrIds.insert(PLAYER_ATTR_LEVEL);//45
+	sAttrIds.insert(PLAYER_ATTR_ZHENYING);//47
+	sAttrIds.insert(PLAYER_ATTR_JOB);//51
+	sAttrIds.insert(PLAYER_ATTR_EXP);//53
+	sAttrIds.insert(PLAYER_ATTR_HEAD);//57
+	sAttrIds.insert(PLAYER_ATTR_CLOTHES);//58
+	sAttrIds.insert(PLAYER_ATTR_CLOTHES_COLOR_UP);//59
+	sAttrIds.insert(PLAYER_ATTR_HAT);//60
+	sAttrIds.insert(PLAYER_ATTR_HAT_COLOR);//61
+	sAttrIds.insert(PLAYER_ATTR_CLOTHES_COLOR_DOWN);//62
+	sAttrIds.insert(PLAYER_ATTR_WEAPON);//65
+	sAttrIds.insert(PLAYER_ATTR_BAGUA);//72
+	sAttrIds.insert(PLAYER_ATTR_WEAPON_COLOR);//84
+	sAttrIds.insert(PLAYER_ATTR_TITLE);//103
+	sAttrIds.insert(PLAYER_ATTR_SEX);//110
 
-	std::vector<uint32_t> attrIds;
-// s
-	attrIds.push_back(PLAYER_ATTR_HP);//生命
-	attrIds.push_back(PLAYER_ATTR_MAXHP);  //生命值上限
-	attrIds.push_back(PLAYER_ATTR_ATTACK); //攻击
-	attrIds.push_back(PLAYER_ATTR_DFWUDEL );//= 4, //忽略全抗
-	attrIds.push_back(PLAYER_ATTR_ATK_METAL );//= 5, //金攻
-	attrIds.push_back(PLAYER_ATTR_ATK_WOOD );//= 6, //木攻
-	attrIds.push_back(PLAYER_ATTR_ATK_WATER );//= 7, //水攻
-	attrIds.push_back(PLAYER_ATTR_ATK_FIRE);// = 8, //火攻
-	attrIds.push_back(PLAYER_ATTR_ATK_EARTH );//= 9, //土攻
-	attrIds.push_back(PLAYER_ATTR_DEF_METAL );//= 10, //金抗
-	attrIds.push_back(PLAYER_ATTR_DEF_WOOD );//= 11, //木抗
-	attrIds.push_back(PLAYER_ATTR_DEF_WATER );//= 12, //水抗
-	attrIds.push_back(PLAYER_ATTR_DEF_FIRE );//= 13, //火抗
-	attrIds.push_back(PLAYER_ATTR_DEF_EARTH );//= 14, //土抗
-	attrIds.push_back(PLAYER_ATTR_DODGE);// 15, //闪避
-	attrIds.push_back(PLAYER_ATTR_HIT );//= 16, //命中
-	attrIds.push_back(PLAYER_ATTR_CRIT ); //17, //暴击
-	attrIds.push_back(PLAYER_ATTR_CRIT_DEF );//= 18, //暴抗
-	attrIds.push_back(PLAYER_ATTR_CRT_DMG );// 19, //暴击伤害
-	attrIds.push_back(PLAYER_ATTR_CRT_DMG_DEF );//= 20, //暴击免伤
-	attrIds.push_back(PLAYER_ATTR_MOVE_SPEED );//= 21, //移动速度
-	
-	attrIds.push_back(PLAYER_ATTR_DODGEDF );//= 22, //	忽略闪避
-	attrIds.push_back(PLAYER_ATTR_DIZZY );// 23, //	眩晕几率
-	attrIds.push_back(PLAYER_ATTR_SLOW );//= 24, //	迟缓几率
-	attrIds.push_back(PLAYER_ATTR_MABI );//= 25, //	麻痹几率
-	attrIds.push_back(PLAYER_ATTR_HURT );//= 26, //	受伤几率
-	attrIds.push_back(PLAYER_ATTR_CAN );//= 27, //	致残几率
-	attrIds.push_back(PLAYER_ATTR_DIZZYDF );//= 28, //	抗眩晕几率
-	attrIds.push_back(PLAYER_ATTR_SLOWDF );//= 29, //	抗迟缓几率
-	attrIds.push_back(PLAYER_ATTR_MABIDF );//= 30, //	抗麻痹几率
-    attrIds.push_back(PLAYER_ATTR_HURTDF );//= 31, //	抗受伤几率
-	attrIds.push_back(PLAYER_ATTR_CANDF );// 32, //	抗致残几率
-	attrIds.push_back(PLAYER_ATTR_CANDF );//= 32, //	抗致残几率
-	attrIds.push_back(PLAYER_ATTR_PVPAT );//= 33, // 穿刺
-	attrIds.push_back(PLAYER_ATTR_PVPDF );//= 34, //霸体
-	attrIds.push_back(PLAYER_ATTR_REGION_ID );//= 35, //区域ID
-	attrIds.push_back(PLAYER_ATTR_FIGHTING_CAPACITY );//= 36, //战斗力
-	
-	attrIds.push_back(PLAYER_ATTR_PVPAT );//= 33, // 穿刺
-	attrIds.push_back(PLAYER_ATTR_PVPDF );//= 34, //霸体
-	attrIds.push_back(PLAYER_ATTR_REGION_ID );//= 35, //区域ID
-	attrIds.push_back(PLAYER_ATTR_FIGHTING_CAPACITY );//= 36, //战斗力
-	
-	attrIds.push_back(PLAYER_ATTR_LEVEL );//= 45, //等级
-	attrIds.push_back(PLAYER_ATTR_FLY_SPEED );//= 46, //飞行速度
-	attrIds.push_back(PLAYER_ATTR_ZHENYING );//= 47, //阵营
-	attrIds.push_back(PLAYER_ATTR_PK_TYPE );//= 48, //pk模式 0和平,1阵营,2杀戮
-	attrIds.push_back(PLAYER_ATTR_FIGHT_MAX);       //战斗相关的最大属性ID
-
-	attrIds.push_back(PLAYER_ATTR_JOB );//= 51, //职业
-	attrIds.push_back(PLAYER_ATTR_SILVER );//= 52, //银两
-	attrIds.push_back(PLAYER_ATTR_EXP );//= 53, //经验
-
-	attrIds.push_back(PLAYER_ATTR_GOLD );//= 54, //元宝
-	attrIds.push_back(PLAYER_ATTR_BIND_GOLD );//= 55, //绑定元宝
-	attrIds.push_back(PLAYER_ATTR_COIN );//= 56, //银票
-	attrIds.push_back(PLAYER_ATTR_HEAD );//= 57, //头像
-	attrIds.push_back(PLAYER_ATTR_CLOTHES );//= 58, //衣服
-	attrIds.push_back(PLAYER_ATTR_CLOTHES_COLOR_UP );//= 59, //衣服颜色
-	attrIds.push_back(PLAYER_ATTR_HAT );//= 60, //帽子
-	attrIds.push_back(PLAYER_ATTR_HAT_COLOR );//= 61, //帽子颜色
-	attrIds.push_back(PLAYER_ATTR_CLOTHES_COLOR_DOWN );// 62, //衣服颜色
-
-	attrIds.push_back(PLAYER_ATTR_RELIVE_TYPE1 );//= 63, //原地复活，类型1
-	attrIds.push_back(PLAYER_ATTR_RELIVE_TYPE2 );//= 64, //原地复活，类型2
-
-	attrIds.push_back(PLAYER_ATTR_WEAPON );//= 65, //武器外形
-	
-	attrIds.push_back(PLAYER_ATTR_CUR_HORSE );//= 67, //当前坐骑
-	attrIds.push_back(PLAYER_ATTR_ON_HORSE_STATE );//= 68, //乘骑状态 0:下坐骑 1:上坐骑
-	attrIds.push_back(PLAYER_ATTR_ZHENQI );//= 69, //真气
-
-	attrIds.push_back(PLAYER_ATTR_MURDER );//= 70, //杀戮值
-	attrIds.push_back(PLAYER_ATTR_GONGXUN );//= 71, //功勋
-	attrIds.push_back(PLAYER_ATTR_BAGUA );//= 72, //八卦牌
-	attrIds.push_back(PLAYER_ATTR_ACTIVENESS );//= 73, //活动活跃度
-
-	attrIds.push_back(PLAYER_ATTR_ENERGY );//= 77, //精力值
-	attrIds.push_back(PLAYER_ATTR_BRAVE );//= 78, //勇武值
-	
-	attrIds.push_back(PLAYER_ATTR_ITEM_HP_CD );//= 79, //加血药剂CD
-	attrIds.push_back(PLAYER_ATTR_ITEM_HP_POOL_CD );//== 80, //血池药品CD	
-	attrIds.push_back(PLAYER_ATTR_PARTNER_FIGHT );// 81, //伙伴出战状态
-	attrIds.push_back(PLAYER_ATTR_PARTNER_PRECEDENCE );//= 82, //主战伙伴是否优先出战
-	attrIds.push_back(PLAYER_ATTR_PARTNER_ANGER ); //伙伴怒气
-	attrIds.push_back(PLAYER_ATTR_WEAPON_COLOR ); //武器外形
-	attrIds.push_back(PLAYER_ATTR_TI ); //		 体质
-	attrIds.push_back(PLAYER_ATTR_LI ); // 	力量
-	attrIds.push_back(PLAYER_ATTR_MIN ); //	敏捷
-	attrIds.push_back(PLAYER_ATTR_LING ); //	灵巧
-	attrIds.push_back(PLAYER_ATTR_HEALTHPRO ); // 	基础生命加成
-	attrIds.push_back(PLAYER_ATTR_ATTACKPRO ); // 	基础攻击加成
-	attrIds.push_back(PLAYER_ATTR_DFWU ); //	全系抗性
-	attrIds.push_back(PLAYER_ATTR_ALLEFF ); //	属性效果几率
-	attrIds.push_back(PLAYER_ATTR_ALLEFFDF ); //	抗属性效果几率
-	attrIds.push_back(PLAYER_ATTR_SHENGWANG ); //声望
-	attrIds.push_back(PLAYER_ATTR_XUEJING ); //血晶
-	attrIds.push_back(PLAYER_ATTR_LINGSHI ); //灵石
-
-	attrIds.push_back(PLAYER_ATTR_TITLE ); //称号
-	attrIds.push_back(PLAYER_ATTR_EXP_ZHENQI ); //经验转换的真气
-	attrIds.push_back(PLAYER_ATTR_BASELV ); // 	体质成长
-	attrIds.push_back(PLAYER_ATTR_TILV ); // 	体质成长
-	attrIds.push_back(PLAYER_ATTR_LILV ); // 	力量成长
-	attrIds.push_back(PLAYER_ATTR_MINLV ); //	敏捷成长
-	attrIds.push_back(PLAYER_ATTR_LINGLV ); //灵巧成长
-
-	attrIds.push_back(PLAYER_ATTR_SEX ); //性别
-
-// e
-
-
+// 读配置文件
+	uint32_t carrerid = 101000000 + target->get_job() + target->get_sex()*100;
+	std::map<uint64_t, struct ActorTable *>::iterator itAt = actor_config.find(carrerid);
+	if (itAt != actor_config.end())
+	{
+		for (uint32_t idx = 0; idx < itAt->second->n_BasiceAttribute; ++idx)
+			sAttrIds.insert(itAt->second->BasiceAttribute[idx]);
+		for (uint32_t idx = 0; idx < itAt->second->n_LvAttributeNum; ++idx)
+			sAttrIds.insert(itAt->second->LvAttributeNum[idx]);
+		for (uint32_t idx = 0; idx < itAt->second->n_FiveAttribute; ++idx)
+			sAttrIds.insert(itAt->second->FiveAttribute[idx]);
+		for (uint32_t idx = 0; idx < itAt->second->n_SeniorAttribute; ++idx)
+			sAttrIds.insert(itAt->second->SeniorAttribute[idx]);
+		for (uint32_t idx = 0; idx < itAt->second->n_BuffAttribute; ++idx)
+			sAttrIds.insert(itAt->second->BuffAttribute[idx]);
+	}	
 
 	detail_data.n_attrs = 0;
 	detail_data.attrs = player_attr_point;
-
-	for (std::vector<uint32_t>::iterator iter = attrIds.begin(); iter != attrIds.end(); ++iter)
+	for ( std::set<uint32_t>::iterator its = sAttrIds.begin(); its != sAttrIds.end(); ++its )
 	{
 		player_attr_point[detail_data.n_attrs] = &player_attr[detail_data.n_attrs];
 		attr_data__init(&player_attr[detail_data.n_attrs]);
-		player_attr[detail_data.n_attrs].id = *iter;
-		player_attr[detail_data.n_attrs].val = target->get_attr(*iter);
+		player_attr[detail_data.n_attrs].id = *its;
+		player_attr[detail_data.n_attrs].val = target->get_attr(*its);
 		detail_data.n_attrs++;
 	}
+// end
 
-	//read configure file 2.calulate id , send 
-	
-
+	PersonalityData personality_data;
+	personality_data__init(&personality_data);
 	detail_data.personality = &personality_data;
 	personality_data.sex = target->data->personality_sex;
 	personality_data.sex = target->data->personality_sex;
@@ -17275,7 +17251,6 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 	personality_data.province = target->data->personality_province;
 	personality_data.city = target->data->personality_city;
 	personality_data.bloodtype = target->data->personality_blood_type;
-
 	size_t equip_num = 0;
 	for (int k = 0; k < MAX_EQUIP_NUM; ++k)
 	{
@@ -17292,6 +17267,17 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 		equip_data[equip_num].stair = equip_info.stair;
 		equip_data[equip_num].starlv = equip_info.star_lv;
 		equip_data[equip_num].starexp = equip_info.star_exp;
+		if(equip_data[equip_num].type == 9)
+		{
+			WeddingRing *wedding_ring_config = get_config_by_id(target->data->player_marry_info.propose_type, &propose_ring_config);
+			if(wedding_ring_config != NULL)
+			{
+				propose_ring_info__init(&ring_attr_info);
+				ring_attr_info.ring_id = wedding_ring_config->ID;
+				ring_attr_info.target_name = target->data->player_marry_info.target_name;
+				equip_data[equip_num].ring_info = &ring_attr_info;
+			}
+		}
 		size_t enchant_num = 0;
 		for (int i = 0; i < MAX_EQUIP_ENCHANT_NUM; ++i)
 		{
@@ -17417,7 +17403,251 @@ void answer_get_other_info(EXTERN_DATA *extern_data, int result, player_struct *
 
 	detail_data.teamid = target->data->teamid;
 	detail_data.status = status;
+//坐骑信息
+//horseinfo
 
+	HorseList  horse_list;
+		HorseData horse_data[MAX_HORSE_NUM];
+		HorseData* horse_data_point[MAX_HORSE_NUM];
+
+		HorseCommonAttr horse_common_attr;
+
+	horse_list__init(&horse_list);
+
+	uint32_t horse_nums = 0;
+	uint64_t now = time_helper::get_cached_time();
+	for (uint32_t idx = 0; idx < target->data->n_horse; ++idx )
+	{
+		horse_data__init(&horse_data[idx]);	
+		horse_data[idx].id = target->data->horse[idx].id;
+		horse_data[idx].isnew = target->data->horse[idx].isNew;
+		horse_data[idx].step = target->data->horse[idx].step;
+		horse_data[idx].star = target->data->horse[idx].star;
+
+		if ( 0 != target->data->horse[idx].timeout )
+		{
+			if (target->data->horse[idx].timeout <= (time_t)now)
+			{
+				horse_data[idx].isexpire = true;
+			}
+			{
+				horse_data[idx].cd =  target->data->horse[idx].timeout - now;
+				horse_data[idx].isexpire = false;	
+			}
+		}
+		else 
+		{
+			horse_data[idx].isexpire = false;
+			horse_data[idx].cd = 0;
+		}
+
+		if (horse_data[idx].id == target->get_attr(PLAYER_ATTR_CUR_HORSE))
+			horse_data[idx].is_current = true;
+		else 
+			horse_data[idx].is_current = false;
+	
+		horse_data_point[idx] = &horse_data[idx];
+		
+		horse_nums++;
+	}
+	//HorseCommonAttr 
+	horse_common_attr__init(&horse_common_attr);
+		
+
+	horse_common_attr.step = target->data->horse_attr.step;
+	horse_common_attr.attr = target->data->horse_attr.attr;
+	horse_common_attr.attr_level = target->data->horse_attr.attr_exp;		
+	horse_common_attr.n_attr = horse_common_attr.n_attr_level = MAX_HORSE_ATTR_NUM;		
+		
+	horse_common_attr.power = target->data->horse_attr.power;
+	horse_common_attr.soul_step = target->data->horse_attr.soul_step;
+	horse_common_attr.soul_star = target->data->horse_attr.soul_star;
+
+	horse_list.attr = &horse_common_attr;
+	horse_list.data = horse_data_point;
+	horse_list.n_data = horse_nums;//坐骑数量
+	detail_data.mounts = &horse_list;
+
+	// partnerlist
+	PartnerData  partner_data[MAX_PARTNER_NUM];
+	PartnerData* partner_point[MAX_PARTNER_NUM];
+	//当前属性
+	PartnerAttr partner_cur_attr[MAX_PARTNER_NUM];
+	//洗髓属性
+	PartnerAttr partner_cur_flash[MAX_PARTNER_NUM];
+	//属性列表
+	AttrData  attr_data_partner[MAX_PARTNER_NUM][MAX_PARTNER_ATTR];
+	AttrData* attr_point[MAX_PARTNER_NUM][MAX_PARTNER_ATTR]; PartnerSkillData  skill_data[MAX_PARTNER_NUM][MAX_PARTNER_SKILL_NUM];
+	// PartnerAttr 的 技能列表
+	PartnerSkillData* skill_point[MAX_PARTNER_NUM][MAX_PARTNER_SKILL_NUM];
+	PartnerSkillData  partner_skill_data_flash[MAX_PARTNER_NUM][MAX_PARTNER_SKILL_NUM];
+	PartnerSkillData* partner_skill_point_flash[MAX_PARTNER_NUM][MAX_PARTNER_SKILL_NUM];
+	//
+	PartnerCurFabaoInfo partner_cur_fabao[MAX_PARTNER_NUM];
+
+	AttrData partner_fabao_minor_attr[MAX_PARTNER_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
+	AttrData* partner_fabao_minor_attr_point[MAX_PARTNER_NUM][MAX_HUOBAN_FABAO_MINOR_ATTR_NUM];
+	AttrData partner_fabao_main_attr[MAX_PARTNER_NUM];
+
+	uint32_t partner_num = 0;
+	for (PartnerMap::iterator iter = target->m_partners.begin(); iter!= target->m_partners.end(); ++iter)
+	{
+		partner_struct *partner = iter->second;
+		if(NULL==partner)
+		{
+			continue;
+		}
+		partner->calculate_attribute(false);
+		partner_point[partner_num] = &partner_data[partner_num];
+		partner_data__init(&partner_data[partner_num]);
+		partner_data[partner_num].uuid = partner->data->uuid;
+		partner_data[partner_num].partnerid = partner->data->partner_id;	
+		partner_data[partner_num].relivetime = partner->data->relive_time;	
+		partner_data[partner_num].rename_free = partner->data->partner_rename_free;	
+	//	strncpy(partner_data[partner_num].name, partner->data->name, strlen(partner->data->name)+1);
+		partner_data[partner_num].name = partner->data->name;
+		uint32_t attr_num = 0;
+		for (int i = 1; i < MAX_PARTNER_ATTR; ++i)
+		{
+			attr_point[partner_num][attr_num] = &attr_data_partner[partner_num][attr_num];
+			attr_data__init(&attr_data_partner[partner_num][attr_num]);
+			attr_data_partner[partner_num][attr_num].id = i;
+			attr_data_partner[partner_num][attr_num].val = partner->data->attrData[i];
+			attr_num++;
+		}
+		partner_data[partner_num].attrs = attr_point[partner_num];
+		partner_data[partner_num].n_attrs = attr_num;
+		LOG_INFO("%s:%d partner_num:%d ,djx:attr_num:%u\n", __FUNCTION__,__LINE__, partner_num, attr_num);
+		uint32_t skill_num = 0;
+		if (partner->data->attr_cur.base_attr_up[0] != 0)
+		{
+			partner_data[partner_num].cur_attr = partner_cur_attr + partner_num;
+			partner_attr__init(partner_cur_attr + partner_num);
+			for (int i = 0; i < MAX_PARTNER_SKILL_NUM; ++i)
+			{
+				skill_point[partner_num][skill_num] = &skill_data[partner_num][skill_num];
+				partner_skill_data__init(&skill_data[partner_num][skill_num]);
+				skill_data[partner_num][skill_num].id = partner->data->attr_cur.skill_list[i].skill_id;
+				skill_data[partner_num][skill_num].lv = partner->data->attr_cur.skill_list[i].lv;
+				skill_data[partner_num][skill_num].lock = partner->data->attr_cur.skill_list[i].lock;
+				skill_data[partner_num][skill_num].exp = partner->data->attr_cur.skill_list[i].exp;
+				skill_num++;
+			}
+			partner_cur_attr[partner_num].skills = skill_point[partner_num];
+			partner_cur_attr[partner_num].n_skills = skill_num;
+			partner_cur_attr[partner_num].base_attr_id = (uint32_t *)&base_attr_id[0];
+			partner_cur_attr[partner_num].n_base_attr_id = MAX_PARTNER_BASE_ATTR;
+			partner_cur_attr[partner_num].base_attr_cur = partner->data->attr_cur.base_attr_vaual;
+			partner_cur_attr[partner_num].n_base_attr_cur = MAX_PARTNER_BASE_ATTR;
+			partner_cur_attr[partner_num].base_attr_up = partner->data->attr_cur.base_attr_up;
+			partner_cur_attr[partner_num].n_base_attr_up = MAX_PARTNER_BASE_ATTR;
+			partner_cur_attr[partner_num].base_attr_up = partner->data->attr_cur.base_attr_up;
+			partner_cur_attr[partner_num].n_base_attr_up = MAX_PARTNER_BASE_ATTR;
+			partner_cur_attr[partner_num].detail_attr_id = partner->data->attr_cur.detail_attr_id;
+			partner_cur_attr[partner_num].n_detail_attr_id = partner->data->attr_cur.n_detail_attr;
+			partner_cur_attr[partner_num].detail_attr_cur = partner->data->attr_cur.detail_attr_vaual;
+			partner_cur_attr[partner_num].n_detail_attr_cur = partner->data->attr_cur.n_detail_attr;
+			partner_cur_attr[partner_num].type = partner->data->attr_cur.type;
+		}
+		
+		if (partner->data->attr_flash.base_attr_up[0] != 0)
+		{
+			partner_data[partner_num].flash_attr = partner_cur_flash + partner_num;
+			partner_attr__init(partner_cur_flash + partner_num);
+			skill_num = 0;
+			for (int i = 0; i < MAX_PARTNER_SKILL_NUM; ++i)
+			{
+				partner_skill_point_flash[partner_num][skill_num] = &partner_skill_data_flash[partner_num][skill_num];
+				partner_skill_data__init(&partner_skill_data_flash[partner_num][skill_num]);
+				partner_skill_data_flash[partner_num][skill_num].id = partner->data->attr_flash.skill_list[i].skill_id;
+				partner_skill_data_flash[partner_num][skill_num].lv = partner->data->attr_flash.skill_list[i].lv;
+				partner_skill_data_flash[partner_num][skill_num].exp = partner->data->attr_flash.skill_list[i].exp;
+				skill_num++;
+			}
+			partner_cur_flash[partner_num].skills = partner_skill_point_flash[partner_num];
+			partner_cur_flash[partner_num].n_skills = skill_num;
+			partner_cur_flash[partner_num].base_attr_id = (uint32_t *)base_attr_id;
+			partner_cur_flash[partner_num].n_base_attr_id = MAX_PARTNER_BASE_ATTR;
+			partner_cur_flash[partner_num].base_attr_cur = partner->data->attr_flash.base_attr_vaual;
+			partner_cur_flash[partner_num].n_base_attr_cur = MAX_PARTNER_BASE_ATTR;
+			partner_cur_flash[partner_num].base_attr_up = partner->data->attr_flash.base_attr_up;
+			partner_cur_flash[partner_num].n_base_attr_up = MAX_PARTNER_BASE_ATTR;
+			partner_cur_flash[partner_num].base_attr_up = partner->data->attr_flash.base_attr_up;
+			partner_cur_flash[partner_num].n_base_attr_up = MAX_PARTNER_BASE_ATTR;
+			partner_cur_flash[partner_num].detail_attr_id = partner->data->attr_flash.detail_attr_id;
+			partner_cur_flash[partner_num].n_detail_attr_id = partner->data->attr_flash.n_detail_attr;
+			partner_cur_flash[partner_num].detail_attr_cur = partner->data->attr_flash.detail_attr_vaual;
+			partner_cur_flash[partner_num].n_detail_attr_cur = partner->data->attr_flash.n_detail_attr;
+			partner_cur_flash[partner_num].type = partner->data->attr_flash.type;
+			partner_data[partner_num].power = partner->data->attr_flash.power_refresh;
+		}
+
+		partner_data[partner_num].god_id = partner->data->god_id;
+		partner_data[partner_num].n_god_id = partner->data->n_god;
+		partner_data[partner_num].god_level = partner->data->god_level;
+		partner_data[partner_num].n_god_level = partner->data->n_god;
+
+		if(partner->data->cur_fabao.fabao_id != 0)
+		{
+			partner_data[partner_num].cur_fabao = &partner_cur_fabao[partner_num];
+			partner_cur_fabao_info__init(&partner_cur_fabao[partner_num]);
+			partner_cur_fabao[partner_num].fabao_id = partner->data->cur_fabao.fabao_id;
+			partner_cur_fabao[partner_num].main_attr = &partner_fabao_main_attr[partner_num];
+			attr_data__init(&partner_fabao_main_attr[partner_num]);
+			partner_fabao_main_attr[partner_num].id = partner->data->cur_fabao.main_attr.id;
+			partner_fabao_main_attr[partner_num].val = partner->data->cur_fabao.main_attr.val;
+			uint32_t attr_num = 0;
+			for (int j = 0; j < MAX_HUOBAN_FABAO_MINOR_ATTR_NUM; ++j)
+			{
+
+				partner_fabao_minor_attr_point[partner_num][attr_num] = &partner_fabao_minor_attr[partner_num][attr_num];
+				attr_data__init(&partner_fabao_minor_attr[partner_num][attr_num]);
+				partner_fabao_minor_attr[partner_num][attr_num].id = partner->data->cur_fabao.minor_attr[j].id;
+				partner_fabao_minor_attr[partner_num][attr_num].val = partner->data->cur_fabao.minor_attr[j].val;
+				attr_num++;
+			}
+
+			partner_cur_fabao[partner_num].minor_attr = partner_fabao_minor_attr_point[partner_num];
+			partner_cur_fabao[partner_num].n_minor_attr = attr_num;
+		}
+		partner_num++;
+	}
+
+	detail_data.partners = partner_point;
+	detail_data.n_partners = partner_num;
+	
+	// 布阵信息
+	//AC 魅力等级
+	//AC  总魅力
+	detail_data.charmlevel = target->data->charm_level;
+	detail_data.charmtotal = target->data->charm_total;
+
+	//时装列表
+	FashionData fashion[MAX_FASHION_NUM];
+	FashionData *fashionPoint[MAX_FASHION_NUM];
+	FashionList sendFashion;
+	fashion_list__init(&sendFashion);
+
+	int fashion_num = 0;
+	for (uint32_t idx = 0; idx < target->data->n_fashion; ++idx)
+	{
+		if (0!=target->data->fashion[idx].timeout)	
+			if(target->data->fashion[idx].timeout <= (time_t)time_helper::get_cached_time()/1000)
+				continue;
+		pack_fashion_info(fashion[fashion_num], target, idx);
+		fashionPoint[fashion_num] =  &fashion[fashion_num];
+		++fashion_num;
+	}
+	sendFashion.n_data = fashion_num;
+	sendFashion.data = fashionPoint;
+	sendFashion.level = target->data->charm_level;
+	sendFashion.charm = target->data->charm_total;
+
+	detail_data.fashions = &sendFashion;
+
+	//布阵信息
+	detail_data.embattleinfo = target->data->partner_formation;
+	detail_data.n_embattleinfo = MAX_PARTNER_FORMATION_NUM;
 
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_GET_OTHER_INFO_ANSWER, get_other_info_answer__pack, resp);
 }
@@ -18348,6 +18578,7 @@ static int notify_partner_info(player_struct *player, EXTERN_DATA *extern_data)
 
 	resp.result = 0;
 
+	resp.cd = player->data->partner_add_angry_cd;
 	uint32_t partner_num = 0;
 	for (PartnerMap::iterator iter = player->m_partners.begin(); iter != player->m_partners.end() && partner_num < MAX_PARTNER_NUM; ++iter)
 	{
@@ -19966,9 +20197,9 @@ static int handle_partner_compose_stone_request(player_struct *player, EXTERN_DA
 		}
 
 		uint32_t product_num = stone_score / product_score;
-		if (!player->check_can_add_item(product_id, product_num, NULL))
+		ret = player->check_can_add_item(product_id, product_num, NULL);
+		if(ret != 0)
 		{
-			ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
 			LOG_ERR("[%s:%d] player[%lu] bag not enough, item_id:%u, item_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, product_id, product_num);
 			break;
 		}
@@ -20477,9 +20708,9 @@ static int handle_partner_fabao_stone_request(player_struct *player, EXTERN_DATA
 		}
 	
 		uint64_t fabao_id = Magic[flag];
-		if (!player->check_can_add_item(fabao_id, 1, NULL))
+		ret = player->check_can_add_item(fabao_id, 1, NULL);
+		if(ret != 0)
 		{
-			ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
 			LOG_ERR("[%s:%d] player[%lu] bag not enough, item_id:%lu, item_num:%u", __FUNCTION__, __LINE__, extern_data->player_id, fabao_id, 1);
 			break;
 		}
@@ -22387,9 +22618,9 @@ static int handle_strong_chapter_reward_request(player_struct *player, EXTERN_DA
 
 		uint32_t item_id = config->Reward;
 		uint32_t item_num = 1;
-		if (!player->check_can_add_item(item_id, item_num, NULL))
+		ret = player->check_can_add_item(item_id, item_num, NULL);
+		if(ret != 0)
 		{
-			ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
 			LOG_ERR("[%s:%d] player[%lu] bag space, chapter_id:%u", __FUNCTION__, __LINE__, extern_data->player_id, chapter_id);
 			break;
 		}
@@ -22633,9 +22864,9 @@ static int handle_trade_re_shelf_change_request(player_struct *player, EXTERN_DA
 
 		if (req->off_num > 0)
 		{
-			if (player->check_can_add_item(item_id, req->off_num, NULL) == false)
+			ret = player->check_can_add_item(item_id, req->off_num, NULL);
+			if(ret != 0)
 			{
-				ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
 				LOG_ERR("[%s:%d] player[%lu] bag space, item_id:%u, num:%u", __FUNCTION__, __LINE__, extern_data->player_id, item_id, req->off_num);
 				break;
 			}
@@ -22709,9 +22940,9 @@ static int handle_trade_buy_execute_request(player_struct *player, EXTERN_DATA *
 			break;
 		}
 
-		if (player->check_can_add_item(bind_id, req->buy_num, NULL) == false)
+		ret = player->check_can_add_item(bind_id, req->buy_num, NULL);
+		if(ret != 0)
 		{
-			ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
 			LOG_ERR("[%s:%d] player[%lu] bag space, item_id:%u, num:%u", __FUNCTION__, __LINE__, extern_data->player_id, item_id, req->buy_num);
 			break;
 		}
@@ -23190,9 +23421,14 @@ static int handle_recieve_online_zhuanpan_request(player_struct* player, EXTERN_
 			LOG_ERR("[%s:%d] 在线奖励配置表出错, TimeReward表id[%u]", __FUNCTION__, __LINE__, player->data->online_reward.reward_id);
 			return -7;
 		}
-		if (!player->check_can_add_item(reward_config->ItemID, reward_config->ItemValue, NULL))
+		ret = player->check_can_add_item(reward_config->ItemID, reward_config->ItemValue, NULL);
+		if(ret != 0)
 		{
-			ret = 190500315; //包裹数量不足
+			if(ret == ERROR_ID_BAG_GRID_NOT_ENOUGH)
+			{
+				ret = 190500315; //包裹数量不足
+				break;
+			}
 		}
 
 	}while(0);
@@ -23255,10 +23491,14 @@ int handle_recieve_online_reward_request(player_struct* player, EXTERN_DATA* ext
 			LOG_ERR("[%s:%d] 在线奖励领奖失败,获取物品id或者物品数量失败 item_id[%u] item_num[%u]", __FUNCTION__, __LINE__, item_id, item_num);
 			return -6;
 		}
-		if (!player->check_can_add_item(item_id, item_num, NULL))
+		ret = player->check_can_add_item(item_id, item_num, NULL);
+		if(ret != 0)
 		{
-			ret = 190500315; //包裹数量不足
-			break;
+			if(ret == ERROR_ID_BAG_GRID_NOT_ENOUGH)
+			{
+				ret = 190500315; //包裹数量不足
+				break;
+			}
 		}
 
 		//扣次数，给物品
@@ -23373,9 +23613,13 @@ int handle_player_sign_in_ervery_day_request(player_struct* player, EXTERN_DATA*
 		//这里物品数量的计算还要根据vip倍率来，当前没有做vip要预留
 		//uint32_t vip_beilv = day_config->VipDouble;
 		//先判断包裹是否满了
-		if (!player->check_can_add_item(item_id, item_num, NULL))
+		ret = player->check_can_add_item(item_id, item_num, NULL);
+		if(ret !=0)
 		{
-			ret = 190500315; //包裹数量不足
+			if(ret == ERROR_ID_BAG_GRID_NOT_ENOUGH)
+			{
+				ret = 190500315; //包裹数量不足
+			}
 			break;
 		}
 		
@@ -23549,9 +23793,13 @@ int handle_sign_in_receive_leiji_reward_request(player_struct* player, EXTERN_DA
 			LOG_ERR("[%s:%d] 奖励不可领或已领取,领取状态 statu : [%u]", __FUNCTION__, __LINE__, cumula_info->state);
 			return -7;
 		}
-		if (!player->check_can_add_item(leiji_config->ItemID, leiji_config->ItemValue, NULL))
+		ret = player->check_can_add_item(leiji_config->ItemID, leiji_config->ItemValue, NULL);
+		if(ret !=0)
 		{
-			ret = 190500315; //包裹数量不足
+			if(ret == ERROR_ID_BAG_GRID_NOT_ENOUGH)
+			{
+				ret = 190500315; //包裹数量不足
+			}
 			break;
 		}
 
@@ -24866,7 +25114,7 @@ int handle_player_guild_chuan_gong_queren_request(player_struct* player, EXTERN_
 				break;
 			}
 			//判断对方包裹
-			if (!guild_player->check_can_add_item(sg_zhu_chuan_gong_add_item_id, sg_zhu_chuan_gong_add_item_num, NULL))
+			if (guild_player->check_can_add_item(sg_zhu_chuan_gong_add_item_id, sg_zhu_chuan_gong_add_item_num, NULL) != 0)
 			{
 				ret = 190500541; //对方包裹已满,不能获得奖励物品,提示失败
 				break;
@@ -24885,9 +25133,13 @@ int handle_player_guild_chuan_gong_queren_request(player_struct* player, EXTERN_
 				break;
 			}
 			//判断我自己的包裹
-			if (!player->check_can_add_item(sg_zhu_chuan_gong_add_item_id, sg_zhu_chuan_gong_add_item_num, NULL))
+			ret = player->check_can_add_item(sg_zhu_chuan_gong_add_item_id, sg_zhu_chuan_gong_add_item_num, NULL);
+			if(ret != 0)
 			{
-				ret = 190500337; //我的包裹满了
+				if(ret == ERROR_ID_BAG_GRID_NOT_ENOUGH)
+				{
+					ret = 190500337; //我的包裹满了
+				}
 				break;
 			}
 		}
@@ -25100,9 +25352,13 @@ int handle_player_guild_chuan_gong_finish_request(player_struct* player, EXTERN_
 			if (player->data->guild_chuan_gong_info.cur_info.type == 1)
 			{
 
-				if (!player->check_can_add_item(sg_zhu_chuan_gong_add_item_id, sg_zhu_chuan_gong_add_item_num, NULL))
+				ret = player->check_can_add_item(sg_zhu_chuan_gong_add_item_id, sg_zhu_chuan_gong_add_item_num, NULL);
+				if(ret != 0)
 				{
-					ret = 190500337;//自己的包裹满了
+					if(ret == ERROR_ID_BAG_GRID_NOT_ENOUGH)
+					{
+						ret = 190500337;//自己的包裹满了
+					}
 					he_ret = 190500541; //告诉对方失败
 					break;
 				}
@@ -25122,7 +25378,8 @@ int handle_player_guild_chuan_gong_finish_request(player_struct* player, EXTERN_
 			}
 			else
 			{
-				if (!guild_player->check_can_add_item(sg_zhu_chuan_gong_add_item_id, sg_zhu_chuan_gong_add_item_num, NULL))
+				ret = guild_player->check_can_add_item(sg_zhu_chuan_gong_add_item_id, sg_zhu_chuan_gong_add_item_num, NULL);
+				if(ret != 0)
 				{
 					ret = 190500541;
 					he_ret = 190500337;
@@ -25617,6 +25874,594 @@ int handle_red_packet_send_failed_still_money_request(player_struct* player, EXT
 	return 0;
 }
 
+//玩家求婚请求
+int handle_marry_player_propose_request(player_struct* player, EXTERN_DATA* extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+	int ret = 0;
+	uint64_t player_id = 0; 
+	uint32_t ring_type = 0;
+	ret = player->player_propose_check_up(player_id, ring_type);
+	CommAnswer answer;
+	comm_answer__init(&answer);
+
+	answer.result = ret;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MARRY_PLAYER_PROPOSE_ANSWER, comm_answer__pack, answer);
+	return 0;
+}
+
+//玩家正式求婚请求
+int handle_marry_player_propose_start_request(player_struct* player, EXTERN_DATA* extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+	PlayerProposeStartRequest *req = player_propose_start_request__unpack(NULL, get_data_len(), (uint8_t*)get_data());
+	if(req == NULL)
+	{
+		LOG_ERR("[%s:%d] propose start faild player_id[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -2;
+	}
+	double  my_pos_x =  marry_propose_active_player_x;		  //求婚者站立的x坐标点
+	double  my_pos_z =  marry_propose_active_player_z;		  //求婚者站立的z坐标点
+	double  target_pos_x =  marry_propose_passive_player_x;		  //被求婚者站立的x坐标点
+	double  target_pos_z =  marry_propose_passive_player_z;		  //被求婚者站立的z坐标点
+	uint64_t now_time = time_helper::get_cached_time() / 1000;
+
+	uint64_t player_id = 0;
+	uint32_t ring_type = req->propose_type;
+	int ret = 0;
+	do{
+		
+		ret = player->player_propose_check_up(player_id, ring_type);
+		if(ret != 0)
+			break;
+		struct map_block *block_start = get_map_block(player->scene->map_config, my_pos_x, my_pos_z);
+		if (block_start == NULL || block_start->can_walk != true)
+		{
+			LOG_ERR("[%s:%d] 求婚正式开始失败,求婚者坐标点配置错误pos_x[%lf] pos_z[%lf] player[%lu]", my_pos_x, my_pos_z, extern_data->player_id);
+			ret = ERROR_ID_CONFIG; //配置错误
+			break;
+		}
+		block_start = get_map_block(player->scene->map_config, target_pos_x, target_pos_z);
+		if (block_start == NULL || block_start->can_walk != true)
+		{
+			LOG_ERR("[%s:%d] 求婚正式开始失败,被求婚者坐标点配置错误pos_x[%lf] pos_z[%lf] player[%lu]", target_pos_x, target_pos_z, extern_data->player_id);
+			ret = ERROR_ID_CONFIG; //配置错误
+			break;
+		}
+		player_struct *target_player = player_manager::get_player_by_id(player_id);
+		if(target_player == NULL || target_player->data == NULL || target_player->scene == NULL || player->scene != target_player->scene)
+		{
+			LOG_ERR("[%s:%d] 求婚正式开始获取被求婚者玩家对象时出错了 player[%lu]", extern_data->player_id);
+			ret = ERROR_ID_SERVER;
+			break;
+		}
+
+		//条件都满足,将两个人拉到指定的坐标播放动画
+		int trans_ret = player->cur_scene_jump(my_pos_x, my_pos_x, 0, extern_data);		
+		if(trans_ret != 0)
+		{
+			LOG_ERR("[%s:%d] 求婚拉求婚者失败,求婚者[%lu] 被求婚者[%lu] result[%d]", __FUNCTION__, __LINE__, extern_data->player_id, target_player->data->player_id, trans_ret);
+			ret = ERROR_ID_SERVER;
+			break;
+		}
+		EXTERN_DATA he_extern_data;
+		he_extern_data.player_id = target_player->data->player_id;
+		trans_ret = target_player->cur_scene_jump(target_pos_x, target_pos_z, 0, &he_extern_data);		
+		if(trans_ret != 0)
+		{
+			LOG_ERR("[%s:%d] 求婚拉被求婚者失败,求婚者[%lu] 被求婚者[%lu] result[%d]", __FUNCTION__, __LINE__, extern_data->player_id, target_player->data->player_id, trans_ret);
+			ret = ERROR_ID_SERVER;
+			break;
+		}
+		player->data->player_marry_info.cur_propose_info.statu = MARRY_PROPOSE_IS_ACTIVE;
+		player->data->player_marry_info.cur_propose_info.player_id = target_player->data->player_id;
+		player->data->player_marry_info.cur_propose_info.time = now_time;
+		player->data->player_marry_info.cur_propose_info.ring_type = ring_type;
+
+		target_player->data->player_marry_info.cur_propose_info.statu = MARRY_PROPOSE_IS_PASSIVE;
+		target_player->data->player_marry_info.cur_propose_info.player_id = player->data->player_id;
+		target_player->data->player_marry_info.cur_propose_info.time = now_time;
+		target_player->data->player_marry_info.cur_propose_info.ring_type = ring_type;
+
+		//通知两人
+		PlayerProposeStatetNotify start_notify;
+		PlayerProposeStartInfo   detailed_info;
+		PlayerProposePlayerPosInfo active_player;
+		PlayerProposePlayerPosInfo passive_player;
+		player_propose_statet_notify__init(&start_notify);
+		player_propose_start_info__init(&detailed_info);
+		player_propose_player_pos_info__init(&active_player);
+		player_propose_player_pos_info__init(&passive_player);
+		active_player.player_id = player->data->player_id;
+		active_player.player_name = player->data->name;
+		active_player.pos_x = my_pos_x;
+		active_player.pos_z = my_pos_z;
+
+		passive_player.player_id = target_player->data->player_id;
+		passive_player.player_name = target_player->data->name;
+		passive_player.pos_x = target_pos_x;
+		passive_player.pos_z = target_pos_z;
+		
+		detailed_info.time = now_time;
+		detailed_info.propose_type = ring_type;
+		detailed_info.propose_enounce = req->propose_enounce;
+
+		start_notify.type = 0;
+		start_notify.propose_info = &detailed_info;
+		start_notify.active_player = &active_player;
+		start_notify.passive_player = &passive_player;
+
+
+		uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_MARRY_PLAYER_PROPOSE_START_NOTIFY, &start_notify, (pack_func)player_propose_statet_notify__pack);
+		ppp = conn_node_gamesrv::broadcast_msg_add_players(player->data->player_id, ppp);
+		ppp = conn_node_gamesrv::broadcast_msg_add_players(target_player->data->player_id, ppp);
+		conn_node_gamesrv::broadcast_msg_send();
+
+	}while(0);
+	player_propose_start_request__free_unpacked(req, NULL);
+
+	CommAnswer answer;
+	comm_answer__init(&answer);
+
+	answer.result = ret;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MARRY_PLAYER_PROPOSE_START_ANSWER, comm_answer__pack, answer);
+	return 0;
+	
+}
+
+//玩家正式求婚请求
+int handle_marry_player_propose_queren_request(player_struct* player, EXTERN_DATA* extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+	PlayerProposeQuerenRequest *req = player_propose_queren_request__unpack(NULL, get_data_len(), (uint8_t*)get_data());
+	if(req == NULL)
+	{
+		LOG_ERR("[%s:%d] player_propose_queren_request__unpack failed player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -2;
+	}
+	uint32_t result = req->statu;
+	player_propose_queren_request__free_unpacked(req, NULL);
+
+	if(!player->is_on_propose())
+	{
+		LOG_ERR("[%s:%d] player confirm propose fail, not propose state, player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -3;
+	}
+	if(player->data->player_marry_info.cur_propose_info.statu == MARRY_PROPOSE_IS_ACTIVE)
+	{
+		LOG_ERR("[%s:%d] player confirm propose fail, not proposed, not operation, player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -4;
+	}
+
+	int ret = 0;
+	do{
+		player_struct *target_player = player_manager::get_player_by_id(player->data->player_marry_info.cur_propose_info.player_id);
+		if(!target_player || !target_player->is_online())
+		{
+			ret = 190500606; //玩家已经下线
+			break;
+		}
+		if(target_player->data->player_marry_info.cur_propose_info.player_id != player->data->player_marry_info.cur_propose_info.player_id)
+		{
+			ret = ERROR_ID_SERVER; //信息不匹配?
+			break;
+		}
+
+		//拒绝的处理
+		//int result = 0;
+		if(result == 1)
+		{
+			player->player_propose_end_deal_with(false);
+			break;
+		}
+
+		//同意的处理 
+		uint64_t player_id = 0;
+		uint32_t ring_type = target_player->data->player_marry_info.cur_propose_info.ring_type;
+		ret = target_player->player_propose_check_up(player_id, ring_type);
+		if(ret != 0)
+			break;
+		WeddingRing *wedding_ring_config = get_config_by_id(ring_type, &propose_ring_config);
+		if(wedding_ring_config)
+		{
+			target_player->del_item_by_id(wedding_ring_config->ItemsID, 1, MAGIC_TYPE_PROPOSE_USE_RING);
+		}
+		target_player->sub_unbind_gold(marry_propose_min_money, MAGIC_TYPE_PROPOSE_USE_RING);
+
+
+		//记录信息
+		uint64_t now_time = time_helper::get_cached_time() / 1000;
+		player->data->player_marry_info.statu = MARRY_STATU_HAVE_PROPOSE_NOT_RESERVE_MARRY;
+		player->data->player_marry_info.my_role = MARRY_PROPOSE_IS_PASSIVE;
+		player->data->player_marry_info.propose_type = ring_type;
+		player->data->player_marry_info.propose_success_time = now_time;
+		player->data->player_marry_info.target_id = target_player->data->player_id;
+		player->data->player_marry_info.target_id = target_player->get_attr(PLAYER_ATTR_SEX);
+		strcpy(player->data->player_marry_info.target_name, target_player->data->name);
+
+		target_player->data->player_marry_info.statu = MARRY_STATU_HAVE_PROPOSE_NOT_RESERVE_MARRY;
+		target_player->data->player_marry_info.my_role = MARRY_PROPOSE_IS_ACTIVE;
+		target_player->data->player_marry_info.propose_type = ring_type;
+		target_player->data->player_marry_info.propose_success_time = now_time;
+		target_player->data->player_marry_info.target_id = player->data->player_id;
+		target_player->data->player_marry_info.target_id = player->get_attr(PLAYER_ATTR_SEX);
+		strcpy(target_player->data->player_marry_info.target_name, player->data->name);
+
+		//清除信息
+		player->player_propose_end_deal_with(true);
+		//广播求婚信息
+		PlayerProposeBroadcast broadcast;
+		PlayerProposeSomeInfo active_player;
+		PlayerProposeSomeInfo passive_player;
+		player_propose_broadcast__init(&broadcast);
+		player_propose_some_info__init(&active_player);
+		player_propose_some_info__init(&passive_player);
+
+		broadcast.type = ring_type;
+		broadcast.active_player = &active_player;
+		broadcast.passive_player = &passive_player;
+		active_player.player_id = target_player->data->player_id;
+		active_player.player_name = target_player->data->name;
+		passive_player.player_id = player->data->player_id;
+		passive_player.player_name = player->data->name;
+		conn_node_gamesrv::send_to_all_player(MSG_ID_MARRY_PLAYER_SUCCESS_BROADCAST, &broadcast, (pack_func)player_propose_broadcast__pack);
+
+		//通知客户端婚姻信息改变
+		player->player_cur_marry_info_notify();
+		target_player->player_cur_marry_info_notify();
+	
+	}while(0);
+
+	CommAnswer answer;
+	comm_answer__init(&answer);
+
+	answer.result = ret;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MARRY_PLAYER_PROPOSE_QUEREN_ANSWER, comm_answer__pack, answer);
+
+	return 0;
+}
+
+//玩家预定婚期请求
+int handle_marry_player_reserve_wedding_request(player_struct* player, EXTERN_DATA* extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	PlayerReserveMarriageRequest *req = player_reserve_marriage_request__unpack(NULL, get_data_len(), (uint8_t*)get_data());
+	if(!req)
+	{
+		LOG_ERR("[%s;%d] reserve marriage fail, unpack fail, player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -2;
+	}
+
+	uint32_t marry_type = req->type;
+	time_t marry_time = req->marry_time;
+	player_reserve_marriage_request__free_unpacked(req, NULL);
+	time_t now_time = time_helper::get_cached_time() / 1000;
+	if(marry_time < now_time)
+	{
+		LOG_ERR("[%s;%d] reserve marriage fail, time erroe, now_time[%lu] request_time[%lu] player[%lu]", __FUNCTION__, __LINE__, now_time, marry_time, extern_data->player_id);
+		return -3;
+	}
+
+	WeddingTable *marry_table = get_config_by_id(marry_type, &wedding_config);
+	if(marry_table == NULL)
+	{
+		LOG_ERR("[%s;%d] reserve marriage fail, time erroe, request_type[%u] player[%lu]", __FUNCTION__, __LINE__, marry_type, extern_data->player_id);
+		return -4;
+	}	
+
+	int ret = 0;
+	do{
+		//先判断是不是求婚者
+		if(player->data->player_marry_info.statu != MARRY_STATU_HAVE_PROPOSE_NOT_RESERVE_MARRY || player->data->player_marry_info.my_role != MARRY_PROPOSE_IS_ACTIVE)
+		{
+			ret = 190500619;
+			break;
+		}
+		struct tm marry_tm;
+		localtime_r(&marry_time, &marry_tm);
+
+		time_t propose_time = player->data->player_marry_info.propose_success_time;
+		struct tm propose_tm;
+		localtime_r(&propose_time, &propose_tm);
+
+		bool flag = false;
+		for(uint32_t i = 0; i < marry_table->n_Time; i++)
+		{
+			int config_time = marry_table->Time[i];
+			if(config_time == marry_tm.tm_hour && marry_tm.tm_min == 0)
+			{
+				flag = true;
+			}
+		}
+		if(flag == false)
+		{
+			LOG_ERR("[%s;%d] reserve marriage fail, time is no config hour[%d] min[%d] player[%lu]", __FUNCTION__, __LINE__, marry_tm.tm_hour, marry_tm.tm_min, extern_data->player_id);
+			ret = 1111; //时间不在配置表中
+			break;
+		}
+		if(marry_tm.tm_year == propose_tm.tm_year && marry_tm.tm_mon == propose_tm.tm_mon && marry_tm.tm_mday == propose_tm.tm_mday)
+		{
+			ret = 190500625; //可预订的婚礼时间需在第二天开始的任意天
+		}
+
+		uint32_t use_gold = marry_table->Cost;
+		if(player->sub_unbind_gold(use_gold, MAGIC_TYPE_RESERVE_WEDDING_USE_MONEY) !=0)
+		{
+			ret = 190500318; //元宝不足
+			break;
+		}
+		
+		//记录信息
+		player->data->player_marry_info.statu = MARRY_STATU_HAVE_PROPOSE_HAVE_RESERVE_MARRY;
+		player->data->player_marry_info.reserve_marry_type = marry_type;
+		player->data->player_marry_info.reserve_marry_time = marry_time;
+
+		player_struct *target_player = player_manager::get_player_by_id(player->data->player_marry_info.target_id);
+		//对象在线直接记录
+		if(target_player != NULL && target_player->data != NULL)
+		{
+			target_player->data->player_marry_info.statu = MARRY_STATU_HAVE_PROPOSE_HAVE_RESERVE_MARRY;
+			target_player->data->player_marry_info.reserve_marry_type = marry_type;
+			target_player->data->player_marry_info.reserve_marry_time = marry_time;
+		}
+
+		//发邮件给物品
+		std::vector<char *> mail_text;
+		std::map<uint32_t, uint32_t> mail_item_map_man;
+		std::map<uint32_t, uint32_t> mail_item_map_woman;
+		char reserve_player_text[MAX_PLAYER_NAME_LEN + 1] = {0};
+		char reserve_time_text[256] = {0};
+		strcpy(reserve_player_text, player->data->name);
+		snprintf(reserve_time_text, 256, "%d年%d月%d日%d:%d", marry_tm.tm_year + 1900, marry_tm.tm_mon + 1, marry_tm.tm_mday, marry_tm.tm_hour, marry_tm.tm_min);
+		mail_text.push_back(reserve_player_text);
+		mail_text.push_back(reserve_time_text);
+
+		for(uint32_t i = 0; i < marry_table->n_RewardItem1 && i < marry_table->n_RewardNum; i++)
+		{
+			uint32_t item_id = marry_table->RewardItem1[i];
+			uint32_t item_num = marry_table->RewardNum[i];
+			mail_item_map_man[item_id] += item_num;
+		}
+		for(uint32_t i = 0; i < marry_table->n_RewardItem2 && i < marry_table->n_RewardNum; i++)
+		{
+			uint32_t item_id = marry_table->RewardItem2[i];
+			uint32_t item_num = marry_table->RewardNum[i];
+			mail_item_map_woman[item_id] += item_num;
+		}
+		if(player->get_attr(PLAYER_ATTR_SEX) == 0)
+		{
+			send_mail(&conn_node_gamesrv::connecter, player->data->player_id, 270100020, NULL, NULL, NULL, &mail_text, &mail_item_map_man, MAGIC_TYPE_RESERVE_WEDDING_GIVE_ITEM);
+			
+		}
+		else 
+		{
+			send_mail(&conn_node_gamesrv::connecter, player->data->player_id, 270100020, NULL, NULL, NULL, &mail_text, &mail_item_map_woman, MAGIC_TYPE_RESERVE_WEDDING_GIVE_ITEM);
+		}
+		if(player->data->player_marry_info.sex == 0)
+		{
+			send_mail(&conn_node_gamesrv::connecter, player->data->player_marry_info.target_id, 270100020, NULL, NULL, NULL, &mail_text, &mail_item_map_man, MAGIC_TYPE_RESERVE_WEDDING_GIVE_ITEM);
+			
+		}
+		else 
+		{
+			send_mail(&conn_node_gamesrv::connecter, player->data->player_marry_info.target_id, 270100020, NULL, NULL, NULL, &mail_text, &mail_item_map_woman, MAGIC_TYPE_RESERVE_WEDDING_GIVE_ITEM);
+		}
+		//通知客户端婚姻信息改变
+		player->player_cur_marry_info_notify();
+		if(target_player != NULL)
+		{
+			target_player->player_cur_marry_info_notify();
+		}
+		else 
+		{
+			//不在线要更新mysql
+		}
+
+
+	}while(0);
+
+	CommAnswer answer;
+	comm_answer__init(&answer);
+
+	answer.result = ret;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MARRY_PLAYER_RESERVE_WEDDING_ANSWER, comm_answer__pack, answer);
+
+
+	return 0;
+}
+
+//玩家取消订婚请求
+int handle_marry_player_cancel_propose_request(player_struct* player, EXTERN_DATA* extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	if(player->data->player_marry_info.statu != MARRY_STATU_HAVE_PROPOSE_NOT_RESERVE_MARRY || player->data->player_marry_info.statu != MARRY_STATU_HAVE_PROPOSE_HAVE_RESERVE_MARRY)
+	{
+		LOG_ERR("[%s:%d] player cancel propose fail, marry_statu[%u] player[%lu]", __FUNCTION__, __LINE__, player->data->player_marry_info.statu, extern_data->player_id);
+		return -2;
+	}
+	if(player->data->player_marry_info.target_id == 0)
+	{
+		LOG_ERR("[%s:%d] player cancel propose fail, target player_id error player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -3;
+	}
+	int ret = 0;
+	do{
+		bool flag = false; //是否跟自己的对象组队
+		if(player->m_team != NULL)
+		{
+			for(int pos = 0; pos < player->m_team->m_data->m_memSize && pos < 2; pos++)
+			{
+				if(player->m_team->m_data->m_mem[pos].id == player->data->player_marry_info.target_id)
+				{
+					flag = true;
+					break;
+				}
+			}
+		}
+		player_struct *target_player = player_manager::get_player_by_id(player->data->player_marry_info.target_id);
+		
+		//组队在线需要对方对方确认,且免费取消     不组队直接取消,需要消耗金钱
+		if(flag == true)
+		{
+			if(!target_player || !target_player->is_online())
+			{
+				ret = 190500626;
+				break;
+			}
+			player->data->player_marry_info.cur_cancel_propose = true;
+			target_player->data->player_marry_info.cur_cancel_propose = true;
+			CommAnswer answer;
+			comm_answer__init(&answer);
+
+			fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MARRY_PLAYER_CANCEL_PROPOSE_NOTYFY, comm_answer__pack, answer);
+			break;
+		}
+
+		//未组队处理
+		if(player->sub_unbind_gold(marry_cancel_propose_marry_use_money, MAGIC_TYPE_CANCEL_PROPOSE_MARRY_USE_MONEY) !=0)
+		{
+			ret = 190500318; //元宝不足
+			break;
+		}
+		uint64_t target_id = player->data->player_marry_info.target_id;
+		player->clean_player_all_marry_info(false);
+		player->clean_player_friend_closeness(target_id);
+		player->player_cur_marry_info_notify();
+
+		bool online = false;
+		if(target_player != NULL && target_player->is_online())
+		{
+			online = true;
+			target_player->clean_player_all_marry_info(false);
+			target_player->player_cur_marry_info_notify();
+		}
+		else 
+		{
+			//不在线要更新mysql
+		}
+
+		PlayerCancelProposeResultNotify notify;
+		player_cancel_propose_result_notify__init(&notify);
+		notify.result = 0;
+		uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_MARRY_PLAYER_CANCEL_RESULT_NOTYFY, &notify, (pack_func)player_cancel_propose_result_notify__pack);
+		ppp = conn_node_gamesrv::broadcast_msg_add_players(player->data->player_id, ppp);
+		if(online == true)
+		{
+			ppp = conn_node_gamesrv::broadcast_msg_add_players(target_id, ppp);
+		}
+		conn_node_gamesrv::broadcast_msg_send();
+
+	}while(0);
+
+	CommAnswer answer;
+	comm_answer__init(&answer);
+
+	answer.result = ret;
+	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_MARRY_PLAYER_CANCEL_PROPOSE_ANSWER, comm_answer__pack, answer);
+
+	return 0;
+}
+
+//玩家取消订婚请求
+int handle_marry_player_cancel_confirm_request(player_struct* player, EXTERN_DATA* extern_data)
+{
+	if (!player || !player->is_online())
+	{
+		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -1;
+	}
+
+	PlayerCancelProposeConfirmRequest *req = player_cancel_propose_confirm_request__unpack(NULL, get_data_len(), (uint8_t*)get_data());
+
+	if(req == NULL)
+	{
+		LOG_ERR("[%s:%d] confirm cancel propose unpack fail player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -2;
+	}
+	uint32_t result = req->result;
+	player_cancel_propose_confirm_request__free_unpacked(req, NULL);
+	if(player->data->player_marry_info.statu != MARRY_STATU_HAVE_PROPOSE_NOT_RESERVE_MARRY || player->data->player_marry_info.statu != MARRY_STATU_HAVE_PROPOSE_HAVE_RESERVE_MARRY)
+	{
+		LOG_ERR("[%s:%d] player confirm cancel propose fail, marry_statu[%u] player[%lu]", __FUNCTION__, __LINE__, player->data->player_marry_info.statu, extern_data->player_id);
+		return -3;
+	}
+	uint64_t target_id = player->data->player_marry_info.target_id;
+	if(target_id == 0)
+	{
+		LOG_ERR("[%s:%d] player confirm cancel propose fail, target player_id error player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -4;
+	}
+	if(player->data->player_marry_info.cur_cancel_propose == false)
+	{
+		LOG_ERR("[%s:%d] player confirm cancel propose fail, target not cancel player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -5;
+	}
+
+	bool online = false;
+	player_struct *target_player = player_manager::get_player_by_id(target_id);
+	if(target_player != NULL && target_player->is_online())
+	{
+		online = true;
+	}
+	if(result == 0)
+	{
+		player->clean_player_all_marry_info(false);
+		player->clean_player_friend_closeness(target_id);
+		player->player_cur_marry_info_notify();
+	
+		if(online == true)
+		{
+			target_player->clean_player_all_marry_info(false);
+			target_player->player_cur_marry_info_notify();
+		}
+		else 
+		{
+			//不在线要更新mysql
+		}
+	
+	}
+
+
+	PlayerCancelProposeResultNotify notify;
+	player_cancel_propose_result_notify__init(&notify);
+	notify.result = 0;
+	if(result != 0)
+	{
+		notify.result = 190500627;
+		notify.player_id = player->data->player_id;
+	}
+	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_MARRY_PLAYER_CANCEL_RESULT_NOTYFY, &notify, (pack_func)player_cancel_propose_result_notify__pack);
+	ppp = conn_node_gamesrv::broadcast_msg_add_players(player->data->player_id, ppp);
+	if(online == true)
+	{
+		ppp = conn_node_gamesrv::broadcast_msg_add_players(target_id, ppp);
+	}
+	conn_node_gamesrv::broadcast_msg_send();
+	return 0;
+}
+
 void install_msg_handle()
 {
 	add_msg_handle(MSG_ID_MOVE_REQUEST, handle_move_request);
@@ -26026,6 +26871,13 @@ void install_msg_handle()
 	add_msg_handle(MSG_ID_RED_BACKET_SEND_TO_MANY_PLAYER_REQUEST, handle_red_packet_send_red_request);
 	add_msg_handle(SERVER_PROTO_TRADE_GRAB_RED_PACKET_REQUEST, handle_red_packet_grab_red_add_money_request);
 	add_msg_handle(SERVER_PROTO_TRADE_SEND_RED_PACKET_FAILED_ANSWER, handle_red_packet_send_failed_still_money_request);
+
+	add_msg_handle(MSG_ID_MARRY_PLAYER_PROPOSE_REQUEST, handle_marry_player_propose_request);
+	add_msg_handle(MSG_ID_MARRY_PLAYER_PROPOSE_START_REQUEST, handle_marry_player_propose_start_request);
+	add_msg_handle(MSG_ID_MARRY_PLAYER_PROPOSE_START_REQUEST, handle_marry_player_propose_queren_request);
+	add_msg_handle(MSG_ID_MARRY_PLAYER_RESERVE_WEDDING_REQUEST, handle_marry_player_reserve_wedding_request);
+	add_msg_handle(MSG_ID_MARRY_PLAYER_CANCEL_PROPOSE_REQUEST, handle_marry_player_cancel_propose_request);
+	add_msg_handle(MSG_ID_MARRY_PLAYER_CANCEL_CONFIRM_REQUEST, handle_marry_player_cancel_confirm_request);
 }
 
 void uninstall_msg_handle()

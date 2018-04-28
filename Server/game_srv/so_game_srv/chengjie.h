@@ -26,7 +26,7 @@ public:
 	static void AddTask(STChengJie &task);
 	static void AddTask(STChengJie &task, uint64_t accepter);
 	static void AddTaskDb(STChengJie &task, EXTERN_DATA *extern_data);
-	static void DelTask(uint32_t taskId);
+	static void DelTask(uint32_t taskId, bool rm_target);
 	static void DelTaskDb(uint32_t taskId);
 	static void UpdateTaskDb(STChengJie &task);
 	static void CommpleteTask(player_struct *player, player_struct *target, STChengJie &task);

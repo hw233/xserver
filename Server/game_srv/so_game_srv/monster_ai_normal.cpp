@@ -293,6 +293,9 @@ void normal_ai_beattack(monster_struct *monster, unit_struct *player)
 
 	uint64_t now = time_helper::get_cached_time();			
 	monster->reset_timer(now + 500);
+
+	do_normal_pursue(monster);
+	
 //	monster_manager::monster_ontick_reset_timer(monster);
 }
 

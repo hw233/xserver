@@ -62,7 +62,8 @@ void scene_struct::clear()
 
 uint32_t scene_struct::get_area_width()
 {
-	return 15;
+	return res_config->ViewSize;
+//	return 15;
 }
 
 int scene_struct::init_scene_struct(uint64_t sceneid, bool create_monster, int lv)
@@ -253,6 +254,8 @@ int scene_struct::add_monster_to_scene(monster_struct *monster, uint32_t effecti
 	{
 		LOG_ERR("%s: add monster %u %lu to scene[%u] fail, pos[%.1f][%.1f]", __FUNCTION__, monster->data->monster_id,
 			monster->data->player_id, m_id, move_path->pos[move_path->cur_pos].pos_x, move_path->pos[move_path->cur_pos].pos_z);
+			//后面跑AI的时候还是会崩溃，除非删除这个怪
+		assert(0);
 		return -1;
 	}
 	area->add_monster_to_area(monster->data->player_id);
@@ -340,11 +343,11 @@ int scene_struct::delete_player_from_scene(player_struct *player)
 {
 //	area_struct *area = get_area_by_pos(player->get_player_pos()->pos_x, player->get_player_pos()->pos_z);
 	area_struct *area = player->area;
-	if (!area)
-		return -1;
+//	if (!area)
+//		return -1;
 	LOG_DEBUG("%s %d: scene[%d] player[%lu] area[%p]", __FUNCTION__, __LINE__, m_id, player->data->player_id, area);
 	broadcast_player_delete(player);
-	if (area->del_player_from_area(player->data->player_id) != 0)
+	if (area && area->del_player_from_area(player->data->player_id) != 0)
 	{
 		LOG_ERR("%s %d: can not del player[%lu] from area[%ld]", __FUNCTION__, __LINE__, player->data->player_id, area - m_area);
 	}

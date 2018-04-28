@@ -703,6 +703,41 @@ static void generate_parameters(void)
 		send_red_packet_min_level = config->parameter1[0];
 	}
 
+
+	config = get_config_by_id(161001100, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		marry_propose_is_same_sex = config->parameter1[0];
+	}
+	config = get_config_by_id(161001101, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		marry_propose_min_closeness = config->parameter1[0];
+	}
+	config = get_config_by_id(161001102, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		marry_propose_divorce_time = config->parameter1[0];
+	}
+	config = get_config_by_id(161001103, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		marry_propose_min_money = config->parameter1[0];
+	}
+	config = get_config_by_id(161001106, &parameter_config);
+	if (config && config->n_parameter1 >= 4)
+	{
+		marry_propose_active_player_x = config->parameter1[0];
+		marry_propose_active_player_z = config->parameter1[1];
+		marry_propose_passive_player_x = config->parameter1[2];
+		marry_propose_passive_player_z = config->parameter1[3];
+	}
+	config = get_config_by_id(161001107, &parameter_config);
+	if (config && config->n_parameter1 >= 1)
+	{
+		marry_cancel_propose_marry_use_money = config->parameter1[0];
+	}
+
 	MAX_TOWER_LEVEL = tower_level_config.size();
 
 }
@@ -1168,6 +1203,25 @@ static void adjust_script_raid_table()
 	{
 		sg_script_raid_config.insert(std::make_pair(ite->second->DungeonID, ite->second));
 	}
+}
+
+static void adjust_propose_ring_table()
+{
+	std::map<uint64_t, struct WeddingRing*>::iterator ite = propose_ring_config.begin(); 
+	for (; ite != propose_ring_config.end(); ++ite)
+	{
+		propose_ring_config.insert(std::make_pair(ite->second->RingGrade, ite->second));
+	}
+}
+
+static void adjust_wedding_reserve_table()
+{
+	std::map<uint64_t, struct WeddingTable*>::iterator ite = wedding_config.begin(); 
+	for (; ite != wedding_config.end(); ++ite)
+	{
+		wedding_config.insert(std::make_pair(ite->second->WeddingGrade, ite->second));
+	}
+	
 }
 
 static void gen_show_collect()
@@ -4376,6 +4430,18 @@ int read_all_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/TaskDungeonsTable.lua", (config_type)&script_raid_config);
 	assert(ret == 0);
 	adjust_script_raid_table();
+
+	type = sproto_type(sp, "WeddingRing");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/WeddingRing.lua", (config_type)&propose_ring_config);
+	assert(ret == 0);
+	adjust_propose_ring_table();
+
+	type = sproto_type(sp, "WeddingTable");
+	assert(type);
+	ret = traverse_main_table(L, type, "../lua_data/WeddingTable.lua", (config_type)&wedding_config);
+	assert(ret == 0);
+	adjust_wedding_reserve_table();
 
 	adjust_escort_config();
 	adjust_achievement_config();

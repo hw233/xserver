@@ -523,6 +523,7 @@ message PlayerDBInfo
 	required uint32 default_hair_color = 116;
 	required uint32 default_up_color = 117;
 	required uint32 default_down_color = 118;
+	required uint64 partner_add_angry_cd = 119;
 }
 
 message DBAutoAddHp

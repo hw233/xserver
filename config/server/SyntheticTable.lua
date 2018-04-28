@@ -3,29 +3,29 @@ local SyntheticTable = {
 		['ID'] = 651000001,	--索引
 		['SyntheticTarget'] = 201060002,	--合成目标
 		['SyntheticMaterial'] = {201060001},	--合成材料
-		['SyntheticMaterialNum'] = {3},	--合成材料所需数量
-		['Consume'] = 800	--单次合成所需银票数量
+		['SyntheticMaterialNum'] = {4},	--合成材料所需数量
+		['Consume'] = 2000	--单次合成所需银票数量
 		},
 	[651000002] = {
 		['ID'] = 651000002,
 		['SyntheticTarget'] = 201060003,
 		['SyntheticMaterial'] = {201060002},
-		['SyntheticMaterialNum'] = {3},
-		['Consume'] = 1000
+		['SyntheticMaterialNum'] = {4},
+		['Consume'] = 10000
 		},
 	[651000003] = {
 		['ID'] = 651000003,
 		['SyntheticTarget'] = 201060028,
 		['SyntheticMaterial'] = {201060027},
-		['SyntheticMaterialNum'] = {4},
-		['Consume'] = 800
+		['SyntheticMaterialNum'] = {5},
+		['Consume'] = 10000
 		},
 	[651000004] = {
 		['ID'] = 651000004,
 		['SyntheticTarget'] = 201060029,
 		['SyntheticMaterial'] = {201060028},
-		['SyntheticMaterialNum'] = {3},
-		['Consume'] = 800
+		['SyntheticMaterialNum'] = {5},
+		['Consume'] = 50000
 		},
 	[651000005] = {
 		['ID'] = 651000005,

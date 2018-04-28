@@ -172,9 +172,53 @@ static void tower_raid_ai_player_dead(raid_struct *raid, player_struct *player, 
 }
 static void tower_raid_ai_monster_dead(raid_struct *raid, monster_struct *monster, unit_struct *killer)
 {
+	if ( NULL != monster )
+	{
+		// 计算死亡怪物索引以及死亡数量 & 发送怪物死亡消息
+		
+		raid->m_monster.erase(monster);
+
+		RaidPassParamChangedNotify nty;
+		raid_pass_param_changed_notify__init(&nty);
+		uint32_t monster_index = 0;
+		uint32_t dead_cnt = 0;
+
+		if ( NULL==killer )
+			return ;
+		player_struct *player = NULL;
+		player = (player_struct *)killer;
+		
+		P20076Table *monTable = get_config_by_id(351601000 + player->data->tower.cur_lv, &tower_level_config);
+
+		for ( uint32_t idx = 0; idx < monTable->n_MonsterID; ++idx)
+		{
+			if ( monster->data->monster_id == monTable->MonsterID[idx])
+			{
+				monster_index = idx;
+				break;
+			}
+		}
+		//副本中当前死亡怪物数量与配置中当前死亡怪物数量进行对比。 
+		std::set<monster_struct *>::iterator iter = raid->m_monster.begin();
+		uint32_t remain_cnt = 0;
+		for ( ; iter != raid->m_monster.end(); ++iter )
+		{
+			if (monster->data->monster_id == (*iter)->data->monster_id )
+				++remain_cnt;
+		}
+		
+		dead_cnt = monTable->MonsterNum[monster_index] - remain_cnt;
+
+		nty.pass_index = monster_index;	//死亡怪物索引
+		nty.pass_value = dead_cnt;		//死亡数量 un
+
+		raid->broadcast_to_raid(MSG_ID_RAID_PASS_PARAM_CHANGED_NOTIFY, &nty, (pack_func)raid_pass_param_changed_notify__pack,false);
+	}
+
+
 	if (raid->m_monster.size() != 0)
 	{
-		return;
+		return ;
 	}
 	player_struct *player = NULL;
 	if (killer->get_unit_type() == UNIT_TYPE_PLAYER)
@@ -390,13 +434,31 @@ static void tower_raid_ai_player_region_changed(raid_struct *raid, player_struct
 			{
 				uint64_t x = monTable->BirthPointX + monTable->BirthRange - rand() % (2 * monTable->BirthRange + 1);
 				uint64_t z = monTable->BirthPointZ + monTable->BirthRange - rand() % (2 * monTable->BirthRange + 1);
-				monster_struct *mon = monster_manager::create_monster_at_pos(player->scene, monTable->MonsterID[i], monTable->MonsterLevel[i], x, z, 0, NULL, 0);
+				monster_struct *mon = monster_manager::create_monster_at_pos(player->scene, monTable->MonsterID[i], monTable->MonsterLevel[i], x, z, 0, NULL, monTable->BirthDirection);
+				raid->m_monster.insert(mon);
 				if (mon == NULL)
 				{
 					LOG_INFO("%s: player[%lu] add to %lu", __FUNCTION__, player->get_uuid(), raid->data->uuid);
 				}
+				else
+				{
+					++raid->data->ai_data.tower_data.mon_num;
+				}
 			}
 		}
+		//发送消息给客户端，创建怪物成功 msgid: 10822
+		double parama1[1] = {(double)monTable->n_MonsterID};
+		char param2[10]="";
+		char *pparam2 = param2;
+		RaidEventNotify nty;
+		raid_event_notify__init(&nty);
+		nty.type = 	8080;// 幻宝地牢生成怪物标记
+		nty.param1 = parama1;
+		nty.n_param1 = 1;
+		nty.param2 = &pparam2;//"monster created";
+		nty.n_param2 = 1;
+
+		raid->broadcast_to_raid(MSG_ID_RAID_EVENT_NOTIFY, &nty, (pack_func)raid_event_notify__pack, false);
 	}
 }
 
@@ -420,5 +482,7 @@ struct raid_ai_interface raid_ai_tower_interface =
 	NULL, //和npc对话
 	NULL, //获取配置，主要是万妖谷的配置
 	tower_raid_ai_failed, //失败
-	NULL	
+	NULL
+		
+
 };

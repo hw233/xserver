@@ -118,6 +118,7 @@ public:
 
 		//清除类型3(变身)buff
 	bool is_in_buff3();
+	bool is_in_buff4();
 	void clear_type3_buff();
 	void clear_god_buff();
 	bool has_buff(uint32_t buff_id);

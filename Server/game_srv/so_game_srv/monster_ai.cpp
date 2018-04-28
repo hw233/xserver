@@ -749,9 +749,12 @@ void do_normal_patrol(monster_struct *monster)
 	if (monster->try_active_attack())
 	{
 		monster->ai_state = AI_PURSUE_STATE;
-		struct position *target_pos = monster->target->get_pos();
-		monster->data->target_pos.pos_x = target_pos->pos_x;
-		monster->data->target_pos.pos_z = target_pos->pos_z;		
+		uint64_t now = time_helper::get_cached_time();
+		monster->data->ontick_time = now + 500;
+		do_normal_pursue(monster);
+		// struct position *target_pos = monster->target->get_pos();
+		// monster->data->target_pos.pos_x = target_pos->pos_x;
+		// monster->data->target_pos.pos_z = target_pos->pos_z;		
 //	uint64_t now = time_helper::get_cached_time();			
 //	monster->reset_timer(now + 500);
 		return;
@@ -1146,5 +1149,5 @@ void do_normal_pursue(monster_struct *monster)
 
 	do_monster_active_attack_to_target(monster, skill_id, config);
 
-	LOG_DEBUG("%s: jack111 skill[%u] 释放技能", __FUNCTION__, skill_id);	
+//	LOG_DEBUG("%s: jack111 skill[%u] 释放技能", __FUNCTION__, skill_id);	
 }

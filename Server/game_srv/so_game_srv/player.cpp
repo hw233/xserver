@@ -70,6 +70,7 @@
 #include "../proto/xunbao.pb-c.h"
 #include "../proto/achievement.pb-c.h"
 #include "../proto/player_fuli.pb-c.h"
+#include "../proto/marry.pb-c.h"
 #include "auto_add_hp.pb-c.h"
 #include "error_code.h"
 #include "app_data_statis.h"
@@ -925,6 +926,10 @@ void player_struct::process_offline(bool again/* = false*/, EXTERN_DATA *ext_dat
 	if (is_in_guild_chuan_gong())
 	{
 		guild_chuan_gong_zhong_duan();
+	}
+	if (is_on_propose())
+	{
+		player_propose_end_deal_with(false);
 	}
 
 	data->status = OFFLINE_SAVING;
@@ -1868,6 +1873,7 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 	db_info.partner_recruit_senior_free_count = data->partner_recruit_senior_free_count;
 	db_info.partner_recruit_senior_count = data->partner_recruit_senior_count;
 	db_info.partner_recruit_first = data->partner_recruit_first;
+	db_info.partner_add_angry_cd = data->partner_add_angry_cd;
 
 	db_info.partner_bond = data->partner_bond;
 	db_info.n_partner_bond = 0;
@@ -2767,6 +2773,7 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 	data->partner_today_junior_recurit_count = db_info->partner_today_junior_recurit_count;
 	data->partner_today_senior_recurit_cd = db_info->partner_today_senior_recurit_cd;
 	data->partner_today_senior_recurit_count = db_info->partner_today_senior_recurit_count;	
+	data->partner_add_angry_cd = db_info->partner_add_angry_cd;
 
 	if (db_info->truck != NULL)
 	{
@@ -4040,7 +4047,8 @@ void player_struct::calculate_attribute(bool isNty)
 //	memset(&data->attrData[PLAYER_ATTR_MAXHP], 0, sizeof(double));
 //	data->attrData[PLAYER_ATTR_MAXHP] = 0;
 //	memset(&data->attrData[PLAYER_ATTR_ATTACK], 0, (PLAYER_ATTR_DETIMEDF - PLAYER_ATTR_ATTACK + 1) * sizeof(double));
-	memset(&data->attrData[PLAYER_ATTR_MAXHP], 0, (PLAYER_ATTR_PVPDF - PLAYER_ATTR_MAXHP + 1) * sizeof(double));	
+	memset(&data->attrData[PLAYER_ATTR_MAXHP], 0, (PLAYER_ATTR_PVPDF - PLAYER_ATTR_MAXHP + 1) * sizeof(double));
+	memset(&data->attrData[PLAYER_ATTR_BASELV], 0, (PLAYER_ATTR_LINGLV - PLAYER_ATTR_BASELV + 1) * sizeof(double));
 
 	for (int i = PLAYER_ATTR_TI; i <= PLAYER_ATTR_ALLEFFDF; ++i)
 		data->attrData[i] = 0;
@@ -4313,6 +4321,21 @@ void player_struct::calcu_equip_attr(double *attr)
 			{
 				double value = (next_equip_config->AttriEquipValue - equip_config->AttriEquipValue) * ((double)equip_info.star_exp / next_star_config->StarSchedule);
 				attr[equip_config->AttriEquipType] += value;
+			}
+		}
+
+		//戒指部位加婚戒属性
+		if(type == 9 && data->player_marry_info.propose_type != 0)
+		{
+			WeddingRing *propose_ring_table = get_config_by_id(data->player_marry_info.propose_type, &propose_ring_config);
+			if(propose_ring_table != NULL && propose_ring_table->n_AttributeType == propose_ring_table->n_AttributeValue)
+			{
+				for(uint32_t j = 0; j < propose_ring_table->n_AttributeType; j++)
+				{
+					uint32_t ring_attr_id = propose_ring_table->AttributeType[j];
+					uint32_t ring_attr_value = propose_ring_table->AttributeValue[j];
+					attr[ring_attr_id] += ring_attr_value;
+				}
 			}
 		}
 
@@ -5953,7 +5976,7 @@ int player_struct::check_can_transfer()
 	if (is_in_raid())
 	{
 		raid_struct *raid = (raid_struct *)this->scene;
-		if (raid->m_config->DengeonRank != DUNGEON_TYPE_ZHENYING && raid->m_config->DengeonRank != DUNGEON_TYPE_GUILD_LAND)
+		if (raid->m_config->DengeonRank != DUNGEON_TYPE_ZHENYING && raid->m_config->DengeonRank != DUNGEON_TYPE_GUILD_LAND && raid->m_config->DengeonRank != DUNGEON_TYPE_QINGREN_DAO)
 		{
 			return 190500045;
 		}
@@ -6021,11 +6044,11 @@ int player_struct::check_item_cd(ItemsConfigTable *config)
 	return (0);
 }
 
-bool player_struct::check_can_add_item(uint32_t id, uint32_t num, std::map<uint32_t, uint32_t> *out_add_list)
+int player_struct::check_can_add_item(uint32_t id, uint32_t num, std::map<uint32_t, uint32_t> *out_add_list)
 {
 	if (get_item_type(id) != ITEM_TYPE_ITEM)
 	{
-		return true;
+		return 0;
 	}
 
 	uint32_t stack_num = get_item_stack_num(id);
@@ -6073,10 +6096,23 @@ bool player_struct::check_can_add_item(uint32_t id, uint32_t num, std::map<uint3
 
 	if (tmp_num > 0)
 	{
-		return false;
+		return ERROR_ID_BAG_GRID_NOT_ENOUGH;
 	}
 
-	return true;
+	//婚戒判断(玩家同一时间身上只能有一个婚戒)
+	if(id == marry_propose_gaojie_sing_item_id || id == marry_propose_haohua_sing_item_id || id == marry_propose_shehua_sing_item_id)
+	{
+		for (uint32_t i = 0; i < data->bag_grid_num; ++i)
+		{
+			bag_grid_data& grid = data->bag[i];
+			if(grid.id == marry_propose_gaojie_sing_item_id || grid.id == marry_propose_haohua_sing_item_id || grid.id == marry_propose_shehua_sing_item_id)
+			{
+				return 190500605;
+			}
+		}
+	}
+
+	return 0;
 }
 
 bool player_struct::check_can_add_item_list(std::map<uint32_t, uint32_t>& item_list)
@@ -6272,10 +6308,10 @@ int player_struct::add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool 
 			}
 
 			std::map<uint32_t, uint32_t> add_list;
-			if (!check_can_add_item(id, num, &add_list))
+			ret = check_can_add_item(id, num, &add_list);
+			if(ret != 0)
 			{
 				LOG_ERR("[%s:%d] player[%lu] bag grid not enough, id:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, id, num);
-				ret = ERROR_ID_BAG_GRID_NOT_ENOUGH;
 				break;
 			}
 
@@ -7187,6 +7223,52 @@ int player_struct::try_use_prop(uint32_t pos, uint32_t use_all, ItemUseEffectInf
 				}
 			}
 			break;
+		case IUE_PROPOSE_POST:
+			{
+				if (config->n_ParameterEffect < 1)
+				{
+					return ERROR_ID_NO_CONFIG;
+				}
+				DungeonTable *raid_config = get_config_by_id(this->data->scene_id, &all_raid_config);
+				if(raid_config != NULL && raid_config->DengeonRank == DUNGEON_TYPE_QINGREN_DAO)
+				{
+					return 666; //当前在情人岛
+				}
+				DungeonTable *changjing_config = get_config_by_id(config->ParameterEffect[0], &all_raid_config);
+				if(changjing_config  == NULL || changjing_config->DengeonRank != DUNGEON_TYPE_QINGREN_DAO)
+				{
+					return ERROR_ID_NO_CONFIG;
+				}
+				struct ControlTable *control_config = get_config_by_id(changjing_config->ActivityControl, &all_control_config);
+				if(control_config == NULL)
+				{
+					return ERROR_ID_NO_CONFIG;
+				}
+				if(!this->m_team)
+				{
+					return 190500602; //您没有队伍，无法进入情人岛，是否创建队伍
+				}
+				if (this->get_uuid() != this->m_team->GetLeadId())
+				{
+					return 2222222222; //你不是队长
+				}
+				//检查人数
+				uint32_t team_mem_num = this->m_team->GetMemberSize();
+				if(control_config->MinActor > team_mem_num)
+				{
+					return 190500604; //情人岛最少需要2个人同时进入
+				}
+				if(control_config->MaxActor < team_mem_num)
+				{
+					return 190500603; //情人岛最多需要2个人同时进入
+				}
+
+				//检查双方情缘系统是否开启
+				
+				//副本进入检查
+				return raid_manager::check_player_enter_raid(this, config->ParameterEffect[0]);
+			}
+			break;
 		default:
 			if (config->n_ParameterEffect < 1)
 			{
@@ -7374,6 +7456,13 @@ int player_struct::use_prop_effect(bag_grid_data& grid, ItemsConfigTable *config
 				del_item(config->ParameterEffect[0], use_count, MAGIC_TYPE_BAG_USE);
 				grid.especial_item.box.item_id = info->random_box_item_id;
 				grid.especial_item.box.item_num = info->random_box_item_num;
+			}
+			break;
+		case IUE_PROPOSE_POST:
+			{
+				EXTERN_DATA extern_data;
+				extern_data.player_id = this->data->player_id;
+				this->move_to_scene(config->ParameterEffect[0], &extern_data);
 			}
 			break;
 	}
@@ -7660,7 +7749,7 @@ int player_struct::move_fabao_to_bag(partner_cur_fabao &fabao)
 int player_struct::move_trade_item_to_bag(uint32_t item_id, uint32_t num, EspecialItemInfo &especial)
 {
 	std::map<uint32_t, uint32_t> add_list;
-	if (check_can_add_item(item_id, num, &add_list) == false)
+	if (check_can_add_item(item_id, num, &add_list) != 0)
 	{
 		LOG_ERR("[%s:%d] player[%lu] bag space, item_id:%u, num:%u", __FUNCTION__, __LINE__, data->player_id, item_id, num);
 		return ERROR_ID_BAG_GRID_NOT_ENOUGH;
@@ -12770,7 +12859,7 @@ int player_struct::add_partner(uint32_t partner_id, uint64_t *uuid)
 	}
 
 	partner->init_create_data();
-	partner->init_end(false);
+	//partner->init_end(false);
 	m_partners[partner->data->uuid] = partner;
 	if (uuid)
 	{
@@ -13293,7 +13382,7 @@ void player_struct::adjust_battle_partner(void)
 	do
 	{
 		//在角色上坐骑、上镖车、死亡的时候，要把伙伴隐藏起来
-		bool partner_out = !(!is_partner_battle() || is_on_horse() || is_on_truck() || !is_alive());
+		bool partner_out = !(!is_partner_battle() || is_on_horse() || is_on_truck() || !is_alive() || is_in_buff4());
 
 		//先把下阵和死亡的伙伴撤下来
 		for (int i = 0; i < MAX_PARTNER_BATTLE_NUM; ++i)
@@ -13518,6 +13607,10 @@ void player_struct::on_leave_scene(scene_struct *old_scene)
 
 int player_struct::add_partner_anger(uint32_t num, bool isNty)
 {
+	if (time_helper::get_cached_time() / 1000 < data->partner_add_angry_cd)
+	{
+		return 0;
+	}
 	if (num == 0)
 	{
 		return 0;
@@ -16712,6 +16805,42 @@ bool player_struct::is_friend_enemy(uint64_t target_id)
 		}
 	}
 	return false;
+}
+
+bool player_struct::is_friend_contacts(uint64_t target_id)
+{
+	for (int i = 0; i < MAX_FRIEND_CONTACT_NUM; ++i)
+	{
+		if (data->friend_contacts[i].player_id == 0)
+		{
+			break;
+		}
+		if(data->friend_contacts[i].player_id == target_id)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+uint32_t player_struct::get_friend_closeness(uint64_t target_id)
+{
+	uint32_t num = 0;
+	for (int i = 0; i < MAX_FRIEND_CONTACT_NUM; ++i)
+	{
+		if (data->friend_contacts[i].player_id == 0)
+		{
+			break;
+		}
+
+		if (data->friend_contacts[i].player_id == target_id)
+		{
+			num = data->friend_contacts[i].closeness;
+			break;
+		}
+	}
+
+	return num;
 }
 
 bool player_struct::get_rank_ranking(uint32_t rank_type, uint32_t rank_lv, uint32_t rank_score)
@@ -20882,4 +21011,344 @@ void player_struct::finish_jiu_gong_bagua_task(uint32_t task_id)
 
 	jiu_gong_ba_gua_reward_info_notify();
 	return;
+}
+
+
+int player_struct::player_propose_check_up(uint64_t &player_id, uint32_t &ring_type)
+{
+	int ret = 0;
+	do{
+		raid_struct *raid = NULL;
+		if(this->is_in_raid())
+		{
+			raid = (raid_struct *)this->scene;
+			if (raid->m_config->DengeonRank != DUNGEON_TYPE_QINGREN_DAO)
+			{
+				ret = 190500624; //不在情人岛
+				break;
+			}
+		}
+		if(raid == NULL)
+		{
+			ret = 190500624;
+			break;
+		}
+		Team *my_team = this->m_team;
+		if(NULL == my_team)
+		{
+			ret = 190500606; //没组队?
+			break;
+		}
+		if(this->get_uuid() != my_team->GetLeadId())
+		{
+			ret = 190500615; //不是队长
+			break;
+		}
+		if(my_team->m_data->m_memSize > 2)
+		{
+			ret = 190500607; //队伍只能出现您的求婚对象
+		}
+
+		bool pass = true;
+		player_struct *target_player = NULL;
+		for(int pos = 0; pos < my_team->m_data->m_memSize && pos < 2; pos++)
+		{
+			target_player = player_manager::get_player_by_id(my_team->m_data->m_mem[pos].id);
+			if(my_team->m_data->m_mem[pos].timeremove != 0 || target_player == NULL || target_player->data == NULL || target_player->scene == NULL)
+			{
+				pass = false;
+				continue;
+			}
+			if(target_player->data->player_id == this->data->player_id)
+			{
+				target_player = NULL;
+			}
+		}
+
+		if(my_team->m_data->m_memSize <=1 || pass == false)
+		{
+			ret = 190500606; //需要与您的求婚对象一起组队过来(队伍只有一人或者有一人掉线)
+			break;
+		}
+
+		//判断双方是否有婚约
+		if(target_player == NULL || !target_player->is_online() || !target_player->is_alive() || target_player->scene == NULL)
+		{
+			ret = ERROR_ID_SERVER; //服务器内部错误
+			break;
+		}
+		if(target_player->scene != this->scene)
+		{
+			ret = 190500050; //对方不在情人岛
+			break;
+		}
+		player_id = target_player->data->player_id;
+
+		if(this->data->player_marry_info.statu != MARRY_STATU_SINGLE_NOT_MARRIAGE_HISTORY && this->data->player_marry_info.statu != MARRY_STATU_SINGLE_HAVE_MARRIAGE_HISTORY)
+		{
+			ret = 190500608; //自己有婚约在身
+			break;
+		}
+		if(target_player->data->player_marry_info.statu != 0 && target_player->data->player_marry_info.statu != 1)
+		{
+			ret = 190500608; //对方有婚约在身
+			break;
+		}
+
+		//同性判断
+		if(marry_propose_is_same_sex == 0)
+		{
+			if(this->get_attr(PLAYER_ATTR_SEX) == target_player->get_attr(PLAYER_ATTR_SEX))
+			{
+				ret = 190500609;
+				break;
+			}
+		}
+
+		//好友相关判断
+		if(!this->is_friend_contacts(target_player->data->player_id) || !target_player->is_friend_contacts(this->data->player_id))
+		{
+			ret = 190500611; //双方不是互为好友
+			break;
+		}
+		if(this->is_friend_enemy(target_player->data->player_id) || target_player->is_friend_enemy(this->data->player_id))
+		{
+			ret = 190500612; //双方互为仇人
+			break;
+		}
+		if(this->get_friend_closeness(target_player->data->player_id) <= marry_propose_min_closeness || target_player->get_friend_closeness(this->data->player_id) <= marry_propose_min_closeness)
+		{
+			ret = 190500610; //好感度不够
+			break;
+		}
+
+		//离婚时长相关
+		uint64_t now_time = time_helper::get_cached_time() / 1000;
+		if(now_time - this->data->player_marry_info.time < (uint64_t)marry_propose_divorce_time)
+		{
+			ret = 190500616; //自己离婚不足24小时
+			break;
+		}
+		if(now_time - target_player->data->player_marry_info.time < (uint64_t)marry_propose_divorce_time)
+		{
+			ret = 190500616; //对方离婚不足24小时
+			break;
+		}
+
+		//判断求婚者是否有婚戒,并且元宝是否足够
+		uint32_t prevGold = this->data->attrData[PLAYER_ATTR_GOLD];
+		if(prevGold < marry_propose_min_money)
+		{
+			ret = 190500614;
+			break;
+		}
+	
+		bool have_sing = false;
+		for (uint32_t i = 0; i < data->bag_grid_num; ++i)
+		{
+			bag_grid_data& grid = data->bag[i];
+			if(ring_type == 0)
+			{
+				for(std::map<uint64_t, struct WeddingRing*>::iterator itr = propose_ring_config.begin(); itr != propose_ring_config.end(); itr++)
+				{
+					if (grid.id == itr->second->ItemsID)
+					{
+						ring_type = itr->second->RingGrade;
+						have_sing = true;
+						break;
+					}
+				}
+				if(have_sing == true)
+					break;
+			}
+			else 
+			{
+				WeddingRing *wedding_ring_config = get_config_by_id(ring_type, &propose_ring_config);
+				if(wedding_ring_config == NULL)
+				{
+					break;
+				}
+				if(wedding_ring_config->ItemsID == grid.id)
+				{
+					have_sing = true;
+				}
+			
+			}
+		}
+		if( have_sing == false)
+		{
+			ret = 190500613; //没有婚戒
+			break;
+		}
+
+	}while(0);
+
+
+	return ret;
+}
+
+bool player_struct::is_on_propose()
+{
+	if(data->player_marry_info.cur_propose_info.player_id != 0 && data->player_marry_info.cur_propose_info.time == 0 && data->player_marry_info.cur_propose_info.ring_type != 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void player_struct::clean_propose_state_and_info()
+{
+	data->player_marry_info.cur_propose_info.player_id = 0;
+	data->player_marry_info.cur_propose_info.time = 0;
+	data->player_marry_info.cur_propose_info.statu = 0;
+	data->player_marry_info.cur_propose_info.ring_type = 0;
+}
+
+void player_struct::player_propose_end_deal_with(bool is_success)
+{
+
+	clean_propose_state_and_info();
+	bool flag = false;
+	player_struct *target_player = player_manager::get_player_by_id(data->player_marry_info.cur_propose_info.player_id);
+	if(target_player != NULL && target_player->data != NULL)
+	{
+		target_player->clean_propose_state_and_info();
+		flag = true;
+	}
+
+	conn_node_gamesrv::broadcast_msg_send();
+	PlayerProposeStatetNotify start_notify;
+	PlayerProposePlayerPosInfo active_player;
+	PlayerProposePlayerPosInfo passive_player;
+	player_propose_statet_notify__init(&start_notify);
+	player_propose_player_pos_info__init(&active_player);
+	player_propose_player_pos_info__init(&passive_player);
+	active_player.player_id = data->player_id;
+	active_player.player_name = data->name;
+	struct position *my_pos = this->get_pos();
+	active_player.pos_x = my_pos->pos_x;
+	active_player.pos_z = my_pos->pos_z;
+
+	if(flag == true)
+	{
+		passive_player.player_id = target_player->data->player_id;
+		passive_player.player_name = target_player->data->name;
+		struct position *target_pos = target_player->get_pos();
+		passive_player.pos_x = target_pos->pos_x;
+		passive_player.pos_z = target_pos->pos_z;
+	}
+
+
+	start_notify.type = 1;
+	start_notify.result = is_success;
+	start_notify.active_player = &active_player;
+	start_notify.passive_player = &passive_player;
+
+
+	uint64_t *ppp = conn_node_gamesrv::prepare_broadcast_msg_to_players(MSG_ID_MARRY_PLAYER_PROPOSE_START_NOTIFY, &start_notify, (pack_func)player_propose_statet_notify__pack);
+	ppp = conn_node_gamesrv::broadcast_msg_add_players(data->player_id, ppp);
+	if (flag == true)
+	{
+		ppp = conn_node_gamesrv::broadcast_msg_add_players(target_player->data->player_id, ppp);
+	}
+	conn_node_gamesrv::broadcast_msg_send();
+
+}
+
+void player_struct::player_cur_marry_info_notify()
+{
+	if(data == NULL)
+	{
+		LOG_ERR("[%s:%d] player data is NULL", __FUNCTION__, __LINE__);
+		return;
+	}
+
+	PlayerCurMarryInfoNotify notify;
+	player_cur_marry_info_notify__init(&notify);
+
+	notify.statu = data->player_marry_info.statu;
+	notify.my_role = data->player_marry_info.my_role;
+	notify.reserve_marry_type = data->player_marry_info.reserve_marry_type;
+	notify.reserve_marry_time = data->player_marry_info.reserve_marry_time;
+	notify.target_id = data->player_marry_info.target_id;
+	notify.target_name = data->player_marry_info.target_name;
+	notify.target_sex = data->player_marry_info.sex;
+	notify.divorce_time = data->player_marry_info.time;
+
+	EXTERN_DATA ext_data;
+	ext_data.player_id = data->player_id;
+	fast_send_msg(&conn_node_gamesrv::connecter, &ext_data, MSG_ID_MARRY_PLAYER_CUR_MARRY_INFO_NOTIFY, player_cur_marry_info_notify__pack, notify);
+
+	return;
+}
+
+void player_struct::clean_player_all_marry_info(bool is_divorce)
+{
+	if(data == NULL)
+	{
+		LOG_ERR("[%s:%d] player data is NULL", __FUNCTION__, __LINE__);
+		return;
+	}
+	uint64_t now_time = time_helper::get_cached_time() / 1000;
+	data->player_marry_info.statu = MARRY_STATU_SINGLE_NOT_MARRIAGE_HISTORY;
+	data->player_marry_info.my_role = 0;
+	data->player_marry_info.propose_type = 0;
+	data->player_marry_info.propose_success_time = 0;
+	data->player_marry_info.reserve_marry_type = 0;
+	data->player_marry_info.reserve_marry_time = 0;
+	data->player_marry_info.target_id = 0;
+	data->player_marry_info.sex = 0;
+	memset(data->player_marry_info.target_name, 0, MAX_PLAYER_NAME_LEN + 1);
+	if(is_divorce == true)
+	{
+		data->player_marry_info.statu = MARRY_STATU_SINGLE_HAVE_MARRIAGE_HISTORY;
+		data->player_marry_info.time = now_time;
+	}
+
+	return;
+
+}
+
+void player_struct::clean_player_friend_closeness(uint64_t target_id)
+{
+	for (int i = 0; i < MAX_FRIEND_CONTACT_NUM; ++i)
+	{
+		if (data->friend_contacts[i].player_id == 0)
+		{
+			break;
+		}
+
+		if (data->friend_contacts[i].player_id == target_id)
+		{
+			data->friend_contacts[i].closeness = 0;
+			break;
+		}
+	}
+	player_struct *target_player = player_manager::get_player_by_id(target_id);
+	if(target_player != NULL && target_player->is_online())
+	{
+		for (int i = 0; i < MAX_FRIEND_CONTACT_NUM; ++i)
+		{
+			if (target_player->data->friend_contacts[i].player_id == 0)
+			{
+				break;
+			}
+
+			if (target_player->data->friend_contacts[i].player_id == data->player_id)
+			{
+				target_player->data->friend_contacts[i].closeness = 0;
+				break;
+			}
+		}
+	}
+	FRIEND_DUMP_CLOSENESS *resq = (FRIEND_DUMP_CLOSENESS*)conn_node_base::get_send_data();
+	uint32_t data_len = sizeof(FRIEND_DUMP_CLOSENESS);
+	memset(resq, 0, data_len);
+	resq->target_id = target_id;
+
+	EXTERN_DATA extern_data;
+	extern_data.player_id = data->player_id;
+	fast_send_msg_base(&conn_node_gamesrv::connecter, &extern_data, SERVER_PROTO_FRIEND_DUMP_CLOSENESS_REQUEST, data_len, 0);
+
 }

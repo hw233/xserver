@@ -373,9 +373,9 @@ static int handle_get_other_info_answer(EXTERN_DATA *extern_data)
 			ret = ERROR_ID_FRIEND_SEARCH_ID;
 			break;
 		}
+		target->calculate_attribute(false);
 	} while(0);
 
-	target->calculate_attribute(false);
 	answer_get_other_info(extern_data, ret, target, 0);
 
 	if (target)

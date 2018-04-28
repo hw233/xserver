@@ -1560,6 +1560,8 @@ int conn_node_friendsrv::recv_func(evutil_socket_t fd)
 				break;
 			case MSG_ID_FRIEND_ID_OR_NO_EACH_OTHER_REQUEST:
 				handle_friend_is_or_no_each_other_request(); 
+			case SERVER_PROTO_FRIEND_DUMP_CLOSENESS_REQUEST:
+				handle_friend_clean_closeness_request();
 			}
 
 		}
@@ -4165,4 +4167,44 @@ void conn_node_friendsrv::handle_friend_is_or_no_each_other_request()
 	comm_answer__init(&answer);
 	answer.result = ret;
 	fast_send_msg(&connecter, extern_data, MSG_ID_FRIEND_ID_OR_NO_EACH_OTHER_ANSWER, comm_answer__pack, answer);
+}
+
+void conn_node_friendsrv::handle_friend_clean_closeness_request()
+{
+	PROTO_HEAD *head = get_head();
+	EXTERN_DATA *extern_data = get_extern_data(head);
+
+	FRIEND_DUMP_CLOSENESS *res = (FRIEND_DUMP_CLOSENESS*)buf_head();
+	uint64_t target_id = res->target_id;
+	FriendPlayer *player = get_friend_player(extern_data->player_id);
+	if(player == NULL)
+	{
+		LOG_ERR("[%s:%d] clean player friend closeness fail, get player friend redis data fail player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return;
+	}
+	FriendPlayer *target = get_friend_player(target_id);
+	if(player == NULL)
+	{
+		LOG_ERR("[%s:%d] clean player friend closeness fail, get target friend redis data fail player[%lu]", __FUNCTION__, __LINE__, target_id);
+		return;
+	}
+	int target_idx = get_contact_idx(player, target->player_id);
+	if (target_idx < 0)
+	{
+		LOG_ERR("[%s:%d] player[%lu] target not friend, target_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
+		return;
+	}
+
+	int player_idx = get_contact_idx(target, player->player_id);
+	if (player_idx < 0)
+	{
+		LOG_ERR("[%s:%d] player[%lu] not target friend, target_id:%lu", __FUNCTION__, __LINE__, extern_data->player_id, target_id);
+		return;
+	}
+	player->contacts[target_idx].closeness = 0;
+	target->contacts[player_idx].closeness = 0;
+
+	save_friend_player(player);
+	save_friend_player(target);
+
 }

@@ -116,6 +116,11 @@
 	HairColorID 20 : *integer
 	ClotheColorID1 21: *integer
 	ClotheColorID2 22 : *integer
+	BasiceAttribute 23 : *integer 
+	LvAttributeNum 24 : *integer 
+	FiveAttribute 25 : *integer 
+	SeniorAttribute 26 : *integer 
+	BuffAttribute 27 : *integer 
 }
 
 .ActorAttributeTable {
@@ -202,6 +207,7 @@
 	UseDelivery 18 : *integer
 	Recovery 19 : integer
 	Partner 20 : integer
+	ViewSize 21 : integer
 }
 
 .SkillTable {
@@ -1799,6 +1805,7 @@
 	ExpReward 11 : integer 
 	MoneyReward 12 : integer
 	MonsterLevel 13 : *integer 
+	BirthDirection  14 : integer
 }
 
 .DonationTable {
@@ -1931,4 +1938,23 @@
 	ID 1 : integer
 	DungeonID 2 : integer
 	TaskID 3 : integer
+}
+
+.WeddingRing{
+	ID 1 : integer 
+	RingGrade 2 : integer 
+	ItemsID 3 : integer 
+	AttributeType 4 : *integer 
+	AttributeValue 5 : *integer
+}
+
+.WeddingTable{
+	ID 1 : integer 
+	WeddingGrade 2 : integer 
+	RewardItem1 3 : *integer
+	RewardItem2 4 : *integer
+	RewardNum 5 : *integer
+	SceneID 6 : integer 
+	Cost 7 : integer 
+	Time 8 : *integer
 }

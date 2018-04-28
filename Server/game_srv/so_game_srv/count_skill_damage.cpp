@@ -154,7 +154,7 @@ static bool check_can_add_buff(unit_struct *attack_unit, unit_struct *defence_un
 {
 	uint64_t type = buff_manager::get_buff_first_effect_type(buff_id);
 	if (buff_manager::is_move_buff_effect(type) &&
-		(defence_unit->is_in_lock_time() || (attack_unit->get_unit_type() == UNIT_TYPE_PLAYER && attack_unit->get_unit_type() == UNIT_TYPE_PLAYER )))
+		(defence_unit->is_in_lock_time() || (attack_unit->get_unit_type() == UNIT_TYPE_PLAYER && defence_unit->get_unit_type() == UNIT_TYPE_PLAYER )))
 		return false;
 	return true;
 }

@@ -285,10 +285,6 @@ int raid_struct::init_raid(player_struct *player)
 		
 	return (0);
 }
-uint32_t raid_struct::get_area_width()
-{
-	return 20;
-}
 
 void raid_struct::stop_monster_ai()
 {

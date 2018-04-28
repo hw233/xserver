@@ -663,6 +663,36 @@ struct JiuGongBaGuaRewardInfo
 	uint32_t statu; //领取标记 0:不可领, 1:可领 2:已领
 };
 
+//当前正在求婚的数据
+struct CurProposeData
+{
+	uint32_t statu; //0:主动者 1:被动者
+	uint64_t player_id; //对方玩家id
+	uint64_t time; //开始的时间戳
+	uint32_t ring_type; //婚戒档次(根据婚戒来)
+};
+
+//玩家情缘信息数据
+struct PlayerMarryData
+{
+	uint32_t statu; //玩家当前的婚姻状态 0:单身(且无婚史) 1:单身(且有婚史) 2:当前已订婚(未预定婚礼) 3:当前已订婚(且已经预定婚礼) 4:已婚
+	uint32_t my_role; //0:表示我是求婚者 1:是被求婚者
+	uint32_t propose_type; //求婚档次(更婚戒档次一样)
+	uint64_t propose_success_time; //求婚成功的时间点
+
+	uint32_t reserve_marry_type; //所预定的婚礼档次
+	uint64_t reserve_marry_time; //所预定的婚礼时间
+
+	uint64_t target_id; //当前对象id
+	char target_name[MAX_PLAYER_NAME_LEN + 1];    //当前对象名字
+	uint32_t sex; //对象性别
+
+	uint64_t time; //上次离婚时间戳
+
+	CurProposeData cur_propose_info; //当前正在求婚的信息
+	bool cur_cancel_propose; //当前是否在等待对方确认取消订婚
+};
+
 enum
 {
 	Strong_State_Achieving = 0, //奖励不可领
@@ -852,6 +882,7 @@ struct player_data
 	uint32_t  partner_today_junior_recurit_cd;  //今日JUNIOR伙伴招募cd
 	uint32_t  partner_today_senior_recurit_count;  //今日senior伙伴招募次数
 	uint32_t  partner_today_senior_recurit_cd;  //今日senior伙伴招募cd
+	uint64_t  partner_add_angry_cd;  //增加怒气值cd
 
 	LeaveRaidPosition leaveraid; //离开副本
 	bool noviceraid_flag;	//新手副本是否完成的标记
@@ -925,6 +956,9 @@ struct player_data
 
 	//九宫八卦奖励信息
 	JiuGongBaGuaRewardInfo jiu_gong_ba_gua_reward[MAX_JIU_GONG_BA_GUA_REWARD_NUM];
+
+	//玩家情缘信息
+	PlayerMarryData player_marry_info;
 };
 
 struct ai_player_data
@@ -1232,7 +1266,7 @@ public:
 
 	uint32_t set_item_cd(ItemsConfigTable *config);	
 	int check_item_cd(ItemsConfigTable *config);
-	bool check_can_add_item(uint32_t id, uint32_t num, std::map<uint32_t, uint32_t> *out_add_list); //检查背包空间
+	int check_can_add_item(uint32_t id, uint32_t num, std::map<uint32_t, uint32_t> *out_add_list); //检查背包空间
 	bool check_can_add_item_list(std::map<uint32_t, uint32_t>& item_list);
 	int add_item(uint32_t id, uint32_t num, uint32_t statis_id, bool isNty = true); //增加道具
 	bool add_item_list(std::map<uint32_t, uint32_t>& item_list, uint32_t statis_id, bool isNty = true); //增加一堆道具，如果背包不足，会失败
@@ -1543,6 +1577,9 @@ public:
 	uint32_t get_friend_num(void);
 	uint32_t get_friend_close_num(uint32_t close_lv);
 	bool is_friend_enemy(uint64_t target_id);
+	bool is_friend_contacts(uint64_t target_id);
+	uint32_t get_friend_closeness(uint64_t target_id);
+	void clean_player_friend_closeness(uint64_t target_id);
 
 	bool get_rank_ranking(uint32_t rank_type, uint32_t rank_lv, uint32_t rank_score);
 
@@ -1650,6 +1687,18 @@ public:
 	void jiu_gong_ba_gua_reward_info_notify();
 	//九宫八卦任务完成处理
 	void finish_jiu_gong_bagua_task(uint32_t task_id);
+	//求婚相关检查
+	int player_propose_check_up(uint64_t& player_id, uint32_t &ring_type);
+	//当前是否是求婚状态
+	bool is_on_propose();
+	//清除订婚状态信息
+	void clean_propose_state_and_info();
+	//求婚成功或者失败处理
+	void player_propose_end_deal_with(bool is_success);
+	//玩家当前情缘数据通知
+	void player_cur_marry_info_notify();
+	//清除玩家所有婚姻信息(is_divorce:是否是离婚清除)
+	void clean_player_all_marry_info(bool is_divorce);
 
 	uint64_t last_change_area_time;
 	sight_space_struct *sight_space;

@@ -154,6 +154,14 @@ message EquipData
 	required uint32 starExp = 4; //升星等级
 	repeated EquipEnchantData enchant = 5; //附魔
 	repeated int32 inlay = 6; //镶嵌（-1：未开孔，0：未镶嵌，>0：宝石id）
+	optional ProposeRingInfo ring_info = 7; //求婚戒指信息(装备戒指部位需要额外增加婚戒属性,并且雕刻对象名字)
+}
+
+//求婚戒指信息相关
+message ProposeRingInfo
+{
+	required uint32 ring_id = 1; //婚戒表id(WeddingRing.lua)
+	required string target_name = 2; //对象名字
 }
 
 //邮件信息

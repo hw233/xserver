@@ -298,6 +298,18 @@ local NoticeTable = {
 		['NoticeChannel'] = {8},
 		['NoticeTxt'] = '%s%s一复活，勇士们快去围剿吧！',
 		['Effect'] = 1
+		},
+	[330510020] = {
+		['ID'] = 330510020,
+		['Priority'] = 1,
+		['Way'] = 1,
+		['NoticeDay'] = {1,2,3,4,5,6,0},
+		['NoticeTime'] = {0},
+		['NoticeInterval'] = 0,
+		['NoticeEnd'] = 0,
+		['NoticeChannel'] = {8},
+		['NoticeTxt'] = '恭喜%s向%s求婚成功',
+		['Effect'] = 1
 		}
 	}
 return NoticeTable

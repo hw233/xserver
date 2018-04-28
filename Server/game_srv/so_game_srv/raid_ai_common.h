@@ -72,6 +72,8 @@ enum
 	SCRIPT_EVENT_MOVE_TO_AND_COLLECT = 69, //走到指定坐标范围探查读条
 	SCRIPT_EVENT_LOCK_CAMERA = 70, //调整玩家当前视角并锁定  备注主摄像机视角
 	SCRIPT_EVENT_UNLOCK_CAMERA = 71, //解除玩家当前视角
+	SCRIPT_EVENT_DRAW_CAMERA = 72, //拉伸玩家当前视角
+	SCRIPT_EVENT_UNDRAW_CAMERA = 73, //解除拉伸玩家当前视角
 };
 
 void do_script_raid_init_cond(raid_struct *raid, struct raid_script_data *script_data);

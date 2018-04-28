@@ -19,7 +19,7 @@ local TaskEventTable = {
 		['PointY'] = 0,	--场景y坐标
 		['PointZ'] = 0,	--场景y坐标
 		['Orientation'] = 0,	--NPC朝向
-		['Anglecamera'] = '0'	--主摄像机视角
+		['Anglecamera'] = {0}	--主摄像机视角
 		},
 	[240300002] = {
 		['ID'] = 240300002,
@@ -41,7 +41,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300003] = {
 		['ID'] = 240300003,
@@ -63,7 +63,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300004] = {
 		['ID'] = 240300004,
@@ -85,7 +85,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300006] = {
 		['ID'] = 240300006,
@@ -107,7 +107,7 @@ local TaskEventTable = {
 		['PointY'] = 17.78,
 		['PointZ'] = 74.89,
 		['Orientation'] = 88.92,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300007] = {
 		['ID'] = 240300007,
@@ -129,7 +129,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300008] = {
 		['ID'] = 240300008,
@@ -151,7 +151,7 @@ local TaskEventTable = {
 		['PointY'] = 17.809999999999999,
 		['PointZ'] = 68.58,
 		['Orientation'] = -96.98,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300009] = {
 		['ID'] = 240300009,
@@ -173,7 +173,7 @@ local TaskEventTable = {
 		['PointY'] = 17.809999999999999,
 		['PointZ'] = 66.56,
 		['Orientation'] = -85.25,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300010] = {
 		['ID'] = 240300010,
@@ -195,7 +195,7 @@ local TaskEventTable = {
 		['PointY'] = 17.809999999999999,
 		['PointZ'] = 63.61,
 		['Orientation'] = -82.38,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300011] = {
 		['ID'] = 240300011,
@@ -217,7 +217,7 @@ local TaskEventTable = {
 		['PointY'] = 17.809999999999999,
 		['PointZ'] = 66.239999999999995,
 		['Orientation'] = -87.14,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300012] = {
 		['ID'] = 240300012,
@@ -239,7 +239,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300013] = {
 		['ID'] = 240300013,
@@ -261,7 +261,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300014] = {
 		['ID'] = 240300014,
@@ -283,7 +283,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300015] = {
 		['ID'] = 240300015,
@@ -305,7 +305,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300016] = {
 		['ID'] = 240300016,
@@ -327,7 +327,7 @@ local TaskEventTable = {
 		['PointY'] = 19.350000000000001,
 		['PointZ'] = 401.16,
 		['Orientation'] = 31.35,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300017] = {
 		['ID'] = 240300017,
@@ -349,7 +349,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300018] = {
 		['ID'] = 240300018,
@@ -371,7 +371,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300019] = {
 		['ID'] = 240300019,
@@ -393,7 +393,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300020] = {
 		['ID'] = 240300020,
@@ -415,7 +415,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300021] = {
 		['ID'] = 240300021,
@@ -437,7 +437,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300022] = {
 		['ID'] = 240300022,
@@ -459,7 +459,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300023] = {
 		['ID'] = 240300023,
@@ -481,7 +481,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300024] = {
 		['ID'] = 240300024,
@@ -503,7 +503,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300025] = {
 		['ID'] = 240300025,
@@ -525,7 +525,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300026] = {
 		['ID'] = 240300026,
@@ -547,7 +547,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300027] = {
 		['ID'] = 240300027,
@@ -569,7 +569,7 @@ local TaskEventTable = {
 		['PointY'] = 19.98,
 		['PointZ'] = 221.93,
 		['Orientation'] = 58.36,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300028] = {
 		['ID'] = 240300028,
@@ -591,7 +591,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300029] = {
 		['ID'] = 240300029,
@@ -613,7 +613,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300030] = {
 		['ID'] = 240300030,
@@ -635,7 +635,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300031] = {
 		['ID'] = 240300031,
@@ -657,7 +657,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300032] = {
 		['ID'] = 240300032,
@@ -679,7 +679,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300033] = {
 		['ID'] = 240300033,
@@ -701,7 +701,7 @@ local TaskEventTable = {
 		['PointY'] = 20.38,
 		['PointZ'] = 324.13,
 		['Orientation'] = 168,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300034] = {
 		['ID'] = 240300034,
@@ -723,7 +723,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300035] = {
 		['ID'] = 240300035,
@@ -745,7 +745,7 @@ local TaskEventTable = {
 		['PointY'] = 14.754,
 		['PointZ'] = 146.07,
 		['Orientation'] = 111.53,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300036] = {
 		['ID'] = 240300036,
@@ -767,7 +767,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300037] = {
 		['ID'] = 240300037,
@@ -789,7 +789,7 @@ local TaskEventTable = {
 		['PointY'] = 19.5,
 		['PointZ'] = 399.7,
 		['Orientation'] = 13,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300038] = {
 		['ID'] = 240300038,
@@ -811,7 +811,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300039] = {
 		['ID'] = 240300039,
@@ -833,7 +833,7 @@ local TaskEventTable = {
 		['PointY'] = 18,
 		['PointZ'] = 344,
 		['Orientation'] = 114,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300040] = {
 		['ID'] = 240300040,
@@ -855,7 +855,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300041] = {
 		['ID'] = 240300041,
@@ -877,7 +877,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300042] = {
 		['ID'] = 240300042,
@@ -899,7 +899,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300043] = {
 		['ID'] = 240300043,
@@ -921,7 +921,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300044] = {
 		['ID'] = 240300044,
@@ -943,7 +943,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300045] = {
 		['ID'] = 240300045,
@@ -965,7 +965,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300046] = {
 		['ID'] = 240300046,
@@ -987,7 +987,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300047] = {
 		['ID'] = 240300047,
@@ -1009,7 +1009,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300048] = {
 		['ID'] = 240300048,
@@ -1031,7 +1031,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300049] = {
 		['ID'] = 240300049,
@@ -1053,7 +1053,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300050] = {
 		['ID'] = 240300050,
@@ -1075,7 +1075,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300051] = {
 		['ID'] = 240300051,
@@ -1097,7 +1097,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300052] = {
 		['ID'] = 240300052,
@@ -1119,7 +1119,7 @@ local TaskEventTable = {
 		['PointY'] = 17.8,
 		['PointZ'] = 71.2,
 		['Orientation'] = -157,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300053] = {
 		['ID'] = 240300053,
@@ -1141,7 +1141,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300054] = {
 		['ID'] = 240300054,
@@ -1163,7 +1163,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300055] = {
 		['ID'] = 240300055,
@@ -1185,7 +1185,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300057] = {
 		['ID'] = 240300057,
@@ -1207,7 +1207,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300058] = {
 		['ID'] = 240300058,
@@ -1229,7 +1229,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300059] = {
 		['ID'] = 240300059,
@@ -1251,7 +1251,7 @@ local TaskEventTable = {
 		['PointY'] = 20.38,
 		['PointZ'] = 324.13,
 		['Orientation'] = 168,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300060] = {
 		['ID'] = 240300060,
@@ -1273,7 +1273,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300061] = {
 		['ID'] = 240300061,
@@ -1295,7 +1295,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300062] = {
 		['ID'] = 240300062,
@@ -1317,7 +1317,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300063] = {
 		['ID'] = 240300063,
@@ -1339,7 +1339,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300064] = {
 		['ID'] = 240300064,
@@ -1361,7 +1361,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300065] = {
 		['ID'] = 240300065,
@@ -1383,7 +1383,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300066] = {
 		['ID'] = 240300066,
@@ -1405,7 +1405,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300067] = {
 		['ID'] = 240300067,
@@ -1427,7 +1427,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300068] = {
 		['ID'] = 240300068,
@@ -1449,7 +1449,7 @@ local TaskEventTable = {
 		['PointY'] = 17.809999999999999,
 		['PointZ'] = 68.58,
 		['Orientation'] = -96.98,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300069] = {
 		['ID'] = 240300069,
@@ -1471,7 +1471,7 @@ local TaskEventTable = {
 		['PointY'] = 17.809999999999999,
 		['PointZ'] = 66.56,
 		['Orientation'] = -85.25,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300070] = {
 		['ID'] = 240300070,
@@ -1493,7 +1493,7 @@ local TaskEventTable = {
 		['PointY'] = 17.809999999999999,
 		['PointZ'] = 63.61,
 		['Orientation'] = -82.38,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300071] = {
 		['ID'] = 240300071,
@@ -1515,7 +1515,7 @@ local TaskEventTable = {
 		['PointY'] = 17.809999999999999,
 		['PointZ'] = 66.239999999999995,
 		['Orientation'] = -87.14,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300072] = {
 		['ID'] = 240300072,
@@ -1537,7 +1537,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300073] = {
 		['ID'] = 240300073,
@@ -1559,7 +1559,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300074] = {
 		['ID'] = 240300074,
@@ -1581,7 +1581,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300075] = {
 		['ID'] = 240300075,
@@ -1603,7 +1603,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300076] = {
 		['ID'] = 240300076,
@@ -1625,7 +1625,7 @@ local TaskEventTable = {
 		['PointY'] = 21.130269999999999,
 		['PointZ'] = 235.8,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300077] = {
 		['ID'] = 240300077,
@@ -1647,7 +1647,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300078] = {
 		['ID'] = 240300078,
@@ -1669,7 +1669,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300079] = {
 		['ID'] = 240300079,
@@ -1691,7 +1691,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300080] = {
 		['ID'] = 240300080,
@@ -1713,7 +1713,7 @@ local TaskEventTable = {
 		['PointY'] = 18.8,
 		['PointZ'] = 164.28,
 		['Orientation'] = 177,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300081] = {
 		['ID'] = 240300081,
@@ -1735,7 +1735,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300082] = {
 		['ID'] = 240300082,
@@ -1757,7 +1757,7 @@ local TaskEventTable = {
 		['PointY'] = 19.18,
 		['PointZ'] = 159.94999999999999,
 		['Orientation'] = 98.1,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300083] = {
 		['ID'] = 240300083,
@@ -1779,7 +1779,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300084] = {
 		['ID'] = 240300084,
@@ -1801,7 +1801,7 @@ local TaskEventTable = {
 		['PointY'] = 20,
 		['PointZ'] = 131.65,
 		['Orientation'] = 118,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300085] = {
 		['ID'] = 240300085,
@@ -1823,7 +1823,7 @@ local TaskEventTable = {
 		['PointY'] = 57.322310000000002,
 		['PointZ'] = 32.19,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300086] = {
 		['ID'] = 240300086,
@@ -1845,7 +1845,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300087] = {
 		['ID'] = 240300087,
@@ -1867,7 +1867,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300088] = {
 		['ID'] = 240300088,
@@ -1889,7 +1889,7 @@ local TaskEventTable = {
 		['PointY'] = 19.5,
 		['PointZ'] = 147.84,
 		['Orientation'] = -1.49,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300089] = {
 		['ID'] = 240300089,
@@ -1911,7 +1911,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300090] = {
 		['ID'] = 240300090,
@@ -1933,7 +1933,7 @@ local TaskEventTable = {
 		['PointY'] = 19.579999999999998,
 		['PointZ'] = 145.21,
 		['Orientation'] = -1.49,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300091] = {
 		['ID'] = 240300091,
@@ -1955,7 +1955,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300092] = {
 		['ID'] = 240300092,
@@ -1977,7 +1977,7 @@ local TaskEventTable = {
 		['PointY'] = 19.5,
 		['PointZ'] = 147.84,
 		['Orientation'] = -1.49,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300093] = {
 		['ID'] = 240300093,
@@ -1999,7 +1999,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300094] = {
 		['ID'] = 240300094,
@@ -2021,7 +2021,7 @@ local TaskEventTable = {
 		['PointY'] = 19.579999999999998,
 		['PointZ'] = 145.21,
 		['Orientation'] = -1.49,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300095] = {
 		['ID'] = 240300095,
@@ -2043,7 +2043,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300096] = {
 		['ID'] = 240300096,
@@ -2065,7 +2065,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300097] = {
 		['ID'] = 240300097,
@@ -2087,7 +2087,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300098] = {
 		['ID'] = 240300098,
@@ -2109,7 +2109,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300099] = {
 		['ID'] = 240300099,
@@ -2131,7 +2131,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300100] = {
 		['ID'] = 240300100,
@@ -2153,7 +2153,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300101] = {
 		['ID'] = 240300101,
@@ -2175,7 +2175,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300102] = {
 		['ID'] = 240300102,
@@ -2197,7 +2197,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300107] = {
 		['ID'] = 240300107,
@@ -2219,7 +2219,7 @@ local TaskEventTable = {
 		['PointY'] = 23.36,
 		['PointZ'] = 74.12,
 		['Orientation'] = 22.84,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300108] = {
 		['ID'] = 240300108,
@@ -2241,7 +2241,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300109] = {
 		['ID'] = 240300109,
@@ -2263,7 +2263,7 @@ local TaskEventTable = {
 		['PointY'] = 23.36,
 		['PointZ'] = 74.12,
 		['Orientation'] = 22.84,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300110] = {
 		['ID'] = 240300110,
@@ -2285,7 +2285,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300111] = {
 		['ID'] = 240300111,
@@ -2307,7 +2307,7 @@ local TaskEventTable = {
 		['PointY'] = 23.36,
 		['PointZ'] = 74.12,
 		['Orientation'] = 22.84,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300112] = {
 		['ID'] = 240300112,
@@ -2329,7 +2329,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300113] = {
 		['ID'] = 240300113,
@@ -2351,7 +2351,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300114] = {
 		['ID'] = 240300114,
@@ -2373,7 +2373,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300115] = {
 		['ID'] = 240300115,
@@ -2395,7 +2395,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300116] = {
 		['ID'] = 240300116,
@@ -2417,7 +2417,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300117] = {
 		['ID'] = 240300117,
@@ -2439,7 +2439,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300118] = {
 		['ID'] = 240300118,
@@ -2461,7 +2461,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300119] = {
 		['ID'] = 240300119,
@@ -2483,7 +2483,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300120] = {
 		['ID'] = 240300120,
@@ -2505,7 +2505,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300121] = {
 		['ID'] = 240300121,
@@ -2527,7 +2527,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300122] = {
 		['ID'] = 240300122,
@@ -2549,7 +2549,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300123] = {
 		['ID'] = 240300123,
@@ -2571,7 +2571,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300124] = {
 		['ID'] = 240300124,
@@ -2593,7 +2593,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300125] = {
 		['ID'] = 240300125,
@@ -2615,7 +2615,7 @@ local TaskEventTable = {
 		['PointY'] = 25.02,
 		['PointZ'] = 204.66,
 		['Orientation'] = -139.99,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300126] = {
 		['ID'] = 240300126,
@@ -2637,7 +2637,7 @@ local TaskEventTable = {
 		['PointY'] = 24.95,
 		['PointZ'] = 208.05,
 		['Orientation'] = -139.99,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300127] = {
 		['ID'] = 240300127,
@@ -2659,7 +2659,7 @@ local TaskEventTable = {
 		['PointY'] = 25,
 		['PointZ'] = 204.65,
 		['Orientation'] = -140,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300128] = {
 		['ID'] = 240300128,
@@ -2681,7 +2681,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300129] = {
 		['ID'] = 240300129,
@@ -2703,7 +2703,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300130] = {
 		['ID'] = 240300130,
@@ -2725,7 +2725,7 @@ local TaskEventTable = {
 		['PointY'] = 8.6999999999999993,
 		['PointZ'] = 82.6,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300131] = {
 		['ID'] = 240300131,
@@ -2747,7 +2747,7 @@ local TaskEventTable = {
 		['PointY'] = 8.6,
 		['PointZ'] = 87,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300132] = {
 		['ID'] = 240300132,
@@ -2769,7 +2769,7 @@ local TaskEventTable = {
 		['PointY'] = 8.5,
 		['PointZ'] = 86,
 		['Orientation'] = -100.1918,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300133] = {
 		['ID'] = 240300133,
@@ -2791,7 +2791,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300134] = {
 		['ID'] = 240300134,
@@ -2813,7 +2813,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300135] = {
 		['ID'] = 240300135,
@@ -2835,7 +2835,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300136] = {
 		['ID'] = 240300136,
@@ -2857,7 +2857,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300141] = {
 		['ID'] = 240300141,
@@ -2879,7 +2879,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300142] = {
 		['ID'] = 240300142,
@@ -2901,7 +2901,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300143] = {
 		['ID'] = 240300143,
@@ -2923,7 +2923,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300147] = {
 		['ID'] = 240300147,
@@ -2945,7 +2945,7 @@ local TaskEventTable = {
 		['PointY'] = 16.690000000000001,
 		['PointZ'] = 239.24,
 		['Orientation'] = 122.74,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300148] = {
 		['ID'] = 240300148,
@@ -2967,7 +2967,7 @@ local TaskEventTable = {
 		['PointY'] = 16.690000000000001,
 		['PointZ'] = 237.51,
 		['Orientation'] = 122.74,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300149] = {
 		['ID'] = 240300149,
@@ -2989,7 +2989,7 @@ local TaskEventTable = {
 		['PointY'] = 16.690000000000001,
 		['PointZ'] = 239.24,
 		['Orientation'] = 122.74,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300150] = {
 		['ID'] = 240300150,
@@ -3011,7 +3011,7 @@ local TaskEventTable = {
 		['PointY'] = 16.690000000000001,
 		['PointZ'] = 237.51,
 		['Orientation'] = 122.74,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300151] = {
 		['ID'] = 240300151,
@@ -3033,7 +3033,7 @@ local TaskEventTable = {
 		['PointY'] = 20,
 		['PointZ'] = 248.28,
 		['Orientation'] = -175.56,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300152] = {
 		['ID'] = 240300152,
@@ -3055,7 +3055,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300153] = {
 		['ID'] = 240300153,
@@ -3077,7 +3077,7 @@ local TaskEventTable = {
 		['PointY'] = 21.33586,
 		['PointZ'] = 247.4076,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300154] = {
 		['ID'] = 240300154,
@@ -3099,7 +3099,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300155] = {
 		['ID'] = 240300155,
@@ -3121,7 +3121,7 @@ local TaskEventTable = {
 		['PointY'] = 20.37,
 		['PointZ'] = 206.5,
 		['Orientation'] = 58.99,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300156] = {
 		['ID'] = 240300156,
@@ -3143,7 +3143,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300157] = {
 		['ID'] = 240300157,
@@ -3165,7 +3165,7 @@ local TaskEventTable = {
 		['PointY'] = 19.3,
 		['PointZ'] = 281,
 		['Orientation'] = -118,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300158] = {
 		['ID'] = 240300158,
@@ -3187,7 +3187,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300159] = {
 		['ID'] = 240300159,
@@ -3209,7 +3209,7 @@ local TaskEventTable = {
 		['PointY'] = 24.88,
 		['PointZ'] = 26.85,
 		['Orientation'] = 19.63,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300160] = {
 		['ID'] = 240300160,
@@ -3231,7 +3231,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300161] = {
 		['ID'] = 240300161,
@@ -3253,7 +3253,7 @@ local TaskEventTable = {
 		['PointY'] = 24.44,
 		['PointZ'] = 26.85,
 		['Orientation'] = -13.19,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300162] = {
 		['ID'] = 240300162,
@@ -3275,7 +3275,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300163] = {
 		['ID'] = 240300163,
@@ -3297,7 +3297,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300164] = {
 		['ID'] = 240300164,
@@ -3319,7 +3319,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300165] = {
 		['ID'] = 240300165,
@@ -3341,7 +3341,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300166] = {
 		['ID'] = 240300166,
@@ -3363,7 +3363,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300167] = {
 		['ID'] = 240300167,
@@ -3385,7 +3385,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300168] = {
 		['ID'] = 240300168,
@@ -3407,7 +3407,7 @@ local TaskEventTable = {
 		['PointY'] = 20,
 		['PointZ'] = 233.8,
 		['Orientation'] = 73,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300169] = {
 		['ID'] = 240300169,
@@ -3429,7 +3429,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300170] = {
 		['ID'] = 240300170,
@@ -3451,7 +3451,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300171] = {
 		['ID'] = 240300171,
@@ -3473,7 +3473,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300172] = {
 		['ID'] = 240300172,
@@ -3495,7 +3495,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300173] = {
 		['ID'] = 240300173,
@@ -3517,7 +3517,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300174] = {
 		['ID'] = 240300174,
@@ -3539,7 +3539,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300175] = {
 		['ID'] = 240300175,
@@ -3561,7 +3561,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300176] = {
 		['ID'] = 240300176,
@@ -3583,7 +3583,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300177] = {
 		['ID'] = 240300177,
@@ -3605,7 +3605,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300178] = {
 		['ID'] = 240300178,
@@ -3627,7 +3627,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300179] = {
 		['ID'] = 240300179,
@@ -3649,7 +3649,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300180] = {
 		['ID'] = 240300180,
@@ -3671,7 +3671,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300181] = {
 		['ID'] = 240300181,
@@ -3693,7 +3693,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300182] = {
 		['ID'] = 240300182,
@@ -3715,7 +3715,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300183] = {
 		['ID'] = 240300183,
@@ -3737,7 +3737,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300184] = {
 		['ID'] = 240300184,
@@ -3759,7 +3759,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300185] = {
 		['ID'] = 240300185,
@@ -3781,7 +3781,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300186] = {
 		['ID'] = 240300186,
@@ -3803,7 +3803,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300187] = {
 		['ID'] = 240300187,
@@ -3825,7 +3825,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300188] = {
 		['ID'] = 240300188,
@@ -3847,7 +3847,7 @@ local TaskEventTable = {
 		['PointY'] = 57.31,
 		['PointZ'] = 37.46,
 		['Orientation'] = 180,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300189] = {
 		['ID'] = 240300189,
@@ -3869,7 +3869,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300190] = {
 		['ID'] = 240300190,
@@ -3891,7 +3891,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300191] = {
 		['ID'] = 240300191,
@@ -3913,7 +3913,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300192] = {
 		['ID'] = 240300192,
@@ -3935,7 +3935,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300193] = {
 		['ID'] = 240300193,
@@ -3957,7 +3957,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300194] = {
 		['ID'] = 240300194,
@@ -3979,7 +3979,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300195] = {
 		['ID'] = 240300195,
@@ -4001,7 +4001,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300196] = {
 		['ID'] = 240300196,
@@ -4023,7 +4023,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300197] = {
 		['ID'] = 240300197,
@@ -4045,7 +4045,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300198] = {
 		['ID'] = 240300198,
@@ -4067,7 +4067,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300199] = {
 		['ID'] = 240300199,
@@ -4089,7 +4089,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300200] = {
 		['ID'] = 240300200,
@@ -4111,7 +4111,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300201] = {
 		['ID'] = 240300201,
@@ -4133,7 +4133,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300202] = {
 		['ID'] = 240300202,
@@ -4155,7 +4155,7 @@ local TaskEventTable = {
 		['PointY'] = 57.322310000000002,
 		['PointZ'] = 32.19,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300203] = {
 		['ID'] = 240300203,
@@ -4177,7 +4177,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300204] = {
 		['ID'] = 240300204,
@@ -4199,7 +4199,7 @@ local TaskEventTable = {
 		['PointY'] = 19.16,
 		['PointZ'] = 263.47000000000003,
 		['Orientation'] = 89.25,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300205] = {
 		['ID'] = 240300205,
@@ -4221,7 +4221,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300206] = {
 		['ID'] = 240300206,
@@ -4243,7 +4243,7 @@ local TaskEventTable = {
 		['PointY'] = 19.16,
 		['PointZ'] = 259.95,
 		['Orientation'] = 90.45,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300207] = {
 		['ID'] = 240300207,
@@ -4265,7 +4265,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300214] = {
 		['ID'] = 240300214,
@@ -4287,7 +4287,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 139,
 		['Orientation'] = -7.1,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300215] = {
 		['ID'] = 240300215,
@@ -4309,7 +4309,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 141,
 		['Orientation'] = -72,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300216] = {
 		['ID'] = 240300216,
@@ -4331,7 +4331,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 142,
 		['Orientation'] = 59.2,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300217] = {
 		['ID'] = 240300217,
@@ -4353,7 +4353,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 139,
 		['Orientation'] = -7.1,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300218] = {
 		['ID'] = 240300218,
@@ -4375,7 +4375,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 141,
 		['Orientation'] = -72,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300219] = {
 		['ID'] = 240300219,
@@ -4397,7 +4397,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 142,
 		['Orientation'] = 59.2,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300220] = {
 		['ID'] = 240300220,
@@ -4419,7 +4419,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300221] = {
 		['ID'] = 240300221,
@@ -4441,7 +4441,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300222] = {
 		['ID'] = 240300222,
@@ -4463,7 +4463,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300223] = {
 		['ID'] = 240300223,
@@ -4485,7 +4485,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300224] = {
 		['ID'] = 240300224,
@@ -4507,7 +4507,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300225] = {
 		['ID'] = 240300225,
@@ -4529,7 +4529,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300226] = {
 		['ID'] = 240300226,
@@ -4551,7 +4551,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300227] = {
 		['ID'] = 240300227,
@@ -4573,7 +4573,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300228] = {
 		['ID'] = 240300228,
@@ -4595,7 +4595,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300229] = {
 		['ID'] = 240300229,
@@ -4617,7 +4617,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300230] = {
 		['ID'] = 240300230,
@@ -4639,7 +4639,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300231] = {
 		['ID'] = 240300231,
@@ -4661,7 +4661,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300232] = {
 		['ID'] = 240300232,
@@ -4683,7 +4683,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300233] = {
 		['ID'] = 240300233,
@@ -4705,7 +4705,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300234] = {
 		['ID'] = 240300234,
@@ -4727,7 +4727,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300235] = {
 		['ID'] = 240300235,
@@ -4749,7 +4749,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300236] = {
 		['ID'] = 240300236,
@@ -4771,7 +4771,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300239] = {
 		['ID'] = 240300239,
@@ -4793,7 +4793,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300240] = {
 		['ID'] = 240300240,
@@ -4815,7 +4815,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300241] = {
 		['ID'] = 240300241,
@@ -4837,7 +4837,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300242] = {
 		['ID'] = 240300242,
@@ -4859,7 +4859,7 @@ local TaskEventTable = {
 		['PointY'] = 21.77,
 		['PointZ'] = 211.36,
 		['Orientation'] = 80,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300243] = {
 		['ID'] = 240300243,
@@ -4881,7 +4881,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300244] = {
 		['ID'] = 240300244,
@@ -4903,7 +4903,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300245] = {
 		['ID'] = 240300245,
@@ -4925,7 +4925,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300247] = {
 		['ID'] = 240300247,
@@ -4947,7 +4947,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300248] = {
 		['ID'] = 240300248,
@@ -4969,7 +4969,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300249] = {
 		['ID'] = 240300249,
@@ -4991,7 +4991,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300250] = {
 		['ID'] = 240300250,
@@ -5013,7 +5013,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300251] = {
 		['ID'] = 240300251,
@@ -5035,7 +5035,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300252] = {
 		['ID'] = 240300252,
@@ -5057,7 +5057,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300253] = {
 		['ID'] = 240300253,
@@ -5079,7 +5079,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300254] = {
 		['ID'] = 240300254,
@@ -5101,7 +5101,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300255] = {
 		['ID'] = 240300255,
@@ -5123,7 +5123,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300256] = {
 		['ID'] = 240300256,
@@ -5145,7 +5145,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300257] = {
 		['ID'] = 240300257,
@@ -5167,7 +5167,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300258] = {
 		['ID'] = 240300258,
@@ -5189,7 +5189,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300259] = {
 		['ID'] = 240300259,
@@ -5211,7 +5211,7 @@ local TaskEventTable = {
 		['PointY'] = 22.9,
 		['PointZ'] = 53.53,
 		['Orientation'] = -33.44,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300260] = {
 		['ID'] = 240300260,
@@ -5233,7 +5233,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300261] = {
 		['ID'] = 240300261,
@@ -5255,7 +5255,7 @@ local TaskEventTable = {
 		['PointY'] = 22.99,
 		['PointZ'] = 55.21,
 		['Orientation'] = -45.91,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300262] = {
 		['ID'] = 240300262,
@@ -5277,7 +5277,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300263] = {
 		['ID'] = 240300263,
@@ -5299,7 +5299,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300264] = {
 		['ID'] = 240300264,
@@ -5321,7 +5321,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300265] = {
 		['ID'] = 240300265,
@@ -5343,7 +5343,7 @@ local TaskEventTable = {
 		['PointY'] = 18.36,
 		['PointZ'] = 214.27,
 		['Orientation'] = 98,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300266] = {
 		['ID'] = 240300266,
@@ -5365,7 +5365,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300267] = {
 		['ID'] = 240300267,
@@ -5387,7 +5387,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300268] = {
 		['ID'] = 240300268,
@@ -5409,7 +5409,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300269] = {
 		['ID'] = 240300269,
@@ -5431,7 +5431,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300270] = {
 		['ID'] = 240300270,
@@ -5453,7 +5453,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300271] = {
 		['ID'] = 240300271,
@@ -5475,7 +5475,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300272] = {
 		['ID'] = 240300272,
@@ -5497,7 +5497,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300273] = {
 		['ID'] = 240300273,
@@ -5519,7 +5519,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300274] = {
 		['ID'] = 240300274,
@@ -5541,7 +5541,7 @@ local TaskEventTable = {
 		['PointY'] = 23,
 		['PointZ'] = 253.15,
 		['Orientation'] = -141.72999999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300275] = {
 		['ID'] = 240300275,
@@ -5563,7 +5563,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300276] = {
 		['ID'] = 240300276,
@@ -5585,7 +5585,7 @@ local TaskEventTable = {
 		['PointY'] = 18.649999999999999,
 		['PointZ'] = 200,
 		['Orientation'] = -55,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300277] = {
 		['ID'] = 240300277,
@@ -5607,7 +5607,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300278] = {
 		['ID'] = 240300278,
@@ -5629,7 +5629,7 @@ local TaskEventTable = {
 		['PointY'] = 18.579999999999998,
 		['PointZ'] = 204.43,
 		['Orientation'] = -53,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300279] = {
 		['ID'] = 240300279,
@@ -5651,7 +5651,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300280] = {
 		['ID'] = 240300280,
@@ -5673,7 +5673,7 @@ local TaskEventTable = {
 		['PointY'] = 18.510000000000002,
 		['PointZ'] = 195.57,
 		['Orientation'] = -23,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300281] = {
 		['ID'] = 240300281,
@@ -5695,7 +5695,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300282] = {
 		['ID'] = 240300282,
@@ -5717,7 +5717,7 @@ local TaskEventTable = {
 		['PointY'] = 17.88,
 		['PointZ'] = 199,
 		['Orientation'] = 112,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300283] = {
 		['ID'] = 240300283,
@@ -5739,7 +5739,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300284] = {
 		['ID'] = 240300284,
@@ -5761,7 +5761,7 @@ local TaskEventTable = {
 		['PointY'] = 17.96,
 		['PointZ'] = 201.9,
 		['Orientation'] = 117,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300285] = {
 		['ID'] = 240300285,
@@ -5783,7 +5783,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300286] = {
 		['ID'] = 240300286,
@@ -5805,7 +5805,7 @@ local TaskEventTable = {
 		['PointY'] = 17.84,
 		['PointZ'] = 205.7,
 		['Orientation'] = 116.94,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300287] = {
 		['ID'] = 240300287,
@@ -5827,7 +5827,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300288] = {
 		['ID'] = 240300288,
@@ -5849,7 +5849,7 @@ local TaskEventTable = {
 		['PointY'] = 47.96,
 		['PointZ'] = 333.3,
 		['Orientation'] = -36.6,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300289] = {
 		['ID'] = 240300289,
@@ -5866,12 +5866,12 @@ local TaskEventTable = {
 		['EventDialog2'] = '0',
 		['ChangeTarget2'] = 0,
 		['Num2'] = 0,
-		['SceneId'] = 155000008,
+		['SceneId'] = 0,
 		['PointX'] = 0,
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300290] = {
 		['ID'] = 240300290,
@@ -5893,7 +5893,7 @@ local TaskEventTable = {
 		['PointY'] = 47,
 		['PointZ'] = 347.99,
 		['Orientation'] = 54.25,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300291] = {
 		['ID'] = 240300291,
@@ -5910,12 +5910,12 @@ local TaskEventTable = {
 		['EventDialog2'] = '0',
 		['ChangeTarget2'] = 0,
 		['Num2'] = 0,
-		['SceneId'] = 155000008,
+		['SceneId'] = 0,
 		['PointX'] = 0,
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300292] = {
 		['ID'] = 240300292,
@@ -5937,7 +5937,7 @@ local TaskEventTable = {
 		['PointY'] = 47,
 		['PointZ'] = 345.68,
 		['Orientation'] = 54.25,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300293] = {
 		['ID'] = 240300293,
@@ -5954,12 +5954,12 @@ local TaskEventTable = {
 		['EventDialog2'] = '0',
 		['ChangeTarget2'] = 0,
 		['Num2'] = 0,
-		['SceneId'] = 155000008,
+		['SceneId'] = 0,
 		['PointX'] = 0,
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300294] = {
 		['ID'] = 240300294,
@@ -5981,7 +5981,7 @@ local TaskEventTable = {
 		['PointY'] = 46.667340000000003,
 		['PointZ'] = 315.83,
 		['Orientation'] = -151,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300295] = {
 		['ID'] = 240300295,
@@ -5998,12 +5998,12 @@ local TaskEventTable = {
 		['EventDialog2'] = '0',
 		['ChangeTarget2'] = 0,
 		['Num2'] = 0,
-		['SceneId'] = 155000008,
+		['SceneId'] = 0,
 		['PointX'] = 0,
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300296] = {
 		['ID'] = 240300296,
@@ -6025,7 +6025,7 @@ local TaskEventTable = {
 		['PointY'] = 46.818370000000002,
 		['PointZ'] = 319.32780000000002,
 		['Orientation'] = -160,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300297] = {
 		['ID'] = 240300297,
@@ -6042,12 +6042,12 @@ local TaskEventTable = {
 		['EventDialog2'] = '0',
 		['ChangeTarget2'] = 0,
 		['Num2'] = 0,
-		['SceneId'] = 155000008,
+		['SceneId'] = 0,
 		['PointX'] = 0,
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300298] = {
 		['ID'] = 240300298,
@@ -6069,7 +6069,7 @@ local TaskEventTable = {
 		['PointY'] = 47,
 		['PointZ'] = 322.48,
 		['Orientation'] = -38.53,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300299] = {
 		['ID'] = 240300299,
@@ -6087,11 +6087,11 @@ local TaskEventTable = {
 		['ChangeTarget2'] = 0,
 		['Num2'] = 0,
 		['SceneId'] = 155000008,
-		['PointX'] = 405.24,
+		['PointX'] = 402.47,
 		['PointY'] = 18.91,
-		['PointZ'] = 447.14,
+		['PointZ'] = 449.45,
 		['Orientation'] = 173.16,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300300] = {
 		['ID'] = 240300300,
@@ -6113,7 +6113,7 @@ local TaskEventTable = {
 		['PointY'] = 47.29,
 		['PointZ'] = 327.67,
 		['Orientation'] = -38.53,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300301] = {
 		['ID'] = 240300301,
@@ -6135,7 +6135,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300302] = {
 		['ID'] = 240300302,
@@ -6157,7 +6157,7 @@ local TaskEventTable = {
 		['PointY'] = 47.34,
 		['PointZ'] = 325.49,
 		['Orientation'] = -28.16,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300303] = {
 		['ID'] = 240300303,
@@ -6179,7 +6179,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300304] = {
 		['ID'] = 240300304,
@@ -6201,7 +6201,7 @@ local TaskEventTable = {
 		['PointY'] = 47,
 		['PointZ'] = 323.87,
 		['Orientation'] = -36.450000000000003,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300305] = {
 		['ID'] = 240300305,
@@ -6223,7 +6223,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300306] = {
 		['ID'] = 240300306,
@@ -6245,7 +6245,7 @@ local TaskEventTable = {
 		['PointY'] = 47,
 		['PointZ'] = 349.71,
 		['Orientation'] = -176.25,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300307] = {
 		['ID'] = 240300307,
@@ -6267,7 +6267,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300308] = {
 		['ID'] = 240300308,
@@ -6289,7 +6289,7 @@ local TaskEventTable = {
 		['PointY'] = 46.97,
 		['PointZ'] = 350.8,
 		['Orientation'] = -172.53,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300309] = {
 		['ID'] = 240300309,
@@ -6311,7 +6311,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300310] = {
 		['ID'] = 240300310,
@@ -6333,7 +6333,7 @@ local TaskEventTable = {
 		['PointY'] = 46.99,
 		['PointZ'] = 349.73,
 		['Orientation'] = 176.02,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300311] = {
 		['ID'] = 240300311,
@@ -6355,7 +6355,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300312] = {
 		['ID'] = 240300312,
@@ -6377,7 +6377,7 @@ local TaskEventTable = {
 		['PointY'] = 47.16,
 		['PointZ'] = 336.37,
 		['Orientation'] = 62.76,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300313] = {
 		['ID'] = 240300313,
@@ -6399,7 +6399,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300314] = {
 		['ID'] = 240300314,
@@ -6421,7 +6421,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300315] = {
 		['ID'] = 240300315,
@@ -6443,7 +6443,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300316] = {
 		['ID'] = 240300316,
@@ -6465,7 +6465,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300317] = {
 		['ID'] = 240300317,
@@ -6487,7 +6487,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300318] = {
 		['ID'] = 240300318,
@@ -6509,7 +6509,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300319] = {
 		['ID'] = 240300319,
@@ -6531,7 +6531,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300320] = {
 		['ID'] = 240300320,
@@ -6553,7 +6553,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300321] = {
 		['ID'] = 240300321,
@@ -6575,7 +6575,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300322] = {
 		['ID'] = 240300322,
@@ -6597,7 +6597,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300323] = {
 		['ID'] = 240300323,
@@ -6619,7 +6619,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300324] = {
 		['ID'] = 240300324,
@@ -6641,7 +6641,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300325] = {
 		['ID'] = 240300325,
@@ -6663,7 +6663,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300326] = {
 		['ID'] = 240300326,
@@ -6685,7 +6685,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300327] = {
 		['ID'] = 240300327,
@@ -6707,7 +6707,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300328] = {
 		['ID'] = 240300328,
@@ -6729,7 +6729,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300329] = {
 		['ID'] = 240300329,
@@ -6751,7 +6751,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300330] = {
 		['ID'] = 240300330,
@@ -6773,7 +6773,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300331] = {
 		['ID'] = 240300331,
@@ -6795,7 +6795,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300332] = {
 		['ID'] = 240300332,
@@ -6817,7 +6817,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300333] = {
 		['ID'] = 240300333,
@@ -6839,7 +6839,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300334] = {
 		['ID'] = 240300334,
@@ -6861,7 +6861,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300335] = {
 		['ID'] = 240300335,
@@ -6883,7 +6883,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300336] = {
 		['ID'] = 240300336,
@@ -6905,7 +6905,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300337] = {
 		['ID'] = 240300337,
@@ -6927,7 +6927,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300338] = {
 		['ID'] = 240300338,
@@ -6949,7 +6949,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300339] = {
 		['ID'] = 240300339,
@@ -6971,7 +6971,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300340] = {
 		['ID'] = 240300340,
@@ -6993,7 +6993,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300341] = {
 		['ID'] = 240300341,
@@ -7015,7 +7015,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300342] = {
 		['ID'] = 240300342,
@@ -7037,7 +7037,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300343] = {
 		['ID'] = 240300343,
@@ -7059,7 +7059,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300344] = {
 		['ID'] = 240300344,
@@ -7081,7 +7081,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300345] = {
 		['ID'] = 240300345,
@@ -7103,7 +7103,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300346] = {
 		['ID'] = 240300346,
@@ -7125,7 +7125,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300347] = {
 		['ID'] = 240300347,
@@ -7147,7 +7147,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300348] = {
 		['ID'] = 240300348,
@@ -7169,7 +7169,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300349] = {
 		['ID'] = 240300349,
@@ -7191,7 +7191,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300350] = {
 		['ID'] = 240300350,
@@ -7213,7 +7213,7 @@ local TaskEventTable = {
 		['PointY'] = 47,
 		['PointZ'] = 359,
 		['Orientation'] = 175,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300351] = {
 		['ID'] = 240300351,
@@ -7235,7 +7235,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300352] = {
 		['ID'] = 240300352,
@@ -7257,7 +7257,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300353] = {
 		['ID'] = 240300353,
@@ -7279,7 +7279,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300354] = {
 		['ID'] = 240300354,
@@ -7301,7 +7301,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 219.36930000000001,
 		['Orientation'] = -30,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300355] = {
 		['ID'] = 240300355,
@@ -7323,7 +7323,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300356] = {
 		['ID'] = 240300356,
@@ -7345,7 +7345,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 218.78,
 		['Orientation'] = 43.5,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300357] = {
 		['ID'] = 240300357,
@@ -7367,7 +7367,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300358] = {
 		['ID'] = 240300358,
@@ -7389,7 +7389,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300359] = {
 		['ID'] = 240300359,
@@ -7411,7 +7411,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300360] = {
 		['ID'] = 240300360,
@@ -7433,7 +7433,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300361] = {
 		['ID'] = 240300361,
@@ -7455,7 +7455,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300362] = {
 		['ID'] = 240300362,
@@ -7477,7 +7477,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300363] = {
 		['ID'] = 240300363,
@@ -7499,7 +7499,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300364] = {
 		['ID'] = 240300364,
@@ -7521,7 +7521,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300365] = {
 		['ID'] = 240300365,
@@ -7543,7 +7543,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300366] = {
 		['ID'] = 240300366,
@@ -7565,7 +7565,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300367] = {
 		['ID'] = 240300367,
@@ -7587,7 +7587,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300368] = {
 		['ID'] = 240300368,
@@ -7609,7 +7609,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300369] = {
 		['ID'] = 240300369,
@@ -7631,7 +7631,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300370] = {
 		['ID'] = 240300370,
@@ -7653,7 +7653,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300371] = {
 		['ID'] = 240300371,
@@ -7675,7 +7675,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300372] = {
 		['ID'] = 240300372,
@@ -7697,7 +7697,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300373] = {
 		['ID'] = 240300373,
@@ -7719,7 +7719,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300374] = {
 		['ID'] = 240300374,
@@ -7741,7 +7741,7 @@ local TaskEventTable = {
 		['PointY'] = 20.32,
 		['PointZ'] = 136.14400000000001,
 		['Orientation'] = 85.81,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300375] = {
 		['ID'] = 240300375,
@@ -7763,7 +7763,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300376] = {
 		['ID'] = 240300376,
@@ -7785,7 +7785,7 @@ local TaskEventTable = {
 		['PointY'] = 17.62,
 		['PointZ'] = 205.61,
 		['Orientation'] = 39.880000000000003,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300377] = {
 		['ID'] = 240300377,
@@ -7807,7 +7807,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300378] = {
 		['ID'] = 240300378,
@@ -7829,7 +7829,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300379] = {
 		['ID'] = 240300379,
@@ -7851,7 +7851,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300380] = {
 		['ID'] = 240300380,
@@ -7873,7 +7873,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300381] = {
 		['ID'] = 240300381,
@@ -7895,7 +7895,7 @@ local TaskEventTable = {
 		['PointY'] = 47,
 		['PointZ'] = 354.38,
 		['Orientation'] = 135.4,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300382] = {
 		['ID'] = 240300382,
@@ -7917,7 +7917,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300383] = {
 		['ID'] = 240300383,
@@ -7939,7 +7939,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300384] = {
 		['ID'] = 240300384,
@@ -7961,7 +7961,7 @@ local TaskEventTable = {
 		['PointY'] = 57.81,
 		['PointZ'] = 334.59,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300385] = {
 		['ID'] = 240300385,
@@ -7983,7 +7983,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300386] = {
 		['ID'] = 240300386,
@@ -8005,7 +8005,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300387] = {
 		['ID'] = 240300387,
@@ -8027,7 +8027,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300388] = {
 		['ID'] = 240300388,
@@ -8049,7 +8049,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300389] = {
 		['ID'] = 240300389,
@@ -8071,7 +8071,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300390] = {
 		['ID'] = 240300390,
@@ -8093,7 +8093,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300391] = {
 		['ID'] = 240300391,
@@ -8115,7 +8115,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300392] = {
 		['ID'] = 240300392,
@@ -8137,7 +8137,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300393] = {
 		['ID'] = 240300393,
@@ -8159,7 +8159,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300394] = {
 		['ID'] = 240300394,
@@ -8181,7 +8181,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300395] = {
 		['ID'] = 240300395,
@@ -8203,7 +8203,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300396] = {
 		['ID'] = 240300396,
@@ -8225,7 +8225,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300397] = {
 		['ID'] = 240300397,
@@ -8247,7 +8247,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300398] = {
 		['ID'] = 240300398,
@@ -8269,7 +8269,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300399] = {
 		['ID'] = 240300399,
@@ -8291,7 +8291,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300400] = {
 		['ID'] = 240300400,
@@ -8313,7 +8313,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300401] = {
 		['ID'] = 240300401,
@@ -8335,7 +8335,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300402] = {
 		['ID'] = 240300402,
@@ -8357,7 +8357,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300403] = {
 		['ID'] = 240300403,
@@ -8379,7 +8379,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300404] = {
 		['ID'] = 240300404,
@@ -8401,7 +8401,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300405] = {
 		['ID'] = 240300405,
@@ -8423,7 +8423,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300406] = {
 		['ID'] = 240300406,
@@ -8445,7 +8445,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300407] = {
 		['ID'] = 240300407,
@@ -8467,7 +8467,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300408] = {
 		['ID'] = 240300408,
@@ -8489,7 +8489,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300409] = {
 		['ID'] = 240300409,
@@ -8511,7 +8511,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300410] = {
 		['ID'] = 240300410,
@@ -8533,7 +8533,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300411] = {
 		['ID'] = 240300411,
@@ -8555,7 +8555,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300412] = {
 		['ID'] = 240300412,
@@ -8577,7 +8577,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300413] = {
 		['ID'] = 240300413,
@@ -8599,7 +8599,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300414] = {
 		['ID'] = 240300414,
@@ -8621,7 +8621,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300415] = {
 		['ID'] = 240300415,
@@ -8643,7 +8643,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300416] = {
 		['ID'] = 240300416,
@@ -8665,7 +8665,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300417] = {
 		['ID'] = 240300417,
@@ -8687,7 +8687,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300418] = {
 		['ID'] = 240300418,
@@ -8709,7 +8709,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300419] = {
 		['ID'] = 240300419,
@@ -8731,7 +8731,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300420] = {
 		['ID'] = 240300420,
@@ -8753,7 +8753,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300421] = {
 		['ID'] = 240300421,
@@ -8775,7 +8775,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300422] = {
 		['ID'] = 240300422,
@@ -8797,7 +8797,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300423] = {
 		['ID'] = 240300423,
@@ -8819,7 +8819,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 447.85,
 		['Orientation'] = -168.3,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300424] = {
 		['ID'] = 240300424,
@@ -8841,7 +8841,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300425] = {
 		['ID'] = 240300425,
@@ -8863,7 +8863,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 447.85,
 		['Orientation'] = -168.3,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300426] = {
 		['ID'] = 240300426,
@@ -8885,7 +8885,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300427] = {
 		['ID'] = 240300427,
@@ -8907,7 +8907,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300428] = {
 		['ID'] = 240300428,
@@ -8929,7 +8929,7 @@ local TaskEventTable = {
 		['PointY'] = 19.399999999999999,
 		['PointZ'] = 165.7,
 		['Orientation'] = 28,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300429] = {
 		['ID'] = 240300429,
@@ -8951,7 +8951,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300430] = {
 		['ID'] = 240300430,
@@ -8973,7 +8973,7 @@ local TaskEventTable = {
 		['PointY'] = 19.2,
 		['PointZ'] = 168.6,
 		['Orientation'] = 85.6,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300431] = {
 		['ID'] = 240300431,
@@ -8995,7 +8995,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300432] = {
 		['ID'] = 240300432,
@@ -9017,7 +9017,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300433] = {
 		['ID'] = 240300433,
@@ -9039,7 +9039,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300434] = {
 		['ID'] = 240300434,
@@ -9061,7 +9061,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300435] = {
 		['ID'] = 240300435,
@@ -9083,7 +9083,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300436] = {
 		['ID'] = 240300436,
@@ -9105,7 +9105,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300437] = {
 		['ID'] = 240300437,
@@ -9127,7 +9127,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300438] = {
 		['ID'] = 240300438,
@@ -9149,7 +9149,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300439] = {
 		['ID'] = 240300439,
@@ -9171,7 +9171,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300440] = {
 		['ID'] = 240300440,
@@ -9193,7 +9193,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300441] = {
 		['ID'] = 240300441,
@@ -9215,7 +9215,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300442] = {
 		['ID'] = 240300442,
@@ -9237,7 +9237,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300443] = {
 		['ID'] = 240300443,
@@ -9259,7 +9259,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300444] = {
 		['ID'] = 240300444,
@@ -9281,7 +9281,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300445] = {
 		['ID'] = 240300445,
@@ -9303,7 +9303,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300446] = {
 		['ID'] = 240300446,
@@ -9325,7 +9325,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300447] = {
 		['ID'] = 240300447,
@@ -9347,7 +9347,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300448] = {
 		['ID'] = 240300448,
@@ -9369,7 +9369,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300449] = {
 		['ID'] = 240300449,
@@ -9391,7 +9391,7 @@ local TaskEventTable = {
 		['PointY'] = 21.35,
 		['PointZ'] = 229.92,
 		['Orientation'] = 3.38,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300450] = {
 		['ID'] = 240300450,
@@ -9413,7 +9413,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300451] = {
 		['ID'] = 240300451,
@@ -9435,7 +9435,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300452] = {
 		['ID'] = 240300452,
@@ -9457,7 +9457,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300453] = {
 		['ID'] = 240300453,
@@ -9479,7 +9479,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300455] = {
 		['ID'] = 240300455,
@@ -9501,7 +9501,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300456] = {
 		['ID'] = 240300456,
@@ -9523,7 +9523,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300457] = {
 		['ID'] = 240300457,
@@ -9545,7 +9545,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300458] = {
 		['ID'] = 240300458,
@@ -9567,7 +9567,7 @@ local TaskEventTable = {
 		['PointY'] = 57.268000000000001,
 		['PointZ'] = 42.24,
 		['Orientation'] = -2.375702,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300454] = {
 		['ID'] = 240300454,
@@ -9589,7 +9589,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300459] = {
 		['ID'] = 240300459,
@@ -9611,7 +9611,7 @@ local TaskEventTable = {
 		['PointY'] = 57.3,
 		['PointZ'] = 45.9,
 		['Orientation'] = 179.4,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300460] = {
 		['ID'] = 240300460,
@@ -9633,7 +9633,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300461] = {
 		['ID'] = 240300461,
@@ -9655,7 +9655,7 @@ local TaskEventTable = {
 		['PointY'] = 57.3,
 		['PointZ'] = 46.2,
 		['Orientation'] = 162,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300462] = {
 		['ID'] = 240300462,
@@ -9677,7 +9677,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300463] = {
 		['ID'] = 240300463,
@@ -9699,7 +9699,7 @@ local TaskEventTable = {
 		['PointY'] = 57.3,
 		['PointZ'] = 45.1,
 		['Orientation'] = -153.6,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300464] = {
 		['ID'] = 240300464,
@@ -9721,7 +9721,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300465] = {
 		['ID'] = 240300465,
@@ -9743,7 +9743,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 222.9,
 		['Orientation'] = -62.3,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300466] = {
 		['ID'] = 240300466,
@@ -9765,7 +9765,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300467] = {
 		['ID'] = 240300467,
@@ -9787,7 +9787,7 @@ local TaskEventTable = {
 		['PointY'] = 18.899999999999999,
 		['PointZ'] = 199.4,
 		['Orientation'] = -74.2,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300468] = {
 		['ID'] = 240300468,
@@ -9809,7 +9809,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300469] = {
 		['ID'] = 240300469,
@@ -9831,7 +9831,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300470] = {
 		['ID'] = 240300470,
@@ -9853,7 +9853,7 @@ local TaskEventTable = {
 		['PointY'] = 18.899999999999999,
 		['PointZ'] = 133.28,
 		['Orientation'] = 21.18,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300471] = {
 		['ID'] = 240300471,
@@ -9875,7 +9875,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300472] = {
 		['ID'] = 240300472,
@@ -9897,7 +9897,7 @@ local TaskEventTable = {
 		['PointY'] = 23.36,
 		['PointZ'] = 77.42,
 		['Orientation'] = 58,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300473] = {
 		['ID'] = 240300473,
@@ -9919,7 +9919,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300474] = {
 		['ID'] = 240300474,
@@ -9941,7 +9941,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300475] = {
 		['ID'] = 240300475,
@@ -9963,7 +9963,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300476] = {
 		['ID'] = 240300476,
@@ -9985,7 +9985,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300477] = {
 		['ID'] = 240300477,
@@ -10007,7 +10007,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300478] = {
 		['ID'] = 240300478,
@@ -10029,7 +10029,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300479] = {
 		['ID'] = 240300479,
@@ -10051,7 +10051,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300480] = {
 		['ID'] = 240300480,
@@ -10073,7 +10073,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300481] = {
 		['ID'] = 240300481,
@@ -10095,7 +10095,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300482] = {
 		['ID'] = 240300482,
@@ -10117,7 +10117,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300483] = {
 		['ID'] = 240300483,
@@ -10139,7 +10139,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300484] = {
 		['ID'] = 240300484,
@@ -10161,7 +10161,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300485] = {
 		['ID'] = 240300485,
@@ -10183,7 +10183,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300486] = {
 		['ID'] = 240300486,
@@ -10205,13 +10205,13 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300487] = {
 		['ID'] = 240300487,
 		['EventClass'] = 2,
 		['EventType'] = 3,
-		['EventTarget'] = 240720209,
+		['EventTarget'] = 240720641,
 		['EventNum'] = 1,
 		['EventNum1'] = '1',
 		['EventIcon'] = '0',
@@ -10227,7 +10227,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300488] = {
 		['ID'] = 240300488,
@@ -10249,13 +10249,13 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300489] = {
 		['ID'] = 240300489,
 		['EventClass'] = 2,
 		['EventType'] = 3,
-		['EventTarget'] = 240720210,
+		['EventTarget'] = 240720642,
 		['EventNum'] = 1,
 		['EventNum1'] = '1',
 		['EventIcon'] = '0',
@@ -10271,7 +10271,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300490] = {
 		['ID'] = 240300490,
@@ -10293,13 +10293,13 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300491] = {
 		['ID'] = 240300491,
 		['EventClass'] = 2,
 		['EventType'] = 3,
-		['EventTarget'] = 240720211,
+		['EventTarget'] = 240720643,
 		['EventNum'] = 1,
 		['EventNum1'] = '1',
 		['EventIcon'] = '0',
@@ -10315,7 +10315,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300492] = {
 		['ID'] = 240300492,
@@ -10337,13 +10337,13 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300493] = {
 		['ID'] = 240300493,
 		['EventClass'] = 2,
 		['EventType'] = 3,
-		['EventTarget'] = 240720212,
+		['EventTarget'] = 240720644,
 		['EventNum'] = 1,
 		['EventNum1'] = '1',
 		['EventIcon'] = '0',
@@ -10359,7 +10359,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300494] = {
 		['ID'] = 240300494,
@@ -10381,13 +10381,13 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300495] = {
 		['ID'] = 240300495,
 		['EventClass'] = 2,
 		['EventType'] = 3,
-		['EventTarget'] = 240720213,
+		['EventTarget'] = 240720645,
 		['EventNum'] = 1,
 		['EventNum1'] = '1',
 		['EventIcon'] = '0',
@@ -10403,7 +10403,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300496] = {
 		['ID'] = 240300496,
@@ -10425,7 +10425,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300497] = {
 		['ID'] = 240300497,
@@ -10447,7 +10447,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300498] = {
 		['ID'] = 240300498,
@@ -10469,7 +10469,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300499] = {
 		['ID'] = 240300499,
@@ -10491,7 +10491,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300500] = {
 		['ID'] = 240300500,
@@ -10513,7 +10513,7 @@ local TaskEventTable = {
 		['PointY'] = 23.48,
 		['PointZ'] = 61,
 		['Orientation'] = -94.75,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300501] = {
 		['ID'] = 240300501,
@@ -10535,7 +10535,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300502] = {
 		['ID'] = 240300502,
@@ -10557,7 +10557,7 @@ local TaskEventTable = {
 		['PointY'] = 23.42,
 		['PointZ'] = 65.5,
 		['Orientation'] = -95,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300503] = {
 		['ID'] = 240300503,
@@ -10579,7 +10579,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300504] = {
 		['ID'] = 240300504,
@@ -10601,7 +10601,7 @@ local TaskEventTable = {
 		['PointY'] = 23.42,
 		['PointZ'] = 55,
 		['Orientation'] = -68.97,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300505] = {
 		['ID'] = 240300505,
@@ -10623,7 +10623,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300506] = {
 		['ID'] = 240300506,
@@ -10645,7 +10645,7 @@ local TaskEventTable = {
 		['PointY'] = 18.899999999999999,
 		['PointZ'] = 174.85,
 		['Orientation'] = 84.7,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300507] = {
 		['ID'] = 240300507,
@@ -10667,7 +10667,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300508] = {
 		['ID'] = 240300508,
@@ -10689,7 +10689,7 @@ local TaskEventTable = {
 		['PointY'] = 18.899999999999999,
 		['PointZ'] = 172.6,
 		['Orientation'] = 91.1,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300509] = {
 		['ID'] = 240300509,
@@ -10711,7 +10711,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300510] = {
 		['ID'] = 240300510,
@@ -10729,11 +10729,11 @@ local TaskEventTable = {
 		['ChangeTarget2'] = 0,
 		['Num2'] = 0,
 		['SceneId'] = 155000008,
-		['PointX'] = 305.98,
+		['PointX'] = 304.21300000000002,
 		['PointY'] = 18.899999999999999,
-		['PointZ'] = 178.99,
+		['PointZ'] = 177.20099999999999,
 		['Orientation'] = -135.36000000000001,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300511] = {
 		['ID'] = 240300511,
@@ -10755,7 +10755,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300512] = {
 		['ID'] = 240300512,
@@ -10777,7 +10777,7 @@ local TaskEventTable = {
 		['PointY'] = 18.899999999999999,
 		['PointZ'] = 170,
 		['Orientation'] = 24,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300513] = {
 		['ID'] = 240300513,
@@ -10799,7 +10799,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300514] = {
 		['ID'] = 240300514,
@@ -10821,7 +10821,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 170,
 		['Orientation'] = -18.8,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300515] = {
 		['ID'] = 240300515,
@@ -10843,7 +10843,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300516] = {
 		['ID'] = 240300516,
@@ -10865,7 +10865,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300517] = {
 		['ID'] = 240300517,
@@ -10887,7 +10887,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300518] = {
 		['ID'] = 240300518,
@@ -10909,7 +10909,7 @@ local TaskEventTable = {
 		['PointY'] = 18.84,
 		['PointZ'] = 343.42,
 		['Orientation'] = 88.68,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300519] = {
 		['ID'] = 240300519,
@@ -10931,7 +10931,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300520] = {
 		['ID'] = 240300520,
@@ -10953,7 +10953,7 @@ local TaskEventTable = {
 		['PointY'] = 23.3,
 		['PointZ'] = 253.5,
 		['Orientation'] = 178.7,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300521] = {
 		['ID'] = 240300521,
@@ -10975,7 +10975,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300522] = {
 		['ID'] = 240300522,
@@ -10997,7 +10997,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300523] = {
 		['ID'] = 240300523,
@@ -11019,7 +11019,7 @@ local TaskEventTable = {
 		['PointY'] = 23.3,
 		['PointZ'] = 232.15,
 		['Orientation'] = 87.82,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300524] = {
 		['ID'] = 240300524,
@@ -11041,7 +11041,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300525] = {
 		['ID'] = 240300525,
@@ -11063,7 +11063,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300526] = {
 		['ID'] = 240300526,
@@ -11085,7 +11085,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300527] = {
 		['ID'] = 240300527,
@@ -11107,7 +11107,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300528] = {
 		['ID'] = 240300528,
@@ -11129,7 +11129,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300529] = {
 		['ID'] = 240300529,
@@ -11151,7 +11151,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300530] = {
 		['ID'] = 240300530,
@@ -11173,7 +11173,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300531] = {
 		['ID'] = 240300531,
@@ -11195,7 +11195,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300532] = {
 		['ID'] = 240300532,
@@ -11217,7 +11217,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300533] = {
 		['ID'] = 240300533,
@@ -11239,7 +11239,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300534] = {
 		['ID'] = 240300534,
@@ -11261,7 +11261,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300535] = {
 		['ID'] = 240300535,
@@ -11283,7 +11283,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300536] = {
 		['ID'] = 240300536,
@@ -11305,7 +11305,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300537] = {
 		['ID'] = 240300537,
@@ -11327,7 +11327,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300538] = {
 		['ID'] = 240300538,
@@ -11349,7 +11349,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300539] = {
 		['ID'] = 240300539,
@@ -11371,7 +11371,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300540] = {
 		['ID'] = 240300540,
@@ -11393,7 +11393,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300541] = {
 		['ID'] = 240300541,
@@ -11415,7 +11415,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300542] = {
 		['ID'] = 240300542,
@@ -11437,7 +11437,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300543] = {
 		['ID'] = 240300543,
@@ -11459,7 +11459,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300544] = {
 		['ID'] = 240300544,
@@ -11481,7 +11481,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300545] = {
 		['ID'] = 240300545,
@@ -11503,7 +11503,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300546] = {
 		['ID'] = 240300546,
@@ -11525,7 +11525,7 @@ local TaskEventTable = {
 		['PointY'] = 23,
 		['PointZ'] = 60.8,
 		['Orientation'] = -68.23,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300547] = {
 		['ID'] = 240300547,
@@ -11547,7 +11547,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300548] = {
 		['ID'] = 240300548,
@@ -11569,7 +11569,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300549] = {
 		['ID'] = 240300549,
@@ -11591,7 +11591,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300550] = {
 		['ID'] = 240300550,
@@ -11613,7 +11613,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300551] = {
 		['ID'] = 240300551,
@@ -11635,7 +11635,7 @@ local TaskEventTable = {
 		['PointY'] = 14.1,
 		['PointZ'] = 441.53,
 		['Orientation'] = -162.20699999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300552] = {
 		['ID'] = 240300552,
@@ -11657,7 +11657,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300553] = {
 		['ID'] = 240300553,
@@ -11679,7 +11679,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300554] = {
 		['ID'] = 240300554,
@@ -11701,7 +11701,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300555] = {
 		['ID'] = 240300555,
@@ -11723,7 +11723,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300556] = {
 		['ID'] = 240300556,
@@ -11745,7 +11745,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300557] = {
 		['ID'] = 240300557,
@@ -11767,7 +11767,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300558] = {
 		['ID'] = 240300558,
@@ -11789,7 +11789,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300559] = {
 		['ID'] = 240300559,
@@ -11811,7 +11811,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300560] = {
 		['ID'] = 240300560,
@@ -11833,7 +11833,7 @@ local TaskEventTable = {
 		['PointY'] = 18.899999999999999,
 		['PointZ'] = 217.84469999999999,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300561] = {
 		['ID'] = 240300561,
@@ -11855,7 +11855,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300562] = {
 		['ID'] = 240300562,
@@ -11877,7 +11877,7 @@ local TaskEventTable = {
 		['PointY'] = 18.899999999999999,
 		['PointZ'] = 218.55,
 		['Orientation'] = -60,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300563] = {
 		['ID'] = 240300563,
@@ -11899,7 +11899,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300564] = {
 		['ID'] = 240300564,
@@ -11921,7 +11921,7 @@ local TaskEventTable = {
 		['PointY'] = 18.899999999999999,
 		['PointZ'] = 211.18,
 		['Orientation'] = 32.49,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300565] = {
 		['ID'] = 240300565,
@@ -11943,7 +11943,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300566] = {
 		['ID'] = 240300566,
@@ -11965,7 +11965,7 @@ local TaskEventTable = {
 		['PointY'] = 18.989999999999998,
 		['PointZ'] = 253,
 		['Orientation'] = -108.41,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300567] = {
 		['ID'] = 240300567,
@@ -11987,7 +11987,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300568] = {
 		['ID'] = 240300568,
@@ -12009,7 +12009,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300569] = {
 		['ID'] = 240300569,
@@ -12031,7 +12031,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300570] = {
 		['ID'] = 240300570,
@@ -12053,7 +12053,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300571] = {
 		['ID'] = 240300571,
@@ -12075,7 +12075,7 @@ local TaskEventTable = {
 		['PointY'] = 19.100000000000001,
 		['PointZ'] = 171.4,
 		['Orientation'] = 115.5,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300572] = {
 		['ID'] = 240300572,
@@ -12097,7 +12097,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300573] = {
 		['ID'] = 240300573,
@@ -12119,7 +12119,7 @@ local TaskEventTable = {
 		['PointY'] = 19.100000000000001,
 		['PointZ'] = 168.6,
 		['Orientation'] = 85.6,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300574] = {
 		['ID'] = 240300574,
@@ -12141,7 +12141,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300575] = {
 		['ID'] = 240300575,
@@ -12163,7 +12163,7 @@ local TaskEventTable = {
 		['PointY'] = 21,
 		['PointZ'] = 139.38,
 		['Orientation'] = -131.30000000000001,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300576] = {
 		['ID'] = 240300576,
@@ -12185,7 +12185,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300577] = {
 		['ID'] = 240300577,
@@ -12207,7 +12207,7 @@ local TaskEventTable = {
 		['PointY'] = 57.3,
 		['PointZ'] = 57.68,
 		['Orientation'] = -11,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300578] = {
 		['ID'] = 240300578,
@@ -12229,7 +12229,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300579] = {
 		['ID'] = 240300579,
@@ -12251,7 +12251,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 224.74,
 		['Orientation'] = 71.510000000000005,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300580] = {
 		['ID'] = 240300580,
@@ -12273,7 +12273,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300581] = {
 		['ID'] = 240300581,
@@ -12295,7 +12295,7 @@ local TaskEventTable = {
 		['PointY'] = 18.899999999999999,
 		['PointZ'] = 221.42,
 		['Orientation'] = 45.2,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300582] = {
 		['ID'] = 240300582,
@@ -12317,7 +12317,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300583] = {
 		['ID'] = 240300583,
@@ -12339,7 +12339,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 219.94,
 		['Orientation'] = -8.6,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300584] = {
 		['ID'] = 240300584,
@@ -12361,7 +12361,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300585] = {
 		['ID'] = 240300585,
@@ -12383,7 +12383,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300586] = {
 		['ID'] = 240300586,
@@ -12405,7 +12405,7 @@ local TaskEventTable = {
 		['PointY'] = 19.57,
 		['PointZ'] = 160.94,
 		['Orientation'] = -43.64,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300587] = {
 		['ID'] = 240300587,
@@ -12427,7 +12427,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300588] = {
 		['ID'] = 240300588,
@@ -12449,7 +12449,7 @@ local TaskEventTable = {
 		['PointY'] = 20.32,
 		['PointZ'] = 152.1,
 		['Orientation'] = -43.332459999999998,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300589] = {
 		['ID'] = 240300589,
@@ -12471,7 +12471,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300590] = {
 		['ID'] = 240300590,
@@ -12493,7 +12493,7 @@ local TaskEventTable = {
 		['PointY'] = 19.27195,
 		['PointZ'] = 147.5,
 		['Orientation'] = -25.062619999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300591] = {
 		['ID'] = 240300591,
@@ -12515,7 +12515,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300592] = {
 		['ID'] = 240300592,
@@ -12537,7 +12537,7 @@ local TaskEventTable = {
 		['PointY'] = 20.138480000000001,
 		['PointZ'] = 139.9,
 		['Orientation'] = -26.18451,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300593] = {
 		['ID'] = 240300593,
@@ -12559,7 +12559,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300594] = {
 		['ID'] = 240300594,
@@ -12581,7 +12581,7 @@ local TaskEventTable = {
 		['PointY'] = 19.8,
 		['PointZ'] = 231.72,
 		['Orientation'] = -117.59,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300595] = {
 		['ID'] = 240300595,
@@ -12603,7 +12603,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300596] = {
 		['ID'] = 240300596,
@@ -12625,7 +12625,7 @@ local TaskEventTable = {
 		['PointY'] = 19.8,
 		['PointZ'] = 238.66900000000001,
 		['Orientation'] = -131.29,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300597] = {
 		['ID'] = 240300597,
@@ -12647,7 +12647,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300598] = {
 		['ID'] = 240300598,
@@ -12669,7 +12669,7 @@ local TaskEventTable = {
 		['PointY'] = 19.8,
 		['PointZ'] = 238.36,
 		['Orientation'] = -146.4,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300599] = {
 		['ID'] = 240300599,
@@ -12691,7 +12691,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300600] = {
 		['ID'] = 240300600,
@@ -12713,7 +12713,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300601] = {
 		['ID'] = 240300601,
@@ -12735,7 +12735,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300602] = {
 		['ID'] = 240300602,
@@ -12757,7 +12757,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300603] = {
 		['ID'] = 240300603,
@@ -12779,7 +12779,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 234.9,
 		['Orientation'] = 115.4,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300604] = {
 		['ID'] = 240300604,
@@ -12801,7 +12801,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300605] = {
 		['ID'] = 240300605,
@@ -12823,7 +12823,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 225.5,
 		['Orientation'] = 53,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300606] = {
 		['ID'] = 240300606,
@@ -12845,7 +12845,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300607] = {
 		['ID'] = 240300607,
@@ -12867,7 +12867,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 223.2,
 		['Orientation'] = 75,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300608] = {
 		['ID'] = 240300608,
@@ -12889,7 +12889,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300609] = {
 		['ID'] = 240300609,
@@ -12911,7 +12911,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 133.66,
 		['Orientation'] = -142.69999999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300610] = {
 		['ID'] = 240300610,
@@ -12933,7 +12933,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300611] = {
 		['ID'] = 240300611,
@@ -12955,7 +12955,7 @@ local TaskEventTable = {
 		['PointY'] = 18.899999999999999,
 		['PointZ'] = 130.69999999999999,
 		['Orientation'] = -85,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300612] = {
 		['ID'] = 240300612,
@@ -12977,7 +12977,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300613] = {
 		['ID'] = 240300613,
@@ -12999,7 +12999,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300614] = {
 		['ID'] = 240300614,
@@ -13021,7 +13021,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300615] = {
 		['ID'] = 240300615,
@@ -13043,7 +13043,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300616] = {
 		['ID'] = 240300616,
@@ -13065,7 +13065,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300617] = {
 		['ID'] = 240300617,
@@ -13087,7 +13087,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300618] = {
 		['ID'] = 240300618,
@@ -13109,7 +13109,7 @@ local TaskEventTable = {
 		['PointY'] = 24.44,
 		['PointZ'] = 37.94,
 		['Orientation'] = -101.88200000000001,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300619] = {
 		['ID'] = 240300619,
@@ -13131,7 +13131,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300620] = {
 		['ID'] = 240300620,
@@ -13153,7 +13153,7 @@ local TaskEventTable = {
 		['PointY'] = 24.44,
 		['PointZ'] = 37.409999999999997,
 		['Orientation'] = 97,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300621] = {
 		['ID'] = 240300621,
@@ -13175,7 +13175,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300622] = {
 		['ID'] = 240300622,
@@ -13197,7 +13197,7 @@ local TaskEventTable = {
 		['PointY'] = 24.44,
 		['PointZ'] = 32.950000000000003,
 		['Orientation'] = 47.77,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300623] = {
 		['ID'] = 240300623,
@@ -13219,7 +13219,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300624] = {
 		['ID'] = 240300624,
@@ -13241,7 +13241,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300625] = {
 		['ID'] = 240300625,
@@ -13263,7 +13263,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300626] = {
 		['ID'] = 240300626,
@@ -13285,7 +13285,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300627] = {
 		['ID'] = 240300627,
@@ -13307,7 +13307,7 @@ local TaskEventTable = {
 		['PointY'] = 23.36,
 		['PointZ'] = 61.84,
 		['Orientation'] = 109.31,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300628] = {
 		['ID'] = 240300628,
@@ -13329,7 +13329,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300629] = {
 		['ID'] = 240300629,
@@ -13351,7 +13351,7 @@ local TaskEventTable = {
 		['PointY'] = 23.36,
 		['PointZ'] = 61.84,
 		['Orientation'] = 109.31,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300630] = {
 		['ID'] = 240300630,
@@ -13373,7 +13373,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300631] = {
 		['ID'] = 240300631,
@@ -13395,7 +13395,7 @@ local TaskEventTable = {
 		['PointY'] = 23.36,
 		['PointZ'] = 61.84,
 		['Orientation'] = 109.31,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300632] = {
 		['ID'] = 240300632,
@@ -13417,7 +13417,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300633] = {
 		['ID'] = 240300633,
@@ -13439,7 +13439,7 @@ local TaskEventTable = {
 		['PointY'] = 23.36,
 		['PointZ'] = 55.41,
 		['Orientation'] = 59.6,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300634] = {
 		['ID'] = 240300634,
@@ -13461,7 +13461,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300635] = {
 		['ID'] = 240300635,
@@ -13483,7 +13483,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300636] = {
 		['ID'] = 240300636,
@@ -13505,7 +13505,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300637] = {
 		['ID'] = 240300637,
@@ -13527,7 +13527,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300638] = {
 		['ID'] = 240300638,
@@ -13549,7 +13549,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300639] = {
 		['ID'] = 240300639,
@@ -13571,7 +13571,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300640] = {
 		['ID'] = 240300640,
@@ -13593,7 +13593,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300641] = {
 		['ID'] = 240300641,
@@ -13615,7 +13615,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300642] = {
 		['ID'] = 240300642,
@@ -13637,7 +13637,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300643] = {
 		['ID'] = 240300643,
@@ -13659,7 +13659,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300644] = {
 		['ID'] = 240300644,
@@ -13681,7 +13681,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300645] = {
 		['ID'] = 240300645,
@@ -13703,7 +13703,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300646] = {
 		['ID'] = 240300646,
@@ -13725,7 +13725,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300647] = {
 		['ID'] = 240300647,
@@ -13747,7 +13747,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300748] = {
 		['ID'] = 240300748,
@@ -13769,7 +13769,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300649] = {
 		['ID'] = 240300649,
@@ -13791,13 +13791,13 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300650] = {
 		['ID'] = 240300650,
 		['EventClass'] = 2,
 		['EventType'] = 7,
-		['EventTarget'] = 152040119,
+		['EventTarget'] = 152040118,
 		['EventNum'] = 1,
 		['EventNum1'] = '1',
 		['EventIcon'] = '0',
@@ -13809,17 +13809,17 @@ local TaskEventTable = {
 		['ChangeTarget2'] = 0,
 		['Num2'] = 0,
 		['SceneId'] = 155000008,
-		['PointX'] = 441.72,
+		['PointX'] = 440,
 		['PointY'] = 23.3,
-		['PointZ'] = 249.2,
+		['PointZ'] = 236,
 		['Orientation'] = -151.41,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300651] = {
 		['ID'] = 240300651,
 		['EventClass'] = 3,
 		['EventType'] = 16,
-		['EventTarget'] = 152040119,
+		['EventTarget'] = 152040118,
 		['EventNum'] = 1,
 		['EventNum1'] = '1',
 		['EventIcon'] = '0',
@@ -13835,7 +13835,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300648] = {
 		['ID'] = 240300648,
@@ -13857,7 +13857,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300653] = {
 		['ID'] = 240300653,
@@ -13879,7 +13879,7 @@ local TaskEventTable = {
 		['PointY'] = 19,
 		['PointZ'] = 165.22,
 		['Orientation'] = -153,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300654] = {
 		['ID'] = 240300654,
@@ -13901,7 +13901,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300655] = {
 		['ID'] = 240300655,
@@ -13923,7 +13923,7 @@ local TaskEventTable = {
 		['PointY'] = 18.940000000000001,
 		['PointZ'] = 159.41999999999999,
 		['Orientation'] = 15.78,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300656] = {
 		['ID'] = 240300656,
@@ -13945,7 +13945,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300657] = {
 		['ID'] = 240300657,
@@ -13967,7 +13967,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300658] = {
 		['ID'] = 240300658,
@@ -13989,7 +13989,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300659] = {
 		['ID'] = 240300659,
@@ -14011,7 +14011,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300660] = {
 		['ID'] = 240300660,
@@ -14033,7 +14033,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300661] = {
 		['ID'] = 240300661,
@@ -14055,7 +14055,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300662] = {
 		['ID'] = 240300662,
@@ -14077,7 +14077,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300663] = {
 		['ID'] = 240300663,
@@ -14099,7 +14099,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300664] = {
 		['ID'] = 240300664,
@@ -14121,7 +14121,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300665] = {
 		['ID'] = 240300665,
@@ -14143,7 +14143,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300666] = {
 		['ID'] = 240300666,
@@ -14165,7 +14165,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300667] = {
 		['ID'] = 240300667,
@@ -14187,7 +14187,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300668] = {
 		['ID'] = 240300668,
@@ -14209,7 +14209,7 @@ local TaskEventTable = {
 		['PointY'] = 12.65,
 		['PointZ'] = 366.01,
 		['Orientation'] = -44.27,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300669] = {
 		['ID'] = 240300669,
@@ -14231,7 +14231,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300670] = {
 		['ID'] = 240300670,
@@ -14253,7 +14253,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300671] = {
 		['ID'] = 240300671,
@@ -14275,7 +14275,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300672] = {
 		['ID'] = 240300672,
@@ -14297,7 +14297,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300673] = {
 		['ID'] = 240300673,
@@ -14319,7 +14319,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300674] = {
 		['ID'] = 240300674,
@@ -14341,7 +14341,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300675] = {
 		['ID'] = 240300675,
@@ -14363,7 +14363,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300676] = {
 		['ID'] = 240300676,
@@ -14385,7 +14385,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300677] = {
 		['ID'] = 240300677,
@@ -14407,7 +14407,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300678] = {
 		['ID'] = 240300678,
@@ -14429,7 +14429,7 @@ local TaskEventTable = {
 		['PointY'] = 17.760000000000002,
 		['PointZ'] = 46.58,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300679] = {
 		['ID'] = 240300679,
@@ -14451,7 +14451,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300680] = {
 		['ID'] = 240300680,
@@ -14473,7 +14473,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300681] = {
 		['ID'] = 240300681,
@@ -14495,7 +14495,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300682] = {
 		['ID'] = 240300682,
@@ -14517,7 +14517,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300683] = {
 		['ID'] = 240300683,
@@ -14539,7 +14539,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300684] = {
 		['ID'] = 240300684,
@@ -14561,7 +14561,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300685] = {
 		['ID'] = 240300685,
@@ -14583,7 +14583,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300686] = {
 		['ID'] = 240300686,
@@ -14605,7 +14605,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300687] = {
 		['ID'] = 240300687,
@@ -14627,7 +14627,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300688] = {
 		['ID'] = 240300688,
@@ -14649,7 +14649,7 @@ local TaskEventTable = {
 		['PointY'] = 18.91,
 		['PointZ'] = 449.72,
 		['Orientation'] = -150,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300689] = {
 		['ID'] = 240300689,
@@ -14671,7 +14671,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300690] = {
 		['ID'] = 240300690,
@@ -14693,7 +14693,7 @@ local TaskEventTable = {
 		['PointY'] = 18.91,
 		['PointZ'] = 447.37,
 		['Orientation'] = -149.25,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300691] = {
 		['ID'] = 240300691,
@@ -14715,7 +14715,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300692] = {
 		['ID'] = 240300692,
@@ -14737,7 +14737,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300693] = {
 		['ID'] = 240300693,
@@ -14759,7 +14759,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300694] = {
 		['ID'] = 240300694,
@@ -14781,7 +14781,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300695] = {
 		['ID'] = 240300695,
@@ -14803,7 +14803,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300696] = {
 		['ID'] = 240300696,
@@ -14825,7 +14825,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300697] = {
 		['ID'] = 240300697,
@@ -14847,7 +14847,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300698] = {
 		['ID'] = 240300698,
@@ -14869,7 +14869,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300699] = {
 		['ID'] = 240300699,
@@ -14891,7 +14891,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300700] = {
 		['ID'] = 240300700,
@@ -14913,7 +14913,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300701] = {
 		['ID'] = 240300701,
@@ -14935,7 +14935,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300702] = {
 		['ID'] = 240300702,
@@ -14957,7 +14957,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300703] = {
 		['ID'] = 240300703,
@@ -14979,7 +14979,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300704] = {
 		['ID'] = 240300704,
@@ -15001,7 +15001,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300705] = {
 		['ID'] = 240300705,
@@ -15023,7 +15023,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300706] = {
 		['ID'] = 240300706,
@@ -15045,7 +15045,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300707] = {
 		['ID'] = 240300707,
@@ -15067,7 +15067,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300708] = {
 		['ID'] = 240300708,
@@ -15089,7 +15089,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300709] = {
 		['ID'] = 240300709,
@@ -15111,7 +15111,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300710] = {
 		['ID'] = 240300710,
@@ -15133,7 +15133,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300711] = {
 		['ID'] = 240300711,
@@ -15155,7 +15155,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300712] = {
 		['ID'] = 240300712,
@@ -15177,7 +15177,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300713] = {
 		['ID'] = 240300713,
@@ -15199,7 +15199,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300714] = {
 		['ID'] = 240300714,
@@ -15221,7 +15221,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300715] = {
 		['ID'] = 240300715,
@@ -15243,7 +15243,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300716] = {
 		['ID'] = 240300716,
@@ -15265,7 +15265,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300717] = {
 		['ID'] = 240300717,
@@ -15287,7 +15287,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300718] = {
 		['ID'] = 240300718,
@@ -15309,7 +15309,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300719] = {
 		['ID'] = 240300719,
@@ -15331,7 +15331,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300720] = {
 		['ID'] = 240300720,
@@ -15353,7 +15353,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300721] = {
 		['ID'] = 240300721,
@@ -15375,7 +15375,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300722] = {
 		['ID'] = 240300722,
@@ -15397,7 +15397,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300723] = {
 		['ID'] = 240300723,
@@ -15419,7 +15419,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300724] = {
 		['ID'] = 240300724,
@@ -15441,7 +15441,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300726] = {
 		['ID'] = 240300726,
@@ -15463,7 +15463,7 @@ local TaskEventTable = {
 		['PointY'] = 21.193000000000001,
 		['PointZ'] = 171.809,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300727] = {
 		['ID'] = 240300727,
@@ -15485,7 +15485,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300728] = {
 		['ID'] = 240300728,
@@ -15507,7 +15507,7 @@ local TaskEventTable = {
 		['PointY'] = 21.18,
 		['PointZ'] = 171.75700000000001,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300729] = {
 		['ID'] = 240300729,
@@ -15529,7 +15529,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300730] = {
 		['ID'] = 240300730,
@@ -15551,7 +15551,7 @@ local TaskEventTable = {
 		['PointY'] = 21.186,
 		['PointZ'] = 171.732,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300731] = {
 		['ID'] = 240300731,
@@ -15573,7 +15573,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300732] = {
 		['ID'] = 240300732,
@@ -15595,7 +15595,7 @@ local TaskEventTable = {
 		['PointY'] = 14.083449999999999,
 		['PointZ'] = 438.57499999999999,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300733] = {
 		['ID'] = 240300733,
@@ -15617,7 +15617,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300734] = {
 		['ID'] = 240300734,
@@ -15639,7 +15639,7 @@ local TaskEventTable = {
 		['PointY'] = 14.08304,
 		['PointZ'] = 444.3,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300735] = {
 		['ID'] = 240300735,
@@ -15661,7 +15661,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300736] = {
 		['ID'] = 240300736,
@@ -15683,7 +15683,7 @@ local TaskEventTable = {
 		['PointY'] = 14.08304,
 		['PointZ'] = 446.71,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300737] = {
 		['ID'] = 240300737,
@@ -15705,7 +15705,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300738] = {
 		['ID'] = 240300738,
@@ -15727,7 +15727,7 @@ local TaskEventTable = {
 		['PointY'] = 14.08304,
 		['PointZ'] = 442.64,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300739] = {
 		['ID'] = 240300739,
@@ -15749,7 +15749,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300740] = {
 		['ID'] = 240300740,
@@ -15771,7 +15771,7 @@ local TaskEventTable = {
 		['PointY'] = 14.08304,
 		['PointZ'] = 437.73,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300741] = {
 		['ID'] = 240300741,
@@ -15793,7 +15793,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300742] = {
 		['ID'] = 240300742,
@@ -15815,7 +15815,7 @@ local TaskEventTable = {
 		['PointY'] = 18,
 		['PointZ'] = 197.52,
 		['Orientation'] = 1.66,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300743] = {
 		['ID'] = 240300743,
@@ -15837,7 +15837,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301001] = {
 		['ID'] = 240301001,
@@ -15859,7 +15859,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301002] = {
 		['ID'] = 240301002,
@@ -15881,7 +15881,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301003] = {
 		['ID'] = 240301003,
@@ -15903,7 +15903,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301004] = {
 		['ID'] = 240301004,
@@ -15925,7 +15925,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301005] = {
 		['ID'] = 240301005,
@@ -15947,7 +15947,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300821] = {
 		['ID'] = 240300821,
@@ -15969,7 +15969,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300822] = {
 		['ID'] = 240300822,
@@ -15991,7 +15991,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300823] = {
 		['ID'] = 240300823,
@@ -16013,7 +16013,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300824] = {
 		['ID'] = 240300824,
@@ -16035,7 +16035,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300825] = {
 		['ID'] = 240300825,
@@ -16057,7 +16057,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300826] = {
 		['ID'] = 240300826,
@@ -16079,7 +16079,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240302001] = {
 		['ID'] = 240302001,
@@ -16101,7 +16101,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240302002] = {
 		['ID'] = 240302002,
@@ -16123,7 +16123,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240302003] = {
 		['ID'] = 240302003,
@@ -16145,7 +16145,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240302004] = {
 		['ID'] = 240302004,
@@ -16167,7 +16167,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240302005] = {
 		['ID'] = 240302005,
@@ -16189,7 +16189,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240302006] = {
 		['ID'] = 240302006,
@@ -16211,7 +16211,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301821] = {
 		['ID'] = 240301821,
@@ -16233,7 +16233,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301822] = {
 		['ID'] = 240301822,
@@ -16255,7 +16255,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301823] = {
 		['ID'] = 240301823,
@@ -16277,7 +16277,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301824] = {
 		['ID'] = 240301824,
@@ -16299,7 +16299,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301825] = {
 		['ID'] = 240301825,
@@ -16321,7 +16321,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301826] = {
 		['ID'] = 240301826,
@@ -16343,7 +16343,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301827] = {
 		['ID'] = 240301827,
@@ -16365,7 +16365,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301828] = {
 		['ID'] = 240301828,
@@ -16387,7 +16387,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301829] = {
 		['ID'] = 240301829,
@@ -16409,7 +16409,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301830] = {
 		['ID'] = 240301830,
@@ -16431,7 +16431,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301831] = {
 		['ID'] = 240301831,
@@ -16453,7 +16453,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301832] = {
 		['ID'] = 240301832,
@@ -16475,7 +16475,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301833] = {
 		['ID'] = 240301833,
@@ -16497,7 +16497,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301834] = {
 		['ID'] = 240301834,
@@ -16519,7 +16519,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301835] = {
 		['ID'] = 240301835,
@@ -16541,7 +16541,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301836] = {
 		['ID'] = 240301836,
@@ -16563,7 +16563,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301837] = {
 		['ID'] = 240301837,
@@ -16585,7 +16585,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301838] = {
 		['ID'] = 240301838,
@@ -16607,7 +16607,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301839] = {
 		['ID'] = 240301839,
@@ -16629,7 +16629,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301840] = {
 		['ID'] = 240301840,
@@ -16651,7 +16651,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301841] = {
 		['ID'] = 240301841,
@@ -16673,7 +16673,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301842] = {
 		['ID'] = 240301842,
@@ -16695,7 +16695,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301843] = {
 		['ID'] = 240301843,
@@ -16717,7 +16717,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301844] = {
 		['ID'] = 240301844,
@@ -16739,7 +16739,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301845] = {
 		['ID'] = 240301845,
@@ -16761,7 +16761,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240302846] = {
 		['ID'] = 240302846,
@@ -16783,7 +16783,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240302847] = {
 		['ID'] = 240302847,
@@ -16805,7 +16805,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301846] = {
 		['ID'] = 240301846,
@@ -16827,7 +16827,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301847] = {
 		['ID'] = 240301847,
@@ -16849,7 +16849,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301848] = {
 		['ID'] = 240301848,
@@ -16871,7 +16871,7 @@ local TaskEventTable = {
 		['PointY'] = 18.853999999999999,
 		['PointZ'] = 166.06800000000001,
 		['Orientation'] = 138.5,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301849] = {
 		['ID'] = 240301849,
@@ -16893,7 +16893,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301850] = {
 		['ID'] = 240301850,
@@ -16915,7 +16915,7 @@ local TaskEventTable = {
 		['PointY'] = 17.695,
 		['PointZ'] = 169.85300000000001,
 		['Orientation'] = -35.119999999999997,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301851] = {
 		['ID'] = 240301851,
@@ -16937,7 +16937,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301852] = {
 		['ID'] = 240301852,
@@ -16959,7 +16959,7 @@ local TaskEventTable = {
 		['PointY'] = 19.356639999999999,
 		['PointZ'] = 150.32,
 		['Orientation'] = -90,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301853] = {
 		['ID'] = 240301853,
@@ -16981,7 +16981,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301854] = {
 		['ID'] = 240301854,
@@ -17003,7 +17003,7 @@ local TaskEventTable = {
 		['PointY'] = 47.334780000000002,
 		['PointZ'] = 353.81,
 		['Orientation'] = 150.80000000000001,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301855] = {
 		['ID'] = 240301855,
@@ -17025,7 +17025,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301856] = {
 		['ID'] = 240301856,
@@ -17047,7 +17047,7 @@ local TaskEventTable = {
 		['PointY'] = 13.290570000000001,
 		['PointZ'] = 276.62419999999997,
 		['Orientation'] = -118.0759,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301857] = {
 		['ID'] = 240301857,
@@ -17069,7 +17069,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301858] = {
 		['ID'] = 240301858,
@@ -17091,7 +17091,7 @@ local TaskEventTable = {
 		['PointY'] = 13.32034,
 		['PointZ'] = 282.16379999999998,
 		['Orientation'] = -101.66,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301859] = {
 		['ID'] = 240301859,
@@ -17113,7 +17113,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301860] = {
 		['ID'] = 240301860,
@@ -17135,7 +17135,7 @@ local TaskEventTable = {
 		['PointY'] = 47.96,
 		['PointZ'] = 408.34,
 		['Orientation'] = 54.29,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301861] = {
 		['ID'] = 240301861,
@@ -17157,7 +17157,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301862] = {
 		['ID'] = 240301862,
@@ -17179,7 +17179,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301863] = {
 		['ID'] = 240301863,
@@ -17201,7 +17201,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301864] = {
 		['ID'] = 240301864,
@@ -17223,7 +17223,7 @@ local TaskEventTable = {
 		['PointY'] = 18.744039999999998,
 		['PointZ'] = 439.202,
 		['Orientation'] = 90,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301865] = {
 		['ID'] = 240301865,
@@ -17245,7 +17245,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301866] = {
 		['ID'] = 240301866,
@@ -17267,7 +17267,7 @@ local TaskEventTable = {
 		['PointY'] = 18.744039999999998,
 		['PointZ'] = 439.202,
 		['Orientation'] = -90,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301867] = {
 		['ID'] = 240301867,
@@ -17289,7 +17289,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301868] = {
 		['ID'] = 240301868,
@@ -17311,7 +17311,7 @@ local TaskEventTable = {
 		['PointY'] = 18.744039999999998,
 		['PointZ'] = 409.61149999999998,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301869] = {
 		['ID'] = 240301869,
@@ -17333,7 +17333,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301870] = {
 		['ID'] = 240301870,
@@ -17355,7 +17355,7 @@ local TaskEventTable = {
 		['PointY'] = 18.744039999999998,
 		['PointZ'] = 407.3,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301871] = {
 		['ID'] = 240301871,
@@ -17377,7 +17377,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301872] = {
 		['ID'] = 240301872,
@@ -17399,7 +17399,7 @@ local TaskEventTable = {
 		['PointY'] = 18.744039999999998,
 		['PointZ'] = 439.202,
 		['Orientation'] = -90,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301873] = {
 		['ID'] = 240301873,
@@ -17421,7 +17421,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301874] = {
 		['ID'] = 240301874,
@@ -17443,7 +17443,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301875] = {
 		['ID'] = 240301875,
@@ -17465,7 +17465,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301876] = {
 		['ID'] = 240301876,
@@ -17487,7 +17487,7 @@ local TaskEventTable = {
 		['PointY'] = 18.637709999999998,
 		['PointZ'] = 206.6454,
 		['Orientation'] = -71.5,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301877] = {
 		['ID'] = 240301877,
@@ -17509,7 +17509,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301878] = {
 		['ID'] = 240301878,
@@ -17531,7 +17531,7 @@ local TaskEventTable = {
 		['PointY'] = 18.702210000000001,
 		['PointZ'] = 179.27,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301879] = {
 		['ID'] = 240301879,
@@ -17553,7 +17553,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301880] = {
 		['ID'] = 240301880,
@@ -17575,7 +17575,7 @@ local TaskEventTable = {
 		['PointY'] = 18.674320000000002,
 		['PointZ'] = 219.57149999999999,
 		['Orientation'] = -101.0629,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301881] = {
 		['ID'] = 240301881,
@@ -17597,7 +17597,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301882] = {
 		['ID'] = 240301882,
@@ -17619,7 +17619,7 @@ local TaskEventTable = {
 		['PointY'] = 22.644020000000001,
 		['PointZ'] = 84.396640000000005,
 		['Orientation'] = -40.495609999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301883] = {
 		['ID'] = 240301883,
@@ -17641,7 +17641,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301884] = {
 		['ID'] = 240301884,
@@ -17663,7 +17663,7 @@ local TaskEventTable = {
 		['PointY'] = 18.674320000000002,
 		['PointZ'] = 219.57149999999999,
 		['Orientation'] = -101.0629,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301885] = {
 		['ID'] = 240301885,
@@ -17685,7 +17685,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301886] = {
 		['ID'] = 240301886,
@@ -17707,7 +17707,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301887] = {
 		['ID'] = 240301887,
@@ -17729,7 +17729,7 @@ local TaskEventTable = {
 		['PointY'] = 18.846509999999999,
 		['PointZ'] = 221.01,
 		['Orientation'] = -84.900019999999998,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301888] = {
 		['ID'] = 240301888,
@@ -17751,7 +17751,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301889] = {
 		['ID'] = 240301889,
@@ -17773,7 +17773,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301890] = {
 		['ID'] = 240301890,
@@ -17795,7 +17795,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301891] = {
 		['ID'] = 240301891,
@@ -17817,7 +17817,7 @@ local TaskEventTable = {
 		['PointY'] = 18.460090000000001,
 		['PointZ'] = 198.17240000000001,
 		['Orientation'] = 39.680759999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301892] = {
 		['ID'] = 240301892,
@@ -17839,7 +17839,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301893] = {
 		['ID'] = 240301893,
@@ -17861,7 +17861,7 @@ local TaskEventTable = {
 		['PointY'] = 17.7,
 		['PointZ'] = 197,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301894] = {
 		['ID'] = 240301894,
@@ -17883,7 +17883,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301895] = {
 		['ID'] = 240301895,
@@ -17905,7 +17905,7 @@ local TaskEventTable = {
 		['PointY'] = 11.360569999999999,
 		['PointZ'] = 208.71250000000001,
 		['Orientation'] = 64.900000000000006,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301896] = {
 		['ID'] = 240301896,
@@ -17927,7 +17927,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301897] = {
 		['ID'] = 240301897,
@@ -17949,7 +17949,7 @@ local TaskEventTable = {
 		['PointY'] = 11.204040000000001,
 		['PointZ'] = 238.93979999999999,
 		['Orientation'] = 117.1,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301898] = {
 		['ID'] = 240301898,
@@ -17971,7 +17971,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301899] = {
 		['ID'] = 240301899,
@@ -17993,7 +17993,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301900] = {
 		['ID'] = 240301900,
@@ -18015,7 +18015,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301901] = {
 		['ID'] = 240301901,
@@ -18037,7 +18037,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303001] = {
 		['ID'] = 240303001,
@@ -18059,7 +18059,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303002] = {
 		['ID'] = 240303002,
@@ -18081,7 +18081,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303003] = {
 		['ID'] = 240303003,
@@ -18103,7 +18103,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303004] = {
 		['ID'] = 240303004,
@@ -18125,7 +18125,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303005] = {
 		['ID'] = 240303005,
@@ -18147,7 +18147,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303006] = {
 		['ID'] = 240303006,
@@ -18169,7 +18169,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303007] = {
 		['ID'] = 240303007,
@@ -18191,7 +18191,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303008] = {
 		['ID'] = 240303008,
@@ -18213,7 +18213,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303009] = {
 		['ID'] = 240303009,
@@ -18235,7 +18235,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303010] = {
 		['ID'] = 240303010,
@@ -18257,7 +18257,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303011] = {
 		['ID'] = 240303011,
@@ -18279,7 +18279,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303012] = {
 		['ID'] = 240303012,
@@ -18301,7 +18301,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303013] = {
 		['ID'] = 240303013,
@@ -18323,7 +18323,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303014] = {
 		['ID'] = 240303014,
@@ -18345,7 +18345,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303015] = {
 		['ID'] = 240303015,
@@ -18367,7 +18367,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303016] = {
 		['ID'] = 240303016,
@@ -18389,7 +18389,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303017] = {
 		['ID'] = 240303017,
@@ -18411,7 +18411,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303018] = {
 		['ID'] = 240303018,
@@ -18433,7 +18433,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303019] = {
 		['ID'] = 240303019,
@@ -18455,7 +18455,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303020] = {
 		['ID'] = 240303020,
@@ -18477,7 +18477,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303021] = {
 		['ID'] = 240303021,
@@ -18499,7 +18499,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303022] = {
 		['ID'] = 240303022,
@@ -18521,7 +18521,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303023] = {
 		['ID'] = 240303023,
@@ -18543,7 +18543,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303024] = {
 		['ID'] = 240303024,
@@ -18565,7 +18565,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303025] = {
 		['ID'] = 240303025,
@@ -18587,7 +18587,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303026] = {
 		['ID'] = 240303026,
@@ -18609,7 +18609,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303027] = {
 		['ID'] = 240303027,
@@ -18631,7 +18631,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303028] = {
 		['ID'] = 240303028,
@@ -18653,7 +18653,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303029] = {
 		['ID'] = 240303029,
@@ -18675,7 +18675,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303030] = {
 		['ID'] = 240303030,
@@ -18697,7 +18697,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303031] = {
 		['ID'] = 240303031,
@@ -18719,7 +18719,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303032] = {
 		['ID'] = 240303032,
@@ -18741,7 +18741,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303033] = {
 		['ID'] = 240303033,
@@ -18763,7 +18763,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303034] = {
 		['ID'] = 240303034,
@@ -18785,7 +18785,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303035] = {
 		['ID'] = 240303035,
@@ -18807,7 +18807,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303036] = {
 		['ID'] = 240303036,
@@ -18829,7 +18829,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303037] = {
 		['ID'] = 240303037,
@@ -18851,7 +18851,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303038] = {
 		['ID'] = 240303038,
@@ -18873,7 +18873,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303039] = {
 		['ID'] = 240303039,
@@ -18895,7 +18895,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303040] = {
 		['ID'] = 240303040,
@@ -18917,7 +18917,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303041] = {
 		['ID'] = 240303041,
@@ -18939,7 +18939,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303042] = {
 		['ID'] = 240303042,
@@ -18961,7 +18961,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303043] = {
 		['ID'] = 240303043,
@@ -18983,7 +18983,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303044] = {
 		['ID'] = 240303044,
@@ -19005,7 +19005,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303045] = {
 		['ID'] = 240303045,
@@ -19027,7 +19027,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303046] = {
 		['ID'] = 240303046,
@@ -19049,7 +19049,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303047] = {
 		['ID'] = 240303047,
@@ -19071,7 +19071,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303048] = {
 		['ID'] = 240303048,
@@ -19093,7 +19093,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303049] = {
 		['ID'] = 240303049,
@@ -19115,7 +19115,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303050] = {
 		['ID'] = 240303050,
@@ -19137,7 +19137,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303051] = {
 		['ID'] = 240303051,
@@ -19159,7 +19159,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303052] = {
 		['ID'] = 240303052,
@@ -19181,7 +19181,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303053] = {
 		['ID'] = 240303053,
@@ -19203,7 +19203,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303054] = {
 		['ID'] = 240303054,
@@ -19225,7 +19225,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303055] = {
 		['ID'] = 240303055,
@@ -19247,7 +19247,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303056] = {
 		['ID'] = 240303056,
@@ -19269,7 +19269,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303057] = {
 		['ID'] = 240303057,
@@ -19291,7 +19291,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303058] = {
 		['ID'] = 240303058,
@@ -19313,7 +19313,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303059] = {
 		['ID'] = 240303059,
@@ -19335,7 +19335,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303060] = {
 		['ID'] = 240303060,
@@ -19357,7 +19357,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303061] = {
 		['ID'] = 240303061,
@@ -19379,7 +19379,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303062] = {
 		['ID'] = 240303062,
@@ -19401,7 +19401,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303063] = {
 		['ID'] = 240303063,
@@ -19423,7 +19423,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303064] = {
 		['ID'] = 240303064,
@@ -19445,7 +19445,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303065] = {
 		['ID'] = 240303065,
@@ -19467,7 +19467,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303066] = {
 		['ID'] = 240303066,
@@ -19489,7 +19489,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303067] = {
 		['ID'] = 240303067,
@@ -19511,7 +19511,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303068] = {
 		['ID'] = 240303068,
@@ -19533,7 +19533,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303069] = {
 		['ID'] = 240303069,
@@ -19555,7 +19555,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303070] = {
 		['ID'] = 240303070,
@@ -19577,7 +19577,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303071] = {
 		['ID'] = 240303071,
@@ -19599,7 +19599,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303072] = {
 		['ID'] = 240303072,
@@ -19621,7 +19621,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303073] = {
 		['ID'] = 240303073,
@@ -19643,7 +19643,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303074] = {
 		['ID'] = 240303074,
@@ -19665,7 +19665,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303075] = {
 		['ID'] = 240303075,
@@ -19687,7 +19687,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303076] = {
 		['ID'] = 240303076,
@@ -19709,7 +19709,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303077] = {
 		['ID'] = 240303077,
@@ -19731,7 +19731,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303078] = {
 		['ID'] = 240303078,
@@ -19753,7 +19753,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303079] = {
 		['ID'] = 240303079,
@@ -19775,7 +19775,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303080] = {
 		['ID'] = 240303080,
@@ -19797,7 +19797,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303081] = {
 		['ID'] = 240303081,
@@ -19819,7 +19819,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303082] = {
 		['ID'] = 240303082,
@@ -19841,7 +19841,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303083] = {
 		['ID'] = 240303083,
@@ -19863,7 +19863,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303084] = {
 		['ID'] = 240303084,
@@ -19885,7 +19885,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303085] = {
 		['ID'] = 240303085,
@@ -19907,7 +19907,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303086] = {
 		['ID'] = 240303086,
@@ -19929,7 +19929,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303087] = {
 		['ID'] = 240303087,
@@ -19951,7 +19951,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303088] = {
 		['ID'] = 240303088,
@@ -19973,7 +19973,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303089] = {
 		['ID'] = 240303089,
@@ -19995,7 +19995,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303090] = {
 		['ID'] = 240303090,
@@ -20017,7 +20017,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303091] = {
 		['ID'] = 240303091,
@@ -20039,7 +20039,7 @@ local TaskEventTable = {
 		['PointY'] = 18.460090000000001,
 		['PointZ'] = 198.17240000000001,
 		['Orientation'] = 39.680759999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303092] = {
 		['ID'] = 240303092,
@@ -20061,7 +20061,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303105] = {
 		['ID'] = 240303105,
@@ -20083,7 +20083,7 @@ local TaskEventTable = {
 		['PointY'] = 20.88184,
 		['PointZ'] = 337.87549999999999,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303106] = {
 		['ID'] = 240303106,
@@ -20105,7 +20105,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303107] = {
 		['ID'] = 240303107,
@@ -20127,7 +20127,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303108] = {
 		['ID'] = 240303108,
@@ -20149,7 +20149,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303109] = {
 		['ID'] = 240303109,
@@ -20171,7 +20171,7 @@ local TaskEventTable = {
 		['PointY'] = 13.32034,
 		['PointZ'] = 281.61110000000002,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303110] = {
 		['ID'] = 240303110,
@@ -20193,7 +20193,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303118] = {
 		['ID'] = 240303118,
@@ -20215,7 +20215,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303119] = {
 		['ID'] = 240303119,
@@ -20237,7 +20237,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303120] = {
 		['ID'] = 240303120,
@@ -20259,7 +20259,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303121] = {
 		['ID'] = 240303121,
@@ -20281,7 +20281,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303122] = {
 		['ID'] = 240303122,
@@ -20303,7 +20303,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303123] = {
 		['ID'] = 240303123,
@@ -20325,7 +20325,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303125] = {
 		['ID'] = 240303125,
@@ -20347,7 +20347,7 @@ local TaskEventTable = {
 		['PointY'] = 19.75563,
 		['PointZ'] = 370.26990000000001,
 		['Orientation'] = -95.300020000000004,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303126] = {
 		['ID'] = 240303126,
@@ -20369,7 +20369,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303127] = {
 		['ID'] = 240303127,
@@ -20391,7 +20391,7 @@ local TaskEventTable = {
 		['PointY'] = 19.75563,
 		['PointZ'] = 370.26990000000001,
 		['Orientation'] = -95.300020000000004,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303128] = {
 		['ID'] = 240303128,
@@ -20413,7 +20413,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303129] = {
 		['ID'] = 240303129,
@@ -20435,7 +20435,7 @@ local TaskEventTable = {
 		['PointY'] = 13.32034,
 		['PointZ'] = 282.16379999999998,
 		['Orientation'] = -101.66,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303130] = {
 		['ID'] = 240303130,
@@ -20457,7 +20457,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303133] = {
 		['ID'] = 240303133,
@@ -20479,7 +20479,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303134] = {
 		['ID'] = 240303134,
@@ -20501,7 +20501,7 @@ local TaskEventTable = {
 		['PointY'] = 13.114039999999999,
 		['PointZ'] = 309.71570000000003,
 		['Orientation'] = 180,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303135] = {
 		['ID'] = 240303135,
@@ -20523,7 +20523,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303136] = {
 		['ID'] = 240303136,
@@ -20545,7 +20545,7 @@ local TaskEventTable = {
 		['PointY'] = 15.91,
 		['PointZ'] = 370.16,
 		['Orientation'] = -92.079800000000006,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303137] = {
 		['ID'] = 240303137,
@@ -20567,7 +20567,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303144] = {
 		['ID'] = 240303144,
@@ -20589,7 +20589,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303145] = {
 		['ID'] = 240303145,
@@ -20611,7 +20611,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303147] = {
 		['ID'] = 240303147,
@@ -20633,7 +20633,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303097] = {
 		['ID'] = 240303097,
@@ -20655,7 +20655,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303098] = {
 		['ID'] = 240303098,
@@ -20677,7 +20677,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303099] = {
 		['ID'] = 240303099,
@@ -20699,7 +20699,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303100] = {
 		['ID'] = 240303100,
@@ -20721,7 +20721,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303101] = {
 		['ID'] = 240303101,
@@ -20743,7 +20743,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303190] = {
 		['ID'] = 240303190,
@@ -20765,7 +20765,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303191] = {
 		['ID'] = 240303191,
@@ -20787,7 +20787,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303192] = {
 		['ID'] = 240303192,
@@ -20809,7 +20809,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304193] = {
 		['ID'] = 240304193,
@@ -20831,7 +20831,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303172] = {
 		['ID'] = 240303172,
@@ -20853,7 +20853,7 @@ local TaskEventTable = {
 		['PointY'] = 55.801000000000002,
 		['PointZ'] = 204.05,
 		['Orientation'] = -151.9,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303173] = {
 		['ID'] = 240303173,
@@ -20875,7 +20875,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303174] = {
 		['ID'] = 240303174,
@@ -20897,7 +20897,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303175] = {
 		['ID'] = 240303175,
@@ -20919,7 +20919,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303178] = {
 		['ID'] = 240303178,
@@ -20941,7 +20941,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303179] = {
 		['ID'] = 240303179,
@@ -20963,7 +20963,7 @@ local TaskEventTable = {
 		['PointY'] = 54.000340000000001,
 		['PointZ'] = 98.822040000000001,
 		['Orientation'] = -10.549989999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303180] = {
 		['ID'] = 240303180,
@@ -20985,7 +20985,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303181] = {
 		['ID'] = 240303181,
@@ -21007,7 +21007,7 @@ local TaskEventTable = {
 		['PointY'] = 54.000340000000001,
 		['PointZ'] = 98.822040000000001,
 		['Orientation'] = -10.549989999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303182] = {
 		['ID'] = 240303182,
@@ -21029,7 +21029,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303183] = {
 		['ID'] = 240303183,
@@ -21051,7 +21051,7 @@ local TaskEventTable = {
 		['PointY'] = 54.000340000000001,
 		['PointZ'] = 98.822040000000001,
 		['Orientation'] = -10.549989999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300056] = {
 		['ID'] = 240300056,
@@ -21073,7 +21073,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303093] = {
 		['ID'] = 240303093,
@@ -21095,7 +21095,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303094] = {
 		['ID'] = 240303094,
@@ -21117,7 +21117,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303095] = {
 		['ID'] = 240303095,
@@ -21139,7 +21139,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303096] = {
 		['ID'] = 240303096,
@@ -21161,7 +21161,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303201] = {
 		['ID'] = 240303201,
@@ -21183,7 +21183,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303202] = {
 		['ID'] = 240303202,
@@ -21205,7 +21205,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303203] = {
 		['ID'] = 240303203,
@@ -21227,7 +21227,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303204] = {
 		['ID'] = 240303204,
@@ -21249,7 +21249,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303205] = {
 		['ID'] = 240303205,
@@ -21271,7 +21271,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303199] = {
 		['ID'] = 240303199,
@@ -21293,7 +21293,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303200] = {
 		['ID'] = 240303200,
@@ -21315,7 +21315,7 @@ local TaskEventTable = {
 		['PointY'] = 19.438780000000001,
 		['PointZ'] = 350.02,
 		['Orientation'] = 2.7,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304201] = {
 		['ID'] = 240304201,
@@ -21337,7 +21337,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303209] = {
 		['ID'] = 240303209,
@@ -21359,7 +21359,7 @@ local TaskEventTable = {
 		['PointY'] = 11.15404,
 		['PointZ'] = 181.35679999999999,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303210] = {
 		['ID'] = 240303210,
@@ -21381,7 +21381,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303211] = {
 		['ID'] = 240303211,
@@ -21403,7 +21403,7 @@ local TaskEventTable = {
 		['PointY'] = 11.15404,
 		['PointZ'] = 182.57,
 		['Orientation'] = 55.6,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303212] = {
 		['ID'] = 240303212,
@@ -21425,7 +21425,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303213] = {
 		['ID'] = 240303213,
@@ -21447,7 +21447,7 @@ local TaskEventTable = {
 		['PointY'] = 11.15404,
 		['PointZ'] = 185.28,
 		['Orientation'] = -156,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303214] = {
 		['ID'] = 240303214,
@@ -21469,7 +21469,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303208] = {
 		['ID'] = 240303208,
@@ -21491,7 +21491,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303131] = {
 		['ID'] = 240303131,
@@ -21513,7 +21513,7 @@ local TaskEventTable = {
 		['PointY'] = 11.31057,
 		['PointZ'] = 185.73480000000001,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303132] = {
 		['ID'] = 240303132,
@@ -21535,7 +21535,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303116] = {
 		['ID'] = 240303116,
@@ -21557,7 +21557,7 @@ local TaskEventTable = {
 		['PointY'] = 11.31057,
 		['PointZ'] = 186.45,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303117] = {
 		['ID'] = 240303117,
@@ -21579,7 +21579,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300246] = {
 		['ID'] = 240300246,
@@ -21601,7 +21601,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303215] = {
 		['ID'] = 240303215,
@@ -21623,7 +21623,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300237] = {
 		['ID'] = 240300237,
@@ -21645,7 +21645,7 @@ local TaskEventTable = {
 		['PointY'] = 21.724250000000001,
 		['PointZ'] = 212.82,
 		['Orientation'] = 90.000010000000003,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300238] = {
 		['ID'] = 240300238,
@@ -21667,7 +21667,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303193] = {
 		['ID'] = 240303193,
@@ -21689,7 +21689,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303194] = {
 		['ID'] = 240303194,
@@ -21711,7 +21711,7 @@ local TaskEventTable = {
 		['PointY'] = 21.724250000000001,
 		['PointZ'] = 212.82,
 		['Orientation'] = 90.000010000000003,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303195] = {
 		['ID'] = 240303195,
@@ -21733,7 +21733,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303197] = {
 		['ID'] = 240303197,
@@ -21755,7 +21755,7 @@ local TaskEventTable = {
 		['PointY'] = 20.042639999999999,
 		['PointZ'] = 225.43,
 		['Orientation'] = 128.6,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303198] = {
 		['ID'] = 240303198,
@@ -21777,7 +21777,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304001] = {
 		['ID'] = 240304001,
@@ -21799,7 +21799,7 @@ local TaskEventTable = {
 		['PointY'] = 21.724250000000001,
 		['PointZ'] = 213.82,
 		['Orientation'] = 90.000010000000003,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304002] = {
 		['ID'] = 240304002,
@@ -21821,7 +21821,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304003] = {
 		['ID'] = 240304003,
@@ -21843,7 +21843,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300208] = {
 		['ID'] = 240300208,
@@ -21865,7 +21865,7 @@ local TaskEventTable = {
 		['PointY'] = 18.579999999999998,
 		['PointZ'] = 221,
 		['Orientation'] = -86,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300209] = {
 		['ID'] = 240300209,
@@ -21887,7 +21887,7 @@ local TaskEventTable = {
 		['PointY'] = 18.579999999999998,
 		['PointZ'] = 217,
 		['Orientation'] = -86,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300210] = {
 		['ID'] = 240300210,
@@ -21909,7 +21909,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300211] = {
 		['ID'] = 240300211,
@@ -21931,7 +21931,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300212] = {
 		['ID'] = 240300212,
@@ -21953,7 +21953,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300213] = {
 		['ID'] = 240300213,
@@ -21975,7 +21975,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301000] = {
 		['ID'] = 240301000,
@@ -21997,7 +21997,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303148] = {
 		['ID'] = 240303148,
@@ -22019,7 +22019,7 @@ local TaskEventTable = {
 		['PointY'] = 18.360220000000002,
 		['PointZ'] = 238.52789999999999,
 		['Orientation'] = -134.4,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303149] = {
 		['ID'] = 240303149,
@@ -22041,7 +22041,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300137] = {
 		['ID'] = 240300137,
@@ -22063,7 +22063,7 @@ local TaskEventTable = {
 		['PointY'] = 21.22,
 		['PointZ'] = 156.44,
 		['Orientation'] = -93.32,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300138] = {
 		['ID'] = 240300138,
@@ -22085,7 +22085,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300139] = {
 		['ID'] = 240300139,
@@ -22107,7 +22107,7 @@ local TaskEventTable = {
 		['PointY'] = 21.267019999999999,
 		['PointZ'] = 162.54,
 		['Orientation'] = -140,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300140] = {
 		['ID'] = 240300140,
@@ -22129,7 +22129,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303124] = {
 		['ID'] = 240303124,
@@ -22151,7 +22151,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303140] = {
 		['ID'] = 240303140,
@@ -22173,7 +22173,7 @@ local TaskEventTable = {
 		['PointY'] = 19.23,
 		['PointZ'] = 157.4,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303141] = {
 		['ID'] = 240303141,
@@ -22195,7 +22195,7 @@ local TaskEventTable = {
 		['PointY'] = 19.658999999999999,
 		['PointZ'] = 159.37899999999999,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303300] = {
 		['ID'] = 240303300,
@@ -22217,7 +22217,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303111] = {
 		['ID'] = 240303111,
@@ -22239,7 +22239,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303112] = {
 		['ID'] = 240303112,
@@ -22261,7 +22261,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303113] = {
 		['ID'] = 240303113,
@@ -22283,7 +22283,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303114] = {
 		['ID'] = 240303114,
@@ -22305,7 +22305,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303115] = {
 		['ID'] = 240303115,
@@ -22327,7 +22327,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303184] = {
 		['ID'] = 240303184,
@@ -22349,7 +22349,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303185] = {
 		['ID'] = 240303185,
@@ -22371,7 +22371,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303186] = {
 		['ID'] = 240303186,
@@ -22393,7 +22393,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300725] = {
 		['ID'] = 240300725,
@@ -22415,7 +22415,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301011] = {
 		['ID'] = 240301011,
@@ -22437,7 +22437,7 @@ local TaskEventTable = {
 		['PointY'] = 17.29,
 		['PointZ'] = 221.37,
 		['Orientation'] = -34.299999999999997,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301012] = {
 		['ID'] = 240301012,
@@ -22459,7 +22459,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301013] = {
 		['ID'] = 240301013,
@@ -22481,7 +22481,7 @@ local TaskEventTable = {
 		['PointY'] = 17.29,
 		['PointZ'] = 221.37,
 		['Orientation'] = -34.299999999999997,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301014] = {
 		['ID'] = 240301014,
@@ -22503,7 +22503,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301015] = {
 		['ID'] = 240301015,
@@ -22525,7 +22525,7 @@ local TaskEventTable = {
 		['PointY'] = 18.999120000000001,
 		['PointZ'] = 247.465,
 		['Orientation'] = 176.04499999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301016] = {
 		['ID'] = 240301016,
@@ -22547,7 +22547,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301017] = {
 		['ID'] = 240301017,
@@ -22569,7 +22569,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301018] = {
 		['ID'] = 240301018,
@@ -22591,7 +22591,7 @@ local TaskEventTable = {
 		['PointY'] = 19.2,
 		['PointZ'] = 250.58269999999999,
 		['Orientation'] = 178.45339999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301019] = {
 		['ID'] = 240301019,
@@ -22613,7 +22613,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301020] = {
 		['ID'] = 240301020,
@@ -22635,7 +22635,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301021] = {
 		['ID'] = 240301021,
@@ -22657,7 +22657,7 @@ local TaskEventTable = {
 		['PointY'] = 18.550529999999998,
 		['PointZ'] = 237.72649999999999,
 		['Orientation'] = -166.42189999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301022] = {
 		['ID'] = 240301022,
@@ -22679,7 +22679,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240301023] = {
 		['ID'] = 240301023,
@@ -22701,7 +22701,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304180] = {
 		['ID'] = 240304180,
@@ -22723,7 +22723,7 @@ local TaskEventTable = {
 		['PointY'] = 20.025670000000002,
 		['PointZ'] = 284.5539,
 		['Orientation'] = 132.9,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304181] = {
 		['ID'] = 240304181,
@@ -22745,7 +22745,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303150] = {
 		['ID'] = 240303150,
@@ -22767,7 +22767,7 @@ local TaskEventTable = {
 		['PointY'] = 20.010819999999999,
 		['PointZ'] = 309.62,
 		['Orientation'] = 96.63,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303151] = {
 		['ID'] = 240303151,
@@ -22789,7 +22789,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303154] = {
 		['ID'] = 240303154,
@@ -22811,7 +22811,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303152] = {
 		['ID'] = 240303152,
@@ -22833,7 +22833,7 @@ local TaskEventTable = {
 		['PointY'] = 15.19886,
 		['PointZ'] = 370.51,
 		['Orientation'] = 163.9,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303153] = {
 		['ID'] = 240303153,
@@ -22855,7 +22855,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303155] = {
 		['ID'] = 240303155,
@@ -22877,7 +22877,7 @@ local TaskEventTable = {
 		['PointY'] = 15.19886,
 		['PointZ'] = 367.86,
 		['Orientation'] = 163.9,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303156] = {
 		['ID'] = 240303156,
@@ -22899,7 +22899,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303157] = {
 		['ID'] = 240303157,
@@ -22921,7 +22921,7 @@ local TaskEventTable = {
 		['PointY'] = 15.19886,
 		['PointZ'] = 370.51,
 		['Orientation'] = 163.9,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303158] = {
 		['ID'] = 240303158,
@@ -22943,7 +22943,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303159] = {
 		['ID'] = 240303159,
@@ -22965,7 +22965,7 @@ local TaskEventTable = {
 		['PointY'] = 15.19886,
 		['PointZ'] = 367.86,
 		['Orientation'] = 163.9,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303160] = {
 		['ID'] = 240303160,
@@ -22987,7 +22987,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240300005] = {
 		['ID'] = 240300005,
@@ -23009,7 +23009,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303102] = {
 		['ID'] = 240303102,
@@ -23031,7 +23031,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303161] = {
 		['ID'] = 240303161,
@@ -23053,7 +23053,7 @@ local TaskEventTable = {
 		['PointY'] = 15.19886,
 		['PointZ'] = 370.51,
 		['Orientation'] = 163.9,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303162] = {
 		['ID'] = 240303162,
@@ -23075,7 +23075,7 @@ local TaskEventTable = {
 		['PointY'] = 15.19886,
 		['PointZ'] = 367.86,
 		['Orientation'] = 163.9,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303163] = {
 		['ID'] = 240303163,
@@ -23097,7 +23097,7 @@ local TaskEventTable = {
 		['PointY'] = 20.64,
 		['PointZ'] = 346.29,
 		['Orientation'] = -102.9,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303164] = {
 		['ID'] = 240303164,
@@ -23119,7 +23119,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303165] = {
 		['ID'] = 240303165,
@@ -23141,7 +23141,7 @@ local TaskEventTable = {
 		['PointY'] = 20.64,
 		['PointZ'] = 342.79,
 		['Orientation'] = 63.1,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303166] = {
 		['ID'] = 240303166,
@@ -23163,7 +23163,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303167] = {
 		['ID'] = 240303167,
@@ -23185,7 +23185,7 @@ local TaskEventTable = {
 		['PointY'] = 20.84,
 		['PointZ'] = 345.98,
 		['Orientation'] = -13.540010000000001,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303168] = {
 		['ID'] = 240303168,
@@ -23207,7 +23207,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303169] = {
 		['ID'] = 240303169,
@@ -23225,11 +23225,11 @@ local TaskEventTable = {
 		['ChangeTarget2'] = 0,
 		['Num2'] = 0,
 		['SceneId'] = 155000013,
-		['PointX'] = 96.47,
+		['PointX'] = 98.19,
 		['PointY'] = 20.64,
-		['PointZ'] = 346.29,
+		['PointZ'] = 347.93,
 		['Orientation'] = -102.9,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303170] = {
 		['ID'] = 240303170,
@@ -23251,7 +23251,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303171] = {
 		['ID'] = 240303171,
@@ -23273,7 +23273,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240305001] = {
 		['ID'] = 240305001,
@@ -23295,7 +23295,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303176] = {
 		['ID'] = 240303176,
@@ -23313,11 +23313,11 @@ local TaskEventTable = {
 		['ChangeTarget2'] = 0,
 		['Num2'] = 0,
 		['SceneId'] = 155000013,
-		['PointX'] = 344.12790000000001,
+		['PointX'] = 343.87529999999998,
 		['PointY'] = 45.052799999999998,
-		['PointZ'] = 253.97309999999999,
+		['PointZ'] = 267.32639999999998,
 		['Orientation'] = -159.19999999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303177] = {
 		['ID'] = 240303177,
@@ -23339,7 +23339,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304179] = {
 		['ID'] = 240304179,
@@ -23357,11 +23357,11 @@ local TaskEventTable = {
 		['ChangeTarget2'] = 0,
 		['Num2'] = 0,
 		['SceneId'] = 155000013,
-		['PointX'] = 344.12790000000001,
+		['PointX'] = 343.87529999999998,
 		['PointY'] = 45.052799999999998,
-		['PointZ'] = 253.97309999999999,
+		['PointZ'] = 267.32639999999998,
 		['Orientation'] = -159.19999999999999,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240305002] = {
 		['ID'] = 240305002,
@@ -23383,7 +23383,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304182] = {
 		['ID'] = 240304182,
@@ -23405,7 +23405,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304183] = {
 		['ID'] = 240304183,
@@ -23427,7 +23427,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304184] = {
 		['ID'] = 240304184,
@@ -23449,7 +23449,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304185] = {
 		['ID'] = 240304185,
@@ -23471,7 +23471,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304186] = {
 		['ID'] = 240304186,
@@ -23493,7 +23493,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304187] = {
 		['ID'] = 240304187,
@@ -23515,7 +23515,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304188] = {
 		['ID'] = 240304188,
@@ -23537,7 +23537,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304189] = {
 		['ID'] = 240304189,
@@ -23559,7 +23559,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304190] = {
 		['ID'] = 240304190,
@@ -23581,7 +23581,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304191] = {
 		['ID'] = 240304191,
@@ -23603,7 +23603,7 @@ local TaskEventTable = {
 		['PointY'] = 20.051200000000001,
 		['PointZ'] = 223.0341,
 		['Orientation'] = 77.284000000000006,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304192] = {
 		['ID'] = 240304192,
@@ -23625,7 +23625,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240305003] = {
 		['ID'] = 240305003,
@@ -23647,7 +23647,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303103] = {
 		['ID'] = 240303103,
@@ -23669,7 +23669,7 @@ local TaskEventTable = {
 		['PointY'] = 20.88184,
 		['PointZ'] = 337.87549999999999,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240303104] = {
 		['ID'] = 240303104,
@@ -23691,7 +23691,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304194] = {
 		['ID'] = 240304194,
@@ -23713,7 +23713,7 @@ local TaskEventTable = {
 		['PointY'] = 20.88184,
 		['PointZ'] = 337.87549999999999,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304195] = {
 		['ID'] = 240304195,
@@ -23735,7 +23735,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304196] = {
 		['ID'] = 240304196,
@@ -23757,7 +23757,7 @@ local TaskEventTable = {
 		['PointY'] = 20.88184,
 		['PointZ'] = 337.87549999999999,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304197] = {
 		['ID'] = 240304197,
@@ -23779,7 +23779,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304198] = {
 		['ID'] = 240304198,
@@ -23801,7 +23801,7 @@ local TaskEventTable = {
 		['PointY'] = 20.042639999999999,
 		['PointZ'] = 225.43,
 		['Orientation'] = 128.6,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304199] = {
 		['ID'] = 240304199,
@@ -23823,7 +23823,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240304200] = {
 		['ID'] = 240304200,
@@ -23845,7 +23845,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306000] = {
 		['ID'] = 240306000,
@@ -23867,7 +23867,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306001] = {
 		['ID'] = 240306001,
@@ -23889,7 +23889,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306002] = {
 		['ID'] = 240306002,
@@ -23911,7 +23911,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306003] = {
 		['ID'] = 240306003,
@@ -23933,7 +23933,7 @@ local TaskEventTable = {
 		['PointY'] = 18.36553,
 		['PointZ'] = 161.1397,
 		['Orientation'] = -90,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306004] = {
 		['ID'] = 240306004,
@@ -23955,7 +23955,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306005] = {
 		['ID'] = 240306005,
@@ -23977,7 +23977,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306006] = {
 		['ID'] = 240306006,
@@ -23999,7 +23999,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306007] = {
 		['ID'] = 240306007,
@@ -24021,7 +24021,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306008] = {
 		['ID'] = 240306008,
@@ -24043,7 +24043,7 @@ local TaskEventTable = {
 		['PointY'] = 47,
 		['PointZ'] = 359,
 		['Orientation'] = 175,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306009] = {
 		['ID'] = 240306009,
@@ -24065,7 +24065,7 @@ local TaskEventTable = {
 		['PointY'] = 17.89808,
 		['PointZ'] = 262.14530000000002,
 		['Orientation'] = -90,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306010] = {
 		['ID'] = 240306010,
@@ -24087,7 +24087,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306011] = {
 		['ID'] = 240306011,
@@ -24109,7 +24109,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306012] = {
 		['ID'] = 240306012,
@@ -24131,7 +24131,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306013] = {
 		['ID'] = 240306013,
@@ -24153,7 +24153,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306014] = {
 		['ID'] = 240306014,
@@ -24175,7 +24175,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306015] = {
 		['ID'] = 240306015,
@@ -24197,7 +24197,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306016] = {
 		['ID'] = 240306016,
@@ -24219,7 +24219,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306017] = {
 		['ID'] = 240306017,
@@ -24241,7 +24241,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306018] = {
 		['ID'] = 240306018,
@@ -24263,7 +24263,7 @@ local TaskEventTable = {
 		['PointY'] = 57.322310000000002,
 		['PointZ'] = 32.19,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306019] = {
 		['ID'] = 240306019,
@@ -24285,7 +24285,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306020] = {
 		['ID'] = 240306020,
@@ -24307,7 +24307,7 @@ local TaskEventTable = {
 		['PointY'] = 19.309999999999999,
 		['PointZ'] = 264.90030000000002,
 		['Orientation'] = -180,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306021] = {
 		['ID'] = 240306021,
@@ -24329,7 +24329,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306022] = {
 		['ID'] = 240306022,
@@ -24351,7 +24351,7 @@ local TaskEventTable = {
 		['PointY'] = 19.34,
 		['PointZ'] = 264.90030000000002,
 		['Orientation'] = -180,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306023] = {
 		['ID'] = 240306023,
@@ -24373,7 +24373,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306024] = {
 		['ID'] = 240306024,
@@ -24395,7 +24395,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306025] = {
 		['ID'] = 240306025,
@@ -24417,7 +24417,7 @@ local TaskEventTable = {
 		['PointY'] = 35.673229999999997,
 		['PointZ'] = 281.31180000000001,
 		['Orientation'] = -180,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306026] = {
 		['ID'] = 240306026,
@@ -24439,7 +24439,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306027] = {
 		['ID'] = 240306027,
@@ -24461,7 +24461,7 @@ local TaskEventTable = {
 		['PointY'] = 47.392690000000002,
 		['PointZ'] = 343.30270000000002,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306028] = {
 		['ID'] = 240306028,
@@ -24483,7 +24483,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306029] = {
 		['ID'] = 240306029,
@@ -24505,7 +24505,7 @@ local TaskEventTable = {
 		['PointY'] = 19.042739999999998,
 		['PointZ'] = 259.76549999999997,
 		['Orientation'] = -90,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306030] = {
 		['ID'] = 240306030,
@@ -24527,7 +24527,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306031] = {
 		['ID'] = 240306031,
@@ -24549,7 +24549,7 @@ local TaskEventTable = {
 		['PointY'] = 19.82471,
 		['PointZ'] = 227.2679,
 		['Orientation'] = -90,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306032] = {
 		['ID'] = 240306032,
@@ -24571,7 +24571,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306033] = {
 		['ID'] = 240306033,
@@ -24593,7 +24593,7 @@ local TaskEventTable = {
 		['PointY'] = 19.82471,
 		['PointZ'] = 227.2679,
 		['Orientation'] = -90,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306034] = {
 		['ID'] = 240306034,
@@ -24615,7 +24615,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306035] = {
 		['ID'] = 240306035,
@@ -24637,7 +24637,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306036] = {
 		['ID'] = 240306036,
@@ -24659,7 +24659,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306037] = {
 		['ID'] = 240306037,
@@ -24681,7 +24681,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306038] = {
 		['ID'] = 240306038,
@@ -24703,7 +24703,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306039] = {
 		['ID'] = 240306039,
@@ -24725,7 +24725,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306040] = {
 		['ID'] = 240306040,
@@ -24747,7 +24747,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306041] = {
 		['ID'] = 240306041,
@@ -24769,7 +24769,7 @@ local TaskEventTable = {
 		['PointY'] = 23.310749999999999,
 		['PointZ'] = 91.82,
 		['Orientation'] = -180,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306042] = {
 		['ID'] = 240306042,
@@ -24791,7 +24791,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306043] = {
 		['ID'] = 240306043,
@@ -24813,7 +24813,7 @@ local TaskEventTable = {
 		['PointY'] = 23.310749999999999,
 		['PointZ'] = 88.65,
 		['Orientation'] = -94.75,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306044] = {
 		['ID'] = 240306044,
@@ -24835,7 +24835,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306045] = {
 		['ID'] = 240306045,
@@ -24857,7 +24857,7 @@ local TaskEventTable = {
 		['PointY'] = 23.310749999999999,
 		['PointZ'] = 85.66,
 		['Orientation'] = -90,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306046] = {
 		['ID'] = 240306046,
@@ -24879,7 +24879,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306047] = {
 		['ID'] = 240306047,
@@ -24901,7 +24901,7 @@ local TaskEventTable = {
 		['PointY'] = 23.310749999999999,
 		['PointZ'] = 91.86,
 		['Orientation'] = -90,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306048] = {
 		['ID'] = 240306048,
@@ -24923,7 +24923,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306049] = {
 		['ID'] = 240306049,
@@ -24945,7 +24945,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306050] = {
 		['ID'] = 240306050,
@@ -24967,7 +24967,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306051] = {
 		['ID'] = 240306051,
@@ -24989,7 +24989,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306052] = {
 		['ID'] = 240306052,
@@ -25011,7 +25011,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306053] = {
 		['ID'] = 240306053,
@@ -25033,7 +25033,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306054] = {
 		['ID'] = 240306054,
@@ -25055,7 +25055,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306055] = {
 		['ID'] = 240306055,
@@ -25077,7 +25077,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306056] = {
 		['ID'] = 240306056,
@@ -25099,7 +25099,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306057] = {
 		['ID'] = 240306057,
@@ -25121,7 +25121,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306058] = {
 		['ID'] = 240306058,
@@ -25143,7 +25143,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306059] = {
 		['ID'] = 240306059,
@@ -25165,7 +25165,7 @@ local TaskEventTable = {
 		['PointY'] = 24.83,
 		['PointZ'] = 29.771999999999998,
 		['Orientation'] = 150,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306060] = {
 		['ID'] = 240306060,
@@ -25187,7 +25187,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306061] = {
 		['ID'] = 240306061,
@@ -25209,7 +25209,7 @@ local TaskEventTable = {
 		['PointY'] = 24.88,
 		['PointZ'] = 26.85,
 		['Orientation'] = 19.63,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306062] = {
 		['ID'] = 240306062,
@@ -25231,7 +25231,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306063] = {
 		['ID'] = 240306063,
@@ -25253,7 +25253,7 @@ local TaskEventTable = {
 		['PointY'] = 23.4,
 		['PointZ'] = 57.87,
 		['Orientation'] = 270,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306064] = {
 		['ID'] = 240306064,
@@ -25275,7 +25275,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306065] = {
 		['ID'] = 240306065,
@@ -25297,7 +25297,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306066] = {
 		['ID'] = 240306066,
@@ -25319,7 +25319,7 @@ local TaskEventTable = {
 		['PointY'] = 23.310749999999999,
 		['PointZ'] = 54.79,
 		['Orientation'] = -80.844210000000004,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306067] = {
 		['ID'] = 240306067,
@@ -25341,7 +25341,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306068] = {
 		['ID'] = 240306068,
@@ -25363,7 +25363,7 @@ local TaskEventTable = {
 		['PointY'] = 24.6,
 		['PointZ'] = 33.452019999999997,
 		['Orientation'] = -90,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306069] = {
 		['ID'] = 240306069,
@@ -25385,7 +25385,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306070] = {
 		['ID'] = 240306070,
@@ -25407,7 +25407,7 @@ local TaskEventTable = {
 		['PointY'] = 24.6,
 		['PointZ'] = 35.770000000000003,
 		['Orientation'] = -110,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306071] = {
 		['ID'] = 240306071,
@@ -25429,7 +25429,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306072] = {
 		['ID'] = 240306072,
@@ -25451,7 +25451,7 @@ local TaskEventTable = {
 		['PointY'] = 24.6,
 		['PointZ'] = 36.97,
 		['Orientation'] = -120,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306073] = {
 		['ID'] = 240306073,
@@ -25473,7 +25473,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306074] = {
 		['ID'] = 240306074,
@@ -25495,7 +25495,7 @@ local TaskEventTable = {
 		['PointY'] = 24.6,
 		['PointZ'] = 37.340000000000003,
 		['Orientation'] = -140,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306075] = {
 		['ID'] = 240306075,
@@ -25517,7 +25517,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306076] = {
 		['ID'] = 240306076,
@@ -25539,7 +25539,7 @@ local TaskEventTable = {
 		['PointY'] = 55.801000000000002,
 		['PointZ'] = 204.05,
 		['Orientation'] = -151.9,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306077] = {
 		['ID'] = 240306077,
@@ -25561,7 +25561,7 @@ local TaskEventTable = {
 		['PointY'] = 23.310749999999999,
 		['PointZ'] = 54.79,
 		['Orientation'] = -80.844210000000004,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306078] = {
 		['ID'] = 240306078,
@@ -25583,7 +25583,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306079] = {
 		['ID'] = 240306079,
@@ -25605,7 +25605,7 @@ local TaskEventTable = {
 		['PointY'] = 24.44,
 		['PointZ'] = 37.94,
 		['Orientation'] = -101.88200000000001,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306080] = {
 		['ID'] = 240306080,
@@ -25627,7 +25627,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306081] = {
 		['ID'] = 240306081,
@@ -25649,7 +25649,7 @@ local TaskEventTable = {
 		['PointY'] = 23.4,
 		['PointZ'] = 78.781999999999996,
 		['Orientation'] = -80.844210000000004,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306082] = {
 		['ID'] = 240306082,
@@ -25671,7 +25671,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306083] = {
 		['ID'] = 240306083,
@@ -25692,8 +25692,8 @@ local TaskEventTable = {
 		['PointX'] = 281.52,
 		['PointY'] = 23.4,
 		['PointZ'] = 78.781999999999996,
-		['Orientation'] = -80.844210000000004,
-		['Anglecamera'] = '0'
+		['Orientation'] = -180.84421,
+		['Anglecamera'] = {0}
 		},
 	[240306084] = {
 		['ID'] = 240306084,
@@ -25715,7 +25715,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '0'
+		['Anglecamera'] = {0}
 		},
 	[240306170] = {
 		['ID'] = 240306170,
@@ -25723,7 +25723,7 @@ local TaskEventTable = {
 		['EventType'] = 47,
 		['EventTarget'] = 0,
 		['EventNum'] = 1,
-		['EventNum1'] = '493.3203,20.58604,228.0883,26.05507,-48.45914,0',
+		['EventNum1'] = '1',
 		['EventIcon'] = '0',
 		['IconTillte'] = '0',
 		['ChangeTarget1'] = 0,
@@ -25737,7 +25737,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = '493,20,228,26,-48,0'
+		['Anglecamera'] = {494,17,226,19,-35,4}
 		},
 	[240306085] = {
 		['ID'] = 240306085,
@@ -25759,7 +25759,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306086] = {
 		['ID'] = 240306086,
@@ -25781,7 +25781,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306087] = {
 		['ID'] = 240306087,
@@ -25803,7 +25803,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306088] = {
 		['ID'] = 240306088,
@@ -25825,7 +25825,7 @@ local TaskEventTable = {
 		['PointY'] = 18.899999999999999,
 		['PointZ'] = 170,
 		['Orientation'] = 24,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306089] = {
 		['ID'] = 240306089,
@@ -25847,7 +25847,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306090] = {
 		['ID'] = 240306090,
@@ -25869,7 +25869,7 @@ local TaskEventTable = {
 		['PointY'] = 21.308820000000001,
 		['PointZ'] = 237.0069,
 		['Orientation'] = -90,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306091] = {
 		['ID'] = 240306091,
@@ -25891,7 +25891,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306092] = {
 		['ID'] = 240306092,
@@ -25913,7 +25913,7 @@ local TaskEventTable = {
 		['PointY'] = 21.308820000000001,
 		['PointZ'] = 228.42099999999999,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306093] = {
 		['ID'] = 240306093,
@@ -25935,7 +25935,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306094] = {
 		['ID'] = 240306094,
@@ -25957,7 +25957,7 @@ local TaskEventTable = {
 		['PointY'] = 21.308820000000001,
 		['PointZ'] = 228.42099999999999,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306095] = {
 		['ID'] = 240306095,
@@ -25979,7 +25979,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306096] = {
 		['ID'] = 240306096,
@@ -26001,7 +26001,7 @@ local TaskEventTable = {
 		['PointY'] = 21.308820000000001,
 		['PointZ'] = 228.42099999999999,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306097] = {
 		['ID'] = 240306097,
@@ -26023,7 +26023,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306098] = {
 		['ID'] = 240306098,
@@ -26045,7 +26045,7 @@ local TaskEventTable = {
 		['PointY'] = 21.308820000000001,
 		['PointZ'] = 228.42099999999999,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306099] = {
 		['ID'] = 240306099,
@@ -26067,7 +26067,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306100] = {
 		['ID'] = 240306100,
@@ -26089,7 +26089,7 @@ local TaskEventTable = {
 		['PointY'] = 21.308820000000001,
 		['PointZ'] = 237.47,
 		['Orientation'] = -90,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306101] = {
 		['ID'] = 240306101,
@@ -26111,7 +26111,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306102] = {
 		['ID'] = 240306102,
@@ -26133,7 +26133,7 @@ local TaskEventTable = {
 		['PointY'] = 21.308820000000001,
 		['PointZ'] = 234.93,
 		['Orientation'] = -90,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306103] = {
 		['ID'] = 240306103,
@@ -26155,7 +26155,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306104] = {
 		['ID'] = 240306104,
@@ -26177,7 +26177,7 @@ local TaskEventTable = {
 		['PointY'] = 21.308820000000001,
 		['PointZ'] = 231.86,
 		['Orientation'] = -90,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306105] = {
 		['ID'] = 240306105,
@@ -26199,7 +26199,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306106] = {
 		['ID'] = 240306106,
@@ -26219,9 +26219,9 @@ local TaskEventTable = {
 		['SceneId'] = 155000008,
 		['PointX'] = 402.6266,
 		['PointY'] = 21.308820000000001,
-		['PointZ'] = 237.0069,
+		['PointZ'] = 349.27749999999997,
 		['Orientation'] = -90,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306107] = {
 		['ID'] = 240306107,
@@ -26243,7 +26243,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306108] = {
 		['ID'] = 240306108,
@@ -26261,11 +26261,11 @@ local TaskEventTable = {
 		['ChangeTarget2'] = 0,
 		['Num2'] = 0,
 		['SceneId'] = 155000008,
-		['PointX'] = 333.24239999999998,
+		['PointX'] = 402.6266,
 		['PointY'] = 21.308820000000001,
-		['PointZ'] = 228.42099999999999,
+		['PointZ'] = 347.27749999999997,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306109] = {
 		['ID'] = 240306109,
@@ -26287,7 +26287,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306110] = {
 		['ID'] = 240306110,
@@ -26309,7 +26309,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306111] = {
 		['ID'] = 240306111,
@@ -26331,7 +26331,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306112] = {
 		['ID'] = 240306112,
@@ -26353,7 +26353,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306113] = {
 		['ID'] = 240306113,
@@ -26375,7 +26375,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306114] = {
 		['ID'] = 240306114,
@@ -26397,7 +26397,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306115] = {
 		['ID'] = 240306115,
@@ -26419,7 +26419,7 @@ local TaskEventTable = {
 		['PointY'] = 21.308820000000001,
 		['PointZ'] = 250.22,
 		['Orientation'] = 180,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306116] = {
 		['ID'] = 240306116,
@@ -26441,7 +26441,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306117] = {
 		['ID'] = 240306117,
@@ -26463,7 +26463,7 @@ local TaskEventTable = {
 		['PointY'] = 21.308820000000001,
 		['PointZ'] = 246.16300000000001,
 		['Orientation'] = 90,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306118] = {
 		['ID'] = 240306118,
@@ -26485,7 +26485,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306119] = {
 		['ID'] = 240306119,
@@ -26507,7 +26507,7 @@ local TaskEventTable = {
 		['PointY'] = 24.86382,
 		['PointZ'] = 360.24779999999998,
 		['Orientation'] = 90,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306120] = {
 		['ID'] = 240306120,
@@ -26529,7 +26529,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306121] = {
 		['ID'] = 240306121,
@@ -26551,7 +26551,7 @@ local TaskEventTable = {
 		['PointY'] = 24.86382,
 		['PointZ'] = 363.8098,
 		['Orientation'] = -120,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306122] = {
 		['ID'] = 240306122,
@@ -26573,7 +26573,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306123] = {
 		['ID'] = 240306123,
@@ -26595,7 +26595,7 @@ local TaskEventTable = {
 		['PointY'] = 24.86382,
 		['PointZ'] = 361.73390000000001,
 		['Orientation'] = -110,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306124] = {
 		['ID'] = 240306124,
@@ -26617,7 +26617,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306125] = {
 		['ID'] = 240306125,
@@ -26639,7 +26639,7 @@ local TaskEventTable = {
 		['PointY'] = 24.86382,
 		['PointZ'] = 359.18610000000001,
 		['Orientation'] = -80,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306126] = {
 		['ID'] = 240306126,
@@ -26661,7 +26661,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306127] = {
 		['ID'] = 240306127,
@@ -26683,7 +26683,7 @@ local TaskEventTable = {
 		['PointY'] = 24.86382,
 		['PointZ'] = 357.28,
 		['Orientation'] = -60,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306128] = {
 		['ID'] = 240306128,
@@ -26705,7 +26705,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306129] = {
 		['ID'] = 240306129,
@@ -26727,7 +26727,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306130] = {
 		['ID'] = 240306130,
@@ -26749,7 +26749,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306131] = {
 		['ID'] = 240306131,
@@ -26771,7 +26771,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306132] = {
 		['ID'] = 240306132,
@@ -26793,7 +26793,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306133] = {
 		['ID'] = 240306133,
@@ -26815,7 +26815,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306134] = {
 		['ID'] = 240306134,
@@ -26837,7 +26837,7 @@ local TaskEventTable = {
 		['PointY'] = 26.417570000000001,
 		['PointZ'] = 362.09789999999998,
 		['Orientation'] = -90,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306135] = {
 		['ID'] = 240306135,
@@ -26859,7 +26859,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306136] = {
 		['ID'] = 240306136,
@@ -26881,7 +26881,7 @@ local TaskEventTable = {
 		['PointY'] = 26.417570000000001,
 		['PointZ'] = 360.33089999999999,
 		['Orientation'] = -20,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306137] = {
 		['ID'] = 240306137,
@@ -26903,7 +26903,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306138] = {
 		['ID'] = 240306138,
@@ -26925,7 +26925,7 @@ local TaskEventTable = {
 		['PointY'] = 26.417570000000001,
 		['PointZ'] = 359.3999,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306139] = {
 		['ID'] = 240306139,
@@ -26947,7 +26947,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306140] = {
 		['ID'] = 240306140,
@@ -26969,7 +26969,7 @@ local TaskEventTable = {
 		['PointY'] = 26.417570000000001,
 		['PointZ'] = 359.3999,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306141] = {
 		['ID'] = 240306141,
@@ -26991,7 +26991,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306142] = {
 		['ID'] = 240306142,
@@ -27013,7 +27013,7 @@ local TaskEventTable = {
 		['PointY'] = 26.417570000000001,
 		['PointZ'] = 366.15559999999999,
 		['Orientation'] = 180,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306143] = {
 		['ID'] = 240306143,
@@ -27035,7 +27035,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306144] = {
 		['ID'] = 240306144,
@@ -27057,7 +27057,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306145] = {
 		['ID'] = 240306145,
@@ -27079,7 +27079,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306146] = {
 		['ID'] = 240306146,
@@ -27101,7 +27101,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306147] = {
 		['ID'] = 240306147,
@@ -27123,7 +27123,7 @@ local TaskEventTable = {
 		['PointY'] = 19.957100000000001,
 		['PointZ'] = 147.8965,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306148] = {
 		['ID'] = 240306148,
@@ -27145,12 +27145,12 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306149] = {
 		['ID'] = 240306149,
 		['EventClass'] = 3,
-		['EventType'] = 8,
+		['EventType'] = 32,
 		['EventTarget'] = 240404148,
 		['EventNum'] = 1,
 		['EventNum1'] = '1',
@@ -27167,7 +27167,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306150] = {
 		['ID'] = 240306150,
@@ -27189,7 +27189,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306151] = {
 		['ID'] = 240306151,
@@ -27211,7 +27211,7 @@ local TaskEventTable = {
 		['PointY'] = 21.74109,
 		['PointZ'] = 139.327,
 		['Orientation'] = -11,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306152] = {
 		['ID'] = 240306152,
@@ -27233,7 +27233,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306153] = {
 		['ID'] = 240306153,
@@ -27255,7 +27255,7 @@ local TaskEventTable = {
 		['PointY'] = 15.01904,
 		['PointZ'] = 95.14,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306154] = {
 		['ID'] = 240306154,
@@ -27277,7 +27277,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306155] = {
 		['ID'] = 240306155,
@@ -27299,7 +27299,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306156] = {
 		['ID'] = 240306156,
@@ -27321,7 +27321,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306157] = {
 		['ID'] = 240306157,
@@ -27343,7 +27343,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306158] = {
 		['ID'] = 240306158,
@@ -27365,7 +27365,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306159] = {
 		['ID'] = 240306159,
@@ -27387,7 +27387,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306160] = {
 		['ID'] = 240306160,
@@ -27409,12 +27409,12 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306161] = {
 		['ID'] = 240306161,
 		['EventClass'] = 2,
-		['EventType'] = 8,
+		['EventType'] = 32,
 		['EventTarget'] = 240404152,
 		['EventNum'] = 1,
 		['EventNum1'] = '1',
@@ -27431,7 +27431,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306162] = {
 		['ID'] = 240306162,
@@ -27453,12 +27453,12 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306163] = {
 		['ID'] = 240306163,
 		['EventClass'] = 3,
-		['EventType'] = 8,
+		['EventType'] = 32,
 		['EventTarget'] = 240404153,
 		['EventNum'] = 1,
 		['EventNum1'] = '1',
@@ -27475,7 +27475,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306164] = {
 		['ID'] = 240306164,
@@ -27497,7 +27497,7 @@ local TaskEventTable = {
 		['PointY'] = 21.308820000000001,
 		['PointZ'] = 271.0027,
 		['Orientation'] = -90,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306165] = {
 		['ID'] = 240306165,
@@ -27519,7 +27519,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306166] = {
 		['ID'] = 240306166,
@@ -27541,7 +27541,7 @@ local TaskEventTable = {
 		['PointY'] = 21.308820000000001,
 		['PointZ'] = 272.83,
 		['Orientation'] = -170,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306167] = {
 		['ID'] = 240306167,
@@ -27563,7 +27563,7 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306168] = {
 		['ID'] = 240306168,
@@ -27585,7 +27585,7 @@ local TaskEventTable = {
 		['PointY'] = 21.308820000000001,
 		['PointZ'] = 272.83,
 		['Orientation'] = -170,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
 		},
 	[240306169] = {
 		['ID'] = 240306169,
@@ -27607,7 +27607,535 @@ local TaskEventTable = {
 		['PointY'] = 0,
 		['PointZ'] = 0,
 		['Orientation'] = 0,
-		['Anglecamera'] = ''
+		['Anglecamera'] = {}
+		},
+	[240306171] = {
+		['ID'] = 240306171,
+		['EventClass'] = 2,
+		['EventType'] = 7,
+		['EventTarget'] = 152031055,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 402.6266,
+		['PointY'] = 21.308820000000001,
+		['PointZ'] = 237.0069,
+		['Orientation'] = -90,
+		['Anglecamera'] = {}
+		},
+	[240306172] = {
+		['ID'] = 240306172,
+		['EventClass'] = 3,
+		['EventType'] = 16,
+		['EventTarget'] = 152031055,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306173] = {
+		['ID'] = 240306173,
+		['EventClass'] = 2,
+		['EventType'] = 7,
+		['EventTarget'] = 152031056,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 335.28,
+		['PointY'] = 21.308820000000001,
+		['PointZ'] = 228.42099999999999,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306174] = {
+		['ID'] = 240306174,
+		['EventClass'] = 3,
+		['EventType'] = 16,
+		['EventTarget'] = 152031056,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306175] = {
+		['ID'] = 240306175,
+		['EventClass'] = 2,
+		['EventType'] = 7,
+		['EventTarget'] = 152031057,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 448.82420000000002,
+		['PointY'] = 18.993189999999998,
+		['PointZ'] = 161.2748,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306176] = {
+		['ID'] = 240306176,
+		['EventClass'] = 3,
+		['EventType'] = 16,
+		['EventTarget'] = 152031057,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306177] = {
+		['ID'] = 240306177,
+		['EventClass'] = 2,
+		['EventType'] = 7,
+		['EventTarget'] = 152040126,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 400.07440000000003,
+		['PointY'] = 18.955739999999999,
+		['PointZ'] = 448.3605,
+		['Orientation'] = -180,
+		['Anglecamera'] = {}
+		},
+	[240306178] = {
+		['ID'] = 240306178,
+		['EventClass'] = 3,
+		['EventType'] = 16,
+		['EventTarget'] = 152040126,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306179] = {
+		['ID'] = 240306179,
+		['EventClass'] = 2,
+		['EventType'] = 7,
+		['EventTarget'] = 152040119,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 398.3381,
+		['PointY'] = 18.96744,
+		['PointZ'] = 446.34910000000002,
+		['Orientation'] = 90,
+		['Anglecamera'] = {}
+		},
+	[240306180] = {
+		['ID'] = 240306180,
+		['EventClass'] = 3,
+		['EventType'] = 16,
+		['EventTarget'] = 152040119,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306181] = {
+		['ID'] = 240306181,
+		['EventClass'] = 2,
+		['EventType'] = 7,
+		['EventTarget'] = 152040118,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 398.3381,
+		['PointY'] = 18.96744,
+		['PointZ'] = 444.87,
+		['Orientation'] = 90,
+		['Anglecamera'] = {}
+		},
+	[240306182] = {
+		['ID'] = 240306182,
+		['EventClass'] = 3,
+		['EventType'] = 16,
+		['EventTarget'] = 152040118,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306183] = {
+		['ID'] = 240306183,
+		['EventClass'] = 2,
+		['EventType'] = 7,
+		['EventTarget'] = 152040063,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 198.29,
+		['PointY'] = 23.310749999999999,
+		['PointZ'] = 84.67,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306184] = {
+		['ID'] = 240306184,
+		['EventClass'] = 3,
+		['EventType'] = 16,
+		['EventTarget'] = 152040063,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306185] = {
+		['ID'] = 240306185,
+		['EventClass'] = 2,
+		['EventType'] = 7,
+		['EventTarget'] = 152031058,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 199.51750000000001,
+		['PointY'] = 23.310700000000001,
+		['PointZ'] = 82.439859999999996,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306186] = {
+		['ID'] = 240306186,
+		['EventClass'] = 3,
+		['EventType'] = 16,
+		['EventTarget'] = 152031058,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306187] = {
+		['ID'] = 240306187,
+		['EventClass'] = 2,
+		['EventType'] = 7,
+		['EventTarget'] = 152031059,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 197.21180000000001,
+		['PointY'] = 23.310700000000001,
+		['PointZ'] = 82.439859999999996,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306188] = {
+		['ID'] = 240306188,
+		['EventClass'] = 3,
+		['EventType'] = 16,
+		['EventTarget'] = 152031059,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306189] = {
+		['ID'] = 240306189,
+		['EventClass'] = 2,
+		['EventType'] = 7,
+		['EventTarget'] = 152040095,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 437.95780000000002,
+		['PointY'] = 23.237220000000001,
+		['PointZ'] = 227.8228,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306190] = {
+		['ID'] = 240306190,
+		['EventClass'] = 3,
+		['EventType'] = 16,
+		['EventTarget'] = 152040095,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306191] = {
+		['ID'] = 240306191,
+		['EventClass'] = 2,
+		['EventType'] = 7,
+		['EventTarget'] = 152031060,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 437.95780000000002,
+		['PointY'] = 23.237220000000001,
+		['PointZ'] = 227.8228,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306192] = {
+		['ID'] = 240306192,
+		['EventClass'] = 3,
+		['EventType'] = 16,
+		['EventTarget'] = 152031060,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0,
+		['Anglecamera'] = {}
+		},
+	[240306193] = {
+		['ID'] = 240306193,
+		['EventClass'] = 2,
+		['EventType'] = 19,
+		['EventTarget'] = 152031061,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0,
+		['Anglecamera'] = {0}
+		},
+	[240306194] = {
+		['ID'] = 240306194,
+		['EventClass'] = 3,
+		['EventType'] = 16,
+		['EventTarget'] = 152031061,
+		['EventNum'] = 1,
+		['EventNum1'] = '1',
+		['EventIcon'] = '0',
+		['IconTillte'] = '0',
+		['ChangeTarget1'] = 0,
+		['Num1'] = 0,
+		['OptionText2'] = '0',
+		['EventDialog2'] = '0',
+		['ChangeTarget2'] = 0,
+		['Num2'] = 0,
+		['SceneId'] = 155000008,
+		['PointX'] = 0,
+		['PointY'] = 0,
+		['PointZ'] = 0,
+		['Orientation'] = 0,
+		['Anglecamera'] = {0}
 		}
 	}
 return TaskEventTable

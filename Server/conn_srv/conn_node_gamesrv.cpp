@@ -88,6 +88,7 @@ int conn_node_gamesrv::dispatch_message()
 		case SERVER_PROTO_FRIEND_TURN_SWITCH:
 		case SERVER_PROTO_FRIEND_SYNC_RENAME:
 		case SERVER_PROTO_FRIEND_TRACK_ENEMY_ANSWER:
+		case SERVER_PROTO_FRIEND_DUMP_CLOSENESS_REQUEST:
 			return transfer_to_friendsrv(); 
 		case SERVER_PROTO_GAMESRV_START:
 			transfer_to_guildsrv();

@@ -34,6 +34,7 @@ public:
 
 	static int reset_all_monster_ai();
 
+	static void do_monster_on_tick(monster_struct *monster, uint64_t now);	
 	static void on_tick_1();
 	static void on_tick_5();	
 	static void on_tick_10();

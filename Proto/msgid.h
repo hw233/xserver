@@ -45,9 +45,9 @@
 #define MSG_ID_BOATING_START_REQUEST 10127       //开始划船，从视野删除 boating_start_request
 #define MSG_ID_BOATING_START_ANSWER 10128        // comm_answer
 #define MSG_ID_BOATING_STOP_REQUEST 10129        //划船结束  NULL
-#define MSG_ID_ONE_WAY_TRANSFER_START_REQUEST 10130       //单向定点传送请求  NULL
-#define MSG_ID_ONE_WAY_TRANSFER_START_ANSWER 10131        //comm_answer
-#define MSG_ID_ONE_WAY_TRANSFER_STOP_REQUEST 10132        //单向定点传送结束  NULL
+#define MSG_ID_ONE_WAY_TRANSFER_START_REQUEST 10130       //飞行请求  NULL
+#define MSG_ID_ONE_WAY_TRANSFER_START_ANSWER 10131        //飞行应答  comm_answer
+#define MSG_ID_ONE_WAY_TRANSFER_STOP_REQUEST 10132        //飞行结束  NULL
 #define MSG_ID_OPEN_BIG_MAP_REQUEST 10133        //打开大地图界面  NULL
 #define MSG_ID_OPEN_BIG_MAP_ANSWER 10134        //打开大地图界面  OpenBigMapAns
 
@@ -1084,5 +1084,28 @@
 #define MSG_ID_RED_BACKET_QIANG_HONGBAO_ANSWER  15507   // 抢红包应答 RedPacketGrabRedAnswer
 #define MSG_ID_RED_BACKET_HISTORY_INFO_REQUEST  15508  // 红包历史记录请求 NULL
 #define MSG_ID_RED_BACKET_HISTORY_INFO_ANSWER  15509   // 红包历史记录应答 RedPacketHistoryInfoAnswer
+
+//情缘系统相关
+//求婚
+#define MSG_ID_MARRY_PLAYER_PROPOSE_REQUEST   15600		   //玩家点击求婚请求 NULL 
+#define MSG_ID_MARRY_PLAYER_PROPOSE_ANSWER    15601		   //玩家点击求婚应答 CommAnswer
+#define MSG_ID_MARRY_PLAYER_PROPOSE_START_REQUEST   15602  //玩家正式开始求婚请求 PlayerProposeStartRequest
+#define MSG_ID_MARRY_PLAYER_PROPOSE_START_ANSWER    15603  //玩家正式开始求婚应答 CommAnswer
+#define MSG_ID_MARRY_PLAYER_PROPOSE_START_NOTIFY    15604  //玩家求婚状态通知 PlayerProposeStatetNotify(玩家开始求婚状态和停止都走这个协议)
+#define MSG_ID_MARRY_PLAYER_PROPOSE_QUEREN_REQUEST  15605  //被求婚者同意或者主动拒绝,或者超时拒绝的请求 PlayerProposeQuerenRequest
+#define MSG_ID_MARRY_PLAYER_PROPOSE_QUEREN_ANSWER   15606  //被求婚者同意或者主动拒绝,或者超时拒绝的回复 CommAnswer
+#define MSG_ID_MARRY_PLAYER_SUCCESS_BROADCAST       15607  //求婚成功全服广播 PlayerProposeBroadcast
+#define MSG_ID_MARRY_PLAYER_CUR_MARRY_INFO_NOTIFY   15608  //玩家情缘信息通知(上线和状态改变的时候推)PlayerCurMarryInfoNotify
+
+//预定婚期
+#define MSG_ID_MARRY_PLAYER_RESERVE_WEDDING_REQUEST     15610  //预定婚期请求 PlayerReserveMarriageRequest
+#define MSG_ID_MARRY_PLAYER_RESERVE_WEDDING_ANSWER	    15611  //预定婚期应答 CommAnswer
+
+//取消订婚
+#define MSG_ID_MARRY_PLAYER_CANCEL_PROPOSE_REQUEST      15612  //取消订婚请求 NULL
+#define MSG_ID_MARRY_PLAYER_CANCEL_PROPOSE_ANSWER	    15613  //取消订婚应答 CommAnswer
+#define MSG_ID_MARRY_PLAYER_CANCEL_PROPOSE_NOTYFY	    15614  //取消订婚通知 NULL(双方组队的时候通知另一方确认)
+#define MSG_ID_MARRY_PLAYER_CANCEL_CONFIRM_REQUEST	    15615  //取消订婚确认请求 PlayerCancelProposeConfirmRequest
+#define MSG_ID_MARRY_PLAYER_CANCEL_RESULT_NOTYFY	    15616  //取消订婚最终结果通知(成功还是失败) PlayerCancelProposeResultNotify
 
 #endif

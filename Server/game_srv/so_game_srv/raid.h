@@ -188,6 +188,7 @@ union raid_ai_data
 		uint32_t state;   //
 		bool refresh;
 		uint64_t end;   //
+		uint64_t mon_num;
 	} tower_data;
 
 	struct
@@ -341,7 +342,6 @@ public:
 	virtual int init_special_raid_data(player_struct *player);
 	virtual bool check_raid_need_delete();
 	virtual	int player_offline(player_struct *player);
-	virtual uint32_t get_area_width();
 
 		//进入另外一个野外场景，为空表示下线	
 //	virtual int enter_other_scene(player_struct *player, scene_struct *new_scene, double pos_x, double pos_y, double pos_z, double direct);

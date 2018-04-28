@@ -70,14 +70,18 @@ void ChengJieTaskManage::AddTask(STChengJie &task, uint64_t accepter)
 	}
 }
 
-void ChengJieTaskManage::DelTask(uint32_t taskId)
+void ChengJieTaskManage::DelTask(uint32_t taskId, bool rm_target)
 {
 	CHENGJIE_CONTAIN::iterator it = ChengJieTaskManage_m_contain.find(taskId);
 	if (it == ChengJieTaskManage_m_contain.end())
 	{
 		return;
 	}
-	ChengJieTaskManage_m_target.erase((it->second.pid));
+	if (rm_target)
+	{
+		ChengJieTaskManage_m_target.erase((it->second.pid));
+	}
+	
 	for (CHENGJIE_VECTOR::iterator itv = ChengJieTaskManage_m_containVt.begin(); itv != ChengJieTaskManage_m_containVt.end(); ++itv)
 	{
 		if (*itv == taskId)
@@ -328,7 +332,7 @@ void ChengJieTaskManage::AddTaskDb(STChengJie &task, EXTERN_DATA *extern_data)
 	chengjie_task_db__init(&send);
 	send.playerid = task.pid;
 	send.fail = task.fail;
-	send.shuangjin = task.shuangjin ;
+	send.shuangjin = task.shuangjin;
 	send.exp = task.exp;
 	send.courage = task.courage;
 	send.cd = task.timeOut;
@@ -1027,7 +1031,7 @@ void ChengJieTaskManage::OnTimer()
 			EXTERN_DATA ext_data;
 			ext_data.player_id = send.pid;
 			conn_node_gamesrv::connecter.send_to_friend(&ext_data, SERVER_PROTO_CHENGJIE_MONEY_BACK, &send, (pack_func)chengjie_money__pack);
-			DelTask(it->first);
+			DelTask(it->first, true);
 			break;
 		}
 	}

@@ -760,7 +760,7 @@ int install(int argc, char **argv)
 			LOG_ERR("add all scene fail");
 			goto done;
 		}
-		zhenying_raid_manager::create_all_line();
+		//zhenying_raid_manager::create_all_line();
 	}
 #endif
 

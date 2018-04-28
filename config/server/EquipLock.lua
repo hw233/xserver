@@ -12,7 +12,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},	--附魔星级解锁
 		['EnchantItem'] = {201060020,201060020,201060020},	--附魔消耗道具
 		['EnchantItemNum'] = {1,2,3},	--消耗道具数量
-		['EnchantCoin'] = {500,1000,2000}	--附魔消耗铜币
+		['EnchantCoin'] = {1000,5000,15000}	--附魔消耗铜币
 		},
 	[263100002] = {
 		['ID'] = 263100002,
@@ -27,7 +27,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263100003] = {
 		['ID'] = 263100003,
@@ -42,7 +42,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263100004] = {
 		['ID'] = 263100004,
@@ -57,7 +57,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263100005] = {
 		['ID'] = 263100005,
@@ -72,7 +72,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263100006] = {
 		['ID'] = 263100006,
@@ -87,7 +87,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263100007] = {
 		['ID'] = 263100007,
@@ -102,7 +102,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263100008] = {
 		['ID'] = 263100008,
@@ -117,7 +117,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263100009] = {
 		['ID'] = 263100009,
@@ -132,7 +132,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263100010] = {
 		['ID'] = 263100010,
@@ -147,7 +147,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263200001] = {
 		['ID'] = 263200001,
@@ -162,7 +162,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263200002] = {
 		['ID'] = 263200002,
@@ -177,7 +177,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263200003] = {
 		['ID'] = 263200003,
@@ -192,7 +192,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263200004] = {
 		['ID'] = 263200004,
@@ -207,7 +207,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263200005] = {
 		['ID'] = 263200005,
@@ -222,7 +222,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263200006] = {
 		['ID'] = 263200006,
@@ -237,7 +237,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263200007] = {
 		['ID'] = 263200007,
@@ -252,7 +252,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263200008] = {
 		['ID'] = 263200008,
@@ -267,7 +267,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263200009] = {
 		['ID'] = 263200009,
@@ -282,7 +282,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263200010] = {
 		['ID'] = 263200010,
@@ -297,7 +297,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263300001] = {
 		['ID'] = 263300001,
@@ -312,7 +312,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263300002] = {
 		['ID'] = 263300002,
@@ -327,7 +327,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263300003] = {
 		['ID'] = 263300003,
@@ -342,7 +342,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263300004] = {
 		['ID'] = 263300004,
@@ -357,7 +357,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263300005] = {
 		['ID'] = 263300005,
@@ -372,7 +372,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263300006] = {
 		['ID'] = 263300006,
@@ -387,7 +387,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263300007] = {
 		['ID'] = 263300007,
@@ -402,7 +402,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263300008] = {
 		['ID'] = 263300008,
@@ -417,7 +417,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263300009] = {
 		['ID'] = 263300009,
@@ -432,7 +432,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263300010] = {
 		['ID'] = 263300010,
@@ -447,7 +447,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263400001] = {
 		['ID'] = 263400001,
@@ -462,7 +462,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263400002] = {
 		['ID'] = 263400002,
@@ -477,7 +477,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263400003] = {
 		['ID'] = 263400003,
@@ -492,7 +492,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263400004] = {
 		['ID'] = 263400004,
@@ -507,7 +507,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263400005] = {
 		['ID'] = 263400005,
@@ -522,7 +522,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263400006] = {
 		['ID'] = 263400006,
@@ -537,7 +537,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263400007] = {
 		['ID'] = 263400007,
@@ -552,7 +552,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263400008] = {
 		['ID'] = 263400008,
@@ -567,7 +567,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263400009] = {
 		['ID'] = 263400009,
@@ -582,7 +582,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		},
 	[263400010] = {
 		['ID'] = 263400010,
@@ -597,7 +597,7 @@ local EquipLock = {
 		['EnchantStarLock'] = {0,0,0},
 		['EnchantItem'] = {201060020,201060020,201060020},
 		['EnchantItemNum'] = {1,2,3},
-		['EnchantCoin'] = {500,1000,2000}
+		['EnchantCoin'] = {1000,5000,15000}
 		}
 	}
 return EquipLock

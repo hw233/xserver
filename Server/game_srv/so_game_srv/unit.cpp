@@ -930,7 +930,19 @@ bool unit_struct::is_in_buff3()
 	{
 		if (!m_buffs[i])
 			continue;
-		if (m_buffs[i]->config->BuffType == 3)
+		if (m_buffs[i]->config->BuffType == 3 || m_buffs[i]->config->BuffType == 4)
+			return true;
+	}
+	return false;
+}
+
+bool unit_struct::is_in_buff4()
+{
+	for (int i = 0; i < MAX_BUFF_PER_UNIT; ++i)
+	{
+		if (!m_buffs[i])
+			continue;
+		if (m_buffs[i]->config->BuffType == 4)
 			return true;
 	}
 	return false;

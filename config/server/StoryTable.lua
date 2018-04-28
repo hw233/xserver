@@ -691,6 +691,39 @@ local StoryTable = {
 		['TriggerPoint'] = {0},
 		['StoryLoop'] = 0,
 		['TriggerDistance'] = 20
+		},
+	[450000065] = {
+		['ID'] = 450000065,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0015',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000066] = {
+		['ID'] = 450000066,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0016',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
+		},
+	[450000067] = {
+		['ID'] = 450000067,
+		['ShowUI'] = 0,
+		['PlayerOperation'] = 1,
+		['PlayerInvincible'] = 1,
+		['StoryTime'] = 4.20,
+		['FileID'] = 'MAP_JYD_0017',
+		['TriggerPoint'] = {0},
+		['StoryLoop'] = 0,
+		['TriggerDistance'] = 20
 		}
 	}
 return StoryTable

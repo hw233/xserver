@@ -145,6 +145,8 @@ SCENE_TYPE_DEFINE get_scene_looks_type(uint32_t scene_id);
 /* 16=新手阵营战 */
 /* 17=帮会领地副本活动 */
 /* 18=猫鬼乐园副本*/
+/* 19=幻宝地牢*/
+/* 20=情人岛*/
 enum DUNGEON_TYPE_DEFINE
 {
 	DUNGEON_TYPE_NORMAL = 0,
@@ -163,6 +165,7 @@ enum DUNGEON_TYPE_DEFINE
 	DUNGEON_TYPE_GUILD_LAND = 17,
 	DUNGEON_TYPE_MAOGUI_LEYUAN = 18,
 	DUNGEON_TYPE_TOWER = 19,
+	DUNGEON_TYPE_QINGREN_DAO = 20,
 };
 
 #endif /* GAME_CONFIG_H */

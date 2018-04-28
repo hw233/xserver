@@ -90,6 +90,11 @@ void free_ActorTable(struct ActorTable *p)
     free(p->HairColorID);
     free(p->ClotheColorID1);
     free(p->ClotheColorID2);
+    free(p->BasiceAttribute);
+    free(p->LvAttributeNum);
+    free(p->FiveAttribute);
+    free(p->SeniorAttribute);
+    free(p->BuffAttribute);
     free(p);
 };
 
@@ -1372,6 +1377,24 @@ void free_UndergroundTask(struct UndergroundTask *p)
 void free_WeaponsEffectTable(struct WeaponsEffectTable *p)
 {
     if (!p) return;
+    free(p);
+};
+
+void free_WeddingRing(struct WeddingRing *p)
+{
+    if (!p) return;
+    free(p->AttributeType);
+    free(p->AttributeValue);
+    free(p);
+};
+
+void free_WeddingTable(struct WeddingTable *p)
+{
+    if (!p) return;
+    free(p->RewardItem1);
+    free(p->RewardItem2);
+    free(p->RewardNum);
+    free(p->Time);
     free(p);
 };
 

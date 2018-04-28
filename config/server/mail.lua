@@ -558,6 +558,16 @@ local mail = {
 		['RewardID'] = {},
 		['RewardNum'] = {},
 		['time'] = ''
+		},
+	[270100020] = {
+		['ID'] = 270100020,
+		['MailType'] = 1,
+		['Title'] = '订婚成功',
+		['Content'] = '您预订的婚期将在%s月%s日%s开始，婚期保留30分钟，敬请提前邀请各大亲朋好友来参加！',
+		['Sender'] = '系统',
+		['RewardID'] = {},
+		['RewardNum'] = {},
+		['time'] = ''
 		}
 	}
 return mail

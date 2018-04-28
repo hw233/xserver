@@ -180,6 +180,8 @@ std::map<uint64_t, struct SkillTimeTable*> skill_time_config; //技能时间表
 std::map<uint64_t, struct SyntheticTable*> item_combin_config; //合成表
 std::map<uint64_t, struct NineEightTable*> jiu_gong_ba_gua_reward_config; //九宫八卦奖励表
 std::map<uint64_t, struct TaskDungeonsTable*> script_raid_config; //剧情副本表
+std::map<uint64_t, struct WeddingRing*> propose_ring_config; //求婚戒指表
+std::map<uint64_t, struct WeddingTable*> wedding_config;	 //婚礼表
 
 /////////////////////
 uint32_t sg_bag_unlock_base_price;
@@ -485,4 +487,18 @@ uint32_t sg_yinpiao_red_packet_max_money;      //银票红包最大货币值
 uint32_t sg_yuanbao_red_packet_min_money;      //元宝红包最小货币值
 uint32_t sg_yuanbao_red_packet_max_money;      //元宝红包最大货币值
 uint32_t send_red_packet_min_level;            //发红包最小等级要求
+
+
+uint32_t marry_propose_min_closeness;          //求婚最小好感度要求
+uint32_t marry_propose_is_same_sex;            //是否允许是异性 0:不允许 否则允许
+uint32_t marry_propose_divorce_time;           //离婚多少时长后才能再度求婚或者接受求婚
+uint32_t marry_propose_min_money;			  //求婚消耗最小金钱数量
+double   marry_propose_active_player_x;		  //求婚者站立的x坐标点
+double   marry_propose_active_player_z;		  //求婚者站立的z坐标点
+double   marry_propose_passive_player_x;		  //被求婚者站立的x坐标点
+double   marry_propose_passive_player_z;		  //被求婚者站立的z坐标点
+uint32_t marry_propose_gaojie_sing_item_id = 201071201;          //求婚高级婚戒物品id
+uint32_t marry_propose_haohua_sing_item_id = 201071202;          //求婚豪华婚戒物品id
+uint32_t marry_propose_shehua_sing_item_id = 201071203;          //求婚奢华婚戒物品id
+uint32_t marry_cancel_propose_marry_use_money;          //取消订婚消耗的元宝数量
 
