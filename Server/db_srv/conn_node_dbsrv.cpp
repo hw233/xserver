@@ -79,7 +79,7 @@ void conn_node_dbsrv::handle_save_player(EXTERN_DATA *extern_data)
 	char *p;
 	uint32_t result = ERROR_ID_SUCCESS;
 	
-	len = sprintf(sql, "update player set logout_time = now(), lv = %u,chengjie_rest=%lu, comm_data = \'", req->level,req->chengjie_cd);
+	len = sprintf(sql, "update player set logout_time = now(), lv = %u,chengjie_rest=%lu,marry_statu=%u,marry_type=%u,marry_period=%lu, comm_data = \'", req->level,req->chengjie_cd,req->marry_statu,req->marry_type,req->marry_period);
 	p = sql + len;
 	p += escape_string(p, (const char *)req->data, req->data_size);
 	len = sprintf(p, "\' where player_id = %lu", extern_data->player_id);
@@ -334,6 +334,9 @@ int conn_node_dbsrv::recv_func(evutil_socket_t fd)
 				case SERVER_PROTO_TRADE_STATIS:
 					handle_trade_statis_insert(extern_data);
 					break;
+				case SERVER_PROTO_UPDATE_PLAYER_SOME_MARRY_DATA:
+					handle_updata_player_some_marry_data(extern_data);
+					break;
 
 				default:
 					break;
@@ -435,10 +438,10 @@ void conn_node_dbsrv::handle_enter_game(EXTERN_DATA *extern_data)
 	query(const_cast<char*>("set names utf8"), 1, NULL);
 
 	if (extern_data->open_id > 0) {
-		sprintf(sql, "SELECT job, player_name, lv , comm_data, UNIX_TIMESTAMP(create_time), UNIX_TIMESTAMP(logout_time),chengjie_rest from player where open_id = %u and player_id = %lu", extern_data->open_id, player_id);
+		sprintf(sql, "SELECT job, player_name, lv , comm_data, UNIX_TIMESTAMP(create_time), UNIX_TIMESTAMP(logout_time),chengjie_rest,marry_statu,marry_type,marry_period from player where open_id = %u and player_id = %lu", extern_data->open_id, player_id);
 	} else {
 		LOG_ERR("[%s : %d]: notice: no openid, maybe a bug. openid[%u] player [%lu]", __FUNCTION__, __LINE__, extern_data->open_id, player_id);
-		sprintf(sql, "SELECT job, player_name, lv , comm_data, UNIX_TIMESTAMP(create_time), UNIX_TIMESTAMP(logout_time),chengjie_rest from player where player_id = %lu", player_id);
+		sprintf(sql, "SELECT job, player_name, lv , comm_data, UNIX_TIMESTAMP(create_time), UNIX_TIMESTAMP(logout_time),chengjie_rest,marry_statu,marry_type,marry_period from player where player_id = %lu", player_id);
 	}
 
 	res = query(sql, 1, NULL);
@@ -467,6 +470,9 @@ void conn_node_dbsrv::handle_enter_game(EXTERN_DATA *extern_data)
 	proto->create_time = (row[4] != NULL ? atoi(row[4]) : 0);
 	proto->logout_time = (row[5] != NULL ? atoi(row[5]) : 0);
 	proto->chengjie_cd = atol(row[6]);
+	proto->marry_statu = atol(row[7]);
+	proto->marry_type = atol(row[8]);
+	proto->marry_period = strtoul(row[9], NULL, 0);
 
 	proto->head.msg_id = ENDION_FUNC_2(SERVER_PROTO_ENTER_GAME_ANSWER);
 	proto->head.len = ENDION_FUNC_4(sizeof(PROTO_ENTER_GAME_RESP) + proto->data_size);
@@ -921,6 +927,29 @@ void conn_node_dbsrv::handle_trade_statis_insert(EXTERN_DATA * /*extern_data*/)
 	{
 		LOG_ERR("[%s:%d] save failed, sql:%s", __FUNCTION__, __LINE__, sql);
 	}
+}
+
+void conn_node_dbsrv::handle_updata_player_some_marry_data(EXTERN_DATA *extern_data)
+{
+	unsigned long effect = 0;
+	char sql[1024];
+
+	PLAYER_SOME_MARRY_DATA *req = (PLAYER_SOME_MARRY_DATA *)buf_head();
+	uint64_t player_id = req->player_id;
+	uint32_t marry_statu = req->marry_statu;
+	uint32_t marry_type = req->marry_type;
+	uint64_t marry_period = req->marry_period;
+	
+	snprintf(sql, sizeof(sql), "update player set marry_statu=%u, marry_type=%u, marry_period=%lu where player_id=%lu", marry_statu, marry_type, marry_period, player_id);
+
+
+	query(const_cast<char*>("set names utf8"), 1, NULL);
+	query(sql, 1, &effect);
+
+	if (effect <= 0) {
+		LOG_ERR("[%s:%d] mysql handle updata player some marry data fail, player_id[%lu] marry_statu[%u] marry_type[%u] marry_period[%lu]", player_id, marry_statu, marry_type, marry_period);
+	}
+	
 }
 
 //////////////////////////// 涓嬮潰鏄痵tatic 鍑芥暟

@@ -2127,7 +2127,7 @@ int conn_node_tradesrv::handle_red_packet_detalled_info_request(EXTERN_DATA *ext
 		return -1;
 	}
 	uint32_t red_type = req->red_type;
-	uint64_t red_uuid = req->red_id;
+	uint64_t red_uuid = strtoul(req->red_id, NULL, 0);
 	red_packet_detailed_info_request__free_unpacked(req, NULL);
 
 	if(red_type != 1 && red_type != 5)
@@ -2248,7 +2248,7 @@ int conn_node_tradesrv::handle_red_packet_grab_red_packet_request(EXTERN_DATA *e
 	}
 	uint32_t red_type = req->red_type;
 	uint32_t money_type = 0;
-	uint64_t red_uuid = req->red_id;
+	uint64_t red_uuid = strtoul(req->red_id, NULL, 0);
 	uint64_t my_player_id = extern_data->player_id;
 	red_packet_grab_red_request__free_unpacked(req, NULL);
 	if(red_type != 1 && red_type != 5)
@@ -2337,6 +2337,8 @@ int conn_node_tradesrv::handle_red_packet_grab_red_packet_request(EXTERN_DATA *e
 		red_packet_main_info.player_head_id = cur_red_info->head_icon;
 		red_packet_main_info.player_name = cur_red_info->player_name;
 		red_packet_main_info.player_text = cur_red_info->player_text;
+		red_packet_main_info.red_money_num = cur_red_info->red_sum_money;
+		red_packet_main_info.zheng_ying = cur_red_info->player_zhengyin;
 		for(size_t i = 0; i < sg_red_packet_max_can_recive_num && i < cur_red_info->n_all_player; i++)
 		{
 			if(cur_red_info->all_player[i]->player_id == my_player_id)
@@ -2413,6 +2415,7 @@ int conn_node_tradesrv::handle_red_packet_grab_red_packet_request(EXTERN_DATA *e
 		updata_red_info.red_sum_num = cur_red_info->red_sum_num;
 		updata_red_info.red_use_num = cur_red_info->red_use_num + 1;
 		updata_red_info.player_text = cur_red_info->player_text;
+		updata_red_info.player_zhengyin = cur_red_info->player_zhengyin;
 		updata_red_info.max_player = &max_money_player;
 		red_packet_redis_player_recive_info__init(&max_money_player);
 		updata_red_info.min_player = &min_money_player;

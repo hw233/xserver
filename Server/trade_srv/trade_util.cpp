@@ -1609,6 +1609,10 @@ void load_red_packet_redis_data()
 				{
 					red_packet_surplus_money_give_back_player(red_redis_info->player_id, red_redis_info->red_typ, red_redis_info->red_coin_type, red_redis_info->send_red_time, red_redis_info->red_sum_money, red_redis_info->red_use_money);
 				}
+				RedPacketOverTimeNotify notify;
+				red_packet_over_time_notify__init(&notify);
+				notify.red_id = red_uuid;
+				broadcast_message_to_online_player(MSG_ID_RED_BACKET_OVER_TIME_NOTIFY, &notify, pack_func(red_packet_over_time_notify__pack));
 				continue;
 			}
 			normal_red_packet_time_map.insert(std::make_pair(red_uuid, red_redis_info->send_red_time));
@@ -1661,6 +1665,10 @@ void load_red_packet_redis_data()
 				{
 					red_packet_surplus_money_give_back_player(red_redis_info->player_id, red_redis_info->red_typ, red_redis_info->red_coin_type, red_redis_info->send_red_time, red_redis_info->red_sum_money, red_redis_info->red_use_money);
 				}
+				RedPacketOverTimeNotify notify;
+				red_packet_over_time_notify__init(&notify);
+				notify.red_id = red_uuid;
+				broadcast_message_to_online_player(MSG_ID_RED_BACKET_OVER_TIME_NOTIFY, &notify, pack_func(red_packet_over_time_notify__pack));
 				continue;
 			}
 			std::map<uint32_t, std::map<uint64_t, uint64_t> >::iterator iter = guild_red_packet_time_map.find(red_redis_info->guild_id);
@@ -1712,6 +1720,10 @@ void refresh_all_red_packet_redis_data()
 				{
 					red_packet_surplus_money_give_back_player(last_red_info->player_id, last_red_info->red_typ, last_red_info->red_coin_type, last_red_info->send_red_time, last_red_info->red_sum_money, last_red_info->red_use_money);
 					normal_red_packet_time_map.erase(itr++);
+					RedPacketOverTimeNotify notify;
+					red_packet_over_time_notify__init(&notify);
+					notify.red_id = red_uuid;
+					broadcast_message_to_online_player(MSG_ID_RED_BACKET_OVER_TIME_NOTIFY, &notify, pack_func(red_packet_over_time_notify__pack));
 					continue;
 				}
 			}
@@ -1752,6 +1764,10 @@ void refresh_all_red_packet_redis_data()
 							red_packet_surplus_money_give_back_player(last_red_info->player_id, last_red_info->red_typ, last_red_info->red_coin_type, last_red_info->send_red_time, last_red_info->red_sum_money, last_red_info->red_use_money);
 						}
 						guild_red_packet_map.erase(ite++);
+						RedPacketOverTimeNotify notify;
+						red_packet_over_time_notify__init(&notify);
+						notify.red_id = red_uuid;
+						broadcast_message_to_online_player(MSG_ID_RED_BACKET_OVER_TIME_NOTIFY, &notify, pack_func(red_packet_over_time_notify__pack));
 						continue;
 					}
 
@@ -1822,6 +1838,11 @@ int delete_one_red_packet_for_redis(uint64_t last_red_uuid ,char* red_packet_key
 	{
 		red_packet_surplus_money_give_back_player(last_red_info->player_id, last_red_info->red_typ, last_red_info->red_coin_type, last_red_info->send_red_time, last_red_info->red_sum_money, last_red_info->red_use_money);
 	}
+
+	RedPacketOverTimeNotify notify;
+	red_packet_over_time_notify__init(&notify);
+	notify.red_id = last_red_uuid;
+	broadcast_message_to_online_player(MSG_ID_RED_BACKET_OVER_TIME_NOTIFY, &notify, pack_func(red_packet_over_time_notify__pack));
 	return 0;
 
 }
@@ -2018,4 +2039,72 @@ void add_player_red_packet_history_max_num(uint64_t player_id)
 		return;
 	}
 }
+PlayerRedisInfo *find_redis_from_map(std::map<uint64_t, PlayerRedisInfo*> &redis_players, uint64_t player_id)
+{
+	std::map<uint64_t, PlayerRedisInfo*>::iterator iter = redis_players.find(player_id);
+	if (iter != redis_players.end())
+	{
+		return iter->second;
+	}
+	return NULL;
+}
 
+void broadcast_message_to_online_player(uint16_t msg_id, void *msg_data, pack_func packer)
+{
+	AutoReleaseBatchRedisPlayer t1;	
+	std::map<uint64_t, PlayerRedisInfo*> redis_players;
+	std::set<uint64_t> notice_player;//所有玩家唯一id
+	int ret = sg_redis_client.hkeys(sg_player_key,  notice_player);
+	if(ret != 0)
+	{
+		LOG_ERR("[%s:%d] broadcast message to online player fail,get redis player_id error", __FUNCTION__, __LINE__);
+		return;
+	}
+	if(get_more_redis_player(notice_player ,redis_players, sg_player_key, sg_redis_client, t1) != 0)
+	{
+		LOG_ERR("[%s:%d] broadcast message to online player fail,get redis player data error", __FUNCTION__, __LINE__);
+		return;
+	}
+
+	std::vector<uint64_t> broadcast_ids;//在线玩家
+	for (std::set<uint64_t>::iterator iter = notice_player.begin(); iter != notice_player.end(); ++iter)
+	{
+
+		PlayerRedisInfo *redis_player = find_redis_from_map(redis_players, *iter);
+		if (redis_player && redis_player->status == 0)
+		{
+			broadcast_ids.push_back(*iter);
+		}
+	}
+
+	PROTO_HEAD_CONN_BROADCAST *head;
+	PROTO_HEAD *real_head;
+
+	head = (PROTO_HEAD_CONN_BROADCAST *)conn_node_base::global_send_buf;
+	head->msg_id = ENDION_FUNC_2(SERVER_PROTO_BROADCAST);
+	real_head = &head->proto_head;
+
+	real_head->msg_id = ENDION_FUNC_2(msg_id);
+	real_head->seq = 0;
+	//	memcpy(real_head->data, msg_data, len);
+	size_t len = 0;
+	if (msg_data && packer)
+	{
+		len = packer(msg_data, (uint8_t *)real_head->data);
+	}
+	real_head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD) + len);
+
+	uint64_t *ppp = (uint64_t*)((char *)&head->player_id + len);
+	head->num_player_id = 0;
+	for (std::vector<uint64_t>::iterator iter = broadcast_ids.begin(); iter != broadcast_ids.end(); ++iter)
+	{
+		ppp[head->num_player_id++] = *iter;
+	}
+	head->len = ENDION_FUNC_4(sizeof(PROTO_HEAD_CONN_BROADCAST) + len + sizeof(uint64_t) * head->num_player_id);
+	if (conn_node_tradesrv::connecter.send_one_msg((PROTO_HEAD *)head, 1) != (int)(ENDION_FUNC_4(head->len)))
+	{
+		LOG_ERR("[%s:%d] send to conn_srv failed err[%d]", __FUNCTION__, __LINE__, errno);
+	}
+	return;
+
+}

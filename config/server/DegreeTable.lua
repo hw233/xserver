@@ -15,7 +15,7 @@ local DegreeTable = {
 		['ID'] = 380200003,
 		['Stage'] = 3,
 		['Value'] = 1100,
-		['Function'] = {1}
+		['Function'] = {2}
 		},
 	[380200004] = {
 		['ID'] = 380200004,

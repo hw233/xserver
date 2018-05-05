@@ -12,7 +12,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,	--研发消耗资金
 		['CreateWood'] = 200,	--研发消耗木柴
 		['CreateTime'] = 1800,	--研发消耗时间
-		['UseMoney1'] = 100,	--修炼消耗帮贡
+		['UseMoney1'] = 120,	--修炼消耗帮贡
 		['UseMoney2'] = 1600,	--修炼消耗银两
 		['BuildingLeve'] = 1	--藏经阁等级
 		},
@@ -29,7 +29,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 140,
 		['UseMoney2'] = 2200,
 		['BuildingLeve'] = 1
 		},
@@ -46,7 +46,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 160,
 		['UseMoney2'] = 2800,
 		['BuildingLeve'] = 1
 		},
@@ -63,7 +63,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 180,
 		['UseMoney2'] = 3400,
 		['BuildingLeve'] = 1
 		},
@@ -80,7 +80,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 200,
 		['UseMoney2'] = 4000,
 		['BuildingLeve'] = 1
 		},
@@ -97,7 +97,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 220,
 		['UseMoney2'] = 4600,
 		['BuildingLeve'] = 1
 		},
@@ -114,7 +114,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 240,
 		['UseMoney2'] = 5200,
 		['BuildingLeve'] = 1
 		},
@@ -131,7 +131,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 260,
 		['UseMoney2'] = 5800,
 		['BuildingLeve'] = 1
 		},
@@ -148,7 +148,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 280,
 		['UseMoney2'] = 6400,
 		['BuildingLeve'] = 1
 		},
@@ -165,7 +165,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 300,
 		['UseMoney2'] = 7000,
 		['BuildingLeve'] = 1
 		},
@@ -182,7 +182,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 330,
 		['UseMoney2'] = 7800,
 		['BuildingLeve'] = 2
 		},
@@ -199,7 +199,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 360,
 		['UseMoney2'] = 8600,
 		['BuildingLeve'] = 2
 		},
@@ -216,7 +216,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 390,
 		['UseMoney2'] = 9400,
 		['BuildingLeve'] = 2
 		},
@@ -233,7 +233,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 420,
 		['UseMoney2'] = 10200,
 		['BuildingLeve'] = 2
 		},
@@ -250,7 +250,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 450,
 		['UseMoney2'] = 11000,
 		['BuildingLeve'] = 2
 		},
@@ -267,7 +267,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 480,
 		['UseMoney2'] = 11800,
 		['BuildingLeve'] = 2
 		},
@@ -284,7 +284,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 510,
 		['UseMoney2'] = 12600,
 		['BuildingLeve'] = 2
 		},
@@ -301,7 +301,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 540,
 		['UseMoney2'] = 13400,
 		['BuildingLeve'] = 2
 		},
@@ -318,7 +318,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 570,
 		['UseMoney2'] = 14200,
 		['BuildingLeve'] = 2
 		},
@@ -335,7 +335,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 600,
 		['UseMoney2'] = 15000,
 		['BuildingLeve'] = 2
 		},
@@ -352,7 +352,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 640,
 		['UseMoney2'] = 16000,
 		['BuildingLeve'] = 3
 		},
@@ -369,7 +369,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 680,
 		['UseMoney2'] = 17000,
 		['BuildingLeve'] = 3
 		},
@@ -386,7 +386,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 720,
 		['UseMoney2'] = 18000,
 		['BuildingLeve'] = 3
 		},
@@ -403,7 +403,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 760,
 		['UseMoney2'] = 19000,
 		['BuildingLeve'] = 3
 		},
@@ -420,7 +420,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 800,
 		['UseMoney2'] = 20000,
 		['BuildingLeve'] = 3
 		},
@@ -437,7 +437,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 840,
 		['UseMoney2'] = 21000,
 		['BuildingLeve'] = 3
 		},
@@ -454,7 +454,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 880,
 		['UseMoney2'] = 22000,
 		['BuildingLeve'] = 3
 		},
@@ -471,7 +471,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 920,
 		['UseMoney2'] = 23000,
 		['BuildingLeve'] = 3
 		},
@@ -488,7 +488,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 960,
 		['UseMoney2'] = 24000,
 		['BuildingLeve'] = 3
 		},
@@ -505,7 +505,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 1000,
 		['UseMoney2'] = 25000,
 		['BuildingLeve'] = 3
 		},
@@ -522,7 +522,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1050,
 		['UseMoney2'] = 26200,
 		['BuildingLeve'] = 4
 		},
@@ -539,7 +539,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1100,
 		['UseMoney2'] = 27400,
 		['BuildingLeve'] = 4
 		},
@@ -556,7 +556,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1150,
 		['UseMoney2'] = 28600,
 		['BuildingLeve'] = 4
 		},
@@ -573,7 +573,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1200,
 		['UseMoney2'] = 29800,
 		['BuildingLeve'] = 4
 		},
@@ -590,7 +590,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1250,
 		['UseMoney2'] = 31000,
 		['BuildingLeve'] = 4
 		},
@@ -607,7 +607,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1300,
 		['UseMoney2'] = 32200,
 		['BuildingLeve'] = 4
 		},
@@ -624,7 +624,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1350,
 		['UseMoney2'] = 33400,
 		['BuildingLeve'] = 4
 		},
@@ -641,7 +641,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1400,
 		['UseMoney2'] = 34600,
 		['BuildingLeve'] = 4
 		},
@@ -658,7 +658,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1450,
 		['UseMoney2'] = 35800,
 		['BuildingLeve'] = 4
 		},
@@ -675,7 +675,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1500,
 		['UseMoney2'] = 37000,
 		['BuildingLeve'] = 4
 		},
@@ -692,7 +692,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1560,
 		['UseMoney2'] = 38400,
 		['BuildingLeve'] = 5
 		},
@@ -709,7 +709,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1620,
 		['UseMoney2'] = 39800,
 		['BuildingLeve'] = 5
 		},
@@ -726,7 +726,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1680,
 		['UseMoney2'] = 41200,
 		['BuildingLeve'] = 5
 		},
@@ -743,7 +743,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1740,
 		['UseMoney2'] = 42600,
 		['BuildingLeve'] = 5
 		},
@@ -760,7 +760,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1800,
 		['UseMoney2'] = 44000,
 		['BuildingLeve'] = 5
 		},
@@ -777,7 +777,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1860,
 		['UseMoney2'] = 45400,
 		['BuildingLeve'] = 5
 		},
@@ -794,7 +794,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1920,
 		['UseMoney2'] = 46800,
 		['BuildingLeve'] = 5
 		},
@@ -811,7 +811,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1980,
 		['UseMoney2'] = 48200,
 		['BuildingLeve'] = 5
 		},
@@ -828,7 +828,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 2040,
 		['UseMoney2'] = 49600,
 		['BuildingLeve'] = 5
 		},
@@ -845,7 +845,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 2100,
 		['UseMoney2'] = 51000,
 		['BuildingLeve'] = 5
 		},
@@ -862,7 +862,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2170,
 		['UseMoney2'] = 52600,
 		['BuildingLeve'] = 6
 		},
@@ -879,7 +879,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2240,
 		['UseMoney2'] = 54200,
 		['BuildingLeve'] = 6
 		},
@@ -896,7 +896,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2310,
 		['UseMoney2'] = 55800,
 		['BuildingLeve'] = 6
 		},
@@ -913,7 +913,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2380,
 		['UseMoney2'] = 57400,
 		['BuildingLeve'] = 6
 		},
@@ -930,7 +930,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2450,
 		['UseMoney2'] = 59000,
 		['BuildingLeve'] = 6
 		},
@@ -947,7 +947,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2520,
 		['UseMoney2'] = 60600,
 		['BuildingLeve'] = 6
 		},
@@ -964,7 +964,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2590,
 		['UseMoney2'] = 62200,
 		['BuildingLeve'] = 6
 		},
@@ -981,7 +981,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2660,
 		['UseMoney2'] = 63800,
 		['BuildingLeve'] = 6
 		},
@@ -998,7 +998,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2730,
 		['UseMoney2'] = 65400,
 		['BuildingLeve'] = 6
 		},
@@ -1015,7 +1015,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2800,
 		['UseMoney2'] = 67000,
 		['BuildingLeve'] = 6
 		},
@@ -1032,7 +1032,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 2880,
 		['UseMoney2'] = 68800,
 		['BuildingLeve'] = 7
 		},
@@ -1049,7 +1049,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 2960,
 		['UseMoney2'] = 70600,
 		['BuildingLeve'] = 7
 		},
@@ -1066,7 +1066,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3040,
 		['UseMoney2'] = 72400,
 		['BuildingLeve'] = 7
 		},
@@ -1083,7 +1083,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3120,
 		['UseMoney2'] = 74200,
 		['BuildingLeve'] = 7
 		},
@@ -1100,7 +1100,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3200,
 		['UseMoney2'] = 76000,
 		['BuildingLeve'] = 7
 		},
@@ -1117,7 +1117,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3280,
 		['UseMoney2'] = 77800,
 		['BuildingLeve'] = 7
 		},
@@ -1134,7 +1134,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3360,
 		['UseMoney2'] = 79600,
 		['BuildingLeve'] = 7
 		},
@@ -1151,7 +1151,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3440,
 		['UseMoney2'] = 81400,
 		['BuildingLeve'] = 7
 		},
@@ -1168,7 +1168,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3520,
 		['UseMoney2'] = 83200,
 		['BuildingLeve'] = 7
 		},
@@ -1185,7 +1185,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3600,
 		['UseMoney2'] = 85000,
 		['BuildingLeve'] = 7
 		},
@@ -1202,7 +1202,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 3690,
 		['UseMoney2'] = 87000,
 		['BuildingLeve'] = 8
 		},
@@ -1219,7 +1219,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 3780,
 		['UseMoney2'] = 89000,
 		['BuildingLeve'] = 8
 		},
@@ -1236,7 +1236,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 3870,
 		['UseMoney2'] = 91000,
 		['BuildingLeve'] = 8
 		},
@@ -1253,7 +1253,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 3960,
 		['UseMoney2'] = 93000,
 		['BuildingLeve'] = 8
 		},
@@ -1270,7 +1270,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 4050,
 		['UseMoney2'] = 95000,
 		['BuildingLeve'] = 8
 		},
@@ -1287,7 +1287,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 4140,
 		['UseMoney2'] = 97000,
 		['BuildingLeve'] = 8
 		},
@@ -1304,7 +1304,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 4230,
 		['UseMoney2'] = 99000,
 		['BuildingLeve'] = 8
 		},
@@ -1321,7 +1321,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 4320,
 		['UseMoney2'] = 101000,
 		['BuildingLeve'] = 8
 		},
@@ -1338,7 +1338,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 4410,
 		['UseMoney2'] = 103000,
 		['BuildingLeve'] = 8
 		},
@@ -1355,7 +1355,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 4500,
 		['UseMoney2'] = 105000,
 		['BuildingLeve'] = 8
 		},
@@ -1372,7 +1372,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 4600,
 		['UseMoney2'] = 108000,
 		['BuildingLeve'] = 9
 		},
@@ -1389,7 +1389,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 4700,
 		['UseMoney2'] = 111000,
 		['BuildingLeve'] = 9
 		},
@@ -1406,7 +1406,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 4800,
 		['UseMoney2'] = 114000,
 		['BuildingLeve'] = 9
 		},
@@ -1423,7 +1423,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 4900,
 		['UseMoney2'] = 117000,
 		['BuildingLeve'] = 9
 		},
@@ -1440,7 +1440,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 5000,
 		['UseMoney2'] = 120000,
 		['BuildingLeve'] = 9
 		},
@@ -1457,7 +1457,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 5100,
 		['UseMoney2'] = 123000,
 		['BuildingLeve'] = 9
 		},
@@ -1474,7 +1474,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 5200,
 		['UseMoney2'] = 126000,
 		['BuildingLeve'] = 9
 		},
@@ -1491,7 +1491,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 5300,
 		['UseMoney2'] = 129000,
 		['BuildingLeve'] = 9
 		},
@@ -1508,7 +1508,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 5400,
 		['UseMoney2'] = 132000,
 		['BuildingLeve'] = 9
 		},
@@ -1525,7 +1525,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 5500,
 		['UseMoney2'] = 135000,
 		['BuildingLeve'] = 9
 		},
@@ -1542,7 +1542,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 5620,
 		['UseMoney2'] = 138000,
 		['BuildingLeve'] = 10
 		},
@@ -1559,7 +1559,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 5740,
 		['UseMoney2'] = 141000,
 		['BuildingLeve'] = 10
 		},
@@ -1576,7 +1576,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 5860,
 		['UseMoney2'] = 144000,
 		['BuildingLeve'] = 10
 		},
@@ -1593,7 +1593,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 5980,
 		['UseMoney2'] = 147000,
 		['BuildingLeve'] = 10
 		},
@@ -1610,7 +1610,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 6100,
 		['UseMoney2'] = 150000,
 		['BuildingLeve'] = 10
 		},
@@ -1627,7 +1627,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 6220,
 		['UseMoney2'] = 153000,
 		['BuildingLeve'] = 10
 		},
@@ -1644,7 +1644,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 6340,
 		['UseMoney2'] = 156000,
 		['BuildingLeve'] = 10
 		},
@@ -1661,7 +1661,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 6460,
 		['UseMoney2'] = 159000,
 		['BuildingLeve'] = 10
 		},
@@ -1678,7 +1678,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 6580,
 		['UseMoney2'] = 162000,
 		['BuildingLeve'] = 10
 		},
@@ -1695,7 +1695,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 6700,
 		['UseMoney2'] = 165000,
 		['BuildingLeve'] = 10
 		},
@@ -1729,7 +1729,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 120,
 		['UseMoney2'] = 1600,
 		['BuildingLeve'] = 1
 		},
@@ -1746,7 +1746,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 160,
 		['UseMoney2'] = 2800,
 		['BuildingLeve'] = 1
 		},
@@ -1763,7 +1763,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 200,
 		['UseMoney2'] = 4000,
 		['BuildingLeve'] = 1
 		},
@@ -1780,7 +1780,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 240,
 		['UseMoney2'] = 5200,
 		['BuildingLeve'] = 1
 		},
@@ -1797,7 +1797,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 280,
 		['UseMoney2'] = 6400,
 		['BuildingLeve'] = 1
 		},
@@ -1814,7 +1814,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 330,
 		['UseMoney2'] = 7800,
 		['BuildingLeve'] = 2
 		},
@@ -1831,7 +1831,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 390,
 		['UseMoney2'] = 9400,
 		['BuildingLeve'] = 2
 		},
@@ -1848,7 +1848,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 450,
 		['UseMoney2'] = 11000,
 		['BuildingLeve'] = 2
 		},
@@ -1865,7 +1865,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 510,
 		['UseMoney2'] = 12600,
 		['BuildingLeve'] = 2
 		},
@@ -1882,7 +1882,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 570,
 		['UseMoney2'] = 14200,
 		['BuildingLeve'] = 2
 		},
@@ -1899,7 +1899,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 640,
 		['UseMoney2'] = 16000,
 		['BuildingLeve'] = 3
 		},
@@ -1916,7 +1916,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 720,
 		['UseMoney2'] = 18000,
 		['BuildingLeve'] = 3
 		},
@@ -1933,7 +1933,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 800,
 		['UseMoney2'] = 20000,
 		['BuildingLeve'] = 3
 		},
@@ -1950,7 +1950,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 880,
 		['UseMoney2'] = 22000,
 		['BuildingLeve'] = 3
 		},
@@ -1967,7 +1967,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 960,
 		['UseMoney2'] = 24000,
 		['BuildingLeve'] = 3
 		},
@@ -1984,7 +1984,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1050,
 		['UseMoney2'] = 26200,
 		['BuildingLeve'] = 4
 		},
@@ -2001,7 +2001,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1150,
 		['UseMoney2'] = 28600,
 		['BuildingLeve'] = 4
 		},
@@ -2018,7 +2018,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1250,
 		['UseMoney2'] = 31000,
 		['BuildingLeve'] = 4
 		},
@@ -2035,7 +2035,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1350,
 		['UseMoney2'] = 33400,
 		['BuildingLeve'] = 4
 		},
@@ -2052,7 +2052,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1450,
 		['UseMoney2'] = 35800,
 		['BuildingLeve'] = 4
 		},
@@ -2069,7 +2069,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1560,
 		['UseMoney2'] = 38400,
 		['BuildingLeve'] = 5
 		},
@@ -2086,7 +2086,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1680,
 		['UseMoney2'] = 41200,
 		['BuildingLeve'] = 5
 		},
@@ -2103,7 +2103,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1800,
 		['UseMoney2'] = 44000,
 		['BuildingLeve'] = 5
 		},
@@ -2120,7 +2120,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1920,
 		['UseMoney2'] = 46800,
 		['BuildingLeve'] = 5
 		},
@@ -2137,7 +2137,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 2040,
 		['UseMoney2'] = 49600,
 		['BuildingLeve'] = 5
 		},
@@ -2154,7 +2154,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2170,
 		['UseMoney2'] = 52600,
 		['BuildingLeve'] = 6
 		},
@@ -2171,7 +2171,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2310,
 		['UseMoney2'] = 55800,
 		['BuildingLeve'] = 6
 		},
@@ -2188,7 +2188,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2450,
 		['UseMoney2'] = 59000,
 		['BuildingLeve'] = 6
 		},
@@ -2205,7 +2205,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2590,
 		['UseMoney2'] = 62200,
 		['BuildingLeve'] = 6
 		},
@@ -2222,7 +2222,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2730,
 		['UseMoney2'] = 65400,
 		['BuildingLeve'] = 6
 		},
@@ -2239,7 +2239,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 2880,
 		['UseMoney2'] = 68800,
 		['BuildingLeve'] = 7
 		},
@@ -2256,7 +2256,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3040,
 		['UseMoney2'] = 72400,
 		['BuildingLeve'] = 7
 		},
@@ -2273,7 +2273,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3200,
 		['UseMoney2'] = 76000,
 		['BuildingLeve'] = 7
 		},
@@ -2290,7 +2290,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3360,
 		['UseMoney2'] = 79600,
 		['BuildingLeve'] = 7
 		},
@@ -2307,7 +2307,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3520,
 		['UseMoney2'] = 83200,
 		['BuildingLeve'] = 7
 		},
@@ -2324,7 +2324,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 3690,
 		['UseMoney2'] = 87000,
 		['BuildingLeve'] = 8
 		},
@@ -2341,7 +2341,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 3870,
 		['UseMoney2'] = 91000,
 		['BuildingLeve'] = 8
 		},
@@ -2358,7 +2358,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 4050,
 		['UseMoney2'] = 95000,
 		['BuildingLeve'] = 8
 		},
@@ -2375,7 +2375,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 4230,
 		['UseMoney2'] = 99000,
 		['BuildingLeve'] = 8
 		},
@@ -2392,7 +2392,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 4410,
 		['UseMoney2'] = 103000,
 		['BuildingLeve'] = 8
 		},
@@ -2409,7 +2409,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 4600,
 		['UseMoney2'] = 108000,
 		['BuildingLeve'] = 9
 		},
@@ -2426,7 +2426,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 4800,
 		['UseMoney2'] = 114000,
 		['BuildingLeve'] = 9
 		},
@@ -2443,7 +2443,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 5000,
 		['UseMoney2'] = 120000,
 		['BuildingLeve'] = 9
 		},
@@ -2460,7 +2460,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 5200,
 		['UseMoney2'] = 126000,
 		['BuildingLeve'] = 9
 		},
@@ -2477,7 +2477,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 5400,
 		['UseMoney2'] = 132000,
 		['BuildingLeve'] = 9
 		},
@@ -2494,7 +2494,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 5620,
 		['UseMoney2'] = 138000,
 		['BuildingLeve'] = 10
 		},
@@ -2511,7 +2511,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 5860,
 		['UseMoney2'] = 144000,
 		['BuildingLeve'] = 10
 		},
@@ -2528,7 +2528,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 6100,
 		['UseMoney2'] = 150000,
 		['BuildingLeve'] = 10
 		},
@@ -2545,7 +2545,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 6340,
 		['UseMoney2'] = 156000,
 		['BuildingLeve'] = 10
 		},
@@ -2562,7 +2562,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 6580,
 		['UseMoney2'] = 162000,
 		['BuildingLeve'] = 10
 		},
@@ -2596,7 +2596,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 120,
 		['UseMoney2'] = 1600,
 		['BuildingLeve'] = 1
 		},
@@ -2613,7 +2613,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 200,
 		['UseMoney2'] = 4000,
 		['BuildingLeve'] = 1
 		},
@@ -2630,7 +2630,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 260,
 		['UseMoney2'] = 5800,
 		['BuildingLeve'] = 1
 		},
@@ -2647,7 +2647,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 330,
 		['UseMoney2'] = 7800,
 		['BuildingLeve'] = 2
 		},
@@ -2664,7 +2664,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 450,
 		['UseMoney2'] = 11000,
 		['BuildingLeve'] = 2
 		},
@@ -2681,7 +2681,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 540,
 		['UseMoney2'] = 13400,
 		['BuildingLeve'] = 2
 		},
@@ -2698,7 +2698,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 640,
 		['UseMoney2'] = 16000,
 		['BuildingLeve'] = 3
 		},
@@ -2715,7 +2715,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 800,
 		['UseMoney2'] = 20000,
 		['BuildingLeve'] = 3
 		},
@@ -2732,7 +2732,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 920,
 		['UseMoney2'] = 23000,
 		['BuildingLeve'] = 3
 		},
@@ -2749,7 +2749,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1050,
 		['UseMoney2'] = 26200,
 		['BuildingLeve'] = 4
 		},
@@ -2766,7 +2766,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1250,
 		['UseMoney2'] = 31000,
 		['BuildingLeve'] = 4
 		},
@@ -2783,7 +2783,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1400,
 		['UseMoney2'] = 34600,
 		['BuildingLeve'] = 4
 		},
@@ -2800,7 +2800,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1560,
 		['UseMoney2'] = 38400,
 		['BuildingLeve'] = 5
 		},
@@ -2817,7 +2817,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1800,
 		['UseMoney2'] = 44000,
 		['BuildingLeve'] = 5
 		},
@@ -2834,7 +2834,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1980,
 		['UseMoney2'] = 48200,
 		['BuildingLeve'] = 5
 		},
@@ -2851,7 +2851,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2170,
 		['UseMoney2'] = 52600,
 		['BuildingLeve'] = 6
 		},
@@ -2868,7 +2868,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2450,
 		['UseMoney2'] = 59000,
 		['BuildingLeve'] = 6
 		},
@@ -2885,7 +2885,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2660,
 		['UseMoney2'] = 63800,
 		['BuildingLeve'] = 6
 		},
@@ -2902,7 +2902,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 2880,
 		['UseMoney2'] = 68800,
 		['BuildingLeve'] = 7
 		},
@@ -2919,7 +2919,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3200,
 		['UseMoney2'] = 76000,
 		['BuildingLeve'] = 7
 		},
@@ -2936,7 +2936,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3440,
 		['UseMoney2'] = 81400,
 		['BuildingLeve'] = 7
 		},
@@ -2953,7 +2953,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 3690,
 		['UseMoney2'] = 87000,
 		['BuildingLeve'] = 8
 		},
@@ -2970,7 +2970,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 4050,
 		['UseMoney2'] = 95000,
 		['BuildingLeve'] = 8
 		},
@@ -2987,7 +2987,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 4320,
 		['UseMoney2'] = 101000,
 		['BuildingLeve'] = 8
 		},
@@ -3004,7 +3004,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 4600,
 		['UseMoney2'] = 108000,
 		['BuildingLeve'] = 9
 		},
@@ -3021,7 +3021,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 5000,
 		['UseMoney2'] = 120000,
 		['BuildingLeve'] = 9
 		},
@@ -3038,7 +3038,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 5300,
 		['UseMoney2'] = 129000,
 		['BuildingLeve'] = 9
 		},
@@ -3055,7 +3055,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 5620,
 		['UseMoney2'] = 138000,
 		['BuildingLeve'] = 10
 		},
@@ -3072,7 +3072,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 6100,
 		['UseMoney2'] = 150000,
 		['BuildingLeve'] = 10
 		},
@@ -3089,7 +3089,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 6460,
 		['UseMoney2'] = 159000,
 		['BuildingLeve'] = 10
 		},
@@ -3123,7 +3123,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 120,
 		['UseMoney2'] = 1600,
 		['BuildingLeve'] = 1
 		},
@@ -3140,7 +3140,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 200,
 		['UseMoney2'] = 4000,
 		['BuildingLeve'] = 1
 		},
@@ -3157,7 +3157,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 1000,
 		['CreateWood'] = 200,
 		['CreateTime'] = 1800,
-		['UseMoney1'] = 100,
+		['UseMoney1'] = 260,
 		['UseMoney2'] = 5800,
 		['BuildingLeve'] = 1
 		},
@@ -3174,7 +3174,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 330,
 		['UseMoney2'] = 7800,
 		['BuildingLeve'] = 2
 		},
@@ -3191,7 +3191,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 450,
 		['UseMoney2'] = 11000,
 		['BuildingLeve'] = 2
 		},
@@ -3208,7 +3208,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 2000,
 		['CreateWood'] = 400,
 		['CreateTime'] = 3600,
-		['UseMoney1'] = 200,
+		['UseMoney1'] = 540,
 		['UseMoney2'] = 13400,
 		['BuildingLeve'] = 2
 		},
@@ -3225,7 +3225,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 640,
 		['UseMoney2'] = 16000,
 		['BuildingLeve'] = 3
 		},
@@ -3242,7 +3242,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 800,
 		['UseMoney2'] = 20000,
 		['BuildingLeve'] = 3
 		},
@@ -3259,7 +3259,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 3000,
 		['CreateWood'] = 600,
 		['CreateTime'] = 5400,
-		['UseMoney1'] = 300,
+		['UseMoney1'] = 920,
 		['UseMoney2'] = 23000,
 		['BuildingLeve'] = 3
 		},
@@ -3276,7 +3276,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1050,
 		['UseMoney2'] = 26200,
 		['BuildingLeve'] = 4
 		},
@@ -3293,7 +3293,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1250,
 		['UseMoney2'] = 31000,
 		['BuildingLeve'] = 4
 		},
@@ -3310,7 +3310,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 4000,
 		['CreateWood'] = 800,
 		['CreateTime'] = 7200,
-		['UseMoney1'] = 400,
+		['UseMoney1'] = 1400,
 		['UseMoney2'] = 34600,
 		['BuildingLeve'] = 4
 		},
@@ -3327,7 +3327,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1560,
 		['UseMoney2'] = 38400,
 		['BuildingLeve'] = 5
 		},
@@ -3344,7 +3344,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1800,
 		['UseMoney2'] = 44000,
 		['BuildingLeve'] = 5
 		},
@@ -3361,7 +3361,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 5000,
 		['CreateWood'] = 1000,
 		['CreateTime'] = 9000,
-		['UseMoney1'] = 500,
+		['UseMoney1'] = 1980,
 		['UseMoney2'] = 48200,
 		['BuildingLeve'] = 5
 		},
@@ -3378,7 +3378,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2170,
 		['UseMoney2'] = 52600,
 		['BuildingLeve'] = 6
 		},
@@ -3395,7 +3395,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2450,
 		['UseMoney2'] = 59000,
 		['BuildingLeve'] = 6
 		},
@@ -3412,7 +3412,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 6000,
 		['CreateWood'] = 1200,
 		['CreateTime'] = 10800,
-		['UseMoney1'] = 600,
+		['UseMoney1'] = 2660,
 		['UseMoney2'] = 63800,
 		['BuildingLeve'] = 6
 		},
@@ -3429,7 +3429,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 2880,
 		['UseMoney2'] = 68800,
 		['BuildingLeve'] = 7
 		},
@@ -3446,7 +3446,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3200,
 		['UseMoney2'] = 76000,
 		['BuildingLeve'] = 7
 		},
@@ -3463,7 +3463,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 7000,
 		['CreateWood'] = 1400,
 		['CreateTime'] = 12600,
-		['UseMoney1'] = 700,
+		['UseMoney1'] = 3440,
 		['UseMoney2'] = 81400,
 		['BuildingLeve'] = 7
 		},
@@ -3480,7 +3480,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 3690,
 		['UseMoney2'] = 87000,
 		['BuildingLeve'] = 8
 		},
@@ -3497,7 +3497,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 4050,
 		['UseMoney2'] = 95000,
 		['BuildingLeve'] = 8
 		},
@@ -3514,7 +3514,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 8000,
 		['CreateWood'] = 1600,
 		['CreateTime'] = 14400,
-		['UseMoney1'] = 800,
+		['UseMoney1'] = 4320,
 		['UseMoney2'] = 101000,
 		['BuildingLeve'] = 8
 		},
@@ -3531,7 +3531,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 4600,
 		['UseMoney2'] = 108000,
 		['BuildingLeve'] = 9
 		},
@@ -3548,7 +3548,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 5000,
 		['UseMoney2'] = 120000,
 		['BuildingLeve'] = 9
 		},
@@ -3565,7 +3565,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 9000,
 		['CreateWood'] = 1800,
 		['CreateTime'] = 16200,
-		['UseMoney1'] = 900,
+		['UseMoney1'] = 5300,
 		['UseMoney2'] = 129000,
 		['BuildingLeve'] = 9
 		},
@@ -3582,7 +3582,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 5620,
 		['UseMoney2'] = 138000,
 		['BuildingLeve'] = 10
 		},
@@ -3599,7 +3599,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 6100,
 		['UseMoney2'] = 150000,
 		['BuildingLeve'] = 10
 		},
@@ -3616,7 +3616,7 @@ local GangsSkillTable = {
 		['CreateMnoney'] = 10000,
 		['CreateWood'] = 2000,
 		['CreateTime'] = 18000,
-		['UseMoney1'] = 1000,
+		['UseMoney1'] = 6460,
 		['UseMoney2'] = 159000,
 		['BuildingLeve'] = 10
 		},

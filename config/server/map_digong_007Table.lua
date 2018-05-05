@@ -1001,5 +1001,17 @@
         ['PointPosZ'] = 98.3491,
         ['Yaw'] = 0,
     },
+    [1000085] = {
+        ['uid'] = 1000085,
+        ['ID'] = 151008032,
+        ['ResType'] = "Monster",
+        ['PointPosX'] = 5.725355,
+        ['PointPosY'] = 18.05924,
+        ['PointPosZ'] = 85.15114,
+        ['Yaw'] = 0,
+        ['Level'] = 1,
+        ['TargetInfoList'] = {
+        }
+    },
 }
 return map_digong_007

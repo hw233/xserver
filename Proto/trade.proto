@@ -196,7 +196,7 @@ message RedPacketMainInfo
 message RedPacketDetailedInfoRequest
 {
 	required uint32 red_type = 1; //红包类型 1:世界频道红包 5:帮派频道红包
-	required uint64 red_id = 2; //红包唯一id
+	required string red_id = 2; //红包唯一id
 }
 
 //红包领取详情
@@ -235,7 +235,7 @@ message RedPacketSendRequest
 message RedPacketGrabRedRequest
 {
 	required uint32 red_type = 1; //红包类型 1:世界频道红包 5:帮派频道红包
-	required uint64 red_id = 2; //红包唯一id
+	required string red_id = 2; //红包唯一id
 }
 
 //抢红包应答
@@ -265,4 +265,10 @@ message RedPacketPlayerRedInfo
 	required uint32 red_coin_type = 2; //红包样式 0:元宝红包 1:银票红包
 	required uint64 time = 3; //时间戳
 	required uint32 money_num = 4; //金钱数量
+}
+
+//红包过时通知
+message RedPacketOverTimeNotify
+{
+	required uint64 red_id = 1; //红包id
 }

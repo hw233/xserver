@@ -10,6 +10,7 @@
 #include <map>
 #include <list>
 #include "trade_db.pb-c.h"
+#include "player_redis_info.pb-c.h"
 
 #define RED_PACKET_TYPE_UUID 1 //红包
 union uuid_data
@@ -123,5 +124,8 @@ int modify_player_red_packet_optimum_record(uint64_t player_id, uint64_t red_uui
 void updata_player_red_packet_history_info(RedPacketRedisPlayeNormalInfo* temp_info, uint64_t player_id);
 //增加玩家历史记录里面的手气最佳个数
 void add_player_red_packet_history_max_num(uint64_t player_id);
+PlayerRedisInfo *find_redis_from_map(std::map<uint64_t, PlayerRedisInfo*> &redis_players, uint64_t player_id);
+//广播给所有在线玩家
+void broadcast_message_to_online_player(uint16_t msg_id, void *msg_data, pack_func packer);
 
 #endif

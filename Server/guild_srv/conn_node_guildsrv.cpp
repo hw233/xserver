@@ -4805,6 +4805,7 @@ static int handle_guild_donate_cost(int data_len, uint8_t *data, int result, EXT
 			resq->red_num = red_packet_num;
 			//strcpy(resq->player_text, parame_config->parameter2);
 			sprintf(resq->player_text, parame_config->parameter2, log->args[0], log->args[1]);
+			resq->player_text[MAX_RED_PACKET_LIU_YAN_LEN - 1] = '\0';
 			fast_send_msg_base(&conn_node_guildsrv::connecter, extern_data, SERVER_PROTO_TRADE_SEND_RED_PACKET_REQUEST, data_len, 0);
 
 		}

@@ -524,6 +524,7 @@ message PlayerDBInfo
 	required uint32 default_up_color = 117;
 	required uint32 default_down_color = 118;
 	required uint64 partner_add_angry_cd = 119;
+	optional DBPlayerMarryData player_marry_data = 120; //玩家结婚信息
 }
 
 message DBAutoAddHp
@@ -684,4 +685,16 @@ message DBPlayerJiuGongBaGuaInfo
 	required uint32 id = 1; //奖励id
 	required uint32 task_id = 2; //对应的任务id
 	required uint32 statu = 3; //奖励领取状态
+}
+
+//婚姻相关数据
+message DBPlayerMarryData
+{
+	required uint32 my_role = 1; //0:表示我是求婚者 1:是被求婚者
+	required uint32 propose_type = 2; //求婚档次(更婚戒档次一样)
+	required uint64 propose_success_time = 3; //求婚成功的时间点
+	required uint64 target_id = 4; //当前对象id
+	required string target_name = 5;    //当前对象名字
+	required uint32 sex = 6; //对象性别
+	required uint64 time = 7; //上次离婚时间戳
 }

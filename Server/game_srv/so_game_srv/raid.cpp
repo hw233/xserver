@@ -1228,6 +1228,10 @@ SCENE_TYPE_DEFINE raid_struct::get_scene_type()
 
 bool raid_struct::check_raid_failed()
 {
+	if (data->state == RAID_STATE_PASS)
+	{
+		return false;
+	}
 	if (m_config->DengeonRank == DUNGEON_TYPE_ZHENYING)
 	{
 		return false; //阵营战

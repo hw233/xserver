@@ -59,7 +59,7 @@ while True:
         for it in req.infos:
             baseinfo = it.baseInfo
             zhenying = get_attr(baseinfo.attrs, 47)
-            print "player[%lu] name[%s] zhenying[%u]" % (baseinfo.playerId, baseinfo.name, zhenying)
+            print "player[%lu] name[%s] zhenying[%u] score[%u]" % (baseinfo.playerId, baseinfo.name, zhenying, it.score)
 
 
         

@@ -38,7 +38,7 @@ void cb_reward_timeout(evutil_socket_t, short, void* /*arg*/);
 
 #define MAX_RANK_GET_NUM  100 //前端显示数目
 #define MAX_RANK_ADD_NUM  5000 //最多排行数
-#define MAX_RANK_ATTR_NUM  11
+#define MAX_RANK_ATTR_NUM  12
 //斗法场最大排名
 #define DOUFACHANG_MAX_RANK 7000
 
@@ -124,6 +124,11 @@ enum
 	RANK_ZUI_QIANG_PARTNER_TATAL = 1601,
 	RANK_ZUI_QIANG_PARTNER_ZHENYING1 = 1618,
 	RANK_ZUI_QIANG_PARTNER_ZHENYING2 = 1619,
+
+	//幻宝地牢
+	RANK_HUAN_BAO_DI_NAO_MAX_LAYER_TATAL = 1701,
+	RANK_HUAN_BAO_DI_NAO_MAX_LAYER_ZHENYING1 = 1718,
+	RANK_HUAN_BAO_DI_NAO_MAX_LAYER_ZHENYING2 = 1719,
 	
 };
 
@@ -192,6 +197,9 @@ static void init_rank_key_map()
 	scm_rank_keys[RANK_ZUI_QIANG_PARTNER_TATAL]				   = "s%u_rank_zui_qiang_partner_tatal";
 	scm_rank_keys[RANK_ZUI_QIANG_PARTNER_ZHENYING1]			   = "s%u_rank_zui_qiang_partner_zhengying1";
 	scm_rank_keys[RANK_ZUI_QIANG_PARTNER_ZHENYING2]			   = "s%u_rank_zui_qiang_partner_zhengying2";
+	scm_rank_keys[RANK_HUAN_BAO_DI_NAO_MAX_LAYER_TATAL]		   = "s%u_rank_huan_bao_di_nao_max_yayer_tatal";
+	scm_rank_keys[RANK_HUAN_BAO_DI_NAO_MAX_LAYER_ZHENYING1]	   = "s%u_rank_huan_bao_di_nao_max_yayer_zhengying1";
+	scm_rank_keys[RANK_HUAN_BAO_DI_NAO_MAX_LAYER_ZHENYING2]	   = "s%u_rank_huan_bao_di_nao_max_yayer_zhengying2";
 }
 
 void init_redis_keys(uint32_t server_id)
@@ -852,6 +860,7 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		uint32_t award_question = req->award_question;
 		MaxPowerPartner *new_max_partner = req->maxpartner;
 		uint32_t new_meili = req->meili_num;
+		uint32_t new_max_tower = req->max_tower;
 		
 		uint32_t old_level = 0;
 		uint32_t old_fc_total = 0;
@@ -869,6 +878,7 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		uint32_t old_question = 0;
 		MaxPowerPartner *old_max_partner = NULL;
 		uint32_t old_meili = 0;
+		uint32_t old_max_tower = 0;
 
 		if (redis_player)
 		{
@@ -891,12 +901,24 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 			old_question = redis_player->award_question;
 			old_max_partner = redis_player->maxpartner;
 			old_meili = redis_player->meili_num;
+			old_max_tower = redis_player->max_tower;
 		}
 		else
 		{
 			save_player = req;
 		}
 
+		if(old_max_tower != new_max_tower)
+		{
+			rank_type = RANK_HUAN_BAO_DI_NAO_MAX_LAYER_TATAL;
+			update_player_rank_score(rank_type, player_id, 0, new_max_tower);
+			if (zhenying > 0)
+			{
+				rank_type = RANK_HUAN_BAO_DI_NAO_MAX_LAYER_ZHENYING1 + zhenying - 1;
+				update_player_rank_score(rank_type, player_id, 0, new_max_tower);
+			}
+		
+		}
 		if(old_meili != new_meili)
 		{
 			rank_type = RANK_MEI_LI_ZHI_TATAL;
@@ -954,36 +976,51 @@ int conn_node_ranksrv::handle_refresh_player_info(EXTERN_DATA *extern_data)
 		{
 			if(old_zhenying == 0)
 			{
-				if(new_max_partner != NULL)
+				if (new_max_partner != NULL)
 				{
 					rank_type = RANK_ZUI_QIANG_PARTNER_ZHENYING1 + zhenying - 1;
 					update_player_rank_score(rank_type, player_id, 0, new_max_partner->power);
 				}
+
 				rank_type =  RANK_MEI_LI_ZHI_ZHENYING1 + zhenying - 1;
 				update_player_rank_score(rank_type, player_id, 0, new_meili);
+
+				rank_type = RANK_HUAN_BAO_DI_NAO_MAX_LAYER_ZHENYING1 + zhenying - 1;
+				update_player_rank_score(rank_type, player_id, 0, new_max_tower);
 			}
 			else 
 			{
-				if(new_max_partner != NULL)
+				if(zhenying == 0)
 				{
-					if(zhenying == 0)
-					{
-						rank_type = RANK_ZUI_QIANG_PARTNER_ZHENYING1 + old_zhenying - 1;
-						del_player_rank(rank_type, player_id);
-						rank_type = RANK_MEI_LI_ZHI_ZHENYING1 + old_zhenying - 1;
-						del_player_rank(rank_type, player_id);
-					}
-					else 
+					rank_type = RANK_ZUI_QIANG_PARTNER_ZHENYING1 + old_zhenying - 1;
+					del_player_rank(rank_type, player_id);
+
+					rank_type = RANK_MEI_LI_ZHI_ZHENYING1 + old_zhenying - 1;
+					del_player_rank(rank_type, player_id);
+
+					rank_type = RANK_HUAN_BAO_DI_NAO_MAX_LAYER_ZHENYING1 + old_zhenying - 1;
+					del_player_rank(rank_type, player_id);
+				}
+				else 
+				{
+					if (new_max_partner != NULL)
 					{
 						rank_type = RANK_ZUI_QIANG_PARTNER_ZHENYING1 + zhenying - 1;
 						update_player_rank_score(rank_type, player_id, 0, new_max_partner->power);
-						rank_type = RANK_ZUI_QIANG_PARTNER_ZHENYING1 + old_zhenying - 1;
-						del_player_rank(rank_type, player_id);
-						rank_type = RANK_MEI_LI_ZHI_ZHENYING1 + zhenying - 1;
-						update_player_rank_score(rank_type, player_id, 0, new_meili);
-						rank_type = RANK_MEI_LI_ZHI_ZHENYING1 + old_zhenying - 1;
-						del_player_rank(rank_type, player_id);
 					}
+
+					rank_type = RANK_ZUI_QIANG_PARTNER_ZHENYING1 + old_zhenying - 1;
+					del_player_rank(rank_type, player_id);
+
+					rank_type = RANK_MEI_LI_ZHI_ZHENYING1 + zhenying - 1;
+					update_player_rank_score(rank_type, player_id, 0, new_meili);
+					rank_type = RANK_MEI_LI_ZHI_ZHENYING1 + old_zhenying - 1;
+					del_player_rank(rank_type, player_id);
+
+					rank_type = RANK_HUAN_BAO_DI_NAO_MAX_LAYER_ZHENYING1 + zhenying - 1;
+					update_player_rank_score(rank_type, player_id, 0, new_max_tower);
+					rank_type = RANK_HUAN_BAO_DI_NAO_MAX_LAYER_ZHENYING1 + old_zhenying - 1;
+					del_player_rank(rank_type, player_id);
 				}
 			
 			}
@@ -1212,6 +1249,9 @@ static void fill_rank_player(PlayerRedisInfo *redis, RankPlayerData *rank)
 	rank->baseinfo->n_attrs++;
 	rank->baseinfo->attrs[rank->baseinfo->n_attrs]->id = PLAYER_ATTR_SEX;
 	rank->baseinfo->attrs[rank->baseinfo->n_attrs]->val = redis->sex;
+	rank->baseinfo->n_attrs++;
+	rank->baseinfo->attrs[rank->baseinfo->n_attrs]->id = PLAYER_ATTR_FIGHTING_CAPACITY;
+	rank->baseinfo->attrs[rank->baseinfo->n_attrs]->val = redis->fighting_capacity;
 	rank->baseinfo->n_attrs++;
 
 	rank->baseinfo->tags = redis->tags;
@@ -3190,84 +3230,33 @@ int conn_node_ranksrv::world_boss_provide_rank_reward(uint64_t boss_id)
 
 int conn_node_ranksrv::receive_world_boss_reward_to_player(uint32_t rank, uint64_t boss_id, uint64_t player_id, uint32_t score)
 {
-	uint32_t id = 0;
-	if( rank == 1)
-	{
-		id = WORLD_BOSS_FIRST_GEAR_REWARD;
-	}
-	else if( rank == 2)
-	{
-		id = WORLD_BOSS_SECOND_GEAR_REWARD;
-	}
-	else if(rank == 3)
-	{
-		id = WORLD_BOSS_THIRD_GEAR_REWARD;
-	}
-	else if(rank >= 4 && rank <= 10)
-	{
-		id = WORLD_BOSS_FOURTH_GEAR_REWARD;
-	}
-	else if(rank >= 11 && rank <= 30)
-	{
-		id = WORLD_BOSS_FIFTH_GEAR_REWARD;
-	}
-	else if(rank >= 31 && rank <= 50)
-	{
-		id = WORLD_BOSS_SIXTH_GEAR_REWARD;
-	}
-	else if(rank >= 51 && rank <= 70)
-	{
-		id = WORLD_BOSS_SEVENTH_GEAR_REWARD;
-	}
-	else if(rank >= 71 && rank <= 100)
-	{
-		id = WORLD_BOSS_EIGHTH_GEAR_REWARD;
-	}
-	else
-	{
-		id = WORLD_BOSS_NINTH_GEAR_REWARD;
-	}
-
-	WorldBossRewardTable *reward_config = get_config_by_id(id, &world_boss_reward_config);
-	if(reward_config == NULL)
+	WorldBossTable *world_boss_config = get_config_by_id(boss_id, &rank_world_boss_config);
+	if(world_boss_config == NULL)
 	{
 		LOG_ERR("[%s:%d] 世界boss发奖失败,配置错误,player_id[%lu]", __FUNCTION__, __LINE__, player_id);
 		return -1;
 	}
 	std::map<uint32_t, uint32_t> attachs;
-	//固定奖励
-	if( reward_config->n_ItemID > 0 && reward_config->n_Num >0 && reward_config->n_ItemID == reward_config->n_Num)
+	uint32_t drop_id = 0;
+	uint32_t mail_id = 0;
+	for(uint32_t i = 0; i < world_boss_config->n_Ranking1 && i < world_boss_config->n_Ranking2 && i < world_boss_config->n_Reward && i < world_boss_config->n_MailID; i++)
 	{
-		for(size_t i = 0; i < reward_config->n_ItemID; i++)
+		if(rank >= world_boss_config->Ranking1[i] && rank < world_boss_config->Ranking2[i])
 		{
-			attachs[reward_config->ItemID[i]] = reward_config->Num[i];
+			drop_id = world_boss_config->Reward[i];
+			mail_id = world_boss_config->MailID[i];
+			break;
 		}
 	}
-	//从随机库抽取奖励
-	if(reward_config->Draw >0)
+	if(drop_id == 0)
 	{
-		uint32_t luck_num = reward_config->Draw;
-		if(reward_config->n_Random >0)
-		{
-			for(uint32_t i =0; i < luck_num; i ++)
-			{
-				uint32_t xia_biao = rand() % reward_config->n_Random;
-				if(attachs.find(reward_config->Random[xia_biao]) != attachs.end())
-				{
-					attachs[reward_config->Random[xia_biao]] += 1;
-				}
-				else
-				{
-					attachs[reward_config->Random[xia_biao]] = 1;
-				}
-			}
-		}
+		LOG_ERR("[%s:%d] 世界boss发奖失败 player[%lu] rank[%u]", __FUNCTION__, __LINE__, player_id, rank);
+		return -2;
 	}
 
-
+	get_drop_item(drop_id, attachs);
 
 	//邮件发奖
-	WorldBossTable *world_boss_config = get_config_by_id(boss_id, &rank_world_boss_config);
 	std::vector<char *> boss_name_vect;
 	char boss_name[1024] = {0};
 	if(world_boss_config != NULL)
@@ -3282,7 +3271,7 @@ int conn_node_ranksrv::receive_world_boss_reward_to_player(uint32_t rank, uint64
 		}
 		boss_name_vect.push_back(boss_name);
 	}
-	send_mail(&connecter, player_id,reward_config->MailID , NULL, NULL, NULL, &boss_name_vect, &attachs, MAGIC_TYPE_WORLDBOS_RANK_REWARD);
+	send_mail(&connecter, player_id, mail_id , NULL, NULL, NULL, &boss_name_vect, &attachs, MAGIC_TYPE_WORLDBOS_RANK_REWARD);
 
 	//通知玩家弹奖励界面
 	RankWorldBossRewardNotify notify;

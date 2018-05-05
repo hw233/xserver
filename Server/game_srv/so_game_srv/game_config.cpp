@@ -485,7 +485,8 @@ static void generate_parameters(void)
 	sg_fight_param_161000393 = get_config_by_id(161000393, &parameter_config)->parameter1[0];
 	sg_fight_param_161000394 = get_config_by_id(161000394, &parameter_config)->parameter1[0];
 	sg_fight_param_161000395 = get_config_by_id(161000395, &parameter_config)->parameter1[0];
-	sg_fight_param_161000396 = get_config_by_id(161000396, &parameter_config)->parameter1[0];	
+	sg_fight_param_161000396 = get_config_by_id(161000396, &parameter_config)->parameter1[0];
+	sg_fight_param_161000503 = get_config_by_id(161000503, &parameter_config)->parameter1[0];		
 
 	sg_doufachang_ai[0] = get_config_by_id(161000315, &parameter_config)->parameter1[0];
 	sg_doufachang_ai[1] = get_config_by_id(161000315, &parameter_config)->parameter1[1];
@@ -710,9 +711,10 @@ static void generate_parameters(void)
 		marry_propose_is_same_sex = config->parameter1[0];
 	}
 	config = get_config_by_id(161001101, &parameter_config);
-	if (config && config->n_parameter1 >= 1)
+	if (config && config->n_parameter1 >= 2)
 	{
-		marry_propose_min_closeness = config->parameter1[0];
+		marry_propose_cancle_return_money = config->parameter1[0];
+		marry_propose_again_use_money = config->parameter1[1];
 	}
 	config = get_config_by_id(161001102, &parameter_config);
 	if (config && config->n_parameter1 >= 1)
@@ -2359,10 +2361,10 @@ static void adjust_jijiangopen_table()
 
 static void adjust_every_level_all_charm()
 {
+	uint32_t level = 1;
+	uint32_t sun_num = 0;
 	for(std::map<uint64_t, struct CharmTable *>::iterator itr =  charm_config.begin(); itr != charm_config.end(); itr++)
 	{
-		uint32_t level = 1;
-		uint32_t sun_num = 0;
 		sun_num += itr->second->Exp;
 		every_level_all_charm.insert(std::make_pair(level, sun_num));
 		level++;
@@ -2909,22 +2911,6 @@ int get_drop_item(uint32_t drop_id, std::map<uint32_t, uint32_t> &item_list, uin
 	return 0;
 }
 
-int get_player_sex(uint32_t job)
-{
-	switch(job)
-	{
-		case JOB_DEFINE_DAO:
-		case JOB_DEFINE_BI:
-			return SEX_DEFINE_MALE;
-		case JOB_DEFINE_GONG:
-		case JOB_DEFINE_QIANG:
-		case JOB_DEFINE_FAZHANG:
-			return SEX_DEFINE_FEMALE;
-	}
-
-	return 0;
-}
-
 int get_task_type(uint32_t task_id)
 {
 	TaskTable *config = get_config_by_id(task_id, &task_config);
@@ -3101,6 +3087,66 @@ uint32_t get_friend_close_level(uint32_t closeness)
 		}
 	}
 	return lv;
+}
+bool friend_close_can_sworn(uint32_t closeness)
+{
+	uint32_t pre_val = 0;
+	for (std::map<uint64_t, DegreeTable*>::iterator iter = friend_close_config.begin(); iter != friend_close_config.end(); ++iter)
+	{
+		DegreeTable *config = iter->second;
+		if (closeness > pre_val)
+		{
+			if (closeness <= config->Value)
+			{
+				for(uint32_t i = 0; i < config->n_Function; i++)
+				{
+					if(config->Function[i] == 1)
+						return true;
+				}
+				return false;
+			}
+			else
+			{
+				pre_val = config->Value;
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+	return false;
+}
+
+bool friend_close_can_marry(uint32_t closeness)
+{
+	uint32_t pre_val = 0;
+	for (std::map<uint64_t, DegreeTable*>::iterator iter = friend_close_config.begin(); iter != friend_close_config.end(); ++iter)
+	{
+		DegreeTable *config = iter->second;
+		if (closeness > pre_val)
+		{
+			if (closeness <= config->Value)
+			{
+				for(uint32_t i = 0; i < config->n_Function; i++)
+				{
+					if(config->Function[i] == 2)
+						return true;
+				}
+				return false;
+			}
+			else
+			{
+				pre_val = config->Value;
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+	return false;
+
 }
 
 bool activity_is_open(uint32_t activity_id)

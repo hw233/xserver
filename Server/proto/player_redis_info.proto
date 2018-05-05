@@ -65,7 +65,8 @@ message player_redis_info
 	required uint32 award_question = 34;  //有奖答题
 	optional MaxPowerPartner maxpartner = 35; //最高战力宠物信息
 	required uint32 meili_num = 36; //玩家当前总魅力
-	required uint32 sex = 37; //
+	required uint32 sex = 37; //性别
+	required uint32 max_tower = 38; //冲塔历史最高层数
 }
 
 message RedisGuildInfo

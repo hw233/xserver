@@ -22,10 +22,10 @@ typedef std::map<uint64_t, void *> *config_type;
 std::map<uint64_t, struct WorldBossTable*> rank_world_boss_config; //世界boss表
 std::map<uint64_t, struct ActorAttributeTable *> actor_attribute_config;
 std::map<uint64_t, struct MonsterTable *> monster_config;
-std::map<uint64_t, struct WorldBossRewardTable *> world_boss_reward_config;
 std::map<uint64_t, struct ParameterTable *> parameter_config;
 std::map<uint64_t, struct RankingRewardTable *> rank_reward_config;//排行榜奖励表
 std::map<uint64_t, std::vector<struct RankingRewardTable *> > rank_reward_map;//排行榜奖励表
+std::map<uint64_t, struct DropConfigTable *> drop_config;
 
 uint32_t sg_rank_reward_time;
 uint32_t sg_rank_reward_interval;
@@ -94,11 +94,6 @@ int read_all_rank_excel_data()
 	ret = traverse_main_table(L, type, "../lua_data/MonsterTable.lua", (config_type)&monster_config);
 	assert(ret == 0);
 
-	type = sproto_type(sp, "WorldBossRewardTable");
-	assert(type);		
-	ret = traverse_main_table(L, type, "../lua_data/WorldBossRewardTable.lua", (config_type)&world_boss_reward_config);
-	assert(ret == 0);
-
 	type = sproto_type(sp, "ParameterTable");
 	assert(type);		
 	ret = traverse_main_table(L, type, "../lua_data/ParameterTable.lua", (config_type)&parameter_config);
@@ -107,6 +102,11 @@ int read_all_rank_excel_data()
 	type = sproto_type(sp, "RankingRewardTable");
 	assert(type);		
 	ret = traverse_main_table(L, type, "../lua_data/RankingRewardTable.lua", (config_type)&rank_reward_config);
+	assert(ret == 0);
+
+	type = sproto_type(sp, "DropConfigTable");
+	assert(type);		
+	ret = traverse_main_table(L, type, "../lua_data/DropConfigTable.lua", (config_type)&drop_config);
 	assert(ret == 0);
 
 	generate_parameters();
@@ -118,5 +118,79 @@ int read_all_rank_excel_data()
 	return (0);
 }
 
+void add_drop_item(uint32_t item_id, uint32_t num_max, uint32_t num_min, std::map<uint32_t, uint32_t> &item_list, uint32_t stack)
+{
+	if (item_id > 200000000 && item_id < 209999999)
+	{
+		uint32_t rand_num = rand_between(num_min, num_max);
+		if (rand_num > 0)
+		{
+			item_list[item_id] += rand_num;
+		}
+	}
+	else
+	{
+		get_drop_item(item_id, item_list, stack + 1);
+	}
+}
+
+int get_drop_item(uint32_t drop_id, std::map<uint32_t, uint32_t> &item_list, uint32_t stack)
+{
+	if (stack >= 10)
+	{
+		LOG_ERR("[%s:%d] stack level too deep, drop_id:%u", __FUNCTION__, __LINE__, drop_id);
+		return -1;
+	}
+
+	DropConfigTable *config = get_config_by_id(drop_id, &drop_config);
+	if (!config)
+	{
+		LOG_ERR("[%s:%d] get drop config failed, drop_id:%u", __FUNCTION__, __LINE__, drop_id);
+		return -1;
+	}
+
+	if (config->ProType == 0) //统一概率
+	{
+		uint64_t total_prob = 0;
+		for (uint32_t i = 0; i < config->n_DropID && i < config->n_Probability && i < config->n_NumMin && i < config->n_NumMax; ++i)
+		{
+			total_prob += config->Probability[i];
+		}
+
+		if (total_prob == 0)
+		{
+			LOG_ERR("[%s:%d] total_probability is 0, drop_id:%u", __FUNCTION__, __LINE__, drop_id);
+			return -1;
+		}
+
+		uint32_t rand_val = random() % total_prob;
+		uint32_t add_val = 0;
+		for (uint32_t i = 0; i < config->n_DropID && i < config->n_Probability && i < config->n_NumMin && i < config->n_NumMax; ++i)
+		{
+			if (add_val <= rand_val && rand_val < add_val + config->Probability[i])
+			{
+				add_drop_item(config->DropID[i], config->NumMax[i], config->NumMin[i], item_list, stack);
+				break;
+			}
+			else
+			{
+				add_val += config->Probability[i];
+			}
+		}
+	}
+	else //单独概率
+	{
+		for (uint32_t i = 0; i < config->n_DropID && i < config->n_Probability && i < config->n_NumMin && i < config->n_NumMax; ++i)
+		{
+			uint32_t rand_val = random() % RAND_RATE_BASE;
+			if (rand_val < config->Probability[i])
+			{
+				add_drop_item(config->DropID[i], config->NumMax[i], config->NumMin[i], item_list, stack);
+			}
+		}
+	}
+
+	return 0;
+}
 
 

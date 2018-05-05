@@ -174,6 +174,17 @@ local ServerResTable = {
 		['Port'] = 23686,
 		['ServerId'] = 16,
 		['OpenTime'] = 1506700800
+		},
+	[17] = {
+		['ID'] = 17,
+		['Name'] = '袁新林',
+		['ResName1'] = 'pic_dl_1huise',
+		['State2Name'] = '',
+		['ResName2'] = '',
+		['Ip'] = '192.168.2.114',
+		['Port'] = 24686,
+		['ServerId'] = 17,
+		['OpenTime'] = 1506700800
 		}
 	}
 return ServerResTable

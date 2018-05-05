@@ -385,6 +385,7 @@ double sg_fight_param_161000393;                //伤害公式加入战斗力计
 double sg_fight_param_161000394;                //伤害公式加入战斗力计算
 double sg_fight_param_161000395;                //伤害公式加入战斗力计算
 double sg_fight_param_161000396;                //伤害公式加入战斗力计算
+double sg_fight_param_161000503;                //力量转五行攻击系数
 
 uint32_t sg_server_level_reward_item_id;
 uint32_t sg_server_level_reward_item_num;
@@ -488,8 +489,8 @@ uint32_t sg_yuanbao_red_packet_min_money;      //元宝红包最小货币值
 uint32_t sg_yuanbao_red_packet_max_money;      //元宝红包最大货币值
 uint32_t send_red_packet_min_level;            //发红包最小等级要求
 
-
-uint32_t marry_propose_min_closeness;          //求婚最小好感度要求
+uint32_t marry_propose_cancle_return_money;    //取消婚期退还费用百分比
+uint32_t marry_propose_again_use_money;		   //再次预定婚期消耗百分比
 uint32_t marry_propose_is_same_sex;            //是否允许是异性 0:不允许 否则允许
 uint32_t marry_propose_divorce_time;           //离婚多少时长后才能再度求婚或者接受求婚
 uint32_t marry_propose_min_money;			  //求婚消耗最小金钱数量

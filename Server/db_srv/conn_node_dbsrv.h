@@ -30,6 +30,7 @@ private:
 	void handle_save_server_level(EXTERN_DATA *extern_data);
 	void handle_break_server_level(EXTERN_DATA *extern_data);
 	void handle_trade_statis_insert(EXTERN_DATA *extern_data);
+	void handle_updata_player_some_marry_data(EXTERN_DATA *extern_data);
 };
 
 #endif

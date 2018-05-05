@@ -87,6 +87,7 @@ int refresh_next_tower(player_struct *player)
 	}
 
 	raid->data->ai_data.tower_data.refresh = true;
+	raid->data->ai_data.tower_data.mon_num = 0;
 	//P20076Table *monTable = get_config_by_id(351601000 + player->data->tower.cur_lv, &tower_level_config);
 	//if (monTable == NULL)
 	//{
@@ -213,10 +214,15 @@ static void tower_raid_ai_monster_dead(raid_struct *raid, monster_struct *monste
 		nty.pass_value = dead_cnt;		//死亡数量 un
 
 		raid->broadcast_to_raid(MSG_ID_RAID_PASS_PARAM_CHANGED_NOTIFY, &nty, (pack_func)raid_pass_param_changed_notify__pack,false);
+
+		if (monster->data->owner == 0)
+		{
+			--raid->data->ai_data.tower_data.mon_num;
+		}
 	}
 
 
-	if (raid->m_monster.size() != 0)
+	if (raid->data->ai_data.tower_data.mon_num > 0)
 	{
 		return ;
 	}
@@ -241,6 +247,7 @@ static void tower_raid_ai_monster_dead(raid_struct *raid, monster_struct *monste
 		if (player->data->tower.cur_lv > player->data->tower.top_lv)
 		{
 			player->data->tower.top_lv = player->data->tower.cur_lv;
+			player->refresh_player_redis_info(false);
 		}
 		if (player->data->tower.cur_lv + 5 > player->data->tower.top_lv)
 		{

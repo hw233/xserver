@@ -158,7 +158,6 @@ struct WeaponsEffectTable;
 struct WeddingRing;
 struct WeddingTable;
 struct WeekTable;
-struct WorldBossRewardTable;
 struct WorldBossTable;
 struct raidsrv_config;
 struct sproto_config_pos;
@@ -316,7 +315,6 @@ void free_WeaponsEffectTable(struct WeaponsEffectTable *p);
 void free_WeddingRing(struct WeddingRing *p);
 void free_WeddingTable(struct WeddingTable *p);
 void free_WeekTable(struct WeekTable *p);
-void free_WorldBossRewardTable(struct WorldBossRewardTable *p);
 void free_WorldBossTable(struct WorldBossTable *p);
 void free_raidsrv_config(struct raidsrv_config *p);
 void free_sproto_config_pos(struct sproto_config_pos *p);
@@ -537,6 +535,7 @@ struct ActorTable
 	uint64_t *SeniorAttribute; //26
 	uint32_t n_BuffAttribute; //27
 	uint64_t *BuffAttribute; //27
+	uint64_t  AttributeWu; //28
 }__attribute__ ((packed));
 
 struct AcupunctureTable
@@ -2773,19 +2772,6 @@ struct WeekTable
 	uint64_t *MonsterID; //5
 }__attribute__ ((packed));
 
-struct WorldBossRewardTable
-{
-	uint64_t  ID; //1
-	uint32_t n_ItemID; //2
-	uint64_t *ItemID; //2
-	uint32_t n_Num; //3
-	uint64_t *Num; //3
-	uint64_t  Draw; //4
-	uint32_t n_Random; //5
-	uint64_t *Random; //5
-	uint64_t  MailID; //6
-}__attribute__ ((packed));
-
 struct WorldBossTable
 {
 	uint64_t  ID; //1
@@ -2796,8 +2782,16 @@ struct WorldBossTable
 	uint64_t  MonsterID; //6
 	uint32_t n_Time; //7
 	uint64_t *Time; //7
-	double  Coefficient; //8
-	uint64_t  RewardLevel; //9
+	uint32_t n_Ranking1; //8
+	uint64_t *Ranking1; //8
+	uint32_t n_Ranking2; //9
+	uint64_t *Ranking2; //9
+	uint32_t n_Reward; //10
+	uint64_t *Reward; //10
+	uint32_t n_MailID; //11
+	uint64_t *MailID; //11
+	double  Coefficient; //12
+	uint64_t  RewardLevel; //13
 }__attribute__ ((packed));
 
 struct raidsrv_config

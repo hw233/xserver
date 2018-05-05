@@ -23,7 +23,6 @@ typedef std::map<uint64_t, void *> *config_type;
 std::map<uint64_t, struct WorldBossTable*> rank_world_boss_config; //世界boss表
 std::map<uint64_t, struct ActorAttributeTable *> actor_attribute_config;
 std::map<uint64_t, struct MonsterTable *> monster_config;
-std::map<uint64_t, struct WorldBossRewardTable *> world_boss_reward_config;
 std::map<uint64_t, struct ParameterTable *> parameter_config;
 std::map<uint64_t, struct ServerResTable *> server_res_config; //服务器资源配置
 std::map<uint64_t, struct LimitActivityControlTable *> time_limit_control_config; //限时活动表
@@ -91,11 +90,6 @@ int read_all_activity_excel_data()
 	type = sproto_type(sp, "MonsterTable");
 	assert(type);		
 	ret = traverse_main_table(L, type, "../lua_data/MonsterTable.lua", (config_type)&monster_config);
-	assert(ret == 0);
-
-	type = sproto_type(sp, "WorldBossRewardTable");
-	assert(type);		
-	ret = traverse_main_table(L, type, "../lua_data/WorldBossRewardTable.lua", (config_type)&world_boss_reward_config);
 	assert(ret == 0);
 
 	type = sproto_type(sp, "ParameterTable");

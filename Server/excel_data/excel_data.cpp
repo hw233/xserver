@@ -1405,20 +1405,15 @@ void free_WeekTable(struct WeekTable *p)
     free(p);
 };
 
-void free_WorldBossRewardTable(struct WorldBossRewardTable *p)
-{
-    if (!p) return;
-    free(p->ItemID);
-    free(p->Num);
-    free(p->Random);
-    free(p);
-};
-
 void free_WorldBossTable(struct WorldBossTable *p)
 {
     if (!p) return;
     free(p->Name);
     free(p->Time);
+    free(p->Ranking1);
+    free(p->Ranking2);
+    free(p->Reward);
+    free(p->MailID);
     free(p);
 };
 

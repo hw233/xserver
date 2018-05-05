@@ -120,7 +120,8 @@
 	LvAttributeNum 24 : *integer 
 	FiveAttribute 25 : *integer 
 	SeniorAttribute 26 : *integer 
-	BuffAttribute 27 : *integer 
+	BuffAttribute 27 : *integer
+	AttributeWu 28 : integer
 }
 
 .ActorAttributeTable {
@@ -1513,16 +1514,12 @@
 	SceneID 5 : integer
 	MonsterID 6 : integer
 	Time 7 : *integer
-	Coefficient 8 : double
-	RewardLevel 9 : integer
-}
-.WorldBossRewardTable{
-	ID 1 : integer
-	ItemID 2 : *integer
-	Num 3 : *integer
-	Draw 4 : integer
-	Random 5 : *integer
-	MailID 6 : integer
+	Ranking1 8 : *integer
+	Ranking2 9 : *integer
+	Reward 10 : *integer
+	MailID 11 : *integer
+	Coefficient 12 : double
+	RewardLevel 13 : integer
 }
 
 .BattlefieldTable{

@@ -2487,6 +2487,10 @@ int pack_player_online(player_struct *player, EXTERN_DATA *extern_data, bool loa
 		player->init_player_login_reward_receive_data();
 		player->init_player_ci_fu_reward_receive_data();
 		player->jiu_gong_ba_gua_reward_info_init();
+		if(player->data->player_marry_info.statu == MARRY_STATU_SINGLE_NOT_MARRIAGE_HISTORY)
+		{
+			player->clean_player_all_marry_info(false);
+		}
 	}
 
 	if (player->data->attrData[PLAYER_ATTR_HP] < __DBL_EPSILON__)
@@ -25785,6 +25789,7 @@ int handle_red_packet_send_red_request(player_struct* player, EXTERN_DATA* exter
 		{
 			strcpy(resq->player_text, req->player_text);
 		}
+		resq->player_text[MAX_RED_PACKET_LIU_YAN_LEN - 1] = '\0';
 		fast_send_msg_base(&conn_node_gamesrv::connecter, extern_data, SERVER_PROTO_TRADE_SEND_RED_PACKET_REQUEST, data_len, 0);
 
 	}while(0);
@@ -25872,6 +25877,19 @@ int handle_red_packet_send_failed_still_money_request(player_struct* player, EXT
 	answer.result = req->result;
 	fast_send_msg(&conn_node_gamesrv::connecter, extern_data, MSG_ID_RED_BACKET_SEND_TO_MANY_PLAYER_ANSWER, comm_answer__pack, answer);
 	return 0;
+}
+
+void handle_updata_player_some_marry_data(EXTERN_DATA* extern_data, uint64_t player_id, uint32_t marry_statu, uint32_t   marry_type, uint64_t   marry_period)
+{
+	PLAYER_SOME_MARRY_DATA *resq = (PLAYER_SOME_MARRY_DATA*)get_send_data();
+	uint32_t data_len = sizeof(RED_PACKET_SEND_DATA_REQUEST);
+	memset(resq, 0, data_len);
+	resq->player_id = player_id;
+	resq->marry_statu = marry_statu;
+	resq->marry_type = marry_type;
+	resq->marry_period = marry_period;
+	fast_send_msg_base(conn_node_dbsrv::connecter, extern_data, SERVER_PROTO_UPDATE_PLAYER_SOME_MARRY_DATA, data_len, 0);
+
 }
 
 //玩家求婚请求
@@ -26169,7 +26187,12 @@ int handle_marry_player_reserve_wedding_request(player_struct* player, EXTERN_DA
 	int ret = 0;
 	do{
 		//先判断是不是求婚者
-		if(player->data->player_marry_info.statu != MARRY_STATU_HAVE_PROPOSE_NOT_RESERVE_MARRY || player->data->player_marry_info.my_role != MARRY_PROPOSE_IS_ACTIVE)
+		if(player->data->player_marry_info.statu != MARRY_STATU_HAVE_PROPOSE_NOT_RESERVE_MARRY)
+		{
+			ret = 190500630;
+			break;
+		}
+		if(player->data->player_marry_info.my_role != MARRY_PROPOSE_IS_ACTIVE)
 		{
 			ret = 190500619;
 			break;
@@ -26226,11 +26249,8 @@ int handle_marry_player_reserve_wedding_request(player_struct* player, EXTERN_DA
 		std::vector<char *> mail_text;
 		std::map<uint32_t, uint32_t> mail_item_map_man;
 		std::map<uint32_t, uint32_t> mail_item_map_woman;
-		char reserve_player_text[MAX_PLAYER_NAME_LEN + 1] = {0};
 		char reserve_time_text[256] = {0};
-		strcpy(reserve_player_text, player->data->name);
 		snprintf(reserve_time_text, 256, "%d年%d月%d日%d:%d", marry_tm.tm_year + 1900, marry_tm.tm_mon + 1, marry_tm.tm_mday, marry_tm.tm_hour, marry_tm.tm_min);
-		mail_text.push_back(reserve_player_text);
 		mail_text.push_back(reserve_time_text);
 
 		for(uint32_t i = 0; i < marry_table->n_RewardItem1 && i < marry_table->n_RewardNum; i++)
@@ -26272,6 +26292,7 @@ int handle_marry_player_reserve_wedding_request(player_struct* player, EXTERN_DA
 		else 
 		{
 			//不在线要更新mysql
+			handle_updata_player_some_marry_data(extern_data, player->data->player_marry_info.target_id, MARRY_STATU_HAVE_PROPOSE_HAVE_RESERVE_MARRY, marry_type, marry_time);
 		}
 
 
@@ -26295,36 +26316,61 @@ int handle_marry_player_cancel_propose_request(player_struct* player, EXTERN_DAT
 		LOG_ERR("[%s:%d] can not find player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 		return -1;
 	}
+	PlayerCancelProposeRequest *req = player_cancel_propose_request__unpack(NULL, get_data_len(), (uint8_t*)get_data());
+	if(req == NULL)
+	{
+		LOG_ERR("[%s:%d] cancel propose request unpack fail[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
+		return -2;
+	}
+	uint32_t statu = req->statu;
+	player_cancel_propose_request__free_unpacked(req, NULL);
 
 	if(player->data->player_marry_info.statu != MARRY_STATU_HAVE_PROPOSE_NOT_RESERVE_MARRY || player->data->player_marry_info.statu != MARRY_STATU_HAVE_PROPOSE_HAVE_RESERVE_MARRY)
 	{
 		LOG_ERR("[%s:%d] player cancel propose fail, marry_statu[%u] player[%lu]", __FUNCTION__, __LINE__, player->data->player_marry_info.statu, extern_data->player_id);
-		return -2;
+		return -3;
 	}
 	if(player->data->player_marry_info.target_id == 0)
 	{
 		LOG_ERR("[%s:%d] player cancel propose fail, target player_id error player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
-		return -3;
+		return -4;
 	}
+	WeddingTable *marry_table = NULL;
+	if(player->data->player_marry_info.statu == MARRY_STATU_HAVE_PROPOSE_HAVE_RESERVE_MARRY)
+	{
+		uint32_t reserve_marry_type = player->data->player_marry_info.reserve_marry_type;
+		marry_table = get_config_by_id(reserve_marry_type, &wedding_config);
+		if(marry_table == NULL)
+		{
+			LOG_ERR("[%s;%d] cancel propose fail, get wedding table error, reserve_marry_type[%u] player[%lu]", __FUNCTION__, __LINE__, reserve_marry_type, extern_data->player_id);
+			return -5;
+		}	
+	}
+
 	int ret = 0;
 	do{
-		bool flag = false; //是否跟自己的对象组队
-		if(player->m_team != NULL)
+		player_struct *target_player = player_manager::get_player_by_id(player->data->player_marry_info.target_id);
+		//协议取消订婚
+		if(statu == 0)
 		{
-			for(int pos = 0; pos < player->m_team->m_data->m_memSize && pos < 2; pos++)
+			bool flag = false; //是否跟自己的对象组队
+			if(player->m_team != NULL)
 			{
-				if(player->m_team->m_data->m_mem[pos].id == player->data->player_marry_info.target_id)
+				for(int pos = 0; pos < player->m_team->m_data->m_memSize && pos < 2; pos++)
 				{
-					flag = true;
-					break;
+					if(player->m_team->m_data->m_mem[pos].id == player->data->player_marry_info.target_id)
+					{
+						flag = true;
+						break;
+					}
 				}
 			}
-		}
-		player_struct *target_player = player_manager::get_player_by_id(player->data->player_marry_info.target_id);
-		
-		//组队在线需要对方对方确认,且免费取消     不组队直接取消,需要消耗金钱
-		if(flag == true)
-		{
+			if(flag == false)
+			{
+				ret = 190500629; //未组队
+				break;
+			}
+
 			if(!target_player || !target_player->is_online())
 			{
 				ret = 190500626;
@@ -26339,13 +26385,15 @@ int handle_marry_player_cancel_propose_request(player_struct* player, EXTERN_DAT
 			break;
 		}
 
-		//未组队处理
+		//强制取消订婚
 		if(player->sub_unbind_gold(marry_cancel_propose_marry_use_money, MAGIC_TYPE_CANCEL_PROPOSE_MARRY_USE_MONEY) !=0)
 		{
 			ret = 190500318; //元宝不足
 			break;
 		}
 		uint64_t target_id = player->data->player_marry_info.target_id;
+		char target_name[MAX_PLAYER_NAME_LEN + 1] = {0};
+		strcpy(target_name, player->data->player_marry_info.target_name);
 		player->clean_player_all_marry_info(false);
 		player->clean_player_friend_closeness(target_id);
 		player->player_cur_marry_info_notify();
@@ -26360,6 +26408,50 @@ int handle_marry_player_cancel_propose_request(player_struct* player, EXTERN_DAT
 		else 
 		{
 			//不在线要更新mysql
+			handle_updata_player_some_marry_data(extern_data, target_id, 0, 0, 0);
+		}
+		time_t now_time = time_helper::get_cached_time() / 1000;
+		struct tm now_tm;
+		localtime_r(&now_time, &now_tm);
+		std::vector<char *> mail_text1;
+		std::vector<char *> mail_text2;
+		std::map<uint32_t, uint32_t> mail_item_map;
+		mail_text1.clear();
+		mail_text2.clear();
+		mail_item_map.clear();
+		char reserve_time_text[256] = {0};
+		snprintf(reserve_time_text, 256, "%d年%d月%d日%d:%d", now_tm.tm_year + 1900, now_tm.tm_mon + 1, now_tm.tm_mday, now_tm.tm_hour, now_tm.tm_min);
+		mail_text1.push_back(target_name);
+		mail_text1.push_back(reserve_time_text);
+		send_mail(&conn_node_gamesrv::connecter, player->data->player_id, 270300021, NULL, NULL, NULL, &mail_text1, &mail_item_map, MAGIC_TYPE_CANCEL_PROPOSE_MARRY_MAIL);
+
+		mail_text2.push_back(player->data->name);
+		mail_text2.push_back(reserve_time_text);
+		send_mail(&conn_node_gamesrv::connecter, target_id, 270300021, NULL, NULL, NULL, &mail_text2, &mail_item_map, MAGIC_TYPE_CANCEL_PROPOSE_MARRY_MAIL);
+
+		if(marry_table != NULL)
+		{
+			//另外把预定婚期的发费返回一部分给订婚的玩家
+			std::vector<char *> mail_text3;
+			std::map<uint32_t, uint32_t> mail_item_map1;
+			mail_item_map.clear();
+			uint64_t active_id = 0;
+			char active_name[MAX_PLAYER_NAME_LEN + 1] = {0};
+			if(player->data->player_marry_info.my_role == MARRY_PROPOSE_IS_ACTIVE)
+			{
+				active_id = player->data->player_id;
+				strcpy(active_name, target_name);
+			}
+			else 
+			{
+				active_id = target_id;
+				strcpy(active_name, player->data->name);
+			}
+			uint32_t return_money = marry_table->Cost * (double)marry_propose_cancle_return_money/(double)100;
+			mail_text3.push_back(active_name);
+			mail_text3.push_back(reserve_time_text);
+			mail_item_map1[201010003] = return_money;
+			send_mail(&conn_node_gamesrv::connecter, active_id, 270300022, NULL, NULL, NULL, &mail_text3, &mail_item_map1, MAGIC_TYPE_CANCEL_PROPOSE_MARRY_MAIL);
 		}
 
 		PlayerCancelProposeResultNotify notify;
@@ -26384,7 +26476,7 @@ int handle_marry_player_cancel_propose_request(player_struct* player, EXTERN_DAT
 	return 0;
 }
 
-//玩家取消订婚请求
+//玩家确认取消订婚请求
 int handle_marry_player_cancel_confirm_request(player_struct* player, EXTERN_DATA* extern_data)
 {
 	if (!player || !player->is_online())
@@ -26418,6 +26510,18 @@ int handle_marry_player_cancel_confirm_request(player_struct* player, EXTERN_DAT
 		LOG_ERR("[%s:%d] player confirm cancel propose fail, target not cancel player[%lu]", __FUNCTION__, __LINE__, extern_data->player_id);
 		return -5;
 	}
+	WeddingTable *marry_table = NULL;
+	if(player->data->player_marry_info.statu == MARRY_STATU_HAVE_PROPOSE_HAVE_RESERVE_MARRY)
+	{
+		uint32_t reserve_marry_type = player->data->player_marry_info.reserve_marry_type;
+		marry_table = get_config_by_id(reserve_marry_type, &wedding_config);
+		if(marry_table == NULL)
+		{
+			LOG_ERR("[%s;%d] cancel propose fail, get wedding table error, reserve_marry_type[%u] player[%lu]", __FUNCTION__, __LINE__, reserve_marry_type, extern_data->player_id);
+			return -6;
+		}	
+	}
+
 
 	bool online = false;
 	player_struct *target_player = player_manager::get_player_by_id(target_id);
@@ -26427,6 +26531,8 @@ int handle_marry_player_cancel_confirm_request(player_struct* player, EXTERN_DAT
 	}
 	if(result == 0)
 	{
+		char target_name[MAX_PLAYER_NAME_LEN + 1] = {0};
+		strcpy(target_name, player->data->player_marry_info.target_name);
 		player->clean_player_all_marry_info(false);
 		player->clean_player_friend_closeness(target_id);
 		player->player_cur_marry_info_notify();
@@ -26439,6 +26545,51 @@ int handle_marry_player_cancel_confirm_request(player_struct* player, EXTERN_DAT
 		else 
 		{
 			//不在线要更新mysql
+			handle_updata_player_some_marry_data(extern_data, target_id, 0, 0, 0);
+		}
+		//发邮件通知取消订婚
+		time_t now_time = time_helper::get_cached_time() / 1000;
+		struct tm now_tm;
+		localtime_r(&now_time, &now_tm);
+		std::vector<char *> mail_text1;
+		std::vector<char *> mail_text2;
+		std::map<uint32_t, uint32_t> mail_item_map;
+		mail_text1.clear();
+		mail_text2.clear();
+		mail_item_map.clear();
+		char reserve_time_text[256] = {0};
+		snprintf(reserve_time_text, 256, "%d年%d月%d日%d:%d", now_tm.tm_year + 1900, now_tm.tm_mon + 1, now_tm.tm_mday, now_tm.tm_hour, now_tm.tm_min);
+		mail_text1.push_back(target_name);
+		mail_text1.push_back(reserve_time_text);
+		send_mail(&conn_node_gamesrv::connecter, player->data->player_id, 270300021, NULL, NULL, NULL, &mail_text1, &mail_item_map, MAGIC_TYPE_CANCEL_PROPOSE_MARRY_MAIL);
+
+		mail_text2.push_back(player->data->name);
+		mail_text2.push_back(reserve_time_text);
+		send_mail(&conn_node_gamesrv::connecter, target_id, 270300021, NULL, NULL, NULL, &mail_text2, &mail_item_map, MAGIC_TYPE_CANCEL_PROPOSE_MARRY_MAIL);
+
+		if(marry_table != NULL)
+		{
+			//另外把预定婚期的发费返回一部分给订婚的玩家
+			std::vector<char *> mail_text3;
+			std::map<uint32_t, uint32_t> mail_item_map1;
+			mail_item_map.clear();
+			uint64_t active_id = 0;
+			char active_name[MAX_PLAYER_NAME_LEN + 1] = {0};
+			if(player->data->player_marry_info.my_role == MARRY_PROPOSE_IS_ACTIVE)
+			{
+				active_id = player->data->player_id;
+				strcpy(active_name, target_name);
+			}
+			else 
+			{
+				active_id = target_id;
+				strcpy(active_name, player->data->name);
+			}
+			uint32_t return_money = marry_table->Cost * (double)marry_propose_cancle_return_money/(double)100;
+			mail_text3.push_back(active_name);
+			mail_text3.push_back(reserve_time_text);
+			mail_item_map1[201010003] = return_money;
+			send_mail(&conn_node_gamesrv::connecter, active_id, 270300022, NULL, NULL, NULL, &mail_text3, &mail_item_map1, MAGIC_TYPE_CANCEL_PROPOSE_MARRY_MAIL);
 		}
 	
 	}

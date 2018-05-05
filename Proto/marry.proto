@@ -83,6 +83,11 @@ message PlayerCurMarryInfoNotify
 	required uint64 divorce_time = 8; //上次离婚时间
 }
 
+//取消订婚请求
+message PlayerCancelProposeRequest 
+{
+	required uint32 statu = 1; //方式 0:协议取消 否则强制取消
+}
 //取消订婚最终结果通知
 message PlayerCancelProposeResultNotify
 {

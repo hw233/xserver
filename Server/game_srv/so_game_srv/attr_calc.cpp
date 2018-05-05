@@ -130,6 +130,8 @@ void calculate_lv3_attribute(double *attrData)
 	attrData[PLAYER_ATTR_ATTACK] += attrData[PLAYER_ATTR_LI] * (1 + attrData[PLAYER_ATTR_ATTACKPRO]) * sg_fight_param_161000275;
 	// 最终全系抗性=面板敏捷*敏捷转全系抗性系数+其他系统附加属性
 	attrData[PLAYER_ATTR_DFWU] += attrData[PLAYER_ATTR_MIN] * sg_fight_param_161000277;
+		//五行攻击=力量*力量转五行攻击系数+角色五行攻击
+	attrData[PLAYER_ATTR_WUXINGGONGJI] += attrData[PLAYER_ATTR_LI] * sg_fight_param_161000503;
 	// 面板忽略全抗=角色忽略全抗+其他系统附加属性
 	// 最终金系伤害=角色金系伤害+其他系统附加属性	
 	// 最终木系伤害=角色木系伤害+其他系统附加属性	

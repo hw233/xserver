@@ -1032,6 +1032,9 @@ void player_struct::cache_to_dbserver(bool again/* = false*/, EXTERN_DATA *ext_d
 	req->again = again ? 1 : 0;
 	req->plug = 0;
 	req->chengjie_cd = data->chengjie.rest;
+	req->marry_statu = data->player_marry_info.statu;
+	req->marry_type = data->player_marry_info.reserve_marry_type;
+	req->marry_period = data->player_marry_info.reserve_marry_time;
 
 	size_t name_len = std::min((uint32_t)sizeof(req->name) - 1, (uint32_t)strlen(data->name));
 	memcpy(req->name, data->name, name_len);
@@ -2245,6 +2248,19 @@ int player_struct::pack_playerinfo_to_dbinfo(uint8_t *out_data)
 		db_info.n_jiu_gong_ba_gua_reward_info++;
 	}
 
+	//结婚信息
+	DBPlayerMarryData player_marry_data;
+	dbplayer_marry_data__init(&player_marry_data);
+	player_marry_data.my_role = data->player_marry_info.my_role;
+	player_marry_data.propose_type = data->player_marry_info.propose_type;
+	player_marry_data.propose_success_time = data->player_marry_info.propose_success_time;
+	player_marry_data.target_id = data->player_marry_info.target_id;
+	player_marry_data.target_name = data->player_marry_info.target_name;
+	player_marry_data.sex = data->player_marry_info.sex;
+	player_marry_data.time = data->player_marry_info.time;
+
+	db_info.player_marry_data = &player_marry_data;
+
 	return player_dbinfo__pack(&db_info, out_data);
 }
 
@@ -2963,6 +2979,18 @@ int player_struct::unpack_dbinfo_to_playerinfo(uint8_t *packed_data, int len)
 		data->jiu_gong_ba_gua_reward[i].id = db_info->jiu_gong_ba_gua_reward_info[i]->id;
 		data->jiu_gong_ba_gua_reward[i].task_id = db_info->jiu_gong_ba_gua_reward_info[i]->task_id;
 		data->jiu_gong_ba_gua_reward[i].statu = db_info->jiu_gong_ba_gua_reward_info[i]->statu;
+	}
+
+	if(db_info->player_marry_data != NULL)
+	{
+		data->player_marry_info.my_role = db_info->player_marry_data->my_role;
+		data->player_marry_info.propose_type = db_info->player_marry_data->propose_type;
+		data->player_marry_info.propose_success_time = db_info->player_marry_data->propose_success_time;
+		data->player_marry_info.target_id = db_info->player_marry_data->target_id;
+		data->player_marry_info.sex = db_info->player_marry_data->sex;
+		data->player_marry_info.time = db_info->player_marry_data->time;
+		strncpy(data->player_marry_info.target_name, db_info->player_marry_data->target_name, MAX_PLAYER_NAME_LEN);
+		data->player_marry_info.target_name[MAX_PLAYER_NAME_LEN] = '\0';
 	}
 
 	player_dbinfo__free_unpacked(db_info, NULL);
@@ -3867,6 +3895,9 @@ void player_struct::update_region_id()
 	uint16_t new_region_id = get_region_id(scene->map_config, scene->region_config, pos->pos_x, pos->pos_z);
 	if (new_region_id != old_region_id)
 	{
+
+		LOG_DEBUG("[%s:%d] player[%lu], scene[%d] pos[%.1f][%.1f] region_id:%u",
+			__FUNCTION__, __LINE__, scene->m_id, pos->pos_x, pos->pos_z, data->player_id, new_region_id);
 //		data->region_id = new_region_id;
 		set_attr(PLAYER_ATTR_REGION_ID, new_region_id);
 		send_enter_region_notify(new_region_id);
@@ -3973,6 +4004,34 @@ void player_struct::calculate_lv4_attribute()
 // 面板土系抗性=最终全系抗性+角色土系抗性+其他系统附加属性
 	data->attrData[PLAYER_ATTR_DEF_EARTH] += data->attrData[PLAYER_ATTR_DFWU];
 
+//"5=金攻
+//6=木攻
+//7=水攻
+//8=火攻
+//9=土攻"
+	uint32_t player_job = data->attrData[PLAYER_ATTR_JOB];
+	ActorTable *config = get_actor_config(player_job);
+	switch (config->AttributeWu)
+	{
+		case 5:
+			data->attrData[PLAYER_ATTR_ATK_METAL] += data->attrData[PLAYER_ATTR_WUXINGGONGJI];
+			break;
+		case 6:
+			data->attrData[PLAYER_ATTR_ATK_WOOD] += data->attrData[PLAYER_ATTR_WUXINGGONGJI];
+			break;
+		case 7:
+			data->attrData[PLAYER_ATTR_ATK_WATER] += data->attrData[PLAYER_ATTR_WUXINGGONGJI];
+			break;
+		case 8:
+			data->attrData[PLAYER_ATTR_ATK_FIRE] += data->attrData[PLAYER_ATTR_WUXINGGONGJI];
+			break;
+		case 9:
+			data->attrData[PLAYER_ATTR_ATK_EARTH] += data->attrData[PLAYER_ATTR_WUXINGGONGJI];
+			break;
+		default:
+			break;
+	}
+
 // 面板眩晕几率=最终属性效果几率+角色眩晕几率+其他系统附加属性			
 // 面板迟缓几率=最终属性效果几率+角色迟缓几率+其他系统附加属性			
 // 面板麻痹几率=最终属性效果几率+角色麻痹几率+其他系统附加属性			
@@ -4004,6 +4063,9 @@ void player_struct::calculate_lv3_attribute()
 	data->attrData[PLAYER_ATTR_ATTACK] += data->attrData[PLAYER_ATTR_LI] * (1 + data->attrData[PLAYER_ATTR_ATTACKPRO]) * sg_fight_param_161000275;
 // 最终全系抗性=面板敏捷*敏捷转全系抗性系数+其他系统附加属性
 	data->attrData[PLAYER_ATTR_DFWU] += data->attrData[PLAYER_ATTR_MIN] * sg_fight_param_161000277;
+		//五行攻击=力量*力量转五行攻击系数+角色五行攻击
+	data->attrData[PLAYER_ATTR_WUXINGGONGJI] += data->attrData[PLAYER_ATTR_LI] * sg_fight_param_161000503;
+	
 // 面板忽略全抗=角色忽略全抗+其他系统附加属性
 // 最终金系伤害=角色金系伤害+其他系统附加属性	
 // 最终木系伤害=角色木系伤害+其他系统附加属性	
@@ -4050,7 +4112,7 @@ void player_struct::calculate_attribute(bool isNty)
 	memset(&data->attrData[PLAYER_ATTR_MAXHP], 0, (PLAYER_ATTR_PVPDF - PLAYER_ATTR_MAXHP + 1) * sizeof(double));
 	memset(&data->attrData[PLAYER_ATTR_BASELV], 0, (PLAYER_ATTR_LINGLV - PLAYER_ATTR_BASELV + 1) * sizeof(double));
 
-	for (int i = PLAYER_ATTR_TI; i <= PLAYER_ATTR_ALLEFFDF; ++i)
+	for (int i = PLAYER_ATTR_TI; i <= PLAYER_ATTR_WUXINGGONGJI; ++i)
 		data->attrData[i] = 0;
 	// data->attrData[PLAYER_ATTR_DFWU] = 0;
 	// data->attrData[PLAYER_ATTR_TI] = 0;
@@ -8335,7 +8397,7 @@ bool player_struct::check_task_accept_condition(uint32_t type, uint32_t target, 
 					case TBC_LEVEL:
 						return ((uint32_t)data->attrData[PLAYER_ATTR_LEVEL] >= val);
 					case TBC_SEX:
-						return ((uint32_t)get_player_sex(data->attrData[PLAYER_ATTR_JOB]) == val);
+						return ((uint32_t)data->attrData[PLAYER_ATTR_SEX] == val);
 					case TBC_EXP:
 						return ((uint32_t)get_total_exp() >= val);
 					case TBC_COIN:
@@ -15093,12 +15155,13 @@ void player_struct::refresh_player_redis_info(bool offline)
 	info.meili_num = data->charm_total;
 	if(data->charm_level > 1)
 	{
-		std::map<uint32_t, uint32_t>::iterator itr_exp = every_level_all_charm.find(data->charm_level);
+		std::map<uint32_t, uint32_t>::iterator itr_exp = every_level_all_charm.find(data->charm_level - 1);
 		if(itr_exp != every_level_all_charm.end())
 		{
 			info.meili_num += itr_exp->second;
 		}
 	}
+	info.max_tower = data->tower.top_lv;
 
 	EXTERN_DATA extern_data;
 	extern_data.player_id = data->player_id;
@@ -19098,6 +19161,7 @@ int player_struct::cur_scene_jump(double pos_x, double pos_z, double direct, EXT
 	// old->add_player_to_scene(this);
 	// take_partner_into_scene();
 	// send_scene_transfer(direct, pos_x, data->pos_y, pos_z, old->m_id, 0);
+	update_region_id();		
 	return (0);
 }
 
@@ -20769,7 +20833,7 @@ void player_struct::guild_chuan_gong_deal_with()
 	GuildPlayerPosInfo chuangong_player2;
 	guild_player_pos_info__init(&chuangong_player1);
 	guild_player_pos_info__init(&chuangong_player2);
-	chuan_gong_broad.statu = 2;
+	chuan_gong_broad.statu = 1;
 	struct position *my_pos = get_pos();
 	struct position *guild_pos = guild_player->get_pos();
 	chuangong_player1.player_id = data->player_id;
@@ -20778,8 +20842,8 @@ void player_struct::guild_chuan_gong_deal_with()
 	chuangong_player2.player_id = guild_player->data->player_id;
 	chuangong_player2.pos_x = guild_pos->pos_x;
 	chuangong_player2.pos_z = guild_pos->pos_z;
-	chuan_gong_broad.player1_info = & chuangong_player1;
-	chuan_gong_broad.player2_info = & chuangong_player2;
+	chuan_gong_broad.player1_info = &chuangong_player1;
+	chuan_gong_broad.player2_info = &chuangong_player2;
 	broadcast_to_sight(MSG_ID_GUILD_CHUAN_GONG_ZHUANGTAI_BROADCAST, &chuan_gong_broad, (pack_func)guild_chuan_gong_statu_notify__pack, true);
 	guild_player->broadcast_to_sight(MSG_ID_GUILD_CHUAN_GONG_ZHUANGTAI_BROADCAST, &chuan_gong_broad, (pack_func)guild_chuan_gong_statu_notify__pack, true);
 	return;
@@ -21116,7 +21180,7 @@ int player_struct::player_propose_check_up(uint64_t &player_id, uint32_t &ring_t
 			ret = 190500612; //双方互为仇人
 			break;
 		}
-		if(this->get_friend_closeness(target_player->data->player_id) <= marry_propose_min_closeness || target_player->get_friend_closeness(this->data->player_id) <= marry_propose_min_closeness)
+		if(friend_close_can_marry(this->get_friend_closeness(target_player->data->player_id)) && friend_close_can_marry(target_player->get_friend_closeness(this->data->player_id)))
 		{
 			ret = 190500610; //好感度不够
 			break;

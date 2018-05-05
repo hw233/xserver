@@ -85,7 +85,7 @@ enum PlayerAttrId
 	PLAYER_ATTR_FLY_SPEED = 46, //飞行速度
 	PLAYER_ATTR_ZHENYING = 47, //阵营
 	PLAYER_ATTR_PK_TYPE = 48, //pk模式 0和平,1阵营,2杀戮
-	PLAYER_ATTR_FIGHT_MAX,        //战斗相关的最大属性ID
+//	PLAYER_ATTR_FIGHT_MAX,        //战斗相关的最大属性ID
 
 	PLAYER_ATTR_JOB = 51, //职业
 	PLAYER_ATTR_SILVER = 52, //银两
@@ -139,7 +139,7 @@ enum PlayerAttrId
 	PLAYER_ATTR_ALLEFF = 96, //	属性效果几率
 	PLAYER_ATTR_ALLEFFDF = 97, //	抗属性效果几率
 //#define MAX_PARTNER_ATTR (PLAYER_ATTR_ALLEFFDF + 1)
-//	PLAYER_ATTR_ALLTIME = 98, //	属性效果时间
+	PLAYER_ATTR_WUXINGGONGJI = 98, //	五行攻击
 //	PLAYER_ATTR_AllTimeDf = 99, //	抗属性效果时间
 	PLAYER_ATTR_SHENGWANG = 100, //声望
 	PLAYER_ATTR_XUEJING = 101, //血晶
@@ -158,6 +158,7 @@ enum PlayerAttrId
 };
 
 typedef std::map<uint32_t, double> AttrMap;
-#define MAX_BUFF_FIGHT_ATTR (PLAYER_ATTR_SHENGWANG)
-#define MAX_PARTNER_ATTR (PLAYER_ATTR_ALLEFFDF + 1)
+#define MAX_BUFF_FIGHT_ATTR (PLAYER_ATTR_MAX)
+#define PLAYER_ATTR_FIGHT_MAX (PLAYER_ATTR_MAX)
+#define MAX_PARTNER_ATTR (PLAYER_ATTR_MAX + 1)
 #endif

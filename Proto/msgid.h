@@ -1084,6 +1084,7 @@
 #define MSG_ID_RED_BACKET_QIANG_HONGBAO_ANSWER  15507   // 抢红包应答 RedPacketGrabRedAnswer
 #define MSG_ID_RED_BACKET_HISTORY_INFO_REQUEST  15508  // 红包历史记录请求 NULL
 #define MSG_ID_RED_BACKET_HISTORY_INFO_ANSWER  15509   // 红包历史记录应答 RedPacketHistoryInfoAnswer
+#define MSG_ID_RED_BACKET_OVER_TIME_NOTIFY     15510   // 红包过时通知 RedPacketOverTimeNotify
 
 //情缘系统相关
 //求婚
@@ -1102,10 +1103,10 @@
 #define MSG_ID_MARRY_PLAYER_RESERVE_WEDDING_ANSWER	    15611  //预定婚期应答 CommAnswer
 
 //取消订婚
-#define MSG_ID_MARRY_PLAYER_CANCEL_PROPOSE_REQUEST      15612  //取消订婚请求 NULL
+#define MSG_ID_MARRY_PLAYER_CANCEL_PROPOSE_REQUEST      15612  //取消订婚请求 PlayerCancelProposeRequest
 #define MSG_ID_MARRY_PLAYER_CANCEL_PROPOSE_ANSWER	    15613  //取消订婚应答 CommAnswer
-#define MSG_ID_MARRY_PLAYER_CANCEL_PROPOSE_NOTYFY	    15614  //取消订婚通知 NULL(双方组队的时候通知另一方确认)
-#define MSG_ID_MARRY_PLAYER_CANCEL_CONFIRM_REQUEST	    15615  //取消订婚确认请求 PlayerCancelProposeConfirmRequest
+#define MSG_ID_MARRY_PLAYER_CANCEL_PROPOSE_NOTYFY	    15614  //协议取消通知另一方 NULL(双方组队的时候通知另一方确认)
+#define MSG_ID_MARRY_PLAYER_CANCEL_CONFIRM_REQUEST	    15615  //协议取消订婚另一方确认请求 PlayerCancelProposeConfirmRequest
 #define MSG_ID_MARRY_PLAYER_CANCEL_RESULT_NOTYFY	    15616  //取消订婚最终结果通知(成功还是失败) PlayerCancelProposeResultNotify
 
 #endif

@@ -651,6 +651,10 @@ player_struct * player_manager::create_player(PROTO_ENTER_GAME_RESP *proto, uint
 	ret->data->guild_id = proto->guild_id;
 	ret->data->guild_office = proto->guild_office;	
 	ret->data->create_time = proto->create_time;
+	ret->data->player_marry_info.statu = proto->marry_statu;
+	ret->data->player_marry_info.reserve_marry_type = proto->marry_type;
+	ret->data->player_marry_info.reserve_marry_time = proto->marry_period;
+	ret->data->create_time = proto->create_time;
 	if (ret->data->truck.truck_id != 0)
 	{
 		assert(ret->data->truck.scene_id > 0);

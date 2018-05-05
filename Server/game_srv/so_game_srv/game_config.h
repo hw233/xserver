@@ -94,7 +94,6 @@ int get_drop_item(uint32_t drop_id, std::map<uint32_t, uint32_t> &item_list, uin
 uint32_t get_drop_by_lv(uint32_t lv, uint32_t star, uint32_t n_Rewards, uint64_t *Rewards, uint32_t n_ItemRewardSection, uint64_t *ItemRewardSectio);
 #define MAX_DROP_ITEM_DATA_NUM 30
 int pack_drop_config_item(uint32_t drop_id, int max, int *begin, ItemData ***point);
-int get_player_sex(uint32_t job); //获取角色性别
 int get_task_type(uint32_t task_id);
 int task_is_trunk(uint32_t task_id);
 int task_is_branch(uint32_t task_id);
@@ -105,6 +104,8 @@ int bagua_item_to_card(uint32_t item_id);
 int get_actor_skill_index(uint32_t job, uint32_t skill_id);
 bool item_is_partner_fabao(uint32_t item_id);
 uint32_t get_friend_close_level(uint32_t closeness);
+bool friend_close_can_sworn(uint32_t closeness);
+bool friend_close_can_marry(uint32_t closeness);
 bool activity_is_open(uint32_t activity_id);
 uint32_t get_activity_reward_time(uint32_t activity_id); //获取活动的收益次数
 int get_dungeon_type(uint32_t raid_id);

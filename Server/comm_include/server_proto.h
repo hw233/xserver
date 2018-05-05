@@ -185,6 +185,8 @@ enum SERVER_PROTO {
     SERVER_PROTO_OFFLINE_RECHARGE_LIST_REQUEST,  // 获取离线充值列表请求
     SERVER_PROTO_OFFLINE_RECHARGE_LIST_ANSWER,   // 获取离线充值列表应答
 
+	SERVER_PROTO_UPDATE_PLAYER_SOME_MARRY_DATA,  // 更新部分结婚信息
+
 
     SERVER_PROTO_TIREN_LIST_NOTIFY,  // 外挂踢人
 };
@@ -235,6 +237,9 @@ typedef struct proto_save_player_req
     char       name[50];
     uint32_t   again;  //是否重新选角
     uint64_t   chengjie_cd;
+    uint32_t   marry_statu;	
+    uint32_t   marry_type;	
+    uint64_t   marry_period;	
     uint8_t    data[0];
 } PROTO_SAVE_PLAYER_REQ;
 
@@ -279,6 +284,9 @@ typedef struct proto_enter_game_resp
     uint64_t   chengjie_cd;
     uint32_t   guild_id;
     uint32_t   guild_office;	
+    uint32_t   marry_statu;	
+    uint32_t   marry_type;	
+    uint64_t   marry_period;	
     uint16_t   data_size;  //数据库blob最大64K
     uint8_t    data[0];
 } PROTO_ENTER_GAME_RESP;
@@ -913,5 +921,13 @@ typedef struct red_packet_recive_give_money
 	uint32_t money_num;
 } RED_PACKET_PLAYER_ADD_MONEY;
 
+//玩家不在线的时候需要更新相关婚姻数据
+typedef struct player_some_marry_data
+{
+	uint64_t   player_id;
+    uint32_t   marry_statu;	
+    uint32_t   marry_type;	
+    uint64_t   marry_period;	
+} PLAYER_SOME_MARRY_DATA;
 #pragma pack()
 #endif

@@ -1208,5 +1208,17 @@
         ['TargetInfoList'] = {
         }
     },
+    [1000102] = {
+        ['uid'] = 1000102,
+        ['ID'] = 151008035,
+        ['ResType'] = "Monster",
+        ['PointPosX'] = -50.51597,
+        ['PointPosY'] = 0.5257866,
+        ['PointPosZ'] = -47.04873,
+        ['Yaw'] = 0,
+        ['Level'] = 1,
+        ['TargetInfoList'] = {
+        }
+    },
 }
 return map_digong_011
