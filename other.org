@@ -1,0 +1,18 @@
+* log4c
+** 调试开关
+设置环境变量SD_DEBUG和SD_ERROR可以看到log4c打印的日志
+
+** reread开关
+每次写日志都去检查log4crc是否有改变，为了性能要关闭
+
+** bufsize
+如果不设置，或者设置成0，那么每次写日志都要堆上分配内存，最好设置一个值。但是设置的值会在栈上分配内存(alloca), 所以不要设置的太大。
+另外如果超长的时候会出现..., 但是不截断, 那么要修改源码或者设置自己的layout函数
+
+* protobuf-c
+** 内存分配
+#+BEGIN_SRC
+        if (allocator == NULL)
+                allocator = &protobuf_c__allocator;
+#+END_SRC
+自定义alloc函数可以做内存池
